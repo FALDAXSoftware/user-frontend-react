@@ -3,3 +3,41 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.slick-slide img
+{
+  display: none !important;
+}
+.slick-slide span
+{
+  display: none;
+}
+.slick-slide p
+{
+  display:none;
+}
+.slick-current img
+{
+  margin-top: -10px;
+  display:-webkit-inline-box !important;
+  width: 120px;
+  height:120px;
+}
+.slick-current span
+{
+  display:block;
+}
+.slick-current p
+{
+  display:block;
+}
+
+.slick-active img
+{
+  display:-webkit-inline-box !important;
+}
+.slick-dots
+{
+  text-align:left !important;
+  bottom:auto;
+}
