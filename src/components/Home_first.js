@@ -36,7 +36,7 @@ const MainRow = styled(Row)`
     }
 `
 const Left_Col = styled(Col)`
-    margin-top: 20%;
+    margin-top: 10%;
     padding-left: 12%;
 `
 const Home_text = styled.span`

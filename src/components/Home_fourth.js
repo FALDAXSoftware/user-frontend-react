@@ -23,6 +23,7 @@ const FourthRow = styled(Row)`
     height:auto;
     background-color:#ffffff;
     padding-bottom: 45px;
+    border-bottom: 3px solid #0f477b;
 `
 const FirstSlider = styled.div`
     margin-top:140px
@@ -99,7 +100,7 @@ export default class Home_fourth extends React.Component
           return (
             <FourthRow>
                 <Col span={18} offset={3}>
-                    <Col xxl={{span:12}} xl={{span:12}} sm={{span:24}}>
+                    <Col xxl={{span:10}} xl={{span:10}} sm={{span:24}}>
                         <FirstSlider>
                             <Slider {...settings}>
                                 <div>
@@ -133,7 +134,7 @@ export default class Home_fourth extends React.Component
                             </Slider>
                         </FirstSlider>
                     </Col>
-                    <Col xxl={{span:12}} xl={{span:12}} sm={{span:24}}>
+                    <Col xxl={{span:14}} xl={{span:14}} sm={{span:24}}>
                         <Secondslider >
                             <img src="./images/Homepage/quote.png"/>
                             <Sub_slider>
