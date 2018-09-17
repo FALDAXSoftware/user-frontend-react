@@ -4,10 +4,10 @@ body {
   font-family: sans-serif;
 }
 
-.App {
+/* .App {
   margin-left: 210px !important;
   margin-right: 210px !important;
-}
+} */
 
 @media (min-width: 1200px) {
   .container {
@@ -30,26 +30,37 @@ body {
   width: 100%;
 }
 
-.container {
+/* .container {
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+} */
+
+/* .section-1 {
+  background-color: #f5f5f5;
+}
+
+@media (max-width: 576px) {
+  .section-1 {
+    background-color: white !important;
+  }
 }
 
 .section-2 {
   width: 100%;
   background-color: #f5f5f5;
+  padding-bottom: 70px;
 }
 
 .section-3 {
   width: 100%;
   background-image: -webkit-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
-}
+} */
 
 .BTC_USD {
   font-size: 16px;
-  font-family: "OpenSans";
+  font-family: "Open sans";
   color: rgba( 0, 0, 0, 0.231 );
   font-weight: bold;
   line-height: 1.125;
@@ -58,7 +69,7 @@ body {
 
 ._6516_82 {
   font-size: 20px;
-  font-family: "OpenSans";
+  font-family: "Open sans";
   color: rgb( 0, 0, 0 );
   font-weight: bold;
   line-height: 0.9;
@@ -67,7 +78,7 @@ body {
 
 ._3_23 {
   font-size: 14px;
-  font-family: "OpenSans";
+  font-family: "Open sans";
   color: rgb( 52, 165, 57 );
   line-height: 1.286;
   text-align: left;
@@ -83,6 +94,18 @@ body {
   background-color: white;
 }
 
+.odd-table-row td, .even-table-row td{
+  padding: 8.5px !important;
+}
+
+/* .ant-table-thead > tr > th {
+  padding: 10px !important;
+} */
+
+
+.dashboard-table thead th{
+  padding: 12px !important;
+}
 
 thead[class*="ant-table-thead"] th {
   background-color: #0f477b !important;
@@ -101,3 +124,68 @@ table .ant-table-tbody > tr > td {
 .ant-table-column-sorter > .on * {
   color: white;
 }
+
+.slick-slide img
+{
+  display: none !important;
+}
+.slick-slide span
+{
+  display: none;
+}
+.slick-slide p
+{
+  display:none;
+}
+.slick-current img
+{
+  margin-top: -10px;
+  display:-webkit-inline-box !important;
+  width: 120px;
+  height:120px;
+}
+.slick-current span
+{
+  display:block;
+}
+.slick-current p
+{
+  display:block;
+}
+
+.slick-active img
+{
+  display:-webkit-inline-box !important;
+}
+.slick-dots
+{
+  text-align:left !important;
+  margin-top: 20px !important;
+  position: relative !important;
+}
+.slick-dots li button:before {
+  font-size: 11px !important;
+}
+
+@media(max-width:1200px)
+{
+  .slick-dots{
+    text-align:center !important;
+  }
+}
+
+.ant-modal
+{
+  width:1200px !important;
+}
+.ant-modal-content
+{
+  border-radius: 0px !important;
+  max-height: 815px;
+}
+.ant-modal-close-x
+{
+  color: white;
+}
+
+
