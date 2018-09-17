@@ -171,20 +171,25 @@ table .ant-table-tbody > tr > td {
 {
   .slick-dots{
     text-align:center !important;
-  }
+    }
+    .ant-modal-close-x
+    {
+      color:black !important;
+    }
 }
 
 .ant-modal
 {
-  width:1200px !important;
+  width:75% !important;
 }
 .ant-modal-content
 {
   border-radius: 0px !important;
-  max-height: 815px;
+  height: 815px;
 }
 .ant-modal-close-x
 {
+  font-size: 20px;
   color: white;
 }
 
