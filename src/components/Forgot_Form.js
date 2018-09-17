@@ -3,6 +3,7 @@ import React from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import {Button} from "antd";
+
 /* Components */
 
 /* Global Constants */
@@ -24,21 +25,30 @@ const Login_head = styled.div`
   padding-bottom: 10px;
   border-bottom: 2px solid;
   display: inline-block;
+  @media(max-width :400px)
+  {
+      border-bottom:none;
+  }
 `
 const Welcome_text = styled.div`
-  font-size: 24px;
-  font-family: "Open Sans";
-  color: rgb( 0, 0, 0 );
-  font-weight: bold;
-  margin-top:60px;
+    font-weight: bold;
+    font-size: 24px;
+    font-family: "Open Sans";
+    color: rgb( 0, 0, 0 );
+    margin-top:60px;
+    
 ` 
+const Sub_text = styled.span`
+    font-size: 16px;
+    font-family: "Open Sans";
+    color: rgb( 163, 163, 163 );  
+`
 const Email_label = styled.div`
   font-size: 14px;
   font-family: "Open Sans";
-  font-weight: bold;
-  color: black;
+  color: rgb( 0, 0, 0 );
   margin-top: 50px;
-
+  font-weight: bold;
 `
 const Username = styled.input`
   display:block;
@@ -60,15 +70,6 @@ const Check_wrap = styled.div`
 `
 const Remember = styled.div`
   display: inline-block;
-  font-size: 14px;
-  font-family: "Open Sans";
-  font-weight: bold;
-  color: black;
-
-  @media(max-width:400px)
-  {
-    display:block;
-  }
 `
 const Check = styled.input`
   vertical-align:middle;
@@ -79,15 +80,9 @@ const Forgot= styled.a`
   font-family: "Open Sans";
   color: rgb( 15, 71, 123 );
   text-align: left;
-
-  @media(max-width:400px)
-  {
-    float:left;
-    margin-top: 15px;
-  }
 `
 const Button_login = styled(Button)`
-  width: 110px;
+  width: 190px;;
   background-color: #0f477b;
   color: white;
   margin-top: 50px;
@@ -100,25 +95,29 @@ const Button_login = styled(Button)`
   font-weight: bold;
   text-transform: uppercase;
   line-height: 2.875;
-  @media(max-width:400px)
-  {
-    display:block;
-    margin-top: 70px;
-  }
 `
 const Sign = styled.div`
   margin-top: 50px;
   margin-bottom: 60px;
-  @media(max-width:400px)
-  {
-    margin-top: 50px;
-  }
 `
 const Sign_a = styled.a`
   font-size: 16px;
   font-family: "Open Sans";
   color:#0f477b;
   font-weight:bold;
+`
+const Link_wrap = styled.div`
+    margin-top:50px;
+`
+const Icon = styled.i`
+    vertical-align: middle;
+    color: rgb( 15, 71, 123 );    
+`
+const Back_link = styled.a`
+    vertical-align: middle;
+    font-size: 14px;
+    font-family: "Open Sans";
+    color: rgb( 15, 71, 123 );   
 `
 class Login_Form extends React.Component
 {     
@@ -149,36 +148,23 @@ class Login_Form extends React.Component
             <div>
               <Form_wrap>
 
-                <Login_head>Login</Login_head>
-                <Welcome_text>Welcome to Faldax</Welcome_text>
-                  <Email_label>Email Address</Email_label>
+                <Login_head>Forgot Password</Login_head>
+                <Welcome_text>Forgot Password?</Welcome_text>
+                    <Sub_text>Don't worry,it happen's to the best of us</Sub_text>
+                  <Email_label>Full Name</Email_label>
                   <Username {...getFieldProps('username', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
                     rules: [{required: true}],
                   })}/>
-                  <Ph_Label>Phone Number</Ph_Label>
-                  <Password {...getFieldProps('password', {
-                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{required: true}],
-                  })}
-                  />
-                  <Ph_Label>Password</Ph_Label>
-                  <Password {...getFieldProps('password', {
-                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{required: true}],
-                  })}
-                  />
-                  <Check_wrap>
-                    <Remember>
-                    <Check type="checkbox"/> Remember Me</Remember>
-                    <Forgot onClick={()=>this.dispModal("forgot")}>Forgot Password?</Forgot>
-                  </Check_wrap>
                     
                 {(errors = getFieldError('required')) ? errors.join(',') : null}
-                <Button_login onClick={this.submit}>LOGIN</Button_login>
-                <Sign>
-                  Don't have an account ? <Sign_a onClick={()=>this.dispModal("signup")}>Sign Up</Sign_a>
-                </Sign>
+                <Button_login onClick={this.submit}>Send Reset Link</Button_login>
+                <Link_wrap>
+                    <Icon className="material-icons">
+                        keyboard_backspace
+                    </Icon>
+                    <Back_link onClick={()=>this.dispModal("login")}> Back To Link </Back_link>
+                </Link_wrap>
               </Form_wrap>
             </div>
         );

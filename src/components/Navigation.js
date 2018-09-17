@@ -4,7 +4,11 @@ import 'antd/dist/antd.css';
 import {Card,Row, Col , Button , Layout, Menu, Breadcrumb,Cardimport , Modal } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components'
+
+/* Components */
 import Login_Form from "./Login_Form"
+import Signup_Form from "./Signup_Form"
+import Forgot_Form from "./Forgot_Form"
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
@@ -93,6 +97,10 @@ const SideNav = styled.div`
         transition: 0.5s;
         line-height: 1.5;
     }
+    @media(min-width:1200px)
+    {
+        display:none;
+    }
 `
 const Login_SignUp = styled.a`
     display:none !important;
@@ -161,7 +169,7 @@ const Login_text = styled.span`
     color: rgb( 0, 0, 0 );
     font-weight: bold;
     margin-right:15px;
-
+    cursor:pointer;
     @media(max-width:480px)
     {
         display:none;
@@ -196,6 +204,11 @@ const Right_Col = styled(Col)`
     background-position: center;
     background-repeat: no-repeat;
     display: table;
+
+    @media(max-width:1200px)
+    {
+        display:none;
+    }
 `
 const Logo_text_wrap = styled.div`
     display: table-cell;
@@ -210,10 +223,18 @@ const Faldaxtext = styled.img`
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 30px;
 `
 export default class Navigation extends React.Component
 {
-    state = { visible: false }
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            visible:false,
+            modal:0
+        }
+    }
     openNav() {
         if(document.getElementById("mySidenav")!==undefined && document.getElementById("mySidenav")!==null)
         {
@@ -229,6 +250,17 @@ export default class Navigation extends React.Component
             document.getElementById("main").style.marginRight= "0";
             document.body.style.backgroundColor = "white";
         }
+    }
+    dispModal(pressed)
+    {
+        console.log(pressed)
+        if(pressed=="login")
+        this.setState({modal:0})   
+        else if(pressed=="signup")
+        this.setState({modal:1})  
+        else
+        this.setState({modal:2})  
+        this.showModal();
     }
     showModal = () => {
         this.setState({
@@ -261,7 +293,7 @@ export default class Navigation extends React.Component
                         <Menu_main
                             theme="light"
                             mode="horizontal"
-                            defaultSelectedKeys={['2']}
+                            defaultSelectedKeys={['1']}
                         >
                             <Menu_item key="1">HOME</Menu_item>
                             <Menu_item key="2">FEATURES</Menu_item>
@@ -276,8 +308,8 @@ export default class Navigation extends React.Component
                                 <Exchange>
                                     <span>EXCHANGE / WHY FALDAX</span>
                                 </Exchange>
-                                <Login_text onClick={this.showModal}>LOGIN</Login_text>
-                                <Temp_button type="primary" size="large">Sign up</Temp_button>
+                                <Login_text onClick={this.dispModal.bind(this,"login")}>LOGIN</Login_text>
+                                <Temp_button onClick={this.dispModal.bind(this,"signup")} type="primary" size="large">Sign up</Temp_button>
                                 <Open style={{fontSize:"30px", cursor:"pointer"}} onClick={this.openNav.bind(this)}>&#9776;</Open>
                             </div>
                         </Right_div>
@@ -285,8 +317,8 @@ export default class Navigation extends React.Component
                             <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                             <Login_SignUp>
                                 <div>
-                                <LOG>LOGIN</LOG>
-                                <SIGN>SIGNUP</SIGN>
+                                <LOG onClick={this.dispModal.bind(this,"login")}>LOGIN</LOG>
+                                <SIGN onClick={this.dispModal.bind(this,"signup")}>SIGNUP</SIGN>
                                 </div>
                             </Login_SignUp>
                             <a href="#">Home</a>
@@ -311,13 +343,25 @@ export default class Navigation extends React.Component
                                       padding:"0px"
                                   }
                               }
-                              width={1200}
+                              width="100%"
                             >
                                 <Row>
-                                    <Left_col span={12}>
-                                        <Login_Form/>
+                                    <Left_col xl={{span:12}} sm={{span:24}}>
+                                        {console.log(this.state.modal)}
+                                        {
+                                            this.state.modal==0?
+                                            <Login_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                        }
+                                        {
+                                            this.state.modal==1?
+                                            <Signup_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                        }
+                                        {
+                                            this.state.modal==2?
+                                            <Forgot_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                        }
                                     </Left_col>
-                                    <Right_Col span={12}>
+                                    <Right_Col xl={{span:12}} sm={{span:24}}>
                                         <Logo_text_wrap>
                                             <Faldaxlogo src="./images/Homepage/Faldax_Login.png"/>
                                             <Faldaxtext src="./images/Homepage/Faldax_Login_text.png"/>

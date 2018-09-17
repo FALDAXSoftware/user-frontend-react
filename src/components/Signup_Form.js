@@ -29,15 +29,13 @@ const Welcome_text = styled.div`
   font-size: 24px;
   font-family: "Open Sans";
   color: rgb( 0, 0, 0 );
-  font-weight: bold;
-  margin-top:60px;
+  margin-top:40px;
 ` 
 const Email_label = styled.div`
   font-size: 14px;
   font-family: "Open Sans";
-  font-weight: bold;
   color: black;
-  margin-top: 50px;
+  margin-top: 40px;
 
 `
 const Username = styled.input`
@@ -60,15 +58,6 @@ const Check_wrap = styled.div`
 `
 const Remember = styled.div`
   display: inline-block;
-  font-size: 14px;
-  font-family: "Open Sans";
-  font-weight: bold;
-  color: black;
-
-  @media(max-width:400px)
-  {
-    display:block;
-  }
 `
 const Check = styled.input`
   vertical-align:middle;
@@ -76,15 +65,9 @@ const Check = styled.input`
 const Forgot= styled.a`
   float:right;
   font-size: 14px;
-  font-family: "Open Sans";
+  font-family: "OpenSans";
   color: rgb( 15, 71, 123 );
   text-align: left;
-
-  @media(max-width:400px)
-  {
-    float:left;
-    margin-top: 15px;
-  }
 `
 const Button_login = styled(Button)`
   width: 110px;
@@ -100,36 +83,21 @@ const Button_login = styled(Button)`
   font-weight: bold;
   text-transform: uppercase;
   line-height: 2.875;
-  @media(max-width:400px)
-  {
-    display:block;
-    margin-top: 70px;
-  }
+
 `
 const Sign = styled.div`
-  margin-top: 50px;
+  margin-top: 30px;
   margin-bottom: 60px;
-  @media(max-width:400px)
-  {
-    margin-top: 50px;
-  }
 `
 const Sign_a = styled.a`
   font-size: 16px;
   font-family: "Open Sans";
   color:#0f477b;
   font-weight:bold;
+
 `
-class Login_Form extends React.Component
-{     
-      constructor(props)
-      {
-        super(props);
-        this.state = {
-          
-        }
-      }
-      static propTypes = {
+class Signup_Form extends React.Component
+{     static propTypes = {
         form: formShape,
       };
       submit = () => {
@@ -137,10 +105,10 @@ class Login_Form extends React.Component
           console.log(error, value);
         });
       }
-      dispModal(pressed)
+      dispModal()
       {
-        console.log(this.props,pressed)
-        this.props.dispModal(pressed)
+        console.log(this.props)
+        this.props.dispModal("login")
       }
       render() {
         let errors;
@@ -149,14 +117,21 @@ class Login_Form extends React.Component
             <div>
               <Form_wrap>
 
-                <Login_head>Login</Login_head>
-                <Welcome_text>Welcome to Faldax</Welcome_text>
-                  <Email_label>Email Address</Email_label>
+                <Login_head>Sign Up</Login_head>
+                <Welcome_text>Lets Get Started</Welcome_text>
+                    <span>Enter Your Information Below</span>
+                  <Email_label>Full Name</Email_label>
                   <Username {...getFieldProps('username', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
                     rules: [{required: true}],
                   })}/>
                   <Ph_Label>Phone Number</Ph_Label>
+                  <Password {...getFieldProps('password', {
+                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
+                    rules: [{required: true}],
+                  })}
+                  />
+                  <Ph_Label>Email Adress</Ph_Label>
                   <Password {...getFieldProps('password', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
                     rules: [{required: true}],
@@ -168,20 +143,14 @@ class Login_Form extends React.Component
                     rules: [{required: true}],
                   })}
                   />
-                  <Check_wrap>
-                    <Remember>
-                    <Check type="checkbox"/> Remember Me</Remember>
-                    <Forgot onClick={()=>this.dispModal("forgot")}>Forgot Password?</Forgot>
-                  </Check_wrap>
-                    
                 {(errors = getFieldError('required')) ? errors.join(',') : null}
-                <Button_login onClick={this.submit}>LOGIN</Button_login>
+                <Button_login onClick={this.submit}>SIgn Up</Button_login>
                 <Sign>
-                  Don't have an account ? <Sign_a onClick={()=>this.dispModal("signup")}>Sign Up</Sign_a>
+                  Already have an account ? <Sign_a onClick={()=>this.dispModal()}>Login</Sign_a>
                 </Sign>
               </Form_wrap>
             </div>
         );
       }
 }
-export default createForm()(Login_Form);
+export default createForm()(Signup_Form);
