@@ -6,6 +6,10 @@ import {Row, Col , Button , Layout, Menu, Breadcrumb,Card } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components'
 
+/* Styled Components */
+import { Container } from '../styled-components/homepage/style';
+
+
 /* Components */
 
 import Header_main from "./Navigation";
@@ -25,10 +29,19 @@ const MainRow = styled(Row)`
     max-height: 778px;
     width: 100%;
     text-align:left;
+    font-family: "Open sans";
 
+    @media(min-width:1200px)
+    {
+        height: 778px;
+    }
     @media(max-width:1200px)
     {
-        height:auto;
+        height: 700px;
+    }
+    @media(max-width:991px)
+    {
+        height: 560px;
     }
     @media(max-width:576px)
     {
@@ -36,12 +49,11 @@ const MainRow = styled(Row)`
     }
 `
 const Left_Col = styled(Col)`
-    margin-top: 10%;
-    padding-left: 12%;
+    margin-top: 20%;
 `
 const Home_text = styled.span`
     font-size: 36px;
-    font-family: "Times New Roman";
+    font-family: "Open sans";
     color: rgb( 40, 37, 40 );
     line-height: 1;
     text-align: left;  
@@ -66,7 +78,6 @@ const Laptop = styled.img`
     {
         width:75%;
         margin-top:25px;
-
     }
 `
 const Home_list = styled.ul`
@@ -84,17 +95,19 @@ export default class Homefirst extends React.Component
     {
         return(
             <MainRow>
-                        <Left_Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Home_text>TRADE. INNOVATE. DISCOVER.</Home_text>
-                            <Home_list>
-                                <List>Full-featured trading platform</List>
-                                <List>Leveraged margin trading</List>
-                                <List>DIGITAL MONEY WALLET</List>
-                            </Home_list>
-                        </Left_Col>
-                        <Right_Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Laptop src="./images/Homepage/Laptop.png"/>
-                        </Right_Col>
+                <Container>
+                    <Left_Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <Home_text>TRADE. INNOVATE. DISCOVER.</Home_text>
+                        <Home_list>
+                            <List>Full-featured trading platform</List>
+                            <List>Leveraged margin trading</List>
+                            <List>DIGITAL MONEY WALLET</List>
+                        </Home_list>
+                    </Left_Col>
+                    <Right_Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <Laptop src="./images/Homepage/Laptop.png"/>
+                    </Right_Col>
+                </Container>
             </MainRow>
         );
     }

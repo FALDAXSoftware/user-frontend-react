@@ -1,9 +1,9 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {Card,Row, Col , Button , Layout, Menu, Breadcrumb,Cardimport , Modal } from 'antd';
+import {Row, Col , Button , Layout, Menu, Breadcrumb, Card, Cardimport , Modal } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 /* Components */
 import Login_Form from "./Login_Form"
@@ -13,14 +13,50 @@ import Forgot_Form from "./Forgot_Form"
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
 
+/* Modal Styled Components */
+const Left_col = styled(Col)`
+
+`
+const Right_Col = styled(Col)`
+    background-image:url("./images/Homepage/wallpaper.png");
+    height:815px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: table;
+
+    @media(max-width:1200px)
+    {
+        display:none;
+    }
+`
+const Logo_text_wrap = styled.div`
+    display: table-cell;
+    vertical-align: middle;
+`
+const Faldaxlogo = styled.img`
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    cursor:pointer;
+`
+const Faldaxtext = styled.img`
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    cursor:pointer;
+`
+
 /* Styled Components */
 const FALDAX = styled.img`
     margin-left: 15px; 
+    cursor:pointer;
 `
 const Logo = styled.div`
     margin-top: 6px;
     display:inline-block;
     text-align:left;
+    cursor:pointer;
 `
 const Header_main = styled(Header)`
     position:fixed;
@@ -52,7 +88,7 @@ const Menu_main = styled(Menu)`
 const Menu_item = styled(Menu.Item)`
     padding:0px 15px;
     font-size: 13px;
-    font-family: "OpenSans";
+    font-family: "Open sans";
     color: rgb( 40, 37, 40 );
     font-weight: bold;
     text-transform: uppercase;      
@@ -87,19 +123,25 @@ const SideNav = styled.div`
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 0px;
+    background-image: url(./images/Homepage/wallpaper.png);
+    width: 0px;
+    color: white;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     a
     {
-        padding: 8px 8px 8px 32px;
+        padding: 8px 32px;
         text-decoration: none;
         font-size: 18px;
-        color: #818181;
         display: block;
         transition: 0.5s;
         line-height: 1.5;
+        color:white;
     }
-    @media(min-width:1200px)
+    @media(min-width: 1200px)
     {
-        display:none;
+        display: none;
     }
 `
 const Login_SignUp = styled.a`
@@ -115,13 +157,15 @@ const Login_SignUp = styled.a`
         height:50px;
     }
 `
-const LOG = styled.li`
+const LOG = styled.span`
     display:inline-block;
     float:left;
+    color: #818181;
 `
-const SIGN = styled.li`
+const SIGN = styled.span`
     display:inline-block;
     float:right;
+    color: #818181;
 `
 const Why = styled.a`
     display:none !important;
@@ -147,12 +191,12 @@ const Exchange = styled.div`
     margin-right: 30px;
     border-right: 2px solid #f0f0f0;
     font-size: 13px;
-    font-family: "OpenSans";
+    font-family: "Open sans";
     color: rgb( 40, 37, 40 );
     font-weight: bold;
     text-transform: uppercase;
     padding-right: 24px;
-
+    cursor:pointer;
     @media(max-width:1365px)
     {
         margin-right:10px;
@@ -165,7 +209,7 @@ const Exchange = styled.div`
 `
 const Login_text = styled.span`
     font-size: 13px;
-    font-family: "OpenSans";
+    font-family: "Open sans";
     color: rgb( 0, 0, 0 );
     font-weight: bold;
     margin-right:15px;
@@ -193,38 +237,6 @@ const Temp_button = styled(Button)`
         margin-right: 10px;
     }
 `
-/* Modal Styled Components */
-const Left_col = styled(Col)`
-
-`
-const Right_Col = styled(Col)`
-    background-image:url("./images/Homepage/wallpaper.png");
-    height:815px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: table;
-
-    @media(max-width:1200px)
-    {
-        display:none;
-    }
-`
-const Logo_text_wrap = styled.div`
-    display: table-cell;
-    vertical-align: middle;
-`
-const Faldaxlogo = styled.img`
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-`
-const Faldaxtext = styled.img`
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
-`
 export default class Navigation extends React.Component
 {
     constructor(props)
@@ -235,7 +247,9 @@ export default class Navigation extends React.Component
             modal:0
         }
     }
+
     openNav() {
+        console.log('open nav');
         if(document.getElementById("mySidenav")!==undefined && document.getElementById("mySidenav")!==null)
         {
             document.getElementById("mySidenav").style.width = "250px";
@@ -264,32 +278,32 @@ export default class Navigation extends React.Component
         this.showModal();
     }
     showModal = () => {
+        console.log('show modal');
         this.setState({
           visible: true,
         });
-      }
-    
-      handleOk = (e) => {
+    }
+    handleOk = (e) => {
         console.log(e);
         this.setState({
           visible: false,
         });
-      }
-    
-      handleCancel = (e) => {
+    }
+    handleCancel = (e) => {
         console.log(e);
         this.setState({
           visible: false,
         });
-      }
+    }
+
 
     render()
     {
         return(
                     <Header_main id="main">
                         <Logo>
-                                    <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png"/>
-                                    <FALDAX src="./images/Homepage/faldax.png"/>
+                            <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png"/>
+                            <FALDAX src="./images/Homepage/faldax.png"/>
                         </Logo>
                         <Menu_main
                             theme="light"
@@ -311,7 +325,7 @@ export default class Navigation extends React.Component
                                 </Exchange>
                                 <Login_text onClick={this.dispModal.bind(this,"login")}>LOGIN</Login_text>
                                 <Temp_button onClick={this.dispModal.bind(this,"signup")} type="primary" size="large">Sign up</Temp_button>
-                                <Open style={{fontSize:"30px", cursor:"pointer"}} onClick={this.openNav.bind(this)}>&#9776;</Open>
+                                <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={this.openNav.bind(this)}>&#9776;</Open>
                             </div>
                         </Right_div>
                         <SideNav id="mySidenav">
