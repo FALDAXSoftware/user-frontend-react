@@ -6,6 +6,8 @@
     "antd": "^3.9.1",
     "bizcharts": "^3.2.2",
     "chart.js": "^2.7.2",
+    "rc-form": "^2.2.2",
+    "rc-form-validation": "^2.5.0",
     "react": "^16.4.2",
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.4.2",

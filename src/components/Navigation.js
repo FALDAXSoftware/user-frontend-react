@@ -1,10 +1,10 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {Row, Col , Button , Layout, Menu, Breadcrumb, Card, Cardimport , Modal } from 'antd';
+import {Card,Row, Col , Button , Layout, Menu, Breadcrumb,Cardimport , Modal } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
-import styled from 'styled-components';
-import Login_Form from "./Login_Form";
+import styled from 'styled-components'
+import Login_Form from "./Login_Form"
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
@@ -224,10 +224,35 @@ const Temp_button = styled(Button)`
         margin-right: 10px;
     }
 `
+/* Modal Styled Components */
+const Left_col = styled(Col)`
+
+`
+const Right_Col = styled(Col)`
+    background-image:url("./images/Homepage/wallpaper.png");
+    height:815px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: table;
+`
+const Logo_text_wrap = styled.div`
+    display: table-cell;
+    vertical-align: middle;
+`
+const Faldaxlogo = styled.img`
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+`
+const Faldaxtext = styled.img`
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+`
 export default class Navigation extends React.Component
 {
     state = { visible: false }
-
     openNav() {
         console.log('open nav');
         if(document.getElementById("mySidenav")!==undefined && document.getElementById("mySidenav")!==null)
@@ -246,24 +271,24 @@ export default class Navigation extends React.Component
         }
     }
     showModal = () => {
-        console.log('show modal');
         this.setState({
           visible: true,
         });
-    }
-    handleOk = (e) => {
+      }
+    
+      handleOk = (e) => {
         console.log(e);
         this.setState({
           visible: false,
         });
-    }
-    handleCancel = (e) => {
+      }
+    
+      handleCancel = (e) => {
         console.log(e);
         this.setState({
           visible: false,
         });
-    }
-
+      }
 
     render()
     {
@@ -291,7 +316,7 @@ export default class Navigation extends React.Component
                                 <Exchange>
                                     <span>EXCHANGE / WHY FALDAX</span>
                                 </Exchange>
-                                <Login_text>LOGIN</Login_text>
+                                <Login_text onClick={this.showModal}>LOGIN</Login_text>
                                 <Temp_button type="primary" size="large">Sign up</Temp_button>
                                 <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={this.openNav.bind(this)}>&#9776;</Open>
                             </div>
