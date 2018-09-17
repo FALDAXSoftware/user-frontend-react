@@ -1,9 +1,9 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {Card,Row, Col , Button , Layout, Menu, Breadcrumb,Cardimport , Modal } from 'antd';
+import {Row, Col , Button , Layout, Menu, Breadcrumb, Card, Cardimport , Modal } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 /* Components */
 import Login_Form from "./Login_Form"
@@ -24,6 +24,11 @@ const Right_Col = styled(Col)`
     background-position: center;
     background-repeat: no-repeat;
     display: table;
+
+    @media(max-width:1200px)
+    {
+        display:none;
+    }
 `
 const Logo_text_wrap = styled.div`
     display: table-cell;
@@ -119,7 +124,7 @@ const SideNav = styled.div`
     transition: 0.5s;
     padding-top: 0px;
     background-image: url(./images/Homepage/wallpaper.png);
-    width: 250px;
+    width: 0px;
     color: white;
     background-position: center;
     background-repeat: no-repeat;
@@ -138,18 +143,18 @@ const SideNav = styled.div`
     {
         display: none;
     }
-    @media(min-width:1200px)
-    {
-        display:none;
-    }
 `
 const Login_SignUp = styled.a`
     display:none !important;
+    div
+    {
+        list-style-type:none;
+        padding-left:8px;
+    }
     @media(max-width:480px)
     {
         display:block !important;
         height:50px;
-        padding: 8px 32px;
     }
 `
 const LOG = styled.span`
@@ -232,38 +237,6 @@ const Temp_button = styled(Button)`
         margin-right: 10px;
     }
 `
-/* Modal Styled Components */
-const Left_col = styled(Col)`
-
-`
-const Right_Col = styled(Col)`
-    background-image:url("./images/Homepage/wallpaper.png");
-    height:815px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: table;
-
-    @media(max-width:1200px)
-    {
-        display:none;
-    }
-`
-const Logo_text_wrap = styled.div`
-    display: table-cell;
-    vertical-align: middle;
-`
-const Faldaxlogo = styled.img`
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-`
-const Faldaxtext = styled.img`
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
-`
 export default class Navigation extends React.Component
 {
     constructor(props)
@@ -274,6 +247,7 @@ export default class Navigation extends React.Component
             modal:0
         }
     }
+
     openNav() {
         console.log('open nav');
         if(document.getElementById("mySidenav")!==undefined && document.getElementById("mySidenav")!==null)
@@ -303,24 +277,24 @@ export default class Navigation extends React.Component
         this.showModal();
     }
     showModal = () => {
+        console.log('show modal');
         this.setState({
           visible: true,
         });
-      }
-    
-      handleOk = (e) => {
+    }
+    handleOk = (e) => {
         console.log(e);
         this.setState({
           visible: false,
         });
-      }
-    
-      handleCancel = (e) => {
+    }
+    handleCancel = (e) => {
         console.log(e);
         this.setState({
           visible: false,
         });
-      }
+    }
+
 
     render()
     {
@@ -350,7 +324,7 @@ export default class Navigation extends React.Component
                                 </Exchange>
                                 <Login_text onClick={this.dispModal.bind(this,"login")}>LOGIN</Login_text>
                                 <Temp_button onClick={this.dispModal.bind(this,"signup")} type="primary" size="large">Sign up</Temp_button>
-                                <Open style={{fontSize:"30px", cursor:"pointer"}} onClick={this.openNav.bind(this)}>&#9776;</Open>
+                                <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={this.openNav.bind(this)}>&#9776;</Open>
                             </div>
                         </Right_div>
                         <SideNav id="mySidenav">
