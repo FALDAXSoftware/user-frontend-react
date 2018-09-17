@@ -244,6 +244,7 @@ export default class Navigation extends React.Component
         }
     }
     closeNav() {
+        console.log("close nav")
         if(document.getElementById("mySidenav")!==undefined && document.getElementById("mySidenav")!==null)
         {
             document.getElementById("mySidenav").style.width = "0";
