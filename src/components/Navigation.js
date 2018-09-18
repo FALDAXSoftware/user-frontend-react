@@ -155,7 +155,7 @@ const SideNav = styled.div`
         line-height: 1.5;
         color:white;
     }
-    @media(min-width: 1200px)
+    @media(min-width: 1320px)
     {
         display: none;
     }
