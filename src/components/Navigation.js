@@ -15,7 +15,11 @@ const { Meta } = Card;
 
 /* Modal Styled Components */
 const Left_col = styled(Col)`
-
+    height:815px;
+    @media(min-width:1024px) and (max-width:1440px)
+    {
+        height:580px
+    }
 `
 const Right_Col = styled(Col)`
     background-image:url("./images/Homepage/wallpaper.png");
@@ -28,6 +32,10 @@ const Right_Col = styled(Col)`
     @media(max-width:1200px)
     {
         display:none;
+    }
+    @media(min-width:1024px) and (max-width:1440px)
+    {
+        height:580px
     }
 `
 const Logo_text_wrap = styled.div`

@@ -3,6 +3,7 @@ import React from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import {Button} from "antd";
+import {Username,Form_wrap,Welcome_text,Email_label} from "./Login_Form";
 
 /* Components */
 
@@ -10,11 +11,7 @@ import {Button} from "antd";
 
 
 /* Styled-Components */
-const Form_wrap = styled.div`
-  padding-left:60px;
-  padding-top:60px;
-  
-`
+
 const Login_head = styled.div`
   font-size: 30px;
   font-family: "Open Sans";
@@ -30,27 +27,14 @@ const Login_head = styled.div`
       border-bottom:none;
   }
 `
-const Welcome_text = styled.div`
-    font-weight: bold;
-    font-size: 24px;
-    font-family: "Open Sans";
-    color: rgb( 0, 0, 0 );
-    margin-top:60px;
-    
-` 
+
 const Sub_text = styled.span`
     font-size: 16px;
     font-family: "Open Sans";
     color: rgb( 163, 163, 163 );  
 `
-const Email_label = styled.div`
-  font-size: 14px;
-  font-family: "Open Sans";
-  color: rgb( 0, 0, 0 );
-  margin-top: 50px;
-  font-weight: bold;
-`
-const Username = styled.input`
+
+const Full  = styled.input`
   display:block;
   background-color: #f8f8f8;
   border: 0px;
@@ -95,6 +79,11 @@ const Button_login = styled(Button)`
   font-weight: bold;
   text-transform: uppercase;
   line-height: 2.875;
+  @media (min-width:1024px) (max-width:1440px)
+  {
+    width:40%;
+    height:40px;
+  }
 `
 const Sign = styled.div`
   margin-top: 50px;
