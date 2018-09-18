@@ -4,6 +4,8 @@ import 'antd/dist/antd.css';
 import {Row, Col , Button , Layout, Menu, Breadcrumb, Card, Cardimport , Modal } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon } from '@fortawesome/free-solid-svg-icons';
 
 /* Components */
 import Login_Form from "./Login_Form"
@@ -49,8 +51,14 @@ const Faldaxtext = styled.img`
 
 /* Styled Components */
 const FALDAX = styled.img`
+
     margin-left: 15px; 
     cursor:pointer;
+
+    @media(max-width:1320px)
+    {
+        margin-top:3px;
+    }
 `
 const Logo = styled.div`
     margin-top: 6px;
@@ -76,11 +84,11 @@ const Menu_main = styled(Menu)`
     border-bottom:0px;
     vertical-align: middle;
 
-    @media(max-width:1200px)
+    @media(max-width:1320px)
     {
         display:none;
     }
-    @media(max-width:1365px)
+    @media(max-width:1540px)
     {
         margin-left: 15px;
     }
@@ -96,7 +104,7 @@ const Menu_item = styled(Menu.Item)`
     float: left;
     border-bottom:0px !important;
 
-    @media(max-width:1365px)
+    @media(max-width:1540px)
     {
         padding:0px 8px;
     }
@@ -106,7 +114,7 @@ const FALDAX_LOGO = styled.img`
 `
 const Open = styled.span`
     display:none;
-    @media(max-width:1200px)
+    @media(max-width:1320px)
     {
         display:inline-block;
         margin-right:15px;
@@ -188,39 +196,46 @@ const Right_div = styled.div`
 `
 const Exchange = styled.div`
     display:inline;
-    margin-right: 30px;
-    border-right: 2px solid #f0f0f0;
     font-size: 13px;
     font-family: "Open sans";
     color: rgb( 40, 37, 40 );
     font-weight: bold;
     text-transform: uppercase;
-    padding-right: 24px;
+    padding-right: 22px;
     cursor:pointer;
-    @media(max-width:1365px)
+    @media(max-width:1540px)
     {
-        margin-right:10px;
-        padding-right:10px;
+        margin-right:8px;
+        padding-right:8px;
     }
     @media(max-width:670px)
     {
         display:none;
     }
 `
+const Day_night_mode = styled.div`
+    display:inline;
+    font-size: 13px;
+    padding-right: 10px;
+    cursor:pointer;
+`
 const Login_text = styled.span`
+    border-left: 1px solid #f0f0f0;
     font-size: 13px;
     font-family: "Open sans";
-    color: rgb( 0, 0, 0 );
+    color: rgb( 0,0,0 );
     font-weight: bold;
-    margin-right:15px;
-    cursor:pointer;
+    margin-right: 15px;
+    padding-left: 30px;
+    cursor: pointer;
     @media(max-width:480px)
     {
         display:none;
     }
-    @media(max-width:1365px)
+    @media(max-width:1540px)
     {
         margin-right:10px;
+        padding-left: 18px;
     }
 `
 const Temp_button = styled(Button)`
@@ -232,7 +247,7 @@ const Temp_button = styled(Button)`
     {
         display:none;
     }
-    @media(max-width:1365px)
+    @media(max-width:1440px)
     {
         margin-right: 10px;
     }
@@ -299,92 +314,97 @@ export default class Navigation extends React.Component
     render()
     {
         return(
-                    <Header_main id="main">
-                        <Logo>
-                            <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png"/>
-                            <FALDAX src="./images/Homepage/faldax.png"/>
-                        </Logo>
-                        <Menu_main
-                            theme="light"
-                            mode="horizontal"
-                            defaultSelectedKeys={['1']}
-                        >
-                            <Menu_item key="1">HOME</Menu_item>
-                            <Menu_item key="2">FEATURES</Menu_item>
-                            <Menu_item key="3">ABOUT</Menu_item>
-                            <Menu_item key="4">SECURITY</Menu_item>
-                            <Menu_item key="5">NEWS</Menu_item>
-                            <Menu_item key="6">CONTACT</Menu_item>
-                            <Menu_item key="7">LIST YOUR COIN</Menu_item>
-                        </Menu_main>
-                        <Right_div>
-                            <div>
-                                <Exchange>
-                                    <span>EXCHANGE / WHY FALDAX</span>
-                                </Exchange>
-                                <Login_text onClick={this.dispModal.bind(this,"login")}>LOGIN</Login_text>
-                                <Temp_button onClick={this.dispModal.bind(this,"signup")} type="primary" size="large">Sign up</Temp_button>
-                                <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={this.openNav.bind(this)}>&#9776;</Open>
-                            </div>
-                        </Right_div>
-                        <SideNav id="mySidenav">
-                            <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
-                            <Login_SignUp>
-                                <div>
-                                <LOG onClick={this.dispModal.bind(this,"login")}>LOGIN</LOG>
-                                <SIGN onClick={this.dispModal.bind(this,"signup")}>SIGNUP</SIGN>
-                                </div>
-                            </Login_SignUp>
-                            <a href="#">Home</a>
-                            <a href="#">Features</a>
-                            <a href="#">About</a>
-                            <a href="#">Security</a>
-                            <a href="#">News</a>
-                            <a href="#">Contact</a>
-                            <a href="#">List Your Coin</a>
-                            <Why>Exchange/Why FALDAX</Why>
-                        </SideNav> 
+            <Header_main id="main">
+                <Logo>
+                    <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png"/>
+                    <FALDAX src="./images/Homepage/faldax.png"/>
+                </Logo>
+                <Menu_main
+                    theme="light"
+                    mode="horizontal"
+                    defaultSelectedKeys={['1']}
+                >
+                    <Menu_item key="1">HOME</Menu_item>
+                    <Menu_item key="2">FEATURES</Menu_item>
+                    <Menu_item key="3">ABOUT</Menu_item>
+                    <Menu_item key="4">SECURITY</Menu_item>
+                    <Menu_item key="5">NEWS</Menu_item>
+                    <Menu_item key="6">CONTACT</Menu_item>
+                    <Menu_item key="7">LIST YOUR TOKEN/COIN</Menu_item>
+                    <Menu_item key="8">EXCHANGE</Menu_item>
+                </Menu_main>
+                <Right_div>
+                    <div>
+                        <Day_night_mode>
+                            <span> <FontAwesomeIcon icon={faMoon} color='black' style={{transform: 'rotate(315deg)'}} /> </span>
+                        </Day_night_mode>
+                        <Exchange>
+                            <span> CAREERS </span>
+                        </Exchange>
+                        <Exchange>
+                            <span> LANGUAGE </span>
+                        </Exchange>
+                        <Login_text onClick={this.dispModal.bind(this,"login")}>LOGIN</Login_text>
+                        <Temp_button onClick={this.dispModal.bind(this,"signup")} type="primary" size="large">Sign up</Temp_button>
+                        <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={this.openNav.bind(this)}>&#9776;</Open>
+                    </div>
+                </Right_div>
+                <SideNav id="mySidenav">
+                    <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
+                    <Login_SignUp>
                         <div>
-                            <Modal
-                              visible={this.state.visible}
-                              onOk={this.handleOk}
-                              onCancel={this.handleCancel}
-                              footer={null}
-                              className="Login-Modal"
-                              style={{borderRadius:"0px"}}
-                              bodyStyle={
-                                  {
-                                      padding:"0px"
-                                  }
-                              }
-                              width="100%"
-                            >
-                                <Row>
-                                    <Left_col xl={{span:12}} sm={{span:24}}>
-                                        {console.log(this.state.modal)}
-                                        {
-                                            this.state.modal==0?
-                                            <Login_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
-                                        }
-                                        {
-                                            this.state.modal==1?
-                                            <Signup_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
-                                        }
-                                        {
-                                            this.state.modal==2?
-                                            <Forgot_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
-                                        }
-                                    </Left_col>
-                                    <Right_Col xl={{span:12}} sm={{span:24}}>
-                                        <Logo_text_wrap>
-                                            <Faldaxlogo src="./images/Homepage/Faldax_Login.png"/>
-                                            <Faldaxtext src="./images/Homepage/Faldax_Login_text.png"/>
-                                        </Logo_text_wrap>
-                                    </Right_Col>
-                                </Row>
-                            </Modal>
-                          </div>
-                    </Header_main>
+                        <LOG onClick={this.dispModal.bind(this,"login")}>LOGIN</LOG>
+                        <SIGN onClick={this.dispModal.bind(this,"signup")}>SIGNUP</SIGN>
+                        </div>
+                    </Login_SignUp>
+                    <a href="#">Home</a>
+                    <a href="#">Features</a>
+                    <a href="#">About</a>
+                    <a href="#">Security</a>
+                    <a href="#">News</a>
+                    <a href="#">Contact</a>
+                    <a href="#">List Your Token/Coin</a>
+                    <a href="#">Exchange</a>
+                    <Why> Careers </Why>
+                    <Why> Language </Why>
+                </SideNav> 
+                <div>
+                    <Modal
+                        visible={this.state.visible}
+                        onOk={this.handleOk}
+                        onCancel={this.handleCancel}
+                        footer={null}
+                        className="Login-Modal"
+                        style={{borderRadius:"0px"}}
+                        bodyStyle={{ padding:"0px" }}
+                        width="100%"
+                    >
+                        <Row>
+                            <Left_col xl={{span:12}} sm={{span:24}}>
+                                {console.log(this.state.modal)}
+                                {
+                                    this.state.modal==0?
+                                    <Login_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                }
+                                {
+                                    this.state.modal==1?
+                                    <Signup_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                }
+                                {
+                                    this.state.modal==2?
+                                    <Forgot_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                }
+                            </Left_col>
+                            <Right_Col xl={{span:12}} sm={{span:24}}>
+                                <Logo_text_wrap>
+                                    <Faldaxlogo src="./images/Homepage/Faldax_Login.png"/>
+                                    <Faldaxtext src="./images/Homepage/Faldax_Login_text.png"/>
+                                </Logo_text_wrap>
+                            </Right_Col>
+                        </Row>
+                    </Modal>
+                    </div>
+            </Header_main>
         );
     }
 }

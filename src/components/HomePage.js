@@ -175,7 +175,7 @@ const columns = [
       title: "24HR VOLUME",
       dataIndex: "hours_volume",
       width: "20%",
-      render: (text, record, index) => text.toLocaleString().replace(/,/g,' ')
+      render: (text, record, index) => text.toLocaleString().replace(/,/g,',')
     },
     {
       title: "HIGH",
@@ -191,7 +191,7 @@ const columns = [
   
 const tableData = [
   {
-    name: "sachin",
+    name: "Petey Cruiser",
     last_price: 2000.02,
     change: 0.15,
     hours_volume: 43354600,
@@ -199,7 +199,7 @@ const tableData = [
     low: 2.024585
   },
   {
-    name: "sachin",
+    name: "Anna Sthesia",
     last_price: 7000.03,
     change: 2.15,
     hours_volume: 33460,
@@ -207,7 +207,7 @@ const tableData = [
     low: 3.024585
   },
   {
-    name: "sachin",
+    name: "Paul Molive",
     last_price: 5500.024573,
     change: -5.15,
     hours_volume: 3399906,
@@ -215,7 +215,7 @@ const tableData = [
     low: 10.024585
   },
   {
-    name: "sachin",
+    name: "Anna Mull",
     last_price: 0.024573,
     change: 11.15,
     hours_volume: 76554600,
@@ -223,7 +223,7 @@ const tableData = [
     low: 7.024585
   },
   {
-      name: "sachin",
+      name: "Gail Forcewind",
       last_price: 2000.02,
       change: 0.15,
       hours_volume: 43354600,
@@ -231,7 +231,7 @@ const tableData = [
       low: 2.024585
   },
   {
-      name: "sachin",
+      name: "Paige Turner",
       last_price: 7000.03,
       change: 2.15,
       hours_volume: 33460,
@@ -239,7 +239,7 @@ const tableData = [
       low: 3.024585
   },
   {
-      name: "sachin",
+      name: "Bob Frapples",
       last_price: 5500.024573,
       change: -5.15,
       hours_volume: 3399906,
@@ -247,7 +247,7 @@ const tableData = [
       low: 10.024585
   },
   {
-      name: "sachin",
+      name: "Walter Melon",
       last_price: 0.024573,
       change: 11.15,
       hours_volume: 76554600,
@@ -255,7 +255,7 @@ const tableData = [
       low: 7.024585
   },
   {
-      name: "sachin",
+      name: "Brock Lee",
       last_price: 2000.02,
       change: 0.15,
       hours_volume: 43354600,
@@ -263,7 +263,7 @@ const tableData = [
       low: 2.024585
   },
   {
-      name: "sachin",
+      name: "Rick O'Shea",
       last_price: 7000.03,
       change: 2.15,
       hours_volume: 33460,
@@ -271,7 +271,7 @@ const tableData = [
       low: 3.024585
   },
   {
-      name: "sachin",
+      name: "Barb Dwyer",
       last_price: 5500.024573,
       change: -5.15,
       hours_volume: 3399906,
@@ -279,7 +279,7 @@ const tableData = [
       low: 10.024585
   },
   {
-      name: "sachin",
+      name: "Terry Aki",
       last_price: 0.024573,
       change: 11.15,
       hours_volume: 76554600,
@@ -287,7 +287,7 @@ const tableData = [
       low: 7.024585
   },
   {
-      name: "sachin",
+      name: "Cory Ander",
       last_price: 4000.04,
       change: 2.15,
       hours_volume: 33460,
@@ -295,7 +295,7 @@ const tableData = [
       low: 3.024585
   },
   {
-      name: "sachin",
+      name: "Robin Banks",
       last_price: 10001.024,
       change: -1.15,
       hours_volume: 3399906,
@@ -303,7 +303,7 @@ const tableData = [
       low: 10.024585
   },
   {
-      name: "sachin",
+      name: "Barry Wine",
       last_price: 2200.57301,
       change: 0.15,
       hours_volume: 2500,
