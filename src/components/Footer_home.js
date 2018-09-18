@@ -187,22 +187,25 @@ export default class Footer_home extends React.Component
                                                 <li>
                                                     Careers
                                                 </li>
+                                                <li>
+                                                    Media Contact
+                                                </li>
                                             </Footer_ul>
                                         </Col>
                                         <Col xs={24} sm={12} md={8} lg={8} xl={5}>
                                             <Footer_ul>
                                             <Footer_headers>Features</Footer_headers>
                                                     <li>
-                                                        Trading
+                                                        Exchange
                                                     </li>
                                                     <li>
-                                                        Deposit
+                                                        List your Token/Coin
                                                     </li>
                                                     <li>
-                                                        Withdraw
+                                                        News
                                                     </li>
                                                     <li>
-                                                        Manage Wallets
+                                                        Security
                                                     </li>
                                             </Footer_ul>       
                                         </Col>
@@ -210,21 +213,21 @@ export default class Footer_home extends React.Component
                                         <Col xs={24} sm={12} md={5} lg={3} xl={5}>
                                             <Footer_ul>
                                                 
-                                            <Footer_headers>For User</Footer_headers>
+                                            <Footer_headers>For Users</Footer_headers>
                                                     <li>
                                                         FAQ
-                                                    </li>
-                                                    <li>
-                                                        Charts
                                                     </li>
                                                     <li>
                                                         Blog
                                                     </li>
                                                     <li>
-                                                        Fees
+                                                        Support
                                                     </li>
                                                     <li>
-                                                        Support
+                                                        Supported Countries
+                                                    </li>
+                                                    <li>
+                                                        Legal & Privacy
                                                     </li>
                                             </Footer_ul>
                                         </Col>

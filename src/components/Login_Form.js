@@ -9,9 +9,15 @@ import {Button} from "antd";
 
 
 /* Styled-Components */
-const Form_wrap = styled.div`
+export const Form_wrap = styled.div`
   padding-left:60px;
   padding-top:60px;
+
+  @media(min-width:1024px) and  (max-width:1440px)
+  {
+    padding-left: 30px;
+    padding-top: 10px;
+  }
   
 `
 const Login_head = styled.div`
@@ -24,39 +30,63 @@ const Login_head = styled.div`
   padding-bottom: 10px;
   border-bottom: 2px solid;
   display: inline-block;
+  @media(min-width:1024px) and  (max-width:1440px)
+  {
+    padding-bottom:0px;
+  }
 `
-const Welcome_text = styled.div`
+export const Welcome_text = styled.div`
   font-size: 24px;
   font-family: "Open Sans";
   color: rgb( 0, 0, 0 );
   font-weight: bold;
   margin-top:60px;
+  @media(min-width:1024px) and  (max-width:1440px)
+  {
+    margin-top: 15px;
+  }
 ` 
-const Email_label = styled.div`
+export const Email_label = styled.div`
   font-size: 14px;
   font-family: "Open Sans";
   font-weight: bold;
   color: black;
   margin-top: 50px;
-
+  @media(min-width:1024px) and  (max-width:1440px)
+  {
+    margin-top: 25px;
+  }
 `
-const Username = styled.input`
+export const Username = styled.input`
   display:block;
   background-color: #f8f8f8;
   border: 0px;
   width: 76%;
   margin-top:10px;
   height:50px;
+  font-size:16px;
+
+  @media(min-width:1024px) and (max-width:1440px)
+  {
+    height:35px;
+  }
+`
+const Phone = styled(Username)`
+
 `
 const Ph_Label = styled(Email_label)`
-  margin-top:20px;
+  margin-top:15px;
 `
 const Password = styled(Username)`
-  
+  font-size:16px;
 `
 const Check_wrap = styled.div`
   margin-top:35px;
   width:76%;
+  @media(min-width:1024px) and  (max-width:1440px)
+  {
+    margin-top: 20px;
+  }
 `
 const Remember = styled.div`
   display: inline-block;
@@ -105,6 +135,10 @@ const Button_login = styled(Button)`
     display:block;
     margin-top: 70px;
   }
+  @media (min-width:1024px) and (max-width:1440px)
+  {
+    margin-top: 40px;
+  }
 `
 const Sign = styled.div`
   margin-top: 50px;
@@ -112,6 +146,11 @@ const Sign = styled.div`
   @media(max-width:400px)
   {
     margin-top: 50px;
+  }
+  @media (min-width:1024px) and (max-width:1440px)
+  {
+    margin-top: 30px;
+    margin-bottom: 10px;
   }
 `
 const Sign_a = styled.a`
@@ -146,7 +185,6 @@ class Login_Form extends React.Component
         let errors;
         const { getFieldProps, getFieldError } = this.props.form;
         return (
-            <div>
               <Form_wrap>
 
                 <Login_head>Login</Login_head>
@@ -157,7 +195,7 @@ class Login_Form extends React.Component
                     rules: [{required: true}],
                   })}/>
                   <Ph_Label>Phone Number</Ph_Label>
-                  <Password {...getFieldProps('password', {
+                  <Phone {...getFieldProps('phone', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
                     rules: [{required: true}],
                   })}
@@ -180,7 +218,7 @@ class Login_Form extends React.Component
                   Don't have an account ? <Sign_a onClick={()=>this.dispModal("signup")}>Sign Up</Sign_a>
                 </Sign>
               </Form_wrap>
-            </div>
+
         );
       }
 }
