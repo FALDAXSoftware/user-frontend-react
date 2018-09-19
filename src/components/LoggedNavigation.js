@@ -76,6 +76,8 @@ const DropDownDiv = styled.div`
     margin-right : 30px;
 `
 const DownIcon = styled(Icon)`
+   height: 10px;
+   margin-bottom: 5px;
    padding-left: 20px;
    color: #dee2ed;
 `
