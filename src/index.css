@@ -231,4 +231,19 @@ table .ant-table-tbody > tr > td {
     height:580px;
   }
 }
+/* Edir Profile css starts from here */
+.ant-tabs-tab {
+  font-family: "Open sans";
+  font-size: 14px;
+  color: #b7bbc4;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
 
+.ant-tabs-tab-active {
+  font-weight: bold !important;
+}
+
+.profile-tabs {
+  text-align: center;
+}

@@ -1,7 +1,7 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {Row, Col , Button , Layout, Menu, Breadcrumb, Card, Cardimport , Modal } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -260,73 +260,66 @@ const Temp_button = styled(Button)`
         margin-right: 10px;
     }
 `
-export default class Navigation extends React.Component
-{
-    constructor(props)
-    {
+export default class Navigation extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
-            visible:false,
-            modal:0
+            visible: false,
+            modal: 0
         }
     }
 
     openNav() {
         console.log('open nav');
-        if(document.getElementById("mySidenav")!==undefined && document.getElementById("mySidenav")!==null)
-        {
+        if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
             document.getElementById("mySidenav").style.width = "250px";
             document.getElementById("main").style.marginRight = "250px";
             document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
     }
     closeNav() {
-        console.log("close nav")
-        if(document.getElementById("mySidenav")!==undefined && document.getElementById("mySidenav")!==null)
-        {
+        if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
             document.getElementById("mySidenav").style.width = "0";
-            document.getElementById("main").style.marginRight= "0";
+            document.getElementById("main").style.marginRight = "0";
             document.body.style.backgroundColor = "white";
         }
     }
-    dispModal(pressed)
-    {
+    dispModal(pressed) {
         console.log(pressed)
-        if(pressed=="login")
-        this.setState({modal:0})   
-        else if(pressed=="signup")
-        this.setState({modal:1})  
+        if (pressed == "login")
+            this.setState({ modal: 0 })
+        else if (pressed == "signup")
+            this.setState({ modal: 1 })
         else
-        this.setState({modal:2})  
+            this.setState({ modal: 2 })
         this.showModal();
     }
     showModal = () => {
         console.log('show modal');
         this.setState({
-          visible: true,
+            visible: true,
         });
     }
     handleOk = (e) => {
         console.log(e);
         this.setState({
-          visible: false,
+            visible: false,
         });
     }
     handleCancel = (e) => {
         console.log(e);
         this.setState({
-          visible: false,
+            visible: false,
         });
     }
 
 
-    render()
-    {
-        return(
+    render() {
+        return (
             <Header_main id="main">
                 <Logo>
-                    <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png"/>
-                    <FALDAX src="./images/Homepage/faldax.png"/>
+                    <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png" />
+                    <FALDAX src="./images/Homepage/faldax.png" />
                 </Logo>
                 <Menu_main
                     theme="light"
@@ -362,8 +355,8 @@ export default class Navigation extends React.Component
                     <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                     <Login_SignUp>
                         <div>
-                        <LOG onClick={this.dispModal.bind(this,"login")}>LOGIN</LOG>
-                        <SIGN onClick={this.dispModal.bind(this,"signup")}>SIGNUP</SIGN>
+                            <LOG onClick={this.dispModal.bind(this, "login")}>LOGIN</LOG>
+                            <SIGN onClick={this.dispModal.bind(this, "signup")}>SIGNUP</SIGN>
                         </div>
                     </Login_SignUp>
                     <a href="#">Home</a>

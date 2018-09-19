@@ -34,7 +34,6 @@ npm manifest:
       "react": "^16.4.2",
       "react-chartjs-2": "^2.7.4",
       "react-dom": "^16.4.2",
-  <<<<<<< HEAD
       "react-redux": "^5.0.7",
       "react-scripts": "1.1.5",
       "react-simple-maps": "^0.12.1",
@@ -43,12 +42,8 @@ npm manifest:
       "redux-tooltip": "^0.7.2",
       "styled-components": "^3.4.5",
       "wsdm-tooltip": "^0.1.3"
-  =======
-      "react-scripts": "1.1.5",
       "react-slick": "^0.23.1",
       "slick-carousel": "^1.8.1",
-      "styled-components": "^3.4.5"
-  >>>>>>> 8df7221e297f29189aa088bd7a1a28ed65af0eaa
     },
     "scripts": {
       "start": "react-scripts start",
@@ -6573,13 +6568,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-4.0.1.tgz#417addb0814a90f3a7082eacba7cee588d00da89"
   
   react-is@^16.3.1:
-  <<<<<<< HEAD
     version "16.5.0"
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.5.0.tgz#2ec7c192709698591efe13722fab3ef56144ba55"
-  =======
-    version "16.4.2"
-    resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
-  >>>>>>> 8df7221e297f29189aa088bd7a1a28ed65af0eaa
   
   react-lazy-load@^3.0.12:
     version "3.0.13"
@@ -6650,7 +6640,6 @@ Lockfile:
     optionalDependencies:
       fsevents "^1.1.3"
   
-  <<<<<<< HEAD
   react-simple-maps@^0.12.1:
     version "0.12.1"
     resolved "https://registry.yarnpkg.com/react-simple-maps/-/react-simple-maps-0.12.1.tgz#afc732362bb8eb2e5609a61d33bf6567d0fdd02a"
@@ -6660,9 +6649,6 @@ Lockfile:
       topojson-client "2.1.0"
   
   react-slick@~0.23.1:
-  =======
-  react-slick@^0.23.1, react-slick@~0.23.1:
-  >>>>>>> 8df7221e297f29189aa088bd7a1a28ed65af0eaa
     version "0.23.1"
     resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.23.1.tgz#15791c4107f0ba3a5688d5bd97b7b7ceaa0dd181"
     dependencies:

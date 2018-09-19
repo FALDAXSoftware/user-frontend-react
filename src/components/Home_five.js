@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {Row, Col , Button , Layout, Menu, Breadcrumb,Card } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components'
 
@@ -54,11 +54,9 @@ const Card_span = styled.span`
 `
 
 
-export default class Homesecond extends React.Component
-{
-    render()
-    {
-        return(
+export default class Homesecond extends React.Component {
+    render() {
+        return (
             <Second_Wrap>
                         <Second_head>
                             <Second_head_span>Our <b>Features</b></Second_head_span>
@@ -107,9 +105,9 @@ export default class Homesecond extends React.Component
                                         </Card>
                                     </Col>
                                 </Row>
-                            </Col>
-                        </Row_Icon>
-                    </Second_Wrap>
+                    </Col>
+                </Row_Icon>
+            </Second_Wrap>
         );
-    }   
+    }
 }
