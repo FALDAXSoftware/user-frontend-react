@@ -77,7 +77,7 @@ export default class Homesecond extends React.Component
                                                 title="Exchange"
                                                 description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                             />
-                                            <Card_span>Learn More ></Card_span>
+                                            <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
                                         </Card>
                                     </Col>
                                     <Col xl={8}>
@@ -90,7 +90,7 @@ export default class Homesecond extends React.Component
                                                 title="Margin Trading"
                                                 description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                             />
-                                            <Card_span>Learn More ></Card_span>
+                                            <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
                                         </Card>
                                     </Col>
                                     <Col xl={8}>
@@ -103,7 +103,7 @@ export default class Homesecond extends React.Component
                                                 title="Security"
                                                 description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                             />
-                                            <Card_span>Learn More ></Card_span>
+                                            <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
                                         </Card>
                                     </Col>
                                 </Row>

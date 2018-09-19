@@ -30,13 +30,25 @@ const FourthRow = styled(Row)`
     border-bottom: 3px solid #0f477b;
 `
 const FirstSlider = styled.div`
-    margin-top:140px
+    margin-top: 120px;
 `
 const Slide = styled.div`
     text-align:center;
 `
 const Slide_img = styled.img`
     display: -webkit-inline-box;
+    display: block;
+    width: 70px;
+    height: 70px;
+    margin: 1em auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-border-radius: 30em;
+    -moz-border-radius: 30em;
+    border-radius: 30em;
+    border: 5px solid #ffffff;
+    box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3); 
 `
 const Slide_span = styled.span`
     color:#0f477b;
@@ -45,6 +57,7 @@ const Secondslider =  styled.div`
     text-align:left;
     margin-top:50px;
 `
+  
 const Sub_slider = styled.div`
     margin-top:70px;
 `
@@ -109,29 +122,29 @@ export default class Home_fourth extends React.Component
                                 <Slider {...settings}>
                                     <div>
                                         <Slide>
-                                            <Slide_img src="./images/Homepage/Testi_2.png"/><br/>
+                                            <Slide_img src="./images/Homepage/Pro_pic1.jpg"/><br/>
                                             <Slide_span>Robert Leonard</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src="./images/Homepage/Testi_2.png"/><br/>
-                                            <Slide_span>Robert Leonard</Slide_span>
+                                            <Slide_img src="./images/Homepage/Pro_pic2.jpg"/><br/>
+                                            <Slide_span>Smit Jones</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src="./images/Homepage/Testi_3.png"/><br/>
-                                            <Slide_span>Robert Leonard</Slide_span>
+                                            <Slide_img src="./images/Homepage/Pro_pic3.jpg"/><br/>
+                                            <Slide_span>William Johanas</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src="./images/Homepage/Testi_3.png"/><br/>
-                                            <Slide_span>Robert Leonard</Slide_span>
+                                            <Slide_img src="./images/Homepage/Pro_pic2.jpg"/><br/>
+                                            <Slide_span>John Lopez</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>

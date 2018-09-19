@@ -1,6 +1,7 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 0 !important;
+  overflow: auto !important;
   font-family: sans-serif;
 }
 
@@ -139,7 +140,6 @@ table .ant-table-tbody > tr > td {
 }
 .slick-current img
 {
-  margin-top: -10px;
   display:-webkit-inline-box !important;
   width: 120px;
   height:120px;
@@ -148,20 +148,40 @@ table .ant-table-tbody > tr > td {
 {
   display:block;
 }
+.slick-cloned img
+{
+  margin-top:10px !important;
+}
 .slick-current p
 {
   display:block;
 }
-
+.slick-active
+{
+  margin-top:25px;
+}
 .slick-active img
 {
   display:-webkit-inline-box !important;
+}
+.slick-active.slick-current 
+{
+  margin-top: 0px;
 }
 .slick-dots
 {
   text-align:left !important;
   margin-top: 20px !important;
+  margin-left: 20px !important;
   position: relative !important;
+}
+.slick-dots li
+{
+  margin : 0px !important;
+}
+.slick-dots li button
+{
+  padding:0px !important;
 }
 .slick-dots li button:before {
   font-size: 11px !important;
@@ -180,17 +200,35 @@ table .ant-table-tbody > tr > td {
 
 .ant-modal
 {
-  width:75% !important;
+  width:70% !important;
 }
 .ant-modal-content
 {
   border-radius: 0px !important;
   height: 815px;
 }
+.Login-Modal
+{
+  top: 20px !important;
+}
 .ant-modal-close-x
 {
   font-size: 20px;
   color: white;
 }
+.right_arr
+{
+  vertical-align: middle;
+  margin-left: -8px;
+  margin-top: -2px;
+  font-size: 23px;
+}
 
+@media (min-width:1024px) and (max-width:1440px)
+{
+  .ant-modal-content
+  {
+    height:580px;
+  }
+}
 
