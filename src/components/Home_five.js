@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {Row, Col , Button , Layout, Menu, Breadcrumb,Card } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components'
 
@@ -54,62 +54,60 @@ const Card_span = styled.span`
 `
 
 
-export default class Homesecond extends React.Component
-{
-    render()
-    {
-        return(
+export default class Homesecond extends React.Component {
+    render() {
+        return (
             <Second_Wrap>
-                        <Second_head>
-                            <Second_head_span>Our <b>Features</b></Second_head_span>
-                            <Second_head_p>Here are a few reasons why you should choose Faldax</Second_head_p>
-                        </Second_head>
-                        <Row_Icon>
-                            <Col span={18} offset={3}>
-                                <Row>
-                                    <Col xl={8}>
-                                        <Card
-                                            hoverable={false}
-                                            style={{ width: "100%", border:"none" }}
-                                            cover={<Card_img src="./images/Homepage/conversion.png" alt="Card image cap"/>}
-                                        >
-                                            <Meta_main
-                                                title="Exchange"
-                                                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                                            />
-                                            <Card_span>Learn More ></Card_span>
-                                        </Card>
-                                    </Col>
-                                    <Col xl={8}>
-                                        <Card
-                                            hoverable={false}
-                                            style={{ width: "100%", border:"none" }}
-                                            cover={<Card_img src="./images/Homepage/connect_bitcoin.png" alt="Card image cap"/>}
-                                        >
-                                            <Meta_main
-                                                title="Margin Trading"
-                                                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                                            />
-                                            <Card_span>Learn More ></Card_span>
-                                        </Card>
-                                    </Col>
-                                    <Col xl={8}>
-                                        <Card
-                                            hoverable={false}
-                                            style={{ width: "100%", border:"none" }}
-                                            cover={<Card_img src="./images/Homepage/security.png" alt="Card image cap"/>}
-                                        >
-                                            <Meta_main
-                                                title="Security"
-                                                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                                            />
-                                            <Card_span>Learn More ></Card_span>
-                                        </Card>
-                                    </Col>
-                                </Row>
+                <Second_head>
+                    <Second_head_span>Our <b>Features</b></Second_head_span>
+                    <Second_head_p>Here are a few reasons why you should choose Faldax</Second_head_p>
+                </Second_head>
+                <Row_Icon>
+                    <Col span={18} offset={3}>
+                        <Row>
+                            <Col xl={8}>
+                                <Card
+                                    hoverable={false}
+                                    style={{ width: "100%", border: "none" }}
+                                    cover={<Card_img src="./images/Homepage/conversion.png" alt="Card image cap" />}
+                                >
+                                    <Meta_main
+                                        title="Exchange"
+                                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                                    />
+                                    <Card_span>Learn More ></Card_span>
+                                </Card>
                             </Col>
-                        </Row_Icon>
-                    </Second_Wrap>
+                            <Col xl={8}>
+                                <Card
+                                    hoverable={false}
+                                    style={{ width: "100%", border: "none" }}
+                                    cover={<Card_img src="./images/Homepage/connect_bitcoin.png" alt="Card image cap" />}
+                                >
+                                    <Meta_main
+                                        title="Margin Trading"
+                                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                                    />
+                                    <Card_span>Learn More ></Card_span>
+                                </Card>
+                            </Col>
+                            <Col xl={8}>
+                                <Card
+                                    hoverable={false}
+                                    style={{ width: "100%", border: "none" }}
+                                    cover={<Card_img src="./images/Homepage/security.png" alt="Card image cap" />}
+                                >
+                                    <Meta_main
+                                        title="Security"
+                                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                                    />
+                                    <Card_span>Learn More ></Card_span>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row_Icon>
+            </Second_Wrap>
         );
-    }   
+    }
 }

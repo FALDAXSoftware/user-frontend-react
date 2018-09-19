@@ -1,7 +1,7 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {Row, Col , Button , Layout, Menu, Breadcrumb, Card, Cardimport , Modal } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components';
 
@@ -237,154 +237,148 @@ const Temp_button = styled(Button)`
         margin-right: 10px;
     }
 `
-export default class Navigation extends React.Component
-{
-    constructor(props)
-    {
+export default class Navigation extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
-            visible:false,
-            modal:0
+            visible: false,
+            modal: 0
         }
     }
 
     openNav() {
         console.log('open nav');
-        if(document.getElementById("mySidenav")!==undefined && document.getElementById("mySidenav")!==null)
-        {
+        if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
             document.getElementById("mySidenav").style.width = "250px";
             document.getElementById("main").style.marginRight = "250px";
             document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
     }
     closeNav() {
-        if(document.getElementById("mySidenav")!==undefined && document.getElementById("mySidenav")!==null)
-        {
+        if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
             document.getElementById("mySidenav").style.width = "0";
-            document.getElementById("main").style.marginRight= "0";
+            document.getElementById("main").style.marginRight = "0";
             document.body.style.backgroundColor = "white";
         }
     }
-    dispModal(pressed)
-    {
+    dispModal(pressed) {
         console.log(pressed)
-        if(pressed=="login")
-        this.setState({modal:0})   
-        else if(pressed=="signup")
-        this.setState({modal:1})  
+        if (pressed == "login")
+            this.setState({ modal: 0 })
+        else if (pressed == "signup")
+            this.setState({ modal: 1 })
         else
-        this.setState({modal:2})  
+            this.setState({ modal: 2 })
         this.showModal();
     }
     showModal = () => {
         console.log('show modal');
         this.setState({
-          visible: true,
+            visible: true,
         });
     }
     handleOk = (e) => {
         console.log(e);
         this.setState({
-          visible: false,
+            visible: false,
         });
     }
     handleCancel = (e) => {
         console.log(e);
         this.setState({
-          visible: false,
+            visible: false,
         });
     }
 
 
-    render()
-    {
-        return(
-                    <Header_main id="main">
-                        <Logo>
-                            <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png"/>
-                            <FALDAX src="./images/Homepage/faldax.png"/>
-                        </Logo>
-                        <Menu_main
-                            theme="light"
-                            mode="horizontal"
-                            defaultSelectedKeys={['1']}
-                        >
-                            <Menu_item key="1">HOME</Menu_item>
-                            <Menu_item key="2">FEATURES</Menu_item>
-                            <Menu_item key="3">ABOUT</Menu_item>
-                            <Menu_item key="4">SECURITY</Menu_item>
-                            <Menu_item key="5">NEWS</Menu_item>
-                            <Menu_item key="6">CONTACT</Menu_item>
-                            <Menu_item key="7">LIST YOUR COIN</Menu_item>
-                        </Menu_main>
-                        <Right_div>
-                            <div>
-                                <Exchange>
-                                    <span>EXCHANGE / WHY FALDAX</span>
-                                </Exchange>
-                                <Login_text onClick={this.dispModal.bind(this,"login")}>LOGIN</Login_text>
-                                <Temp_button onClick={this.dispModal.bind(this,"signup")} type="primary" size="large">Sign up</Temp_button>
-                                <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={this.openNav.bind(this)}>&#9776;</Open>
-                            </div>
-                        </Right_div>
-                        <SideNav id="mySidenav">
-                            <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
-                            <Login_SignUp>
-                                <div>
-                                <LOG onClick={this.dispModal.bind(this,"login")}>LOGIN</LOG>
-                                <SIGN onClick={this.dispModal.bind(this,"signup")}>SIGNUP</SIGN>
-                                </div>
-                            </Login_SignUp>
-                            <a href="#">Home</a>
-                            <a href="#">Features</a>
-                            <a href="#">About</a>
-                            <a href="#">Security</a>
-                            <a href="#">News</a>
-                            <a href="#">Contact</a>
-                            <a href="#">List Your Coin</a>
-                            <Why>Exchange/Why FALDAX</Why>
-                        </SideNav> 
+    render() {
+        return (
+            <Header_main id="main">
+                <Logo>
+                    <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png" />
+                    <FALDAX src="./images/Homepage/faldax.png" />
+                </Logo>
+                <Menu_main
+                    theme="light"
+                    mode="horizontal"
+                    defaultSelectedKeys={['1']}
+                >
+                    <Menu_item key="1">HOME</Menu_item>
+                    <Menu_item key="2">FEATURES</Menu_item>
+                    <Menu_item key="3">ABOUT</Menu_item>
+                    <Menu_item key="4">SECURITY</Menu_item>
+                    <Menu_item key="5">NEWS</Menu_item>
+                    <Menu_item key="6">CONTACT</Menu_item>
+                    <Menu_item key="7">LIST YOUR COIN</Menu_item>
+                </Menu_main>
+                <Right_div>
+                    <div>
+                        <Exchange>
+                            <span>EXCHANGE / WHY FALDAX</span>
+                        </Exchange>
+                        <Login_text onClick={this.dispModal.bind(this, "login")}>LOGIN</Login_text>
+                        <Temp_button onClick={this.dispModal.bind(this, "signup")} type="primary" size="large">Sign up</Temp_button>
+                        <Open style={{ fontSize: "30px", cursor: "pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={this.openNav.bind(this)}>&#9776;</Open>
+                    </div>
+                </Right_div>
+                <SideNav id="mySidenav">
+                    <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
+                    <Login_SignUp>
                         <div>
-                            <Modal
-                              visible={this.state.visible}
-                              onOk={this.handleOk}
-                              onCancel={this.handleCancel}
-                              footer={null}
-                              className="Login-Modal"
-                              style={{borderRadius:"0px"}}
-                              bodyStyle={
-                                  {
-                                      padding:"0px"
-                                  }
-                              }
-                              width="100%"
-                            >
-                                <Row>
-                                    <Left_col xl={{span:12}} sm={{span:24}}>
-                                        {console.log(this.state.modal)}
-                                        {
-                                            this.state.modal==0?
-                                            <Login_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
-                                        }
-                                        {
-                                            this.state.modal==1?
-                                            <Signup_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
-                                        }
-                                        {
-                                            this.state.modal==2?
-                                            <Forgot_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
-                                        }
-                                    </Left_col>
-                                    <Right_Col xl={{span:12}} sm={{span:24}}>
-                                        <Logo_text_wrap>
-                                            <Faldaxlogo src="./images/Homepage/Faldax_Login.png"/>
-                                            <Faldaxtext src="./images/Homepage/Faldax_Login_text.png"/>
-                                        </Logo_text_wrap>
-                                    </Right_Col>
-                                </Row>
-                            </Modal>
-                          </div>
-                    </Header_main>
+                            <LOG onClick={this.dispModal.bind(this, "login")}>LOGIN</LOG>
+                            <SIGN onClick={this.dispModal.bind(this, "signup")}>SIGNUP</SIGN>
+                        </div>
+                    </Login_SignUp>
+                    <a href="#">Home</a>
+                    <a href="#">Features</a>
+                    <a href="#">About</a>
+                    <a href="#">Security</a>
+                    <a href="#">News</a>
+                    <a href="#">Contact</a>
+                    <a href="#">List Your Coin</a>
+                    <Why>Exchange/Why FALDAX</Why>
+                </SideNav>
+                <div>
+                    <Modal
+                        visible={this.state.visible}
+                        onOk={this.handleOk}
+                        onCancel={this.handleCancel}
+                        footer={null}
+                        className="Login-Modal"
+                        style={{ borderRadius: "0px" }}
+                        bodyStyle={
+                            {
+                                padding: "0px"
+                            }
+                        }
+                        width="100%"
+                    >
+                        <Row>
+                            <Left_col xl={{ span: 12 }} sm={{ span: 24 }}>
+                                {console.log(this.state.modal)}
+                                {
+                                    this.state.modal == 0 ?
+                                        <Login_Form dispModal={(pressed) => this.dispModal(pressed)} /> : ""
+                                }
+                                {
+                                    this.state.modal == 1 ?
+                                        <Signup_Form dispModal={(pressed) => this.dispModal(pressed)} /> : ""
+                                }
+                                {
+                                    this.state.modal == 2 ?
+                                        <Forgot_Form dispModal={(pressed) => this.dispModal(pressed)} /> : ""
+                                }
+                            </Left_col>
+                            <Right_Col xl={{ span: 12 }} sm={{ span: 24 }}>
+                                <Logo_text_wrap>
+                                    <Faldaxlogo src="./images/Homepage/Faldax_Login.png" />
+                                    <Faldaxtext src="./images/Homepage/Faldax_Login_text.png" />
+                                </Logo_text_wrap>
+                            </Right_Col>
+                        </Row>
+                    </Modal>
+                </div>
+            </Header_main>
         );
     }
 }
