@@ -2,18 +2,18 @@
 
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {Row, Col , Button , Layout, Menu, Breadcrumb,Card } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components'
 
 /* Styled Components */
-import { Container } from '../styled-components/homepage/style';
+import { Container } from './../../styled-components/homepage/style';
 
 
 /* Components */
 
-import Header_main from "./Navigation";
-import Home_first from "./Home_first";
+//import Header_main from "./Navigation";
+//import Home_first from "./Home_first";
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
@@ -89,11 +89,9 @@ const List = styled.li`
 `
 
 
-export default class Homefirst extends React.Component
-{
-    render()
-    {
-        return(
+export default class Homefirst extends React.Component {
+    render() {
+        return (
             <MainRow>
                 <Container>
                     <Left_Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -105,7 +103,7 @@ export default class Homefirst extends React.Component
                         </Home_list>
                     </Left_Col>
                     <Right_Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Laptop src="./images/Homepage/Laptop.png"/>
+                        <Laptop src="./images/Homepage/Laptop.png" />
                     </Right_Col>
                 </Container>
             </MainRow>

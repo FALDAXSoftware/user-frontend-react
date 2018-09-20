@@ -1,7 +1,7 @@
 /* In-built Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {Row, Col , Button , Layout, Menu, Breadcrumb,Card } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components'
 
@@ -17,7 +17,7 @@ import Home_seven from "./Home_seven";
 import Footer_main from "./Footer_home";
 
 /* Styled Components */
-import { Section_2, Section_3, Container } from '../styled-components/homepage/style';
+import { Section_2, Section_3, Container } from './../../styled-components/homepage/style';
 
 /* Global Components */
 const { Header, Content, Footer } = Layout;
@@ -30,13 +30,13 @@ const Content_style = styled(Content)`
 
 /* Static data */
 const data = [
-    {
-      image: '/images/Homepage/imgpsh_fullsize_1.png',
-      coinName: 'BTC/USD',
-      price: 700000,
-      percentage: 3.35,
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
+  {
+    image: '/images/Homepage/imgpsh_fullsize_1.png',
+    coinName: 'BTC/USD',
+    price: 700000,
+    percentage: 3.35,
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
       {
         label: 'My First dataset',
         fill: false,
@@ -151,47 +151,47 @@ const data = [
     ]
   }
 ];
-  
+
 const columns = [
-    {
-      title: "NAME",
-      dataIndex: "name",
-      width: "20%"
-    },
-    {
-      title: "LAST PRICE",
-      dataIndex: "last_price",
-      sorter: true,
-      width: "15%"
-    },
-    {
-      title: "CHANGE",
-      dataIndex: "change",
-      sorter: true,
-      render: (text, record, index) => <SpanCoinChange value={text}> {text===0 ? '' : text>=0 ? '+' : ''}{text}% </SpanCoinChange>,
-      width: "15%"
-    },
-    {
-      title: "24HR VOLUME",
-      dataIndex: "hours_volume",
-      width: "20%",
-      render: (text, record, index) => text.toLocaleString().replace(/,/g,' ')
-    },
-    {
-      title: "HIGH",
-      dataIndex: "high",
-      width: "15%"
-    },
-    {
-      title: "LOW",
-      dataIndex: "low",
-      width: "15%"
-    }
+  {
+    title: "NAME",
+    dataIndex: "name",
+    width: "20%"
+  },
+  {
+    title: "LAST PRICE",
+    dataIndex: "last_price",
+    sorter: true,
+    width: "15%"
+  },
+  {
+    title: "CHANGE",
+    dataIndex: "change",
+    sorter: true,
+    render: (text, record, index) => <SpanCoinChange value={text}> {text === 0 ? '' : text >= 0 ? '+' : ''}{text}% </SpanCoinChange>,
+    width: "15%"
+  },
+  {
+    title: "24HR VOLUME",
+    dataIndex: "hours_volume",
+    width: "20%",
+    render: (text, record, index) => text.toLocaleString().replace(/,/g, ',')
+  },
+  {
+    title: "HIGH",
+    dataIndex: "high",
+    width: "15%"
+  },
+  {
+    title: "LOW",
+    dataIndex: "low",
+    width: "15%"
+  }
 ];
-  
+
 const tableData = [
   {
-    name: "sachin",
+    name: "Petey Cruiser",
     last_price: 2000.02,
     change: 0.15,
     hours_volume: 43354600,
@@ -199,7 +199,7 @@ const tableData = [
     low: 2.024585
   },
   {
-    name: "sachin",
+    name: "Anna Sthesia",
     last_price: 7000.03,
     change: 2.15,
     hours_volume: 33460,
@@ -207,7 +207,7 @@ const tableData = [
     low: 3.024585
   },
   {
-    name: "sachin",
+    name: "Paul Molive",
     last_price: 5500.024573,
     change: -5.15,
     hours_volume: 3399906,
@@ -215,7 +215,7 @@ const tableData = [
     low: 10.024585
   },
   {
-    name: "sachin",
+    name: "Anna Mull",
     last_price: 0.024573,
     change: 11.15,
     hours_volume: 76554600,
@@ -223,145 +223,142 @@ const tableData = [
     low: 7.024585
   },
   {
-      name: "sachin",
-      last_price: 2000.02,
-      change: 0.15,
-      hours_volume: 43354600,
-      high: 5.024563,
-      low: 2.024585
+    name: "Gail Forcewind",
+    last_price: 2000.02,
+    change: 0.15,
+    hours_volume: 43354600,
+    high: 5.024563,
+    low: 2.024585
   },
   {
-      name: "sachin",
-      last_price: 7000.03,
-      change: 2.15,
-      hours_volume: 33460,
-      high: 7.024563,
-      low: 3.024585
+    name: "Paige Turner",
+    last_price: 7000.03,
+    change: 2.15,
+    hours_volume: 33460,
+    high: 7.024563,
+    low: 3.024585
   },
   {
-      name: "sachin",
-      last_price: 5500.024573,
-      change: -5.15,
-      hours_volume: 3399906,
-      high: 9.024563,
-      low: 10.024585
+    name: "Bob Frapples",
+    last_price: 5500.024573,
+    change: -5.15,
+    hours_volume: 3399906,
+    high: 9.024563,
+    low: 10.024585
   },
   {
-      name: "sachin",
-      last_price: 0.024573,
-      change: 11.15,
-      hours_volume: 76554600,
-      high: 3.024563,
-      low: 7.024585
+    name: "Walter Melon",
+    last_price: 0.024573,
+    change: 11.15,
+    hours_volume: 76554600,
+    high: 3.024563,
+    low: 7.024585
   },
   {
-      name: "sachin",
-      last_price: 2000.02,
-      change: 0.15,
-      hours_volume: 43354600,
-      high: 5.024563,
-      low: 2.024585
+    name: "Brock Lee",
+    last_price: 2000.02,
+    change: 0.15,
+    hours_volume: 43354600,
+    high: 5.024563,
+    low: 2.024585
   },
   {
-      name: "sachin",
-      last_price: 7000.03,
-      change: 2.15,
-      hours_volume: 33460,
-      high: 7.024563,
-      low: 3.024585
+    name: "Rick O'Shea",
+    last_price: 7000.03,
+    change: 2.15,
+    hours_volume: 33460,
+    high: 7.024563,
+    low: 3.024585
   },
   {
-      name: "sachin",
-      last_price: 5500.024573,
-      change: -5.15,
-      hours_volume: 3399906,
-      high: 9.024563,
-      low: 10.024585
+    name: "Barb Dwyer",
+    last_price: 5500.024573,
+    change: -5.15,
+    hours_volume: 3399906,
+    high: 9.024563,
+    low: 10.024585
   },
   {
-      name: "sachin",
-      last_price: 0.024573,
-      change: 11.15,
-      hours_volume: 76554600,
-      high: 3.024563,
-      low: 7.024585
+    name: "Terry Aki",
+    last_price: 0.024573,
+    change: 11.15,
+    hours_volume: 76554600,
+    high: 3.024563,
+    low: 7.024585
   },
   {
-      name: "sachin",
-      last_price: 4000.04,
-      change: 2.15,
-      hours_volume: 33460,
-      high: 7.024563,
-      low: 3.024585
+    name: "Cory Ander",
+    last_price: 4000.04,
+    change: 2.15,
+    hours_volume: 33460,
+    high: 7.024563,
+    low: 3.024585
   },
   {
-      name: "sachin",
-      last_price: 10001.024,
-      change: -1.15,
-      hours_volume: 3399906,
-      high: 3.78606,
-      low: 10.024585
+    name: "Robin Banks",
+    last_price: 10001.024,
+    change: -1.15,
+    hours_volume: 3399906,
+    high: 3.78606,
+    low: 10.024585
   },
   {
-      name: "sachin",
-      last_price: 2200.57301,
-      change: 0.15,
-      hours_volume: 2500,
-      high: 9.475,
-      low: 5.024585
+    name: "Barry Wine",
+    last_price: 2200.57301,
+    change: 0.15,
+    hours_volume: 2500,
+    high: 9.475,
+    low: 5.024585
   }
 ];
-  
+
 /* styled components */
 const SpanCoinChange = styled.span`
-    color: ${props => props.value===0 ? 'black' : props.value<=0 ? 'red' : '#34a539'}
+    color: ${props => props.value === 0 ? 'black' : props.value <= 0 ? 'red' : '#34a539'}
 `;
 
 
 
 /* Component Defination Starts Here*/
 
-export default class NavigationBar extends React.Component
-{
-    constructor() {
-      super();
-      this.state={pagination: {}};
-    }
+export default class NavigationBar extends React.Component {
+  constructor() {
+    super();
+    this.state = { pagination: {} };
+  }
 
-    handleTableChange = (pagination, filters, sorter) => {
-        const pager = { ...this.state.pagination };
-        pager.current = pagination.current;
-        this.setState({
-          pagination: pager
-        });
-    };
+  handleTableChange = (pagination, filters, sorter) => {
+    const pager = { ...this.state.pagination };
+    pager.current = pagination.current;
+    this.setState({
+      pagination: pager
+    });
+  };
 
-    render()
-    {
-        return(
-        <div>
-            <Layout>
-                <Header_main/>
-                <Content_style>
-                    <Home_first/>
-                    <Home_second data={data}/>
-                    <Home_third 
-                        columns={columns} 
-                        dataSource={tableData} 
-                        loading={false} 
-                        pagination={false} 
-                        handleTableChange={this.handleTableChange}
-                    />
-                    <Home_four />
-                    <Home_five/>
-                    <Home_six/>
-                    <Home_seven/>
-                </Content_style>
-                <Footer_main/>
-            </Layout>
-        </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <Layout>
+          <Header_main />
+          <Content_style>
+            <Home_first />
+            <Home_second data={data} />
+            <Home_third
+              columns={columns}
+              dataSource={tableData}
+              loading={false}
+              pagination={false}
+              handleTableChange={this.handleTableChange}
+            />
+            <Home_four />
+            <Home_five />
+            <Home_six />
+            <Home_seven />
+          </Content_style>
+          <Footer_main />
+        </Layout>
+      </div>
+    );
+  }
 }
 
-    

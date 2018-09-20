@@ -8,8 +8,8 @@ import styled from 'styled-components'
 
 /* Components */
 
-import Header_main from "./Navigation";
-import Home_first from "./Home_first";
+import Header_main from "./Landing/Navigation";
+import Home_first from "./Landing/Home_first";
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
