@@ -3,17 +3,13 @@ import React from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import {Button} from "antd";
+import {Username,Form_wrap,Welcome_text,Email_label} from "./Login_Form";
 /* Components */
 
 /* Global Constants */
 
 
 /* Styled-Components */
-const Form_wrap = styled.div`
-  padding-left:60px;
-  padding-top:60px;
-  
-`
 const Login_head = styled.div`
   font-size: 30px;
   font-family: "Open Sans";
@@ -24,30 +20,22 @@ const Login_head = styled.div`
   padding-bottom: 10px;
   border-bottom: 2px solid;
   display: inline-block;
+  @media(min-width:1024px) and  (max-width:1440px)
+  {
+    padding-bottom:0px;
+  }
 `
-const Welcome_text = styled.div`
-  font-size: 24px;
-  font-family: "Open Sans";
-  color: rgb( 0, 0, 0 );
-  margin-top:40px;
-` 
-const Email_label = styled.div`
-  font-size: 14px;
-  font-family: "Open Sans";
-  color: black;
-  margin-top: 40px;
+const Full = styled(Username)`
 
 `
-const Username = styled.input`
-  display:block;
-  background-color: #f8f8f8;
-  border: 0px;
-  width: 76%;
-  margin-top:10px;
-  height:50px;
+const Phone = styled(Username)`
+
+`
+const Email = styled(Username)`
+
 `
 const Ph_Label = styled(Email_label)`
-  margin-top:20px;
+  margin-top:10px;
 `
 const Password = styled(Username)`
   
@@ -83,11 +71,19 @@ const Button_login = styled(Button)`
   font-weight: bold;
   text-transform: uppercase;
   line-height: 2.875;
+  @media (min-width:1024px) and (max-width:1440px)
+  {
+    margin-top: 20px;
+  }
 
 `
 const Sign = styled.div`
   margin-top: 30px;
   margin-bottom: 60px;
+  @media (min-width:1024px) and (max-width:1440px)
+  {
+    margin-top: 13px;
+  }
 `
 const Sign_a = styled.a`
   font-size: 16px;
@@ -121,18 +117,18 @@ class Signup_Form extends React.Component
                 <Welcome_text>Lets Get Started</Welcome_text>
                     <span>Enter Your Information Below</span>
                   <Email_label>Full Name</Email_label>
-                  <Username {...getFieldProps('username', {
+                  <Full {...getFieldProps('fullname', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
                     rules: [{required: true}],
                   })}/>
                   <Ph_Label>Phone Number</Ph_Label>
-                  <Password {...getFieldProps('password', {
+                  <Phone {...getFieldProps('phone', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
                     rules: [{required: true}],
                   })}
                   />
                   <Ph_Label>Email Adress</Ph_Label>
-                  <Password {...getFieldProps('password', {
+                  <Email {...getFieldProps('email', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
                     rules: [{required: true}],
                   })}
