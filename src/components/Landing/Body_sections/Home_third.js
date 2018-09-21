@@ -1,10 +1,10 @@
 /* In-build packages */
 import React from 'react';
-import {Row, Col, Button, Layout, Menu, Breadcrumb, Card, Table } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Table } from 'antd';
 import styled from 'styled-components';
 
 /* Styled Components */
-import { Section_2, Section_3, Container } from '../styled-components/homepage/style';
+import { Section_2, Section_3, Container } from '../../../styled-components/homepage/style';
 
 /* Styled componets */
 const AntdTable = styled.div`
@@ -55,7 +55,7 @@ const Home_third = ({ loading, columns, dataSource, pagination, handleTableChang
                                 onChange={handleTableChange || false}
                                 bordered={false}
                                 className="dashboard-table"
-                                rowClassName={(record, index) => index % 2 === 0 ? "even-table-row" : "odd-table-row" }
+                                rowClassName={(record, index) => index % 2 === 0 ? "even-table-row" : "odd-table-row"}
                             />
                         </AntdTable>
                     </Col>

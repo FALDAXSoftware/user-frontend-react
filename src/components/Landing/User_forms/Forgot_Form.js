@@ -2,8 +2,8 @@
 import React from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
-import {Button} from "antd";
-import {Username,Form_wrap,Welcome_text,Email_label} from "./Login_Form";
+import { Button } from "antd";
+import { Username, Form_wrap, Welcome_text, Email_label } from "./Login_Form";
 
 /* Components */
 
@@ -27,14 +27,13 @@ const Login_head = styled.div`
       border-bottom:none;
   }
 `
-
 const Sub_text = styled.span`
     font-size: 16px;
     font-family: "Open Sans";
     color: rgb( 163, 163, 163 );  
 `
 
-const Full  = styled.input`
+const Full = styled.input`
   display:block;
   background-color: #f8f8f8;
   border: 0px;
@@ -58,7 +57,7 @@ const Remember = styled.div`
 const Check = styled.input`
   vertical-align:middle;
 `
-const Forgot= styled.a`
+const Forgot = styled.a`
   float:right;
   font-size: 14px;
   font-family: "Open Sans";
@@ -108,55 +107,52 @@ const Back_link = styled.a`
     font-family: "Open Sans";
     color: rgb( 15, 71, 123 );   
 `
-class Login_Form extends React.Component
-{     
-      constructor(props)
-      {
-        super(props);
-        this.state = {
-          
-        }
-      }
-      static propTypes = {
-        form: formShape,
-      };
-      submit = () => {
-        this.props.form.validateFields((error, value) => {
-          console.log(error, value);
-        });
-      }
-      dispModal(pressed)
-      {
-        console.log(this.props,pressed)
-        this.props.dispModal(pressed)
-      }
-      render() {
-        let errors;
-        const { getFieldProps, getFieldError } = this.props.form;
-        return (
-            <div>
-              <Form_wrap>
+class Login_Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
 
-                <Login_head>Forgot Password</Login_head>
-                <Welcome_text>Forgot Password?</Welcome_text>
-                    <Sub_text>Don't worry,it happen's to the best of us</Sub_text>
-                  <Email_label>Full Name</Email_label>
-                  <Username {...getFieldProps('username', {
-                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{required: true}],
-                  })}/>
-                    
-                {(errors = getFieldError('required')) ? errors.join(',') : null}
-                <Button_login onClick={this.submit}>Send Reset Link</Button_login>
-                <Link_wrap>
-                    <Icon className="material-icons">
-                        keyboard_backspace
+    }
+  }
+  static propTypes = {
+    form: formShape,
+  };
+  submit = () => {
+    this.props.form.validateFields((error, value) => {
+      console.log(error, value);
+    });
+  }
+  dispModal(pressed) {
+    console.log(this.props, pressed)
+    this.props.dispModal(pressed)
+  }
+  render() {
+    let errors;
+    const { getFieldProps, getFieldError } = this.props.form;
+    return (
+      <div>
+        <Form_wrap>
+
+          <Login_head>Forgot Password</Login_head>
+          <Welcome_text>Forgot Password?</Welcome_text>
+          <Sub_text>Don't worry,it happen's to the best of us</Sub_text>
+          <Email_label>Full Name</Email_label>
+          <Username {...getFieldProps('username', {
+            onChange() { console.log("Hello How are You") }, // have to write original onChange here if you need
+            rules: [{ required: true }],
+          })} />
+
+          {(errors = getFieldError('required')) ? errors.join(',') : null}
+          <Button_login onClick={this.submit}>Send Reset Link</Button_login>
+          <Link_wrap>
+            <Icon className="material-icons">
+              keyboard_backspace
                     </Icon>
-                    <Back_link onClick={()=>this.dispModal("login")}> Back To Link </Back_link>
-                </Link_wrap>
-              </Form_wrap>
-            </div>
-        );
-      }
+            <Back_link onClick={() => this.dispModal("login")}> Back To Link </Back_link>
+          </Link_wrap>
+        </Form_wrap>
+      </div>
+    );
+  }
 }
 export default createForm()(Login_Form);

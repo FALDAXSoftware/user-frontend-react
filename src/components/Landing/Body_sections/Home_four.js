@@ -1,10 +1,10 @@
 /* In-build packages */
 import React, { Component } from "react"
 import {
-  ComposableMap,
-  ZoomableGroup,
-  Geographies,
-  Geography,
+    ComposableMap,
+    ZoomableGroup,
+    Geographies,
+    Geography,
 } from "react-simple-maps";
 import { connect } from "react-redux";
 import {
@@ -17,18 +17,18 @@ import tooltip from 'wsdm-tooltip';
 import { Row, Col } from 'antd';
 
 /* Styled Components */
-import { Section_3, Container } from '../styled-components/homepage/style';
+import { Section_3, Container } from '../../../styled-components/homepage/style';
 const { show, hide } = actions;
 const tip = tooltip({
-  styles: {
-    "color": "#282528",
-    "text-transform": 'uppercase',
-    "font-family": 'Open Sans',
-    'font-weight': 'bold',
-    "font-size": "15px",
-    "background-color": "white",
-    "border-radius": "3px",
-  },
+    styles: {
+        "color": "#282528",
+        "text-transform": 'uppercase',
+        "font-family": 'Open Sans',
+        'font-weight': 'bold',
+        "font-size": "15px",
+        "background-color": "white",
+        "border-radius": "3px",
+    },
 });
 
 
@@ -76,21 +76,21 @@ class Home_four extends Component {
     handleMove(geography, evt) {
         const x = evt.clientX;
         const y = evt.clientY + window.pageYOffset;
-        this.props.dispatch(show({ origin: { x, y }, content: geography.properties.name}));
+        this.props.dispatch(show({ origin: { x, y }, content: geography.properties.name }));
     }
     handleLeave() {
         this.props.dispatch(hide());
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.tooltip && this.props.tooltip.show!==nextProps.tooltip.show) {
-            if(this.props.tooltip.show===true) {
+        if (nextProps.tooltip && this.props.tooltip.show !== nextProps.tooltip.show) {
+            if (this.props.tooltip.show === true) {
                 tip.hide(nextProps.tooltip.content);
             } else {
                 tip.show(nextProps.tooltip.content);
             }
         }
-        if(nextProps.tooltip && nextProps.tooltip.origin && nextProps.tooltip.origin.x && nextProps.tooltip.origin.y) {
+        if (nextProps.tooltip && nextProps.tooltip.origin && nextProps.tooltip.origin.x && nextProps.tooltip.origin.y) {
             tip.position({ pageX: nextProps.tooltip.origin.x, pageY: nextProps.tooltip.origin.y })
         }
     }
@@ -109,7 +109,7 @@ class Home_four extends Component {
                                 <ComposableMap
                                     projectionConfig={{
                                         scale: 205,
-                                        rotation: [-11,0,0],
+                                        rotation: [-11, 0, 0],
                                     }}
                                     width={980}
                                     height={551}
@@ -118,39 +118,39 @@ class Home_four extends Component {
                                         height: "auto",
                                     }}
                                 >
-                                    <ZoomableGroup center={[0,20]} disablePanning>
+                                    <ZoomableGroup center={[0, 20]} disablePanning>
                                         <Geographies geography="/assets/world-50m.json">
-                                        {(geographies, projection) => geographies.map((geography, i) => geography.id !== "ATA" && (
-                                            <Geography
-                                            key={i}
-                                            geography={geography}
-                                            projection={projection}
-                                            onMouseMove={this.handleMove}
-                                            onMouseLeave={this.handleLeave}
-                                            style={{
-                                                default: {
-                                                fill: "#ECEFF1",
-                                                stroke: "#607D8B",
-                                                strokeWidth: 0.75,
-                                                outline: "none",
-                                                
-                                                },
-                                                hover: {
-                                                fill: "#168fff",
-                                                stroke: "#168fff",
-                                                strokeWidth: 0.75,
-                                                outline: "none",
-                                                },
-                                                pressed: {
-                                                fill: "#168fff",
-                                                stroke: "#168fff",
-                                                strokeWidth: 0.75,
-                                                outline: "none",
-                                                },
-                                                
-                                            }}
-                                            />
-                                        ))}
+                                            {(geographies, projection) => geographies.map((geography, i) => geography.id !== "ATA" && (
+                                                <Geography
+                                                    key={i}
+                                                    geography={geography}
+                                                    projection={projection}
+                                                    onMouseMove={this.handleMove}
+                                                    onMouseLeave={this.handleLeave}
+                                                    style={{
+                                                        default: {
+                                                            fill: "#ECEFF1",
+                                                            stroke: "#607D8B",
+                                                            strokeWidth: 0.75,
+                                                            outline: "none",
+
+                                                        },
+                                                        hover: {
+                                                            fill: "#168fff",
+                                                            stroke: "#168fff",
+                                                            strokeWidth: 0.75,
+                                                            outline: "none",
+                                                        },
+                                                        pressed: {
+                                                            fill: "#168fff",
+                                                            stroke: "#168fff",
+                                                            strokeWidth: 0.75,
+                                                            outline: "none",
+                                                        },
+
+                                                    }}
+                                                />
+                                            ))}
                                         </Geographies>
                                     </ZoomableGroup>
                                 </ComposableMap>
@@ -159,7 +159,7 @@ class Home_four extends Component {
                     </Row>
                 </Container>
             </Section_3>
-        
+
         )
     }
 }

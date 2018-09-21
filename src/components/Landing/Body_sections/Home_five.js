@@ -8,9 +8,6 @@ import styled from 'styled-components'
 
 /* Components */
 
-import Header_main from "./Navigation";
-import Home_first from "./Home_first";
-
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
 

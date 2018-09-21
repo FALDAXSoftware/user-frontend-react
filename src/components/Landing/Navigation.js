@@ -8,9 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 
 /* Components */
-import Login_Form from "./Login_Form"
-import Signup_Form from "./Signup_Form"
-import Forgot_Form from "./Forgot_Form"
+import Login_Form from "../Landing/User_forms/Login_Form"
+import Signup_Form from "../Landing/User_forms/Signup_Form"
+import Forgot_Form from "../Landing/User_forms/Forgot_Form"
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;

@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStroopwafel } from '@fortawesome/free-solid-svg-icons'
 
 /* Components */
-import HomePage from './components/HomePage';
+import HomePage from './components/Landing/HomePage';
 
 library.add(faStroopwafel)
 

@@ -1,23 +1,23 @@
 /* In-built Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {Row, Col , Button , Layout, Menu, Breadcrumb,Card } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components'
 
 /* Components */
 import Header_main from "./Navigation";
-import Home_first from "./Home_first";
-import Home_second from './Home_second';
-import Home_third from './Home_third';
-import Home_four from './Home_four';
-import Home_five from "./Home_five";
-import Home_six from "./Home_six";
-import Home_seven from "./Home_seven";
-import Footer_main from "./Footer_home";
+import Home_first from "../Landing/Body_sections/Home_first";
+import Home_second from '../Landing/Body_sections/Home_second';
+import Home_third from '../Landing/Body_sections/Home_third';
+import Home_four from '../Landing/Body_sections/Home_four';
+import Home_five from "../Landing/Body_sections/Home_five";
+import Home_six from "../Landing/Body_sections/Home_six";
+import Home_seven from "../Landing/Body_sections/Home_seven";
+import Footer_main from "../Landing/Footers/Footer_home";
 
 /* Styled Components */
-import { Section_2, Section_3, Container } from '../styled-components/homepage/style';
+import { Section_2, Section_3, Container } from './../../styled-components/homepage/style';
 
 /* Global Components */
 const { Header, Content, Footer } = Layout;
@@ -30,13 +30,13 @@ const Content_style = styled(Content)`
 
 /* Static data */
 const data = [
-    {
-      image: '/images/Homepage/imgpsh_fullsize_1.png',
-      coinName: 'BTC/USD',
-      price: 700000,
-      percentage: 3.35,
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
+  {
+    image: '/images/Homepage/imgpsh_fullsize_1.png',
+    coinName: 'BTC/USD',
+    price: 700000,
+    percentage: 3.35,
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
       {
         label: 'My First dataset',
         fill: false,
@@ -151,7 +151,7 @@ const data = [
     ]
   }
 ];
-  
+
 const columns = [
     {
       title: "NAME",
@@ -188,7 +188,7 @@ const columns = [
       width: "15%"
     }
 ];
-  
+
 const tableData = [
   {
     name: "Petey Cruiser",
@@ -311,57 +311,54 @@ const tableData = [
       low: 5.024585
   }
 ];
-  
+
 /* styled components */
 const SpanCoinChange = styled.span`
-    color: ${props => props.value===0 ? 'black' : props.value<=0 ? 'red' : '#34a539'}
+    color: ${props => props.value === 0 ? 'black' : props.value <= 0 ? 'red' : '#34a539'}
 `;
 
 
 
 /* Component Defination Starts Here*/
 
-export default class NavigationBar extends React.Component
-{
-    constructor() {
-      super();
-      this.state={pagination: {}};
-    }
+export default class NavigationBar extends React.Component {
+  constructor() {
+    super();
+    this.state = { pagination: {} };
+  }
 
-    handleTableChange = (pagination, filters, sorter) => {
-        const pager = { ...this.state.pagination };
-        pager.current = pagination.current;
-        this.setState({
-          pagination: pager
-        });
-    };
+  handleTableChange = (pagination, filters, sorter) => {
+    const pager = { ...this.state.pagination };
+    pager.current = pagination.current;
+    this.setState({
+      pagination: pager
+    });
+  };
 
-    render()
-    {
-        return(
-        <div>
-            <Layout>
-                <Header_main/>
-                <Content_style>
-                    <Home_first/>
-                    <Home_second data={data}/>
-                    <Home_third 
-                        columns={columns} 
-                        dataSource={tableData} 
-                        loading={false} 
-                        pagination={false} 
-                        handleTableChange={this.handleTableChange}
-                    />
-                    <Home_four />
-                    <Home_five/>
-                    <Home_six/>
-                    <Home_seven/>
-                </Content_style>
-                <Footer_main/>
-            </Layout>
-        </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <Layout>
+          <Header_main />
+          <Content_style>
+            <Home_first />
+            <Home_second data={data} />
+            <Home_third
+              columns={columns}
+              dataSource={tableData}
+              loading={false}
+              pagination={false}
+              handleTableChange={this.handleTableChange}
+            />
+            <Home_four />
+            <Home_five />
+            <Home_six />
+            <Home_seven />
+          </Content_style>
+          <Footer_main />
+        </Layout>
+      </div>
+    );
+  }
 }
 
-    

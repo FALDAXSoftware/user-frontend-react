@@ -11,8 +11,6 @@ import "slick-carousel/slick/slick-theme.css";
 
 /* Components */
 
-import Header_main from "./Navigation";
-import Home_first from "./Home_first";
 
 /* Global Components */
 const { Header, Content, Footer } = Layout;
