@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import { Row, Col, Tabs } from 'antd';
 import styled from 'styled-components';
 import PersonalDetails from './PersonalDetails';
+import Referral from './Referral';
 
 const TabPane = Tabs.TabPane;
 
@@ -37,12 +38,12 @@ class EditProfile extends Component {
         return (
             <ProfileWrapper>
                 <ProfileDiv>
-                    <Tabs className="profile-tabs" defaultActiveKey={currentTab} onChange={this._changeTab}>
+                    <Tabs className="profile-tabs" defaultActiveKey="1" onChange={this._changeTab}>
                         <TabPane tab="Personal Details" key="1"><PersonalDetails /></TabPane>
                         <TabPane tab="Security" key="2">Content of Tab Pane 2</TabPane>
                         <TabPane tab="KYC" key="3">Content of Tab Pane 3</TabPane>
                         <TabPane tab="Payment Methods" key="4">Content of Tab Pane 3</TabPane>
-                        <TabPane tab="Referral" key="5">Content of Tab Pane 3</TabPane>
+                        <TabPane tab="Referral" key="5"><Referral/></TabPane>
                     </Tabs>
                 </ProfileDiv>
             </ProfileWrapper>

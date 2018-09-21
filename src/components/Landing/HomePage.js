@@ -7,14 +7,14 @@ import styled from 'styled-components'
 
 /* Components */
 import Header_main from "./Navigation";
-import Home_first from "./Home_first";
-import Home_second from './Home_second';
-import Home_third from './Home_third';
-import Home_four from './Home_four';
-import Home_five from "./Home_five";
-import Home_six from "./Home_six";
-import Home_seven from "./Home_seven";
-import Footer_main from "./Footer_home";
+import Home_first from "../Landing/Body_sections/Home_first";
+import Home_second from '../Landing/Body_sections/Home_second';
+import Home_third from '../Landing/Body_sections/Home_third';
+import Home_four from '../Landing/Body_sections/Home_four';
+import Home_five from "../Landing/Body_sections/Home_five";
+import Home_six from "../Landing/Body_sections/Home_six";
+import Home_seven from "../Landing/Body_sections/Home_seven";
+import Footer_main from "../Landing/Footers/Footer_home";
 
 /* Styled Components */
 import { Section_2, Section_3, Container } from './../../styled-components/homepage/style';
@@ -153,40 +153,40 @@ const data = [
 ];
 
 const columns = [
-  {
-    title: "NAME",
-    dataIndex: "name",
-    width: "20%"
-  },
-  {
-    title: "LAST PRICE",
-    dataIndex: "last_price",
-    sorter: true,
-    width: "15%"
-  },
-  {
-    title: "CHANGE",
-    dataIndex: "change",
-    sorter: true,
-    render: (text, record, index) => <SpanCoinChange value={text}> {text === 0 ? '' : text >= 0 ? '+' : ''}{text}% </SpanCoinChange>,
-    width: "15%"
-  },
-  {
-    title: "24HR VOLUME",
-    dataIndex: "hours_volume",
-    width: "20%",
-    render: (text, record, index) => text.toLocaleString().replace(/,/g, ',')
-  },
-  {
-    title: "HIGH",
-    dataIndex: "high",
-    width: "15%"
-  },
-  {
-    title: "LOW",
-    dataIndex: "low",
-    width: "15%"
-  }
+    {
+      title: "NAME",
+      dataIndex: "name",
+      width: "20%"
+    },
+    {
+      title: "LAST PRICE",
+      dataIndex: "last_price",
+      sorter: true,
+      width: "15%"
+    },
+    {
+      title: "CHANGE",
+      dataIndex: "change",
+      sorter: true,
+      render: (text, record, index) => <SpanCoinChange value={text}> {text===0 ? '' : text>=0 ? '+' : ''}{text}% </SpanCoinChange>,
+      width: "15%"
+    },
+    {
+      title: "24HR VOLUME",
+      dataIndex: "hours_volume",
+      width: "20%",
+      render: (text, record, index) => text.toLocaleString().replace(/,/g,',')
+    },
+    {
+      title: "HIGH",
+      dataIndex: "high",
+      width: "15%"
+    },
+    {
+      title: "LOW",
+      dataIndex: "low",
+      width: "15%"
+    }
 ];
 
 const tableData = [
@@ -223,92 +223,92 @@ const tableData = [
     low: 7.024585
   },
   {
-    name: "Gail Forcewind",
-    last_price: 2000.02,
-    change: 0.15,
-    hours_volume: 43354600,
-    high: 5.024563,
-    low: 2.024585
+      name: "Gail Forcewind",
+      last_price: 2000.02,
+      change: 0.15,
+      hours_volume: 43354600,
+      high: 5.024563,
+      low: 2.024585
   },
   {
-    name: "Paige Turner",
-    last_price: 7000.03,
-    change: 2.15,
-    hours_volume: 33460,
-    high: 7.024563,
-    low: 3.024585
+      name: "Paige Turner",
+      last_price: 7000.03,
+      change: 2.15,
+      hours_volume: 33460,
+      high: 7.024563,
+      low: 3.024585
   },
   {
-    name: "Bob Frapples",
-    last_price: 5500.024573,
-    change: -5.15,
-    hours_volume: 3399906,
-    high: 9.024563,
-    low: 10.024585
+      name: "Bob Frapples",
+      last_price: 5500.024573,
+      change: -5.15,
+      hours_volume: 3399906,
+      high: 9.024563,
+      low: 10.024585
   },
   {
-    name: "Walter Melon",
-    last_price: 0.024573,
-    change: 11.15,
-    hours_volume: 76554600,
-    high: 3.024563,
-    low: 7.024585
+      name: "Walter Melon",
+      last_price: 0.024573,
+      change: 11.15,
+      hours_volume: 76554600,
+      high: 3.024563,
+      low: 7.024585
   },
   {
-    name: "Brock Lee",
-    last_price: 2000.02,
-    change: 0.15,
-    hours_volume: 43354600,
-    high: 5.024563,
-    low: 2.024585
+      name: "Brock Lee",
+      last_price: 2000.02,
+      change: 0.15,
+      hours_volume: 43354600,
+      high: 5.024563,
+      low: 2.024585
   },
   {
-    name: "Rick O'Shea",
-    last_price: 7000.03,
-    change: 2.15,
-    hours_volume: 33460,
-    high: 7.024563,
-    low: 3.024585
+      name: "Rick O'Shea",
+      last_price: 7000.03,
+      change: 2.15,
+      hours_volume: 33460,
+      high: 7.024563,
+      low: 3.024585
   },
   {
-    name: "Barb Dwyer",
-    last_price: 5500.024573,
-    change: -5.15,
-    hours_volume: 3399906,
-    high: 9.024563,
-    low: 10.024585
+      name: "Barb Dwyer",
+      last_price: 5500.024573,
+      change: -5.15,
+      hours_volume: 3399906,
+      high: 9.024563,
+      low: 10.024585
   },
   {
-    name: "Terry Aki",
-    last_price: 0.024573,
-    change: 11.15,
-    hours_volume: 76554600,
-    high: 3.024563,
-    low: 7.024585
+      name: "Terry Aki",
+      last_price: 0.024573,
+      change: 11.15,
+      hours_volume: 76554600,
+      high: 3.024563,
+      low: 7.024585
   },
   {
-    name: "Cory Ander",
-    last_price: 4000.04,
-    change: 2.15,
-    hours_volume: 33460,
-    high: 7.024563,
-    low: 3.024585
+      name: "Cory Ander",
+      last_price: 4000.04,
+      change: 2.15,
+      hours_volume: 33460,
+      high: 7.024563,
+      low: 3.024585
   },
   {
-    name: "Robin Banks",
-    last_price: 10001.024,
-    change: -1.15,
-    hours_volume: 3399906,
-    high: 3.78606,
-    low: 10.024585
+      name: "Robin Banks",
+      last_price: 10001.024,
+      change: -1.15,
+      hours_volume: 3399906,
+      high: 3.78606,
+      low: 10.024585
   },
   {
-    name: "Barry Wine",
-    last_price: 2200.57301,
-    change: 0.15,
-    hours_volume: 2500,
-    high: 9.475,
-    low: 5.024585
+      name: "Barry Wine",
+      last_price: 2200.57301,
+      change: 0.15,
+      hours_volume: 2500,
+      high: 9.475,
+      low: 5.024585
   }
 ];
 
