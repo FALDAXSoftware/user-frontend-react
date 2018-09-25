@@ -8,12 +8,17 @@ import registerServiceWorker from './registerServiceWorker';
 import App from './App';
 
 /* Redux store */
-import initStore from "./store";
-
+import configureStore from "./store";
+import {loadState,saveState} from './localstorage';
+let persisteState= loadState();
+let store =configureStore(persisteState);
+store.subscribe(() =>{
+    saveState(store.getState())
+  })
 /* Appication start from here */
 ReactDOM.render(
     <Router>
-        <Provider store={initStore}>
+        <Provider store={store}>
             <App />
         </Provider>
     </Router>

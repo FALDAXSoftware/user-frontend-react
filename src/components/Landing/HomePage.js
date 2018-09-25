@@ -6,7 +6,7 @@ import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components'
 
 /* Components */
-import Header_main from "./Navigation";
+import Header_main from "../Navigations/Navigation";
 import Home_first from "../Landing/Body_sections/Home_first";
 import Home_second from '../Landing/Body_sections/Home_second';
 import Home_third from '../Landing/Body_sections/Home_third';
@@ -336,10 +336,11 @@ export default class NavigationBar extends React.Component {
   };
 
   render() {
+    console.log("props", this.props)
     return (
       <div>
         <Layout>
-          <Header_main />
+          <Header_main {...this.props}/>
           <Content_style>
             <Home_first />
             <Home_second data={data} />

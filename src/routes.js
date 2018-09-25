@@ -1,24 +1,41 @@
-import React from 'react';
+import React,{Component} from 'react';
 import NavigationBar from './components/Landing/HomePage';
-import Navigation from './components/Landing/Navigation';
-import LoggedNavigation from '../src/components/Landing/LoggedNavigation';
+import Navigation from './components/Navigations/Navigation';
+import LoggedNavigation from './components/Navigations/LoggedNavigation';
 import About from './components/About';
 import Referral from "../src/components/Settings/Referral"
-import EditProfile from './components/Settings/EditProfile';
+import Editprofile from '../src/components/Settings/Editprofile';
 import Footer from '../src/components/Landing/Footers/Footer';
-import { Switch, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 
-const Routes = () => (
-    <main>
-        {/* <LoggedNavigation />*/}
-        <Switch>
-            <Route exact path='/' component={NavigationBar} />
-            <Route exact path='/about' component={About} />
-            <Route exact path='/settings' component={EditProfile} />
-            <Route exact path='/settings/referral' component={Referral}/>
-        </Switch>
-        {/*<Footer /> */}
-    </main>
-)
-
-export default Routes;
+const routes = [
+    {
+      exact:false,
+      path: "/editProfile",
+      component:Editprofile 
+    }
+  ];
+  
+ export default class AppRouter extends Component {
+    render() {
+      const { url } = this.props.match;
+        console.log("asdasdasdasdasdasdasdasdasdasd", this.props)
+      return (
+        <div>
+          {routes.map(singleRoute => {
+            const { path, exact, ...otherProps } = singleRoute;
+            return (
+              <Route
+                exact={exact === false ? false : true}
+                key={singleRoute.path}
+                path={`${singleRoute.path}`}
+                {...otherProps}
+                {...this.props}
+              />
+            );
+          })}
+        </div>
+      );
+    }
+  }
+  

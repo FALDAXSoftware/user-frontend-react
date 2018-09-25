@@ -1,13 +1,15 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Input,Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal , Table } from 'antd';
+import { Input,Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal , Table,notification } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components';
-
-
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+/* COnstants */
 const { Header, Content, Footer } = Layout;
 const Search = Input.Search;
+
+/* Styled Components */
 
 const columns = [{
     title: 'Accounts Referred',
@@ -151,8 +153,36 @@ const Ref_acc = styled.div`
 `
 export default class Referral extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            value: 'abcdabcd',
+            copied: false,
+        }
+    }
+    openNotificationWithIcon  = (type) => {
+        notification[type]({
+            message: 'Copied Referral Code to Clipboard',
+            duration:2
+          });
+      };
+    SearchText()
+    {
+        console.log("HELLO")
+        // Copy to clipboard example
+        document.querySelectorAll(".ant-input-search-button")[0].onclick = function() {
+            // Select the content
+            console.log("I m in")
+            document.querySelectorAll(".INPUT_search > input")[0].select();
+            // Copy to the clipboard
+            document.execCommand('copy');
+        };
+        this.openNotificationWithIcon ('success');
+    }
     render()
     {
+        console.log(this.state)
         return(
             <Parent_wrap>
                 <Header_text>Referral Program</Header_text>
@@ -161,12 +191,17 @@ export default class Referral extends React.Component
                     <Row>
                         <Ref_leftcol sm={24} md={18}>
                             <Ref_text>YOUR REFERRAL LINK</Ref_text>
-                            <Ref_input
-                                placeholder="Referral"
-                                enterButton="Copy"
-                                size="large"
-                                onSearch={value => console.log(value)}
-                            />
+                            <CopyToClipboard text={this.state.value}
+                                    onCopy={() => this.setState({copied: true})}>
+                                <Ref_input
+                                    value={this.state.value}
+                                    className="INPUT_search"
+                                    placeholder="Referral"
+                                    enterButton="Copy"
+                                    size="large"
+                                    onSearch={value => this.SearchText()}
+                                />
+                            </CopyToClipboard>
                         </Ref_leftcol>
                         <Ref_rightcol sm={24} md={6}>
                             <Right_text>Total Earned</Right_text>

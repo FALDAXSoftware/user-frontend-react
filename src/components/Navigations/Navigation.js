@@ -76,7 +76,7 @@ const Logo = styled.div`
 `
 const Header_main = styled(Header)`
     position:fixed;
-    z-index:1;
+    z-index:1000;
     width : 100%;
     padding:0;
     text-align:left;
@@ -386,15 +386,15 @@ export default class Navigation extends React.Component {
                                 {console.log(this.state.modal)}
                                 {
                                     this.state.modal==0?
-                                    <Login_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                    <Login_Form {...this.props} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
                                 }
                                 {
                                     this.state.modal==1?
-                                    <Signup_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                    <Signup_Form {...this.props} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
                                 }
                                 {
                                     this.state.modal==2?
-                                    <Forgot_Form dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                    <Forgot_Form {...this.props} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
                                 }
                             </Left_col>
                             <Right_Col xl={{span:12}} sm={{span:24}}>

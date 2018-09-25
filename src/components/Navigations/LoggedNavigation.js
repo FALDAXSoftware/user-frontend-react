@@ -20,7 +20,7 @@ const Logo = styled.div`
 `
 const Header_main = styled(Header)`
     position:fixed;
-    z-index:1;
+    z-index: 1000;
     width : 100%;
     padding:0;
     text-align:left;

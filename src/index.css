@@ -258,7 +258,9 @@ table .ant-table-tbody > tr > td {
     height:580px;
   }
 }
+
 /* Edir Profile css starts from here */
+
 .ant-tabs-tab {
   font-family: "Open sans";
   font-size: 14px;
@@ -275,3 +277,86 @@ table .ant-table-tbody > tr > td {
 .profile-tabs {
   text-align: center;
 }
+
+  /* Date css */
+
+  #profile-year
+  {
+    background-color: #f8f8f8;
+    height: 32px;
+    border-radius: 5px;
+    width:27%;
+    border:1px solid #dadfe3;
+  }
+  #profile-month
+  {
+    background-color: #f8f8f8;
+    height: 32px;
+    border-radius: 5px;
+    margin-left:12px;
+    width:27%;
+    border:1px solid #dadfe3;
+  }
+  #profile-day
+  {
+    background-color: #f8f8f8;
+    height: 32px;
+    border-radius: 5px;
+    margin-left:12px;
+    width:27%;
+    border:1px solid #dadfe3;
+  }
+
+  @media(max-width:992px)
+  {
+    #profile-year
+    {
+      width:31%;
+    }
+    #profile-month
+    {
+      width:30%;
+    }
+    #profile-day
+    {
+      width:30%;
+    }
+  }
+  @media(max-width:768px)
+  {
+    #profile-year
+    {
+      width:32%;
+    }
+    #profile-month
+    {
+      width:32%;
+    }
+    #profile-day
+    {
+      width:31%;
+    }
+  }
+  @media(max-width:710px)
+  {
+    #profile-year
+    {
+      margin-top:20px;
+      display:block;
+      width:30%;
+    }
+    #profile-month
+    {
+      margin-top:20px;
+      margin-left:0px;
+      display:block;      
+      width:30%;
+    }
+    #profile-day
+    {
+      margin-left:0px;
+      margin-top:20px;
+      display:block;      
+      width:30%;
+    }
+  }

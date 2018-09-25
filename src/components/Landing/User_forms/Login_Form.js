@@ -3,6 +3,8 @@ import React from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import {Button} from "antd";
+import { connect } from 'react-redux';
+import {Login} from '../../../Actions/Auth'
 /* Components */
 
 /* Global Constants */
@@ -71,14 +73,29 @@ export const Username = styled.input`
     height:35px;
   }
 `
+export const Email_req = styled.div`
+  display:none;
+  color:red;
+  font-size:14px;
+`
 const Phone = styled(Username)`
 
 `
 const Ph_Label = styled(Email_label)`
   margin-top:15px;
 `
+export const Phone_req = styled.label`
+  display:none;
+  color:red;
+  font-size:14px;
+`
 const Password = styled(Username)`
   font-size:16px;
+`
+export const Pass_req = styled.label`
+  display:none;
+  color:red;
+  font-size:14px;
 `
 const Check_wrap = styled.div`
   margin-top:35px;
@@ -165,7 +182,9 @@ class Login_Form extends React.Component
       {
         super(props);
         this.state = {
-          
+          email_msg:null,
+          pass_msg:null,
+          phone_msg:null
         }
       }
       static propTypes = {
@@ -174,6 +193,59 @@ class Login_Form extends React.Component
       submit = () => {
         this.props.form.validateFields((error, value) => {
           console.log(error, value);
+          if(error!==null && error!==undefined)
+          {
+            if(error.email!==undefined)
+            {
+              if(error.email.errors[0].message!==undefined && error.email.errors[0].message!==null)
+              {
+                document.querySelectorAll(".email_msg")[0].style.display = "block";
+                this.setState({email_msg:"*Email is incorrect"})
+              }
+              else
+              {
+                this.setState({email_msg:null})
+              }
+            }
+            if(error.phone_number!==undefined)
+            {
+              if(error.phone_number.errors[0].message!==undefined && error.phone_number.errors[0].message!==null)
+              {
+                document.querySelectorAll(".phone_msg")[0].style.display = "block";
+                this.setState({phone_msg:"*Phone Number is Incorrecct"})
+              }
+              else
+              {
+                
+                document.querySelectorAll(".phone_msg")[0].style.display = "none";
+                this.setState({phone_msg:null})
+              }
+            }
+            if(error.password!==undefined)
+            {
+              if(error.password.errors[0].message!==undefined && error.password.errors[0].message!==null)
+              {
+                document.querySelectorAll(".pass_msg")[0].style.display = "block";
+                this.setState({pass_msg:"*Password is Incorrecct"})
+              }
+              else
+              {
+                document.querySelectorAll(".pass_msg")[0].style.display = "none";
+                this.setState({pass_msg:null})
+              }
+            }
+          } 
+          else
+          { 
+            document.querySelectorAll(".pass_msg")[0].style.display = "none";
+            document.querySelectorAll(".phone_msg")[0].style.display = "none";
+            document.querySelectorAll(".email_msg")[0].style.display = "none";
+            this.setState({pass_msg:null,phone_msg:null,email_msg:null});
+            console.log(value,this.props)
+            this.props.Login(value);
+            console.log(this.props)
+            
+          }
         });
       }
       dispModal(pressed)
@@ -182,6 +254,9 @@ class Login_Form extends React.Component
         this.props.dispModal(pressed)
       }
       render() {
+        if(this.props.isLoggedIn){
+          this.props.history.push("/editProfile");
+        }
         let errors;
         const { getFieldProps, getFieldError } = this.props.form;
         return (
@@ -190,22 +265,25 @@ class Login_Form extends React.Component
                 <Login_head>Login</Login_head>
                 <Welcome_text>Welcome to Faldax</Welcome_text>
                   <Email_label>Email Address</Email_label>
-                  <Username {...getFieldProps('username', {
+                  <Username {...getFieldProps('email', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{required: true}],
+                    rules: [{type:"email",required: true}],
                   })}/>
+                  <Email_req className="email_msg">{this.state.email_msg}</Email_req>
                   <Ph_Label>Phone Number</Ph_Label>
-                  <Phone {...getFieldProps('phone', {
+                  <Phone {...getFieldProps('phone_number', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{required: true}],
+                    rules: [{type:"string",required: true,max:13}],
                   })}
                   />
+                  <Phone_req className="phone_msg">{this.state.phone_msg}</Phone_req>
                   <Ph_Label>Password</Ph_Label>
-                  <Password {...getFieldProps('password', {
+                  <Password  type="password" {...getFieldProps('password', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{required: true}],
+                    rules: [{type:"string",required: true,min:2}],
                   })}
                   />
+                  <Pass_req className="pass_msg">{this.state.pass_msg}</Pass_req>
                   <Check_wrap>
                     <Remember>
                     <Check type="checkbox"/> Remember Me</Remember>
@@ -222,4 +300,13 @@ class Login_Form extends React.Component
         );
       }
 }
-export default createForm()(Login_Form);
+function mapStateToProps(state){
+  return({
+    isLoggedIn:state.simpleReducer.isLoggedIn!==undefined ? true : false 
+  })
+ }
+const mapDispatchToProps = dispatch => ({
+  Login: (values) => dispatch(Login(values))
+ })
+
+export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Login_Form));

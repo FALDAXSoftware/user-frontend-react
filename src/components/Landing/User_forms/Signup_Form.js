@@ -3,9 +3,11 @@ import React from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import {Button} from "antd";
-import {Username,Form_wrap,Welcome_text,Email_label} from "./Login_Form";
+import { connect } from 'react-redux';
+import { relativeTimeThreshold } from 'moment';
 /* Components */
-
+import {Signup} from '../../../Actions/Auth'
+import {Username,Form_wrap,Welcome_text,Email_label,Email_req,Phone_req,Pass_req} from "./Login_Form";
 /* Global Constants */
 
 
@@ -26,6 +28,10 @@ const Login_head = styled.div`
   }
 `
 const Full = styled(Username)`
+  @media(min-width:1024px) and  (max-width:1440px)
+  {
+    margin-top: 15px;
+  }
 
 `
 const Phone = styled(Username)`
@@ -34,12 +40,16 @@ const Phone = styled(Username)`
 const Email = styled(Username)`
 
 `
+const Full_req = styled(Email_req)`
+
+`
 const Ph_Label = styled(Email_label)`
   margin-top:10px;
 `
 const Password = styled(Username)`
   
 `
+const Referral = styled(Username)``
 const Check_wrap = styled.div`
   margin-top:35px;
   width:76%;
@@ -93,12 +103,92 @@ const Sign_a = styled.a`
 
 `
 class Signup_Form extends React.Component
-{     static propTypes = {
+{     
+      constructor(props)
+      {
+        super(props)
+        this.state = {
+          full_msg:null,
+          email_msg:null,
+          pass_msg:null,
+          phone_msg:null
+        }
+      }
+      static propTypes = {
         form: formShape,
       };
       submit = () => {
         this.props.form.validateFields((error, value) => {
           console.log(error, value);
+          if(error==null)
+          {
+            document.querySelectorAll(".full_sign")[0].style.display = "none";
+            document.querySelectorAll(".pass_sign")[0].style.display = "none";
+            document.querySelectorAll(".phone_sign")[0].style.display = "none";
+            document.querySelectorAll(".email_sign")[0].style.display = "none";
+            this.setState({pass_msg:null,phone_msg:null,email_msg:null});
+            console.log(value,this.props)
+            this.props.Signup(value);
+            this.props.history.push("login");
+            this.props.dispModal("login")
+          }
+          else
+          {
+            if(error.fullname!==undefined)
+            {
+              if(error.fullname.errors[0].message!==undefined && error.fullname.errors[0].message!==null)
+              {
+                document.querySelectorAll(".full_sign")[0].style.display = "block";
+                this.setState({full_msg:"*Email is incorrect"})
+              }
+              else
+              {
+                document.querySelectorAll(".full_sign")[0].style.display = "none";
+                this.setState({full_msg:null})
+              }
+            }
+            if(error.email!==undefined)
+            {
+              if(error.email.errors[0].message!==undefined && error.email.errors[0].message!==null)
+              {
+                document.querySelectorAll(".email_sign")[0].style.display = "block";
+                this.setState({email_msg:"*Email is incorrect"})
+              }
+              else
+              {
+                document.querySelectorAll(".email_sign")[0].style.display = "none";
+                this.setState({email_msg:null})
+              }
+            }
+            if(error.phone_number!==undefined)
+            {
+              if(error.phone_number.errors[0].message!==undefined && error.phone_number.errors[0].message!==null)
+              {
+                document.querySelectorAll(".phone_sign")[0].style.display = "block";
+                this.setState({phone_msg:"*Phone Number is Incorrecct"})
+              }
+              else
+              {
+                
+                document.querySelectorAll(".phone_sign")[0].style.display = "none";
+                this.setState({phone_msg:null})
+              }
+            }
+            if(error.password!==undefined)
+            {
+              if(error.password.errors[0].message!==undefined && error.password.errors[0].message!==null)
+              {
+                document.querySelectorAll(".pass_sign")[0].style.display = "block";
+                this.setState({pass_msg:"*Password is Incorrecct"})
+              }
+              else
+              {
+                document.querySelectorAll(".pass_sign")[0].style.display = "none";
+                this.setState({pass_msg:null})
+              }
+            }
+          }
+
         });
       }
       dispModal()
@@ -119,34 +209,54 @@ class Signup_Form extends React.Component
                   <Email_label>Full Name</Email_label>
                   <Full {...getFieldProps('fullname', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{required: true}],
+                    rules: [{type:"string" ,required: true ,max:25}],
                   })}/>
+                  <Full_req className="full_sign">{this.state.full_msg}</Full_req>
                   <Ph_Label>Phone Number</Ph_Label>
-                  <Phone {...getFieldProps('phone', {
+                  <Phone {...getFieldProps('phone_number', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{required: true}],
+                    rules: [{type:"string",required: true}],
                   })}
                   />
+                  <Phone_req className="phone_sign">{this.state.phone_msg}</Phone_req>
                   <Ph_Label>Email Adress</Ph_Label>
                   <Email {...getFieldProps('email', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{required: true}],
+                    rules: [{type:"email",required: true}],
                   })}
                   />
+                  <Email_req  className="email_sign">{this.state.email_msg}</Email_req>
                   <Ph_Label>Password</Ph_Label>
-                  <Password {...getFieldProps('password', {
+                  <Password type="password" {...getFieldProps('password', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{required: true}],
+                    rules: [{type:"string",required: true,min:8}],
                   })}
                   />
-                {(errors = getFieldError('required')) ? errors.join(',') : null}
-                <Button_login onClick={this.submit}>SIgn Up</Button_login>
-                <Sign>
-                  Already have an account ? <Sign_a onClick={()=>this.dispModal()}>Login</Sign_a>
-                </Sign>
+                  <Pass_req className="pass_sign">{this.state.pass_msg}</Pass_req>
+                  <Ph_Label>Referral Code</Ph_Label>
+                  <Referral {...getFieldProps('referral_code', {
+                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
+                    rules: [{type:"string",required:false}],
+                  })}
+                  />
+                  {(errors = getFieldError('required')) ? errors.join(',') : null}
+                  <Button_login onClick={this.submit}>SIgn Up</Button_login>
+                  <Sign>
+                    Already have an account ? <Sign_a onClick={()=>this.dispModal()}>Login</Sign_a>
+                  </Sign>
               </Form_wrap>
             </div>
         );
       }
 }
-export default createForm()(Signup_Form);
+
+function mapStateToProps(state){
+  return({
+    ...state
+  })
+ }
+const mapDispatchToProps = dispatch => ({
+  Signup: (values) => dispatch(Signup(values))
+ })
+
+export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Signup_Form))
