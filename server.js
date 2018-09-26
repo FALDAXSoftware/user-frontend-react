@@ -51,8 +51,8 @@ app.get('/', (req,res) => {
 // });
 
 // Start the server
-app.set('port', 9000);
+app.set('port', 8085);
 
 var server = app.listen(app.get('port'), function() {
-	console.log('Express server listening on port ' + 9000);
+	console.log('Express server listening on port ' + 8085);
 });
