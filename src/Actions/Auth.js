@@ -4,7 +4,7 @@ export function Login(values)
     console.log(values)
     return(dispatch) => {
         console.log(values)
-        fetch("http://192.168.0.22:1337/login",{
+        fetch("http://192.168.2.224:1337/login",{
             method:"post",
             headers: {
                 Accept: 'application/json',
