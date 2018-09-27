@@ -1,6 +1,7 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
+import {connect} from "react-redux"
 import { Input,Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal , Table,notification } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components';
@@ -13,7 +14,7 @@ const Search = Input.Search;
 
 const columns = [{
     title: 'Accounts Referred',
-    dataIndex: 'referral',
+    dataIndex: 'email',
   }];
   const data = [{
       key:"1",
@@ -152,7 +153,7 @@ const Ref_acc = styled.div`
     height:auto;
     margin-bottom:65px;
 `
-export default class Referral extends React.Component
+class Referral extends React.Component
 {
     constructor(props)
     {
@@ -160,14 +161,34 @@ export default class Referral extends React.Component
         this.state = {
             value: 'abcdabcd',
             copied: false,
+            tableData:[]
         }
+    }
+    componentDidMount()
+    {
+        console.log(this.props.isLoggedIn)
+        fetch("http://192.168.2.224:1337/users/referredUsers",{
+            method:"get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization:"Bearer " + this.props.isLoggedIn
+            }
+        })
+        .then(response => response.json())
+        .then((responseData) => {
+            console.log(responseData);
+            this.setState({tableData:responseData.data})
+        })
+        .catch(error => { console.log(error) })
     }
     openNotificationWithIcon  = (type) => {
         notification[type]({
             message: 'Copied Referral Code to Clipboard',
             duration:2
           });
-      };
+    };
+
     SearchText()
     {
         // Copy to clipboard example
@@ -211,7 +232,7 @@ export default class Referral extends React.Component
                 </Ref_div>
                 <Ref_acc>
                     <div>
-                        <Table columns={columns} dataSource={data} 
+                        <Table columns={columns} dataSource={this.state.tableData} 
                         size="middle"
                         className="referral-table"
                         pagination={false}
@@ -222,3 +243,9 @@ export default class Referral extends React.Component
         );
     }
 }
+function mapStateToProps(state){
+    return({
+      isLoggedIn : state.simpleReducer.isLoggedIn
+    })
+}
+export default connect(mapStateToProps)(Referral);

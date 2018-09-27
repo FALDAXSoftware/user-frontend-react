@@ -200,7 +200,7 @@ class Login_Form extends React.Component
               if(error.email.errors[0].message!==undefined && error.email.errors[0].message!==null)
               {
                 document.querySelectorAll(".email_msg")[0].style.display = "block";
-                this.setState({email_msg:"*Email is incorrect"})
+                this.setState({email_msg:"*email is not valid"})
               }
               else
               {
@@ -212,7 +212,7 @@ class Login_Form extends React.Component
               if(error.phone_number.errors[0].message!==undefined && error.phone_number.errors[0].message!==null)
               {
                 document.querySelectorAll(".phone_msg")[0].style.display = "block";
-                this.setState({phone_msg:"*Phone Number is Incorrecct"})
+                this.setState({phone_msg:`*${error.phone_number.errors[0].message}`})
               }
               else
               {
@@ -226,7 +226,8 @@ class Login_Form extends React.Component
               if(error.password.errors[0].message!==undefined && error.password.errors[0].message!==null)
               {
                 document.querySelectorAll(".pass_msg")[0].style.display = "block";
-                this.setState({pass_msg:"*Password is Incorrecct"})
+                if(error.password.errors[0].message.includes("8"))
+                this.setState({pass_msg:`*${error.password.errors[0].message}`})
               }
               else
               {
@@ -280,7 +281,7 @@ class Login_Form extends React.Component
                   <Ph_Label>Password</Ph_Label>
                   <Password  type="password" {...getFieldProps('password', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{type:"string",required: true,min:2}],
+                    rules: [{type:"string",required: true,min:5}],
                   })}
                   />
                   <Pass_req className="pass_msg">{this.state.pass_msg}</Pass_req>

@@ -277,6 +277,14 @@ table .ant-table-tbody > tr > td {
 .profile-tabs {
   text-align: center;
 }
+.Country_Select
+{
+  width:89%;
+}
+.Country_Select > .ant-select-selection
+{
+  background-color: #f8f8f8;
+}
 
   /* Date css */
 
