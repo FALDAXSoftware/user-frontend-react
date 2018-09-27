@@ -210,6 +210,7 @@ class LoggedNavigation extends Component {
     }
 
     render() {
+        console.log(this.props)
         const DropdownItems = (
             <Menu>
                 <Menu.Item key="0">
@@ -240,7 +241,7 @@ class LoggedNavigation extends Component {
                             <AnchorName className="ant-dropdown-link" href="#">
                                 <HeaderAvatar size={35} style={{ color: '#f56a00', backgroundColor: '#fde3cf' }} />
                                 <UserName>
-                                    Dwayne Johnson
+                                    {this.props.profileDetails.first_name + " " +  this.props.profileDetails.last_name}
                                     <DownIcon type="caret-down" theme="outlined" />
                                 </UserName>
                             </AnchorName>
@@ -261,7 +262,10 @@ class LoggedNavigation extends Component {
     }
 }
 function mapStateToProps(state){
-    return state;
+    console.log(state)
+    return ({
+        profileDetails:state.simpleReducer.profileDetails?state.simpleReducer.profileDetails.data[0]:""
+    });
 }
   const mapDispatchToProps = dispatch => ({
     Logout: () => dispatch(Logout())
