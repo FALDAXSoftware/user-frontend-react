@@ -76,7 +76,7 @@ export const Username = styled.input`
 export const Email_req = styled.div`
   display:none;
   color:red;
-  font-size:14px;
+  font-size:10px;
 `
 const Phone = styled(Username)`
 

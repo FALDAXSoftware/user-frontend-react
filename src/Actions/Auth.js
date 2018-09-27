@@ -52,7 +52,6 @@ export const signupAction = (isLoggedIn) => dispatch => {
     dispatch({
      type: 'SIGNUP',
      payload: isLoggedIn
-     
     })
 }
    
