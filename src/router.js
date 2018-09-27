@@ -21,16 +21,18 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
     />
   );
   const PublicRoutes = ({ history, isLoggedIn }) => {
+    console.log("is",isLoggedIn)
     return (
       <ConnectedRouter history={history}>
         <Switch>
           <Route
-            exact
+            
             path={'/signin'}
             component={HomePage}
           />
           <RestrictedRoute
             path="/"
+            
             component={Routes}
             isLoggedIn={isLoggedIn}
           />
@@ -41,7 +43,7 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   
   export default connect(
     state => ({
-      isLoggedIn: true
+      isLoggedIn: state.simpleReducer.isLoggedIn?true:false
     })
   ,null)(PublicRoutes);
   

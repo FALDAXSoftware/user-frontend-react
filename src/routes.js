@@ -7,12 +7,18 @@ import Referral from "../src/components/Settings/Referral"
 import Editprofile from '../src/components/Settings/EditProfile';
 import Footer from '../src/components/Landing/Footers/Footer';
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
+import HomePage from "../src/components/Landing/HomePage";
 
 const routes = [
     {
       exact:false,
       path: "/editProfile",
       component:Editprofile 
+    },
+    {
+      exact:false,
+      path: "/",
+      component:HomePage 
     }
   ];
   
