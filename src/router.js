@@ -25,7 +25,6 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
       <ConnectedRouter history={history}>
         <Switch>
           <Route
-            exact
             path={'/signin'}
             component={HomePage}
           />

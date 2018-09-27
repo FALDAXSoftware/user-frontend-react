@@ -13,7 +13,16 @@ export default (state = {}, action) => {
       console.log("SIGNUP")
         return {...state,isLoggedIn:undefined}
 
+      case "EDITPROFILE":
+        console.log("EDITPROFILE",action.payload)
+        return {...state}
+      
+      case "ADDPROFILE":
+        console.log("ADDPROFILE",action.payload)
+        return {...state,profileDetails:action.payload}
+        
       default:
-        return {...state,isLoggedIn:undefined};
+        console.log("default")
+        return {...state};
     }
    }

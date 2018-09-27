@@ -1,12 +1,14 @@
 /* In-built Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
+import {connect} from "react-redux"
 import { Row, Col, Tabs } from 'antd';
 import styled from 'styled-components';
-import PersonalDetails from './PersonalDetails';
+import PersonalDetails from './Personaldetails/PersonalDetails';
 import Referral from './Referral';
 import LoggedNavigation from '../Navigations/LoggedNavigation'
 import CommonFooter from "../Landing/Footers/Footer"
+
 const TabPane = Tabs.TabPane;
 
 /* Styled-Components */
@@ -35,6 +37,7 @@ class Editprofile extends Component {
     }
 
     render() {
+        console.log(this.props)
         const { currentTab } = this.state;
 
         return (
@@ -43,7 +46,7 @@ class Editprofile extends Component {
                 <ProfileWrapper>
                     <ProfileDiv>
                         <Tabs className="profile-tabs" defaultActiveKey="1" onChange={this._changeTab}>
-                            <TabPane tab="Personal Details" key="1"><PersonalDetails /></TabPane>
+                            <TabPane tab="Personal Details" key="1"><PersonalDetails {...this.props}/></TabPane>
                             <TabPane tab="Security" key="2">Content of Tab Pane 2</TabPane>
                             <TabPane tab="KYC" key="3">Content of Tab Pane 3</TabPane>
                             <TabPane tab="Payment Methods" key="4">Content of Tab Pane 3</TabPane>
@@ -58,4 +61,10 @@ class Editprofile extends Component {
     }
 }
 
-export default Editprofile;
+function mapStateToProps(state){
+    return({
+      isLoggedIn:state.simpleReducer.isLoggedIn
+    })
+}
+
+export default connect(mapStateToProps)(Editprofile);

@@ -28,10 +28,6 @@ const Login_head = styled.div`
   }
 `
 const Full = styled(Username)`
-  @media(min-width:1024px) and  (max-width:1440px)
-  {
-    margin-top: 15px;
-  }
 
 `
 const Phone = styled(Username)`
