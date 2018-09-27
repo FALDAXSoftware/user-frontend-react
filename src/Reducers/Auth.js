@@ -9,6 +9,12 @@ export default (state = {}, action) => {
           isLoggedIn: action.payload
         }
 
+      case 'LOGOUT':
+        return {
+          ...state,
+          isLoggedIn: undefined
+        }
+
       case "SIGNUP":
       console.log("SIGNUP")
         return {...state,isLoggedIn:undefined}

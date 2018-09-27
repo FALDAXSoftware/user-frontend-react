@@ -56,7 +56,7 @@ class App extends Component {
           <Switch location={location}>
             {console.log(location)}
             {/* <Route path="/" exact title="Login" component={HomePage}/> */}
-            <Route  path="/login"  title="Login" component={HomePage}/>
+            <Route  path="/login" exact title="Login" component={HomePage}/>
             {console.log(this.props.isLoggedIn)}
             <RestrictedRoute
            

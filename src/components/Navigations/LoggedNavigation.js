@@ -1,9 +1,11 @@
 /* IN-built */
 import React, { Component } from 'react';
-import 'antd/dist/antd.css';
 import { Layout, Menu, Dropdown, Icon, Avatar } from 'antd';
 import styled from 'styled-components';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Logout } from '../../Actions/Auth';
+import 'antd/dist/antd.css';
 
 const { Header } = Layout;
 
@@ -172,7 +174,7 @@ const Profile = styled.a`
         display: none !important;
     }
 `
-const Logout = styled.a`
+const LogoutStyle = styled.a`
     @media(min-width: 361px)
     {
         display: none !important;
@@ -203,6 +205,9 @@ class LoggedNavigation extends Component {
             document.body.style.backgroundColor = "white";
         }
     }
+    logout() {
+        this.props.Logout();
+    }
 
     render() {
         const DropdownItems = (
@@ -210,7 +215,7 @@ class LoggedNavigation extends Component {
                 <Menu.Item key="0">
                     <a onClick={() => this.props.history.push('/edit-profile')}> Profile </a>
                 </Menu.Item>
-                <Menu.Item key="1">Logout</Menu.Item>
+                <Menu.Item key="1" onClick={this.logout.bind(this)}>Logout</Menu.Item>
             </Menu>
         )
 
@@ -249,11 +254,17 @@ class LoggedNavigation extends Component {
                     <a href="#">TRACE</a>
                     <a href="#">WALLET</a>
                     <a href="#">HISTORY</a>
-                    <Logout> LOGOUT </Logout>
+                    <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
                 </SideNav> 
             </Header_main>
         );
     }
 }
-
-export default withRouter(LoggedNavigation);
+function mapStateToProps(state){
+    return state;
+}
+  const mapDispatchToProps = dispatch => ({
+    Logout: () => dispatch(Logout())
+   })
+  
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation));

@@ -20,6 +20,12 @@ export function Login(values)
         .catch(error => { console.log(error) })
     }
 }
+export const Logout = (Data) => dispatch => {
+    dispatch({
+        type: 'LOGOUT',
+        payload: Data
+    })
+}
 export const loginAction = (isLoggedIn) => dispatch => {
     dispatch({
      type: 'LOGIN',
