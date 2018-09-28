@@ -366,6 +366,10 @@ class PersonalDetails extends Component {
                 console.log("CWRP",this.state.profileImg,props.profileDetails.profile_pic)
                 this.setState({profileImg:globalVariables.amazon_Bucket + props.profileDetails.profile_pic})
             }
+            else
+            {
+                this.setState({profileImg:"./images/Settings/profile_pic.png"})
+            }
       }
       handleProfile(e) {
         try{
@@ -400,7 +404,7 @@ class PersonalDetails extends Component {
             const formData = new FormData();
             console.log(this.props)
             formData.append('email',this.props.email)
-            formData.append('profile',"")
+            formData.append('profile_pic',"")
             this.props.removepicAction(this.props.isLoggedIn,formData)
       }
 
@@ -424,7 +428,7 @@ class PersonalDetails extends Component {
                         <Row>
                             <Left_Col md={{span:24}} lg={{span:6}} xl={{span:6}} xxl={{span:6}}>
                                 {console.log("Above Image",this.state,this.props)}
-                                <div><ImageDiv src={this.state.profileImg} /></div>
+                                <div><ImageDiv src={this.state.profileImg?this.state.profileImg:"./images/Settings/profile_pic.png"} /></div>
                                 <div><Image_input type="file" onChange={this.handleProfile} name="file" id="file"/><Image_up><Image_upload for="file">Upload New Photo</Image_upload></Image_up></div>
                                 <Remove onClick={this.removePic.bind(this)}>Remove</Remove>
                             </Left_Col>

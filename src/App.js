@@ -35,16 +35,40 @@ class App extends Component {
     }) => (
   
       <Route
-        {...rest}
-        render={props => isLoggedIn
-        ? <Component {...props}/>
-        : <Redirect
+      {...rest}
+      render={props => {
+        
+       if(isLoggedIn){
+         if(props.location.pathname== '/'){
+           return <Redirect
+           to={{
+             pathname: '/home',
+             state: { from: props.location },
+           }}
+         />
+         }else{
+          return <Component {...props} />
+         }
+       }else{
+        if(props.location.pathname== '/'){
+          return <Redirect
           to={{
-          pathname: '/login',
-          state: {
-            from: props.location
-          }
-        }}/>}/>
+            pathname: '/home',
+            state: { from: props.location },
+          }}
+        />
+        }else{
+          return <Redirect
+          to={{
+            pathname: '/login',
+            state: { from: props.location },
+          }}
+        />
+        }
+       
+       }
+     }}
+    />
     );
     // console.log("this", this.props)
     
