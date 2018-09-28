@@ -83,7 +83,6 @@ class App extends Component {
             <Route  path="/login" exact title="Login" component={HomePage}/>
             {console.log(this.props.isLoggedIn)}
             <RestrictedRoute
-           
               path="/"
               component={AppRouter}
               isLoggedIn={isLoggedIn}/>

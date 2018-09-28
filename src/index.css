@@ -232,7 +232,7 @@ table .ant-table-tbody > tr > td {
 .ant-modal-content
 {
   border-radius: 0px !important;
-  height: 815px;
+  min-height: 600px;
 }
 .Login-Modal
 {
@@ -251,13 +251,13 @@ table .ant-table-tbody > tr > td {
   font-size: 23px;
 }
 
-@media (min-width:1024px) and (max-width:1440px)
+/* @media (min-width:1024px) and (max-width:1440px)
 {
   .ant-modal-content
   {
-    height:580px;
+    min-height: 600px;
   }
-}
+} */
 
 /* Edir Profile css starts from here */
 

@@ -62,6 +62,7 @@ const Ref_div = styled.div`
 `
 const Ref_leftcol = styled(Col)`
     text-align:left;
+    padding-left: 35px;
     &:after 
     {
         content: '';
@@ -73,12 +74,12 @@ const Ref_leftcol = styled(Col)`
     }
     @media(max-width:600px)
     {
-        text-align:center;
+        // text-align:center;
     }
 `
 const Ref_input = styled(Search)`
     width:86%;
-    margin-left:35px;
+    // margin-left:35px;
     text-align:left;
     margin-top:5px;
     margin-bottom: 32px;
@@ -95,7 +96,7 @@ const Ref_text = styled.div`
     font-family: "Open sans";
     color: rgba( 119, 119, 119, 0.702 );
     text-transform: uppercase;
-    margin-left:36px;
+    // margin-left:36px;
     margin-top:25px;
     line-height: 2.571;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -190,11 +191,9 @@ class Referral extends React.Component
 
     SearchText()
     {
-        console.log("HELLO")
         // Copy to clipboard example
         document.querySelectorAll(".ant-input-search-button")[0].onclick = function() {
             // Select the content
-            console.log("I m in")
             document.querySelectorAll(".INPUT_search > input")[0].select();
             // Copy to the clipboard
             document.execCommand('copy');
@@ -203,7 +202,6 @@ class Referral extends React.Component
     }
     render()
     {
-        console.log(this.state)
         return(
             <Parent_wrap>
                 <Header_text>Referral Program</Header_text>
@@ -214,14 +212,16 @@ class Referral extends React.Component
                             <Ref_text>YOUR REFERRAL LINK</Ref_text>
                             <CopyToClipboard text={this.state.value}
                                     onCopy={() => this.setState({copied: true})}>
-                                <Ref_input
-                                    value={this.state.value}
-                                    className="INPUT_search"
-                                    placeholder="Referral"
-                                    enterButton="Copy"
-                                    size="large"
-                                    onSearch={value => this.SearchText()}
-                                />
+                                <div style={{textAlign: 'left'}}>
+                                    <Ref_input
+                                        value={this.state.value}
+                                        className="INPUT_search"
+                                        placeholder="Referral"
+                                        enterButton="Copy"
+                                        size="large"
+                                        onSearch={value => this.SearchText()}
+                                    />
+                                </div>
                             </CopyToClipboard>
                         </Ref_leftcol>
                         <Ref_rightcol sm={24} md={6}>

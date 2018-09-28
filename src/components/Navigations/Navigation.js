@@ -17,32 +17,29 @@ const { Meta } = Card;
 
 /* Modal Styled Components */
 const Left_col = styled(Col)`
-    height:815px;
-    @media(min-width:1024px) and (max-width:1440px)
-    {
-        height:580px
-    }
+    min-height: 600px
 `
 const Right_Col = styled(Col)`
     background-image:url("./images/Homepage/wallpaper.png");
-    height:815px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    display: table;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
 
     @media(max-width:1200px)
     {
         display:none;
     }
-    @media(min-width:1024px) and (max-width:1440px)
-    {
-        height:580px
-    }
 `
 const Logo_text_wrap = styled.div`
     display: table-cell;
     vertical-align: middle;
+    top: calc(50% - 96px);
+    position: absolute;
+    width: 100%;
 `
 const Faldaxlogo = styled.img`
     display: block;

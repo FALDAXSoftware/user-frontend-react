@@ -1,9 +1,11 @@
 /* IN-built */
 import React, { Component } from 'react';
-import 'antd/dist/antd.css';
 import { Layout, Menu, Dropdown, Icon, Avatar } from 'antd';
 import styled from 'styled-components';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Logout } from '../../Actions/Auth';
+import 'antd/dist/antd.css';
 
 const { Header } = Layout;
 
@@ -44,6 +46,20 @@ const Menu_main = styled(Menu)`
         margin-left: 15px;
     }
 `
+const Open = styled.span`
+    display:none;
+    margin-right: 10px;
+    font-size: 30px;
+    cursor: pointer;
+    line-height: 76px;
+    vertical-align: middle;
+    
+    @media(max-width:1200px)
+    {
+        display:inline-block;
+        margin-right:15px;
+    }
+`
 const Menu_item = styled(Menu.Item)`
     padding:0px 18px;
     font-size: 13px;
@@ -72,13 +88,27 @@ const Right_div = styled.div`
         margin-top:0px;
     }
 `
-const DropDownDiv = styled.div`
+const DropDownDiv = styled(Dropdown)`
     margin-right : 30px;
+
+    @media(max-width:480px)
+    {
+        margin-top:10px;
+    }
+    @media(max-width:360px)
+    {
+        display: none;
+    }
+    
+    @media(max-width:576px)
+    {
+        margin-right : 10px;
+    }
 `
 const DownIcon = styled(Icon)`
    height: 10px;
    margin-bottom: 5px;
-   padding-left: 20px;
+   padding-left: 10px;
    color: #dee2ed;
 `
 const AnchorName = styled.a`
@@ -86,26 +116,107 @@ const AnchorName = styled.a`
   font-weight: bold;
   font-family: "Open sans";
   color: #505050;
+
+  @media(max-width:1200px)
+  {
+      margin-top:0px;
+  }
 `
 const HeaderAvatar = styled(Avatar)`
     padding-right: 10px;
     margin-right: 10px;
+`
+const SideNav = styled.div`
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 0px;
+    background-image: url(./images/Homepage/wallpaper.png);
+    width: 0px;
+    color: white;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    a
+    {
+        padding: 8px 32px;
+        text-decoration: none;
+        font-size: 18px;
+        display: block;
+        transition: 0.5s;
+        line-height: 1.5;
+        color:white;
+    }
+    @media(min-width: 1200px)
+    {
+        display: none;
+    }
+`
+const UserName = styled.div`
+    display: inline-block;
+    @media(max-width: 576px)
+    {
+        display: none;
+    }
+`
+const Close = styled.a`
+    text-align:right;
+`
+const Profile = styled.a`
+    @media(min-width: 361px)
+    {
+        display: none !important;
+    }
+`
+const LogoutStyle = styled.a`
+    @media(min-width: 361px)
+    {
+        display: none !important;
+    }
 `
 
 class LoggedNavigation extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            visible: false,
+            modal: 0
         }
     }
 
+    openNav() {
+        console.log('open nav');
+        if (document.getElementById("mySidenav2") !== undefined && document.getElementById("mySidenav2") !== null) {
+            document.getElementById("mySidenav2").style.width = "250px";
+            document.getElementById("main").style.marginRight = "250px";
+            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+        }
+    }
+    closeNav() {
+        if (document.getElementById("mySidenav2") !== undefined && document.getElementById("mySidenav2") !== null) {
+            document.getElementById("mySidenav2").style.width = "0";
+            document.getElementById("main").style.marginRight = "0";
+            document.body.style.backgroundColor = "white";
+        }
+    }
+    logout() {
+        this.props.Logout();
+    }
+
     render() {
+        console.log(this.props)
         const DropdownItems = (
             <Menu>
                 <Menu.Item key="0">
                     <a onClick={() => this.props.history.push('/edit-profile')}> Profile </a>
                 </Menu.Item>
-                <Menu.Item key="1">Logout</Menu.Item>
+                <Menu.Item key="1" onClick={this.logout.bind(this)}>Logout</Menu.Item>
             </Menu>
         )
 
@@ -126,19 +237,38 @@ class LoggedNavigation extends Component {
                     <Menu_item key="4">HISTORY</Menu_item>
                 </Menu_main>
                 <Right_div>
-                    <DropDownDiv>
-                        <Dropdown overlay={DropdownItems} trigger={['click']}>
+                        <DropDownDiv overlay={DropdownItems} trigger={['click']}>
                             <AnchorName className="ant-dropdown-link" href="#">
                                 <HeaderAvatar size={35} style={{ color: '#f56a00', backgroundColor: '#fde3cf' }} />
-                                Dwayne Johnson
-                                <DownIcon type="caret-down" theme="outlined" />
+                                <UserName>
+                                    {this.props.profileDetails.first_name + " " +  this.props.profileDetails.last_name}
+                                    <DownIcon type="caret-down" theme="outlined" />
+                                </UserName>
                             </AnchorName>
-                        </Dropdown>
-                    </DropDownDiv>
+                        </DropDownDiv>
+                        <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={this.openNav.bind(this)}>&#9776;</Open>
                 </Right_div>
+                <SideNav id="mySidenav2">
+                    <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
+                    <Profile> PROFILE </Profile>
+                    <a href="#">DASHBOARD</a>
+                    <a href="#">TRACE</a>
+                    <a href="#">WALLET</a>
+                    <a href="#">HISTORY</a>
+                    <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
+                </SideNav> 
             </Header_main>
         );
     }
 }
-
-export default withRouter(LoggedNavigation);
+function mapStateToProps(state){
+    console.log(state)
+    return ({
+        profileDetails:state.simpleReducer.profileDetails?state.simpleReducer.profileDetails.data[0]:""
+    });
+}
+  const mapDispatchToProps = dispatch => ({
+    Logout: () => dispatch(Logout())
+   })
+  
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation));
