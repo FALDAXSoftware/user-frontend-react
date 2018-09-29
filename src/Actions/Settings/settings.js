@@ -1,7 +1,7 @@
 
 export function profileupdateAction(isLoggedIn,form)
 {
-    console.log(isLoggedIn,form)
+    /* console.log(isLoggedIn,form) */
     return(dispatch) => {
         fetch("http://192.168.2.224:1337/users/update",{
             method:"put",
@@ -12,11 +12,11 @@ export function profileupdateAction(isLoggedIn,form)
         })
         .then(response => response.json())
         .then((responseData) => {
-            console.log(responseData);
+           /*  console.log(responseData); */
            dispatch(profileupdatedData(responseData))
            dispatch(getProfileDataAction(isLoggedIn))
         })
-        .catch(error => { console.log(error) })
+        .catch(error => { /* console.log(error) */ })
     } 
 }
 export const profileupdatedData = (Data) => dispatch => {
@@ -39,11 +39,11 @@ export const getProfileDataAction = (token) =>
             })
             .then(response => response.json())
             .then((responseData) => {
-                console.log("I m in API get",responseData)
+                /* console.log("I m in API get",responseData) */
                 dispatch(addprofileData(responseData))
                 dispatch(removeLoader());
             })
-            .catch(error => { console.log(error) })
+            .catch(error => { /* console.log(error) */ })
 }
 export const addprofileData = (Data) => dispatch => {
     dispatch({
@@ -54,7 +54,7 @@ export const addprofileData = (Data) => dispatch => {
 }
 export function removepicAction(isLoggedIn,form)
 {
-    console.log(isLoggedIn,form)
+   /*  console.log(isLoggedIn,form) */
     return(dispatch) => {
         fetch("http://192.168.2.224:1337/users/update",{
             method:"put",
@@ -65,10 +65,10 @@ export function removepicAction(isLoggedIn,form)
         })
         .then(response => response.json())
         .then((responseData) => {
-            console.log(responseData);
+            /* console.log(responseData); */
             dispatch(getProfileDataAction(isLoggedIn))
         })
-        .catch(error => { console.log(error) })
+        .catch(error => {/*  console.log(error) */ })
     } 
 }
 export const removeLoader = () => dispatch => {

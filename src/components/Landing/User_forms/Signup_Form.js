@@ -2,7 +2,7 @@
 import React from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
-import {Button} from "antd";
+import {Button,notification,Icon} from "antd";
 import { connect } from 'react-redux';
 import { relativeTimeThreshold } from 'moment';
 /* Components */
@@ -115,7 +115,7 @@ class Signup_Form extends React.Component
       };
       submit = () => {
         this.props.form.validateFields((error, value) => {
-          console.log(error, value);
+          /* console.log(error, value); */
           if(error==null)
           {
             document.querySelectorAll(".full_sign")[0].style.display = "none";
@@ -123,7 +123,7 @@ class Signup_Form extends React.Component
             document.querySelectorAll(".phone_sign")[0].style.display = "none";
             document.querySelectorAll(".email_sign")[0].style.display = "none";
             this.setState({pass_msg:null,phone_msg:null,email_msg:null});
-            console.log(value,this.props)
+            /* console.log(value,this.props) */
             this.props.Signup(value);
             this.props.history.push("login");
             this.props.dispModal("login")
@@ -189,9 +189,17 @@ class Signup_Form extends React.Component
       }
       dispModal()
       {
-        console.log(this.props)
+       /*  console.log(this.props) */
         this.props.dispModal("login")
       }
+      openNotification = () => {
+        notification.open({
+          message: 'Verification mail sent',
+          description: 'We have sent you Account activation link',
+          duration:5,
+          icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+        });
+      };
       render() {
         let errors;
         const { getFieldProps, getFieldError } = this.props.form;
@@ -204,34 +212,34 @@ class Signup_Form extends React.Component
                     <span>Enter Your Information Below</span>
                   <Email_label>Full Name</Email_label>
                   <Full {...getFieldProps('fullname', {
-                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
+                    onChange(){/* console.log("Hello How are You") */}, // have to write original onChange here if you need
                     rules: [{type:"string" ,required: true ,max:25}],
                   })}/>
                   <Full_req className="full_sign">{this.state.full_msg}</Full_req>
                   <Ph_Label>Phone Number</Ph_Label>
                   <Phone {...getFieldProps('phone_number', {
-                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
+                    onChange(){/* console.log("Hello How are You") */}, // have to write original onChange here if you need
                     rules: [{type:"string",required: true}],
                   })}
                   />
                   <Phone_req className="phone_sign">{this.state.phone_msg}</Phone_req>
                   <Ph_Label>Email Adress</Ph_Label>
                   <Email {...getFieldProps('email', {
-                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
+                    onChange(){/* console.log("Hello How are You") */}, // have to write original onChange here if you need
                     rules: [{type:"email",required: true}],
                   })}
                   />
                   <Email_req  className="email_sign">{this.state.email_msg}</Email_req>
                   <Ph_Label>Password</Ph_Label>
                   <Password type="password" {...getFieldProps('password', {
-                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
+                    onChange(){/* console.log("Hello How are You") */}, // have to write original onChange here if you need
                     rules: [{type:"string",required: true,min:8}],
                   })}
                   />
                   <Pass_req className="pass_sign">{this.state.pass_msg}</Pass_req>
                   <Ph_Label>Referral Code</Ph_Label>
                   <Referral {...getFieldProps('referral_code', {
-                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
+                    onChange(){/* console.log("Hello How are You") */}, // have to write original onChange here if you need
                     rules: [{type:"string",required:false}],
                   })}
                   />

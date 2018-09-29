@@ -131,7 +131,7 @@ class LoggedNavigation extends Component {
     }
 
     openNav() {
-        console.log('open nav');
+        /* console.log('open nav'); */
         if (document.getElementById("mySidenav2") !== undefined && document.getElementById("mySidenav2") !== null) {
             document.getElementById("mySidenav2").style.width = "250px";
             document.getElementById("main").style.marginRight = "250px";
@@ -150,7 +150,7 @@ class LoggedNavigation extends Component {
         this.props.Logout();
     }
     render() {
-        console.log(this.props)
+        /* console.log(this.props) */
         
         let prof_name = this.props.profileDetails.first_name!==null && this.props.profileDetails.first_name!==undefined?(this.props.profileDetails.first_name + " " +  this.props.profileDetails.last_name):"User";
         return (
@@ -164,19 +164,19 @@ class LoggedNavigation extends Component {
                     mode="horizontal"
                     defaultSelectedKeys={['1']}
                 >
-                    <Menu_item key="1">DASHBOARD</Menu_item>
+                  {/*   <Menu_item key="1">DASHBOARD</Menu_item>
                     <Menu_item key="2">TRACE</Menu_item>
                     <Menu_item key="3">WALLET</Menu_item>
-                    <Menu_item key="4">HISTORY</Menu_item>
+                    <Menu_item key="4">HISTORY</Menu_item> */}
                 </Menu_main>
                     <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()}/>
                 <SideNav id="mySidenav2">
                     <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
-                    <Profile> PROFILE </Profile>
-                    <a href="#">DASHBOARD</a>
+                   { <Profile> PROFILE </Profile>}
+                    {/* <a href="#">DASHBOARD</a>
                     <a href="#">TRACE</a>
                     <a href="#">WALLET</a>
-                    <a href="#">HISTORY</a>
+                    <a href="#">HISTORY</a>} */}
                     <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
                 </SideNav> 
             </Header_main>
@@ -184,7 +184,7 @@ class LoggedNavigation extends Component {
     }
 }
 function mapStateToProps(state){
-    console.log(state)
+   /*  console.log(state) */
     return ({
         profileDetails:state.simpleReducer.profileDetails?state.simpleReducer.profileDetails.data[0]:""
     });

@@ -27,7 +27,7 @@ const routes = [
  export default class AppRouter extends Component {
     render() {
       const { url } = this.props.match;
-        console.log("asdasdasdasdasdasdasdasdasdasd", this.props)
+        /* console.log("asdasdasdasdasdasdasdasdasdasd", this.props) */
       return (
         <div>
           {routes.map(singleRoute => {

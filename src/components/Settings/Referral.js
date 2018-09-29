@@ -60,12 +60,13 @@ const Ref_div = styled.div`
     border-radius: 10px;
     height:auto;
 `
+/* ADD CONTENT="" */
 const Ref_leftcol = styled(Col)`
     text-align:left;
     padding-left: 35px;
     &:after 
     {
-        content: '';
+    
         top: 8%;
         position: absolute;
         height: 84%;
@@ -166,8 +167,8 @@ class Referral extends React.Component
     }
     componentDidMount()
     {
-        console.log(this.props.isLoggedIn)
-        fetch("http://192.168.2.224:1337/users/referredUsers",{
+        /* console.log(this.props.isLoggedIn) */
+        fetch("http://18.191.87.133:8084/users/referredUsers",{
             method:"get",
             headers: {
                 Accept: 'application/json',
@@ -177,10 +178,10 @@ class Referral extends React.Component
         })
         .then(response => response.json())
         .then((responseData) => {
-            console.log(responseData);
+            /* console.log(responseData); */
             this.setState({tableData:responseData.data})
         })
-        .catch(error => { console.log(error) })
+        .catch(error => { /* console.log(error) */ })
     }
     openNotificationWithIcon  = (type) => {
         notification[type]({
@@ -224,10 +225,10 @@ class Referral extends React.Component
                                 </div>
                             </CopyToClipboard>
                         </Ref_leftcol>
-                        <Ref_rightcol sm={24} md={6}>
+                        {/* <Ref_rightcol sm={24} md={6}>
                             <Right_text>Total Earned</Right_text>
                             <Right_value>3.0850 BTC</Right_value>
-                        </Ref_rightcol>
+                        </Ref_rightcol> */}
                     </Row>
                 </Ref_div>
                 <Ref_acc>

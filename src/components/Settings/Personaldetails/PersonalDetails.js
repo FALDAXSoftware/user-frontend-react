@@ -71,6 +71,7 @@ const First_name = styled.div`
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
+    margin-bottom:10px;
 `
 const First_input = styled(Input)`
     background-color:#f8f8f8;
@@ -179,7 +180,7 @@ const Save = styled(Button)`
     -ms-transform: matrix( 1.2195120140195,0,0,1.20991183157525,0,0);  
     border-radius: 24px;
     background-color: rgb( 76, 132, 255 );
-    box-shadow: 0px 6px 10px 0px rgb( 76, 132, 255 );
+    box-shadow: 0px 6px 5px 0px rgb( 76, 132, 255 );
     margin-left: 10px;
     width: 15%;
     @media(max-width:600px)
@@ -214,7 +215,7 @@ class PersonalDetails extends Component {
         this.props.form.validateFields((error, value) => {
             let dataDate = "";
             const profileData = new FormData();
-          console.log(error, value,"Check Here ====>",this.state,this.props);
+         /*  console.log(error, value,"Check Here ====>",this.state,this.props); */
           if(error==null && (this.state.Datedata!==undefined || this.props.profileDetails.dob!==undefined) && (this.state.countrySelected!==undefined || this.props.profileDetails.country!==undefined))
           {
             document.querySelectorAll(".first_msg")[0].style.display = "none";
@@ -240,7 +241,7 @@ class PersonalDetails extends Component {
             {
                 country=this.props.country
             }
-            console.log("BEFORE FORM",value,this.state.countrySelected,this.state.profileImage,dataDate)
+            /* console.log("BEFORE FORM",value,this.state.countrySelected,this.state.profileImage,dataDate) */
             profileData.append('first_name', value.first_name);
             profileData.append('email',this.props.email);
             profileData.append('last_name',value.last_name);
@@ -251,7 +252,7 @@ class PersonalDetails extends Component {
             profileData.append('dob',dataDate);
             if(this.state.profileImage!==null && this.state.profileImage!==undefined)
             profileData.append('profile_pic',this.state.profileImage)
-            console.log(profileData)
+            /* console.log(profileData) */
             this.openNotificationWithIcon('warning');
             this.props.profileupdateAction(this.props.isLoggedIn,profileData);
           }
@@ -359,15 +360,15 @@ class PersonalDetails extends Component {
       }
       componentWillMount()
       {
-          console.log(this.props)
+          /* console.log(this.props) */
             this.props.getProfileDataAction(this.props.isLoggedIn)
       }
       componentWillReceiveProps(props,newProps)
       {
-          console.log(this.state,this.props,props,newProps)
+          /* console.log(this.state,this.props,props,newProps) */
             if(props.profileDetails.profile_pic!==null && props.profileDetails.profile_pic!==undefined && props.profileDetails.profile_pic!=="" )
             {
-                console.log("CWRP",this.state.profileImg,props.profileDetails.profile_pic)
+                /* console.log("CWRP",this.state.profileImg,props.profileDetails.profile_pic) */
                 this.setState({profileImg:globalVariables.amazon_Bucket + props.profileDetails.profile_pic})
             }
             else
@@ -381,7 +382,7 @@ class PersonalDetails extends Component {
             const file = e.target.files[0];
             const fileType = e.target.files[0] && e.target.files[0].type ? e.target.files[0].type.substring(0, e.target.files[0].type.indexOf('/') ) : '';
             const fileSize = e.target.files[0] && e.target.files[0].size ? e.target.files[0].size : 0;
-            console.log("handleProfile")
+            /* console.log("handleProfile") */
             //check file size to max 5mb (5*1024*1024=5242880) and type image
             if(fileType==='image' && fileSize<5242880) {
                 reader.onload = (upload) => {
@@ -394,7 +395,7 @@ class PersonalDetails extends Component {
                     });
                 };
             } else {
-                console.log(" elsse handleProfile")
+               /*  console.log(" elsse handleProfile") */
                 this.setState({profileImg: "Default Photo", imageName: '', imageType: fileType , imagemsg:'Please select image with less then 5 mb'})
             }
         
@@ -406,7 +407,7 @@ class PersonalDetails extends Component {
       removePic()
       {
             const formData = new FormData();
-            console.log(this.props)
+            /* console.log(this.props) */
             this.removeNotification("warning");
             formData.append('email',this.props.email)
             formData.append('profile_pic',"")
@@ -427,7 +428,7 @@ class PersonalDetails extends Component {
           }); 
       }
     render() {
-        console.log(this.props)
+        /* console.log(this.props) */
         let errors;
         let imageSRC
         let firstname = `${this.props.profileDetails.first_name}`
@@ -444,7 +445,7 @@ class PersonalDetails extends Component {
                     <Col>
                         <Row>
                             <Left_Col md={{span:24}} lg={{span:6}} xl={{span:6}} xxl={{span:6}}>
-                                {console.log("Above Image",this.state,this.props)}
+                               {/*  {console.log("Above Image",this.state,this.props)} */}
                                 <div><ImageDiv src={this.state.profileImg} /></div>
                                 <div><Image_input type="file" onChange={this.handleProfile} name="file" id="file"/><Image_up><Image_upload for="file">Upload New Photo</Image_upload></Image_up></div>
                                 <Remove onClick={this.removePic.bind(this)}>Remove</Remove>
@@ -453,9 +454,9 @@ class PersonalDetails extends Component {
                                 <First_Row>
                                     <Col md={{span:12}} lg={{span:12}} xl={{span:12}} xxl={{span:12}}>
                                         <First_name>First Name</First_name>
-                                        {console.log(this.props.profileDetails.first_name)}
+                                   {/*      {console.log(this.props.profileDetails.first_name)} */}
                                         <First_input placeholder="First Name" {...getFieldProps('first_name', {
-                                            onChange(){console.log("Hello How are You")},
+                                            onChange(){/* console.log("Hello How are You") */},
                                             initialValue:this.props.profileDetails.first_name, // have to write original onChange here if you need
                                             rules: [{required: true}],
                                         })}/>
@@ -464,7 +465,7 @@ class PersonalDetails extends Component {
                                     <Col md={{span:12}} lg={{span:12}} xl={{span:12}} xxl={{span:12}}>
                                         <Last_name>Last Name</Last_name>
                                         <Last_input placeholder="Last Name" {...getFieldProps('last_name', {
-                                            onChange(){console.log("Hello How are You")}, 
+                                            onChange(){/* console.log("Hello How are You") */}, 
                                             initialValue:this.props.profileDetails.last_name,// have to write original onChange here if you need
                                             rules: [{required: true}],
                                         })}/>
@@ -487,7 +488,7 @@ class PersonalDetails extends Component {
                                     <Col md={{span:24}} lg={{span:24}} xl={{span:24}} xxl={{span:24}}>
                                         <Street_Address>Street Address</Street_Address>
                                         <Street_input placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} {...getFieldProps('street_address', {
-                                            onChange(){console.log("Hello How are You")},
+                                            onChange(){/* console.log("Hello How are You") */},
                                             initialValue:this.props.profileDetails.street_address, // have to write original onChange here if you need
                                             rules: [{required: true}],
                                         })}/>
@@ -498,7 +499,7 @@ class PersonalDetails extends Component {
                                     <Col md={{span:12}} lg={{span:12}} xl={{span:12}} xxl={{span:12}}>
                                         <City>City/Town</City>
                                         <First_input placeholder="City"{...getFieldProps('city_town', {
-                                            onChange(){console.log("Hello How are You")},
+                                            onChange(){/* console.log("Hello How are You") */},
                                             initialValue:this.props.profileDetails.city_town, // have to write original onChange here if you need
                                             rules: [{required: true}],
                                         })}/>
@@ -507,7 +508,7 @@ class PersonalDetails extends Component {
                                     <Col md={{span:12}} lg={{span:12}} xl={{span:12}} xl={{span:12}}>
                                         <Postal>Postal Code</Postal>
                                         <Last_input placeholder="Postal Code"{...getFieldProps('postal_code', {
-                                            onChange(){console.log("Hello How are You")},
+                                            onChange(){/* console.log("Hello How are You") */},
                                             initialValue:this.props.profileDetails.postal_code,// have to write original onChange here if you need
                                             rules: [{required: true}],
                                         })}/>
@@ -529,7 +530,7 @@ class PersonalDetails extends Component {
     }
 }
 const mapStateToProps = (state) => {
-    console.log("personalDetails",state)
+    /* console.log("personalDetails",state) */
     return {
       ...state,
         email:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0].email:"",

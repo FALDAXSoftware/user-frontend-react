@@ -2,11 +2,12 @@
 import React from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
-import { Button } from "antd";
-import { Username, Form_wrap, Welcome_text, Email_label } from "./Login_Form";
+import { Button,notification } from "antd";
+import {Username, Form_wrap, Welcome_text, Email_label , Email_req } from "./Login_Form";
+import {connect} from "react-redux"
 
 /* Components */
-
+import {forgotAction} from "../../../Actions/Auth"
 /* Global Constants */
 
 
@@ -107,11 +108,11 @@ const Back_link = styled.a`
     font-family: "Open Sans";
     color: rgb( 15, 71, 123 );   
 `
-class Login_Form extends React.Component {
+class Forgot_Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      forgot:false
     }
   }
   static propTypes = {
@@ -119,13 +120,55 @@ class Login_Form extends React.Component {
   };
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      console.log(error, value);
+     /*  console.log(error, value); */
+      if(error!==null && error!==undefined)
+      {
+        if(error.email!==undefined)
+            {
+              if(error.email.errors[0].message!==undefined && error.email.errors[0].message!==null)
+              {
+                document.querySelectorAll(".email_msg")[0].style.display = "block";
+                if(value.email=="" || value.email==undefined)
+                this.setState({email_msg:`*${error.email.errors[0].message}`})
+                else
+                this.setState({email_msg:"*email address is not valid"})
+              }
+              else
+              {
+                document.querySelectorAll(".email_msg")[0].style.display = "none";
+                this.setState({email_msg:null})
+              }
+            }
+      }
+      else
+      {
+        document.querySelectorAll(".email_msg")[0].style.display = "none";            
+       /*  console.log(this.props,value) */
+        this.setState({email_msg:null});
+        this.openNotification();
+        this.props.forgotAction(value);    
+      }
     });
   }
   dispModal(pressed) {
-    console.log(this.props, pressed)
+    /* console.log(this.props, pressed) */
     this.props.dispModal(pressed)
   }
+  componentWillReceiveProps(props,newProps)
+  {
+    if(props.forgot==true && this.state.forgot!==true)
+    {
+
+    }
+  }
+  openNotification = () => {
+    notification.open({
+      message: 'Password Reset Link Sent',
+      description: 'The link to reset the password is sent to your Email Address',
+      duration:6,
+      icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+    });
+  };
   render() {
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
@@ -137,11 +180,11 @@ class Login_Form extends React.Component {
           <Welcome_text>Forgot Password?</Welcome_text>
           <Sub_text>Don't worry,it happen's to the best of us</Sub_text>
           <Email_label>Email Address</Email_label>
-          <Username {...getFieldProps('username', {
-            onChange() { console.log("Hello How are You") }, // have to write original onChange here if you need
-            rules: [{ required: true }],
+          <Username {...getFieldProps('email', {
+            onChange() { /* console.log("Hello How are You") */ }, // have to write original onChange here if you need
+            rules: [{ type:"email",required: true }],
           })} />
-
+          <Email_req className="email_msg">{this.state.email_msg}</Email_req>
           {(errors = getFieldError('required')) ? errors.join(',') : null}
           <Button_login onClick={this.submit}>Send Reset Link</Button_login>
           <Link_wrap>
@@ -155,4 +198,14 @@ class Login_Form extends React.Component {
     );
   }
 }
-export default createForm()(Login_Form);
+
+function mapStateToProps(state,ownProps){
+  /* console.log(ownProps) */
+  return({
+    forgot:state.simpleReducer.forgot?state.simpleReducer.forgot:false
+  })
+ }
+const mapDispatchToProps = dispatch => ({
+  forgotAction: (isLoggedIn) => dispatch(forgotAction(isLoggedIn))
+ })
+export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Forgot_Form));

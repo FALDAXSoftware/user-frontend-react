@@ -17,26 +17,29 @@ export default (state = {}, action) => {
         }
 
       case "SIGNUP":
-      console.log("SIGNUP")
+      /* console.log("SIGNUP") */
         return {...state,isLoggedIn:undefined}
-
+      case "FORGOT":
+        return {...state,forgot:action.payload}
       case "EDITPROFILE":
-        console.log("EDITPROFILE",action.payload)
+        /* console.log("EDITPROFILE",action.payload) */
         return {...state}
       
       case "ADDPROFILE":
-        console.log("ADDPROFILE",action.payload)
+        /* console.log("ADDPROFILE",action.payload) */
         return {...state,profileDetails:action.payload}
 
       case "REMOVELOADER":
-        console.log("REMOVELOADER",action.payload)
+        /* console.log("REMOVELOADER",action.payload) */
         return{...state,loader:action.payload}
       case "ADDLOADER":
-        console.log("ADDLOADER",action.payload)
+        /* console.log("ADDLOADER",action.payload) */
         return{...state,loader:action.payload}
+      case "RESET":
+        return {...state}
       default:
-        console.log("default")
-        return {...state};
+        /* console.log("default") */
+        return {...state,forgot:undefined};
     }
 
 

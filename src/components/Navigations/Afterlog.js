@@ -5,7 +5,7 @@ import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal , D
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-
+import {queryString} from 'query-string'
 import { Logout } from '../../Actions/Auth';
 import {globalVariables} from '../../Globals'
 
@@ -21,6 +21,10 @@ const Right_div = styled.div`
 `
 const UserName = styled.div`
     display: inline-block;
+    font-size: 13px;
+    font-family: "Open sans";
+    color: rgb( 80, 80, 80 );
+    font-weight: bold;
     @media(max-width: 576px)
     {
         display: none;
@@ -86,7 +90,7 @@ class Afterlog extends React.Component
         this.props.openNav();
     }
     logout() {
-        console.log("hello Logout")
+        /* console.log("hello Logout") */
         this.props.Logout();
     }
     render()
@@ -104,12 +108,12 @@ class Afterlog extends React.Component
         {
             if(this.props.profileDetails.profile_pic!==null && this.props.profileDetails.profile_pic!==undefined && this.props.profileDetails.profile_pic!=="")
             {
-                console.log("aaaaaaaaaa")
+                /* console.log("aaaaaaaaaa") */
                 Avatar_img = globalVariables.amazon_Bucket + this.props.profileDetails.profile_pic;
             }
             else
             {
-                console.log("vbbbbbbbbbbbbb")
+                /* console.log("vbbbbbbbbbbbbb") */
                 Avatar_img =  "./images/Settings/def_profile.png";
             }
         }
@@ -117,7 +121,7 @@ class Afterlog extends React.Component
             <Right_div>
                 <DropDownDiv overlay={DropdownItems} trigger={['click']}>
                     <AnchorName className="ant-dropdown-link" href="#">
-                    {console.log(this.props,Avatar_img)}
+                    {/* console.log(this.props,Avatar_img) */}
                         <HeaderAvatar src={Avatar_img} />
                         <UserName>
                                 {this.props.prof_name}
@@ -131,7 +135,7 @@ class Afterlog extends React.Component
     }
 }
 function mapStateToProps(state){
-    console.log(state)
+   /*  console.log(state) */
     return ({
         ...state,
     });

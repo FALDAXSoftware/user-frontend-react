@@ -33,7 +33,7 @@ export default class Datepicker extends React.Component
             fields[type] = date;
         }
         
-        console.log(fields["day"],fields["year"],fields["month"], "State ===>" ,fields)
+        /* console.log(fields["day"],fields["year"],fields["month"], "State ===>" ,fields) */
         if(fields["day"]!==undefined && fields["year"]!==undefined && fields["month"]!==undefined)
         {
             this.props.onDateChange(fields)
@@ -50,7 +50,7 @@ export default class Datepicker extends React.Component
             month = Number(date[1])
             day = Number(date[2])
         }
-        console.log(year,month,day)
+        /* console.log(year,month,day) */
         return(
             <Picker_wrap>
                 <YearPicker
@@ -66,7 +66,7 @@ export default class Datepicker extends React.Component
                     // mandatory
                     onChange={(year) => {
                         this.onChangeDate(year,"year")
-                        console.log(year);
+                        /* console.log(year); */
                     }}
                     id={'profile-year'}
                     name={'year'}
@@ -87,7 +87,7 @@ export default class Datepicker extends React.Component
                     // mandatory
                     onChange={(month) => {
                         this.onChangeDate(month,"month")
-                        console.log(month);
+                       /*  console.log(month); */
                     }}
                     id={'profile-month'}
                     name={'month'}
@@ -106,7 +106,7 @@ export default class Datepicker extends React.Component
                     // mandatory
                     onChange={(day) => {
                         this.onChangeDate(day,"day")
-                        console.log(day);
+                        /* console.log(day); */
                     }}
                     id={'profile-day'}
                     name={'day'}

@@ -192,7 +192,7 @@ class Login_Form extends React.Component
       };
       submit = () => {
         this.props.form.validateFields((error, value) => {
-          console.log(error, value);
+          /* console.log(error, value); */
           if(error!==null && error!==undefined)
           {
             if(error.email!==undefined)
@@ -247,17 +247,20 @@ class Login_Form extends React.Component
             document.querySelectorAll(".email_msg")[0].style.display = "none";
             
             this.setState({pass_msg:null,email_msg:null});
-            console.log(value,this.props)
+            /* console.log(value,this.props) */
+            if(this.props.forgotParam!==undefined)
+            value['email_verify_token']=this.props.forgotParam[1];
+            /* console.log(value); */
             this.openNotification();
             this.props.Login(value);
-            console.log(this.props)
+           /*  console.log(this.props) */
             
           }
         });
       }
       dispModal(pressed)
       {
-        console.log(this.props,pressed)
+        /* console.log(this.props,pressed) */
         this.props.dispModal(pressed)
       }
       openNotification = () => {
@@ -281,13 +284,13 @@ class Login_Form extends React.Component
                 <Welcome_text>Welcome to Faldax</Welcome_text>
                   <Email_label>Email Address</Email_label>
                   <Username {...getFieldProps('email', {
-                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
+                    onChange(){/* console.log("Hello How are You") */}, // have to write original onChange here if you need
                     rules: [{type:"email",required: true}],
                   })}/>
                   <Email_req className="email_msg">{this.state.email_msg}</Email_req>
                   <Ph_Label>Password</Ph_Label>
                   <Password  type="password" {...getFieldProps('password', {
-                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
+                    onChange(){/* console.log("Hello How are You") */}, // have to write original onChange here if you need
                     rules: [{type:"string",required: true,min:5}],
                   })}
                   />

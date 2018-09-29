@@ -20,11 +20,11 @@ export default class CountryPick extends React.Component
         this.handleChange = this.handleChange.bind(this);
     }
     handleChange(value) {
-        console.log(`selected ${value}`);
+       /*  console.log(`selected ${value}`); */
         this.props.onCountryChange(value);
     }
     handleBlur() {
-        console.log('blur');
+        /* console.log('blur'); */
     }
     componentDidMount() {
         fetch('http://192.168.2.224:1337/user/countries',{
@@ -37,7 +37,7 @@ export default class CountryPick extends React.Component
         .then(response => response.json())
         .then((responseData) => {
             this.setState({countries:responseData.data,fetching:false,callOnce:true});
-            console.log(responseData)
+            /* console.log(responseData) */
             Countries = responseData.data;
         
         });
@@ -45,7 +45,7 @@ export default class CountryPick extends React.Component
     
     render()
     {
-        console.log(this.state,this.props,this.props.profileDetails.country)
+        /* console.log(this.state,this.props,this.props.profileDetails.country) */
         return(
             <Select
                 showSearch

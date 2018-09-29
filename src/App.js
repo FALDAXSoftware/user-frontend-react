@@ -24,9 +24,9 @@ class App extends Component {
   }
   
   render() {
-    console.log(this.props)
+    /* console.log(this.props) */
     const {isLoggedIn} = this.props
-    console.log(isLoggedIn)
+    /* console.log(isLoggedIn) */
 
     const RestrictedRoute = ({
       component: Component,
@@ -78,10 +78,10 @@ class App extends Component {
         <Route
           render={({location}) => (
           <Switch location={location}>
-            {console.log(location)}
-            {/* <Route path="/" exact title="Login" component={HomePage}/> */}
+            /* {console.log(location)} */
+            <Route path='/reset-password' title="Login" component={HomePage}/>
             <Route  path="/login" exact title="Login" component={HomePage}/>
-            {console.log(this.props.isLoggedIn)}
+           {/*  {console.log(this.props.isLoggedIn)} */}
             <RestrictedRoute
               path="/"
               component={AppRouter}
@@ -94,7 +94,7 @@ class App extends Component {
 }
 
 function mapStateToProps(state){
-  console.log(state)
+ /*  console.log(state) */
   return({
     isLoggedIn:state.simpleReducer.isLoggedIn!==undefined ? true : false 
   })

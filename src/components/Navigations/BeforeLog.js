@@ -89,15 +89,15 @@ export default class Beforelog extends React.Component
                         {/* <Day_night_mode>
                             <span> <FontAwesomeIcon icon={faMoon} color='black' style={{transform: 'rotate(315deg)'}} /> </span>
                         </Day_night_mode> */}
-                        <Exchange>
+                        {/* <Exchange>
                             <span> CAREERS </span>
-                        </Exchange>
+                        </Exchange> */}
                         {/* <Exchange>
                             <span> LANGUAGE </span>
                         </Exchange> */}
                         <Login_text onClick={()=>this.dispModal("login")}>LOGIN</Login_text>
                         <Temp_button onClick={()=>this.dispModal("signup")} type="primary" size="large">Sign up</Temp_button>
-                        <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={() => this.openNav()}>&#9776;</Open>
+                       {/*  <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={() => this.openNav()}>&#9776;</Open> */}
                     </div>
         );
     }
