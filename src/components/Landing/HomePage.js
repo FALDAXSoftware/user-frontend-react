@@ -191,7 +191,7 @@ const columns = [
 
 const tableData = [
   {
-    name: "Petey Cruiser",
+    name: "ZEC/BTC",
     last_price: 2000.02,
     change: 0.15,
     hours_volume: 43354600,
@@ -199,7 +199,7 @@ const tableData = [
     low: 2.024585
   },
   {
-    name: "Anna Sthesia",
+    name: "XRP/BTC",
     last_price: 7000.03,
     change: 2.15,
     hours_volume: 33460,
@@ -207,7 +207,7 @@ const tableData = [
     low: 3.024585
   },
   {
-    name: "Paul Molive",
+    name: "XMR/BTC",
     last_price: 5500.024573,
     change: -5.15,
     hours_volume: 3399906,
@@ -215,7 +215,7 @@ const tableData = [
     low: 10.024585
   },
   {
-    name: "Anna Mull",
+    name: "SWFTC/BTC",
     last_price: 0.024573,
     change: 11.15,
     hours_volume: 76554600,
@@ -223,7 +223,7 @@ const tableData = [
     low: 7.024585
   },
   {
-      name: "Gail Forcewind",
+      name: "ZEC/BTC",
       last_price: 2000.02,
       change: 0.15,
       hours_volume: 43354600,
@@ -231,7 +231,7 @@ const tableData = [
       low: 2.024585
   },
   {
-      name: "Paige Turner",
+      name: "LTC/BTC",
       last_price: 7000.03,
       change: 2.15,
       hours_volume: 33460,
@@ -239,7 +239,7 @@ const tableData = [
       low: 3.024585
   },
   {
-      name: "Bob Frapples",
+      name: "LTC/BTC",
       last_price: 5500.024573,
       change: -5.15,
       hours_volume: 3399906,
@@ -247,7 +247,7 @@ const tableData = [
       low: 10.024585
   },
   {
-      name: "Walter Melon",
+      name: "DASH/BTC",
       last_price: 0.024573,
       change: 11.15,
       hours_volume: 76554600,
@@ -255,7 +255,7 @@ const tableData = [
       low: 7.024585
   },
   {
-      name: "Brock Lee",
+      name: "BTC/USDT",
       last_price: 2000.02,
       change: 0.15,
       hours_volume: 43354600,
@@ -263,7 +263,7 @@ const tableData = [
       low: 2.024585
   },
   {
-      name: "Rick O'Shea",
+      name: "BCH/USDT",
       last_price: 7000.03,
       change: 2.15,
       hours_volume: 33460,
@@ -271,7 +271,7 @@ const tableData = [
       low: 3.024585
   },
   {
-      name: "Barb Dwyer",
+      name: "ZEC/BTC",
       last_price: 5500.024573,
       change: -5.15,
       hours_volume: 3399906,
@@ -279,7 +279,7 @@ const tableData = [
       low: 10.024585
   },
   {
-      name: "Terry Aki",
+      name: "BCH/BTC",
       last_price: 0.024573,
       change: 11.15,
       hours_volume: 76554600,
@@ -287,7 +287,7 @@ const tableData = [
       low: 7.024585
   },
   {
-      name: "Cory Ander",
+      name: "ZEC/BTC",
       last_price: 4000.04,
       change: 2.15,
       hours_volume: 33460,
@@ -295,7 +295,7 @@ const tableData = [
       low: 3.024585
   },
   {
-      name: "Robin Banks",
+      name: "BCH/USDT",
       last_price: 10001.024,
       change: -1.15,
       hours_volume: 3399906,
@@ -303,7 +303,7 @@ const tableData = [
       low: 10.024585
   },
   {
-      name: "Barry Wine",
+      name: "BTC/ZEC",
       last_price: 2200.57301,
       change: 0.15,
       hours_volume: 2500,

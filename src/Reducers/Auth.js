@@ -12,7 +12,8 @@ export default (state = {}, action) => {
       case 'LOGOUT':
         return {
           ...state,
-          isLoggedIn: undefined
+          isLoggedIn: undefined,
+          profileDetails:undefined
         }
 
       case "SIGNUP":
@@ -26,9 +27,19 @@ export default (state = {}, action) => {
       case "ADDPROFILE":
         console.log("ADDPROFILE",action.payload)
         return {...state,profileDetails:action.payload}
-        
+
+      case "REMOVELOADER":
+        console.log("REMOVELOADER",action.payload)
+        return{...state,loader:action.payload}
+      case "ADDLOADER":
+        console.log("ADDLOADER",action.payload)
+        return{...state,loader:action.payload}
       default:
         console.log("default")
         return {...state};
     }
+
+
+
+    
    }

@@ -43,7 +43,7 @@ export default class Datepicker extends React.Component
     render()
     {
         let date,year,month,day
-        if(this.props.profileDetails.dob!==undefined)
+        if(this.props.profileDetails.dob!==undefined && this.props.profileDetails.dob!==null)
         {
             date = this.props.profileDetails.dob.split("/")
             year = Number(date[0])

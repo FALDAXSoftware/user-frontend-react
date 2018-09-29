@@ -135,7 +135,7 @@ class Signup_Form extends React.Component
               if(error.fullname.errors[0].message!==undefined && error.fullname.errors[0].message!==null)
               {
                 document.querySelectorAll(".full_sign")[0].style.display = "block";
-                this.setState({full_msg:"*Email is incorrect"})
+                this.setState({full_msg:"*full name is not valid"})
               }
               else
               {
@@ -148,7 +148,7 @@ class Signup_Form extends React.Component
               if(error.email.errors[0].message!==undefined && error.email.errors[0].message!==null)
               {
                 document.querySelectorAll(".email_sign")[0].style.display = "block";
-                this.setState({email_msg:"*Email is incorrect"})
+                this.setState({email_msg:"*email address is not valid"})
               }
               else
               {
@@ -161,7 +161,7 @@ class Signup_Form extends React.Component
               if(error.phone_number.errors[0].message!==undefined && error.phone_number.errors[0].message!==null)
               {
                 document.querySelectorAll(".phone_sign")[0].style.display = "block";
-                this.setState({phone_msg:"*Phone Number is Incorrecct"})
+                this.setState({phone_msg:"*Phone Number is not valid"})
               }
               else
               {
@@ -175,7 +175,7 @@ class Signup_Form extends React.Component
               if(error.password.errors[0].message!==undefined && error.password.errors[0].message!==null)
               {
                 document.querySelectorAll(".pass_sign")[0].style.display = "block";
-                this.setState({pass_msg:"*Password is Incorrecct"})
+                this.setState({pass_msg:"*Password is not valid"})
               }
               else
               {
@@ -238,7 +238,7 @@ class Signup_Form extends React.Component
                   {(errors = getFieldError('required')) ? errors.join(',') : null}
                   <Button_login onClick={this.submit}>SIgn Up</Button_login>
                   <Sign>
-                    Already have an account ? <Sign_a onClick={()=>this.dispModal()}>Login</Sign_a>
+                    Already have an account? <Sign_a onClick={()=>this.dispModal()}>Login</Sign_a>
                   </Sign>
               </Form_wrap>
             </div>

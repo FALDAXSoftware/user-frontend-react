@@ -26,7 +26,9 @@ export const profileupdatedData = (Data) => dispatch => {
         
     })
 }
-export const getProfileDataAction = (token) => dispatch => {
+export const getProfileDataAction = (token) => 
+    dispatch => {
+    dispatch(addLoader());
     fetch("http://192.168.2.224:1337/users/getUserDetails",{
                     method:"get",
                     headers: {
@@ -39,6 +41,7 @@ export const getProfileDataAction = (token) => dispatch => {
             .then((responseData) => {
                 console.log("I m in API get",responseData)
                 dispatch(addprofileData(responseData))
+                dispatch(removeLoader());
             })
             .catch(error => { console.log(error) })
 }
@@ -67,4 +70,18 @@ export function removepicAction(isLoggedIn,form)
         })
         .catch(error => { console.log(error) })
     } 
+}
+export const removeLoader = () => dispatch => {
+    dispatch({
+        type: 'REMOVELOADER',
+        payload: false
+    })
+}
+
+export const addLoader = () => dispatch => {
+    dispatch({
+        type: 'ADDLOADER',
+        payload: true
+        
+    })
 }

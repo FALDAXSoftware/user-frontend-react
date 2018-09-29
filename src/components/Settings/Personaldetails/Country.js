@@ -14,7 +14,8 @@ export default class CountryPick extends React.Component
     constructor(props){
         super(props);
         this.state={
-            countries:[]
+            countries:[],
+            country_selected:this.props.profileDetails.country?this.props.profileDetails.country:"Afghanistan"
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -44,7 +45,7 @@ export default class CountryPick extends React.Component
     
     render()
     {
-        console.log(this.state,this.props)
+        console.log(this.state,this.props,this.props.profileDetails.country)
         return(
             <Select
                 showSearch

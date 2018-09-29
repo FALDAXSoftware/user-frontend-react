@@ -6,11 +6,14 @@ import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
 
 /* Components */
 import Login_Form from "../Landing/User_forms/Login_Form"
 import Signup_Form from "../Landing/User_forms/Signup_Form"
 import Forgot_Form from "../Landing/User_forms/Forgot_Form"
+import Beforelog from "./BeforeLog"
+import Afterlog from "./Afterlog"
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
@@ -117,14 +120,7 @@ const Menu_item = styled(Menu.Item)`
 const FALDAX_LOGO = styled.img`
     padding-left:22px;
 `
-const Open = styled.span`
-    display:none;
-    @media(max-width:1320px)
-    {
-        display:inline-block;
-        margin-right:15px;
-    }
-`
+
 const SideNav = styled.div`
     height: 100%;
     width: 0;
@@ -199,65 +195,10 @@ const Right_div = styled.div`
         margin-top:0px;
     }
 `
-const Exchange = styled.div`
-    display:inline;
-    font-size: 13px;
-    font-family: "Open sans";
-    color: rgb( 40, 37, 40 );
-    font-weight: bold;
-    text-transform: uppercase;
-    padding-right: 22px;
-    cursor:pointer;
-    @media(max-width:1540px)
-    {
-        margin-right:8px;
-        padding-right:8px;
-    }
-    @media(max-width:670px)
-    {
-        display:none;
-    }
-`
-const Day_night_mode = styled.div`
-    display:inline;
-    font-size: 13px;
-    padding-right: 10px;
-    cursor:pointer;
-`
-const Login_text = styled.span`
-    border-left: 1px solid #f0f0f0;
-    font-size: 13px;
-    font-family: "Open sans";
-    color: rgb( 0,0,0 );
-    font-weight: bold;
-    margin-right: 15px;
-    padding-left: 30px;
-    cursor: pointer;
-    @media(max-width:480px)
-    {
-        display:none;
-    }
-    @media(max-width:1540px)
-    {
-        margin-right:10px;
-        padding-left: 18px;
-    }
-`
-const Temp_button = styled(Button)`
-    background-color:#0f477b;
-    border-radius: 20px;
-    margin-right:30px;
 
-    @media(max-width:480px)
-    {
-        display:none;
-    }
-    @media(max-width:1440px)
-    {
-        margin-right: 10px;
-    }
-`
-export default class Navigation extends React.Component {
+
+
+class Navigation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -314,7 +255,7 @@ export default class Navigation extends React.Component {
     render() {
         return (
             <Header_main id="main">
-                <Logo>
+                <Logo onClick = { () => this.props.history.push("/login")}>
                     <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png" />
                     <FALDAX src="./images/Homepage/faldax.png" />
                 </Logo>
@@ -333,20 +274,9 @@ export default class Navigation extends React.Component {
                     <Menu_item key="8">EXCHANGE</Menu_item>
                 </Menu_main>
                 <Right_div>
-                    <div>
-                        <Day_night_mode>
-                            <span> <FontAwesomeIcon icon={faMoon} color='black' style={{transform: 'rotate(315deg)'}} /> </span>
-                        </Day_night_mode>
-                        <Exchange>
-                            <span> CAREERS </span>
-                        </Exchange>
-                        <Exchange>
-                            <span> LANGUAGE </span>
-                        </Exchange>
-                        <Login_text onClick={this.dispModal.bind(this,"login")}>LOGIN</Login_text>
-                        <Temp_button onClick={this.dispModal.bind(this,"signup")} type="primary" size="large">Sign up</Temp_button>
-                        <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={this.openNav.bind(this)}>&#9776;</Open>
-                    </div>
+                    {this.props.isLoggedIn?<Afterlog {...this.props} openNav={() => this.openNav()}/>:
+                        <Beforelog {...this.props} dispModal={(pressed)=>this.dispModal(pressed)} openNav={() => this.openNav()}/>
+                    }
                 </Right_div>
                 <SideNav id="mySidenav">
                     <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
@@ -407,3 +337,14 @@ export default class Navigation extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state){
+    console.log(state)
+    return ({
+        isLoggedIn:state.simpleReducer.isLoggedIn?true:false
+    });
+}
+  const mapDispatchToProps = dispatch => ({
+   })
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

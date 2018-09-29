@@ -136,7 +136,7 @@ class Login_Form extends React.Component {
           <Login_head>Forgot Password</Login_head>
           <Welcome_text>Forgot Password?</Welcome_text>
           <Sub_text>Don't worry,it happen's to the best of us</Sub_text>
-          <Email_label>Full Name</Email_label>
+          <Email_label>Email Address</Email_label>
           <Username {...getFieldProps('username', {
             onChange() { console.log("Hello How are You") }, // have to write original onChange here if you need
             rules: [{ required: true }],

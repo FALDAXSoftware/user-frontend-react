@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import {connect} from "react-redux"
 import { Row, Col, Tabs } from 'antd';
 import styled from 'styled-components';
+import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader'
 import PersonalDetails from './Personaldetails/PersonalDetails';
 import Referral from './Referral';
 import LoggedNavigation from '../Navigations/LoggedNavigation'
@@ -42,28 +43,36 @@ class Editprofile extends Component {
 
         return (
             <div>
-                <LoggedNavigation/>
-                <ProfileWrapper>
-                    <ProfileDiv>
-                        <Tabs className="profile-tabs" defaultActiveKey="1" onChange={this._changeTab}>
-                            <TabPane tab="Personal Details" key="1"><PersonalDetails {...this.props}/></TabPane>
-                            <TabPane tab="Security" key="2">Content of Tab Pane 2</TabPane>
-                            <TabPane tab="KYC" key="3">Content of Tab Pane 3</TabPane>
-                            <TabPane tab="Payment Methods" key="4">Content of Tab Pane 3</TabPane>
-                            <TabPane tab="Account Settings" key="5">Content of Tab Pane 3</TabPane>
-                            <TabPane tab="Referral" key="6"><Referral/></TabPane>
-                        </Tabs>
-                    </ProfileDiv>
-                </ProfileWrapper>
+                {console.log(this.props.loader)}
+                <OverlayLoader 
+                        color={'red'} // default is white
+                        loader="ScaleLoader" // check below for more loaders
+                        text="Loading... Please wait!" 
+                        active={false} 
+                        backgroundColor={'black'} // default is black
+                        opacity=".4" // default is .9  
+                    >
+                    <LoggedNavigation/>
+                    <ProfileWrapper>
+                        <ProfileDiv>
+                            <Tabs className="profile-tabs" defaultActiveKey="1" onChange={this._changeTab}>
+                                <TabPane tab="Personal Details" key="1"><PersonalDetails {...this.props}/></TabPane>
+                                <TabPane tab="Referral" key="2"><Referral/></TabPane>
+                            </Tabs>
+                        </ProfileDiv>
+                    </ProfileWrapper>
                 <CommonFooter/>
+                </OverlayLoader>
             </div>
         );
     }
 }
 
 function mapStateToProps(state){
+    console.log(state)
     return({
-      isLoggedIn:state.simpleReducer.isLoggedIn
+      isLoggedIn:state.simpleReducer.isLoggedIn,
+      /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }
 

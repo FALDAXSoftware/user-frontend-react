@@ -11,7 +11,7 @@ const { Footer } = Layout;
 const Bottom_Footer = styled(Footer)`
     text-align: center;
     background-color: #ffffff;
-    font-size : 13pt;
+    font-size : 13px;
     font-family: "Open sans";
 `
 const Footer_wrap = styled.div`

@@ -2,7 +2,7 @@
 import React from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
-import {Button} from "antd";
+import {Button, notification,Icon} from "antd";
 import { connect } from 'react-redux';
 import {Login} from '../../../Actions/Auth'
 /* Components */
@@ -62,6 +62,7 @@ export const Email_label = styled.div`
 export const Username = styled.input`
   display:block;
   background-color: #f8f8f8;
+  padding-left:5px;
   border: 0px;
   width: 76%;
   margin-top:10px;
@@ -87,7 +88,7 @@ const Ph_Label = styled(Email_label)`
 export const Phone_req = styled.label`
   display:none;
   color:red;
-  font-size:14px;
+  font-size:10px;
 `
 const Password = styled(Username)`
   font-size:16px;
@@ -95,7 +96,7 @@ const Password = styled(Username)`
 export const Pass_req = styled.label`
   display:none;
   color:red;
-  font-size:14px;
+  font-size:10px;
 `
 const Check_wrap = styled.div`
   margin-top:35px;
@@ -183,8 +184,7 @@ class Login_Form extends React.Component
         super(props);
         this.state = {
           email_msg:null,
-          pass_msg:null,
-          phone_msg:null
+          pass_msg:null
         }
       }
       static propTypes = {
@@ -200,34 +200,33 @@ class Login_Form extends React.Component
               if(error.email.errors[0].message!==undefined && error.email.errors[0].message!==null)
               {
                 document.querySelectorAll(".email_msg")[0].style.display = "block";
-                this.setState({email_msg:"*email is not valid"})
+                if(value.email=="" || value.email==undefined)
+                this.setState({email_msg:`*${error.email.errors[0].message}`})
+                else
+                this.setState({email_msg:"*email address is not valid"})
               }
               else
               {
+                document.querySelectorAll(".email_msg")[0].style.display = "none";
                 this.setState({email_msg:null})
               }
             }
-            if(error.phone_number!==undefined)
+            else
             {
-              if(error.phone_number.errors[0].message!==undefined && error.phone_number.errors[0].message!==null)
-              {
-                document.querySelectorAll(".phone_msg")[0].style.display = "block";
-                this.setState({phone_msg:`*${error.phone_number.errors[0].message}`})
-              }
-              else
-              {
-                
-                document.querySelectorAll(".phone_msg")[0].style.display = "none";
-                this.setState({phone_msg:null})
-              }
+              document.querySelectorAll(".email_msg")[0].style.display = "none";
+              this.setState({email_msg:null})
             }
             if(error.password!==undefined)
             {
               if(error.password.errors[0].message!==undefined && error.password.errors[0].message!==null)
               {
                 document.querySelectorAll(".pass_msg")[0].style.display = "block";
-                if(error.password.errors[0].message.includes("8"))
+                if(value.password=="" || value.password==undefined)
                 this.setState({pass_msg:`*${error.password.errors[0].message}`})
+                else if(error.password.errors[0].message.includes("8"))
+                this.setState({pass_msg:`*${error.password.errors[0].message}`})
+                else
+                this.setState({pass_msg:"*password is not valid"})
               }
               else
               {
@@ -235,14 +234,21 @@ class Login_Form extends React.Component
                 this.setState({pass_msg:null})
               }
             }
+            else
+            {
+                document.querySelectorAll(".pass_msg")[0].style.display = "none";
+                this.setState({pass_msg:null})
+            }
           } 
           else
           { 
+            
             document.querySelectorAll(".pass_msg")[0].style.display = "none";
-            document.querySelectorAll(".phone_msg")[0].style.display = "none";
             document.querySelectorAll(".email_msg")[0].style.display = "none";
-            this.setState({pass_msg:null,phone_msg:null,email_msg:null});
+            
+            this.setState({pass_msg:null,email_msg:null});
             console.log(value,this.props)
+            this.openNotification();
             this.props.Login(value);
             console.log(this.props)
             
@@ -254,6 +260,14 @@ class Login_Form extends React.Component
         console.log(this.props,pressed)
         this.props.dispModal(pressed)
       }
+      openNotification = () => {
+        notification.open({
+          message: 'Logging In',
+          description: 'Please wait.....',
+          duration:3,
+          icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+        });
+      };
       render() {
         if(this.props.isLoggedIn){
           this.props.history.push("/editProfile");
@@ -271,13 +285,6 @@ class Login_Form extends React.Component
                     rules: [{type:"email",required: true}],
                   })}/>
                   <Email_req className="email_msg">{this.state.email_msg}</Email_req>
-                  <Ph_Label>Phone Number</Ph_Label>
-                  <Phone {...getFieldProps('phone_number', {
-                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{type:"string",required: true,max:13}],
-                  })}
-                  />
-                  <Phone_req className="phone_msg">{this.state.phone_msg}</Phone_req>
                   <Ph_Label>Password</Ph_Label>
                   <Password  type="password" {...getFieldProps('password', {
                     onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
@@ -294,7 +301,7 @@ class Login_Form extends React.Component
                 {(errors = getFieldError('required')) ? errors.join(',') : null}
                 <Button_login onClick={this.submit}>LOGIN</Button_login>
                 <Sign>
-                  Don't have an account ? <Sign_a onClick={()=>this.dispModal("signup")}>Sign Up</Sign_a>
+                  Don't have an account? <Sign_a onClick={()=>this.dispModal("signup")}>Sign Up</Sign_a>
                 </Sign>
               </Form_wrap>
 

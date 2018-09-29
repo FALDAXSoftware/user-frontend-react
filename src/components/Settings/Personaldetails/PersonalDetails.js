@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux";
 import { createForm, formShape } from 'rc-form';
-import { Row, Col ,Input,Button} from 'antd';
+import { Row, Col ,Input,Button,notification,Icon} from 'antd';
 import styled from 'styled-components'
 import Datepicker from "./Datepicker"
 import CountryPick from "./Country"
@@ -48,10 +48,12 @@ const Image_up = styled.div`
 `
 const Image_upload = styled.label`
     color:#0f477b;
+    cursor:pointer;
 `
 const Remove = styled.div`
     margin-top:20px;
     color:#0f477b;
+    cursor:pointer;
 `
 const Right_Col = styled(Col)`
     @media(max-width:992px)
@@ -247,8 +249,10 @@ class PersonalDetails extends Component {
             profileData.append('city_town',value.city_town);
             profileData.append('postal_code',number);
             profileData.append('dob',dataDate);
+            if(this.state.profileImage!==null && this.state.profileImage!==undefined)
             profileData.append('profile_pic',this.state.profileImage)
             console.log(profileData)
+            this.openNotificationWithIcon('warning');
             this.props.profileupdateAction(this.props.isLoggedIn,profileData);
           }
           else
@@ -368,7 +372,7 @@ class PersonalDetails extends Component {
             }
             else
             {
-                this.setState({profileImg:"./images/Settings/profile_pic.png"})
+                this.setState({profileImg:"./images/Settings/def_profile.jpg"})
             }
       }
       handleProfile(e) {
@@ -403,12 +407,25 @@ class PersonalDetails extends Component {
       {
             const formData = new FormData();
             console.log(this.props)
+            this.removeNotification("warning");
             formData.append('email',this.props.email)
             formData.append('profile_pic',"")
             this.props.removepicAction(this.props.isLoggedIn,formData)
       }
-
-
+      openNotificationWithIcon = (type) => {
+        notification[type]({
+          message: 'Updating Profile',
+          description: 'Please wait.....',
+          duration: 3,
+        });
+      };
+      removeNotification = (type) => {
+        notification[type]({
+            message: 'Removing profile picture',
+            description: 'Please wait.....',
+            duration: 3,
+          }); 
+      }
     render() {
         console.log(this.props)
         let errors;
@@ -428,7 +445,7 @@ class PersonalDetails extends Component {
                         <Row>
                             <Left_Col md={{span:24}} lg={{span:6}} xl={{span:6}} xxl={{span:6}}>
                                 {console.log("Above Image",this.state,this.props)}
-                                <div><ImageDiv src={this.state.profileImg?this.state.profileImg:"./images/Settings/profile_pic.png"} /></div>
+                                <div><ImageDiv src={this.state.profileImg} /></div>
                                 <div><Image_input type="file" onChange={this.handleProfile} name="file" id="file"/><Image_up><Image_upload for="file">Upload New Photo</Image_upload></Image_up></div>
                                 <Remove onClick={this.removePic.bind(this)}>Remove</Remove>
                             </Left_Col>

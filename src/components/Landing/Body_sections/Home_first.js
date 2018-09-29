@@ -100,7 +100,7 @@ export default class Homefirst extends React.Component {
                         </Home_list>
                     </Left_Col>
                     <Right_Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Laptop src="./images/Homepage/Laptop.png" />
+                        <Laptop src="./images/Homepage/desktop.png" />
                     </Right_Col>
                 </Container>
             </MainRow>
