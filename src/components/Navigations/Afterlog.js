@@ -5,7 +5,6 @@ import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal , D
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import {queryString} from 'query-string'
 import { Logout } from '../../Actions/Auth';
 import {globalVariables} from '../../Globals'
 
