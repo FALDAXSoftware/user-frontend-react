@@ -4,7 +4,7 @@ export function Login(values)
     /* console.log(values) */
     return(dispatch) => {
         /* console.log(values) */
-        fetch("http://192.168.2.224:1337/login",{
+        fetch("http://18.191.87.133:8084/login",{
             method:"post",
             headers: {
                 Accept: 'application/json',
@@ -42,7 +42,7 @@ export function Signup(values)
     /* console.log(values) */
     return(dispatch) => {
         /* console.log(values) */
-        fetch("http://192.168.2.224:1337/users/create",{
+        fetch("http://18.191.87.133:8084/users/create",{
             method:"post",
             headers: {
                 Accept: 'application/json',
@@ -69,7 +69,7 @@ export const signupAction = (isLoggedIn) => dispatch => {
 export function forgotAction(email)
 {
     return(dispatch) => {
-        fetch("http://192.168.2.224:1337/users/forgotPassword",{
+        fetch("http://18.191.87.133:8084/users/forgotPassword",{
             method:"post",
             headers: {
                 'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ export function resetAction(value)
 {
    /*  console.log(value) */
     return(dispatch) => {
-        fetch("http://192.168.2.224:1337/users/resetPassword",{
+        fetch("http://18.191.87.133:8084/users/resetPassword",{
             method:"put",
             headers: {
                 'Content-Type': 'application/json',

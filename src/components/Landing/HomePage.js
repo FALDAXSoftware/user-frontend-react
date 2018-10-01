@@ -342,14 +342,14 @@ export default class NavigationBar extends React.Component {
           <Header_main {...this.props}/>
           <Content_style>
             <Home_first />
-            <Home_second data={data} />
-            <Home_third
+            {/* <Home_second data={data} /> */}
+            {/* <Home_third
               columns={columns}
               dataSource={tableData}
               loading={false}
               pagination={false}
               handleTableChange={this.handleTableChange}
-            />
+            /> */}
             <Home_four />
             <Home_five />
             <Home_six />

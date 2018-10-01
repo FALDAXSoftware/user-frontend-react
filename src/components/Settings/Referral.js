@@ -160,7 +160,7 @@ class Referral extends React.Component
     {
         super(props);
         this.state = {
-            value: 'abcdabcd',
+            value: null,
             copied: false,
             tableData:[]
         }
@@ -182,6 +182,10 @@ class Referral extends React.Component
             this.setState({tableData:responseData.data})
         })
         .catch(error => { /* console.log(error) */ })
+        if(this.props.profileDetails.referral_code!==undefined)
+        {
+            this.setState({value:this.props.profileDetails.referral_code})
+        }
     }
     openNotificationWithIcon  = (type) => {
         notification[type]({
@@ -246,7 +250,8 @@ class Referral extends React.Component
 }
 function mapStateToProps(state){
     return({
-      isLoggedIn : state.simpleReducer.isLoggedIn
+      isLoggedIn : state.simpleReducer.isLoggedIn,
+      profileDetails:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0]:""
     })
 }
 export default connect(mapStateToProps)(Referral);

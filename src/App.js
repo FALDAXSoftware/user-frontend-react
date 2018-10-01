@@ -47,7 +47,7 @@ class App extends Component {
            }}
          />
          }else{
-          return <Component {...props} />
+          return <Component {...props}  />
          }
        }else{
         if(props.location.pathname== '/'){
@@ -78,12 +78,11 @@ class App extends Component {
         <Route
           render={({location}) => (
           <Switch location={location}>
-            /* {console.log(location)} */
             <Route path='/reset-password' title="Login" component={HomePage}/>
             <Route  path="/login" exact title="Login" component={HomePage}/>
            {/*  {console.log(this.props.isLoggedIn)} */}
             <RestrictedRoute
-              path="/"
+              path="/" 
               component={AppRouter}
               isLoggedIn={isLoggedIn}/>
           </Switch>

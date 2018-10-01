@@ -124,6 +124,7 @@ class Signup_Form extends React.Component
             document.querySelectorAll(".email_sign")[0].style.display = "none";
             this.setState({pass_msg:null,phone_msg:null,email_msg:null});
             /* console.log(value,this.props) */
+            this.openNotification();
             this.props.Signup(value);
             this.props.history.push("login");
             this.props.dispModal("login")

@@ -3,7 +3,7 @@ export function profileupdateAction(isLoggedIn,form)
 {
     /* console.log(isLoggedIn,form) */
     return(dispatch) => {
-        fetch("http://192.168.2.224:1337/users/update",{
+        fetch("http://18.191.87.133:8084/users/update",{
             method:"put",
             headers: {
                 Authorization:"Bearer " + isLoggedIn
@@ -29,7 +29,7 @@ export const profileupdatedData = (Data) => dispatch => {
 export const getProfileDataAction = (token) => 
     dispatch => {
     dispatch(addLoader());
-    fetch("http://192.168.2.224:1337/users/getUserDetails",{
+    fetch("http://18.191.87.133:8084/users/getUserDetails",{
                     method:"get",
                     headers: {
                         Accept: 'application/json',
@@ -56,7 +56,7 @@ export function removepicAction(isLoggedIn,form)
 {
    /*  console.log(isLoggedIn,form) */
     return(dispatch) => {
-        fetch("http://192.168.2.224:1337/users/update",{
+        fetch("http://18.191.87.133:8084/users/update",{
             method:"put",
             headers: {
                 Authorization:"Bearer " + isLoggedIn

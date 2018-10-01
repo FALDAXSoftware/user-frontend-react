@@ -256,7 +256,8 @@ class Navigation extends React.Component {
     componentDidMount()
     {
         let queryParams
-        if(this.props.queryParams!==undefined )
+        console.log("asdfas",this.props)
+        if(this.props.queryParams!==undefined  && this.props.queryParams !=="" )
         {
             queryParams = this.props.queryParams;
             this.setState({forgotParam:queryParams.split("="),
@@ -264,8 +265,9 @@ class Navigation extends React.Component {
             })
         }
     }
-
+    
     render() {
+        let prof_name = this.props.profileDetails.first_name!==null && this.props.profileDetails.first_name!==undefined?(this.props.profileDetails.first_name + " " +  this.props.profileDetails.last_name):"User";
         return (
             <Header_main id="main">
                 <Logo onClick = { () => this.props.history.push("/login")}>
@@ -286,8 +288,9 @@ class Navigation extends React.Component {
                     <Menu_item key="7">LIST YOUR TOKEN/COIN</Menu_item>
                     <Menu_item key="8">EXCHANGE</Menu_item> */}
                 </Menu_main>
+                {console.log(this.props)}
                 <Right_div>
-                    {this.props.isLoggedIn?<Afterlog {...this.props} openNav={() => this.openNav()}/>:
+                    {this.props.isLoggedIn?<Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()}/>:
                         <Beforelog {...this.props} dispModal={(pressed)=>this.dispModal(pressed)} openNav={() => this.openNav()}/>
                     }
                 </Right_div>
@@ -324,6 +327,7 @@ class Navigation extends React.Component {
                         <Row>
                             <Left_col xl={{span:12}} sm={{span:24}}>
                                 {/* console.log(this.state.modal) */}
+                                {console.log(this.state.modal)}
                                 {
                                     this.state.modal==0 || (this.state.forgotParam!==undefined && this.props.pathname.includes("login"))?
                                     <Login_Form {...this.props} forgotParam={this.state.forgotParam} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
@@ -363,7 +367,8 @@ function mapStateToProps(state,ownProps){
     return ({
         isLoggedIn:state.simpleReducer.isLoggedIn?true:false,
         queryParams:ownProps.location.search,
-        pathname:ownProps.location.pathname
+        pathname:ownProps.location.pathname,
+        profileDetails:state.simpleReducer.profileDetails?state.simpleReducer.profileDetails.data[0]:""
     });
 }
 const mapDispatchToProps = dispatch => ({

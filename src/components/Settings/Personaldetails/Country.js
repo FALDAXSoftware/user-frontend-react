@@ -27,7 +27,7 @@ export default class CountryPick extends React.Component
         /* console.log('blur'); */
     }
     componentDidMount() {
-        fetch('http://192.168.2.224:1337/user/countries',{
+        fetch('http://18.191.87.133:8084/user/countries',{
         method:"get",
         headers:{
             Accept: 'application/json',

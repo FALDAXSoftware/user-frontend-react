@@ -369,9 +369,9 @@ class PersonalDetails extends Component {
             if(props.profileDetails.profile_pic!==null && props.profileDetails.profile_pic!==undefined && props.profileDetails.profile_pic!=="" )
             {
                 /* console.log("CWRP",this.state.profileImg,props.profileDetails.profile_pic) */
-                this.setState({profileImg:globalVariables.amazon_Bucket + props.profileDetails.profile_pic})
+                this.setState({profileImg:globalVariables.amazon_Bucket + props.profileDetails.profile_pic,removedProfile:false})
             }
-            else
+            if(this.state.removedProfile && this.state.profileImg)
             {
                 this.setState({profileImg:"./images/Settings/def_profile.jpg"})
             }
@@ -409,6 +409,7 @@ class PersonalDetails extends Component {
             const formData = new FormData();
             /* console.log(this.props) */
             this.removeNotification("warning");
+            this.setState({removedProfile:true})
             formData.append('email',this.props.email)
             formData.append('profile_pic',"")
             this.props.removepicAction(this.props.isLoggedIn,formData)
