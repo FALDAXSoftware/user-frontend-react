@@ -6,7 +6,7 @@ import { Row, Col, Button, Layout, Menu, Breadcrumb, Card } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components'
 
-/* Styled Components */
+/* Import Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
 
 
@@ -86,8 +86,11 @@ const List = styled.li`
 `
 
 
-export default class Homefirst extends React.Component {
+export default class Homefirst extends React.Component 
+{
+
     render() {
+
         return (
             <MainRow>
                 <Container>
@@ -106,4 +109,5 @@ export default class Homefirst extends React.Component {
             </MainRow>
         );
     }
+
 }

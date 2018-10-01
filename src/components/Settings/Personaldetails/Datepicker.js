@@ -15,6 +15,7 @@ export default class Datepicker extends React.Component
             year: null, month: null, day: null
         }
     }
+
     onChangeDate(date,type)
     {
         if(type=="year")
@@ -51,6 +52,7 @@ export default class Datepicker extends React.Component
             day = Number(date[2])
         }
         /* console.log(year,month,day) */
+        
         return(
             <Picker_wrap>
                 <YearPicker

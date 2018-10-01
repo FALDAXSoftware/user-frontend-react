@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 
 /* Styled-Components */
+
 const Day_night_mode = styled.div`
     display:inline;
     font-size: 13px;

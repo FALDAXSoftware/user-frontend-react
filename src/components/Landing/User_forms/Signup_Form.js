@@ -114,7 +114,8 @@ class Signup_Form extends React.Component
         form: formShape,
       };
       submit = () => {
-        this.props.form.validateFields((error, value) => {
+
+          this.props.form.validateFields((error, value) => {
           /* console.log(error, value); */
           if(error==null)
           {
@@ -188,11 +189,13 @@ class Signup_Form extends React.Component
 
         });
       }
+
       dispModal()
       {
        /*  console.log(this.props) */
         this.props.dispModal("login")
       }
+
       openNotification = () => {
         notification.open({
           message: 'Verification mail sent',
@@ -201,6 +204,7 @@ class Signup_Form extends React.Component
           icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
         });
       };
+      
       render() {
         let errors;
         const { getFieldProps, getFieldError } = this.props.form;
@@ -249,6 +253,7 @@ class Signup_Form extends React.Component
                   <Sign>
                     Already have an account? <Sign_a onClick={()=>this.dispModal()}>Login</Sign_a>
                   </Sign>
+
               </Form_wrap>
             </div>
         );
@@ -256,12 +261,16 @@ class Signup_Form extends React.Component
 }
 
 function mapStateToProps(state){
+
   return({
     ...state
   })
- }
+
+}
 const mapDispatchToProps = dispatch => ({
+
   Signup: (values) => dispatch(Signup(values))
- })
+
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Signup_Form))

@@ -6,7 +6,8 @@ import { Input,Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Mod
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-/* COnstants */
+
+/* Constants */
 const { Header, Content, Footer } = Layout;
 const Search = Input.Search;
 
@@ -165,6 +166,7 @@ class Referral extends React.Component
             tableData:[]
         }
     }
+
     componentDidMount()
     {
         /* console.log(this.props.isLoggedIn) */
@@ -187,6 +189,7 @@ class Referral extends React.Component
             this.setState({value:this.props.profileDetails.referral_code})
         }
     }
+
     openNotificationWithIcon  = (type) => {
         notification[type]({
             message: 'Copied Referral Code to Clipboard',
@@ -205,6 +208,7 @@ class Referral extends React.Component
         };
         this.openNotificationWithIcon ('success');
     }
+
     render()
     {
         return(
@@ -248,6 +252,7 @@ class Referral extends React.Component
         );
     }
 }
+
 function mapStateToProps(state){
     return({
       isLoggedIn : state.simpleReducer.isLoggedIn,

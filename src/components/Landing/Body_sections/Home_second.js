@@ -11,6 +11,7 @@ import { Section_1, Container, Container_row } from '../../../styled-components/
 export default class Home_second extends Component {
     render() {
         return (
+
             <Section_1>
                 <Container>
                     <Container_row>
@@ -22,6 +23,7 @@ export default class Home_second extends Component {
                     </Container_row>
                 </Container>
             </Section_1>
+            
         )
     }
 }

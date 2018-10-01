@@ -19,14 +19,18 @@ export default class CountryPick extends React.Component
         }
         this.handleChange = this.handleChange.bind(this);
     }
+
     handleChange(value) {
        /*  console.log(`selected ${value}`); */
         this.props.onCountryChange(value);
     }
+
     handleBlur() {
         /* console.log('blur'); */
     }
-    componentDidMount() {
+
+    componentDidMount() 
+    {
         fetch('http://18.191.87.133:8084/user/countries',{
         method:"get",
         headers:{

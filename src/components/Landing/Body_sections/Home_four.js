@@ -1,24 +1,19 @@
 /* In-build packages */
 import React, { Component } from "react"
-import {
-    ComposableMap,
-    ZoomableGroup,
-    Geographies,
-    Geography,
-} from "react-simple-maps";
+import { ComposableMap,ZoomableGroup,Geographies,Geography} from "react-simple-maps";
 import { connect } from "react-redux";
-import {
-    Tooltip,
-    actions,
-} from "redux-tooltip";
+import {Tooltip,actions,} from "redux-tooltip";
 import styled from 'styled-components';
 import tooltip from 'wsdm-tooltip';
 
 import { Row, Col } from 'antd';
 
-/* Styled Components */
+/* Components */
+
 import { Section_3, Container } from '../../../styled-components/homepage/style';
+
 const { show, hide } = actions;
+
 const tip = tooltip({
     styles: {
         "color": "#282528",
@@ -67,22 +62,29 @@ const Forth_head_p = styled.p`
 `;
 
 /* Component defination start here */
-class Home_four extends Component {
+class Home_four extends Component 
+{
     constructor() {
         super();
         this.handleMove = this.handleMove.bind(this);
         this.handleLeave = this.handleLeave.bind(this);
     }
-    handleMove(geography, evt) {
+
+    handleMove(geography, evt) 
+    {
         const x = evt.clientX;
         const y = evt.clientY + window.pageYOffset;
         this.props.dispatch(show({ origin: { x, y }, content: geography.properties.name }));
     }
-    handleLeave() {
+
+    handleLeave() 
+    {
         this.props.dispatch(hide());
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) 
+    {
+
         if (nextProps.tooltip && this.props.tooltip.show !== nextProps.tooltip.show) {
             if (this.props.tooltip.show === true) {
                 tip.hide(nextProps.tooltip.content);
@@ -94,9 +96,11 @@ class Home_four extends Component {
             tip.position({ pageX: nextProps.tooltip.origin.x, pageY: nextProps.tooltip.origin.y })
         }
     }
-    render() {
-        return (
 
+    render() {
+
+        return (
+            
             <Section_3>
                 <Container>
                     <Row>

@@ -5,9 +5,11 @@ import styled from 'styled-components';
 import {Button,notification,Icon} from "antd";
 import { connect } from 'react-redux';
 import { relativeTimeThreshold } from 'moment';
+
 /* Components */
 import {resetAction} from '../../../Actions/Auth'
 import {Username,Form_wrap,Welcome_text,Email_label,Email_req,Phone_req,Pass_req} from "./Login_Form";
+
 /* Global Constants */
 
 
@@ -206,6 +208,7 @@ class Signup_Form extends React.Component
                   <Common_req className="comp_pass">{this.state.common_req}</Common_req>
                   {(errors = getFieldError('required')) ? errors.join(',') : null}
                   <Button_login onClick={this.submit}>Reset</Button_login>
+
               </Form_wrap>
             </div>
         );
@@ -213,12 +216,15 @@ class Signup_Form extends React.Component
 }
 
 function mapStateToProps(state){
+
   return({
     ...state
   })
+
  }
 const mapDispatchToProps = dispatch => ({
+
   resetAction: (values) => dispatch(resetAction(values))
- })
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Signup_Form))

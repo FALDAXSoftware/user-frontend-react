@@ -306,18 +306,25 @@ class Login_Form extends React.Component
                 <Sign>
                   Don't have an account? <Sign_a onClick={()=>this.dispModal("signup")}>Sign Up</Sign_a>
                 </Sign>
+                
               </Form_wrap>
 
         );
       }
 }
+
 function mapStateToProps(state){
+  
   return({
     isLoggedIn:state.simpleReducer.isLoggedIn!==undefined ? true : false 
   })
- }
+
+}
+
 const mapDispatchToProps = dispatch => ({
+
   Login: (values) => dispatch(Login(values))
+  
  })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Login_Form));

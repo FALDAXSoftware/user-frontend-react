@@ -8,6 +8,7 @@ import {connect} from "react-redux"
 
 /* Components */
 import {forgotAction} from "../../../Actions/Auth"
+
 /* Global Constants */
 
 
@@ -108,16 +109,19 @@ const Back_link = styled.a`
     font-family: "Open Sans";
     color: rgb( 15, 71, 123 );   
 `
-class Forgot_Form extends React.Component {
+class Forgot_Form extends React.Component 
+{
   constructor(props) {
     super(props);
     this.state = {
       forgot:false
     }
   }
+
   static propTypes = {
     form: formShape,
   };
+
   submit = () => {
     this.props.form.validateFields((error, value) => {
      /*  console.log(error, value); */
@@ -150,10 +154,12 @@ class Forgot_Form extends React.Component {
       }
     });
   }
+
   dispModal(pressed) {
     /* console.log(this.props, pressed) */
     this.props.dispModal(pressed)
   }
+
   componentWillReceiveProps(props,newProps)
   {
     if(props.forgot==true && this.state.forgot!==true)
@@ -161,6 +167,7 @@ class Forgot_Form extends React.Component {
 
     }
   }
+
   openNotification = () => {
     notification.open({
       message: 'Password Reset Link Sent',
@@ -169,13 +176,14 @@ class Forgot_Form extends React.Component {
       icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
     });
   };
+
   render() {
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
+
     return (
       <div>
         <Form_wrap>
-
           <Login_head>Forgot Password</Login_head>
           <Welcome_text>Forgot Password?</Welcome_text>
           <Sub_text>Don't worry,it happen's to the best of us</Sub_text>
@@ -196,6 +204,7 @@ class Forgot_Form extends React.Component {
         </Form_wrap>
       </div>
     );
+    
   }
 }
 
@@ -204,8 +213,13 @@ function mapStateToProps(state,ownProps){
   return({
     forgot:state.simpleReducer.forgot?state.simpleReducer.forgot:false
   })
- }
+
+}
+
 const mapDispatchToProps = dispatch => ({
-  forgotAction: (isLoggedIn) => dispatch(forgotAction(isLoggedIn))
- })
+
+  forgotAction: (isLoggedIn) => dispatch(forgotAction(isLoggedIn)) 
+
+})
+
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Forgot_Form));

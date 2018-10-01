@@ -1,8 +1,9 @@
-
+/* Action to Update Profile */
 export function profileupdateAction(isLoggedIn,form)
 {
     /* console.log(isLoggedIn,form) */
     return(dispatch) => {
+
         fetch("http://18.191.87.133:8084/users/update",{
             method:"put",
             headers: {
@@ -19,43 +20,56 @@ export function profileupdateAction(isLoggedIn,form)
         .catch(error => { /* console.log(error) */ })
     } 
 }
+
 export const profileupdatedData = (Data) => dispatch => {
+
     dispatch({
         type: 'EDITPROFILE',
         payload: Data
-        
     })
+
 }
-export const getProfileDataAction = (token) => 
-    dispatch => {
+
+/* Action to GET Profile Data */
+
+export const getProfileDataAction = (token) => dispatch => {
+
     dispatch(addLoader());
     fetch("http://18.191.87.133:8084/users/getUserDetails",{
-                    method:"get",
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                        Authorization:"Bearer " + token
-                    }
-            })
-            .then(response => response.json())
-            .then((responseData) => {
-                /* console.log("I m in API get",responseData) */
-                dispatch(addprofileData(responseData))
-                dispatch(removeLoader());
-            })
-            .catch(error => { /* console.log(error) */ })
+        method:"get",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization:"Bearer " + token
+        }
+    })
+    .then(response => response.json())
+    .then((responseData) => {
+        /* console.log("I m in API get",responseData) */
+        dispatch(addprofileData(responseData))
+        dispatch(removeLoader());
+    })
+    .catch(error => { /* console.log(error) */ })
+
 }
+
 export const addprofileData = (Data) => dispatch => {
+    
     dispatch({
         type: 'ADDPROFILE',
         payload: Data
         
     })
+
 }
+
+/* Action to remove Profile Picture */
+
 export function removepicAction(isLoggedIn,form)
 {
    /*  console.log(isLoggedIn,form) */
     return(dispatch) => {
+
         fetch("http://18.191.87.133:8084/users/update",{
             method:"put",
             headers: {
@@ -70,7 +84,10 @@ export function removepicAction(isLoggedIn,form)
         })
         .catch(error => {/*  console.log(error) */ })
     } 
+
 }
+
+/* Actions for Removing and Adding Loaders */
 export const removeLoader = () => dispatch => {
     dispatch({
         type: 'REMOVELOADER',

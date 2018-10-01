@@ -5,6 +5,8 @@ import {connect} from "react-redux"
 import { Row, Col, Tabs } from 'antd';
 import styled from 'styled-components';
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader'
+
+/* Components */
 import PersonalDetails from './Personaldetails/PersonalDetails';
 import Referral from './Referral';
 import LoggedNavigation from '../Navigations/LoggedNavigation'
@@ -24,7 +26,9 @@ const ProfileDiv = styled.div`
   border-radius: 7px;
 `
 
-class Editprofile extends Component {
+class Editprofile extends Component 
+{
+
     constructor(props) {
         super(props);
         this.state = {

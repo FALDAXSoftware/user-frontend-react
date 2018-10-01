@@ -57,14 +57,15 @@ export default class Home_fourth extends React.Component
           nav1: null,
           nav2: null
         };
-      }
+    }
     
-      componentDidMount() {
+    componentDidMount() {
         this.setState({
           nav1: this.slider1,
           nav2: this.slider2
         });
-      }
+    }
+    
     render()
     {
           var settings = {

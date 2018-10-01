@@ -5,7 +5,11 @@ import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal , D
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
+
+/* Components */
 import { Logout } from '../../Actions/Auth';
+
+/* Constants */
 import {globalVariables} from '../../Globals'
 
 /* Styled-Components */
@@ -139,8 +143,9 @@ function mapStateToProps(state){
         ...state,
     });
 }
+
 const mapDispatchToProps = dispatch => ({
     Logout: () => dispatch(Logout())
-   })
+})
   
 export default connect(mapStateToProps, mapDispatchToProps)(Afterlog);

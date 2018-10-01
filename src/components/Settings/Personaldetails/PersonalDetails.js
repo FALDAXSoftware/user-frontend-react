@@ -5,9 +5,11 @@ import { connect } from "react-redux";
 import { createForm, formShape } from 'rc-form';
 import { Row, Col ,Input,Button,notification,Icon} from 'antd';
 import styled from 'styled-components'
+
+
+/* Components */
 import Datepicker from "./Datepicker"
 import CountryPick from "./Country"
-/* Components */
 import {Email_req} from "../../Landing/User_forms/Login_Form"
 import {globalVariables} from "../../../Globals"
 import {profileupdateAction ,removepicAction, getProfileDataAction} from "../../../Actions/Settings/settings"

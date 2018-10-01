@@ -321,7 +321,9 @@ const SpanCoinChange = styled.span`
 
 /* Component Defination Starts Here*/
 
-export default class NavigationBar extends React.Component {
+export default class NavigationBar extends React.Component 
+{
+  
   constructor() {
     super();
     this.state = { pagination: {} };
