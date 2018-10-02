@@ -106,8 +106,8 @@ class Home_four extends Component
                     <Row>
                         <Col>
                             <Forth_head>
-                                <Forth_head_span> Exchange <b> World </b></Forth_head_span>
-                                <Forth_head_p>Lorem ipsum dolor sir amet, consectertur adipiscing elit.</Forth_head_p>
+                                <Forth_head_span> Service Availability</Forth_head_span>
+                                <Forth_head_p>Mouse-over or click on your country to view our operational status.</Forth_head_p>
                             </Forth_head>
                             <ReactSimpleMapWrapper>
                                 <ComposableMap

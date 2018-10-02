@@ -15,13 +15,14 @@ export default class CountryPick extends React.Component
         super(props);
         this.state={
             countries:[],
-            country_selected:this.props.profileDetails.country?this.props.profileDetails.country:"Afghanistan"
+            country_selected:""
         }
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(value) {
        /*  console.log(`selected ${value}`); */
+       this.setState({country_selected:value});
         this.props.onCountryChange(value);
     }
 
@@ -49,11 +50,11 @@ export default class CountryPick extends React.Component
     
     render()
     {
-        /* console.log(this.state,this.props,this.props.profileDetails.country) */
+        console.log(this.props,this.props.profileDetails.country)
         return(
             <Select
                 showSearch
-                defaultValue={this.props.profileDetails.country}
+                value={this.state.country_selected!==""?this.state.country_selected:this.props.profileDetails.country}
                 placeholder="Select a Country"
                 className="Country_Select"
                 optionFilterProp="children"

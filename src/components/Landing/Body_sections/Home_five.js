@@ -59,8 +59,7 @@ export default class Homesecond extends React.Component
 
                     <Second_Wrap>
                         <Second_head>
-                            <Second_head_span>Our <b>Features</b></Second_head_span>
-                            <Second_head_p>Here are a few reasons why you should choose Faldax</Second_head_p>
+                            <Second_head_span>Features</Second_head_span>
                         </Second_head>
                         <Row_Icon>
                             <Col span={18} offset={3}>
@@ -108,7 +107,7 @@ export default class Homesecond extends React.Component
                             </Col>
                         </Row_Icon>
                     </Second_Wrap>
-                    
+
         );
     }
 }

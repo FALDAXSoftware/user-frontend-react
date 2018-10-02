@@ -16,9 +16,16 @@ export function Login(values)
         .then(response => response.json())
         .then((responseData) => {
             /* console.log(responseData); */
+            if(responseData.status==200)
             dispatch(loginAction(responseData.token))
+            else
+            dispatch(errorAction(responseData)) 
+
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => { 
+            console.log("----->>",error)
+            
+        })
     }
 }
 
@@ -117,5 +124,11 @@ export function resetAction(value)
 export const resetData = (value) => dispatch => {
     dispatch({
      type: 'RESET',
+    })
+}
+export const errorAction = (error) => dispatch => {
+    dispatch({
+        type: 'ERROR',
+        payload: error
     })
 }

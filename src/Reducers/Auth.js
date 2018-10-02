@@ -8,6 +8,12 @@ export default (state = {}, action) => {
           ...state,
           isLoggedIn: action.payload
         }
+        
+      case 'ERROR':
+        return{
+          ...state,
+          error:action.payload
+        }
 
       case 'LOGOUT':
         return {
@@ -34,7 +40,7 @@ export default (state = {}, action) => {
         return {...state}
       
       case "ADDPROFILE":
-        /* console.log("ADDPROFILE",action.payload) */
+        console.log("ADDPROFILE",action.payload)
         return {
           ...state,
           profileDetails:action.payload

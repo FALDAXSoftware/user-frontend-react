@@ -7635,6 +7635,13 @@ react-overlay-loading@^1.0.3:
     webpack "^2.2.1"
     webpack-dev-server "^2.4.1"
 
+react-password-strength@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-password-strength/-/react-password-strength-2.3.1.tgz#a88721e72e5377fd28989dd666aaea060779b142"
+  dependencies:
+    prop-types "^15.6.0"
+    zxcvbn "^4.3.0"
+
 react-popper@^0.9.1:
   version "0.9.5"
   resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.9.5.tgz#02a24ef3eec33af9e54e8358ab70eb0e331edd05"
@@ -9846,3 +9853,7 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
+
+zxcvbn@^4.3.0:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/zxcvbn/-/zxcvbn-4.4.2.tgz#28ec17cf09743edcab056ddd8b1b06262cc73c30"

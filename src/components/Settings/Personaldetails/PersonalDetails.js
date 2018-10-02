@@ -367,14 +367,15 @@ class PersonalDetails extends Component {
       }
       componentWillReceiveProps(props,newProps)
       {
-          /* console.log(this.state,this.props,props,newProps) */
-            if(props.profileDetails.profile_pic!==null && props.profileDetails.profile_pic!==undefined && props.profileDetails.profile_pic!=="" )
+          console.log(this.state,this.props,props,newProps)
+            if(this.state.profileImg==undefined && props.profileDetails.profile_pic!==null && props.profileDetails.profile_pic!==undefined && props.profileDetails.profile_pic!=="" )
             {
-                /* console.log("CWRP",this.state.profileImg,props.profileDetails.profile_pic) */
+                console.log("CWRP",this.state.profileImg,props.profileDetails.profile_pic)
                 this.setState({profileImg:globalVariables.amazon_Bucket + props.profileDetails.profile_pic,removedProfile:false})
             }
             if(this.state.removedProfile && this.state.profileImg)
             {
+                console.log("abababababababb")
                 this.setState({profileImg:"./images/Settings/def_profile.jpg"})
             }
       }
@@ -431,7 +432,7 @@ class PersonalDetails extends Component {
           }); 
       }
     render() {
-        /* console.log(this.props) */
+        console.log(this.props)
         let errors;
         let imageSRC
         let firstname = `${this.props.profileDetails.first_name}`
@@ -448,7 +449,7 @@ class PersonalDetails extends Component {
                     <Col>
                         <Row>
                             <Left_Col md={{span:24}} lg={{span:6}} xl={{span:6}} xxl={{span:6}}>
-                               {/*  {console.log("Above Image",this.state,this.props)} */}
+                                {console.log("Above Image",this.state,this.props)}
                                 <div><ImageDiv src={this.state.profileImg} /></div>
                                 <div><Image_input type="file" onChange={this.handleProfile} name="file" id="file"/><Image_up><Image_upload for="file">Upload New Photo</Image_upload></Image_up></div>
                                 <Remove onClick={this.removePic.bind(this)}>Remove</Remove>
