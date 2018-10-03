@@ -10,6 +10,8 @@ import App from './App';
 /* Redux store */
 import configureStore from "./store";
 import {loadState,saveState} from './localstorage';
+
+import Navigation from './components/Navigations/Navigation';
 let persisteState= loadState();
 let store =configureStore(persisteState);
 store.subscribe(() =>{

@@ -306,7 +306,7 @@ class Navigation extends React.Component {
                         className="Login-Modal"
                         style={{borderRadius:"0px"}}
                         bodyStyle={{ padding:"0px" }}
-                        width="100%"
+                        width="70%"
                     >
                         <Row>
                             <Left_col xl={{span:12}} sm={{span:24}}>

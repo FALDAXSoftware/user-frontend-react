@@ -4,11 +4,11 @@ import 'antd/dist/antd.css';
 import {connect} from "react-redux"
 import { Row, Col, Tabs } from 'antd';
 import styled from 'styled-components';
-import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader'
+import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
 import PersonalDetails from './Personaldetails/PersonalDetails';
 import Referral from './Referral';
-import LoggedNavigation from '../Navigations/LoggedNavigation'
-import CommonFooter from "../Landing/Footers/Footer"
+import LoggedNavigation from '../Navigations/LoggedNavigation';
+import CommonFooter from "../Landing/Footers/Footer";
 
 const TabPane = Tabs.TabPane;
 
