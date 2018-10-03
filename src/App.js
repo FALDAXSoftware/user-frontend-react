@@ -1,17 +1,19 @@
 /* In-Build components */
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import AppRouter from '../src/routes';
 import './App.css';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStroopwafel } from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
 import {connect} from 'react-redux';  
 /* Components */
 import HomePage from './components/Landing/HomePage';
+import FaqPage from './components/Landing/FaqPage';
+import AboutUs from './components/Landing/About_us';
 
-library.add(faStroopwafel)
+library.add(faStroopwafel);
 
 /* Component defination start here */
 class App extends Component {
@@ -19,7 +21,6 @@ class App extends Component {
   {
     super(props);
     this.state = {
-      
     }
   }
   

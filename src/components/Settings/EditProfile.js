@@ -9,8 +9,8 @@ import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader'
 /* Components */
 import PersonalDetails from './Personaldetails/PersonalDetails';
 import Referral from './Referral';
-import LoggedNavigation from '../Navigations/LoggedNavigation'
-import CommonFooter from "../Landing/Footers/Footer"
+import LoggedNavigation from '../Navigations/LoggedNavigation';
+import CommonFooter from "../Landing/Footers/Footer";
 
 const TabPane = Tabs.TabPane;
 
