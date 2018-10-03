@@ -6,7 +6,7 @@ import {Tooltip,actions,} from "redux-tooltip";
 import styled from 'styled-components';
 import tooltip from 'wsdm-tooltip';
 
-import { Row, Col, Modal, Button, Input } from 'antd';
+import { Row, Col, Modal, Button, Input, Icon, notification } from 'antd';
 
 /* Components */
 
@@ -74,7 +74,7 @@ const Back_link = styled.a`
 const Link_wrap = styled.div`
     margin-top:50px;
 `;
-const Icon = styled.i`
+const Icon1 = styled.i`
     vertical-align: middle;
     color: rgb( 15, 71, 123 );    
 `;
@@ -402,9 +402,42 @@ class Home_four extends Component
         this.props.dispatch(hide());
     }
 
-    componentWillReceiveProps(nextProps) 
-    {
+    handleOk() {
+        this.setState({ visible: false });
+    }
 
+    handleCancel() {
+        this.setState({ visible: false });
+    }
+    showModal(modal) {
+        if(modal.properties.name=='United States') {
+            this.setState({ usaMap: true, email_address: '' });
+        } else if(modal.properties.name=="Vietnam") { 
+            //skip for now
+        } else {
+            for(var i=0;i<countries.length;i++) {
+                if(countries[i].region=="United States"){
+                    if(modal.properties.name=="Colorado")
+                    {
+                        this.setState({ visible: true, modal: 'Legal', email_address: '' });
+                        return;
+                    } else {
+                        this.setState({ visible: true, modal: 'usa_neutral', email_address: '' });
+                        return;
+                    }
+                } else if(countries[i].name==modal.properties.name) {
+                    this.setState({ visible: true, modal: countries[i].legality, email_address: '' });
+                    return;
+                }
+            }
+        }
+    }
+
+    hideModal() {
+        this.setState({ visible: false, usaMap: false, email_address: '' });
+    }
+
+    componentWillReceiveProps(nextProps) {
         if (nextProps.tooltip && this.props.tooltip.show !== nextProps.tooltip.show) {
             if (this.props.tooltip.show === true) {
                 tip.hide(nextProps.tooltip.content);
@@ -416,6 +449,45 @@ class Home_four extends Component
             tip.position({ pageX: nextProps.tooltip.origin.x, pageY: nextProps.tooltip.origin.y })
         }
     }
+
+    send_email() {
+        const values = { email: this.state.email_address};
+        this.setState({ visible: false, email_address: '' });
+        fetch("http://18.191.87.133:8084/users/email-subscription",{
+            method:"post",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify(values)
+        })
+        .then(response => response.json())
+        .then((responseData) => {
+            if(responseData.status==500){
+                this.openNotification1();
+            } else {
+                this.openNotification();
+            }
+        })
+        .catch(error => { console.log(error) })
+    }
+
+    openNotification(){
+        notification.open({
+          message: 'Thank You',
+          description: 'You will recieve an Email shortly',
+          duration: 6,
+          icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+        });
+      };
+    openNotification1(){
+        notification.open({
+        message: 'Error',
+        description: 'Sorry, There is some error',
+        duration: 6,
+        icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+        });
+    };
 
     render() {
 
@@ -483,7 +555,7 @@ class Home_four extends Component
                                 <UsaMap>
                                     <Link_wrap>
                                         <Back_link onClick={() => this.hideModal()}> 
-                                            <Icon className="material-icons"> keyboard_backspace </Icon>
+                                            <Icon1 className="material-icons"> keyboard_backspace </Icon1>
                                             Back To World Map 
                                         </Back_link>
                                     </Link_wrap>
@@ -573,7 +645,7 @@ class Home_four extends Component
                             <div>
                                 <p>All FALDAX services are unavailable here due to legal reasons. We are constantly monitoring this situation in hopes of legislation changes. Please enter your e-mail address below if you would like updates.</p>
                                 <label style={{color: 'green'}}> Email: </label>
-                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
+                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
                                 <div style={{marginTop: '20px', minHeight: '20px'}}>
                                     <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
                                 </div>
@@ -584,7 +656,7 @@ class Home_four extends Component
                             <div>
                                 <p>We are currently engaged in the licensing process in this state. Enter your e-mail address below and we will notify you the moment you can start trading.</p>
                                 <label style={{color: 'green'}}> Email: </label>
-                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }}  onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
+                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
                                 <div style={{marginTop: '20px', minHeight: '20px'}}>
                                     <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
                                 </div>
