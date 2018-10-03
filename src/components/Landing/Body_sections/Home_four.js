@@ -24,7 +24,6 @@ const tip = tooltip({
         "color": "#282528",
         "text-transform": 'uppercase',
         "font-family": 'Open Sans',
-        'font-weight': 'bold',
         "font-size": "15px",
         "background-color": "white",
         "border-radius": "3px",
@@ -412,7 +411,7 @@ class Home_four extends Component {
     }
     showModal(modal) {
         if(modal.properties.name=='United States') {
-            this.setState({ usaMap: true });
+            this.setState({ usaMap: true, email_address: '' });
         } else if(modal.properties.name=="Vietnam") { 
             //skip for now
         } else {
@@ -420,14 +419,14 @@ class Home_four extends Component {
                 if(countries[i].region=="United States"){
                     if(modal.properties.name=="Colorado")
                     {
-                        this.setState({ visible: true, modal: 'Legal' });
+                        this.setState({ visible: true, modal: 'Legal', email_address: '' });
                         return;
                     } else {
-                        this.setState({ visible: true, modal: 'usa_neutral' });
+                        this.setState({ visible: true, modal: 'usa_neutral', email_address: '' });
                         return;
                     }
                 } else if(countries[i].name==modal.properties.name) {
-                    this.setState({ visible: true, modal: countries[i].legality });
+                    this.setState({ visible: true, modal: countries[i].legality, email_address: '' });
                     return;
                 }
             }
@@ -435,7 +434,7 @@ class Home_four extends Component {
     }
 
     hideModal() {
-        this.setState({ visible: false, usaMap: false });
+        this.setState({ visible: false, usaMap: false, email_address: '' });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -450,6 +449,26 @@ class Home_four extends Component {
             tip.position({ pageX: nextProps.tooltip.origin.x, pageY: nextProps.tooltip.origin.y })
         }
     }
+
+    send_email() {
+        console.log('send email to ' + this.state.email_address);
+        const values = { email: this.state.email_address};
+        fetch("http://18.191.87.133:8084/users/email-subscription",{
+            method:"post",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify(values)
+        })
+        .then(response => response.json())
+        .then((responseData) => {
+            console.log(responseData);
+            
+        })
+        .catch(error => { console.log(error) })
+    }
+
     render() {
         return (
 
@@ -494,7 +513,7 @@ class Home_four extends Component {
                                                             
                                                         },
                                                         hover: {
-                                                            fill: "#168fff",
+                                                            fill: countryColor(geography.properties.name),
                                                             stroke: "#168fff",
                                                             strokeWidth: 0.75,
                                                             outline: "none",
@@ -514,8 +533,10 @@ class Home_four extends Component {
                                 :
                                 <UsaMap>
                                     <Link_wrap>
-                                        <Icon className="material-icons"> keyboard_backspace </Icon>
-                                        <Back_link onClick={() => this.hideModal()}> Back To World Map </Back_link>
+                                        <Back_link onClick={() => this.hideModal()}> 
+                                            <Icon className="material-icons"> keyboard_backspace </Icon>
+                                            Back To World Map 
+                                        </Back_link>
                                     </Link_wrap>
                                     
                                     <ComposableMap
@@ -546,10 +567,9 @@ class Home_four extends Component {
                                                             stroke: "#607D8B",
                                                             strokeWidth: 0.75,
                                                             outline: "none",
-
                                                         },
                                                         hover: {
-                                                            fill: "#168fff",
+                                                            fill: countryColor(geo.properties.name),
                                                             stroke: "#168fff",
                                                             strokeWidth: 0.75,
                                                             outline: "none",
@@ -589,7 +609,7 @@ class Home_four extends Component {
                             <div>
                                 <p>All FALDAX services are available here. Start trading now!</p>
                                 <div style={{minHeight: '20px'}}>
-                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}}> TRADE NOW </Button>
+                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} disabled> TRADE NOW </Button>
                                 </div>
                             </div>:""
                         }
@@ -604,9 +624,9 @@ class Home_four extends Component {
                             <div>
                                 <p>All FALDAX services are unavailable here due to legal reasons. We are constantly monitoring this situation in hopes of legislation changes. Please enter your e-mail address below if you would like updates.</p>
                                 <label style={{color: 'green'}}> Email: </label>
-                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }}/>
+                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
                                 <div style={{marginTop: '20px', minHeight: '20px'}}>
-                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}}> RECEIVE UPDATE </Button>
+                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
                                 </div>
                             </div>:""
                         }
@@ -615,9 +635,9 @@ class Home_four extends Component {
                             <div>
                                 <p>We are currently engaged in the licensing process in this state. Enter your e-mail address below and we will notify you the moment you can start trading.</p>
                                 <label style={{color: 'green'}}> Email: </label>
-                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }}/>
+                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }}  onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
                                 <div style={{marginTop: '20px', minHeight: '20px'}}>
-                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}}> RECEIVE UPDATE </Button>
+                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
                                 </div>
                             </div>:""
                         }                    
