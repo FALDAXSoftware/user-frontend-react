@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Row, Col, Button, Layout, Menu, Breadcrumb, Card } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import Slider from "react-slick";
 
 /* Components */
 
@@ -50,62 +51,235 @@ const Card_span = styled.span`
     text-align: left;
 `
 
+function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block",color:"black !important"}}
+        onClick={onClick}
+      />
+    );
+  }
+  
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", color:"black !important"}}
+        onClick={onClick}
+      />
+    );
+  }
 
 export default class Homesecond extends React.Component 
 {
     render() 
     {
+
+        var settings = {
+            dots: false,
+            infinite: false,
+            speed: 500,
+            arrows:true,
+            infinite:true,
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            initialSlide: 0,
+            nextArrow: <SampleNextArrow />,
+            prevArrow: <SamplePrevArrow />,
+            responsive: [
+              {
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3,
+                  infinite: true,
+                  dots: true
+                }
+              },
+              {
+                breakpoint: 600,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2,
+                  initialSlide: 2
+                }
+              },
+              {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1
+                }
+              }
+            ]
+        };
         return (
 
                     <Second_Wrap>
                         <Second_head>
                             <Second_head_span>Features</Second_head_span>
                         </Second_head>
-                        <Row_Icon>
-                            <Col span={18} offset={3}>
-                                <Row>
-                                    <Col xl={8}>
-                                        <Card
-                                            hoverable={false}
-                                            style={{ width: "100%", border:"none" }}
-                                            cover={<Card_img src="./images/Homepage/conversion.png" alt="Card image cap"/>}
-                                        >
-                                            <Meta_main
-                                                title="Exchange"
-                                                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                                            />
-                                            <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
-                                        </Card>
-                                    </Col>
-                                    <Col xl={8}>
-                                        <Card
-                                            hoverable={false}
-                                            style={{ width: "100%", border:"none" }}
-                                            cover={<Card_img src="./images/Homepage/connect_bitcoin.png" alt="Card image cap"/>}
-                                        >
-                                            <Meta_main
-                                                title="Margin Trading"
-                                                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                                            />
-                                            <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
-                                        </Card>
-                                    </Col>
-                                    <Col xl={8}>
-                                        <Card
-                                            hoverable={false}
-                                            style={{ width: "100%", border:"none" }}
-                                            cover={<Card_img src="./images/Homepage/security.png" alt="Card image cap"/>}
-                                        >
-                                            <Meta_main
-                                                title="Security"
-                                                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                                            />
-                                            <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
-                                        </Card>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row_Icon>
+                                <div style={{width:"90%",margin:"auto"}}>
+                                        <Slider {...settings}>
+                                            <div>
+                                                <Card
+                                                    hoverable={false}
+                                                    className="features"
+                                                    style={{ width: "100%", border:"none" }}
+                                                    cover={<Card_img src="./images/Homepage/conversion.png" alt="Card image cap"/>}
+                                                >
+                                                    <Meta_main
+                                                        title="Security"
+                                                        description="It’s sad this has to be listed as a feature but  FALDAX was developed from the ground upto endure your security."
+                                                    />
+                                                    <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
+                                                </Card>
+                                            </div>
+                                            <div>
+                                                <Card
+                                                    hoverable={false}
+                                                    className="features"
+                                                    style={{ width: "100%", border:"none" }}
+                                                    cover={<Card_img src="./images/Homepage/connect_bitcoin.png" alt="Card image cap"/>}
+                                                >
+                                                    <Meta_main
+                                                        title="Coin & Token Selection"
+                                                        description="You shouldn’t have to have accounts on multiple exchanges to trade the crypto you’re interested. We have 73 coins/tokens ar launch with plans to add hundreds more."
+                                                    />
+                                                    <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
+                                                </Card>
+                                            </div>
+                                            <div>
+                                                <Card
+                                                    hoverable={false}
+                                                    className="features"
+                                                    style={{ width: "100%", border:"none" }}
+                                                    cover={<Card_img src="./images/Homepage/security.png" alt="Card image cap"/>}
+                                                >
+                                                    <Meta_main
+                                                        title="Portfolio Management"
+                                                        description=" Stop paying for portfolio managemnet software and enjoy our rbust, free of charge portfolio instead. We also have some exciting upcoming additions not offered anywhere else. Click this link provide your e-mail address to be notified when we announce these features!"
+                                                    />
+                                                    <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
+                                                </Card>
+                                            </div>
+                                            <div>
+                                                <Card
+                                                    hoverable={false}
+                                                    className="features"
+                                                    style={{ width: "100%", border:"none" }}
+                                                    cover={<Card_img src="./images/Homepage/conversion.png" alt="Card image cap"/>}
+                                                >
+                                                    <Meta_main
+                                                        title="Affilliate System"
+                                                        description="You love trading crypto so much that you tell all of your friends and family about it. When you do convience them to try it, why not make a little for your efforts too? Give them your affilliate link or code and you can!"
+                                                    />
+                                                    <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
+                                                </Card>
+                                            </div>
+                                            <div>
+                                                <Card
+                                                    hoverable={false}
+                                                    className="features"
+                                                    style={{ width: "100%", border:"none" }}
+                                                    cover={<Card_img src="./images/Homepage/connect_bitcoin.png" alt="Card image cap"/>}
+                                                >
+                                                    <Meta_main
+                                                        title="Basic And Advanced UI"
+                                                        description="You should feel comfortable with our intuitive UI regardless of your trading experience. Toggle between ‘Basic’ and ‘Advanced’ and use what works best for you!"
+                                                    />
+                                                    <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
+                                                </Card>
+                                            </div>
+                                            <div>
+                                                <Card
+                                                    hoverable={false}
+                                                    className="features"
+                                                    style={{ width: "100%", border:"none" }}
+                                                    cover={<Card_img src="./images/Homepage/security.png" alt="Card image cap"/>}
+                                                >
+                                                    <Meta_main
+                                                        title="Advanced Charting Tools"
+                                                        description="By leveraging TradingView’s charting libraries, we are able to provide you with some of the most robust charting tools available today."
+                                                    />
+                                                    <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
+                                                </Card>
+                                            </div>
+                                            <div>
+                                                <Card
+                                                    hoverable={false}
+                                                    className="features"
+                                                    style={{ width: "100%", border:"none" }}
+                                                    cover={<Card_img src="./images/Homepage/conversion.png" alt="Card image cap"/>}
+                                                >
+                                                    <Meta_main
+                                                        title="Collaboration "
+                                                        description=" Friends list, private messaging, group chats, live chart viewing/markup, chart saving, and so much more! Leam and share knowledge with other treaders easily."
+                                                    />
+                                                    <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
+                                                </Card>
+                                            </div>
+                                            <div>
+                                                <Card
+                                                    hoverable={false}
+                                                    className="features"
+                                                    style={{ width: "100%", border:"none" }}
+                                                    cover={<Card_img src="./images/Homepage/connect_bitcoin.png" alt="Card image cap"/>}
+                                                >
+                                                    <Meta_main
+                                                        title="Accounting "
+                                                        description="Download your transaction history for your records or texas in an Excel, CSV or PDF format in just a few clicks."
+                                                    />
+                                                    <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
+                                                </Card>
+                                            </div>
+                                            <div>
+                                                <Card
+                                                    hoverable={false}
+                                                    className="features"
+                                                    style={{ width: "100%", border:"none" }}
+                                                    cover={<Card_img src="./images/Homepage/security.png" alt="Card image cap"/>}
+                                                >
+                                                    <Meta_main
+                                                        title="Bank-Level Wallet Security"
+                                                        description="We have partnered with BitGo to ensure the safety of your digital assets. *Some tokens offered are not covered by BitGo at this time. Check our Coin/Token list for more info."
+                                                    />
+                                                    <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
+                                                </Card>
+                                            </div>
+                                            <div>
+                                                <Card
+                                                    hoverable={false}
+                                                    className="features"
+                                                    style={{ width: "100%", border:"none" }}
+                                                    cover={<Card_img src="./images/Homepage/security.png" alt="Card image cap"/>}
+                                                >
+                                                    <Meta_main
+                                                        title="Customizable Dashboard"
+                                                        description="We all consume information differently which is why we want to make sure that what you want to see, in the order you want to see it, is entirely up to you."
+                                                    />
+                                                    <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
+                                                </Card>
+                                            </div>
+                                            <div>
+                                                <Card
+                                                    hoverable={false}
+                                                    className="features"
+                                                    style={{ width: "100%", border:"none" }}
+                                                    cover={<Card_img src="./images/Homepage/security.png" alt="Card image cap"/>}
+                                                >
+                                                    <Meta_main
+                                                        title="Proprietary Code "
+                                                        description="Everything about FALDAX was built from scratch by a team of developers that have worked on projects for companies like Google, Motorola, Unilever, Done and many more. "
+                                                    />
+                                                    <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
+                                                </Card>
+                                            </div>
+                                        </Slider>
+                            </div>
                     </Second_Wrap>
 
         );

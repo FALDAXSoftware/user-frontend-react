@@ -306,8 +306,8 @@ export default class NavigationBar extends React.Component
             /> */}
             <Home_four />
             <Home_five />
-            <Home_six />
-            <Home_seven />
+            {/* <Home_six />*/}
+            {/* <Home_seven />  */}
           </Content_style>
           <Footer_main />
         </Layout>

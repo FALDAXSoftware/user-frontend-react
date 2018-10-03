@@ -164,19 +164,19 @@ class LoggedNavigation extends Component {
                     mode="horizontal"
                     defaultSelectedKeys={['1']}
                 >
-                  {/*   <Menu_item key="1">DASHBOARD</Menu_item>
+                    <Menu_item key="1">DASHBOARD</Menu_item>
                     <Menu_item key="2">TRACE</Menu_item>
                     <Menu_item key="3">WALLET</Menu_item>
-                    <Menu_item key="4">HISTORY</Menu_item> */}
+                    <Menu_item key="4">HISTORY</Menu_item>
                 </Menu_main>
                     <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()}/>
                 <SideNav id="mySidenav2">
                     <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
-                   { <Profile> PROFILE </Profile>}
-                    {/* <a href="#">DASHBOARD</a>
+                    <Profile> PROFILE </Profile>
+                    <a href="#">DASHBOARD</a>
                     <a href="#">TRACE</a>
                     <a href="#">WALLET</a>
-                    <a href="#">HISTORY</a>} */}
+                    <a href="#">HISTORY</a>
                     <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
                 </SideNav> 
             </Header_main>

@@ -75,6 +75,13 @@ const Open = styled.span`
 `
 export default class Beforelog extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            comingSoon:false,
+        }
+    }
     dispModal(pressed)
     {
         this.props.dispModal(pressed)
@@ -83,22 +90,53 @@ export default class Beforelog extends React.Component
     {
         this.props.openNav()
     }
+    showComing = () => {
+        console.log(" onClick={this.showComming}")
+        this.setState({
+          comingSoon: true,
+        });
+      }
+    
+      handleComing = (e) => {
+        console.log(e);
+        this.setState({
+            comingSoon: false,
+        });
+      }
+    
+      comingCancel = (e) => {
+        console.log(e);
+        this.setState({
+            comingSoon: false,
+        });
+      }
     render()
     {
         return(
                     <div>
-                        {/* <Day_night_mode>
+                        <Day_night_mode>
                             <span> <FontAwesomeIcon icon={faMoon} color='black' style={{transform: 'rotate(315deg)'}} /> </span>
-                        </Day_night_mode> */}
-                        {/* <Exchange>
-                            <span> CAREERS </span>
-                        </Exchange> */}
-                        {/* <Exchange>
-                            <span> LANGUAGE </span>
-                        </Exchange> */}
+                        </Day_night_mode>
+                        <Exchange>
+                            <span  onClick={this.showComing}> CAREERS </span>
+                        </Exchange>
+                        <Exchange onClick={this.showComing}>
+                            <span  onClick={this.showComing}> LANGUAGE </span>
+                        </Exchange>
                         <Login_text onClick={()=>this.dispModal("login")}>LOGIN</Login_text>
                         <Temp_button onClick={()=>this.dispModal("signup")} type="primary" size="large">Sign up</Temp_button>
-                       {/*  <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={() => this.openNav()}>&#9776;</Open> */}
+                        <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={() => this.openNav()}>&#9776;</Open> 
+                        <div>
+                            <Modal
+                            visible={this.state.comingSoon}
+                            onOk={this.handleComing}
+                            className="Coming_soon"
+                            onCancel={this.comingCancel}
+                            footer={null}
+                            >
+                            <div style={{textAlign:"center"}}><h1>Comming Soon......</h1></div>
+                            </Modal>
+                        </div>
                     </div>
         );
     }

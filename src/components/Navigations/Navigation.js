@@ -205,25 +205,26 @@ class Navigation extends React.Component {
         this.state = {
             visible: false,
             modal: undefined,
-            forgotParam:undefined
+            forgotParam:undefined,
+            comingSoon:false
         }
     }
 
-    /* openNav() {
+    openNav() {
         console.log('open nav');
         if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
             document.getElementById("mySidenav").style.width = "250px";
             document.getElementById("main").style.marginRight = "250px";
             document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
-    } */
-    /* closeNav() {
+    } 
+    closeNav() {
         if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
             document.getElementById("mySidenav").style.width = "0";
             document.getElementById("main").style.marginRight = "0";
             document.body.style.backgroundColor = "white";
         }
-    } */
+    }
     dispModal(pressed) {
         /* console.log(pressed) */
         if (pressed == "login")
@@ -253,6 +254,25 @@ class Navigation extends React.Component {
             visible: false,
         });
     }
+    showComing = () => {
+        this.setState({
+          comingSoon: true,
+        });
+      }
+    
+      handleComing = (e) => {
+        console.log(e);
+        this.setState({
+            comingSoon: false,
+        });
+      }
+    
+      comingCancel = (e) => {
+        console.log(e);
+        this.setState({
+            comingSoon: false,
+        });
+      }
     componentDidMount()
     {
         let queryParams
@@ -279,22 +299,22 @@ class Navigation extends React.Component {
                     mode="horizontal"
                     defaultSelectedKeys={['1']}
                 >
-                    {/* <Menu_item key="1">HOME</Menu_item>
-                    <Menu_item key="2">FEATURES</Menu_item>
-                    <Menu_item key="3">ABOUT</Menu_item>
-                    <Menu_item key="4">SECURITY</Menu_item>
-                    <Menu_item key="5">NEWS</Menu_item>
-                    <Menu_item key="6">CONTACT</Menu_item>
-                    <Menu_item key="7">LIST YOUR TOKEN/COIN</Menu_item>
-                    <Menu_item key="8">EXCHANGE</Menu_item> */}
+                    <Menu_item key="1" onClick={this.showComing}>HOME</Menu_item>
+                    <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item>
+                    <Menu_item key="3" onClick={this.showComing}>ABOUT</Menu_item>
+                    <Menu_item key="4" onClick={this.showComing}>SECURITY</Menu_item>
+                    <Menu_item key="5" onClick={this.showComing}>NEWS</Menu_item>
+                    <Menu_item key="6" onClick={this.showComing}>CONTACT</Menu_item>
+                    <Menu_item key="7" onClick={this.showComing}>LIST YOUR TOKEN/COIN</Menu_item>
+                    <Menu_item key="8" onClick={this.showComing}>EXCHANGE</Menu_item>
                 </Menu_main>
                 {console.log(this.props)}
                 <Right_div>
-                    {this.props.isLoggedIn?<Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()}/>:
-                        <Beforelog {...this.props} dispModal={(pressed)=>this.dispModal(pressed)} openNav={() => this.openNav()}/>
+                    {this.props.isLoggedIn?<Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />:
+                        <Beforelog {...this.props} dispModal={(pressed)=>this.dispModal(pressed)} openNav={() => this.openNav()} />
                     }
                 </Right_div>
-                    {/* <SideNav id="mySidenav">
+                <SideNav id="mySidenav">
                     <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                     <Login_SignUp>
                         <div>
@@ -312,7 +332,7 @@ class Navigation extends React.Component {
                     <a href="#">Exchange</a>
                     <Why> Careers </Why>
                     <Why> Language </Why>
-                </SideNav>  */}
+                </SideNav>
                 <div>
                     <Modal
                         visible={this.state.visible}
@@ -356,6 +376,17 @@ class Navigation extends React.Component {
                             </Right_Col>
                         </Row>
                     </Modal>
+                    </div>
+                    <div>
+                        <Modal
+                        visible={this.state.comingSoon}
+                        onOk={this.handleComing}
+                        className="Coming_soon"
+                        onCancel={this.comingCancel}
+                        footer={null}
+                        >
+                        <div style={{textAlign:"center"}}><h1>Comming Soon......</h1></div>
+                        </Modal>
                     </div>
             </Header_main>
         );

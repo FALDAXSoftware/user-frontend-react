@@ -169,7 +169,7 @@ export default class Footer_home extends React.Component {
                 <Row>
                     <Container>
                         <Col span={24}>
-                            {/* <Row>
+                            <Row>
                                 <Col xs={24} sm={12} md={7} lg={7} xl={5}>
                                     <Footer_ul>
                                         <Footer_headers>About Us</Footer_headers>
@@ -264,7 +264,7 @@ export default class Footer_home extends React.Component {
                                         <Playstore src="./images/Homepage/playstore_icon.png" />
                                     </Store_Wrap>
                                 </Store_Col>
-                            </Row> */}
+                            </Row> 
                             <HR />
                             <Bottom_Footer>
                                 <Footer_Text> ©2018 FALDAX. All Rights Reserved. </Footer_Text>

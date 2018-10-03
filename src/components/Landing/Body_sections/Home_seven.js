@@ -81,6 +81,7 @@ export default class Home_fourth extends React.Component {
     render() {
         var settings = {
             arrows: false,
+            className:"testimonial",
             slidesToShow: 3,
             asNavFor: this.state.nav2,
             ref: slider => (this.slider1 = slider),

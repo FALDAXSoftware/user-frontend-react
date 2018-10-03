@@ -69,7 +69,7 @@ const Email = styled(Username)`
   display:inline-block;
 `
 const Full_req = styled(Email_req)`
-
+  
 `
 const ConfirmPass_req = styled(Email_req)`
 

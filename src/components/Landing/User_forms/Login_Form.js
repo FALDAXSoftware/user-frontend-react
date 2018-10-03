@@ -74,10 +74,11 @@ export const Username = styled.input`
     height:35px;
   }
 `
-export const Email_req = styled.div`
+export const Email_req = styled.label`
   display:none;
   color:red;
   font-size:10px;
+  width:76%;
 `
 const UserIconS = styled(Icon)`
   font-size:19px;
@@ -100,6 +101,10 @@ export const Phone_req = styled.label`
 const Password = styled(Username)`
   font-size:16px;
 `
+const EyeIcon = styled(Icon)`
+  margin-left:10px;
+  cursor:pointer
+`
 const PassIconF = styled(UserIconS)`
 `
 const PassIconS = styled(UserIconF)`
@@ -108,6 +113,7 @@ export const Pass_req = styled.label`
   display:none;
   color:red;
   font-size:10px;
+  width:76%;
 `
 const Check_wrap = styled.div`
   margin-top:35px;
@@ -145,6 +151,7 @@ const Forgot= styled.a`
     margin-top: 15px;
   }
 `
+
 const Button_login = styled(Button)`
   width: 110px;
   background-color: #0f477b;
@@ -197,7 +204,8 @@ class Login_Form extends React.Component
           email_msg:null,
           pass_msg:null,
           passIcon:null,
-          emailIcon:null
+          emailIcon:null,
+          typeEye:"password"
         }
       }
       static propTypes = {
@@ -241,12 +249,12 @@ class Login_Form extends React.Component
       };
       componentWillReceiveProps(props,newProps)
       {
-        console.log(props.errorLogin)
-        if(props.errorLogin !==undefined )
+        /* console.log(props.errorLogin)
+        if(props.errorLogin.status!==200 && props.errorLogin.message!==undefined && props.errorLogin.message!== "error" )
         {
           console.log("Hello how are you coz u are in errors")
           this.openNotificationWithIcon('error',props.errorLogin.status,props.errorLogin.message)
-        }
+        } */
       }
       onChangeField(value,field)
       {
@@ -264,8 +272,8 @@ class Login_Form extends React.Component
               document.querySelectorAll(".user_msg")[0].style.display = "none";
             }
             else
-            {/* 
-              this.setState({emailIcon:false}) */
+            {
+              this.setState({emailIcon:false})
               console.log("on changeELSE")
               document.querySelector("#userlog_icon_fail").style.display = "inline-block"
               document.querySelector("#userlog_icon_success").style.display = "none"
@@ -274,10 +282,10 @@ class Login_Form extends React.Component
             }
           }
           else
-          {/* 
-            this.setState({emailIcon:false}) */
-            document.querySelector("#user_icon_success").style.display = "none"
-            document.querySelector("#user_icon_fail").style.display = "none"
+          {
+            this.setState({emailIcon:false})
+            document.querySelector("#userlog_icon_success").style.display = "none"
+            document.querySelector("#userlog_icon_fail").style.display = "none"
             document.querySelectorAll(".user_msg")[0].style.display = "none";
           }
         }
@@ -295,8 +303,8 @@ class Login_Form extends React.Component
               document.querySelectorAll(".pass_msg")[0].style.display = "none";
             }
             else
-            {/* 
-              this.setState({passIcon:false}) */
+            {
+              this.setState({passIcon:false})
               console.log("on changeELSE")
               document.querySelector("#passlog_icon_success").style.display = "none"
               document.querySelector("#passlog_icon_fail").style.display = "inline-block"
@@ -306,14 +314,27 @@ class Login_Form extends React.Component
           }
           else
           {
-            /* this.setState({passIcon:false}) */
+            this.setState({passIcon:false})
             document.querySelector("#passlog_icon_success").style.display = "none"
             document.querySelector("#passlog_icon_fail").style.display = "none"
             document.querySelectorAll(".pass_msg")[0].style.display = "none";
           }
         }
       }
-
+      handleEye(e)
+      {
+        if(document.getElementById("logPass")!==undefined)
+        {
+          if(document.getElementById("logPass").type=="password")
+          { 
+            this.setState({typeEye:"text"})
+          }
+          else
+          {
+            this.setState({typeEye:"password"})
+          }
+        }
+      }
 
       render() {
         if(this.props.isLoggedIn){
@@ -339,11 +360,12 @@ class Login_Form extends React.Component
                   <Email_req className="user_msg">{this.state.email_msg}</Email_req>
                   <Ph_Label>Password</Ph_Label>
                   <div>
-                    <Password  type="password" {...getFieldProps('password', {
+                    <Password  id="logPass" type={this.state.typeEye} {...getFieldProps('password', {
                       onChange(e){me.onChangeField(e.target.value,"password")}, // have to write original onChange here if you need
                       rules: [{type:"string",required: true,min:5}],
                     })}
                     />
+                    <EyeIcon type={"eye"} theme="outlined" onClick={this.handleEye.bind(this)}/>
                     <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                     <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                   </div>
@@ -361,7 +383,6 @@ class Login_Form extends React.Component
                 </Sign>
 
               </Form_wrap>
-
         );
       }
 }
