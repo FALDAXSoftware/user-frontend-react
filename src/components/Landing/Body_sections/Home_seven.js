@@ -81,6 +81,7 @@ export default class Home_fourth extends React.Component {
     render() {
         var settings = {
             arrows: false,
+            className:"testimonial",
             slidesToShow: 3,
             asNavFor: this.state.nav2,
             ref: slider => (this.slider1 = slider),
@@ -108,6 +109,7 @@ export default class Home_fourth extends React.Component {
             focusOnSelect: true
         }
         return (
+
             <FourthRow>
                 <Container>
                     <Col span={24}>
@@ -182,6 +184,7 @@ export default class Home_fourth extends React.Component {
                     </Col>
                 </Container>
             </FourthRow>
+            
         );
     }
 }

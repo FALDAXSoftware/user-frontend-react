@@ -4,6 +4,8 @@ import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Layout } from 'antd';
+
+/* Components */
 import { simpleAction } from '../../../Actions/Auth'
 const { Footer } = Layout;
 

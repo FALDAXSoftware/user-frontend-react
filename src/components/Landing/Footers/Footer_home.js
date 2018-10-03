@@ -264,7 +264,7 @@ export default class Footer_home extends React.Component {
                                         <Playstore src="./images/Homepage/playstore_icon.png" />
                                     </Store_Wrap>
                                 </Store_Col>
-                            </Row>
+                            </Row> 
                             <HR />
                             <Bottom_Footer>
                                 <Footer_Text> ©2018 FALDAX. All Rights Reserved. </Footer_Text>

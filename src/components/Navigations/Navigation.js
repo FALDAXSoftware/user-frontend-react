@@ -14,6 +14,7 @@ import Signup_Form from "../Landing/User_forms/Signup_Form"
 import Forgot_Form from "../Landing/User_forms/Forgot_Form"
 import Beforelog from "./BeforeLog"
 import Afterlog from "./Afterlog"
+import Reset_Form from "../Landing/User_forms/Reset_Form"
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
@@ -203,7 +204,9 @@ class Navigation extends React.Component {
         super(props);
         this.state = {
             visible: false,
-            modal: 0
+            modal: undefined,
+            forgotParam:undefined,
+            comingSoon:false
         }
     }
 
@@ -214,7 +217,7 @@ class Navigation extends React.Component {
             document.getElementById("main").style.marginRight = "250px";
             document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
-    }
+    } 
     closeNav() {
         if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
             document.getElementById("mySidenav").style.width = "0";
@@ -223,7 +226,7 @@ class Navigation extends React.Component {
         }
     }
     dispModal(pressed) {
-        console.log(pressed)
+        /* console.log(pressed) */
         if (pressed == "login")
             this.setState({ modal: 0 })
         else if (pressed == "signup")
@@ -231,28 +234,60 @@ class Navigation extends React.Component {
         else
             this.setState({ modal: 2 })
         this.showModal();
+        this.setState({forgotParam:undefined})
     }
     showModal = () => {
-        console.log('show modal');
+        /* console.log('show modal'); */
         this.setState({
             visible: true,
         });
     }
     handleOk = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             visible: false,
         });
     }
     handleCancel = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             visible: false,
         });
     }
-
-
+    showComing = () => {
+        this.setState({
+          comingSoon: true,
+        });
+      }
+    
+      handleComing = (e) => {
+        console.log(e);
+        this.setState({
+            comingSoon: false,
+        });
+      }
+    
+      comingCancel = (e) => {
+        console.log(e);
+        this.setState({
+            comingSoon: false,
+        });
+      }
+    componentDidMount()
+    {
+        let queryParams
+        console.log("asdfas",this.props)
+        if(this.props.queryParams!==undefined  && this.props.queryParams !=="" )
+        {
+            queryParams = this.props.queryParams;
+            this.setState({forgotParam:queryParams.split("="),
+                visible:true
+            })
+        }
+    }
+    
     render() {
+        let prof_name = this.props.profileDetails.first_name!==null && this.props.profileDetails.first_name!==undefined?(this.props.profileDetails.first_name + " " +  this.props.profileDetails.last_name):"User";
         return (
             <Header_main id="main">
                 <Logo onClick = { () => this.props.history.push("/login")}>
@@ -264,18 +299,19 @@ class Navigation extends React.Component {
                     mode="horizontal"
                     defaultSelectedKeys={['1']}
                 >
-                    <Menu_item key="1">HOME</Menu_item>
-                    <Menu_item key="2">FEATURES</Menu_item>
-                    <Menu_item key="3">ABOUT</Menu_item>
-                    <Menu_item key="4">SECURITY</Menu_item>
-                    <Menu_item key="5">NEWS</Menu_item>
-                    <Menu_item key="6">CONTACT</Menu_item>
-                    <Menu_item key="7">LIST YOUR TOKEN/COIN</Menu_item>
-                    <Menu_item key="8">EXCHANGE</Menu_item>
+                    <Menu_item key="1" onClick={this.showComing}>HOME</Menu_item>
+                    <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item>
+                    <Menu_item key="3" onClick={this.showComing}>ABOUT</Menu_item>
+                    <Menu_item key="4" onClick={this.showComing}>SECURITY</Menu_item>
+                    <Menu_item key="5" onClick={this.showComing}>NEWS</Menu_item>
+                    <Menu_item key="6" onClick={this.showComing}>CONTACT</Menu_item>
+                    <Menu_item key="7" onClick={this.showComing}>LIST YOUR TOKEN/COIN</Menu_item>
+                    <Menu_item key="8" onClick={this.showComing}>EXCHANGE</Menu_item>
                 </Menu_main>
+                {console.log(this.props)}
                 <Right_div>
-                    {this.props.isLoggedIn?<Afterlog {...this.props} openNav={() => this.openNav()}/>:
-                        <Beforelog {...this.props} dispModal={(pressed)=>this.dispModal(pressed)} openNav={() => this.openNav()}/>
+                    {this.props.isLoggedIn?<Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />:
+                        <Beforelog {...this.props} dispModal={(pressed)=>this.dispModal(pressed)} openNav={() => this.openNav()} />
                     }
                 </Right_div>
                 <SideNav id="mySidenav">
@@ -296,7 +332,7 @@ class Navigation extends React.Component {
                     <a href="#">Exchange</a>
                     <Why> Careers </Why>
                     <Why> Language </Why>
-                </SideNav> 
+                </SideNav>
                 <div>
                     <Modal
                         visible={this.state.visible}
@@ -310,10 +346,11 @@ class Navigation extends React.Component {
                     >
                         <Row>
                             <Left_col xl={{span:12}} sm={{span:24}}>
+                                {/* console.log(this.state.modal) */}
                                 {console.log(this.state.modal)}
                                 {
-                                    this.state.modal==0?
-                                    <Login_Form {...this.props} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                    this.state.modal==0 || (this.state.forgotParam!==undefined && this.props.pathname.includes("login"))?
+                                    <Login_Form {...this.props} forgotParam={this.state.forgotParam} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
                                 }
                                 {
                                     this.state.modal==1?
@@ -322,6 +359,13 @@ class Navigation extends React.Component {
                                 {
                                     this.state.modal==2?
                                     <Forgot_Form {...this.props} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                }
+                                {
+                                    /* console.log(this.state.forgotParam) */
+                                }
+                                {
+                                    this.state.forgotParam!==undefined && this.props.pathname.includes("reset-password")?
+                                    <Reset_Form {...this.props} forgotParam={this.state.forgotParam} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
                                 }
                             </Left_col>
                             <Right_Col xl={{span:12}} sm={{span:24}}>
@@ -333,18 +377,33 @@ class Navigation extends React.Component {
                         </Row>
                     </Modal>
                     </div>
+                    <div>
+                        <Modal
+                        visible={this.state.comingSoon}
+                        onOk={this.handleComing}
+                        className="Coming_soon"
+                        onCancel={this.comingCancel}
+                        footer={null}
+                        >
+                        <div style={{textAlign:"center"}}><h1>Comming Soon......</h1></div>
+                        </Modal>
+                    </div>
             </Header_main>
         );
     }
 }
 
-function mapStateToProps(state){
-    console.log(state)
+function mapStateToProps(state,ownProps){
+    /* console.log(state,ownProps) */
     return ({
-        isLoggedIn:state.simpleReducer.isLoggedIn?true:false
+        isLoggedIn:state.simpleReducer.isLoggedIn?true:false,
+        queryParams:ownProps.location.search,
+        pathname:ownProps.location.pathname,
+        profileDetails:state.simpleReducer.profileDetails?state.simpleReducer.profileDetails.data[0]:""
     });
 }
-  const mapDispatchToProps = dispatch => ({
-   })
+const mapDispatchToProps = dispatch => ({
+
+})
   
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

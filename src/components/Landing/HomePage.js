@@ -33,7 +33,7 @@ const data = [
   {
     image: '/images/Homepage/imgpsh_fullsize_1.png',
     coinName: 'BTC/USD',
-    price: 700000,
+    price: "700,000",
     percentage: 3.35,
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [
@@ -63,7 +63,7 @@ const data = [
   {
     image: '/images/Homepage/imgpsh_fullsize_2.png',
     coinName: 'BTC/USD',
-    price: 400000,
+    price: "400,000",
     percentage: 0.35,
     labels: ['5', '59', '80', '81', '56', '55', '100', '59', '80', '81', '56', '55', '100', '59', '80', '81', '56', '55', '100', '59', '80', '81', '56', '55', '100', '59', '80', '81', '56', '55', '150'],
     datasets: [
@@ -93,7 +93,7 @@ const data = [
   {
     image: '/images/Homepage/imgpsh_fullsize_3.png',
     coinName: 'BTC/USD',
-    price: 1000,
+    price: "1,000",
     percentage: -0.35,
     labels: ['150', '59', '80', '81', '56', '55', '100', '59', '80', '81', '56', '55', '100', '59', '80', '81', '56', '55', '100', '59', '80', '81', '56', '55', '100', '59', '80', '81', '56', '55', '5'],
     datasets: [
@@ -123,7 +123,7 @@ const data = [
   {
     image: '/images/Homepage/imgpsh_fullsize_1.png',
     coinName: 'BTC/USD',
-    price: 45000,
+    price: "45,000",
     percentage: -3.45,
     labels: ['5', '59', '80', '81', '56', '55', '100', '59', '80', '81', '56', '55', '100', '59', '80', '81', '56', '55', '100', '59', '80', '81', '56', '55', '100', '59', '80', '81', '56', '55', '150'],
     datasets: [
@@ -154,8 +154,8 @@ const data = [
 
 const columns = [
     {
-      title: "NAME",
-      dataIndex: "name",
+      title: "MARKET",
+      dataIndex: "market",
       width: "20%"
     },
     {
@@ -191,7 +191,7 @@ const columns = [
 
 const tableData = [
   {
-    name: "ZEC/BTC",
+    market: "ZEC",
     last_price: 2000.02,
     change: 0.15,
     hours_volume: 43354600,
@@ -199,7 +199,7 @@ const tableData = [
     low: 2.024585
   },
   {
-    name: "XRP/BTC",
+    market: "BTC",
     last_price: 7000.03,
     change: 2.15,
     hours_volume: 33460,
@@ -207,7 +207,7 @@ const tableData = [
     low: 3.024585
   },
   {
-    name: "XMR/BTC",
+    market: "XMR",
     last_price: 5500.024573,
     change: -5.15,
     hours_volume: 3399906,
@@ -215,7 +215,7 @@ const tableData = [
     low: 10.024585
   },
   {
-    name: "SWFTC/BTC",
+    market: "SWFTC",
     last_price: 0.024573,
     change: 11.15,
     hours_volume: 76554600,
@@ -223,15 +223,7 @@ const tableData = [
     low: 7.024585
   },
   {
-      name: "ZEC/BTC",
-      last_price: 2000.02,
-      change: 0.15,
-      hours_volume: 43354600,
-      high: 5.024563,
-      low: 2.024585
-  },
-  {
-      name: "LTC/BTC",
+    market: "LTC",
       last_price: 7000.03,
       change: 2.15,
       hours_volume: 33460,
@@ -239,15 +231,7 @@ const tableData = [
       low: 3.024585
   },
   {
-      name: "LTC/BTC",
-      last_price: 5500.024573,
-      change: -5.15,
-      hours_volume: 3399906,
-      high: 9.024563,
-      low: 10.024585
-  },
-  {
-      name: "DASH/BTC",
+    market: "DASH",
       last_price: 0.024573,
       change: 11.15,
       hours_volume: 76554600,
@@ -255,7 +239,7 @@ const tableData = [
       low: 7.024585
   },
   {
-      name: "BTC/USDT",
+    market: "USDT",
       last_price: 2000.02,
       change: 0.15,
       hours_volume: 43354600,
@@ -263,7 +247,7 @@ const tableData = [
       low: 2.024585
   },
   {
-      name: "BCH/USDT",
+    market: "BCH",
       last_price: 7000.03,
       change: 2.15,
       hours_volume: 33460,
@@ -271,44 +255,12 @@ const tableData = [
       low: 3.024585
   },
   {
-      name: "ZEC/BTC",
+    market: "ZEC",
       last_price: 5500.024573,
       change: -5.15,
       hours_volume: 3399906,
       high: 9.024563,
       low: 10.024585
-  },
-  {
-      name: "BCH/BTC",
-      last_price: 0.024573,
-      change: 11.15,
-      hours_volume: 76554600,
-      high: 3.024563,
-      low: 7.024585
-  },
-  {
-      name: "ZEC/BTC",
-      last_price: 4000.04,
-      change: 2.15,
-      hours_volume: 33460,
-      high: 7.024563,
-      low: 3.024585
-  },
-  {
-      name: "BCH/USDT",
-      last_price: 10001.024,
-      change: -1.15,
-      hours_volume: 3399906,
-      high: 3.78606,
-      low: 10.024585
-  },
-  {
-      name: "BTC/ZEC",
-      last_price: 2200.57301,
-      change: 0.15,
-      hours_volume: 2500,
-      high: 9.475,
-      low: 5.024585
   }
 ];
 
@@ -321,7 +273,9 @@ const SpanCoinChange = styled.span`
 
 /* Component Defination Starts Here*/
 
-export default class NavigationBar extends React.Component {
+export default class NavigationBar extends React.Component 
+{
+  
   constructor() {
     super();
     this.state = { pagination: {} };
@@ -342,18 +296,18 @@ export default class NavigationBar extends React.Component {
           <Header_main {...this.props}/>
           <Content_style>
             <Home_first />
-            <Home_second data={data} />
-            <Home_third
+            {/* <Home_second data={data} /> */}
+            {/* <Home_third
               columns={columns}
               dataSource={tableData}
               loading={false}
               pagination={false}
               handleTableChange={this.handleTableChange}
-            />
+            /> */}
             <Home_four />
             <Home_five />
-            <Home_six />
-            <Home_seven />
+            {/* <Home_six />*/}
+            {/* <Home_seven />  */}
           </Content_style>
           <Footer_main />
         </Layout>

@@ -1,24 +1,19 @@
 /* In-build packages */
 import React, { Component } from "react"
-import {
-    ComposableMap,
-    ZoomableGroup,
-    Geographies,
-    Geography,
-} from "react-simple-maps";
+import { ComposableMap,ZoomableGroup,Geographies,Geography} from "react-simple-maps";
 import { connect } from "react-redux";
-import {
-    Tooltip,
-    actions,
-} from "redux-tooltip";
+import {Tooltip,actions,} from "redux-tooltip";
 import styled from 'styled-components';
 import tooltip from 'wsdm-tooltip';
 
 import { Row, Col, Modal, Button, Input } from 'antd';
 
-/* Styled Components */
+/* Components */
+
 import { Section_3, Container } from '../../../styled-components/homepage/style';
+
 const { show, hide } = actions;
+
 const tip = tooltip({
     styles: {
         "color": "#282528",
@@ -386,58 +381,30 @@ let countryColor = function(text) {
 };
 
 /* Component defination start here */
-class Home_four extends Component {
+class Home_four extends Component 
+{
     constructor() {
         super();
         this.handleMove = this.handleMove.bind(this);
         this.handleLeave = this.handleLeave.bind(this);
         this.state = { visible: false, modal: '', usaMap: false };
     }
-    handleMove(geography, evt) {
+
+    handleMove(geography, evt) 
+    {
         const x = evt.clientX;
         const y = evt.clientY + window.pageYOffset;
         this.props.dispatch(show({ origin: { x, y }, content: geography.properties.name }));
     }
-    handleLeave() {
+
+    handleLeave() 
+    {
         this.props.dispatch(hide());
     }
 
-    handleOk() {
-        this.setState({ visible: false });
-    }
+    componentWillReceiveProps(nextProps) 
+    {
 
-    handleCancel() {
-        this.setState({ visible: false });
-    }
-    showModal(modal) {
-        if(modal.properties.name=='United States') {
-            this.setState({ usaMap: true, email_address: '' });
-        } else if(modal.properties.name=="Vietnam") { 
-            //skip for now
-        } else {
-            for(var i=0;i<countries.length;i++) {
-                if(countries[i].region=="United States"){
-                    if(modal.properties.name=="Colorado")
-                    {
-                        this.setState({ visible: true, modal: 'Legal', email_address: '' });
-                        return;
-                    } else {
-                        this.setState({ visible: true, modal: 'usa_neutral', email_address: '' });
-                        return;
-                    }
-                } else if(countries[i].name==modal.properties.name) {
-                    this.setState({ visible: true, modal: countries[i].legality, email_address: '' });
-                    return;
-                }
-            }
-        }
-    }
-
-    hideModal() {
-        this.setState({ visible: false, usaMap: false, email_address: '' });
-    }
-
-    componentWillReceiveProps(nextProps) {
         if (nextProps.tooltip && this.props.tooltip.show !== nextProps.tooltip.show) {
             if (this.props.tooltip.show === true) {
                 tip.hide(nextProps.tooltip.content);
@@ -450,35 +417,17 @@ class Home_four extends Component {
         }
     }
 
-    send_email() {
-        console.log('send email to ' + this.state.email_address);
-        const values = { email: this.state.email_address};
-        fetch("http://18.191.87.133:8084/users/email-subscription",{
-            method:"post",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify(values)
-        })
-        .then(response => response.json())
-        .then((responseData) => {
-            console.log(responseData);
-            
-        })
-        .catch(error => { console.log(error) })
-    }
-
     render() {
-        return (
 
+        return (
+            
             <Section_3>
                 <Container>
                     <Row>
                         <Col>
                             <Forth_head>
-                                <Forth_head_span> Exchange <b> World </b></Forth_head_span>
-                                <Forth_head_p>Lorem ipsum dolor sir amet, consectertur adipiscing elit.</Forth_head_p>
+                                <Forth_head_span> Service Availability</Forth_head_span>
+                                <Forth_head_p>Mouse-over or click on your country to view our operational status.</Forth_head_p>
                             </Forth_head>
                             <ReactSimpleMapWrapper>
                                 { !this.state.usaMap ?

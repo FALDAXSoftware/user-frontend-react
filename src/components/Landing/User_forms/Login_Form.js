@@ -2,13 +2,12 @@
 import React from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
-import {Button, notification,Icon} from "antd";
+import { Button, notification, Icon } from "antd";
 import { connect } from 'react-redux';
-import {Login} from '../../../Actions/Auth'
+import { Login } from '../../../Actions/Auth';
 /* Components */
 
 /* Global Constants */
-
 
 /* Styled-Components */
 export const Form_wrap = styled.div`
@@ -20,7 +19,6 @@ export const Form_wrap = styled.div`
     padding-left: 30px;
     padding-top: 10px;
   }
-  
 `
 const Login_head = styled.div`
   font-size: 30px;
@@ -47,7 +45,7 @@ export const Welcome_text = styled.div`
   {
     margin-top: 15px;
   }
-` 
+`
 export const Email_label = styled.div`
   font-size: 14px;
   font-family: "Open Sans";
@@ -68,7 +66,7 @@ export const Username = styled.input`
   margin-top:10px;
   height:50px;
   font-size:16px;
-
+  display:inline-block;
   @media(min-width:1024px) and (max-width:1440px)
   {
     height:35px;
@@ -79,8 +77,12 @@ export const Email_req = styled.div`
   color:red;
   font-size:10px;
 `
-const Phone = styled(Username)`
-
+const UserIconS = styled(Icon)`
+  font-size:19px;
+  display:none;
+  margin-left:10px;
+`
+const UserIconF = styled(UserIconS)`
 `
 const Ph_Label = styled(Email_label)`
   margin-top:15px;
@@ -92,6 +94,10 @@ export const Phone_req = styled.label`
 `
 const Password = styled(Username)`
   font-size:16px;
+`
+const PassIconF = styled(UserIconS)`
+`
+const PassIconS = styled(UserIconF)`
 `
 export const Pass_req = styled.label`
   display:none;
@@ -121,7 +127,7 @@ const Remember = styled.div`
 const Check = styled.input`
   vertical-align:middle;
 `
-const Forgot= styled.a`
+const Forgot = styled.a`
   float:right;
   font-size: 14px;
   font-family: "Open Sans";
@@ -171,150 +177,190 @@ const Sign = styled.div`
     margin-bottom: 10px;
   }
 `
+const EyeIcon = styled(Icon)`
+  margin-left:10px;
+  cursor:pointer
+`
 const Sign_a = styled.a`
   font-size: 16px;
   font-family: "Open Sans";
   color:#0f477b;
   font-weight:bold;
 `
-class Login_Form extends React.Component
-{     
-      constructor(props)
-      {
-        super(props);
-        this.state = {
-          email_msg:null,
-          pass_msg:null
+class Login_Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email_msg: null,
+      pass_msg: null,
+      passIcon: null,
+      emailIcon: null,
+      typeEye:"password"
+    }
+  }
+
+  static propTypes = {
+    form: formShape,
+  };
+
+  componentDidMount = () => {
+    console.log('LOGIN')
+  }
+
+  submit = () => {
+    this.props.form.validateFields((error, value) => {
+      if (error == null) {
+        document.querySelectorAll(".pass_msg")[0].style.display = "none";
+        document.querySelectorAll(".user_msg")[0].style.display = "none";
+        this.setState({ pass_msg: null, email_msg: null });
+
+        if (this.props.forgotParam !== undefined)
+          value['email_verify_token'] = this.props.forgotParam[1];
+        this.props.Login(value);
+
+        if (this.props.errorLogin && this.props.errorLogin.token) {
+          this.openNotificationWithIcon('success', 'Login In', this.props.errorLogin.message);
+        } else {
+          this.openNotificationWithIcon('error', 'Login In', this.props.errorLogin.err);
         }
+      } else {
+        this.openNotificationWithIcon('error', 'Required Fields', 'Please enter all Required Fields');
       }
-      static propTypes = {
-        form: formShape,
-      };
-      submit = () => {
-        this.props.form.validateFields((error, value) => {
-          console.log(error, value);
-          if(error!==null && error!==undefined)
-          {
-            if(error.email!==undefined)
-            {
-              if(error.email.errors[0].message!==undefined && error.email.errors[0].message!==null)
-              {
-                document.querySelectorAll(".email_msg")[0].style.display = "block";
-                if(value.email=="" || value.email==undefined)
-                this.setState({email_msg:`*${error.email.errors[0].message}`})
-                else
-                this.setState({email_msg:"*email address is not valid"})
-              }
-              else
-              {
-                document.querySelectorAll(".email_msg")[0].style.display = "none";
-                this.setState({email_msg:null})
-              }
-            }
-            else
-            {
-              document.querySelectorAll(".email_msg")[0].style.display = "none";
-              this.setState({email_msg:null})
-            }
-            if(error.password!==undefined)
-            {
-              if(error.password.errors[0].message!==undefined && error.password.errors[0].message!==null)
-              {
-                document.querySelectorAll(".pass_msg")[0].style.display = "block";
-                if(value.password=="" || value.password==undefined)
-                this.setState({pass_msg:`*${error.password.errors[0].message}`})
-                else if(error.password.errors[0].message.includes("8"))
-                this.setState({pass_msg:`*${error.password.errors[0].message}`})
-                else
-                this.setState({pass_msg:"*password is not valid"})
-              }
-              else
-              {
-                document.querySelectorAll(".pass_msg")[0].style.display = "none";
-                this.setState({pass_msg:null})
-              }
-            }
-            else
-            {
-                document.querySelectorAll(".pass_msg")[0].style.display = "none";
-                this.setState({pass_msg:null})
-            }
-          } 
-          else
+    });
+  }
+
+  dispModal(pressed) {
+    this.props.dispModal(pressed)
+  }
+
+  openNotificationWithIcon(type, head, desc) {
+    notification[type]({
+      message: head,
+      description: desc,
+    });
+  };
+
+  onChangeField(value, field) {
+    if (field == "username") {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var bool = re.test(String(value).toLowerCase());
+      if (value !== "") {
+        if (bool == true) {
+          this.setState({ emailIcon: true })
+          document.querySelector("#userlog_icon_success").style.display = "inline-block"
+          document.querySelector("#userlog_icon_fail").style.display = "none"
+          document.querySelectorAll(".user_msg")[0].style.display = "none";
+        } else {
+          this.setState({ emailIcon: false })
+          document.querySelector("#userlog_icon_fail").style.display = "inline-block"
+          document.querySelector("#userlog_icon_success").style.display = "none"
+          document.querySelectorAll(".user_msg")[0].style.display = "block";
+          this.setState({ email_msg: "*email address is not valid" })
+        }
+      } else {
+        this.setState({ emailIcon: false })
+        document.querySelector("#userlog_icon_success").style.display = "none"
+        document.querySelector("#userlog_icon_fail").style.display = "none"
+        document.querySelectorAll(".user_msg")[0].style.display = "none";
+      }
+    } else if (field == "password") {
+      var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+      var bool = re.test(value);
+      if (value !== "") {
+        if (bool == true) {
+          this.setState({ passIcon: true, password: value })
+          document.querySelector("#passlog_icon_success").style.display = "inline-block"
+          document.querySelector("#passlog_icon_fail").style.display = "none"
+          document.querySelectorAll(".pass_msg")[0].style.display = "none";
+        } else {
+          this.setState({ passIcon: false })
+          document.querySelector("#passlog_icon_success").style.display = "none"
+          document.querySelector("#passlog_icon_fail").style.display = "inline-block"
+          document.querySelectorAll(".pass_msg")[0].style.display = "block";
+          this.setState({ pass_msg: "*Password should contain atleast one alphabet,special character and number and should have min. 6 chartacters and max. 16 characters" })
+        }
+      } else {
+        this.setState({ passIcon: false })
+        document.querySelector("#passlog_icon_success").style.display = "none"
+        document.querySelector("#passlog_icon_fail").style.display = "none"
+        document.querySelectorAll(".pass_msg")[0].style.display = "none";
+      }
+    }
+  }
+  handleEye(e)
+      {
+        if(document.getElementById("logPass")!==undefined)
+        {
+          if(document.getElementById("logPass").type=="password")
           { 
-            
-            document.querySelectorAll(".pass_msg")[0].style.display = "none";
-            document.querySelectorAll(".email_msg")[0].style.display = "none";
-            
-            this.setState({pass_msg:null,email_msg:null});
-            console.log(value,this.props)
-            this.openNotification();
-            this.props.Login(value);
-            console.log(this.props)
-            
+            this.setState({typeEye:"text"})
           }
-        });
-      }
-      dispModal(pressed)
-      {
-        console.log(this.props,pressed)
-        this.props.dispModal(pressed)
-      }
-      openNotification = () => {
-        notification.open({
-          message: 'Logging In',
-          description: 'Please wait.....',
-          duration:3,
-          icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
-        });
-      };
-      render() {
-        if(this.props.isLoggedIn){
-          this.props.history.push("/editProfile");
+          else
+          {
+            this.setState({typeEye:"password"})
+          }
         }
-        let errors;
-        const { getFieldProps, getFieldError } = this.props.form;
-        return (
-              <Form_wrap>
-
-                <Login_head>Login</Login_head>
-                <Welcome_text>Welcome to Faldax</Welcome_text>
-                  <Email_label>Email Address</Email_label>
-                  <Username {...getFieldProps('email', {
-                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{type:"email",required: true}],
-                  })}/>
-                  <Email_req className="email_msg">{this.state.email_msg}</Email_req>
-                  <Ph_Label>Password</Ph_Label>
-                  <Password  type="password" {...getFieldProps('password', {
-                    onChange(){console.log("Hello How are You")}, // have to write original onChange here if you need
-                    rules: [{type:"string",required: true,min:5}],
-                  })}
-                  />
-                  <Pass_req className="pass_msg">{this.state.pass_msg}</Pass_req>
-                  <Check_wrap>
-                    <Remember>
-                    <Check type="checkbox"/> Remember Me</Remember>
-                    <Forgot onClick={()=>this.dispModal("forgot")}>Forgot Password?</Forgot>
-                  </Check_wrap>
-                    
-                {(errors = getFieldError('required')) ? errors.join(',') : null}
-                <Button_login onClick={this.submit}>LOGIN</Button_login>
-                <Sign>
-                  Don't have an account? <Sign_a onClick={()=>this.dispModal("signup")}>Sign Up</Sign_a>
-                </Sign>
-              </Form_wrap>
-
-        );
       }
+
+  render() {
+    if (this.props.isLoggedIn) {
+      this.props.history.push("/editProfile");
+    }
+    var me = this;
+    let errors;
+    const { getFieldProps, getFieldError } = this.props.form;
+
+    return (
+      <Form_wrap>
+        <Login_head>Login</Login_head>
+        <Welcome_text>Welcome Back!</Welcome_text>
+        <Email_label>Email Address</Email_label>
+        <div>
+          <Username {...getFieldProps('email', {
+            onChange(e) { me.onChangeField(e.target.value, "username") }, // have to write original onChange here if you need
+            rules: [{ type: "email", required: true }],
+          })} />
+          <UserIconS id="userlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+          <UserIconF id="userlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+        </div>
+        <Email_req className="user_msg">{this.state.email_msg}</Email_req>
+        <Ph_Label>Password</Ph_Label>
+        <div>
+          <Password type="password" {...getFieldProps('password', {
+            onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
+            rules: [{ type: "string", required: true, min: 5 }],
+          })}
+          />
+          <EyeIcon type={"eye"} theme="outlined" onClick={this.handleEye.bind(this)}/>
+          <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+          <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+        </div>
+        <Pass_req className="pass_msg">{this.state.pass_msg}</Pass_req>
+        <Check_wrap>
+          <Remember>
+            <Check type="checkbox" /> Remember Me</Remember>
+          <Forgot onClick={() => this.dispModal("forgot")}>Forgot Password?</Forgot>
+        </Check_wrap>
+
+        {(errors = getFieldError('required')) ? errors.join(',') : null}
+        <Button_login onClick={this.submit}>LOGIN</Button_login>
+        <Sign>
+          No account? <Sign_a onClick={() => this.dispModal("signup")}>Sign Up</Sign_a>
+        </Sign>
+      </Form_wrap>
+    );
+  }
 }
-function mapStateToProps(state){
-  return({
-    isLoggedIn:state.simpleReducer.isLoggedIn!==undefined ? true : false 
+
+function mapStateToProps(state) {
+  return ({
+    isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
+    errorLogin: state.simpleReducer.error !== undefined && state.simpleReducer.error !== "error" ? state.simpleReducer.error : undefined
   })
- }
+}
+
 const mapDispatchToProps = dispatch => ({
   Login: (values) => dispatch(Login(values))
- })
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Login_Form));

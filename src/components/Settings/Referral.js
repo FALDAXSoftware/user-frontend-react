@@ -6,7 +6,8 @@ import { Input,Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Mod
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-/* COnstants */
+
+/* Constants */
 const { Header, Content, Footer } = Layout;
 const Search = Input.Search;
 
@@ -60,12 +61,13 @@ const Ref_div = styled.div`
     border-radius: 10px;
     height:auto;
 `
+/* ADD CONTENT="" */
 const Ref_leftcol = styled(Col)`
     text-align:left;
     padding-left: 35px;
     &:after 
     {
-        content: '';
+    
         top: 8%;
         position: absolute;
         height: 84%;
@@ -159,15 +161,16 @@ class Referral extends React.Component
     {
         super(props);
         this.state = {
-            value: 'abcdabcd',
+            value: null,
             copied: false,
             tableData:[]
         }
     }
+
     componentDidMount()
     {
-        console.log(this.props.isLoggedIn)
-        fetch("http://192.168.2.224:1337/users/referredUsers",{
+        /* console.log(this.props.isLoggedIn) */
+        fetch("http://18.191.87.133:8084/users/referredUsers",{
             method:"get",
             headers: {
                 Accept: 'application/json',
@@ -177,11 +180,16 @@ class Referral extends React.Component
         })
         .then(response => response.json())
         .then((responseData) => {
-            console.log(responseData);
+            /* console.log(responseData); */
             this.setState({tableData:responseData.data})
         })
-        .catch(error => { console.log(error) })
+        .catch(error => { /* console.log(error) */ })
+        if(this.props.profileDetails.referral_code!==undefined)
+        {
+            this.setState({value:this.props.profileDetails.referral_code})
+        }
     }
+
     openNotificationWithIcon  = (type) => {
         notification[type]({
             message: 'Copied Referral Code to Clipboard',
@@ -200,6 +208,7 @@ class Referral extends React.Component
         };
         this.openNotificationWithIcon ('success');
     }
+
     render()
     {
         return(
@@ -243,9 +252,11 @@ class Referral extends React.Component
         );
     }
 }
+
 function mapStateToProps(state){
     return({
-      isLoggedIn : state.simpleReducer.isLoggedIn
+      isLoggedIn : state.simpleReducer.isLoggedIn,
+      profileDetails:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0]:""
     })
 }
 export default connect(mapStateToProps)(Referral);

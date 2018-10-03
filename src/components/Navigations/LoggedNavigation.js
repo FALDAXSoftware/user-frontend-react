@@ -131,7 +131,7 @@ class LoggedNavigation extends Component {
     }
 
     openNav() {
-        console.log('open nav');
+        /* console.log('open nav'); */
         if (document.getElementById("mySidenav2") !== undefined && document.getElementById("mySidenav2") !== null) {
             document.getElementById("mySidenav2").style.width = "250px";
             document.getElementById("main").style.marginRight = "250px";
@@ -150,12 +150,12 @@ class LoggedNavigation extends Component {
         this.props.Logout();
     }
     render() {
-        console.log(this.props)
+        /* console.log(this.props) */
         
         let prof_name = this.props.profileDetails.first_name!==null && this.props.profileDetails.first_name!==undefined?(this.props.profileDetails.first_name + " " +  this.props.profileDetails.last_name):"User";
         return (
             <Header_main id="main">
-                <Logo onClick = { () => this.props.history.push("/login")}>
+                <Logo onClick = { () => this.props.history.push("/home")}>
                     <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png" />
                     <FALDAX src="./images/Homepage/faldax.png" />
                 </Logo>
@@ -184,7 +184,7 @@ class LoggedNavigation extends Component {
     }
 }
 function mapStateToProps(state){
-    console.log(state)
+   /*  console.log(state) */
     return ({
         profileDetails:state.simpleReducer.profileDetails?state.simpleReducer.profileDetails.data[0]:""
     });

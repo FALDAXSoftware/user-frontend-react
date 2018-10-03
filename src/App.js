@@ -25,7 +25,9 @@ class App extends Component {
   }
   
   render() {
-    const {isLoggedIn} = this.props;
+    /* console.log(this.props) */
+    const {isLoggedIn} = this.props
+    /* console.log(isLoggedIn) */
 
     const RestrictedRoute = ({
       component: Component,
@@ -46,7 +48,7 @@ class App extends Component {
            }}
          />
          }else{
-          return <Component {...props} />
+          return <Component {...props}  />
          }
        }else{
         if(props.location.pathname== '/'){
@@ -77,14 +79,11 @@ class App extends Component {
         <Route
           render={({location}) => (
           <Switch location={location}>
-            {console.log(location)}
-            {/* <Route path="/" exact title="Login" component={HomePage}/> */}
+            <Route path='/reset-password' title="Login" component={HomePage}/>
             <Route  path="/login" exact title="Login" component={HomePage}/>
-            <Route path="/faq" exact title="Faq" component={FaqPage}/>
-            <Route path="/about-us" exact title="AboutUs" component={AboutUs}/>
-            {console.log(this.props.isLoggedIn)}
+           {/*  {console.log(this.props.isLoggedIn)} */}
             <RestrictedRoute
-              path="/"
+              path="/" 
               component={AppRouter}
               isLoggedIn={isLoggedIn}/>
           </Switch>
@@ -95,7 +94,7 @@ class App extends Component {
 }
 
 function mapStateToProps(state){
-  console.log(state)
+ /*  console.log(state) */
   return({
     isLoggedIn:state.simpleReducer.isLoggedIn!==undefined ? true : false 
   })

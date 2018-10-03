@@ -3,7 +3,7 @@ import React from 'react';
 import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Table } from 'antd';
 import styled from 'styled-components';
 
-/* Styled Components */
+/* Components */
 import { Section_2, Section_3, Container } from '../../../styled-components/homepage/style';
 
 /* Styled componets */
@@ -36,6 +36,7 @@ const Third_head_p = styled.p`
 
 /* Component defination start here */
 const Home_third = ({ loading, columns, dataSource, pagination, handleTableChange }) => {
+    
     return (
         <Section_2>
             <Container>

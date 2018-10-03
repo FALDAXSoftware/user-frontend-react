@@ -4,7 +4,9 @@ import 'antd/dist/antd.css';
 import {connect} from "react-redux"
 import { Row, Col, Tabs } from 'antd';
 import styled from 'styled-components';
-import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
+import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader'
+
+/* Components */
 import PersonalDetails from './Personaldetails/PersonalDetails';
 import Referral from './Referral';
 import LoggedNavigation from '../Navigations/LoggedNavigation';
@@ -24,7 +26,9 @@ const ProfileDiv = styled.div`
   border-radius: 7px;
 `
 
-class Editprofile extends Component {
+class Editprofile extends Component 
+{
+
     constructor(props) {
         super(props);
         this.state = {
@@ -33,17 +37,17 @@ class Editprofile extends Component {
     }
 
     _changeTab(key) {
-        console.log(key);
+        /* console.log(key); */
         //this.setState({ currentTab: key });
     }
 
     render() {
-        console.log(this.props)
+        /* console.log(this.props) */
         const { currentTab } = this.state;
 
         return (
             <div>
-                {console.log(this.props.loader)}
+                {/* console.log(this.props.loader) */}
                 <OverlayLoader 
                         color={'red'} // default is white
                         loader="ScaleLoader" // check below for more loaders
@@ -69,7 +73,7 @@ class Editprofile extends Component {
 }
 
 function mapStateToProps(state){
-    console.log(state)
+    /* console.log(state) */
     return({
       isLoggedIn:state.simpleReducer.isLoggedIn,
       /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
