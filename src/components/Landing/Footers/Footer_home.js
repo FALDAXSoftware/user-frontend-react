@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card,Modal } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components'
 
@@ -163,6 +163,32 @@ const HR = styled.hr`
 
 
 export default class Footer_home extends React.Component {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            comingSoon:false
+        }
+    }
+    showComing = () => {
+        this.setState({
+          comingSoon: true,
+        });
+      }
+    
+      handleComing = (e) => {
+        console.log(e);
+        this.setState({
+            comingSoon: false,
+        });
+      }
+    
+      comingCancel = (e) => {
+        console.log(e);
+        this.setState({
+            comingSoon: false,
+        });
+      }
     render() {
         return (
             <Footer_main>
@@ -173,16 +199,16 @@ export default class Footer_home extends React.Component {
                                 <Col xs={24} sm={12} md={7} lg={7} xl={5}>
                                     <Footer_ul>
                                         <Footer_headers>About Us</Footer_headers>
-                                        <li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             About Faldax
                                                 </li>
-                                        <li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             Contact Us
                                                 </li>
-                                        <li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             Careers
                                                 </li>
-                                        <li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             Media Contact
                                                 </li>
                                     </Footer_ul>
@@ -190,18 +216,19 @@ export default class Footer_home extends React.Component {
                                 <Col xs={24} sm={12} md={8} lg={8} xl={5}>
                                     <Footer_ul>
                                         <Footer_headers>Features</Footer_headers>
-                                        <li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             Exchange
                                                     </li>
-                                        <li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             List your Token/Coin
                                                     </li>
-                                        <li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             News
                                                     </li>
-                                        <li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             Security
                                                     </li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>Language</li><li onClick={this.showComing}>API Documentation</li>
                                     </Footer_ul>
                                 </Col>
 
@@ -209,19 +236,19 @@ export default class Footer_home extends React.Component {
                                     <Footer_ul>
 
                                         <Footer_headers>For Users</Footer_headers>
-                                        <li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             FAQ
                                                     </li>
-                                        <li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             Blog
                                                     </li>
-                                        <li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             Support
                                                     </li>
-                                        <li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             Supported Countries
                                                     </li>
-                                        <li>
+                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             Legal & Privacy
                                                     </li>
                                     </Footer_ul>
@@ -229,30 +256,30 @@ export default class Footer_home extends React.Component {
                                 <Col xs={24} sm={11} md={12} lg={7} xl={5}>
                                     <Icon_ul_1>
                                         <Footer_headers>Social</Footer_headers>
-                                        <LI>
+                                        <LI style={{cursor:"pointer"}} onClick={this.showComing}>
                                             <img src="./images/Homepage/fb_icon.png" />
                                         </LI>
-                                        <LI>
+                                        <LI style={{cursor:"pointer"}} onClick={this.showComing}>
                                             <img src="./images/Homepage/tweet_icon.png" />
                                         </LI>
-                                        <LI>
+                                        <LI style={{cursor:"pointer"}} onClick={this.showComing}>
                                             <img src="./images/Homepage/google_icon.png" />
                                         </LI>
-                                        <LI>
+                                        <LI style={{cursor:"pointer"}} onClick={this.showComing}>
                                             <img src="./images/Homepage/you_icon.png" />
                                         </LI>
                                     </Icon_ul_1>
                                     <Icon_ul_2>
-                                        <LI2>
+                                        <LI2 style={{cursor:"pointer"}} onClick={this.showComing}>
                                             <img src="./images/Homepage/insta_icon.png" />
                                         </LI2>
-                                        <LI2>
+                                        <LI2 style={{cursor:"pointer"}} onClick={this.showComing}>
                                             <img src="./images/Homepage/telegram_icon.png" />
                                         </LI2>
-                                        <LI2>
+                                        <LI2 style={{cursor:"pointer"}} onClick={this.showComing}>
                                             <img src="./images/Homepage/in_icon.png" />
                                         </LI2>
-                                        <LI2>
+                                        <LI2 style={{cursor:"pointer"}} onClick={this.showComing}>
                                             <img src="./images/Homepage/www_icon.png" />
                                         </LI2>
                                     </Icon_ul_2>
@@ -260,8 +287,8 @@ export default class Footer_home extends React.Component {
                                 <Store_Col xs={24} sm={24} md={8} lg={2} xl={2}>
                                     <Download>Download</Download>
                                     <Store_Wrap>
-                                        <Appstore src="./images/Homepage/appstore_icon.png" />
-                                        <Playstore src="./images/Homepage/playstore_icon.png" />
+                                        <Appstore style={{cursor:"pointer"}} onClick={this.showComing} src="./images/Homepage/appstore_icon.png" />
+                                        <Playstore style={{cursor:"pointer"}} onClick={this.showComing} src="./images/Homepage/playstore_icon.png" />
                                     </Store_Wrap>
                                 </Store_Col>
                             </Row> 
@@ -273,6 +300,17 @@ export default class Footer_home extends React.Component {
                         </Col>
                     </Container>
                 </Row>
+                <div>
+                        <Modal
+                        visible={this.state.comingSoon}
+                        onOk={this.handleComing}
+                        className="Coming_soon"
+                        onCancel={this.comingCancel}
+                        footer={null}
+                        >
+                        <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Comming Soon......</h1></div>
+                        </Modal>
+                    </div>
             </Footer_main>
         );
     }

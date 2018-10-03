@@ -383,7 +383,20 @@ table .ant-table-tbody > tr > td {
   {
     margin:auto;
   }
-  .slick-prev:before, .slick-next:before
+  .slick-prev:before
   {
     color:black !important;
+    font-size: 23px !important;
+  }
+  
+  .slick-next:before
+  {
+    color:black !important;
+    font-size: 23px !important;
+  }
+  .Coming_soon .ant-modal-body
+  {
+    padding-top:31px !important;
+    color:white !important;
+    background-color: #1890ff !important;
   }

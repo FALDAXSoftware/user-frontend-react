@@ -76,6 +76,7 @@ export const Email_req = styled.div`
   display:none;
   color:red;
   font-size:10px;
+  width:76%;
 `
 const UserIconS = styled(Icon)`
   font-size:19px;
@@ -91,6 +92,7 @@ export const Phone_req = styled.label`
   display:none;
   color:red;
   font-size:10px;
+  width:76%;
 `
 const Password = styled(Username)`
   font-size:16px;
@@ -103,6 +105,7 @@ export const Pass_req = styled.label`
   display:none;
   color:red;
   font-size:10px;
+  width:76%;
 `
 const Check_wrap = styled.div`
   margin-top:35px;
@@ -219,9 +222,9 @@ class Login_Form extends React.Component {
         this.props.Login(value);
 
         if (this.props.errorLogin && this.props.errorLogin.token) {
-          this.openNotificationWithIcon('success', 'Login In', this.props.errorLogin.message);
+          this.openNotificationWithIcon('success', 'Login In',"Please Wait.....");
         } else {
-          this.openNotificationWithIcon('error', 'Login In', this.props.errorLogin.err);
+          this.openNotificationWithIcon('success', 'Login In', "Please Wait.....");
         }
       } else {
         this.openNotificationWithIcon('error', 'Required Fields', 'Please enter all Required Fields');
@@ -289,8 +292,10 @@ class Login_Form extends React.Component {
   }
   handleEye(e)
       {
-        if(document.getElementById("logPass")!==undefined)
+        console.log("Hello i  am here",document.getElementById("logPass"),document.getElementById("logPass").type)
+        if(document.getElementById("logPass").type!==undefined)
         {
+          console.log("I am in")
           if(document.getElementById("logPass").type=="password")
           { 
             this.setState({typeEye:"text"})
@@ -326,7 +331,7 @@ class Login_Form extends React.Component {
         <Email_req className="user_msg">{this.state.email_msg}</Email_req>
         <Ph_Label>Password</Ph_Label>
         <div>
-          <Password type="password" {...getFieldProps('password', {
+          <Password id="logPass"  type={this.state.typeEye} {...getFieldProps('password', {
             onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
             rules: [{ type: "string", required: true, min: 5 }],
           })}

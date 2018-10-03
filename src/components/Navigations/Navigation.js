@@ -322,14 +322,14 @@ class Navigation extends React.Component {
                             <SIGN onClick={this.dispModal.bind(this, "signup")}>SIGNUP</SIGN>
                         </div>
                     </Login_SignUp>
-                    <a href="#">Home</a>
-                    <a href="#">Features</a>
-                    <a href="#">About</a>
-                    <a href="#">Security</a>
-                    <a href="#">News</a>
-                    <a href="#">Contact</a>
-                    <a href="#">List Your Token/Coin</a>
-                    <a href="#">Exchange</a>
+                    <a onClick={this.showComing} href="#">Home</a>
+                    <a onClick={this.showComing} href="#">Features</a>
+                    <a onClick={this.showComing} href="#">About</a>
+                    <a onClick={this.showComing} href="#">Security</a>
+                    <a onClick={this.showComing} href="#">News</a>
+                    <a onClick={this.showComing} href="#">Contact</a>
+                    <a onClick={this.showComing} href="#">List Your Token/Coin</a>
+                    <a onClick={this.showComing} href="#">Exchange</a>
                     <Why> Careers </Why>
                     <Why> Language </Why>
                 </SideNav>
@@ -385,7 +385,7 @@ class Navigation extends React.Component {
                         onCancel={this.comingCancel}
                         footer={null}
                         >
-                        <div style={{textAlign:"center"}}><h1>Comming Soon......</h1></div>
+                        <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Comming Soon......</h1></div>
                         </Modal>
                     </div>
             </Header_main>

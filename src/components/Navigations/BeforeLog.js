@@ -134,7 +134,7 @@ export default class Beforelog extends React.Component
                             onCancel={this.comingCancel}
                             footer={null}
                             >
-                            <div style={{textAlign:"center"}}><h1>Comming Soon......</h1></div>
+                            <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Comming Soon......</h1></div>
                             </Modal>
                         </div>
                     </div>

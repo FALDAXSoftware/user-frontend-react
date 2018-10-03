@@ -16,6 +16,7 @@ const { Meta } = Card;
 const Second_Wrap = styled.div`
     background-color:#ffffff;
     text-align: center;
+    border-bottom: 3px solid #0f477b;
 `
 const Second_head = styled.div`
     padding-top: 80px;
@@ -42,6 +43,7 @@ const Card_img = styled.img`
 `
 const Meta_main = styled(Meta)`
     margin-top:60px;
+    margin-bottom:10px;
 `
 const Card_span = styled.span`
     font-size: 16px;
@@ -129,7 +131,7 @@ export default class Homesecond extends React.Component
                                                     hoverable={false}
                                                     className="features"
                                                     style={{ width: "100%", border:"none" }}
-                                                    cover={<Card_img src="./images/Homepage/conversion.png" alt="Card image cap"/>}
+                                                    cover={<Card_img src="./images/Homepage/Group 17.png" alt="Card image cap"/>}
                                                 >
                                                     <Meta_main
                                                         title="Security"
@@ -143,7 +145,7 @@ export default class Homesecond extends React.Component
                                                     hoverable={false}
                                                     className="features"
                                                     style={{ width: "100%", border:"none" }}
-                                                    cover={<Card_img src="./images/Homepage/connect_bitcoin.png" alt="Card image cap"/>}
+                                                    cover={<Card_img src="./images/Homepage/Group 18.png" alt="Card image cap"/>}
                                                 >
                                                     <Meta_main
                                                         title="Coin & Token Selection"
@@ -157,7 +159,7 @@ export default class Homesecond extends React.Component
                                                     hoverable={false}
                                                     className="features"
                                                     style={{ width: "100%", border:"none" }}
-                                                    cover={<Card_img src="./images/Homepage/security.png" alt="Card image cap"/>}
+                                                    cover={<Card_img src="./images/Homepage/Group 19.png" alt="Card image cap"/>}
                                                 >
                                                     <Meta_main
                                                         title="Portfolio Management"
@@ -171,7 +173,7 @@ export default class Homesecond extends React.Component
                                                     hoverable={false}
                                                     className="features"
                                                     style={{ width: "100%", border:"none" }}
-                                                    cover={<Card_img src="./images/Homepage/conversion.png" alt="Card image cap"/>}
+                                                    cover={<Card_img src="./images/Homepage/Group 20.png" alt="Card image cap"/>}
                                                 >
                                                     <Meta_main
                                                         title="Affilliate System"
@@ -185,7 +187,7 @@ export default class Homesecond extends React.Component
                                                     hoverable={false}
                                                     className="features"
                                                     style={{ width: "100%", border:"none" }}
-                                                    cover={<Card_img src="./images/Homepage/connect_bitcoin.png" alt="Card image cap"/>}
+                                                    cover={<Card_img src="./images/Homepage/Group 21.png" alt="Card image cap"/>}
                                                 >
                                                     <Meta_main
                                                         title="Basic And Advanced UI"
@@ -199,7 +201,7 @@ export default class Homesecond extends React.Component
                                                     hoverable={false}
                                                     className="features"
                                                     style={{ width: "100%", border:"none" }}
-                                                    cover={<Card_img src="./images/Homepage/security.png" alt="Card image cap"/>}
+                                                    cover={<Card_img src="./images/Homepage/Group 22.png" alt="Card image cap"/>}
                                                 >
                                                     <Meta_main
                                                         title="Advanced Charting Tools"
@@ -213,7 +215,7 @@ export default class Homesecond extends React.Component
                                                     hoverable={false}
                                                     className="features"
                                                     style={{ width: "100%", border:"none" }}
-                                                    cover={<Card_img src="./images/Homepage/conversion.png" alt="Card image cap"/>}
+                                                    cover={<Card_img src="./images/Homepage/Group 23.png" alt="Card image cap"/>}
                                                 >
                                                     <Meta_main
                                                         title="Collaboration "
@@ -227,7 +229,7 @@ export default class Homesecond extends React.Component
                                                     hoverable={false}
                                                     className="features"
                                                     style={{ width: "100%", border:"none" }}
-                                                    cover={<Card_img src="./images/Homepage/connect_bitcoin.png" alt="Card image cap"/>}
+                                                    cover={<Card_img src="./images/Homepage/Group 24.png" alt="Card image cap"/>}
                                                 >
                                                     <Meta_main
                                                         title="Accounting "
@@ -241,7 +243,7 @@ export default class Homesecond extends React.Component
                                                     hoverable={false}
                                                     className="features"
                                                     style={{ width: "100%", border:"none" }}
-                                                    cover={<Card_img src="./images/Homepage/security.png" alt="Card image cap"/>}
+                                                    cover={<Card_img src="./images/Homepage/Group 25.png" alt="Card image cap"/>}
                                                 >
                                                     <Meta_main
                                                         title="Bank-Level Wallet Security"
@@ -255,7 +257,7 @@ export default class Homesecond extends React.Component
                                                     hoverable={false}
                                                     className="features"
                                                     style={{ width: "100%", border:"none" }}
-                                                    cover={<Card_img src="./images/Homepage/security.png" alt="Card image cap"/>}
+                                                    cover={<Card_img src="./images/Homepage/Group 26.png" alt="Card image cap"/>}
                                                 >
                                                     <Meta_main
                                                         title="Customizable Dashboard"
@@ -269,7 +271,7 @@ export default class Homesecond extends React.Component
                                                     hoverable={false}
                                                     className="features"
                                                     style={{ width: "100%", border:"none" }}
-                                                    cover={<Card_img src="./images/Homepage/security.png" alt="Card image cap"/>}
+                                                    cover={<Card_img src="./images/Homepage/Group 27.png" alt="Card image cap"/>}
                                                 >
                                                     <Meta_main
                                                         title="Proprietary Code "

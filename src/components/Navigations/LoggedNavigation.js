@@ -1,6 +1,6 @@
 /* IN-built */
 import React, { Component } from 'react';
-import { Layout, Menu, Dropdown, Icon, Avatar } from 'antd';
+import { Layout, Menu, Dropdown, Icon, Avatar,Modal } from 'antd';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -126,7 +126,8 @@ class LoggedNavigation extends Component {
         super(props);
         this.state = {
             visible: false,
-            modal: 0
+            modal: 0,
+            comingSoon:false,
         }
     }
 
@@ -149,6 +150,25 @@ class LoggedNavigation extends Component {
     logout() {
         this.props.Logout();
     }
+    showComing = () => {
+        this.setState({
+          comingSoon: true,
+        });
+      }
+    
+      handleComing = (e) => {
+        console.log(e);
+        this.setState({
+            comingSoon: false,
+        });
+      }
+    
+      comingCancel = (e) => {
+        console.log(e);
+        this.setState({
+            comingSoon: false,
+        });
+      }
     render() {
         /* console.log(this.props) */
         
@@ -164,21 +184,32 @@ class LoggedNavigation extends Component {
                     mode="horizontal"
                     defaultSelectedKeys={['1']}
                 >
-                    <Menu_item key="1">DASHBOARD</Menu_item>
-                    <Menu_item key="2">TRACE</Menu_item>
-                    <Menu_item key="3">WALLET</Menu_item>
-                    <Menu_item key="4">HISTORY</Menu_item>
+                    <Menu_item onClick={this.showComing} key="1">DASHBOARD</Menu_item>
+                    <Menu_item onClick={this.showComing} key="2">TRACE</Menu_item>
+                    <Menu_item onClick={this.showComing} key="3">WALLET</Menu_item>
+                    <Menu_item onClick={this.showComing} key="4">HISTORY</Menu_item>
                 </Menu_main>
                     <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()}/>
                 <SideNav id="mySidenav2">
                     <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                     <Profile> PROFILE </Profile>
-                    <a href="#">DASHBOARD</a>
-                    <a href="#">TRACE</a>
-                    <a href="#">WALLET</a>
-                    <a href="#">HISTORY</a>
+                    <a onClick={this.showComing} href="#">DASHBOARD</a>
+                    <a onClick={this.showComing} href="#">TRACE</a>
+                    <a onClick={this.showComing} href="#">WALLET</a>
+                    <a onClick={this.showComing} href="#">HISTORY</a>
                     <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
                 </SideNav> 
+                <div>
+                        <Modal
+                        visible={this.state.comingSoon}
+                        onOk={this.handleComing}
+                        className="Coming_soon"
+                        onCancel={this.comingCancel}
+                        footer={null}
+                        >
+                        <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Comming Soon......</h1></div>
+                        </Modal>
+                    </div>
             </Header_main>
         );
     }
