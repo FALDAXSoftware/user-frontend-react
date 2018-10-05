@@ -71,7 +71,6 @@ class App extends Component {
      }}
     />
     );
-    // console.log("this", this.props)
     
     return (
       <div className="App">
@@ -81,7 +80,8 @@ class App extends Component {
           <Switch location={location}>
             <Route path='/reset-password' title="Login" component={HomePage}/>
             <Route  path="/login" exact title="Login" component={HomePage}/>
-           {/*  {console.log(this.props.isLoggedIn)} */}
+            <Route  path="/about-us" exact title="About Us" component={AboutUs}/>
+            <Route  path="/faq" exact title="Faq Page" component={FaqPage}/>
             <RestrictedRoute
               path="/" 
               component={AppRouter}
@@ -94,7 +94,6 @@ class App extends Component {
 }
 
 function mapStateToProps(state){
- /*  console.log(state) */
   return({
     isLoggedIn:state.simpleReducer.isLoggedIn!==undefined ? true : false 
   })

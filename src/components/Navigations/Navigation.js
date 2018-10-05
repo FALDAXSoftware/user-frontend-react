@@ -290,7 +290,7 @@ class Navigation extends React.Component {
         let prof_name = this.props.profileDetails.first_name!==null && this.props.profileDetails.first_name!==undefined?(this.props.profileDetails.first_name + " " +  this.props.profileDetails.last_name):"User";
         return (
             <Header_main id="main">
-                <Logo onClick = { () => this.props.history.push("/login")}>
+                <Logo onClick = { () => this.props.history ? this.props.history.push("/login") : ''}>
                     <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png" />
                     <FALDAX src="./images/Homepage/faldax.png" />
                 </Logo>
@@ -397,9 +397,9 @@ function mapStateToProps(state,ownProps){
     /* console.log(state,ownProps) */
     return ({
         isLoggedIn:state.simpleReducer.isLoggedIn?true:false,
-        queryParams:ownProps.location.search,
-        pathname:ownProps.location.pathname,
-        profileDetails:state.simpleReducer.profileDetails?state.simpleReducer.profileDetails.data[0]:""
+        queryParams:ownProps && ownProps.location && ownProps.location.search ? ownProps.location.search : '',
+        pathname:ownProps && ownProps.location && ownProps.location.pathname ? ownProps.location.pathname : '',
+        profileDetails:""
     });
 }
 const mapDispatchToProps = dispatch => ({

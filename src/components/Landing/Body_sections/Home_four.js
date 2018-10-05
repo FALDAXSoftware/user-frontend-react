@@ -1,6 +1,7 @@
 /* In-build packages */
 import React, { Component } from "react"
 import { ComposableMap,ZoomableGroup,Geographies,Geography} from "react-simple-maps";
+import { geoAlbersUsa } from 'd3-geo';
 import { connect } from "react-redux";
 import {Tooltip,actions,} from "redux-tooltip";
 import styled from 'styled-components';
@@ -351,7 +352,7 @@ const countries = [
     { name: 'New Hampshire', region: 'United States', legality: 'Legal', color: 'yellow' },
     { name: 'Massachusetts', region: 'United States', legality: 'Legal', color: 'yellow' },
     { name: 'Connecticut', region: 'United States', legality: 'Legal', color: 'yellow' },
-    { name: 'West virginia', region: 'United States', legality: 'Legal', color: 'yellow' },
+    { name: 'West Virginia', region: 'United States', legality: 'Legal', color: 'yellow' },
     { name: 'Virginia', region: 'United States', legality: 'Legal', color: 'yellow' },
     { name: 'New Jersey', region: 'United States', legality: 'Legal', color: 'yellow' },
     { name: 'Arkansas', region: 'United States', legality: 'Legal', color: 'yellow' },
@@ -367,8 +368,10 @@ const countries = [
     { name: 'Mississippi', region: 'United States', legality: 'Legal', color: 'yellow' },
     { name: 'Alabama', region: 'United States', legality: 'Legal', color: 'yellow' },
     { name: 'Kentucky', region: 'United States', legality: 'Legal', color: 'yellow' },
-    { name: 'Mary Land', region: 'United States', legality: 'Legal', color: 'yellow' },
+    { name: 'Maryland', region: 'United States', legality: 'Legal', color: 'yellow' },
+    { name: 'Delaware', region: 'United States', legality: 'Legal', color: 'yellow' },
     { name: 'Maine', region: 'United States', legality: 'Legal', color: 'yellow' },
+    { name: 'Rhode Island', region: 'United States', legality: 'Legal', color: 'yellow' },
 ];
 
 let countryColor = function(text) {
@@ -387,7 +390,7 @@ class Home_four extends Component
         super();
         this.handleMove = this.handleMove.bind(this);
         this.handleLeave = this.handleLeave.bind(this);
-        this.state = { visible: false, modal: '', usaMap: false };
+        this.state = { visible: false, modal: '', usaMap: true };
     }
 
     handleMove(geography, evt) 
@@ -406,7 +409,7 @@ class Home_four extends Component
         this.setState({ visible: false });
     }
 
-    handleCancel() {
+    handleCancel(e) {
         this.setState({ visible: false });
     }
     showModal(modal) {
@@ -492,8 +495,59 @@ class Home_four extends Component
     render() {
 
         return (
-            
+            <div>
+                <div className="simple-maps">
+                    <Modal
+                        title={<img src="./images/Homepage/Footer_logo.png"/>}
+                        visible={this.state.visible}
+                        onOk={(e)=>this.handleOk()}
+                        onCancel={(e)=>this.handleCancel(e)}
+                        footer={null}
+                        width={520}
+                        height={150}
+                        className="simple-maps"
+                        >
+                        {
+                            this.state.modal==='Legal'?
+                            <div>
+                                <p>All FALDAX services are available here. Start trading now!</p>
+                                <div style={{minHeight: '20px'}}>
+                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} disabled> TRADE NOW </Button>
+                                </div>
+                            </div>:""
+                        }
+                        {
+                            this.state.modal==='Neutral'?
+                            <div>
+                                <p>All FALDAX services are available here! This country has not made an official determination regarding cryptocurrency and so their stance is considered 'Neutral'. We are continuously monitoring legislation changes and will update our operational status here and notify you if anything changes.</p>
+                            </div>:""
+                        }
+                        {
+                            this.state.modal==='Illegal'?
+                            <div>
+                                <p>All FALDAX services are unavailable here due to legal reasons. We are constantly monitoring this situation in hopes of legislation changes. Please enter your e-mail address below if you would like updates.</p>
+                                <label style={{color: 'green'}}> Email: </label>
+                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
+                                <div style={{marginTop: '20px', minHeight: '20px'}}>
+                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
+                                </div>
+                            </div>:""
+                        }
+                        {
+                            this.state.modal==="usa_neutral" ?
+                            <div>
+                                <p>We are currently engaged in the licensing process in this state. Enter your e-mail address below and we will notify you the moment you can start trading.</p>
+                                <label style={{color: 'green'}}> Email: </label>
+                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
+                                <div style={{marginTop: '20px', minHeight: '20px'}}>
+                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
+                                </div>
+                            </div>:""
+                        }                    
+                    </Modal>
+                </div>
             <Section_3>
+                
                 <Container>
                     <Row>
                         <Col>
@@ -559,18 +613,70 @@ class Home_four extends Component
                                             Back To World Map 
                                         </Back_link>
                                     </Link_wrap>
-                                    
                                     <ComposableMap
+                                        width={900}
+                                        height={600}
+                                        projection={geoAlbersUsa}
+                                        projectionConfig={{ scale: 900 }}
+                                        style={{
+                                            width: "100%",
+                                            height: "auto",
+                                        }}
+                                    >
+                                        <ZoomableGroup disablePanning>
+                                            <Geographies
+                                            disableOptimization
+                                            geography="/assets/us-albers-7.json"
+                                            >
+                                            {(geos, proj) =>
+                                                geos.map((geo, i) => (
+                                                <Geography
+                                                    key={geo.properties.ID_1}
+                                                    geography={geo}
+                                                    projection={proj}
+                                                    onClick={(modal)=>this.showModal(modal)}
+                                                    onMouseMove={this.handleMove}
+                                                    onMouseLeave={this.handleLeave}
+                                                    style={{
+                                                        default: {
+                                                            fill: countryColor(geo.properties.name),
+                                                            stroke: "#607D8B",
+                                                            strokeWidth: 0.75,
+                                                            outline: "none",
+                                                        },
+                                                        hover: {
+                                                            fill: countryColor(geo.properties.name),
+                                                            stroke: "#168fff",
+                                                            strokeWidth: 0.75,
+                                                            outline: "none",
+                                                        },
+                                                        pressed: {
+                                                            fill: "#168fff",
+                                                            stroke: "#168fff",
+                                                            strokeWidth: 0.75,
+                                                            outline: "none",
+                                                        }
+                                                    }}
+                                                />
+                                                ))
+                                            }
+                                            </Geographies>
+                                        </ZoomableGroup>
+                                    </ComposableMap>
+                                    {/* <ComposableMap
+                                        projection={geoAlbersUsa}
+                                        projectionConfig={{ scale: 205 }}
                                         width={980}
                                         height={551}
-                                        projection="albersUsa"
-                                        projectionConfig={{ scale: 900 }}
-                                        style={{width: '900px', height: '300px'}}
-                                        >
+                                        style={{
+                                            width: "100%",
+                                            height: "auto",
+                                        }}
+                                    >
                                         <ZoomableGroup>
                                             <Geographies
                                             disableOptimization
-                                            geography="/assets/us-albers.json"
+                                            geography="/assets/us-albers-1.json"
                                             >
                                             {(geos, proj) =>
                                                 geos.map((geo, i) => (
@@ -607,64 +713,16 @@ class Home_four extends Component
                                             }
                                             </Geographies>
                                         </ZoomableGroup>
-                                    </ComposableMap>
+                                    </ComposableMap> */}
                                 </UsaMap>
                             }
                             </ReactSimpleMapWrapper>
                         </Col>
                     </Row>
                 </Container>
-                <div className="simple-maps">
-                    <Modal
-                        title={<img src="./images/Homepage/Footer_logo.png"/>}
-                        visible={this.state.visible}
-                        onOk={(e)=>this.handleOk()}
-                        onCancel={(e)=>this.handleCancel()}
-                        footer={null}
-                        width={520}
-                        height={150}
-                        className="simple-maps"
-                        >
-                        {
-                            this.state.modal==='Legal'?
-                            <div>
-                                <p>All FALDAX services are available here. Start trading now!</p>
-                                <div style={{minHeight: '20px'}}>
-                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} disabled> TRADE NOW </Button>
-                                </div>
-                            </div>:""
-                        }
-                        {
-                            this.state.modal==='Neutral'?
-                            <div>
-                                <p>All FALDAX services are available here! This country has not made an official determination regarding cryptocurrency and so their stance is considered 'Neutral'. We are continuously monitoring legislation changes and will update our operational status here and notify you if anything changes.</p>
-                            </div>:""
-                        }
-                        {
-                            this.state.modal==='Illegal'?
-                            <div>
-                                <p>All FALDAX services are unavailable here due to legal reasons. We are constantly monitoring this situation in hopes of legislation changes. Please enter your e-mail address below if you would like updates.</p>
-                                <label style={{color: 'green'}}> Email: </label>
-                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
-                                <div style={{marginTop: '20px', minHeight: '20px'}}>
-                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
-                                </div>
-                            </div>:""
-                        }
-                        {
-                            this.state.modal==="usa_neutral" ?
-                            <div>
-                                <p>We are currently engaged in the licensing process in this state. Enter your e-mail address below and we will notify you the moment you can start trading.</p>
-                                <label style={{color: 'green'}}> Email: </label>
-                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
-                                <div style={{marginTop: '20px', minHeight: '20px'}}>
-                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
-                                </div>
-                            </div>:""
-                        }                    
-                    </Modal>
-                </div>
+                
             </Section_3>
+            </div>
 
         )
     }
