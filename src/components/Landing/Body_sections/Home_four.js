@@ -387,7 +387,7 @@ class Home_four extends Component
         super();
         this.handleMove = this.handleMove.bind(this);
         this.handleLeave = this.handleLeave.bind(this);
-        this.state = { visible: false, modal: '', usaMap: false };
+        this.state = { visible: false, modal: '', usaMap: false ,email_msg:""};
     }
 
     handleMove(geography, evt) 
@@ -452,24 +452,35 @@ class Home_four extends Component
 
     send_email() {
         const values = { email: this.state.email_address};
-        this.setState({ visible: false, email_address: '' });
-        fetch("http://18.191.87.133:8084/users/email-subscription",{
-            method:"post",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify(values)
-        })
-        .then(response => response.json())
-        .then((responseData) => {
-            if(responseData.status==500){
-                this.openNotification1();
-            } else {
-                this.openNotification();
-            }
-        })
-        .catch(error => { console.log(error) })
+        this.setState({email_address: '' });
+        var re=/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
+        if(re.test(this.state.email_address))
+        {
+
+            this.setState({email_msg:""})
+                fetch("http://18.191.87.133:8084/users/email-subscription",{
+                    method:"post",
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body:JSON.stringify(values)
+                })
+                .then(response => response.json())
+                .then((responseData) => {
+                    if(responseData.status==500){
+                        this.openNotification1();
+                    } else {
+                        this.openNotification();
+                        this.setState({visible:false,email_msg:""})
+                    }
+                })
+                .catch(error => { console.log(error) })
+        }
+        else
+        {
+            this.setState({email_msg:"*email address not valid"})
+        }
     }
 
     openNotification(){
@@ -646,6 +657,7 @@ class Home_four extends Component
                                 <p>All FALDAX services are unavailable here due to legal reasons. We are constantly monitoring this situation in hopes of legislation changes. Please enter your e-mail address below if you would like updates.</p>
                                 <label style={{color: 'green'}}> Email: </label>
                                 <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
+                                <span style={{color:"red"}}>{this.state.email_msg}</span>
                                 <div style={{marginTop: '20px', minHeight: '20px'}}>
                                     <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
                                 </div>
@@ -657,6 +669,7 @@ class Home_four extends Component
                                 <p>We are currently engaged in the licensing process in this state. Enter your e-mail address below and we will notify you the moment you can start trading.</p>
                                 <label style={{color: 'green'}}> Email: </label>
                                 <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
+                                <span style={{color:"red"}}>{this.state.email_msg}</span>
                                 <div style={{marginTop: '20px', minHeight: '20px'}}>
                                     <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
                                 </div>

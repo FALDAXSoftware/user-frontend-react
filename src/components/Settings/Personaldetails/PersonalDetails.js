@@ -21,7 +21,7 @@ const Profile_wrap = styled.div`
     width: 71%;
     margin: auto;
 `
-const HeaderCol = styled(Col)`
+export const HeaderCol = styled(Col)`
   font-size:20px;
   font-weight: bold;
   color: #505050;
@@ -170,7 +170,7 @@ const Fifth_Row = styled(Row)`
     text-align:left;
     margin-top:50px;
 `
-const Save = styled(Button)`
+export const Save = styled(Button)`
     font-size: 13.217px;
     font-family: "Open Sans";
     color: rgb( 255, 255, 255 );
@@ -182,9 +182,10 @@ const Save = styled(Button)`
     -ms-transform: matrix( 1.2195120140195,0,0,1.20991183157525,0,0);  
     border-radius: 24px;
     background-color: rgb( 76, 132, 255 );
-    box-shadow: 0px 6px 5px 0px rgb( 76, 132, 255 );
+    box-shadow: 0px 4px 10px 0px rgba(76, 132, 255, 0.33);
     margin-left: 10px;
     width: 15%;
+    height:40px;
     @media(max-width:600px)
     {
         width:100px;   

@@ -4,7 +4,10 @@ import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import { Button, notification, Icon } from "antd";
 import { connect } from 'react-redux';
-import { Login } from '../../../Actions/Auth';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Login,clearLogin } from '../../../Actions/Auth';
+import { faEyeSlash,faEye } from '@fortawesome/free-solid-svg-icons';
 /* Components */
 
 /* Global Constants */
@@ -180,15 +183,15 @@ const Sign = styled.div`
     margin-bottom: 10px;
   }
 `
-const EyeIcon = styled(Icon)`
-  margin-left:10px;
-  cursor:pointer
-`
 const Sign_a = styled.a`
   font-size: 16px;
   font-family: "Open Sans";
   color:#0f477b;
   font-weight:bold;
+`
+const FAI = styled(FontAwesomeIcon)`
+  margin-left:10px;
+  cursor:pointer;
 `
 class Login_Form extends React.Component {
   constructor(props) {
@@ -220,14 +223,6 @@ class Login_Form extends React.Component {
         if (this.props.forgotParam !== undefined)
           value['email_verify_token'] = this.props.forgotParam[1];
         this.props.Login(value);
-
-        if (this.props.errorLogin && this.props.errorLogin.token) {
-          this.openNotificationWithIcon('success', 'Login In',"Please Wait.....");
-        } else {
-          this.openNotificationWithIcon('success', 'Login In', "Please Wait.....");
-        }
-      } else {
-        this.openNotificationWithIcon('error', 'Required Fields', 'Please enter all Required Fields');
       }
     });
   }
@@ -306,7 +301,21 @@ class Login_Form extends React.Component {
           }
         }
       }
-
+      componentWillReceiveProps(props, newProps) {
+        console.log("-------->>>>>>>",props,newProps)
+        if (props.errorStatus) {
+          console.log("inside IF I Am")
+          if (props.errorStatus.status == 200) {
+            this.openNotificationWithIcon('success', 'Sign In', props.errorStatus.message);
+            /* this.props.dispModal("login"); */
+          } else {
+            this.openNotificationWithIcon('error', 'Sign In', props.errorStatus.err);
+          }
+          this.props.clearLogin();
+        }
+        
+        
+      }
   render() {
     if (this.props.isLoggedIn) {
       this.props.history.push("/editProfile");
@@ -336,7 +345,9 @@ class Login_Form extends React.Component {
             rules: [{ type: "string", required: true, min: 5 }],
           })}
           />
-          <EyeIcon type={"eye"} theme="outlined" onClick={this.handleEye.bind(this)}/>
+          {
+            (this.state.typeEye=="password")?<FAI icon={faEye} color='black' onClick={this.handleEye.bind(this)}/>:<FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this)}/>
+          }
           <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
           <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
         </div>
@@ -358,14 +369,16 @@ class Login_Form extends React.Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state)
   return ({
     isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
-    errorLogin: state.simpleReducer.error !== undefined && state.simpleReducer.error !== "error" ? state.simpleReducer.error : undefined
+    errorStatus: state.simpleReducer.errorStatus !==undefined ? state.simpleReducer.errorStatus :undefined
   })
 }
 
 const mapDispatchToProps = dispatch => ({
-  Login: (values) => dispatch(Login(values))
+  Login: (values) => dispatch(Login(values)),
+  clearLogin: () =>  dispatch(clearLogin())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Login_Form));

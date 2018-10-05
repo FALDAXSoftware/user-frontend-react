@@ -200,7 +200,7 @@ export default class Footer_home extends React.Component {
                                     <Footer_ul>
                                         <Footer_headers>About Us</Footer_headers>
                                         <li style={{cursor:"pointer"}} onClick={this.showComing}>
-                                            About Faldax
+                                            About FALDAX
                                                 </li>
                                         <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             Contact Us
@@ -217,10 +217,7 @@ export default class Footer_home extends React.Component {
                                     <Footer_ul>
                                         <Footer_headers>Features</Footer_headers>
                                         <li style={{cursor:"pointer"}} onClick={this.showComing}>
-                                            Exchange
-                                                    </li>
-                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
-                                            List your Token/Coin
+                                            List your Token
                                                     </li>
                                         <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             News
@@ -308,7 +305,7 @@ export default class Footer_home extends React.Component {
                         onCancel={this.comingCancel}
                         footer={null}
                         >
-                        <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Comming Soon......</h1></div>
+                        <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Coming Soon......</h1></div>
                         </Modal>
                     </div>
             </Footer_main>

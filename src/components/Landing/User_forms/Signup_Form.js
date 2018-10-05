@@ -165,12 +165,13 @@ class Signup_Form extends React.Component {
   };
 
   componentWillReceiveProps(props, newProps) {
+    console.log("-------->>>>>>>",props,newProps)
     if (props.isSignUp) {
       if (props.isSignUp.status == 200) {
         this.openNotificationWithIcon('success', 'Sign In', props.isSignUp.message);
         this.props.dispModal("login");
       } else {
-        this.openNotificationWithIcon('error', 'Sign In', props.isSignUp.message);
+        this.openNotificationWithIcon('error', 'Sign In', props.isSignUp.err);
       }
     }
     this.props.clearSignUp();
@@ -413,9 +414,9 @@ class Signup_Form extends React.Component {
 }
 
 function mapStateToProps(state) {
+  console.log("Hello 123",state)
   return ({
-    isSignUp: state.simpleReducer.isSignUp,
-    errorLogin: state.simpleReducer.error !== undefined ? state.simpleReducer.error : false
+    isSignUp: state.simpleReducer.isSignUp!==undefined?state.simpleReducer.isSignUp:undefined
   })
 }
 

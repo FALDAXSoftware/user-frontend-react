@@ -10,8 +10,8 @@ import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
 import {connect} from 'react-redux';  
 /* Components */
 import HomePage from './components/Landing/HomePage';
-import FaqPage from './components/Landing/FaqPage';
-import AboutUs from './components/Landing/About_us';
+// import FaqPage from './components/Landing/FaqPage';
+// import AboutUs from './components/Landing/About_us';
 
 library.add(faStroopwafel);
 

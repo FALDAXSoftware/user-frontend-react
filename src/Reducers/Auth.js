@@ -3,16 +3,38 @@ export default (state = {}, action) => {
   switch (action.type) {
 
     case 'LOGIN':
+    if(action.payload!==undefined)
+    {
+        return {
+          ...state,
+          isLoggedIn: action.payload.token,
+          errorStatus: action.payload
+        }
+      }
+    else
+    {
       return {
         ...state,
-        isLoggedIn: action.payload
+        errorStatus:undefined
       }
+    }
 
     case 'ERROR':
-      return {
-        ...state,
-        error: action.payload
-      }
+        console.log(action.payload)
+        if(action.status=="login")
+        {
+          return{
+            ...state,
+            errorStatus:action.payload
+          }
+        }
+        else
+        {
+          return {
+            ...state,
+            isSignUp: action.payload
+          }
+        }
 
     case 'LOGOUT':
       return {
@@ -24,7 +46,7 @@ export default (state = {}, action) => {
     case "SIGNUP":
       return {
         ...state,
-        isSignUp: action.payload
+        isSignUp: action.payload,
       }
 
     case "FORGOT":

@@ -11,6 +11,7 @@ import PersonalDetails from './Personaldetails/PersonalDetails';
 import Referral from './Referral';
 import LoggedNavigation from '../Navigations/LoggedNavigation';
 import CommonFooter from "../Landing/Footers/Footer";
+import Passwordchange from "./changePassword/Passwordchange"
 
 const TabPane = Tabs.TabPane;
 
@@ -61,7 +62,8 @@ class Editprofile extends Component
                         <ProfileDiv>
                             <Tabs className="profile-tabs" defaultActiveKey="1" onChange={this._changeTab}>
                                 <TabPane tab="Personal Details" key="1"><PersonalDetails {...this.props}/></TabPane>
-                                <TabPane tab="Referral" key="2"><Referral/></TabPane>
+                                <TabPane tab="Security" key="2"><Passwordchange/></TabPane>
+                                <TabPane tab="Referral" key="3"><Referral/></TabPane>
                             </Tabs>
                         </ProfileDiv>
                     </ProfileWrapper>

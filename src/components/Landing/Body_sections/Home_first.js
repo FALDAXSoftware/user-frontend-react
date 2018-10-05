@@ -103,7 +103,7 @@ export default class Homefirst extends React.Component
             <MainRow>
                 <Container>
                     <Left_Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Home_text1>Welcome TO FALDAX</Home_text1>
+                        <Home_text1>Welcome To FALDAX</Home_text1>
                         <Home_list>
                             RELIABILITY.ACCESSIBILITY.SECURITY.INNOVATION
                         </Home_list>

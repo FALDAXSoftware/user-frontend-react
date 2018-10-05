@@ -120,9 +120,9 @@ export default class Beforelog extends React.Component
                         <Exchange>
                             <span  onClick={this.showComing}> CAREERS </span>
                         </Exchange>
-                        <Exchange onClick={this.showComing}>
+                      {/*   <Exchange onClick={this.showComing}>
                             <span  onClick={this.showComing}> LANGUAGE </span>
-                        </Exchange>
+                        </Exchange> */}
                         <Login_text onClick={()=>this.dispModal("login")}>LOGIN</Login_text>
                         <Temp_button onClick={()=>this.dispModal("signup")} type="primary" size="large">Sign up</Temp_button>
                         <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={() => this.openNav()}>&#9776;</Open> 
@@ -134,7 +134,7 @@ export default class Beforelog extends React.Component
                             onCancel={this.comingCancel}
                             footer={null}
                             >
-                            <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Comming Soon......</h1></div>
+                            <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Coming Soon......</h1></div>
                             </Modal>
                         </div>
                     </div>

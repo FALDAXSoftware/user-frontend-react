@@ -300,13 +300,13 @@ class Navigation extends React.Component {
                     defaultSelectedKeys={['1']}
                 >
                     <Menu_item key="1" onClick={this.showComing}>HOME</Menu_item>
-                    <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item>
-                    <Menu_item key="3" onClick={this.showComing}>ABOUT</Menu_item>
-                    <Menu_item key="4" onClick={this.showComing}>SECURITY</Menu_item>
-                    <Menu_item key="5" onClick={this.showComing}>NEWS</Menu_item>
-                    <Menu_item key="6" onClick={this.showComing}>CONTACT</Menu_item>
-                    <Menu_item key="7" onClick={this.showComing}>LIST YOUR TOKEN/COIN</Menu_item>
-                    <Menu_item key="8" onClick={this.showComing}>EXCHANGE</Menu_item>
+                    {/* <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item> */}
+                    <Menu_item key="2" onClick={this.showComing}>ABOUT</Menu_item>
+                    <Menu_item key="3" onClick={this.showComing}>SECURITY</Menu_item>
+                    <Menu_item key="4" onClick={this.showComing}>NEWS</Menu_item>
+                    <Menu_item key="5" onClick={this.showComing}>CONTACT</Menu_item>
+                    <Menu_item key="6" onClick={this.showComing}>LIST YOUR TOKEN/COIN</Menu_item>
+                    <Menu_item key="7" onClick={this.showComing}>EXCHANGE</Menu_item>
                 </Menu_main>
                 {console.log(this.props)}
                 <Right_div>
@@ -328,7 +328,7 @@ class Navigation extends React.Component {
                     <a onClick={this.showComing} href="#">Security</a>
                     <a onClick={this.showComing} href="#">News</a>
                     <a onClick={this.showComing} href="#">Contact</a>
-                    <a onClick={this.showComing} href="#">List Your Token/Coin</a>
+                    <a onClick={this.showComing} href="#">List Your Token</a>
                     <a onClick={this.showComing} href="#">Exchange</a>
                     <Why> Careers </Why>
                     <Why> Language </Why>
@@ -385,7 +385,7 @@ class Navigation extends React.Component {
                         onCancel={this.comingCancel}
                         footer={null}
                         >
-                        <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Comming Soon......</h1></div>
+                        <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Coming Soon......</h1></div>
                         </Modal>
                     </div>
             </Header_main>
