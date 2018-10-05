@@ -66,7 +66,7 @@ const Email = styled(Username)`
   display:inline-block;
 `
 const Full_req = styled(Email_req)`
-  
+
 `
 const ConfirmPass_req = styled(Email_req)`
 
@@ -168,8 +168,8 @@ class Signup_Form extends React.Component {
     console.log("-------->>>>>>>",props,newProps)
     if (props.isSignUp) {
       if (props.isSignUp.status == 200) {
-        this.openNotificationWithIcon('success', 'Sign In', props.isSignUp.message);
-        this.props.dispModal("login");
+        // this.openNotificationWithIcon('success', 'Sign In', props.isSignUp.message);
+        this.props.dispModal("thankyou");
       } else {
         this.openNotificationWithIcon('error', 'Sign In', props.isSignUp.err);
       }

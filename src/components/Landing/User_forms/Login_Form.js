@@ -110,6 +110,10 @@ export const Pass_req = styled.label`
   font-size:10px;
   width:76%;
 `
+const OtpLabel = styled(Email_label)`
+    width: 76%;
+    text-align: justify;
+`
 const Check_wrap = styled.div`
   margin-top:35px;
   width:76%;
@@ -199,9 +203,12 @@ class Login_Form extends React.Component {
     this.state = {
       email_msg: null,
       pass_msg: null,
+      otp_msg:null,
       passIcon: null,
       emailIcon: null,
-      typeEye:"password"
+      otpIcon:null,
+      typeEye:"password",
+      isOtpRequired:false,
     }
   }
 
@@ -283,6 +290,28 @@ class Login_Form extends React.Component {
         document.querySelector("#passlog_icon_fail").style.display = "none"
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
       }
+    }else if (field == "otp") {
+      var re = /^\b[a-zA-Z0-9]{6}\b|\b[a-zA-Z0-9]{6}\b/;
+      var bool = re.test(value);
+      if (value !== "") {
+        if (bool == true) {
+          this.setState({ otpIcon: true })
+          document.querySelector("#otp_icon_success").style.display = "inline-block"
+          document.querySelector("#otp_icon_fail").style.display = "none"
+          document.querySelectorAll(".otp_msg")[0].style.display = "none";
+        } else {
+          this.setState({ otpIcon: false })
+          document.querySelector("#otp_icon_success").style.display = "none"
+          document.querySelector("#otp_icon_fail").style.display = "inline-block"
+          document.querySelectorAll(".otp_msg")[0].style.display = "block";
+          this.setState({ otp_msg: "Otp should have 6 characters." })
+        }
+      } else {
+        this.setState({ otpIcon: false })
+        document.querySelector("#otp_icon_success").style.display = "none"
+        document.querySelector("#otp_icon_fail").style.display = "none"
+        document.querySelectorAll(".otp_msg")[0].style.display = "none";
+      }
     }
   }
   handleEye(e)
@@ -292,7 +321,7 @@ class Login_Form extends React.Component {
         {
           console.log("I am in")
           if(document.getElementById("logPass").type=="password")
-          { 
+          {
             this.setState({typeEye:"text"})
           }
           else
@@ -302,19 +331,24 @@ class Login_Form extends React.Component {
         }
       }
       componentWillReceiveProps(props, newProps) {
-        console.log("-------->>>>>>>",props,newProps)
         if (props.errorStatus) {
-          console.log("inside IF I Am")
           if (props.errorStatus.status == 200) {
             this.openNotificationWithIcon('success', 'Sign In', props.errorStatus.message);
             /* this.props.dispModal("login"); */
-          } else {
+          }else if (props.errorStatus.status == 201) {
+            this.setState({
+              isOtpRequired:true
+            });
+            // document.querySelector("#otp-field").focus();
+            this.openNotificationWithIcon('error', 'Sign In', props.errorStatus.err);
+          }
+          else {
             this.openNotificationWithIcon('error', 'Sign In', props.errorStatus.err);
           }
           this.props.clearLogin();
         }
-        
-        
+
+
       }
   render() {
     if (this.props.isLoggedIn) {
@@ -352,6 +386,21 @@ class Login_Form extends React.Component {
           <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
         </div>
         <Pass_req className="pass_msg">{this.state.pass_msg}</Pass_req>
+
+        {this.state.isOtpRequired &&
+          <div>
+            <OtpLabel>Your Two Factor Authentiaction is ON. So Please Check Google Authenticator App in Your Device and add OTP here</OtpLabel>
+            <div>
+              <Username id="otp-field" {...getFieldProps('otp', {
+                onChange(e) { me.onChangeField(e.target.value, "otp") }, // have to write original onChange here if you need
+                rules: [{ required: true }],
+              })} />
+              <UserIconS id="otp_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+              <UserIconF id="otp_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+            </div>
+            <Email_req className="otp_msg">{this.state.otp_msg}</Email_req>
+          </div>
+        }
         <Check_wrap>
           <Remember>
             <Check type="checkbox" /> Remember Me</Remember>
@@ -372,7 +421,8 @@ function mapStateToProps(state) {
   console.log(state)
   return ({
     isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
-    errorStatus: state.simpleReducer.errorStatus !==undefined ? state.simpleReducer.errorStatus :undefined
+    errorStatus: state.simpleReducer.errorStatus !==undefined ? state.simpleReducer.errorStatus :undefined,
+    // isOtpRequired:state.simpleReducer.isOtpRequired,
   })
 }
 

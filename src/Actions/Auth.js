@@ -13,7 +13,7 @@ export function Login(values) {
             body: JSON.stringify(values)
         }).then(response => response.json())
             .then((responseData) => {
-                console.log(responseData)
+                // console.log(responseData)
                 if (responseData.status == 200)
                     dispatch(loginAction(responseData))
                 else
@@ -32,6 +32,13 @@ export function clearLogin() {
 export const loginAction = (data) => dispatch => {
     dispatch({
         type: 'LOGIN',
+        payload: data
+    })
+}
+
+export const otpRequiredAction = (data) => dispatch => {
+    dispatch({
+        type: 'otpRequired',
         payload: data
     })
 }
@@ -57,7 +64,7 @@ export function Signup(values) {
                 if (responseData.status == 200) {
                     console.log("Response Data")
                     dispatch(signupAction(responseData))
-                } 
+                }
                 else {
                     console.log("Error")
                     dispatch(errorAction(responseData))
@@ -139,5 +146,5 @@ export const errorAction = (error,status="") => dispatch => {
         payload: error,
         status:status
     })
-    
+
 }
