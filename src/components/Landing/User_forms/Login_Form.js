@@ -6,10 +6,10 @@ import { Button, notification, Icon } from "antd";
 import { connect } from 'react-redux';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Login,clearLogin } from '../../../Actions/Auth';
+
 import { faEyeSlash,faEye } from '@fortawesome/free-solid-svg-icons';
 /* Components */
-
+import { Login,clearLogin } from '../../../Actions/Auth';
 /* Global Constants */
 
 /* Styled-Components */
@@ -81,12 +81,12 @@ export const Email_req = styled.div`
   font-size:10px;
   width:76%;
 `
-const UserIconS = styled(Icon)`
+export const UserIconS = styled(Icon)`
   font-size:19px;
   display:none;
   margin-left:10px;
 `
-const UserIconF = styled(UserIconS)`
+export const UserIconF = styled(UserIconS)`
 `
 const Ph_Label = styled(Email_label)`
   margin-top:15px;
@@ -215,7 +215,7 @@ class Login_Form extends React.Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      if (error == null) {
+      if (error == null && this.state.passIcon==true && this.state.password==true ) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
@@ -223,6 +223,10 @@ class Login_Form extends React.Component {
         if (this.props.forgotParam !== undefined)
           value['email_verify_token'] = this.props.forgotParam[1];
         this.props.Login(value);
+      }
+      else
+      {
+        this.openNotificationWithIcon("error","Login","Please Enter all Required fields")
       }
     });
   }

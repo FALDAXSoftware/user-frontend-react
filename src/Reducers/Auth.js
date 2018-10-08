@@ -82,6 +82,12 @@ export default (state = {}, action) => {
 
     case "RESET":
       return { ...state }
+    
+    case "CHANGEPASSWORD":
+      return {
+        ...state,
+        changePass:action.payload
+      }
 
     default:
       /* console.log("default") */

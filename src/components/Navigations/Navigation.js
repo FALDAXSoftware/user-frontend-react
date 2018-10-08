@@ -385,7 +385,7 @@ class Navigation extends React.Component {
                         onCancel={this.comingCancel}
                         footer={null}
                         >
-                        <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Coming Soon......</h1></div>
+                        <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Coming Soon</h1></div>
                         </Modal>
                     </div>
             </Header_main>

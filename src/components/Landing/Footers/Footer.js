@@ -27,10 +27,12 @@ const HR = styled.hr`
 
 class CommonFooter extends Component {
     render() {
+        var date = new Date();
+        var Year = date.getFullYear();
         return (
             <Footer_wrap>
                 <Bottom_Footer>
-                    @2013-2018 FALDAX. All Rights Reserved.
+                    @{Year} FALDAX. All Rights Reserved.
                 </Bottom_Footer>
             </Footer_wrap>
         );
