@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import Login_Form from "../Landing/User_forms/Login_Form"
 import Signup_Form from "../Landing/User_forms/Signup_Form"
 import Forgot_Form from "../Landing/User_forms/Forgot_Form"
+import Thank_You from "../Landing/User_forms/Thank_You"
 import Beforelog from "./BeforeLog"
 import Afterlog from "./Afterlog"
 import Reset_Form from "../Landing/User_forms/Reset_Form"
@@ -61,7 +62,7 @@ const Faldaxtext = styled.img`
 /* Styled Components */
 const FALDAX = styled.img`
 
-    margin-left: 15px; 
+    margin-left: 15px;
     cursor:pointer;
 
     @media(max-width:1320px)
@@ -108,7 +109,7 @@ const Menu_item = styled(Menu.Item)`
     font-family: "Open sans";
     color: rgb( 40, 37, 40 );
     font-weight: bold;
-    text-transform: uppercase;      
+    text-transform: uppercase;
     vertical-align: unset;
     float: left;
     border-bottom:0px !important;
@@ -217,7 +218,7 @@ class Navigation extends React.Component {
             document.getElementById("main").style.marginRight = "250px";
             document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
-    } 
+    }
     closeNav() {
         if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
             document.getElementById("mySidenav").style.width = "0";
@@ -231,6 +232,8 @@ class Navigation extends React.Component {
             this.setState({ modal: 0 })
         else if (pressed == "signup")
             this.setState({ modal: 1 })
+        else if (pressed == "thankyou")
+          this.setState({modal:4});
         else
             this.setState({ modal: 2 })
         this.showModal();
@@ -259,14 +262,14 @@ class Navigation extends React.Component {
           comingSoon: true,
         });
       }
-    
+
       handleComing = (e) => {
         console.log(e);
         this.setState({
             comingSoon: false,
         });
       }
-    
+
       comingCancel = (e) => {
         console.log(e);
         this.setState({
@@ -285,7 +288,7 @@ class Navigation extends React.Component {
             })
         }
     }
-    
+
     render() {
         let prof_name = this.props.profileDetails.first_name!==null && this.props.profileDetails.first_name!==undefined?(this.props.profileDetails.first_name + " " +  this.props.profileDetails.last_name):"User";
         return (
@@ -361,7 +364,8 @@ class Navigation extends React.Component {
                                     <Forgot_Form {...this.props} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
                                 }
                                 {
-                                    /* console.log(this.state.forgotParam) */
+                                  this.state.modal==4?
+                                  <Thank_You {...this.props}/>:""
                                 }
                                 {
                                     this.state.forgotParam!==undefined && this.props.pathname.includes("reset-password")?
@@ -405,5 +409,5 @@ function mapStateToProps(state,ownProps){
 const mapDispatchToProps = dispatch => ({
 
 })
-  
+
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

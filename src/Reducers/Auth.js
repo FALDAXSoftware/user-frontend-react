@@ -19,6 +19,13 @@ export default (state = {}, action) => {
       }
     }
 
+    case 'otpRequired':
+    return{
+      ...state,
+      isOtpRequired:true,
+      OtpParams:action.payload
+    }
+
     case 'ERROR':
         console.log(action.payload)
         if(action.status=="login")
