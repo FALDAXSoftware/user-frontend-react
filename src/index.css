@@ -322,6 +322,10 @@ table .ant-table-tbody > tr > td {
     {
       width:30%;
     }
+    .Country_Select
+    {
+      width:95%;
+    }
   }
   @media(max-width:768px)
   {
@@ -336,6 +340,10 @@ table .ant-table-tbody > tr > td {
     #profile-day
     {
       width:31%;
+    }
+    .Country_Select
+    {
+      width:100%;
     }
   }
   @media(max-width:710px)

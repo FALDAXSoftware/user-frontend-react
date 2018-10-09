@@ -2,6 +2,31 @@ import { globalVariables } from '../Globals';
 
 let { API_URL } = globalVariables;
 
+export function deleteAccount(isLoggedIn,value)
+{
+    console.log(isLoggedIn,value)
+    return (dispatch) => {
+        fetch(API_URL + "/users/deleteAccount", {
+            method: "delete",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization:"Bearer " + isLoggedIn
+            },
+            body: JSON.stringify(value)
+        }).then(response => response.json())
+            .then((responseData) => {
+                // console.log(responseData)
+                if (responseData.status == 200)
+                    dispatch(Logout(responseData))
+            }).catch(error => {
+                console.log("error", error)
+            })
+    }
+}
+
+
+
 export function Login(values) {
     return (dispatch) => {
         fetch(API_URL + "/login", {

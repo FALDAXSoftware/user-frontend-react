@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {connect} from "react-redux"
-import { Row,Col,Checkbox,Table,Button } from 'antd';
+import {connect} from "react-redux";
+import { Row,Col,Checkbox,Table,Button,notification } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { globalVariables } from '../../../Globals';
+
+import {deleteAccount} from "../../../Actions/Auth"
 
 let { API_URL } = globalVariables;
 
@@ -29,7 +31,7 @@ const columns = [{
 /* Styled- Components */
 
 const Acc_wrap = styled.div`
-
+  margin-bottom:50px;
 `
 const Noti_Wrap = styled.div`
     margin-top:50px;
@@ -136,7 +138,7 @@ const Button_del = styled(Button)`
   border-radius:40px;
   height:50px;
 `
-export default class Acc_settings extends React.Component
+class Acc_settings extends React.Component
 {
     constructor(props){
         super(props);
@@ -178,6 +180,21 @@ export default class Acc_settings extends React.Component
         
         
     }
+    deleteAccount()
+    {
+        console.log(this.props)
+        this.openNotificationWithIcon('success')
+        let value = {};
+        value["email"] = this.props.email;
+        this.props.deleteAccount(this.props.isLoggedIn,value)
+    }
+    openNotificationWithIcon = (type) => {
+        notification[type]({
+          message: 'Deleted',
+          description: 'Account has been successfully deleted.',
+          duration: 3,
+        });
+      };
     render()
     {
         return(
@@ -248,10 +265,23 @@ export default class Acc_settings extends React.Component
                         <span>To permenantly delete the account click on the below button</span>
                     </Delete_desc>
                     <Delete_btn>
-                        <Button_del type="primary">Delete Account</Button_del>
+                        <Button_del type="primary" onClick={this.deleteAccount.bind(this)}>Delete Account</Button_del>
                     </Delete_btn>
                 </Delete_wrap>
             </Acc_wrap>
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    console.log("personalDetails",state)
+    return {
+      ...state,
+        email:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0].email:"",
+    }
+  }
+const mapDispatchToProps = dispatch => ({
+   deleteAccount : (isLoggedIn,email) => dispatch(deleteAccount(isLoggedIn,email))
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(Acc_settings);

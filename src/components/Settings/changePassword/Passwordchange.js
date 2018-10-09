@@ -30,7 +30,7 @@ const ChangeCol = styled.div`
     padding-bottom:40px;
 `
 const Old = styled.div`
-    width:41%
+    width:90%
     margin:auto;
     text-align:left
     margin-top:35px;
@@ -60,6 +60,7 @@ const Button_div = styled.div`
 `
 const NewButton = styled(Save)`
     border:none;
+    width:auto;
     &:hover
     {
         background-color: rgb( 76, 132, 255 );
@@ -109,7 +110,7 @@ const Left_Col = styled(Col)`
         content:"";
         top: 8%;
         position: absolute;
-        height: 84%;
+        height: 114%;
         right: 0px;
         border-right: 1px solid #d6d6d6;
     }
@@ -170,13 +171,14 @@ const TF_input = styled(Input)`
     dipslay:inline-block;
 `
 const Enable = styled.div`
-    text-align:left;
+    margin-bottom: 40px;
     text-align: left;
     margin-left: 40px;
     margin-top: 30px;
 `
 const E_button = styled(Save)`
     border:none;
+    width:auto;
     &:hover
     {
         background-color: rgb( 76, 132, 255 );
@@ -538,7 +540,7 @@ class Passwordchange extends React.Component
                 </TwofactorRow>
                 {(this.state.show_QR==true)?
                 <BarRow >
-                    <Left_Col span={12}>
+                    <Left_Col sm={{span:24}} md={{span:24}} lg={{span:12}}>
                         <Image_Wrap>
                             <Bar_code src={this.state.QR_img}/>
                         </Image_Wrap>
@@ -547,7 +549,7 @@ class Passwordchange extends React.Component
                             <Key>{this.state.Key}</Key>
                         </Key_wrap>
                     </Left_Col>
-                    <Right_Col span={12}>
+                    <Right_Col sm={{span:24}} md={{span:24}} lg={{span:12}}>
                         <Order_list>
                             <LI>Install an authenticator app on your mobile device. We suggest Google Authenticator. </LI>
                             <LI>Scan the QR code with the authenticator.</LI>
