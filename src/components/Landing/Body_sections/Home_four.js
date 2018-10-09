@@ -76,7 +76,7 @@ const Link_wrap = styled.div`
 `;
 const Icon1 = styled.i`
     vertical-align: middle;
-    color: rgb( 15, 71, 123 );    
+    color: rgb( 15, 71, 123 );
 `;
 
 const colorScale = [
@@ -89,7 +89,7 @@ const colorScale = [
 const UsaMap = styled.div`
 `;
 
-//Myanmar, Somaliland new added 
+//Myanmar, Somaliland new added
 const countries = [
     { name: 'Afghanistan', legality: 'Neutral', color: '#ADD8E6' },
     { name: 'Bangladesh', legality: 'Illegal', color: 'red' },
@@ -381,7 +381,7 @@ let countryColor = function(text) {
 };
 
 /* Component defination start here */
-class Home_four extends Component 
+class Home_four extends Component
 {
     constructor() {
         super();
@@ -390,14 +390,14 @@ class Home_four extends Component
         this.state = { visible: false, modal: '', usaMap: false ,email_msg:""};
     }
 
-    handleMove(geography, evt) 
+    handleMove(geography, evt)
     {
         const x = evt.clientX;
         const y = evt.clientY + window.pageYOffset;
         this.props.dispatch(show({ origin: { x, y }, content: geography.properties.name }));
     }
 
-    handleLeave() 
+    handleLeave()
     {
         this.props.dispatch(hide());
     }
@@ -412,7 +412,7 @@ class Home_four extends Component
     showModal(modal) {
         if(modal.properties.name=='United States') {
             this.setState({ usaMap: true, email_address: '' });
-        } else if(modal.properties.name=="Vietnam") { 
+        } else if(modal.properties.name=="Vietnam") {
             //skip for now
         } else {
             for(var i=0;i<countries.length;i++) {
@@ -503,7 +503,7 @@ class Home_four extends Component
     render() {
 
         return (
-            
+
             <Section_3>
                 <Container>
                     <Row>
@@ -542,7 +542,7 @@ class Home_four extends Component
                                                             stroke: "#607D8B",
                                                             strokeWidth: 0.75,
                                                             outline: "none",
-                                                            
+
                                                         },
                                                         hover: {
                                                             fill: countryColor(geography.properties.name),
@@ -565,12 +565,12 @@ class Home_four extends Component
                                 :
                                 <UsaMap>
                                     <Link_wrap>
-                                        <Back_link onClick={() => this.hideModal()}> 
+                                        <Back_link onClick={() => this.hideModal()}>
                                             <Icon1 className="material-icons"> keyboard_backspace </Icon1>
-                                            Back To World Map 
+                                            Back To World Map
                                         </Back_link>
                                     </Link_wrap>
-                                    
+
                                     <ComposableMap
                                         width={980}
                                         height={551}
@@ -674,7 +674,7 @@ class Home_four extends Component
                                     <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
                                 </div>
                             </div>:""
-                        }                    
+                        }
                     </Modal>
                 </div>
             </Section_3>

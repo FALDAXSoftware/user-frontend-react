@@ -36,6 +36,12 @@ const KYC_form = styled.div`
     margin-right:auto;
     margin-top:55px;
 `
+
+
+const KYC_type_select_row = styled.div`
+  width:50%;
+  margin 55px auto;
+`
 const Save_kyc = styled(Save)`
 margin-left:0px;
 `
@@ -95,7 +101,7 @@ class KYC extends React.Component
             is_twofactor:"ENABLE",
             QR_img:null,
             otp_msg:null,
-            
+
         }
     }
 
@@ -104,7 +110,7 @@ class KYC extends React.Component
     };
 
     onDateChange(Datedata)
-    { 
+    {
       this.setState({Datedata})
     }
     onCountryChange(country)
@@ -129,7 +135,7 @@ class KYC extends React.Component
 
     render()
     {
-        
+
         const { getFieldProps, getFieldError } = this.props.form;
         return(
             <KYC_wrap>
@@ -160,7 +166,7 @@ class KYC extends React.Component
                                     <Col md={{span:12}} lg={{span:12}} xl={{span:12}} xxl={{span:12}}>
                                         <Last_name_kyc>Last Name</Last_name_kyc>
                                         <Last_input_kyc placeholder="Last Name" {...getFieldProps('last_name', {
-                                            onChange(){/* console.log("Hello How are You") */}, 
+                                            onChange(){/* console.log("Hello How are You") */},
                                             initialValue:this.props.profileDetails.last_name,// have to write original onChange here if you need
                                             rules: [{required: true}],
                                         })}/>
@@ -218,6 +224,52 @@ class KYC extends React.Component
                                 </Fifth_Row_kyc>
                     </Right_Col_kyc>
                 </KYC_form>
+                <KYC_type_select_row>
+                  <Col md={{span:24}}>
+                    Select ID type
+                  </Col>
+                  <Col md={{span:6}}>
+                  <label className="kyc-radio-container">
+                    <input type="radio" name="kyc_type"/>
+                    <span className="background">
+                      <img src="/images/passport-logo-active.png" className="active"/>
+                      <img src="/images/passport-logo.png" className="normal"/>
+                      <span className="text">Passport</span>
+                    </span>
+                  </label>
+                  </Col>
+                  <Col md={{span:6}}>
+                  <label className="kyc-radio-container">
+                    <input type="radio" name="kyc_type"/>
+                    <span className="background license">
+                      <img src="/images/driving-license-active.png" className="active"/>
+                      <img src="/images/driving-license.png" className="normal"/>
+                      <span className="text">Driving license</span>
+                    </span>
+                  </label>
+                  </Col>
+                  <Col md={{span:6}}>
+                  <label className="kyc-radio-container">
+                    <input type="radio" name="kyc_type"/>
+                    <span className="background identity">
+                      <img src="/images/identity-active.png" className="active"/>
+                      <img src="/images/identity.png" className="normal"/>
+                      <span className="text">Identity</span>
+                    </span>
+                  </label>
+                  </Col>
+                  <Col md={{span:6}}>
+                  <label className="kyc-radio-container">
+                    <input type="radio" name="kyc_type"/>
+                    <span className="background ssn">
+                      <img src="/images/ssn-active.png" className="active"/>
+                      <img src="/images/ssn.png" className="normal"/>
+                      <span className="text">SSN</span>
+                    </span>
+                  </label>
+                  </Col>
+                </KYC_type_select_row>
+
             </KYC_wrap>
         );
     }
