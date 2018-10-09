@@ -57,16 +57,16 @@ const Remove = styled.div`
     color:#0f477b;
     cursor:pointer;
 `
-const Right_Col = styled(Col)`
+export const Right_Col = styled(Col)`
     @media(max-width:992px)
     {
         margin-top: 60px;
     }
 `
-const First_Row = styled(Row)`
+export const First_Row = styled(Row)`
     text-align:left;
 `
-const First_name = styled.div`
+export const First_name = styled.div`
     font-size: 14.007px;
     font-family: "Open Sans";
     color: rgba( 80, 80, 80, 0.502 );
@@ -75,7 +75,7 @@ const First_name = styled.div`
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     margin-bottom:10px;
 `
-const First_input = styled(Input)`
+export const First_input = styled(Input)`
     background-color:#f8f8f8;
     width:89%;
     border:1px solid #dadfe3;
@@ -84,22 +84,22 @@ const First_input = styled(Input)`
         width:100%;
     }
 `
-const First_Msg = styled(Email_req)`
+export const First_Msg = styled(Email_req)`
     display:block;
 `
-const Last_Msg =styled(First_Msg)``
-const Country_Msg =styled(First_Msg)``
-const Dob_Msg =styled(First_Msg)``
-const Street_Msg =styled(First_Msg)``
-const City_Msg =styled(First_Msg)``
-const Postal_Msg =styled(First_Msg)``
-const Last_name = styled(First_name)`
+export const Last_Msg =styled(First_Msg)``
+export const Country_Msg =styled(First_Msg)``
+export const Dob_Msg =styled(First_Msg)``
+export const Street_Msg =styled(First_Msg)``
+export const City_Msg =styled(First_Msg)``
+export const Postal_Msg =styled(First_Msg)``
+export const Last_name = styled(First_name)`
     @media(max-width:768px)
     {
         margin-top:25px;
     }
 `
-const Last_input = styled(Input)`
+export const Last_input = styled(Input)`
     background-color:#f8f8f8;
     width:90%;
     border:1px solid #dadfe3;
@@ -109,14 +109,14 @@ const Last_input = styled(Input)`
     }
    
 `
-const Second_Row = styled(Row)`
+export const Second_Row = styled(Row)`
     text-align:left;
     margin-top:25px;
 `
-const Country = styled(First_name)`
+export const Country = styled(First_name)`
    
 `
-const Country_input = styled(First_input)`
+export const Country_input = styled(First_input)`
     @media(max-width:992px)
     {
         width:95%;
@@ -126,7 +126,7 @@ const Country_input = styled(First_input)`
         width:100%;
     }
 `
-const Date_birth = styled(First_name)`
+export const Date_birth = styled(First_name)`
     
     @media(max-width:992px)
     {
@@ -134,13 +134,13 @@ const Date_birth = styled(First_name)`
     }
 
 `
-const Third_Row = styled(Second_Row)`
+export const Third_Row = styled(Second_Row)`
     text-align:left;
 `
-const Street_Address = styled(First_name)`
+export const Street_Address = styled(First_name)`
 
 `
-const Street_input = styled(TextArea)`
+export const Street_input = styled(TextArea)`
     background-color:#f8f8f8;
     width:95%;
     border:1px solid #dadfe3;
@@ -154,19 +154,19 @@ const Street_input = styled(TextArea)`
         width:100%;
     }
 `
-const Fourth_Row = styled(Second_Row)`
+export const Fourth_Row = styled(Second_Row)`
     text-align:left;
 `
-const City = styled(First_name)`
+export const City = styled(First_name)`
 
 `
-const Postal = styled(First_name)`
+export const Postal = styled(First_name)`
     @media(max-width:768px)
     {
         margin-top:25px;
     }
 `
-const Fifth_Row = styled(Row)`
+export const Fifth_Row = styled(Row)`
     text-align:left;
     margin-top:50px;
 `

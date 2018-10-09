@@ -222,14 +222,16 @@ class Login_Form extends React.Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      if (error == null && this.state.passIcon==true && this.state.password==true ) {
+      console.log("validate Fields",error,value,this.state)
+      if (error == null && this.state.passIcon==true && this.state.emailIcon==true ) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
 
         if (this.props.forgotParam !== undefined)
-          value['email_verify_token'] = this.props.forgotParam[1];
-        this.props.Login(value);
+        {value['email_verify_token'] = this.props.forgotParam[1];}
+        console.log("I am in")
+          this.props.Login(value);
       }
       else
       {
@@ -255,6 +257,7 @@ class Login_Form extends React.Component {
       var bool = re.test(String(value).toLowerCase());
       if (value !== "") {
         if (bool == true) {
+          console.log("EmailICON is true")
           this.setState({ emailIcon: true })
           document.querySelector("#userlog_icon_success").style.display = "inline-block"
           document.querySelector("#userlog_icon_fail").style.display = "none"
@@ -277,6 +280,7 @@ class Login_Form extends React.Component {
       var bool = re.test(value);
       if (value !== "") {
         if (bool == true) {
+          console.log("passIcon is true")
           this.setState({ passIcon: true, password: value })
           document.querySelector("#passlog_icon_success").style.display = "inline-block"
           document.querySelector("#passlog_icon_fail").style.display = "none"
@@ -397,7 +401,7 @@ class Login_Form extends React.Component {
             <div>
               <Username id="otp-field" {...getFieldProps('otp', {
                 onChange(e) { me.onChangeField(e.target.value, "otp") }, // have to write original onChange here if you need
-                rules: [{ required: true }],
+                rules: [{ required: false }],
               })} />
               <UserIconS id="otp_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
               <UserIconF id="otp_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />

@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import {UserIconF ,UserIconS ,Email_req} from "../../Landing/User_forms/Login_Form"
 import {HeaderCol,Save} from "../Personaldetails/PersonalDetails"
-import {passwordChange,passwordChangeData} from "../../../Actions/Settings/passwordChange"
+import {passwordChange,passwordChangeData,TF_Enable,QRData,verifyTF,verifyQRData,TF_Disable,disableAction} from "../../../Actions/Settings/passwordChange"
 
 const Wrapper = styled.div``
 const ChangeRow = styled(Row)`
@@ -26,7 +26,8 @@ const ChangeRow = styled(Row)`
     }
 `
 const ChangeCol = styled.div`
-    height:370px;
+    height:auto;
+    padding-bottom:40px;
 `
 const Old = styled.div`
     width:41%
@@ -94,8 +95,8 @@ const  Head_text = styled.p`
 `
 const BarRow = styled(Row)`
     width:81%;
-    margin:auto;
-    min-height:415px;
+    margin:0 auto;
+    height:auto
     background-color:#f8f8f8;
     margin-top:45px;
     border:1px solid #d6d6d6;
@@ -123,7 +124,6 @@ const Bar_code = styled.img`
 `
 const Key_wrap = styled.div`
     margin-top:20px;
-    margin-bottom: 110px;
 `
 const Key_text = styled.span`
     font-size: 13.007px;
@@ -166,8 +166,8 @@ const TF_label = styled.label`
 `
 const TF_input = styled(Input)`
     width:148px;
-    display:block;
     margin-top:10px;
+    dipslay:inline-block;
 `
 const Enable = styled.div`
     text-align:left;
@@ -197,14 +197,18 @@ class Passwordchange extends React.Component
         super(props)
         this.state = {
             ON_OFF:"OFF",
-            Key:"MRXIDKFHJAS",
+            Key:null,
             typeEye:"password",
             newEye:"password",
             repeatEye:"password",
             currentpassIcon:false,
             newpassIcon:false,
             confirmIcon:false,
+            otpIcon:false,
             is_twofactor:"ENABLE",
+            QR_img:null,
+            otp_msg:null,
+            
         }
     }
     static propTypes = {
@@ -334,6 +338,54 @@ class Passwordchange extends React.Component
             }
     }
     }
+    TF_AUTH()
+    {
+        console.log(this.props)
+        if(this.props.profileDetails.is_twofactor == true)
+        {
+            this.props.TF_Disable(this.props.isLoggedIn)
+        }
+        else
+            this.props.TF_Enable(this.props.isLoggedIn);
+    }
+    changeOTP(value,field)
+    {
+        console.log(this.props,value,field)
+        if (field == "otp") {
+            var re = /^\b[a-zA-Z0-9]{6}\b|\b[a-zA-Z0-9]{6}\b/;
+            var bool = re.test(value);
+            if (value !== "") {
+              if (bool == true) {
+                this.setState({ otpIcon: true })
+                document.querySelector("#otp_success").style.display = "inline-block"
+                document.querySelector("#otp_fail").style.display = "none"
+                document.querySelectorAll(".MSG_OTP")[0].style.display = "none";
+              } else {
+                this.setState({ otpIcon: false })
+                document.querySelector("#otp_success").style.display = "none"
+                document.querySelector("#otp_fail").style.display = "inline-block"
+                document.querySelectorAll(".MSG_OTP")[0].style.display = "block";
+                this.setState({ otp_msg: "Otp should have 6 characters." })
+              }
+            } else {
+              this.setState({ otpIcon: false })
+              document.querySelector("#otp_success").style.display = "none"
+              document.querySelector("#otp_fail").style.display = "none"
+              document.querySelectorAll(".MSG_OTP")[0].style.display = "none";
+            }
+          }
+    }
+    OTPfield(e){
+        console.log(e.target.value) 
+        this.setState({verify_otp:e.target.value})
+    }
+    finalEnable()
+    {
+        let value = {};
+        value["otp"] = this.state.verify_otp;
+        this.props.verifyTF(this.props.isLoggedIn,value)
+    }
+    
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
           message: head,
@@ -370,6 +422,43 @@ class Passwordchange extends React.Component
                 this.openNotificationWithIcon("error","Change Password",props.passChange.err)
             }
             this.props.passwordChangeData();
+        }
+        if(props.verifyOTP)
+        {
+            if(props.verifyOTP.status==200)
+            {
+                this.openNotificationWithIcon("success","Two-Factor Auth..",props.verifyOTP.message)
+                this.setState({is_twofactor:"DISABLE",show_QR:false})
+            }
+            else
+            {
+                this.openNotificationWithIcon("error","Two-Factor Auth..",props.verifyOTP.err)
+            }
+            this.props.verifyQRData();
+        }
+        if(props.DisableTF)
+        {
+
+            if(props.DisableTF.status==200)
+            {
+                this.openNotificationWithIcon("success","Two-Factor Auth..",props.DisableTF.message)
+                this.setState({is_twofactor:"ENABLE",show_QR:false})
+            }
+            else
+            {
+                this.openNotificationWithIcon("error","Two-Factor Auth..",props.DisableTF.err)
+            }
+            this.props.disableAction();
+        }
+
+        if(props.QR_code)
+        {
+            this.setState({show_QR:true});
+            if(props.QR_code.dataURL !== undefined && props.QR_code.tempSecret !== undefined)
+            {
+                this.setState({QR_img:props.QR_code.dataURL,Key:props.QR_code.tempSecret})
+            }
+            this.props.QRData();
         }
     }
     render()
@@ -443,14 +532,15 @@ class Passwordchange extends React.Component
                         <ON_OFF>your two-factor Authenticator is: {this.state.ON_OFF}</ON_OFF>
                         <Head_text>For more security,Enable an authenticator app. </Head_text>
                         <Button_div>
-                            <NewButton>{this.state.is_twofactor} AUTHENTICATOR</NewButton>
+                            <NewButton onClick={this.TF_AUTH.bind(this)}> {this.state.is_twofactor} AUTHENTICATOR</NewButton>
                         </Button_div>
                     </TFCol>
                 </TwofactorRow>
-                <BarRow>
+                {(this.state.show_QR==true)?
+                <BarRow >
                     <Left_Col span={12}>
                         <Image_Wrap>
-                            <Bar_code/>
+                            <Bar_code src={this.state.QR_img}/>
                         </Image_Wrap>
                         <Key_wrap>
                             <Key_text>16 Digit Key</Key_text>
@@ -466,15 +556,21 @@ class Passwordchange extends React.Component
                         </Order_list>
                         <TF_code>
                             <TF_label>Enter your two-factor code here:</TF_label>
-                            <TF_input></TF_input>
+                            <div>
+                                <TF_input onChange={this.OTPfield.bind(this)}/>
+                                <UserIconS id="otp_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                                <UserIconF id="otp_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                            </div>
+                            <Email_req className="MSG_OTP">{this.state.otp_msg}</Email_req>
                         </TF_code>
                         <Enable>
-                            <E_button>
+                            <E_button onClick={this.finalEnable.bind(this)}>
                                 ENABLE
                             </E_button>
                         </Enable>
                     </Right_Col>
                 </BarRow>
+                :''}
             </Wrapper>
         );
     }
@@ -483,12 +579,21 @@ function mapStateToProps(state) {
     console.log(state)
     return ({
         passChange : state.simpleReducer.changePass!==undefined ? state.simpleReducer.changePass : false,
-        profileDetails:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0]:""
+        profileDetails:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0]:"",
+        QR_code:state.passwordReducer.QR_code !== undefined ? state.passwordReducer.QR_code : null,
+        verifyOTP:state.passwordReducer.verifyOTP !== undefined ? state.passwordReducer.verifyOTP : null,
+        DisableTF:state.passwordReducer.DisableTF !== undefined ? state.passwordReducer.DisableTF : null
     })
   }
   
   const mapDispatchToProps = dispatch => ({
     passwordChange : (isLoggedIn,value) =>  dispatch(passwordChange(isLoggedIn,value)),
-    passwordChangeData : () => dispatch(passwordChangeData())
+    passwordChangeData : () => dispatch(passwordChangeData()),
+    TF_Enable : (isLoggedIn) => dispatch(TF_Enable(isLoggedIn)),
+    QRData : () => dispatch(QRData()),
+    verifyTF : (isLoggedIn,value) => dispatch(verifyTF(isLoggedIn,value)),
+    verifyQRData: () => dispatch(verifyQRData()),
+    TF_Disable:(isLoggedIn) => dispatch(TF_Disable(isLoggedIn)),
+    disableAction: () => dispatch(disableAction())
   })
   export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Passwordchange));

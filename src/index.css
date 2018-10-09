@@ -385,3 +385,15 @@ table .ant-table-tbody > tr > td {
     color:white !important;
     background-color: #1890ff !important;
   }
+
+
+  /* History Table */
+
+  .history_table th
+  {
+    background-color: #e4ecff !important;
+  }
+  .history_table td,.history_table th
+  {
+    padding: 6px 6px !important;
+  }

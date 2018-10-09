@@ -12,7 +12,8 @@ import Referral from './Referral';
 import LoggedNavigation from '../Navigations/LoggedNavigation';
 import CommonFooter from "../Landing/Footers/Footer";
 import Passwordchange from "./changePassword/Passwordchange"
-
+import Acc_settings from "./Account_settings/Acc_settings"
+import KYC from "./KYC/kyc"
 const TabPane = Tabs.TabPane;
 
 /* Styled-Components */
@@ -64,7 +65,9 @@ class Editprofile extends Component
                             <Tabs className="profile-tabs" defaultActiveKey="1" onChange={this._changeTab}>
                                 <TabPane tab="Personal Details" key="1"><PersonalDetails {...this.props}/></TabPane>
                                 <TabPane tab="Security" key="2" ><Passwordchange {...this.props}/></TabPane>
-                                <TabPane tab="Referral" key="3"><Referral/></TabPane>
+                                <TabPane tab="Account Settings" key="3"><Acc_settings {...this.props}/></TabPane>
+                                <TabPane tab="KYC" key="4"><KYC/></TabPane>
+                                <TabPane tab="Referral" key="5"><Referral/></TabPane>
                             </Tabs>
                         </ProfileDiv>
                     </ProfileWrapper>
