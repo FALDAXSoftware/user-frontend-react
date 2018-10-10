@@ -1,8 +1,8 @@
 /* In-built Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {connect} from "react-redux"
-import { Row, Col, Tabs, Button,Input,notification,Steps } from 'antd';
+import { connect } from "react-redux"
+import { Row, Col, Tabs, Button, Input, notification, Steps } from 'antd';
 import styled from 'styled-components';
 import { createForm, formShape } from 'rc-form';
 
@@ -11,6 +11,7 @@ import { createForm, formShape } from 'rc-form';
 import KYCForm from "./KYCForm"
 import IDselect from "./IDselect"
 import SSN from "./SSN"
+import DocUpload from './DocUpload';
 
 const Step = Steps.Step;
 
@@ -38,36 +39,33 @@ const KYC_progress = styled.div`
 `
 
 
-class KYC extends React.Component
-{
-    constructor(props)
-    {
+class KYC extends React.Component {
+    constructor(props) {
         super(props)
         this.state = {
-            ON_OFF:"OFF",
-            Key:null,
-            typeEye:"password",
-            newEye:"password",
-            repeatEye:"password",
-            currentpassIcon:false,
-            newpassIcon:false,
-            confirmIcon:false,
-            otpIcon:false,
-            is_twofactor:"ENABLE",
-            QR_img:null,
-            otp_msg:null,
-            next:0
+            ON_OFF: "OFF",
+            Key: null,
+            typeEye: "password",
+            newEye: "password",
+            repeatEye: "password",
+            currentpassIcon: false,
+            newpassIcon: false,
+            confirmIcon: false,
+            otpIcon: false,
+            is_twofactor: "ENABLE",
+            QR_img: null,
+            otp_msg: null,
+            next: 3
         }
     }
 
-   
-    next_step(a){
-        this.setState({next:a})
-    }
-    render()
-    {
 
-        return(
+    next_step(a) {
+        this.setState({ next: a })
+    }
+    render() {
+
+        return (
             <KYC_wrap>
                 <KYC_head>
                     Identity Verification
@@ -79,11 +77,12 @@ class KYC extends React.Component
                         <Step />
                     </Steps>
                 </KYC_progress>
-                {(this.state.next==0) ?
-                        <KYCForm next_step={(a)=>this.next_step(a)}/>:""
+                {(this.state.next == 0) ?
+                    <KYCForm next_step={(a) => this.next_step(a)} /> : ""
                 }
-                {(this.state.next==1)?<IDselect next_step={(a)=>this.next_step(a)}/>:""}
-                {(this.state.next==2)?<SSN/>:""}
+                {(this.state.next == 1) ? <IDselect next_step={(a) => this.next_step(a)} /> : ""}
+                {(this.state.next == 2) ? <SSN /> : ""}
+                {(this.state.next == 3) ? <DocUpload /> : ""}
 
             </KYC_wrap>
         );
@@ -93,12 +92,12 @@ class KYC extends React.Component
 const mapStateToProps = (state) => {
     /* console.log("personalDetails",state) */
     return {
-      ...state,
-        email:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0].email:"",
-        profileDetails:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0]:""
+        ...state,
+        email: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].email : "",
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : ""
     }
-  }
+}
 const mapDispatchToProps = dispatch => ({
 })
 
-export default  connect(mapStateToProps,mapDispatchToProps)(createForm()(KYC));
+export default connect(mapStateToProps, mapDispatchToProps)(createForm()(KYC));
