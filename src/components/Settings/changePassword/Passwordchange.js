@@ -26,20 +26,67 @@ const ChangeRow = styled(Row)`
     }
 `
 const ChangeCol = styled.div`
+    width:42%;
     height:auto;
+    margin-left:auto;
+    margin-right:auto;
     padding-bottom:40px;
+
+    @media(max-width:1530px)
+    {
+        width:46%;
+    }
+    @media(max-width:1400px)
+    {
+        width:54%;
+    }
+    @media(max-width:1190px)
+    {
+        width:60%;
+    }
+    @media(max-width:1070px)
+    {
+        width:65%;
+    }
+    @media(max-width:990px)
+    {
+        width:75%;
+    }
+    @media(max-width:856px)
+    {
+        width:90%;
+    }
 `
 const Old = styled.div`
-    width:90%
+    width: 95%; 
     margin:auto;
     text-align:left
     margin-top:35px;
+    @media(max-width:720px)
+    {
+        width:87%;
+    }
+
 `
 const NewP = styled(Old)`
     margin-top:30px;
 `
 const Repeat = styled(Old)`
     margin-top:30px;
+`
+const Old_label = styled.label`
+    font-size: 14.007px;
+    font-family: "Open Sans";
+    color: rgba( 80, 80, 80, 0.502 );
+    -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
+    -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
+    -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
+`
+const New_label = styled(Old_label)`
+
+`
+const Repeat_label = styled(Old_label)`
+
 `
 const OldInput = styled(Input)`
     margin-top:5px;
@@ -113,6 +160,13 @@ const Left_Col = styled(Col)`
         height: 114%;
         right: 0px;
         border-right: 1px solid #d6d6d6;
+    }
+    @media(min-width:1024px)
+    {
+        &:after 
+        {
+            height: 100%;
+        }
     }
 `
 const Image_Wrap = styled.div`
@@ -210,7 +264,7 @@ class Passwordchange extends React.Component
             is_twofactor:"ENABLE",
             QR_img:null,
             otp_msg:null,
-            
+
         }
     }
     static propTypes = {
@@ -479,7 +533,7 @@ class Passwordchange extends React.Component
                 <ChangeRow>
                     <ChangeCol>
                         <Old>
-                            <label>Old Password</label>
+                            <Old_label>Old Password</Old_label>
                             <div>
                                 <OldInput type={this.state.typeEye}  {...getFieldProps('current_password', {
                                 onChange(e) { me.onChangeField(e.target.value, "current_password") }, // have to write original onChange here if you need
@@ -494,7 +548,7 @@ class Passwordchange extends React.Component
                             <Email_req className="oldchange_msg">{this.state.current_msg}</Email_req>
                         </Old>
                         <NewP>
-                            <label>New Password</label>
+                            <New_label>New Password</New_label>
                             <div>
                                 <NewInput type={this.state.newEye} {...getFieldProps('new_password', {
                                 onChange(e) { me.onChangeField(e.target.value, "new_password") }, // have to write original onChange here if you need
@@ -509,7 +563,7 @@ class Passwordchange extends React.Component
                             <Email_req className="newchange_msg">{this.state.new_msg}</Email_req>
                         </NewP>
                         <Repeat>
-                            <label>Repeat New Password</label>
+                            <Repeat_label>Repeat New Password</Repeat_label>
                             <div>
                                 <RepeatInput type={this.state.repeatEye} {...getFieldProps('confirm_password', {
                                     onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
@@ -521,7 +575,7 @@ class Passwordchange extends React.Component
                                 <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                             </div>
-                            <Email_req className="confirmchange_msg">{this.state.confirm_msg}</Email_req>
+                            <Email_req className="confirmchange_msg">{this.state.confirmPass_msg}</Email_req>
                         </Repeat>
                         <Button_div>
                             <NewButton onClick={this.submit}>Save New Password</NewButton>
