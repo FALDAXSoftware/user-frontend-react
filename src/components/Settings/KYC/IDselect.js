@@ -78,6 +78,7 @@ export default class IDselect extends React.Component
     render()
     {
         return(
+            <div>
             <KYC_type_select_row>
                     <Row>
                         <Select_text md={{span:24}}>
@@ -124,13 +125,15 @@ export default class IDselect extends React.Component
                         </label>
                         </Select_Col4>
                     </Row>
-                    <Button_wrap>
-                        <Sub_wrap>
-                            <Back_Button type="primary">Back</Back_Button>
-                            <Next_Button onClick = {this.next_step.bind(this)} type="primary">Next</Next_Button>
-                        </Sub_wrap>
-                    </Button_wrap>
+                    
                 </KYC_type_select_row>
+                <Button_wrap>
+                    <Sub_wrap>
+                        <Back_Button type="primary">Back</Back_Button>
+                        <Next_Button onClick = {this.next_step.bind(this)} type="primary">Next</Next_Button>
+                    </Sub_wrap>
+                </Button_wrap>
+            </div>
         );
     }
 }

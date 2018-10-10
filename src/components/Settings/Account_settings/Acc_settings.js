@@ -58,9 +58,31 @@ const Check_Wrap = styled(Row)`
 `
 const Check_Row = styled(Row)`
     text-align:left;
+    @media(max-width:992px)
+    {
+        margin-left:160px;
+    }
+    @media(max-width:728px)
+    {
+        margin-left:135px;
+
+    }
+    @media(max-width:630px)
+    {
+        margin-left:114px;
+        
+    }
+    @media(max-width:330px)
+    {
+        margin-left:100px;
+    }
 `
 const Check_Row2 = styled(Check_Row)`
     margin-top:20px;
+    @media(max-width:992px)
+    {
+        margin-top:0px;
+    }
 `
 const Check_Col = styled(Col)`
 
@@ -107,6 +129,19 @@ const Table_wrap = styled.div`
     width:36%;    
     margin-left: auto;
     margin-right: auto;
+    border-radius: 5px;
+    @media(max-width:992px)
+    {
+        width:60%;
+    }
+    @media(max-width:992px)
+    {
+        width:80%;
+    }
+    @media(max-width:400px)
+    {
+        width:90%;
+    }
 `
 const HR2 = styled(HR)`
 
@@ -209,30 +244,30 @@ class Acc_settings extends React.Component
                 </Noti_Wrap>
                 <Check_Wrap>
                     <Check_Row>
-                        <Check_Col span={6}>
+                        <Check_Col sm={{span:12}} md={{span:12}} lg={{span:6}}>
                             <Checkbox onChange={this.onChange.bind(this,"Deposit")}>Deposits</Checkbox>
                         </Check_Col>    
-                        <Check_Col2 span={6}>
+                        <Check_Col2 sm={{span:12}} md={{span:12}} lg={{span:6}}>
                             <Checkbox onChange={this.onChange.bind(this,"Trade")}>Trade Execution</Checkbox>
                         </Check_Col2>
-                        <Check_Col3 span={6}>
+                        <Check_Col3 sm={{span:12}} md={{span:12}} lg={{span:6}}>
                             <Checkbox onChange={this.onChange.bind(this,"Withdrawals")}>Withdrawals</Checkbox>
                         </Check_Col3>
-                        <Check_Col4 span={6}>
+                        <Check_Col4 sm={{span:12}} md={{span:12}} lg={{span:6}}>
                             <Checkbox onChange={this.onChange.bind(this,"Follower")}>New Follower</Checkbox>
                         </Check_Col4>
                     </Check_Row>
                     <Check_Row2>
-                        <Check_Col span={6}>
+                        <Check_Col sm={{span:12}} md={{span:12}} lg={{span:6}}>
                             <Checkbox onChange={this.onChange.bind(this,"Login")}>Login</Checkbox>
                         </Check_Col>    
-                        <Check_Col2 span={6}>
+                        <Check_Col2 sm={{span:12}} md={{span:12}} lg={{span:6}}>
                             <Checkbox onChange={this.onChange.bind(this,"Review")}>New Review</Checkbox>
                         </Check_Col2>
-                        <Check_Col3 span={6}>
+                        <Check_Col3 sm={{span:12}} md={{span:12}} lg={{span:6}}>
                             <Checkbox onChange={this.onChange.bind(this,"private")}>New private message</Checkbox>
                         </Check_Col3>
-                        <Check_Col4 span={6}>
+                        <Check_Col4 sm={{span:12}} md={{span:12}} lg={{span:6}}>
                             <Checkbox onChange={this.onChange.bind(this,"execution")}>Order execution</Checkbox>
                         </Check_Col4>
                     </Check_Row2>

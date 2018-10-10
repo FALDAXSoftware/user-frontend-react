@@ -168,6 +168,13 @@ const Left_Col = styled(Col)`
             height: 100%;
         }
     }
+    @media(max-width:992px)
+    { 
+        &:after 
+        {
+            display:none;
+        }
+    }
 `
 const Image_Wrap = styled.div`
     margin-top:50px;
