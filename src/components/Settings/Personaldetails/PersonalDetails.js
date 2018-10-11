@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux";
 import { createForm, formShape } from 'rc-form';
-import { Row, Col ,Input,Button,notification,Icon} from 'antd';
+import { Row, Col ,Input,Button,notification,Icon,Spin} from 'antd';
 import styled from 'styled-components'
 
 
@@ -191,6 +191,19 @@ export const Save = styled(Button)`
         width:100px;   
     }
 `
+export const Spin_Ex = styled.div`
+    text-align: center;
+    background: white;
+    border-radius: 4px;
+    margin: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f5f5f580;
+    height: 100%;
+    z-index: 9999;
+`
 class PersonalDetails extends Component {
     constructor(props) {
         super(props);
@@ -207,7 +220,8 @@ class PersonalDetails extends Component {
             imageName:null,
             imageType:null,
             imagemsg:null,profileImage:null,
-            countrySelected:this.props.profileDetails.country
+            countrySelected:this.props.profileDetails.country,
+            spin_show:false
         }
         this.handleProfile = this.handleProfile.bind(this);
     }
@@ -228,7 +242,7 @@ class PersonalDetails extends Component {
             document.querySelectorAll(".street_msg")[0].style.display = "none";
             document.querySelectorAll(".city_msg")[0].style.display = "none";
             document.querySelectorAll(".postal_msg")[0].style.display = "none";
-            this.setState({first_msg:null,last_msg:null,country_msg:null,dob_msg:null,street_msg:null,city_msg:null,postal_msg:null});
+            this.setState({first_msg:null,last_msg:null,country_msg:null,dob_msg:null,street_msg:null,city_msg:null,postal_msg:null,spin_show:true});
             
             let number = Number(value.postal_code);
             let country = this.state.countrySelected;
@@ -274,7 +288,7 @@ class PersonalDetails extends Component {
                 this.setState({firstmsg:null})
               }
             }
-            if(error.lastname!==null && error.lastname!==undefined)
+            if(error.last_name!==null && error.last_name!==undefined)
             {
               if(error.last_name.errors[0].message!==undefined && error.last_name.errors[0].message!==null)
               {
@@ -340,7 +354,7 @@ class PersonalDetails extends Component {
                 this.setState({postalmsg:null})
               }
             }
-            if(this.state.Datedata==undefined)
+            if(this.state.Datedata==undefined && this.props.profileDetails.dob !==undefined)
             {
                 document.querySelectorAll(".dob_msg")[0].style.display = "block";
                 this.setState({dobmsg:"*Date of Birth is Incorrecct"})
@@ -368,16 +382,16 @@ class PersonalDetails extends Component {
       }
       componentWillReceiveProps(props,newProps)
       {
-          console.log(this.state,this.props,props,newProps)
-            if(this.state.profileImg==undefined && props.profileDetails.profile_pic!==null && props.profileDetails.profile_pic!==undefined && props.profileDetails.profile_pic!=="" )
+          console.log("CWRP MAIN ------->>>>>>",this.state.profileImg==undefined,props.profileDetails.profile_pic)
+            if(props.profileDetails.profile_pic!==null && props.profileDetails.profile_pic!==undefined && props.profileDetails.profile_pic!=="" )
             {
                 console.log("CWRP",this.state.profileImg,props.profileDetails.profile_pic)
-                this.setState({profileImg:globalVariables.amazon_Bucket + props.profileDetails.profile_pic,removedProfile:false})
+                this.setState({profileImg:globalVariables.amazon_Bucket + props.profileDetails.profile_pic,removedProfile:false,spin_show:false})
             }
             if(this.state.removedProfile && this.state.profileImg)
             {
-                console.log("abababababababb")
-                this.setState({profileImg:"./images/Settings/def_profile.jpg"})
+                console.log("abababababababb",this.state.removedProfile,this.state.profileImg)
+                this.setState({profileImg:"./images/Settings/def_profile.jpg",spin_show:false})
             }
       }
       handleProfile(e) {
@@ -526,6 +540,13 @@ class PersonalDetails extends Component {
                                     </Col>
                                 </Fifth_Row>
                             </Right_Col>
+                            {console.log("989898",this.state.spin_show)}
+                            {(this.props.loader==true)?
+                                <Spin_Ex className="Ex_spin">
+                                    <Spin size="large"/>
+                                </Spin_Ex>
+                            :""
+                            }
                         </Row>
                     </Col>
                     {(errors = getFieldError('required')) ? errors.join(',') : null}
@@ -535,17 +556,18 @@ class PersonalDetails extends Component {
     }
 }
 const mapStateToProps = (state) => {
-    /* console.log("personalDetails",state) */
+    console.log("personalDetails",state,state.simpleReducer.loader)
     return {
       ...state,
         email:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0].email:"",
-        profileDetails:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0]:""
+        profileDetails:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0]:"",
+        loader:state.simpleReducer.loader
     }
   }
 const mapDispatchToProps = dispatch => ({
     profileupdateAction: (isLoggedIn,form) => dispatch(profileupdateAction(isLoggedIn,form)),
     getProfileDataAction: (isLoggedIn) => dispatch(getProfileDataAction(isLoggedIn)),
-    removepicAction : (isLoggedIn,form) => dispatch(removepicAction(isLoggedIn,form))
+    removepicAction : (isLoggedIn,form) => dispatch(removepicAction(isLoggedIn,form)),
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(createForm()(PersonalDetails));

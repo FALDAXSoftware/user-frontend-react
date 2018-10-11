@@ -162,7 +162,10 @@ class LoggedNavigation extends Component {
             comingSoon: false,
         });
       }
-    
+      componentWillReceiveProps(props,newProps)
+      {
+          console.log(props,newProps)
+      }
       comingCancel = (e) => {
         console.log(e);
         this.setState({

@@ -21,7 +21,17 @@ export default (state = {}, action) => {
                 ...state,
                 DisableTF:action.payload
             }
+        case "KYCFORMDATA":
+        console.log("KYC DTAAAAA",action.payload)
+            return{
+                ...state,
+                kycData:action.payload
+            }
 
+        case "KYCDOCDATA":
+        return{
+            ...state
+        }
         default:
         /* console.log("default") */
         return { ...state, forgot: undefined };

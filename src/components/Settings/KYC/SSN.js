@@ -46,7 +46,10 @@ const SSN_input = styled.input`
 
 export default class SSN extends React.Component
 {
-
+    next_step()
+    {
+        this.props.next_step(2)
+    }
     render()
     {
         return(
@@ -60,7 +63,7 @@ export default class SSN extends React.Component
                 <Button_wrap>
                     <Sub_wrap>
                         <Back_Button type="primary">Back</Back_Button>
-                        <Next_Button type="primary">Next</Next_Button>
+                        <Next_Button onClick = {this.next_step.bind(this)} type="primary">Next</Next_Button>
                     </Sub_wrap>
                 </Button_wrap>
             </div>

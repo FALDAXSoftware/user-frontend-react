@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import {connect} from "react-redux"
-import { Row, Col, Tabs, Button,Input,notification } from 'antd';
+import { Row, Col, Tabs, Button,Input,notification ,Progress,Spin} from 'antd';
 import styled from 'styled-components';
 import { createForm, formShape } from 'rc-form';
 import { faEyeSlash,faEye } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import {UserIconF ,UserIconS ,Email_req} from "../../Landing/User_forms/Login_Form"
-import {HeaderCol,Save} from "../Personaldetails/PersonalDetails"
+import {HeaderCol,Save,Spin_Ex} from "../Personaldetails/PersonalDetails"
 import {passwordChange,passwordChangeData,TF_Enable,QRData,verifyTF,verifyQRData,TF_Disable,disableAction} from "../../../Actions/Settings/passwordChange"
 
 const Wrapper = styled.div``
@@ -253,6 +253,10 @@ const FAI = styled(FontAwesomeIcon)`
     margin-left: -25px;
     margin-top: 17px;
 `
+const Progress_bar = styled(Progress)`
+    margin-top:20px;
+    width:100%;
+`
 class Passwordchange extends React.Component
 {
     constructor(props)
@@ -271,7 +275,8 @@ class Passwordchange extends React.Component
             is_twofactor:"ENABLE",
             QR_img:null,
             otp_msg:null,
-
+            percent:"",
+            stroke:''
         }
     }
     static propTypes = {
@@ -358,6 +363,12 @@ class Passwordchange extends React.Component
         if (field == "new_password") {
             var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
             var bool = re.test(value);
+            var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
+            if (numb.test(value) || letters.test(value)) { this.setState({ status: "active", stroke: "red", percent: 20 }) }
+            if (alphanum.test(value)) { this.setState({ status: "active", stroke: "orange", percent: 40 }) }
+            if (alphanum.test(value) && value.length == 6) { this.setState({ status: "exception", stroke: "yellow", percent: 60 }) }
+            if (re.test(value) && value.length == 6) { this.setState({ status: "success", stroke: "#7CFC00", percent: 80 }) }
+            if (re.test(value) && value.length == 10) { this.setState({ status: "success", stroke: "#008000", percent: 100 }) }
             if (value !== "") {
               if (bool == true) {
                 this.setState({ newpassIcon: true, password: value })
@@ -372,7 +383,7 @@ class Passwordchange extends React.Component
                 this.setState({ new_msg: "*Password should contain atleast one alphabet,special character and number and should have min. 6 chartacters and max. 16 characters" })
               }
             } else {
-              this.setState({ newpassIcon: false })
+              this.setState({ newpassIcon: false , percent: 0})
               document.querySelector("#newchange_icon_success").style.display = "none"
               document.querySelector("#newchange_icon_fail").style.display = "none"
               document.querySelectorAll(".newchange_msg")[0].style.display = "none";
@@ -491,7 +502,7 @@ class Passwordchange extends React.Component
             if(props.verifyOTP.status==200)
             {
                 this.openNotificationWithIcon("success","Two-Factor Auth..",props.verifyOTP.message)
-                this.setState({is_twofactor:"DISABLE",show_QR:false})
+                this.setState({is_twofactor:"DISABLE",show_QR:false,ON_OFF:"ON"})
             }
             else
             {
@@ -505,7 +516,7 @@ class Passwordchange extends React.Component
             if(props.DisableTF.status==200)
             {
                 this.openNotificationWithIcon("success","Two-Factor Auth..",props.DisableTF.message)
-                this.setState({is_twofactor:"ENABLE",show_QR:false})
+                this.setState({is_twofactor:"ENABLE",ON_OFF:"OFF",show_QR:false})
             }
             else
             {
@@ -583,6 +594,8 @@ class Passwordchange extends React.Component
                                 <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                             </div>
                             <Email_req className="confirmchange_msg">{this.state.confirmPass_msg}</Email_req>
+
+                            <Progress_bar type="line" size="small" percent={this.state.percent} strokeColor={this.state.stroke} />
                         </Repeat>
                         <Button_div>
                             <NewButton onClick={this.submit}>Save New Password</NewButton>
@@ -634,6 +647,9 @@ class Passwordchange extends React.Component
                     </Right_Col>
                 </BarRow>
                 :''}
+                {/* <Spin_Ex className="Ex_spin">
+                    <Spin size="large"/>
+                </Spin_Ex> */}
             </Wrapper>
         );
     }

@@ -115,7 +115,7 @@ export const signupAction = (data) => dispatch => {
 
 export function forgotAction(email) {
     return (dispatch) => {
-        fetch("http://18.191.87.133:8084/users/forgotPassword", {
+        fetch(API_URL + "/users/forgotPassword", {
             method: "post",
             headers: {
                 'Content-Type': 'application/json',
@@ -142,7 +142,7 @@ export const forgotData = (value) => dispatch => {
 export function resetAction(value) {
     /*  console.log(value) */
     return (dispatch) => {
-        fetch("http://18.191.87.133:8084/users/resetPassword", {
+        fetch(API_URL + "/users/resetPassword", {
             method: "put",
             headers: {
                 'Content-Type': 'application/json',

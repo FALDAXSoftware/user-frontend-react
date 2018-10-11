@@ -127,3 +127,67 @@ export const disableAction = (data) => dispatch =>{
         payload: data
     })
 }
+
+export function kycFormAction(isLoggedIn,value)
+{
+    console.log(isLoggedIn)
+    return(dispatch) => {
+
+        fetch(API_URL + "/users/add-kyc-details",{
+            method:"post",
+            headers: {
+                Authorization:"Bearer " + isLoggedIn
+            },
+            body:JSON.stringify(value)
+        })
+        .then(response => response.json())
+        .then((responseData) => {
+            console.log(responseData);
+            //dispatch(getProfileDataAction(isLoggedIn))
+            dispatch(kycformData(responseData));
+        })
+        .catch(error => { console.log(error) })
+    } 
+}
+
+export const kycformData = (data) => dispatch =>{
+    console.log("ABCD",data)
+    dispatch({
+        type: 'KYCFORMDATA',
+        payload: data
+    })
+}
+
+export function kycDoc(isLoggedIn, value,type)
+{
+    console.log(isLoggedIn)
+    return(dispatch) => {
+
+        fetch(API_URL + "/users/add-kyc-docs",{
+            method:"post",
+            headers: {
+                Authorization:"Bearer " + isLoggedIn
+            },
+            body:value
+        })
+        .then(response => response.json())
+        .then((responseData) => {
+            console.log(responseData);
+            var Data = {};
+            if(type=="front")
+            {Data["front_doc"]=responseData.data}
+            else
+            {Data["back_doc"]=responseData.data}
+            dispatch(kycFormAction(isLoggedIn,Data))
+            dispatch(kycDocData(responseData));
+        })
+        .catch(error => { console.log(error) })
+    } 
+}
+export const kycDocData = (data) => dispatch =>{
+    console.log("ABCD",data)
+    dispatch({
+        type: 'KYCDOCDATA',
+        payload: data
+    })
+}

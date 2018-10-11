@@ -55,12 +55,15 @@ class KYC extends React.Component {
             is_twofactor: "ENABLE",
             QR_img: null,
             otp_msg: null,
-            next: 3
+            next: 0
         }
     }
 
 
     next_step(a) {
+        this.setState({ next: a })
+    }
+    back_step(a) {
         this.setState({ next: a })
     }
     render() {
@@ -78,11 +81,11 @@ class KYC extends React.Component {
                     </Steps>
                 </KYC_progress>
                 {(this.state.next == 0) ?
-                    <KYCForm next_step={(a) => this.next_step(a)} /> : ""
+                    <KYCForm back_step={(a)=>this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""
                 }
-                {(this.state.next == 1) ? <IDselect next_step={(a) => this.next_step(a)} /> : ""}
-                {(this.state.next == 2) ? <SSN /> : ""}
-                {(this.state.next == 3) ? <DocUpload /> : ""}
+                {(this.state.next == 1) ? <IDselect back_step={(a)=>this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
+                {(this.state.next == 2) ? <SSN back_step={(a)=>this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
+                {(this.state.next == 3) ? <DocUpload back_step={(a)=>this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
 
             </KYC_wrap>
         );
