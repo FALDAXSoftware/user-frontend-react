@@ -29,9 +29,10 @@ export default (state = {}, action) => {
             }
 
         case "KYCDOCDATA":
-        return{
-            ...state
-        }
+            return{
+                ...state,
+                image_path : action.payload.data
+            }
         default:
         /* console.log("default") */
         return { ...state, forgot: undefined };

@@ -5,7 +5,7 @@ import { Row, Col, Tabs, Button, Input, notification, Steps, Icon } from 'antd';
 import styled from 'styled-components';
 import { Button_wrap, Sub_wrap, Back_Button, Next_Button } from "./IDselect"
 
-import {kycDoc} from "../../../Actions/Settings/passwordChange"
+import {kycDoc,kycFormAction} from "../../../Actions/Settings/passwordChange"
 
 const SSN_wrap = styled.div`
     width:100%;
@@ -132,6 +132,8 @@ class DocUpload extends React.Component {
             profileImage:"",
             imagemsg:"",
             icon1:"plus",
+            frontImg:"",
+            backImg:"",
             icon2:"plus"
         }
         this.handleProfile = this.handleProfile.bind(this);
@@ -176,18 +178,57 @@ class DocUpload extends React.Component {
             reader.readAsDataURL(file);
             var DataForm = new FormData()
             DataForm.append("image",file)
+            console.log(e.target.name)
             this.props.kycDoc(this.props.isLoggedIn,DataForm,e.target.name)
         } catch(error) {
             this.setState({ imagemsg: 'Something went wrong please try again' });
         }
       }
+      openNotificationWithIcon(type, head, desc) {
+        notification[type]({
+          message: head,
+          description: desc,
+        });
+      };
     next_step()
     {
-        this.props.next_step(2)
+        console.log("next_step")
+        if(this.state.icon1=="check" && this.state.icon2=="check")
+        {
+            console.log("next_step",this.state)
+            if(this.state.frontImg!=="" && this.state.backImg!=="")
+            {
+                console.log("next_step")
+                var temp = {};
+                temp["front_doc"]=this.state.frontImg;
+                temp["back_doc"]=this.state.backImg;
+                temp["steps"] = 3 ;
+                this.props.kycFormAction(this.props.isLoggedIn,temp)
+            }
+        }
+        else
+        {
+            this.openNotificationWithIcon("error","KYC","Please upload front and back of your document")
+        }
     }
     back_step()
     {
-        this.props.back_step(2)
+        this.props.back_step(1)
+    }
+    componentWillReceiveProps(props,newProps)
+    {
+        if(this.state.icon1=="check" && this.state.frontImg=="")
+        {
+            this.setState({frontImg:props.image_path})
+        }
+        else if(this.state.icon2 == "check" && this.state.backImg=="")
+        {
+            this.setState({backImg:props.image_path})
+        }
+        if(this.props.is_kyc_done==true)
+        {
+            this.props.next_step(5)
+        }
     }
     render() {
 
@@ -218,7 +259,7 @@ class DocUpload extends React.Component {
                 </SSN_wrap>
                 <Button_wrap>
                     <Sub_wrap>
-                        <Back_Button type="primary">Back</Back_Button>
+                        <Back_Button onClick={this.back_step.bind(this)} type="primary">Back</Back_Button>
                         <Next_Button onClick = {this.next_step.bind(this)} type="primary">Next</Next_Button>
                     </Sub_wrap>
                 </Button_wrap>
@@ -228,14 +269,17 @@ class DocUpload extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    /* console.log("personalDetails",state) */
+    console.log("personalDetails",state)
     return {
       ...state,
-        isLoggedIn : state.simpleReducer.isLoggedIn !==undefined?state.simpleReducer.isLoggedIn:"",
+        image_path:state.passwordReducer.image_path !== undefined ? state.passwordReducer.image_path:"",
+        isLoggedIn : state.simpleReducer.isLoggedIn !==undefined ? state.simpleReducer.isLoggedIn:"",
+        is_kyc_done : state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].is_kyc_done : ""
     }
   }
 const mapDispatchToProps = dispatch => ({
-    kycDoc:(is,Data)=>dispatch(kycDoc(is,Data))
+    kycDoc:(is,Data,type)=>dispatch(kycDoc(is,Data,type)),
+    kycFormAction:(isLoggedIn,value)=>dispatch(kycFormAction(isLoggedIn,value))
 })
 
 export default  connect(mapStateToProps,mapDispatchToProps)(DocUpload);

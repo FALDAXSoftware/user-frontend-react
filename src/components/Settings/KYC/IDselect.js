@@ -82,36 +82,38 @@ class IDselect extends React.Component
         if(document.getElementById('passport').checked)
         {
             abcd["id_type"]= 1;
+            abcd["steps"]=2;
             this.props.kycFormAction(this.props.isLoggedIn,abcd);
-            this.props.next_step(3)
+            this.props.next_step(3,"ssn")
          
         }
         else if(document.getElementById('license').checked)
         {
             abcd["id_type"]= 2;
+            abcd["steps"]=2;
             this.props.kycFormAction(this.props.isLoggedIn,abcd);
-            this.props.next_step(3)
+            this.props.next_step(3,"ssn")
           
         }
         else if(document.getElementById('identity').checked)
         {
             abcd["id_type"]= 3;
+            abcd["steps"]=2;
             this.props.kycFormAction(this.props.isLoggedIn,abcd);
-            this.props.next_step(3)
+            this.props.next_step(3,"ssn")
             
         }
         else if(document.getElementById('ssn').checked)
         {
             abcd["id_type"]= 4;
+            abcd["steps"]=2;
             this.props.kycFormAction(this.props.isLoggedIn,abcd);
-            this.props.next_step(2)
+            this.props.next_step(2,"ssn_ori")
          
         }
         else
         {
-            this.props.kycFormAction(this.props.isLoggedIn,abcd);
-            this.props.next_step(3)
-            abcd["id_type"]= 3;
+            this.openNotificationWithIcon("error","KYC","Please select any one option.")
         }
         
     }
@@ -119,7 +121,12 @@ class IDselect extends React.Component
     {
         this.props.next_step(0)
     }
-    com
+    openNotificationWithIcon(type, head, desc) {
+        notification[type]({
+          message: head,
+          description: desc,
+        });
+      };
     render()
     {
         return(

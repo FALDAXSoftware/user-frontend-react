@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import {connect} from "react-redux"
-import { Row, Col, Tabs, Button,Input,notification,Steps } from 'antd';
+import { Row, Col, Tabs, Button,Input,notification,Steps ,Spin} from 'antd';
 import styled from 'styled-components';
 import { createForm, formShape } from 'rc-form';
 
 
-import {Save,Fifth_Row,Postal,City,Fourth_Row,Street_input,Street_Address,Third_Row,Date_birth,Country_input,Country,Second_Row,Last_input,Last_name,First_Msg,First_input,First_name,First_Row,Right_Col} from '../Personaldetails/PersonalDetails'
+import {Spin_Ex,Save,Fifth_Row,Postal,City,Fourth_Row,Street_input,Street_Address,Third_Row,Date_birth,Country_input,Country,Second_Row,Last_input,Last_name,First_Msg,First_input,First_name,First_Row,Right_Col} from '../Personaldetails/PersonalDetails'
 
 import Datepicker from "../Personaldetails/Datepicker"
 import CountryPick from "../Personaldetails/Country"
@@ -95,7 +95,7 @@ class KYCForm extends React.Component
         this.props.form.validateFields((error, value) => {
            console.log("-----<<<...",error,value)
            let dataDate = "";
-            const profileData = new FormData();
+            const profileData = {};
             console.log(this.state,this.props)
          
              if(error==null && (this.state.Datedata!==undefined || this.props.profileDetails.dob!==undefined) && (this.state.countrySelected!==undefined || this.props.profileDetails.country!==undefined))
@@ -124,14 +124,14 @@ class KYCForm extends React.Component
                     country=this.props.country
                 }
                 /* console.log("BEFORE FORM",value,this.state.countrySelected,this.state.profileImage,dataDate) */
-                profileData.append('first_name', value.first_name);
-                profileData.append('last_name',value.last_name);
-                profileData.append('country',country);
-                profileData.append('address',value.street_address)
-                profileData.append('city',value.city_town);
-                profileData.append('zip',number);
-                profileData.append('dob',dataDate);
-                profileData.append('steps',1);
+                profileData['first_name']=value.first_name
+                profileData['last_name']=value.last_name
+                profileData['country']=country
+                profileData['address']=value.street_address
+                profileData['city']=value.city_town
+                profileData['zip']=number
+                profileData['dob']=dataDate
+                profileData['steps']=1
                 
                 console.log(value,country,number,dataDate)
 
@@ -253,7 +253,7 @@ class KYCForm extends React.Component
             {
                 console.log("KYC obcvwevuyh")
                 
-                this.openNotificationWithIcon("success","KYC",props.kycData.message)
+                //this.openNotificationWithIcon("success","KYC",props.kycData.message)
                 this.props.kycformData();
                 this.props.next_step(1);
             }
@@ -342,6 +342,12 @@ class KYCForm extends React.Component
                                             </Col>
                                         </Fifth_Row_kyc>
                             </Right_Col_kyc>
+                            {(this.props.loader==true)?
+                                <Spin_Ex className="Ex_spin">
+                                    <Spin size="large"/>
+                                </Spin_Ex>
+                            :""
+                            }
                         </KYC_form>
         );
     }
@@ -355,7 +361,8 @@ const mapStateToProps = (state) => {
         email:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0].email:"",
         profileDetails:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0]:"",
         isLoggedIn : state.simpleReducer.isLoggedIn !==undefined?state.simpleReducer.isLoggedIn:"",
-        kycData: state.passwordReducer.kycData !== undefined ? state.passwordReducer.kycData : ""
+        kycData: state.passwordReducer.kycData !== undefined ? state.passwordReducer.kycData : "",
+        loader:state.simpleReducer.loader
     }
   }
 const mapDispatchToProps = dispatch => ({

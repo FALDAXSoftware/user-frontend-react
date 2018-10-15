@@ -647,9 +647,9 @@ class Passwordchange extends React.Component
                     </Right_Col>
                 </BarRow>
                 :''}
-                {/* <Spin_Ex className="Ex_spin">
+                {(this.props.loader==true)?<Spin_Ex className="Ex_spin">
                     <Spin size="large"/>
-                </Spin_Ex> */}
+                </Spin_Ex>:""}
             </Wrapper>
         );
     }
@@ -661,7 +661,8 @@ function mapStateToProps(state) {
         profileDetails:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0]:"",
         QR_code:state.passwordReducer.QR_code !== undefined ? state.passwordReducer.QR_code : null,
         verifyOTP:state.passwordReducer.verifyOTP !== undefined ? state.passwordReducer.verifyOTP : null,
-        DisableTF:state.passwordReducer.DisableTF !== undefined ? state.passwordReducer.DisableTF : null
+        DisableTF:state.passwordReducer.DisableTF !== undefined ? state.passwordReducer.DisableTF : null,
+        loader:state.simpleReducer.loader
     })
   }
   

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import {connect} from "react-redux";
-import { Row,Col,Checkbox,Table,Button,notification } from 'antd';
+import { Row,Col,Checkbox,Table,Button,notification,Spin } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
+
+import {HeaderCol,Save,Spin_Ex} from "../Personaldetails/PersonalDetails"
 import { globalVariables } from '../../../Globals';
 
 import {deleteAccount} from "../../../Actions/Auth"
@@ -303,6 +305,9 @@ class Acc_settings extends React.Component
                         <Button_del type="primary" onClick={this.deleteAccount.bind(this)}>Delete Account</Button_del>
                     </Delete_btn>
                 </Delete_wrap>
+                {(this.props.loader==true)?<Spin_Ex className="Ex_spin">
+                    <Spin size="large"/>
+                </Spin_Ex>:""}
             </Acc_wrap>
         );
     }
@@ -313,6 +318,7 @@ const mapStateToProps = (state) => {
     return {
       ...state,
         email:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0].email:"",
+        loader:state.simpleReducer.loader
     }
   }
 const mapDispatchToProps = dispatch => ({

@@ -386,6 +386,9 @@ class PersonalDetails extends Component {
             if(props.profileDetails.profile_pic!==null && props.profileDetails.profile_pic!==undefined && props.profileDetails.profile_pic!=="" )
             {
                 console.log("CWRP",this.state.profileImg,props.profileDetails.profile_pic)
+                if(this.state.profileImg && this.state.profileImg!=="./images/Settings/def_profile.jpg")
+                this.setState({profileImg:this.state.profileImg})
+                else
                 this.setState({profileImg:globalVariables.amazon_Bucket + props.profileDetails.profile_pic,removedProfile:false,spin_show:false})
             }
             if(this.state.removedProfile && this.state.profileImg)

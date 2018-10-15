@@ -1,11 +1,12 @@
 import { globalVariables } from '../Globals';
-
+import {removeLoader,addLoader} from "./Settings/settings";
 let { API_URL } = globalVariables;
 
 export function deleteAccount(isLoggedIn,value)
 {
     console.log(isLoggedIn,value)
     return (dispatch) => {
+        dispatch(addLoader())
         fetch(API_URL + "/users/deleteAccount", {
             method: "delete",
             headers: {
@@ -19,6 +20,8 @@ export function deleteAccount(isLoggedIn,value)
                 // console.log(responseData)
                 if (responseData.status == 200)
                     dispatch(Logout(responseData))
+
+                dispatch(removeLoader())
             }).catch(error => {
                 console.log("error", error)
             })
