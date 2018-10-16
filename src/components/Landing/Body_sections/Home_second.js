@@ -23,7 +23,7 @@ export default class Home_second extends Component {
                     </Container_row>
                 </Container>
             </Section_1>
-            
+
         )
     }
 }

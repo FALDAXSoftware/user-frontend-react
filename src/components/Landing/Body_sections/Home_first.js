@@ -15,115 +15,85 @@ import { Container } from '../../../styled-components/homepage/style';
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
 
-
-/* Styled-Components */
-
-const MainRow = styled(Row)`
-    background-image: url("./images/Homepage/home_pack.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    max-height: 778px;
-    width: 100%;
-    text-align:left;
-    font-family: "Open sans";
-
-    @media(min-width:1200px)
-    {
-        height: 778px;
-    }
-    @media(max-width:1200px)
-    {
-        height: 700px;
-    }
-    @media(max-width:991px)
-    {
-        height: 560px;
-    }
-    @media(max-width:576px)
-    {
-        height : auto;
-    }
-`
-const Left_Col = styled(Col)`
-    margin-top: 40px;
-    padding-right:20px;
-`
-const Home_text1 = styled.span`
-    font-size: 36px;
-    font-family: "Open sans";
-    color: rgb( 40, 37, 40 );
-    line-height: 1;
-    display: block;
-    margin-top: 40px;
-    text-align: left;  
-    font-weight: bold;
-`
-const Home_text2 = styled(Home_text1)`
-    margin-top:80px;
+const Section = styled.section`
+  width:100%;
+  height:100vh;
+  background-image:url('/images/Homepage/banner.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 `
 
-const Right_Col = styled(Col)`
-    
-    @media(max-width:576px)
-    {
-        text-align:center;
-    }
-
+const Heading = styled.h2`
+  font-size:63px;
+  color:white;
+  font-family:"Open sans";
+  margin-bottom:0px;
+  margin-top:20%;
+  @media (max-width: 1199px) {
+    font-size:50px;
+    padding-left:30px;
+  }
+  @media (max-width: 991px) {
+    text-align:center;
+    padding-left:0px;
+    margin-top:8%;
+  }
 `
-const Laptop = styled.img`
-    margin-top : 130px;
-
-    @media(max-width:1365px)
-    {
-        width:100%;
-    }
-    @media(max-width:576px)
-    {
-        width:75%;
-        margin-top:25px;
-    }
+const HeadingBrand = styled.span`
+  font-weight: bold;
+  color:#00a7ff;
+  @media (max-width: 991px) {
+    color:white;
+  }
 `
-const Home_list = styled.div`
-    list-style-image : url("./images/Homepage/arrow-list.png");
-    padding-top: 15px;
-    font-size:12px;
+const SubHeading = styled.h3`
+  font-size:26px;
+  color:white;
+  font-family:"Open sans";
+  text-transform: uppercase;
+  letter-spacing: 6.7px;
+  @media (max-width: 1199px) {
+    font-size:20px;
+    letter-spacing: 5.7px;
+    padding-left:30px;
+  }
+  @media (max-width: 991px) {
+    text-align:center;
+    padding-left:0px;
+  }
 `
-const List = styled.li`
-    margin-top:15px
+const Img = styled.img`
+  @media (max-width: 991px) {
+    display:none;
+  }
 `
 
 
-export default class Homefirst extends React.Component 
+
+export default class Homefirst extends React.Component
 {
 
     render() {
 
         return (
-            <MainRow>
-                <Container>
-                    <Left_Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Home_text1>Welcome To FALDAX</Home_text1>
-                        <Home_list>
-                            RELIABILITY.ACCESSIBILITY.SECURITY.INNOVATION
-                        </Home_list>
-                        <Home_text2>What is FALDAX?</Home_text2>
-                        <Home_list>
-                        Ford & Lowery Digital Asset Exchange (FALDAX) is an exchange. Built by tech-sawy traders that became frustrated with the trading options available today. We love the cryptocurrency industry and are excited by the potential it has to change the world for the better but the tools and platforms used today limit the potential of traders and industry growth. Treaders want to trade crypto, but are forced to setle with the current means of doing so. Why is it so difficult to find a platform that is intuitive, feature-rich, reliable, innovable, and alternative to your needs? We didn’t have that answer for you – until now.
-
-We don’t want customers, we want customers, we want raving fans ! And we know the only way to accomplish that is to offer you and exceptionsl and personal level of support. We have to listen to your feedback and act on it.We have to offer more for less. Our goal is to offer so much, for so little,
-that it would not make sense for you to trade anywhere else.
-
-We know that exceptional customer support is baseline. Expect that from us, and get iot. Aside from that, the first step in enhancing your trading experience is to consolidate everything into single platform crypto news, robust portfolio management tools, advanced charting and market analysis tools, collaboration via friend’s lists, groups, market chat, accounting and more wiil be available to our customers at no addional change. In Q2 2019, we will release additional features in developement that are unique in FALDAX at no additional charge as well. We are incredibly excited to share more details with you. Join our mailling list (hyperlink) to be notified when they announced.
-
-This is the beginning of a crypto trading revolution. The status quo is no longer acceptable.
-                        </Home_list>
-                    </Left_Col>
-                    <Right_Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Laptop src="./images/Homepage/desktop.png" />
-                    </Right_Col>
-                </Container>
-            </MainRow>
+          <Section>
+            <Container>
+            <Row style={{paddingTop:"8%"}}>
+              <Col lg={{span:14}}>
+                <Heading>
+                  Welcome to <HeadingBrand>FALDAX</HeadingBrand>
+                </Heading>
+                <SubHeading>
+                  Built For Traders, By Traders
+                </SubHeading>
+              </Col>
+              <Col lg={{span:10}}>
+                <Img src="/images/logo-lg.png" width="80%"/>
+              </Col>
+            </Row>
+            </Container>
+          </Section>
         );
     }
 
