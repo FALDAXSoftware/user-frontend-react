@@ -82,7 +82,7 @@ class KYC extends React.Component {
         }
         else if(type=="ssn_ori")
         {
-            console.log("ssn_original",type,a)
+            /* console.log("ssn_original",type,a) */
             var b=a
             this.setState({nexts:b})
         }
@@ -98,7 +98,7 @@ class KYC extends React.Component {
 
         return (
             <KYC_wrap>
-                {console.log(this.state)}
+                {/* console.log(this.state) */}
                 {(this.props.is_kyc_done !== true && this.state.next!==5)? 
                 <div>
                     <KYC_head>

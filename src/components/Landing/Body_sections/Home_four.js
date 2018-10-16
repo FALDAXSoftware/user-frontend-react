@@ -475,7 +475,7 @@ class Home_four extends Component
                         this.setState({visible:false,email_msg:""})
                     }
                 })
-                .catch(error => { console.log(error) })
+                .catch(error => { /* console.log(error) */ })
         }
         else
         {

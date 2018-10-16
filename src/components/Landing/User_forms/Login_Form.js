@@ -217,12 +217,12 @@ class Login_Form extends React.Component {
   };
 
   componentDidMount = () => {
-    console.log('LOGIN')
+    /* console.log('LOGIN') */
   }
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      console.log("validate Fields",error,value,this.state)
+      /* console.log("validate Fields",error,value,this.state) */
       if (error == null && this.state.passIcon==true && this.state.emailIcon==true ) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
@@ -230,7 +230,7 @@ class Login_Form extends React.Component {
 
         if (this.props.forgotParam !== undefined)
         {value['email_verify_token'] = this.props.forgotParam[1];}
-        console.log("I am in")
+        /* console.log("I am in") */
           this.props.Login(value);
       }
       else
@@ -257,7 +257,7 @@ class Login_Form extends React.Component {
       var bool = re.test(String(value).toLowerCase());
       if (value !== "") {
         if (bool == true) {
-          console.log("EmailICON is true")
+          /* console.log("EmailICON is true") */
           this.setState({ emailIcon: true })
           document.querySelector("#userlog_icon_success").style.display = "inline-block"
           document.querySelector("#userlog_icon_fail").style.display = "none"
@@ -280,7 +280,7 @@ class Login_Form extends React.Component {
       var bool = re.test(value);
       if (value !== "") {
         if (bool == true) {
-          console.log("passIcon is true")
+          /* console.log("passIcon is true") */
           this.setState({ passIcon: true, password: value })
           document.querySelector("#passlog_icon_success").style.display = "inline-block"
           document.querySelector("#passlog_icon_fail").style.display = "none"
@@ -324,10 +324,10 @@ class Login_Form extends React.Component {
   }
   handleEye(e)
       {
-        console.log("Hello i  am here",document.getElementById("logPass"),document.getElementById("logPass").type)
+        /* console.log("Hello i  am here",document.getElementById("logPass"),document.getElementById("logPass").type) */
         if(document.getElementById("logPass").type!==undefined)
         {
-          console.log("I am in")
+          /* console.log("I am in") */
           if(document.getElementById("logPass").type=="password")
           {
             this.setState({typeEye:"text"})
@@ -426,7 +426,7 @@ class Login_Form extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
+/*   console.log(state) */
   return ({
     isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
     errorStatus: state.simpleReducer.errorStatus !==undefined ? state.simpleReducer.errorStatus :undefined,

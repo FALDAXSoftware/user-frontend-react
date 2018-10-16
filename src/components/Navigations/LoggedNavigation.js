@@ -157,17 +157,17 @@ class LoggedNavigation extends Component {
       }
     
       handleComing = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });
       }
       componentWillReceiveProps(props,newProps)
       {
-          console.log(props,newProps)
+          /* console.log(props,newProps) */
       }
       comingCancel = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });

@@ -93,10 +93,10 @@ class KYCForm extends React.Component
 
     submit = () => {
         this.props.form.validateFields((error, value) => {
-           console.log("-----<<<...",error,value)
+           /* console.log("-----<<<...",error,value) */
            let dataDate = "";
             const profileData = {};
-            console.log(this.state,this.props)
+           /*  console.log(this.state,this.props) */
          
              if(error==null && (this.state.Datedata!==undefined || this.props.profileDetails.dob!==undefined) && (this.state.countrySelected!==undefined || this.props.profileDetails.country!==undefined))
             {
@@ -132,8 +132,8 @@ class KYCForm extends React.Component
                 profileData['zip']=number
                 profileData['dob']=dataDate
                 profileData['steps']=1
-                
-                console.log(value,country,number,dataDate)
+                /* 
+                console.log(value,country,number,dataDate) */
 
                 this.props.kycFormAction(this.props.isLoggedIn,profileData);
             }
@@ -251,7 +251,7 @@ class KYCForm extends React.Component
           { 
             if(props.kycData.status==200)
             {
-                console.log("KYC obcvwevuyh")
+              /*   console.log("KYC obcvwevuyh") */
                 
                 //this.openNotificationWithIcon("success","KYC",props.kycData.message)
                 this.props.kycformData();
@@ -295,7 +295,7 @@ class KYCForm extends React.Component
                                         <Second_Row_kyc>
                                             <Col md={{span:24}} lg={{span:12}} xl={{span:12}} xxl={{span:12}}>
                                                 <Country_kyc>Country</Country_kyc>
-                                                {console.log(this.props)}
+                                                {/* console.log(this.props) */}
                                                 <CountryPick {...this.props} isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={ (value) => this.onCountryChange(value) }/>
                                                 <Country_Msg_kyc className="country_kyc_msg">{this.state.countrymsg}</Country_Msg_kyc>
                                             </Col>

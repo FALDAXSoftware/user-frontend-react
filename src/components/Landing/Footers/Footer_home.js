@@ -177,14 +177,14 @@ export default class Footer_home extends React.Component {
       }
     
       handleComing = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });
       }
     
       comingCancel = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });

@@ -382,10 +382,10 @@ class PersonalDetails extends Component {
       }
       componentWillReceiveProps(props,newProps)
       {
-          console.log("CWRP MAIN ------->>>>>>",this.state.profileImg==undefined,props.profileDetails.profile_pic)
+          /* console.log("CWRP MAIN ------->>>>>>",this.state.profileImg==undefined,props.profileDetails.profile_pic) */
             if(props.profileDetails.profile_pic!==null && props.profileDetails.profile_pic!==undefined && props.profileDetails.profile_pic!=="" )
             {
-                console.log("CWRP",this.state.profileImg,props.profileDetails.profile_pic)
+                /* console.log("CWRP",this.state.profileImg,props.profileDetails.profile_pic) */
                 if(this.state.profileImg && this.state.profileImg!=="./images/Settings/def_profile.jpg")
                 this.setState({profileImg:this.state.profileImg})
                 else
@@ -393,7 +393,7 @@ class PersonalDetails extends Component {
             }
             if(this.state.removedProfile && this.state.profileImg)
             {
-                console.log("abababababababb",this.state.removedProfile,this.state.profileImg)
+                /* console.log("abababababababb",this.state.removedProfile,this.state.profileImg) */
                 this.setState({profileImg:"./images/Settings/def_profile.jpg",spin_show:false})
             }
       }
@@ -450,7 +450,7 @@ class PersonalDetails extends Component {
           }); 
       }
     render() {
-        console.log(this.props)
+        /* console.log(this.props) */
         let errors;
         let imageSRC
         let firstname = `${this.props.profileDetails.first_name}`
@@ -467,7 +467,7 @@ class PersonalDetails extends Component {
                     <Col>
                         <Row>
                             <Left_Col md={{span:24}} lg={{span:6}} xl={{span:6}} xxl={{span:6}}>
-                                {console.log("Above Image",this.state,this.props)}
+                                {/* console.log("Above Image",this.state,this.props) */}
                                 <div><ImageDiv src={this.state.profileImg} /></div>
                                 <div><Image_input type="file" onChange={this.handleProfile} name="file" id="file"/><Image_up><Image_upload for="file">Upload New Photo</Image_upload></Image_up></div>
                                 <Remove onClick={this.removePic.bind(this)}>Remove</Remove>
@@ -543,7 +543,7 @@ class PersonalDetails extends Component {
                                     </Col>
                                 </Fifth_Row>
                             </Right_Col>
-                            {console.log("989898",this.state.spin_show)}
+                            {/* console.log("989898",this.state.spin_show) */}
                             {(this.props.loader==true)?
                                 <Spin_Ex className="Ex_spin">
                                     <Spin size="large"/>
@@ -559,7 +559,7 @@ class PersonalDetails extends Component {
     }
 }
 const mapStateToProps = (state) => {
-    console.log("personalDetails",state,state.simpleReducer.loader)
+   /*  console.log("personalDetails",state,state.simpleReducer.loader) */
     return {
       ...state,
         email:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0].email:"",

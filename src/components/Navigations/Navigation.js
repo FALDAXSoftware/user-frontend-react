@@ -212,7 +212,7 @@ class Navigation extends React.Component {
     }
 
     openNav() {
-        console.log('open nav');
+        /* console.log('open nav'); */
         if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
             document.getElementById("mySidenav").style.width = "250px";
             document.getElementById("main").style.marginRight = "250px";
@@ -264,14 +264,14 @@ class Navigation extends React.Component {
       }
 
       handleComing = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });
       }
 
       comingCancel = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });
@@ -279,7 +279,7 @@ class Navigation extends React.Component {
     componentDidMount()
     {
         let queryParams
-        console.log("asdfas",this.props)
+        /* console.log("asdfas",this.props) */
         if(this.props.queryParams!==undefined  && this.props.queryParams !=="" )
         {
             queryParams = this.props.queryParams;
@@ -311,7 +311,7 @@ class Navigation extends React.Component {
                     <Menu_item key="6" onClick={this.showComing}>LIST YOUR TOKEN</Menu_item>
                     <Menu_item key="7" onClick={this.showComing}>EXCHANGE</Menu_item>
                 </Menu_main>
-                {console.log(this.props)}
+                {/* console.log(this.props) */}
                 <Right_div>
                     {this.props.isLoggedIn?<Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />:
                         <Beforelog {...this.props} dispModal={(pressed)=>this.dispModal(pressed)} openNav={() => this.openNav()} />
@@ -350,7 +350,7 @@ class Navigation extends React.Component {
                         <Row>
                             <Left_col xl={{span:12}} sm={{span:24}}>
                                 {/* console.log(this.state.modal) */}
-                                {console.log(this.state.modal)}
+                                {/* console.log(this.state.modal) */}
                                 {
                                     this.state.modal==0 || (this.state.forgotParam!==undefined && this.props.pathname.includes("login"))?
                                     <Login_Form {...this.props} forgotParam={this.state.forgotParam} dispModal={(pressed)=>this.dispModal(pressed)}/>:""

@@ -184,7 +184,7 @@ class Acc_settings extends React.Component
         }
     }
     onChange(e,abcd) {
-        console.log(e,abcd,);
+        /* console.log(e,abcd,); */
     }
     componentDidMount()
     {   var self = this;
@@ -197,7 +197,7 @@ class Acc_settings extends React.Component
         })
         .then(response => response.json())
         .then((responseData) => {
-            console.log(responseData)
+           /*  console.log(responseData) */
             let antTableData = [];
             Object.keys(responseData.data).map(function(key,index)
             {
@@ -208,18 +208,18 @@ class Acc_settings extends React.Component
                 };
                 antTableData.push(temp);
             });
-            console.log("->>>>>>>>>",antTableData);
+            /* console.log("->>>>>>>>>",antTableData); */
             self.setState({
                 loginHistory:antTableData
             })
         })
-        .catch(error => {console.log(error)})
+        .catch(error => {/* console.log(error) */})
         
         
     }
     deleteAccount()
     {
-        console.log(this.props)
+        /* console.log(this.props) */
         this.openNotificationWithIcon('success')
         let value = {};
         value["email"] = this.props.email;
@@ -314,7 +314,7 @@ class Acc_settings extends React.Component
 }
 
 const mapStateToProps = (state) => {
-    console.log("personalDetails",state)
+    /* console.log("personalDetails",state) */
     return {
       ...state,
         email:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0].email:"",

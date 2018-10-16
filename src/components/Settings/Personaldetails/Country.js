@@ -44,7 +44,7 @@ export default class CountryPick extends React.Component
         .then(response => response.json())
         .then((responseData) => {
             this.setState({countries:responseData.data,fetching:false,callOnce:true});
-            console.log(responseData)
+            /* console.log(responseData) */
             Countries = responseData.data;
         
         });
@@ -52,7 +52,7 @@ export default class CountryPick extends React.Component
     
     render()
     {
-        console.log(this.props,this.props.profileDetails.country)
+      /*   console.log(this.props,this.props.profileDetails.country) */
         return(
             <Select
                 showSearch
