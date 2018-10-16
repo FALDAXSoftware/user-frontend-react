@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import { Row, Col, Button, Layout, Menu, Breadcrumb, Card,Modal } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 /* Components */
 
@@ -199,8 +200,8 @@ export default class Footer_home extends React.Component {
                                 <Col xs={24} sm={12} md={7} lg={7} xl={5}>
                                     <Footer_ul>
                                         <Footer_headers>About Us</Footer_headers>
-                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>
-                                            About FALDAX
+                                        <li style={{cursor:"pointer"}} >
+                                            <Link to="/about-us">About FALDAX</Link>
                                                 </li>
                                         <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             Contact Us
@@ -234,7 +235,7 @@ export default class Footer_home extends React.Component {
 
                                         <Footer_headers>For Users</Footer_headers>
                                         <li style={{cursor:"pointer"}} onClick={this.showComing}>
-                                            FAQ
+                                        <Link to="/faq">FAQ</Link>
                                                     </li>
                                         <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             Blog

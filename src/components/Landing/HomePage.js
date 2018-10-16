@@ -8,16 +8,19 @@ import styled from 'styled-components'
 /* Components */
 import Header_main from "../Navigations/Navigation";
 import Home_first from "../Landing/Body_sections/Home_first";
-import Home_second from '../Landing/Body_sections/Home_second';
+import About from "../Landing/Body_sections/About";
+// import Home_second from '../Landing/Body_sections/Home_second';
 import Home_third from '../Landing/Body_sections/Home_third';
-import Home_four from '../Landing/Body_sections/Home_four';
+import Services from '../Landing/Body_sections/Services';
 import Home_five from "../Landing/Body_sections/Home_five";
 import Home_six from "../Landing/Body_sections/Home_six";
+import Feature from "../Landing/Body_sections/Feature";
 import Home_seven from "../Landing/Body_sections/Home_seven";
 import Footer_main from "../Landing/Footers/Footer_home";
 
 /* Styled Components */
 import { Section_2, Section_3, Container } from './../../styled-components/homepage/style';
+import Home_four from './Body_sections/Home_four';
 
 /* Global Components */
 const { Header, Content, Footer } = Layout;
@@ -273,9 +276,9 @@ const SpanCoinChange = styled.span`
 
 /* Component Defination Starts Here*/
 
-export default class NavigationBar extends React.Component 
+export default class NavigationBar extends React.Component
 {
-  
+
   constructor() {
     super();
     this.state = { pagination: {} };
@@ -296,6 +299,7 @@ export default class NavigationBar extends React.Component
           <Header_main {...this.props}/>
           <Content_style>
             <Home_first />
+            <About />
             {/* <Home_second data={data} /> */}
             {/* <Home_third
               columns={columns}
@@ -304,9 +308,11 @@ export default class NavigationBar extends React.Component
               pagination={false}
               handleTableChange={this.handleTableChange}
             /> */}
-            <Home_four />
-            <Home_five />
-            {/* <Home_six />*/}
+            <Home_four/>
+            <Services />
+            <Home_six />
+            <Feature />
+            
             {/* <Home_seven />  */}
           </Content_style>
           <Footer_main />
@@ -315,4 +321,3 @@ export default class NavigationBar extends React.Component
     );
   }
 }
-

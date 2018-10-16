@@ -1,6 +1,6 @@
 /* In-Build components */
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Redirect,withRouter} from 'react-router-dom';
 import AppRouter from '../src/routes';
 import './App.css';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
@@ -80,7 +80,7 @@ class App extends Component {
           <Switch location={location}>
             <Route path='/reset-password' title="Login" component={HomePage}/>
             <Route  path="/login" exact title="Login" component={HomePage}/>
-            <Route  path="/about-us" exact title="About Us" component={AboutUs}/>
+            <Route {...this.props} path="/about-us" exact title="About Us" component={AboutUs}/>
             <Route  path="/faq" exact title="Faq Page" component={FaqPage}/>
             <RestrictedRoute
               path="/" 

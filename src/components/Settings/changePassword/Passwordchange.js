@@ -555,7 +555,7 @@ class Passwordchange extends React.Component
                             <div>
                                 <OldInput type={this.state.typeEye}  {...getFieldProps('current_password', {
                                 onChange(e) { me.onChangeField(e.target.value, "current_password") }, // have to write original onChange here if you need
-                                rules: [{type: "string", required: true }],
+                                rules: [{type: "string", required: true,whitespace:true }],
                                 })} />
                                 {
                                     (this.state.typeEye=="password")?<FAI icon={faEye} color='black' onClick={this.handleEye.bind(this,"old")}/>:<FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this,"old")}/>
@@ -570,7 +570,7 @@ class Passwordchange extends React.Component
                             <div>
                                 <NewInput type={this.state.newEye} {...getFieldProps('new_password', {
                                 onChange(e) { me.onChangeField(e.target.value, "new_password") }, // have to write original onChange here if you need
-                                rules: [{ type: "string", required: true,}],
+                                rules: [{ type: "string", required: true,whitespace:true}],
                                 })}/>
                                 {
                                     (this.state.newEye=="password")?<FAI icon={faEye} color='black' onClick={this.handleEye.bind(this,"new")}/>:<FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this,"new")}/>
@@ -585,7 +585,7 @@ class Passwordchange extends React.Component
                             <div>
                                 <RepeatInput type={this.state.repeatEye} {...getFieldProps('confirm_password', {
                                     onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
-                                    rules: [{ type: "string", required: true,}],
+                                    rules: [{ type: "string", required: true,whitespace:true}],
                                 })}/>
                                 {
                                     (this.state.repeatEye=="password")?<FAI icon={faEye} color='black' onClick={this.handleEye.bind(this,"repeat")}/>:<FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this,"repeat")}/>

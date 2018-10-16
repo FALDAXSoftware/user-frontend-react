@@ -134,14 +134,15 @@ class DocUpload extends React.Component {
             icon1:"plus",
             frontImg:"",
             backImg:"",
-            icon2:"plus"
+            icon2:"plus",
+            click:''
         }
         this.handleProfile = this.handleProfile.bind(this);
     }
     handleFileSelectClick(val) {
        /*  console.log(val) */
         document.querySelector("#" + val).click();
-
+        this.setState({click:val})
     }
     handleProfile(e) {
         try{
@@ -217,11 +218,12 @@ class DocUpload extends React.Component {
     }
     componentWillReceiveProps(props,newProps)
     {
-        if(this.state.icon1=="check" && this.state.frontImg=="")
+       /*  console.log(this.props,this.state) */
+        if(this.state.icon1=="check" && this.state.click=='front')
         {
             this.setState({frontImg:props.image_path})
         }
-        else if(this.state.icon2 == "check" && this.state.backImg=="")
+        else if(this.state.icon2 == "check" && this.state.click=='back')
         {
             this.setState({backImg:props.image_path})
         }

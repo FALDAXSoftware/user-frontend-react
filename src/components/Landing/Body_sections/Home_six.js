@@ -16,11 +16,11 @@ const { Meta } = Card;
 /* Styled-Components */
 
 const Third_Row = styled(Row)`
-    padding-top: 68px;
+    padding-top: 50px;
     padding-bottom: 50px;
 `
 const Third_Wrap = styled.div`
-    background-color:#0f477b;
+    background-color:#f7f5f5;
     text-align: center;
 `
 const BlueCol = styled(Col)`
@@ -31,16 +31,21 @@ const BlueCol = styled(Col)`
 
 `
 const Third_span = styled.span`
-    font-size: 48px;
+    font-size: 55px;
     font-family: "Open sans";
-    color: rgb( 255, 255, 255 );
-    line-height: 0.625;  
+    color: #00a7ff;
+    line-height: 0.625;
 `
 const Third_p = styled.p`
     font-size: 24px;
     font-family: "Open sans";
     color: rgb( 175, 216, 255 );
-    line-height: 1.5; 
+    line-height: 1.5;
+    color:black;
+`
+const Third_title = styled(Third_p)`
+  color:#cbc9ca;
+  font-size:20px;
 `
 
 
@@ -54,16 +59,19 @@ export default class Homethird extends React.Component
                             <Col span={18} offset={3}>
                                 <Row>
                                     <BlueCol xl={8}>
-                                        <Third_span>$150B+</Third_span>
-                                        <Third_p>Digital currency exchanged</Third_p> 
+                                        <Third_title>Service Available in</Third_title>
+                                        <Third_span>211</Third_span>
+                                        <Third_p>Countries</Third_p>
                                     </BlueCol>
                                     <BlueCol xl={8}>
-                                        <Third_span>34</Third_span>
-                                        <Third_p>Countries supported</Third_p>
+                                        <Third_title>Support For</Third_title>
+                                        <Third_span>73+</Third_span>
+                                        <Third_p>Coins</Third_p>
                                     </BlueCol>
                                     <BlueCol xl={8}>
-                                        <Third_span>80+</Third_span>
-                                        <Third_p>Coins Supported</Third_p>
+                                        <Third_title>Always</Third_title>
+                                        <Third_span>0%</Third_span>
+                                        <Third_p>Fee</Third_p>
                                     </BlueCol>
                                 </Row>
                             </Col>

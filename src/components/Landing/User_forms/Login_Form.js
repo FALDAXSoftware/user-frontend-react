@@ -410,8 +410,8 @@ class Login_Form extends React.Component {
           </div>
         }
         <Check_wrap>
-          <Remember>
-            <Check type="checkbox" /> Remember Me</Remember>
+          {/* <Remember>
+            <Check type="checkbox" /> Remember Me</Remember> */}
           <Forgot onClick={() => this.dispModal("forgot")}>Forgot Password?</Forgot>
         </Check_wrap>
 

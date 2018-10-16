@@ -232,8 +232,7 @@ class PersonalDetails extends Component {
         this.props.form.validateFields((error, value) => {
             let dataDate = "";
             const profileData = new FormData();
-         /*  console.log(error, value,"Check Here ====>",this.state,this.props); */
-          if(error==null && (this.state.Datedata!==undefined || this.props.profileDetails.dob!==undefined) && (this.state.countrySelected!==undefined || this.props.profileDetails.country!==undefined))
+          if(error==null && ( (this.state.Datedata!==undefined && this.state.Datedata!==null) || (this.props.profileDetails.dob!==undefined && this.props.profileDetails.dob!==null) ) && ((this.state.countrySelected!==undefined && this.state.countrySelected!==null) || (this.props.profileDetails.country!==undefined && this.props.profileDetails.country!==null) ))
           {
             document.querySelectorAll(".first_msg")[0].style.display = "none";
             document.querySelectorAll(".last_msg")[0].style.display = "none";
@@ -256,9 +255,9 @@ class PersonalDetails extends Component {
             }
             if(country==undefined && country==null)
             {
-                country=this.props.country
+                country=this.props.country?this.props.country:""
             }
-            /* console.log("BEFORE FORM",value,this.state.countrySelected,this.state.profileImage,dataDate) */
+            /* console.log("BEFORE FORM",value,this.state.countrySelected,this.state.profileImage,dataDate,country) */
             profileData.append('first_name', value.first_name);
             profileData.append('email',this.props.email);
             profileData.append('last_name',value.last_name);
@@ -273,14 +272,37 @@ class PersonalDetails extends Component {
             this.openNotificationWithIcon('warning');
             this.props.profileupdateAction(this.props.isLoggedIn,profileData);
           }
-          else
+          else if(this.state.countrySelected==null && this.state.countrySelected==undefined)
+            {
+                if(this.state.countrySelected==null && this.state.countrySelected==undefined)
+                {
+                document.querySelectorAll(".country_msg")[0].style.display = "block";
+                this.setState({countrymsg:"*Country Field is not valid"})
+                }
+                else
+                {
+                document.querySelectorAll(".country_msg")[0].style.display = "none";
+                this.setState({countrymsg:null})
+                }
+            }
+            if(this.state.Datedata==undefined && this.props.profileDetails.dob !==undefined)
+            {
+                document.querySelectorAll(".dob_msg")[0].style.display = "block";
+                this.setState({dobmsg:"*Date of Birth is not valid"})
+            }
+            else
+            {
+                document.querySelectorAll(".dob_msg")[0].style.display = "none";
+                this.setState({dobmsg:null})
+            }
+          if(error!==null)
           {
             if(error.first_name!==null && error.first_name!==undefined)
             {
               if(error.first_name.errors[0].message!==undefined && error.first_name.errors[0].message!==null)
               {
                 document.querySelectorAll(".first_msg")[0].style.display = "block";
-                this.setState({firstmsg:"*First name is incorrect"})
+                this.setState({firstmsg:"*First name is not valid"})
               }
               else
               {
@@ -293,7 +315,7 @@ class PersonalDetails extends Component {
               if(error.last_name.errors[0].message!==undefined && error.last_name.errors[0].message!==null)
               {
                 document.querySelectorAll(".last_msg")[0].style.display = "block";
-                this.setState({lastmsg:"*Last name is incorrect"})
+                this.setState({lastmsg:"*Last name is not valid"})
               }
               else
               {
@@ -301,26 +323,12 @@ class PersonalDetails extends Component {
                 this.setState({lastmsg:null})
               }
             }
-            if(error.country!==null && error.country!==undefined)
-            {
-              if(error.country.errors[0].message!==undefined && error.country.errors[0].message!==null)
-              {
-                document.querySelectorAll(".country_msg")[0].style.display = "block";
-                this.setState({countrymsg:"*Phone Number is Incorrecct"})
-              }
-              else
-              {
-                
-                document.querySelectorAll(".country_msg")[0].style.display = "none";
-                this.setState({countrymsg:null})
-              }
-            }
             if(error.street_address!==null && error.street_address!==undefined)
             {
               if(error.street_address.errors[0].message!==undefined && error.street_address.errors[0].message!==null)
               {
                 document.querySelectorAll(".street_msg")[0].style.display = "block";
-                this.setState({streetmsg:"*Street Address is Incorrecct"})
+                this.setState({streetmsg:"*Street Address is not valid"})
               }
               else
               {
@@ -333,7 +341,7 @@ class PersonalDetails extends Component {
               if(error.city_town.errors[0].message!==undefined && error.city_town.errors[0].message!==null)
               {
                 document.querySelectorAll(".city_msg")[0].style.display = "block";
-                this.setState({citymsg:"*City is Incorrecct"})
+                this.setState({citymsg:"*City is not valid"})
               }
               else
               {
@@ -346,7 +354,7 @@ class PersonalDetails extends Component {
               if(error.postal_code.errors[0].message!==undefined && error.postal_code.errors[0].message!==null)
               {
                 document.querySelectorAll(".postal_msg")[0].style.display = "block";
-                this.setState({postalmsg:"*Postal is Incorrecct"})
+                this.setState({postalmsg:"*Postal is not valid"})
               }
               else
               {
@@ -354,16 +362,7 @@ class PersonalDetails extends Component {
                 this.setState({postalmsg:null})
               }
             }
-            if(this.state.Datedata==undefined && this.props.profileDetails.dob !==undefined)
-            {
-                document.querySelectorAll(".dob_msg")[0].style.display = "block";
-                this.setState({dobmsg:"*Date of Birth is Incorrecct"})
-            }
-            else
-            {
-                document.querySelectorAll(".dob_msg")[0].style.display = "none";
-                this.setState({dobmsg:null})
-            }
+            
           }
         });
       }
@@ -480,7 +479,7 @@ class PersonalDetails extends Component {
                                         <First_input placeholder="First Name" {...getFieldProps('first_name', {
                                             onChange(){/* console.log("Hello How are You") */},
                                             initialValue:this.props.profileDetails.first_name, // have to write original onChange here if you need
-                                            rules: [{required: true}],
+                                            rules: [{required: true,whitespace:true}]
                                         })}/>
                                         <First_Msg className="first_msg">{this.state.firstmsg}</First_Msg>
                                     </Col>
@@ -489,7 +488,7 @@ class PersonalDetails extends Component {
                                         <Last_input placeholder="Last Name" {...getFieldProps('last_name', {
                                             onChange(){/* console.log("Hello How are You") */}, 
                                             initialValue:this.props.profileDetails.last_name,// have to write original onChange here if you need
-                                            rules: [{required: true}],
+                                            rules: [{required: true,whitespace:true}],
                                         })}/>
                                         <Last_Msg className="last_msg">{this.state.lastmsg}</Last_Msg>
                                     </Col>
@@ -512,7 +511,7 @@ class PersonalDetails extends Component {
                                         <Street_input placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} {...getFieldProps('street_address', {
                                             onChange(){/* console.log("Hello How are You") */},
                                             initialValue:this.props.profileDetails.street_address, // have to write original onChange here if you need
-                                            rules: [{required: true}],
+                                            rules: [{required: true,whitespace:true}],
                                         })}/>
                                         <Street_Msg className="street_msg">{this.state.streetmsg}</Street_Msg>
                                     </Col>
@@ -523,7 +522,7 @@ class PersonalDetails extends Component {
                                         <First_input placeholder="City"{...getFieldProps('city_town', {
                                             onChange(){/* console.log("Hello How are You") */},
                                             initialValue:this.props.profileDetails.city_town, // have to write original onChange here if you need
-                                            rules: [{required: true}],
+                                            rules: [{required: true,whitespace:true}],
                                         })}/>
                                         <City_Msg className="city_msg">{this.state.citymsg}</City_Msg>
                                     </Col>
@@ -532,7 +531,7 @@ class PersonalDetails extends Component {
                                         <Last_input placeholder="Postal Code"{...getFieldProps('postal_code', {
                                             onChange(){/* console.log("Hello How are You") */},
                                             initialValue:this.props.profileDetails.postal_code,// have to write original onChange here if you need
-                                            rules: [{required: true}],
+                                            rules: [{required: true,whitespace:true}],
                                         })}/>
                                         <Postal_Msg className="postal_msg">{this.state.postalmsg}</Postal_Msg>
                                     </Col>
