@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 /* Components */
 import { Logout } from '../../Actions/Auth';
-
+import {Day_night_mode,Exchange} from "./BeforeLog"
 /* Constants */
 import {globalVariables} from '../../Globals'
 
@@ -84,6 +84,12 @@ const AnchorName = styled.a`
       margin-top:0px;
   }
 `
+const Bell = styled.div`
+display:inline;
+    font-size: 13px;
+    padding-right: 10px;
+    cursor:pointer;
+`
 
 
 class Afterlog extends React.Component
@@ -122,6 +128,15 @@ class Afterlog extends React.Component
         }
         return(
             <Right_div>
+                <Bell>
+                    <Icon  style={{fontSize:"15px",color:"black"}} type="bell" theme="filled" />      
+                </Bell>
+                <Day_night_mode>
+                    <span> <FontAwesomeIcon icon={faMoon} color='black' style={{transform: 'rotate(315deg)'}} /> </span>
+                </Day_night_mode>
+                <Exchange>
+                            <span  onClick={this.showComing}> CAREERS </span>
+                        </Exchange>
                 <DropDownDiv overlay={DropdownItems} trigger={['click']}>
                     <AnchorName className="ant-dropdown-link" href="#">
                     {/* console.log(this.props,Avatar_img) */}

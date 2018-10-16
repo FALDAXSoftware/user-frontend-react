@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import {connect} from "react-redux"
-import { Row, Col, Tabs, Button,Input,notification,Steps } from 'antd';
+import { Row, Col, Tabs, Button,Input,notification,Steps ,Spin} from 'antd';
 import styled from 'styled-components';
 import { createForm, formShape } from 'rc-form';
 
 
-import {Save,Fifth_Row,Postal,City,Fourth_Row,Street_input,Street_Address,Third_Row,Date_birth,Country_input,Country,Second_Row,Last_input,Last_name,First_Msg,First_input,First_name,First_Row,Right_Col} from '../Personaldetails/PersonalDetails'
+import {Spin_Ex,Save,Fifth_Row,Postal,City,Fourth_Row,Street_input,Street_Address,Third_Row,Date_birth,Country_input,Country,Second_Row,Last_input,Last_name,First_Msg,First_input,First_name,First_Row,Right_Col} from '../Personaldetails/PersonalDetails'
 
 import Datepicker from "../Personaldetails/Datepicker"
 import CountryPick from "../Personaldetails/Country"
-
+import {kycFormAction,kycformData} from "../../../Actions/Settings/passwordChange"
 
 const KYC_form = styled.div`
     width:50%;
@@ -68,7 +68,15 @@ class KYCForm extends React.Component
     {
         super(props);
         this.state={
-            
+            Datedata:undefined,
+            firstmsg:null,
+            lastmsg:null,
+            countrymsg:null,
+            dobmsg:null,
+            streetmsg:null,
+            citymsg:null,
+            postalmsg:null,
+            countrySelected:this.props.profileDetails.country,
         }
     }
     static propTypes = {
@@ -86,19 +94,177 @@ class KYCForm extends React.Component
     submit = () => {
         this.props.form.validateFields((error, value) => {
            console.log("-----<<<...",error,value)
+           let dataDate = "";
+            const profileData = {};
             console.log(this.state,this.props)
-            this.props.next_step(1);
-             /* if(error==null && this.state.currentpassIcon==true && this.state.newpassIcon==true && this.state.confirmIcon==true)
+         
+             if(error==null && (this.state.Datedata!==undefined || this.props.profileDetails.dob!==undefined) && (this.state.countrySelected!==undefined || this.props.profileDetails.country!==undefined))
             {
-                console.log("HELLO !@#")
-                document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
-                document.querySelectorAll(".newchange_msg")[0].style.display = "none";
-                document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
-                this.props.passwordChange(this.props.isLoggedIn,value);
-            } */
+                document.querySelectorAll(".first_kyc_msg")[0].style.display = "none";
+                document.querySelectorAll(".last_kyc_msg")[0].style.display = "none";
+                document.querySelectorAll(".country_kyc_msg")[0].style.display = "none";
+                document.querySelectorAll(".dob_kyc_msg")[0].style.display = "none";
+                document.querySelectorAll(".street_kyc_msg")[0].style.display = "none";
+                document.querySelectorAll(".city_kyc_msg")[0].style.display = "none";
+                document.querySelectorAll(".postal_kyc_msg")[0].style.display = "none";
+                this.setState({first_msg:null,last_msg:null,country_msg:null,dob_msg:null,street_msg:null,city_msg:null,postal_msg:null,spin_show:true});
+                
+                let number = Number(value.postal_code);
+                let country = this.state.countrySelected;
+                if(this.state.Datedata!==undefined && this.state.Datedata!==null)
+                {  
+                    dataDate = this.state.Datedata.year + "/" + this.state.Datedata.month + "/" + this.state.Datedata.day
+                }
+                else
+                {    
+                    dataDate = this.props.profileDetails.dob 
+                }
+                if(country==undefined && country==null)
+                {
+                    country=this.props.country
+                }
+                /* console.log("BEFORE FORM",value,this.state.countrySelected,this.state.profileImage,dataDate) */
+                profileData['first_name']=value.first_name
+                profileData['last_name']=value.last_name
+                profileData['country']=country
+                profileData['address']=value.street_address
+                profileData['city']=value.city_town
+                profileData['zip']=number
+                profileData['dob']=dataDate
+                profileData['steps']=1
+                
+                console.log(value,country,number,dataDate)
+
+                this.props.kycFormAction(this.props.isLoggedIn,profileData);
+            }
+            else
+            {
+                if(error.first_name!==null && error.first_name!==undefined)
+                {
+                    if(error.first_name.errors[0].message!==undefined && error.first_name.errors[0].message!==null)
+                    {
+                        document.querySelectorAll(".first_kyc_msg")[0].style.display = "block";
+                        this.setState({firstmsg:"*First name is incorrect"})
+                    }
+                    else
+                    {
+                        document.querySelectorAll(".first_kyc_msg")[0].style.display = "none";
+                        this.setState({firstmsg:null})
+                    }
+                }
+                if(error.last_name!==null && error.last_name!==undefined)
+                {
+                    if(error.last_name.errors[0].message!==undefined && error.last_name.errors[0].message!==null)
+                    {
+                        document.querySelectorAll(".last_kyc_msg")[0].style.display = "block";
+                        this.setState({lastmsg:"*Last name is incorrect"})
+                    }
+                    else
+                    {
+                        document.querySelectorAll(".last_kyc_msg")[0].style.display = "none";
+                        this.setState({lastmsg:null})
+                    }
+                }
+                if(error.country!==null && error.country!==undefined)
+                {
+                    if(error.country.errors[0].message!==undefined && error.country.errors[0].message!==null)
+                    {
+                        document.querySelectorAll(".country_kyc_msg")[0].style.display = "block";
+                        this.setState({countrymsg:"*Phone Number is Incorrecct"})
+                    }
+                    else
+                    {
+                        
+                        document.querySelectorAll(".country_kyc_msg")[0].style.display = "none";
+                        this.setState({countrymsg:null})
+                    }
+                }
+                if(error.street_address!==null && error.street_address!==undefined)
+                {
+                    if(error.street_address.errors[0].message!==undefined && error.street_address.errors[0].message!==null)
+                    {
+                        document.querySelectorAll(".street_kyc_msg")[0].style.display = "block";
+                        this.setState({streetmsg:"*Street Address is Incorrecct"})
+                    }
+                    else
+                    {
+                        document.querySelectorAll(".street_kyc_msg")[0].style.display = "none";
+                        this.setState({streetmsg:null})
+                    }
+                }
+                if(error.city_town!==null && error.city_town!==undefined)
+                {
+                    if(error.city_town.errors[0].message!==undefined && error.city_town.errors[0].message!==null)
+                    {
+                        document.querySelectorAll(".city_kyc_msg")[0].style.display = "block";
+                        this.setState({citymsg:"*City is Incorrecct"})
+                    }
+                    else
+                    {
+                        document.querySelectorAll(".city_kyc_msg")[0].style.display = "none";
+                        this.setState({citymsg:null})
+                    }
+                }
+                if(error.postal_code!==null && error.postal_code!==undefined)
+                {
+                    if(error.postal_code.errors[0].message!==undefined && error.postal_code.errors[0].message!==null)
+                    {
+                        document.querySelectorAll(".postal_kyc_msg")[0].style.display = "block";
+                        this.setState({postalmsg:"*Postal is Incorrecct"})
+                    }
+                    else
+                    {
+                        document.querySelectorAll(".postal_kyc_msg")[0].style.display = "none";
+                        this.setState({postalmsg:null})
+                    }
+                }
+                if(this.state.Datedata==undefined && this.props.profileDetails.dob==undefined )
+                {
+                    document.querySelectorAll(".dob_kyc_msg")[0].style.display = "block";
+                    this.setState({dobmsg:"*Date of Birth is Incorrecct"})
+                }
+                else
+                {
+                    document.querySelectorAll(".dob_kyc_msg")[0].style.display = "none";
+                    this.setState({dobmsg:null})
+                }
+            }
         });
     }
-
+    onDateChange(Datedata)
+      { 
+        this.setState({Datedata})
+      }
+      onCountryChange(country)
+      {
+          this.setState({countrySelected:country})
+      }
+      openNotificationWithIcon(type, head, desc) {
+        notification[type]({
+          message: head,
+          description: desc,
+        });
+      };
+      componentWillReceiveProps(props,newProps)
+      {
+          if(props.kycData!==undefined && props.kycData!=="")
+          { 
+            if(props.kycData.status==200)
+            {
+                console.log("KYC obcvwevuyh")
+                
+                //this.openNotificationWithIcon("success","KYC",props.kycData.message)
+                this.props.kycformData();
+                this.props.next_step(1);
+            }
+            else
+            {
+                this.openNotificationWithIcon("error","KYC",props.kycData.err)
+                this.props.kycformData();
+            }
+            
+          }
+      }
     render()
     {
         const { getFieldProps, getFieldError } = this.props.form;
@@ -114,7 +280,7 @@ class KYCForm extends React.Component
                                                     initialValue:this.props.profileDetails.first_name, // have to write original onChange here if you need
                                                     rules: [{required: true}],
                                         })}/>
-                                        <First_Msg_kyc className="first_msg">{this.state.firstmsg}</First_Msg_kyc>
+                                        <First_Msg_kyc className="first_kyc_msg">{this.state.firstmsg}</First_Msg_kyc>
                                     </Col>
                                             <Col md={{span:12}} lg={{span:12}} xl={{span:12}} xxl={{span:12}}>
                                                 <Last_name_kyc>Last Name</Last_name_kyc>
@@ -123,7 +289,7 @@ class KYCForm extends React.Component
                                                     initialValue:this.props.profileDetails.last_name,// have to write original onChange here if you need
                                                     rules: [{required: true}],
                                                 })}/>
-                                                <Last_Msg_kyc className="last_msg">{this.state.lastmsg}</Last_Msg_kyc>
+                                                <Last_Msg_kyc className="last_kyc_msg">{this.state.lastmsg}</Last_Msg_kyc>
                                             </Col>
                                         </First_Row_kyc>
                                         <Second_Row_kyc>
@@ -131,12 +297,12 @@ class KYCForm extends React.Component
                                                 <Country_kyc>Country</Country_kyc>
                                                 {console.log(this.props)}
                                                 <CountryPick {...this.props} isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={ (value) => this.onCountryChange(value) }/>
-                                                <Country_Msg_kyc className="country_msg">{this.state.countrymsg}</Country_Msg_kyc>
+                                                <Country_Msg_kyc className="country_kyc_msg">{this.state.countrymsg}</Country_Msg_kyc>
                                             </Col>
                                             <Col md={{span:24}} lg={{span:12}} xl={{span:12}} xxl={{span:12}}>
                                                 <Date_birth_kyc>Date of Birth</Date_birth_kyc>
                                                 <Datepicker {...this.props} onDateChange={(Data) => this.onDateChange(Data)}/>
-                                                <Dob_Msg_kyc className="dob_msg">{this.state.dobmsg}</Dob_Msg_kyc>
+                                                <Dob_Msg_kyc className="dob_kyc_msg">{this.state.dobmsg}</Dob_Msg_kyc>
                                             </Col>
                                         </Second_Row_kyc>
                                         <Third_Row_kyc>
@@ -147,7 +313,7 @@ class KYCForm extends React.Component
                                                     initialValue:this.props.profileDetails.street_address, // have to write original onChange here if you need
                                                     rules: [{required: true}],
                                                 })}/>
-                                                <Street_Msg_kyc className="street_msg">{this.state.streetmsg}</Street_Msg_kyc>
+                                                <Street_Msg_kyc className="street_kyc_msg">{this.state.streetmsg}</Street_Msg_kyc>
                                             </Col>
                                         </Third_Row_kyc>
                                         <Fourth_Row_kyc>
@@ -158,7 +324,7 @@ class KYCForm extends React.Component
                                                     initialValue:this.props.profileDetails.city_town, // have to write original onChange here if you need
                                                     rules: [{required: true}],
                                                 })}/>
-                                                <City_Msg_kyc className="city_msg">{this.state.citymsg}</City_Msg_kyc>
+                                                <City_Msg_kyc className="city_kyc_msg">{this.state.citymsg}</City_Msg_kyc>
                                             </Col>
                                             <Col md={{span:12}} lg={{span:12}} xl={{span:12}} xl={{span:12}}>
                                                 <Postal_kyc>Postal Code</Postal_kyc>
@@ -167,7 +333,7 @@ class KYCForm extends React.Component
                                                     initialValue:this.props.profileDetails.postal_code,// have to write original onChange here if you need
                                                     rules: [{required: true}],
                                                 })}/>
-                                                <Postal_Msg_kyc className="postal_msg">{this.state.postalmsg}</Postal_Msg_kyc>
+                                                <Postal_Msg_kyc className="postal_kyc_msg">{this.state.postalmsg}</Postal_Msg_kyc>
                                             </Col>
                                         </Fourth_Row_kyc>
                                         <Fifth_Row_kyc>
@@ -176,6 +342,12 @@ class KYCForm extends React.Component
                                             </Col>
                                         </Fifth_Row_kyc>
                             </Right_Col_kyc>
+                            {(this.props.loader==true)?
+                                <Spin_Ex className="Ex_spin">
+                                    <Spin size="large"/>
+                                </Spin_Ex>
+                            :""
+                            }
                         </KYC_form>
         );
     }
@@ -187,10 +359,15 @@ const mapStateToProps = (state) => {
     return {
       ...state,
         email:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0].email:"",
-        profileDetails:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0]:""
+        profileDetails:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0]:"",
+        isLoggedIn : state.simpleReducer.isLoggedIn !==undefined?state.simpleReducer.isLoggedIn:"",
+        kycData: state.passwordReducer.kycData !== undefined ? state.passwordReducer.kycData : "",
+        loader:state.simpleReducer.loader
     }
   }
 const mapDispatchToProps = dispatch => ({
+    kycFormAction:(is,data)=>dispatch(kycFormAction(is,data)),
+    kycformData:(data)=>dispatch(kycformData(data))
 })
 
 export default  connect(mapStateToProps,mapDispatchToProps)(createForm()(KYCForm));

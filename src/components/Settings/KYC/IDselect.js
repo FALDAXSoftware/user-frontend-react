@@ -4,6 +4,7 @@ import {connect} from "react-redux"
 import { Row, Col, Tabs, Button,Input,notification,Steps } from 'antd';
 import styled from 'styled-components';
 
+import {kycFormAction,kycformData} from "../../../Actions/Settings/passwordChange"
 
 const KYC_type_select_row = styled.div`
   width:50%;
@@ -62,6 +63,10 @@ export const Back_Button = styled(Button)`
 `
 export const Next_Button = styled(Button)`
     margin-left:10px;
+    font-size: 13.217px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: "Open Sans";
     border-radius: 24px;
     background-color:#4c84ff;
     height:50px;
@@ -69,15 +74,63 @@ export const Next_Button = styled(Button)`
 `
 
 
-export default class IDselect extends React.Component
+class IDselect extends React.Component
 {
     next_step()
     {
-        this.props.next_step(2)
+        var abcd = {};
+        if(document.getElementById('passport').checked)
+        {
+            abcd["id_type"]= 1;
+            abcd["steps"]=2;
+            this.props.kycFormAction(this.props.isLoggedIn,abcd);
+            this.props.next_step(3,"ssn")
+         
+        }
+        else if(document.getElementById('license').checked)
+        {
+            abcd["id_type"]= 2;
+            abcd["steps"]=2;
+            this.props.kycFormAction(this.props.isLoggedIn,abcd);
+            this.props.next_step(3,"ssn")
+          
+        }
+        else if(document.getElementById('identity').checked)
+        {
+            abcd["id_type"]= 3;
+            abcd["steps"]=2;
+            this.props.kycFormAction(this.props.isLoggedIn,abcd);
+            this.props.next_step(3,"ssn")
+            
+        }
+        else if(document.getElementById('ssn').checked)
+        {
+            abcd["id_type"]= 4;
+            abcd["steps"]=2;
+            this.props.kycFormAction(this.props.isLoggedIn,abcd);
+            this.props.next_step(2,"ssn_ori")
+         
+        }
+        else
+        {
+            this.openNotificationWithIcon("error","KYC","Please select any one option.")
+        }
+        
     }
+    back_step()
+    {
+        this.props.next_step(0)
+    }
+    openNotificationWithIcon(type, head, desc) {
+        notification[type]({
+          message: head,
+          description: desc,
+        });
+      };
     render()
     {
         return(
+            <div>
             <KYC_type_select_row>
                     <Row>
                         <Select_text md={{span:24}}>
@@ -85,7 +138,7 @@ export default class IDselect extends React.Component
                         </Select_text>
                         <Select_Col1 sm={{span:12}} md={{span:12}} lg={{span:12}} xl={{span:6}}>
                         <label className="kyc-radio-container">
-                            <input type="radio" name="kyc_type"/>
+                            <input id="passport" type="radio" name="kyc_type"/>
                             <span className="background">
                             <img src="/images/passport-logo-active.png" className="active"/>
                             <img src="/images/passport-logo.png" className="normal"/>
@@ -95,7 +148,7 @@ export default class IDselect extends React.Component
                         </Select_Col1>
                         <Select_Col2 sm={{span:12}} md={{span:12}} lg={{span:12}} xl={{span:6}}>
                         <label className="kyc-radio-container">
-                            <input type="radio" name="kyc_type"/>
+                            <input id="license" type="radio" name="kyc_type"/>
                             <span className="background license">
                             <img src="/images/driving-license-active.png" className="active"/>
                             <img src="/images/driving-license.png" className="normal"/>
@@ -105,7 +158,7 @@ export default class IDselect extends React.Component
                         </Select_Col2>
                         <Select_Col3 sm={{span:12}} md={{span:12}} lg={{span:12}} xl={{span:6}}>
                         <label className="kyc-radio-container">
-                            <input type="radio" name="kyc_type"/>
+                            <input id="identity" type="radio" name="kyc_type"/>
                             <span className="background identity">
                             <img src="/images/identity-active.png" className="active"/>
                             <img src="/images/identity.png" className="normal"/>
@@ -115,7 +168,7 @@ export default class IDselect extends React.Component
                         </Select_Col3>
                         <Select_Col4 sm={{span:12}} md={{span:12}} lg={{span:12}} xl={{span:6}}>
                         <label className="kyc-radio-container">
-                            <input type="radio" name="kyc_type"/>
+                            <input id="ssn" type="radio" name="kyc_type"/>
                             <span className="background ssn">
                             <img src="/images/ssn-active.png" className="active"/>
                             <img src="/images/ssn.png" className="normal"/>
@@ -124,13 +177,30 @@ export default class IDselect extends React.Component
                         </label>
                         </Select_Col4>
                     </Row>
-                    <Button_wrap>
-                        <Sub_wrap>
-                            <Back_Button type="primary">Back</Back_Button>
-                            <Next_Button onClick = {this.next_step.bind(this)} type="primary">Next</Next_Button>
-                        </Sub_wrap>
-                    </Button_wrap>
+                    
                 </KYC_type_select_row>
+                <Button_wrap>
+                    <Sub_wrap>
+                        <Back_Button onClick={this.back_step.bind(this)} type="primary">Back</Back_Button>
+                        <Next_Button onClick = {this.next_step.bind(this)} type="primary">Next</Next_Button>
+                    </Sub_wrap>
+                </Button_wrap>
+            </div>
         );
     }
 }
+
+
+const mapStateToProps = (state) => {
+    /* console.log("personalDetails",state) */
+    return {
+      ...state,
+        isLoggedIn : state.simpleReducer.isLoggedIn !==undefined?state.simpleReducer.isLoggedIn:"",
+    }
+  }
+const mapDispatchToProps = dispatch => ({
+    kycFormAction:(is,data)=>dispatch(kycFormAction(is,data)),
+    kycformData:(data)=>dispatch(kycformData(data))
+})
+
+export default  connect(mapStateToProps,mapDispatchToProps)(IDselect);

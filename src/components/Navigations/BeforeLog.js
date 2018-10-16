@@ -7,13 +7,13 @@ import { faMoon } from '@fortawesome/free-solid-svg-icons';
 
 /* Styled-Components */
 
-const Day_night_mode = styled.div`
+export const Day_night_mode = styled.div`
     display:inline;
     font-size: 13px;
     padding-right: 10px;
     cursor:pointer;
 `
-const Exchange = styled.div`
+export const Exchange = styled.div`
     display:inline;
     font-size: 13px;
     font-family: "Open sans";
@@ -114,6 +114,7 @@ export default class Beforelog extends React.Component
     {
         return(
                     <div>
+                        
                         <Day_night_mode>
                             <span> <FontAwesomeIcon icon={faMoon} color='black' style={{transform: 'rotate(315deg)'}} /> </span>
                         </Day_night_mode>

@@ -4,6 +4,7 @@ import {connect} from "react-redux"
 import { Row, Col, Tabs, Button,Input,notification,Steps } from 'antd';
 import styled from 'styled-components';
 import {Button_wrap,Sub_wrap,Back_Button,Next_Button} from "./IDselect"
+import {kycFormAction,kycformData} from "../../../Actions/Settings/passwordChange"
 
 const SSN_wrap = styled.div`
     width:42%;
@@ -43,10 +44,38 @@ const SSN_input = styled.input`
     border-radius: 5px;
     background-color: rgb( 248, 248, 248 );      
 `
-
-export default class SSN extends React.Component
+class SSN extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            value_input:""
+        }
+    }
+    next_step()
+    {
+        var abcd = {};
+        if(this.state.value_input !== '')
+        {
+            abcd["ssn"] = this.state.value_input;
+            abcd["steps"] = 3;
+            this.props.kycFormAction(this.props.isLoggedIn,abcd);
+            this.props.next_step(5)
+        }
+        else
+        {
 
+        }
+    }
+    back_step()
+    {
+        this.props.back_step(1)
+    }
+    input_change(e)
+    {
+        this.setState({value_input:e.target.value})
+    }
     render()
     {
         return(
@@ -54,16 +83,29 @@ export default class SSN extends React.Component
                 <SSN_wrap>
                     <SSN_sub>
                         <SSN_label>SSN no.</SSN_label>
-                        <SSN_input/>
+                        <SSN_input onChange={this.input_change.bind(this)}/>
                     </SSN_sub>
                 </SSN_wrap>
                 <Button_wrap>
                     <Sub_wrap>
-                        <Back_Button type="primary">Back</Back_Button>
-                        <Next_Button type="primary">Next</Next_Button>
+                        <Back_Button onClick={this.back_step.bind(this)} type="primary">Back</Back_Button>
+                        <Next_Button onClick = {this.next_step.bind(this)} type="primary">Next</Next_Button>
                     </Sub_wrap>
                 </Button_wrap>
             </div>
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    /* console.log("personalDetails",state) */
+    return {
+      ...state,
+        isLoggedIn : state.simpleReducer.isLoggedIn !==undefined?state.simpleReducer.isLoggedIn:""
+    }
+  }
+const mapDispatchToProps = dispatch => ({
+    kycFormAction:(is,data)=>dispatch(kycFormAction(is,data)),
+})
+
+export default  connect(mapStateToProps,mapDispatchToProps)(SSN);

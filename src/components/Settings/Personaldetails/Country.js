@@ -3,7 +3,9 @@ import 'antd/dist/antd.css';
 import styled from "styled-components";
 import { Select, Spin } from 'antd';
 import debounce from 'lodash/debounce';
+import { globalVariables } from '../../../Globals';
 
+let { API_URL } = globalVariables;
 const Option = Select.Option;
 let Countries = [];
 
@@ -32,7 +34,7 @@ export default class CountryPick extends React.Component
 
     componentDidMount() 
     {
-        fetch('http://18.191.87.133:8084/user/countries',{
+        fetch(API_URL + '/users/countries',{
         method:"get",
         headers:{
             Accept: 'application/json',

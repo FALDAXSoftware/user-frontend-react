@@ -1,10 +1,14 @@
+import { globalVariables } from '../../Globals';
+
+let { API_URL } = globalVariables;
+
 /* Action to Update Profile */
 export function profileupdateAction(isLoggedIn,form)
 {
     /* console.log(isLoggedIn,form) */
     return(dispatch) => {
-
-        fetch("http://18.191.87.133:8084/users/update",{
+        dispatch(addLoader());
+        fetch(API_URL + "/users/update",{
             method:"put",
             headers: {
                 Authorization:"Bearer " + isLoggedIn
@@ -35,7 +39,7 @@ export const profileupdatedData = (Data) => dispatch => {
 export const getProfileDataAction = (token) => dispatch => {
 
     dispatch(addLoader());
-    fetch("http://18.191.87.133:8084/users/getUserDetails",{
+    fetch(API_URL + "/users/getUserDetails",{
         method:"get",
         headers: {
             Accept: 'application/json',
@@ -70,7 +74,7 @@ export function removepicAction(isLoggedIn,form)
    /*  console.log(isLoggedIn,form) */
     return(dispatch) => {
 
-        fetch("http://18.191.87.133:8084/users/update",{
+        fetch(API_URL + "/users/update",{
             method:"put",
             headers: {
                 Authorization:"Bearer " + isLoggedIn

@@ -308,7 +308,7 @@ class Navigation extends React.Component {
                     <Menu_item key="3" onClick={this.showComing}>SECURITY</Menu_item>
                     <Menu_item key="4" onClick={this.showComing}>NEWS</Menu_item>
                     <Menu_item key="5" onClick={this.showComing}>CONTACT</Menu_item>
-                    <Menu_item key="6" onClick={this.showComing}>LIST YOUR TOKEN/COIN</Menu_item>
+                    <Menu_item key="6" onClick={this.showComing}>LIST YOUR TOKEN</Menu_item>
                     <Menu_item key="7" onClick={this.showComing}>EXCHANGE</Menu_item>
                 </Menu_main>
                 {console.log(this.props)}
