@@ -324,11 +324,11 @@ class Passwordchange extends React.Component
     }
     submit = () => {
         this.props.form.validateFields((error, value) => {
-            console.log("-----<<<...",error,value)
-            console.log(this.state,this.props)
+            /* console.log("-----<<<...",error,value)
+            console.log(this.state,this.props) */
             if(error==null && this.state.currentpassIcon==true && this.state.newpassIcon==true && this.state.confirmIcon==true)
             {
-                console.log("HELLO !@#")
+               /*  console.log("HELLO !@#") */
                 document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
                 document.querySelectorAll(".newchange_msg")[0].style.display = "none";
                 document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
@@ -414,7 +414,7 @@ class Passwordchange extends React.Component
     }
     TF_AUTH()
     {
-        console.log(this.props)
+        /* console.log(this.props) */
         if(this.props.profileDetails.is_twofactor == true)
         {
             this.props.TF_Disable(this.props.isLoggedIn)
@@ -424,7 +424,7 @@ class Passwordchange extends React.Component
     }
     changeOTP(value,field)
     {
-        console.log(this.props,value,field)
+        /* console.log(this.props,value,field) */
         if (field == "otp") {
             var re = /^\b[a-zA-Z0-9]{6}\b|\b[a-zA-Z0-9]{6}\b/;
             var bool = re.test(value);
@@ -450,7 +450,7 @@ class Passwordchange extends React.Component
           }
     }
     OTPfield(e){
-        console.log(e.target.value) 
+       /*  console.log(e.target.value)  */
         this.setState({verify_otp:e.target.value})
     }
     finalEnable()
@@ -470,7 +470,7 @@ class Passwordchange extends React.Component
       {
         if(this.props.profileDetails)
         {
-            console.log("HELLO !@#$$%$%")
+            /* console.log("HELLO !@#$$%$%") */
             if(this.props.profileDetails.is_twofactor==false)
             {
                 this.setState({is_twofactor:"ENABLE",ON_OFF:"OFF"})
@@ -483,7 +483,7 @@ class Passwordchange extends React.Component
       }
     componentWillReceiveProps(props,newProps)
     {
-        console.log(props,newProps)
+        /* console.log(props,newProps) */
         
         if(props.passChange!==false)
         {
@@ -555,7 +555,7 @@ class Passwordchange extends React.Component
                             <div>
                                 <OldInput type={this.state.typeEye}  {...getFieldProps('current_password', {
                                 onChange(e) { me.onChangeField(e.target.value, "current_password") }, // have to write original onChange here if you need
-                                rules: [{type: "string", required: true }],
+                                rules: [{type: "string", required: true,whitespace:true }],
                                 })} />
                                 {
                                     (this.state.typeEye=="password")?<FAI icon={faEye} color='black' onClick={this.handleEye.bind(this,"old")}/>:<FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this,"old")}/>
@@ -570,7 +570,7 @@ class Passwordchange extends React.Component
                             <div>
                                 <NewInput type={this.state.newEye} {...getFieldProps('new_password', {
                                 onChange(e) { me.onChangeField(e.target.value, "new_password") }, // have to write original onChange here if you need
-                                rules: [{ type: "string", required: true,}],
+                                rules: [{ type: "string", required: true,whitespace:true}],
                                 })}/>
                                 {
                                     (this.state.newEye=="password")?<FAI icon={faEye} color='black' onClick={this.handleEye.bind(this,"new")}/>:<FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this,"new")}/>
@@ -585,7 +585,7 @@ class Passwordchange extends React.Component
                             <div>
                                 <RepeatInput type={this.state.repeatEye} {...getFieldProps('confirm_password', {
                                     onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
-                                    rules: [{ type: "string", required: true,}],
+                                    rules: [{ type: "string", required: true,whitespace:true}],
                                 })}/>
                                 {
                                     (this.state.repeatEye=="password")?<FAI icon={faEye} color='black' onClick={this.handleEye.bind(this,"repeat")}/>:<FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this,"repeat")}/>
@@ -655,7 +655,7 @@ class Passwordchange extends React.Component
     }
 }
 function mapStateToProps(state) {
-    console.log(state)
+   /*  console.log(state) */
     return ({
         passChange : state.simpleReducer.changePass!==undefined ? state.simpleReducer.changePass : false,
         profileDetails:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0]:"",

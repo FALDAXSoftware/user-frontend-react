@@ -11,7 +11,6 @@ import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom
 import HomePage from "../src/components/Landing/HomePage";
 
 const routes = [
- 
     {
       exact:false,
       path: "/editProfile",

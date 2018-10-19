@@ -134,14 +134,15 @@ class DocUpload extends React.Component {
             icon1:"plus",
             frontImg:"",
             backImg:"",
-            icon2:"plus"
+            icon2:"plus",
+            click:''
         }
         this.handleProfile = this.handleProfile.bind(this);
     }
     handleFileSelectClick(val) {
-        console.log(val)
+       /*  console.log(val) */
         document.querySelector("#" + val).click();
-
+        this.setState({click:val})
     }
     handleProfile(e) {
         try{
@@ -178,7 +179,7 @@ class DocUpload extends React.Component {
             reader.readAsDataURL(file);
             var DataForm = new FormData()
             DataForm.append("image",file)
-            console.log(e.target.name)
+          /*   console.log(e.target.name) */
             this.props.kycDoc(this.props.isLoggedIn,DataForm,e.target.name)
         } catch(error) {
             this.setState({ imagemsg: 'Something went wrong please try again' });
@@ -192,13 +193,13 @@ class DocUpload extends React.Component {
       };
     next_step()
     {
-        console.log("next_step")
+   /*      console.log("next_step") */
         if(this.state.icon1=="check" && this.state.icon2=="check")
         {
-            console.log("next_step",this.state)
+           /*  console.log("next_step",this.state) */
             if(this.state.frontImg!=="" && this.state.backImg!=="")
             {
-                console.log("next_step")
+        /*         console.log("next_step") */
                 var temp = {};
                 temp["front_doc"]=this.state.frontImg;
                 temp["back_doc"]=this.state.backImg;
@@ -217,11 +218,12 @@ class DocUpload extends React.Component {
     }
     componentWillReceiveProps(props,newProps)
     {
-        if(this.state.icon1=="check" && this.state.frontImg=="")
+       /*  console.log(this.props,this.state) */
+        if(this.state.icon1=="check" && this.state.click=='front')
         {
             this.setState({frontImg:props.image_path})
         }
-        else if(this.state.icon2 == "check" && this.state.backImg=="")
+        else if(this.state.icon2 == "check" && this.state.click=='back')
         {
             this.setState({backImg:props.image_path})
         }
@@ -232,10 +234,10 @@ class DocUpload extends React.Component {
     }
     render() {
 
-        console.log("Meghal Doc",this.state)
+  /*       console.log("Meghal Doc",this.state) */
         return (
             <div>
-                {console.log("HElloasjfbjabjhadvbfdavjhfvwavefv")}
+                {/* console.log("HElloasjfbjabjhadvbfdavjhfvwavefv") */}
                 <SSN_wrap>
                     <SSN_sub>
                         <SSN_label>Upload Document</SSN_label>
@@ -269,7 +271,7 @@ class DocUpload extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log("personalDetails",state)
+    /* console.log("personalDetails",state) */
     return {
       ...state,
         image_path:state.passwordReducer.image_path !== undefined ? state.passwordReducer.image_path:"",

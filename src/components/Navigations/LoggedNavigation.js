@@ -157,17 +157,17 @@ class LoggedNavigation extends Component {
       }
     
       handleComing = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });
       }
       componentWillReceiveProps(props,newProps)
       {
-          console.log(props,newProps)
+          /* console.log(props,newProps) */
       }
       comingCancel = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });
@@ -178,7 +178,7 @@ class LoggedNavigation extends Component {
         let prof_name = this.props.profileDetails.first_name!==null && this.props.profileDetails.first_name!==undefined?(this.props.profileDetails.first_name + " " +  this.props.profileDetails.last_name):"User";
         return (
             <Header_main id="main">
-                <Logo onClick = { () => this.props.history.push("/home")}>
+                <Logo onClick = { () => this.props.history ? this.props.history.push("login") : ''}>
                     <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png" />
                     <FALDAX src="./images/Homepage/faldax.png" />
                 </Logo>

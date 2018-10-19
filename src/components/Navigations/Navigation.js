@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components';
+import {BrowserRouter as Router, Route, Switch,Link, Redirect,withRouter} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
@@ -16,6 +17,8 @@ import Thank_You from "../Landing/User_forms/Thank_You"
 import Beforelog from "./BeforeLog"
 import Afterlog from "./Afterlog"
 import Reset_Form from "../Landing/User_forms/Reset_Form"
+import About_us from "../Landing/About_us"
+import FaqPage from '../Landing/FaqPage';
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
@@ -212,7 +215,7 @@ class Navigation extends React.Component {
     }
 
     openNav() {
-        console.log('open nav');
+        /* console.log('open nav'); */
         if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
             document.getElementById("mySidenav").style.width = "250px";
             document.getElementById("main").style.marginRight = "250px";
@@ -264,14 +267,14 @@ class Navigation extends React.Component {
       }
 
       handleComing = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });
       }
 
       comingCancel = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });
@@ -279,7 +282,7 @@ class Navigation extends React.Component {
     componentDidMount()
     {
         let queryParams
-        console.log("asdfas",this.props)
+        /* console.log("asdfas",this.props) */
         if(this.props.queryParams!==undefined  && this.props.queryParams !=="" )
         {
             queryParams = this.props.queryParams;
@@ -291,9 +294,10 @@ class Navigation extends React.Component {
 
     render() {
         let prof_name = this.props.profileDetails.first_name!==null && this.props.profileDetails.first_name!==undefined?(this.props.profileDetails.first_name + " " +  this.props.profileDetails.last_name):"User";
+ 
         return (
             <Header_main id="main">
-                <Logo onClick = { () => this.props.history.push("/login")}>
+                <Logo onClick = { () => this.props.history ? this.props.history.push("/login") : ''}>
                     <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png" />
                     <FALDAX src="./images/Homepage/faldax.png" />
                 </Logo>
@@ -304,14 +308,14 @@ class Navigation extends React.Component {
                 >
                     <Menu_item key="1" onClick={this.showComing}>HOME</Menu_item>
                     {/* <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item> */}
-                    <Menu_item key="2" onClick={this.showComing}>ABOUT</Menu_item>
+                    <Menu_item key="2" ><Link to="/about-us">ABOUT</Link></Menu_item>
                     <Menu_item key="3" onClick={this.showComing}>SECURITY</Menu_item>
                     <Menu_item key="4" onClick={this.showComing}>NEWS</Menu_item>
                     <Menu_item key="5" onClick={this.showComing}>CONTACT</Menu_item>
                     <Menu_item key="6" onClick={this.showComing}>LIST YOUR TOKEN</Menu_item>
                     <Menu_item key="7" onClick={this.showComing}>EXCHANGE</Menu_item>
                 </Menu_main>
-                {console.log(this.props)}
+                {/* console.log(this.props) */}
                 <Right_div>
                     {this.props.isLoggedIn?<Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />:
                         <Beforelog {...this.props} dispModal={(pressed)=>this.dispModal(pressed)} openNav={() => this.openNav()} />
@@ -327,7 +331,7 @@ class Navigation extends React.Component {
                     </Login_SignUp>
                     <a onClick={this.showComing} href="#">Home</a>
                     <a onClick={this.showComing} href="#">Features</a>
-                    <a onClick={this.showComing} href="#">About</a>
+                    <a  href="#"><Link to="/about-us">About</Link></a>
                     <a onClick={this.showComing} href="#">Security</a>
                     <a onClick={this.showComing} href="#">News</a>
                     <a onClick={this.showComing} href="#">Contact</a>
@@ -350,7 +354,7 @@ class Navigation extends React.Component {
                         <Row>
                             <Left_col xl={{span:12}} sm={{span:24}}>
                                 {/* console.log(this.state.modal) */}
-                                {console.log(this.state.modal)}
+                                {/* console.log(this.state.modal) */}
                                 {
                                     this.state.modal==0 || (this.state.forgotParam!==undefined && this.props.pathname.includes("login"))?
                                     <Login_Form {...this.props} forgotParam={this.state.forgotParam} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
@@ -401,8 +405,8 @@ function mapStateToProps(state,ownProps){
     /* console.log(state,ownProps) */
     return ({
         isLoggedIn:state.simpleReducer.isLoggedIn?true:false,
-        queryParams:ownProps.location.search,
-        pathname:ownProps.location.pathname,
+        queryParams:ownProps && ownProps.location && ownProps.location.search ? ownProps.location.search : '',
+        pathname:ownProps && ownProps.location && ownProps.location.pathname ? ownProps.location.pathname : '',
         profileDetails:state.simpleReducer.profileDetails?state.simpleReducer.profileDetails.data[0]:""
     });
 }
@@ -410,4 +414,4 @@ const mapDispatchToProps = dispatch => ({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter( Navigation ));

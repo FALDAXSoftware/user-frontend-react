@@ -27,7 +27,7 @@ export default (state = {}, action) => {
     }
 
     case 'ERROR':
-        console.log(action.payload)
+        /* console.log(action.payload) */
         if(action.status=="login")
         {
           return{
@@ -67,7 +67,7 @@ export default (state = {}, action) => {
       return { ...state }
 
     case "ADDPROFILE":
-      console.log("ADDPROFILE", action.payload)
+      /* console.log("ADDPROFILE", action.payload) */
       return {
         ...state,
         profileDetails: action.payload

@@ -93,10 +93,10 @@ class KYCForm extends React.Component
 
     submit = () => {
         this.props.form.validateFields((error, value) => {
-           console.log("-----<<<...",error,value)
+           /* console.log("-----<<<...",error,value) */
            let dataDate = "";
             const profileData = {};
-            console.log(this.state,this.props)
+           /*  console.log(this.state,this.props) */
          
              if(error==null && (this.state.Datedata!==undefined || this.props.profileDetails.dob!==undefined) && (this.state.countrySelected!==undefined || this.props.profileDetails.country!==undefined))
             {
@@ -132,8 +132,8 @@ class KYCForm extends React.Component
                 profileData['zip']=number
                 profileData['dob']=dataDate
                 profileData['steps']=1
-                
-                console.log(value,country,number,dataDate)
+                /* 
+                console.log(value,country,number,dataDate) */
 
                 this.props.kycFormAction(this.props.isLoggedIn,profileData);
             }
@@ -251,7 +251,7 @@ class KYCForm extends React.Component
           { 
             if(props.kycData.status==200)
             {
-                console.log("KYC obcvwevuyh")
+              /*   console.log("KYC obcvwevuyh") */
                 
                 //this.openNotificationWithIcon("success","KYC",props.kycData.message)
                 this.props.kycformData();
@@ -278,7 +278,7 @@ class KYCForm extends React.Component
                                         <First_input_kyc placeholder="First Name" {...getFieldProps('first_name', {
                                                     onChange(){/* console.log("Hello How are You") */},
                                                     initialValue:this.props.profileDetails.first_name, // have to write original onChange here if you need
-                                                    rules: [{required: true}],
+                                                    rules: [{required: true,whitespace:true}],
                                         })}/>
                                         <First_Msg_kyc className="first_kyc_msg">{this.state.firstmsg}</First_Msg_kyc>
                                     </Col>
@@ -287,7 +287,7 @@ class KYCForm extends React.Component
                                                 <Last_input_kyc placeholder="Last Name" {...getFieldProps('last_name', {
                                                     onChange(){/* console.log("Hello How are You") */},
                                                     initialValue:this.props.profileDetails.last_name,// have to write original onChange here if you need
-                                                    rules: [{required: true}],
+                                                    rules: [{required: true,whitespace:true}],
                                                 })}/>
                                                 <Last_Msg_kyc className="last_kyc_msg">{this.state.lastmsg}</Last_Msg_kyc>
                                             </Col>
@@ -295,7 +295,7 @@ class KYCForm extends React.Component
                                         <Second_Row_kyc>
                                             <Col md={{span:24}} lg={{span:12}} xl={{span:12}} xxl={{span:12}}>
                                                 <Country_kyc>Country</Country_kyc>
-                                                {console.log(this.props)}
+                                                {/* console.log(this.props) */}
                                                 <CountryPick {...this.props} isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={ (value) => this.onCountryChange(value) }/>
                                                 <Country_Msg_kyc className="country_kyc_msg">{this.state.countrymsg}</Country_Msg_kyc>
                                             </Col>
@@ -311,7 +311,7 @@ class KYCForm extends React.Component
                                                 <Street_input_kyc placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} {...getFieldProps('street_address', {
                                                     onChange(){/* console.log("Hello How are You") */},
                                                     initialValue:this.props.profileDetails.street_address, // have to write original onChange here if you need
-                                                    rules: [{required: true}],
+                                                    rules: [{required: true,whitespace:true}],
                                                 })}/>
                                                 <Street_Msg_kyc className="street_kyc_msg">{this.state.streetmsg}</Street_Msg_kyc>
                                             </Col>
@@ -322,7 +322,7 @@ class KYCForm extends React.Component
                                                 <First_input_kyc placeholder="City"{...getFieldProps('city_town', {
                                                     onChange(){/* console.log("Hello How are You") */},
                                                     initialValue:this.props.profileDetails.city_town, // have to write original onChange here if you need
-                                                    rules: [{required: true}],
+                                                    rules: [{required: true,whitespace:true}],
                                                 })}/>
                                                 <City_Msg_kyc className="city_kyc_msg">{this.state.citymsg}</City_Msg_kyc>
                                             </Col>
@@ -331,7 +331,7 @@ class KYCForm extends React.Component
                                                 <Last_input_kyc placeholder="Postal Code"{...getFieldProps('postal_code', {
                                                     onChange(){/* console.log("Hello How are You") */},
                                                     initialValue:this.props.profileDetails.postal_code,// have to write original onChange here if you need
-                                                    rules: [{required: true}],
+                                                    rules: [{required: true,whitespace:true}],
                                                 })}/>
                                                 <Postal_Msg_kyc className="postal_kyc_msg">{this.state.postalmsg}</Postal_Msg_kyc>
                                             </Col>

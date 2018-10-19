@@ -61,7 +61,7 @@ class Editprofile extends Component
                     <LoggedNavigation/>
                     <ProfileWrapper>
                         <ProfileDiv>
-                            {console.log(this.props)}
+                            {/* console.log(this.props) */}
                             <Tabs className="profile-tabs" defaultActiveKey="1" onChange={this._changeTab}>
                                 <TabPane tab="Personal Details" key="1"><PersonalDetails {...this.props}/></TabPane>
                                 <TabPane tab="Security" key="2" ><Passwordchange {...this.props}/></TabPane>

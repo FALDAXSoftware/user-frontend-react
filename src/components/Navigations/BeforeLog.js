@@ -91,21 +91,21 @@ export default class Beforelog extends React.Component
         this.props.openNav()
     }
     showComing = () => {
-        console.log(" onClick={this.showComming}")
+       /*  console.log(" onClick={this.showComming}") */
         this.setState({
           comingSoon: true,
         });
       }
     
       handleComing = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });
       }
     
       comingCancel = (e) => {
-        console.log(e);
+        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });

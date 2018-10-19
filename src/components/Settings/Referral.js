@@ -214,7 +214,7 @@ class Referral extends React.Component
         return(
             <Parent_wrap>
                 <Header_text>Referral Program</Header_text>
-                <Header_p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Header_p>
+                {/* <Header_p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Header_p> */}
                 <Ref_div>
                     <Row>
                         <Ref_leftcol sm={24} md={18}>

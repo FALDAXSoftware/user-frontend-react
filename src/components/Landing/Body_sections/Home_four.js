@@ -1,11 +1,13 @@
 /* In-build packages */
 import React, { Component } from "react"
 import { ComposableMap,ZoomableGroup,Geographies,Geography} from "react-simple-maps";
+import { geoAlbersUsa } from 'd3-geo';
 import { connect } from "react-redux";
 import {Tooltip,actions,} from "redux-tooltip";
 import styled from 'styled-components';
 import tooltip from 'wsdm-tooltip';
 import {globalVariables} from '../../../Globals';
+
 import { Row, Col, Modal, Button, Input, Icon, notification } from 'antd';
 
 /* Components */
@@ -78,6 +80,16 @@ const Icon1 = styled.i`
     vertical-align: middle;
     color: rgb( 15, 71, 123 );
 `;
+
+const colorScale = [
+    '#008000',
+    '#168fff',
+    '#fb0202',
+    '#ffff00'
+];
+
+const UsaMap = styled.div`
+`;
 const Heading = styled.h2`
   font-size:42px;
   color:black;
@@ -93,25 +105,15 @@ const SubHeading = styled.h3`
   font-family:"Open sans";
   margin-bottom:40px;
 `
-const colorScale = [
-    '#008000',
-    '#168fff',
-    '#fb0202',
-    '#ffff00'
-];
-
-const UsaMap = styled.div`
-`;
 const Section = styled(Section_3)`
   padding-top:50px;
   padding-bottom:50px;
 `
-
-
+//Myanmar, Somaliland new added
 
 
 /* Component defination start here */
-class ExchangeWorld extends Component
+class Home_four extends Component
 {
     constructor() {
         super();
@@ -119,13 +121,7 @@ class ExchangeWorld extends Component
         this.handleLeave = this.handleLeave.bind(this);
         this.showModal = this.showModal.bind(this);
         this.countryColor = this.countryColor.bind(this);
-        this.state = {
-          visible: false,
-          modal: '',
-          usaMap: false,
-          email_msg:"",
-          countries:[]
-        };
+        this.state = { visible: false, modal: '', usaMap: false ,email_msg:"", countries:[]};
     }
 
     handleMove(geography, evt)
@@ -144,28 +140,27 @@ class ExchangeWorld extends Component
         this.setState({ visible: false });
     }
 
-    handleCancel() {
+    handleCancel(e) {
         this.setState({ visible: false });
     }
     showModal(modal) {
-      let countries = this.state.countries;
         if(modal.properties.name=='United States') {
             this.setState({ usaMap: true, email_address: '' });
         } else if(modal.properties.name=="Vietnam") {
             //skip for now
         } else {
-            for(var i=0;i<countries.length;i++) {
-                if(countries[i].region=="United States"){
+            for(var i=0;i<this.state.countries.length;i++) {
+                if(this.state.countries[i].region=="United States"){
                     if(modal.properties.name=="Colorado")
                     {
-                        this.setState({ visible: true, modal:"usa_neutral", email_address: '' });
+                        this.setState({ visible: true, modal: 1, email_address: '' });
                         return;
                     } else {
-                        this.setState({ visible: true, modal: 3, email_address: '' });
+                        this.setState({ visible: true, modal: 'usa_neutral', email_address: '' });
                         return;
                     }
-                } else if(countries[i].name==modal.properties.name) {
-                    this.setState({ visible: true, modal: countries[i].legality, email_address: '' });
+                } else if(this.state.countries[i].name==modal.properties.name) {
+                    this.setState({ visible: true, modal: this.state.countries[i].legality, email_address: '' });
                     return;
                 }
             }
@@ -214,7 +209,7 @@ class ExchangeWorld extends Component
                         this.setState({visible:false,email_msg:""})
                     }
                 })
-                .catch(error => { console.log(error) })
+                .catch(error => { /* console.log(error) */ })
         }
         else
         {
@@ -250,31 +245,83 @@ class ExchangeWorld extends Component
     };
     componentDidMount(){
       let self = this;
-      console.log(globalVariables.API_URL );
+     /*  console.log(globalVariables.API_URL ); */
       fetch(globalVariables.API_URL+"/users/getMapCountries",{
           method:"GET",
       })
       .then(response => response.json())
       .then((responseData) => {
         // console.log(responseData);
+       if (responseData.state == 200) {
         self.setState({
-          countries:responseData.countries
-        });
+            countries:responseData.countries
+          });
+       }
       })
-      .catch(error => { console.log(error) })
+      .catch(error => { /* console.log(error) */ })
     }
     render() {
-      let self =this;
+        let self =this;
         return (
-
+            <div>
+                <div className="simple-maps">
+                    <Modal
+                        title={<img src="./images/Homepage/Footer_logo.png"/>}
+                        visible={this.state.visible}
+                        onOk={(e)=>this.handleOk()}
+                        onCancel={(e)=>this.handleCancel(e)}
+                        footer={null}
+                        width={520}
+                        height={150}
+                        className="simple-maps"
+                        >
+                        {
+                            this.state.modal===1?
+                            <div>
+                                <p>All FALDAX services are available here. Start trading now!</p>
+                                <div style={{minHeight: '20px'}}>
+                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} disabled> TRADE NOW </Button>
+                                </div>
+                            </div>:""
+                        }
+                        {
+                            this.state.modal===2?
+                            <div>
+                                <p>All FALDAX services are available here! This country has not made an official determination regarding cryptocurrency and so their stance is considered 'Neutral'. We are continuously monitoring legislation changes and will update our operational status here and notify you if anything changes.</p>
+                            </div>:""
+                        }
+                        {
+                            this.state.modal===3?
+                            <div>
+                                <p>All FALDAX services are unavailable here due to legal reasons. We are constantly monitoring this situation in hopes of legislation changes. Please enter your e-mail address below if you would like updates.</p>
+                                <label style={{color: 'green'}}> Email: </label>
+                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
+                                <div style={{marginTop: '20px', minHeight: '20px'}}>
+                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
+                                </div>
+                            </div>:""
+                        }
+                        {
+                            this.state.modal==="usa_neutral" ?
+                            <div>
+                                <p>We are currently engaged in the licensing process in this state. Enter your e-mail address below and we will notify you the moment you can start trading.</p>
+                                <label style={{color: 'green'}}> Email: </label>
+                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
+                                <div style={{marginTop: '20px', minHeight: '20px'}}>
+                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
+                                </div>
+                            </div>:""
+                        }                    
+                    </Modal>
+                </div>
             <Section>
-              {
+            {
                 this.state.countries.length > 0 &&
                 <Container>
-                <Row>
+                     <Row>
                   <Col style={{textAlign:"center"}}>
                   <Heading>
-                    Exchange<HeadingBrand>World</HeadingBrand>
+                    Exchange <HeadingBrand>World</HeadingBrand>
                   </Heading>
                   <SubHeading>
                     Built For Traders, By Traders
@@ -341,26 +388,27 @@ class ExchangeWorld extends Component
                                             Back To World Map
                                         </Back_link>
                                     </Link_wrap>
-
                                     <ComposableMap
-                                        width={980}
-                                        height={551}
-                                        projection="albersUsa"
+                                        width={900}
+                                        height={600}
+                                        projection={geoAlbersUsa}
                                         projectionConfig={{ scale: 900 }}
-                                        style={{width: '900px', height: '300px'}}
-                                        >
-                                        <ZoomableGroup>
+                                        style={{
+                                            width: "100%",
+                                            height: "auto",
+                                        }}
+                                    >
+                                        <ZoomableGroup disablePanning>
                                             <Geographies
                                             disableOptimization
-                                            geography="/assets/us-albers.json"
+                                            geography="/assets/us-albers-7.json"
                                             >
                                             {(geos, proj) =>
                                                 geos.map((geo, i) => (
                                                 <Geography
-                                                    key={i}
+                                                    key={geo.properties.ID_1}
                                                     geography={geo}
                                                     projection={proj}
-                                                    style={{ default: { fill: "#CFD8DC" } }}
                                                     onClick={(modal)=>this.showModal(modal)}
                                                     onMouseMove={this.handleMove}
                                                     onMouseLeave={this.handleLeave}
@@ -390,66 +438,66 @@ class ExchangeWorld extends Component
                                             </Geographies>
                                         </ZoomableGroup>
                                     </ComposableMap>
+                                    {/* <ComposableMap
+                                        projection={geoAlbersUsa}
+                                        projectionConfig={{ scale: 205 }}
+                                        width={980}
+                                        height={551}
+                                        style={{
+                                            width: "100%",
+                                            height: "auto",
+                                        }}
+                                    >
+                                        <ZoomableGroup>
+                                            <Geographies
+                                            disableOptimization
+                                            geography="/assets/us-albers-1.json"
+                                            >
+                                            {(geos, proj) =>
+                                                geos.map((geo, i) => (
+                                                <Geography
+                                                    key={i}
+                                                    geography={geo}
+                                                    projection={proj}
+                                                    style={{ default: { fill: "#CFD8DC" } }}
+                                                    onClick={(modal)=>this.showModal(modal)}
+                                                    onMouseMove={this.handleMove}
+                                                    onMouseLeave={this.handleLeave}
+                                                    style={{
+                                                        default: {
+                                                            fill: countryColor(geo.properties.name),
+                                                            stroke: "#607D8B",
+                                                            strokeWidth: 0.75,
+                                                            outline: "none",
+                                                        },
+                                                        hover: {
+                                                            fill: countryColor(geo.properties.name),
+                                                            stroke: "#168fff",
+                                                            strokeWidth: 0.75,
+                                                            outline: "none",
+                                                        },
+                                                        pressed: {
+                                                            fill: "#168fff",
+                                                            stroke: "#168fff",
+                                                            strokeWidth: 0.75,
+                                                            outline: "none",
+                                                        }
+                                                    }}
+                                                />
+                                                ))
+                                            }
+                                            </Geographies>
+                                        </ZoomableGroup>
+                                    </ComposableMap> */}
                                 </UsaMap>
                             }
                             </ReactSimpleMapWrapper>
                         </Col>
                     </Row>
                 </Container>
-              }
-                <div className="simple-maps">
-                    <Modal
-                        title={<img src="./images/Homepage/Footer_logo.png"/>}
-                        visible={this.state.visible}
-                        onOk={(e)=>this.handleOk()}
-                        onCancel={(e)=>this.handleCancel()}
-                        footer={null}
-                        width={520}
-                        height={150}
-                        className="simple-maps"
-                        >
-                        {
-                            this.state.modal===1?
-                            <div>
-                                <p>All FALDAX services are available here. Start trading now!</p>
-                                <div style={{minHeight: '20px'}}>
-                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} disabled> TRADE NOW </Button>
-                                </div>
-                            </div>:""
-                        }
-                        {
-                            this.state.modal===3?
-                            <div>
-                                <p>All FALDAX services are available here! This country has not made an official determination regarding cryptocurrency and so their stance is considered 'Neutral'. We are continuously monitoring legislation changes and will update our operational status here and notify you if anything changes.</p>
-                            </div>:""
-                        }
-                        {
-                            this.state.modal===2?
-                            <div>
-                                <p>All FALDAX services are unavailable here due to legal reasons. We are constantly monitoring this situation in hopes of legislation changes. Please enter your e-mail address below if you would like updates.</p>
-                                <label style={{color: 'green'}}> Email: </label>
-                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
-                                <span style={{color:"red"}}>{this.state.email_msg}</span>
-                                <div style={{marginTop: '20px', minHeight: '20px'}}>
-                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
-                                </div>
-                            </div>:""
-                        }
-                        {
-                            this.state.modal==="usa_neutral" ?
-                            <div>
-                                <p>We are currently engaged in the licensing process in this state. Enter your e-mail address below and we will notify you the moment you can start trading.</p>
-                                <label style={{color: 'green'}}> Email: </label>
-                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
-                                <span style={{color:"red"}}>{this.state.email_msg}</span>
-                                <div style={{marginTop: '20px', minHeight: '20px'}}>
-                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
-                                </div>
-                            </div>:""
-                        }
-                    </Modal>
-                </div>
+                }
             </Section>
+            </div>
 
         )
     }
@@ -459,4 +507,4 @@ export default connect(
     (state) => {
         return { tooltip: state.tooltip.default };
     }
-)(ExchangeWorld);
+)(Home_four);

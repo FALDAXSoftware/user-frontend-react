@@ -11,7 +11,6 @@ import Home_first from "../Landing/Body_sections/Home_first";
 import About from "../Landing/Body_sections/About";
 // import Home_second from '../Landing/Body_sections/Home_second';
 import Home_third from '../Landing/Body_sections/Home_third';
-import ExchangeWorld from '../Landing/Body_sections/ExchangeWorld';
 import Services from '../Landing/Body_sections/Services';
 import Home_five from "../Landing/Body_sections/Home_five";
 import Home_six from "../Landing/Body_sections/Home_six";
@@ -21,6 +20,7 @@ import Footer_main from "../Landing/Footers/Footer_home";
 
 /* Styled Components */
 import { Section_2, Section_3, Container } from './../../styled-components/homepage/style';
+import Home_four from './Body_sections/Home_four';
 
 /* Global Components */
 const { Header, Content, Footer } = Layout;
@@ -308,7 +308,7 @@ export default class NavigationBar extends React.Component
               pagination={false}
               handleTableChange={this.handleTableChange}
             /> */}
-            <ExchangeWorld/>
+            <Home_four/>
             <Services />
             <Home_six />
             <Feature />
