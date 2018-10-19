@@ -73,7 +73,7 @@ const Feature_img = styled.div`
 `
 
 function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   const NextIcon = styled(Icon)`
   color: white;
   font-size: 36px;
@@ -96,7 +96,7 @@ function SampleNextArrow(props) {
 }
 
 function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
+  const {  onClick } = props;
   const PrevIcon = styled(Icon)`
   color: white;
   font-size: 36px;

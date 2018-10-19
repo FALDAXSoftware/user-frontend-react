@@ -1,9 +1,7 @@
 /* In-built Packages */
-
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card } from 'antd';
-import MenuItem from 'antd/lib/menu/MenuItem';
+import { Row, Col } from 'antd';
 import styled from 'styled-components'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -11,14 +9,8 @@ import "slick-carousel/slick/slick-theme.css";
 
 /* Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
-
-
 /* Components */
-
 /* Global Components */
-const { Header, Content, Footer } = Layout;
-const { Meta } = Card;
-
 /* Styled-Components */
 const FourthRow = styled(Row)`
     height:auto;
@@ -61,9 +53,8 @@ const P_tag = styled.p`
     display:block;
 `
 
-
 /* Component Defination Starts here */
-export default class Home_fourth extends React.Component {
+export default class Home_fourth extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -73,15 +64,13 @@ export default class Home_fourth extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({
-            nav1: this.slider1,
-            nav2: this.slider2
-        });
+        this.setState({ nav1: this.slider1, nav2: this.slider2 });
     }
+
     render() {
         var settings = {
             arrows: false,
-            className:"testimonial",
+            className: "testimonial",
             slidesToShow: 3,
             asNavFor: this.state.nav2,
             ref: slider => (this.slider1 = slider),
@@ -108,8 +97,8 @@ export default class Home_fourth extends React.Component {
             swipeToSlide: true,
             focusOnSelect: true
         }
-        return (
 
+        return (
             <FourthRow>
                 <Container>
                     <Col span={24}>
@@ -132,14 +121,14 @@ export default class Home_fourth extends React.Component {
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src="./images/Homepage/Pro_pic3.jpg"/><br/>
+                                            <Slide_img src="./images/Homepage/Pro_pic3.jpg" /><br />
                                             <Slide_span>William Johanas</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src="./images/Homepage/Pro_pic2.jpg"/><br/>
+                                            <Slide_img src="./images/Homepage/Pro_pic2.jpg" /><br />
                                             <Slide_span>John Lopez</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
@@ -184,7 +173,6 @@ export default class Home_fourth extends React.Component {
                     </Col>
                 </Container>
             </FourthRow>
-            
         );
     }
 }
