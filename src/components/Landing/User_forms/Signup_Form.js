@@ -187,7 +187,7 @@ class Signup_Form extends React.Component {
         document.querySelectorAll("#confirm_icon_success")[0].style.display = "none";
         this.props.Signup(value);
       } else {
-        this.openNotificationWithIcon('error', "Required Fields", "Please enter all required fields")
+        this.openNotificationWithIcon('error', "Error", "Please complete all required fields before continuing.")
       }
     });
   }
@@ -260,7 +260,7 @@ class Signup_Form extends React.Component {
         document.querySelectorAll(".last_sign")[0].style.display = "none";
       }
     } else if (field == "password") {
-      var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+      var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
       var bool = re.test(value);
       var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
       if (numb.test(value) || letters.test(value)) { this.setState({ status: "active", stroke: "red", percent: 20 }) }
@@ -280,7 +280,7 @@ class Signup_Form extends React.Component {
           document.querySelector("#pass_icon_success").style.display = "none"
           document.querySelector("#pass_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".pass_sign")[0].style.display = "block";
-          this.setState({ pass_msg: "*Password should contain atleast one alphabet,special character and number and should have min. 6 chartacters and max. 16 characters" })
+          this.setState({ pass_msg: "Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
         }
       } else {
         this.setState({ passIcon: false, percent: 0 })
@@ -416,7 +416,7 @@ class Signup_Form extends React.Component {
 function mapStateToProps(state) {
   /* console.log("Hello 123",state) */
   return ({
-    isSignUp: state.simpleReducer.isSignUp!==undefined?state.simpleReducer.isSignUp:undefined
+    isSignUp: state.simpleReducer.isSignUp !== undefined ? state.simpleReducer.isSignUp : undefined
   })
 }
 

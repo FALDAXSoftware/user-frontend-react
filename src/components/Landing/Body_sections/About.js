@@ -48,40 +48,39 @@ const Paragraph = styled.p`
 
 
 
-export default class About extends React.Component
-{
+export default class About extends React.Component {
 
-    render() {
+  render() {
 
-        return (
-          <Section>
-            <Container style={{textAlign:"center"}}>
-            <Row>
-              <Col>
+    return (
+      <Section>
+        <Container style={{ textAlign: "center" }}>
+          <Row>
+            <Col>
               <Heading>
                 What is <HeadingBrand>FALDAX ?</HeadingBrand>
               </Heading>
               <SubHeading>
                 Built For Traders, By Traders
               </SubHeading>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Paragraph>
-                Ford & Lowrey Digital Asset Exchange (FALDAX) is a new cryptocurrency exchange platform, built by tech-savvy traders that were frustrated with the trading options available today. Cryptocurrency adoption is hindered by a lack of innovation and accessibility. For new traders, crypto trading is often confusing or seems too risky. New and old exchanges are copies of one another. FALDAX will propel the industry with forward-thinking innovations that enhance the experience for all traders – novice and veteran, alike.
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Paragraph>
+                Ford & Lowrey Digital Asset Exchange (FALDAX) is a new cryptocurrency exchange platform, built by tech-savvy traders that were frustrated with the trading options available today. Cryptocurrency adoption is hindered by a lack of innovation and accessibility. For new traders, crypto trading is often confusing or seems too risky. New and old exchanges are one and the same. FALDAX will propel the industry with forward-thinking innovations that enhance every trader’s experience – novice and veteran, alike.
                 </Paragraph>
-                <Paragraph>
-                We don’t want customers, we want raving fans! We know the only way to accomplish this is to offer you an exceptional and personal level of support. We have to listen to your feedback and act on it. We have to offer you more for less. Exceptional customer support is a touchstone of corporate culture. Expect that from us, and get it.
+              <Paragraph>
+                FALDAX consolidates your entire trading experience into a single platform. Crypto news, robust portfolio management tools, advanced charting and market analysis tools, collaboration via friend's lists, groups, market chat, accounting and more will all be available to our customers at no additional charge. Soon, we will release additional features that are unique to FALDAX at no additional charge as well. We are incredibly excited to share more details with you. Please consider <a href="">joining our mailing list</a> to be notified when they are announced.
                 </Paragraph>
-                <Paragraph>
-                FALDAX consolidates your entire trading experience into a single platform. Crypto news, robust portfolio management tools, advanced charting and market analysis tools, collaboration via friend's lists, groups, market chat, accounting and more will all be available to our customers at no additional charge. Soon, we will release additional features that are unique to FALDAX at no additional charge as well. We are incredibly excited to share more details with you. Please consider joining our mailing list (hyperlink) to be notified when they are announced.
+              <Paragraph>
+                We don’t want customers, <b>we want raving fans!</b> We know the only way to accomplish this is to offer you an exceptional and personal level of support. We have to listen to your feedback, not simply hear it, and act on it. We have to offer you more for less. Exceptional customer support is a touchstone of corporate culture. Expect that from us, and get it.
                 </Paragraph>
-              </Col>
-            </Row>
-            </Container>
-          </Section>
-        );
-    }
+            </Col>
+          </Row>
+        </Container>
+      </Section>
+    );
+  }
 
 }

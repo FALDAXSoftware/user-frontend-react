@@ -2,18 +2,12 @@
 
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card,Icon} from 'antd';
-import MenuItem from 'antd/lib/menu/MenuItem';
+import { Row, Col, Icon } from 'antd';
 import styled from 'styled-components'
 import Slider from 'react-slick'
 /* Import Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
-
-
 /* Components */
-
-const { Header, Content, Footer } = Layout;
-const { Meta } = Card;
 
 const Section = styled.section`
   background-image:url('/images/Homepage/features_BG.png');
@@ -25,29 +19,11 @@ const Section = styled.section`
   padding-top:50px;
   padding-bottom:50px;
 `
-
 const Heading = styled.h2`
   font-size:42px;
   color:white;
   font-family:"Open sans";
   margin-bottom:0px;
-`
-const HeadingBrand = styled.span`
-  font-weight: bold;
-`
-const SubHeading = styled.h3`
-  font-size:14px;
-  color:white;
-  font-family:"Open sans";
-  margin-bottom:40px;
-`
-const Paragraph = styled.p`
-  text-align:center;
-  font-size:16px;
-  color:white;
-  font-family:"Open sans";
-  line-height: 1.875;
-
 `
 const Row1 = styled(Row)`
   text-align : left;
@@ -59,7 +35,6 @@ const Col_Left = styled(Col)`
     text-align:center;
   }
 `
-
 const Head1 = styled.span`
   font-size: 41.97px;
   font-family: "Open Sans";
@@ -83,7 +58,6 @@ const Desc1 = styled.p`
     text-align:center;
   }
 `
-
 const Col_Right = styled(Col)`
   @media(max-width:992px)
   {
@@ -94,8 +68,6 @@ const Col_Right = styled(Col)`
 const Feature_img = styled.div`
   float:right;
 `
-
-
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -116,7 +88,7 @@ function SampleNextArrow(props) {
   }
 `
   return (
-    <NextIcon type="right" theme="outlined" onClick={onClick}/>
+    <NextIcon type="right" theme="outlined" onClick={onClick} />
   );
 }
 
@@ -143,213 +115,187 @@ function SamplePrevArrow(props) {
   );
 }
 
-export default class Feature extends React.Component
-{
+export default class Feature extends Component {
+  render() {
+    const settings = {
+      dots: false,
+      infinite: true,
+      speed: 1000,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      fade: true,
+      nextArrow: <SampleNextArrow />,
+      prevArrow: <SamplePrevArrow />,
+      autoplay: true,
+      autoplaySpeed: 30000
+    };
 
-    render() {
-      const settings = {
-        dots: false,
-        infinite: true,
-        speed: 1000,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        fade:true,
-        nextArrow:<SampleNextArrow/>,
-        prevArrow:<SamplePrevArrow/>,
-        autoplay:true
-      };
-        return (
-          <Section>
-            <Container style={{textAlign:"center"}}>
-              <Row>
-                  <Col>
-                    <Heading>
-                      Our <HeadingBrand>Features</HeadingBrand>
-                    </Heading>
-                    <SubHeading>
-                      Here are few reasons why you should choose Faldax
-                    </SubHeading>
-                  </Col>
-              </Row>
-              <Row>
-                <Col>
-                <Slider {...settings}>
-                  <div>
-                    <Row1>
-                      <Col_Left xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:16}} xl={{span:16}} xxl={{span:16}}>
-                        <Head1>
-                          Coin & Token Selection
-                        </Head1>
-                        <Desc1 >
-                          You shouldn't have to have accounts on multiple exchanges to trade the crypto you're interested. We have 73 coins/tokens launch with plans to add hundreds more.
+    return (
+      <Section>
+        <Container style={{ textAlign: "center" }}>
+          <Row>
+            <Col>
+              <Heading> Features </Heading>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Slider {...settings}>
+                <div>
+                  <Row1>
+                    <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
+                      <Head1> Coin & Token Selection </Head1>
+                      <Desc1 >
+                        FALDAX has 73 coins and tokens with plans to add hundreds more. We will always perform our due diligence in regards to any token added to the platform. Check out our <a href="" style={{ textDecoration: 'underline' }}>Token Knowledgebase</a> to learn about the coins that have been approved on FALDAX. <a href="" style={{ textDecoration: 'underline' }}>Click here</a> if you have created a token and would like to list it on FALDAX.
                         </Desc1>
-                      </Col_Left>
-                      <Col_Right lg={{span:8}} xl={{span:8}} xxl={{span:8}}>
-                        <Feature_img>
-                          <img src="./images/Homepage/img_1.png"/>
-                        </Feature_img>
-                      </Col_Right>
-                    </Row1>
-                  </div>
-                  <div>
-                    <Row1>
-                      <Col_Left xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:16}} xl={{span:16}} xxl={{span:16}}>
-                        <Head1>
-                          Propritetary Code
-                        </Head1>
-                        <Desc1 >
-                          Everything about FALDAX was build from scratch by a team of developers that have worked on projects for companies like Google, Motorola, Unilever, Dove and many more.
+                    </Col_Left>
+                    <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
+                      <Feature_img>
+                        <img src="./images/Homepage/img_1.png" />
+                      </Feature_img>
+                    </Col_Right>
+                  </Row1>
+                </div>
+                <div>
+                  <Row1>
+                    <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
+                      <Head1> Propritetary Code </Head1>
+                      <Desc1 >
+                        Every line of code was written from scratch and have complete control over the source code. The development team has experience with projects for Google, Motorola, Unilever, Dove, The University of Florida, and hundreds of other companies.
                         </Desc1>
-                      </Col_Left>
-                      <Col_Right lg={{span:8}} xl={{span:8}} xxl={{span:8}}>
-                        <Feature_img>
-                          <img src="./images/Homepage/img_10.png"/>
-                        </Feature_img>
-                      </Col_Right>
-                    </Row1>
-                  </div>
-                  <div>
-                    <Row1>
-                      <Col_Left xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:16}} xl={{span:16}} xxl={{span:16}}>
-                        <Head1>
-                          Advanced Charting Tools
-                        </Head1>
-                        <Desc1 >
-                          By leveraging Trading Views charting libraries,we are able to provide you with some of the most robust charting tools available today.
+                    </Col_Left>
+                    <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
+                      <Feature_img>
+                        <img src="./images/Homepage/img_10.png" />
+                      </Feature_img>
+                    </Col_Right>
+                  </Row1>
+                </div>
+                <div>
+                  <Row1>
+                    <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
+                      <Head1> Advanced Charting Tools </Head1>
+                      <Desc1 >
+                        We have integrated TradingView’s charting libraries which enable us to offer some of the most robust and feature-rich live charts available today. <a href="" style={{ textDecoration: 'underline' }}>Click here</a> to see a live demo of TradingView’s incredible charting tools.
                         </Desc1>
-                      </Col_Left>
-                      <Col_Right lg={{span:8}} xl={{span:8}} xxl={{span:8}}>
-                        <Feature_img>
-                          <img src="./images/Homepage/img_5.png"/>
-                        </Feature_img>
-                      </Col_Right>
-                    </Row1>
-                  </div>
-                  <div>
-                    <Row1>
-                      <Col_Left xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:16}} xl={{span:16}} xxl={{span:16}}>
-                        <Head1>
-                          Collaboration
-                        </Head1>
-                        <Desc1 >
-                          Friends list,private messaging,group chats,live chart viewing/makeup,chart sharing,chart saving, and so much more! learn and share knowledge with other trades easily.
+                    </Col_Left>
+                    <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
+                      <Feature_img>
+                        <img src="./images/Homepage/img_5.png" />
+                      </Feature_img>
+                    </Col_Right>
+                  </Row1>
+                </div>
+                <div>
+                  <Row1>
+                    <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
+                      <Head1> Collaboration </Head1>
+                      <Desc1 >
+                        Chat publicly, privately, add friends, create chat groups, view and markup live charts with friends, and so much more.
                         </Desc1>
-                      </Col_Left>
-                      <Col_Right lg={{span:8}} xl={{span:8}} xxl={{span:8}}>
-                        <Feature_img>
-                          <img src="./images/Homepage/img_6.png"/>
-                        </Feature_img>
-                      </Col_Right>
-                    </Row1>
-                  </div>
-                  <div>
-                    <Row1>
-                      <Col_Left xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:16}} xl={{span:16}} xxl={{span:16}}>
-                        <Head1>
-                          Portfolio Management
-                        </Head1>
-                        <Desc1 >
-                          Stop paying for portfolio management software and enjoy our robust,free of charge portfolio instand.We also have some exciting upcomming additions not offerred anywhere else.Click this link and provide your e-mail.
+                    </Col_Left>
+                    <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
+                      <Feature_img>
+                        <img src="./images/Homepage/img_6.png" />
+                      </Feature_img>
+                    </Col_Right>
+                  </Row1>
+                </div>
+                <div>
+                  <Row1>
+                    <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
+                      <Head1> Portfolio Management </Head1>
+                      <Desc1 >
+                        Your portfolio should organize a lot of information and condense it into bit-sized chunks leaving you with a clear picture of your financial position. Your FALDAX portfolio does just that, but that is just the beginning. We have some incredible new features that will supercharge your portfolio coming in a few months. No other exchange has these features and as always with FALDAX, they are completely free for all users. <a href="" style={{ textDecoration: 'underline' }}>Click here</a> to enter your e-mail address to be notified when these features and other exciting news are released.
                         </Desc1>
-                      </Col_Left>
-                      <Col_Right lg={{span:8}} xl={{span:8}} xxl={{span:8}}>
-                        <Feature_img>
-                          <img src="./images/Homepage/img_2.png"/>
-                        </Feature_img>
-                      </Col_Right>
-                    </Row1>
-                  </div>
-                  <div>
-                    <Row1>
-                      <Col_Left xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:16}} xl={{span:16}} xxl={{span:16}}>
-                        <Head1>
-                          Accounting
-                        </Head1>
-                        <Desc1 >
-                          Download your transaction history for your record or taxes in a Excel,CSV, or PDF format in just a few clicks.
+                    </Col_Left>
+                    <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
+                      <Feature_img>
+                        <img src="./images/Homepage/img_2.png" />
+                      </Feature_img>
+                    </Col_Right>
+                  </Row1>
+                </div>
+                <div>
+                  <Row1>
+                    <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
+                      <Head1> Accounting </Head1>
+                      <Desc1 >
+                        Export a specific transaction record or a record of every transaction you have ever made into a convenience Excel, CSV or PDF format with a few clicks. Hand it to your tax professional and enjoy the peace of mind knowing you have done your part.
                         </Desc1>
-                      </Col_Left>
-                      <Col_Right lg={{span:8}} xl={{span:8}} xxl={{span:8}}>
-                        <Feature_img>
-                          <img src="./images/Homepage/img_7.png"/>
-                        </Feature_img>
-                      </Col_Right>
-                    </Row1>
-                  </div>
-                  <div>
-                    <Row1>
-                      <Col_Left xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:16}} xl={{span:16}} xxl={{span:16}}>
-                        <Head1>
-                          Bank-Level Wallet Security
-                        </Head1>
-                        <Desc1 >
-                          We have partnered with BitGo to ensure the safety of your digital assets.Some tokens offered tokens are not covered BitGo at this time. CHeck our Coin/Token list for more info.
+                    </Col_Left>
+                    <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
+                      <Feature_img>
+                        <img src="./images/Homepage/img_7.png" />
+                      </Feature_img>
+                    </Col_Right>
+                  </Row1>
+                </div>
+                <div>
+                  <Row1>
+                    <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
+                      <Head1> Bank-Level Wallet Security* </Head1>
+                      <Desc1 >
+                        We have partnered with BitGo to ensure the safety of your digital assets. *Some tokens available at FALDAX are not supported by BitGo at this time. Check our <a href="" style={{ textDecoration: 'underline' }}>Token Knowledgebase</a> for more info.
                         </Desc1>
-                      </Col_Left>
-                      <Col_Right lg={{span:8}} xl={{span:8}} xxl={{span:8}}>
-                        <Feature_img>
-                          <img src="./images/Homepage/img_8.png"/>
-                        </Feature_img>
-                      </Col_Right>
-                    </Row1>
-                  </div>
-                  <div>
-                    <Row1>
-                      <Col_Left xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:16}} xl={{span:16}} xxl={{span:16}}>
-                        <Head1>
-                          Customizable Dashboard
-                        </Head1>
-                        <Desc1 >
-                          We all consume information differently which is why we want to make sure that what you want to see,in the order you want to see it, is entirely up to you.
+                    </Col_Left>
+                    <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
+                      <Feature_img>
+                        <img src="./images/Homepage/img_8.png" />
+                      </Feature_img>
+                    </Col_Right>
+                  </Row1>
+                </div>
+                <div>
+                  <Row1>
+                    <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
+                      <Head1> Customizable Dashboard </Head1>
+                      <Desc1 >
+                        All info blocks on your personal Dashboard can be shifted to any location on your screen.  The new positions are saved so everything is just the way you want it when you login.
                         </Desc1>
-                      </Col_Left>
-                      <Col_Right lg={{span:8}} xl={{span:8}} xxl={{span:8}}>
-                        <Feature_img>
-                          <img src="./images/Homepage/img_9.png"/>
-                        </Feature_img>
-                      </Col_Right>
-                    </Row1>
-                  </div>
-                  <div>
-                    <Row1>
-                      <Col_Left xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:16}} xl={{span:16}} xxl={{span:16}}>
-                        <Head1>
-                          Basic and Advanced UI
-                        </Head1>
-                        <Desc1 >
-                          You should feel comfortable with our invite UI reagardless of your trading experience.Toggle between 'Basic' and 'Advanced' and use what works best for you!
+                    </Col_Left>
+                    <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
+                      <Feature_img>
+                        <img src="./images/Homepage/img_9.png" />
+                      </Feature_img>
+                    </Col_Right>
+                  </Row1>
+                </div>
+                <div>
+                  <Row1>
+                    <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
+                      <Head1> Basic and Advanced UI </Head1>
+                      <Desc1 >
+                        We started FALDAX to make the crypto trading experience better for everyone, experienced or not. The Basic UI makes buying and selling crypto simple and clear. The Advanced UI will provide even the most seasoned traders with all of the information they want and need.
                         </Desc1>
-                      </Col_Left>
-                      <Col_Right lg={{span:8}} xl={{span:8}} xxl={{span:8}}>
-                        <Feature_img>
-                          <img src="./images/Homepage/img_4.png"/>
-                        </Feature_img>
-                      </Col_Right>
-                    </Row1>
-                  </div>
-                  <div>
-                    <Row1>
-                      <Col_Left xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:16}} xl={{span:16}} xxl={{span:16}}>
-                        <Head1>
-                          Affiliate System
-                        </Head1>
-                        <Desc1 >
-                          You love trading crypto so much that you tell friends and family about it. When you do convince them to try it,why not make 
+                    </Col_Left>
+                    <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
+                      <Feature_img>
+                        <img src="./images/Homepage/img_4.png" />
+                      </Feature_img>
+                    </Col_Right>
+                  </Row1>
+                </div>
+                <div>
+                  <Row1>
+                    <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
+                      <Head1> Affiliate System </Head1>
+                      <Desc1 >
+                        Every user can generate an affiliate link within their personal profile. Share your link with friends and family. As a ‘Thank You’ for helping FALDAX grow, Bitcoin will automatically be added to your Bitcoin wallet every time they make a trade! Just make sure they use your link to create their account.
                         </Desc1>
-                      </Col_Left>
-                      <Col_Right lg={{span:8}} xl={{span:8}} xxl={{span:8}}>
-                        <Feature_img>
-                          <img src="./images/Homepage/img_3.png"/>
-                        </Feature_img>
-                      </Col_Right>
-                    </Row1>
-                  </div>
-                </Slider>
-                </Col>
-            </Row>
-            </Container>
-          </Section>
-        );
-    }
-
+                    </Col_Left>
+                    <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
+                      <Feature_img>
+                        <img src="./images/Homepage/img_3.png" />
+                      </Feature_img>
+                    </Col_Right>
+                  </Row1>
+                </div>
+              </Slider>
+            </Col>
+          </Row>
+        </Container>
+      </Section>
+    );
+  }
 }
