@@ -241,7 +241,7 @@ const TeamIn4 = styled.div`
 export default class AboutUs extends React.Component {
   constructor() {
     super();
-    this.state={
+    this.state = {
       team: 1
     };
   }
@@ -253,189 +253,189 @@ export default class AboutUs extends React.Component {
   render() {
     return (
       <div>
-          <Navigation />
-            <OverlayLoader 
-                color={'red'} // default is white
-                loader="ScaleLoader" // check below for more loaders
-                text="Loading... Please wait!" 
-                active={false} 
-                backgroundColor={'black'} // default is black
-                opacity=".4" // default is .9  
-            >
-                <ProfileWrapper>
-                    <ProfileDiv>
-                        <div style={{ display: 'inline-block',width: '100%', position: 'relative'}}>
-                          <About_Faldax_Title> ABOUT FALDAX STORY </About_Faldax_Title>
-                        </div>
-                        <div style={{ marginTop: '24px' }}> 
-                          <span style={{fontWeight: 'bold', fontFamily: 'Open sans', fontSize: '17px'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
-                        </div>
-                        <div style={{ marginTop: '20px' }}>
-                          <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <Navigation />
+        <OverlayLoader
+          color={'red'} // default is white
+          loader="ScaleLoader" // check below for more loaders
+          text="Loading... Please wait!"
+          active={false}
+          backgroundColor={'black'} // default is black
+          opacity=".4" // default is .9  
+        >
+          <ProfileWrapper>
+            <ProfileDiv>
+              <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+                <About_Faldax_Title> ABOUT FALDAX STORY </About_Faldax_Title>
+              </div>
+              <div style={{ marginTop: '24px' }}>
+                <span style={{ fontWeight: 'bold', fontFamily: 'Open sans', fontSize: '17px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
+              </div>
+              <div style={{ marginTop: '20px' }}>
+                <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                           </span>
-                        </div>
-                        <div style={{ marginTop: '20px', marginBottom: '35px' }}>
-                          <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </div>
+              <div style={{ marginTop: '20px', marginBottom: '35px' }}>
+                <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                           </span>
-                        </div>
-                        <div style={{ display: 'inline-block',width: '100%', position: 'relative'}}>
-                          <Our_Mission> OUR MISSION </Our_Mission>
-                        </div>
-                        <div style={{ marginTop: '25px'}}> 
-                          <span style={{fontWeight: 'bold', fontSize: '17px'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
-                        </div>
-                        <div style={{ marginTop: '20px', minHeight: '270px' }}>
-                          <About_Us_Image src="/images/about-us-image-2.jpg"/>
-                          
-                          <span style={{fontFamily: "Open sans", fontSize: '16px', lineHeight: '24px' }}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </div>
+              <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+                <Our_Mission> OUR MISSION </Our_Mission>
+              </div>
+              <div style={{ marginTop: '25px' }}>
+                <span style={{ fontWeight: 'bold', fontSize: '17px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
+              </div>
+              <div style={{ marginTop: '20px', minHeight: '270px' }}>
+                <About_Us_Image src="/images/about-us-image-2.jpg" />
+
+                <span style={{ fontFamily: "Open sans", fontSize: '16px', lineHeight: '24px' }}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                           </span>
-                        </div>
-                        <div style={{ marginTop: '10px', marginBottom: '35px' }}>
-                          <span style={{ fontSize: '16px', fontFamily: "Open Sans", lineHeight: '24px' }}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </div>
+              <div style={{ marginTop: '10px', marginBottom: '35px' }}>
+                <span style={{ fontSize: '16px', fontFamily: "Open Sans", lineHeight: '24px' }}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                           </span>
-                        </div>
-                        <div style={{ display: 'inline-block',width: '100%', position: 'relative'}}>
-                          <Our_Team> OUR TEAM </Our_Team>
-                        </div>
-                        <div style={{ marginTop: '25px', textAlign: 'center' }}>
-                          <Team onClick={()=>this.teamClick('1')}>
-                            <Hexagon>
-                              <Hexagon_In1>
-                                <Hexagon_In2 src="url(/images/about-us-people-1.jpg)">
-                                </Hexagon_In2>
-                              </Hexagon_In1>
-                            </Hexagon>
-                            <TeamIn1>
-                              <span style={{fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans"}}> MICHAEL GOLTSMAN </span>
-                            </TeamIn1>
-                            <TeamIn2>
-                              <span style={{fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans"}}> co-founder </span>
-                            </TeamIn2>
-                            <TeamIn3>
-                              <p style={{fontSize: '14px'}}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                            </TeamIn3>
-                            <TeamIn4 color={this.state.team=='1' ? true: false}>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faLinkedinIn} color={this.state.team=='1' ? true: false}/>
-                              </FontAwesomeDiv>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faTwitter} color={this.state.team=='1' ? true: false}/>
-                              </FontAwesomeDiv>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faYoutube} color={this.state.team=='1' ? true: false}/>
-                              </FontAwesomeDiv>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faDiscord} color={this.state.team=='1' ? true: false}/>
-                              </FontAwesomeDiv>
-                            </TeamIn4>
-                          </Team>
-                          <Team onClick={()=>this.teamClick('2')}>
-                            <Hexagon>
-                              <Hexagon_In1>
-                                <Hexagon_In2 src="url(/images/about-us-people-2.jpg)">
-                                </Hexagon_In2>
-                              </Hexagon_In1>
-                            </Hexagon>
-                            <TeamIn1>
-                              <span style={{fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans"}}> MICHAEL GOLTSMAN </span>
-                            </TeamIn1>
-                            <TeamIn2>
-                              <span style={{fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans"}}> co-founder </span>
-                            </TeamIn2>
-                            <TeamIn3>
-                              <p style={{fontSize: '14px'}}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                            </TeamIn3>
-                            <TeamIn4 color={this.state.team=='2' ? true: false}>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faLinkedinIn} color={this.state.team=='2' ? true: false}/>
-                              </FontAwesomeDiv>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faTwitter} color={this.state.team=='2' ? true: false}/>
-                              </FontAwesomeDiv>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faYoutube} color={this.state.team=='2' ? true: false}/>
-                              </FontAwesomeDiv>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faDiscord} color={this.state.team=='2' ? true: false}/>
-                              </FontAwesomeDiv>
-                            </TeamIn4>
-                          </Team>
-                          <Team onClick={()=>this.teamClick('3')}>
-                            <Hexagon>
-                              <Hexagon_In1>
-                                <Hexagon_In2 src="url(/images/about-us-people-3.jpg)">
-                                </Hexagon_In2>
-                              </Hexagon_In1>
-                            </Hexagon>
-                            <TeamIn1>
-                              <span style={{fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans"}}> MICHAEL GOLTSMAN </span>
-                            </TeamIn1>
-                            <TeamIn2>
-                              <span style={{fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans"}}> co-founder </span>
-                            </TeamIn2>
-                            <TeamIn3>
-                              <p style={{fontSize: '14px'}}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                            </TeamIn3>
-                            <TeamIn4 color={this.state.team=='3' ? true: false}>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faLinkedinIn} color={this.state.team=='3' ? true: false}/>
-                              </FontAwesomeDiv>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faTwitter} color={this.state.team=='3' ? true: false}/>
-                              </FontAwesomeDiv>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faYoutube} color={this.state.team=='3' ? true: false}/>
-                              </FontAwesomeDiv>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faDiscord} color={this.state.team=='3' ? true: false}/>
-                              </FontAwesomeDiv>
-                            </TeamIn4>
-                          </Team>
-                          <Team onClick={()=>this.teamClick('4')}>
-                            <Hexagon>
-                              <Hexagon_In1>
-                                <Hexagon_In2 src="url(/images/about-us-people-4.jpg)">
-                                </Hexagon_In2>
-                              </Hexagon_In1>
-                            </Hexagon>
-                            <TeamIn1>
-                              <span style={{fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans"}}> MICHAEL GOLTSMAN </span>
-                            </TeamIn1>
-                            <TeamIn2>
-                              <span style={{fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans"}}> co-founder </span>
-                            </TeamIn2>
-                            <TeamIn3>
-                              <p style={{fontSize: '14px'}}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                            </TeamIn3>
-                            <TeamIn4 color={this.state.team=='4' ? true: false}>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faLinkedinIn} color={this.state.team=='4' ? true: false}/>
-                              </FontAwesomeDiv>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faTwitter} color={this.state.team=='4' ? true: false}/>
-                              </FontAwesomeDiv>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faYoutube} color={this.state.team=='4' ? true: false}/>
-                              </FontAwesomeDiv>
-                              <FontAwesomeDiv>
-                                <FontAwesomeIcons icon={faDiscord} color={this.state.team=='4' ? true: false}/>
-                              </FontAwesomeDiv>
-                            </TeamIn4>
-                          </Team>
-                        </div>
-                    </ProfileDiv>
-                </ProfileWrapper>
-                <CommonFooter/>
-            </OverlayLoader>
-          
+              </div>
+              <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+                <Our_Team> OUR TEAM </Our_Team>
+              </div>
+              <div style={{ marginTop: '25px', textAlign: 'center' }}>
+                <Team onClick={() => this.teamClick('1')}>
+                  <Hexagon>
+                    <Hexagon_In1>
+                      <Hexagon_In2 src="url(/images/about-us-people-1.jpg)">
+                      </Hexagon_In2>
+                    </Hexagon_In1>
+                  </Hexagon>
+                  <TeamIn1>
+                    <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> MICHAEL GOLTSMAN </span>
+                  </TeamIn1>
+                  <TeamIn2>
+                    <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> co-founder </span>
+                  </TeamIn2>
+                  <TeamIn3>
+                    <p style={{ fontSize: '14px' }}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                  </TeamIn3>
+                  <TeamIn4 color={this.state.team == '1' ? true : false}>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faLinkedinIn} color={this.state.team == '1' ? true : false} />
+                    </FontAwesomeDiv>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faTwitter} color={this.state.team == '1' ? true : false} />
+                    </FontAwesomeDiv>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faYoutube} color={this.state.team == '1' ? true : false} />
+                    </FontAwesomeDiv>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faDiscord} color={this.state.team == '1' ? true : false} />
+                    </FontAwesomeDiv>
+                  </TeamIn4>
+                </Team>
+                <Team onClick={() => this.teamClick('2')}>
+                  <Hexagon>
+                    <Hexagon_In1>
+                      <Hexagon_In2 src="url(/images/about-us-people-2.jpg)">
+                      </Hexagon_In2>
+                    </Hexagon_In1>
+                  </Hexagon>
+                  <TeamIn1>
+                    <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> MICHAEL GOLTSMAN </span>
+                  </TeamIn1>
+                  <TeamIn2>
+                    <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> co-founder </span>
+                  </TeamIn2>
+                  <TeamIn3>
+                    <p style={{ fontSize: '14px' }}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                  </TeamIn3>
+                  <TeamIn4 color={this.state.team == '2' ? true : false}>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faLinkedinIn} color={this.state.team == '2' ? true : false} />
+                    </FontAwesomeDiv>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faTwitter} color={this.state.team == '2' ? true : false} />
+                    </FontAwesomeDiv>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faYoutube} color={this.state.team == '2' ? true : false} />
+                    </FontAwesomeDiv>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faDiscord} color={this.state.team == '2' ? true : false} />
+                    </FontAwesomeDiv>
+                  </TeamIn4>
+                </Team>
+                <Team onClick={() => this.teamClick('3')}>
+                  <Hexagon>
+                    <Hexagon_In1>
+                      <Hexagon_In2 src="url(/images/about-us-people-3.jpg)">
+                      </Hexagon_In2>
+                    </Hexagon_In1>
+                  </Hexagon>
+                  <TeamIn1>
+                    <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> MICHAEL GOLTSMAN </span>
+                  </TeamIn1>
+                  <TeamIn2>
+                    <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> co-founder </span>
+                  </TeamIn2>
+                  <TeamIn3>
+                    <p style={{ fontSize: '14px' }}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                  </TeamIn3>
+                  <TeamIn4 color={this.state.team == '3' ? true : false}>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faLinkedinIn} color={this.state.team == '3' ? true : false} />
+                    </FontAwesomeDiv>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faTwitter} color={this.state.team == '3' ? true : false} />
+                    </FontAwesomeDiv>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faYoutube} color={this.state.team == '3' ? true : false} />
+                    </FontAwesomeDiv>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faDiscord} color={this.state.team == '3' ? true : false} />
+                    </FontAwesomeDiv>
+                  </TeamIn4>
+                </Team>
+                <Team onClick={() => this.teamClick('4')}>
+                  <Hexagon>
+                    <Hexagon_In1>
+                      <Hexagon_In2 src="url(/images/about-us-people-4.jpg)">
+                      </Hexagon_In2>
+                    </Hexagon_In1>
+                  </Hexagon>
+                  <TeamIn1>
+                    <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> MICHAEL GOLTSMAN </span>
+                  </TeamIn1>
+                  <TeamIn2>
+                    <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> co-founder </span>
+                  </TeamIn2>
+                  <TeamIn3>
+                    <p style={{ fontSize: '14px' }}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                  </TeamIn3>
+                  <TeamIn4 color={this.state.team == '4' ? true : false}>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faLinkedinIn} color={this.state.team == '4' ? true : false} />
+                    </FontAwesomeDiv>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faTwitter} color={this.state.team == '4' ? true : false} />
+                    </FontAwesomeDiv>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faYoutube} color={this.state.team == '4' ? true : false} />
+                    </FontAwesomeDiv>
+                    <FontAwesomeDiv>
+                      <FontAwesomeIcons icon={faDiscord} color={this.state.team == '4' ? true : false} />
+                    </FontAwesomeDiv>
+                  </TeamIn4>
+                </Team>
+              </div>
+            </ProfileDiv>
+          </ProfileWrapper>
+          <CommonFooter />
+        </OverlayLoader>
+
       </div>
     );
   }

@@ -4,12 +4,10 @@ import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import { Button, notification, Icon } from "antd";
 import { connect } from 'react-redux';
-import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-import { faEyeSlash,faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 /* Components */
-import { Login,clearLogin } from '../../../Actions/Auth';
+import { Login, clearLogin } from '../../../Actions/Auth';
 /* Global Constants */
 
 /* Styled-Components */
@@ -203,12 +201,12 @@ class Login_Form extends React.Component {
     this.state = {
       email_msg: null,
       pass_msg: null,
-      otp_msg:null,
+      otp_msg: null,
       passIcon: null,
       emailIcon: null,
-      otpIcon:null,
-      typeEye:"password",
-      isOtpRequired:false,
+      otpIcon: null,
+      typeEye: "password",
+      isOtpRequired: false,
     }
   }
 
@@ -216,26 +214,19 @@ class Login_Form extends React.Component {
     form: formShape,
   };
 
-  componentDidMount = () => {
-    /* console.log('LOGIN') */
-  }
-
   submit = () => {
     this.props.form.validateFields((error, value) => {
       /* console.log("validate Fields",error,value,this.state) */
-      if (error == null && this.state.passIcon==true && this.state.emailIcon==true ) {
+      if (error == null && this.state.emailIcon == true) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
 
-        if (this.props.forgotParam !== undefined)
-        {value['email_verify_token'] = this.props.forgotParam[1];}
+        if (this.props.forgotParam !== undefined) { value['email_verify_token'] = this.props.forgotParam[1]; }
         /* console.log("I am in") */
-          this.props.Login(value);
-      }
-      else
-      {
-        this.openNotificationWithIcon("error","Login","Please Enter all Required fields")
+        this.props.Login(value);
+      } else {
+        this.openNotificationWithIcon('error', "Error", "Please complete all required fields before continuing.")
       }
     });
   }
@@ -275,30 +266,34 @@ class Login_Form extends React.Component {
         document.querySelector("#userlog_icon_fail").style.display = "none"
         document.querySelectorAll(".user_msg")[0].style.display = "none";
       }
-    } else if (field == "password") {
-      var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-      var bool = re.test(value);
-      if (value !== "") {
-        if (bool == true) {
-          /* console.log("passIcon is true") */
-          this.setState({ passIcon: true, password: value })
-          document.querySelector("#passlog_icon_success").style.display = "inline-block"
-          document.querySelector("#passlog_icon_fail").style.display = "none"
-          document.querySelectorAll(".pass_msg")[0].style.display = "none";
-        } else {
-          this.setState({ passIcon: false })
-          document.querySelector("#passlog_icon_success").style.display = "none"
-          document.querySelector("#passlog_icon_fail").style.display = "inline-block"
-          document.querySelectorAll(".pass_msg")[0].style.display = "block";
-          this.setState({ pass_msg: "*Password should contain atleast one alphabet,special character and number and should have min. 6 chartacters and max. 16 characters" })
-        }
-      } else {
-        this.setState({ passIcon: false })
-        document.querySelector("#passlog_icon_success").style.display = "none"
-        document.querySelector("#passlog_icon_fail").style.display = "none"
-        document.querySelectorAll(".pass_msg")[0].style.display = "none";
-      }
-    }else if (field == "otp") {
+    }
+    //password shouldn't have validation except required. 
+
+    //  else if (field == "password") {
+    //   var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
+    //   var bool = re.test(value);
+    //   if (value !== "") {
+    //     if (bool == true) {
+    //       /* console.log("passIcon is true") */
+    //       this.setState({ passIcon: true, password: value })
+    //       document.querySelector("#passlog_icon_success").style.display = "inline-block"
+    //       document.querySelector("#passlog_icon_fail").style.display = "none"
+    //       document.querySelectorAll(".pass_msg")[0].style.display = "none";
+    //     } else {
+    //       this.setState({ passIcon: false })
+    //       document.querySelector("#passlog_icon_success").style.display = "none"
+    //       document.querySelector("#passlog_icon_fail").style.display = "inline-block"
+    //       document.querySelectorAll(".pass_msg")[0].style.display = "block";
+    //       this.setState({ pass_msg: "Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+    //     }
+    //   } else {
+    //     this.setState({ passIcon: false })
+    //     document.querySelector("#passlog_icon_success").style.display = "none"
+    //     document.querySelector("#passlog_icon_fail").style.display = "none"
+    //     document.querySelectorAll(".pass_msg")[0].style.display = "none";
+    //   }
+    // }
+    else if (field == "otp") {
       var re = /^\b[a-zA-Z0-9]{6}\b|\b[a-zA-Z0-9]{6}\b/;
       var bool = re.test(value);
       if (value !== "") {
@@ -322,42 +317,35 @@ class Login_Form extends React.Component {
       }
     }
   }
-  handleEye(e)
-      {
-        /* console.log("Hello i  am here",document.getElementById("logPass"),document.getElementById("logPass").type) */
-        if(document.getElementById("logPass").type!==undefined)
-        {
-          /* console.log("I am in") */
-          if(document.getElementById("logPass").type=="password")
-          {
-            this.setState({typeEye:"text"})
-          }
-          else
-          {
-            this.setState({typeEye:"password"})
-          }
-        }
+  handleEye(e) {
+    /* console.log("Hello i  am here",document.getElementById("logPass"),document.getElementById("logPass").type) */
+    if (document.getElementById("logPass").type !== undefined) {
+      /* console.log("I am in") */
+      if (document.getElementById("logPass").type == "password") {
+        this.setState({ typeEye: "text" })
+      } else {
+        this.setState({ typeEye: "password" })
       }
-      componentWillReceiveProps(props, newProps) {
-        if (props.errorStatus) {
-          if (props.errorStatus.status == 200) {
-            this.openNotificationWithIcon('success', 'Sign In', props.errorStatus.message);
-            /* this.props.dispModal("login"); */
-          }else if (props.errorStatus.status == 201) {
-            this.setState({
-              isOtpRequired:true
-            });
-            // document.querySelector("#otp-field").focus();
-            this.openNotificationWithIcon('error', 'Sign In', props.errorStatus.err);
-          }
-          else {
-            this.openNotificationWithIcon('error', 'Sign In', props.errorStatus.err);
-          }
-          this.props.clearLogin();
-        }
-
-
+    }
+  }
+  componentWillReceiveProps(props, newProps) {
+    if (props.errorStatus) {
+      if (props.errorStatus.status == 200) {
+        this.openNotificationWithIcon('success', 'Login Successful', props.errorStatus.message);
+        /* this.props.dispModal("login"); */
+      } else if (props.errorStatus.status == 201) {
+        this.setState({
+          isOtpRequired: true
+        });
+        // document.querySelector("#otp-field").focus();
+        this.openNotificationWithIcon('error', 'Error', props.errorStatus.err);
+      } else {
+        this.openNotificationWithIcon('error', 'Error', props.errorStatus.err);
       }
+      this.props.clearLogin();
+    }
+  }
+
   render() {
     if (this.props.isLoggedIn) {
       this.props.history.push("/editProfile");
@@ -382,13 +370,13 @@ class Login_Form extends React.Component {
         <Email_req className="user_msg">{this.state.email_msg}</Email_req>
         <Ph_Label>Password</Ph_Label>
         <div>
-          <Password id="logPass"  type={this.state.typeEye} {...getFieldProps('password', {
+          <Password id="logPass" type={this.state.typeEye} {...getFieldProps('password', {
             onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
             rules: [{ type: "string", required: true, min: 5 }],
           })}
           />
           {
-            (this.state.typeEye=="password")?<FAI icon={faEye} color='black' onClick={this.handleEye.bind(this)}/>:<FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this)}/>
+            (this.state.typeEye == "password") ? <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this)} /> : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this)} />
           }
           <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
           <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
@@ -426,17 +414,17 @@ class Login_Form extends React.Component {
 }
 
 function mapStateToProps(state) {
-/*   console.log(state) */
+  /*   console.log(state) */
   return ({
     isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
-    errorStatus: state.simpleReducer.errorStatus !==undefined ? state.simpleReducer.errorStatus :undefined,
+    errorStatus: state.simpleReducer.errorStatus !== undefined ? state.simpleReducer.errorStatus : undefined,
     // isOtpRequired:state.simpleReducer.isOtpRequired,
   })
 }
 
 const mapDispatchToProps = dispatch => ({
   Login: (values) => dispatch(Login(values)),
-  clearLogin: () =>  dispatch(clearLogin())
+  clearLogin: () => dispatch(clearLogin())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Login_Form));
