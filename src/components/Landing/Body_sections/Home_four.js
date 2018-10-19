@@ -192,7 +192,7 @@ class Home_four extends Component
         {
 
             this.setState({email_msg:""})
-                fetch("http://18.191.87.133:8084/users/email-subscription",{
+                fetch(globalVariables.API_URL + "/users/email-subscription",{
                     method:"post",
                     headers: {
                         Accept: 'application/json',

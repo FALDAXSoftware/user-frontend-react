@@ -267,7 +267,7 @@ class Signup_Form extends React.Component {
       if (alphanum.test(value)) { this.setState({ status: "active", stroke: "orange", percent: 40 }) }
       if (alphanum.test(value) && value.length == 6) { this.setState({ status: "exception", stroke: "yellow", percent: 60 }) }
       if (re.test(value) && value.length == 6) { this.setState({ status: "success", stroke: "#7CFC00", percent: 80 }) }
-      if (re.test(value) && value.length == 10) { this.setState({ status: "success", stroke: "#008000", percent: 100 }) }
+      if (re.test(value) && value.length >= 10) { this.setState({ status: "success", stroke: "#008000", percent: 100 }) }
 
       if (value !== "") {
         if (bool == true) {

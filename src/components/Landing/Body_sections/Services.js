@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card,Icon } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components';
 import Slider from "react-slick";
@@ -58,6 +58,51 @@ const Description = styled.p`
   }
 `
 
+function SampleNextArrow(props) {
+  const { className, style, onClick } = props;
+  const NextIcon = styled(Icon)`
+  color: white;
+  font-size: 36px;
+  position: absolute;
+  right: -110px;
+  top: calc(50% - 17px);
+  cursor:pointer;
+  @media(max-width:1370px)
+  {
+    right:-60px;
+  }
+  @media(max-width:1265px)
+  {
+    display:none;
+  }
+`
+  return (
+    <NextIcon type="right" theme="outlined" onClick={onClick}/>
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { className, style, onClick } = props;
+  const PrevIcon = styled(Icon)`
+  color: white;
+  font-size: 36px;
+  position: absolute;
+  left: -110px;
+  top: calc(50% - 17px);
+  cursor:pointer;
+  @media(max-width:1370px)
+  {
+    left:-60px;
+  }
+  @media(max-width:1265px)
+  {
+    display:none;
+  }
+`
+  return (
+    <PrevIcon type="left" theme="outlined" onClick={onClick} />
+  );
+}
 
 export default class Services extends React.Component
 {
@@ -66,13 +111,14 @@ export default class Services extends React.Component
 
       const sliderSettings = {
         dots: false,
-        arrows:false,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
         fade:true,
-        autoplay:true
+        autoplay:true,
+        nextArrow:<SampleNextArrow/>,
+        prevArrow:<SamplePrevArrow/>
       };
         return (
           <Section>
