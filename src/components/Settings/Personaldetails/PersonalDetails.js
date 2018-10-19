@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { createForm, formShape } from 'rc-form';
 import { Row, Col, Input, Button, notification, Spin } from 'antd';
 import styled from 'styled-components';
-import moment from 'moment';
 
 /* Components */
 import Datepicker from "./Datepicker"
@@ -127,7 +126,6 @@ export const Country_input = styled(First_input)`
     }
 `
 export const Date_birth = styled(First_name)`
-    
     @media(max-width:992px)
     {
         margin-top:25px;
@@ -221,8 +219,7 @@ class PersonalDetails extends Component {
             imageType: null,
             imagemsg: null, profileImage: null,
             countrySelected: this.props.profileDetails.country,
-            spin_show: false,
-            tempDate: {}
+            spin_show: false
         }
         this.handleProfile = this.handleProfile.bind(this);
     }
@@ -231,7 +228,6 @@ class PersonalDetails extends Component {
     };
     submit = () => {
         this.props.form.validateFields((error, value) => {
-            console.log('>>>>>>SUBMIT', this.state, this.props);
             let dataDate = "";
             const profileData = new FormData();
             if (error == null && ((this.state.Datedata !== undefined && this.state.Datedata !== null) || (this.props.profileDetails.dob !== undefined && this.props.profileDetails.dob !== null)) && ((this.state.countrySelected !== undefined && this.state.countrySelected !== null) || (this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== null))) {
@@ -415,9 +411,11 @@ class PersonalDetails extends Component {
     render() {
         /* console.log(this.props) */
         let errors;
-        let imageSRC
         let firstname = `${this.props.profileDetails.first_name}`
         const { getFieldProps, getFieldError } = this.props.form;
+        const { profileDetails } = this.props;
+        const { citymsg, postalmsg } = this.state;
+
         return (
             <Profile_wrap>
                 <Row>
@@ -439,10 +437,9 @@ class PersonalDetails extends Component {
                                 <First_Row>
                                     <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xxl={{ span: 12 }}>
                                         <First_name>First Name</First_name>
-                                        {/*      {console.log(this.props.profileDetails.first_name)} */}
                                         <First_input placeholder="First Name" {...getFieldProps('first_name', {
                                             onChange() {/* console.log("Hello How are You") */ },
-                                            initialValue: this.props.profileDetails.first_name, // have to write original onChange here if you need
+                                            initialValue: profileDetails.first_name, // have to write original onChange here if you need
                                             rules: [{ required: true, whitespace: true }]
                                         })} />
                                         <First_Msg className="first_msg">{this.state.firstmsg}</First_Msg>
@@ -451,7 +448,7 @@ class PersonalDetails extends Component {
                                         <Last_name>Last Name</Last_name>
                                         <Last_input placeholder="Last Name" {...getFieldProps('last_name', {
                                             onChange() {/* console.log("Hello How are You") */ },
-                                            initialValue: this.props.profileDetails.last_name,// have to write original onChange here if you need
+                                            initialValue: profileDetails.last_name,// have to write original onChange here if you need
                                             rules: [{ required: true, whitespace: true }],
                                         })} />
                                         <Last_Msg className="last_msg">{this.state.lastmsg}</Last_Msg>
@@ -474,7 +471,7 @@ class PersonalDetails extends Component {
                                         <Street_Address>Street Address</Street_Address>
                                         <Street_input placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} {...getFieldProps('street_address', {
                                             onChange() {/* console.log("Hello How are You") */ },
-                                            initialValue: this.props.profileDetails.street_address, // have to write original onChange here if you need
+                                            initialValue: profileDetails.street_address, // have to write original onChange here if you need
                                             rules: [{ required: true, whitespace: true }],
                                         })} />
                                         <Street_Msg className="street_msg">{this.state.streetmsg}</Street_Msg>
@@ -485,19 +482,19 @@ class PersonalDetails extends Component {
                                         <City>City/Town</City>
                                         <First_input placeholder="City"{...getFieldProps('city_town', {
                                             onChange() {/* console.log("Hello How are You") */ },
-                                            initialValue: this.props.profileDetails.city_town, // have to write original onChange here if you need
+                                            initialValue: profileDetails.city_town, // have to write original onChange here if you need
                                             rules: [{ required: true, whitespace: true }],
                                         })} />
-                                        <City_Msg className="city_msg">{this.state.citymsg}</City_Msg>
+                                        <City_Msg className="city_msg">{citymsg}</City_Msg>
                                     </Col>
                                     <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xl={{ span: 12 }}>
                                         <Postal>Postal Code</Postal>
                                         <Last_input placeholder="Postal Code"{...getFieldProps('postal_code', {
                                             onChange() {/* console.log("Hello How are You") */ },
-                                            initialValue: this.props.profileDetails.postal_code,// have to write original onChange here if you need
+                                            initialValue: profileDetails.postal_code,// have to write original onChange here if you need
                                             rules: [{ required: true, whitespace: true }],
                                         })} />
-                                        <Postal_Msg className="postal_msg">{this.state.postalmsg}</Postal_Msg>
+                                        <Postal_Msg className="postal_msg">{postalmsg}</Postal_Msg>
                                     </Col>
                                 </Fourth_Row>
                                 <Fifth_Row>
@@ -506,7 +503,6 @@ class PersonalDetails extends Component {
                                     </Col>
                                 </Fifth_Row>
                             </Right_Col>
-                            {/* console.log("989898",this.state.spin_show) */}
                             {(this.props.loader == true) ?
                                 <Spin_Ex className="Ex_spin">
                                     <Spin size="large" />

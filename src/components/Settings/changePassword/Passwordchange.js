@@ -126,7 +126,7 @@ const Head_TF = styled.p`
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
 `
-const isEnabled = styled.p`
+const IsEnabled = styled.p`
     font-size: 15.008px;
     font-family: "Open Sans";
     margin-bottom:0px !important;
@@ -431,7 +431,6 @@ class Passwordchange extends React.Component {
         }
     }
     OTPfield(e) {
-        /*  console.log(e.target.value)  */
         this.setState({ verify_otp: e.target.value })
     }
     finalEnable() {
@@ -448,18 +447,14 @@ class Passwordchange extends React.Component {
     };
     componentDidMount() {
         if (this.props.profileDetails) {
-            /* console.log("HELLO !@#$$%$%") */
             if (this.props.profileDetails.is_twofactor == false) {
                 this.setState({ is_twofactor: "ENABLE", isEnabled: "DISABLED" })
-            }
-            else {
+            } else {
                 this.setState({ is_twofactor: "DISABLE", isEnabled: "ENABLED" })
             }
         }
     }
     componentWillReceiveProps(props, newProps) {
-        /* console.log(props,newProps) */
-
         if (props.passChange !== false) {
             if (props.passChange.status == 200) {
                 this.openNotificationWithIcon("success", "Change Password", props.passChange.message)
@@ -498,7 +493,7 @@ class Passwordchange extends React.Component {
     render() {
         var me = this;
         const { getFieldProps } = this.props.form;
-        const { isEnabled } = this.state;
+        const { isEnabled, typeEye, newEye, current_msg, percent, repeatEye } = this.state;
 
         return (
             <Wrapper>
@@ -513,27 +508,27 @@ class Passwordchange extends React.Component {
                         <Old>
                             <Old_label>Old Password</Old_label>
                             <div>
-                                <OldInput type={this.state.typeEye}  {...getFieldProps('current_password', {
+                                <OldInput type={typeEye}  {...getFieldProps('current_password', {
                                     onChange(e) { me.onChangeField(e.target.value, "current_password") }, // have to write original onChange here if you need
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (this.state.typeEye == "password") ? <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "old")} /> : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "old")} />
+                                    (typeEye == "password") ? <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "old")} /> : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "old")} />
                                 }
                                 <UserIconS id="passchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="passchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                             </div>
-                            <Email_req className="oldchange_msg">{this.state.current_msg}</Email_req>
+                            <Email_req className="oldchange_msg">{current_msg}</Email_req>
                         </Old>
                         <NewP>
                             <New_label>New Password</New_label>
                             <div>
-                                <NewInput type={this.state.newEye} {...getFieldProps('new_password', {
+                                <NewInput type={newEye} {...getFieldProps('new_password', {
                                     onChange(e) { me.onChangeField(e.target.value, "new_password") }, // have to write original onChange here if you need
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (this.state.newEye == "password") ? <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "new")} /> : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "new")} />
+                                    (newEye == "password") ? <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "new")} /> : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "new")} />
                                 }
                                 <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
@@ -543,19 +538,19 @@ class Passwordchange extends React.Component {
                         <Repeat>
                             <Repeat_label>Repeat New Password</Repeat_label>
                             <div>
-                                <RepeatInput type={this.state.repeatEye} {...getFieldProps('confirm_password', {
+                                <RepeatInput type={repeatEye} {...getFieldProps('confirm_password', {
                                     onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (this.state.repeatEye == "password") ? <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "repeat")} /> : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "repeat")} />
+                                    (repeatEye == "password") ? <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "repeat")} /> : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "repeat")} />
                                 }
                                 <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                             </div>
                             <Email_req className="confirmchange_msg">{this.state.confirmPass_msg}</Email_req>
 
-                            <Progress_bar type="line" size="small" percent={this.state.percent} strokeColor={this.state.stroke} />
+                            <Progress_bar type="line" size="small" percent={percent} strokeColor={this.state.stroke} />
                         </Repeat>
                         <Button_div>
                             <NewButton onClick={this.submit}>Save New Password</NewButton>
@@ -565,16 +560,16 @@ class Passwordchange extends React.Component {
                 <TwofactorRow>
                     <TFCol>
                         <Head_TF>Two-Factor Authentication</Head_TF>
-                        <isEnabled> Two-Factor Authentication Status:
+                        <IsEnabled> Two-Factor Authentication Status:
                             {isEnabled == 'DISABLED' ?
                                 <span style={{ color: 'red' }}> {isEnabled}</span>
                                 : <span style={{ color: 'green' }}> {isEnabled}</span>
                             }
-                        </isEnabled>
+                        </IsEnabled>
                         <Head_text>
                             {isEnabled == 'DISABLED' ?
-                                <span>For more security,Enable an authenticator app.</span>
-                                : <span>dd</span>
+                                <span>Two-Factor Authentication significantly increases the security of your account. We highly recommend that you enable it. </span>
+                                : <span>Way to go! You care about your security as much as we do. Thanks for enabling Two=Factor Authentication!</span>
                             }
                         </Head_text>
                         <Button_div>
@@ -595,10 +590,10 @@ class Passwordchange extends React.Component {
                         </Left_Col>
                         <Right_Col sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>
                             <Order_list>
-                                <LI>Install an authenticator app on your mobile device. We suggest Google Authenticator. </LI>
-                                <LI>Scan the QR code with the authenticator.</LI>
-                                <LI>In case your phone gets stolen or erased, you will need this code to link Faldax with a new app.</LI>
-                                <LI>Do not share the code with anyone. Faldax will never ask you for this code.</LI>
+                                <LI>Install an authenticator app on your mobile device. We suggest Google Authenticator or Authy. </LI>
+                                <LI>Scan the QR code when prompted by your Authenticator.</LI>
+                                <LI>In case your phone gets stolen or erased, you will need this code to link FALDAX with a new app.</LI>
+                                <LI>Do not share the code with anyone. FALDAX will never ask you for this code.</LI>
                             </Order_list>
                             <TF_code>
                                 <TF_label>Enter your two-factor code here:</TF_label>
