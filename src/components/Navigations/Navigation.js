@@ -1,13 +1,14 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal,Input,notification,Icon } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components';
 import {BrowserRouter as Router, Route, Switch,Link, Redirect,withRouter} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
+import {globalVariables} from '../../Globals'
 
 /* Components */
 import Login_Form from "../Landing/User_forms/Login_Form"
@@ -18,7 +19,7 @@ import Beforelog from "./BeforeLog"
 import Afterlog from "./Afterlog"
 import Reset_Form from "../Landing/User_forms/Reset_Form"
 import About_us from "../Landing/About_us"
-import FaqPage from '../Landing/FaqPage';
+import FaqPage from '../Landing/FaqPage'
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
@@ -210,7 +211,9 @@ class Navigation extends React.Component {
             visible: false,
             modal: undefined,
             forgotParam:undefined,
-            comingSoon:false
+            comingSoon:false,
+            email_address:"",
+            email_msg:"",
         }
     }
 
@@ -279,6 +282,54 @@ class Navigation extends React.Component {
             comingSoon: false,
         });
       }
+      openNotification(){
+        notification.open({
+          message: 'Thank You',
+          description: 'You will recieve an Email shortly',
+          duration: 6,
+          icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+        });
+      };
+    openNotification1(){
+        notification.open({
+        message: 'Subscribed',
+        description: 'You have already Subscribed for FALDAX.',
+        duration: 6,
+        icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+        });
+    };
+      send_email() {
+        const values = { email: this.state.email_address};
+        this.setState({email_address: '' });
+        var re=/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
+        if(re.test(this.state.email_address))
+        {
+
+            this.setState({email_msg:""})
+                fetch(globalVariables.API_URL + "/users/email-subscription",{
+                    method:"post",
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body:JSON.stringify(values)
+                })
+                .then(response => response.json())
+                .then((responseData) => {
+                    if(responseData.status==500){
+                        this.openNotification1();
+                    } else {
+                        this.openNotification();
+                        this.setState({visible:false,email_msg:""})
+                    }
+                })
+                .catch(error => { /* console.log(error) */ })
+        }
+        else
+        {
+            this.setState({email_msg:"*email address not valid"})
+        }
+    }
     componentDidMount()
     {
         let queryParams
@@ -306,7 +357,7 @@ class Navigation extends React.Component {
                     mode="horizontal"
                     defaultSelectedKeys={['1']}
                 >
-                    <Menu_item key="1" onClick={this.showComing}>HOME</Menu_item>
+                    <Menu_item key="1"><Link to="/">HOME</Link></Menu_item>
                     {/* <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item> */}
                     <Menu_item key="2" ><Link to="/about-us">ABOUT</Link></Menu_item>
                     <Menu_item key="3" onClick={this.showComing}>SECURITY</Menu_item>
@@ -331,7 +382,7 @@ class Navigation extends React.Component {
                     </Login_SignUp>
                     <a onClick={this.showComing} href="#">Home</a>
                     <a onClick={this.showComing} href="#">Features</a>
-                    <a  href="#"><Link to="/about-us">About</Link></a>
+                    <Link to="/about-us">About</Link>
                     <a onClick={this.showComing} href="#">Security</a>
                     <a onClick={this.showComing} href="#">News</a>
                     <a onClick={this.showComing} href="#">Contact</a>
@@ -387,13 +438,23 @@ class Navigation extends React.Component {
                     </div>
                     <div>
                         <Modal
+                        title={<img src="./images/Homepage/Footer_logo.png"/>}
                         visible={this.state.comingSoon}
-                        onOk={this.handleComing}
-                        className="Coming_soon"
-                        onCancel={this.comingCancel}
+                        onOk={(e)=>this.handleComing()}
+                        onCancel={(e)=>this.comingCancel(e)}
                         footer={null}
+                        width={520}
+                        height={150}
+                        className="simple-maps"
                         >
-                        <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Coming Soon</h1></div>
+                        <div>
+                                <h3 style={{fontSize:"32px"}}>Coming Soon</h3>
+                                <label style={{color: 'green'}}> Please enter your email to get updates of FALDAX: </label>
+                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
+                                <div style={{marginTop: '20px', minHeight: '20px'}}>
+                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
+                                </div>
+                            </div>
                         </Modal>
                     </div>
             </Header_main>

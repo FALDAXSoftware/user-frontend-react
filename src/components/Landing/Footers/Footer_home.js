@@ -2,10 +2,11 @@
 
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card,Modal } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card,Modal,Icon,Input,notification } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {globalVariables} from '../../../Globals'
 
 /* Components */
 
@@ -168,7 +169,9 @@ export default class Footer_home extends React.Component {
     {
         super(props);
         this.state = {
-            comingSoon:false
+            comingSoon:false,
+            email_address:"",
+            email_msg:"",
         }
     }
     showComing = () => {
@@ -190,6 +193,54 @@ export default class Footer_home extends React.Component {
             comingSoon: false,
         });
       }
+      openNotification(){
+        notification.open({
+          message: 'Thank You',
+          description: 'You will recieve an Email shortly',
+          duration: 6,
+          icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+        });
+      };
+    openNotification1(){
+        notification.open({
+        message: 'Subscribed',
+        description: 'You have already Subscribed for FALDAX.',
+        duration: 6,
+        icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+        });
+    };
+      send_email() {
+        const values = { email: this.state.email_address};
+        this.setState({email_address: '' });
+        var re=/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
+        if(re.test(this.state.email_address))
+        {
+
+            this.setState({email_msg:""})
+                fetch(globalVariables.API_URL + "/users/email-subscription",{
+                    method:"post",
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body:JSON.stringify(values)
+                })
+                .then(response => response.json())
+                .then((responseData) => {
+                    if(responseData.status==500){
+                        this.openNotification1();
+                    } else {
+                        this.openNotification();
+                        this.setState({visible:false,email_msg:""})
+                    }
+                })
+                .catch(error => { /* console.log(error) */ })
+        }
+        else
+        {
+            this.setState({email_msg:"*email address not valid"})
+        }
+    }
     render() {
         return (
             <Footer_main>
@@ -216,7 +267,7 @@ export default class Footer_home extends React.Component {
                                 </Col>
                                 <Col xs={24} sm={12} md={8} lg={8} xl={5}>
                                     <Footer_ul>
-                                        <Footer_headers>Features</Footer_headers>
+                                        <Footer_headers>Lorem</Footer_headers>
                                         <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             List your Token
                                                     </li>
@@ -226,7 +277,8 @@ export default class Footer_home extends React.Component {
                                         <li style={{cursor:"pointer"}} onClick={this.showComing}>
                                             Security
                                                     </li>
-                                        <li style={{cursor:"pointer"}} onClick={this.showComing}>Language</li><li onClick={this.showComing}>API Documentation</li>
+                                        {/* <li style={{cursor:"pointer"}} onClick={this.showComing}>Language</li> */}
+                                        <li onClick={this.showComing}>API Documentation</li>
                                     </Footer_ul>
                                 </Col>
 
@@ -300,13 +352,23 @@ export default class Footer_home extends React.Component {
                 </Row>
                 <div>
                         <Modal
+                        title={<img src="./images/Homepage/Footer_logo.png"/>}
                         visible={this.state.comingSoon}
-                        onOk={this.handleComing}
-                        className="Coming_soon"
-                        onCancel={this.comingCancel}
+                        onOk={(e)=>this.handleComing()}
+                        onCancel={(e)=>this.comingCancel(e)}
                         footer={null}
+                        width={520}
+                        height={150}
+                        className="simple-maps"
                         >
-                        <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Coming Soon</h1></div>
+                        <div>
+                                <h3 style={{fontSize:"32px"}}>Coming Soon</h3>
+                                <label style={{color: 'green'}}> Please enter your email to get updates of FALDAX: </label>
+                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
+                                <div style={{marginTop: '20px', minHeight: '20px'}}>
+                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
+                                </div>
+                            </div>
                         </Modal>
                     </div>
             </Footer_main>
