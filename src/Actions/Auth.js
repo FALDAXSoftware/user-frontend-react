@@ -1,9 +1,8 @@
 import { globalVariables } from '../Globals';
-import {removeLoader,addLoader} from "./Settings/settings";
+import { removeLoader, addLoader } from "./Settings/settings";
 let { API_URL } = globalVariables;
 
-export function deleteAccount(isLoggedIn,value)
-{
+export function deleteAccount(isLoggedIn, value) {
     /* console.log(isLoggedIn,value) */
     return (dispatch) => {
         dispatch(addLoader())
@@ -12,7 +11,7 @@ export function deleteAccount(isLoggedIn,value)
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                Authorization:"Bearer " + isLoggedIn
+                Authorization: "Bearer " + isLoggedIn
             },
             body: JSON.stringify(value)
         }).then(response => response.json())
@@ -45,7 +44,7 @@ export function Login(values) {
                 if (responseData.status == 200)
                     dispatch(loginAction(responseData))
                 else
-                    dispatch(errorAction(responseData,"login"))
+                    dispatch(errorAction(responseData, "login"))
             }).catch(error => {
                 /* console.log("error", error) */
             })
@@ -93,11 +92,11 @@ export function Signup(values) {
                     dispatch(signupAction(responseData))
                 }
                 else {
-                   /*  console.log("Error") */
+                    /*  console.log("Error") */
                     dispatch(errorAction(responseData))
                 }
             }).catch(error => {
-               /*  console.log('error', error) */
+                /*  console.log('error', error) */
             })
     }
 }
@@ -166,12 +165,12 @@ export const resetData = (value) => dispatch => {
         type: 'RESET',
     })
 }
-export const errorAction = (error,status="") => dispatch => {
+export const errorAction = (error, status = "") => dispatch => {
     /* console.log(error) */
     dispatch({
         type: 'ERROR',
         payload: error,
-        status:status
+        status: status
     })
 
 }

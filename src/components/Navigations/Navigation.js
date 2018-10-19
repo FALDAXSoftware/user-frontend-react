@@ -1,12 +1,9 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal, Input, notification, Icon } from 'antd';
-import MenuItem from 'antd/lib/menu/MenuItem';
+import { Row, Col, Button, Layout, Menu, Card, Modal, Input, notification, Icon } from 'antd';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Route, Switch, Link, Redirect, withRouter } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoon } from '@fortawesome/free-solid-svg-icons';
+import { BrowserRouter as Router, Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { globalVariables } from '../../Globals'
 
@@ -18,11 +15,8 @@ import Thank_You from "../Landing/User_forms/Thank_You"
 import Beforelog from "./BeforeLog"
 import Afterlog from "./Afterlog"
 import Reset_Form from "../Landing/User_forms/Reset_Form"
-import About_us from "../Landing/About_us"
-import FaqPage from '../Landing/FaqPage'
 
-const { Header, Content, Footer } = Layout;
-const { Meta } = Card;
+const { Header } = Layout;
 
 /* Modal Styled Components */
 const Left_col = styled(Col)`
@@ -202,8 +196,6 @@ const Right_div = styled.div`
     }
 `
 
-
-
 class Navigation extends React.Component {
     constructor(props) {
         super(props);
@@ -245,42 +237,29 @@ class Navigation extends React.Component {
         this.showModal();
         this.setState({ forgotParam: undefined })
     }
+
     showModal = () => {
-        /* console.log('show modal'); */
-        this.setState({
-            visible: true,
-        });
+        this.setState({ visible: true });
     }
+
     handleOk = (e) => {
-        /* console.log(e); */
-        this.setState({
-            visible: false,
-        });
+        this.setState({ visible: false });
     }
+
     handleCancel = (e) => {
-        /* console.log(e); */
-        this.setState({
-            visible: false,
-        });
+        this.setState({ visible: false });
     }
+
     showComing = () => {
-        this.setState({
-            comingSoon: true,
-        });
+        this.setState({ comingSoon: true });
     }
 
     handleComing = (e) => {
-        /* console.log(e); */
-        this.setState({
-            comingSoon: false,
-        });
+        this.setState({ comingSoon: false });
     }
 
     comingCancel = (e) => {
-        /* console.log(e); */
-        this.setState({
-            comingSoon: false,
-        });
+        this.setState({ comingSoon: false });
     }
     openNotification() {
         notification.open({
@@ -323,8 +302,7 @@ class Navigation extends React.Component {
                     }
                 })
                 .catch(error => { /* console.log(error) */ })
-        }
-        else {
+        } else {
             this.setState({ email_msg: "*email address not valid" })
         }
     }
@@ -342,6 +320,7 @@ class Navigation extends React.Component {
 
     render() {
         let prof_name = this.props.profileDetails.first_name !== null && this.props.profileDetails.first_name !== undefined ? (this.props.profileDetails.first_name + " " + this.props.profileDetails.last_name) : "User";
+        const { modal } = this.state;
 
         return (
             <Header_main id="main">
@@ -354,7 +333,7 @@ class Navigation extends React.Component {
                     mode="horizontal"
                     defaultSelectedKeys={['1']}
                 >
-                    <Menu_item key="1"><Link to="/">HOME</Link></Menu_item>
+                    <Menu_item key="1"><Link to="/login">HOME</Link></Menu_item>
                     {/* <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item> */}
                     <Menu_item key="2" ><Link to="/about-us">ABOUT</Link></Menu_item>
                     <Menu_item key="3" onClick={this.showComing}>SECURITY</Menu_item>
@@ -404,19 +383,19 @@ class Navigation extends React.Component {
                                 {/* console.log(this.state.modal) */}
                                 {/* console.log(this.state.modal) */}
                                 {
-                                    this.state.modal == 0 || (this.state.forgotParam !== undefined && this.props.pathname.includes("login")) ?
+                                    modal == 0 || (this.state.forgotParam !== undefined && this.props.pathname.includes("login")) ?
                                         <Login_Form {...this.props} forgotParam={this.state.forgotParam} dispModal={(pressed) => this.dispModal(pressed)} /> : ""
                                 }
                                 {
-                                    this.state.modal == 1 ?
+                                    modal == 1 ?
                                         <Signup_Form {...this.props} dispModal={(pressed) => this.dispModal(pressed)} /> : ""
                                 }
                                 {
-                                    this.state.modal == 2 ?
+                                    modal == 2 ?
                                         <Forgot_Form {...this.props} dispModal={(pressed) => this.dispModal(pressed)} /> : ""
                                 }
                                 {
-                                    this.state.modal == 4 ?
+                                    modal == 4 ?
                                         <Thank_You {...this.props} /> : ""
                                 }
                                 {

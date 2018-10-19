@@ -1,16 +1,14 @@
 /* IN-built */
 import React, { Component } from 'react';
-import { Layout, Menu, Dropdown, Icon, Avatar,Modal } from 'antd';
+import { Layout, Menu, Modal } from 'antd';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import 'antd/dist/antd.css';
 
 /* Components */
 import Afterlog from "./Afterlog"
 import { Logout } from '../../Actions/Auth';
-
 const { Header } = Layout;
 
 /* Styled Components */
@@ -50,7 +48,6 @@ const Menu_main = styled(Menu)`
         margin-left: 15px;
     }
 `
-
 const Menu_item = styled(Menu.Item)`
     padding:0px 18px;
     font-size: 13px;
@@ -70,8 +67,6 @@ const Menu_item = styled(Menu.Item)`
 const FALDAX_LOGO = styled.img`
     padding-left:22px;
 `
-
-
 const SideNav = styled.div`
     height: 100%;
     width: 0;
@@ -127,7 +122,7 @@ class LoggedNavigation extends Component {
         this.state = {
             visible: false,
             modal: 0,
-            comingSoon:false,
+            comingSoon: false,
         }
     }
 
@@ -146,39 +141,30 @@ class LoggedNavigation extends Component {
             document.body.style.backgroundColor = "white";
         }
     }
-   
+
     logout() {
+
         this.props.Logout();
     }
+
     showComing = () => {
-        this.setState({
-          comingSoon: true,
-        });
-      }
-    
-      handleComing = (e) => {
+        this.setState({ comingSoon: true });
+    }
+
+    handleComing = (e) => {
         /* console.log(e); */
-        this.setState({
-            comingSoon: false,
-        });
-      }
-      componentWillReceiveProps(props,newProps)
-      {
-          /* console.log(props,newProps) */
-      }
-      comingCancel = (e) => {
-        /* console.log(e); */
-        this.setState({
-            comingSoon: false,
-        });
-      }
+        this.setState({ comingSoon: false });
+    }
+
+    comingCancel = (e) => {
+        this.setState({ comingSoon: false });
+    }
+
     render() {
-        /* console.log(this.props) */
-        
-        let prof_name = this.props.profileDetails.first_name!==null && this.props.profileDetails.first_name!==undefined?(this.props.profileDetails.first_name + " " +  this.props.profileDetails.last_name):"User";
+        let prof_name = this.props.profileDetails.first_name !== null && this.props.profileDetails.first_name !== undefined ? (this.props.profileDetails.first_name + " " + this.props.profileDetails.last_name) : "User";
         return (
             <Header_main id="main">
-                <Logo onClick = { () => this.props.history ? this.props.history.push("login") : ''}>
+                <Logo onClick={() => this.props.history ? this.props.history.push("login") : ''}>
                     <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png" />
                     <FALDAX src="./images/Homepage/faldax.png" />
                 </Logo>
@@ -192,7 +178,7 @@ class LoggedNavigation extends Component {
                     <Menu_item onClick={this.showComing} key="3">WALLET</Menu_item>
                     <Menu_item onClick={this.showComing} key="4">HISTORY</Menu_item>
                 </Menu_main>
-                    <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()}/>
+                <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />
                 <SideNav id="mySidenav2">
                     <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                     <Profile> PROFILE </Profile>
@@ -201,30 +187,30 @@ class LoggedNavigation extends Component {
                     <a onClick={this.showComing} href="#">WALLET</a>
                     <a onClick={this.showComing} href="#">HISTORY</a>
                     <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
-                </SideNav> 
+                </SideNav>
                 <div>
-                        <Modal
+                    <Modal
                         visible={this.state.comingSoon}
                         onOk={this.handleComing}
                         className="Coming_soon"
                         onCancel={this.comingCancel}
                         footer={null}
-                        >
-                        <div style={{textAlign:"center",color: "white"}}><h1 style={{textAlign:"center",color: "white"}}>Coming Soon</h1></div>
-                        </Modal>
-                    </div>
+                    >
+                        <div style={{ textAlign: "center", color: "white" }}><h1 style={{ textAlign: "center", color: "white" }}>Coming Soon</h1></div>
+                    </Modal>
+                </div>
             </Header_main>
         );
     }
 }
-function mapStateToProps(state){
-   /*  console.log(state) */
+function mapStateToProps(state) {
+    /*  console.log(state) */
     return ({
-        profileDetails:state.simpleReducer.profileDetails?state.simpleReducer.profileDetails.data[0]:""
+        profileDetails: state.simpleReducer.profileDetails ? state.simpleReducer.profileDetails.data[0] : ""
     });
 }
-  const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
     Logout: () => dispatch(Logout())
-   })
-  
+})
+
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation));
