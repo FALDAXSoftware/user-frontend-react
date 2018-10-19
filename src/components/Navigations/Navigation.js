@@ -1,14 +1,14 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal,Input,notification,Icon } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal, Input, notification, Icon } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components';
-import {BrowserRouter as Router, Route, Switch,Link, Redirect,withRouter} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link, Redirect, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import {globalVariables} from '../../Globals'
+import { globalVariables } from '../../Globals'
 
 /* Components */
 import Login_Form from "../Landing/User_forms/Login_Form"
@@ -210,10 +210,10 @@ class Navigation extends React.Component {
         this.state = {
             visible: false,
             modal: undefined,
-            forgotParam:undefined,
-            comingSoon:false,
-            email_address:"",
-            email_msg:"",
+            forgotParam: undefined,
+            comingSoon: false,
+            email_address: "",
+            email_msg: "",
         }
     }
 
@@ -239,11 +239,11 @@ class Navigation extends React.Component {
         else if (pressed == "signup")
             this.setState({ modal: 1 })
         else if (pressed == "thankyou")
-          this.setState({modal:4});
+            this.setState({ modal: 4 });
         else
             this.setState({ modal: 2 })
         this.showModal();
-        this.setState({forgotParam:undefined})
+        this.setState({ forgotParam: undefined })
     }
     showModal = () => {
         /* console.log('show modal'); */
@@ -265,90 +265,87 @@ class Navigation extends React.Component {
     }
     showComing = () => {
         this.setState({
-          comingSoon: true,
+            comingSoon: true,
         });
-      }
+    }
 
-      handleComing = (e) => {
+    handleComing = (e) => {
         /* console.log(e); */
         this.setState({
             comingSoon: false,
         });
-      }
+    }
 
-      comingCancel = (e) => {
+    comingCancel = (e) => {
         /* console.log(e); */
         this.setState({
             comingSoon: false,
         });
-      }
-      openNotification(){
+    }
+    openNotification() {
         notification.open({
-          message: 'Thank You',
-          description: 'You will recieve an Email shortly',
-          duration: 6,
-          icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
-        });
-      };
-    openNotification1(){
-        notification.open({
-        message: 'Subscribed',
-        description: 'You have already Subscribed for FALDAX.',
-        duration: 6,
-        icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+            message: 'Thank You',
+            description: 'You will recieve an Email shortly',
+            duration: 6,
+            icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
         });
     };
-      send_email() {
-        const values = { email: this.state.email_address};
-        this.setState({email_address: '' });
-        var re=/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
-        if(re.test(this.state.email_address))
-        {
+    openNotification1() {
+        notification.open({
+            message: 'Subscribed',
+            description: 'You have already Subscribed for FALDAX.',
+            duration: 6,
+            icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+        });
+    };
+    send_email() {
+        const values = { email: this.state.email_address };
+        this.setState({ email_address: '' });
+        var re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
+        if (re.test(this.state.email_address)) {
 
-            this.setState({email_msg:""})
-                fetch(globalVariables.API_URL + "/users/email-subscription",{
-                    method:"post",
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body:JSON.stringify(values)
-                })
+            this.setState({ email_msg: "" })
+            fetch(globalVariables.API_URL + "/users/email-subscription", {
+                method: "post",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(values)
+            })
                 .then(response => response.json())
                 .then((responseData) => {
-                    if(responseData.status==500){
+                    if (responseData.status == 500) {
                         this.openNotification1();
                     } else {
                         this.openNotification();
-                        this.setState({visible:false,email_msg:""})
+                        this.setState({ visible: false, email_msg: "" })
                     }
                 })
                 .catch(error => { /* console.log(error) */ })
         }
-        else
-        {
-            this.setState({email_msg:"*email address not valid"})
+        else {
+            this.setState({ email_msg: "*email address not valid" })
         }
     }
-    componentDidMount()
-    {
+    componentDidMount() {
         let queryParams
         /* console.log("asdfas",this.props) */
-        if(this.props.queryParams!==undefined  && this.props.queryParams !=="" )
-        {
+        if (this.props.queryParams !== undefined && this.props.queryParams !== "") {
             queryParams = this.props.queryParams;
-            this.setState({forgotParam:queryParams.split("="),
-                visible:true
+            this.setState({
+                forgotParam: queryParams.split("="),
+                visible: true
             })
         }
     }
 
     render() {
-        let prof_name = this.props.profileDetails.first_name!==null && this.props.profileDetails.first_name!==undefined?(this.props.profileDetails.first_name + " " +  this.props.profileDetails.last_name):"User";
- 
+        let prof_name = this.props.profileDetails.first_name !== null && this.props.profileDetails.first_name !== undefined ? (this.props.profileDetails.first_name + " " + this.props.profileDetails.last_name) : "User";
+
         return (
             <Header_main id="main">
-                <Logo onClick = { () => this.props.history ? this.props.history.push("/login") : ''}>
+                <Logo onClick={() => this.props.history ? this.props.history.push("/login") : ''}>
                     <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png" />
                     <FALDAX src="./images/Homepage/faldax.png" />
                 </Logo>
@@ -368,8 +365,8 @@ class Navigation extends React.Component {
                 </Menu_main>
                 {/* console.log(this.props) */}
                 <Right_div>
-                    {this.props.isLoggedIn?<Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />:
-                        <Beforelog {...this.props} dispModal={(pressed)=>this.dispModal(pressed)} openNav={() => this.openNav()} />
+                    {this.props.isLoggedIn ? <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} /> :
+                        <Beforelog {...this.props} dispModal={(pressed) => this.dispModal(pressed)} openNav={() => this.openNav()} />
                     }
                 </Right_div>
                 <SideNav id="mySidenav">
@@ -398,81 +395,81 @@ class Navigation extends React.Component {
                         onCancel={this.handleCancel}
                         footer={null}
                         className="Login-Modal"
-                        style={{borderRadius:"0px"}}
-                        bodyStyle={{ padding:"0px" }}
+                        style={{ borderRadius: "0px" }}
+                        bodyStyle={{ padding: "0px" }}
                         width="70%"
                     >
                         <Row>
-                            <Left_col xl={{span:12}} sm={{span:24}}>
+                            <Left_col xl={{ span: 12 }} sm={{ span: 24 }}>
                                 {/* console.log(this.state.modal) */}
                                 {/* console.log(this.state.modal) */}
                                 {
-                                    this.state.modal==0 || (this.state.forgotParam!==undefined && this.props.pathname.includes("login"))?
-                                    <Login_Form {...this.props} forgotParam={this.state.forgotParam} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                    this.state.modal == 0 || (this.state.forgotParam !== undefined && this.props.pathname.includes("login")) ?
+                                        <Login_Form {...this.props} forgotParam={this.state.forgotParam} dispModal={(pressed) => this.dispModal(pressed)} /> : ""
                                 }
                                 {
-                                    this.state.modal==1?
-                                    <Signup_Form {...this.props} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                    this.state.modal == 1 ?
+                                        <Signup_Form {...this.props} dispModal={(pressed) => this.dispModal(pressed)} /> : ""
                                 }
                                 {
-                                    this.state.modal==2?
-                                    <Forgot_Form {...this.props} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                    this.state.modal == 2 ?
+                                        <Forgot_Form {...this.props} dispModal={(pressed) => this.dispModal(pressed)} /> : ""
                                 }
                                 {
-                                  this.state.modal==4?
-                                  <Thank_You {...this.props}/>:""
+                                    this.state.modal == 4 ?
+                                        <Thank_You {...this.props} /> : ""
                                 }
                                 {
-                                    this.state.forgotParam!==undefined && this.props.pathname.includes("reset-password")?
-                                    <Reset_Form {...this.props} forgotParam={this.state.forgotParam} dispModal={(pressed)=>this.dispModal(pressed)}/>:""
+                                    this.state.forgotParam !== undefined && this.props.pathname.includes("reset-password") ?
+                                        <Reset_Form {...this.props} forgotParam={this.state.forgotParam} dispModal={(pressed) => this.dispModal(pressed)} /> : ""
                                 }
                             </Left_col>
-                            <Right_Col xl={{span:12}} sm={{span:24}}>
+                            <Right_Col xl={{ span: 12 }} sm={{ span: 24 }}>
                                 <Logo_text_wrap>
-                                    <Faldaxlogo src="./images/Homepage/Faldax_Login.png"/>
-                                    <Faldaxtext src="./images/Homepage/Faldax_Login_text.png"/>
+                                    <Faldaxlogo src="./images/Homepage/Faldax_Login.png" />
+                                    <Faldaxtext src="./images/Homepage/Faldax_Login_text.png" />
                                 </Logo_text_wrap>
                             </Right_Col>
                         </Row>
                     </Modal>
-                    </div>
-                    <div>
-                        <Modal
-                        title={<img src="./images/Homepage/Footer_logo.png"/>}
+                </div>
+                <div>
+                    <Modal
+                        title={<img src="./images/Homepage/Footer_logo.png" />}
                         visible={this.state.comingSoon}
-                        onOk={(e)=>this.handleComing()}
-                        onCancel={(e)=>this.comingCancel(e)}
+                        onOk={(e) => this.handleComing()}
+                        onCancel={(e) => this.comingCancel(e)}
                         footer={null}
                         width={520}
                         height={150}
                         className="simple-maps"
-                        >
+                    >
                         <div>
-                                <h3 style={{fontSize:"32px"}}>Coming Soon</h3>
-                                <label style={{color: 'green'}}> Please enter your email to get updates of FALDAX: </label>
-                                <Input placeholder="Please enter your email address" style={{color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); } }/>
-                                <div style={{marginTop: '20px', minHeight: '20px'}}>
-                                    <Button style={{float: 'right', color: 'green', borderColor: 'green'}} onClick={()=>this.send_email()}> RECEIVE UPDATE </Button>
-                                </div>
+                            <h3 style={{ fontSize: "32px" }}>Coming Soon</h3>
+                            <label style={{ color: 'green' }}> Please enter your email to get updates of FALDAX: </label>
+                            <Input placeholder="Please enter your email address" style={{ color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
+                            <div style={{ marginTop: '20px', minHeight: '20px' }}>
+                                <Button style={{ float: 'right', color: 'green', borderColor: 'green' }} onClick={() => this.send_email()}> RECEIVE UPDATE </Button>
                             </div>
-                        </Modal>
-                    </div>
+                        </div>
+                    </Modal>
+                </div>
             </Header_main>
         );
     }
 }
 
-function mapStateToProps(state,ownProps){
+function mapStateToProps(state, ownProps) {
     /* console.log(state,ownProps) */
     return ({
-        isLoggedIn:state.simpleReducer.isLoggedIn?true:false,
-        queryParams:ownProps && ownProps.location && ownProps.location.search ? ownProps.location.search : '',
-        pathname:ownProps && ownProps.location && ownProps.location.pathname ? ownProps.location.pathname : '',
-        profileDetails:state.simpleReducer.profileDetails?state.simpleReducer.profileDetails.data[0]:""
+        isLoggedIn: state.simpleReducer.isLoggedIn ? true : false,
+        queryParams: ownProps && ownProps.location && ownProps.location.search ? ownProps.location.search : '',
+        pathname: ownProps && ownProps.location && ownProps.location.pathname ? ownProps.location.pathname : '',
+        profileDetails: state.simpleReducer.profileDetails ? state.simpleReducer.profileDetails.data[0] : ""
     });
 }
 const mapDispatchToProps = dispatch => ({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter( Navigation ));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navigation));

@@ -25,6 +25,9 @@ const Heading = styled.h2`
   font-family:"Open sans";
   margin-bottom:0px;
 `
+const HeadingBrand = styled.span`
+  font-weight: bold;
+`
 const Row1 = styled(Row)`
   text-align : left;
 `
@@ -123,7 +126,6 @@ export default class Feature extends Component {
       speed: 1000,
       slidesToShow: 1,
       slidesToScroll: 1,
-      fade: true,
       nextArrow: <SampleNextArrow />,
       prevArrow: <SamplePrevArrow />,
       autoplay: true,
@@ -135,7 +137,7 @@ export default class Feature extends Component {
         <Container style={{ textAlign: "center" }}>
           <Row>
             <Col>
-              <Heading> Features </Heading>
+              <Heading> <HeadingBrand>Features</HeadingBrand> </Heading>
             </Col>
           </Row>
           <Row>

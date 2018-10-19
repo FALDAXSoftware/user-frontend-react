@@ -11,6 +11,7 @@ import { Row, Col, Modal, Button, Input, Icon, notification } from 'antd';
 
 /* Components */
 import { Section_3, Container } from '../../../styled-components/homepage/style';
+import { Legend } from "bizcharts";
 const { show, hide } = actions;
 
 const tip = tooltip({
@@ -80,6 +81,21 @@ const SubHeading = styled.h3`
 const Section = styled(Section_3)`
   padding-top:50px;
   padding-bottom:50px;
+`
+
+const CircleColor = styled.span`
+    height:20px;
+    width:20px;
+    border-radius:50%;
+    display:inline-block;
+`
+const LegendDiv = styled.div`
+    margin-top:-150px;
+    width:200px;
+    @media(max-width:767px)
+    {
+        display:none;
+    }
 `
 //Myanmar, Somaliland new added
 
@@ -460,8 +476,27 @@ class Home_four extends Component {
                                     </ReactSimpleMapWrapper>
                                 </Col>
                             </Row>
+                            <LegendDiv>
+                                <Row style={{ padding: "5px 0px" }}>
+                                    <Col span={4}> <CircleColor style={{ backgroundColor: "#61d0c4" }}></CircleColor> </Col>
+                                    <Col span={20}> <span>All Services Availabile</span> </Col>
+                                </Row>
+                                <Row style={{ padding: "5px 0px" }}>
+                                    <Col span={4}> <CircleColor style={{ backgroundColor: "#fbd26d" }}></CircleColor> </Col>
+                                    <Col span={20}> <span>Partial Services Availabile</span> </Col>
+                                </Row>
+                                <Row style={{ padding: "5px 0px" }}>
+                                    <Col span={4}> <CircleColor style={{ backgroundColor: "#b4caf9" }}></CircleColor> </Col>
+                                    <Col span={20}> <span>All Services Availabile</span> </Col>
+                                </Row>
+                                <Row style={{ padding: "5px 0px" }}>
+                                    <Col span={4}> <CircleColor style={{ backgroundColor: "#fa776d" }}></CircleColor> </Col>
+                                    <Col span={20}> <span>No Services Availabile</span> </Col>
+                                </Row>
+                            </LegendDiv>
                         </Container>
                     }
+
                 </Section>
             </div>
 

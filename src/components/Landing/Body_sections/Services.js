@@ -17,9 +17,10 @@ const Section = styled.section`
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  padding-top:9%;
+  padding-top:5%;
   @media (max-width: 991px) {
-    min-height:500px;
+    padding-top:10%
+    min-height:auto;
   }
 `
 const Img = styled.img`
@@ -60,7 +61,7 @@ function SampleNextArrow(props) {
   position: absolute;
   right: -110px;
   top: calc(50% - 17px);
-  cursor:pointer;
+  cursor:pointer; 
   @media(max-width:1370px)
   {
     right:-60px;
@@ -107,7 +108,6 @@ export default class Services extends Component {
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
-      fade: true,
       autoplay: true,
       nextArrow: <SampleNextArrow />,
       prevArrow: <SamplePrevArrow />,

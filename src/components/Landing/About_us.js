@@ -322,18 +322,18 @@ export default class AboutUs extends React.Component {
                   <TeamIn3>
                     <p style={{ fontSize: '14px' }}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
                   </TeamIn3>
-                  <TeamIn4 color={this.state.team == '1' ? true : false}>
+                  <TeamIn4 color={true}>
                     <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faLinkedinIn} color={this.state.team == '1' ? true : false} />
+                      <FontAwesomeIcons icon={faLinkedinIn} color={true} />
                     </FontAwesomeDiv>
                     <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faTwitter} color={this.state.team == '1' ? true : false} />
+                      <FontAwesomeIcons icon={faTwitter} color={true} />
                     </FontAwesomeDiv>
                     <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faYoutube} color={this.state.team == '1' ? true : false} />
+                      <FontAwesomeIcons icon={faYoutube} color={true} />
                     </FontAwesomeDiv>
                     <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faDiscord} color={this.state.team == '1' ? true : false} />
+                      <FontAwesomeIcons icon={faDiscord} color={true} />
                     </FontAwesomeDiv>
                   </TeamIn4>
                 </Team>
@@ -353,18 +353,18 @@ export default class AboutUs extends React.Component {
                   <TeamIn3>
                     <p style={{ fontSize: '14px' }}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
                   </TeamIn3>
-                  <TeamIn4 color={this.state.team == '2' ? true : false}>
+                  <TeamIn4 color={true}>
                     <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faLinkedinIn} color={this.state.team == '2' ? true : false} />
+                      <FontAwesomeIcons icon={faLinkedinIn} color={true} />
                     </FontAwesomeDiv>
                     <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faTwitter} color={this.state.team == '2' ? true : false} />
+                      <FontAwesomeIcons icon={faTwitter} color={true} />
                     </FontAwesomeDiv>
                     <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faYoutube} color={this.state.team == '2' ? true : false} />
+                      <FontAwesomeIcons icon={faYoutube} color={true} />
                     </FontAwesomeDiv>
                     <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faDiscord} color={this.state.team == '2' ? true : false} />
+                      <FontAwesomeIcons icon={faDiscord} color={true} />
                     </FontAwesomeDiv>
                   </TeamIn4>
                 </Team>
@@ -384,52 +384,22 @@ export default class AboutUs extends React.Component {
                   <TeamIn3>
                     <p style={{ fontSize: '14px' }}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
                   </TeamIn3>
-                  <TeamIn4 color={this.state.team == '3' ? true : false}>
+                  <TeamIn4 color={true}>
                     <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faLinkedinIn} color={this.state.team == '3' ? true : false} />
+                      <FontAwesomeIcons icon={faLinkedinIn} color={true} />
                     </FontAwesomeDiv>
                     <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faTwitter} color={this.state.team == '3' ? true : false} />
+                      <FontAwesomeIcons icon={faTwitter} color={true} />
                     </FontAwesomeDiv>
                     <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faYoutube} color={this.state.team == '3' ? true : false} />
+                      <FontAwesomeIcons icon={faYoutube} color={true} />
                     </FontAwesomeDiv>
                     <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faDiscord} color={this.state.team == '3' ? true : false} />
-                    </FontAwesomeDiv>
-                  </TeamIn4>
-                </Team>
-                <Team onClick={() => this.teamClick('4')}>
-                  <Hexagon>
-                    <Hexagon_In1>
-                      <Hexagon_In2 src="url(/images/about-us-people-4.jpg)">
-                      </Hexagon_In2>
-                    </Hexagon_In1>
-                  </Hexagon>
-                  <TeamIn1>
-                    <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> MICHAEL GOLTSMAN </span>
-                  </TeamIn1>
-                  <TeamIn2>
-                    <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> co-founder </span>
-                  </TeamIn2>
-                  <TeamIn3>
-                    <p style={{ fontSize: '14px' }}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                  </TeamIn3>
-                  <TeamIn4 color={this.state.team == '4' ? true : false}>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faLinkedinIn} color={this.state.team == '4' ? true : false} />
-                    </FontAwesomeDiv>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faTwitter} color={this.state.team == '4' ? true : false} />
-                    </FontAwesomeDiv>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faYoutube} color={this.state.team == '4' ? true : false} />
-                    </FontAwesomeDiv>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faDiscord} color={this.state.team == '4' ? true : false} />
+                      <FontAwesomeIcons icon={faDiscord} color={true} />
                     </FontAwesomeDiv>
                   </TeamIn4>
                 </Team>
+
               </div>
             </ProfileDiv>
           </ProfileWrapper>
