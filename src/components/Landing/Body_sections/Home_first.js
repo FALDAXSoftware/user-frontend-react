@@ -1,19 +1,13 @@
 /* In-built Packages */
-
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card } from 'antd';
-import MenuItem from 'antd/lib/menu/MenuItem';
+import { Row, Col } from 'antd';
 import styled from 'styled-components'
 
 /* Import Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
 
-
 /* Components */
-
-const { Header, Content, Footer } = Layout;
-const { Meta } = Card;
 
 const Section = styled.section`
   width:100%;
@@ -23,7 +17,6 @@ const Section = styled.section`
   background-size: cover;
   background-repeat: no-repeat;
 `
-
 const Heading = styled.h2`
   font-size:63px;
   color:white;
@@ -68,33 +61,26 @@ const Img = styled.img`
     display:none;
   }
 `
-
-
-
-export default class Homefirst extends React.Component
-{
-
-    render() {
-
-        return (
-          <Section>
-            <Container>
-            <Row style={{paddingTop:"8%"}}>
-              <Col lg={{span:14}}>
-                <Heading>
-                  Welcome to <HeadingBrand>FALDAX</HeadingBrand>
-                </Heading>
-                <SubHeading>
-                  Built For Traders, By Traders
+export default class Homefirst extends Component {
+  render() {
+    return (
+      <Section>
+        <Container>
+          <Row style={{ paddingTop: "8%" }}>
+            <Col lg={{ span: 14 }}>
+              <Heading>
+                Welcome to <HeadingBrand>FALDAX</HeadingBrand>
+              </Heading>
+              <SubHeading>
+                Built For Traders, By Traders
                 </SubHeading>
-              </Col>
-              <Col lg={{span:10}}>
-                <Img src="/images/logo-lg.png" width="80%"/>
-              </Col>
-            </Row>
-            </Container>
-          </Section>
-        );
-    }
-
+            </Col>
+            <Col lg={{ span: 10 }}>
+              <Img src="/images/logo-lg.png" width="80%" />
+            </Col>
+          </Row>
+        </Container>
+      </Section>
+    );
+  }
 }

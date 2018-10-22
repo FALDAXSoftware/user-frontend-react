@@ -1,23 +1,20 @@
 /* In-build packages */
 import React from 'react';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Table } from 'antd';
+import { Row, Col, Table } from 'antd';
 import styled from 'styled-components';
 
 /* Components */
-import { Section_2, Section_3, Container } from '../../../styled-components/homepage/style';
+import { Section_2, Container } from '../../../styled-components/homepage/style';
 
 /* Styled componets */
 const AntdTable = styled.div`
     overflow: auto;
 `;
-
-
 const Third_head = styled.div`
     margin-top: 55px;
     margin-bottom: 50px;
     text-align: center;
 `;
-
 const Third_head_span = styled.span`
     font-family: 'Open sans';
     font-size: 42px;
@@ -25,7 +22,6 @@ const Third_head_span = styled.span`
     line-height: 1.143;
     text-align: center;
 `;
-
 const Third_head_p = styled.p`
     font-family: 'Open sans';
     font-size: 42px;
@@ -36,7 +32,6 @@ const Third_head_p = styled.p`
 
 /* Component defination start here */
 const Home_third = ({ loading, columns, dataSource, pagination, handleTableChange }) => {
-    
     return (
         <Section_2>
             <Container>

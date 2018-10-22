@@ -1,27 +1,19 @@
 /* In-built Packages */
-
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card } from 'antd';
-import MenuItem from 'antd/lib/menu/MenuItem';
-import styled from 'styled-components'
+import { Row, Col } from 'antd';
+import styled from 'styled-components';
 
 /* Import Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
 
-
 /* Components */
-
-const { Header, Content, Footer } = Layout;
-const { Meta } = Card;
-
 const Section = styled.section`
   width:100%;
   background-color:#faf9f9;
   padding-top:50px;
   padding-bottom:50px;
 `
-
 const Heading = styled.h2`
   font-size:42px;
   color:black;
@@ -43,15 +35,9 @@ const Paragraph = styled.p`
   color:black;
   font-family:"Open sans";
   line-height: 1.875;
-
 `
-
-
-
-export default class About extends React.Component {
-
+export default class About extends Component {
   render() {
-
     return (
       <Section>
         <Container style={{ textAlign: "center" }}>
@@ -82,5 +68,4 @@ export default class About extends React.Component {
       </Section>
     );
   }
-
 }
