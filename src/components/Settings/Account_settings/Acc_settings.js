@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {connect} from "react-redux";
-import { Row,Col,Checkbox,Table,Button,notification,Spin } from 'antd';
+import { connect } from "react-redux";
+import { Row, Col, Checkbox, Table, Button, notification, Spin } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 
-import {HeaderCol,Save,Spin_Ex} from "../Personaldetails/PersonalDetails"
+import { HeaderCol, Save, Spin_Ex } from "../Personaldetails/PersonalDetails"
 import { globalVariables } from '../../../Globals';
 
-import {deleteAccount} from "../../../Actions/Auth"
+import { deleteAccount } from "../../../Actions/Auth"
 
 let { API_URL } = globalVariables;
 
@@ -16,20 +16,20 @@ const columns = [{
     title: 'Date/Time',
     dataIndex: 'date',
     key: 'date',
-  }, {
+}, {
     title: 'IP Address',
     dataIndex: 'IP',
     key: 'IP',
-  }];
-  const dataSource = [{
+}];
+const dataSource = [{
     key: '1',
     date: 'Mike',
     IP: 32
-  }, {
+}, {
     key: '2',
     date: 'John',
     IP: 42
-  }];
+}];
 /* Styled- Components */
 
 const Acc_wrap = styled.div`
@@ -175,125 +175,121 @@ const Button_del = styled(Button)`
   border-radius:40px;
   height:50px;
 `
-class Acc_settings extends React.Component
-{
-    constructor(props){
+class Acc_settings extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             loginHistory: []
         }
     }
-    onChange(e,abcd) {
+    onChange(e, abcd) {
         /* console.log(e,abcd,); */
     }
-    componentDidMount()
-    {   var self = this;
+    componentDidMount() {
+        var self = this;
         var Data = {};
-        fetch(API_URL + "/users/login-history",{
-            method:"get",
+        fetch(API_URL + "/users/login-history", {
+            method: "get",
             headers: {
-                Authorization:"Bearer " + this.props.isLoggedIn
+                Authorization: "Bearer " + this.props.isLoggedIn
             }
         })
-        .then(response => response.json())
-        .then((responseData) => {
-           /*  console.log(responseData) */
-            let antTableData = [];
-            Object.keys(responseData.data).map(function(key,index)
-            {
-                let temp = {
-                    key:key,
-                    date:moment.utc(responseData.data[index].created_at).local().format("YYYY-MM-DD H:m:s"),
-                    IP:responseData.data[index].ip.split(":")[3]
-                };
-                antTableData.push(temp);
-            });
-            /* console.log("->>>>>>>>>",antTableData); */
-            self.setState({
-                loginHistory:antTableData
+            .then(response => response.json())
+            .then((responseData) => {
+                /*  console.log(responseData) */
+                let antTableData = [];
+                Object.keys(responseData.data).map(function (key, index) {
+                    let temp = {
+                        key: key,
+                        date: moment.utc(responseData.data[index].created_at).local().format("MMM DD YYYY, HH:mm:ss"),
+                        IP: responseData.data[index].ip.split(":")[3]
+                    };
+                    antTableData.push(temp);
+                });
+                /* console.log("->>>>>>>>>",antTableData); */
+                self.setState({
+                    loginHistory: antTableData
+                })
             })
-        })
-        .catch(error => {/* console.log(error) */})
-        
-        
+            .catch(error => {/* console.log(error) */ })
+
+
     }
-    deleteAccount()
-    {
+    deleteAccount() {
         /* console.log(this.props) */
         this.openNotificationWithIcon('success')
         let value = {};
         value["email"] = this.props.email;
-        this.props.deleteAccount(this.props.isLoggedIn,value)
+        this.props.deleteAccount(this.props.isLoggedIn, value)
     }
     openNotificationWithIcon = (type) => {
         notification[type]({
-          message: 'Deleted',
-          description: 'Account has been successfully deleted.',
-          duration: 3,
+            message: 'Deleted',
+            description: 'Account has been successfully deleted.',
+            duration: 3,
         });
-      };
-    render()
-    {
-        return(
+    };
+    render() {
+        return (
             <Acc_wrap>
-                <Noti_Wrap>  
+                <Noti_Wrap>
                     <Noti_Head>
-                        <span>Notification</span>
-                    </Noti_Head>          
+                        <span>Notifications</span>
+                    </Noti_Head>
                     <Noti_desc>
-                        <span>Automatic Email Notifications</span>
+                        {/* <span>Automatic Email Notifications</span> */}
                     </Noti_desc>
                 </Noti_Wrap>
                 <Check_Wrap>
                     <Check_Row>
-                        <Check_Col sm={{span:12}} md={{span:12}} lg={{span:6}}>
-                            <Checkbox onChange={this.onChange.bind(this,"Deposit")}>Deposits</Checkbox>
-                        </Check_Col>    
-                        <Check_Col2 sm={{span:12}} md={{span:12}} lg={{span:6}}>
-                            <Checkbox onChange={this.onChange.bind(this,"Trade")}>Trade Execution</Checkbox>
+                        <Check_Col sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
+                            <Checkbox onChange={this.onChange.bind(this, "Deposit")}>Deposits</Checkbox>
+                        </Check_Col>
+                        <Check_Col2 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
+                            <Checkbox onChange={this.onChange.bind(this, "Trade")}>Trade Execution</Checkbox>
                         </Check_Col2>
-                        <Check_Col3 sm={{span:12}} md={{span:12}} lg={{span:6}}>
-                            <Checkbox onChange={this.onChange.bind(this,"Withdrawals")}>Withdrawals</Checkbox>
+                        <Check_Col3 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
+                            <Checkbox onChange={this.onChange.bind(this, "Withdrawals")}>Withdrawals</Checkbox>
                         </Check_Col3>
-                        <Check_Col4 sm={{span:12}} md={{span:12}} lg={{span:6}}>
-                            <Checkbox onChange={this.onChange.bind(this,"Follower")}>New Follower</Checkbox>
+                        <Check_Col4 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
+                            <Checkbox onChange={this.onChange.bind(this, "Follower")}>New Follower</Checkbox>
                         </Check_Col4>
                     </Check_Row>
                     <Check_Row2>
-                        <Check_Col sm={{span:12}} md={{span:12}} lg={{span:6}}>
-                            <Checkbox onChange={this.onChange.bind(this,"Login")}>Login</Checkbox>
-                        </Check_Col>    
-                        <Check_Col2 sm={{span:12}} md={{span:12}} lg={{span:6}}>
-                            <Checkbox onChange={this.onChange.bind(this,"Review")}>New Review</Checkbox>
+                        <Check_Col sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
+                            <Checkbox onChange={this.onChange.bind(this, "Login")}>Login</Checkbox>
+                        </Check_Col>
+                        <Check_Col2 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
+                            <Checkbox onChange={this.onChange.bind(this, "Review")}>New Review</Checkbox>
                         </Check_Col2>
-                        <Check_Col3 sm={{span:12}} md={{span:12}} lg={{span:6}}>
-                            <Checkbox onChange={this.onChange.bind(this,"private")}>New private message</Checkbox>
+                        <Check_Col3 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
+                            <Checkbox onChange={this.onChange.bind(this, "private")}>New private message</Checkbox>
                         </Check_Col3>
-                        <Check_Col4 sm={{span:12}} md={{span:12}} lg={{span:6}}>
-                            <Checkbox onChange={this.onChange.bind(this,"execution")}>Order execution</Checkbox>
+                        <Check_Col4 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
+                            <Checkbox onChange={this.onChange.bind(this, "execution")}>Order execution</Checkbox>
                         </Check_Col4>
                     </Check_Row2>
                 </Check_Wrap>
-                <HR/>
+                <HR />
                 <Login_History>
                     <History_head>
                         <Heading>
                             <span>Login History</span>
                         </Heading>
                         <Desc>
-                            <span>This feature provides information about the last activity on this mail account and any concurrent activity.</span>
+                            {/* <span>This feature provides information about the last activity on this mail account and any concurrent activity.</span> */}
                         </Desc>
                     </History_head>
                     <Table_wrap>
-                        <Table 
-                        className="history_table"
-                        pagination={false}
-                        bordered
-                        dataSource={this.state.loginHistory} 
-                        columns={columns} />
+                        <Table
+                            className="history_table"
+                            pagination={false}
+                            bordered
+                            dataSource={this.state.loginHistory}
+                            columns={columns} />
                     </Table_wrap>
                 </Login_History>
-                <HR2/>
+                <HR2 />
                 <Delete_wrap>
                     <Delete_head>
                         <span>Delete Account</span>
@@ -305,9 +301,9 @@ class Acc_settings extends React.Component
                         <Button_del type="primary" onClick={this.deleteAccount.bind(this)}>Delete Account</Button_del>
                     </Delete_btn>
                 </Delete_wrap>
-                {(this.props.loader==true)?<Spin_Ex className="Ex_spin">
-                    <Spin size="large"/>
-                </Spin_Ex>:""}
+                {(this.props.loader == true) ? <Spin_Ex className="Ex_spin">
+                    <Spin size="large" />
+                </Spin_Ex> : ""}
             </Acc_wrap>
         );
     }
@@ -316,13 +312,13 @@ class Acc_settings extends React.Component
 const mapStateToProps = (state) => {
     /* console.log("personalDetails",state) */
     return {
-      ...state,
-        email:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0].email:"",
-        loader:state.simpleReducer.loader
+        ...state,
+        email: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].email : "",
+        loader: state.simpleReducer.loader
     }
-  }
+}
 const mapDispatchToProps = dispatch => ({
-   deleteAccount : (isLoggedIn,email) => dispatch(deleteAccount(isLoggedIn,email))
+    deleteAccount: (isLoggedIn, email) => dispatch(deleteAccount(isLoggedIn, email))
 })
 
-export default connect(mapStateToProps,mapDispatchToProps)(Acc_settings);
+export default connect(mapStateToProps, mapDispatchToProps)(Acc_settings);

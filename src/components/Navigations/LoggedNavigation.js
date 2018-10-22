@@ -174,7 +174,7 @@ class LoggedNavigation extends Component {
                     defaultSelectedKeys={['1']}
                 >
                     <Menu_item onClick={this.showComing} key="1">DASHBOARD</Menu_item>
-                    <Menu_item onClick={this.showComing} key="2">TRACE</Menu_item>
+                    <Menu_item onClick={this.showComing} key="2">TRADE</Menu_item>
                     <Menu_item onClick={this.showComing} key="3">WALLET</Menu_item>
                     <Menu_item onClick={this.showComing} key="4">HISTORY</Menu_item>
                 </Menu_main>
