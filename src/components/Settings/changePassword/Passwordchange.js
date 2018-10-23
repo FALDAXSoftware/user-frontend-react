@@ -474,10 +474,10 @@ class Passwordchange extends React.Component {
         }
         if (props.DisableTF) {
             if (props.DisableTF.status == 200) {
-                this.openNotificationWithIcon("success", "Two-Factor Auth..", props.DisableTF.message)
+                this.openNotificationWithIcon("success", "Two-Factor Authentication", props.DisableTF.message)
                 this.setState({ is_twofactor: "ENABLE", isEnabled: "DISABLED", show_QR: false })
             } else {
-                this.openNotificationWithIcon("error", "Two-Factor Auth..", props.DisableTF.err)
+                this.openNotificationWithIcon("error", "Two-Factor Authentication", props.DisableTF.err)
             }
             this.props.disableAction();
         }
