@@ -255,6 +255,7 @@ const Progress_bar = styled(Progress)`
     margin-top:20px;
     width:100%;
 `
+let confPass,password;
 class Passwordchange extends React.Component {
     constructor(props) {
         super(props)
@@ -308,7 +309,7 @@ class Passwordchange extends React.Component {
         this.props.form.validateFields((error, value) => {
             /* console.log("-----<<<...",error,value)
             console.log(this.state,this.props) */
-            if (error == null && this.state.currentpassIcon == true && this.state.newpassIcon == true && this.state.confirmIcon == true) {
+            if (error == null && this.state.newpassIcon == true && this.state.confirmIcon == true) {
                 /*  console.log("HELLO !@#") */
                 document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
                 document.querySelectorAll(".newchange_msg")[0].style.display = "none";
@@ -346,9 +347,11 @@ class Passwordchange extends React.Component {
         //     }
         // }
         if (field == "new_password") {
-            if(this.state.confPass!=="")
+            console.log(value,confPass)
+            password=value;
+            if(confPass!==undefined)
             {
-                if(this.state.confPass==value)
+                if(confPass==value)
                 {
                     this.setState({ confirmIcon: false })
                     document.querySelector("#confirmchange_icon_success").style.display = "none"
@@ -367,6 +370,7 @@ class Passwordchange extends React.Component {
             if (value !== "") {
                 if (bool == true) {
                     this.setState({ newpassIcon: true, password: value })
+                    
                     document.querySelector("#newchange_icon_success").style.display = "inline-block"
                     document.querySelector("#newchange_icon_fail").style.display = "none"
                     document.querySelectorAll(".newchange_msg")[0].style.display = "none";
@@ -385,8 +389,10 @@ class Passwordchange extends React.Component {
             }
         }
         if (field == "confirm_password") {
-            var bool = this.state.password == value ? true : false
+            console.log(value,password)
+            var bool = password == value ? true : false
             if (value !== "") {
+                this.setState({confPass:value})
                 if (bool == true) {
                     this.setState({ confirmIcon: true })
                     document.querySelector("#confirmchange_icon_success").style.display = "inline-block"
