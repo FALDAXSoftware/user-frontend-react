@@ -52,15 +52,17 @@ export default class Datepicker extends React.Component
             day = Number(date[2])
         }
         /* console.log(year,month,day) */
-        
+        let higherDate = new Date().getFullYear()-10;
+        let lowerDate = higherDate - 100;
+        console.log(higherDate,lowerDate)
         return(
             <Picker_wrap>
                 <YearPicker
                     defaultValue={year?year:'Year'}
                     // default is 1900
-                    start={1920}
+                    start={lowerDate}
                     // default is current year
-                    end={2020}
+                    end={higherDate}
                     // default is ASCENDING
                     reverse
                     // mandatory
