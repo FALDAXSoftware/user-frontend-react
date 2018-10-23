@@ -7,7 +7,7 @@ import { Username, Form_wrap, Welcome_text, Email_label, Email_req } from "./Log
 import { connect } from "react-redux"
 
 /* Components */
-import { forgotAction } from "../../../Actions/Auth"
+import { forgotAction, clearForgot } from "../../../Actions/Auth"
 
 /* Global Constants */
 
@@ -19,7 +19,7 @@ const Login_head = styled.div`
   color: rgb( 15, 71, 123 );
   font-weight: bold;
   text-transform: uppercase;
-  text-align: left;
+  text-align: left;                                                                                         
   padding-bottom: 10px;
   border-bottom: 2px solid;
   display: inline-block;
@@ -140,7 +140,7 @@ class Forgot_Form extends React.Component {
         document.querySelectorAll(".email_msg")[0].style.display = "none";
         /*  console.log(this.props,value) */
         this.setState({ email_msg: null });
-        this.openNotification();
+        // this.openNotification();
         this.props.forgotAction(value);
       }
     });
@@ -151,9 +151,16 @@ class Forgot_Form extends React.Component {
   }
 
   componentWillReceiveProps(props, newProps) {
-    if (props.forgot == true && this.state.forgot !== true) {
-
+    if (props.forgot) {
+      if (props.forgot.status == 200) {
+        this.openNotificationWithIcon('success', 'Login Successful', props.forgot.message);
+        /* this.props.dispModal("login"); */
+      } else {
+        this.openNotificationWithIcon('error', 'Error', props.forgot.err);
+      }
+      this.props.clearForgot();
     }
+
   }
 
   openNotification = () => {
@@ -162,6 +169,13 @@ class Forgot_Form extends React.Component {
       description: 'The link to reset the password is sent to your Email Address',
       duration: 6,
       icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+    });
+  };
+
+  openNotificationWithIcon(type, head, desc) {
+    notification[type]({
+      message: head,
+      description: desc,
     });
   };
 
@@ -174,7 +188,7 @@ class Forgot_Form extends React.Component {
         <Form_wrap>
           <Login_head>Forgot Password</Login_head>
           <Welcome_text>Forgot Password?</Welcome_text>
-          <Sub_text>Don't worry,it happen's to the best of us</Sub_text>
+          <Sub_text>Don't worry, It happen's to the best of us</Sub_text>
           <Email_label>Email Address</Email_label>
           <Username {...getFieldProps('email', {
             onChange() { /* console.log("Hello How are You") */ }, // have to write original onChange here if you need
@@ -187,7 +201,7 @@ class Forgot_Form extends React.Component {
             <Icon className="material-icons">
               keyboard_backspace
                     </Icon>
-            <Back_link onClick={() => this.dispModal("login")}> Back To Link </Back_link>
+            <Back_link onClick={() => this.dispModal("login")}> Back To Login </Back_link>
           </Link_wrap>
         </Form_wrap>
       </div>
@@ -203,7 +217,9 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  forgotAction: (isLoggedIn) => dispatch(forgotAction(isLoggedIn))
+  forgotAction: (isLoggedIn) => dispatch(forgotAction(isLoggedIn)),
+  clearForgot: () => dispatch(clearForgot())
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Forgot_Form));

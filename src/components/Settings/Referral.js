@@ -1,11 +1,11 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {connect} from "react-redux"
-import { Input,Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal , Table,notification } from 'antd';
+import { connect } from "react-redux"
+import { Input, Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal, Table, notification } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import styled from 'styled-components';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 /* Constants */
 const { Header, Content, Footer } = Layout;
@@ -16,22 +16,22 @@ const Search = Input.Search;
 const columns = [{
     title: 'Accounts Referred',
     dataIndex: 'email',
-  }];
-  const data = [{
-      key:"1",
-    referral:"test1@tesst.com"
-  },{
-    key:"2",
-    referral:"test2@tesst.com"
-  },{
-    key:"3",
-    referral:"test3@test.com"
-  }];
-  
+}];
+const data = [{
+    key: "1",
+    referral: "test1@tesst.com"
+}, {
+    key: "2",
+    referral: "test2@tesst.com"
+}, {
+    key: "3",
+    referral: "test3@test.com"
+}];
+
 
 /* Styled Components */
 
-const Parent_wrap= styled.div`
+const Parent_wrap = styled.div`
     
 `
 const Header_text = styled.div`
@@ -155,63 +155,57 @@ const Ref_acc = styled.div`
     height:auto;
     margin-bottom:65px;
 `
-class Referral extends React.Component
-{
-    constructor(props)
-    {
+class Referral extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
             value: null,
             copied: false,
-            tableData:[]
+            tableData: []
         }
     }
 
-    componentDidMount()
-    {
+    componentDidMount() {
         /* console.log(this.props.isLoggedIn) */
-        fetch("http://18.191.87.133:8084/users/referredUsers",{
-            method:"get",
+        fetch("http://18.191.87.133:8084/users/referredUsers", {
+            method: "get",
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                Authorization:"Bearer " + this.props.isLoggedIn
+                Authorization: "Bearer " + this.props.isLoggedIn
             }
         })
-        .then(response => response.json())
-        .then((responseData) => {
-            /* console.log(responseData); */
-            this.setState({tableData:responseData.data})
-        })
-        .catch(error => { /* console.log(error) */ })
-        if(this.props.profileDetails.referral_code!==undefined)
-        {
-            this.setState({value:this.props.profileDetails.referral_code})
+            .then(response => response.json())
+            .then((responseData) => {
+                /* console.log(responseData); */
+                this.setState({ tableData: responseData.data })
+            })
+            .catch(error => { /* console.log(error) */ })
+        if (this.props.profileDetails.referral_code !== undefined) {
+            this.setState({ value: this.props.profileDetails.referral_code })
         }
     }
 
-    openNotificationWithIcon  = (type) => {
+    openNotificationWithIcon = (type) => {
         notification[type]({
-            message: 'Copied Referral Code to Clipboard',
-            duration:2
-          });
+            message: 'Referral Code Copied to Clipboard',
+            duration: 2
+        });
     };
 
-    SearchText()
-    {
+    SearchText() {
         // Copy to clipboard example
-        document.querySelectorAll(".ant-input-search-button")[0].onclick = function() {
+        document.querySelectorAll(".ant-input-search-button")[0].onclick = function () {
             // Select the content
             document.querySelectorAll(".INPUT_search > input")[0].select();
             // Copy to the clipboard
             document.execCommand('copy');
         };
-        this.openNotificationWithIcon ('success');
+        this.openNotificationWithIcon('success');
     }
 
-    render()
-    {
-        return(
+    render() {
+        return (
             <Parent_wrap>
                 <Header_text>Referral Program</Header_text>
                 {/* <Header_p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Header_p> */}
@@ -220,8 +214,8 @@ class Referral extends React.Component
                         <Ref_leftcol sm={24} md={18}>
                             <Ref_text>YOUR REFERRAL LINK</Ref_text>
                             <CopyToClipboard text={this.state.value}
-                                    onCopy={() => this.setState({copied: true})}>
-                                <div style={{textAlign: 'left'}}>
+                                onCopy={() => this.setState({ copied: true })}>
+                                <div style={{ textAlign: 'left' }}>
                                     <Ref_input
                                         value={this.state.value}
                                         className="INPUT_search"
@@ -241,10 +235,10 @@ class Referral extends React.Component
                 </Ref_div>
                 <Ref_acc>
                     <div>
-                        <Table columns={columns} dataSource={this.state.tableData} 
-                        size="middle"
-                        className="referral-table"
-                        pagination={false}
+                        <Table columns={columns} dataSource={this.state.tableData}
+                            size="middle"
+                            className="referral-table"
+                            pagination={false}
                         />
                     </div>
                 </Ref_acc>
@@ -253,10 +247,10 @@ class Referral extends React.Component
     }
 }
 
-function mapStateToProps(state){
-    return({
-      isLoggedIn : state.simpleReducer.isLoggedIn,
-      profileDetails:state.simpleReducer.profileDetails!==undefined?state.simpleReducer.profileDetails.data[0]:""
+function mapStateToProps(state) {
+    return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : ""
     })
 }
 export default connect(mapStateToProps)(Referral);

@@ -206,7 +206,7 @@ class Navigation extends React.Component {
             comingSoon: false,
             email_address: "",
             email_msg: "",
-            selected:[]
+            selected: []
         }
     }
 
@@ -318,13 +318,11 @@ class Navigation extends React.Component {
                 visible: true
             })
         }
-        if(this.props.location.pathname == "/about-us")
-        {
-            this.setState({selected:['2']})
+        if (this.props.location.pathname == "/about-us") {
+            this.setState({ selected: ['2'] })
         }
-        else
-        {
-            this.setState({selected:['1']})
+        else {
+            this.setState({ selected: ['1'] })
         }
     }
     render() {

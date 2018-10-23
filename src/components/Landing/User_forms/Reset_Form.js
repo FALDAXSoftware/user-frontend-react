@@ -75,7 +75,7 @@ const FAI = styled(FontAwesomeIcon)`
     display:inline-block;
     position: absolute;
     margin-left: -25px;
-    margin-top: 17px;
+    margin-top: 30px;
 `
 
 class ResetPassword extends Component {
@@ -155,7 +155,7 @@ class ResetPassword extends Component {
       if (error == null) {
         if (value.password.toUpperCase() == value.confirm_password.toUpperCase()) {
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
-          document.querySelectorAll(".confirmPass_msg")[0].style.display = "none";
+          document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
           this.setState({ pass_msg: null, confirmPass_msg: null });
           /* console.log(value,this.props) */
           this.props.resetAction({ password: value.password, reset_token: url[1] });
@@ -165,7 +165,7 @@ class ResetPassword extends Component {
         } else {
           document.querySelectorAll(".comp_pass")[0].style.display = "block";
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
-          document.querySelectorAll(".confirmPass_msg")[0].style.display = "none";
+          document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
           this.setState({ common_req: "*Both passwords do not match" })
         }
       } else {
@@ -181,11 +181,11 @@ class ResetPassword extends Component {
         if (error.confirm_password !== undefined) {
           if (error.confirm_password.errors[0].message !== undefined && error.confirm_password.errors[0].message !== null) {
             /* console.log("Password ELse") */
-            document.querySelectorAll(".confirmPass_msg")[0].style.display = "block";
+            document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
             this.setState({ confirmPass_msg: "*Password is not valid" })
           } else {
             /* console.log("Confirm ELse") */
-            document.querySelectorAll(".confirmPass_msg")[0].style.display = "none";
+            document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
             this.setState({ confrimPass_msg: null })
           }
         }
@@ -205,10 +205,10 @@ class ResetPassword extends Component {
         this.setState({ newEye: "password" })
       }
     } else {
-      if (this.state.repeatEye == "confirm_password") {
+      if (this.state.repeatEye == "password") {
         this.setState({ repeatEye: "text" })
       } else {
-        this.setState({ repeatEye: "confirm_password" })
+        this.setState({ repeatEye: "password" })
       }
     }
   }
@@ -232,33 +232,40 @@ class ResetPassword extends Component {
         <Form_wrap>
           <Login_head>Reset Password</Login_head>
           <Pass_label>Password</Pass_label>
-          <Full type="password" {...getFieldProps('password', {
-            onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
-            rules: [{ type: "string", required: true, max: 16 }],
-          })} />
-          {
-            (newEye == "password") ?
-              <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "new")} />
-              : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "new")} />
-          }
-          <Full_req className="pass_msg">{this.state.pass_msg}</Full_req>
-          <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-          <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+          <div>
+            <Full type={newEye} {...getFieldProps('password', {
+              onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
+              rules: [{ type: "string", required: true, max: 16 }],
+            })} />
+            {
+              (newEye == "password") ?
+                <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "new")} />
+                : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "new")} />
+            }
+            <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+            <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+            <Full_req className="pass_msg">{this.state.pass_msg}</Full_req>
+          </div>
+
+
 
           <Passconfirm_Label>Confirm Password</Passconfirm_Label>
-          <Password type="password" {...getFieldProps('confirm_password', {
-            onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
-            rules: [{ type: "string", required: true, max: 16 }],
-          })}
-          />
-          {
-            (repeatEye == "confirm_password") ?
-              <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "password")} />
-              : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "password")} />
-          }
-          <Password_req className="confirmchange_msg">{this.state.confirmPass_msg}</Password_req>
-          <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-          <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+          <div>
+            <Password type={repeatEye} {...getFieldProps('confirm_password', {
+              onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
+              rules: [{ type: "string", required: true, max: 16 }],
+            })}
+            />
+            {
+              (repeatEye == "password") ?
+                <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "confirm_password")} />
+                : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "confirm_password")} />
+            }
+            <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+            <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+            <Password_req className="confirmchange_msg">{this.state.confirmPass_msg}</Password_req>
+          </div>
+
           <Common_req className="comp_pass">{this.state.common_req}</Common_req>
           {(errors = getFieldError('required')) ? errors.join(',') : null}
           <Button_login onClick={this.submit}>Reset</Button_login>

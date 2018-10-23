@@ -106,7 +106,11 @@ export function clearSignUp() {
         dispatch(signupAction())
     }
 }
-
+export function clearForgot() {
+    return (dispatch) => {
+        dispatch(forgotData())
+    }
+}
 export const signupAction = (data) => dispatch => {
     dispatch({
         type: 'SIGNUP',
@@ -125,10 +129,10 @@ export function forgotAction(email) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                dispatch(forgotData(true));
+                dispatch(forgotData(responseData));
             })
             .catch(error => {
-                dispatch(forgotData(false));
+                dispatch(forgotData(error));
             })
     }
 }

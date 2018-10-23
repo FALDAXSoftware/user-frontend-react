@@ -379,7 +379,7 @@ class Signup_Form extends React.Component {
           </div>
           <Full_req className="last_sign">{this.state.last_msg}</Full_req>
 
-          <Ph_Label>Email Adress</Ph_Label>
+          <Ph_Label>Email Address</Ph_Label>
           <div>
             <Email {...getFieldProps('email', {
               onChange(e) { me.onChangeField(e.target.value, "email") }, // have to write original onChange here if you need
