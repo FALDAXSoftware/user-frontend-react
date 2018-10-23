@@ -84,7 +84,7 @@ class IDselect extends React.Component
             abcd["id_type"]= 1;
             abcd["steps"]=2;
             this.props.kycFormAction(this.props.isLoggedIn,abcd);
-            this.props.next_step(3,"ssn")
+            this.props.next_step(3,"Passport")
          
         }
         else if(document.getElementById('license').checked)
@@ -92,7 +92,7 @@ class IDselect extends React.Component
             abcd["id_type"]= 2;
             abcd["steps"]=2;
             this.props.kycFormAction(this.props.isLoggedIn,abcd);
-            this.props.next_step(3,"ssn")
+            this.props.next_step(3,"Driver's license")
           
         }
         else if(document.getElementById('identity').checked)
@@ -100,7 +100,7 @@ class IDselect extends React.Component
             abcd["id_type"]= 3;
             abcd["steps"]=2;
             this.props.kycFormAction(this.props.isLoggedIn,abcd);
-            this.props.next_step(3,"ssn")
+            this.props.next_step(3,"Identity")
             
         }
         else if(document.getElementById('ssn').checked)
@@ -108,7 +108,7 @@ class IDselect extends React.Component
             abcd["id_type"]= 4;
             abcd["steps"]=2;
             this.props.kycFormAction(this.props.isLoggedIn,abcd);
-            this.props.next_step(2,"ssn_ori")
+            this.props.next_step(2,"ssn")
          
         }
         else

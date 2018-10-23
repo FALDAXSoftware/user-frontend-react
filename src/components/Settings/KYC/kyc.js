@@ -41,8 +41,9 @@ const Done_wrap = styled.div`
     margin-top:80px;
 `
 const Kyc_succ = styled.div`
+    width:80%;
+    margin:auto;
     font-size: 20px;
-    font-weight:bold;
     font-family: "Open Sans";
     color: rgb( 80, 80, 80 );
     margin-top:20px;
@@ -75,12 +76,12 @@ class KYC extends React.Component {
 
     next_step(a,type=null) {
         this.setState({ next: a })
-        if(type=="ssn")
+        if(type=="Passport" || type=="Driver's license" || type=="Identity")
         {
             var b=a-1
-            this.setState({nexts:b})
+            this.setState({nexts:b,docType:type})
         }
-        else if(type=="ssn_ori")
+        else if(type=="ssn")
         {
             /* console.log("ssn_original",type,a) */
             var b=a
@@ -112,13 +113,13 @@ class KYC extends React.Component {
                         </Steps>
                     </KYC_progress>
                 </div>
-                :<Done_wrap><Icon style={{fontSize:"50px"}} type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> <Kyc_succ>KYC IS DONE</Kyc_succ></Done_wrap>}
+                :<Done_wrap><Icon style={{fontSize:"50px"}} type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> <Kyc_succ><span><b>Thank you.</b> <br/>All of your information has been recieved and will be reviewed by our Identity Verification team. You will recieve a notification and an email within 24 hours informing you of our decision. If you don't hear anything after 24 hours, please visit the support page to let us know.</span></Kyc_succ></Done_wrap>}
                 {(this.state.next == 0 && this.props.is_kyc_done !== true) ?
                     <KYCForm back_step={(a)=>this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""
                 }
                 {(this.state.next == 1 && this.props.is_kyc_done !== true) ? <IDselect back_step={(a)=>this.back_step(a)} next_step={(a,type) => this.next_step(a,type)} /> : ""}
                 {(this.state.next == 2 && this.props.is_kyc_done !== true) ? <SSN back_step={(a)=>this.back_step(a)} next_step={(a,type) => this.next_step(a,type)} /> : ""}
-                {(this.state.next == 3 && this.props.is_kyc_done !== true) ? <DocUpload back_step={(a)=>this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
+                {(this.state.next == 3 && this.props.is_kyc_done !== true) ? <DocUpload docText={this.state.docType} back_step={(a)=>this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
             </KYC_wrap>
         );
     }

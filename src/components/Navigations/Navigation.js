@@ -206,6 +206,7 @@ class Navigation extends React.Component {
             comingSoon: false,
             email_address: "",
             email_msg: "",
+            selected:[]
         }
     }
 
@@ -316,8 +317,15 @@ class Navigation extends React.Component {
                 visible: true
             })
         }
+        if(this.props.location.pathname == "/about-us")
+        {
+            this.setState({selected:['2']})
+        }
+        else
+        {
+            this.setState({selected:['1']})
+        }
     }
-
     render() {
         let prof_name = this.props.profileDetails.first_name !== null && this.props.profileDetails.first_name !== undefined ? (this.props.profileDetails.first_name + " " + this.props.profileDetails.last_name) : "User";
         const { modal } = this.state;
@@ -332,10 +340,11 @@ class Navigation extends React.Component {
                     theme="light"
                     mode="horizontal"
                     defaultSelectedKeys={['1']}
+                    selectedKeys={this.state.selected}
                 >
-                    <Menu_item key="1"><Link to="/login">HOME</Link></Menu_item>
+                    <Menu_item key="1"><Link className="Nav_selected" to="/login">HOME</Link></Menu_item>
                     {/* <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item> */}
-                    <Menu_item key="2" ><Link to="/about-us">ABOUT</Link></Menu_item>
+                    <Menu_item key="2"><Link className="Nav_selected" to="/about-us">ABOUT</Link></Menu_item>
                     <Menu_item key="3" onClick={this.showComing}>SECURITY</Menu_item>
                     <Menu_item key="4" onClick={this.showComing}>NEWS</Menu_item>
                     <Menu_item key="5" onClick={this.showComing}>CONTACT</Menu_item>

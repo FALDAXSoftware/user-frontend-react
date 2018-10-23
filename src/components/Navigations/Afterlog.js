@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal , Dropdown, Icon, Avatar } from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal , Dropdown, Icon, Avatar ,Input} from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
@@ -94,6 +94,20 @@ display:inline;
 
 class Afterlog extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            comingSoon:false
+        };
+    }
+    handleComing = (e) => {
+        this.setState({ comingSoon: false });
+    }
+
+    comingCancel = (e) => {
+        this.setState({ comingSoon: false });
+    }
     openNav()
     {
         this.props.openNav();
@@ -128,7 +142,7 @@ class Afterlog extends React.Component
         }
         return(
             <Right_div>
-                <Bell>
+               {/*  <Bell>
                     <Icon  style={{fontSize:"15px",color:"black"}} type="bell" theme="filled" />      
                 </Bell>
                 <Day_night_mode>
@@ -136,7 +150,7 @@ class Afterlog extends React.Component
                 </Day_night_mode>
                 <Exchange>
                             <span  onClick={this.showComing}> CAREERS </span>
-                        </Exchange>
+                        </Exchange> */}
                 <DropDownDiv overlay={DropdownItems} trigger={['click']}>
                     <AnchorName className="ant-dropdown-link" href="#">
                     {/* console.log(this.props,Avatar_img) */}
@@ -148,6 +162,27 @@ class Afterlog extends React.Component
                     </AnchorName>
                 </DropDownDiv>
                 <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={() => this.openNav()}>&#9776;</Open>
+                <div>
+                    <Modal
+                        title={<img src="./images/Homepage/Footer_logo.png" />}
+                        visible={this.state.comingSoon}
+                        onOk={(e) => this.handleComing()}
+                        onCancel={(e) => this.comingCancel(e)}
+                        footer={null}
+                        width={520}
+                        height={150}
+                        className="simple-maps"
+                    >
+                        <div>
+                            <h3 style={{ fontSize: "32px" }}>Coming Soon</h3>
+                            <label style={{ color: 'green' }}> Please enter your email to get updates of FALDAX: </label>
+                            <Input placeholder="Please enter your email address" style={{ color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
+                            <div style={{ marginTop: '20px', minHeight: '20px' }}>
+                                <Button style={{ float: 'right', color: 'green', borderColor: 'green' }} onClick={() => this.send_email()}> RECEIVE UPDATE </Button>
+                            </div>
+                        </div>
+                    </Modal>
+                </div>
             </Right_div>
         );
     }

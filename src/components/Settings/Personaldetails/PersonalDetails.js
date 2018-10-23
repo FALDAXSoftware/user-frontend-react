@@ -202,6 +202,9 @@ export const Spin_Ex = styled.div`
     height: 100%;
     z-index: 9999;
 `
+const Street_2_Col = styled(Col)`
+    margin-top:15px; 
+`
 class PersonalDetails extends Component {
     constructor(props) {
         super(props);
@@ -212,6 +215,7 @@ class PersonalDetails extends Component {
             countrymsg: null,
             dobmsg: null,
             streetmsg: null,
+            street2msg: null,
             citymsg: null,
             postalmsg: null,
             profileImg: undefined,
@@ -236,9 +240,10 @@ class PersonalDetails extends Component {
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
                 document.querySelectorAll(".dob_msg")[0].style.display = "none";
                 document.querySelectorAll(".street_msg")[0].style.display = "none";
+                document.querySelectorAll(".street2_msg")[0].style.display = "none";
                 document.querySelectorAll(".city_msg")[0].style.display = "none";
                 document.querySelectorAll(".postal_msg")[0].style.display = "none";
-                this.setState({ first_msg: null, last_msg: null, country_msg: null, dob_msg: null, street_msg: null, city_msg: null, postal_msg: null, spin_show: true });
+                this.setState({ first_msg: null, last_msg: null, country_msg: null, dob_msg: null, street_msg: null,street2_msg: null, city_msg: null, postal_msg: null, spin_show: true });
 
                 let number = Number(value.postal_code);
                 let country = this.state.countrySelected;
@@ -250,12 +255,13 @@ class PersonalDetails extends Component {
                 if (country == undefined && country == null) {
                     country = this.props.country ? this.props.country : ""
                 }
-                /* console.log("BEFORE FORM",value,this.state.countrySelected,this.state.profileImage,dataDate,country) */
+                console.log("BEFORE FORM",value,this.state.countrySelected,this.state.profileImage,dataDate,country)
                 profileData.append('first_name', value.first_name);
                 profileData.append('email', this.props.email);
                 profileData.append('last_name', value.last_name);
                 profileData.append('country', country);
                 profileData.append('street_address', value.street_address)
+                profileData.append('street_address_2', value.street_address2)
                 profileData.append('city_town', value.city_town);
                 profileData.append('postal_code', number);
                 profileData.append('dob', dataDate);
@@ -309,6 +315,15 @@ class PersonalDetails extends Component {
                     } else {
                         document.querySelectorAll(".street_msg")[0].style.display = "none";
                         this.setState({ streetmsg: null })
+                    }
+                }
+                if (error.street_address_2 !== null && error.street_address_2 !== undefined) {
+                    if (error.street_address_2.errors[0].message !== undefined && error.street_address_2.errors[0].message !== null) {
+                        document.querySelectorAll(".street2_msg")[0].style.display = "block";
+                        this.setState({ street2msg: "*Street Address is not valid" })
+                    } else {
+                        document.querySelectorAll(".street2_msg")[0].style.display = "none";
+                        this.setState({ street2msg: null })
                     }
                 }
                 if (error.city_town !== null && error.city_town !== undefined) {
@@ -468,14 +483,23 @@ class PersonalDetails extends Component {
                                 </Second_Row>
                                 <Third_Row>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
-                                        <Street_Address>Street Address</Street_Address>
-                                        <Street_input placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} {...getFieldProps('street_address', {
+                                        <Street_Address>Street Address Line 1</Street_Address>
+                                        <Street_input placeholder="Street Address" {...getFieldProps('street_address', {
                                             onChange() {/* console.log("Hello How are You") */ },
                                             initialValue: profileDetails.street_address, // have to write original onChange here if you need
                                             rules: [{ required: true, whitespace: true }],
                                         })} />
                                         <Street_Msg className="street_msg">{this.state.streetmsg}</Street_Msg>
                                     </Col>
+                                    <Street_2_Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
+                                        <Street_Address>Street Address Line 2</Street_Address>
+                                        <Street_input placeholder="Street Address" {...getFieldProps('street_address_2', {
+                                            onChange() {/* console.log("Hello How are You") */ },
+                                            initialValue: profileDetails.street_address_2, // have to write original onChange here if you need
+                                            rules: [{ required: true, whitespace: true }],
+                                        })} />
+                                        <Street_Msg className="street2_msg">{this.state.street2msg}</Street_Msg>
+                                    </Street_2_Col>
                                 </Third_Row>
                                 <Fourth_Row>
                                     <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xxl={{ span: 12 }}>

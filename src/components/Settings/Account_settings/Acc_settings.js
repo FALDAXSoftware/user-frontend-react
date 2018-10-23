@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux";
-import { Row, Col, Checkbox, Table, Button, notification, Spin } from 'antd';
+import { Row, Col, Checkbox, Table, Button, notification, Spin , Divider, Tag,Modal} from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 
@@ -175,6 +175,72 @@ const Button_del = styled(Button)`
   border-radius:40px;
   height:50px;
 `
+const columns_text = [, {
+    title: 'Notifications',
+    dataIndex: 'Notifications',
+    key: 'Notifications',
+  },{
+    title: 'Text',
+    className:"column-Text",
+    dataIndex: 'Text',
+    key: 'Text',
+  }, {
+    title: 'Email',
+    className:"column-Email",
+    dataIndex: 'Email',
+    key: 'Email',
+  }];
+  const data_noti = [{
+    key: '1',
+    Notifications: "Deposits",
+    Text: <Checkbox></Checkbox>,
+    
+    Email: <Checkbox></Checkbox>,
+  }, {
+    key: '2',
+    Notifications: "Trade Execution",
+    Text: <Checkbox></Checkbox>,
+    
+    Email: <Checkbox></Checkbox>,
+  }, {
+    key: '3',
+    Notifications: "Withdrawals",
+    Text: <Checkbox></Checkbox>,
+    
+    Email: <Checkbox></Checkbox>,
+  },{
+    key: '4',
+    Notifications: "Login",
+    Text: <Checkbox></Checkbox>,
+    
+    Email: <Checkbox></Checkbox>,
+  }, {
+    key: '5',
+    Notifications: "New Review",
+    Text: <Checkbox></Checkbox>,
+   
+    Email: <Checkbox></Checkbox>,
+  },
+  {
+    key: '6',
+    Notifications: "New Private Message",
+    Text: <Checkbox></Checkbox>,
+    
+    Email: <Checkbox></Checkbox>,
+  }, {
+    key: '7',
+    Notifications: "New Follower",
+    Text: <Checkbox></Checkbox>,
+    
+    Email: <Checkbox></Checkbox>,
+  }, {
+    key: '8',
+    Notifications: "Order Execution",
+    Text: <Checkbox></Checkbox>,
+   
+    Email: <Checkbox></Checkbox>,
+  }];
+  const confirm = Modal.confirm;
 class Acc_settings extends React.Component {
     constructor(props) {
         super(props);
@@ -222,6 +288,21 @@ class Acc_settings extends React.Component {
         value["email"] = this.props.email;
         this.props.deleteAccount(this.props.isLoggedIn, value)
     }
+    showConfirm() {
+        var me = this
+        confirm({
+          title: 'Do you want to delete the account?',
+          content: 'When clicked the OK button, your account will be deleted.',
+          onOk() {
+            me.deleteAccount()
+            return new Promise((resolve, reject) => {
+               
+              setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+            }).catch(() => console.log('Oops errors!'));
+          },
+          onCancel() {},
+        });
+      }
     openNotificationWithIcon = (type) => {
         notification[type]({
             message: 'Deleted',
@@ -241,34 +322,11 @@ class Acc_settings extends React.Component {
                     </Noti_desc>
                 </Noti_Wrap>
                 <Check_Wrap>
-                    <Check_Row>
-                        <Check_Col sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
-                            <Checkbox onChange={this.onChange.bind(this, "Deposit")}>Deposits</Checkbox>
-                        </Check_Col>
-                        <Check_Col2 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
-                            <Checkbox onChange={this.onChange.bind(this, "Trade")}>Trade Execution</Checkbox>
-                        </Check_Col2>
-                        <Check_Col3 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
-                            <Checkbox onChange={this.onChange.bind(this, "Withdrawals")}>Withdrawals</Checkbox>
-                        </Check_Col3>
-                        <Check_Col4 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
-                            <Checkbox onChange={this.onChange.bind(this, "Follower")}>New Follower</Checkbox>
-                        </Check_Col4>
-                    </Check_Row>
-                    <Check_Row2>
-                        <Check_Col sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
-                            <Checkbox onChange={this.onChange.bind(this, "Login")}>Login</Checkbox>
-                        </Check_Col>
-                        <Check_Col2 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
-                            <Checkbox onChange={this.onChange.bind(this, "Review")}>New Review</Checkbox>
-                        </Check_Col2>
-                        <Check_Col3 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
-                            <Checkbox onChange={this.onChange.bind(this, "private")}>New private message</Checkbox>
-                        </Check_Col3>
-                        <Check_Col4 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 6 }}>
-                            <Checkbox onChange={this.onChange.bind(this, "execution")}>Order execution</Checkbox>
-                        </Check_Col4>
-                    </Check_Row2>
+                        <Table
+                            className="Noti_table"
+                            pagination={false}
+                            dataSource={data_noti}
+                            columns={columns_text} />
                 </Check_Wrap>
                 <HR />
                 <Login_History>
@@ -295,10 +353,10 @@ class Acc_settings extends React.Component {
                         <span>Delete Account</span>
                     </Delete_head>
                     <Delete_desc>
-                        <span>To permenantly delete the account click on the below button</span>
+                        <span>Click on the button below to permanently delete your account.</span>
                     </Delete_desc>
                     <Delete_btn>
-                        <Button_del type="primary" onClick={this.deleteAccount.bind(this)}>Delete Account</Button_del>
+                        <Button_del type="primary" onClick={this.showConfirm.bind(this)}>Delete Account</Button_del>
                     </Delete_btn>
                 </Delete_wrap>
                 {(this.props.loader == true) ? <Spin_Ex className="Ex_spin">

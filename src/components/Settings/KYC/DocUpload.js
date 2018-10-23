@@ -27,6 +27,8 @@ const SSN_sub = styled.div`
 `
 const SSN_label = styled.label`
     display:block;
+    font-size: 18px;
+    font-family: open sans;
     text-align:center;
     margin-bottom:10px;
 `
@@ -75,7 +77,7 @@ const File_select2 = styled(File_select1)`
 `
 const ButtonUp = styled.button`
     display: block;
-    /* width: 85%; */
+    width: 100%;
     /* margin: 0 auto; */
     height: 145px;
     background-color: white;
@@ -102,6 +104,7 @@ const Plus = styled.span`
 const Plus_text = styled.span`
 margin-top: 18px;
 display: block;
+font-size: 18px;
 `
 const ButtonUp2 = styled(ButtonUp)`
 
@@ -240,20 +243,20 @@ class DocUpload extends React.Component {
                 {/* console.log("HElloasjfbjabjhadvbfdavjhfvwavefv") */}
                 <SSN_wrap>
                     <SSN_sub>
-                        <SSN_label>Upload Document</SSN_label>
+                        <SSN_label>Upload Your {this.props.docText}</SSN_label>
                     </SSN_sub>
                     <File_wrap>
                             <File_select1 className="file-select-col">
                                 <ButtonUp className="file-select-btn" onClick={() => { this.handleFileSelectClick('front') }}>
                                     <Plus className="plus"><Icon type={this.state.icon1} theme="outlined" /></Plus>
-                                    <Plus_text className="text">click here to upload front of document</Plus_text>
+                                    <Plus_text className="text">Front</Plus_text>
                                 </ButtonUp>
                                 <File_input onChange={this.handleProfile} type="file" name="front-doc" id="front" />
                             </File_select1>
                             <File_select2 md={{ span: 6 }} className="file-select-col">
                                 <ButtonUp2 className="file-select-btn" onClick={() => { this.handleFileSelectClick('back') }}>
                                     <Plus2 className="plus"><Icon type={this.state.icon2} theme="outlined" /></Plus2>
-                                    <Plus_text2 className="text">click here to upload back of document</Plus_text2>
+                                    <Plus_text2 className="text">Back</Plus_text2>
                                 </ButtonUp2>
                                 <File_input2 onChange={this.handleProfile}  type="file" name="back-doc" id="back" />
                             </File_select2>

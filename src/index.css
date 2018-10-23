@@ -491,3 +491,34 @@ table .ant-table-tbody > tr > td {
     margin-top: 20%;
     /* margin-top: calc(50% - 10px ); */
   }
+
+
+
+  /* Navigation Slection */
+  .Nav_selected
+  {
+    font-size: 13px;
+    font-family: "Open sans";
+    color: black ;
+    font-weight: bold;
+    text-transform: uppercase;
+    vertical-align: unset;
+    border-bottom:0px !important;
+  }
+.ant-menu-item
+{
+  color:black !important;
+  font-weight:bold !important;
+}
+  /* Table of notification */
+
+  th.column-Text,
+  td.column-Text
+  {
+    text-align:center !important;
+  }
+  th.column-Email,
+  td.column-Email
+  {
+    text-align:center !important;
+  }

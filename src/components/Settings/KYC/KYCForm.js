@@ -74,6 +74,7 @@ class KYCForm extends React.Component
             countrymsg:null,
             dobmsg:null,
             streetmsg:null,
+            street2msg:null,
             citymsg:null,
             postalmsg:null,
             countrySelected:this.props.profileDetails.country,
@@ -105,9 +106,10 @@ class KYCForm extends React.Component
                 document.querySelectorAll(".country_kyc_msg")[0].style.display = "none";
                 document.querySelectorAll(".dob_kyc_msg")[0].style.display = "none";
                 document.querySelectorAll(".street_kyc_msg")[0].style.display = "none";
+                document.querySelectorAll(".street2_kyc_msg")[0].style.display = "none";
                 document.querySelectorAll(".city_kyc_msg")[0].style.display = "none";
                 document.querySelectorAll(".postal_kyc_msg")[0].style.display = "none";
-                this.setState({first_msg:null,last_msg:null,country_msg:null,dob_msg:null,street_msg:null,city_msg:null,postal_msg:null,spin_show:true});
+                this.setState({first_msg:null,last_msg:null,country_msg:null,dob_msg:null,street_msg:null,street2_msg:null,city_msg:null,postal_msg:null,spin_show:true});
                 
                 let number = Number(value.postal_code);
                 let country = this.state.countrySelected;
@@ -128,6 +130,7 @@ class KYCForm extends React.Component
                 profileData['last_name']=value.last_name
                 profileData['country']=country
                 profileData['address']=value.street_address
+                profileData['address_2']=value.street_address_2
                 profileData['city']=value.city_town
                 profileData['zip']=number
                 profileData['dob']=dataDate
@@ -190,6 +193,19 @@ class KYCForm extends React.Component
                     {
                         document.querySelectorAll(".street_kyc_msg")[0].style.display = "none";
                         this.setState({streetmsg:null})
+                    }
+                }
+                if(error.street_address_2!==null && error.street_address_2!==undefined)
+                {
+                    if(error.street_address_2.errors[0].message!==undefined && error.street_address_2.errors[0].message!==null)
+                    {
+                        document.querySelectorAll(".street2_kyc_msg")[0].style.display = "block";
+                        this.setState({street2msg:"*Street Address is Incorrecct"})
+                    }
+                    else
+                    {
+                        document.querySelectorAll(".street2_kyc_msg")[0].style.display = "none";
+                        this.setState({street2msg:null})
                     }
                 }
                 if(error.city_town!==null && error.city_town!==undefined)
@@ -314,6 +330,15 @@ class KYCForm extends React.Component
                                                     rules: [{required: true,whitespace:true}],
                                                 })}/>
                                                 <Street_Msg_kyc className="street_kyc_msg">{this.state.streetmsg}</Street_Msg_kyc>
+                                            </Col>
+                                            <Col md={{span:24}} lg={{span:24}} xl={{span:24}} xxl={{span:24}}>
+                                                <Street_Address_kyc>Street Address</Street_Address_kyc>
+                                                <Street_input_kyc placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} {...getFieldProps('street_address_2', {
+                                                    onChange(){/* console.log("Hello How are You") */},
+                                                    initialValue:this.props.profileDetails.street_address_2, // have to write original onChange here if you need
+                                                    rules: [{required: true,whitespace:true}],
+                                                })}/>
+                                                <Street_Msg_kyc className="street2_kyc_msg">{this.state.street2msg}</Street_Msg_kyc>
                                             </Col>
                                         </Third_Row_kyc>
                                         <Fourth_Row_kyc>

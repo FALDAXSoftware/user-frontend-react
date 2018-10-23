@@ -1,6 +1,6 @@
 /* IN-built */
 import React, { Component } from 'react';
-import { Layout, Menu, Modal } from 'antd';
+import { Layout, Menu, Modal,Input,Button } from 'antd';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -9,6 +9,7 @@ import 'antd/dist/antd.css';
 /* Components */
 import Afterlog from "./Afterlog"
 import { Logout } from '../../Actions/Auth';
+import {globalVariables} from "../../Globals"
 const { Header } = Layout;
 
 /* Styled Components */
@@ -152,14 +153,41 @@ class LoggedNavigation extends Component {
     }
 
     handleComing = (e) => {
-        /* console.log(e); */
         this.setState({ comingSoon: false });
     }
 
     comingCancel = (e) => {
         this.setState({ comingSoon: false });
     }
+    send_email() {
+        const values = { email: this.state.email_address };
+        this.setState({ email_address: '' });
+        var re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
+        if (re.test(this.state.email_address)) {
 
+            this.setState({ email_msg: "" })
+            fetch(globalVariables.API_URL + "/users/email-subscription", {
+                method: "post",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(values)
+            })
+                .then(response => response.json())
+                .then((responseData) => {
+                    if (responseData.status == 500) {
+                        this.openNotification1();
+                    } else {
+                        this.openNotification();
+                        this.setState({ visible: false, email_msg: "" })
+                    }
+                })
+                .catch(error => { /* console.log(error) */ })
+        } else {
+            this.setState({ email_msg: "*email address not valid" })
+        }
+    }
     render() {
         let prof_name = this.props.profileDetails.first_name !== null && this.props.profileDetails.first_name !== undefined ? (this.props.profileDetails.first_name + " " + this.props.profileDetails.last_name) : "User";
         return (
@@ -190,13 +218,23 @@ class LoggedNavigation extends Component {
                 </SideNav>
                 <div>
                     <Modal
-                        visible={this.state.comingSoon}
-                        onOk={this.handleComing}
-                        className="Coming_soon"
-                        onCancel={this.comingCancel}
-                        footer={null}
-                    >
-                        <div style={{ textAlign: "center", color: "white" }}><h1 style={{ textAlign: "center", color: "white" }}>Coming Soon</h1></div>
+                            title={<img src="./images/Homepage/Footer_logo.png" />}
+                            visible={this.state.comingSoon}
+                            onOk={(e) => this.handleComing()}
+                            onCancel={(e) => this.comingCancel(e)}
+                            footer={null}
+                            width={520}
+                            height={150}
+                            className="simple-maps"
+                        >
+                        <div>
+                            <h3 style={{ fontSize: "32px" }}>Coming Soon</h3>
+                            <label style={{ color: 'green' }}> Please enter your email to get updates of FALDAX: </label>
+                            <Input placeholder="Please enter your email address" style={{ color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
+                            <div style={{ marginTop: '20px', minHeight: '20px' }}>
+                                <Button style={{ float: 'right', color: 'green', borderColor: 'green' }} onClick={() => this.send_email()}> RECEIVE UPDATE </Button>
+                            </div>
+                        </div>
                     </Modal>
                 </div>
             </Header_main>
