@@ -25,7 +25,7 @@ export default class CountryPick extends React.Component
     handleChange(value) {
        /*  console.log(`selected ${value}`); */
        this.setState({country_selected:value});
-        this.props.onCountryChange(value);
+        this.props.onCountryChange(value,"country");
     }
 
     handleBlur() {

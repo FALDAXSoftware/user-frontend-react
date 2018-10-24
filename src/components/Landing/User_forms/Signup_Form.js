@@ -343,7 +343,8 @@ class Signup_Form extends React.Component {
       description: desc,
     });
   };
-  render() {
+  render() 
+  {
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
     var me = this;
