@@ -25,6 +25,7 @@ const Footer_headers = styled.li`
     color: rgba( 40, 37, 40, 0.8 );
     font-weight: bold;
     line-height: 1.714;
+    width:100%;
     @media(max-width:1200px)
     {
         margin-top:30px;
@@ -34,6 +35,11 @@ const Footer_ul = styled.ul`
     margin-top:20px;
     list-style-type:none;
     padding: 0px;
+    width:100%;
+    color: rgba( 40, 37, 40, 0.8 );
+    font-size: 13px;
+    font-family: "Open sans";
+
     li:not(:first-child)
     {
         margin-top:20px;
@@ -72,6 +78,10 @@ const Icon_ul_1 = styled.ul`
        margin-right:15px; 
        margin-top:20px;
     }
+`
+
+const Icon_ul_1_header = styled(Icon_ul_1)`
+    display:block;
 `
 const Icon_ul_2 = styled.ul`
     display: inline-block;
@@ -161,7 +171,18 @@ const HR = styled.hr`
 const Footer_Link = styled(Link)`
     color:rgba(0, 0, 0, 0.65);
 `
-
+const FooterContainer = styled.div`
+@media(max-width:991px)
+{
+    text-align:center
+}
+`
+const FooterLinkCol = styled(Col)`
+@media(max-width:767px)
+{
+    display:none;
+}
+`
 export default class Footer_home extends Component {
     constructor(props) {
         super(props);
@@ -239,112 +260,113 @@ export default class Footer_home extends Component {
     render() {
         return (
             <Footer_main>
-                <Row>
-                    <Container>
-                        <Col span={24}>
-                            <Row>
-                                <Col xs={24} sm={12} md={7} lg={7} xl={5}>
-                                    <Footer_ul>
-                                        <Footer_headers>About Us</Footer_headers>
-                                        <li style={{ cursor: "pointer" }} >
-                                            <Footer_Link to="/about-us">About FALDAX</Footer_Link>
-                                        </li>
-                                        <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            Contact Us
+                <Container>
+                    <FooterContainer>
+                        <Row>
+                            <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
+                                <Footer_ul>
+                                    <Footer_headers>About Us</Footer_headers>
+                                    <li style={{ cursor: "pointer" }} >
+                                        <Footer_Link to="/about-us">About FALDAX</Footer_Link>
+                                    </li>
+                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        Contact Us
                                                 </li>
-                                        <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            Careers
+                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        Careers
                                                 </li>
-                                        <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            Media Contact
+                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        Media Contact
                                                 </li>
-                                    </Footer_ul>
-                                </Col>
-                                <Col xs={24} sm={12} md={8} lg={8} xl={5}>
-                                    <Footer_ul>
-                                        <Footer_headers>Lorem</Footer_headers>
-                                        <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            List your Token
+                                </Footer_ul>
+                            </FooterLinkCol>
+                            <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
+                                <Footer_ul>
+                                    <Footer_headers>Lorem</Footer_headers>
+                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        List your Token
                                                     </li>
-                                        <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            News
+                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        News
                                                     </li>
-                                        <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            Security
+                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        Security
                                                     </li>
-                                        {/* <li style={{cursor:"pointer"}} onClick={this.showComing}>Language</li> */}
-                                        <li onClick={this.showComing}>API Documentation</li>
-                                    </Footer_ul>
-                                </Col>
+                                    {/* <li style={{cursor:"pointer"}} onClick={this.showComing}>Language</li> */}
+                                    <li onClick={this.showComing}>API Documentation</li>
+                                </Footer_ul>
+                            </FooterLinkCol>
 
-                                <Col xs={24} sm={12} md={5} lg={3} xl={5}>
-                                    <Footer_ul>
-                                        <Footer_headers>For Users</Footer_headers>
-                                        <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            <Footer_Link to="/faq">FAQ</Footer_Link>
-                                        </li>
-                                        <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            Blog
+                            <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
+                                <Footer_ul>
+                                    <Footer_headers>For Users</Footer_headers>
+                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        <Footer_Link to="/faq">FAQ</Footer_Link>
+                                    </li>
+                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        Blog
                                                     </li>
-                                        <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            Support
+                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        Support
                                                     </li>
-                                        <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            Supported Countries
+                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        Supported Countries
                                                     </li>
-                                        <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            Legal & Privacy
+                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        Legal & Privacy
                                                     </li>
-                                    </Footer_ul>
-                                </Col>
+                                </Footer_ul>
+                            </FooterLinkCol>
 
-                                <Col xs={24} sm={11} md={12} lg={7} xl={5}>
-                                    <Icon_ul_1>
-                                        <Footer_headers>Social</Footer_headers>
-                                        <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            <img src="./images/Homepage/fb_icon.png" />
-                                        </LI>
-                                        <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            <img src="./images/Homepage/tweet_icon.png" />
-                                        </LI>
-                                        <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            <img src="./images/Homepage/google_icon.png" />
-                                        </LI>
-                                        <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            <img src="./images/Homepage/you_icon.png" />
-                                        </LI>
-                                    </Icon_ul_1>
-                                    <Icon_ul_2>
-                                        <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            <img src="./images/Homepage/insta_icon.png" />
-                                        </LI2>
-                                        <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            <img src="./images/Homepage/telegram_icon.png" />
-                                        </LI2>
-                                        <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            <img src="./images/Homepage/in_icon.png" />
-                                        </LI2>
-                                        <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                            <img src="./images/Homepage/www_icon.png" />
-                                        </LI2>
-                                    </Icon_ul_2>
-                                </Col>
-                                <Store_Col xs={24} sm={24} md={8} lg={2} xl={2}>
-                                    <Download>Download</Download>
-                                    <Store_Wrap>
-                                        <Appstore style={{ cursor: "pointer" }} onClick={this.showComing} src="./images/Homepage/appstore_icon.png" />
-                                        <Playstore style={{ cursor: "pointer" }} onClick={this.showComing} src="./images/Homepage/playstore_icon.png" />
-                                    </Store_Wrap>
-                                </Store_Col>
-                            </Row>
-                            <HR />
-                            <Bottom_Footer>
-                                <Footer_Text> ©2018 FALDAX. All Rights Reserved. </Footer_Text>
-                                <Footer_logo src="./images/Homepage/Footer_logo.png" />
-                            </Bottom_Footer>
-                        </Col>
-                    </Container>
-                </Row>
+                            <Col xs={24} lg={5} xl={5}>
+                                <Icon_ul_1_header>
+                                    <Footer_headers>Social</Footer_headers>
+                                </Icon_ul_1_header>
+                                <Icon_ul_1>
+
+                                    <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        <img src="./images/Homepage/fb_icon.png" />
+                                    </LI>
+                                    <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        <img src="./images/Homepage/tweet_icon.png" />
+                                    </LI>
+                                    <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        <img src="./images/Homepage/google_icon.png" />
+                                    </LI>
+                                    <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        <img src="./images/Homepage/you_icon.png" />
+                                    </LI>
+                                </Icon_ul_1>
+                                <Icon_ul_2>
+                                    <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        <img src="./images/Homepage/insta_icon.png" />
+                                    </LI2>
+                                    <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        <img src="./images/Homepage/telegram_icon.png" />
+                                    </LI2>
+                                    <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        <img src="./images/Homepage/in_icon.png" />
+                                    </LI2>
+                                    <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        <img src="./images/Homepage/www_icon.png" />
+                                    </LI2>
+                                </Icon_ul_2>
+                            </Col>
+                            <Store_Col xs={24} lg={2} xl={2}>
+                                <Download>Download</Download>
+                                <Store_Wrap>
+                                    <Appstore style={{ cursor: "pointer" }} onClick={this.showComing} src="./images/Homepage/appstore_icon.png" />
+                                    <Playstore style={{ cursor: "pointer" }} onClick={this.showComing} src="./images/Homepage/playstore_icon.png" />
+                                </Store_Wrap>
+                            </Store_Col>
+                        </Row>
+                    </FooterContainer>
+                    <HR />
+                    <Bottom_Footer>
+                        <Footer_Text> ©2018 FALDAX. All Rights Reserved. </Footer_Text>
+                        <Footer_logo src="./images/Homepage/Footer_logo.png" />
+                    </Bottom_Footer>
+                </Container>
                 <div>
                     <Modal
                         title={<img src="./images/Homepage/Footer_logo.png" />}

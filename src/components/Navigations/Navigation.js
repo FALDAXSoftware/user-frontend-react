@@ -170,6 +170,9 @@ const LOG = styled.span`
     display:inline-block;
     float:left;
     color: #818181;
+    &:hover{
+        color:#1890ff !important;
+    }
 `
 const SIGN = styled.span`
     display:inline-block;
@@ -195,7 +198,12 @@ const Right_div = styled.div`
         margin-top:0px;
     }
 `
-
+const NavLink = styled(Link)`
+    color: rgb( 40, 37, 40 ) !important;
+    &:hover{
+        color:#1890ff !important;
+    }
+`
 class Navigation extends React.Component {
     constructor(props) {
         super(props);
@@ -249,7 +257,7 @@ class Navigation extends React.Component {
 
     handleCancel = (e) => {
         console.log("Hello 123")
-        this.setState({ visible: false ,modal:5});
+        this.setState({ visible: false, modal: 5 });
     }
 
     showComing = () => {
@@ -341,9 +349,9 @@ class Navigation extends React.Component {
                     defaultSelectedKeys={['1']}
                     selectedKeys={this.state.selected}
                 >
-                    <Menu_item key="1"><Link className="Nav_selected" to="/login">HOME</Link></Menu_item>
+                    <Menu_item key="1"><NavLink className="Nav_selected" to="/">HOME</NavLink></Menu_item>
                     {/* <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item> */}
-                    <Menu_item key="2"><Link className="Nav_selected" to="/about-us">ABOUT</Link></Menu_item>
+                    <Menu_item key="2"><NavLink className="Nav_selected" to="/about-us">ABOUT</NavLink></Menu_item>
                     <Menu_item key="3" onClick={this.showComing}>SECURITY</Menu_item>
                     <Menu_item key="4" onClick={this.showComing}>NEWS</Menu_item>
                     <Menu_item key="5" onClick={this.showComing}>CONTACT</Menu_item>
@@ -364,7 +372,7 @@ class Navigation extends React.Component {
                             <SIGN onClick={this.dispModal.bind(this, "signup")}>SIGNUP</SIGN>
                         </div>
                     </Login_SignUp>
-                    <a onClick={this.showComing} href="#">Home</a>
+                    <Link to="/">Home</Link>
                     <a onClick={this.showComing} href="#">Features</a>
                     <Link to="/about-us">About</Link>
                     <a onClick={this.showComing} href="#">Security</a>
@@ -433,7 +441,7 @@ class Navigation extends React.Component {
                     >
                         <div>
                             <h3 style={{ fontSize: "32px", textAlign: "center" }}>Coming Soon</h3>
-                            <label  style={{ color: '#00a7ff' }}> Please enter your email to get updates of FALDAX: </label>
+                            <label style={{ color: '#00a7ff' }}> Please enter your email to get updates of FALDAX: </label>
                             <Input placeholder="Please enter your email address" style={{ color: '#00a7ff', borderColor: '#00a7ff' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
                             <div style={{ marginTop: '20px', minHeight: '20px' }}>
                                 <Button style={{ float: 'right', color: '#00a7ff', borderColor: '#00a7ff' }} onClick={() => this.send_email()}> RECEIVE UPDATE </Button>

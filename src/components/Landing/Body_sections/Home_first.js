@@ -11,7 +11,7 @@ import { Container } from '../../../styled-components/homepage/style';
 
 const Section = styled.section`
   width:100%;
-  height:100vh;
+  height:calc(100vh - 80px);
   background-image:url('/images/Homepage/banner.png');
   background-position: center;
   background-size: cover;
@@ -22,7 +22,6 @@ const Heading = styled.h2`
   color:white;
   font-family:"Open sans";
   margin-bottom:0px;
-  margin-top:20%;
   @media (max-width: 1199px) {
     font-size:50px;
     padding-left:30px;
@@ -39,6 +38,11 @@ const HeadingBrand = styled.span`
   @media (max-width: 991px) {
     color:white;
   }
+`
+const BannerRow = styled(Row)`
+    display: flex;
+    align-items: center;
+    height: 100%;
 `
 const SubHeading = styled.h3`
   font-size:26px;
@@ -68,9 +72,9 @@ export default class Homefirst extends Component {
   render() {
     return (
       <Section>
-        <Container>
-          <Row style={{}}>
-            <Col lg={{ span: 14 }}>
+        <Container style={{ height: "100%" }}>
+          <BannerRow>
+            <Col xs={24} lg={14}>
               <Heading>
                 Welcome to <HeadingBrand>FALDAX</HeadingBrand>
               </Heading>
@@ -78,10 +82,10 @@ export default class Homefirst extends Component {
                 Built For Traders, By Traders
                 </SubHeading>
             </Col>
-            <ImageCol lg={{ span: 10 }}>
+            <ImageCol lg={10}>
               <Img src="/images/logo-lg.png" width="80%" />
             </ImageCol>
-          </Row>
+          </BannerRow>
         </Container>
       </Section>
     );

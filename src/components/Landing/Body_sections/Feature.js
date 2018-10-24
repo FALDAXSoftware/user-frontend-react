@@ -16,60 +16,74 @@ const Section = styled.section`
   background-repeat: no-repeat;
   width:100%;
   background-color:#faf9f9;
-  padding-top:50px;
-  padding-bottom:50px;
+  padding:80px 0px 100px;
+  @media (max-width: 1199px) {
+    padding:40px 0px 50px;
+  }
 `
 const Heading = styled.h2`
   font-size:42px;
   color:white;
   font-family:"Open sans";
-  margin-bottom:0px;
+  margin-bottom:20px;
 `
 const HeadingBrand = styled.span`
   font-weight: bold;
 `
 const Row1 = styled(Row)`
   text-align : left;
+  display:flex !important;
+  height:100%;
+  align-items:center;
 `
 const Col_Left = styled(Col)`
-  margin-top:90px
+  padding:5px;
+  margin-top:5%;
   @media(max-width:992px)
   {
+    margin-top:0;
+    padding:20px;
     text-align:center;
   }
 `
 const Head1 = styled.span`
-  font-size: 41.97px;
+  font-size: 42px;
   font-family: "Open Sans";
   color: rgb( 255, 255, 255 );
   font-weight: bold;
   line-height: 0.429;
   text-align:left;
-  @media(max-width:992px)
+  @media(max-width:991px)
   {
     text-align:center;
+    font-size:26px;
   }
 `
 const Desc1 = styled.p`
-  font-size: 22px;
+  font-size: 16px;
   font-family: "Open Sans";
   color: rgb( 255, 255, 255 );
   margin-top:30px;
-  text-align:left;
-  @media(max-width:992px)
+  text-align:justify;
+  @media(max-width:991px)
   {
-    text-align:center;
+    text-align:justify;
   }
 `
 const Col_Right = styled(Col)`
-  @media(max-width:992px)
+  @media(max-width:991px)
   {
     display:none;
     text-align:center;
   }
 `
 const Feature_img = styled.div`
-  float:right;
+  text-align:right;
+  padding-right:5px;
+  width:100%;
+`
+const Img = styled.img`
+  display:inline-block !important;
 `
 
 function SampleNextArrow(props) {
@@ -96,7 +110,7 @@ function SampleNextArrow(props) {
 }
 
 function SamplePrevArrow(props) {
-  const {  onClick } = props;
+  const { onClick } = props;
   const PrevIcon = styled(Icon)`
   color: white;
   font-size: 36px;
@@ -123,7 +137,7 @@ export default class Feature extends Component {
     const settings = {
       dots: false,
       infinite: true,
-      speed: 1000,
+      speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
       nextArrow: <SampleNextArrow />,
@@ -153,7 +167,7 @@ export default class Feature extends Component {
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
                       <Feature_img>
-                        <img src="./images/Homepage/img_1.png" />
+                        <Img src="./images/Homepage/img_1.png" />
                       </Feature_img>
                     </Col_Right>
                   </Row1>
@@ -168,7 +182,7 @@ export default class Feature extends Component {
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
                       <Feature_img>
-                        <img src="./images/Homepage/img_10.png" />
+                        <Img src="./images/Homepage/img_10.png" />
                       </Feature_img>
                     </Col_Right>
                   </Row1>
@@ -183,7 +197,7 @@ export default class Feature extends Component {
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
                       <Feature_img>
-                        <img src="./images/Homepage/img_5.png" />
+                        <Img src="./images/Homepage/img_5.png" />
                       </Feature_img>
                     </Col_Right>
                   </Row1>
@@ -198,7 +212,7 @@ export default class Feature extends Component {
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
                       <Feature_img>
-                        <img src="./images/Homepage/img_6.png" />
+                        <Img src="./images/Homepage/img_6.png" />
                       </Feature_img>
                     </Col_Right>
                   </Row1>
@@ -213,7 +227,7 @@ export default class Feature extends Component {
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
                       <Feature_img>
-                        <img src="./images/Homepage/img_2.png" />
+                        <Img src="./images/Homepage/img_2.png" />
                       </Feature_img>
                     </Col_Right>
                   </Row1>
@@ -228,7 +242,7 @@ export default class Feature extends Component {
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
                       <Feature_img>
-                        <img src="./images/Homepage/img_7.png" />
+                        <Img src="./images/Homepage/img_7.png" />
                       </Feature_img>
                     </Col_Right>
                   </Row1>
@@ -243,7 +257,7 @@ export default class Feature extends Component {
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
                       <Feature_img>
-                        <img src="./images/Homepage/img_8.png" />
+                        <Img src="./images/Homepage/img_8.png" />
                       </Feature_img>
                     </Col_Right>
                   </Row1>
@@ -258,7 +272,7 @@ export default class Feature extends Component {
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
                       <Feature_img>
-                        <img src="./images/Homepage/img_9.png" />
+                        <Img src="./images/Homepage/img_9.png" />
                       </Feature_img>
                     </Col_Right>
                   </Row1>
@@ -273,7 +287,7 @@ export default class Feature extends Component {
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
                       <Feature_img>
-                        <img src="./images/Homepage/img_4.png" />
+                        <Img src="./images/Homepage/img_4.png" />
                       </Feature_img>
                     </Col_Right>
                   </Row1>
@@ -288,7 +302,7 @@ export default class Feature extends Component {
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
                       <Feature_img>
-                        <img src="./images/Homepage/img_3.png" />
+                        <Img src="./images/Homepage/img_3.png" />
                       </Feature_img>
                     </Col_Right>
                   </Row1>
