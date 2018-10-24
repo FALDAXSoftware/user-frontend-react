@@ -30,7 +30,7 @@ const Heading = styled.h2`
   @media (max-width: 991px) {
     text-align:center;
     padding-left:0px;
-    margin-top:8%;
+    
   }
 `
 const HeadingBrand = styled.span`
@@ -61,12 +61,15 @@ const Img = styled.img`
     display:none;
   }
 `
+const ImageCol = styled(Col)`
+  text-align:center;
+`
 export default class Homefirst extends Component {
   render() {
     return (
       <Section>
         <Container>
-          <Row style={{ paddingTop: "8%" }}>
+          <Row style={{}}>
             <Col lg={{ span: 14 }}>
               <Heading>
                 Welcome to <HeadingBrand>FALDAX</HeadingBrand>
@@ -75,9 +78,9 @@ export default class Homefirst extends Component {
                 Built For Traders, By Traders
                 </SubHeading>
             </Col>
-            <Col lg={{ span: 10 }}>
+            <ImageCol lg={{ span: 10 }}>
               <Img src="/images/logo-lg.png" width="80%" />
-            </Col>
+            </ImageCol>
           </Row>
         </Container>
       </Section>

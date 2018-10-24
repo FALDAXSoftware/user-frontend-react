@@ -30,7 +30,7 @@ const SubHeading = styled.h3`
   margin-bottom:40px;
 `
 const Paragraph = styled.p`
-  text-align:center;
+  text-align:justify;
   font-size:16px;
   color:black;
   font-family:"Open sans";
