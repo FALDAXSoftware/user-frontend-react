@@ -288,7 +288,7 @@ class PersonalDetails extends Component {
             }
             else
             {
-                this.openNotificationWithProfile("error","Error","Please fill out all required fields")
+                this.openNotificationWithProfile("error","Error","Please complete all required fields before continuing.")
             }
             if(this.state.firstIcon==null && this.props.profileDetails.first_name==null){
                 this.setState({ firstIcon: false })

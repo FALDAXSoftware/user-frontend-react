@@ -153,7 +153,7 @@ class Afterlog extends React.Component
                         </Exchange> */}
                 <DropDownDiv overlay={DropdownItems} trigger={['click']}>
                     <AnchorName className="ant-dropdown-link" href="#">
-                    {/* console.log(this.props,Avatar_img) */}
+                    {console.log(this.props,Avatar_img)}
                         <HeaderAvatar src={Avatar_img} />
                         <UserName>
                                 {this.props.prof_name}
