@@ -34,11 +34,20 @@ export default class Datepicker extends React.Component
             fields[type] = date;
         }
         
-        /* console.log(fields["day"],fields["year"],fields["month"], "State ===>" ,fields) */
-        if(fields["day"]!==undefined && fields["year"]!==undefined && fields["month"]!==undefined)
+        console.log(fields["day"],fields["year"],fields["month"], "State ===>" ,fields,this.props)
+        let propFields
+        if(this.props.profileDetails.dob!==null)
         {
-            this.props.onDateChange(fields)
+            propFields = this.props.profileDetails.dob.split("/");
+            if(fields["day"]==undefined && propFields[2]!==undefined){fields["day"]=propFields[2]}
+            if(fields["month"]==undefined && propFields[1]!==undefined){fields["month"]=propFields[1]}
+            if(fields["year"]==undefined && propFields[0]!==undefined){fields["year"]=propFields[0]}
+            
         }
+        
+        console.log(propFields)
+        
+        this.props.onDateChange(fields,"dob")
 
     }
     render()
