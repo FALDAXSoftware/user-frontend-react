@@ -217,22 +217,22 @@ class LoggedNavigation extends Component {
                     <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
                 </SideNav>
                 <div>
-                    <Modal
-                            title={<img src="./images/Homepage/Footer_logo.png" />}
-                            visible={this.state.comingSoon}
-                            onOk={(e) => this.handleComing()}
-                            onCancel={(e) => this.comingCancel(e)}
-                            footer={null}
-                            width={520}
-                            height={150}
-                            className="simple-maps"
-                        >
+                <Modal
+                        title={<img src="./images/Homepage/Footer_logo.png" />}
+                        visible={this.state.comingSoon}
+                        onOk={(e) => this.handleComing()}
+                        onCancel={(e) => this.comingCancel(e)}
+                        footer={null}
+                        width={520}
+                        height={150}
+                        className="simple-maps"
+                    >
                         <div>
-                            <h3 style={{ fontSize: "32px" }}>Coming Soon</h3>
-                            <label style={{ color: 'green' }}> Please enter your email to get updates of FALDAX: </label>
-                            <Input placeholder="Please enter your email address" style={{ color: 'green', borderColor: 'green' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
+                            <h3 style={{ fontSize: "32px", textAlign: "center" }}>Coming Soon</h3>
+                            <label  style={{ color: '#00a7ff' }}> Please enter your email to get updates of FALDAX: </label>
+                            <Input placeholder="Please enter your email address" style={{ color: '#00a7ff', borderColor: '#00a7ff' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
                             <div style={{ marginTop: '20px', minHeight: '20px' }}>
-                                <Button style={{ float: 'right', color: 'green', borderColor: 'green' }} onClick={() => this.send_email()}> RECEIVE UPDATE </Button>
+                                <Button style={{ float: 'right', color: '#00a7ff', borderColor: '#00a7ff' }} onClick={() => this.send_email()}> RECEIVE UPDATE </Button>
                             </div>
                         </div>
                     </Modal>

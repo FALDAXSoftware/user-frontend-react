@@ -115,7 +115,7 @@ class ResetPassword extends Component {
           document.querySelector("#newchange_icon_success").style.display = "none"
           document.querySelector("#newchange_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".pass_msg")[0].style.display = "block";
-          this.setState({ pass_msg: "Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+          this.setState({ pass_msg: "*Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
         }
       } else {
         this.setState({ newpassIcon: false, percent: 0 })
@@ -137,7 +137,7 @@ class ResetPassword extends Component {
           document.querySelector("#confirmchange_icon_success").style.display = "none"
           document.querySelector("#confirmchange_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
-          this.setState({ confirmPass_msg: "Password does not match." })
+          this.setState({ confirmPass_msg: "*Confirm Password does not match." })
         }
       } else {
         this.setState({ confirmIcon: false })

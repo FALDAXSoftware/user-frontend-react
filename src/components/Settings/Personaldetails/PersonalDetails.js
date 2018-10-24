@@ -245,7 +245,7 @@ class PersonalDetails extends Component {
                 document.querySelectorAll(".postal_msg")[0].style.display = "none";
                 this.setState({ first_msg: null, last_msg: null, country_msg: null, dob_msg: null, street_msg: null,street2_msg: null, city_msg: null, postal_msg: null, spin_show: true });
 
-                let number = Number(value.postal_code);
+                let number = value.postal_code;
                 let country = this.state.countrySelected;
                 if (this.state.Datedata !== undefined && this.state.Datedata !== null) {
                     dataDate = this.state.Datedata.year + "/" + this.state.Datedata.month + "/" + this.state.Datedata.day
@@ -261,7 +261,7 @@ class PersonalDetails extends Component {
                 profileData.append('last_name', value.last_name);
                 profileData.append('country', country);
                 profileData.append('street_address', value.street_address)
-                profileData.append('street_address_2', value.street_address2)
+                profileData.append('street_address_2', value.street_address_2)
                 profileData.append('city_town', value.city_town);
                 profileData.append('postal_code', number);
                 profileData.append('dob', dataDate);
@@ -293,6 +293,9 @@ class PersonalDetails extends Component {
                 if (error.first_name !== null && error.first_name !== undefined) {
                     if (error.first_name.errors[0].message !== undefined && error.first_name.errors[0].message !== null) {
                         document.querySelectorAll(".first_msg")[0].style.display = "block";
+                        if(error.first_name.errors[0].message.includes("2") || error.first_name.errors[0].message.includes("15"))
+                        this.setState({ firstmsg: "*First name should be of min. 2 and max. 15 characters" })
+                        else
                         this.setState({ firstmsg: "*First name is not valid" })
                     } else {
                         document.querySelectorAll(".first_msg")[0].style.display = "none";
@@ -302,6 +305,9 @@ class PersonalDetails extends Component {
                 if (error.last_name !== null && error.last_name !== undefined) {
                     if (error.last_name.errors[0].message !== undefined && error.last_name.errors[0].message !== null) {
                         document.querySelectorAll(".last_msg")[0].style.display = "block";
+                        if(error.last_name.errors[0].message.includes("2") || error.last_name.errors[0].message.includes("15"))
+                        this.setState({ lastmsg: "*Last name should be of min. 2 and max. 15 characters" })
+                        else
                         this.setState({ lastmsg: "*Last name is not valid" })
                     } else {
                         document.querySelectorAll(".last_msg")[0].style.display = "none";
@@ -310,8 +316,11 @@ class PersonalDetails extends Component {
                 }
                 if (error.street_address !== null && error.street_address !== undefined) {
                     if (error.street_address.errors[0].message !== undefined && error.street_address.errors[0].message !== null) {
-                        document.querySelectorAll(".street_msg")[0].style.display = "block";
+                        if(error.street_address.errors[0].message.includes("5") || error.street_address.errors[0].message.includes("20"))
+                        this.setState({ streetmsg: "*Street Address should be of min. 5 and max. 20 Characters" })
+                        else
                         this.setState({ streetmsg: "*Street Address is not valid" })
+                        document.querySelectorAll(".street_msg")[0].style.display = "block";
                     } else {
                         document.querySelectorAll(".street_msg")[0].style.display = "none";
                         this.setState({ streetmsg: null })
@@ -319,8 +328,11 @@ class PersonalDetails extends Component {
                 }
                 if (error.street_address_2 !== null && error.street_address_2 !== undefined) {
                     if (error.street_address_2.errors[0].message !== undefined && error.street_address_2.errors[0].message !== null) {
-                        document.querySelectorAll(".street2_msg")[0].style.display = "block";
+                        if(error.street_address_2.errors[0].message.includes("5") || error.street_address_2.errors[0].message.includes("20"))
+                        this.setState({ street2msg: "*Street Address should be of min. 5 and max. 20 Characters" })
+                        else
                         this.setState({ street2msg: "*Street Address is not valid" })
+                        document.querySelectorAll(".street2_msg")[0].style.display = "block";
                     } else {
                         document.querySelectorAll(".street2_msg")[0].style.display = "none";
                         this.setState({ street2msg: null })
@@ -328,8 +340,12 @@ class PersonalDetails extends Component {
                 }
                 if (error.city_town !== null && error.city_town !== undefined) {
                     if (error.city_town.errors[0].message !== undefined && error.city_town.errors[0].message !== null) {
-                        document.querySelectorAll(".city_msg")[0].style.display = "block";
+                        if(error.city_town.errors[0].message.includes("2") || error.city_town.errors[0].message.includes("20"))
+                        this.setState({ citymsg: "*City should have atleast 2 characters and max. 20 characters are allowed" })
+                        else
                         this.setState({ citymsg: "*City is not valid" })
+                        document.querySelectorAll(".city_msg")[0].style.display = "block";
+                       
                     } else {
                         document.querySelectorAll(".city_msg")[0].style.display = "none";
                         this.setState({ citymsg: null })
@@ -338,6 +354,9 @@ class PersonalDetails extends Component {
                 if (error.postal_code !== null && error.postal_code !== undefined) {
                     if (error.postal_code.errors[0].message !== undefined && error.postal_code.errors[0].message !== null) {
                         document.querySelectorAll(".postal_msg")[0].style.display = "block";
+                        if(error.city_town.errors[0].message.includes("2") || error.city_town.errors[0].message.includes("16"))
+                        this.setState({ postalmsg: "*Postal should have atleast 2 characters and max. 16 characters are allowed" })
+                        else
                         this.setState({ postalmsg: "*Postal is not valid" })
                     } else {
                         document.querySelectorAll(".postal_msg")[0].style.display = "none";
@@ -392,7 +411,8 @@ class PersonalDetails extends Component {
                 };
             } else {
                 /*  console.log(" elsse handleProfile") */
-                this.setState({ profileImg: "Default Photo", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' })
+                this.openNotificationWithProfile("error","Error","Please upload only images");
+                this.setState({ profileImg: "./images/Settings/def_profile.jpg", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' })
             }
 
             reader.readAsDataURL(file);
@@ -413,6 +433,13 @@ class PersonalDetails extends Component {
         notification[type]({
             message: 'Updating Profile',
             description: 'Please wait...',
+            duration: 3,
+        });
+    };
+    openNotificationWithProfile = (type,head,desc) => {
+        notification[type]({
+            message: head,
+            description: desc,
             duration: 3,
         });
     };
@@ -455,7 +482,7 @@ class PersonalDetails extends Component {
                                         <First_input placeholder="First Name" {...getFieldProps('first_name', {
                                             onChange() {/* console.log("Hello How are You") */ },
                                             initialValue: profileDetails.first_name, // have to write original onChange here if you need
-                                            rules: [{ required: true, whitespace: true }]
+                                            rules: [{ required: true, whitespace: true,min:2,max:15 }]
                                         })} />
                                         <First_Msg className="first_msg">{this.state.firstmsg}</First_Msg>
                                     </Col>
@@ -464,7 +491,7 @@ class PersonalDetails extends Component {
                                         <Last_input placeholder="Last Name" {...getFieldProps('last_name', {
                                             onChange() {/* console.log("Hello How are You") */ },
                                             initialValue: profileDetails.last_name,// have to write original onChange here if you need
-                                            rules: [{ required: true, whitespace: true }],
+                                            rules: [{ required: true, whitespace: true,min:2,max:15 }],
                                         })} />
                                         <Last_Msg className="last_msg">{this.state.lastmsg}</Last_Msg>
                                     </Col>
@@ -487,7 +514,7 @@ class PersonalDetails extends Component {
                                         <Street_input placeholder="Street Address" {...getFieldProps('street_address', {
                                             onChange() {/* console.log("Hello How are You") */ },
                                             initialValue: profileDetails.street_address, // have to write original onChange here if you need
-                                            rules: [{ required: true, whitespace: true }],
+                                            rules: [{ required: true, whitespace: true ,min:5 , max:20 }],
                                         })} />
                                         <Street_Msg className="street_msg">{this.state.streetmsg}</Street_Msg>
                                     </Col>
@@ -496,7 +523,7 @@ class PersonalDetails extends Component {
                                         <Street_input placeholder="Street Address" {...getFieldProps('street_address_2', {
                                             onChange() {/* console.log("Hello How are You") */ },
                                             initialValue: profileDetails.street_address_2, // have to write original onChange here if you need
-                                            rules: [{ required: true, whitespace: true }],
+                                            rules: [{ required: true, whitespace: true,min:5 , max:20 }],
                                         })} />
                                         <Street_Msg className="street2_msg">{this.state.street2msg}</Street_Msg>
                                     </Street_2_Col>
@@ -507,7 +534,7 @@ class PersonalDetails extends Component {
                                         <First_input placeholder="City"{...getFieldProps('city_town', {
                                             onChange() {/* console.log("Hello How are You") */ },
                                             initialValue: profileDetails.city_town, // have to write original onChange here if you need
-                                            rules: [{ required: true, whitespace: true }],
+                                            rules: [{ required: true, whitespace: true,min:2,max:20 }],
                                         })} />
                                         <City_Msg className="city_msg">{citymsg}</City_Msg>
                                     </Col>
@@ -516,7 +543,7 @@ class PersonalDetails extends Component {
                                         <Last_input placeholder="Postal Code"{...getFieldProps('postal_code', {
                                             onChange() {/* console.log("Hello How are You") */ },
                                             initialValue: profileDetails.postal_code,// have to write original onChange here if you need
-                                            rules: [{ required: true, whitespace: true }],
+                                            rules: [{type:"string", required: true, whitespace: true ,min:2 , max:16 }],
                                         })} />
                                         <Postal_Msg className="postal_msg">{postalmsg}</Postal_Msg>
                                     </Col>

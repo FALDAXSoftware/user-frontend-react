@@ -115,12 +115,12 @@ export default class Beforelog extends React.Component
         return(
                     <div>
                         
-                        <Day_night_mode>
+                       {/*  <Day_night_mode>
                             <span> <FontAwesomeIcon icon={faMoon} color='black' style={{transform: 'rotate(315deg)'}} /> </span>
                         </Day_night_mode>
                         <Exchange>
                             <span  onClick={this.showComing}> CAREERS </span>
-                        </Exchange>
+                        </Exchange> */}
                       {/*   <Exchange onClick={this.showComing}>
                             <span  onClick={this.showComing}> LANGUAGE </span>
                         </Exchange> */}

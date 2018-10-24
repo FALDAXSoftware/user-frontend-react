@@ -156,16 +156,15 @@ class Signup_Form extends React.Component {
       confirmIcon: false,
       stroke: "",
       status: "",
-      percent: 0
+      percent: 0,
+      init:""
     }
   }
 
   static propTypes = {
     form: formShape,
   };
-
   componentWillReceiveProps(props, newProps) {
-    /* console.log("-------->>>>>>>",props,newProps) */
     if (props.isSignUp) {
       if (props.isSignUp.status == 200) {
         // this.openNotificationWithIcon('success', 'Sign In', props.isSignUp.message);
@@ -191,7 +190,6 @@ class Signup_Form extends React.Component {
       }
     });
   }
-
   onChangeField(value, field) {
     if (field == "email") {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -216,20 +214,31 @@ class Signup_Form extends React.Component {
         document.querySelectorAll(".email_sign")[0].style.display = "none";
       }
     } else if (field == "firstname") {
-      var re = /^[a-zA-Z ]{2,15}$/;
+      var re = /^[a-zA-Z0-9]{2,15}$/;
       var bool = re.test(value);
       if (value !== "") {
         if (bool == true) {
-          this.setState({ firstIcon: true })
-          document.querySelector("#first_icon_success").style.display = "inline-block"
-          document.querySelector("#first_icon_fail").style.display = "none"
-          document.querySelectorAll(".first_sign")[0].style.display = "none";
+          var regexnum = /^[0-9]*$/;
+          if(regexnum.test(value))
+          {
+            this.setState({ firstIcon: false })
+            document.querySelector("#first_icon_success").style.display = "none"
+            document.querySelector("#first_icon_fail").style.display = "inline-block"
+            document.querySelectorAll(".first_sign")[0].style.display = "block";
+            this.setState({ first_msg: "*Only numbers are not allowed" })
+          }
+          else{
+            this.setState({ firstIcon: true })
+            document.querySelector("#first_icon_success").style.display = "inline-block"
+            document.querySelector("#first_icon_fail").style.display = "none"
+            document.querySelectorAll(".first_sign")[0].style.display = "none";
+          }
         } else {
           this.setState({ firstIcon: false })
           document.querySelector("#first_icon_success").style.display = "none"
           document.querySelector("#first_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".first_sign")[0].style.display = "block";
-          this.setState({ first_msg: "*First Name should have min. 2 and max. 15 characters" })
+          this.setState({ first_msg: "*First Name should have min. 2 and max. 15 characters and no special characters are allowed" })
         }
       } else {
         this.setState({ firstIcon: false })
@@ -238,20 +247,32 @@ class Signup_Form extends React.Component {
         document.querySelectorAll(".first_sign")[0].style.display = "none";
       }
     } else if (field == "lastname") {
-      var re = /^[a-zA-Z ]{2,15}$/;
+      var re =/^[a-zA-Z0-9]{2,15}$/;
       var bool = re.test(value);
       if (value !== "") {
         if (bool == true) {
-          this.setState({ lastIcon: true })
-          document.querySelector("#last_icon_success").style.display = "inline-block";
-          document.querySelector("#last_icon_fail").style.display = "none";
-          document.querySelectorAll(".last_sign")[0].style.display = "none";
+          var regexnum = /^[0-9]*$/;
+          if(regexnum.test(value))
+          {
+            this.setState({ lastIcon: false })
+            document.querySelector("#last_icon_success").style.display = "none"
+            document.querySelector("#last_icon_fail").style.display = "inline-block"
+            document.querySelectorAll(".last_sign")[0].style.display = "block";
+            this.setState({ last_msg: "*Only numbers are not allowed" })
+          }
+          else
+          {
+            this.setState({ lastIcon: true })
+            document.querySelector("#last_icon_success").style.display = "inline-block";
+            document.querySelector("#last_icon_fail").style.display = "none";
+            document.querySelectorAll(".last_sign")[0].style.display = "none";
+          }
         } else {
           this.setState({ lastIcon: false })
           document.querySelector("#last_icon_success").style.display = "none";
           document.querySelector("#last_icon_fail").style.display = "inline-block";
           document.querySelectorAll(".last_sign")[0].style.display = "block";
-          this.setState({ last_msg: "*Last Name should have min. 2 and max. 15 characters" })
+          this.setState({ last_msg: "*Last Name should have min. 2 and max. 15 characters and no special characters are allowed" })
         }
       } else {
         this.setState({ lastIcon: false })
@@ -280,7 +301,7 @@ class Signup_Form extends React.Component {
           document.querySelector("#pass_icon_success").style.display = "none"
           document.querySelector("#pass_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".pass_sign")[0].style.display = "block";
-          this.setState({ pass_msg: "Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+          this.setState({ pass_msg: "*Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
         }
       } else {
         this.setState({ passIcon: false, percent: 0 })
@@ -338,6 +359,7 @@ class Signup_Form extends React.Component {
           <div>
             <Full {...getFieldProps('firstname', {
               onChange(e) { me.onChangeField(e.target.value, "firstname") }, // have to write original onChange here if you need
+              initialValue:me.props.init,
               rules: [{ type: "string", required: true }],
             })} />
             <FirstIconS id="first_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
@@ -349,6 +371,7 @@ class Signup_Form extends React.Component {
           <div>
             <Full {...getFieldProps('lastname', {
               onChange(e) { me.onChangeField(e.target.value, "lastname") }, // have to write original onChange here if you need
+              initialValue:me.props.init,
               rules: [{ type: "string", required: true }],
             })} />
             <LastIconS id="last_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
@@ -360,6 +383,7 @@ class Signup_Form extends React.Component {
           <div>
             <Email {...getFieldProps('email', {
               onChange(e) { me.onChangeField(e.target.value, "email") }, // have to write original onChange here if you need
+              initialValue:me.props.init,
               rules: [{ type: "email", required: true }],
             })}
             />
@@ -372,6 +396,7 @@ class Signup_Form extends React.Component {
           <div>
             <Password type="password" {...getFieldProps('password', {
               onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
+              initialValue:me.props.init,
               rules: [{ type: "string", required: true, min: 8 }],
             })}
             />
@@ -384,6 +409,7 @@ class Signup_Form extends React.Component {
           <div>
             <Password type="password" {...getFieldProps('confirm_password', {
               onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
+              initialValue:me.props.init,
               rules: [{ type: "string", required: true, min: 8 }],
             })}
             />
@@ -396,6 +422,7 @@ class Signup_Form extends React.Component {
           <div>
             <Referral {...getFieldProps('referral_code', {
               onChange() {/* console.log("Hello How are You") */ }, // have to write original onChange here if you need
+              initialValue:me.props.init,
               rules: [{ type: "string", required: false }],
             })}
             />

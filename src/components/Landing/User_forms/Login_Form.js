@@ -76,7 +76,7 @@ export const Username = styled.input`
 export const Email_req = styled.div`
   display:none;
   color:red;
-  font-size:10px;
+  font-size:11px;
   width:76%;
 `
 export const UserIconS = styled(Icon)`
@@ -307,7 +307,7 @@ class Login_Form extends React.Component {
           document.querySelector("#otp_icon_success").style.display = "none"
           document.querySelector("#otp_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".otp_msg")[0].style.display = "block";
-          this.setState({ otp_msg: "Otp should have 6 characters." })
+          this.setState({ otp_msg: "*Otp should have 6 characters." })
         }
       } else {
         this.setState({ otpIcon: false })

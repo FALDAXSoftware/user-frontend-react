@@ -255,6 +255,7 @@ const Progress_bar = styled(Progress)`
     margin-top:20px;
     width:100%;
 `
+let confPass,password;
 class Passwordchange extends React.Component {
     constructor(props) {
         super(props)
@@ -272,7 +273,8 @@ class Passwordchange extends React.Component {
             QR_img: null,
             otp_msg: null,
             percent: "",
-            stroke: ''
+            stroke: '',
+            confPass:""
         }
     }
     static propTypes = {
@@ -307,7 +309,7 @@ class Passwordchange extends React.Component {
         this.props.form.validateFields((error, value) => {
             /* console.log("-----<<<...",error,value)
             console.log(this.state,this.props) */
-            if (error == null && this.state.currentpassIcon == true && this.state.newpassIcon == true && this.state.confirmIcon == true) {
+            if (error == null && this.state.newpassIcon == true && this.state.confirmIcon == true) {
                 /*  console.log("HELLO !@#") */
                 document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
                 document.querySelectorAll(".newchange_msg")[0].style.display = "none";
@@ -345,6 +347,18 @@ class Passwordchange extends React.Component {
         //     }
         // }
         if (field == "new_password") {
+            console.log(value,confPass)
+            password=value;
+            if(confPass!==undefined)
+            {
+                if(confPass==value)
+                {
+                    this.setState({ confirmIcon: false })
+                    document.querySelector("#confirmchange_icon_success").style.display = "none"
+                    document.querySelector("#confirmchange_icon_fail").style.display = "none"
+                    document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
+                }
+            }
             var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
             var bool = re.test(value);
             var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
@@ -356,6 +370,7 @@ class Passwordchange extends React.Component {
             if (value !== "") {
                 if (bool == true) {
                     this.setState({ newpassIcon: true, password: value })
+                    
                     document.querySelector("#newchange_icon_success").style.display = "inline-block"
                     document.querySelector("#newchange_icon_fail").style.display = "none"
                     document.querySelectorAll(".newchange_msg")[0].style.display = "none";
@@ -364,7 +379,7 @@ class Passwordchange extends React.Component {
                     document.querySelector("#newchange_icon_success").style.display = "none"
                     document.querySelector("#newchange_icon_fail").style.display = "inline-block"
                     document.querySelectorAll(".newchange_msg")[0].style.display = "block";
-                    this.setState({ new_msg: "Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+                    this.setState({ new_msg: "*Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
                 }
             } else {
                 this.setState({ newpassIcon: false, percent: 0 })
@@ -374,8 +389,10 @@ class Passwordchange extends React.Component {
             }
         }
         if (field == "confirm_password") {
-            var bool = this.state.password == value ? true : false
+            console.log(value,password)
+            var bool = password == value ? true : false
             if (value !== "") {
+                this.setState({confPass:value})
                 if (bool == true) {
                     this.setState({ confirmIcon: true })
                     document.querySelector("#confirmchange_icon_success").style.display = "inline-block"
@@ -386,7 +403,7 @@ class Passwordchange extends React.Component {
                     document.querySelector("#confirmchange_icon_success").style.display = "none"
                     document.querySelector("#confirmchange_icon_fail").style.display = "inline-block"
                     document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
-                    this.setState({ confirmPass_msg: "Password does not match." })
+                    this.setState({ confirmPass_msg: "*Password does not match." })
                 }
             } else {
                 this.setState({ confirmIcon: false })
