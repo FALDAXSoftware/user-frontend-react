@@ -255,7 +255,7 @@ const Progress_bar = styled(Progress)`
     margin-top:20px;
     width:100%;
 `
-let confPass,password;
+let password;
 class Passwordchange extends React.Component {
     constructor(props) {
         super(props)
@@ -347,11 +347,11 @@ class Passwordchange extends React.Component {
         //     }
         // }
         if (field == "new_password") {
-            console.log(value,confPass)
             password=value;
-            if(confPass!==undefined)
+            if(this.state.confPass!==undefined)
             {
-                if(confPass === value)
+                console.log("abcd",this.state.confPass,value)
+                if(this.state.confPass === value)
                 {
                     this.setState({ confirmIcon: true })
                     document.querySelector("#confirmchange_icon_success").style.display = "none"
@@ -362,11 +362,12 @@ class Passwordchange extends React.Component {
             var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
             var bool = re.test(value);
             var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
-            if (numb.test(value) || letters.test(value)) { this.setState({ status: "active", stroke: "red", percent: 20 }) }
-            if (alphanum.test(value)) { this.setState({ status: "active", stroke: "orange", percent: 40 }) }
-            if (alphanum.test(value) && value.length == 6) { this.setState({ status: "exception", stroke: "yellow", percent: 60 }) }
-            if (re.test(value) && value.length == 6) { this.setState({ status: "success", stroke: "#7CFC00", percent: 80 }) }
-            if (re.test(value) && value.length >= 10) { this.setState({ status: "success", stroke: "#008000", percent: 100 }) }
+            if (numb.test(value) || letters.test(value)) {console.log("first"); this.setState({ stroke: "red", percent: 20 }) }
+            if (alphanum.test(value) && value.length < 60) {console.log("second"); this.setState({ stroke: "orange", percent: 40 }) }
+            if (alphanum.test(value) && value.length == 6) {console.log("3"); this.setState({ stroke: "yellow", percent: 60 }) }
+            if (re.test(value) && value.length == 6) {console.log("4"); this.setState({ stroke: "#7CFC00", percent: 80 }) }
+            if (re.test(value) && value.length >= 10 && value.length < 60) {console.log("5"); this.setState({ stroke: "#008000", percent: 100 }) }
+            if (re.test(value) && value.length > 60) {console.log("6"); this.setState({ stroke: "red", percent: 0 }) }
             if (value !== "") {
                 if (bool == true) {
                     this.setState({ newpassIcon: true, password: value })
@@ -523,7 +524,7 @@ class Passwordchange extends React.Component {
                 <ChangeRow>
                     <ChangeCol>
                         <Old>
-                            <Old_label>Old Password</Old_label>
+                            <Old_label>Old Password*</Old_label>
                             <div>
                                 <OldInput type={typeEye}  {...getFieldProps('current_password', {
                                     onChange(e) { me.onChangeField(e.target.value, "current_password") }, // have to write original onChange here if you need
@@ -538,7 +539,7 @@ class Passwordchange extends React.Component {
                             <Email_req className="oldchange_msg">{current_msg}</Email_req>
                         </Old>
                         <NewP>
-                            <New_label>New Password</New_label>
+                            <New_label>New Password*</New_label>
                             <div>
                                 <NewInput type={newEye} {...getFieldProps('new_password', {
                                     onChange(e) { me.onChangeField(e.target.value, "new_password") }, // have to write original onChange here if you need
@@ -553,7 +554,7 @@ class Passwordchange extends React.Component {
                             <Email_req className="newchange_msg">{this.state.new_msg}</Email_req>
                         </NewP>
                         <Repeat>
-                            <Repeat_label>Repeat New Password</Repeat_label>
+                            <Repeat_label>Repeat New Password*</Repeat_label>
                             <div>
                                 <RepeatInput type={repeatEye} {...getFieldProps('confirm_password', {
                                     onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need

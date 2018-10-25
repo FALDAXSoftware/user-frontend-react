@@ -6,8 +6,13 @@ import { Button, notification, Icon } from "antd";
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+
 /* Components */
+
 import { Login, clearLogin } from '../../../Actions/Auth';
+import { globalVariables } from '../../../Globals';
+
+let { API_URL } = globalVariables;
 /* Global Constants */
 
 /* Styled-Components */
@@ -92,7 +97,7 @@ const Ph_Label = styled(Email_label)`
 export const Phone_req = styled.label`
   display:none;
   color:red;
-  font-size:10px;
+  font-size:11px;
   width:76%;
 `
 const Password = styled(Username)`
@@ -105,7 +110,7 @@ const PassIconS = styled(UserIconF)`
 export const Pass_req = styled.label`
   display:none;
   color:red;
-  font-size:10px;
+  font-size:11px;
   width:76%;
 `
 const OtpLabel = styled(Email_label)`
@@ -222,7 +227,7 @@ class Login_Form extends React.Component {
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
 
-        if (this.props.forgotParam !== undefined) { value['email_verify_token'] = this.props.forgotParam[1]; }
+        /* if (this.props.forgotParam !== undefined) { value['email_verify_token'] = this.props.forgotParam[1]; } */
         /* console.log("I am in") */
         this.props.Login(value);
       } else {
@@ -258,7 +263,7 @@ class Login_Form extends React.Component {
           document.querySelector("#userlog_icon_fail").style.display = "inline-block"
           document.querySelector("#userlog_icon_success").style.display = "none"
           document.querySelectorAll(".user_msg")[0].style.display = "block";
-          this.setState({ email_msg: "*email address is not valid" })
+          this.setState({ email_msg: "*Email address is not valid" })
         }
       } else {
         this.setState({ emailIcon: false })
@@ -328,6 +333,33 @@ class Login_Form extends React.Component {
       }
     }
   }
+  componentDidMount()
+  {
+    console.log(this.props)
+    var query = this.props.location.search.split("=")
+    console.log(query)
+    if(query[0]!=="")
+    {
+      var queryObj = {};
+      queryObj["email_verify_token"] = query[1]
+      fetch(API_URL+"/users/verify-user",{
+            method:"post",
+            headers: {
+                Authorization:"Bearer " + this.propsisLoggedIn
+            },
+            body:JSON.stringify(queryObj)
+        })
+        .then(response => response.json())
+        .then((responseData) => {
+          if(responseData.status==200)
+            this.openNotificationWithIcon('success', 'Verified', responseData.message);
+          else
+            this.openNotificationWithIcon('error','Not Verified',responseData.err)
+        })
+        .catch(error => { /* console.log(error) */ })
+ 
+    }
+  }
   componentWillReceiveProps(props, newProps) {
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
@@ -338,7 +370,7 @@ class Login_Form extends React.Component {
           isOtpRequired: true
         });
         // document.querySelector("#otp-field").focus();
-        this.openNotificationWithIcon('error', 'Error', props.errorStatus.err);
+        /* this.openNotificationWithIcon('error', 'Error', props.errorStatus.err); */
       } else {
         this.openNotificationWithIcon('error', 'Error', props.errorStatus.err);
       }

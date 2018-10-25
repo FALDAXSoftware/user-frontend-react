@@ -23,7 +23,10 @@ class App extends Component {
     this.state = {
     }
   }
-  
+  componentWillReceiveProps(props,newProps)
+  {
+    console.log("Hello 9898")
+  }
   render() {
     /* console.log(this.props) */
     const {isLoggedIn} = this.props

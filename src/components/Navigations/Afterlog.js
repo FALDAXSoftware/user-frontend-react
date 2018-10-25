@@ -127,16 +127,17 @@ class Afterlog extends React.Component
             </Menu>
         )
         let Avatar_img
+        console.log(this.props)
         if(this.props.profileDetails!==undefined)
         {
             if(this.props.profileDetails.profile_pic!==null && this.props.profileDetails.profile_pic!==undefined && this.props.profileDetails.profile_pic!=="")
             {
-                /* console.log("aaaaaaaaaa") */
+                console.log("aaaaaaaaaa")
                 Avatar_img = globalVariables.amazon_Bucket + this.props.profileDetails.profile_pic;
             }
             else
             {
-                /* console.log("vbbbbbbbbbbbbb") */
+                console.log("vbbbbbbbbbbbbb")
                 Avatar_img =  "./images/Settings/def_profile.png";
             }
         }

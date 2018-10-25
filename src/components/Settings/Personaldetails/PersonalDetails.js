@@ -11,7 +11,7 @@ import Datepicker from "./Datepicker"
 import CountryPick from "./Country"
 import { Email_req } from "../../Landing/User_forms/Login_Form"
 import { globalVariables } from "../../../Globals"
-import { profileupdateAction, removepicAction, getProfileDataAction } from "../../../Actions/Settings/settings"
+import { profileupdateAction, removepicAction, getProfileDataAction,clearEditData } from "../../../Actions/Settings/settings"
 import { faAsterisk } from '@fortawesome/free-solid-svg-icons';
 
 const { TextArea } = Input;
@@ -283,12 +283,12 @@ class PersonalDetails extends Component {
                 if (this.state.profileImage !== null && this.state.profileImage !== undefined)
                     profileData.append('profile_pic', this.state.profileImage)
                 /* console.log(profileData) */
-                this.openNotificationWithIcon('warning');
+                
                 this.props.profileupdateAction(this.props.isLoggedIn, profileData);
             }
             else
             {
-                this.openNotificationWithProfile("error","Error","Please complete all required fields before continuing.")
+                this.openNotificationWithProfile("error","Error","Please complete all required details to continue")
             }
             if(this.state.firstIcon==null && this.props.profileDetails.first_name==null){
                 this.setState({ firstIcon: false })
@@ -367,6 +367,13 @@ class PersonalDetails extends Component {
             /* console.log("abababababababb",this.state.removedProfile,this.state.profileImg) */
             this.setState({ profileImg: "./images/Settings/def_profile.jpg", spin_show: false })
         }
+        console.log(props.apiMessage,props.apiMessage=="User details updated successfully")
+        if(props.apiStatus==200 && props.apiMessage=="User details updated successfully")
+        {
+            console.log(props.apiStatus)
+            this.openNotificationWithProfile("success","Success","Profile updated successfully");
+            this.props.clearEditData();
+        }
     }
     handleProfile(e) {
         try {
@@ -374,7 +381,7 @@ class PersonalDetails extends Component {
             const file = e.target.files[0];
             const fileType = e.target.files[0] && e.target.files[0].type ? e.target.files[0].type.substring(0, e.target.files[0].type.indexOf('/')) : '';
             const fileSize = e.target.files[0] && e.target.files[0].size ? e.target.files[0].size : 0;
-            /* console.log("handleProfile") */
+            console.log(fileType,"handleProfile")
             //check file size to max 5mb (5*1024*1024=5242880) and type image
             if (fileType === 'image' && fileSize < 5242880) {
                 reader.onload = (upload) => {
@@ -387,9 +394,15 @@ class PersonalDetails extends Component {
                     });
                 };
             } else {
-                /*  console.log(" elsse handleProfile") */
-                this.openNotificationWithProfile("error","Error","Please upload only images");
-                this.setState({ profileImg: "./images/Settings/def_profile.jpg", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' })
+                console.log(fileType,"elsse handleProfile")
+                if(fileType!=="")
+                {
+                    this.openNotificationWithProfile("error","Error","Please upload only images");
+                    
+                }
+                else{
+                    /* this.setState({ profileImg: "./images/Settings/def_profile.jpg", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' }) */
+                }
             }
 
             reader.readAsDataURL(file);
@@ -430,6 +443,7 @@ class PersonalDetails extends Component {
     onChangeField(value,field)
     {
         console.log("Hello1")
+        if(field!=="dob")
         value=value.trim();
         if(field=="first_name")
         {
@@ -596,6 +610,7 @@ class PersonalDetails extends Component {
         }
         else if(field=="city_town")
         {
+            console.log("CITY_TOWN")
             if(value!=="")
             {
                 if(value.length>=2 && value.length<=20)
@@ -606,7 +621,7 @@ class PersonalDetails extends Component {
                 else{
                     this.setState({ cityIcon: false })
                     document.querySelectorAll(".city_msg")[0].style.display = "block";
-                 this.setState({ postalmsg: "City field should be between 2 and 20 characters" })
+                 this.setState({ citymsg: "City field should be between 2 and 20 characters" })
                 }
             }
             else
@@ -618,6 +633,7 @@ class PersonalDetails extends Component {
         }
         else if(field=="postal_code")
         {
+            console.log("postal_code")
             if(value!=="")
             {
                 if(value.length>=2 && value.length<=20)
@@ -758,18 +774,21 @@ class PersonalDetails extends Component {
     }
 }
 const mapStateToProps = (state) => {
-    /*  console.log("personalDetails",state,state.simpleReducer.loader) */
+     console.log("personalDetails",state,state.simpleReducer.loader)
     return {
         ...state,
         email: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].email : "",
         profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
-        loader: state.simpleReducer.loader
+        loader: state.simpleReducer.loader,
+        apiStatus: state.simpleReducer.update !== undefined ? state.simpleReducer.update.status:"",
+        apiMessage:state.simpleReducer.update !== undefined ? state.simpleReducer.update.message:""
     }
 }
 const mapDispatchToProps = dispatch => ({
     profileupdateAction: (isLoggedIn, form) => dispatch(profileupdateAction(isLoggedIn, form)),
     getProfileDataAction: (isLoggedIn) => dispatch(getProfileDataAction(isLoggedIn)),
     removepicAction: (isLoggedIn, form) => dispatch(removepicAction(isLoggedIn, form)),
+    clearEditData:()=> dispatch(clearEditData())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails));

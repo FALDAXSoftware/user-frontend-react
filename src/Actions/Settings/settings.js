@@ -17,12 +17,17 @@ export function profileupdateAction(isLoggedIn,form)
         })
         .then(response => response.json())
         .then((responseData) => {
-           /*  console.log(responseData); */
+            console.log(responseData);
            dispatch(profileupdatedData(responseData))
            dispatch(getProfileDataAction(isLoggedIn))
         })
         .catch(error => { /* console.log(error) */ })
     } 
+}
+export function clearEditData() {
+    return (dispatch) => {
+        dispatch(profileupdatedData())
+    }
 }
 
 export const profileupdatedData = (Data) => dispatch => {

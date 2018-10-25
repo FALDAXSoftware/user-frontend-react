@@ -130,7 +130,7 @@ class Forgot_Form extends React.Component {
             if (value.email == "" || value.email == undefined)
               this.setState({ email_msg: `*${error.email.errors[0].message}` })
             else
-              this.setState({ email_msg: "*email address is not valid" })
+              this.setState({ email_msg: "*Email address is not valid" })
           } else {
             document.querySelectorAll(".email_msg")[0].style.display = "none";
             this.setState({ email_msg: null })
