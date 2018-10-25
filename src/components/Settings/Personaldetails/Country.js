@@ -59,6 +59,7 @@ export default class CountryPick extends React.Component
                 value={this.state.country_selected!==""?this.state.country_selected:this.props.profileDetails.country}
                 placeholder="Select a Country"
                 className="Country_Select"
+                dropdownClassName="country_select_drop"
                 optionFilterProp="children"
                 onChange={this.handleChange}
                 onBlur={this.handleBlur}

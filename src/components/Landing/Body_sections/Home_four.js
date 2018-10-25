@@ -138,8 +138,8 @@ class Home_four extends Component {
                     if (modal.properties.name == "Colorado") {
                         this.setState({ visible: true, modal: 1, email_address: '' });
                         return;
-                    } else {
-                        this.setState({ visible: true, modal: 'usa_neutral', email_address: '' });
+                    } else if (this.state.countries[i].name == modal.properties.name) {
+                        this.setState({ visible: true, modal: this.state.countries[i].legality, email_address: '' });
                         return;
                     }
                 } else if (this.state.countries[i].name == modal.properties.name) {

@@ -13,8 +13,8 @@ import { Login, clearLogin } from '../../../Actions/Auth';
 /* Styled-Components */
 export const Form_wrap = styled.div`
   padding-left:60px;
-  padding-top:60px;
-
+  padding-top:50px;
+  min-height:630px;
   @media(min-width:1024px) and  (max-width:1440px)
   {
     padding-left: 30px;
@@ -29,7 +29,7 @@ const Login_head = styled.div`
   text-transform: uppercase;
   text-align: left;
   padding-bottom: 10px;
-  border-bottom: 2px solid;
+  border-bottom: 3px solid #dbe4eb;
   display: inline-block;
   @media(min-width:1024px) and  (max-width:1440px)
   {
@@ -40,8 +40,8 @@ export const Welcome_text = styled.div`
   font-size: 24px;
   font-family: "Open Sans";
   color: rgb( 0, 0, 0 );
-  font-weight: bold;
-  margin-top:60px;
+  font-weight: 600;
+  margin-top:50px;
   @media(min-width:1024px) and  (max-width:1440px)
   {
     margin-top: 15px;
@@ -50,9 +50,8 @@ export const Welcome_text = styled.div`
 export const Email_label = styled.div`
   font-size: 14px;
   font-family: "Open Sans";
-  font-weight: bold;
   color: black;
-  margin-top: 50px;
+  margin-top: 40px;
   @media(min-width:1024px) and  (max-width:1440px)
   {
     margin-top: 25px;
@@ -68,6 +67,7 @@ export const Username = styled.input`
   height:50px;
   font-size:16px;
   display:inline-block;
+  outline-color: #e0e0e0;
   @media(min-width:1024px) and (max-width:1440px)
   {
     height:35px;
@@ -91,12 +91,13 @@ const Ph_Label = styled(Email_label)`
 `
 export const Phone_req = styled.label`
   display:none;
-  color:red;
+  color:red; 
   font-size:10px;
   width:76%;
 `
 const Password = styled(Username)`
   font-size:16px;
+  padding-right:35px;
 `
 const PassIconF = styled(UserIconS)`
 `
@@ -171,10 +172,17 @@ const Button_login = styled(Button)`
   {
     margin-top: 40px;
   }
+  &:hover{
+    color:#0f477b;
+    border-color:#0f477b;
+    background-color:white;
+  }
 `
 const Sign = styled.div`
   margin-top: 50px;
   margin-bottom: 60px;
+  font-size: 16px;
+  font-family: "Open Sans";
   @media(max-width:400px)
   {
     margin-top: 50px;
@@ -191,240 +199,243 @@ const Sign_a = styled.a`
   color:#0f477b;
   font-weight:bold;
 `
-const FAI = styled(FontAwesomeIcon)`
-  margin-left:10px;
+const FAI = styled.img`
+  margin-left:-35px;
   cursor:pointer;
 `
+const Active_FAI = styled(FAI)`
+    
+`
 class Login_Form extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email_msg: null,
-      pass_msg: null,
-      otp_msg: null,
-      passIcon: null,
-      emailIcon: null,
-      otpIcon: null,
-      typeEye: "password",
-      isOtpRequired: false,
-    }
-  }
-
-  static propTypes = {
-    form: formShape,
-  };
-
-  submit = () => {
-    this.props.form.validateFields((error, value) => {
-      /* console.log("validate Fields",error,value,this.state) */
-      if (error == null && this.state.emailIcon == true) {
-        document.querySelectorAll(".pass_msg")[0].style.display = "none";
-        document.querySelectorAll(".user_msg")[0].style.display = "none";
-        this.setState({ pass_msg: null, email_msg: null });
-
-        if (this.props.forgotParam !== undefined) { value['email_verify_token'] = this.props.forgotParam[1]; }
-        /* console.log("I am in") */
-        this.props.Login(value);
-      } else {
-        this.openNotificationWithIcon('error', "Error", "Please complete all required fields before continuing.")
-      }
-    });
-  }
-
-  dispModal(pressed) {
-    this.props.dispModal(pressed)
-  }
-
-  openNotificationWithIcon(type, head, desc) {
-    notification[type]({
-      message: head,
-      description: desc,
-    });
-  };
-
-  onChangeField(value, field) {
-    if (field == "username") {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      var bool = re.test(String(value).toLowerCase());
-      if (value !== "") {
-        if (bool == true) {
-          /* console.log("EmailICON is true") */
-          this.setState({ emailIcon: true })
-          document.querySelector("#userlog_icon_success").style.display = "inline-block"
-          document.querySelector("#userlog_icon_fail").style.display = "none"
-          document.querySelectorAll(".user_msg")[0].style.display = "none";
-        } else {
-          this.setState({ emailIcon: false })
-          document.querySelector("#userlog_icon_fail").style.display = "inline-block"
-          document.querySelector("#userlog_icon_success").style.display = "none"
-          document.querySelectorAll(".user_msg")[0].style.display = "block";
-          this.setState({ email_msg: "*email address is not valid" })
+    constructor(props) {
+        super(props);
+        this.state = {
+            email_msg: null,
+            pass_msg: null,
+            otp_msg: null,
+            passIcon: null,
+            emailIcon: null,
+            otpIcon: null,
+            typeEye: "password",
+            isOtpRequired: false,
         }
-      } else {
-        this.setState({ emailIcon: false })
-        document.querySelector("#userlog_icon_success").style.display = "none"
-        document.querySelector("#userlog_icon_fail").style.display = "none"
-        document.querySelectorAll(".user_msg")[0].style.display = "none";
-      }
     }
-    //password shouldn't have validation except required. 
 
-    //  else if (field == "password") {
-    //   var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
-    //   var bool = re.test(value);
-    //   if (value !== "") {
-    //     if (bool == true) {
-    //       /* console.log("passIcon is true") */
-    //       this.setState({ passIcon: true, password: value })
-    //       document.querySelector("#passlog_icon_success").style.display = "inline-block"
-    //       document.querySelector("#passlog_icon_fail").style.display = "none"
-    //       document.querySelectorAll(".pass_msg")[0].style.display = "none";
-    //     } else {
-    //       this.setState({ passIcon: false })
-    //       document.querySelector("#passlog_icon_success").style.display = "none"
-    //       document.querySelector("#passlog_icon_fail").style.display = "inline-block"
-    //       document.querySelectorAll(".pass_msg")[0].style.display = "block";
-    //       this.setState({ pass_msg: "Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
-    //     }
-    //   } else {
-    //     this.setState({ passIcon: false })
-    //     document.querySelector("#passlog_icon_success").style.display = "none"
-    //     document.querySelector("#passlog_icon_fail").style.display = "none"
-    //     document.querySelectorAll(".pass_msg")[0].style.display = "none";
-    //   }
-    // }
-    else if (field == "otp") {
-      var re = /^\b[a-zA-Z0-9]{6}\b|\b[a-zA-Z0-9]{6}\b/;
-      var bool = re.test(value);
-      if (value !== "") {
-        if (bool == true) {
-          this.setState({ otpIcon: true })
-          document.querySelector("#otp_icon_success").style.display = "inline-block"
-          document.querySelector("#otp_icon_fail").style.display = "none"
-          document.querySelectorAll(".otp_msg")[0].style.display = "none";
-        } else {
-          this.setState({ otpIcon: false })
-          document.querySelector("#otp_icon_success").style.display = "none"
-          document.querySelector("#otp_icon_fail").style.display = "inline-block"
-          document.querySelectorAll(".otp_msg")[0].style.display = "block";
-          this.setState({ otp_msg: "*Otp should have 6 characters." })
-        }
-      } else {
-        this.setState({ otpIcon: false })
-        document.querySelector("#otp_icon_success").style.display = "none"
-        document.querySelector("#otp_icon_fail").style.display = "none"
-        document.querySelectorAll(".otp_msg")[0].style.display = "none";
-      }
-    }
-  }
-  handleEye(e) {
-    /* console.log("Hello i  am here",document.getElementById("logPass"),document.getElementById("logPass").type) */
-    if (document.getElementById("logPass").type !== undefined) {
-      /* console.log("I am in") */
-      if (document.getElementById("logPass").type == "password") {
-        this.setState({ typeEye: "text" })
-      } else {
-        this.setState({ typeEye: "password" })
-      }
-    }
-  }
-  componentWillReceiveProps(props, newProps) {
-    if (props.errorStatus) {
-      if (props.errorStatus.status == 200) {
-        this.openNotificationWithIcon('success', 'Login Successful', props.errorStatus.message);
-        /* this.props.dispModal("login"); */
-      } else if (props.errorStatus.status == 201) {
-        this.setState({
-          isOtpRequired: true
+    static propTypes = {
+        form: formShape,
+    };
+
+    submit = () => {
+        this.props.form.validateFields((error, value) => {
+            /* console.log("validate Fields",error,value,this.state) */
+            if (error == null && this.state.emailIcon == true) {
+                document.querySelectorAll(".pass_msg")[0].style.display = "none";
+                document.querySelectorAll(".user_msg")[0].style.display = "none";
+                this.setState({ pass_msg: null, email_msg: null });
+
+                if (this.props.forgotParam !== undefined) { value['email_verify_token'] = this.props.forgotParam[1]; }
+                /* console.log("I am in") */
+                this.props.Login(value);
+            } else {
+                this.openNotificationWithIcon('error', "Error", "Please complete all required fields before continuing.")
+            }
         });
-        // document.querySelector("#otp-field").focus();
-        this.openNotificationWithIcon('error', 'Error', props.errorStatus.err);
-      } else {
-        this.openNotificationWithIcon('error', 'Error', props.errorStatus.err);
-      }
-      this.props.clearLogin();
     }
-  }
 
-  render() {
-    if (this.props.isLoggedIn) {
-      this.props.history.push("/editProfile");
+    dispModal(pressed) {
+        this.props.dispModal(pressed)
     }
-    var me = this;
-    let errors;
-    const { getFieldProps, getFieldError } = this.props.form;
 
-    return (
-      <Form_wrap>
-        <Login_head>Login</Login_head>
-        <Welcome_text>Welcome Back!</Welcome_text>
-        <Email_label>Email Address</Email_label>
-        <div>
-          <Username {...getFieldProps('email', {
-            onChange(e) { me.onChangeField(e.target.value, "username") }, // have to write original onChange here if you need
-            rules: [{ type: "email", required: true }],
-          })} />
-          <UserIconS id="userlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-          <UserIconF id="userlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-        </div>
-        <Email_req className="user_msg">{this.state.email_msg}</Email_req>
-        <Ph_Label>Password</Ph_Label>
-        <div>
-          <Password id="logPass" type={this.state.typeEye} {...getFieldProps('password', {
-            onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
-            rules: [{ type: "string", required: true, min: 5 }],
-          })}
-          />
-          {
-            (this.state.typeEye == "password") ? <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this)} /> : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this)} />
-          }
-          <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-          <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-        </div>
-        <Pass_req className="pass_msg">{this.state.pass_msg}</Pass_req>
+    openNotificationWithIcon(type, head, desc) {
+        notification[type]({
+            message: head,
+            description: desc,
+        });
+    };
 
-        {this.state.isOtpRequired &&
-          <div>
-            <OtpLabel>Your Two Factor Authentiaction is ON. So Please Check Google Authenticator App in Your Device and add OTP here</OtpLabel>
-            <div>
-              <Username id="otp-field" {...getFieldProps('otp', {
-                onChange(e) { me.onChangeField(e.target.value, "otp") }, // have to write original onChange here if you need
-                rules: [{ required: false }],
-              })} />
-              <UserIconS id="otp_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-              <UserIconF id="otp_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-            </div>
-            <Email_req className="otp_msg">{this.state.otp_msg}</Email_req>
-          </div>
+    onChangeField(value, field) {
+        if (field == "username") {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            var bool = re.test(String(value).toLowerCase());
+            if (value !== "") {
+                if (bool == true) {
+                    /* console.log("EmailICON is true") */
+                    this.setState({ emailIcon: true })
+                    document.querySelector("#userlog_icon_success").style.display = "inline-block"
+                    document.querySelector("#userlog_icon_fail").style.display = "none"
+                    document.querySelectorAll(".user_msg")[0].style.display = "none";
+                } else {
+                    this.setState({ emailIcon: false })
+                    document.querySelector("#userlog_icon_fail").style.display = "inline-block"
+                    document.querySelector("#userlog_icon_success").style.display = "none"
+                    document.querySelectorAll(".user_msg")[0].style.display = "block";
+                    this.setState({ email_msg: "*email address is not valid" })
+                }
+            } else {
+                this.setState({ emailIcon: false })
+                document.querySelector("#userlog_icon_success").style.display = "none"
+                document.querySelector("#userlog_icon_fail").style.display = "none"
+                document.querySelectorAll(".user_msg")[0].style.display = "none";
+            }
         }
-        <Check_wrap>
-          {/* <Remember>
-            <Check type="checkbox" /> Remember Me</Remember> */}
-          <Forgot onClick={() => this.dispModal("forgot")}>Forgot Password?</Forgot>
-        </Check_wrap>
+        //password shouldn't have validation except required. 
 
-        {(errors = getFieldError('required')) ? errors.join(',') : null}
-        <Button_login onClick={this.submit}>LOGIN</Button_login>
-        <Sign>
-          No account? <Sign_a onClick={() => this.dispModal("signup")}>Sign Up</Sign_a>
-        </Sign>
-      </Form_wrap>
-    );
-  }
+        //  else if (field == "password") {
+        //   var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
+        //   var bool = re.test(value);
+        //   if (value !== "") {
+        //     if (bool == true) {
+        //       /* console.log("passIcon is true") */
+        //       this.setState({ passIcon: true, password: value })
+        //       document.querySelector("#passlog_icon_success").style.display = "inline-block"
+        //       document.querySelector("#passlog_icon_fail").style.display = "none"
+        //       document.querySelectorAll(".pass_msg")[0].style.display = "none";
+        //     } else {
+        //       this.setState({ passIcon: false })
+        //       document.querySelector("#passlog_icon_success").style.display = "none"
+        //       document.querySelector("#passlog_icon_fail").style.display = "inline-block"
+        //       document.querySelectorAll(".pass_msg")[0].style.display = "block";
+        //       this.setState({ pass_msg: "Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+        //     }
+        //   } else {
+        //     this.setState({ passIcon: false })
+        //     document.querySelector("#passlog_icon_success").style.display = "none"
+        //     document.querySelector("#passlog_icon_fail").style.display = "none"
+        //     document.querySelectorAll(".pass_msg")[0].style.display = "none";
+        //   }
+        // }
+        else if (field == "otp") {
+            var re = /^\b[a-zA-Z0-9]{6}\b|\b[a-zA-Z0-9]{6}\b/;
+            var bool = re.test(value);
+            if (value !== "") {
+                if (bool == true) {
+                    this.setState({ otpIcon: true })
+                    document.querySelector("#otp_icon_success").style.display = "inline-block"
+                    document.querySelector("#otp_icon_fail").style.display = "none"
+                    document.querySelectorAll(".otp_msg")[0].style.display = "none";
+                } else {
+                    this.setState({ otpIcon: false })
+                    document.querySelector("#otp_icon_success").style.display = "none"
+                    document.querySelector("#otp_icon_fail").style.display = "inline-block"
+                    document.querySelectorAll(".otp_msg")[0].style.display = "block";
+                    this.setState({ otp_msg: "*Otp should have 6 characters." })
+                }
+            } else {
+                this.setState({ otpIcon: false })
+                document.querySelector("#otp_icon_success").style.display = "none"
+                document.querySelector("#otp_icon_fail").style.display = "none"
+                document.querySelectorAll(".otp_msg")[0].style.display = "none";
+            }
+        }
+    }
+    handleEye(e) {
+        /* console.log("Hello i  am here",document.getElementById("logPass"),document.getElementById("logPass").type) */
+        if (document.getElementById("logPass").type !== undefined) {
+            /* console.log("I am in") */
+            if (document.getElementById("logPass").type == "password") {
+                this.setState({ typeEye: "text" })
+            } else {
+                this.setState({ typeEye: "password" })
+            }
+        }
+    }
+    componentWillReceiveProps(props, newProps) {
+        if (props.errorStatus) {
+            if (props.errorStatus.status == 200) {
+                this.openNotificationWithIcon('success', 'Login Successful', props.errorStatus.message);
+                /* this.props.dispModal("login"); */
+            } else if (props.errorStatus.status == 201) {
+                this.setState({
+                    isOtpRequired: true
+                });
+                // document.querySelector("#otp-field").focus();
+                this.openNotificationWithIcon('error', 'Error', props.errorStatus.err);
+            } else {
+                this.openNotificationWithIcon('error', 'Error', props.errorStatus.err);
+            }
+            this.props.clearLogin();
+        }
+    }
+
+    render() {
+        if (this.props.isLoggedIn) {
+            this.props.history.push("/editProfile");
+        }
+        var me = this;
+        let errors;
+        const { getFieldProps, getFieldError } = this.props.form;
+
+        return (
+            <Form_wrap>
+                <Login_head>Login</Login_head>
+                <Welcome_text>Welcome Back!</Welcome_text>
+                <Email_label>Email Address</Email_label>
+                <div>
+                    <Username {...getFieldProps('email', {
+                        onChange(e) { me.onChangeField(e.target.value, "username") }, // have to write original onChange here if you need
+                        rules: [{ type: "email", required: true }],
+                    })} />
+                    <UserIconS id="userlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                    <UserIconF id="userlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                </div>
+                <Email_req className="user_msg">{this.state.email_msg}</Email_req>
+                <Ph_Label>Password</Ph_Label>
+                <div>
+                    <Password id="logPass" type={this.state.typeEye} {...getFieldProps('password', {
+                        onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
+                        rules: [{ type: "string", required: true, min: 5 }],
+                    })}
+                    />
+                    {
+                        (this.state.typeEye == "password") ? <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this)} /> : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this)} />
+                    }
+                    <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                    <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                </div>
+                <Pass_req className="pass_msg">{this.state.pass_msg}</Pass_req>
+
+                {this.state.isOtpRequired &&
+                    <div>
+                        <OtpLabel>Your Two Factor Authentiaction is ON. So Please Check Google Authenticator App in Your Device and add OTP here</OtpLabel>
+                        <div>
+                            <Username id="otp-field" {...getFieldProps('otp', {
+                                onChange(e) { me.onChangeField(e.target.value, "otp") }, // have to write original onChange here if you need
+                                rules: [{ required: false }],
+                            })} />
+                            <UserIconS id="otp_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                            <UserIconF id="otp_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                        </div>
+                        <Email_req className="otp_msg">{this.state.otp_msg}</Email_req>
+                    </div>
+                }
+                <Check_wrap>
+                    {/* <Remember>
+            <Check type="checkbox" /> Remember Me</Remember> */}
+                    <Forgot onClick={() => this.dispModal("forgot")}>Forgot Password?</Forgot>
+                </Check_wrap>
+
+                {(errors = getFieldError('required')) ? errors.join(',') : null}
+                <Button_login onClick={this.submit}>LOGIN</Button_login>
+                <Sign>
+                    No account? <Sign_a onClick={() => this.dispModal("signup")}>Sign Up</Sign_a>
+                </Sign>
+            </Form_wrap>
+        );
+    }
 }
 
 function mapStateToProps(state) {
-  /*   console.log(state) */
-  return ({
-    isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
-    errorStatus: state.simpleReducer.errorStatus !== undefined ? state.simpleReducer.errorStatus : undefined,
-    // isOtpRequired:state.simpleReducer.isOtpRequired,
-  })
+    /*   console.log(state) */
+    return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
+        errorStatus: state.simpleReducer.errorStatus !== undefined ? state.simpleReducer.errorStatus : undefined,
+        // isOtpRequired:state.simpleReducer.isOtpRequired,
+    })
 }
 
 const mapDispatchToProps = dispatch => ({
-  Login: (values) => dispatch(Login(values)),
-  clearLogin: () => dispatch(clearLogin())
+    Login: (values) => dispatch(Login(values)),
+    clearLogin: () => dispatch(clearLogin())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Login_Form));

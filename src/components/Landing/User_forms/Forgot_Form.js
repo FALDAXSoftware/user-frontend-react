@@ -21,7 +21,7 @@ const Login_head = styled.div`
   text-transform: uppercase;
   text-align: left;                                                                                         
   padding-bottom: 10px;
-  border-bottom: 2px solid;
+  border-bottom: 3px solid #dbe4eb;
   display: inline-block;
   @media(max-width :400px)
   {
@@ -188,7 +188,7 @@ class Forgot_Form extends React.Component {
         <Form_wrap>
           <Login_head>Forgot Password</Login_head>
           <Welcome_text>Forgot Password?</Welcome_text>
-          <Sub_text>Don't worry, It happen's to the best of us</Sub_text>
+          <Sub_text>Don't worry, It happen's to the best of us.</Sub_text>
           <Email_label>Email Address</Email_label>
           <Username {...getFieldProps('email', {
             onChange() { /* console.log("Hello How are You") */ }, // have to write original onChange here if you need

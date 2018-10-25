@@ -78,6 +78,11 @@ const SignupButton = styled(Button)`
         color: #0f477b;
 
     }
+    &:focus{
+        background-color:#0f477b;
+        border-color:2px solid #0f477b;
+        color:white;
+    }
 `
 const Open = styled.span`
     display:none;

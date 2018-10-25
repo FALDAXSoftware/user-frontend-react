@@ -24,7 +24,7 @@ const Login_head = styled.div`
   text-transform: uppercase;
   text-align: left;
   padding-bottom: 10px;
-  border-bottom: 2px solid;
+  border-bottom: 3px solid #dbe4eb;
   display: inline-block;
   @media(min-width:1024px) and  (max-width:1440px)
   {
@@ -42,6 +42,7 @@ const Passconfirm_Label = styled(Email_label)`
 `
 const Full = styled(Username)`
   margin-top:15px;
+  padding-right:40px;
 `
 const Full_req = styled(Email_req)`
 `
@@ -49,6 +50,7 @@ const Common_req = styled(Email_req)`
 `
 const Password = styled(Username)`
 margin-top:15px;
+padding-right:40px;
 `
 const Button_login = styled(Button)`
   width: 110px;
@@ -64,20 +66,26 @@ const Button_login = styled(Button)`
   font-weight: bold;
   text-transform: uppercase;
   line-height: 2.875;
-  margin-top:50px;
   @media (min-width:1024px) and (max-width:1440px)
   {
     margin-top: 50px;
   }
+  &:hover{
+    color:#0f477b;
+    border-color:#0f477b;
+    background-color:white;
+  }
 `
-const FAI = styled(FontAwesomeIcon)`
+const FAI = styled.img`
     cursor:pointer;
     display:inline-block;
     position: absolute;
-    margin-left: -25px;
-    margin-top: 30px;
+    margin-left: -35px;
+    margin-top: 33px;
 `
-
+const Active_FAI = styled(FAI)`
+  margin-top: 28px;  
+`
 class ResetPassword extends Component {
   constructor(props) {
     super(props)
@@ -239,8 +247,8 @@ class ResetPassword extends Component {
             })} />
             {
               (newEye == "password") ?
-                <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "new")} />
-                : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "new")} />
+                <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "new")} />
+                : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "new")} />
             }
             <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
             <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
@@ -258,8 +266,8 @@ class ResetPassword extends Component {
             />
             {
               (repeatEye == "password") ?
-                <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "confirm_password")} />
-                : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "confirm_password")} />
+                <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "confirm_password")} />
+                : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "confirm_password")} />
             }
             <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
             <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />

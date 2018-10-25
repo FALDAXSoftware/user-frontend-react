@@ -19,7 +19,7 @@ const Login_head = styled.div`
   text-transform: uppercase;
   text-align: left;
   padding-bottom: 10px;
-  border-bottom: 2px solid;
+  border-bottom: 3px solid #dbe4eb;
   display: inline-block;
   @media(min-width:1024px) and  (max-width:1440px)
   {
@@ -28,6 +28,11 @@ const Login_head = styled.div`
 `
 const Welcome = styled(Welcome_text)`
   margin-top: 25px;
+`
+const SubHeading = styled.span`
+font-size: 16px;
+font-family: "Open Sans";
+color: #a3a3a3;
 `
 const Email_lab = styled(Email_label)`
   margin-top: 35px;
@@ -113,11 +118,18 @@ const Button_login = styled(Button)`
   {
     margin-top: 20px;
   }
+  &:hover{
+    color:#0f477b;
+    border-color:#0f477b;
+    background-color:white;
+  }
 
 `
 const Sign = styled.div`
   margin-top: 30px;
   margin-bottom: 60px;
+  font-size: 16px;
+  font-family: "Open Sans";
   @media (min-width:1024px) and (max-width:1440px)
   {
     margin-top: 13px;
@@ -157,7 +169,7 @@ class Signup_Form extends React.Component {
       stroke: "",
       status: "",
       percent: 0,
-      init:""
+      init: ""
     }
   }
 
@@ -219,15 +231,14 @@ class Signup_Form extends React.Component {
       if (value !== "") {
         if (bool == true) {
           var regexnum = /^[0-9]*$/;
-          if(regexnum.test(value))
-          {
+          if (regexnum.test(value)) {
             this.setState({ firstIcon: false })
             document.querySelector("#first_icon_success").style.display = "none"
             document.querySelector("#first_icon_fail").style.display = "inline-block"
             document.querySelectorAll(".first_sign")[0].style.display = "block";
             this.setState({ first_msg: "*Only numbers are not allowed" })
           }
-          else{
+          else {
             this.setState({ firstIcon: true })
             document.querySelector("#first_icon_success").style.display = "inline-block"
             document.querySelector("#first_icon_fail").style.display = "none"
@@ -247,21 +258,19 @@ class Signup_Form extends React.Component {
         document.querySelectorAll(".first_sign")[0].style.display = "none";
       }
     } else if (field == "lastname") {
-      var re =/^[a-zA-Z0-9]{2,15}$/;
+      var re = /^[a-zA-Z0-9]{2,15}$/;
       var bool = re.test(value);
       if (value !== "") {
         if (bool == true) {
           var regexnum = /^[0-9]*$/;
-          if(regexnum.test(value))
-          {
+          if (regexnum.test(value)) {
             this.setState({ lastIcon: false })
             document.querySelector("#last_icon_success").style.display = "none"
             document.querySelector("#last_icon_fail").style.display = "inline-block"
             document.querySelectorAll(".last_sign")[0].style.display = "block";
             this.setState({ last_msg: "*Only numbers are not allowed" })
           }
-          else
-          {
+          else {
             this.setState({ lastIcon: true })
             document.querySelector("#last_icon_success").style.display = "inline-block";
             document.querySelector("#last_icon_fail").style.display = "none";
@@ -343,8 +352,7 @@ class Signup_Form extends React.Component {
       description: desc,
     });
   };
-  render() 
-  {
+  render() {
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
     var me = this;
@@ -354,13 +362,13 @@ class Signup_Form extends React.Component {
         <Form_wrap>
           <Login_head>Sign Up</Login_head>
           <Welcome>A Better Trading Experience is Moments Away</Welcome>
-          <span>Lets Get Started</span>
+          <SubHeading>Lets Get Started</SubHeading>
 
           <Email_label>First Name</Email_label>
           <div>
             <Full {...getFieldProps('firstname', {
               onChange(e) { me.onChangeField(e.target.value, "firstname") }, // have to write original onChange here if you need
-              initialValue:me.props.init,
+              initialValue: me.props.init,
               rules: [{ type: "string", required: true }],
             })} />
             <FirstIconS id="first_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
@@ -372,7 +380,7 @@ class Signup_Form extends React.Component {
           <div>
             <Full {...getFieldProps('lastname', {
               onChange(e) { me.onChangeField(e.target.value, "lastname") }, // have to write original onChange here if you need
-              initialValue:me.props.init,
+              initialValue: me.props.init,
               rules: [{ type: "string", required: true }],
             })} />
             <LastIconS id="last_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
@@ -384,7 +392,7 @@ class Signup_Form extends React.Component {
           <div>
             <Email {...getFieldProps('email', {
               onChange(e) { me.onChangeField(e.target.value, "email") }, // have to write original onChange here if you need
-              initialValue:me.props.init,
+              initialValue: me.props.init,
               rules: [{ type: "email", required: true }],
             })}
             />
@@ -397,7 +405,7 @@ class Signup_Form extends React.Component {
           <div>
             <Password type="password" {...getFieldProps('password', {
               onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
-              initialValue:me.props.init,
+              initialValue: me.props.init,
               rules: [{ type: "string", required: true, min: 8 }],
             })}
             />
@@ -410,7 +418,7 @@ class Signup_Form extends React.Component {
           <div>
             <Password type="password" {...getFieldProps('confirm_password', {
               onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
-              initialValue:me.props.init,
+              initialValue: me.props.init,
               rules: [{ type: "string", required: true, min: 8 }],
             })}
             />
@@ -423,7 +431,7 @@ class Signup_Form extends React.Component {
           <div>
             <Referral {...getFieldProps('referral_code', {
               onChange() {/* console.log("Hello How are You") */ }, // have to write original onChange here if you need
-              initialValue:me.props.init,
+              initialValue: me.props.init,
               rules: [{ type: "string", required: false }],
             })}
             />

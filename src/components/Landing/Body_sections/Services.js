@@ -55,6 +55,9 @@ const SlideRow = styled(Row)`
   display:flex !important;
   height:100%;
   align-items:center;
+  @media (max-width: 991px) {
+    padding:0px 5px;
+  }
 `
 
 function SampleNextArrow(props) {

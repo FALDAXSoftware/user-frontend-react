@@ -22,6 +22,7 @@ const Heading = styled.h2`
 `
 const HeadingBrand = styled.span`
   font-weight: bold;
+  white-space: nowrap;
 `
 const SubHeading = styled.h3`
   font-size:14px;
