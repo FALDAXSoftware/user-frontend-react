@@ -366,8 +366,8 @@ class Passwordchange extends React.Component {
             console.log(value, confPass)
             password = value;
             if (confPass !== undefined) {
-                if (confPass == value) {
-                    this.setState({ confirmIcon: false })
+                if (confPass === value) {
+                    this.setState({ confirmIcon: true })
                     document.querySelector("#confirmchange_icon_success").style.display = "none"
                     document.querySelector("#confirmchange_icon_fail").style.display = "none"
                     document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
@@ -404,7 +404,7 @@ class Passwordchange extends React.Component {
         }
         if (field == "confirm_password") {
             console.log(value, password)
-            var bool = password == value ? true : false
+            var bool = (password === value) ? true : false
             if (value !== "") {
                 this.setState({ confPass: value })
                 if (bool == true) {

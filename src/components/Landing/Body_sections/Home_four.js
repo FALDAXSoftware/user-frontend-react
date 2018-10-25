@@ -242,6 +242,7 @@ class Home_four extends Component {
             .catch(error => { /* console.log(error) */ })
     }
     render() {
+
         let self = this;
         const { modal, countries } = this.state;
         return (
