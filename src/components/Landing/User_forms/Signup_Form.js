@@ -40,12 +40,16 @@ const Email_lab = styled(Email_label)`
 const FirstIconS = styled(Icon)`
   font-size:19px;
   display:none;
-  margin-left:10px;
+  margin-left:8px;
+  margin-bottom: -4px;
+
 `
 const FirstIconF = styled(Icon)`
   font-size:19px;
   display:none;
-  margin-left:10px;
+  margin-left:8px;
+  margin-bottom: -4px;
+
 `
 const LastIconS = styled(FirstIconS)`
 `
@@ -56,12 +60,20 @@ const EmailIconS = styled(FirstIconS)`
 const EmailIconF = styled(FirstIconF)`
 `
 const PassIconS = styled(FirstIconS)`
+margin-left:18px;
+  margin-bottom: -4px;
 `
 const PassIconF = styled(FirstIconF)`
+margin-left:18px;
+  margin-bottom: -4px;
 `
 const ConfirmIconS = styled(FirstIconS)`
+margin-left:18px;
+  margin-bottom: -4px;
 `
 const ConfirmIconF = styled(FirstIconF)`
+margin-left:18px;
+  margin-bottom: -4px;
 `
 
 const Full = styled(Username)`
@@ -81,6 +93,7 @@ const Ph_Label = styled(Email_label)`
 `
 const Password = styled(Username)`
 display:inline-block;
+padding-right:40px;
 `
 const Referral = styled(Username)``
 const Check_wrap = styled.div`
@@ -145,6 +158,13 @@ const Sign_a = styled.a`
 const Progress_bar = styled(Progress)`
   width:77%;
 `
+const FAI = styled.img`
+  margin-left:-35px;
+  cursor:pointer;
+`
+const Active_FAI = styled(FAI)`
+    
+`
 function openNotificationWithIcon(type, head, desc) {
   notification[type]({
     message: head,
@@ -169,7 +189,9 @@ class Signup_Form extends React.Component {
       stroke: "",
       status: "",
       percent: 0,
-      init: ""
+      init: "",
+      PasswordtypeEye: "password",
+      repeatEye: "password"
     }
   }
 
@@ -352,6 +374,21 @@ class Signup_Form extends React.Component {
       description: desc,
     });
   };
+  handleEye(type) {
+    if (type == "new") {
+      if (this.state.PasswordtypeEye == "password") {
+        this.setState({ PasswordtypeEye: "text" })
+      } else {
+        this.setState({ PasswordtypeEye: "password" })
+      }
+    } else {
+      if (this.state.repeatEye == "password") {
+        this.setState({ repeatEye: "text" })
+      } else {
+        this.setState({ repeatEye: "password" })
+      }
+    }
+  }
   render() {
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
@@ -403,12 +440,15 @@ class Signup_Form extends React.Component {
 
           <Ph_Label>Password</Ph_Label>
           <div>
-            <Password type="password" {...getFieldProps('password', {
+            <Password type={this.state.PasswordtypeEye} {...getFieldProps('password', {
               onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
               initialValue: me.props.init,
               rules: [{ type: "string", required: true, min: 8 }],
             })}
             />
+            {
+              (this.state.PasswordtypeEye == "password") ? <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "new")} />
+            }
             <PassIconS id="pass_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
             <PassIconF id="pass_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
           </div>
@@ -416,12 +456,17 @@ class Signup_Form extends React.Component {
           <Pass_req className="pass_sign">{this.state.pass_msg}</Pass_req>
           <Ph_Label>Confirm Password</Ph_Label>
           <div>
-            <Password type="password" {...getFieldProps('confirm_password', {
+            <Password type={this.state.repeatEye} {...getFieldProps('confirm_password', {
               onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
               initialValue: me.props.init,
               rules: [{ type: "string", required: true, min: 8 }],
             })}
             />
+            {
+              (this.state.repeatEye == "password") ?
+                <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "repeatEye")} />
+                : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "repeatEye")} />
+            }
             <ConfirmIconS id="confirm_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
             <ConfirmIconF id="confirm_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
           </div>

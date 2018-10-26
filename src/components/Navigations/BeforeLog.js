@@ -80,7 +80,7 @@ const SignupButton = styled(Button)`
     }
     &:focus{
         background-color:#0f477b;
-        border-color:2px solid #0f477b;
+        border-color:#0f477b;
         color:white;
     }
 `
