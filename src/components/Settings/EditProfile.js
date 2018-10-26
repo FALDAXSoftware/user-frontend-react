@@ -19,6 +19,7 @@ const TabPane = Tabs.TabPane;
 /* Styled-Components */
 const ProfileWrapper = styled.div`
   padding-top: 100px;
+  padding-bottom:30px;
   background-color: #f5f6fa;
 `
 const ProfileDiv = styled.div`

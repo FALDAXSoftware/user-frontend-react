@@ -88,10 +88,20 @@ const Repeat_label = styled(Old_label)`
 `
 const OldInput = styled(Input)`
     margin-top:5px;
-    height: 40px;
     width: 95%;
     background-color:#f8f8f8;
     display:inline-block;
+    font-family: "Open Sans";
+    font-size:16;
+    height:auto;
+    font-weight:600;
+    padding:10px;
+    padding-right:35px;
+    &:focus, &:hover{
+        border-color:#4c84ff;
+        outline:0;
+        box-shadow:none;
+    }
 `
 const NewInput = styled(OldInput)`
 
@@ -119,8 +129,9 @@ const TFCol = styled(Col)`
     
 `
 const Head_TF = styled.p`
-    font-size: 20.01px;
-    font-family: "Open Sans";
+    font-size:20px;
+    font-family:"Open Sans";
+    font-weight: 600;
     color: rgb( 80, 80, 80 );
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -244,12 +255,17 @@ const E_button = styled(Save)`
         color:black;
     }
 `
-const FAI = styled(FontAwesomeIcon)`
+const FAI = styled.img`
     cursor:pointer;
     display:inline-block;
-    position: absolute;
-    margin-left: -25px;
-    margin-top: 17px;
+    position: absolute; 
+    margin-left: -35px;
+    margin-top: 18px;
+    color:#8a8a8a;
+    font-size:18px;
+`
+const Active_FAI = styled(FAI)`
+    margin-top: 13px;
 `
 const Progress_bar = styled(Progress)`
     margin-top:20px;
@@ -274,7 +290,7 @@ class Passwordchange extends React.Component {
             otp_msg: null,
             percent: "",
             stroke: '',
-            confPass:""
+            confPass: ""
         }
     }
     static propTypes = {
@@ -371,7 +387,7 @@ class Passwordchange extends React.Component {
             if (value !== "") {
                 if (bool == true) {
                     this.setState({ newpassIcon: true, password: value })
-                    
+
                     document.querySelector("#newchange_icon_success").style.display = "inline-block"
                     document.querySelector("#newchange_icon_fail").style.display = "none"
                     document.querySelectorAll(".newchange_msg")[0].style.display = "none";
@@ -390,10 +406,10 @@ class Passwordchange extends React.Component {
             }
         }
         if (field == "confirm_password") {
-            console.log(value,password)
+            console.log(value, password)
             var bool = (password === value) ? true : false
             if (value !== "") {
-                this.setState({confPass:value})
+                this.setState({ confPass: value })
                 if (bool == true) {
                     this.setState({ confirmIcon: true })
                     document.querySelector("#confirmchange_icon_success").style.display = "inline-block"
@@ -531,7 +547,7 @@ class Passwordchange extends React.Component {
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (typeEye == "password") ? <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "old")} /> : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "old")} />
+                                    (typeEye == "password") ? <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "old")} /> : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "old")} />
                                 }
                                 <UserIconS id="passchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="passchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
@@ -546,7 +562,7 @@ class Passwordchange extends React.Component {
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (newEye == "password") ? <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "new")} /> : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "new")} />
+                                    (newEye == "password") ? <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "new")} />
                                 }
                                 <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
@@ -561,7 +577,7 @@ class Passwordchange extends React.Component {
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (repeatEye == "password") ? <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this, "repeat")} /> : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this, "repeat")} />
+                                    (repeatEye == "password") ? <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "repeat")} /> : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "repeat")} />
                                 }
                                 <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />

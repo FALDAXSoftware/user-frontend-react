@@ -18,8 +18,8 @@ let { API_URL } = globalVariables;
 /* Styled-Components */
 export const Form_wrap = styled.div`
   padding-left:60px;
-  padding-top:60px;
-
+  padding-top:50px;
+  min-height:630px;
   @media(min-width:1024px) and  (max-width:1440px)
   {
     padding-left: 30px;
@@ -34,7 +34,7 @@ const Login_head = styled.div`
   text-transform: uppercase;
   text-align: left;
   padding-bottom: 10px;
-  border-bottom: 2px solid;
+  border-bottom: 3px solid #dbe4eb;
   display: inline-block;
   @media(min-width:1024px) and  (max-width:1440px)
   {
@@ -45,8 +45,8 @@ export const Welcome_text = styled.div`
   font-size: 24px;
   font-family: "Open Sans";
   color: rgb( 0, 0, 0 );
-  font-weight: bold;
-  margin-top:60px;
+  font-weight: 600;
+  margin-top:50px;
   @media(min-width:1024px) and  (max-width:1440px)
   {
     margin-top: 15px;
@@ -55,9 +55,8 @@ export const Welcome_text = styled.div`
 export const Email_label = styled.div`
   font-size: 14px;
   font-family: "Open Sans";
-  font-weight: bold;
   color: black;
-  margin-top: 50px;
+  margin-top: 40px;
   @media(min-width:1024px) and  (max-width:1440px)
   {
     margin-top: 25px;
@@ -73,6 +72,7 @@ export const Username = styled.input`
   height:50px;
   font-size:16px;
   display:inline-block;
+  outline-color: #e0e0e0;
   @media(min-width:1024px) and (max-width:1440px)
   {
     height:35px;
@@ -84,14 +84,14 @@ export const Email_req = styled.div`
   font-size:11px;
   width:76%;
 `
-export const UserIconS = styled(Icon)`
+export const UserIconS = styled(Icon) `
   font-size:19px;
   display:none;
   margin-left:10px;
 `
-export const UserIconF = styled(UserIconS)`
+export const UserIconF = styled(UserIconS) `
 `
-const Ph_Label = styled(Email_label)`
+const Ph_Label = styled(Email_label) `
   margin-top:15px;
 `
 export const Phone_req = styled.label`
@@ -100,12 +100,13 @@ export const Phone_req = styled.label`
   font-size:11px;
   width:76%;
 `
-const Password = styled(Username)`
+const Password = styled(Username) `
   font-size:16px;
+  padding-right:35px;
 `
-const PassIconF = styled(UserIconS)`
+const PassIconF = styled(UserIconS) `
 `
-const PassIconS = styled(UserIconF)`
+const PassIconS = styled(UserIconF) `
 `
 export const Pass_req = styled.label`
   display:none;
@@ -113,7 +114,7 @@ export const Pass_req = styled.label`
   font-size:11px;
   width:76%;
 `
-const OtpLabel = styled(Email_label)`
+const OtpLabel = styled(Email_label) `
     width: 76%;
     text-align: justify;
 `
@@ -153,7 +154,7 @@ const Forgot = styled.a`
     margin-top: 15px;
   }
 `
-const Button_login = styled(Button)`
+const Button_login = styled(Button) `
   width: 110px;
   background-color: #0f477b;
   color: white;
@@ -176,10 +177,17 @@ const Button_login = styled(Button)`
   {
     margin-top: 40px;
   }
+  &:hover{
+    color:#0f477b;
+    border-color:#0f477b;
+    background-color:white;
+  }
 `
 const Sign = styled.div`
   margin-top: 50px;
   margin-bottom: 60px;
+  font-size: 16px;
+  font-family: "Open Sans";
   @media(max-width:400px)
   {
     margin-top: 50px;
@@ -196,9 +204,12 @@ const Sign_a = styled.a`
   color:#0f477b;
   font-weight:bold;
 `
-const FAI = styled(FontAwesomeIcon)`
-  margin-left:10px;
+const FAI = styled.img`
+  margin-left:-35px;
   cursor:pointer;
+`
+const Active_FAI = styled(FAI) `
+    
 `
 class Login_Form extends React.Component {
   constructor(props) {
@@ -265,11 +276,6 @@ class Login_Form extends React.Component {
           document.querySelectorAll(".user_msg")[0].style.display = "block";
           this.setState({ email_msg: "*Email address is not valid" })
         }
-      } else {
-        this.setState({ emailIcon: false })
-        document.querySelector("#userlog_icon_success").style.display = "none"
-        document.querySelector("#userlog_icon_fail").style.display = "none"
-        document.querySelectorAll(".user_msg")[0].style.display = "none";
       }
     }
     //password shouldn't have validation except required. 
@@ -333,31 +339,30 @@ class Login_Form extends React.Component {
       }
     }
   }
-  componentDidMount()
-  {
+
+  componentDidMount() {
     console.log(this.props)
     var query = this.props.location.search.split("=")
     console.log(query)
-    if(query[0]!=="")
-    {
+    if (query[0] !== "") {
       var queryObj = {};
       queryObj["email_verify_token"] = query[1]
-      fetch(API_URL+"/users/verify-user",{
-            method:"post",
-            headers: {
-                Authorization:"Bearer " + this.propsisLoggedIn
-            },
-            body:JSON.stringify(queryObj)
-        })
+      fetch(API_URL + "/users/verify-user", {
+        method: "post",
+        headers: {
+          Authorization: "Bearer " + this.propsisLoggedIn
+        },
+        body: JSON.stringify(queryObj)
+      })
         .then(response => response.json())
         .then((responseData) => {
-          if(responseData.status==200)
+          if (responseData.status == 200)
             this.openNotificationWithIcon('success', 'Verified', responseData.message);
           else
-            this.openNotificationWithIcon('error','Not Verified',responseData.err)
+            this.openNotificationWithIcon('error', 'Not Verified', responseData.err)
         })
         .catch(error => { /* console.log(error) */ })
- 
+
     }
   }
   componentWillReceiveProps(props, newProps) {
@@ -365,19 +370,18 @@ class Login_Form extends React.Component {
       if (props.errorStatus.status == 200) {
         this.openNotificationWithIcon('success', 'Login Successful', props.errorStatus.message);
         /* this.props.dispModal("login"); */
-      } else if (props.errorStatus.status == 201) {
-        this.setState({
-          isOtpRequired: true
-        });
+      }
+      else if (props.errorStatus.status == 201) {
+        this.setState({ isOtpRequired: true });
         // document.querySelector("#otp-field").focus();
         /* this.openNotificationWithIcon('error', 'Error', props.errorStatus.err); */
-      } else {
+      }
+      else {
         this.openNotificationWithIcon('error', 'Error', props.errorStatus.err);
       }
       this.props.clearLogin();
     }
   }
-
   render() {
     if (this.props.isLoggedIn) {
       this.props.history.push("/editProfile");
@@ -408,7 +412,7 @@ class Login_Form extends React.Component {
           })}
           />
           {
-            (this.state.typeEye == "password") ? <FAI icon={faEye} color='black' onClick={this.handleEye.bind(this)} /> : <FAI icon={faEyeSlash} color='black' onClick={this.handleEye.bind(this)} />
+            (this.state.typeEye == "password") ? <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this)} /> : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this)} />
           }
           <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
           <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />

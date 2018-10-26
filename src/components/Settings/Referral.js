@@ -35,8 +35,9 @@ const Parent_wrap = styled.div`
     
 `
 const Header_text = styled.div`
-    font-size: 20px;
-    font-family: "Open sans";
+    font-size:20px;
+    font-family:"Open Sans";
+    font-weight: 600;
     color: rgb( 80, 80, 80 );
     line-height: 2.4;
     margin-top:10px;

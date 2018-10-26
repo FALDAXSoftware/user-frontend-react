@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0 !important;
-  overflow: auto !important;
+  
   font-family: sans-serif;
 }
 
@@ -269,10 +269,27 @@ table .ant-table-tbody > tr > td {
 .Country_Select
 {
   width:89%;
+  
 }
 .Country_Select > .ant-select-selection
 {
   background-color: #f8f8f8;
+  background-color: #f8f8f8;
+  width: 100%;
+  border: 1px solid #dadfe3;
+  padding: 5px;
+  height: auto;
+  font-family: "Open Sans";
+  font-size:16;
+  font-weight:600;
+}
+.Country_Select > .ant-select-selection:hover,.Country_Select > .ant-select-selection:focus{
+    border-color:#4c84ff;
+    outline:0;
+    box-shadow:none;
+}
+.country_select_drop{
+  background-color: red;
 }
 .ant-dropdown-menu
 {
@@ -284,29 +301,54 @@ table .ant-table-tbody > tr > td {
   #profile-year
   {
     background-color: #f8f8f8;
-    height: 32px;
+    font-family: "Open Sans";
+    font-size:16;
+    font-weight:600;
     border-radius: 5px;
     width:27%;
+    margin-left:12px;
     border:1px solid #dadfe3;
+    padding:10px 5px;
+
+  }
+  #profile-year:hover,#profile-year:focus{
+    border-color:#4c84ff;
+    outline:0;
+    box-shadow:none;
   }
   #profile-month
   {
     text-transform:lowercase;
     background-color: #f8f8f8;
-    height: 32px;
+    font-family: "Open Sans";
+    font-size:16;
+    font-weight:600;
     border-radius: 5px;
     margin-left:12px;
     width:27%;
     border:1px solid #dadfe3;
+    padding:10px 5px;
+  }
+  #profile-month:hover,#profile-month:focus{
+    border-color:#4c84ff;
+    outline:0;
+    box-shadow:none;
   }
   #profile-day
   {
     background-color: #f8f8f8;
-    height: 32px;
+    font-family: "Open Sans";
+    font-size:16;
+    font-weight:600;
     border-radius: 5px;
-    margin-left:12px;
     width:27%;
     border:1px solid #dadfe3;
+    padding:10px 5px;
+  }
+  #profile-day:hover,#profile-day:focus{
+    border-color:#4c84ff;
+    outline:0;
+    box-shadow:none;
   }
 
   @media(max-width:992px)

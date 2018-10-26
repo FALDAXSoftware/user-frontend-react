@@ -54,6 +54,7 @@ const Faldaxtext = styled.img`
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-top:20px;
     cursor:pointer;
 `
 
@@ -256,10 +257,12 @@ class Navigation extends React.Component {
     }
 
     handleCancel = (e) => {
-        console.log("Hello 123")
-        this.setState({ visible: false, modal: 5 });
-    }
 
+        this.setState({ visible: false });
+    }
+    handleAfterClose = (e) => {
+        this.setState({ modal: 5 });
+    }
     showComing = () => {
         this.setState({ comingSoon: true });
     }
@@ -318,6 +321,7 @@ class Navigation extends React.Component {
     }
     componentDidMount() {
         let queryParams
+
         /* console.log("asdfas",this.props) */
         if (this.props.queryParams !== undefined && this.props.queryParams !== "") {
             queryParams = this.props.queryParams;
@@ -388,6 +392,7 @@ class Navigation extends React.Component {
                         visible={this.state.visible}
                         onOk={this.handleOk}
                         onCancel={this.handleCancel}
+                        afterClose={this.handleAfterClose}
                         footer={null}
                         className="Login-Modal"
                         style={{ borderRadius: "0px" }}

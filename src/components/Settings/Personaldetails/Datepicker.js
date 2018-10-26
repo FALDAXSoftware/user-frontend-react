@@ -7,8 +7,7 @@ const Picker_wrap = styled.div`
 
 `
 let fields = {};
-export default class Datepicker extends React.Component
-{
+export default class Datepicker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,11 +15,9 @@ export default class Datepicker extends React.Component
         }
     }
 
-    onChangeDate(date,type)
-    {
-        if(type=="year")
-        {
-            this.setState({year:date});
+    onChangeDate(date, type) {
+        if (type == "year") {
+            this.setState({ year: date });
             fields[type] = date;
         }
         else if(type=="month")
@@ -43,33 +40,29 @@ export default class Datepicker extends React.Component
             
             fields[type] = date1;
         }
-        else if(type=="day")
-        {
-            this.setState({day:date});
+        else if (type == "day") {
+            this.setState({ day: date });
             fields[type] = date;
         }
-        
-        console.log(fields["day"],fields["year"],fields["month"], "State ===>" ,fields,this.props)
+
+        console.log(fields["day"], fields["year"], fields["month"], "State ===>", fields, this.props)
         let propFields
-        if(this.props.profileDetails.dob!==null)
-        {
+        if (this.props.profileDetails.dob !== null) {
             propFields = this.props.profileDetails.dob.split("/");
-            if(fields["day"]==undefined && propFields[2]!==undefined){fields["day"]=propFields[2]}
-            if(fields["month"]==undefined && propFields[1]!==undefined){fields["month"]=propFields[1]}
-            if(fields["year"]==undefined && propFields[0]!==undefined){fields["year"]=propFields[0]}
-            
+            if (fields["day"] == undefined && propFields[2] !== undefined) { fields["day"] = propFields[2] }
+            if (fields["month"] == undefined && propFields[1] !== undefined) { fields["month"] = propFields[1] }
+            if (fields["year"] == undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
+
         }
-        
+
         console.log(propFields)
-        
-        this.props.onDateChange(fields,"dob")
+
+        this.props.onDateChange(fields, "dob")
 
     }
-    render()
-    {
-        let date,year,month,day
-        if(this.props.profileDetails.dob!==undefined && this.props.profileDetails.dob!==null)
-        {
+    render() {
+        let date, year, month, day
+        if (this.props.profileDetails.dob !== undefined && this.props.profileDetails.dob !== null) {
             date = this.props.profileDetails.dob.split("/")
             year = Number(date[0])
             month = date[1]
@@ -78,30 +71,31 @@ export default class Datepicker extends React.Component
         /* console.log(year,month,day) */
         let higherDate = new Date().getFullYear()-18;
         let lowerDate = higherDate - 100;
-        console.log(higherDate,lowerDate)
-        return(
+        console.log(higherDate, lowerDate)
+        return (
             <Picker_wrap>
-                <YearPicker
-                    defaultValue={year?year:'Year'}
-                    // default is 1900
-                    start={lowerDate}
-                    // default is current year
-                    end={higherDate}
-                    // default is ASCENDING
-                    reverse
+                <DayPicker
+                    defaultValue={day ? day : 'Day'}
                     // mandatory
-                    value={this.state.year}
+                    year={this.state.year}
                     // mandatory
-                    onChange={(year) => {
-                        this.onChangeDate(year,"year")
-                        /* console.log(year); */
+                    month={this.state.month}
+                    // mandatory if end={} is given in YearPicker
+                    endYearGiven
+                    // mandatory
+                    value={this.state.day}
+                    // mandatory
+                    onChange={(day) => {
+                        this.onChangeDate(day, "day")
+                        /* console.log(day); */
                     }}
-                    id={'profile-year'}
-                    name={'year'}
-                    optionClasses={'option-year'}
+                    id={'profile-day'}
+                    name={'day'}
+                    optionClasses={'option-day'}
                 />
+
                 <MonthPicker
-                    defaultValue={month?month:'Month'}
+                    defaultValue={month ? month : 'Month'}
                     // default is full name
                     short
                     // default is Titlecase
@@ -114,31 +108,31 @@ export default class Datepicker extends React.Component
                     value={this.state.month}
                     // mandatory
                     onChange={(month) => {
-                        this.onChangeDate(month,"month")
-                       /*  console.log(month); */
+                        this.onChangeDate(month, "month")
+                        /*  console.log(month); */
                     }}
                     id={'profile-month'}
                     name={'month'}
                     optionClasses={'option-month'}
                 />
-                <DayPicker
-                    defaultValue={day?day:'Day'}
+                <YearPicker
+                    defaultValue={year ? year : 'Year'}
+                    // default is 1900
+                    start={lowerDate}
+                    // default is current year
+                    end={higherDate}
+                    // default is ASCENDING
+                    reverse
                     // mandatory
-                    year={this.state.year}
+                    value={this.state.year}
                     // mandatory
-                    month={this.state.month}
-                    // mandatory if end={} is given in YearPicker
-                    endYearGiven
-                    // mandatory
-                    value={this.state.day}
-                    // mandatory
-                    onChange={(day) => {
-                        this.onChangeDate(day,"day")
-                        /* console.log(day); */
+                    onChange={(year) => {
+                        this.onChangeDate(year, "year")
+                        /* console.log(year); */
                     }}
-                    id={'profile-day'}
-                    name={'day'}
-                    optionClasses={'option-day'}
+                    id={'profile-year'}
+                    name={'year'}
+                    optionClasses={'option-year'}
                 />
             </Picker_wrap>
         );

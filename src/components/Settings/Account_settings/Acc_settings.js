@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux";
-import { Row, Col, Checkbox, Table, Button, notification, Spin , Divider, Tag,Modal} from 'antd';
+import { Row, Col, Checkbox, Table, Button, notification, Spin, Divider, Tag, Modal } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 
@@ -39,8 +39,9 @@ const Noti_Wrap = styled.div`
     margin-top:50px;
 `
 const Noti_Head = styled.div`
-    font-size: 20px;
-    font-family: "Open Sans";
+    font-size:20px;
+    font-family:"Open Sans";
+    font-weight: 600;
     color: rgb( 80, 80, 80 );
 `
 const Noti_desc = styled.div`
@@ -110,8 +111,9 @@ const History_head = styled.div`
     margin-top:50px;
 `
 const Heading = styled.div`
-    font-size: 20px;
-    font-family: "Open Sans";
+    font-size:20px;
+    font-family:"Open Sans";
+    font-weight: 600;
     color: rgb( 80, 80, 80 );
     line-height: 2.4;
     -moz-transform: matrix( 1,0,0,0.99859542519785,0,0);
@@ -152,8 +154,9 @@ const Delete_wrap = styled.div`
 
 `
 const Delete_head = styled.div`
-    font-size: 20px;
-    font-family: "open sans";
+    font-size:20px;
+    font-family:"Open Sans";
+    font-weight: 600;
     color: rgb( 80, 80, 80 );
     -moz-transform: matrix( 1,0,0,0.99882784793165,0,0);
     -webkit-transform: matrix( 1,0,0,0.99882784793165,0,0);
@@ -179,68 +182,68 @@ const columns_text = [, {
     title: 'Notifications',
     dataIndex: 'Notifications',
     key: 'Notifications',
-  },{
-    title: 'Text',
-    className:"column-Text",
-    dataIndex: 'Text',
-    key: 'Text',
-  }, {
-    title: 'Email',
-    className:"column-Email",
-    dataIndex: 'Email',
-    key: 'Email',
-  }];
-  const data_noti = [{
+}, {
+        title: 'Text',
+        className: "column-Text",
+        dataIndex: 'Text',
+        key: 'Text',
+    }, {
+        title: 'Email',
+        className: "column-Email",
+        dataIndex: 'Email',
+        key: 'Email',
+    }];
+const data_noti = [{
     key: '1',
     Notifications: "Deposits",
     Text: <Checkbox></Checkbox>,
-    
+
     Email: <Checkbox></Checkbox>,
-  }, {
+}, {
     key: '2',
     Notifications: "Trade Execution",
     Text: <Checkbox></Checkbox>,
-    
+
     Email: <Checkbox></Checkbox>,
-  }, {
+}, {
     key: '3',
     Notifications: "Withdrawals",
     Text: <Checkbox></Checkbox>,
-    
+
     Email: <Checkbox></Checkbox>,
-  },{
+}, {
     key: '4',
     Notifications: "Login",
     Text: <Checkbox></Checkbox>,
-    
+
     Email: <Checkbox></Checkbox>,
-  }, {
+}, {
     key: '5',
     Notifications: "New Review",
     Text: <Checkbox></Checkbox>,
-   
+
     Email: <Checkbox></Checkbox>,
-  },
-  {
+},
+{
     key: '6',
     Notifications: "New Private Message",
     Text: <Checkbox></Checkbox>,
-    
+
     Email: <Checkbox></Checkbox>,
-  }, {
+}, {
     key: '7',
     Notifications: "New Follower",
     Text: <Checkbox></Checkbox>,
-    
+
     Email: <Checkbox></Checkbox>,
-  }, {
+}, {
     key: '8',
     Notifications: "Order Execution",
     Text: <Checkbox></Checkbox>,
-   
+
     Email: <Checkbox></Checkbox>,
-  }];
-  const confirm = Modal.confirm;
+}];
+const confirm = Modal.confirm;
 class Acc_settings extends React.Component {
     constructor(props) {
         super(props);
@@ -291,18 +294,18 @@ class Acc_settings extends React.Component {
     showConfirm() {
         var me = this
         confirm({
-          title: 'Do you want to delete the account?',
-          content: 'When clicked the OK button, your account will be deleted.',
-          onOk() {
-            me.deleteAccount()
-            return new Promise((resolve, reject) => {
-               
-              setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-            }).catch(() => console.log('Oops errors!'));
-          },
-          onCancel() {},
+            title: 'Do you want to delete the account?',
+            content: 'When clicked the OK button, your account will be deleted.',
+            onOk() {
+                me.deleteAccount()
+                return new Promise((resolve, reject) => {
+
+                    setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+                }).catch(() => console.log('Oops errors!'));
+            },
+            onCancel() { },
         });
-      }
+    }
     openNotificationWithIcon = (type) => {
         notification[type]({
             message: 'Deleted',
@@ -322,11 +325,11 @@ class Acc_settings extends React.Component {
                     </Noti_desc>
                 </Noti_Wrap>
                 <Check_Wrap>
-                        <Table
-                            className="Noti_table"
-                            pagination={false}
-                            dataSource={data_noti}
-                            columns={columns_text} />
+                    <Table
+                        className="Noti_table"
+                        pagination={false}
+                        dataSource={data_noti}
+                        columns={columns_text} />
                 </Check_Wrap>
                 <HR />
                 <Login_History>
