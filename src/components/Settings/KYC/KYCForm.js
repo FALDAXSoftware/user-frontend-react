@@ -289,7 +289,7 @@ class KYCForm extends React.Component
                             <Right_Col_kyc>
                                 <First_Row_kyc>
                                     <Col md={{span:12}} lg={{span:12}} xl={{span:12}} xxl={{span:12}}>
-                                        <First_name_kyc>First Name</First_name_kyc>
+                                        <First_name_kyc>First Name*</First_name_kyc>
                                         {/*      {console.log(this.props.profileDetails.first_name)} */}
                                         <First_input_kyc placeholder="First Name" {...getFieldProps('first_name', {
                                                     onChange(){/* console.log("Hello How are You") */},
@@ -299,7 +299,7 @@ class KYCForm extends React.Component
                                         <First_Msg_kyc className="first_kyc_msg">{this.state.firstmsg}</First_Msg_kyc>
                                     </Col>
                                             <Col md={{span:12}} lg={{span:12}} xl={{span:12}} xxl={{span:12}}>
-                                                <Last_name_kyc>Last Name</Last_name_kyc>
+                                                <Last_name_kyc>Last Name*</Last_name_kyc>
                                                 <Last_input_kyc placeholder="Last Name" {...getFieldProps('last_name', {
                                                     onChange(){/* console.log("Hello How are You") */},
                                                     initialValue:this.props.profileDetails.last_name,// have to write original onChange here if you need
@@ -310,20 +310,20 @@ class KYCForm extends React.Component
                                         </First_Row_kyc>
                                         <Second_Row_kyc>
                                             <Col md={{span:24}} lg={{span:12}} xl={{span:12}} xxl={{span:12}}>
-                                                <Country_kyc>Country</Country_kyc>
+                                                <Country_kyc>Country*</Country_kyc>
                                                 {/* console.log(this.props) */}
                                                 <CountryPick {...this.props} isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={ (value) => this.onCountryChange(value) }/>
                                                 <Country_Msg_kyc className="country_kyc_msg">{this.state.countrymsg}</Country_Msg_kyc>
                                             </Col>
                                             <Col md={{span:24}} lg={{span:12}} xl={{span:12}} xxl={{span:12}}>
-                                                <Date_birth_kyc>Date of Birth</Date_birth_kyc>
+                                                <Date_birth_kyc>Date of Birth*</Date_birth_kyc>
                                                 <Datepicker {...this.props} onDateChange={(Data) => this.onDateChange(Data)}/>
                                                 <Dob_Msg_kyc className="dob_kyc_msg">{this.state.dobmsg}</Dob_Msg_kyc>
                                             </Col>
                                         </Second_Row_kyc>
                                         <Third_Row_kyc>
                                             <Col md={{span:24}} lg={{span:24}} xl={{span:24}} xxl={{span:24}}>
-                                                <Street_Address_kyc>Street Address</Street_Address_kyc>
+                                                <Street_Address_kyc>Street Address*</Street_Address_kyc>
                                                 <Street_input_kyc placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} {...getFieldProps('street_address', {
                                                     onChange(){/* console.log("Hello How are You") */},
                                                     initialValue:this.props.profileDetails.street_address, // have to write original onChange here if you need
@@ -332,7 +332,7 @@ class KYCForm extends React.Component
                                                 <Street_Msg_kyc className="street_kyc_msg">{this.state.streetmsg}</Street_Msg_kyc>
                                             </Col>
                                             <Col md={{span:24}} lg={{span:24}} xl={{span:24}} xxl={{span:24}}>
-                                                <Street_Address_kyc>Street Address</Street_Address_kyc>
+                                                <Street_Address_kyc>Street Address*</Street_Address_kyc>
                                                 <Street_input_kyc placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} {...getFieldProps('street_address_2', {
                                                     onChange(){/* console.log("Hello How are You") */},
                                                     initialValue:this.props.profileDetails.street_address_2, // have to write original onChange here if you need
@@ -343,7 +343,7 @@ class KYCForm extends React.Component
                                         </Third_Row_kyc>
                                         <Fourth_Row_kyc>
                                             <Col md={{span:12}} lg={{span:12}} xl={{span:12}} xxl={{span:12}}>
-                                                <City_kyc>City/Town</City_kyc>
+                                                <City_kyc>City/Town*</City_kyc>
                                                 <First_input_kyc placeholder="City"{...getFieldProps('city_town', {
                                                     onChange(){/* console.log("Hello How are You") */},
                                                     initialValue:this.props.profileDetails.city_town, // have to write original onChange here if you need
@@ -352,7 +352,7 @@ class KYCForm extends React.Component
                                                 <City_Msg_kyc className="city_kyc_msg">{this.state.citymsg}</City_Msg_kyc>
                                             </Col>
                                             <Col md={{span:12}} lg={{span:12}} xl={{span:12}} xl={{span:12}}>
-                                                <Postal_kyc>Postal Code</Postal_kyc>
+                                                <Postal_kyc>Postal Code*</Postal_kyc>
                                                 <Last_input_kyc placeholder="Postal Code"{...getFieldProps('postal_code', {
                                                     onChange(){/* console.log("Hello How are You") */},
                                                     initialValue:this.props.profileDetails.postal_code,// have to write original onChange here if you need

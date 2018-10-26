@@ -20,9 +20,25 @@ export default class Datepicker extends React.Component {
             this.setState({ year: date });
             fields[type] = date;
         }
-        else if (type == "month") {
-            this.setState({ month: date });
-            fields[type] = Number(date) + 1;
+        else if(type=="month")
+        {
+            let date1
+            this.setState({month:date});
+            console.log(date,type)
+            if(date==0)date1="jan";
+            if(date==1)date1="feb";
+            if(date==2)date1="mar";
+            if(date==3)date1="apr";
+            if(date==4)date1="may";
+            if(date==5)date1="jun";
+            if(date==6)date1="jul";
+            if(date==7)date1="aug";
+            if(date==8)date1 = "sep";
+            if(date==9)date1="oct";
+            if(date==10)date1="nov";
+            if(date==11)date1="dec";
+            
+            fields[type] = date1;
         }
         else if (type == "day") {
             this.setState({ day: date });
@@ -49,11 +65,11 @@ export default class Datepicker extends React.Component {
         if (this.props.profileDetails.dob !== undefined && this.props.profileDetails.dob !== null) {
             date = this.props.profileDetails.dob.split("/")
             year = Number(date[0])
-            month = Number(date[1])
+            month = date[1]
             day = Number(date[2])
         }
         /* console.log(year,month,day) */
-        let higherDate = new Date().getFullYear() - 10;
+        let higherDate = new Date().getFullYear()-18;
         let lowerDate = higherDate - 100;
         console.log(higherDate, lowerDate)
         return (

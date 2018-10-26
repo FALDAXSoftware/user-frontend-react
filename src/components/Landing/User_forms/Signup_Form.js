@@ -220,7 +220,7 @@ class Signup_Form extends React.Component {
         document.querySelectorAll("#confirm_icon_success")[0].style.display = "none";
         this.props.Signup(value);
       } else {
-        this.openNotificationWithIcon('error', "Error", "Please complete all required fields before continuing.")
+        this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue")
       }
     });
   }
@@ -315,12 +315,12 @@ class Signup_Form extends React.Component {
       var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
       var bool = re.test(value);
       var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
-      if (numb.test(value) || letters.test(value)) { this.setState({ status: "active", stroke: "red", percent: 20 }) }
-      if (alphanum.test(value)) { this.setState({ status: "active", stroke: "orange", percent: 40 }) }
-      if (alphanum.test(value) && value.length == 6) { this.setState({ status: "exception", stroke: "yellow", percent: 60 }) }
-      if (re.test(value) && value.length == 6) { this.setState({ status: "success", stroke: "#7CFC00", percent: 80 }) }
-      if (re.test(value) && value.length >= 10) { this.setState({ status: "success", stroke: "#008000", percent: 100 }) }
-
+      if (numb.test(value) || letters.test(value)) {console.log("first"); this.setState({ stroke: "red", percent: 20 }) }
+      if (alphanum.test(value) && value.length < 60) {console.log("second"); this.setState({ stroke: "orange", percent: 40 }) }
+      if (alphanum.test(value) && value.length == 6) {console.log("3"); this.setState({ stroke: "yellow", percent: 60 }) }
+      if (re.test(value) && value.length == 6) {console.log("4"); this.setState({ stroke: "#7CFC00", percent: 80 }) }
+      if (re.test(value) && value.length >= 10 && value.length < 60) {console.log("5"); this.setState({ stroke: "#008000", percent: 100 }) }
+      if (re.test(value) && value.length > 60) {console.log("6"); this.setState({ stroke: "red", percent: 0 }) }
       if (value !== "") {
         if (bool == true) {
           this.setState({ passIcon: true, password: value })
@@ -332,7 +332,7 @@ class Signup_Form extends React.Component {
           document.querySelector("#pass_icon_success").style.display = "none"
           document.querySelector("#pass_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".pass_sign")[0].style.display = "block";
-          this.setState({ pass_msg: "*Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+          this.setState({ pass_msg: "Your password must contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
         }
       } else {
         this.setState({ passIcon: false, percent: 0 })
@@ -353,7 +353,7 @@ class Signup_Form extends React.Component {
           document.querySelector("#confirm_icon_success").style.display = "none"
           document.querySelector("#confirm_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".confirmPass_sign")[0].style.display = "block";
-          this.setState({ confirmPass_msg: "*password doesn't match" })
+          this.setState({ confirmPass_msg: "*Password doesn't match" })
         }
       } else {
         this.setState({ confirmIcon: false })

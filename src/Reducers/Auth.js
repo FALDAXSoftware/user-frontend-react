@@ -64,7 +64,7 @@ export default (state = {}, action) => {
 
     case "EDITPROFILE":
       /* console.log("EDITPROFILE",action.payload) */
-      return { ...state }
+      return { ...state , update:action.payload}
 
     case "ADDPROFILE":
       /* console.log("ADDPROFILE", action.payload) */

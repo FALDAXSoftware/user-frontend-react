@@ -86,6 +86,7 @@ const FAI = styled.img`
 const Active_FAI = styled(FAI)`
   margin-top: 28px;  
 `
+let password;
 class ResetPassword extends Component {
   constructor(props) {
     super(props)
@@ -95,6 +96,7 @@ class ResetPassword extends Component {
       common_req: null,
       repeatEye: "password",
       newEye: "password",
+      confPass:""
     }
   }
 
@@ -104,6 +106,25 @@ class ResetPassword extends Component {
 
   onChangeField(value, field) {
     if (field == "password") {
+      password=value;
+            if(this.state.confPass!==undefined)
+            {
+                console.log("abcd",this.state.confPass,value)
+                if(this.state.confPass === value)
+                {
+                    this.setState({ confirmIcon: true })
+                    document.querySelector("#confirmchange_icon_success").style.display = "none"
+                    document.querySelector("#confirmchange_icon_fail").style.display = "none"
+                    document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
+                }
+                else{
+                  this.setState({ confirmIcon: false })
+                  document.querySelector("#confirmchange_icon_success").style.display = "none"
+                  document.querySelector("#confirmchange_icon_fail").style.display = "inline-block"
+                  document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
+                  this.setState({ confirmPass_msg: "*Confirm Password does not match." })
+                }
+              }
       var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
       var bool = re.test(value);
       var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
@@ -123,7 +144,7 @@ class ResetPassword extends Component {
           document.querySelector("#newchange_icon_success").style.display = "none"
           document.querySelector("#newchange_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".pass_msg")[0].style.display = "block";
-          this.setState({ pass_msg: "*Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+          this.setState({ pass_msg: "Your password must contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
         }
       } else {
         this.setState({ newpassIcon: false, percent: 0 })
@@ -135,6 +156,7 @@ class ResetPassword extends Component {
     if (field == "confirm_password") {
       var bool = this.state.password == value ? true : false
       if (value !== "") {
+        this.setState({confPass:value})
         if (bool == true) {
           this.setState({ confirmIcon: true })
           document.querySelector("#confirmchange_icon_success").style.display = "inline-block"
@@ -180,7 +202,7 @@ class ResetPassword extends Component {
         if (error.password !== undefined) {
           if (error.password.errors[0].message !== undefined && error.password.errors[0].message !== null) {
             document.querySelectorAll(".pass_msg")[0].style.display = "block";
-            this.setState({ pass_msg: "*Password is not valid" })
+            this.setState({ pass_msg: "*Password is required" })
           } else {
             document.querySelectorAll(".pass_msg")[0].style.display = "none";
             this.setState({ pass_msg: null })
@@ -190,7 +212,7 @@ class ResetPassword extends Component {
           if (error.confirm_password.errors[0].message !== undefined && error.confirm_password.errors[0].message !== null) {
             /* console.log("Password ELse") */
             document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
-            this.setState({ confirmPass_msg: "*Password is not valid" })
+            this.setState({ confirmPass_msg: "*Confirm password is required" })
           } else {
             /* console.log("Confirm ELse") */
             document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
