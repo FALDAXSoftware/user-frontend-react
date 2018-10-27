@@ -14,6 +14,7 @@ import Forgot_Form from "../Landing/User_forms/Forgot_Form"
 import Thank_You from "../Landing/User_forms/Thank_You"
 import Beforelog from "./BeforeLog"
 import Afterlog from "./Afterlog"
+import { Logout } from '../../Actions/Auth';
 import Reset_Form from "../Landing/User_forms/Reset_Form"
 
 const { Header } = Layout;
@@ -70,10 +71,12 @@ const FALDAX = styled.img`
     }
 `
 const Logo = styled.div`
-    margin-top: 6px;
     display:inline-block;
     text-align:left;
     cursor:pointer;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
 `
 const Header_main = styled(Header)`
     position:fixed;
@@ -84,22 +87,21 @@ const Header_main = styled(Header)`
     background-color:white;
     box-shadow: 0px 3px #f7f7f7;
     height :80px;
+    display:flex;
+    align-items:center;
 `
 const Menu_main = styled(Menu)`
     display:inline-block;
     margin-left:40px;
-    lineHeight: 64px;
+    lineHeight: 1px;
     text-align: right;
     border-bottom:0px;
     vertical-align: middle;
-
-    @media(max-width:1320px)
+    display: inline-flex;
+    align-items: center;
+    @media(max-width:1200px)
     {
         display:none;
-    }
-    @media(max-width:1540px)
-    {
-        margin-left: 15px;
     }
 `
 const Menu_item = styled(Menu.Item)`
@@ -149,6 +151,9 @@ const SideNav = styled.div`
         line-height: 1.5;
         color:white;
     }
+    a:hover{
+        color:#1890ff !important;
+    }
     @media(min-width: 1320px)
     {
         display: none;
@@ -159,26 +164,35 @@ const Login_SignUp = styled.a`
     div
     {
         list-style-type:none;
-        padding-left:8px;
+        
     }
     @media(max-width:480px)
     {
-        display:block !important;
+        display:block !important;        
         height:50px;
     }
 `
 const LOG = styled.span`
     display:inline-block;
-    float:left;
-    color: #818181;
+    width:50%;
+    color: white;
     &:hover{
         color:#1890ff !important;
+        text-decoration:underline;
     }
 `
 const SIGN = styled.span`
     display:inline-block;
-    float:right;
-    color: #818181;
+    width:50%;
+    
+    color: white;
+    @media(max-width:480px)
+    {
+        &:hover{
+            color:#1890ff !important;
+            text-decoration:underline;
+        }
+    }
 `
 const Why = styled.a`
     display:none !important;
@@ -191,18 +205,19 @@ const Close = styled.a`
     text-align:right;
 `
 const Right_div = styled.div`
-    float: right;
-    margin-top: 6px;
-
-    @media(max-width:1200px)
-    {
-        margin-top:0px;
-    }
+    margin-left:auto;
+    height:100%;
 `
 const NavLink = styled(Link)`
     color: rgb( 40, 37, 40 ) !important;
     &:hover{
         color:#1890ff !important;
+    }
+`
+const ProfileLinkContainer = styled.div`
+    @media(min-width:361px)
+    {
+        display: none;
     }
 `
 class Navigation extends React.Component {
@@ -337,13 +352,17 @@ class Navigation extends React.Component {
             this.setState({ selected: ['1'] })
         }
     }
+    logout() {
+        /* console.log("hello Logout") */
+        this.props.Logout();
+    }
     render() {
         let prof_name = this.props.profileDetails.first_name !== null && this.props.profileDetails.first_name !== undefined ? (this.props.profileDetails.first_name + " " + this.props.profileDetails.last_name) : "User";
         const { modal } = this.state;
 
         return (
             <Header_main id="main">
-                <Logo onClick={() => this.props.history ? this.props.history.push("/login") : ''}>
+                <Logo onClick={() => this.props.history ? this.props.history.push("/") : ''}>
                     <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png" />
                     <FALDAX src="./images/Homepage/faldax.png" />
                 </Logo>
@@ -370,12 +389,12 @@ class Navigation extends React.Component {
                 </Right_div>
                 <SideNav id="mySidenav">
                     <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
-                    <Login_SignUp>
+                    {!this.props.isLoggedIn &&
                         <div>
-                            <LOG onClick={this.dispModal.bind(this, "login")}>LOGIN</LOG>
-                            <SIGN onClick={this.dispModal.bind(this, "signup")}>SIGNUP</SIGN>
+                            <a onClick={this.dispModal.bind(this, "login")}>Login</a>
+                            <a onClick={this.dispModal.bind(this, "signup")}>Signup</a>
                         </div>
-                    </Login_SignUp>
+                    }
                     <Link to="/">Home</Link>
                     <a onClick={this.showComing} href="#">Features</a>
                     <Link to="/about-us">About</Link>
@@ -386,6 +405,12 @@ class Navigation extends React.Component {
                     <a onClick={this.showComing} href="#">Exchange</a>
                     <Why> Careers </Why>
                     <Why> Language </Why>
+                    {this.props.isLoggedIn &&
+                        <ProfileLinkContainer>
+                            <a onClick={() => this.props.history.push('/editProfile')}>Profile</a>
+                            <a onClick={this.logout.bind(this)}>Logout</a>
+                        </ProfileLinkContainer>
+                    }
                 </SideNav>
                 <div>
                     <Modal
@@ -469,7 +494,7 @@ function mapStateToProps(state, ownProps) {
     });
 }
 const mapDispatchToProps = dispatch => ({
-
+    Logout: () => dispatch(Logout())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navigation));

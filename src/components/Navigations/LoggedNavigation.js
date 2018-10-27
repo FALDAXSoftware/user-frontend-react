@@ -1,6 +1,6 @@
 /* IN-built */
 import React, { Component } from 'react';
-import { Layout, Menu, Modal,Input,Button } from 'antd';
+import { Layout, Menu, Modal, Input, Button } from 'antd';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -9,7 +9,7 @@ import 'antd/dist/antd.css';
 /* Components */
 import Afterlog from "./Afterlog"
 import { Logout } from '../../Actions/Auth';
-import {globalVariables} from "../../Globals"
+import { globalVariables } from "../../Globals"
 const { Header } = Layout;
 
 /* Styled Components */
@@ -18,8 +18,9 @@ const FALDAX = styled.img`
     margin-left: 10px;
 `
 const Logo = styled.div`
-    margin-top: 6px;
-    display:inline-block;
+    display:inline-flex;
+    height:100%;
+    align-items:center;
     text-align:left;
     cursor:pointer;
 `
@@ -32,6 +33,8 @@ const Header_main = styled(Header)`
     background-color:white;
     box-shadow: 0px 3px #f7f7f7;
     height :80px;
+    display:flex;
+    align-items:center;
 `
 const Menu_main = styled(Menu)`
     display:inline-block;
@@ -115,6 +118,12 @@ const LogoutStyle = styled.a`
     {
         display: none !important;
     }
+`
+const RightCol = styled.div`
+    height:100%
+    display:inline-flex;
+    align-items:center;
+    margin-left:auto;
 `
 
 class LoggedNavigation extends Component {
@@ -206,7 +215,9 @@ class LoggedNavigation extends Component {
                     <Menu_item onClick={this.showComing} key="3">WALLET</Menu_item>
                     <Menu_item onClick={this.showComing} key="4">HISTORY</Menu_item>
                 </Menu_main>
-                <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />
+                <RightCol>
+                    <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />
+                </RightCol>
                 <SideNav id="mySidenav2">
                     <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                     <Profile> PROFILE </Profile>
@@ -217,7 +228,7 @@ class LoggedNavigation extends Component {
                     <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
                 </SideNav>
                 <div>
-                <Modal
+                    <Modal
                         title={<img src="./images/Homepage/Footer_logo.png" />}
                         visible={this.state.comingSoon}
                         onOk={(e) => this.handleComing()}
@@ -229,7 +240,7 @@ class LoggedNavigation extends Component {
                     >
                         <div>
                             <h3 style={{ fontSize: "32px", textAlign: "center" }}>Coming Soon</h3>
-                            <label  style={{ color: '#00a7ff' }}> Please enter your email to get updates of FALDAX: </label>
+                            <label style={{ color: '#00a7ff' }}> Please enter your email to get updates of FALDAX: </label>
                             <Input placeholder="Please enter your email address" style={{ color: '#00a7ff', borderColor: '#00a7ff' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
                             <div style={{ marginTop: '20px', minHeight: '20px' }}>
                                 <Button style={{ float: 'right', color: '#00a7ff', borderColor: '#00a7ff' }} onClick={() => this.send_email()}> RECEIVE UPDATE </Button>

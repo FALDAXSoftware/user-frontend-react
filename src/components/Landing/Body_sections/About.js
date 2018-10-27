@@ -41,8 +41,8 @@ export default class About extends Component {
   render() {
     return (
       <Section>
-        <Container style={{ textAlign: "center" }}>
-          <Row>
+        <Container style={{ textAlign: "center" }} >
+          <Row className="wow fadeIn" data-wow-duration="2s" data-wow-delay="700ms">
             <Col>
               <Heading>
                 What is <HeadingBrand>FALDAX ?</HeadingBrand>
@@ -52,7 +52,7 @@ export default class About extends Component {
               </SubHeading>
             </Col>
           </Row>
-          <Row>
+          <Row className="wow fadeIn" data-wow-duration="2s" data-wow-delay="700ms">
             <Col>
               <Paragraph>
                 Ford & Lowrey Digital Asset Exchange (FALDAX) is a new cryptocurrency exchange platform, built by tech-savvy traders that were frustrated with the trading options available today. Cryptocurrency adoption is hindered by a lack of innovation and accessibility. For new traders, crypto trading is often confusing or seems too risky. New and old exchanges are one and the same. FALDAX will propel the industry with forward-thinking innovations that enhance every trader’s experience – novice and veteran, alike.

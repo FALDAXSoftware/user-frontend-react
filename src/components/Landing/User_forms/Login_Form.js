@@ -22,8 +22,12 @@ export const Form_wrap = styled.div`
   min-height:630px;
   @media(min-width:1024px) and  (max-width:1440px)
   {
-    padding-left: 30px;
+    padding: 30px;
     padding-top: 10px;
+  }
+  @media(max-width:767px)
+  {
+    padding: 30px;
   }
 `
 const Login_head = styled.div`
@@ -77,6 +81,10 @@ export const Username = styled.input`
   {
     height:35px;
   }
+  @media(max-width:767px)
+  {
+    width: 85%;
+  }
 `
 export const Email_req = styled.div`
   display:none;
@@ -84,14 +92,14 @@ export const Email_req = styled.div`
   font-size:11px;
   width:76%;
 `
-export const UserIconS = styled(Icon) `
+export const UserIconS = styled(Icon)`
   font-size:19px;
   display:none;
   margin-left:10px;
 `
-export const UserIconF = styled(UserIconS) `
+export const UserIconF = styled(UserIconS)`
 `
-const Ph_Label = styled(Email_label) `
+const Ph_Label = styled(Email_label)`
   margin-top:15px;
 `
 export const Phone_req = styled.label`
@@ -100,13 +108,13 @@ export const Phone_req = styled.label`
   font-size:11px;
   width:76%;
 `
-const Password = styled(Username) `
+const Password = styled(Username)`
   font-size:16px;
   padding-right:35px;
 `
-const PassIconF = styled(UserIconS) `
+const PassIconF = styled(UserIconS)`
 `
-const PassIconS = styled(UserIconF) `
+const PassIconS = styled(UserIconF)`
 `
 export const Pass_req = styled.label`
   display:none;
@@ -114,7 +122,7 @@ export const Pass_req = styled.label`
   font-size:11px;
   width:76%;
 `
-const OtpLabel = styled(Email_label) `
+const OtpLabel = styled(Email_label)`
     width: 76%;
     text-align: justify;
 `
@@ -124,6 +132,10 @@ const Check_wrap = styled.div`
   @media(min-width:1024px) and  (max-width:1440px)
   {
     margin-top: 20px;
+  }
+  @media(max-width:767px){
+    width:100%;
+    text-align:left;
   }
 `
 const Remember = styled.div`
@@ -147,14 +159,12 @@ const Forgot = styled.a`
   font-family: "Open Sans";
   color: rgb( 15, 71, 123 );
   text-align: left;
-
-  @media(max-width:400px)
+  @media(max-width:767px)
   {
-    float:left;
-    margin-top: 15px;
+    float:none;
   }
 `
-const Button_login = styled(Button) `
+const Button_login = styled(Button)`
   width: 110px;
   background-color: #0f477b;
   color: white;
@@ -171,7 +181,7 @@ const Button_login = styled(Button) `
   @media(max-width:400px)
   {
     display:block;
-    margin-top: 70px;
+    margin-top: 30px;
   }
   @media (min-width:1024px) and (max-width:1440px)
   {
@@ -190,7 +200,7 @@ const Sign = styled.div`
   font-family: "Open Sans";
   @media(max-width:400px)
   {
-    margin-top: 50px;
+    margin-top: 30px;
   }
   @media (min-width:1024px) and (max-width:1440px)
   {
@@ -208,7 +218,7 @@ const FAI = styled.img`
   margin-left:-35px;
   cursor:pointer;
 `
-const Active_FAI = styled(FAI) `
+const Active_FAI = styled(FAI)`
     
 `
 class Login_Form extends React.Component {
@@ -242,7 +252,7 @@ class Login_Form extends React.Component {
         /* console.log("I am in") */
         this.props.Login(value);
       } else {
-        this.openNotificationWithIcon('error', "Error", "Please complete all required fields before continuing.")
+        this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue.")
       }
     });
   }

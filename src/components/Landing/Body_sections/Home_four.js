@@ -300,7 +300,7 @@ class Home_four extends Component {
                 <Section>
                     {
                         countries.length > 0 &&
-                        <Container>
+                        <Container className="wow fadeIn" data-wow-duration="2s" data-wow-delay="700ms">
                             <Row>
                                 <Col style={{ textAlign: "center" }}>
                                     <Heading>

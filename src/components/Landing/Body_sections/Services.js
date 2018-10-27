@@ -124,7 +124,7 @@ export default class Services extends Component {
 
     return (
       <Section>
-        <Container>
+        <Container className="wow fadeIn" data-wow-duration="2s" data-wow-delay="500ms">
           <Slider {...sliderSettings}>
             <SlideRow>
               <Col lg={{ span: 8 }}>

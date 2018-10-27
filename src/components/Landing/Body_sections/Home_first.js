@@ -49,7 +49,7 @@ const SubHeading = styled.h3`
   color:white;
   font-family:"Open sans";
   text-transform: uppercase;
-  letter-spacing: 6.7px;
+  letter-spacing: 7.3px;
   @media (max-width: 1199px) {
     font-size:20px;
     letter-spacing: 5.7px;
@@ -83,7 +83,7 @@ export default class Homefirst extends Component {
                 </SubHeading>
             </Col>
             <ImageCol lg={10}>
-              <Img src="/images/logo-lg.png" width="80%" />
+              <Img src="/images/logo-lg.png" width="80%" className="wow fadeInUp" data-wow-delay="1s" />
             </ImageCol>
           </BannerRow>
         </Container>

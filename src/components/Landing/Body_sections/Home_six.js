@@ -58,7 +58,7 @@ export default class Homethird extends Component {
     render() {
         return (
             <Third_Wrap>
-                <Container>
+                <Container className="wow fadeIn" data-wow-duration="2s" data-wow-delay="500ms">
                     <Third_Row>
                         <Row>
                             <BlueCol xs={8}>

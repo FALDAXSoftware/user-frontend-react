@@ -15,12 +15,9 @@ import { globalVariables } from '../../Globals'
 /* Styled-Components */
 const Right_div = styled.div`
     float: right;
-    margin-top: 6px;
-
-    @media(max-width:1200px)
-    {
-        margin-top:0px;
-    }
+    display: flex;
+    align-items: center;
+    height:100%;
 `
 const UserName = styled.div`
     display: inline-block;
@@ -38,9 +35,7 @@ const Open = styled.span`
     margin-right: 10px;
     font-size: 30px;
     cursor: pointer;
-    line-height: 76px;
-    vertical-align: middle;
-    
+    margin-top:10px;
     @media(max-width:1200px)
     {
         display:inline-block;
@@ -55,6 +50,7 @@ const HeaderAvatar = styled.div`
     background-position: center;
     border-radius: 50%;
     display: inline-block;
+    vertical-align: middle;
 `
 const DropDownDiv = styled(Dropdown)`
     margin-right : 30px;
@@ -84,8 +80,6 @@ const AnchorName = styled.a`
   font-weight: bold;
   font-family: "Open sans";
   color: #505050;
-  display: flex;
-  align-items: center;
   text-transform: capitalize;
   @media(max-width:1200px)
   {
@@ -162,7 +156,7 @@ class Afterlog extends React.Component {
                         </UserName>
                     </AnchorName>
                 </DropDownDiv>
-                <Open style={{ fontSize: "30px", cursor: "pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={() => this.openNav()}>&#9776;</Open>
+                <Open onClick={() => this.openNav()}>&#9776;</Open>
                 <div>
                     <Modal
                         title={<img src="./images/Homepage/Footer_logo.png" />}

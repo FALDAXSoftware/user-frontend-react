@@ -151,7 +151,7 @@ export default class Feature extends Component {
 
     return (
       <Section>
-        <Container style={{ textAlign: "center" }}>
+        <Container style={{ textAlign: "center" }} className="wow fadeIn" data-wow-duration="2s" data-wow-delay="500ms">
           <Row>
             <Col>
               <Heading> <HeadingBrand>Features</HeadingBrand> </Heading>
