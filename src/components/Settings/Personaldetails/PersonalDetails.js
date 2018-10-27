@@ -250,7 +250,8 @@ class PersonalDetails extends Component {
             street1Icon: null,
             street2Icon: null,
             cityIcon: null,
-            postalIcon: null
+            postalIcon: null,
+            remove_pic: false
         }
         this.handleProfile = this.handleProfile.bind(this);
     }
@@ -261,6 +262,7 @@ class PersonalDetails extends Component {
         this.props.form.validateFields((error, value) => {
             let dataDate = "";
             const profileData = new FormData();
+            console.log(this.state.profileImg, this.state.remove_pic)
             console.log(this.state, this.props)
             if (error == null && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.cityIcon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '') || ((this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
                 document.querySelectorAll(".first_msg")[0].style.display = "none";
@@ -296,8 +298,14 @@ class PersonalDetails extends Component {
                 profileData.append('city_town', value.city_town);
                 profileData.append('postal_code', number);
                 profileData.append('dob', dataDate);
-                if (this.state.profileImage !== null && this.state.profileImage !== undefined)
+                profileData.append('remove_pic', this.state.remove_pic)
+                console.log(!this.state.profileImg.includes("def_profile.jpg"))
+                this.setState({ profileImg: undefined, profileImage: undefined, remove_pic: false })
+                if (this.state.profileImage !== null && this.state.profileImage !== undefined && !this.state.profileImg.includes("def_profile.jpg")) {
                     profileData.append('profile_pic', this.state.profileImage)
+
+                }
+
                 /* console.log(profileData) */
 
                 this.props.profileupdateAction(this.props.isLoggedIn, profileData);
@@ -313,10 +321,10 @@ class PersonalDetails extends Component {
             if (this.state.lastIcon == null && this.props.profileDetails.last_name == null) {
                 this.setState({ lastIcon: false })
                 document.querySelectorAll(".last_msg")[0].style.display = "block";
-                this.setState({ firstmsg: "Last Name field is required" })
+                this.setState({ lastmsg: "Last Name field is required" })
             }
-            console.log(this.state, this.props)
-            if ((this.state.countryIcon == null || this.state.countryIcon == false) && this.state.countrySelected == '' && this.props.profileDetails.country == '') {
+            console.log(this.state.countryIcon, this.state.countrySelected, this.props.profileDetails.country == '')
+            if ((this.state.countryIcon == null || this.state.countryIcon == false) && (this.state.countrySelected == '' || this.state.countrySelected == null) && (this.props.profileDetails.country == '' || this.props.profileDetails.country == null)) {
                 this.setState({ countryIcon: false })
                 document.querySelectorAll(".country_msg")[0].style.display = "block";
                 this.setState({ countrymsg: "Country field is required" })
@@ -369,17 +377,22 @@ class PersonalDetails extends Component {
         this.props.getProfileDataAction(this.props.isLoggedIn)
     }
     componentWillReceiveProps(props, newProps) {
-        /* console.log("CWRP MAIN ------->>>>>>",this.state.profileImg==undefined,props.profileDetails.profile_pic) */
+        console.log("step:1", this.state, props)
         if (props.profileDetails.profile_pic !== null && props.profileDetails.profile_pic !== undefined && props.profileDetails.profile_pic !== "") {
-            /* console.log("CWRP",this.state.profileImg,props.profileDetails.profile_pic) */
-            if (this.state.profileImg && this.state.profileImg !== "./images/Settings/def_profile.jpg")
+            if (this.state.profileImg !== undefined && this.state.profileImg !== null && this.state.profileImg !== "") {
+                console.log("werghabwb", this.state.profileImg, props.profileDetails.profile_pic)
+
+                console.log("will be printed when theres is image on state")
                 this.setState({ profileImg: this.state.profileImg })
-            else
-                this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic, removedProfile: false, spin_show: false })
-        }
-        if (this.state.removedProfile && this.state.profileImg) {
-            /* console.log("abababababababb",this.state.removedProfile,this.state.profileImg) */
-            this.setState({ profileImg: "./images/Settings/def_profile.jpg", spin_show: false })
+
+                console.log("this will be printed when there is no image on state and there is image on props")
+                /*  this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic }) */
+
+            }
+            else {
+                console.log("this will be printed when there is nothing on state", this.state.remove_pic)
+                this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic })
+            }
         }
         console.log(props.apiMessage, props.apiMessage == "User details updated successfully")
         if (props.apiStatus == 200 && props.apiMessage == "User details updated successfully") {
@@ -403,7 +416,7 @@ class PersonalDetails extends Component {
                         imageName: file.name,
                         imageType: file.type,
                         profileImage: file,
-                        imagemsg: ""
+                        imagemsg: "", remove_pic: false
                     });
                 };
             } else {
@@ -413,7 +426,7 @@ class PersonalDetails extends Component {
 
                 }
                 else {
-                    /* this.setState({ profileImg: "./images/Settings/def_profile.jpg", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' }) */
+                    this.setState({ profileImg: "./images/Settings/def_profile.jpg", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' })
                 }
             }
 
@@ -423,13 +436,14 @@ class PersonalDetails extends Component {
         }
     }
     removePic() {
-        const formData = new FormData();
-        /* console.log(this.props) */
-        this.removeNotification("warning");
-        this.setState({ removedProfile: true })
-        formData.append('email', this.props.email)
-        formData.append('profile_pic', "")
-        this.props.removepicAction(this.props.isLoggedIn, formData)
+        console.log(this.props, this.state.profileImg)
+        /* this.removeNotification("warning"); */
+        document.getElementById("file").value = "";
+        if (this.state.profileImg !== "./images/Settings/def_profile.jpg") {
+            this.setState({ remove_pic: true, profileImg: "./images/Settings/def_profile.jpg", profileImage: undefined })
+        }
+        /* 
+        this.props.removepicAction(this.props.isLoggedIn, formData) */
     }
     openNotificationWithIcon = (type) => {
         notification[type]({
@@ -524,7 +538,7 @@ class PersonalDetails extends Component {
             }
             else {
                 console.log("Hello8")
-                this.setState({ firstIcon: false })
+                this.setState({ lastIcon: false })
                 document.querySelectorAll(".last_msg")[0].style.display = "block";
                 this.setState({ lastmsg: "Last Name field is required" })
             }
@@ -545,7 +559,7 @@ class PersonalDetails extends Component {
             }
         }
         else if (field == "dob") {
-            if (value["day"] !== undefined && value["month"] !== undefined && value["year"] !== undefined) {
+            if ((value["day"] !== undefined && value["month"] !== undefined && value["year"] !== undefined) && (value["day"] !== "" && value["month"] !== "" && value["year"] !== "")) {
                 this.setState({ dobIcon: true })
                 document.querySelectorAll(".dob_msg")[0].style.display = "none";
             }
@@ -634,6 +648,7 @@ class PersonalDetails extends Component {
         const { profileDetails } = this.props;
         const { citymsg, postalmsg } = this.state;
         var me = this;
+
         return (
             <Profile_wrap>
                 <Row>
@@ -646,10 +661,10 @@ class PersonalDetails extends Component {
                     <Col>
                         <Row>
                             <Left_Col md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }} xxl={{ span: 6 }}>
-                                {/* console.log("Above Image",this.state,this.props) */}
+                                {console.log("Above Image", this.state, this.props)}
                                 <div><ImageDiv src={this.state.profileImg} /></div>
                                 <div><Image_input type="file" onChange={this.handleProfile} name="file" id="file" /><Image_up><Image_upload htmlFor="file">Upload New Photo</Image_upload></Image_up></div>
-                                <Remove onClick={this.removePic.bind(this)}>Remove</Remove>
+                                {(this.state.remove_pic !== true && !this.props.profileDetails.profile_pic.includes("def_profile.jpg")) ? <Remove onClick={this.removePic.bind(this)}>Remove</Remove> : ""}
                             </Left_Col>
                             <Right_Col md={{ span: 24 }} lg={{ span: 15, offset: 3 }} xl={{ span: 15, offset: 3 }} xxl={{ span: 15, offset: 3 }}>
                                 <First_Row>
