@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal , Dropdown, Icon, Avatar ,Input} from 'antd';
+import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal, Dropdown, Icon, Avatar, Input } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 
 /* Components */
 import { Logout } from '../../Actions/Auth';
-import {Day_night_mode,Exchange} from "./BeforeLog"
+import { Day_night_mode, Exchange } from "./BeforeLog"
 /* Constants */
-import {globalVariables} from '../../Globals'
+import { globalVariables } from '../../Globals'
 
 /* Styled-Components */
 const Right_div = styled.div`
@@ -47,8 +47,14 @@ const Open = styled.span`
         margin-right:15px;
     }
 `
-const HeaderAvatar = styled(Avatar)`
-    margin-right:5px;
+const HeaderAvatar = styled.div`
+    margin-right:10px;
+    height: 35px;
+    width: 35px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    display: inline-block;
 `
 const DropDownDiv = styled(Dropdown)`
     margin-right : 30px;
@@ -78,7 +84,9 @@ const AnchorName = styled.a`
   font-weight: bold;
   font-family: "Open sans";
   color: #505050;
-
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
   @media(max-width:1200px)
   {
       margin-top:0px;
@@ -92,13 +100,11 @@ display:inline;
 `
 
 
-class Afterlog extends React.Component
-{
-    constructor(props)
-    {
+class Afterlog extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
-            comingSoon:false
+            comingSoon: false
         };
     }
     handleComing = (e) => {
@@ -108,16 +114,14 @@ class Afterlog extends React.Component
     comingCancel = (e) => {
         this.setState({ comingSoon: false });
     }
-    openNav()
-    {
+    openNav() {
         this.props.openNav();
     }
     logout() {
         /* console.log("hello Logout") */
         this.props.Logout();
     }
-    render()
-    {
+    render() {
         const DropdownItems = (
             <Menu>
                 <Menu.Item key="0">
@@ -127,23 +131,19 @@ class Afterlog extends React.Component
             </Menu>
         )
         let Avatar_img
-        console.log(this.props)
-        if(this.props.profileDetails!==undefined)
-        {
-            if(this.props.profileDetails.profile_pic!==null && this.props.profileDetails.profile_pic!==undefined && this.props.profileDetails.profile_pic!=="")
-            {
-                console.log("aaaaaaaaaa")
+        if (this.props.profileDetails !== undefined) {
+            if (this.props.profileDetails.profile_pic !== null && this.props.profileDetails.profile_pic !== undefined && this.props.profileDetails.profile_pic !== "") {
+                /* console.log("aaaaaaaaaa") */
                 Avatar_img = globalVariables.amazon_Bucket + this.props.profileDetails.profile_pic;
             }
-            else
-            {
-                console.log("vbbbbbbbbbbbbb")
-                Avatar_img =  "./images/Settings/def_profile.png";
+            else {
+                /* console.log("vbbbbbbbbbbbbb") */
+                Avatar_img = "./images/Settings/def_profile.png";
             }
         }
-        return(
+        return (
             <Right_div>
-               {/*  <Bell>
+                {/*  <Bell>
                     <Icon  style={{fontSize:"15px",color:"black"}} type="bell" theme="filled" />      
                 </Bell>
                 <Day_night_mode>
@@ -154,15 +154,15 @@ class Afterlog extends React.Component
                         </Exchange> */}
                 <DropDownDiv overlay={DropdownItems} trigger={['click']}>
                     <AnchorName className="ant-dropdown-link" href="#">
-                    {console.log(this.props,Avatar_img)}
-                        <HeaderAvatar src={Avatar_img} />
+                        {console.log(this.props, Avatar_img)}
+                        <HeaderAvatar style={{ backgroundImage: "url('" + Avatar_img + "')" }} />
                         <UserName>
-                                {this.props.prof_name}
+                            {this.props.prof_name}
                             <DownIcon type="caret-down" theme="outlined" />
                         </UserName>
                     </AnchorName>
                 </DropDownDiv>
-                <Open style={{ fontSize:"30px", cursor:"pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={() => this.openNav()}>&#9776;</Open>
+                <Open style={{ fontSize: "30px", cursor: "pointer", lineHeight: '76px', verticalAlign: 'middle' }} onClick={() => this.openNav()}>&#9776;</Open>
                 <div>
                     <Modal
                         title={<img src="./images/Homepage/Footer_logo.png" />}
@@ -179,7 +179,7 @@ class Afterlog extends React.Component
                             <label style={{ color: '#00a7ff' }}> Please enter your email to get updates of FALDAX: </label>
                             <Input placeholder="Please enter your email address" style={{ color: '#00a7ff', borderColor: '#00a7ff' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
                             <div style={{ marginTop: '20px', minHeight: '20px' }}>
-                                <Button style={{ float: 'right', color: '#00a7ff', borderColor: '#00a7ff' }}  onClick={() => this.send_email()}> RECEIVE UPDATE </Button>
+                                <Button style={{ float: 'right', color: '#00a7ff', borderColor: '#00a7ff' }} onClick={() => this.send_email()}> RECEIVE UPDATE </Button>
                             </div>
                         </div>
                     </Modal>
@@ -188,8 +188,8 @@ class Afterlog extends React.Component
         );
     }
 }
-function mapStateToProps(state){
-   /*  console.log(state) */
+function mapStateToProps(state) {
+    /*  console.log(state) */
     return ({
         ...state,
     });
@@ -198,5 +198,5 @@ function mapStateToProps(state){
 const mapDispatchToProps = dispatch => ({
     Logout: () => dispatch(Logout())
 })
-  
+
 export default connect(mapStateToProps, mapDispatchToProps)(Afterlog);
