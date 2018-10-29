@@ -7,7 +7,7 @@ import { faYoutube, faTwitter, faLinkedinIn, faDiscord } from '@fortawesome/free
 import styled from 'styled-components';
 import Navigation from '../Navigations/Navigation';
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
-import CommonFooter from "./Footers/Footer";
+import CommonFooter from "../Landing/Footers/Footer";
 const TabPane = Tabs.TabPane;
 
 /* Styled-Components */
@@ -152,7 +152,7 @@ const User_image = styled.div`
   }
 `;
 
-const FontAwesomeIcons = styled(FontAwesomeIcon)`
+const FontAwesomeIcons = styled(FontAwesomeIcon) `
   font-size: 16px;
   margin-top: 5px;
   color: ${props => props.color ? '#4c84ff' : '#878787'};

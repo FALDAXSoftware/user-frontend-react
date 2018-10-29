@@ -570,3 +570,19 @@ table .ant-table-tbody > tr > td {
   {
     text-align:center !important;
   }
+
+
+  /* BLog Cards CSS */
+  .Card-Blog
+  {
+    width:370px !important;
+  }
+  .Card-Blog .ant-card-actions
+  {
+    border-top: 0px;
+    background:#f7f7f7; 
+  }
+  .Card-Blog .ant-card-actions li:not(:last-child)
+  {
+    border-right:1px solid #919191;
+  }

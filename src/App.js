@@ -10,8 +10,9 @@ import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 /* Components */
 import HomePage from './components/Landing/HomePage';
-import FaqPage from './components/Landing/FaqPage';
-import AboutUs from './components/Landing/About_us';
+import FaqPage from './components/Landing_categories/FaqPage';
+import AboutUs from './components/Landing_categories/About_us';
+import Blog from './components/Landing_categories/Blog'
 
 library.add(faStroopwafel);
 
@@ -91,6 +92,7 @@ class App extends Component {
               <Route path="/login" exact title="Login" component={HomePage} />
               <Route {...this.props} path="/about-us" exact title="About Us" component={AboutUs} />
               <Route path="/faq" exact title="Faq Page" component={FaqPage} />
+              <Route path="/blogs" exact title='Blog' component={Blog} />
               <RestrictedRoute
                 path="/"
                 component={AppRouter}

@@ -664,7 +664,7 @@ class PersonalDetails extends Component {
                                 {console.log("Above Image", this.state, this.props)}
                                 <div><ImageDiv src={this.state.profileImg} /></div>
                                 <div><Image_input type="file" onChange={this.handleProfile} name="file" id="file" /><Image_up><Image_upload htmlFor="file">Upload New Photo</Image_upload></Image_up></div>
-                                {(this.state.remove_pic !== true && !this.props.profileDetails.profile_pic.includes("def_profile.jpg")) ? <Remove onClick={this.removePic.bind(this)}>Remove</Remove> : ""}
+                                {(this.state.remove_pic !== true && ((this.props.profileDetails.profile_pic) ? (!this.props.profileDetails.profile_pic.includes("def_profile.jpg")) ? <Remove onClick={this.removePic.bind(this)}>Remove</Remove> : "" : ""))}
                             </Left_Col>
                             <Right_Col md={{ span: 24 }} lg={{ span: 15, offset: 3 }} xl={{ span: 15, offset: 3 }} xxl={{ span: 15, offset: 3 }}>
                                 <First_Row>

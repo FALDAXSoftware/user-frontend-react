@@ -98,7 +98,7 @@ const Sign_a = styled.a`
 const Link_wrap = styled.div`
     margin-top:50px;
 `
-const Icon = styled.i`
+export const Icon = styled.i`
     vertical-align: middle;
     color: rgb( 15, 71, 123 );    
 `
