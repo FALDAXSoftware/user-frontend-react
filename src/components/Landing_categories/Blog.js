@@ -30,7 +30,7 @@ class Blog extends React.Component {
                     <SectionBlog>
                         <Mainimage>
                             <Row>
-                                <Col span={9}>
+                                <Col sm={24} md={12} lg={9} >
                                     <Lefthead>
                                         <Subleft>
                                             <Eco>Economy</Eco>
@@ -39,7 +39,7 @@ class Blog extends React.Component {
                                         </Subleft>
                                     </Lefthead>
                                 </Col>
-                                <Col span={15}>
+                                <Col sm={24} md={12} lg={15}>
                                     <Righthead>
                                     </Righthead>
                                 </Col>
@@ -49,7 +49,7 @@ class Blog extends React.Component {
                             <Blog_p>Latest Blogs</Blog_p><HR_tag/>
                             <Blogs_wrap>
                                 <Row className="blog-card-row">
-                                    <Col lg={8} md={12} sm={12}  className="blog-card-col">
+                                    <Col lg={8} md={{sapn:12}} sm={12}  className="blog-card-col">
                                         <Card
                                             style={{ width: "100%" }}
                                             cover={<CardCover alt="example" style={{backgroundImage:"url('/images/LandingCat/Blog/headImage.png')"}} />}
@@ -63,7 +63,7 @@ class Blog extends React.Component {
                                             />
                                         </Card>
                                     </Col>
-                                    <Col lg={8} md={12} sm={12}  className="blog-card-col">
+                                    <Col lg={8} md={{sapn:12}} sm={12}  className="blog-card-col">
                                         <Card
                                             style={{ width: "100%" }}
                                             cover={<CardCover alt="example" style={{backgroundImage:"url('/images/LandingCat/Blog/headImage.png')"}} />}
@@ -77,7 +77,7 @@ class Blog extends React.Component {
                                             />
                                         </Card>
                                     </Col>
-                                    <Col lg={8} md={12} sm={12}  className="blog-card-col">
+                                    <Col lg={8} md={{sapn:12}} sm={12}  className="blog-card-col">
                                         <Card
                                             style={{ width: "100%" }}
                                             cover={<CardCover alt="example" style={{backgroundImage:"url('/images/LandingCat/Blog/headImage.png')"}} />}
