@@ -11,11 +11,11 @@ export const Lefthead = styled.div`
     background:#0f477b;
     min-height:420px;
     order-color:#0f477b;
-    display:inline-flex;
-    align-items:cebnter;
+    display:flex;
+    align-items:center;
 `
 export const Subleft = styled.div`
-
+    padding : 0px 50px;
 `
 export const Eco = styled.span`
     font-size: 16px;
@@ -34,6 +34,17 @@ export const Eco2 = styled.span`
     font-family: "Open Sans";
     color: rgb( 255, 139, 0 );
 
+`
+export const CardCover = styled.div`
+    width:100%;
+    height:195px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    @media(max-width:575px)
+    {
+        height:450px;
+    }
 `
 export const Righthead = styled.div`
     min-height:420px;
@@ -56,8 +67,6 @@ export const Blog_p = styled.p`
 `
 export const Blogs_wrap = styled.div`
     margin-top:30px;
-    margin-right:-30px;
-    margin-left:-30px;
 `
 export const HR_tag = styled.hr`
     box-sizing: content-box;
@@ -80,11 +89,14 @@ export const Meta_desc = styled.p`
     font-family: "Open Sans";
     color: rgb( 15, 71, 123 );
     font-weight: bold;
+    margin-bottom:8px;
 `
 export const Card_foot = styled.span`
     font-size: 12px;
     font-family: "Open Sans";
-    color: rgba( 102, 102, 102, 0.702 );  
+    font-weight:600;
+    color: #666666;  
+    line-height:1;
 `
 export const Prev_next = styled.div`
     margin-top:45px;
@@ -93,20 +105,43 @@ export const Prev_next = styled.div`
         font-family: "Open Sans";
         color: rgb( 0, 0, 0 );
         font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 `
 export const Prev = styled.div`
     margin-right:60px;
     border:none;
     background:#f7f7f7;
     min-width:215px;
-    display: inline-block;
     min-height:40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    cursor:pointer;
+    &:hover
+    {
+        color:#1890ff;
+        
+    }
 `
 export const Next = styled.div`
     margin-left:60px;
     border:none;
     background:#f7f7f7;
     min-width:215px;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-height:40px;
+    border-radius: 5px;
+    &:hover
+    {
+        color:#1890ff;
+        
+    }
+`
+export const MsgIcon= styled.img`
+ margin-right:5px;
 `

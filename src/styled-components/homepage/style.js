@@ -10,9 +10,8 @@ export const Container = styled.div`
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-    @media (min-width: 1200px) {
-        width: 1170px;
-    }
+    max-width:1170px;
+    width:100%;
 `;
 
 export const Section_1 = styled.div`

@@ -6,12 +6,10 @@ import styled from 'styled-components';
 import Navigation from '../Navigations/Navigation';
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
-import { SectionBlog,Mainimage,Lefthead,Subleft,Eco,Head3,Eco2,Righthead,Whole_wrap,Blog_p,Blogs_wrap,HR_tag,Meta_title,Meta_desc,Card_foot,Prev_next,Prev,Next} from '../../styled-components/landingCategories/blog';
+import { SectionBlog,Mainimage,Lefthead,Subleft,Eco,Head3,Eco2,Righthead,Whole_wrap,Blog_p,Blogs_wrap,HR_tag,Meta_title,Meta_desc,Card_foot,Prev_next,Prev,Next,MsgIcon, CardCover} from '../../styled-components/landingCategories/blogStyle';
 
 const Container_Blog = styled(Container)`
-    width:1170px;
-    padding-left:0px;
-    padding-right:0px;
+
 `
 const { Meta } = Card;
 
@@ -50,12 +48,12 @@ class Blog extends React.Component {
                         <Whole_wrap>    
                             <Blog_p>Latest Blogs</Blog_p><HR_tag/>
                             <Blogs_wrap>
-                                <Row>
-                                    <Col style={{marginLeft:"30px",width:"370px",display:"inline-block"}}>
+                                <Row className="blog-card-row">
+                                    <Col lg={8} md={12} sm={12}  className="blog-card-col">
                                         <Card
-                                            style={{ width: 300 }}
-                                            cover={<img alt="example" height="195px" width="370px" src="./images/LandingCat/Blog/headImage.png" />}
-                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot>25 comments</Card_foot>]}
+                                            style={{ width: "100%" }}
+                                            cover={<CardCover alt="example" style={{backgroundImage:"url('/images/LandingCat/Blog/headImage.png')"}} />}
+                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregodfdfdfffffffffffffffffffffffffffffffffffffffffffr</Card_foot>,<Card_foot> <MsgIcon src="/images/LandingCat/Blog/msg-icon.png"/> 25 comments</Card_foot>]}
                                             bodyStyle={{paddingTop:"15px",paddingLeft: "25px",backgroundColor:"#f7f7f7",paddingBottom: "0px",paddingRight:"30px"}}
                                             className="Card-Blog"
                                         >
@@ -65,11 +63,11 @@ class Blog extends React.Component {
                                             />
                                         </Card>
                                     </Col>
-                                    <Col style={{marginLeft:"30px",width:"370px",display:"inline-block"}}>
+                                    <Col lg={8} md={12} sm={12}  className="blog-card-col">
                                         <Card
-                                            style={{ width: 300 }}
-                                            cover={<img alt="example" height="195px" width="370px" src="./images/LandingCat/Blog/headImage.png" />}
-                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot>25 comments</Card_foot>]}
+                                            style={{ width: "100%" }}
+                                            cover={<CardCover alt="example" style={{backgroundImage:"url('/images/LandingCat/Blog/headImage.png')"}} />}
+                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot> <MsgIcon src="/images/LandingCat/Blog/msg-icon.png"/> 25 comments</Card_foot>]}
                                             bodyStyle={{paddingTop:"15px",paddingLeft: "25px",backgroundColor:"#f7f7f7",paddingBottom: "0px",paddingRight:"30px"}}
                                             className="Card-Blog"
                                         >
@@ -79,149 +77,11 @@ class Blog extends React.Component {
                                             />
                                         </Card>
                                     </Col>
-                                    <Col style={{marginLeft:"30px",width:"370px",display:"inline-block"}}>
+                                    <Col lg={8} md={12} sm={12}  className="blog-card-col">
                                         <Card
-                                            style={{ width: 300 }}
-                                            cover={<img alt="example" height="195px" width="370px" src="./images/LandingCat/Blog/headImage.png" />}
-                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot>25 comments</Card_foot>]}
-                                            bodyStyle={{paddingTop:"15px",paddingLeft: "25px",backgroundColor:"#f7f7f7",paddingBottom: "0px",paddingRight:"30px"}}
-                                            className="Card-Blog"
-                                        >
-                                            <Meta
-                                            title={<Meta_title>Bitcoin</Meta_title>}
-                                            description={<Meta_desc>Savedroid-cryptocurrencies for everyone</Meta_desc>}
-                                            />
-                                        </Card>
-                                    </Col>
-                                </Row>
-                            </Blogs_wrap>
-                            <Blogs_wrap>
-                                <Row>
-                                    <Col style={{marginLeft:"30px",width:"370px",display:"inline-block"}}>
-                                        <Card
-                                            style={{ width: 300 }}
-                                            cover={<img alt="example" height="195px" width="370px" src="./images/LandingCat/Blog/headImage.png" />}
-                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot>25 comments</Card_foot>]}
-                                            bodyStyle={{paddingTop:"15px",paddingLeft: "25px",backgroundColor:"#f7f7f7",paddingBottom: "0px",paddingRight:"30px"}}
-                                            className="Card-Blog"
-                                        >
-                                            <Meta
-                                            title={<Meta_title>Bitcoin</Meta_title>}
-                                            description={<Meta_desc>Savedroid-cryptocurrencies for everyone</Meta_desc>}
-                                            />
-                                        </Card>
-                                    </Col>
-                                    <Col style={{marginLeft:"30px",width:"370px",display:"inline-block"}}>
-                                        <Card
-                                            style={{ width: 300 }}
-                                            cover={<img alt="example" height="195px" width="370px" src="./images/LandingCat/Blog/headImage.png" />}
-                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot>25 comments</Card_foot>]}
-                                            bodyStyle={{paddingTop:"15px",paddingLeft: "25px",backgroundColor:"#f7f7f7",paddingBottom: "0px",paddingRight:"30px"}}
-                                            className="Card-Blog"
-                                        >
-                                            <Meta
-                                            title={<Meta_title>Bitcoin</Meta_title>}
-                                            description={<Meta_desc>Savedroid-cryptocurrencies for everyone</Meta_desc>}
-                                            />
-                                        </Card>
-                                    </Col>
-                                    <Col style={{marginLeft:"30px",width:"370px",display:"inline-block"}}>
-                                        <Card
-                                            style={{ width: 300 }}
-                                            cover={<img alt="example" height="195px" width="370px" src="./images/LandingCat/Blog/headImage.png" />}
-                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot>25 comments</Card_foot>]}
-                                            bodyStyle={{paddingTop:"15px",paddingLeft: "25px",backgroundColor:"#f7f7f7",paddingBottom: "0px",paddingRight:"30px"}}
-                                            className="Card-Blog"
-                                        >
-                                            <Meta
-                                            title={<Meta_title>Bitcoin</Meta_title>}
-                                            description={<Meta_desc>Savedroid-cryptocurrencies for everyone</Meta_desc>}
-                                            />
-                                        </Card>
-                                    </Col>
-                                </Row>
-                            </Blogs_wrap>
-                            <Blogs_wrap>
-                                <Row>
-                                    <Col style={{marginLeft:"30px",width:"370px",display:"inline-block"}}>
-                                        <Card
-                                            style={{ width: 300 }}
-                                            cover={<img alt="example" height="195px" width="370px" src="./images/LandingCat/Blog/headImage.png" />}
-                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot>25 comments</Card_foot>]}
-                                            bodyStyle={{paddingTop:"15px",paddingLeft: "25px",backgroundColor:"#f7f7f7",paddingBottom: "0px",paddingRight:"30px"}}
-                                            className="Card-Blog"
-                                        >
-                                            <Meta
-                                            title={<Meta_title>Bitcoin</Meta_title>}
-                                            description={<Meta_desc>Savedroid-cryptocurrencies for everyone</Meta_desc>}
-                                            />
-                                        </Card>
-                                    </Col>
-                                    <Col style={{marginLeft:"30px",width:"370px",display:"inline-block"}}>
-                                        <Card
-                                            style={{ width: 300 }}
-                                            cover={<img alt="example" height="195px" width="370px" src="./images/LandingCat/Blog/headImage.png" />}
-                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot>25 comments</Card_foot>]}
-                                            bodyStyle={{paddingTop:"15px",paddingLeft: "25px",backgroundColor:"#f7f7f7",paddingBottom: "0px",paddingRight:"30px"}}
-                                            className="Card-Blog"
-                                        >
-                                            <Meta
-                                            title={<Meta_title>Bitcoin</Meta_title>}
-                                            description={<Meta_desc>Savedroid-cryptocurrencies for everyone</Meta_desc>}
-                                            />
-                                        </Card>
-                                    </Col>
-                                    <Col style={{marginLeft:"30px",width:"370px",display:"inline-block"}}>
-                                        <Card
-                                            style={{ width: 300 }}
-                                            cover={<img alt="example" height="195px" width="370px" src="./images/LandingCat/Blog/headImage.png" />}
-                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot>25 comments</Card_foot>]}
-                                            bodyStyle={{paddingTop:"15px",paddingLeft: "25px",backgroundColor:"#f7f7f7",paddingBottom: "0px",paddingRight:"30px"}}
-                                            className="Card-Blog"
-                                        >
-                                            <Meta
-                                            title={<Meta_title>Bitcoin</Meta_title>}
-                                            description={<Meta_desc>Savedroid-cryptocurrencies for everyone</Meta_desc>}
-                                            />
-                                        </Card>
-                                    </Col>
-                                </Row>
-                            </Blogs_wrap>
-                            <Blogs_wrap>
-                                <Row>
-                                    <Col style={{marginLeft:"30px",width:"370px",display:"inline-block"}}>
-                                        <Card
-                                            style={{ width: 300 }}
-                                            cover={<img alt="example" height="195px" width="370px" src="./images/LandingCat/Blog/headImage.png" />}
-                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot>25 comments</Card_foot>]}
-                                            bodyStyle={{paddingTop:"15px",paddingLeft: "25px",backgroundColor:"#f7f7f7",paddingBottom: "0px",paddingRight:"30px"}}
-                                            className="Card-Blog"
-                                        >
-                                            <Meta
-                                            title={<Meta_title>Bitcoin</Meta_title>}
-                                            description={<Meta_desc>Savedroid-cryptocurrencies for everyone</Meta_desc>}
-                                            />
-                                        </Card>
-                                    </Col>
-                                    <Col style={{marginLeft:"30px",width:"370px",display:"inline-block"}}>
-                                        <Card
-                                            style={{ width: 300 }}
-                                            cover={<img alt="example" height="195px" width="370px" src="./images/LandingCat/Blog/headImage.png" />}
-                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot>25 comments</Card_foot>]}
-                                            bodyStyle={{paddingTop:"15px",paddingLeft: "25px",backgroundColor:"#f7f7f7",paddingBottom: "0px",paddingRight:"30px"}}
-                                            className="Card-Blog"
-                                        >
-                                            <Meta
-                                            title={<Meta_title>Bitcoin</Meta_title>}
-                                            description={<Meta_desc>Savedroid-cryptocurrencies for everyone</Meta_desc>}
-                                            />
-                                        </Card>
-                                    </Col>
-                                    <Col style={{marginLeft:"30px",width:"370px",display:"inline-block"}}>
-                                        <Card
-                                            style={{ width: 300 }}
-                                            cover={<img alt="example" height="195px" width="370px" src="./images/LandingCat/Blog/headImage.png" />}
-                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot>25 comments</Card_foot>]}
+                                            style={{ width: "100%" }}
+                                            cover={<CardCover alt="example" style={{backgroundImage:"url('/images/LandingCat/Blog/headImage.png')"}} />}
+                                            actions={[<Card_foot>Aug 14,2018</Card_foot>,<Card_foot>Varun Gregor</Card_foot>,<Card_foot> <MsgIcon src="/images/LandingCat/Blog/msg-icon.png"/> 25 comments</Card_foot>]}
                                             bodyStyle={{paddingTop:"15px",paddingLeft: "25px",backgroundColor:"#f7f7f7",paddingBottom: "0px",paddingRight:"30px"}}
                                             className="Card-Blog"
                                         >
@@ -236,7 +96,7 @@ class Blog extends React.Component {
                         </Whole_wrap>
                         <Prev_next>
                             <Prev><i style={{verticalAlign:"middle"}} className="material-icons">keyboard_backspace</i><span style={{verticalAlign:"middle"}}>Previous Articles</span></Prev>
-                            <Next><i style={{verticalAlign:"middle"}} className="material-icons">keyboard_backspace</i><span style={{verticalAlign:"middle"}}>Next Articles</span></Next>
+                            <Next><span style={{verticalAlign:"middle"}}>Next Articles</span><i style={{verticalAlign:"middle",transform: "rotate(180deg)"}} className="material-icons">keyboard_backspace</i></Next>
                         </Prev_next>
                     </SectionBlog>
                 </Container_Blog>
