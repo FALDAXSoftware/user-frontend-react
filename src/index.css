@@ -587,12 +587,13 @@ table .ant-table-tbody > tr > td {
     padding-left: 25px;
     padding-right: 30px;
   }
-  .Card-Blog .ant-card-actions li:not(:last-child)
-  {
-    border-right:1px solid #666666;
-  }
-  .blog-card-col.ant-col-md-8 {
-    padding: 0px 15px;
+.Card-Blog .ant-card-actions li:not(:last-child)
+{
+  border-right:1px solid #666666;
+}
+.blog-card-col{
+  padding-left: 15px !important;
+  padding-right: 15px !important;
 }
 .ant-row.blog-card-row {
   margin-left: -15px;
@@ -614,8 +615,8 @@ table .ant-table-tbody > tr > td {
   padding: 0px 15px;
   white-space: nowrap;
   text-align: center;
-    text-overflow: ellipsis;
-    overflow: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .Card-Blog .ant-card-actions li:last-child{
   padding-left: 15px;

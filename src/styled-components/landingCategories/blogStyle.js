@@ -101,13 +101,15 @@ export const Card_foot = styled.span`
 export const Prev_next = styled.div`
     margin-top:45px;
     text-align:center;
-        font-size: 14px;
-        font-family: "Open Sans";
-        color: rgb( 0, 0, 0 );
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    font-size: 14px;
+    font-family: "Open Sans";
+    color: rgb( 0, 0, 0 );
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow:hidden;
+    width:100%;
 `
 export const Prev = styled.div`
     margin-right:60px;
@@ -142,6 +144,6 @@ export const Next = styled.div`
         
     }
 `
-export const MsgIcon= styled.img`
+export const MsgIcon = styled.img`
  margin-right:5px;
 `
