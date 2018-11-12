@@ -109,7 +109,7 @@ class ResetPassword extends Component {
       password=value;
             if(this.state.confPass!==undefined)
             {
-                console.log("abcd",this.state.confPass,value)
+                /* console.log("abcd",this.state.confPass,value) */
                 if(this.state.confPass === value)
                 {
                     this.setState({ confirmIcon: true })
@@ -154,7 +154,7 @@ class ResetPassword extends Component {
       }
     }
     if (field == "confirm_password") {
-      var bool = this.state.password == value ? true : false
+      var bool = this.state.password === value ? true : false
       if (value !== "") {
         this.setState({confPass:value})
         if (bool == true) {
@@ -177,14 +177,21 @@ class ResetPassword extends Component {
       }
     }
   }
-
+  openNotificationWithProfile = (type, head, desc) => {
+    notification[type]({
+        message: head,
+        description: desc,
+        duration: 3,
+    });
+  };
   submit = () => {
     this.props.form.validateFields((error, value) => {
       let url = this.props.location.search.split('=')
       /* console.log(error, value); */
       if (error == null) {
-        if (value.password.toUpperCase() == value.confirm_password.toUpperCase()) {
+        if (value.password == value.confirm_password) {
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
+          document.querySelectorAll(".comp_pass")[0].style.display = "block";
           document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
           this.setState({ pass_msg: null, confirmPass_msg: null });
           /* console.log(value,this.props) */
@@ -196,7 +203,7 @@ class ResetPassword extends Component {
           document.querySelectorAll(".comp_pass")[0].style.display = "block";
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
           document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
-          this.setState({ common_req: "*Both passwords do not match" })
+          this.openNotificationWithProfile("error","Error","Password do not match.")
         }
       } else {
         if (error.password !== undefined) {

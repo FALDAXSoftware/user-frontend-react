@@ -57,3 +57,16 @@ export const Container_row = styled(Row)`
         }
     }
 }`;
+export const Spin_Ex = styled.div`
+    text-align: center;
+    background: white;
+    border-radius: 4px;
+    margin: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f5f5f580;
+    height: 100%;
+    z-index: 9999;
+`

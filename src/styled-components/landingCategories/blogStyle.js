@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Col } from 'antd';
 
 
 export const SectionBlog = styled.section`
@@ -13,6 +14,10 @@ export const Lefthead = styled.div`
     order-color:#0f477b;
     display:flex;
     align-items:center;
+    @media(max-width:480px)
+    {
+        min-height:320px;
+    }
 `
 export const Subleft = styled.div`
     padding : 0px 50px;
@@ -28,6 +33,10 @@ export const Head3 = styled.h3`
     font-family: "Open Sans";
     color: rgb( 255, 255, 255 );
     font-weight: bold;
+    @media(max-width:480px)
+    {
+        font-size:25px;
+    }
 `
 export const Eco2 = styled.span`
     font-size: 16px;
@@ -45,13 +54,21 @@ export const CardCover = styled.div`
     {
         height:450px;
     }
+    @media(max-width:480px)
+    {
+        max-height:240px;
+    }
 `
 export const Righthead = styled.div`
     min-height:420px;
-    background-image:url('./images/LandingCat/Blog/headImage.png');
+    background-image:url('/images/LandingCat/Blog/headImage.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    @media(max-width:480px)
+    {
+        min-height:320px;
+    }
 `
 export const Whole_wrap = styled.div`
     margin-top:55px;
@@ -73,9 +90,12 @@ export const HR_tag = styled.hr`
     height: 0;
     overflow: visible;
     display: inline-block;
-    width: 87.6%;
-    margin-left: 30px;
+    width: 99%;
     vertical-align: middle;
+    @media(max-width:991px)
+    {
+        display:none;
+    }
 `
 export const Meta_title = styled.p`
     margin-bottom:0px;
@@ -83,6 +103,7 @@ export const Meta_title = styled.p`
     font-family: "Open Sans";
     color: rgb( 255, 139, 0 );
     font-weight: bold;
+    min-height:24px;
 `
 export const Meta_desc = styled.p`
     font-size: 18px;
@@ -90,6 +111,9 @@ export const Meta_desc = styled.p`
     color: rgb( 15, 71, 123 );
     font-weight: bold;
     margin-bottom:8px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 `
 export const Card_foot = styled.span`
     font-size: 12px;
@@ -101,13 +125,19 @@ export const Card_foot = styled.span`
 export const Prev_next = styled.div`
     margin-top:45px;
     text-align:center;
-        font-size: 14px;
-        font-family: "Open Sans";
-        color: rgb( 0, 0, 0 );
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    font-size: 14px;
+    font-family: "Open Sans";
+    color: rgb( 0, 0, 0 );
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow:hidden;
+    width:100%;
+    @media(max-width:576px)
+    {
+        display:block;
+    }
 `
 export const Prev = styled.div`
     margin-right:60px;
@@ -120,15 +150,23 @@ export const Prev = styled.div`
     justify-content: center;
     border-radius: 5px;
     cursor:pointer;
+    color:black;
     &:hover
     {
         color:#1890ff;
         
     }
+    @media(max-width:576px)
+    {
+        display:block;
+        padding:10px 0px;
+        margin-right:0px;
+    }
 `
 export const Next = styled.div`
     margin-left:60px;
     border:none;
+    color:black;
     background:#f7f7f7;
     min-width:215px;
     display: inline-flex;
@@ -136,12 +174,151 @@ export const Next = styled.div`
     justify-content: center;
     min-height:40px;
     border-radius: 5px;
+    cursor:pointer;
     &:hover
     {
         color:#1890ff;
         
     }
+    @media(max-width:576px)
+    {
+        margin-top:30px;
+        display:block;
+        padding:10px 0px;
+        margin-left:0px;
+    }
 `
-export const MsgIcon= styled.img`
+export const MsgIcon = styled.img`
  margin-right:5px;
+`
+
+
+
+/* <<<<<<<<<<<<<<<<<<<<<<<<< BLOG DETAILS STYLED COMPONENTS >>>>>>>>>>>>>>>>>>>>>> */
+
+
+export const BD_mainWrap = styled.div`
+    padding-top:100px;
+    margin-bottom:80px;
+`
+export const Left_col = styled.div`
+    padding-right:30px;
+    @media(max-width:1199px)
+    {
+        padding-right:0px;
+    }
+`
+export const Blog_desc = styled.p`
+    font-size: 30px;
+    font-family: "Open Sans";
+    color: rgb( 15, 71, 123 );
+    font-weight:600;
+    margin-bottom:0px;
+`
+
+export const Status = styled.div`
+    display:inline-block;
+    padding: 0px 20px;
+    border-right: 1px solid black;
+    line-height: 1;
+`
+export const Date = styled.span`
+    font-size: 12px;
+    font-family: "Open Sans";
+    color: rgba( 102, 102, 102, 0.702 );
+    font-weight:600;
+`
+export const Name = styled.span`
+    font-size: 12px;
+    font-family: "Open Sans";
+    color: rgba( 102, 102, 102, 0.702 );
+    font-weight:600;
+`
+export const Comment =styled.span`
+    font-size: 12px;
+    font-family: "Open Sans";
+    color: rgba( 102, 102, 102, 0.702 );
+    font-weight:600;
+`
+export const Head_image = styled.div`
+    margin-top:20px;
+    background-image:url('${props => props.image}');
+    min-height:400px;
+    margin-bottom:35px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+`
+export const PostHead = styled.div`
+    background-color:#eef7ff;
+    min-height:50px;
+    line-height: 45px;
+    padding-left: 30px;
+`
+
+export const PostHead_span = styled.span`
+    font-size: 20px;
+    font-family: "Open Sans";
+    color: rgb( 15, 71, 123 );
+    font-weight: bold;
+`
+export const PostHead_below = styled(PostHead)`
+    margin-top:30px;
+`
+export const Comment_box = styled.div`
+    margin-top:50px;
+`
+export const Commentspan = styled.span`
+    display:block;
+    font-size: 14px;
+    font-family: "Open Sans";
+    color: rgb( 0, 0, 0 );
+    line-height: 2;   
+`
+export const CommentArea = styled.textarea`
+    width:100%;
+    margin-top:10px;    
+    padding-top:20px;
+    padding-left:20px;
+    border-color:#d9d9d9;
+    font-size: 14px;
+    font-family: "Open Sans";
+    color: rgba( 0, 0, 0, 0.502 );
+`
+export const Comment_button = styled.button`
+    margin-top:15px;
+    float:right;
+    border-radius: 5px;
+    
+    font-family: "Open Sans";
+    background-color: rgb( 76, 132, 255 );      
+    color:white;
+    min-height:40px;
+    padding-left:25px;
+    padding-right:25px;
+    border:none;
+    border-radius:5px;
+`
+export const Right_Col = styled(Col)`
+    @media(max-width:1199px)
+    {
+        display:none;
+    }
+`
+export const SocialHead = styled(PostHead)`
+    margin-top:30px;
+`
+
+export const Social_Li = styled.ul`
+    list-style-type:none;
+    padding-left: 0px;
+    margin-top:20px;
+`
+export const LI1 = styled.li`
+    display:inline-block;
+    padding-right: 25px;
+`
+export const LI2 = styled.li`
+    display:inline-block;
+    padding-right: 25px;
 `

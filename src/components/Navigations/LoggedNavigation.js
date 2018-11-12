@@ -202,8 +202,8 @@ class LoggedNavigation extends Component {
         return (
             <Header_main id="main">
                 <Logo onClick={() => this.props.history ? this.props.history.push("/") : ''}>
-                    <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png" />
-                    <FALDAX src="./images/Homepage/faldax.png" />
+                    <FALDAX_LOGO className="" src="/images/Homepage/Faldax_logo.png" />
+                    <FALDAX src="/images/Homepage/faldax.png" />
                 </Logo>
                 <Menu_main
                     theme="light"

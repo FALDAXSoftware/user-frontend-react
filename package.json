@@ -25,6 +25,8 @@
     "react-datepicker": "^1.6.0",
     "react-dom": "^16.4.2",
     "react-dropdown-date": "^0.0.14",
+    "react-google-maps": "^9.4.5",
+    "react-html-parser": "^2.0.2",
     "react-moment": "^0.8.1",
     "react-overlay-loading": "^1.0.3",
     "react-password-strength": "^2.3.1",

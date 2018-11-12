@@ -351,10 +351,10 @@ class Login_Form extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
+    /* console.log(this.props) */
     var query = this.props.location.search.split("=")
-    console.log(query)
-    if (query[0] !== "") {
+   /*  console.log(query) */
+    if (query[0] !== "" && this.props.location.pathname.includes("login")) {
       var queryObj = {};
       queryObj["email_verify_token"] = query[1]
       fetch(API_URL + "/users/verify-user", {

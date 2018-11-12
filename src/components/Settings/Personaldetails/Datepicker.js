@@ -122,7 +122,6 @@ export default class Datepicker extends React.Component {
                     // default is current year
                     end={higherDate}
                     // default is ASCENDING
-                    reverse
                     // mandatory
                     value={this.state.year}
                     // mandatory

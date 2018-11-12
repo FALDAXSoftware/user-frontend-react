@@ -273,7 +273,7 @@ class Navigation extends React.Component {
 
     handleCancel = (e) => {
 
-        this.setState({ visible: false });
+        this.setState({ visible: false,modal:5 });
     }
     handleAfterClose = (e) => {
         this.setState({ modal: 5 });
@@ -287,7 +287,7 @@ class Navigation extends React.Component {
     }
 
     comingCancel = (e) => {
-        this.setState({ comingSoon: false });
+        this.setState({ comingSoon: false ,});
     }
     openNotification() {
         notification.open({
@@ -363,8 +363,8 @@ class Navigation extends React.Component {
         return (
             <Header_main id="main">
                 <Logo onClick={() => this.props.history ? this.props.history.push("/") : ''}>
-                    <FALDAX_LOGO className="" src="./images/Homepage/Faldax_logo.png" />
-                    <FALDAX src="./images/Homepage/faldax.png" />
+                    <FALDAX_LOGO className="" src="/images/Homepage/Faldax_logo.png" />
+                    <FALDAX src="/images/Homepage/faldax.png" />
                 </Logo>
                 <Menu_main
                     theme="light"

@@ -587,12 +587,13 @@ table .ant-table-tbody > tr > td {
     padding-left: 25px;
     padding-right: 30px;
   }
-  .Card-Blog .ant-card-actions li:not(:last-child)
-  {
-    border-right:1px solid #666666;
-  }
-  .blog-card-col.ant-col-md-8 {
-    padding: 0px 15px;
+.Card-Blog .ant-card-actions li:not(:last-child)
+{
+  border-right:1px solid #666666;
+}
+.blog-card-col{
+  padding-left: 15px !important;
+  padding-right: 15px !important;
 }
 .ant-row.blog-card-row {
   margin-left: -15px;
@@ -609,13 +610,13 @@ table .ant-table-tbody > tr > td {
 }
 .Card-Blog .ant-card-actions li:first-child{
   padding-right: 15px;
+  
 }
 .Card-Blog .ant-card-actions li:nth-child(2){
   padding: 0px 15px;
   white-space: nowrap;
   text-align: center;
-    text-overflow: ellipsis;
-    overflow: hidden;
+  text-overflow: ellipsis;
 }
 .Card-Blog .ant-card-actions li:last-child{
   padding-left: 15px;
@@ -625,4 +626,27 @@ table .ant-table-tbody > tr > td {
 
 .Card-Blog .ant-card-actions li > span{
   line-height: 1;  
+}
+.blog-comment{
+  padding-right: 0px  !important;
+  border-right:none !important; 
+}
+.blog-date{
+  padding-left: 0px !important;
+}
+
+@media(max-width:480px)
+{
+  .Card-Blog .ant-card-actions li:first-child{
+  white-space: nowrap;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  }
+  .Card-Blog .ant-card-actions li:last-child{
+    white-space: nowrap;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    }
 }

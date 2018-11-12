@@ -17,7 +17,7 @@ export function profileupdateAction(isLoggedIn,form)
         })
         .then(response => response.json())
         .then((responseData) => {
-            console.log(responseData);
+            /* console.log(responseData); */
            dispatch(profileupdatedData(responseData))
            dispatch(getProfileDataAction(isLoggedIn))
         })

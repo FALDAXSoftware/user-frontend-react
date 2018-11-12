@@ -264,7 +264,7 @@ class PersonalDetails extends Component {
             const profileData = new FormData();
             console.log(this.state.profileImg, this.state.remove_pic)
             console.log(this.state, this.props)
-            if (error == null && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.cityIcon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '') || ((this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
+            if (error == null && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.cityIcon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '' && this.props.profileDetails.country !== null) || ((this.state.countrySelected!==null && this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
                 document.querySelectorAll(".first_msg")[0].style.display = "none";
                 document.querySelectorAll(".last_msg")[0].style.display = "none";
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
@@ -283,10 +283,10 @@ class PersonalDetails extends Component {
                 } else {
                     dataDate = this.props.profileDetails.dob
                 }
-                console.log("SUBMIT", country)
+                console.log("SUBMIT", country,this.state,this.props)
                 if (country == undefined && country == null) {
                     console.log("SUBMIT", country)
-                    country = this.props.country ? this.props.country : ""
+                    country = this.props.profileDetails.country ? this.props.profileDetails.country : ""
                 }
                 console.log("BEFORE FORM", value, this.state.countrySelected, this.state.profileImage, dataDate, country)
                 profileData.append('first_name', value.first_name);
@@ -294,12 +294,13 @@ class PersonalDetails extends Component {
                 profileData.append('last_name', value.last_name);
                 profileData.append('country', country);
                 profileData.append('street_address', value.street_address)
-                profileData.append('street_address_2', value.street_address_2)
+                if(value.street_address_2!==null && value.street_address_2!=="" && value.street_address_2!==undefined)
+                    profileData.append('street_address_2', value.street_address_2)
                 profileData.append('city_town', value.city_town);
                 profileData.append('postal_code', number);
                 profileData.append('dob', dataDate);
                 profileData.append('remove_pic', this.state.remove_pic)
-                console.log(!this.state.profileImg.includes("def_profile.jpg"))
+                console.log(!this.state.profileImg.includes("def_profile.jpg"),)
                 this.setState({ profileImg: undefined, profileImage: undefined, remove_pic: false })
                 if (this.state.profileImage !== null && this.state.profileImage !== undefined && !this.state.profileImg.includes("def_profile.jpg")) {
                     profileData.append('profile_pic', this.state.profileImage)
@@ -339,11 +340,11 @@ class PersonalDetails extends Component {
                 document.querySelectorAll(".street1_msg")[0].style.display = "block";
                 this.setState({ street1msg: "Street Address is required" })
             }
-            if (this.state.street2Icon == null && this.props.profileDetails.street_address_2 == null) {
+            /* if (this.state.street2Icon == null && this.props.profileDetails.street_address_2 == null) {
                 this.setState({ street2Icon: false })
                 document.querySelectorAll(".street2_msg")[0].style.display = "block";
                 this.setState({ street2msg: "Street Address is required" })
-            }
+            } */
             if (this.state.cityIcon == null && this.props.profileDetails.city_town == null) {
                 this.setState({ cityIcon: false })
                 document.querySelectorAll(".city_msg")[0].style.display = "block";
@@ -407,7 +408,7 @@ class PersonalDetails extends Component {
             const file = e.target.files[0];
             const fileType = e.target.files[0] && e.target.files[0].type ? e.target.files[0].type.substring(0, e.target.files[0].type.indexOf('/')) : '';
             const fileSize = e.target.files[0] && e.target.files[0].size ? e.target.files[0].size : 0;
-            console.log(fileType, "handleProfile")
+            console.log(file,fileSize,fileType, "handleProfile")
             //check file size to max 5mb (5*1024*1024=5242880) and type image
             if (fileType === 'image' && fileSize < 5242880) {
                 reader.onload = (upload) => {
@@ -421,13 +422,8 @@ class PersonalDetails extends Component {
                 };
             } else {
                 console.log(fileType, "elsse handleProfile")
-                if (fileType !== "") {
+                if(file!==undefined)
                     this.openNotificationWithProfile("error", "Error", "Please upload only images");
-
-                }
-                else {
-                    this.setState({ profileImg: "./images/Settings/def_profile.jpg", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' })
-                }
             }
 
             reader.readAsDataURL(file);
@@ -611,7 +607,7 @@ class PersonalDetails extends Component {
                 else {
                     this.setState({ cityIcon: false })
                     document.querySelectorAll(".city_msg")[0].style.display = "block";
-                    this.setState({ citymsg: "City field should be between 2 and 20 characters" })
+                    this.setState({ citymsg: "City should have min. 2 and max. 20 characters" })
                 }
             }
             else {
@@ -630,7 +626,7 @@ class PersonalDetails extends Component {
                 else {
                     this.setState({ postalIcon: false })
                     document.querySelectorAll(".postal_msg")[0].style.display = "block";
-                    this.setState({ postalmsg: "Postal Code should be between 2 and 20 characters" })
+                    this.setState({ postalmsg: "Postal code should have min. 2 and max. 20 characters" })
                 }
             }
             else {
@@ -664,7 +660,9 @@ class PersonalDetails extends Component {
                                 {console.log("Above Image", this.state, this.props)}
                                 <div><ImageDiv src={this.state.profileImg} /></div>
                                 <div><Image_input type="file" onChange={this.handleProfile} name="file" id="file" /><Image_up><Image_upload htmlFor="file">Upload New Photo</Image_upload></Image_up></div>
-                                {(this.state.remove_pic !== true && ((this.props.profileDetails.profile_pic) ? (!this.props.profileDetails.profile_pic.includes("def_profile.jpg")) ? <Remove onClick={this.removePic.bind(this)}>Remove</Remove> : "" : ""))}
+                               
+                                {(this.state.remove_pic !== true && ((this.props.profileDetails.profile_pic) ? (!this.props.profileDetails.profile_pic.includes("def_profile.jpg") ||
+                            ((this.state.profileImg!==undefined)?!this.state.profileImg.includes("def_profile.jpg"):true)) ? <Remove onClick={this.removePic.bind(this)}>Remove</Remove> : "" : ""))}
                             </Left_Col>
                             <Right_Col md={{ span: 24 }} lg={{ span: 15, offset: 3 }} xl={{ span: 15, offset: 3 }} xxl={{ span: 15, offset: 3 }}>
                                 <First_Row>
@@ -714,7 +712,7 @@ class PersonalDetails extends Component {
                                     <Street_Address>Street Address Line 2</Street_Address>
                                     <Street_input placeholder="Street Address" {...getFieldProps('street_address_2', {
                                         onChange(e) { me.onChangeField(e.target.value, "street_address_2") },
-                                        initialValue: profileDetails.street_address_2, // have to write original onChange here if you need
+                                        initialValue: profileDetails.street_address_2!==null?profileDetails.street_address_2:"", // have to write original onChange here if you need
                                         rules: [{ type: "string" }],
                                     })} />
                                     <Street_Msg className="street2_msg">{this.state.street2msg}</Street_Msg>

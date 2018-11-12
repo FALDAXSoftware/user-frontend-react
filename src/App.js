@@ -12,8 +12,13 @@ import { connect } from 'react-redux';
 import HomePage from './components/Landing/HomePage';
 import FaqPage from './components/Landing_categories/FaqPage';
 import AboutUs from './components/Landing_categories/About_us';
-import Blog from './components/Landing_categories/Blog'
-
+import Blog from './components/Landing_categories/Blog';
+import BlogDetails from './components/Landing_categories/BlogDetails';
+import ContactUs from './components/Landing_categories/ContactUs';
+import CareerDetails from './components/Landing_categories/Careerdetails'
+import Careers from './components/Landing_categories/Careerdetails'
+import MediaContact from './components/Landing_categories/MediaContact'
+import Addcoin from './components/Landing_categories/Addcoin'
 library.add(faStroopwafel);
 
 /* Component defination start here */
@@ -33,7 +38,7 @@ class App extends Component {
     window.scrollTo(0, 0);
   }
   render() {
-    console.log(this.props)
+   /*  console.log(this.props) */
 
     const { isLoggedIn } = this.props
     /* console.log(isLoggedIn) */
@@ -92,7 +97,13 @@ class App extends Component {
               <Route path="/login" exact title="Login" component={HomePage} />
               <Route {...this.props} path="/about-us" exact title="About Us" component={AboutUs} />
               <Route path="/faq" exact title="Faq Page" component={FaqPage} />
-              <Route path="/blogs" exact title='Blog' component={Blog} />
+              <Route path="/blogs" excact title='Blog' component={Blog} />
+              <Route path="/blogDetails" excact title='Blog' component={BlogDetails} />
+              <Route path="/contactus" excact title='Contact' component={ContactUs} />
+              <Route path="/careerdetails"excact title='Careerdetails' component={CareerDetails}/>
+              <Route path="/careers"excact title='Careers' component={Careers}/>
+              <Route path="/mediacontact"excact title='MediaContact' component={MediaContact}/>
+              <Route path="/addcoin"excact title='AddCoin' component={Addcoin}/>
               <RestrictedRoute
                 path="/"
                 component={AppRouter}

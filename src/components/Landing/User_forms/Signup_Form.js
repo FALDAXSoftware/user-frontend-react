@@ -239,7 +239,7 @@ class Signup_Form extends React.Component {
           document.querySelector("#email_icon_fail").style.display = "inline-block"
           document.querySelector("#email_icon_success").style.display = "none"
           document.querySelectorAll(".email_sign")[0].style.display = "block";
-          this.setState({ email_msg: "*email address is not valid" })
+          this.setState({ email_msg: "*Email address is not valid" })
         }
       } else {
         this.setState({ emailIcon: false })
@@ -315,12 +315,12 @@ class Signup_Form extends React.Component {
       var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
       var bool = re.test(value);
       var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
-      if (numb.test(value) || letters.test(value)) {console.log("first"); this.setState({ stroke: "red", percent: 20 }) }
-      if (alphanum.test(value) && value.length < 60) {console.log("second"); this.setState({ stroke: "orange", percent: 40 }) }
-      if (alphanum.test(value) && value.length == 6) {console.log("3"); this.setState({ stroke: "yellow", percent: 60 }) }
-      if (re.test(value) && value.length == 6) {console.log("4"); this.setState({ stroke: "#7CFC00", percent: 80 }) }
-      if (re.test(value) && value.length >= 10 && value.length < 60) {console.log("5"); this.setState({ stroke: "#008000", percent: 100 }) }
-      if (re.test(value) && value.length > 60) {console.log("6"); this.setState({ stroke: "red", percent: 0 }) }
+      if (numb.test(value) || letters.test(value)) { this.setState({ stroke: "red", percent: 20 }) }
+      if (alphanum.test(value) && value.length < 60) {this.setState({ stroke: "orange", percent: 40 }) }
+      if (alphanum.test(value) && value.length == 6) {this.setState({ stroke: "yellow", percent: 60 }) }
+      if (re.test(value) && value.length == 6) {this.setState({ stroke: "#7CFC00", percent: 80 }) }
+      if (re.test(value) && value.length >= 10 && value.length < 60) {this.setState({ stroke: "#008000", percent: 100 }) }
+      if (re.test(value) && value.length > 60) {this.setState({ stroke: "red", percent: 0 }) }
       if (value !== "") {
         if (bool == true) {
           this.setState({ passIcon: true, password: value })
@@ -403,7 +403,7 @@ class Signup_Form extends React.Component {
 
           <Email_label>First Name</Email_label>
           <div>
-            <Full {...getFieldProps('firstname', {
+            <Full {...getFieldProps('first_name', {
               onChange(e) { me.onChangeField(e.target.value, "firstname") }, // have to write original onChange here if you need
               initialValue: me.props.init,
               rules: [{ type: "string", required: true }],
@@ -415,7 +415,7 @@ class Signup_Form extends React.Component {
 
           <Ph_Label>Last Name</Ph_Label>
           <div>
-            <Full {...getFieldProps('lastname', {
+            <Full {...getFieldProps('last_name', {
               onChange(e) { me.onChangeField(e.target.value, "lastname") }, // have to write original onChange here if you need
               initialValue: me.props.init,
               rules: [{ type: "string", required: true }],

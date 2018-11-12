@@ -51,7 +51,7 @@ export default class CountryPick extends React.Component {
     }
 
     render() {
-        /* console.log(this.props,this.props.profileDetails.country) */
+        console.log(this.props,this.props.profileDetails.country,this.state)
         return (
             <Select
                 showSearch

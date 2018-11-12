@@ -18,6 +18,7 @@ const Footer_main = styled(Footer)`
     background-color:white;
     text-align: left;
     padding: 25px 0px 0px 0px;
+    border-top:2px solid #0f477b;
 `
 const Footer_headers = styled.li`
     font-size: 14px;
@@ -325,38 +326,38 @@ export default class Footer_home extends Component {
                                 <Icon_ul_1>
 
                                     <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="./images/Homepage/fb_icon.png" />
+                                        <img src="/images/Homepage/fb_icon.png" />
                                     </LI>
                                     <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="./images/Homepage/tweet_icon.png" />
+                                        <img src="/images/Homepage/tweet_icon.png" />
                                     </LI>
                                     <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="./images/Homepage/google_icon.png" />
+                                        <img src="/images/Homepage/google_icon.png" />
                                     </LI>
                                     <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="./images/Homepage/you_icon.png" />
+                                        <img src="/images/Homepage/you_icon.png" />
                                     </LI>
                                 </Icon_ul_1>
                                 <Icon_ul_2>
                                     <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="./images/Homepage/insta_icon.png" />
+                                        <img src="/images/Homepage/insta_icon.png" />
                                     </LI2>
                                     <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="./images/Homepage/telegram_icon.png" />
+                                        <img src="/images/Homepage/telegram_icon.png" />
                                     </LI2>
                                     <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="./images/Homepage/in_icon.png" />
+                                        <img src="/images/Homepage/in_icon.png" />
                                     </LI2>
                                     <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="./images/Homepage/www_icon.png" />
+                                        <img src="/images/Homepage/www_icon.png" />
                                     </LI2>
                                 </Icon_ul_2>
                             </Col>
                             <Store_Col xs={24} lg={2} xl={2}>
                                 <Download>Download</Download>
                                 <Store_Wrap>
-                                    <Appstore style={{ cursor: "pointer" }} onClick={this.showComing} src="./images/Homepage/appstore_icon.png" />
-                                    <Playstore style={{ cursor: "pointer" }} onClick={this.showComing} src="./images/Homepage/playstore_icon.png" />
+                                    <Appstore style={{ cursor: "pointer" }} onClick={this.showComing} src="/images/Homepage/appstore_icon.png" />
+                                    <Playstore style={{ cursor: "pointer" }} onClick={this.showComing} src="/images/Homepage/playstore_icon.png" />
                                 </Store_Wrap>
                             </Store_Col>
                         </Row>
@@ -364,12 +365,12 @@ export default class Footer_home extends Component {
                     <HR />
                     <Bottom_Footer>
                         <Footer_Text> ©2018 FALDAX. All Rights Reserved. </Footer_Text>
-                        <Footer_logo src="./images/Homepage/Footer_logo.png" />
+                        <Footer_logo src="/images/Homepage/Footer_logo.png" />
                     </Bottom_Footer>
                 </Container>
                 <div>
                     <Modal
-                        title={<img src="./images/Homepage/Footer_logo.png" />}
+                        title={<img src="/images/Homepage/Footer_logo.png" />}
                         visible={this.state.comingSoon}
                         onOk={(e) => this.handleComing()}
                         onCancel={(e) => this.comingCancel(e)}

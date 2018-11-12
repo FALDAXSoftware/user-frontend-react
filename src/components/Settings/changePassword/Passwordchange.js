@@ -332,6 +332,22 @@ class Passwordchange extends React.Component {
                 document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
                 this.props.passwordChange(this.props.isLoggedIn, value);
             } else {
+                console.log(value.current_password==undefined)
+                if(value.current_password =='' || value.current_password ==null || value.current_password==undefined)
+                {
+                    document.querySelectorAll(".oldchange_msg")[0].style.display = "block";
+                    this.setState({ current_msg: "Old password is required." })
+                }
+                if(value.new_password =='' || value.new_password ==null || value.new_password==undefined)
+                {
+                    document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
+                    this.setState({ confirmPass_msg: "Repeat New password is required." })
+                }
+                if(value.confirm_password =='' || value.confirm_password ==null || value.confirm_password==undefined)
+                {
+                    document.querySelectorAll(".newchange_msg")[0].style.display = "block";
+                    this.setState({ new_msg: "New password is required." })
+                }
                 this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue.")
             }
         });
@@ -372,6 +388,14 @@ class Passwordchange extends React.Component {
                     document.querySelector("#confirmchange_icon_fail").style.display = "none"
                     document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
                 }
+                else
+                {
+                    this.setState({ confirmIcon: false })
+                    document.querySelector("#confirmchange_icon_success").style.display = "none"
+                    document.querySelector("#confirmchange_icon_fail").style.display = "inline-block"
+                    document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
+                    this.setState({ confirmPass_msg: "Password does not match." })
+                }
             }
             var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
             var bool = re.test(value);
@@ -394,7 +418,7 @@ class Passwordchange extends React.Component {
                     document.querySelector("#newchange_icon_success").style.display = "none"
                     document.querySelector("#newchange_icon_fail").style.display = "inline-block"
                     document.querySelectorAll(".newchange_msg")[0].style.display = "block";
-                    this.setState({ new_msg: "*Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+                    this.setState({ new_msg: "Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
                 }
             } else {
                 this.setState({ newpassIcon: false, percent: 0 })
@@ -418,7 +442,7 @@ class Passwordchange extends React.Component {
                     document.querySelector("#confirmchange_icon_success").style.display = "none"
                     document.querySelector("#confirmchange_icon_fail").style.display = "inline-block"
                     document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
-                    this.setState({ confirmPass_msg: "*Password does not match." })
+                    this.setState({ confirmPass_msg: "Password does not match." })
                 }
             } else {
                 this.setState({ confirmIcon: false })
