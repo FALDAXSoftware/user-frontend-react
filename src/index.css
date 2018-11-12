@@ -650,3 +650,24 @@ table .ant-table-tbody > tr > td {
     overflow: hidden;
     }
 }
+
+
+
+
+/* Validation Message */
+
+.text-danger-validation
+{
+  color:red;
+}
+
+/* React Date Picker Css */
+.datePicker .react-datepicker-wrapper
+{
+  max-width:450px;
+  display: block;
+}
+.datePicker .react-datepicker-wrapper .react-datepicker__input-container
+{
+  display: block;
+}

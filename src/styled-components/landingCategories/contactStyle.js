@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import DatePicker from "react-datepicker";
 export const Headcontact = styled.div`
    
 `
@@ -126,13 +126,22 @@ export const Main_wrap3 = styled(Main_wrap1)`
 export const Main = styled.div`
     display:inline-block;
     padding-left:30px;
+    vertical-align:middle;  
     @media(max-width:1199px)
     {
         text-align:left;
     }
+    @media(max-width:480px)
+    {
+        padding-left:10px;
+        
+    }
 `
 export const Img1 = styled.img`
-    
+    @media(max-width:480px)
+    {
+        width:30px;
+    }
 `
 export const Img2 = styled.img`
     margin-left:70px;
@@ -140,8 +149,16 @@ export const Img2 = styled.img`
     {
         margin-left:0px;
     }
+    @media(max-width:480px)
+    {
+        width:30px;
+    }
 `
 export const Img3 = styled(Img2)`
+    @media(max-width:480px)
+    {
+        width:30px;
+    }
 `
 export const Sub_span= styled.span`
     font-size: 15.983px;
@@ -282,6 +299,11 @@ export const MediaP = styled.p`
 export const Head = styled.div`
     padding-top:40px;
     margin-bottom:60px;
+    @media(max-width:480px)
+    {
+        padding-right:10px;
+        padding-left:10px;
+    }
 `
 export const Head_title = styled.span`
     font-size: 20px;
@@ -302,7 +324,11 @@ export const Subtitle = styled.p`
     margin-top:30px;
 `
 export const Body = styled.div`
-
+    @media(max-width:480px)
+    {
+        padding-right:10px;
+        padding-left:10px;
+    }
 `
 export const BodyText = styled.span`
     font-size: 20px;
@@ -320,10 +346,11 @@ export const Form_coin = styled.div`
     margin-bottom: 50px;
 `
 export const Left = styled.div`
-    text-align:right
-    line-height:45px;
     height:45px;
+    display: flex;
+    align-items: center;
     padding-right:15px;
+    justify-content: flex-end;
     &>p
     {
         margin-bottom:0px;
@@ -332,21 +359,37 @@ export const Left = styled.div`
         color: rgb( 0, 0, 0 );
         font-weight:600;
     }
-`   
+    @media(max-width:1199px)
+    {
+        padding-left:15px;
+        justify-content: flex-start;
+    }
+` 
+export const Right_input = styled.div`
+    padding-right:15px;
+    padding-left:15px;
+`  
 export const CoinInput = styled(First_input)`
-    width:450px;
+    max-width:450px;
 `
 export const URLInput = styled(First_input)`
-    width:450px;
+    max-width:450px;
 `
-export const TargetInput = styled(URLInput)`
+export const TargetInput = styled(DatePicker)`
+    border:1px solid #e2e6ea;
+    background-color:#f8f8f8;
+    border-radius:5px;
+    min-height:45px;
+    width:100%;
+    padding-left:5px;
+    max-width:450px;
     
 `
 export const EmailInput = styled(URLInput)`
     
 `
 export const MsgInput = styled(Fourth_area)`
-    width:450px;
+    max-width:450px;
 `
 export const OneDiv = styled.div`
 
@@ -365,8 +408,18 @@ export const FiveDiv = styled(TwoDiv)`
 `
 export const AddButton = styled(Fifth_button)`
     margin-top:50px;
+    display:block;
+    @media(max-width:480px)
+    {
+        min-width:115px;
+    }
 `
 export const Msg = styled(Left)`
     line-height:145px;
     height:145px;
+    @media(max-width:576px)
+    {
+        line-height:45px;
+        height:auto;
+    }
 `
