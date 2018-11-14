@@ -16,7 +16,7 @@ import Blog from './components/Landing_categories/Blog';
 import BlogDetails from './components/Landing_categories/BlogDetails';
 import ContactUs from './components/Landing_categories/ContactUs';
 import CareerDetails from './components/Landing_categories/Careerdetails'
-import Careers from './components/Landing_categories/Careerdetails'
+import Careers from './components/Landing_categories/Careers'
 import MediaContact from './components/Landing_categories/MediaContact'
 import Addcoin from './components/Landing_categories/Addcoin'
 import ApplyJob from './components/Landing_categories/ApplyJob'
@@ -98,12 +98,12 @@ class App extends Component {
               <Route path="/login" exact title="Login" component={HomePage} />
               <Route {...this.props} path="/about-us" exact title="About Us" component={AboutUs} />
               <Route path="/faq" exact title="Faq Page" component={FaqPage} />
-              <Route path="/blogs" excact title='Blog' component={Blog} />
-              <Route path="/blogDetails" excact title='Blog' component={BlogDetails} />
-              <Route path="/contactus" excact title='Contact' component={ContactUs} />
-              <Route path="/careerdetails"excact title='Careerdetails' component={CareerDetails}/>
-              <Route path="/careers"excact title='Careers' component={Careers}/>
-              <Route path="/mediacontact"excact title='MediaContact' component={MediaContact}/>
+              <Route path="/blogs" exact title='Blog' component={Blog} />
+              <Route path="/blogDetails" exact title='Blog' component={BlogDetails} />
+              <Route path="/contactus" exact title='Contact' component={ContactUs} />
+              <Route path="/careers" exact title='Careers' component={Careers}/>
+              <Route path="/careerdetails" exact title='Careerdetails' component={CareerDetails}/>
+              <Route path="/mediacontact" exact title='MediaContact' component={MediaContact}/>
               <Route path="/addcoin" exact title='AddCoin' component={Addcoin}/>
               <Route path="/applyjob" exact title='ApplyJob' component={ApplyJob}/>
               <RestrictedRoute

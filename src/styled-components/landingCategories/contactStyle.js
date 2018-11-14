@@ -10,8 +10,8 @@ export const Head_span= styled.p`
     font-weight: bold;
     text-transform: uppercase;
     line-height: 1.498;
-    padding-top: 45px;
-    margin-bottom: 40px;
+    padding-top: 40px;
+    margin-bottom: 30px;
     @media(max-width:480px)
     {
         text-align:center;
@@ -513,4 +513,75 @@ export const Btn_apply = styled(AddButton)`
     {
         min-width:115px;
     }
+`
+
+
+
+/* Career Details style */
+
+export const Career_Head = styled(Head_span)`
+    margin-bottom:25px;
+    padding-top: 40px;
+`
+export const CareerD_body = styled.div`
+
+`
+export const Btn_div = styled.div`
+    display:flex;
+    justify-content:center;
+`
+export const Job_btn = styled(AddButton)`
+    margin-top:40px;
+
+`
+export const Body_details = styled.div`
+    margin-top:60px;
+    padding-bottom:50px;
+`
+export const Body_p = styled.p`
+    font-size: 16px;
+    font-family: "Open Sans";
+    color: rgb( 0, 107, 183 );  
+    margin-bottom:5px;
+    font-weight:600;
+`
+export const Location_p = styled.p`
+    font-size: 12.984px;
+    font-family: "Open Sans";
+    color: rgba( 51, 51, 51, 0.6 );
+`
+export const Details_p = styled.p`
+    font-size: 13.983px;
+    font-family: "Open Sans";
+    color: rgb( 25, 25, 25 );
+`
+
+/* Careers Style */
+
+export const Career_desc = styled.div`
+    margin-top:40px;
+`   
+export const Desc_head = styled.p`
+    font-size: 17.978px;
+    font-family: "Open Sans";
+    color: rgb( 51, 51, 51 );
+`
+export const Desc_body = styled.p`
+    font-size: 13.983px;
+    font-family: "Open Sans";
+    color: rgb( 25, 25, 25 );
+`
+export const Job_wrap = styled.div`
+    padding-bottom: 50px;
+`
+export const Job_head = styled.p`
+    cursor:pointer
+    font-size: 17.978px;
+    font-family: "Open Sans";
+    color: rgb( 51, 51, 51 );
+    margin-bottom:15px;
+    font-weight:600;
+`
+export const Body_details_job = styled(Body_details)`
+    padding-bottom:0px;
 `
