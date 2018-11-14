@@ -423,3 +423,94 @@ export const Msg = styled(Left)`
         height:auto;
     }
 `
+
+/* Apply Job */
+
+export const Head_apply = styled(Head_span)`
+    padding-top:35px;
+    margin-bottom:35px;
+`
+export const Apply_wrap = styled.div`
+    border: 1px solid #d4dadf;
+    @media(max-width:467px)
+    {
+        border-top: 1px solid #d4dadf;
+        border-bottom : 0px;
+        border-right : 0px;
+        border-left : 0px;
+    }
+`
+export const Title_apply = styled.div`
+    margin-top:60px;
+    text-align:center;    
+`
+export const Title_span = styled.span`
+    font-size: 20px;
+    font-family: "Open Sans";
+    color: rgb( 51, 51, 51 );
+    font-weight: bold;
+    text-transform: uppercase;  
+`
+export const Form_apply = styled.div`
+    max-width:575px;
+    margin-right:auto;
+    margin-left:auto;
+    margin-top:45px;
+    padding-bottom:50px;
+
+    @media(max-width:767px)
+    {
+        max-width:370px;
+    }
+    @media(max-width:467px)
+    {
+        max-width:246px;
+    }
+`
+export const Gap = styled.div`
+    margin-top:20px;
+`
+export const LeftWing = styled.div`
+    padding-right:15px;
+    @media(max-width:767px)
+    {
+        padding-right:0px;
+        margin-bottom:20px;
+    }
+`
+export const Labelone = styled.label`
+    font-size: 13px;
+    font-family: "Open Sans";
+    color: rgb( 0, 0, 0 );
+    font-weight:600;
+`
+export const InputOne = styled.input`
+    border:1px solid #e2e6ea;
+    background-color:#f8f8f8;
+    border-radius:5px;
+    min-height:45px;
+    width:100%;
+    padding-left:5px;
+`
+
+export const RightWing = styled.div`
+    padding-left:15px;
+    @media(max-width:767px)
+    {
+        padding-left:0px;
+    }
+`
+export const InputTwo = styled(InputOne)`
+
+`
+export const InputThree = styled(InputOne)``
+
+
+export const Btn_apply = styled(AddButton)`
+    margin-top:50px;
+    display:block;
+    @media(max-width:480px)
+    {
+        min-width:115px;
+    }
+`

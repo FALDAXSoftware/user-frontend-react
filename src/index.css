@@ -671,3 +671,17 @@ table .ant-table-tbody > tr > td {
 {
   display: block;
 }
+
+
+/* Apply Job */
+
+.Dropzone_apply
+{
+  border:1px solid #e2e6ea;
+  background-color:#f8f8f8;
+  border-radius:5px;
+  padding-bottom: 30px;
+  padding-top: 30px;
+  width:100%;
+  text-align :center;
+}

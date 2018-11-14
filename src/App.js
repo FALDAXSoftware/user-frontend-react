@@ -19,6 +19,7 @@ import CareerDetails from './components/Landing_categories/Careerdetails'
 import Careers from './components/Landing_categories/Careerdetails'
 import MediaContact from './components/Landing_categories/MediaContact'
 import Addcoin from './components/Landing_categories/Addcoin'
+import ApplyJob from './components/Landing_categories/ApplyJob'
 library.add(faStroopwafel);
 
 /* Component defination start here */
@@ -103,7 +104,8 @@ class App extends Component {
               <Route path="/careerdetails"excact title='Careerdetails' component={CareerDetails}/>
               <Route path="/careers"excact title='Careers' component={Careers}/>
               <Route path="/mediacontact"excact title='MediaContact' component={MediaContact}/>
-              <Route path="/addcoin"excact title='AddCoin' component={Addcoin}/>
+              <Route path="/addcoin" exact title='AddCoin' component={Addcoin}/>
+              <Route path="/applyjob" exact title='ApplyJob' component={ApplyJob}/>
               <RestrictedRoute
                 path="/"
                 component={AppRouter}
