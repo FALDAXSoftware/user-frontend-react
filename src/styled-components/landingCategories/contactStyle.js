@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 export const Headcontact = styled.div`
    
 `
-export const Head_span= styled.p`
+export const Head_span = styled.p`
     font-size: 20px;
     font-family: "Open Sans";
     color: rgb( 51, 51, 51 );
@@ -23,7 +23,7 @@ export const Contact_wrap = styled.div`
 export const Grey_wrap = styled.div`
     padding-top:110px;
     padding-bottom:30px;
-` 
+`
 export const Row_wrap = styled.div`
     padding-bottom:80px;
 `
@@ -160,7 +160,7 @@ export const Img3 = styled(Img2)`
         width:30px;
     }
 `
-export const Sub_span= styled.span`
+export const Sub_span = styled.span`
     font-size: 15.983px;
     font-family: "Open Sans";
     color: rgb( 51, 51, 51 );
@@ -364,11 +364,11 @@ export const Left = styled.div`
         padding-left:15px;
         justify-content: flex-start;
     }
-` 
+`
 export const Right_input = styled.div`
     padding-right:15px;
     padding-left:15px;
-`  
+`
 export const CoinInput = styled(First_input)`
     max-width:450px;
 `
@@ -513,4 +513,10 @@ export const Btn_apply = styled(AddButton)`
     {
         min-width:115px;
     }
+`
+
+export const FileSelectText = styled.p`
+    margin-bottom:0px;
+    display:block;
+    width:100%;
 `

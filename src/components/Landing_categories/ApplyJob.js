@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { withRouter ,Link} from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from "react-redux";
-import { Row, Col, Card, Icon, Avatar,Spin,notification } from 'antd';
+import { Row, Col, Card, Icon, Avatar, Spin, notification } from 'antd';
 import moment from 'moment';
 import styled from 'styled-components';
 import Dropzone from 'react-dropzone';
@@ -11,9 +11,9 @@ import SimpleReactValidator from 'simple-react-validator';
 import Navigation from '../Navigations/Navigation';
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
-import {Contact_wrap,Grey_wrap,Headcontact,Head_apply,Apply_wrap,Title_apply,Title_span,Form_apply,LeftWing,Labelone,InputOne,RightWing,InputTwo,InputThree,Gap,Btn_apply} from '../../styled-components/landingCategories/contactStyle';
+import { Contact_wrap, Grey_wrap, Headcontact, Head_apply, Apply_wrap, Title_apply, Title_span, Form_apply, LeftWing, Labelone, InputOne, RightWing, InputTwo, InputThree, Gap, Btn_apply, FileSelectText } from '../../styled-components/landingCategories/contactStyle';
 import Title from 'antd/lib/skeleton/Avatar';
-import {globalVariables} from "../../Globals"
+import { globalVariables } from "../../Globals"
 
 let { API_URL } = globalVariables;
 
@@ -25,25 +25,23 @@ export const ContainerContact = styled(Container)`
     padding-bottom: 30px;
 `
 
-class ApplyJob extends React.Component
-{
-    constructor(props)
-    {
+class ApplyJob extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
-            files: [] ,
-            flag_drop:null,
-            cover_flag:null,
-            fields : {
-                first_name:'',
-                last_name:'',
-                email:'',
-                position:'',
-                phone_number:'',
-                resume:[],
-                cover_letter:[],
-                linkedin_profile:'',
-                website_url:'',
+            files: [],
+            flag_drop: null,
+            cover_flag: null,
+            fields: {
+                first_name: '',
+                last_name: '',
+                email: '',
+                position: '',
+                phone_number: '',
+                resume: [],
+                cover_letter: [],
+                linkedin_profile: '',
+                website_url: '',
             },
         };
         this._onChangeFields = this._onChangeFields.bind(this);
@@ -51,76 +49,74 @@ class ApplyJob extends React.Component
         let self = this;
         this.validator = new SimpleReactValidator({
             resumeRequired: { // name the rule
-              message: 'The resume field is required.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-              rule: function(val, options){ // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
-                // check that it is a valid IP address and is not blacklisted
-                if(self.state.flag_drop == null){
-                    return false;
+                message: 'The resume field is required.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+                    // check that it is a valid IP address and is not blacklisted
+                    if (self.state.flag_drop == null) {
+                        return false;
+                    }
+                    return true;
                 }
-                return true;
-              }
             },
             resumeValid: { // name the rule
                 message: 'The resume field has not valid file.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-                rule: function(val, options){ // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
-                  // check that it is a valid IP address and is not blacklisted
-                  if(self.state.flag_drop==false){
-                      return false;
-                  }
-                  return true;
+                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+                    // check that it is a valid IP address and is not blacklisted
+                    if (self.state.flag_drop == false) {
+                        return false;
+                    }
+                    return true;
                 }
-              },
-              coverValid: { // name the rule
+            },
+            coverValid: { // name the rule
                 message: 'The cover field has not valid file.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-                rule: function(val, options){ // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
-                  // check that it is a valid IP address and is not blacklisted
-                  if(self.state.cover_flag==false){
-                      return false;
-                  }
-                  return true;
+                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+                    // check that it is a valid IP address and is not blacklisted
+                    if (self.state.cover_flag == false) {
+                        return false;
+                    }
+                    return true;
                 }
-              }
-          });
+            }
+        });
     }
-    onDrop(type,files) {
-        console.log(type,files)
-        if(type=='res')
-        {
-            console.log("hello 123",type,files)
-            let flag = false; 
+    onDrop(type, files) {
+        console.log(type, files)
+        if (type == 'res') {
+            console.log("hello 123", type, files)
+            let flag = false;
             if (files.length > 0) {
                 flag = true
             }
             console.log(flag);
-            
+
             this.setState({
-                flag_drop:flag,
-                fields:{ ...this.state.fields , resume:files[0]}
-                });
+                flag_drop: flag,
+                fields: { ...this.state.fields, resume: files[0] }
+            });
         }
-        else
-        {
-            console.log("hello 123",type,files)
-            let flag = false; 
+        else {
+            console.log("hello 123", type, files)
+            let flag = false;
             if (files.length > 0) {
                 flag = true
             }
             this.setState({
-                cover_flag:flag,
-                fields:{ ...this.state.fields , cover_letter:files[0]}
+                cover_flag: flag,
+                fields: { ...this.state.fields, cover_letter: files[0] }
             });
         }
-      }
-    
+    }
+
     onCancel() {
         this.setState({
-          files: []
+            files: []
         });
-      }
+    }
     _onChangeFields(e) {
         let fields = this.state.fields;
-        let field = e.target.name; 
-       
+        let field = e.target.name;
+
         if (e.target.value.trim() == "") {
             fields[field] = "";
         } else {
@@ -130,26 +126,26 @@ class ApplyJob extends React.Component
     }
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
-          message: head,
-          description: desc,
+            message: head,
+            description: desc,
         });
-      };
-    onSubmit(){
-        if( this.validator.allValid() ){
+    };
+    onSubmit() {
+        if (this.validator.allValid()) {
             console.log(this.state.fields)
             let formdata = new FormData();
-            formdata.append('first_name',this.state.fields['first_name']);
-            formdata.append('last_name',this.state.fields['last_name'])
-            formdata.append('email',this.state.fields['email'])
-            formdata.append('phone_number',this.state.fields['phone_number'])
-            formdata.append('position',this.state.fields['position'])
-            formdata.append('website_url',this.state.fields['website_url'])
-            formdata.append('linkedin_profile',this.state.fields['linkedin_profile'])
-            formdata.append('website_url',this.state.fields['website_url'])
-            formdata.append('resume',this.state.fields['resume'])
-            formdata.append('cover_letter',this.state.fields['cover_letter'])
-            
-            fetch(API_URL + "/apply-job", 
+            formdata.append('first_name', this.state.fields['first_name']);
+            formdata.append('last_name', this.state.fields['last_name'])
+            formdata.append('email', this.state.fields['email'])
+            formdata.append('phone_number', this.state.fields['phone_number'])
+            formdata.append('position', this.state.fields['position'])
+            formdata.append('website_url', this.state.fields['website_url'])
+            formdata.append('linkedin_profile', this.state.fields['linkedin_profile'])
+            formdata.append('website_url', this.state.fields['website_url'])
+            formdata.append('resume', this.state.fields['resume'])
+            formdata.append('cover_letter', this.state.fields['cover_letter'])
+
+            fetch(API_URL + "/apply-job",
                 {
                     method: "post",
                     body: formdata
@@ -157,154 +153,183 @@ class ApplyJob extends React.Component
                 .then(response => response.json())
                 .then((responseData) => {
                     this.openNotificationWithIcon('success', 'Login Successful', responseData.message);
-                    let fields={};
-                    fields["last_name"]='';
-                    fields['first_name']="";
-                    fields['email']="";
-                    fields['phone_number']='';
-                    fields['position']="";
-                    fields['resume']="";
-                    fields['website_url']="";
-                    fields['cover_letter']="";
-                    fields['linkedin_profile']=''
-                                        
-                    this.setState({ fields:fields,flag_drop:null,cover_flag:null},()=>{
+                    let fields = {};
+                    fields["last_name"] = '';
+                    fields['first_name'] = "";
+                    fields['email'] = "";
+                    fields['phone_number'] = '';
+                    fields['position'] = "";
+                    fields['resume'] = "";
+                    fields['website_url'] = "";
+                    fields['cover_letter'] = "";
+                    fields['linkedin_profile'] = ''
+
+                    this.setState({ fields: fields, flag_drop: null, cover_flag: null }, () => {
                         this.validator.hideMessages();
                         this.forceUpdate();
-                        
+
                     })
-                    
+
 
                 })
                 .catch(error => {
-                   console.log(error)
+                    console.log(error)
                 })
-          } else {
+        } else {
             this.validator.showMessages();
             // rerender to show messages for the first time
             this.forceUpdate();
-          }
+        }
     }
-    render()
-    {
+    render() {
 
-        return(
+        return (
             <Contact_wrap>
                 <Navigation />
-                    {console.log(this.state)}
-                    <Grey_wrap>
-                        <ContainerContact>
-                            <Headcontact>
-                                        <Head_apply>Careers</Head_apply>
-                                        <Apply_wrap>
-                                            <Title_apply>    
-                                                <Title_span>Apply For this job</Title_span>
-                                            </Title_apply>
-                                            <Form_apply>
-                                                <Row>
-                                                    <Col sm={24} md={12}>
-                                                        <LeftWing>
-                                                            <Labelone>First Name*</Labelone>
-                                                            <InputOne name="first_name" onChange={this._onChangeFields} value={this.state.fields.first_name}/>
-                                                            {this.validator.message('first_name', this.state.fields.first_name, 'required|alpha_num', 'text-danger-validation')}
-                                                        </LeftWing>
-                                                    </Col>
-                                                    <Col sm={24} md={12}>
-                                                        <RightWing>
-                                                            <Labelone>Last Name*</Labelone>
-                                                            <InputTwo name="last_name" onChange={this._onChangeFields} value={this.state.fields.last_name}/>
-                                                            {this.validator.message('last_name', this.state.fields.last_name, 'required|alpha_num', 'text-danger-validation')}
-                                                        </RightWing>
-                                                    </Col>
-                                                </Row>
-                                                <Gap>
-                                                    <Row>
-                                                        <Col sm={24} md={12}>
-                                                            <LeftWing>
-                                                                <Labelone>Position*</Labelone>
-                                                                <InputOne name="position" onChange={this._onChangeFields} value={this.state.fields.position}/>
-                                                                {this.validator.message('position', this.state.fields.position, 'required|alpha_num', 'text-danger-validation')}
-                                                            </LeftWing>
-                                                        </Col>
-                                                        <Col sm={24} md={12}>
-                                                            <RightWing>
-                                                                <Labelone>Phone*</Labelone>
-                                                                <InputTwo name="phone_number" onChange={this._onChangeFields} value={this.state.fields.phone_number}/>
-                                                                {this.validator.message('phone_number', this.state.fields.phone_number, 'required|integer', 'text-danger-validation')}
-                                                            </RightWing>
-                                                        </Col>
-                                                    </Row>
-                                                </Gap>
-                                                <Gap>
-                                                    <Row>
-                                                        <Col sm={24} md={24}>
-                                                            <Labelone>Email*</Labelone>
-                                                            <InputThree name="email" onChange={this._onChangeFields} value={this.state.fields.email}/>
-                                                            {this.validator.message('email', this.state.fields.email, 'required|email', 'text-danger-validation')}
-                                                        </Col>
-                                                    </Row>
-                                                </Gap>
-                                                <Gap>
-                                                    <Row>
-                                                        <Col sm={24} md={24}>
-                                                            <Labelone>Resume/CV*</Labelone>
-                                                            <Dropzone
-                                                                accept=".pdf,.doc,.docx"
-                                                                className="Dropzone_apply"
-                                                                onDrop={this.onDrop.bind(this,'res')}
-                                                                onFileDialogCancel={this.onCancel.bind(this)}
-                                                            >
-                                                               {this.state.flag_drop==true? <div><Icon style={{ fontSize: '25px'}}type="check-circle" />
-                                                               <p>File Selected</p></div>:<div><img src="/images/LandingCat/Drop_icon.png"/>
-                                                               <p>Choose a file or drag it here</p></div>}
-                                                            </Dropzone>
-                                                            {this.validator.message('resume', this.state.flag_drop, 'resumeRequired|resumeValid', 'text-danger-validation')}
-                                                        </Col>
-                                                    </Row>
-                                                </Gap>
-                                                <Gap>
-                                                    <Row>
-                                                        <Col sm={24} md={24}>
-                                                            <Labelone>Cover Letter</Labelone>
-                                                            <Dropzone
-                                                                accept=".pdf,.doc,.docx"
-                                                                className="Dropzone_apply"
-                                                                onDrop={this.onDrop.bind(this,'cover')}
-                                                                onFileDialogCancel={this.onCancel.bind(this)}
-                                                            >
-                                                               {this.state.cover_flag==true? <div><Icon style={{ fontSize: '25px'}}type="check-circle" />
-                                                               <p>File Selected</p></div>:<div><img src="/images/LandingCat/Drop_icon.png"/>
-                                                               <p>Choose a file or drag it here</p></div>}
-                                                            </Dropzone>
-                                                            {this.validator.message('cover', this.state.cover_flag, 'coverValid', 'text-danger-validation')}
-                                                        </Col>
-                                                    </Row>
-                                                </Gap>
-                                                <Gap>
-                                                    <Row>
-                                                        <Col sm={24} md={24}>
-                                                            <Labelone>Linkedin Profile*</Labelone>
-                                                            <InputThree name="linkedin_profile" onChange={this._onChangeFields} value={this.state.fields.linkedin_profile}/>
-                                                            {this.validator.message('linkedin_profile', this.state.fields.linkedin_profile, 'required|url', 'text-danger-validation')}
-                                                        </Col>
-                                                    </Row>
-                                                </Gap>
-                                                <Gap>
-                                                    <Row>
-                                                        <Col sm={24} md={24}>
-                                                            <Labelone>Website*</Labelone>
-                                                            <InputThree name="website_url" onChange={this._onChangeFields} value={this.state.fields.website_url}/>
-                                                            {this.validator.message('website_url', this.state.fields.website_url, 'required|url', 'text-danger-validation')}
-                                                        </Col>
-                                                    </Row>
-                                                </Gap>
-                                                <Btn_apply onClick={this.onSubmit}>SUBMIT</Btn_apply>
-                                            </Form_apply>
-                                        </Apply_wrap>
-                            </Headcontact>
-                        </ContainerContact>
-                    </Grey_wrap>
-                <CommonFooter/>
+                {console.log(this.state)}
+                <Grey_wrap>
+                    <ContainerContact>
+                        <Headcontact>
+                            <Head_apply>Careers</Head_apply>
+                            <Apply_wrap>
+                                <Title_apply>
+                                    <Title_span>Apply For this job</Title_span>
+                                </Title_apply>
+                                <Form_apply>
+                                    <Row>
+                                        <Col sm={24} md={12}>
+                                            <LeftWing>
+                                                <Labelone>First Name*</Labelone>
+                                                <InputOne name="first_name" onChange={this._onChangeFields} value={this.state.fields.first_name} />
+                                                {this.validator.message('first_name', this.state.fields.first_name, 'required|alpha_num', 'text-danger-validation')}
+                                            </LeftWing>
+                                        </Col>
+                                        <Col sm={24} md={12}>
+                                            <RightWing>
+                                                <Labelone>Last Name*</Labelone>
+                                                <InputTwo name="last_name" onChange={this._onChangeFields} value={this.state.fields.last_name} />
+                                                {this.validator.message('last_name', this.state.fields.last_name, 'required|alpha_num', 'text-danger-validation')}
+                                            </RightWing>
+                                        </Col>
+                                    </Row>
+                                    <Gap>
+                                        <Row>
+                                            <Col sm={24} md={12}>
+                                                <LeftWing>
+                                                    <Labelone>Position*</Labelone>
+                                                    <InputOne name="position" onChange={this._onChangeFields} value={this.state.fields.position} />
+                                                    {this.validator.message('position', this.state.fields.position, 'required|alpha_num', 'text-danger-validation')}
+                                                </LeftWing>
+                                            </Col>
+                                            <Col sm={24} md={12}>
+                                                <RightWing>
+                                                    <Labelone>Phone*</Labelone>
+                                                    <InputTwo name="phone_number" onChange={this._onChangeFields} value={this.state.fields.phone_number} />
+                                                    {this.validator.message('phone_number', this.state.fields.phone_number, 'required|integer', 'text-danger-validation')}
+                                                </RightWing>
+                                            </Col>
+                                        </Row>
+                                    </Gap>
+                                    <Gap>
+                                        <Row>
+                                            <Col sm={24} md={24}>
+                                                <Labelone>Email*</Labelone>
+                                                <InputThree name="email" onChange={this._onChangeFields} value={this.state.fields.email} />
+                                                {this.validator.message('email', this.state.fields.email, 'required|email', 'text-danger-validation')}
+                                            </Col>
+                                        </Row>
+                                    </Gap>
+                                    <Gap>
+                                        <Row>
+                                            <Col sm={24} md={24}>
+                                                <Labelone>Resume/CV*</Labelone>
+                                                <Dropzone
+                                                    accept=".pdf,.doc,.docx"
+                                                    className="Dropzone_apply"
+                                                    onDrop={this.onDrop.bind(this, 'res')}
+                                                    onFileDialogCancel={this.onCancel.bind(this)}
+                                                >
+                                                    {this.state.flag_drop == null &&
+                                                        <div>
+                                                            <Icon type="download" style={{ fontSize: '30px' }} />
+                                                            <FileSelectText>Choose a file or drag it here</FileSelectText>
+                                                        </div>
+                                                    }
+                                                    {this.state.flag_drop == false &&
+                                                        <div>
+                                                            <Icon style={{ fontSize: '30px' }} type="close-square" />
+                                                            <FileSelectText>Wrong File Selected</FileSelectText>
+                                                        </div>
+                                                    }
+                                                    {this.state.flag_drop == true &&
+                                                        <div>
+                                                            <Icon style={{ fontSize: '30px' }} type="check-square" />
+                                                            <FileSelectText>File Selected</FileSelectText>
+                                                        </div>
+                                                    }
+                                                </Dropzone>
+                                                {this.validator.message('resume', this.state.flag_drop, 'resumeRequired|resumeValid', 'text-danger-validation')}
+                                            </Col>
+                                        </Row>
+                                    </Gap>
+                                    <Gap>
+                                        <Row>
+                                            <Col sm={24} md={24}>
+                                                <Labelone>Cover Letter</Labelone>
+                                                <Dropzone
+                                                    accept=".pdf,.doc,.docx"
+                                                    className="Dropzone_apply"
+                                                    onDrop={this.onDrop.bind(this, 'cover')}
+                                                    onFileDialogCancel={this.onCancel.bind(this)}
+                                                >
+                                                    {this.state.cover_flag == null &&
+                                                        <div>
+                                                            <Icon type="download" style={{ fontSize: '30px' }} />
+                                                            <FileSelectText>Choose a file or drag it here</FileSelectText>
+                                                        </div>
+                                                    }
+                                                    {this.state.cover_flag == false &&
+                                                        <div>
+                                                            <Icon style={{ fontSize: '30px' }} type="close-square" />
+                                                            <FileSelectText>Wrong File Selected</FileSelectText>
+                                                        </div>
+                                                    }
+                                                    {this.state.cover_flag == true &&
+                                                        <div>
+                                                            <Icon style={{ fontSize: '30px' }} type="check-square" />
+                                                            <FileSelectText>File Selected</FileSelectText>
+                                                        </div>
+                                                    }
+                                                </Dropzone>
+                                                {this.validator.message('cover', this.state.cover_flag, 'coverValid', 'text-danger-validation')}
+                                            </Col>
+                                        </Row>
+                                    </Gap>
+                                    <Gap>
+                                        <Row>
+                                            <Col sm={24} md={24}>
+                                                <Labelone>Linkedin Profile*</Labelone>
+                                                <InputThree name="linkedin_profile" onChange={this._onChangeFields} value={this.state.fields.linkedin_profile} />
+                                                {this.validator.message('linkedin_profile', this.state.fields.linkedin_profile, 'required|url', 'text-danger-validation')}
+                                            </Col>
+                                        </Row>
+                                    </Gap>
+                                    <Gap>
+                                        <Row>
+                                            <Col sm={24} md={24}>
+                                                <Labelone>Website*</Labelone>
+                                                <InputThree name="website_url" onChange={this._onChangeFields} value={this.state.fields.website_url} />
+                                                {this.validator.message('website_url', this.state.fields.website_url, 'required|url', 'text-danger-validation')}
+                                            </Col>
+                                        </Row>
+                                    </Gap>
+                                    <Btn_apply onClick={this.onSubmit}>SUBMIT</Btn_apply>
+                                </Form_apply>
+                            </Apply_wrap>
+                        </Headcontact>
+                    </ContainerContact>
+                </Grey_wrap>
+                <CommonFooter />
             </Contact_wrap>
         );
     }
