@@ -14,6 +14,21 @@ import { Section_3, Container } from '../../../styled-components/homepage/style'
 import { Legend } from "bizcharts";
 const { show, hide } = actions;
 
+
+
+const Email_input = styled.input`
+    border:1px solid #e2e6ea;
+    background-color:#f8f8f8;
+    border-radius:5px;
+    min-height:45px;
+    width:100%;
+    padding-left:5px;
+    margin-top: 5px;
+    @media(max-width:576px)
+    {
+
+    }
+`
 const tip = tooltip({
     styles: {
         "color": "#282528",
@@ -254,16 +269,17 @@ class Home_four extends Component {
                         onOk={(e) => this.handleOk()}
                         onCancel={(e) => this.handleCancel(e)}
                         footer={null}
-                        width={520}
-                        height={150}
-                        className="simple-maps"
+                        width={605}
+                        height={460}
+                        className="world-map"
+                        
                     >
                         {
                             modal === 1 ?
                                 <div>
                                     <p>All FALDAX services are available here. Start trading now!</p>
                                     <div style={{ minHeight: '20px' }}>
-                                        <Button style={{ float: 'right', color: '#00a7ff', borderColor: '#00a7ff' }} disabled> TRADE NOW </Button>
+                                    <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff',backgroundColor:"#0f477b",height:"45px" }} onClick={() => this.send_email()} disabled>TRADE NOW </Button>
                                     </div>
                                 </div> : ""
                         }
@@ -271,10 +287,10 @@ class Home_four extends Component {
                             modal === 2 ?
                                 <div>
                                     <p>All FALDAX services are unavailable here due to legal reasons. We are constantly monitoring this situation in hopes of legislation changes. Please enter your e-mail address below if you would like updates.</p>
-                                    <label style={{ color: '#00a7ff' }}> Email Address: </label>
-                                    <Input placeholder="Please enter your email address" style={{ color: '#00a7ff', borderColor: '#00a7ff' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
+                                    <label style={{ color: 'black',fontWeight:"600" }}> Email Address: </label>
+                                    <Email_input placeholder="Please enter your email address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
                                     <div style={{ marginTop: '20px', minHeight: '20px' }}>
-                                        <Button style={{ float: 'right', color: '#00a7ff', borderColor: '#00a7ff' }} onClick={() => this.send_email()}> CONFIRM </Button>
+                                    <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff',backgroundColor:"#0f477b",height:"45px" }} onClick={() => this.send_email()}> CONFIRM </Button>
                                     </div>
                                 </div> : ""
                         }
@@ -291,7 +307,7 @@ class Home_four extends Component {
                                     <label style={{ color: '#00a7ff' }}> Email Address: </label>
                                     <Input placeholder="Please enter your email address" style={{ color: '#00a7ff', borderColor: '#00a7ff' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
                                     <div style={{ marginTop: '20px', minHeight: '20px' }}>
-                                        <Button style={{ float: 'right', color: '#00a7ff', borderColor: '#00a7ff' }} onClick={() => this.send_email()}> CONFIRM </Button>
+                                    <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff',backgroundColor:"#0f477b",height:"45px" }} onClick={() => this.send_email()}> CONFIRM </Button>
                                     </div>
                                 </div> : ""
                         }

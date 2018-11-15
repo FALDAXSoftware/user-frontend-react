@@ -12,7 +12,7 @@ import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import { globalVariables } from "../../Globals"
 import {Spin_Ex} from '../../styled-components/homepage/style'
-import {BD_mainWrap,Meta_title,Blog_desc,PostHead,Status,Date,Name,Comment,Head_image,Left_col,PostHead_span,PostHead_below,Comment_box,Commentspan,Comment_button,CommentArea,Right_Col,MsgIcon,SocialHead,Social_Li,LI1,LI2} from '../../styled-components/landingCategories/blogStyle';
+import {BD_mainWrap,Meta_title,Blog_desc,PostHead,Status,Date,Name,Comment,Head_image,Left_col,PostHead_span,PostHead_below,Right_Col,MsgIcon,SocialHead,Social_Li,LI1,LI2} from '../../styled-components/landingCategories/blogStyle';
 
 class BlogDetails extends React.Component {
     constructor(props) {
@@ -79,14 +79,7 @@ class BlogDetails extends React.Component {
                                         <PostHead_below>
                                                 <PostHead_span>Related Posts</PostHead_span>
                                         </PostHead_below>
-                                        <PostHead_below>
-                                                <PostHead_span>Comments (34)</PostHead_span>
-                                        </PostHead_below>
-                                        <Comment_box>
-                                            <Commentspan>Leave a Comment</Commentspan>
-                                            <CommentArea placeholder="Comment" rows='5' cols='60'></CommentArea>
-                                            <Comment_button>SUBMIT COMMENT</Comment_button>
-                                        </Comment_box>
+                                        
                                     </Left_col>
                                 </Col>     
                                 <Right_Col xl={7} xxl={7}>

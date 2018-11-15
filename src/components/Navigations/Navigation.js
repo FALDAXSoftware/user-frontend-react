@@ -16,7 +16,7 @@ import Beforelog from "./BeforeLog"
 import Afterlog from "./Afterlog"
 import { Logout } from '../../Actions/Auth';
 import Reset_Form from "../Landing/User_forms/Reset_Form"
-
+import ComingSoon from '../ComingSoon'
 const { Header } = Layout;
 
 /* Modal Styled Components */
@@ -278,61 +278,17 @@ class Navigation extends React.Component {
     handleAfterClose = (e) => {
         this.setState({ modal: 5 });
     }
-    showComing = () => {
-        this.setState({ comingSoon: true });
-    }
-
-    handleComing = (e) => {
-        this.setState({ comingSoon: false });
-    }
-
     comingCancel = (e) => {
-        this.setState({ comingSoon: false ,});
+        /* console.log(e); */
+        this.setState({
+            comingSoon: false,
+        });
     }
-    openNotification() {
-        notification.open({
-            message: 'Thank You',
-            description: 'You will recieve an Email shortly',
-            duration: 6,
-            icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+    showComing = () => {
+        console.log("In Footer Home")
+        this.setState({
+            comingSoon: true,
         });
-    };
-    openNotification1() {
-        notification.open({
-            message: 'Subscribed',
-            description: 'You have already Subscribed for FALDAX.',
-            duration: 6,
-            icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
-        });
-    };
-    send_email() {
-        const values = { email: this.state.email_address };
-        this.setState({ email_address: '' });
-        var re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
-        if (re.test(this.state.email_address)) {
-
-            this.setState({ email_msg: "" })
-            fetch(globalVariables.API_URL + "/users/email-subscription", {
-                method: "post",
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(values)
-            })
-                .then(response => response.json())
-                .then((responseData) => {
-                    if (responseData.status == 500) {
-                        this.openNotification1();
-                    } else {
-                        this.openNotification();
-                        this.setState({ visible: false, email_msg: "" })
-                    }
-                })
-                .catch(error => { /* console.log(error) */ })
-        } else {
-            this.setState({ email_msg: "*email address not valid" })
-        }
     }
     componentDidMount() {
         let queryParams
@@ -458,27 +414,7 @@ class Navigation extends React.Component {
                         </Row>
                     </Modal>
                 </div>
-                <div>
-                    <Modal
-                        title={<img src="./images/Homepage/Footer_logo.png" />}
-                        visible={this.state.comingSoon}
-                        onOk={(e) => this.handleComing()}
-                        onCancel={(e) => this.comingCancel(e)}
-                        footer={null}
-                        width={520}
-                        height={150}
-                        className="simple-maps"
-                    >
-                        <div>
-                            <h3 style={{ fontSize: "32px", textAlign: "center" }}>Coming Soon</h3>
-                            <label style={{ color: '#00a7ff' }}> Please enter your email to get updates of FALDAX: </label>
-                            <Input placeholder="Please enter your email address" style={{ color: '#00a7ff', borderColor: '#00a7ff' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
-                            <div style={{ marginTop: '20px', minHeight: '20px' }}>
-                                <Button style={{ float: 'right', color: '#00a7ff', borderColor: '#00a7ff' }} onClick={() => this.send_email()}> RECEIVE UPDATE </Button>
-                            </div>
-                        </div>
-                    </Modal>
-                </div>
+                <ComingSoon comingCancel={(e)=>this.comingCancel(e)} visible={this.state.comingSoon}/>
             </Header_main>
         );
     }

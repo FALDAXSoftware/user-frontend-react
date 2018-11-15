@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {Row,Col} from 'antd'
 import DatePicker from "react-datepicker";
 export const Headcontact = styled.div`
    
@@ -227,43 +228,59 @@ export const Rightmedia = styled.div`
 export const Textwrap = styled.div`
     text-align:center;
     margin-top: 100px;
+    margin-left:auto;
+    margin-right:auto;
+    max-width:770px;
+    @media(max-width:767px)
+    {
+        max-width:370px;
+    }
+    @media (max-width: 400px) 
+    {
+        width: 285px;
+    }
 `
-export const LeftText = styled.div`
-    width:370px;
-    display:inline-block;
-    margin-right:15px;
+export const LeftRow = styled(Row)`
     text-align:left;
     @media(max-width:829px)
     {
-        display:block;
-        margin:0px auto;
+        
     }
     @media(max-width:400px)
     {
-        width:285px;
+        
     }
 `
-export const RightText = styled.div`
-    width:370px;
-    display:inline-block;
+export const RightRow = styled(Row)`
+    text-align:left;
+    @media(max-width:767px)
+    {
+        
+    }
+    @media(max-width:400px)
+    {
+        
+    }
+`
+export const Col_wrap_r = styled.div`
     margin-left:15px;
-    text-align:left;
-    @media(max-width:829px)
+    @media(max-width:767px)
     {
-        display:block;
-        margin:0px auto;
-        margin-top:40px;
-    }
-    @media(max-width:400px)
-    {
-        width:285px;
+        margin-top:20px;
+        margin-left:0px;
     }
 `
-export const LT_div = styled.div`
-
+export const Col_wrap_l = styled.div`
+    margin-right:15px;
+    @media(max-width:767px)
+    {
+        margin-top:20px;
+        margin-left:0px;
+    }
 `
-export const LL_div = styled.div`
-    margin-top:40px;
+export const LT_div = styled(Col)`
+`
+export const LL_div = styled(Col)`
 `
 export const MediaUL = styled.ul`
     list-style-type:none;  
@@ -287,7 +304,12 @@ export const MediaP = styled.p`
     color: rgb( 51, 51, 51 ); 
     font-weight:600;
 `
-
+export const Blue_tag = styled.a`
+    color:#4c84ff;
+`
+export const Blue_tag_p = styled.a`
+    color:#4c84ff;
+`
 
 
 

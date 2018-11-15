@@ -9,7 +9,9 @@ import styled from 'styled-components';
 import Navigation from '../Navigations/Navigation';
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
-import {Contact_wrap,Grey_wrap,Head_span,Headcontact,Career_wrap,Subhead,Leftmedia,Rightmedia,Textwrap,LeftText,RightText,LT_div,LL_div,MediaUL,MediaLI,Mediaspan,MediaP} from '../../styled-components/landingCategories/contactStyle';
+import {Contact_wrap,Grey_wrap,Head_span,Headcontact,Career_wrap,Subhead,Leftmedia,Rightmedia,Textwrap,LeftRow,RightRow,LT_div,Col_wrap_r,Col_wrap_l,LL_div,MediaUL,MediaLI,Mediaspan,MediaP,Blue_tag,Blue_tag_p} from '../../styled-components/landingCategories/contactStyle';
+import {globalVariables} from "../../Globals"
+let { API_URL } = globalVariables;
 
 export const ContainerContact = styled(Container)`
     background-color:white; 
@@ -26,6 +28,29 @@ export const ContainerContact = styled(Container)`
 
 class MediaContact extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            contact:null,
+        };
+    }
+    componentDidMount()
+    {
+        fetch(API_URL + "/get-contact-details",{
+            method:"get",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then((responseData) => {
+            /* console.log("I m in API get",responseData) */
+            console.log(responseData)
+            this.setState({contact:responseData.data});
+        })
+        .catch(error => { /* console.log(error) */ })
+    }
     render()
     {
 
@@ -48,31 +73,42 @@ class MediaContact extends React.Component
                                     </Rightmedia>
                                 </Subhead>
                                 <Textwrap>
-                                    <LeftText>
-                                        <LT_div>
-                                            <Mediaspan>PRESS</Mediaspan>
-                                            <MediaP>Please refer to blog.faldax.com for our latest announcements.</MediaP>
+                                    <LeftRow>
+                                        <LT_div sm={24} md={12}>
+                                            <Col_wrap_l>
+                                                <Mediaspan>PRESS</Mediaspan>
+                                                <MediaP>Please refer to <Blue_tag>blog.faldax.com</Blue_tag> for our latest announcements.</MediaP> 
+                                            </Col_wrap_l>
                                         </LT_div>
-                                        <LL_div>
-                                            <Mediaspan>MEDIA CONTACT</Mediaspan>
-                                            <MediaUL>
-                                                <MediaLI><img src="/images/LandingCat/media_fb.png"/></MediaLI>
-                                                <MediaLI><img src="/images/LandingCat/media_tweet.png"/></MediaLI>
-                                                <MediaLI><img src="/images/LandingCat/media_google.png"/></MediaLI>
-                                                <MediaLI><img src="/images/LandingCat/media_IN.png"/></MediaLI>
-                                            </MediaUL>
+                                        <LL_div sm={24} md={12}>
+                                            <Col_wrap_r>
+                                                <Mediaspan>MEDIA CONTACT</Mediaspan>
+                                                {this.state.contact!==null?<MediaP>{this.state.contact.media_name} <Blue_tag_p>{this.state.contact.media_email}</Blue_tag_p> </MediaP>:""}
+                                            </Col_wrap_r>
+                                            
                                         </LL_div>
-                                    </LeftText>
-                                    <RightText>
-                                        <LT_div>
-                                            <Mediaspan>MEDIA CONTACT</Mediaspan>
-                                            <MediaP>Thomas Davies aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa faldax@thomasdavies.com </MediaP>
+                                    </LeftRow>
+                                    <RightRow>
+                                        <LT_div sm={24} md={12}>
+                                            <Col_wrap_l>
+                                                <Mediaspan>MEDIA CONTACT</Mediaspan>
+                                                {this.state.contact!==null?
+                                                    <MediaUL>
+                                                        <a href={`${this.state.contact.social_facebook}`}><MediaLI><img src="/images/LandingCat/media_fb.png"/></MediaLI></a>
+                                                        <a href={`${this.state.contact.social_twitter}`}><MediaLI><img src="/images/LandingCat/media_tweet.png"/></MediaLI></a>
+                                                        <a href={`${this.state.contact.social_gplus}`}><MediaLI><img src="/images/LandingCat/media_google.png"/></MediaLI></a>
+                                                        <a href={`${this.state.contact.social_linkedin}`}><MediaLI><img src="/images/LandingCat/media_IN.png"/></MediaLI></a>
+                                                    </MediaUL>
+                                                :""}
+                                            </Col_wrap_l>
                                         </LT_div>
-                                        <LL_div>
-                                            <Mediaspan>Support CONTACT</Mediaspan>
-                                            <MediaP>Need customer support? For support requests and inquiries please visit fanrax.com/support.</MediaP>
+                                        <LL_div sm={24} md={12}>
+                                            <Col_wrap_r>
+                                                <Mediaspan>Support CONTACT</Mediaspan>
+                                                <MediaP>Need customer support? For support requests and inquiries please visit <Blue_tag>fanrax.com/support.</Blue_tag></MediaP>
+                                            </Col_wrap_r>
                                         </LL_div>
-                                    </RightText>
+                                    </RightRow>
                                 </Textwrap>
                             </Career_wrap>
                         </ContainerContact>

@@ -5,9 +5,13 @@ import { Tabs } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faYoutube, faTwitter, faLinkedinIn, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import styled from 'styled-components';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+
 import Navigation from '../Navigations/Navigation';
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
 import CommonFooter from "../Landing/Footers/Footer";
+import {globalVariables} from "../../Globals"
+let { API_URL } = globalVariables;
 const TabPane = Tabs.TabPane;
 
 /* Styled-Components */
@@ -242,10 +246,27 @@ export default class AboutUs extends React.Component {
   constructor() {
     super();
     this.state = {
-      team: 1
+      team: 1,
+      aboutContent:''
     };
   }
-
+  componentDidMount()
+  {
+    fetch(API_URL + "/users/static-page-json/about",{
+      method:"get",
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then((responseData) => {
+        /* console.log("I m in API get",responseData) */
+        console.log(responseData)
+        this.setState({aboutContent:responseData.data.content})
+    })
+    .catch(error => { /* console.log(error) */ })
+    
+  }
   teamClick(value) {
     this.setState({ team: value });
   }
@@ -267,20 +288,10 @@ export default class AboutUs extends React.Component {
               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                 <About_Faldax_Title> ABOUT FALDAX STORY </About_Faldax_Title>
               </div>
-              <div style={{ marginTop: '24px' }}>
-                <span style={{ fontWeight: 'bold', fontFamily: 'Open sans', fontSize: '17px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
-              </div>
               <div style={{ marginTop: '20px' }}>
                 <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                          </span>
-              </div>
-              <div style={{ marginTop: '20px', marginBottom: '35px' }}>
-                <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                          </span>
+                {ReactHtmlParser(this.state.aboutContent)} 
+                </span>
               </div>
               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                 <Our_Mission> OUR MISSION </Our_Mission>
