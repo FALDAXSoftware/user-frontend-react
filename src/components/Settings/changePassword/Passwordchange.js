@@ -72,7 +72,7 @@ const NewP = styled(Old)`
 const Repeat = styled(Old)`
     margin-top:30px;
 `
-const Old_label = styled.label`
+export const Old_label = styled.label`
     font-size: 14.007px;
     font-family: "Open Sans";
     color: rgba( 80, 80, 80, 0.502 );
@@ -86,7 +86,7 @@ const New_label = styled(Old_label)`
 const Repeat_label = styled(Old_label)`
 
 `
-const OldInput = styled(Input)`
+export const OldInput = styled(Input)`
     margin-top:5px;
     width: 95%;
     background-color:#f8f8f8;

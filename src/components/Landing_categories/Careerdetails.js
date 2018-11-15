@@ -45,7 +45,7 @@ class CareerDetails extends React.Component
                 })
                 .then(response => response.json())
                 .then((responseData) => {
-                    this.setState({jobDetails:responseData.data})
+                    this.setState({jobID:arr[1],jobDetails:responseData.data})
                 })
                 .catch(error => { console.log(error) })
             }
@@ -66,7 +66,7 @@ class CareerDetails extends React.Component
                             </Headcontact>
                             <CareerD_body>
                                 <Btn_div>
-                                    <Job_btn>Apply job</Job_btn>
+                                    <Link to={`/applyjob?jobid=${this.state.jobID}`}><Job_btn>Apply job</Job_btn></Link>
                                 </Btn_div>
                                 {this.state.jobDetails!==null?
                                     <Body_details>

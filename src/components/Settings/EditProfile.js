@@ -11,9 +11,11 @@ import PersonalDetails from './Personaldetails/PersonalDetails';
 import Referral from './Referral';
 import LoggedNavigation from '../Navigations/LoggedNavigation';
 import CommonFooter from "../Landing/Footers/Footer";
-import Passwordchange from "./changePassword/Passwordchange"
-import Acc_settings from "./Account_settings/Acc_settings"
+import Passwordchange from "./changePassword/Passwordchange";
+import Acc_settings from "./Account_settings/Acc_settings";
 import KYC from "./KYC/kyc"
+import Paymethods from './Payment/Paymethods'
+
 const TabPane = Tabs.TabPane;
 
 /* Styled-Components */
@@ -57,6 +59,7 @@ class Editprofile extends Component {
                                 <TabPane tab="Account Settings" key="3"><Acc_settings {...this.props} /></TabPane>
                                 <TabPane tab="Identity Verification" key="4"><KYC /></TabPane>
                                 <TabPane tab="Referral" key="5"><Referral /></TabPane>
+                                <TabPane tab="Payment Methods" key="6"><Paymethods/></TabPane>
                             </Tabs>
                         </ProfileDiv>
                     </ProfileWrapper>
