@@ -9,6 +9,7 @@ import SimpleReactValidator from 'simple-react-validator';
 import "react-datepicker/dist/react-datepicker.css";
 
 import Navigation from '../Navigations/Navigation';
+import {Spin_Ex} from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import Contact_Map from "./Contact_Map"
@@ -34,7 +35,8 @@ class ContactUs extends React.Component
                 first_name:'',
                 last_name:'',
                 message:'',
-                email:''
+                email:'',
+                loader:false
             },
             startDate: null
         };
@@ -44,6 +46,7 @@ class ContactUs extends React.Component
     }
     componentDidMount()
     {
+        this.setState({loader:true})
         fetch(API_URL + "/get-contact-details",{
             method:"get",
             headers: {
@@ -53,8 +56,7 @@ class ContactUs extends React.Component
         .then(response => response.json())
         .then((responseData) => {
             /* console.log("I m in API get",responseData) */
-            console.log(responseData)
-            this.setState({contact:responseData.data});
+            this.setState({contact:responseData.data,loader:false});
         })
         .catch(error => { /* console.log(error) */ })
     }
@@ -103,7 +105,6 @@ class ContactUs extends React.Component
 
                 })
                 .catch(error => {
-                   console.log(error)
                 })
           } else {
             this.validator.showMessages();
@@ -195,6 +196,9 @@ class ContactUs extends React.Component
                         </ContainerContact>
                     </Grey_wrap>
                 <CommonFooter/>
+                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+                    <Spin size="large" />
+                </Spin_Ex> : ""}
             </Contact_wrap>
         );
     }

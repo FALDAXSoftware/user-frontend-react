@@ -601,7 +601,7 @@ export const Job_wrap = styled.div`
     padding-bottom: 50px;
 `
 export const Job_head = styled.p`
-    cursor:pointer
+    
     font-size: 17.978px;
     font-family: "Open Sans";
     color: rgb( 51, 51, 51 );
@@ -610,4 +610,5 @@ export const Job_head = styled.p`
 `
 export const Body_details_job = styled(Body_details)`
     padding-bottom:0px;
+    cursor:pointer
 `

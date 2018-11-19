@@ -32,7 +32,6 @@ class Blog extends React.Component {
     }
     componentDidMount()
     {
-        console.log(this.props,(this.props.match.params.blogPage!==this.state.nxtPage))
         if(this.props.location.search!==this.state.nxtPage && this.props.location.search!=='')
         {
             var bPage = this.props.location.search.split("=")
@@ -45,23 +44,19 @@ class Blog extends React.Component {
     }
     componentWillReceiveProps(props,newProps)
     {
-        console.log(this.state.prevPage,this.state.currPage,this.state.nxtPage)
         if(props.location.search.split('=')[1]==this.state.nxtPage)
         {
-            console.log(props.location.search.split('=')[1],this.state.nxtPage);
             this.BlogDetails(props.location.search.split('=')[1]);
         }
         if(props.location.search.split('=')[1]==this.state.prevPage)
         {
-            console.log(props.location.search.split('=')[1],this.state.nxtPage);
             this.BlogDetails(props.location.search.split('=')[1]);
         }
     }
     BlogDetails(curr)
     {
         this.setState({loader:true})
-        console.log(curr)
-        fetch(globalVariables.API_URL + `/users/get-all-blogs?page=${curr}&limit=2`,{
+        fetch(globalVariables.API_URL + `/users/get-all-blogs?page=${curr}&limit=9`,{
             method:"get",
             headers: {
                 Accept: 'application/json',
@@ -70,12 +65,10 @@ class Blog extends React.Component {
         })
         .then(response => response.json())
         .then((responseData) => {
-            console.log("I m in API get",responseData)
             if(responseData.status==200)
             {
                 var numb = Number(curr)
-                console.log(numb)
-                this.setState({nxtPage:numb+1,blogsData: responseData,currPage:curr,prevPage:numb-1,totalPage:responseData.BlogCount/2,loader:false})
+                this.setState({nxtPage:numb+1,blogsData: responseData,currPage:curr,prevPage:numb-1,totalPage:responseData.BlogCount/9,loader:false})
             }
         })
         .catch(error => { /* console.log(error) */ })
@@ -85,7 +78,6 @@ class Blog extends React.Component {
         return (
             <div>
                 <Navigation />
-                {console.log("HELLO !@#@##$")}
 
                 <Container_Blog style={{ minHeight: "100%" }}>
                     <SectionBlog>
@@ -119,18 +111,16 @@ class Blog extends React.Component {
                                 <Row className="blog-card-row">
 
                                 {this.state.blogsData.data !== undefined?this.state.blogsData.data.map(function(result,key,index){
-                                        console.log(result,key,index,moment.utc(result.created_at).local().format("MMM DD,YYYY"));
                                         var date=moment.utc(result.created_at).local().format("MMM DD,YYYY");
                                         var img = globalVariables.amazon_Bucket + result.cover_image;
                                         var tag = result.tags ? result.tags.split(',') : [];
-                                        console.log(tag)
                                     return(
                                         <Col key={key} xl={8} lg={12} md={{sapn:12}} sm={24}  className="blog-card-col">
                                             <Link to={`/blogDetails?blogID=${result.id}`}>
                                             <Card
                                                 style={{ width: "100%" }}
                                                 cover={<CardCover alt="example" style={{ backgroundImage: `url(${img})` }} />}
-                                                actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.admin_name}</Card_foot>, <Card_foot> <MsgIcon src="/images/LandingCat/Blog/msg-icon.png" /> 25 comments</Card_foot>]}
+                                                actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.admin_name}</Card_foot>, <Card_foot> <MsgIcon src="/images/LandingCat/Blog/msg-icon.png" />{result.comment_count} Comments</Card_foot>]}
                                                 bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
                                                 className="Card-Blog"
                                             >
@@ -148,8 +138,7 @@ class Blog extends React.Component {
                             </Blogs_wrap>
                         </Whole_wrap>
                         <Prev_next>
-                            {console.log(this.state.prevPage,this.state.currPage,this.state.nxtPage,">>>>>>>",this.state.totalPage)}
-                            {(this.state.currPage>1 && this.state.currPage<this.state.totalPage)?<Link to={`/blogs?blogPage=${this.state.nxtPage-2}`}><Prev><i style={{ verticalAlign: "middle",textDecoration:"none" }} className="material-icons">keyboard_backspace</i><span style={{ verticalAlign: "middle" }}>Previous Articles</span></Prev></Link>:""}
+                            {(this.state.currPage>1 && this.state.currPage<=this.state.totalPage)?<Link to={`/blogs?blogPage=${this.state.nxtPage-2}`}><Prev><i style={{ verticalAlign: "middle",textDecoration:"none" }} className="material-icons">keyboard_backspace</i><span style={{ verticalAlign: "middle" }}>Previous Articles</span></Prev></Link>:""}
 
                             {(this.state.nxtPage<=this.state.totalPage)?<Link to={`/blogs?blogPage=${this.state.nxtPage}`}><Next><span style={{ verticalAlign: "middle",textDecoration:"none" }}>Next Articles</span><i style={{ verticalAlign: "middle", transform: "rotate(180deg)" }} className="material-icons">keyboard_backspace</i></Next></Link>:""}
                         </Prev_next>

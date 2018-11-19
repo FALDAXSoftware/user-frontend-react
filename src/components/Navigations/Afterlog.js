@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
+import { withRouter ,Link} from 'react-router-dom';
 import 'antd/dist/antd.css';
 import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal, Dropdown, Icon, Avatar, Input } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -98,8 +99,15 @@ class Afterlog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            comingSoon: false
+            comingSoon: false,
+            selected:false
         };
+    }
+    componentDidMount()
+    {
+        if (this.props.location.pathname == "/careers") {
+            this.setState({ selected: true })
+        }
     }
     handleComing = (e) => {
         this.setState({ comingSoon: false });
@@ -142,10 +150,12 @@ class Afterlog extends React.Component {
                 </Bell>
                 <Day_night_mode>
                     <span> <FontAwesomeIcon icon={faMoon} color='black' style={{transform: 'rotate(315deg)'}} /> </span>
-                </Day_night_mode>
-                <Exchange>
+                </Day_night_mode>*/}
+                <Link to="/careers">
+                <Exchange color={this.state.selected}>
                             <span  onClick={this.showComing}> CAREERS </span>
-                        </Exchange> */}
+                </Exchange>
+                </Link>
                 <DropDownDiv overlay={DropdownItems} trigger={['click']}>
                     <AnchorName className="ant-dropdown-link" href="#">
                         

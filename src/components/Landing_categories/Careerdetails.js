@@ -7,6 +7,7 @@ import moment from 'moment';
 import styled from 'styled-components';
 
 import Navigation from '../Navigations/Navigation';
+import {Spin_Ex} from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import {Contact_wrap,Grey_wrap,Headcontact,Career_Head,CareerD_body,Btn_div,Job_btn,Body_details,Body_p,Location_p,Details_p} from '../../styled-components/landingCategories/contactStyle';
@@ -26,7 +27,8 @@ class CareerDetails extends React.Component
         super(props);
         this.state = {
             jobID:null,
-            jobDetails:null
+            jobDetails:null,
+            loader:false
         };
     }
     componentDidMount()
@@ -36,6 +38,7 @@ class CareerDetails extends React.Component
             let arr = this.props.location.search.split('=');
             if(arr[0].includes("jobID"))
             {
+                this.setState({loader:true})
                 fetch(globalVariables.API_URL + `/jobs/get-job-detail?id=${arr[1]}`,{
                     method:"get",
                     headers: {
@@ -45,15 +48,14 @@ class CareerDetails extends React.Component
                 })
                 .then(response => response.json())
                 .then((responseData) => {
-                    this.setState({jobID:arr[1],jobDetails:responseData.data})
+                    this.setState({jobID:arr[1],jobDetails:responseData.data,loader:false})
                 })
-                .catch(error => { console.log(error) })
+                .catch(error => { })
             }
         }
     }
     render()
     {
-        console.log(this.props)
         return(
             <Contact_wrap>
                 <Navigation />
@@ -79,6 +81,9 @@ class CareerDetails extends React.Component
                         </ContainerContact>
                     </Grey_wrap>
                 <CommonFooter/>
+                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+                    <Spin size="large" />
+                </Spin_Ex> : ""}
             </Contact_wrap>
         );
     }

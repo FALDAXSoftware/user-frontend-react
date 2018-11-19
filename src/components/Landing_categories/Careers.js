@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 import Navigation from '../Navigations/Navigation';
+import {Spin_Ex} from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import {Contact_wrap,Grey_wrap,Headcontact,Head_span,Career_desc,Desc_head,Desc_body,Job_wrap,Body_details_job,Job_head,Body_p,Location_p} from '../../styled-components/landingCategories/contactStyle';
@@ -27,11 +28,13 @@ class Careers extends React.Component
         super(props);
         this.state = {
             careerDesc : [],
-            Jobs : []
+            Jobs : [],
+            loader:false
         };
     }
     componentDidMount()
     {
+        this.setState({loader:true})
         fetch(globalVariables.API_URL + `/all-jobs?page=1&limit=50`,{
             method:"get",
             headers: {
@@ -41,7 +44,7 @@ class Careers extends React.Component
         })
         .then(response => response.json())
         .then((responseData) => {
-            this.setState({Jobs:responseData.data,careerDesc:responseData.careerDesc})
+            this.setState({Jobs:responseData.data,careerDesc:responseData.careerDesc,loader:false})
         })
         .catch(error => { /* console.log(error) */ })
 
@@ -59,19 +62,19 @@ class Careers extends React.Component
                             </Headcontact>
                             <Career_desc>
                                 <Desc_head>careers</Desc_head>
-                                {console.log(this.state)}
                                 <Desc_body>{(this.state.careerDesc)?ReactHtmlParser(this.state.careerDesc.content):''}</Desc_body>
                             </Career_desc>
                             <Job_wrap>
                                 {this.state.Jobs.length>0?
                                     this.state.Jobs.map(function(job,key){
-                                        console.log(job,key)
                                         return (
+                                            <Link to={`/careerdetails?jobID=${job.id}`}>
                                             <Body_details_job>
-                                                <Link to={`/careerdetails?jobID=${job.id}`}><Job_head>{job.position}</Job_head></Link>
+                                                <Job_head>{job.position}</Job_head>
                                                 <Body_p>{job.short_desc}</Body_p>
                                                 <Location_p>{job.location}</Location_p>
                                             </Body_details_job>
+                                            </Link>
                                         );
                                     })
                                 :''}
@@ -79,6 +82,9 @@ class Careers extends React.Component
                         </ContainerContact>
                     </Grey_wrap>
                 <CommonFooter/>
+                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+                    <Spin size="large" />
+                </Spin_Ex> : ""}
             </Contact_wrap>
         );
     }

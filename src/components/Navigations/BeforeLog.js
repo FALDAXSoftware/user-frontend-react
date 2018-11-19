@@ -14,10 +14,11 @@ export const Day_night_mode = styled.div`
     cursor:pointer;
 `
 export const Exchange = styled.div`
+
     display:inline;
     font-size: 13px;
     font-family: "Open sans";
-    color: rgb( 40, 37, 40 );
+    color: ${props => props.color ? "#1890ff" : "black"};
     font-weight: bold;
     text-transform: uppercase;
     padding-right: 22px;

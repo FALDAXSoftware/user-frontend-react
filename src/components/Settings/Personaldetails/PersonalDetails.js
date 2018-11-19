@@ -262,8 +262,6 @@ class PersonalDetails extends Component {
         this.props.form.validateFields((error, value) => {
             let dataDate = "";
             const profileData = new FormData();
-            console.log(this.state.profileImg, this.state.remove_pic)
-            console.log(this.state, this.props)
             if (error == null && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.cityIcon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '' && this.props.profileDetails.country !== null) || ((this.state.countrySelected!==null && this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
                 document.querySelectorAll(".first_msg")[0].style.display = "none";
                 document.querySelectorAll(".last_msg")[0].style.display = "none";
@@ -283,12 +281,9 @@ class PersonalDetails extends Component {
                 } else {
                     dataDate = this.props.profileDetails.dob
                 }
-                console.log("SUBMIT", country,this.state,this.props)
                 if (country == undefined && country == null) {
-                    console.log("SUBMIT", country)
                     country = this.props.profileDetails.country ? this.props.profileDetails.country : ""
                 }
-                console.log("BEFORE FORM", value, this.state.countrySelected, this.state.profileImage, dataDate, country)
                 profileData.append('first_name', value.first_name);
                 profileData.append('email', this.props.email);
                 profileData.append('last_name', value.last_name);
@@ -300,7 +295,6 @@ class PersonalDetails extends Component {
                 profileData.append('postal_code', number);
                 profileData.append('dob', dataDate);
                 profileData.append('remove_pic', this.state.remove_pic)
-                console.log(!this.state.profileImg.includes("def_profile.jpg"),)
                 this.setState({ profileImg: undefined, profileImage: undefined, remove_pic: false })
                 if (this.state.profileImage !== null && this.state.profileImage !== undefined && !this.state.profileImg.includes("def_profile.jpg")) {
                     profileData.append('profile_pic', this.state.profileImage)
@@ -324,7 +318,6 @@ class PersonalDetails extends Component {
                 document.querySelectorAll(".last_msg")[0].style.display = "block";
                 this.setState({ lastmsg: "Last Name field is required" })
             }
-            console.log(this.state.countryIcon, this.state.countrySelected, this.props.profileDetails.country == '')
             if ((this.state.countryIcon == null || this.state.countryIcon == false) && (this.state.countrySelected == '' || this.state.countrySelected == null) && (this.props.profileDetails.country == '' || this.props.profileDetails.country == null)) {
                 this.setState({ countryIcon: false })
                 document.querySelectorAll(".country_msg")[0].style.display = "block";
@@ -365,7 +358,6 @@ class PersonalDetails extends Component {
         }
     }
     onDateChange(value, field) {
-        console.log("value ", value, field)
         this.setState({ Datedata: value })
         this.onChangeField(value, field);
     }
@@ -378,26 +370,17 @@ class PersonalDetails extends Component {
         this.props.getProfileDataAction(this.props.isLoggedIn)
     }
     componentWillReceiveProps(props, newProps) {
-        console.log("step:1", this.state, props)
         if (props.profileDetails.profile_pic !== null && props.profileDetails.profile_pic !== undefined && props.profileDetails.profile_pic !== "") {
             if (this.state.profileImg !== undefined && this.state.profileImg !== null && this.state.profileImg !== "") {
-                console.log("werghabwb", this.state.profileImg, props.profileDetails.profile_pic)
-
-                console.log("will be printed when theres is image on state")
                 this.setState({ profileImg: this.state.profileImg })
-
-                console.log("this will be printed when there is no image on state and there is image on props")
                 /*  this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic }) */
 
             }
             else {
-                console.log("this will be printed when there is nothing on state", this.state.remove_pic)
                 this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic })
             }
         }
-        console.log(props.apiMessage, props.apiMessage == "User details updated successfully")
         if (props.apiStatus == 200 && props.apiMessage == "User details updated successfully") {
-            console.log(props.apiStatus)
             this.openNotificationWithProfile("success", "Success", "Profile updated successfully");
             this.props.clearEditData();
         }
@@ -408,7 +391,6 @@ class PersonalDetails extends Component {
             const file = e.target.files[0];
             const fileType = e.target.files[0] && e.target.files[0].type ? e.target.files[0].type.substring(0, e.target.files[0].type.indexOf('/')) : '';
             const fileSize = e.target.files[0] && e.target.files[0].size ? e.target.files[0].size : 0;
-            console.log(file,fileSize,fileType, "handleProfile")
             //check file size to max 5mb (5*1024*1024=5242880) and type image
             if (fileType === 'image' && fileSize < 5242880) {
                 reader.onload = (upload) => {
@@ -421,7 +403,6 @@ class PersonalDetails extends Component {
                     });
                 };
             } else {
-                console.log(fileType, "elsse handleProfile")
                 if(file!==undefined)
                     this.openNotificationWithProfile("error", "Error", "Please upload only images");
             }
@@ -432,7 +413,6 @@ class PersonalDetails extends Component {
         }
     }
     removePic() {
-        console.log(this.props, this.state.profileImg)
         /* this.removeNotification("warning"); */
         document.getElementById("file").value = "";
         if (this.state.profileImg !== "./images/Settings/def_profile.jpg") {
@@ -463,41 +443,32 @@ class PersonalDetails extends Component {
         });
     }
     onChangeField(value, field) {
-        console.log("Hello1")
         if (field !== "dob")
             value = value.trim();
         if (field == "first_name") {
-            console.log("Hello2")
             value = value.trim();
             var re = /^[a-zA-Z0-9]{2,15}$/;
             var bool = re.test(value);
-            console.log(value)
             if (value !== "") {
-                console.log("Hello3")
                 if (bool == true) {
-                    console.log("Hello4")
                     var regexnum = /^[0-9]*$/;
                     if (regexnum.test(value)) {
-                        console.log("Hello5")
                         this.setState({ firstIcon: false })
                         document.querySelectorAll(".first_msg")[0].style.display = "block";
                         this.setState({ firstmsg: "Only numbers are not allowed" })
                     }
                     else {
-                        console.log("Hello6")
                         this.setState({ firstIcon: true })
                         document.querySelectorAll(".first_msg")[0].style.display = "none";
                     }
                 }
                 else {
-                    console.log("Hello7")
                     this.setState({ firstIcon: false })
                     document.querySelectorAll(".first_msg")[0].style.display = "block";
                     this.setState({ firstmsg: "First Name should have min. 2 and max. 15 characters and no special characters are allowed" })
                 }
             }
             else {
-                console.log("Hello8")
                 this.setState({ firstIcon: false })
                 document.querySelectorAll(".first_msg")[0].style.display = "block";
                 this.setState({ firstmsg: "First Name field is required" })
@@ -505,35 +476,28 @@ class PersonalDetails extends Component {
 
         }
         else if (field == "last_name") {
-            console.log("Hello2")
             var re = /^[a-zA-Z0-9]{2,15}$/;
             var bool = re.test(value);
             if (value !== "") {
-                console.log("Hello3")
                 if (bool == true) {
-                    console.log("Hello4")
                     var regexnum = /^[0-9]*$/;
                     if (regexnum.test(value)) {
-                        console.log("Hello5")
                         this.setState({ lastIcon: false })
                         document.querySelectorAll(".last_msg")[0].style.display = "block";
                         this.setState({ lastmsg: "Only numbers are not allowed" })
                     }
                     else {
-                        console.log("Hello6")
                         this.setState({ lastIcon: true })
                         document.querySelectorAll(".last_msg")[0].style.display = "none";
                     }
                 }
                 else {
-                    console.log("Hello7")
                     this.setState({ lastIcon: false })
                     document.querySelectorAll(".last_msg")[0].style.display = "block";
                     this.setState({ lastmsg: "Last Name should have min. 2 and max. 15 characters and no special characters are allowed" })
                 }
             }
             else {
-                console.log("Hello8")
                 this.setState({ lastIcon: false })
                 document.querySelectorAll(".last_msg")[0].style.display = "block";
                 this.setState({ lastmsg: "Last Name field is required" })
@@ -541,14 +505,11 @@ class PersonalDetails extends Component {
 
         }
         else if (field == "country") {
-            console.log("value country", value)
             if (value !== undefined || value !== null) {
-                console.log("value country2", value)
                 this.setState({ countryIcon: true })
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
             }
             else {
-                console.log("value country3", value)
                 this.setState({ countryIcon: true })
                 document.querySelectorAll(".country_msg")[0].style.display = "block";
                 this.setState({ dobmsg: "Country Field is required" })
@@ -598,7 +559,6 @@ class PersonalDetails extends Component {
 
         }
         else if (field == "city_town") {
-            console.log("CITY_TOWN")
             if (value !== "") {
                 if (value.length >= 2 && value.length <= 20) {
                     this.setState({ cityIcon: true })
@@ -617,7 +577,6 @@ class PersonalDetails extends Component {
             }
         }
         else if (field == "postal_code") {
-            console.log("postal_code")
             if (value !== "") {
                 if (value.length >= 2 && value.length <= 20) {
                     this.setState({ postalIcon: true })
@@ -657,7 +616,6 @@ class PersonalDetails extends Component {
                     <Col>
                         <Row>
                             <Left_Col md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }} xxl={{ span: 6 }}>
-                                {console.log("Above Image", this.state, this.props)}
                                 <div><ImageDiv src={this.state.profileImg} /></div>
                                 <div><Image_input type="file" onChange={this.handleProfile} name="file" id="file" /><Image_up><Image_upload htmlFor="file">Upload New Photo</Image_upload></Image_up></div>
                                
@@ -758,7 +716,6 @@ class PersonalDetails extends Component {
     }
 }
 const mapStateToProps = (state) => {
-    console.log("personalDetails", state, state.simpleReducer.loader)
     return {
         ...state,
         email: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].email : "",

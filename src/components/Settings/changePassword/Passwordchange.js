@@ -332,7 +332,6 @@ class Passwordchange extends React.Component {
                 document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
                 this.props.passwordChange(this.props.isLoggedIn, value);
             } else {
-                console.log(value.current_password==undefined)
                 if(value.current_password =='' || value.current_password ==null || value.current_password==undefined)
                 {
                     document.querySelectorAll(".oldchange_msg")[0].style.display = "block";
@@ -381,7 +380,6 @@ class Passwordchange extends React.Component {
         if (field == "new_password") {
             password = value;
             if (this.state.confPass !== undefined) {
-                console.log("abcd", this.state.confPass, value)
                 if (this.state.confPass === value) {
                     this.setState({ confirmIcon: true })
                     document.querySelector("#confirmchange_icon_success").style.display = "none"
@@ -400,12 +398,12 @@ class Passwordchange extends React.Component {
             var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
             var bool = re.test(value);
             var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
-            if (numb.test(value) || letters.test(value)) { console.log("first"); this.setState({ stroke: "red", percent: 20 }) }
-            if (alphanum.test(value) && value.length < 60) { console.log("second"); this.setState({ stroke: "orange", percent: 40 }) }
-            if (alphanum.test(value) && value.length == 6) { console.log("3"); this.setState({ stroke: "yellow", percent: 60 }) }
-            if (re.test(value) && value.length == 6) { console.log("4"); this.setState({ stroke: "#7CFC00", percent: 80 }) }
-            if (re.test(value) && value.length >= 10 && value.length < 60) { console.log("5"); this.setState({ stroke: "#008000", percent: 100 }) }
-            if (re.test(value) && value.length > 60) { console.log("6"); this.setState({ stroke: "red", percent: 0 }) }
+            if (numb.test(value) || letters.test(value)) { this.setState({ stroke: "red", percent: 20 }) }
+            if (alphanum.test(value) && value.length < 60) {this.setState({ stroke: "orange", percent: 40 }) }
+            if (alphanum.test(value) && value.length == 6) {this.setState({ stroke: "yellow", percent: 60 }) }
+            if (re.test(value) && value.length == 6) {this.setState({ stroke: "#7CFC00", percent: 80 }) }
+            if (re.test(value) && value.length >= 10 && value.length < 60) {this.setState({ stroke: "#008000", percent: 100 }) }
+            if (re.test(value) && value.length > 60) {this.setState({ stroke: "red", percent: 0 }) }
             if (value !== "") {
                 if (bool == true) {
                     this.setState({ newpassIcon: true, password: value })
@@ -428,7 +426,6 @@ class Passwordchange extends React.Component {
             }
         }
         if (field == "confirm_password") {
-            console.log(value, password)
             var bool = (password === value) ? true : false
             if (value !== "") {
                 this.setState({ confPass: value })

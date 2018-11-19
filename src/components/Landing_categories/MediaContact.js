@@ -46,7 +46,6 @@ class MediaContact extends React.Component
         .then(response => response.json())
         .then((responseData) => {
             /* console.log("I m in API get",responseData) */
-            console.log(responseData)
             this.setState({contact:responseData.data});
         })
         .catch(error => { /* console.log(error) */ })

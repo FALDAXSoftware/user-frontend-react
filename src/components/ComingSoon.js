@@ -56,7 +56,7 @@ class ComingSoon extends React.Component
     }
 
     comingCancel = (e) => {
-        console.log("in COmponent");
+        /* console.log("in COmponent"); */
         this.setState({
             comingSoon: false,
         });
@@ -89,7 +89,6 @@ class ComingSoon extends React.Component
         const values = { email: this.state.email_address };
         this.setState({ email_address: '' });
         var re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
-        console.log(this.state,re.test(this.state.email_address))
         if (re.test(this.state.email_address)) {
 
             this.setState({ email_msg: "" })

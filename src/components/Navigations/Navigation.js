@@ -195,6 +195,7 @@ const SIGN = styled.span`
     }
 `
 const Why = styled.a`
+    padding:0px !important;
     display:none !important;
     @media(max-width:670px)
     {
@@ -285,7 +286,6 @@ class Navigation extends React.Component {
         });
     }
     showComing = () => {
-        console.log("In Footer Home")
         this.setState({
             comingSoon: true,
         });
@@ -304,8 +304,17 @@ class Navigation extends React.Component {
         if (this.props.location.pathname == "/about-us") {
             this.setState({ selected: ['2'] })
         }
+        else if (this.props.location.pathname == "/contactus") {
+            this.setState({ selected: ['5'] })
+        }
+        else if (this.props.location.pathname == "/addcoin") {
+            this.setState({ selected: ['6'] })
+        }
         else {
+            if(this.props.location.pathname == "/")
             this.setState({ selected: ['1'] })
+            else
+            this.setState({ selected: ['0'] })
         }
     }
     logout() {
@@ -333,8 +342,8 @@ class Navigation extends React.Component {
                     <Menu_item key="2"><NavLink className="Nav_selected" to="/about-us">ABOUT</NavLink></Menu_item>
                     <Menu_item key="3" onClick={this.showComing}>SECURITY</Menu_item>
                     <Menu_item key="4" onClick={this.showComing}>NEWS</Menu_item>
-                    <Menu_item key="5" onClick={this.showComing}>CONTACT</Menu_item>
-                    <Menu_item key="6" onClick={this.showComing}>LIST YOUR TOKEN</Menu_item>
+                    <Menu_item key="5" onClick={this.showComing}><NavLink className="Nav_selected" to="/contactus">CONTACT</NavLink></Menu_item>
+                    <Menu_item key="6" onClick={this.showComing}><NavLink className="Nav_selected" to="/addcoin">LIST YOUR TOKEN</NavLink></Menu_item>
                     <Menu_item key="7" onClick={this.showComing}>EXCHANGE</Menu_item>
                 </Menu_main>
                 {/* console.log(this.props) */}
@@ -356,11 +365,11 @@ class Navigation extends React.Component {
                     <Link to="/about-us">About</Link>
                     <a onClick={this.showComing} href="#">Security</a>
                     <a onClick={this.showComing} href="#">News</a>
-                    <a onClick={this.showComing} href="#">Contact</a>
-                    <a onClick={this.showComing} href="#">List Your Token</a>
+                    <Link to="/contactus">Contact</Link>
+                    <Link to="/addcoin">List Your Token</Link>
                     <a onClick={this.showComing} href="#">Exchange</a>
-                    <Why> Careers </Why>
-                    <Why> Language </Why>
+                     <Link to="/careers"><Why>Careers </Why></Link>
+                    {/* <Why> Language </Why> */}
                     {this.props.isLoggedIn &&
                         <ProfileLinkContainer>
                             <a onClick={() => this.props.history.push('/editProfile')}>Profile</a>

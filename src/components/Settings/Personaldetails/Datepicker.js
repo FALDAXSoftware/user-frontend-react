@@ -24,7 +24,6 @@ export default class Datepicker extends React.Component {
         {
             let date1
             this.setState({month:date});
-            console.log(date,type)
             if(date==0)date1="jan";
             if(date==1)date1="feb";
             if(date==2)date1="mar";
@@ -44,8 +43,6 @@ export default class Datepicker extends React.Component {
             this.setState({ day: date });
             fields[type] = date;
         }
-
-        console.log(fields["day"], fields["year"], fields["month"], "State ===>", fields, this.props)
         let propFields
         if (this.props.profileDetails.dob !== null) {
             propFields = this.props.profileDetails.dob.split("/");
@@ -55,7 +52,6 @@ export default class Datepicker extends React.Component {
 
         }
 
-        console.log(propFields)
 
         this.props.onDateChange(fields, "dob")
 
@@ -71,7 +67,6 @@ export default class Datepicker extends React.Component {
         /* console.log(year,month,day) */
         let higherDate = new Date().getFullYear()-18;
         let lowerDate = higherDate - 100;
-        console.log(higherDate, lowerDate)
         return (
             <Picker_wrap>
                 <DayPicker

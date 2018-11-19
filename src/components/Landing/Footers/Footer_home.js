@@ -199,7 +199,6 @@ export default class Footer_home extends Component {
         });
     }
     showComing = () => {
-        console.log("In Footer Home")
         this.setState({
             comingSoon: true,
         });
@@ -231,7 +230,7 @@ export default class Footer_home extends Component {
                                 <Footer_ul>
                                     <Footer_headers>Lorem</Footer_headers>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        List your Token
+                                    <Footer_Link to="/addcoin">List your Token</Footer_Link>
                                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         News
@@ -259,9 +258,9 @@ export default class Footer_home extends Component {
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         Supported Countries
                                                     </li>
-                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        Legal & Privacy
-                                                    </li>
+                                    <li style={{ cursor: "pointer" }}>
+                                        <Footer_Link to="/privacy">Legal & Privacy</Footer_Link>
+                                    </li>
                                 </Footer_ul>
                             </FooterLinkCol>
 

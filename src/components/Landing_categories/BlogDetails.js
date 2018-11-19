@@ -7,12 +7,13 @@ import moment from 'moment';
 import styled from 'styled-components';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
+import BlogComments from './BlogComments'
 import Navigation from '../Navigations/Navigation';
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import { globalVariables } from "../../Globals"
 import {Spin_Ex} from '../../styled-components/homepage/style'
-import {BD_mainWrap,Meta_title,Blog_desc,PostHead,Status,Date,Name,Comment,Head_image,Left_col,PostHead_span,PostHead_below,Right_Col,MsgIcon,SocialHead,Social_Li,LI1,LI2} from '../../styled-components/landingCategories/blogStyle';
+import {BD_mainWrap,Meta_title,Blog_desc,PostHead,Status,Date,Name,Comment,Head_image,Left_col,PostHead_span,PostHead_below,Right_Col,MsgIcon,SocialHead,Social_Li,LI1,LI2,Main_Wrap,Sub_wrap,Rel_post,Rel_img,Rel_p,Rel_name, Rel_span,Rel_img_right,Rel_span_right,Rel_p_right,Sub_wrap_right} from '../../styled-components/landingCategories/blogStyle';
 
 class BlogDetails extends React.Component {
     constructor(props) {
@@ -20,17 +21,24 @@ class BlogDetails extends React.Component {
         this.state = {
             blogsData : null,
             loader:false,
+            relatedPosts:[],
+            blogID:'',
+            contactDetails:null
         }
     }
-    componentDidMount()
+    componentWillReceiveProps(props,newProps)
     {
-        console.log(this.props)
-        var blogID = null;
-        if(this.props.location.search!=='')
+        var  ID = props.location.search.split('=');
+        if(ID[1] !== this.state.blogID)
         {
-            blogID = this.props.location.search.split('=');
-            var Obj = {}; Obj['id'] = blogID[1]
-            this.setState({loader:false})
+            this.blogsMethod(ID[1]);
+        }
+    }
+    blogsMethod(blogID)
+    {
+       
+            var Obj = {}; Obj['id'] = blogID
+            this.setState({loader:true})
             fetch(globalVariables.API_URL + '/users/get-blog-detail',{
                 method:"post",
                 headers: {
@@ -41,13 +49,48 @@ class BlogDetails extends React.Component {
             })
             .then(response => response.json())
             .then((responseData) => {
-                this.setState({loader:false,blogsData:responseData.data})
+                this.setState({loader:false,blogsData:responseData.data,blogID:blogID})
             })
             .catch(error => {
-                console.log(error)
             })
+            var ObjRel = {}; ObjRel['blog_id'] = blogID
+            fetch(globalVariables.API_URL + '/get-related-blog',{
+                method:"post",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body:JSON.stringify(ObjRel)
+            })
+            .then(response => response.json())
+            .then((responseData) => {
+                this.setState({relatedPosts:responseData.data.blogs,loader:false})
+            })
+            .catch(error => {
+            })
+    }
+    componentDidMount()
+    {
+        var blogID = null;
+        if(this.props.location.search!=='')
+        {
+            blogID = this.props.location.search.split('=');
+            this.blogsMethod(blogID[1]);
         }
-        
+        this.setState({loader:true})
+        fetch(globalVariables.API_URL + '/get-contact-details',{
+            method:"get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then((responseData) => {
+            this.setState({contactDetails:responseData.data,loader:false});
+        })
+        .catch(error => {
+        })
     }
     render()
     {
@@ -70,42 +113,84 @@ class BlogDetails extends React.Component {
                                             </Name>
                                         </Status>
                                         <Status className="blog-comment">
-                                            <Comment><MsgIcon src="/images/LandingCat/Blog/msg-icon.png" />25 Comment</Comment>
+                                            <Comment><MsgIcon src="/images/LandingCat/Blog/msg-icon.png" />{this.state.blogsData.comment_count} Comments</Comment>
                                         </Status>
                                         <Head_image image={`${globalVariables.amazon_Bucket + this.state.blogsData.cover_image}`}/>
                                         <div>
                                             {ReactHtmlParser(this.state.blogsData.description)}
                                         </div>
-                                        <PostHead_below>
-                                                <PostHead_span>Related Posts</PostHead_span>
-                                        </PostHead_below>
-                                        
+                                        {this.state.relatedPosts.length>0?
+                                            <div>
+                                            <PostHead_below>
+                                                    <PostHead_span>Related Posts</PostHead_span>
+                                            </PostHead_below>
+                                            <Main_Wrap>
+                                                        <Sub_wrap>
+                                                            <Row>
+                                                            {this.state.relatedPosts.length>0?
+                                                                this.state.relatedPosts.map(function(temp,index){
+                                                                    var date=moment.utc(temp.created_at).local().format("MMM DD,YYYY");
+                                                                    return(
+                                                                        <Col sm = {24} md = {8}>
+                                                                        <Link to={`/blogDetails?blogID=${temp.id}`}>
+                                                                            <Rel_post>
+                                                                                <Rel_img style={{backgroundImage:`url(${globalVariables.amazon_Bucket + temp.cover_image})`}}>
+                                                                                </Rel_img>
+                                                                                <Rel_p>{temp.title}</Rel_p>
+                                                                                <Rel_span>{date}</Rel_span>
+                                                                                <Rel_name>{temp.admin_name}</Rel_name>
+                                                                            </Rel_post>
+                                                                        </Link>
+                                                                        </Col>
+                                                                    );
+                                                                })
+                                                            :""}
+                                                            </Row>
+                                                        </Sub_wrap>
+                                            </Main_Wrap>
+                                            </div>
+                                        :""}
+                                        <BlogComments blogID={this.state.blogID}/>
                                     </Left_col>
                                 </Col>     
                                 <Right_Col xl={7} xxl={7}>
-                                    <PostHead>
+                                    {/* <PostHead>
                                         <PostHead_span>Related Posts</PostHead_span>
                                     </PostHead>
+                                    <Main_Wrap>
+                                                    <Sub_wrap_right>
+                                                        <Row>
+                                                            <Col span={12}>
+                                                                <Rel_img_right style={{backgroundImage:`url("/images/temp_img.png")`}}>
+                                                                </Rel_img_right>
+                                                            </Col>
+                                                            <Col span={12}>
+                                                                <Rel_p_right>Crowdfire Founders Plan To Launch Indian Bitcoin Exchange</Rel_p_right>
+                                                                <Rel_span_right>Aug 18,2018</Rel_span_right>
+                                                            </Col>
+                                                        </Row>
+                                                    </Sub_wrap_right>
+                                        </Main_Wrap> */}
                                     <SocialHead>
                                         <PostHead_span>Social Links</PostHead_span>
                                     </SocialHead>
-                                    <Social_Li>
+                                    {this.state.contactDetails!==null?<Social_Li>
                                         <LI1>
-                                            <img width="40" height="40" src="/images/LandingCat/Blog/fb_icon.png"/>
+                                            <a href={this.state.contactDetails.fb_profile}><img width="40" height="40" src="/images/LandingCat/Blog/fb_icon.png"/></a>
                                         </LI1>
                                         <LI2>
-                                            <img width="40" height="40" src="/images/LandingCat/Blog/tweet_icon.png"/>
+                                            <a href={this.state.contactDetails.twitter_profile}><img width="40" height="40" src="/images/LandingCat/Blog/tweet_icon.png"/></a>
                                         </LI2>
                                         <LI2>
-                                            <img width="40" height="40" src="/images/LandingCat/Blog/google_icon.png"/>
+                                            <a href={this.state.contactDetails.google_profile}><img width="40" height="40" src="/images/LandingCat/Blog/google_icon.png"/></a>
                                         </LI2>
                                         <LI2>
                                             <img width="40" height="40" src="/images/LandingCat/Blog/you_icon.png"/>
                                         </LI2>
                                         <LI2>
-                                            <img width="40" height="40" src="/images/LandingCat/Blog/In_icon.png"/>
+                                            <a href={this.state.contactDetails.linkedin_profile}><img width="40" height="40" src="/images/LandingCat/Blog/In_icon.png"/></a>
                                         </LI2>
-                                    </Social_Li>
+                                    </Social_Li>:""}
                                 </Right_Col>
                             </Row>
                         </BD_mainWrap>
@@ -120,4 +205,4 @@ class BlogDetails extends React.Component {
     }
 }
 
-export default BlogDetails;
+export default withRouter( BlogDetails );

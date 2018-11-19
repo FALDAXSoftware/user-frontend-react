@@ -20,6 +20,8 @@ import Careers from './components/Landing_categories/Careers'
 import MediaContact from './components/Landing_categories/MediaContact'
 import Addcoin from './components/Landing_categories/Addcoin'
 import ApplyJob from './components/Landing_categories/ApplyJob'
+import LegalPrivacy from './components/Landing_categories/LegalPrivacy'
+import News from './components/Landing_categories/News'
 library.add(faStroopwafel);
 
 /* Component defination start here */
@@ -106,6 +108,8 @@ class App extends Component {
               <Route path="/mediacontact" exact title='MediaContact' component={MediaContact}/>
               <Route path="/addcoin" exact title='AddCoin' component={Addcoin}/>
               <Route path="/applyjob" exact title='ApplyJob' component={ApplyJob}/>
+              <Route path="/privacy" exact title='privacy' component={LegalPrivacy}/>
+              <Route path="/news" exact title='News' component={News}/>
               <RestrictedRoute
                 path="/"
                 component={AppRouter}

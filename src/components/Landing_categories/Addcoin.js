@@ -111,7 +111,7 @@ class MediaContact extends React.Component
                     })
                 })
                 .catch(error => {
-                   console.log(error)
+                   /* console.log(error) */
                 })
           } else {
             this.validator.showMessages();
@@ -149,7 +149,7 @@ class MediaContact extends React.Component
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
                                                     <CoinInput name="coin_name" onChange={this._onChangeFields} value={this.state.fields.coin_name}/>
-                                                    {console.log("--->>",this.state.coin_name)}
+                                                    {/* console.log("--->>",this.state.coin_name) */}
                                                     {this.validator.message('coin_name', this.state.fields.coin_name, 'required|alpha_num', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
@@ -165,7 +165,7 @@ class MediaContact extends React.Component
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
                                                     <URLInput name="url" onChange={this._onChangeFields} value={this.state.fields.url}/>
-                                                    {console.log("--->>",this.state.url)}
+                                                    {/* console.log("--->>",this.state.url) */}
                                                     {this.validator.message('url', this.state.fields.url, 'required|url', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
@@ -202,7 +202,7 @@ class MediaContact extends React.Component
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
                                                     <EmailInput name="email" onChange={this._onChangeFields} value={this.state.fields.email}/>
-                                                    {console.log("--->>",this.state.email)}
+                                                    {/* console.log("--->>",this.state.email) */}
                                                     {this.validator.message('email', this.state.fields.email, 'required|email', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
@@ -218,7 +218,7 @@ class MediaContact extends React.Component
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
                                                     <MsgInput name="message" onChange={this._onChangeFields} value={this.state.fields.message}/>
-                                                    {console.log("Message",this.state.fields)}
+                                                    {/* console.log("Message",this.state.fields) */}
                                                     {this.validator.message('message', this.state.fields.message, 'required', 'text-danger-validation')}
                                                 <AddButton onClick={this.onSubmit}>SUBMIT</AddButton>
                                                 </Right_input>

@@ -1,11 +1,16 @@
 /* In-built Packages */
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Tabs } from 'antd';
+import { Tabs,Spin } from 'antd';
 import styled from 'styled-components';
 import Navigation from '../Navigations/Navigation';
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
-import CommonFooter from "../Landing/Footers/Footer";
+
+import CommonFooter from "../Landing/Footers/Footer_home"
+import {Spin_Ex} from '../../styled-components/homepage/style'
+import {globalVariables} from "../../Globals"
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+let { API_URL } = globalVariables;
 
 /* Styled-Components */
 const ProfileWrapper = styled.div`
@@ -61,10 +66,29 @@ export default class FaqPage extends React.Component {
   constructor() {
     super();
     this.state = {
-      team: 1
+      team: 1,
+      aboutContent:"",
+      loader:false
     };
   }
-
+  componentDidMount()
+  {
+    this.setState({loader:true})
+    fetch(API_URL + "/users/static-page-json/faq",{
+      method:"get",
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then((responseData) => {
+        /* console.log("I m in API get",responseData) */
+       /*  console.log(responseData) */
+        this.setState({aboutContent:responseData.data.content,loader:false})
+    })
+    .catch(error => { /* console.log(error) */ })
+    
+  }
   teamClick(value) {
     this.setState({ team: value });
   }
@@ -86,54 +110,17 @@ export default class FaqPage extends React.Component {
               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                 <About_Faq_Title> BASIC </About_Faq_Title>
               </div>
-              <div style={{ marginTop: '24px' }}>
-                <span style={{ fontWeight: 'bold', fontFamily: 'Open sans', fontSize: '30px' }}>What is FALDAX?</span>
-              </div>
-              <div style={{ marginTop: '10px' }}>
-                <span style={{ fontSize: '14px', fontFamily: 'Open sans' }}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                          </span>
-              </div>
-              <div style={{ marginTop: '34px' }}>
-                <span style={{ fontWeight: 'bold', fontFamily: 'Open sans', fontSize: '30px' }}>What is Bitcoin?</span>
-              </div>
-              <div style={{ marginTop: '10px' }}>
-                <span style={{ fontSize: '14px', fontFamily: 'Open sans' }}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                          </span>
-              </div>
-              <div style={{ marginTop: '34px' }}>
-                <span style={{ fontWeight: 'bold', fontFamily: 'Open sans', fontSize: '30px' }}>How to Buy Bitcoin?</span>
-              </div>
-              <div style={{ marginTop: '10px' }}>
-                <span style={{ fontSize: '14px', fontFamily: 'Open sans' }}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                          </span>
-              </div>
-              <div style={{ marginTop: '34px' }}>
-                <span style={{ fontWeight: 'bold', fontFamily: 'Open sans', fontSize: '30px' }}>What currencies i can deposit and withdraw?</span>
-              </div>
-              <div style={{ marginTop: '10px' }}>
-                <span style={{ fontSize: '14px', fontFamily: 'Open sans' }}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                          </span>
-              </div>
-              <div style={{ marginTop: '34px' }}>
-                <span style={{ fontWeight: 'bold', fontFamily: 'Open sans', fontSize: '30px' }}>Can i trade currencies other than Bitcoin?</span>
-              </div>
-              <div style={{ marginTop: '10px', marginBottom: '65px' }}>
-                <span style={{ fontSize: '14px', fontFamily: 'Open sans' }}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                          </span>
+              <div style={{ marginTop: '20px' }}>
+                <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
+                {ReactHtmlParser(this.state.aboutContent)} 
+                </span>
               </div>
             </ProfileDiv>
           </ProfileWrapper>
           <CommonFooter />
+          {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+                    <Spin size="large" />
+                </Spin_Ex> : ""}
         </OverlayLoader>
       </div>
     );

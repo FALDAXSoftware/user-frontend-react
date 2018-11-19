@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { Col } from 'antd';
+import { Col,Input } from 'antd';
+
+const Search = Input.Search;
 
 
 export const SectionBlog = styled.section`
@@ -289,7 +291,7 @@ export const Comment_button = styled.button`
     margin-top:15px;
     float:right;
     border-radius: 5px;
-    
+    cursor:pointer;
     font-family: "Open Sans";
     background-color: rgb( 76, 132, 255 );      
     color:white;
@@ -306,7 +308,7 @@ export const Right_Col = styled(Col)`
     }
 `
 export const SocialHead = styled(PostHead)`
-    margin-top:30px;
+    
 `
 
 export const Social_Li = styled.ul`
@@ -321,4 +323,154 @@ export const LI1 = styled.li`
 export const LI2 = styled.li`
     display:inline-block;
     padding-right: 25px;
+`
+
+/* Comments Styled-Components */
+
+
+export const AllComments = styled.div`
+`
+export const Comment_wrap = styled.div`
+    display: inline-flex;
+    align-items: center;
+
+`
+export const CommentImage = styled.div`
+    width:70px;
+    height:70px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display:inline-block;
+`
+export const Comment_text = styled.div`
+    padding-left:20px;
+`
+export const Comment_span = styled.p`
+    display:inline-block;
+    margin-bottom:0px;
+    font-weight:600;
+    font-size: 18px;
+    font-family: "Open Sans";
+    color: rgb( 15, 71, 123 );
+`
+export const Comment_p = styled.p`
+    font-size: 12px;
+    font-family: "Open Sans";
+    color: rgb( 128, 124, 124 );  
+    font-weight:600;
+`
+export const Comment_main = styled.div`
+    margin-top:30px;
+    word-break: break-word;
+    padding-right: 30px;
+`
+export const PostHead_below_comment = styled(PostHead_below)`
+    
+`
+export const PerComment = styled.span`
+    font-size: 14px;
+    font-family: "Open Sans";
+    color: rgb( 0, 0, 0 );
+`
+export const Comment_msg = styled.span`
+    font-size:12px;
+    color:red;
+`
+export const Viewmore = styled.div`
+    margin-left: auto;
+    width: 165px;
+    margin-right: auto;
+    cursor: pointer;
+    margin-top: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 50px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Open Sans";
+    background-color: rgb( 76,132,255 );
+    color: white;
+    min-height: 40px;
+    line-height: 38px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+
+`
+
+
+/* Related Post Styled */
+
+export const Main_Wrap = styled.div`
+    margin-top:30px;
+    margin-bottom:40px;
+`
+export const Sub_wrap =styled.div`
+    margin-left:-15px;
+    margin-right:-15px;
+`
+export const Rel_post = styled.div`
+    margin-left:15px;
+    margin-right:15px;
+    @media(max-width:767px)
+    {
+        margin-bottom: 60px;
+    }
+`
+export const Rel_img = styled.div`
+    width: 100%;
+    height: 140px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-bottom: 25px;
+`
+export const Rel_p = styled.p`
+    font-size: 18px;
+    font-family: "Open Sans";
+    color: rgb( 15, 71, 123 );
+    font-weight:600;
+    margin-bottom: 5px;
+`
+export const Rel_span = styled.span`
+    font-size: 12px;
+    font-family: "Open Sans";
+    color: rgb( 128, 124, 124 );
+    border-right: 1px solid rgb( 128, 124, 124 );
+    padding-right:15px;
+`
+export const Rel_name = styled.span`
+    font-size: 12px;
+    font-family: "Open Sans";
+    color: rgb( 128, 124, 124 );
+    padding-left:15px;
+`
+export const Rel_img_right = styled(Rel_img)`
+
+`
+export const Rel_span_right = styled(Rel_span)`
+    border-right:0px;
+`
+export const Rel_p_right = styled(Rel_p)`
+    font-size: 16.01px;
+    font-family: "Open Sans";
+    color: rgb( 15, 71, 123 );
+`
+export const Sub_wrap_right = styled(Sub_wrap)`
+    margin-left:0px;
+    margin-right:0px;
+`
+
+
+
+
+
+/* News Style */
+
+
+export const Inputsearch = styled(Search)`
+width: 100%;
+height: 40px;
+
 `

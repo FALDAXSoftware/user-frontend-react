@@ -729,3 +729,20 @@ table .ant-table-tbody > tr > td {
   width:100%;
   text-align :center;
 }
+
+
+/* news css */
+
+.news-search input
+{
+  font-size: 16px;
+
+}
+.news-search .ant-input-search-icon
+{
+  font-size:20px;
+}
+.news-title
+{
+  
+}

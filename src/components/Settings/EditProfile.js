@@ -59,7 +59,7 @@ class Editprofile extends Component {
                                 <TabPane tab="Account Settings" key="3"><Acc_settings {...this.props} /></TabPane>
                                 <TabPane tab="Identity Verification" key="4"><KYC /></TabPane>
                                 <TabPane tab="Referral" key="5"><Referral /></TabPane>
-                                <TabPane tab="Payment Methods" key="6"><Paymethods/></TabPane>
+                                {/* <TabPane tab="Payment Methods" key="6"><Paymethods/></TabPane> */}
                             </Tabs>
                         </ProfileDiv>
                     </ProfileWrapper>

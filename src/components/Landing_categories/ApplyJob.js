@@ -81,14 +81,14 @@ class ApplyJob extends React.Component {
         });
     }
     onDrop(type, files) {
-        console.log(type, files)
+        /* console.log(type, files) */
         if (type == 'res') {
-            console.log("hello 123", type, files)
+            /* console.log("hello 123", type, files) */
             let flag = false;
             if (files.length > 0) {
                 flag = true
             }
-            console.log(flag);
+       /*      console.log(flag); */
 
             this.setState({
                 flag_drop: flag,
@@ -96,7 +96,7 @@ class ApplyJob extends React.Component {
             });
         }
         else {
-            console.log("hello 123", type, files)
+           /*  console.log("hello 123", type, files) */
             let flag = false;
             if (files.length > 0) {
                 flag = true
@@ -141,7 +141,7 @@ class ApplyJob extends React.Component {
                     jobID = arr[1];
                 }
             }
-            console.log(this.state.fields)
+            /* console.log(this.state.fields) */
             let formdata = new FormData();
             formdata.append('first_name', this.state.fields['first_name']);
             formdata.append('last_name', this.state.fields['last_name'])
@@ -183,7 +183,7 @@ class ApplyJob extends React.Component {
 
                 })
                 .catch(error => {
-                    console.log(error)
+                   /*  console.log(error) */
                 })
         } else {
             this.validator.showMessages();
@@ -196,7 +196,6 @@ class ApplyJob extends React.Component {
         return (
             <Contact_wrap>
                 <Navigation />
-                {console.log(this.state)}
                 <Grey_wrap>
                     <ContainerContact>
                         <Headcontact>
