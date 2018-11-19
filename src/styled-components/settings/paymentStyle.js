@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import {Old_label,OldInput} from '../../components/Settings/changePassword/Passwordchange'
-import {Button_wrap,Sub_wrap,Back_Button,Next_Button} from '../../components/Settings/KYC/IDselect'
+import { Old_label, OldInput } from '../../components/Settings/changePassword/Passwordchange'
+import { Button_wrap, Sub_wrap, Back_Button, Next_Button } from '../../components/Settings/KYC/IDselect'
 
 export const Payment_wrap = styled.div`
     margin-top: 30px;
@@ -54,7 +54,7 @@ export const Lefty = styled.div`
     }
 `
 
-export const Righty= styled.div`
+export const Righty = styled.div`
     margin-left:15px;
     border-radius:5px;
     height:125px;
@@ -72,6 +72,9 @@ export const Top = styled.div`
     height:45px;
     background-color:#f5f6fa;
     border-radius:5px;
+    padding-left:55px;
+    padding-right:15px;
+    position:relative;
     &:hover
     {
         background-color:#f5f8ff;
@@ -91,6 +94,11 @@ export const RemoveCard = styled.span`
     float:right;
     padding-top: 12px;
     padding-right:5px;
-` 
-export const Body_card= styled.div``
+`
+export const Body_card = styled.div`
+    height: 64%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 export const Body_center = styled.div``
