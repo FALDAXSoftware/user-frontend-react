@@ -339,6 +339,10 @@ table .ant-table-tbody > tr > td {
 {
   margin-top: 10px !important;
 }
+.ant-dropdown-placement-bottomLeft
+{
+  position:fixed !important;
+}
 
   /* Date css */
 
@@ -704,6 +708,10 @@ table .ant-table-tbody > tr > td {
 {
   color:red;
 }
+.validation-message
+{
+  color:red
+}
 
 /* React Date Picker Css */
 .datePicker .react-datepicker-wrapper
@@ -728,6 +736,7 @@ table .ant-table-tbody > tr > td {
   padding-top: 30px;
   width:100%;
   text-align :center;
+  cursor:pointer;
 }
 
 

@@ -341,7 +341,7 @@ class Navigation extends React.Component {
                     {/* <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item> */}
                     <Menu_item key="2"><NavLink className="Nav_selected" to="/about-us">ABOUT</NavLink></Menu_item>
                     <Menu_item key="3" onClick={this.showComing}>SECURITY</Menu_item>
-                    <Menu_item key="4" onClick={this.showComing}>NEWS</Menu_item>
+                    <Menu_item key="4" ><NavLink className="Nav_selected" to="/news">NEWS</NavLink></Menu_item>
                     <Menu_item key="5" onClick={this.showComing}><NavLink className="Nav_selected" to="/contactus">CONTACT</NavLink></Menu_item>
                     <Menu_item key="6" onClick={this.showComing}><NavLink className="Nav_selected" to="/addcoin">LIST YOUR TOKEN</NavLink></Menu_item>
                     <Menu_item key="7" onClick={this.showComing}>EXCHANGE</Menu_item>
@@ -364,7 +364,7 @@ class Navigation extends React.Component {
                     <a onClick={this.showComing} href="#">Features</a>
                     <Link to="/about-us">About</Link>
                     <a onClick={this.showComing} href="#">Security</a>
-                    <a onClick={this.showComing} href="#">News</a>
+                    <Link to="/news">News</Link>
                     <Link to="/contactus">Contact</Link>
                     <Link to="/addcoin">List Your Token</Link>
                     <a onClick={this.showComing} href="#">Exchange</a>

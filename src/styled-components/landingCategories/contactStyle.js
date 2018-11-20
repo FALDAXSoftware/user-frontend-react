@@ -435,6 +435,7 @@ export const AddButton = styled(Fifth_button)`
     {
         min-width:115px;
     }
+    cursor:pointer;
 `
 export const Msg = styled(Left)`
     line-height:145px;
@@ -535,11 +536,16 @@ export const Btn_apply = styled(AddButton)`
     {
         min-width:115px;
     }
+    cursor:pointer;
 `
 export const FileSelectText = styled.p`
     margin-bottom:0px;
     display:block;
-    width:100%;
+    max-width:300px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    margin-left:auto;
+    margin-right:auto;
 `
 
 

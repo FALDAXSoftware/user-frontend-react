@@ -38,11 +38,24 @@ class ContactUs extends React.Component
                 email:'',
                 loader:false
             },
-            startDate: null
+            startDate: null,
+            flag_drop:null
         };
         this._onChangeFields = this._onChangeFields.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.validator = new SimpleReactValidator();
+        let self = this;
+        this.validator = new SimpleReactValidator({
+            validEmail: { // name the rule
+                message: 'Please enter valid email address.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+                    // check that it is a valid IP address and is not blacklisted
+                    console.log(val,options)
+                    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    var bool = re.test(String(val).toLowerCase());
+                    return bool;
+                }
+            }
+        });
     }
     componentDidMount()
     {
@@ -89,7 +102,7 @@ class ContactUs extends React.Component
             })
                 .then(response => response.json())
                 .then((responseData) => {
-                    this.openNotificationWithIcon('success', 'Login Successful', responseData.message);
+                    this.openNotificationWithIcon('success', 'Success', responseData.message);
                     let fields={};
                     fields["last_name"]='';
                     fields['first_name']="";
@@ -130,22 +143,22 @@ class ContactUs extends React.Component
                                             <Left_col>
                                                 <Sub_head>Reach out to us for any inquiry.</Sub_head>
                                                 <First_div>
-                                                    <First_label>First Name</First_label>
+                                                    <First_label>First Name*</First_label>
                                                     <First_input name="first_name" onChange={this._onChangeFields} value={this.state.fields.first_name}/>
                                                     {this.validator.message('first_name', this.state.fields.first_name, 'required|alpha_num', 'text-danger-validation')}
                                                 </First_div>
                                                 <Second_div>
-                                                    <Second_label>Last Name</Second_label>
+                                                    <Second_label>Last Name*</Second_label>
                                                     <Second_input name="last_name" onChange={this._onChangeFields} value={this.state.fields.last_name}/>
                                                     {this.validator.message('last_name', this.state.fields.last_name, 'required|alpha_num', 'text-danger-validation')}
                                                 </Second_div>
                                                 <Third_div>
-                                                    <Third_label>Your Email</Third_label>
+                                                    <Third_label>Your Email*</Third_label>
                                                     <Third_input name="email" onChange={this._onChangeFields} value={this.state.fields.email}/>
-                                                    {this.validator.message('email', this.state.fields.email, 'required|email', 'text-danger-validation')}
+                                                    {this.validator.message('email', this.state.fields.email, 'required|validEmail', 'text-danger-validation')}
                                                 </Third_div>
                                                 <Fourth_div>
-                                                    <Fourth_label>Message</Fourth_label>
+                                                    <Fourth_label>Message*</Fourth_label>
                                                     <Fourth_area name="message" onChange={this._onChangeFields} value={this.state.fields.message}/>
                                                     {this.validator.message('message', this.state.fields.message, 'required', 'text-danger-validation')}
                                                 </Fourth_div>

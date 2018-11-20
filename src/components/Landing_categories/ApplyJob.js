@@ -9,6 +9,7 @@ import Dropzone from 'react-dropzone';
 import SimpleReactValidator from 'simple-react-validator';
 
 import Navigation from '../Navigations/Navigation';
+import {Spin_Ex} from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import { Contact_wrap, Grey_wrap, Headcontact, Head_apply, Apply_wrap, Title_apply, Title_span, Form_apply, LeftWing, Labelone, InputOne, RightWing, InputTwo, InputThree, Gap, Btn_apply, FileSelectText } from '../../styled-components/landingCategories/contactStyle';
@@ -42,6 +43,7 @@ class ApplyJob extends React.Component {
                 cover_letter: [],
                 linkedin_profile: '',
                 website_url: '',
+                loader:false
             },
         };
         this._onChangeFields = this._onChangeFields.bind(this);
@@ -150,11 +152,11 @@ class ApplyJob extends React.Component {
             formdata.append('position', this.state.fields['position'])
             formdata.append('website_url', this.state.fields['website_url'])
             formdata.append('linkedin_profile', this.state.fields['linkedin_profile'])
-            formdata.append('resume', this.state.fields['resume'])
-            formdata.append('cover_letter', this.state.fields['cover_letter'])
             formdata.append('job_id',jobID);
+            formdata.append('cover_letter', this.state.fields['cover_letter'])
+            formdata.append('resume', this.state.fields['resume'])
 
-            
+            this.setState({loader:true});
             fetch(API_URL + "/apply-job",
                 {
                     method: "post",
@@ -174,7 +176,7 @@ class ApplyJob extends React.Component {
                     fields['cover_letter'] = "";
                     fields['linkedin_profile'] = ''
 
-                    this.setState({ fields: fields, flag_drop: null, cover_flag: null }, () => {
+                    this.setState({ fields: fields, flag_drop: null, cover_flag: null,loader:false }, () => {
                         this.validator.hideMessages();
                         this.forceUpdate();
 
@@ -252,6 +254,7 @@ class ApplyJob extends React.Component {
                                         <Row>
                                             <Col sm={24} md={24}>
                                                 <Labelone>Resume/CV*</Labelone>
+                                                {console.log(this.state)}
                                                 <Dropzone
                                                     accept=".pdf,.doc,.docx"
                                                     className="Dropzone_apply"
@@ -273,10 +276,11 @@ class ApplyJob extends React.Component {
                                                     {this.state.flag_drop == true &&
                                                         <div>
                                                             <Icon style={{ fontSize: '30px' }} type="check-square" />
-                                                            <FileSelectText>File Selected</FileSelectText>
+                                                            <FileSelectText>{this.state.fields.resume.name}</FileSelectText>
                                                         </div>
                                                     }
                                                 </Dropzone>
+                                                <span style={{fontSize:"12px",fontFamily:"Open Sans",color:"grey",fontStyle:"italic"}}>Supported format : .doc , .docx , .pdf.</span>
                                                 {this.validator.message('resume', this.state.flag_drop, 'resumeRequired|resumeValid', 'text-danger-validation')}
                                             </Col>
                                         </Row>
@@ -306,7 +310,7 @@ class ApplyJob extends React.Component {
                                                     {this.state.cover_flag == true &&
                                                         <div>
                                                             <Icon style={{ fontSize: '30px' }} type="check-square" />
-                                                            <FileSelectText>File Selected</FileSelectText>
+                                                            <FileSelectText>{this.state.fields.cover_letter.name}</FileSelectText>
                                                         </div>
                                                     }
                                                 </Dropzone>
@@ -339,6 +343,9 @@ class ApplyJob extends React.Component {
                     </ContainerContact>
                 </Grey_wrap>
                 <CommonFooter />
+                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+                    <Spin size="large" />
+                </Spin_Ex> : ""}
             </Contact_wrap>
         );
     }

@@ -125,7 +125,7 @@ class Afterlog extends React.Component {
     }
     render() {
         const DropdownItems = (
-            <Menu>
+            <Menu className="fixed-drop">
                 <Menu.Item key="0">
                     <a onClick={() => this.props.history.push('/editProfile')}> Profile </a>
                 </Menu.Item>
@@ -156,7 +156,7 @@ class Afterlog extends React.Component {
                             <span  onClick={this.showComing}> CAREERS </span>
                 </Exchange>
                 </Link>
-                <DropDownDiv overlay={DropdownItems} trigger={['click']}>
+                <DropDownDiv className="Drop-main" overlay={DropdownItems} trigger={['click']}>
                     <AnchorName className="ant-dropdown-link" href="#">
                         
                         <HeaderAvatar style={{ backgroundImage: "url('" + Avatar_img + "')" }} />

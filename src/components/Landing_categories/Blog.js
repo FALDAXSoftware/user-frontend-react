@@ -68,7 +68,7 @@ class Blog extends React.Component {
             if(responseData.status==200)
             {
                 var numb = Number(curr)
-                this.setState({nxtPage:numb+1,blogsData: responseData,currPage:curr,prevPage:numb-1,totalPage:responseData.BlogCount/9,loader:false})
+                this.setState({nxtPage:numb+1,blogsData: responseData,currPage:curr,prevPage:numb-1,totalPage:Math.ceil(responseData.BlogCount/9),loader:false})
             }
         })
         .catch(error => { /* console.log(error) */ })
@@ -138,6 +138,7 @@ class Blog extends React.Component {
                             </Blogs_wrap>
                         </Whole_wrap>
                         <Prev_next>
+                            {console.log(this.state.currPage,this.state.totalPage,this.state.nxtPage)}
                             {(this.state.currPage>1 && this.state.currPage<=this.state.totalPage)?<Link to={`/blogs?blogPage=${this.state.nxtPage-2}`}><Prev><i style={{ verticalAlign: "middle",textDecoration:"none" }} className="material-icons">keyboard_backspace</i><span style={{ verticalAlign: "middle" }}>Previous Articles</span></Prev></Link>:""}
 
                             {(this.state.nxtPage<=this.state.totalPage)?<Link to={`/blogs?blogPage=${this.state.nxtPage}`}><Next><span style={{ verticalAlign: "middle",textDecoration:"none" }}>Next Articles</span><i style={{ verticalAlign: "middle", transform: "rotate(180deg)" }} className="material-icons">keyboard_backspace</i></Next></Link>:""}

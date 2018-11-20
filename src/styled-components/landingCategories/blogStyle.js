@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Col,Input } from 'antd';
+import { Col,Input,Button } from 'antd';
 
 const Search = Input.Search;
 
@@ -324,6 +324,15 @@ export const LI2 = styled.li`
     display:inline-block;
     padding-right: 25px;
 `
+export const TagSpan = styled.span`
+    background-color: aliceblue;
+    margin-right: 10px;
+    padding: 7px 10px;
+    border-radius: 10px;
+    color: rgb( 15,71,123 );
+    font-weight: 600;
+    font-size: larger;
+`
 
 /* Comments Styled-Components */
 
@@ -470,7 +479,22 @@ export const Sub_wrap_right = styled(Sub_wrap)`
 
 
 export const Inputsearch = styled(Search)`
-width: 100%;
-height: 40px;
-
+    width: 100%;
+    height: 40px;
+    
+`
+export const Search_wrap = styled.div`
+    text-align:right;
+`
+export const Whole_news = styled(Whole_wrap)`
+    margin-top:30px;
+`
+export const RemoveButton = styled(Button)`
+    margin-top:30px;
+`
+export const NoData = styled.div`
+    text-align :center;
+    font-family: "Open Sans";
+    font-weight:bold;
+    font-size:18px;
 `

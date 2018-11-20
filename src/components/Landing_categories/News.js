@@ -11,7 +11,7 @@ import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import { globalVariables } from "../../Globals"
 import {Spin_Ex} from '../../styled-components/homepage/style'
-import { SectionBlog, Mainimage, Lefthead, Subleft, Eco, Head3, Eco2, Righthead, Whole_wrap, Blog_p, Blogs_wrap, HR_tag, Meta_title, Meta_desc, Card_foot, Prev_next, Prev, Next, MsgIcon, CardCover,Inputsearch } from '../../styled-components/landingCategories/blogStyle';
+import { SectionBlog, Mainimage, Lefthead, Subleft, Eco, Head3, Eco2, Righthead, Whole_news, Blog_p, Blogs_wrap, HR_tag, Meta_title, Meta_desc, Card_foot, Prev_next, Prev, Next, MsgIcon, CardCover,Inputsearch,Search_wrap,RemoveButton,NoData } from '../../styled-components/landingCategories/blogStyle';
 
 const Container_Blog = styled(Container)`
     margin-bottom: 80px;
@@ -29,7 +29,8 @@ class Blog extends React.Component {
             totalPage:null,
             loader:false,
             nxtPage:0,
-            searchV:''
+            searchV:'',
+            removeflag:false
         }
     }
     componentDidMount()
@@ -48,12 +49,10 @@ class Blog extends React.Component {
     {
         if(props.location.search.split('=')[1]==this.state.nxtPage)
         {
-            console.log("if props",this.state)
             this.BlogDetails(props.location.search.split('=')[1]);
         }
         if(props.location.search.split('=')[1]==this.state.prevPage)
         {
-            console.log("else props",this.state)
             this.BlogDetails(props.location.search.split('=')[1]);
         }
     }
@@ -76,6 +75,10 @@ class Blog extends React.Component {
             {
                 var numb = Number(curr)
                 this.setState({nxtPage:numb+1,blogsData: responseData,currPage:curr,prevPage:numb-1,totalPage:Math.ceil(responseData.NewsCount/9),loader:false})
+                if(searchV!=="")
+                {
+                    this.setState({removeflag:true})
+                }
             }
         })
         .catch(error => { /* console.log(error) */ })
@@ -83,8 +86,7 @@ class Blog extends React.Component {
     }
     searchChange(e)
     {
-        console.log(e.target.value)
-        this.setState({searchV:e.target.value});
+            this.setState({searchV:e.target.value});
        
     }
     submitSearch(e)
@@ -95,7 +97,7 @@ class Blog extends React.Component {
         }
     }
     removeSearch()
-    { this.setState({searchV:""});
+    { this.setState({searchV:"",removeflag:false});
         this.BlogDetails(1,true);
     }
     render() {
@@ -105,18 +107,18 @@ class Blog extends React.Component {
 
                 <Container_Blog style={{ minHeight: "100%" }}>
                     <SectionBlog>
-                        <div>
+                        <Search_wrap>
                             <Inputsearch
-                            placeholder="search news"
+                            placeholder="Search News"
                             onChange={value => this.searchChange(value)}
                             style={{ width: "100%" }}
                             className="news-search"
                             onPressEnter={e => this.submitSearch(e)}
                             value={this.state.searchV}
                             />
-                            <Button onClick={this.removeSearch.bind(this)}>Remove Search</Button>
-                        </div>
-                        <Whole_wrap>
+                            {this.state.removeflag==true?<RemoveButton onClick={this.removeSearch.bind(this)}>Remove Search <Icon type="close" /></RemoveButton>:""}
+                        </Search_wrap>
+                        <Whole_news>
                             <Blogs_wrap>
                                 <Row className="blog-card-row">
 
@@ -126,7 +128,7 @@ class Blog extends React.Component {
                                         var tag = result.tags ? result.tags.split(',') : [];
                                     return(
                                         <Col key={key} xl={8} lg={12} md={{sapn:12}} sm={24}  className="blog-card-col">
-                                            <a href={result.link}>
+                                            <a href={result.link} target="_blank">
                                                 <Card
                                                     style={{ width: "100%" }}
                                                     cover={<CardCover alt="example" style={{ backgroundImage: `url(${img})` }} />}
@@ -143,12 +145,12 @@ class Blog extends React.Component {
                                         </Col>);
                                     }):""
                                 }
-
+                                {console.log(this.state.blogsData)}
+                                {this.state.blogsData!==undefined && this.state.blogsData!==''?(this.state.blogsData.data.length == 0 ? <NoData>No Data Found</NoData> : ""):""}
                                 </Row>
                             </Blogs_wrap>
-                        </Whole_wrap>
+                        </Whole_news>
                         <Prev_next>
-                            {console.log(this.state.currPage,this.state.totalPage,this.state.nxtPage)}
                             {(this.state.currPage>1 && this.state.currPage<=this.state.totalPage)?<Link to={`/news?newsPage=${this.state.nxtPage-2}`}><Prev><i style={{ verticalAlign: "middle",textDecoration:"none" }} className="material-icons">keyboard_backspace</i><span style={{ verticalAlign: "middle" }}>Previous Articles</span></Prev></Link>:""}
 
                             {(this.state.nxtPage<=this.state.totalPage)?<Link to={`/news?newsPage=${this.state.nxtPage}`}><Next><span style={{ verticalAlign: "middle",textDecoration:"none" }}>Next Articles</span><i style={{ verticalAlign: "middle", transform: "rotate(180deg)" }} className="material-icons">keyboard_backspace</i></Next></Link>:""}

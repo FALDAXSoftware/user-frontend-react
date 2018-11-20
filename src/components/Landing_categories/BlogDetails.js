@@ -13,7 +13,7 @@ import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import { globalVariables } from "../../Globals"
 import {Spin_Ex} from '../../styled-components/homepage/style'
-import {BD_mainWrap,Meta_title,Blog_desc,PostHead,Status,Date,Name,Comment,Head_image,Left_col,PostHead_span,PostHead_below,Right_Col,MsgIcon,SocialHead,Social_Li,LI1,LI2,Main_Wrap,Sub_wrap,Rel_post,Rel_img,Rel_p,Rel_name, Rel_span,Rel_img_right,Rel_span_right,Rel_p_right,Sub_wrap_right} from '../../styled-components/landingCategories/blogStyle';
+import {BD_mainWrap,Meta_title,Blog_desc,PostHead,Status,Date,Name,Comment,Head_image,Left_col,PostHead_span,PostHead_below,Right_Col,MsgIcon,SocialHead,Social_Li,LI1,LI2,Main_Wrap,Sub_wrap,Rel_post,Rel_img,Rel_p,Rel_name, Rel_span,Rel_img_right,Rel_span_right,Rel_p_right,Sub_wrap_right,TagSpan} from '../../styled-components/landingCategories/blogStyle';
 
 class BlogDetails extends React.Component {
     constructor(props) {
@@ -94,6 +94,8 @@ class BlogDetails extends React.Component {
     }
     render()
     {
+        console.log(this.state.blogsData)
+        var Tags = this.state.blogsData!==undefined && this.state.blogsData!=='' && this.state.blogsData!==null ? (this.state.blogsData.tags!==null ? this.state.blogsData.tags.split(',') : "") :"";
         return(
             <div>
                 <Navigation />
@@ -118,6 +120,14 @@ class BlogDetails extends React.Component {
                                         <Head_image image={`${globalVariables.amazon_Bucket + this.state.blogsData.cover_image}`}/>
                                         <div>
                                             {ReactHtmlParser(this.state.blogsData.description)}
+                                        </div>
+                                        <div style={{marginTop:"30px",marginBottom:"50px"}}>
+                                            <h2 style={{marginBottom:"30px"}}>Tags</h2>
+                                            {Tags!==''?Tags.map(function(Tag){
+                                                return(
+                                                    <TagSpan>{Tag}</TagSpan>
+                                                );
+                                            }):""}
                                         </div>
                                         {this.state.relatedPosts.length>0?
                                             <div>

@@ -9,6 +9,7 @@ import SimpleReactValidator from 'simple-react-validator';
 import "react-datepicker/dist/react-datepicker.css";
 
 import Navigation from '../Navigations/Navigation';
+import {Spin_Ex} from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import {Contact_wrap,Grey_wrap,Head,Head_title,Subtitle,Head_desc,Body,BodyText,Body_form,Form_coin,CoinInput,URLInput,TargetInput,EmailInput,MsgInput,LeftP,RightInput,Left,OneDiv,TwoDiv,ThreeDiv,FourDiv,FiveDiv,AddButton,Msg,Right_input} from '../../styled-components/landingCategories/contactStyle';    
@@ -41,6 +42,7 @@ class MediaContact extends React.Component
                 target_date:'',
                 url:'',
                 coin_name:'',
+                loader:false
 
             },
             startDate: null
@@ -86,7 +88,7 @@ class MediaContact extends React.Component
       };
     onSubmit(){
         if( this.validator.allValid() ){
-
+            this.setState({loader:true})
             fetch(API_URL + "/users/add-coin-request", {
                 method: "post",
                 headers: {
@@ -96,7 +98,7 @@ class MediaContact extends React.Component
             })
                 .then(response => response.json())
                 .then((responseData) => {
-                    this.openNotificationWithIcon('success', 'Login Successful', responseData.message);
+                    this.openNotificationWithIcon('success', 'Success', responseData.message);
                     let fields={};
                     fields["target_date"]='';
                     fields['url']="";
@@ -104,7 +106,7 @@ class MediaContact extends React.Component
                     fields['email']="";
                     fields['message']="";
                                         
-                    this.setState({ fields:fields , startDate:null},()=>{
+                    this.setState({ fields:fields , startDate:null,loader:false},()=>{
                         this.validator.hideMessages();
                         this.forceUpdate();
                         
@@ -136,7 +138,7 @@ class MediaContact extends React.Component
                                 <Head_desc>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Head_desc>
                             </Head>
                             <Body>
-                                <BodyText>Please fill out this form or email at relations@fandax.com to apply:</BodyText>
+                                <BodyText>Please fill out this form or email at relations@faldax.com to apply:</BodyText>
                                 <Body_form>
                                     <Form_coin>
                                         <OneDiv>
@@ -150,7 +152,7 @@ class MediaContact extends React.Component
                                                 <Right_input>
                                                     <CoinInput name="coin_name" onChange={this._onChangeFields} value={this.state.fields.coin_name}/>
                                                     {/* console.log("--->>",this.state.coin_name) */}
-                                                    {this.validator.message('coin_name', this.state.fields.coin_name, 'required|alpha_num', 'text-danger-validation')}
+                                                    {this.validator.message('coin_name', this.state.fields.coin_name, 'required|alpha_num|max:15', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
                                         </Row>
@@ -182,7 +184,8 @@ class MediaContact extends React.Component
                                                 <Right_input className="datePicker">
                                                 <TargetInput
                                                     name="target_date"
-                                                    dateFormat="DD/MM/YYYY"
+                                                    dateFormat="DD/MM/YYYY" 
+                                                    minDate={new Date()}
                                                     selected={this.state.startDate}
                                                     onChange={this.dateChange}
                                                     className="date-input"
@@ -231,6 +234,9 @@ class MediaContact extends React.Component
                         </ContainerContact>
                     </Grey_wrap>
                 <CommonFooter/>
+                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+                    <Spin size="large" />
+                </Spin_Ex> : ""}
             </Contact_wrap>
         );
     }

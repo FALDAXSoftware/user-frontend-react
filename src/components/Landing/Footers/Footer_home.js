@@ -232,8 +232,8 @@ export default class Footer_home extends Component {
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                     <Footer_Link to="/addcoin">List your Token</Footer_Link>
                                                     </li>
-                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        News
+                                    <li style={{ cursor: "pointer" }}>
+                                        <Footer_Link to="/news">News</Footer_Link>
                                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         Security

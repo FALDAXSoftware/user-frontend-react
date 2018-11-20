@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Row, Col, Card, Icon, Avatar,Spin } from 'antd';
 import moment from 'moment';
 import styled from 'styled-components';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 import Navigation from '../Navigations/Navigation';
 import {Spin_Ex} from '../../styled-components/homepage/style'
@@ -74,7 +75,7 @@ class CareerDetails extends React.Component
                                     <Body_details>
                                         <Body_p>{this.state.jobDetails.position}</Body_p>
                                         <Location_p>{this.state.jobDetails.location}</Location_p>
-                                        <Details_p>{this.state.jobDetails.job_desc}</Details_p>
+                                        <Details_p>{ReactHtmlParser(this.state.jobDetails.job_desc)}</Details_p>
                                     </Body_details>:''
                                 }
                             </CareerD_body>
