@@ -69,7 +69,9 @@ class CareerDetails extends React.Component
                             </Headcontact>
                             <CareerD_body>
                                 <Btn_div>
-                                    <Link to={`/applyjob?jobid=${this.state.jobID}`}><Job_btn>Apply job</Job_btn></Link>
+                                {this.state.jobDetails!==null?
+                                    <Link to={`/applyjob?jobid=${this.state.jobID}&position=${this.state.jobDetails.position}`}><Job_btn>Apply job</Job_btn></Link>
+                                :""}
                                 </Btn_div>
                                 {this.state.jobDetails!==null?
                                     <Body_details>

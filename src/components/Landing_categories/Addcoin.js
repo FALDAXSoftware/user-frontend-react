@@ -50,7 +50,18 @@ class MediaContact extends React.Component
         this._onChangeFields = this._onChangeFields.bind(this);
         this.dateChange = this.dateChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.validator = new SimpleReactValidator();
+        this.validator = new SimpleReactValidator({
+            validEmail: { // name the rule
+                message: 'Please enter valid email address.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+                    // check that it is a valid IP address and is not blacklisted
+                    console.log(val,options)
+                    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    var bool = re.test(String(val).toLowerCase());
+                    return bool;
+                }
+            }
+        });
     }
     // handleForm(type,e)
     // {
@@ -152,7 +163,7 @@ class MediaContact extends React.Component
                                                 <Right_input>
                                                     <CoinInput name="coin_name" onChange={this._onChangeFields} value={this.state.fields.coin_name}/>
                                                     {/* console.log("--->>",this.state.coin_name) */}
-                                                    {this.validator.message('coin_name', this.state.fields.coin_name, 'required|alpha_num|max:15', 'text-danger-validation')}
+                                                    {this.validator.message('coin_name', this.state.fields.coin_name, 'required|alpha_num|max:30', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
                                         </Row>
@@ -206,7 +217,7 @@ class MediaContact extends React.Component
                                                 <Right_input>
                                                     <EmailInput name="email" onChange={this._onChangeFields} value={this.state.fields.email}/>
                                                     {/* console.log("--->>",this.state.email) */}
-                                                    {this.validator.message('email', this.state.fields.email, 'required|email', 'text-danger-validation')}
+                                                    {this.validator.message('email', this.state.fields.email, 'required|validEmail', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
                                         </Row>

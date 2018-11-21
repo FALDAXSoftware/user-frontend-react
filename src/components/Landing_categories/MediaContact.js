@@ -76,7 +76,9 @@ class MediaContact extends React.Component
                                         <LT_div sm={24} md={12}>
                                             <Col_wrap_l>
                                                 <Mediaspan>PRESS</Mediaspan>
-                                                <MediaP>Please refer to <Blue_tag>blog.faldax.com</Blue_tag> for our latest announcements.</MediaP> 
+                                                {this.state.contact!==null?
+                                                <MediaP>Please refer to <Blue_tag>{this.state.contact.press}</Blue_tag> for our latest announcements.</MediaP> 
+                                                :""}
                                             </Col_wrap_l>
                                         </LT_div>
                                         <LL_div sm={24} md={12}>
@@ -93,10 +95,10 @@ class MediaContact extends React.Component
                                                 <Mediaspan>MEDIA CONTACT</Mediaspan>
                                                 {this.state.contact!==null?
                                                     <MediaUL>
-                                                        <a href={`${this.state.contact.social_facebook}`}><MediaLI><img src="/images/LandingCat/media_fb.png"/></MediaLI></a>
-                                                        <a href={`${this.state.contact.social_twitter}`}><MediaLI><img src="/images/LandingCat/media_tweet.png"/></MediaLI></a>
-                                                        <a href={`${this.state.contact.social_gplus}`}><MediaLI><img src="/images/LandingCat/media_google.png"/></MediaLI></a>
-                                                        <a href={`${this.state.contact.social_linkedin}`}><MediaLI><img src="/images/LandingCat/media_IN.png"/></MediaLI></a>
+                                                        <a href={`${this.state.contact.fb_profile}`}><MediaLI><img src="/images/LandingCat/media_fb.png"/></MediaLI></a>
+                                                        <a href={`${this.state.contact.twitter_profile}`}><MediaLI><img src="/images/LandingCat/media_tweet.png"/></MediaLI></a>
+                                                        <a href={`${this.state.contact.google_profile}`}><MediaLI><img src="/images/LandingCat/media_google.png"/></MediaLI></a>
+                                                        <a href={`${this.state.contact.linkedin_profile}`}><MediaLI><img src="/images/LandingCat/media_IN.png"/></MediaLI></a>
                                                     </MediaUL>
                                                 :""}
                                             </Col_wrap_l>
@@ -104,7 +106,7 @@ class MediaContact extends React.Component
                                         <LL_div sm={24} md={12}>
                                             <Col_wrap_r>
                                                 <Mediaspan>Support CONTACT</Mediaspan>
-                                                <MediaP>Need customer support? For support requests and inquiries please visit <Blue_tag>fanrax.com/support.</Blue_tag></MediaP>
+                                                <MediaP>Need customer support? For support requests and inquiries please visit <Link to="/contactus"><Blue_tag>faldax.com/support.</Blue_tag></Link></MediaP>
                                             </Col_wrap_r>
                                         </LL_div>
                                     </RightRow>

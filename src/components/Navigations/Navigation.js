@@ -310,6 +310,10 @@ class Navigation extends React.Component {
         else if (this.props.location.pathname == "/addcoin") {
             this.setState({ selected: ['6'] })
         }
+        else if(this.props.location.pathname.includes("news"))
+        {
+            this.setState({ selected: ['4'] })
+        }
         else {
             if(this.props.location.pathname == "/")
             this.setState({ selected: ['1'] })
@@ -342,8 +346,8 @@ class Navigation extends React.Component {
                     <Menu_item key="2"><NavLink className="Nav_selected" to="/about-us">ABOUT</NavLink></Menu_item>
                     <Menu_item key="3" onClick={this.showComing}>SECURITY</Menu_item>
                     <Menu_item key="4" ><NavLink className="Nav_selected" to="/news">NEWS</NavLink></Menu_item>
-                    <Menu_item key="5" onClick={this.showComing}><NavLink className="Nav_selected" to="/contactus">CONTACT</NavLink></Menu_item>
-                    <Menu_item key="6" onClick={this.showComing}><NavLink className="Nav_selected" to="/addcoin">LIST YOUR TOKEN</NavLink></Menu_item>
+                    <Menu_item key="5" ><NavLink className="Nav_selected" to="/contactus">CONTACT</NavLink></Menu_item>
+                    <Menu_item key="6" ><NavLink className="Nav_selected" to="/addcoin">LIST YOUR TOKEN</NavLink></Menu_item>
                     <Menu_item key="7" onClick={this.showComing}>EXCHANGE</Menu_item>
                 </Menu_main>
                 {/* console.log(this.props) */}

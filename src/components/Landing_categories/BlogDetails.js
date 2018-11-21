@@ -195,7 +195,7 @@ class BlogDetails extends React.Component {
                                             <a href={this.state.contactDetails.google_profile}><img width="40" height="40" src="/images/LandingCat/Blog/google_icon.png"/></a>
                                         </LI2>
                                         <LI2>
-                                            <img width="40" height="40" src="/images/LandingCat/Blog/you_icon.png"/>
+                                            <a href={this.state.contactDetails.youtube_profile}><img width="40" height="40" src="/images/LandingCat/Blog/you_icon.png"/></a>
                                         </LI2>
                                         <LI2>
                                             <a href={this.state.contactDetails.linkedin_profile}><img width="40" height="40" src="/images/LandingCat/Blog/In_icon.png"/></a>

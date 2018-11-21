@@ -62,12 +62,17 @@ class Blog extends React.Component {
         var searchV = this.state.searchV;
         if(flag==true)
         searchV=""
-        fetch(globalVariables.API_URL + `/users/get-all-news?page=${curr}&limit=9&data=${searchV}`,{
-            method:"get",
+        var obj = {};
+        obj['data'] = searchV
+        //var Buff=Buffer.from(URI).toString('base64')
+        
+        fetch(globalVariables.API_URL + `/users/get-all-news?page=${curr}&limit=9`,{
+            method:"post",
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-            }
+            },
+            body:JSON.stringify(obj)
         })
         .then(response => response.json())
         .then((responseData) => {
@@ -128,7 +133,7 @@ class Blog extends React.Component {
                                         var tag = result.tags ? result.tags.split(',') : [];
                                     return(
                                         <Col key={key} xl={8} lg={12} md={{sapn:12}} sm={24}  className="blog-card-col">
-                                            <a href={result.link} target="_blank">
+                                            <a href={result.link} target="_blank" title={result.title}>
                                                 <Card
                                                     style={{ width: "100%" }}
                                                     cover={<CardCover alt="example" style={{ backgroundImage: `url(${img})` }} />}

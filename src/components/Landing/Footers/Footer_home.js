@@ -190,7 +190,24 @@ export default class Footer_home extends Component {
         super(props);
         this.state = {
             comingSoon: false,
+            contactDetails:[]
         };
+    }
+    componentDidMount()
+    {
+        fetch(globalVariables.API_URL + '/get-contact-details',{
+            method:"get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then((responseData) => {
+            this.setState({contactDetails:responseData.data});
+        })
+        .catch(error => {
+        })
     }
     comingCancel = (e) => {
         /* console.log(e); */
@@ -268,33 +285,35 @@ export default class Footer_home extends Component {
                                 <Icon_ul_1_header>
                                     <Footer_headers>Social</Footer_headers>
                                 </Icon_ul_1_header>
-                                <Icon_ul_1>
+                                {this.state.contactDetails.length!==0?
+                                    <Icon_ul_1>
 
-                                    <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="/images/Homepage/fb_icon.png" />
-                                    </LI>
-                                    <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="/images/Homepage/tweet_icon.png" />
-                                    </LI>
-                                    <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="/images/Homepage/google_icon.png" />
-                                    </LI>
-                                    <LI style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="/images/Homepage/you_icon.png" />
-                                    </LI>
-                                </Icon_ul_1>
+                                        <LI style={{ cursor: "pointer" }}>
+                                            <a href={this.state.contactDetails.fb_profile}><img src="/images/Homepage/fb_icon.png" /></a>
+                                        </LI>
+                                        <LI style={{ cursor: "pointer" }}>
+                                            <a href={this.state.contactDetails.twitter_profile}><img src="/images/Homepage/tweet_icon.png" /></a>
+                                        </LI>
+                                        <LI style={{ cursor: "pointer" }}>
+                                            <a href={this.state.contactDetails.google_profile}><img src="/images/Homepage/google_icon.png" /></a>
+                                        </LI>
+                                        <LI style={{ cursor: "pointer" }} >
+                                            <a href={this.state.contactDetails.youtube_profile}><img src="/images/Homepage/you_icon.png" /></a>
+                                        </LI>
+                                    </Icon_ul_1>
+                                :""}
                                 <Icon_ul_2>
                                     <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="/images/Homepage/insta_icon.png" />
+                                        <a href={this.state.contactDetails.insta_profile}> <img src="/images/Homepage/insta_icon.png" /></a>
+                                    </LI2>
+                                    <LI2 style={{ cursor: "pointer" }}>
+                                        <a href={this.state.contactDetails.telegram_profile}><img src="/images/Homepage/telegram_icon.png" /></a>
+                                    </LI2>
+                                    <LI2 style={{ cursor: "pointer" }}>
+                                        <a href={this.state.contactDetails.linkedin_profile}><img src="/images/Homepage/in_icon.png" /></a>
                                     </LI2>
                                     <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="/images/Homepage/telegram_icon.png" />
-                                    </LI2>
-                                    <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="/images/Homepage/in_icon.png" />
-                                    </LI2>
-                                    <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <img src="/images/Homepage/www_icon.png" />
+                                        <a href={this.state.contactDetails.faldax_url}><img src="/images/Homepage/www_icon.png" /></a>
                                     </LI2>
                                 </Icon_ul_2>
                             </Col>

@@ -102,16 +102,19 @@ class BlogComments extends React.Component
         })
         .then(response => response.json())
         .then((responseData) => {
+            var obj1 = {};
+            obj1["blog_id"] = this.state.blogID;
             fetch(globalVariables.API_URL + `/get-comments?page=1&limit=10`,{
                 method:"post",
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                }
+                },
+                body:JSON.stringify(obj1)
             })
             .then(response => response.json())
             .then((responseData) => {
-                this.setState({comments:responseData.data.comments,commentcount:responseData.data.commentCount,total:responseData.data.commentCount/10,page:1,loader:false});
+                this.setState({comments:responseData.data.comments,commentcount:responseData.data.commentCount,total:responseData.data.commentCount/10,page:1,loader:false,commentTemp:""});
             })
             .catch(error => { /* console.log(error) */ })
         })

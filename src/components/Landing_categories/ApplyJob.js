@@ -43,7 +43,10 @@ class ApplyJob extends React.Component {
                 cover_letter: [],
                 linkedin_profile: '',
                 website_url: '',
-                loader:false
+                loader:false,
+                position_flag:null,
+                coverLimit:null,
+                resumeLimit:null
             },
         };
         this._onChangeFields = this._onChangeFields.bind(this);
@@ -79,32 +82,87 @@ class ApplyJob extends React.Component {
                     }
                     return true;
                 }
+            },
+            validEmail: { // name the rule
+                message: 'Please enter valid email address.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+                    // check that it is a valid IP address and is not blacklisted
+                    console.log(val,options)
+                    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    var bool = re.test(String(val).toLowerCase());
+                    return bool;
+                }
+            },
+            coverLimit:{
+                message: 'Please upload the document of less than 2 mb.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+                    // check that it is a valid IP address and is not blacklisted
+                    console.log(val,options)
+                    if (self.state.coverLimit == false) {
+                        return false;
+                    }
+                    return true;
+                } 
+            },
+            resumeLimit:{
+                message: 'Please upload the document of less than 2 mb.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+                    // check that it is a valid IP address and is not blacklisted
+                    console.log(val,options)
+                    if (self.state.resumeLimit == false) {
+                        return false;
+                    }
+                    return true;
+                } 
             }
         });
+    }
+    componentDidMount()
+    {
+        if(this.props.location.search)
+            {
+                console.log(this.props);
+                var arr = this.props.location.search.split("&");
+                console.log(arr);
+                var arr2 = arr[1].split("=");
+                console.log(arr2[1]);
+                this.setState({position_flag:arr2[1]});
+            }
     }
     onDrop(type, files) {
         /* console.log(type, files) */
         if (type == 'res') {
             /* console.log("hello 123", type, files) */
-            let flag = false;
+            let flag = false,flagLimit=false;
             if (files.length > 0) {
                 flag = true
+                if(files[0].size<=3000000)
+                {
+                   flagLimit=true;
+                }
             }
-       /*      console.log(flag); */
-
             this.setState({
                 flag_drop: flag,
+                resumeLimit:flagLimit,
                 fields: { ...this.state.fields, resume: files[0] }
             });
         }
         else {
            /*  console.log("hello 123", type, files) */
-            let flag = false;
+            let flag = false,flagLimit=false;
             if (files.length > 0) {
                 flag = true
+                console.log(files[0].size)
+                if(files[0].size<=3000000)
+                {
+                    console.log(this.state.flagLimit)
+                    flagLimit=true;
+                }
             }
+            console.log(files)
             this.setState({
                 cover_flag: flag,
+                coverLimit:flagLimit,
                 fields: { ...this.state.fields, cover_letter: files[0] }
             });
         }
@@ -137,11 +195,9 @@ class ApplyJob extends React.Component {
             let jobID;
             if(this.props.location.search)
             {
-                let arr = this.props.location.search.split('=');
-                if(arr[0].includes('jobid'))
-                {
-                    jobID = arr[1];
-                }
+                var arr = this.props.location.search.split("&");
+                var arr2 = arr[0].split("=");
+                jobID=arr2[1];
             }
             /* console.log(this.state.fields) */
             let formdata = new FormData();
@@ -149,7 +205,7 @@ class ApplyJob extends React.Component {
             formdata.append('last_name', this.state.fields['last_name'])
             formdata.append('email', this.state.fields['email'])
             formdata.append('phone_number', this.state.fields['phone_number'])
-            formdata.append('position', this.state.fields['position'])
+            formdata.append('position', this.state.position_flag)
             formdata.append('website_url', this.state.fields['website_url'])
             formdata.append('linkedin_profile', this.state.fields['linkedin_profile'])
             formdata.append('job_id',jobID);
@@ -170,7 +226,6 @@ class ApplyJob extends React.Component {
                     fields['first_name'] = "";
                     fields['email'] = "";
                     fields['phone_number'] = '';
-                    fields['position'] = "";
                     fields['resume'] = "";
                     fields['website_url'] = "";
                     fields['cover_letter'] = "";
@@ -204,7 +259,11 @@ class ApplyJob extends React.Component {
                             <Head_apply>Careers</Head_apply>
                             <Apply_wrap>
                                 <Title_apply>
-                                    <Title_span>Apply For this job</Title_span>
+                                    {
+                                        this.state.position_flag!==null ?
+                                            <Title_span>Apply For {this.state.position_flag} position</Title_span>
+                                        :""
+                                    }
                                 </Title_apply>
                                 <Form_apply>
                                     <Row>
@@ -228,8 +287,7 @@ class ApplyJob extends React.Component {
                                             <Col sm={24} md={12}>
                                                 <LeftWing>
                                                     <Labelone>Position*</Labelone>
-                                                    <InputOne name="position" onChange={this._onChangeFields} value={this.state.fields.position} />
-                                                    {this.validator.message('position', this.state.fields.position, 'required|alpha_num', 'text-danger-validation')}
+                                                    <InputOne disabled name="position" value={this.state.position_flag} />
                                                 </LeftWing>
                                             </Col>
                                             <Col sm={24} md={12}>
@@ -246,7 +304,7 @@ class ApplyJob extends React.Component {
                                             <Col sm={24} md={24}>
                                                 <Labelone>Email*</Labelone>
                                                 <InputThree name="email" onChange={this._onChangeFields} value={this.state.fields.email} />
-                                                {this.validator.message('email', this.state.fields.email, 'required|email', 'text-danger-validation')}
+                                                {this.validator.message('email', this.state.fields.email, 'required|validEmail', 'text-danger-validation')}
                                             </Col>
                                         </Row>
                                     </Gap>
@@ -281,7 +339,7 @@ class ApplyJob extends React.Component {
                                                     }
                                                 </Dropzone>
                                                 <span style={{fontSize:"12px",fontFamily:"Open Sans",color:"grey",fontStyle:"italic"}}>Supported format : .doc , .docx , .pdf.</span>
-                                                {this.validator.message('resume', this.state.flag_drop, 'resumeRequired|resumeValid', 'text-danger-validation')}
+                                                {this.validator.message('resume', this.state.flag_drop, 'resumeRequired|resumeValid|resumeLimit', 'text-danger-validation')}
                                             </Col>
                                         </Row>
                                     </Gap>
@@ -314,7 +372,8 @@ class ApplyJob extends React.Component {
                                                         </div>
                                                     }
                                                 </Dropzone>
-                                                {this.validator.message('cover', this.state.cover_flag, 'coverValid', 'text-danger-validation')}
+                                                <span style={{fontSize:"12px",fontFamily:"Open Sans",color:"grey",fontStyle:"italic"}}>Supported format : .doc , .docx , .pdf.</span>
+                                                {this.validator.message('cover', this.state.cover_flag, 'coverValid|coverLimit', 'text-danger-validation')}
                                             </Col>
                                         </Row>
                                     </Gap>

@@ -106,6 +106,8 @@ export const Meta_title = styled.p`
     color: rgb( 255, 139, 0 );
     font-weight: bold;
     min-height:24px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 `
 export const Meta_desc = styled.p`
     font-size: 18px;
@@ -332,6 +334,9 @@ export const TagSpan = styled.span`
     color: rgb( 15,71,123 );
     font-weight: 600;
     font-size: larger;
+    display: inline-block;
+    white-space: nowrap;
+    margin-top: 10px;
 `
 
 /* Comments Styled-Components */
@@ -375,12 +380,15 @@ export const Comment_main = styled.div`
     padding-right: 30px;
 `
 export const PostHead_below_comment = styled(PostHead_below)`
-    
+    line-height:2;
+    display: flex;
+    align-items: center;
 `
 export const PerComment = styled.span`
     font-size: 14px;
     font-family: "Open Sans";
     color: rgb( 0, 0, 0 );
+    padding: 15px 15px;
 `
 export const Comment_msg = styled.span`
     font-size:12px;
