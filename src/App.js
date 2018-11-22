@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import AppRouter from '../src/routes';
 import './App.css';
+import {ThemeProvider} from 'styled-components';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,6 +30,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      theme:""
     }
   }
   componentDidUpdate(prevProps, prevState) {
@@ -37,8 +39,33 @@ class App extends Component {
       window.scrollTo(0, 0);
     }
   }
+  componentWillReceiveProps(props,newProps)
+  {
+    if(props.theme!==undefined)
+        {
+            console.log(props.theme)
+            if(props.theme !== this.state.theme)
+            {
+                if(props.theme==false)
+                this.setState({theme: "light"})
+                else
+                this.setState({theme: "dark"})
+            }
+        }
+  }
   componentDidMount() {
     window.scrollTo(0, 0);
+    if(this.props.theme!==undefined)
+        {
+            console.log(this.props.theme)
+            if(this.props.theme !== this.state.theme)
+            {
+                if(this.props.theme==false)
+                this.setState({theme: "light"})
+                else
+                this.setState({theme: "dark"})
+            }
+        }
   }
   render() {
    /*  console.log(this.props) */
@@ -89,9 +116,12 @@ class App extends Component {
         />
       );
 
+    let theme = {
+        mode : this.state.theme
+    }
     return (
       <div className="App">
-
+         <ThemeProvider theme={theme}>
         <Route
           render={({ location }) => (
             <Switch location={location}>
@@ -116,6 +146,7 @@ class App extends Component {
                 isLoggedIn={isLoggedIn} />
             </Switch>
           )} />
+          </ThemeProvider>
       </div>
     );
   }
@@ -123,7 +154,8 @@ class App extends Component {
 
 function mapStateToProps(state, ownProps) {
   return ({
-    isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false
+    isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
+    theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
   })
 }
 

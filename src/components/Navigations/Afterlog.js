@@ -6,10 +6,12 @@ import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal, Dr
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 /* Components */
-import { Logout } from '../../Actions/Auth';
+import * as Logout from '../../Actions/Auth';
 import { Day_night_mode, Exchange } from "./BeforeLog"
+import * as darkTheme from '../../Actions/Theme/themeAction'
 /* Constants */
 import { globalVariables } from '../../Globals'
 
@@ -24,8 +26,8 @@ const UserName = styled.div`
     display: inline-block;
     font-size: 13px;
     font-family: "Open sans";
-    color: rgb( 80, 80, 80 );
-    font-weight: bold;
+    color: ${props => props.theme.mode=="dark"?"white":"black"};
+    font-weight: 600;
     @media(max-width: 576px)
     {
         display: none;
@@ -100,8 +102,23 @@ class Afterlog extends React.Component {
         super(props);
         this.state = {
             comingSoon: false,
-            selected:false
+            selected:false,
+            fontColor:""
         };
+    }
+    componentWillReceiveProps(props,newProps)
+    {
+        if(props.theme!==undefined)
+        {
+            console.log(props.theme)
+            if(props.theme !== this.state.theme)
+            {
+                if(props.theme==false)
+                this.setState({fontColor:"black" })
+                else
+                this.setState({fontColor: "white"})
+            }
+        }
     }
     componentDidMount()
     {
@@ -121,7 +138,16 @@ class Afterlog extends React.Component {
     }
     logout() {
         /* console.log("hello Logout") */
-        this.props.Logout();
+        this.props.actions.auth.Logout();
+    }
+    changetoDark()
+    {   let flag;
+        console.log(this.props)
+        if(this.props.themeReducer.theme == true) 
+            flag=false;
+        else
+            flag=true;
+        this.props.actions.theme.darkTheme(flag);
     }
     render() {
         const DropdownItems = (
@@ -147,13 +173,13 @@ class Afterlog extends React.Component {
             <Right_div>
                 {/*  <Bell>
                     <Icon  style={{fontSize:"15px",color:"black"}} type="bell" theme="filled" />      
-                </Bell>
-                <Day_night_mode>
-                    <span> <FontAwesomeIcon icon={faMoon} color='black' style={{transform: 'rotate(315deg)'}} /> </span>
-                </Day_night_mode>*/}
+                </Bell>*/}
+                <Day_night_mode onClick={this.changetoDark.bind(this)}>
+                    <span> <FontAwesomeIcon icon={faMoon} color={this.state.fontColor} style={{transform: 'rotate(315deg)'}} /> </span>
+                </Day_night_mode>
                 <Link to="/careers">
                 <Exchange color={this.state.selected}>
-                            <span  onClick={this.showComing}> CAREERS </span>
+                            <span> CAREERS </span>
                 </Exchange>
                 </Link>
                 <DropDownDiv className="Drop-main" overlay={DropdownItems} trigger={['click']}>
@@ -193,14 +219,20 @@ class Afterlog extends React.Component {
     }
 }
 function mapStateToProps(state) {
-    /*  console.log(state) */
+     console.log(state)
     return ({
         ...state,
+        theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
     });
 }
 
-const mapDispatchToProps = dispatch => ({
-    Logout: () => dispatch(Logout())
-})
+function mapDispatchToProps(dispatch) {
+    return {
+      actions: {
+        auth: bindActionCreators(Logout, dispatch),
+        theme: bindActionCreators(darkTheme, dispatch)
+      }
+    };
+  }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Afterlog);

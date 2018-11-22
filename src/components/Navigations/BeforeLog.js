@@ -18,8 +18,8 @@ export const Exchange = styled.div`
     display:inline;
     font-size: 13px;
     font-family: "Open sans";
-    color: ${props => props.color ? "#1890ff" : "black"};
-    font-weight: bold;
+    color: ${props => props.color ? "#1890ff" :(props.theme.mode=="dark"?"white":"black") };
+    font-weight: 600;
     text-transform: uppercase;
     padding-right: 22px;
     cursor:pointer;

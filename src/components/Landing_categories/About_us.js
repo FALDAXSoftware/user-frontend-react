@@ -19,10 +19,10 @@ const TabPane = Tabs.TabPane;
 const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom: 25px;
-  background-color: #f5f6fa;
+  background-color: ${props => props.theme.mode=="dark"?"#01090f":"#f5f6fa"};
 `
 const ProfileDiv = styled.div`
-  background-color: #ffffff;
+  background-color: ${props => props.theme.mode=="dark"?"#041422":"#ffffff"};
   margin:auto;
   width: 100%;
   max-width: 1170px;
@@ -40,6 +40,7 @@ const About_Faldax_Title = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
+  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"}
   &:before {
     content: '';
     width: calc(50% - 235px);
@@ -61,13 +62,16 @@ const About_Faldax_Title = styled.span`
     top: calc(50% - 1px);
   }
 `;
-
+const AboutContent = styled.div`
+color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"}
+`
 const Our_Mission = styled.span`
   font-size: 40px;
   font-family: "Open sans";
   font-weight: bold;
   display: block;
   text-align: center;
+  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"}
   &:before {
     content: '';
     width: calc(50% - 170px);
@@ -88,14 +92,17 @@ const Our_Mission = styled.span`
     right: 0;
     top: calc(50% - 1px);
   }
-`;
-
+`
+const MissionContent = styled.div`
+  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"}
+`
 const Our_Team = styled.span`
   font-size: 40px;
   font-family: "Open sans";
   font-weight: bold;
   display: block;
   text-align: center;
+  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"}
   &:before {
     content: '';
     width: calc(50% - 125px);
@@ -122,7 +129,10 @@ const About_Us_Image = styled.img`
   float: left;
   width: '40%';
   margin: 10px 30px 5px 0px;
-`;
+`
+const Missiondesc = styled.span`
+  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"}
+`
 
 /* Styled Components */
 
@@ -206,22 +216,26 @@ const Hexagon_In2 = styled.div`
 const Team = styled.div`
   width: 255px;
   min-height: 310px;
-  background-color: white;
+  
   display: inline-block;
   margin: 15px;
   margin-left: 0px;
   margin-bottom: 0px;
   margin-top: 115px;
-  box-shadow: -1px 2px 10px 4px #f1f1f1;
+  box-shadow: ${props => props.theme.mode=="dark"?"none":"-1px 2px 10px 4px #f1f1f1"};
   cursor: pointer;
+  background-color:${props => props.theme.mode=="dark"?"#01090f":"#ffffff"}
 `;
 
 const TeamIn1 = styled.div`
+  color:${props => props.theme.mode=="dark"?"white":"#333333"}
   margin-top: 10px;
 `;
 const TeamIn2 = styled.div`
+  color:${props => props.theme.mode=="dark"?"white":"#333333"}
 `;
 const TeamIn3 = styled.div`
+  color:${props => props.theme.mode=="dark"?"white":"#5c5c5c"}
   padding: 13px 20px;
 `;
 
@@ -291,30 +305,30 @@ export default class AboutUs extends React.Component {
               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                 <About_Faldax_Title> ABOUT FALDAX STORY </About_Faldax_Title>
               </div>
-              <div style={{ marginTop: '20px' }}>
+              <AboutContent style={{ marginTop: '20px' }}>
                 <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
                 {ReactHtmlParser(this.state.aboutContent)} 
                 </span>
-              </div>
+              </AboutContent>
               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                 <Our_Mission> OUR MISSION </Our_Mission>
               </div>
-              <div style={{ marginTop: '25px' }}>
+              <MissionContent style={{ marginTop: '25px' }}>
                 <span style={{ fontWeight: 'bold', fontSize: '17px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
-              </div>
+              </MissionContent>
               <div style={{ marginTop: '20px', minHeight: '270px' }}>
                 <About_Us_Image src="/images/about-us-image-2.jpg" />
 
-                <span style={{ fontFamily: "Open sans", fontSize: '16px', lineHeight: '24px' }}>
+                <Missiondesc style={{ fontFamily: "Open sans", fontSize: '16px', lineHeight: '24px' }}>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                          </span>
+                </Missiondesc>
               </div>
               <div style={{ marginTop: '10px', marginBottom: '35px' }}>
-                <span style={{ fontSize: '16px', fontFamily: "Open Sans", lineHeight: '24px' }}>
+                <Missiondesc style={{ fontSize: '16px', fontFamily: "Open Sans", lineHeight: '24px' }}>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                          </span>
+                          </Missiondesc>
               </div>
               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                 <Our_Team> OUR TEAM </Our_Team>

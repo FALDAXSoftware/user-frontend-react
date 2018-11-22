@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Row, Col, Button, Layout, Menu, Card, Modal, Input, notification, Icon } from 'antd';
 import styled from 'styled-components';
+import {ThemeProvider} from 'styled-components';
 import { BrowserRouter as Router, Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { globalVariables } from '../../Globals'
@@ -84,8 +85,8 @@ const Header_main = styled(Header)`
     width : 100%;
     padding:0;
     text-align:left;
-    background-color:white;
-    box-shadow: 0px 3px #f7f7f7;
+    background-color:${props => props.theme.mode=="dark"? "#041422":"white"};
+    box-shadow:${props => props.theme.mode=="dark"?"" : "0px 3px #f7f7f7"};
     height :80px;
     display:flex;
     align-items:center;
@@ -99,6 +100,7 @@ const Menu_main = styled(Menu)`
     vertical-align: middle;
     display: inline-flex;
     align-items: center;
+    background-color:${props => props.theme.mode=="dark"? "#041422":"white"};
     @media(max-width:1200px)
     {
         display:none;
@@ -210,7 +212,7 @@ const Right_div = styled.div`
     height:100%;
 `
 const NavLink = styled(Link)`
-    color: rgb( 40, 37, 40 ) !important;
+    color: ${props => props.theme.mode=="dark"?"white":"black"} !important;
     &:hover{
         color:#1890ff !important;
     }
@@ -231,7 +233,9 @@ class Navigation extends React.Component {
             comingSoon: false,
             email_address: "",
             email_msg: "",
-            selected: []
+            selected: [],
+            faldaxLogo:"",
+            faldax:""
         }
     }
 
@@ -290,9 +294,35 @@ class Navigation extends React.Component {
             comingSoon: true,
         });
     }
+    componentWillReceiveProps(props,newProps)
+    {
+        if(props.theme!==undefined)
+        {
+            console.log(props.theme)
+            if(props.theme !== this.state.theme)
+            {
+                if(props.theme==false)
+                this.setState({faldaxLogo:"/images/Homepage/Faldax_logo.png" ,faldax:"/images/Homepage/faldax.png"})
+                else
+                this.setState({faldax:"/images/Homepage/faldax_white.png",faldaxLogo: "/images/Homepage/logo_white.png"})
+            }
+        }
+    }
     componentDidMount() {
-        let queryParams
+        if(this.props.theme!==undefined)
+        {
+            console.log(this.props.theme)
+            if(this.props.theme !== this.state.theme)
+            {
+                if(this.props.theme==false)
+                this.setState({faldaxLogo: "/images/Homepage/Faldax_logo.png",faldax:"/images/Homepage/faldax.png"})
+                else
+                this.setState({faldax:"/images/Homepage/faldax_white.png",faldaxLogo: "/images/Homepage/logo_white.png"})
+            }
+        }
 
+        let queryParams
+        
         /* console.log("asdfas",this.props) */
         if (this.props.queryParams !== undefined && this.props.queryParams !== "") {
             queryParams = this.props.queryParams;
@@ -328,15 +358,14 @@ class Navigation extends React.Component {
     render() {
         let prof_name = this.props.profileDetails.first_name !== null && this.props.profileDetails.first_name !== undefined ? (this.props.profileDetails.first_name + " " + this.props.profileDetails.last_name) : "User";
         const { modal } = this.state;
-
         return (
+            <div>
             <Header_main id="main">
                 <Logo onClick={() => this.props.history ? this.props.history.push("/") : ''}>
-                    <FALDAX_LOGO className="" src="/images/Homepage/Faldax_logo.png" />
-                    <FALDAX src="/images/Homepage/faldax.png" />
+                    <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
+                    <FALDAX src={this.state.faldax} />
                 </Logo>
                 <Menu_main
-                    theme="light"
                     mode="horizontal"
                     defaultSelectedKeys={['1']}
                     selectedKeys={this.state.selected}
@@ -344,11 +373,11 @@ class Navigation extends React.Component {
                     <Menu_item key="1"><NavLink className="Nav_selected" to="/">HOME</NavLink></Menu_item>
                     {/* <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item> */}
                     <Menu_item key="2"><NavLink className="Nav_selected" to="/about-us">ABOUT</NavLink></Menu_item>
-                    <Menu_item key="3" onClick={this.showComing}>SECURITY</Menu_item>
+                    <Menu_item key="3" onClick={this.showComing}><NavLink className="Nav_selected" to="#">SECURITY</NavLink></Menu_item>
                     <Menu_item key="4" ><NavLink className="Nav_selected" to="/news">NEWS</NavLink></Menu_item>
                     <Menu_item key="5" ><NavLink className="Nav_selected" to="/contactus">CONTACT</NavLink></Menu_item>
                     <Menu_item key="6" ><NavLink className="Nav_selected" to="/addcoin">LIST YOUR TOKEN</NavLink></Menu_item>
-                    <Menu_item key="7" onClick={this.showComing}>EXCHANGE</Menu_item>
+                    <Menu_item key="7" onClick={this.showComing}><NavLink className="Nav_selected" to="#">EXCHANGE</NavLink></Menu_item>
                 </Menu_main>
                 {/* console.log(this.props) */}
                 <Right_div>
@@ -429,17 +458,19 @@ class Navigation extends React.Component {
                 </div>
                 <ComingSoon comingCancel={(e)=>this.comingCancel(e)} visible={this.state.comingSoon}/>
             </Header_main>
+            </div>
         );
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    /* console.log(state,ownProps) */
+    console.log(state,ownProps)
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn ? true : false,
         queryParams: ownProps && ownProps.location && ownProps.location.search ? ownProps.location.search : '',
         pathname: ownProps && ownProps.location && ownProps.location.pathname ? ownProps.location.pathname : '',
-        profileDetails: state.simpleReducer.profileDetails ? state.simpleReducer.profileDetails.data[0] : ""
+        profileDetails: state.simpleReducer.profileDetails ? state.simpleReducer.profileDetails.data[0] : "",
+        theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
     });
 }
 const mapDispatchToProps = dispatch => ({

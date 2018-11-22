@@ -591,7 +591,7 @@ table .ant-table-tbody > tr > td {
     font-size: 13px;
     font-family: "Open sans";
     color: black ;
-    font-weight: bold;
+    font-weight: 600 !important;
     text-transform: uppercase;
     vertical-align: unset;
     border-bottom:0px !important;
@@ -599,7 +599,6 @@ table .ant-table-tbody > tr > td {
 .ant-menu-item > a
 {
   /* color:black !important; */
-  font-weight:bold !important;
 }
 .ant-menu-item-selected > a
 {
