@@ -110,7 +110,6 @@ class Afterlog extends React.Component {
     {
         if(props.theme!==undefined)
         {
-            console.log(props.theme)
             if(props.theme !== this.state.theme)
             {
                 if(props.theme==false)
@@ -138,11 +137,11 @@ class Afterlog extends React.Component {
     }
     logout() {
         /* console.log("hello Logout") */
+        this.props.actions.theme.darkTheme(false);
         this.props.actions.auth.Logout();
     }
     changetoDark()
     {   let flag;
-        console.log(this.props)
         if(this.props.themeReducer.theme == true) 
             flag=false;
         else
@@ -219,7 +218,6 @@ class Afterlog extends React.Component {
     }
 }
 function mapStateToProps(state) {
-     console.log(state)
     return ({
         ...state,
         theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""

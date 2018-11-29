@@ -16,11 +16,11 @@ let { API_URL } = globalVariables;
 const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom: 25px;
-  background-color: #f5f6fa;
+  background-color: ${props => props.theme.mode=="dark"?"#01090f":"#f5f6fa"};
 `;
 
 const ProfileDiv = styled.div`
-  background-color: #ffffff;
+  background-color: ${props => props.theme.mode=="dark"? "#041422" :"#ffffff"};
   margin:auto;
   width: 100%;
   max-width: 1170px;
@@ -38,6 +38,7 @@ const About_Faq_Title = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
+  color:${props => props.theme.mode=="dark" ? "white":""};
   &:before {
     content: '';
     width: calc(50% - 85px);
@@ -59,7 +60,13 @@ const About_Faq_Title = styled.span`
     top: calc(50% - 1px);
   }
 `;
-
+export const FAQcontent = styled.div`
+  color:${props => props.theme.mode=="dark" ? "white" : ""} !important;
+  &>h2
+  {
+    color:${props => props.theme.mode=="dark" ? "white" : ""} !important;
+  }
+`
 /* Component Defination Starts Here*/
 
 export default class FaqPage extends React.Component {
@@ -82,11 +89,9 @@ export default class FaqPage extends React.Component {
     })
     .then(response => response.json())
     .then((responseData) => {
-        /* console.log("I m in API get",responseData) */
-       /*  console.log(responseData) */
         this.setState({aboutContent:responseData.data.content,loader:false})
     })
-    .catch(error => { /* console.log(error) */ })
+    .catch(error => {  })
     
   }
   teamClick(value) {
@@ -110,11 +115,11 @@ export default class FaqPage extends React.Component {
               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                 <About_Faq_Title> BASIC </About_Faq_Title>
               </div>
-              <div style={{ marginTop: '20px' }}>
+              <FAQcontent style={{ marginTop: '20px' }}>
                 <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
                 {ReactHtmlParser(this.state.aboutContent)} 
                 </span>
-              </div>
+              </FAQcontent>
             </ProfileDiv>
           </ProfileWrapper>
           <CommonFooter />

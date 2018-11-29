@@ -15,7 +15,7 @@ import {Contact_wrap,Grey_wrap,Headcontact,Head_span,Career_desc,Desc_head,Desc_
 import { globalVariables } from "../../Globals"
 
 export const ContainerContact = styled(Container)`
-    background-color:white; 
+    background-color:${props => props.theme.mode=="dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -46,7 +46,7 @@ class Careers extends React.Component
         .then((responseData) => {
             this.setState({Jobs:responseData.data,careerDesc:responseData.careerDesc,loader:false})
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => {  })
 
     }
     render()

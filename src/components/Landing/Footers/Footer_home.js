@@ -20,7 +20,7 @@ const { Footer } = Layout;
 
 /* Styled-Components */
 const Footer_main = styled(Footer)`
-    background-color:${props => props.theme.mode=="dark"?"#041422":"white"}
+    background-color:${props => props.theme.mode=="dark"?"#041422":"white"};
     text-align: left;
     padding: 25px 0px 0px 0px;
     border-top:2px solid #0f477b;
@@ -175,7 +175,7 @@ const HR = styled.hr`
     margin-bottom: 0px;
 `;
 const Footer_Link = styled(Link)`
-    color:${props => props.theme.mode=="dark"?"white":"rgb(0, 0, 0, 0.65)"}
+    color:${props => props.theme.mode=="dark"?"white":"rgb(0, 0, 0, 0.65)"};
 `
 const FooterContainer = styled.div`
 @media(max-width:991px)
@@ -190,6 +190,7 @@ const FooterLinkCol = styled(Col)`
 }
 `
 const FontAwesomeIcons = styled(FontAwesomeIcon)`
+    display:inline-block;
     font-size:25px;
     color:${props => props.theme.mode=="dark"?"white":"#cccccc"};
 `
@@ -204,10 +205,8 @@ class Footer_home extends Component {
     }
     componentWillReceiveProps(props,newProps)
     {
-        console.log(props.theme)
         if(props.theme!==undefined)
         {
-            console.log(props.theme)
             if(props.theme !== this.state.theme)
             {
                 if(props.theme==false)
@@ -242,7 +241,6 @@ class Footer_home extends Component {
         })
     }
     comingCancel = (e) => {
-        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });
@@ -370,7 +368,6 @@ class Footer_home extends Component {
     }
 }
 function mapStateToProps(state, ownProps) {
-    console.log(state,ownProps)
     return ({
         theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
     });

@@ -43,7 +43,6 @@ class App extends Component {
   {
     if(props.theme!==undefined)
         {
-            console.log(props.theme)
             if(props.theme !== this.state.theme)
             {
                 if(props.theme==false)
@@ -57,7 +56,6 @@ class App extends Component {
     window.scrollTo(0, 0);
     if(this.props.theme!==undefined)
         {
-            console.log(this.props.theme)
             if(this.props.theme !== this.state.theme)
             {
                 if(this.props.theme==false)
@@ -68,10 +66,8 @@ class App extends Component {
         }
   }
   render() {
-   /*  console.log(this.props) */
 
     const { isLoggedIn } = this.props
-    /* console.log(isLoggedIn) */
 
     const RestrictedRoute = ({
       component: Component,

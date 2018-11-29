@@ -49,14 +49,12 @@ class ComingSoon extends React.Component
    
 
     handleComing = (e) => {
-        /* console.log(e); */
         this.setState({
             comingSoon: false,
         });
     }
 
     comingCancel = (e) => {
-        /* console.log("in COmponent"); */
         this.setState({
             comingSoon: false,
         });
@@ -109,7 +107,7 @@ class ComingSoon extends React.Component
                         this.setState({ visible: false, email_msg: "" })
                     }
                 })
-                .catch(error => { /* console.log(error) */ })
+                .catch(error => {  })
         }
         else {
             this.setState({ email_msg: "*email address not valid" })

@@ -17,7 +17,11 @@ const Container_Blog = styled(Container)`
     margin-bottom: 80px;
 `
 const { Meta } = Card;
+const Blog_main_wrap = styled.div`
 
+    background-color: ${props => props.theme.mode=="dark" ? "#01090f" : "white"};
+
+`
 class Blog extends React.Component {
     constructor(props) {
         super(props);
@@ -27,7 +31,8 @@ class Blog extends React.Component {
             prevPage:1,
             totalPage:null,
             loader:false,
-            nxtPage:0
+            nxtPage:0,
+            blogCSS:''
         }
     }
     componentDidMount()
@@ -41,6 +46,16 @@ class Blog extends React.Component {
         {
             this.BlogDetails(1);
         }
+        if(this.props.theme!==undefined)
+        {
+            if(this.props.theme !== this.state.theme)
+            {
+                if(this.props.theme==false)
+                this.setState({blogCSS:"Card-Blog"})
+                else
+                this.setState({blogCSS:"Card-Blog-night"})
+            }
+        }
     }
     componentWillReceiveProps(props,newProps)
     {
@@ -51,6 +66,16 @@ class Blog extends React.Component {
         if(props.location.search.split('=')[1]==this.state.prevPage)
         {
             this.BlogDetails(props.location.search.split('=')[1]);
+        }
+        if(props.theme!==undefined)
+        {
+            if(props.theme !== this.state.theme)
+            {
+                if(props.theme==false)
+                this.setState({blogCSS:"Card-Blog"})
+                else
+                this.setState({blogCSS:"Card-Blog-night"})
+            }
         }
     }
     BlogDetails(curr)
@@ -71,12 +96,13 @@ class Blog extends React.Component {
                 this.setState({nxtPage:numb+1,blogsData: responseData,currPage:curr,prevPage:numb-1,totalPage:Math.ceil(responseData.BlogCount/9),loader:false})
             }
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => { })
 
     }
     render() {
+        var _self=this;
         return (
-            <div>
+            <Blog_main_wrap>
                 <Navigation />
 
                 <Container_Blog style={{ minHeight: "100%" }}>
@@ -84,18 +110,23 @@ class Blog extends React.Component {
                         <Mainimage>
                             <Row>
                                 <Col sm={24} md={12} lg={9} >
-                                    <Lefthead>
-                                        <Subleft>
-                                            <Eco>Economy</Eco>
-                                            <Head3>India’s Most Popular Chat App Launching Cryptocurrency Exchange</Head3>
-                                            <Eco2>Vrun Gregor</Eco2>
-                                        </Subleft>
-                                    </Lefthead>
+                                    {this.state.blogsData!==''?Object.keys(this.state.blogsData.featuredBlog).length>0 ?
+                                        <Link to={`/blogDetails?blogID=${this.state.blogsData.featuredBlog.id}`}>
+                                            <Lefthead>
+                                                <Subleft>
+                                                    <Eco>{this.state.blogsData.featuredBlog.tags}</Eco>
+                                                    <Head3>{this.state.blogsData.featuredBlog.title}</Head3>
+                                                    <Eco2>{this.state.blogsData.featuredBlog.admin_name}</Eco2>
+                                                </Subleft>
+                                            </Lefthead>
+                                        </Link>
+                                    :"":""}
                                 </Col>
+                                {this.state.blogsData!==''?Object.keys(this.state.blogsData.featuredBlog).length>0?
                                 <Col sm={24} md={12} lg={15}>
-                                    <Righthead>
+                                    <Righthead image={globalVariables.amazon_Bucket + this.state.blogsData.featuredBlog.cover_image}>
                                     </Righthead>
-                                </Col>
+                                </Col>:"":""}
                             </Row>
                         </Mainimage>
                         <Whole_wrap>
@@ -122,7 +153,7 @@ class Blog extends React.Component {
                                                 cover={<CardCover alt="example" style={{ backgroundImage: `url(${img})` }} />}
                                                 actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.admin_name}</Card_foot>, <Card_foot> <MsgIcon src="/images/LandingCat/Blog/msg-icon.png" />{result.comment_count} Comments</Card_foot>]}
                                                 bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
-                                                className="Card-Blog"
+                                                className={_self.state.blogCSS}
                                             >
                                                 <Meta
                                                     title={<Meta_title>{tag[0]}</Meta_title>}
@@ -138,7 +169,6 @@ class Blog extends React.Component {
                             </Blogs_wrap>
                         </Whole_wrap>
                         <Prev_next>
-                            {console.log(this.state.currPage,this.state.totalPage,this.state.nxtPage)}
                             {(this.state.currPage>1 && this.state.currPage<=this.state.totalPage)?<Link to={`/blogs?blogPage=${this.state.nxtPage-2}`}><Prev><i style={{ verticalAlign: "middle",textDecoration:"none" }} className="material-icons">keyboard_backspace</i><span style={{ verticalAlign: "middle" }}>Previous Articles</span></Prev></Link>:""}
 
                             {(this.state.nxtPage<=this.state.totalPage)?<Link to={`/blogs?blogPage=${this.state.nxtPage}`}><Next><span style={{ verticalAlign: "middle",textDecoration:"none" }}>Next Articles</span><i style={{ verticalAlign: "middle", transform: "rotate(180deg)" }} className="material-icons">keyboard_backspace</i></Next></Link>:""}
@@ -150,9 +180,13 @@ class Blog extends React.Component {
                 {(this.state.loader) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : ""}
-            </div>
+            </Blog_main_wrap>
         );
     }
 }
-
-export default connect()(withRouter(Blog));
+function mapStateToProps(state, ownProps) {
+    return ({
+        theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+    });
+}
+export default connect(mapStateToProps)(withRouter(Blog));

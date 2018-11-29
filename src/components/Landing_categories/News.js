@@ -16,6 +16,9 @@ import { SectionBlog, Mainimage, Lefthead, Subleft, Eco, Head3, Eco2, Righthead,
 const Container_Blog = styled(Container)`
     margin-bottom: 80px;
 `
+const News_main = styled.div`
+    background-color:${props => props.theme.mode=="dark"?"#01090f":"white"};
+`
 const { Meta } = Card;
 const Search = Input.Search;
 
@@ -30,7 +33,9 @@ class Blog extends React.Component {
             loader:false,
             nxtPage:0,
             searchV:'',
-            removeflag:false
+            removeflag:false,
+            searchClass:'',
+            blogCSS:''
         }
     }
     componentDidMount()
@@ -44,6 +49,16 @@ class Blog extends React.Component {
         {
             this.BlogDetails(1);
         }
+        if(this.props.theme!==undefined)
+        {
+            if(this.props.theme !== this.state.theme)
+            {
+                if(this.props.theme==false)
+                this.setState({searchClass:"news-search",blogCSS:"Card-Blog"})
+                else
+                this.setState({searchClass:"news-search-night",blogCSS:"Card-Blog-night"})
+            }
+        }
     }
     componentWillReceiveProps(props,newProps)
     {
@@ -55,6 +70,17 @@ class Blog extends React.Component {
         {
             this.BlogDetails(props.location.search.split('=')[1]);
         }
+        
+        if(props.theme!==undefined)
+        {
+            if(props.theme !== this.state.theme)
+            {
+                if(props.theme==false)
+                this.setState({searchClass:"news-search",blogCSS:"Card-Blog"})
+                else
+                this.setState({searchClass:"news-search-night",blogCSS:"Card-Blog-night"})
+            }
+        }
     }
     BlogDetails(curr,flag=null)
     {
@@ -65,7 +91,6 @@ class Blog extends React.Component {
         var obj = {};
         obj['data'] = searchV
         //var Buff=Buffer.from(URI).toString('base64')
-        
         fetch(globalVariables.API_URL + `/users/get-all-news?page=${curr}&limit=9`,{
             method:"post",
             headers: {
@@ -86,7 +111,7 @@ class Blog extends React.Component {
                 }
             }
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => {})
 
     }
     searchChange(e)
@@ -98,7 +123,7 @@ class Blog extends React.Component {
     {
         if(e.target.value.trim()!=="")
         {
-            this.BlogDetails(this.state.currPage);
+            this.BlogDetails(1);
         }
     }
     removeSearch()
@@ -106,8 +131,9 @@ class Blog extends React.Component {
         this.BlogDetails(1,true);
     }
     render() {
+        var _self=this;
         return (
-            <div>
+            <News_main>
                 <Navigation />
 
                 <Container_Blog style={{ minHeight: "100%" }}>
@@ -117,7 +143,7 @@ class Blog extends React.Component {
                             placeholder="Search News"
                             onChange={value => this.searchChange(value)}
                             style={{ width: "100%" }}
-                            className="news-search"
+                            className={this.state.searchClass}
                             onPressEnter={e => this.submitSearch(e)}
                             value={this.state.searchV}
                             />
@@ -128,7 +154,7 @@ class Blog extends React.Component {
                                 <Row className="blog-card-row">
 
                                 {this.state.blogsData.data !== undefined?this.state.blogsData.data.map(function(result,key,index){
-                                        var date=moment.utc(result.created_at).local().format("MMM DD,YYYY");
+                                        var date=moment.utc(result.created_at).local().format("MMM DD, YYYY");
                                         var img = result.cover_image;
                                         var tag = result.tags ? result.tags.split(',') : [];
                                     return(
@@ -139,7 +165,7 @@ class Blog extends React.Component {
                                                     cover={<CardCover alt="example" style={{ backgroundImage: `url(${img})` }} />}
                                                     actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.owner}</Card_foot>]}
                                                     bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
-                                                    className="Card-Blog"
+                                                    className={_self.state.blogCSS}
                                                 >
                                                     <Meta
                                                         title={<Meta_title className="news-title">{result.title}</Meta_title>}
@@ -150,7 +176,6 @@ class Blog extends React.Component {
                                         </Col>);
                                     }):""
                                 }
-                                {console.log(this.state.blogsData)}
                                 {this.state.blogsData!==undefined && this.state.blogsData!==''?(this.state.blogsData.data.length == 0 ? <NoData>No Data Found</NoData> : ""):""}
                                 </Row>
                             </Blogs_wrap>
@@ -167,9 +192,13 @@ class Blog extends React.Component {
                 {(this.state.loader) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : ""}
-            </div>
+            </News_main>
         );
     }
 }
-
-export default connect()(withRouter(Blog));
+function mapStateToProps(state, ownProps) {
+    return ({
+        theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+    });
+}
+export default connect(mapStateToProps)(withRouter(Blog));

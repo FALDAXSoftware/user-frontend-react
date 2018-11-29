@@ -46,7 +46,7 @@ const Kyc_succ = styled.div`
     margin:auto;
     font-size: 20px;
     font-family: "Open Sans";
-    color: rgb( 80, 80, 80 );
+    color: ${props => props.theme.mode=="dark"?"white":"rgb( 80, 80, 80 )"};
     margin-top:20px;
 `
 const kyc_check = styled(Icon)`
@@ -116,7 +116,7 @@ class KYC extends React.Component {
                 {(this.state.next == 0 && this.props.is_kyc_done !== true) ?
                     <KYCForm back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""
                 }
-                {(this.state.next == 1 && this.props.is_kyc_done !== true) ? <IDselect back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
+                {(this.state.next == 1 && this.props.is_kyc_done !== true) ? <IDselect {...this.props} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
                 {(this.state.next == 2 && this.props.is_kyc_done !== true) ? <SSN back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
                 {(this.state.next == 3 && this.props.is_kyc_done !== true) ? <DocUpload docText={this.state.docType} back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
             </KYC_wrap>
@@ -130,7 +130,9 @@ const mapStateToProps = (state) => {
         ...state,
         is_kyc_done: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].is_kyc_done : "",
         email: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].email : "",
-        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : ""
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
+        theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+
     }
 }
 const mapDispatchToProps = dispatch => ({

@@ -25,12 +25,11 @@ export const HeaderCol = styled(Col) `
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    color: #505050;
+    color: ${props => props.theme.mode == "dark" ? "white" : "#505050"};
     margin-top: 20px;
     padding-bottom: 12px;
     margin-left:0px;
     font-family: "Open Sans";
-    color: rgb( 80, 80, 80 );
 `
 const Main_row = styled(Row) `
     margin-top:40px;
@@ -50,14 +49,14 @@ const Image_up = styled.div`
     margin-top:30px;
 `
 const Image_upload = styled.label`
-    color:#0f477b;
+    color:${props => props.theme.mode=="dark" ? "#828a91" : "#0f477b" };
     cursor:pointer;
     font-family:"Open Sans";
     font-weight:600;
 `
 const Remove = styled.div`
     margin-top:20px;
-    color:#0f477b;
+    color:${props => props.theme.mode=="dark" ? "#828a91" : "#0f477b" };
     cursor:pointer;
     font-family:"Open Sans";
     font-weight:600;
@@ -74,17 +73,19 @@ export const First_Row = styled(Row) `
 export const First_name = styled.div`
     font-size: 14.007px;
     font-family: "Open Sans";
-    color: rgba( 80, 80, 80, 0.502 );
+    color: ${props => props.theme.mode=="dark"? "rgba( 152, 171, 215, 0.502 )" : "rgba( 80, 80, 80, 0.502 )"};
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     margin-bottom:10px;
 `
+  
 export const First_input = styled(Input) `
     font-family: "Open Sans";
     font-size:16;
     font-weight:600;
-    background-color:#f8f8f8;
+    background-color:${props => props.theme.mode=="dark" ? "#020f18" : "#f8f8f8" };
+    color:${props => props.theme.mode=="dark" ? "white" : "" };
     width:89%;
     border:1px solid #dadfe3;
     padding:10px;
@@ -115,7 +116,6 @@ export const Last_name = styled(First_name) `
     }
 `
 export const Last_input = styled(First_input) `
-    background-color:#f8f8f8;
     width:90%;
     border:1px solid #dadfe3;
     @media(max-width:768px)
@@ -155,7 +155,6 @@ export const Street_Address = styled(First_name) `
 
 `
 export const Street_input = styled(First_input) `
-    background-color:#f8f8f8;
     width:95%;
     border:1px solid #dadfe3;
 
@@ -365,7 +364,7 @@ class PersonalDetails extends Component {
         this.setState({ countrySelected: value })
         this.onChangeField(value, field);
     }
-    componentWillMount() {
+    componentDidMount() {
         /* console.log(this.props) */
         this.props.getProfileDataAction(this.props.isLoggedIn)
     }

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Modal, Input, Button } from 'antd';
 import styled from 'styled-components';
-import { withRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
 
@@ -31,8 +31,8 @@ const Header_main = styled(Header)`
     width : 100%;
     padding:0;
     text-align:left;
-    background-color:white;
-    box-shadow: 0px 3px #f7f7f7;
+    background-color:${props => props.theme.mode=="dark"? "#041422":"white"};
+    box-shadow:${props => props.theme.mode=="dark"?"" : "0px 3px #f7f7f7"};
     height :80px;
     display:flex;
     align-items:center;
@@ -43,7 +43,7 @@ const Menu_main = styled(Menu)`
     text-align: right;
     border-bottom:0px;
     vertical-align: middle;
-
+    background-color:${props => props.theme.mode=="dark"? "#041422":"white"};
     @media(max-width:1200px)
     {
         display:none;
@@ -126,6 +126,12 @@ const RightCol = styled.div`
     align-items:center;
     margin-left:auto;
 `
+const NavLink = styled(Link)`
+    color: ${props => props.theme.mode=="dark"?"white":"black"} !important;
+    &:hover{
+        color:#1890ff !important;
+    }
+`
 
 class LoggedNavigation extends Component {
     constructor(props) {
@@ -134,9 +140,35 @@ class LoggedNavigation extends Component {
             visible: false,
             modal: 0,
             comingSoon: false,
+            faldaxLogo:"",
+            faldax:""
         }
     }
-
+    componentWillReceiveProps(props,newProps)
+    {
+        if(props.theme!==undefined)
+            {
+                if(props.theme !== this.state.theme)
+                {
+                    if(props.theme==false)
+                    this.setState({faldaxLogo:"/images/Homepage/Faldax_logo.png" ,faldax:"/images/Homepage/faldax.png"})
+                    else
+                    this.setState({faldax:"/images/Homepage/faldax_white.png",faldaxLogo: "/images/Homepage/logo_white.png"})
+                }
+            }
+    }
+    componentDidMount() {
+        if(this.props.theme!==undefined)
+        {
+            if(this.props.theme !== this.state.theme)
+            {
+                if(this.props.theme==false)
+                this.setState({faldaxLogo: "/images/Homepage/Faldax_logo.png",faldax:"/images/Homepage/faldax.png"})
+                else
+                this.setState({faldax:"/images/Homepage/faldax_white.png",faldaxLogo: "/images/Homepage/logo_white.png"})
+            }
+        }
+    }
     openNav() {
         /* console.log('open nav'); */
         if (document.getElementById("mySidenav2") !== undefined && document.getElementById("mySidenav2") !== null) {
@@ -203,13 +235,13 @@ class LoggedNavigation extends Component {
         return (
             <Header_main id="main">
                 <Logo onClick={() => this.props.history ? this.props.history.push("/") : ''}>
-                    <FALDAX_LOGO className="" src="/images/Homepage/Faldax_logo.png" />
-                    <FALDAX src="/images/Homepage/faldax.png" />
+                    <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
+                    <FALDAX src={this.state.faldax} />
                 </Logo>
                 <Menu_main
-                    theme="light"
                     mode="horizontal"
                     defaultSelectedKeys={['1']}
+                    selectedKeys={this.state.selected}
                 >
                     <Menu_item onClick={this.showComing} key="1">DASHBOARD</Menu_item>
                     <Menu_item onClick={this.showComing} key="2">TRADE</Menu_item>
@@ -236,7 +268,8 @@ class LoggedNavigation extends Component {
 function mapStateToProps(state) {
     /*  console.log(state) */
     return ({
-        profileDetails: state.simpleReducer.profileDetails ? state.simpleReducer.profileDetails.data[0] : ""
+        profileDetails: state.simpleReducer.profileDetails!==undefined ? state.simpleReducer.profileDetails.data[0] : "",
+        theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
     });
 }
 const mapDispatchToProps = dispatch => ({

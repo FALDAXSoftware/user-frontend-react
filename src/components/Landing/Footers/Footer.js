@@ -11,7 +11,8 @@ const { Footer } = Layout;
 /* Styled-Components */
 const Bottom_Footer = styled(Footer)`
     text-align: center;
-    background-color: #ffffff;
+    background-color:${props => props.theme.mode=="dark" ? "#041422" :"#ffffff"};
+    color:${props => props.theme.mode=="dark" ? "white" : "" };
     font-size : 13px;
     font-family: "Open sans";
 `

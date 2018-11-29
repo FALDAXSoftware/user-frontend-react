@@ -22,10 +22,10 @@ const TabPane = Tabs.TabPane;
 const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom:30px;
-  background-color: #f5f6fa;
+  background-color: ${props => props.theme.mode=="dark"?"#01090f":"#f5f6fa"};
 `
 const ProfileDiv = styled.div`
-  background-color: #ffffff;
+    background-color: ${props => props.theme.mode=="dark"? "#041422" :"#ffffff"};
   margin:auto;
   width:95%;
   border-radius: 7px;
@@ -42,14 +42,6 @@ class Editprofile extends Component {
         return (
             <div>
                 {/* console.log(this.props.loader) */}
-                <OverlayLoader
-                    color={'red'} // default is white
-                    loader="ScaleLoader" // check below for more loaders
-                    text="Loading... Please wait!"
-                    active={false}
-                    backgroundColor={'black'} // default is black
-                    opacity=".4" // default is .9  
-                >
                     <LoggedNavigation />
                     <ProfileWrapper>
                         <ProfileDiv>
@@ -58,13 +50,12 @@ class Editprofile extends Component {
                                 <TabPane tab="Security" key="2" ><Passwordchange {...this.props} /></TabPane>
                                 <TabPane tab="Account Settings" key="3"><Acc_settings {...this.props} /></TabPane>
                                 <TabPane tab="Identity Verification" key="4"><KYC /></TabPane>
-                                <TabPane tab="Referral" key="5"><Referral /></TabPane>
+                                <TabPane tab="Referral" key="5"><Referral {...this.props} /></TabPane>
                                 {/* <TabPane tab="Payment Methods" key="6"><Paymethods/></TabPane> */}
                             </Tabs>
                         </ProfileDiv>
                     </ProfileWrapper>
                     <CommonFooter />
-                </OverlayLoader>
             </div>
         );
     }
@@ -74,6 +65,7 @@ function mapStateToProps(state) {
     /* console.log(state) */
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
+        theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }

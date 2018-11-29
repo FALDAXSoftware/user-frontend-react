@@ -122,7 +122,6 @@ class Forgot_Form extends React.Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      /*  console.log(error, value); */
       if (error !== null && error !== undefined) {
         if (error.email !== undefined) {
           if (error.email.errors[0].message !== undefined && error.email.errors[0].message !== null) {
@@ -138,7 +137,6 @@ class Forgot_Form extends React.Component {
         }
       } else {
         document.querySelectorAll(".email_msg")[0].style.display = "none";
-        /*  console.log(this.props,value) */
         this.setState({ email_msg: null });
         // this.openNotification();
         this.props.forgotAction(value);

@@ -13,6 +13,7 @@ const KYC_type_select_row = styled.div`
 const Select_text= styled(Col)`
     margin-top:20px;
     margin-bottom:30px;
+    color:${props => props.theme.mode=="dark"?"white":""};
 `
 const Select_Col1 = styled(Col)`
     @media(max-width:575px)
@@ -76,6 +77,23 @@ export const Next_Button = styled(Button)`
 
 class IDselect extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            background:''
+        };
+    }
+    componentDidMount()
+    {
+        if(this.props.theme!==undefined)
+        {
+            if(this.props.theme==false)
+            this.setState({background:"background"})
+            else
+            this.setState({background:"background-night"})
+        }
+    }
     next_step()
     {
         var abcd = {};
@@ -139,7 +157,7 @@ class IDselect extends React.Component
                         <Select_Col1 sm={{span:12}} md={{span:12}} lg={{span:12}} xl={{span:6}}>
                         <label className="kyc-radio-container">
                             <input id="passport" type="radio" name="kyc_type"/>
-                            <span className="background">
+                            <span className={`${this.state.background}`}>
                             <img src="/images/passport-logo-active.png" className="active"/>
                             <img src="/images/passport-logo.png" className="normal"/>
                             <span className="text">Passport</span>
@@ -149,7 +167,7 @@ class IDselect extends React.Component
                         <Select_Col2 sm={{span:12}} md={{span:12}} lg={{span:12}} xl={{span:6}}>
                         <label className="kyc-radio-container">
                             <input id="license" type="radio" name="kyc_type"/>
-                            <span className="background license">
+                            <span className={`${this.state.background} license`}>
                             <img src="/images/driving-license-active.png" className="active"/>
                             <img src="/images/driving-license.png" className="normal"/>
                             <span className="text">Driving license</span>
@@ -159,7 +177,7 @@ class IDselect extends React.Component
                         <Select_Col3 sm={{span:12}} md={{span:12}} lg={{span:12}} xl={{span:6}}>
                         <label className="kyc-radio-container">
                             <input id="identity" type="radio" name="kyc_type"/>
-                            <span className="background identity">
+                            <span className={`${this.state.background} identity`}>
                             <img src="/images/identity-active.png" className="active"/>
                             <img src="/images/identity.png" className="normal"/>
                             <span className="text">Identity</span>
@@ -169,7 +187,7 @@ class IDselect extends React.Component
                         <Select_Col4 sm={{span:12}} md={{span:12}} lg={{span:12}} xl={{span:6}}>
                         <label className="kyc-radio-container">
                             <input id="ssn" type="radio" name="kyc_type"/>
-                            <span className="background ssn">
+                            <span className={`${this.state.background} ssn`}>
                             <img src="/images/ssn-active.png" className="active"/>
                             <img src="/images/ssn.png" className="normal"/>
                             <span className="text">SSN</span>

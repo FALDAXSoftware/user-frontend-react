@@ -12,14 +12,14 @@ import Navigation from '../Navigations/Navigation';
 import {Spin_Ex} from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
-import { Contact_wrap, Grey_wrap, Headcontact, Head_apply, Apply_wrap, Title_apply, Title_span, Form_apply, LeftWing, Labelone, InputOne, RightWing, InputTwo, InputThree, Gap, Btn_apply, FileSelectText } from '../../styled-components/landingCategories/contactStyle';
+import { Contact_wrap, Grey_wrap, Headcontact, Head_apply, Apply_wrap, Title_apply, Title_span, Form_apply, LeftWing, Labelone, InputOne, RightWing, InputTwo, InputThree, Gap, Btn_apply, FileSelectText,DropzoneStyle,IconS } from '../../styled-components/landingCategories/contactStyle';
 import Title from 'antd/lib/skeleton/Avatar';
 import { globalVariables } from "../../Globals"
 
 let { API_URL } = globalVariables;
 
 export const ContainerContact = styled(Container)`
-    background-color:white; 
+    background-color:${props => props.theme.mode=="dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -87,7 +87,6 @@ class ApplyJob extends React.Component {
                 message: 'Please enter valid email address.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
-                    console.log(val,options)
                     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     var bool = re.test(String(val).toLowerCase());
                     return bool;
@@ -97,7 +96,6 @@ class ApplyJob extends React.Component {
                 message: 'Please upload the document of less than 2 mb.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
-                    console.log(val,options)
                     if (self.state.coverLimit == false) {
                         return false;
                     }
@@ -108,7 +106,6 @@ class ApplyJob extends React.Component {
                 message: 'Please upload the document of less than 2 mb.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
-                    console.log(val,options)
                     if (self.state.resumeLimit == false) {
                         return false;
                     }
@@ -121,18 +118,13 @@ class ApplyJob extends React.Component {
     {
         if(this.props.location.search)
             {
-                console.log(this.props);
-                var arr = this.props.location.search.split("&");
-                console.log(arr);
+                var arr = decodeURI(this.props.location.search).split("&");
                 var arr2 = arr[1].split("=");
-                console.log(arr2[1]);
                 this.setState({position_flag:arr2[1]});
             }
     }
     onDrop(type, files) {
-        /* console.log(type, files) */
         if (type == 'res') {
-            /* console.log("hello 123", type, files) */
             let flag = false,flagLimit=false;
             if (files.length > 0) {
                 flag = true
@@ -148,18 +140,14 @@ class ApplyJob extends React.Component {
             });
         }
         else {
-           /*  console.log("hello 123", type, files) */
             let flag = false,flagLimit=false;
             if (files.length > 0) {
                 flag = true
-                console.log(files[0].size)
                 if(files[0].size<=3000000)
                 {
-                    console.log(this.state.flagLimit)
                     flagLimit=true;
                 }
             }
-            console.log(files)
             this.setState({
                 cover_flag: flag,
                 coverLimit:flagLimit,
@@ -195,11 +183,10 @@ class ApplyJob extends React.Component {
             let jobID;
             if(this.props.location.search)
             {
-                var arr = this.props.location.search.split("&");
+                var arr = decodeURI(this.props.location.search).split("&");
                 var arr2 = arr[0].split("=");
                 jobID=arr2[1];
             }
-            /* console.log(this.state.fields) */
             let formdata = new FormData();
             formdata.append('first_name', this.state.fields['first_name']);
             formdata.append('last_name', this.state.fields['last_name'])
@@ -240,7 +227,6 @@ class ApplyJob extends React.Component {
 
                 })
                 .catch(error => {
-                   /*  console.log(error) */
                 })
         } else {
             this.validator.showMessages();
@@ -312,8 +298,7 @@ class ApplyJob extends React.Component {
                                         <Row>
                                             <Col sm={24} md={24}>
                                                 <Labelone>Resume/CV*</Labelone>
-                                                {console.log(this.state)}
-                                                <Dropzone
+                                                <DropzoneStyle
                                                     accept=".pdf,.doc,.docx"
                                                     className="Dropzone_apply"
                                                     onDrop={this.onDrop.bind(this, 'res')}
@@ -321,23 +306,23 @@ class ApplyJob extends React.Component {
                                                 >
                                                     {this.state.flag_drop == null &&
                                                         <div>
-                                                            <Icon type="download" style={{ fontSize: '30px' }} />
+                                                            <IconS type="download" style={{ fontSize: '30px' }} />
                                                             <FileSelectText>Choose a file or drag it here</FileSelectText>
                                                         </div>
                                                     }
                                                     {this.state.flag_drop == false &&
                                                         <div>
-                                                            <Icon style={{ fontSize: '30px' }} type="close-square" />
+                                                            <IconS style={{ fontSize: '30px' }} type="close-square" />
                                                             <FileSelectText>Wrong File Selected</FileSelectText>
                                                         </div>
                                                     }
                                                     {this.state.flag_drop == true &&
                                                         <div>
-                                                            <Icon style={{ fontSize: '30px' }} type="check-square" />
+                                                            <IconS style={{ fontSize: '30px' }} type="check-square" />
                                                             <FileSelectText>{this.state.fields.resume.name}</FileSelectText>
                                                         </div>
                                                     }
-                                                </Dropzone>
+                                                </DropzoneStyle>
                                                 <span style={{fontSize:"12px",fontFamily:"Open Sans",color:"grey",fontStyle:"italic"}}>Supported format : .doc , .docx , .pdf.</span>
                                                 {this.validator.message('resume', this.state.flag_drop, 'resumeRequired|resumeValid|resumeLimit', 'text-danger-validation')}
                                             </Col>
@@ -347,7 +332,7 @@ class ApplyJob extends React.Component {
                                         <Row>
                                             <Col sm={24} md={24}>
                                                 <Labelone>Cover Letter</Labelone>
-                                                <Dropzone
+                                                <DropzoneStyle
                                                     accept=".pdf,.doc,.docx"
                                                     className="Dropzone_apply"
                                                     onDrop={this.onDrop.bind(this, 'cover')}
@@ -355,23 +340,23 @@ class ApplyJob extends React.Component {
                                                 >
                                                     {this.state.cover_flag == null &&
                                                         <div>
-                                                            <Icon type="download" style={{ fontSize: '30px' }} />
+                                                            <IconS type="download" style={{ fontSize: '30px' }} />
                                                             <FileSelectText>Choose a file or drag it here</FileSelectText>
                                                         </div>
                                                     }
                                                     {this.state.cover_flag == false &&
                                                         <div>
-                                                            <Icon style={{ fontSize: '30px' }} type="close-square" />
+                                                            <IconS style={{ fontSize: '30px' }} type="close-square" />
                                                             <FileSelectText>Wrong File Selected</FileSelectText>
                                                         </div>
                                                     }
                                                     {this.state.cover_flag == true &&
                                                         <div>
-                                                            <Icon style={{ fontSize: '30px' }} type="check-square" />
+                                                            <IconS style={{ fontSize: '30px' }} type="check-square" />
                                                             <FileSelectText>{this.state.fields.cover_letter.name}</FileSelectText>
                                                         </div>
                                                     }
-                                                </Dropzone>
+                                                </DropzoneStyle>
                                                 <span style={{fontSize:"12px",fontFamily:"Open Sans",color:"grey",fontStyle:"italic"}}>Supported format : .doc , .docx , .pdf.</span>
                                                 {this.validator.message('cover', this.state.cover_flag, 'coverValid|coverLimit', 'text-danger-validation')}
                                             </Col>

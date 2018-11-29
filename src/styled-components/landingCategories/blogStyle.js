@@ -63,7 +63,7 @@ export const CardCover = styled.div`
 `
 export const Righthead = styled.div`
     min-height:420px;
-    background-image:url('/images/LandingCat/Blog/headImage.png');
+    background-image:url("${props=>props.image}");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -78,7 +78,7 @@ export const Whole_wrap = styled.div`
 export const Blog_p = styled.p`
     font-size: 18px;
     font-family: "Open Sans";
-    color: rgb( 0, 0, 0 );
+    color:${props => props.theme.mode=="dark" ? "white" : "rgb( 0, 0, 0 )"};
     font-weight: bold;
     margin-bottom: 0px;
     vertical-align: middle;
@@ -108,11 +108,15 @@ export const Meta_title = styled.p`
     min-height:24px;
     text-overflow: ellipsis;
     overflow: hidden;
+    &::focus
+    {
+        text-decoration:none;
+    }
 `
 export const Meta_desc = styled.p`
     font-size: 18px;
     font-family: "Open Sans";
-    color: rgb( 15, 71, 123 );
+    color: ${props => props.theme.mode=="dark" ? "#4c84ff" : "rgb( 15, 71, 123 )"};
     font-weight: bold;
     margin-bottom:8px;
     overflow:hidden;
@@ -123,7 +127,7 @@ export const Card_foot = styled.span`
     font-size: 12px;
     font-family: "Open Sans";
     font-weight:600;
-    color: #666666;  
+    color: ${props => props.theme.mode == "dark" ? "#b4b9bd" :"#666666"};  
     line-height:1;
 `
 export const Prev_next = styled.div`
@@ -146,7 +150,8 @@ export const Prev_next = styled.div`
 export const Prev = styled.div`
     margin-right:60px;
     border:none;
-    background:#f7f7f7;
+    color:${props => props.theme.mode=="dark" ? "white" :"black"};
+    background:${props => props.theme.mode=="dark"? "#4c84ff" : "#f7f7f7"};
     min-width:215px;
     min-height:40px;
     display: inline-flex;
@@ -154,10 +159,9 @@ export const Prev = styled.div`
     justify-content: center;
     border-radius: 5px;
     cursor:pointer;
-    color:black;
     &:hover
     {
-        color:#1890ff;
+        color:${props => props.theme.mode=="dark" ? "black" : '#1890ff'};
         
     }
     @media(max-width:576px)
@@ -170,8 +174,8 @@ export const Prev = styled.div`
 export const Next = styled.div`
     margin-left:60px;
     border:none;
-    color:black;
-    background:#f7f7f7;
+    color:${props => props.theme.mode=="dark" ? "white" :"black"};
+    background:${props => props.theme.mode=="dark"? "#4c84ff" : "#f7f7f7"};
     min-width:215px;
     display: inline-flex;
     align-items: center;
@@ -181,7 +185,7 @@ export const Next = styled.div`
     cursor:pointer;
     &:hover
     {
-        color:#1890ff;
+        color:${props => props.theme.mode=="dark" ? "black" : '#1890ff'};
         
     }
     @media(max-width:576px)
@@ -489,7 +493,6 @@ export const Sub_wrap_right = styled(Sub_wrap)`
 export const Inputsearch = styled(Search)`
     width: 100%;
     height: 40px;
-    
 `
 export const Search_wrap = styled.div`
     text-align:right;

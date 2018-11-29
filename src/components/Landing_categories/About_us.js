@@ -40,7 +40,7 @@ const About_Faldax_Title = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"}
+  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"};
   &:before {
     content: '';
     width: calc(50% - 235px);
@@ -63,7 +63,8 @@ const About_Faldax_Title = styled.span`
   }
 `;
 const AboutContent = styled.div`
-color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"}
+  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"};
+  text-align:justify;
 `
 const Our_Mission = styled.span`
   font-size: 40px;
@@ -71,7 +72,7 @@ const Our_Mission = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"}
+  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"};
   &:before {
     content: '';
     width: calc(50% - 170px);
@@ -94,7 +95,7 @@ const Our_Mission = styled.span`
   }
 `
 const MissionContent = styled.div`
-  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"}
+  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"};
 `
 const Our_Team = styled.span`
   font-size: 40px;
@@ -102,7 +103,7 @@ const Our_Team = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"}
+  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"};
   &:before {
     content: '';
     width: calc(50% - 125px);
@@ -224,18 +225,18 @@ const Team = styled.div`
   margin-top: 115px;
   box-shadow: ${props => props.theme.mode=="dark"?"none":"-1px 2px 10px 4px #f1f1f1"};
   cursor: pointer;
-  background-color:${props => props.theme.mode=="dark"?"#01090f":"#ffffff"}
+  background-color:${props => props.theme.mode=="dark"?"#01090f":"#ffffff"};
 `;
 
 const TeamIn1 = styled.div`
-  color:${props => props.theme.mode=="dark"?"white":"#333333"}
+  color:${props => props.theme.mode=="dark"?"white":"#333333"};
   margin-top: 10px;
 `;
 const TeamIn2 = styled.div`
-  color:${props => props.theme.mode=="dark"?"white":"#333333"}
+  color:${props => props.theme.mode=="dark"?"white":"#333333"};
 `;
 const TeamIn3 = styled.div`
-  color:${props => props.theme.mode=="dark"?"white":"#5c5c5c"}
+  color:${props => props.theme.mode=="dark"?"white":"#5c5c5c"};
   padding: 13px 20px;
 `;
 
@@ -277,11 +278,9 @@ export default class AboutUs extends React.Component {
     })
     .then(response => response.json())
     .then((responseData) => {
-        /* console.log("I m in API get",responseData) */
-       /*  console.log(responseData) */
         this.setState({aboutContent:responseData.data.content,loader:false})
     })
-    .catch(error => { /* console.log(error) */ })
+    .catch(error => { })
     
   }
   teamClick(value) {

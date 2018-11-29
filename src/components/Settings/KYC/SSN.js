@@ -29,6 +29,7 @@ const SSN_sub = styled.div`
 const SSN_label = styled.label`
     display:block;
     margin-bottom:10px;
+    color:${props =>props.theme.mode=="dark"?"white":""};
 `
 const SSN_input = styled.input`
     display:block;
@@ -38,11 +39,12 @@ const SSN_input = styled.input`
     padding:5px;
     background-color:#f8f8f8;
     border:none;
+    color:${props => props.theme.mode=="dark"?"white":""};
     border-style: solid;
     border-width: 1px;
     border-color: rgb( 212, 218, 223 );
     border-radius: 5px;
-    background-color: rgb( 248, 248, 248 );      
+    background-color: ${props => props.theme.mode=="dark"?"#020f18":"rgb( 248, 248, 248 )"};      
 `
 class SSN extends React.Component
 {

@@ -218,7 +218,15 @@ class Signup_Form extends React.Component {
         document.querySelectorAll("#last_icon_success")[0].style.display = "none";
         document.querySelectorAll("#pass_icon_success")[0].style.display = "none";
         document.querySelectorAll("#confirm_icon_success")[0].style.display = "none";
-        this.props.Signup(value);
+        var obj = {};
+        obj['first_name'] = value.first_name;
+        obj['last_name'] = value.last_name;
+        obj['email'] = value.email;
+        obj['password'] = value.password;
+        obj['confirm_password'] = value.confirm_password;
+        obj['referral_code'] = value.referral_code;
+        obj['device_type'] = 0;
+        this.props.Signup(obj);
       } else {
         this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue")
       }

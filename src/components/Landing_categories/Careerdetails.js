@@ -15,7 +15,7 @@ import {Contact_wrap,Grey_wrap,Headcontact,Career_Head,CareerD_body,Btn_div,Job_
 import { globalVariables } from "../../Globals"
 
 export const ContainerContact = styled(Container)`
-    background-color:white; 
+    background-color:${props => props.theme.mode=="dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;

@@ -206,7 +206,7 @@ class Home_four extends Component {
                         this.setState({ visible: false, email_msg: "" })
                     }
                 })
-                .catch(error => { /* console.log(error) */ })
+                .catch(error => {  })
         }
         else {
             this.setState({ email_msg: "*email address not valid" })
@@ -241,20 +241,18 @@ class Home_four extends Component {
     };
     componentDidMount() {
         let self = this;
-        /*  console.log(globalVariables.API_URL ); */
         fetch(globalVariables.API_URL + "/users/getMapCountries", {
             method: "GET",
         })
             .then(response => response.json())
             .then((responseData) => {
-                // console.log(responseData);
                 if (responseData.state == 200) {
                     self.setState({
                         countries: responseData.countries
                     });
                 }
             })
-            .catch(error => { /* console.log(error) */ })
+            .catch(error => {  })
     }
     render() {
 

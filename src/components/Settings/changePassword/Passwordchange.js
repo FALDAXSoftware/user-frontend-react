@@ -75,7 +75,7 @@ const Repeat = styled(Old)`
 export const Old_label = styled.label`
     font-size: 14.007px;
     font-family: "Open Sans";
-    color: rgba( 80, 80, 80, 0.502 );
+    color: ${props => props.theme.mode=="dark" ? '#617090' : 'rgba( 80, 80, 80, 0.502 )'};
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -89,7 +89,8 @@ const Repeat_label = styled(Old_label)`
 export const OldInput = styled(Input)`
     margin-top:5px;
     width: 95%;
-    background-color:#f8f8f8;
+    background-color:${props => props.theme.mode=="dark" ? '#041422' : '#f8f8f8'};
+    color:${props =>props.theme.mode=="dark"?'white':''}
     display:inline-block;
     font-family: "Open Sans";
     font-size:16;
@@ -132,7 +133,7 @@ const Head_TF = styled.p`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    color: rgb( 80, 80, 80 );
+    color: ${props => props.theme.mode=="dark"?"#ffffff":"rgb( 80, 80, 80 )"};
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -141,20 +142,20 @@ const IsEnabled = styled.p`
     font-size: 15.008px;
     font-family: "Open Sans";
     margin-bottom:0px !important;
-    color: rgb( 80, 80, 80 );
+    color: ${props => props.theme.mode=="dark"?"#617090" : "rgb( 80, 80, 80 )"};
     margin-top:20px;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
 `
 const Head_text = styled.p`
-
+    color:${props => props.theme.mode=="dark" ? "white" : "" };
 `
 const BarRow = styled(Row)`
     width:81%;
     margin:0 auto;
     height:auto
-    background-color:#f8f8f8;
+    background-color:${props => props.theme.mode=="dark" ? "#01090f" : "#f8f8f8"};
     margin-top:45px;
     border:1px solid #d6d6d6;
     border-radius:10px;
@@ -199,7 +200,7 @@ const Key_wrap = styled.div`
 const Key_text = styled.span`
     font-size: 13.007px;
     font-family: "Open Sans";
-    color: rgb( 80, 80, 80 );
+    color: ${props => props.theme.mode=="dark" ? "white" :"rgb( 80, 80, 80 )"};
     line-height: 1.846;
     text-align: center;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -210,7 +211,7 @@ const Key_text = styled.span`
 const Key = styled.p`
     font-size: 13.007px;
     font-family: "Open Sans";
-    color: #4c84ff;
+    color: ${props => props.theme.mode=="dark" ? "white" :"#4c84ff"};
     line-height: 1.846;
     text-align: center;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -223,6 +224,7 @@ const Right_Col = styled(Col)`
 const Order_list = styled.ol`
     margin-top:50px;
     text-align:left;
+    color:${props => props.theme.mode=="dark"? "white" : ""};
 `
 const LI = styled.li`
     margin-top:10px;
@@ -233,7 +235,7 @@ const TF_code = styled.div`
     margin-left:40px;
 `
 const TF_label = styled.label`
-
+color:${props => props.theme.mode=="dark" ? "#4c84ff" :""};
 `
 const TF_input = styled(Input)`
     width:148px;
@@ -270,6 +272,10 @@ const Active_FAI = styled(FAI)`
 const Progress_bar = styled(Progress)`
     margin-top:20px;
     width:100%;
+    >div>.ant-progress-text
+    {
+        color:${props => props.theme.mode=="dark"?"white":""};
+    }
 `
 let password;
 class Passwordchange extends React.Component {

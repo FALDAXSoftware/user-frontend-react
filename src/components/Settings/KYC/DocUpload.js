@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
-import { Row, Col, Tabs, Button, Input, notification, Steps, Icon } from 'antd';
+import { Row, Col, Tabs, Button, Input, notification, Steps, Icon,Spin } from 'antd';
 import styled from 'styled-components';
 import { Button_wrap, Sub_wrap, Back_Button, Next_Button } from "./IDselect"
 
 import {kycDoc,kycFormAction} from "../../../Actions/Settings/passwordChange"
+import {Spin_Ex} from '../Personaldetails/PersonalDetails'
+import sizeOf from 'image-size'
 
 const SSN_wrap = styled.div`
     width:100%;
@@ -24,6 +26,7 @@ const SSN_wrap = styled.div`
     }
 `
 const SSN_sub = styled.div`
+    color:${props => props.theme.mode=="dark"?"white":""};
 `
 const SSN_label = styled.label`
     display:block;
@@ -80,7 +83,8 @@ const ButtonUp = styled.button`
     width: 100%;
     /* margin: 0 auto; */
     height: 145px;
-    background-color: white;
+    background-color: ${props => props.theme.mode=="dark" ? "#01090f" : 'white'};
+    color: ${props => props.theme.mode=="dark"? "white" :""};
     box-shadow: none;
     border: 1px solid #4c84ff;
     border-radius: 20px;
@@ -138,7 +142,11 @@ class DocUpload extends React.Component {
             frontImg:"",
             backImg:"",
             icon2:"plus",
-            click:''
+            click:'',
+            frontWidth:'',
+            frontHeight:"",
+            targetName:'',
+            fileTarget:null,
         }
         this.handleProfile = this.handleProfile.bind(this);
     }
@@ -148,45 +156,81 @@ class DocUpload extends React.Component {
         this.setState({click:val})
     }
     handleProfile(e) {
-        try{
-            const reader = new FileReader();
-            const file = e.target.files[0];
-            const fileType = e.target.files[0] && e.target.files[0].type ? e.target.files[0].type.substring(0, e.target.files[0].type.indexOf('/') ) : '';
-            const fileSize = e.target.files[0] && e.target.files[0].size ? e.target.files[0].size : 0;
-            if(e.target.name=="front-doc")
+        var _self = this;
+        var e1 = e;
+        let name = e1.target.name;
+        let target = e1.target;
+        _self.setState({
+            targetName:name,
+            fileTarget:target
+        },()=>{
+            var frontWidth ,frontHeight;
+            try
             {
-                this.setState({icon1:"check"})
-            }
-            else
-            {
-                this.setState({icon2:"check"})
-            }
-            /* console.log("handleProfile") */
-            //check file size to max 5mb (5*1024*1024=5242880) and type image
-            if(fileType==='image' && fileSize<5242880) {
-                reader.onload = (upload) => {
-                    this.setState({
-                        profileImg: upload.target.result,
-                        imageName: file.name,
-                        imageType: file.type,
-                        profileImage : file,
-                        imagemsg:""
-                    });
+                const reader = new FileReader();
+                const file = _self.state.fileTarget.files[0];
+                
+                const fileType =file &&file.type ?file.type.substring(0,file.type.indexOf('/') ) : '';
+                const fileSize =file &&file.size ?file.size : 0;
+                var fr = new FileReader();
+                fr.readAsDataURL(file);
+                fr.onload = function () {
+                    var img = new Image;
+                    img.onload = function() {
+
+                        frontWidth=img.width;
+                        frontHeight=img.height;
+
+                        if(frontWidth>450 && frontHeight>600)
+                        {
+                            if(_self.state.targetName=="front-doc")
+                            {
+                                _self.setState({icon1:"check"})
+                            }
+                            else
+                            {
+                                _self.setState({icon2:"check"})
+                            }
+
+                            //check file size to max 5mb (5*1024*1024=5242880) and type image
+                            if(fileType==='image' && fileSize<5242880) {
+                                reader.onload = (upload) => {
+                                    _self.setState({
+                                        profileImg: upload.target.result,
+                                        imageName: file.name,
+                                        imageType: file.type,
+                                        profileImage : file,
+                                        imagemsg:""
+                                    });
+                                };
+                                
+                            } 
+                            else {
+                            /*  console.log(" elsse handleProfile") */
+                                _self.setState({profileImg: "Default Photo", imageName: '', imageType: fileType , imagemsg:'Please select image with less then 5 mb'})
+                            }
+                    
+                            reader.readAsDataURL(file);
+                            var DataForm = new FormData()
+                            DataForm.append("image",file)
+                        /*   console.log(e.target.name) */
+                            _self.props.kycDoc(_self.props.isLoggedIn,DataForm,_self.state.targetName)
+                        }
+                        else
+                        {
+                            _self.openNotificationWithIcon("error","File Size","File should be greater than 450*600 in dimension")
+                        }
+                    };
+                    
+                    img.src = fr.result;
                 };
                 
-            } else {
-               /*  console.log(" elsse handleProfile") */
-                this.setState({profileImg: "Default Photo", imageName: '', imageType: fileType , imagemsg:'Please select image with less then 5 mb'})
+                
+                
+            } catch(error) {
+                _self.setState({ imagemsg: 'Something went wrong please try again' });
             }
-            
-            reader.readAsDataURL(file);
-            var DataForm = new FormData()
-            DataForm.append("image",file)
-          /*   console.log(e.target.name) */
-            this.props.kycDoc(this.props.isLoggedIn,DataForm,e.target.name)
-        } catch(error) {
-            this.setState({ imagemsg: 'Something went wrong please try again' });
-        }
+        })
       }
       openNotificationWithIcon(type, head, desc) {
         notification[type]({
@@ -268,6 +312,12 @@ class DocUpload extends React.Component {
                         <Next_Button onClick = {this.next_step.bind(this)} type="primary">Next</Next_Button>
                     </Sub_wrap>
                 </Button_wrap>
+                            {(this.props.loader==true)?
+                                <Spin_Ex className="Ex_spin">
+                                    <Spin size="large"/>
+                                </Spin_Ex>
+                            :""
+                }
             </div>
         );
     }
@@ -279,7 +329,8 @@ const mapStateToProps = (state) => {
       ...state,
         image_path:state.passwordReducer.image_path !== undefined ? state.passwordReducer.image_path:"",
         isLoggedIn : state.simpleReducer.isLoggedIn !==undefined ? state.simpleReducer.isLoggedIn:"",
-        is_kyc_done : state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].is_kyc_done : ""
+        is_kyc_done : state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].is_kyc_done : "",
+        loader:state.simpleReducer.loader
     }
   }
 const mapDispatchToProps = dispatch => ({

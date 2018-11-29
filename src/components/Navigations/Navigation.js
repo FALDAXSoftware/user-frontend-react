@@ -298,7 +298,6 @@ class Navigation extends React.Component {
     {
         if(props.theme!==undefined)
         {
-            console.log(props.theme)
             if(props.theme !== this.state.theme)
             {
                 if(props.theme==false)
@@ -311,7 +310,6 @@ class Navigation extends React.Component {
     componentDidMount() {
         if(this.props.theme!==undefined)
         {
-            console.log(this.props.theme)
             if(this.props.theme !== this.state.theme)
             {
                 if(this.props.theme==false)
@@ -464,7 +462,6 @@ class Navigation extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log(state,ownProps)
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn ? true : false,
         queryParams: ownProps && ownProps.location && ownProps.location.search ? ownProps.location.search : '',

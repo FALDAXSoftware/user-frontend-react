@@ -38,7 +38,7 @@ const Header_text = styled.div`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    color: rgb( 80, 80, 80 );
+    color:${props => props.theme.mode=="dark" ? "white" : "rgb( 80, 80, 80 )"};
     line-height: 2.4;
     margin-top:10px;
     text-align:center;
@@ -56,7 +56,7 @@ const Ref_div = styled.div`
     margin:auto;
     width:80%;
     height:140px;
-    background-color:#fcfcfc;
+    background-color:${props => props.theme.mode=="dark" ? "041422" : "#fcfcfc"};
     border:1px solid #d6d6d6;
     margin-top:40px;
     border-radius: 10px;
@@ -149,7 +149,7 @@ const Ref_acc = styled.div`
     margin:auto;
     width:80%;
     height:140px;
-    background-color:#ffffff;
+    background-color:${props => props.theme.mode=="dark" ? "#041422" : "#ffffff"};
     border:1px solid #d6d6d6;
     margin-top:40px;
     border-radius: 10px;
@@ -162,12 +162,35 @@ class Referral extends React.Component {
         this.state = {
             value: null,
             copied: false,
-            tableData: []
+            tableData: [],
+            searchCSS:""
         }
     }
-
+    componentWillReceiveProps(props,newProps)
+    {
+        if(this.props.theme!==undefined)
+        {
+            if(this.props.theme !== this.state.theme)
+            {
+                if(this.props.theme==false)
+                    this.setState({searchCSS:"Input_search_night"})
+                else
+                    this.setState({searchCSS:"INPUT_search"})
+            }
+        }
+    }
     componentDidMount() {
         /* console.log(this.props.isLoggedIn) */
+        if(this.props.theme!==undefined)
+        {
+            if(this.props.theme !== this.state.theme)
+            {
+                if(this.props.theme==false)
+                    this.setState({searchCSS:"Input_search_night",referTable:"referral-table"})
+                else
+                    this.setState({searchCSS:"INPUT_search",referTable:"referral-table-night"})
+            }
+        }
         fetch("http://18.191.87.133:8084/users/referredUsers", {
             method: "get",
             headers: {
@@ -219,7 +242,7 @@ class Referral extends React.Component {
                                 <div style={{ textAlign: 'left' }}>
                                     <Ref_input
                                         value={this.state.value}
-                                        className="INPUT_search"
+                                        className={this.state.searchCSS}
                                         placeholder="Referral"
                                         enterButton="Copy"
                                         size="large"
@@ -238,7 +261,7 @@ class Referral extends React.Component {
                     <div>
                         <Table columns={columns} dataSource={this.state.tableData}
                             size="middle"
-                            className="referral-table"
+                            className={this.state.referTable}
                             pagination={false}
                         />
                     </div>

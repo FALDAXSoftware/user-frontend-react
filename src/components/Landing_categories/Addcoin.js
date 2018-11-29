@@ -15,8 +15,9 @@ import { Container } from '../../styled-components/homepage/style';
 import {Contact_wrap,Grey_wrap,Head,Head_title,Subtitle,Head_desc,Body,BodyText,Body_form,Form_coin,CoinInput,URLInput,TargetInput,EmailInput,MsgInput,LeftP,RightInput,Left,OneDiv,TwoDiv,ThreeDiv,FourDiv,FiveDiv,AddButton,Msg,Right_input} from '../../styled-components/landingCategories/contactStyle';    
 import {globalVariables} from "../../Globals"
 let { API_URL } = globalVariables;
+
 export const ContainerContact = styled(Container)`
-    background-color:white; 
+    background-color:${props => props.theme.mode=="dark"?"#041422":"white"};
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -55,7 +56,6 @@ class MediaContact extends React.Component
                 message: 'Please enter valid email address.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
-                    console.log(val,options)
                     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     var bool = re.test(String(val).toLowerCase());
                     return bool;
@@ -124,7 +124,6 @@ class MediaContact extends React.Component
                     })
                 })
                 .catch(error => {
-                   /* console.log(error) */
                 })
           } else {
             this.validator.showMessages();
@@ -162,7 +161,6 @@ class MediaContact extends React.Component
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
                                                     <CoinInput name="coin_name" onChange={this._onChangeFields} value={this.state.fields.coin_name}/>
-                                                    {/* console.log("--->>",this.state.coin_name) */}
                                                     {this.validator.message('coin_name', this.state.fields.coin_name, 'required|alpha_num|max:30', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
@@ -178,7 +176,6 @@ class MediaContact extends React.Component
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
                                                     <URLInput name="url" onChange={this._onChangeFields} value={this.state.fields.url}/>
-                                                    {/* console.log("--->>",this.state.url) */}
                                                     {this.validator.message('url', this.state.fields.url, 'required|url', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
@@ -216,7 +213,6 @@ class MediaContact extends React.Component
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
                                                     <EmailInput name="email" onChange={this._onChangeFields} value={this.state.fields.email}/>
-                                                    {/* console.log("--->>",this.state.email) */}
                                                     {this.validator.message('email', this.state.fields.email, 'required|validEmail', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
@@ -232,7 +228,6 @@ class MediaContact extends React.Component
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
                                                     <MsgInput name="message" onChange={this._onChangeFields} value={this.state.fields.message}/>
-                                                    {/* console.log("Message",this.state.fields) */}
                                                     {this.validator.message('message', this.state.fields.message, 'required', 'text-danger-validation')}
                                                 <AddButton onClick={this.onSubmit}>SUBMIT</AddButton>
                                                 </Right_input>

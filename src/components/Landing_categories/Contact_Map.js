@@ -1,12 +1,20 @@
 import React from "react"
 import { compose, withProps } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import styled from "styled-components";
 
+const MapContainer = styled.div`
+  height:570px;
+  @media(max-width:575px)
+  {
+    height:400px;
+  }
+`
 const MyMapComponent = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `570px` }} />,
+    containerElement: <MapContainer />,
     mapElement: <div style={{ height: `100%` }} />,
   }),
   withScriptjs,

@@ -94,7 +94,6 @@ class BlogDetails extends React.Component {
     }
     render()
     {
-        console.log(this.state.blogsData)
         var Tags = this.state.blogsData!==undefined && this.state.blogsData!=='' && this.state.blogsData!==null ? (this.state.blogsData.tags!==null ? this.state.blogsData.tags.split(',') : "") :"";
         return(
             <div>

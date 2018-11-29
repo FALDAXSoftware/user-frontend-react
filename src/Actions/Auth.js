@@ -3,7 +3,6 @@ import { removeLoader, addLoader } from "./Settings/settings";
 let { API_URL } = globalVariables;
 
 export function deleteAccount(isLoggedIn, value) {
-    /* console.log(isLoggedIn,value) */
     return (dispatch) => {
         dispatch(addLoader())
         fetch(API_URL + "/users/deleteAccount", {
@@ -16,13 +15,11 @@ export function deleteAccount(isLoggedIn, value) {
             body: JSON.stringify(value)
         }).then(response => response.json())
             .then((responseData) => {
-                // console.log(responseData)
                 if (responseData.status == 200)
                     dispatch(Logout(responseData))
 
                 dispatch(removeLoader())
             }).catch(error => {
-                /* console.log("error", error) */
             })
     }
 }
@@ -40,13 +37,11 @@ export function Login(values) {
             body: JSON.stringify(values)
         }).then(response => response.json())
             .then((responseData) => {
-                // console.log(responseData)
                 if (responseData.status == 200)
                     dispatch(loginAction(responseData))
                 else
                     dispatch(errorAction(responseData, "login"))
             }).catch(error => {
-                /* console.log("error", error) */
             })
     }
 }
@@ -88,15 +83,12 @@ export function Signup(values) {
         }).then(response => response.json())
             .then((responseData) => {
                 if (responseData.status == 200) {
-                    /* console.log("Response Data") */
                     dispatch(signupAction(responseData))
                 }
                 else {
-                    /*  console.log("Error") */
                     dispatch(errorAction(responseData))
                 }
             }).catch(error => {
-                /*  console.log('error', error) */
             })
     }
 }
@@ -145,7 +137,6 @@ export const forgotData = (value) => dispatch => {
 }
 
 export function resetAction(value) {
-    /*  console.log(value) */
     return (dispatch) => {
         fetch(API_URL + "/users/resetPassword", {
             method: "put",
@@ -170,7 +161,6 @@ export const resetData = (value) => dispatch => {
     })
 }
 export const errorAction = (error, status = "") => dispatch => {
-    /* console.log(error) */
     dispatch({
         type: 'ERROR',
         payload: error,

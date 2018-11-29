@@ -5,7 +5,6 @@ let { API_URL } = globalVariables;
 
 export function passwordChange(isLoggedIn,values)
 {
-    /* console.log(isLoggedIn,values) */
         return(dispatch) => {
         dispatch(addLoader())
         fetch(API_URL + "/users/changePassword",{
@@ -17,11 +16,10 @@ export function passwordChange(isLoggedIn,values)
         })
         .then(response => response.json())  
         .then((responseData) => {
-            /* console.log(responseData); */
             dispatch(passwordChangeData(responseData))
             dispatch(removeLoader())
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => {  })
     } 
 }
 export function clearPassword()
@@ -42,7 +40,6 @@ export const passwordChangeData = (data) => dispatch => {
 
 export function TF_Enable(isLoggedIn)
 {
-    /* console.log(isLoggedIn) */
     return(dispatch) => {
         dispatch(addLoader())
         fetch(API_URL + "/users/setup-two-factor",{
@@ -53,11 +50,10 @@ export function TF_Enable(isLoggedIn)
         })
         .then(response => response.json())
         .then((responseData) => {
-        /*     console.log(responseData); */
             dispatch(QRData(responseData))
             dispatch(removeLoader())
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => { })
     } 
 }
 
@@ -74,7 +70,6 @@ export const QRData = (data) => dispatch => {
 
 export function verifyTF(isLoggedIn,value)
 {
-   /*  console.log(isLoggedIn,value) */
     return(dispatch) => {
         dispatch(addLoader())
         fetch(API_URL + "/users/verify-two-factor",{
@@ -86,12 +81,11 @@ export function verifyTF(isLoggedIn,value)
         })
         .then(response => response.json())
         .then((responseData) => {
-            /* console.log(responseData); */
             dispatch(verifyQRData(responseData));
             dispatch(getProfileDataAction(isLoggedIn));
             dispatch(removeLoader())
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => {  })
     } 
 }
 
@@ -106,7 +100,6 @@ export const verifyQRData = (data) => dispatch => {
 
 export function TF_Disable(isLoggedIn)
 {
-   /*  console.log(isLoggedIn) */
     return(dispatch) => {
         dispatch(addLoader())
         fetch(API_URL + "/users/disable-two-factor",{
@@ -117,12 +110,11 @@ export function TF_Disable(isLoggedIn)
         })
         .then(response => response.json())
         .then((responseData) => {
-          /*   console.log(responseData); */
             dispatch(disableAction(responseData));
             dispatch(getProfileDataAction(isLoggedIn));
             dispatch(removeLoader())
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => {  })
     } 
 }
 
@@ -135,7 +127,6 @@ export const disableAction = (data) => dispatch =>{
 
 export function kycFormAction(isLoggedIn,value)
 {
-    /* console.log(isLoggedIn,value) */
     return(dispatch) => {
         dispatch(addLoader())
         fetch(API_URL + "/users/add-kyc-details",{
@@ -147,18 +138,16 @@ export function kycFormAction(isLoggedIn,value)
         })
         .then(response => response.json())
         .then((responseData) => {
-            /* console.log(responseData); */
             if((value.front_doc!==undefined && value.front_doc!=="") || (value.ssn!=="" && value.ssn!==undefined))
             dispatch(getProfileDataAction(isLoggedIn))
             dispatch(kycformData(responseData));
             dispatch(removeLoader())
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => { })
     } 
 }
 
 export const kycformData = (data) => dispatch =>{
-    /* console.log("ABCD",data) */
     dispatch({
         type: 'KYCFORMDATA',
         payload: data
@@ -167,7 +156,6 @@ export const kycformData = (data) => dispatch =>{
 
 export function kycDoc(isLoggedIn, value,type)
 {
-    /* console.log(isLoggedIn,value,type) */
     return(dispatch) => {
         dispatch(addLoader())
         fetch(API_URL + "/users/add-kyc-docs",{
@@ -179,7 +167,6 @@ export function kycDoc(isLoggedIn, value,type)
         })
         .then(response => response.json())
         .then((responseData) => {
-            /* console.log(responseData); */
             var Data = {};
             if(type=="front-doc")
             {Data["front_doc"]=responseData.data}
@@ -188,11 +175,10 @@ export function kycDoc(isLoggedIn, value,type)
             dispatch(kycDocData(responseData));
             dispatch(removeLoader())
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => {  })
     } 
 }
 export const kycDocData = (data) => dispatch =>{
-    /* console.log("ABCD",data) */
     dispatch({
         type: 'KYCDOCDATA',
         payload: data

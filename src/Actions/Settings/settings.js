@@ -5,7 +5,6 @@ let { API_URL } = globalVariables;
 /* Action to Update Profile */
 export function profileupdateAction(isLoggedIn,form)
 {
-    /* console.log(isLoggedIn,form) */
     return(dispatch) => {
         dispatch(addLoader());
         fetch(API_URL + "/users/update",{
@@ -17,11 +16,10 @@ export function profileupdateAction(isLoggedIn,form)
         })
         .then(response => response.json())
         .then((responseData) => {
-            /* console.log(responseData); */
            dispatch(profileupdatedData(responseData))
            dispatch(getProfileDataAction(isLoggedIn))
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => {  })
     } 
 }
 export function clearEditData() {
@@ -54,11 +52,10 @@ export const getProfileDataAction = (token) => dispatch => {
     })
     .then(response => response.json())
     .then((responseData) => {
-        /* console.log("I m in API get",responseData) */
         dispatch(addprofileData(responseData))
         dispatch(removeLoader());
     })
-    .catch(error => { /* console.log(error) */ })
+    .catch(error => {  })
 
 }
 
@@ -76,7 +73,6 @@ export const addprofileData = (Data) => dispatch => {
 
 export function removepicAction(isLoggedIn,form)
 {
-   /*  console.log(isLoggedIn,form) */
     return(dispatch) => {
 
         fetch(API_URL + "/users/update",{
@@ -88,10 +84,9 @@ export function removepicAction(isLoggedIn,form)
         })
         .then(response => response.json())
         .then((responseData) => {
-            /* console.log(responseData); */
             dispatch(getProfileDataAction(isLoggedIn))
         })
-        .catch(error => {/*  console.log(error) */ })
+        .catch(error => { })
     } 
 
 }

@@ -250,7 +250,15 @@ class Login_Form extends React.Component {
 
         /* if (this.props.forgotParam !== undefined) { value['email_verify_token'] = this.props.forgotParam[1]; } */
         /* console.log("I am in") */
-        this.props.Login(value);
+        var obj = {};
+        obj["email"] = value.email;
+        obj["password"] = value.password;
+        obj["device_type"] = 0 ; 
+        if(value.otp!==null && value.otp!=="" && value.otp!==undefined)
+        {
+          obj['otp']==value.otp;
+        }
+        this.props.Login(obj);
       } else {
         this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue.")
       }

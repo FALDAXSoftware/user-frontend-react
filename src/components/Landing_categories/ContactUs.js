@@ -18,7 +18,7 @@ import {globalVariables} from "../../Globals"
 let { API_URL } = globalVariables;
 
 export const ContainerContact = styled(Container)`
-    background-color:white; 
+    background-color:${props => props.theme.mode=="dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -39,7 +39,10 @@ class ContactUs extends React.Component
                 loader:false
             },
             startDate: null,
-            flag_drop:null
+            flag_drop:null,
+            email:"",
+            marker:'',
+            call:''
         };
         this._onChangeFields = this._onChangeFields.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -49,7 +52,6 @@ class ContactUs extends React.Component
                 message: 'Please enter valid email address.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
-                    console.log(val,options)
                     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     var bool = re.test(String(val).toLowerCase());
                     return bool;
@@ -57,8 +59,32 @@ class ContactUs extends React.Component
             }
         });
     }
+    componentWillReceiveProps(props,newProps)
+    {
+        if(props.theme!==undefined)
+        {
+            if(props.theme !== this.state.theme)
+            {
+                if(props.theme==false)
+                this.setState({email:"/images/LandingCat/map_icon.png",marker:"/images/LandingCat/email_icon.png",call:"/images/LandingCat/call_icon.png" })
+                else
+                this.setState({email:"/images/LandingCat/marker_blue.png",marker:"/images/LandingCat/email_blue.png",call:"/images/LandingCat/call_blue.png" })
+            }
+        }
+    }
     componentDidMount()
     {
+        if(this.props.theme!==undefined)
+        {
+            
+            if(this.props.theme !== this.state.theme)
+            {
+                if(this.props.theme==false)
+                this.setState({email:"/images/LandingCat/map_icon.png",marker:"/images/LandingCat/email_icon.png",call:"/images/LandingCat/call_icon.png" })
+                else
+                this.setState({email:"/images/LandingCat/marker_blue.png",marker:"/images/LandingCat/email_blue.png",call:"/images/LandingCat/call_blue.png" })
+            }
+        }
         this.setState({loader:true})
         fetch(API_URL + "/get-contact-details",{
             method:"get",
@@ -68,10 +94,9 @@ class ContactUs extends React.Component
         })
         .then(response => response.json())
         .then((responseData) => {
-            /* console.log("I m in API get",responseData) */
             this.setState({contact:responseData.data,loader:false});
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => {  })
     }
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
@@ -179,7 +204,7 @@ class ContactUs extends React.Component
                                     <Row>
                                         <Col lg={24} xl={8}>
                                             <Main_wrap1>
-                                                <Img1 src="/images/LandingCat/map_icon.png"/>
+                                                <Img1 src={this.state.marker}/>
                                                 <Main>
                                                     <Sub_span>Location:</Sub_span>
                                                     <Sub_p>{this.state.contact.address}</Sub_p>
@@ -188,7 +213,7 @@ class ContactUs extends React.Component
                                         </Col>
                                         <Col lg={24} xl={8}>
                                             <Main_wrap2>
-                                                <Img2 src="/images/LandingCat/email_icon.png"/>
+                                                <Img2 src={this.state.email}/>
                                                 <Main>
                                                     <Sub_span>Email:</Sub_span>
                                                     <Sub_p>{this.state.contact.email}</Sub_p>
@@ -197,7 +222,7 @@ class ContactUs extends React.Component
                                         </Col>
                                         <Col lg={24} xl={8}>
                                             <Main_wrap3>   
-                                                <Img3 src="/images/LandingCat/call_icon.png"/>
+                                                <Img3 src={this.state.call}/>
                                                 <Main>
                                                     <Sub_span>Phone:</Sub_span>
                                                     <Sub_p>{this.state.contact.phone}</Sub_p>
@@ -216,5 +241,10 @@ class ContactUs extends React.Component
         );
     }
 }
+function mapStateToProps(state, ownProps) {
+    return ({
+        theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+    });
+}
 
-export default ContactUs;
+export default connect(mapStateToProps)(ContactUs);

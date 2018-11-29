@@ -52,7 +52,7 @@ class BlogComments extends React.Component
             .then((responseData) => {
                 this.setState({comments:responseData.data.comments,commentcount:responseData.data.commentCount,blogID:blogID,total:responseData.data.commentCount/10,loader:false});
             })
-            .catch(error => { /* console.log(error) */ })
+            .catch(error => { })
         }
     }
     componentDidMount()
@@ -81,7 +81,7 @@ class BlogComments extends React.Component
         .then((responseData) => {
             this.setState({page:page,comments:this.state.comments.concat(responseData.data.comments),total:responseData.data.commentCount/10,loader:false});
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => {  })
     }
     onSubmit()
     {
@@ -116,9 +116,9 @@ class BlogComments extends React.Component
             .then((responseData) => {
                 this.setState({comments:responseData.data.comments,commentcount:responseData.data.commentCount,total:responseData.data.commentCount/10,page:1,loader:false,commentTemp:""});
             })
-            .catch(error => { /* console.log(error) */ })
+            .catch(error => {  })
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => {  })
         }
         else
         this.setState({showMsg:true});
@@ -127,9 +127,10 @@ class BlogComments extends React.Component
     {
         return(
             <div>
+                {this.state.comments.length>0?
                 <PostHead_below>
                     <PostHead_span>Comments ({this.state.commentcount})</PostHead_span>
-                </PostHead_below>
+                </PostHead_below>:""}
                 <AllComments>
                     {this.state.comments.length>0?
                     this.state.comments.map(function(temp,index){

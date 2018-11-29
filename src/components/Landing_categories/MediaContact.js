@@ -14,7 +14,7 @@ import {globalVariables} from "../../Globals"
 let { API_URL } = globalVariables;
 
 export const ContainerContact = styled(Container)`
-    background-color:white; 
+    background-color:${props => props.theme.mode=="dark"?"#041422":"white"};
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -45,10 +45,9 @@ class MediaContact extends React.Component
         })
         .then(response => response.json())
         .then((responseData) => {
-            /* console.log("I m in API get",responseData) */
             this.setState({contact:responseData.data});
         })
-        .catch(error => { /* console.log(error) */ })
+        .catch(error => {  })
     }
     render()
     {
@@ -77,7 +76,7 @@ class MediaContact extends React.Component
                                             <Col_wrap_l>
                                                 <Mediaspan>PRESS</Mediaspan>
                                                 {this.state.contact!==null?
-                                                <MediaP>Please refer to <Blue_tag>{this.state.contact.press}</Blue_tag> for our latest announcements.</MediaP> 
+                                                <MediaP>Please refer to <Link to="/blogs"><Blue_tag>{this.state.contact.press}</Blue_tag></Link> for our latest announcements.</MediaP> 
                                                 :""}
                                             </Col_wrap_l>
                                         </LT_div>

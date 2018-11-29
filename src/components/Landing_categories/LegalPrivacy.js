@@ -19,10 +19,10 @@ const TabPane = Tabs.TabPane;
 const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom: 25px;
-  background-color: #f5f6fa;
+  background-color: ${props => props.theme.mode=="dark"?"#01090f":"#f5f6fa"};
 `
 const ProfileDiv = styled.div`
-  background-color: #ffffff;
+  background-color: ${props => props.theme.mode=="dark"? "#041422" :"#ffffff"};
   margin:auto;
   width: 100%;
   max-width: 1170px;
@@ -40,6 +40,7 @@ const About_Faldax_Title = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
+  color:${props => props.theme.mode=="dark" ? "white":""};
   &:before {
     content: '';
     width: calc(50% - 235px);
@@ -61,7 +62,9 @@ const About_Faldax_Title = styled.span`
     top: calc(50% - 1px);
   }
 `;
-
+const Content = styled.div`
+  color:${props => props.theme.mode=="dark" ? "white" : ""} !important;
+`
 const Our_Mission = styled.span`
   font-size: 40px;
   font-family: "Open sans";
@@ -263,11 +266,9 @@ export default class AboutUs extends React.Component {
     })
     .then(response => response.json())
     .then((responseData) => {
-        /* console.log("I m in API get",responseData) */
-       /*  console.log(responseData) */
         this.setState({aboutContent:responseData.data.content,loader:false})
     })
-    .catch(error => { /* console.log(error) */ })
+    .catch(error => {  })
     
   }
   teamClick(value) {
@@ -291,11 +292,11 @@ export default class AboutUs extends React.Component {
               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                 <About_Faldax_Title>Legal & Privacy </About_Faldax_Title>
               </div>
-              <div style={{ marginTop: '20px' }}>
+              <Content style={{ marginTop: '20px' }}>
                 <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
                 {ReactHtmlParser(this.state.aboutContent)} 
                 </span>
-              </div>
+              </Content>
 {/*               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                 <Our_Mission> OUR MISSION </Our_Mission>
               </div>

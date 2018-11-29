@@ -16,7 +16,9 @@ export default class CountryPick extends React.Component {
         super(props);
         this.state = {
             countries: [],
-            country_selected: ""
+            country_selected: "",
+            CSS:'',
+            theme:''
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -30,16 +32,15 @@ export default class CountryPick extends React.Component {
     handleBlur() {
         /* console.log('blur'); */
     }
-
     componentDidMount() {
         fetch(API_URL + '/users/countries', {
-            method: "get",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: "Bearer " + this.props.isLoggedIn
-            }
-        })
+                method: "get",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer " + this.props.isLoggedIn
+                }
+            })
             .then(response => response.json())
             .then((responseData) => {
                 this.setState({ countries: responseData.data, fetching: false, callOnce: true });
@@ -47,15 +48,30 @@ export default class CountryPick extends React.Component {
                 Countries = responseData.data;
 
             });
+            if(this.props.theme!==undefined)
+            {
+            
+                if(this.props.theme !== this.state.theme)
+                {
+                    if(this.props.theme==false)
+                    {
+                        this.setState({CSS:"Country_Select" });
+                    }
+                    else
+                    {
+                        this.setState({CSS:"Country_Select_night"})
+                    }
+                }
+            }
     }
 
     render() {
         return (
             <Select
                 showSearch
-                value={this.state.country_selected !== "" ? this.state.country_selected : this.props.profileDetails.country}
+                value={this.state.country_selected !== "" ? this.state.country_selected : (this.props.kyc=="kyc"?"":this.props.profileDetails.country)}
                 placeholder="Select a Country"
-                className="Country_Select"
+                className={this.state.CSS}
                 dropdownClassName="country_select_drop"
                 optionFilterProp="children"
                 onChange={this.handleChange}
