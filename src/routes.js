@@ -9,6 +9,7 @@ import Footer from '../src/components/Landing/Footers/Footer';
 
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import HomePage from "../src/components/Landing/HomePage";
+import Wallet from "../src/components/LoggedCategories/Wallet/wallet";
 
 const routes = [
     {
@@ -20,6 +21,11 @@ const routes = [
       exact:false,
       path: "/home",
       component:HomePage 
+    },
+    {
+      exact:false,
+      path: "/wallet",
+      component:Wallet 
     }
   ];
   

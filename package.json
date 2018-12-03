@@ -21,6 +21,7 @@
     "rc-form": "^2.2.2",
     "rc-form-validation": "^2.5.0",
     "react": "^16.4.2",
+    "react-bootstrap": "^0.32.4",
     "react-chartjs-2": "^2.7.4",
     "react-copy-to-clipboard": "^5.0.1",
     "react-datepicker": "^1.6.0",

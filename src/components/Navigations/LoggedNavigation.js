@@ -132,7 +132,6 @@ const NavLink = styled(Link)`
         color:#1890ff !important;
     }
 `
-
 class LoggedNavigation extends Component {
     constructor(props) {
         super(props);
@@ -245,7 +244,7 @@ class LoggedNavigation extends Component {
                 >
                     <Menu_item onClick={this.showComing} key="1">DASHBOARD</Menu_item>
                     <Menu_item onClick={this.showComing} key="2">TRADE</Menu_item>
-                    <Menu_item onClick={this.showComing} key="3">WALLET</Menu_item>
+                    <Menu_item key="3"><NavLink className="Nav_selected" to="/wallet">Wallet</NavLink></Menu_item>
                     <Menu_item onClick={this.showComing} key="4">HISTORY</Menu_item>
                 </Menu_main>
                 <RightCol>

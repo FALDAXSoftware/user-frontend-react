@@ -1176,3 +1176,8 @@ table .ant-table-tbody > tr > td {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+#dropdown-size-medium .caret
+{
+  color:#4c84ff;
+}
