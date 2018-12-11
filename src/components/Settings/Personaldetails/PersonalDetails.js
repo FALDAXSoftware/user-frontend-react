@@ -43,7 +43,7 @@ const ImageDiv = styled.img`
     width: 160px;
 `
 const Image_input = styled(Input) `
-    display:none;
+    display:none !important;
 `
 const Image_up = styled.div`
     margin-top:30px;

@@ -6,11 +6,11 @@ import styled from 'styled-components';
 
 import Tableofcoin from './TableofCoin'
 import WalletDetails from './WalletDetails'
-import Navigation from '../../Navigations/Navigation';
+import LoggedNavigation from '../../Navigations/LoggedNavigation';
 import CommonFooter from "../../Landing/Footers/Footer_home";
 import { Container } from '../../../styled-components/homepage/style';
 import {Contact_wrap, Grey_wrap} from "../../../styled-components/landingCategories/contactStyle"
-import {Header_wrap,SearchCoin,MY_wallet,Total,Tot,Money,Currency,CoinTable,SearchCoin2} from "../../../styled-components/loggedStyle/walletStyle";
+import {Header_wrap,SearchCoin,MY_wallet,Total,Tot,Money,Currency,CoinTable,SearchCoin2,Header_wrap2} from "../../../styled-components/loggedStyle/walletStyle";
 
 const Search = Input.Search;
 
@@ -34,9 +34,32 @@ const ContainerContact2 = styled(ContainerContact)`
 const Inputsearch = styled(Search)`
     width: 100%;
     height: 40px;
+    >input
+    {
+        background-color:${props=>props.theme.mode=="dark"?"#020e18":""};
+    }
+    >span>i
+    {
+        color:${props=>props.theme.mode=="dark"?"white":""};
+    }
+`
+const Table_wrap = styled.div `  
+    margin-left:-30px;
+    margin-right:-30px; 
+    @media(max-width:1160px)
+    {
+        overflow:scroll
+    }
 `
 class Wallet extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+
+        };
+    }
     searchChange(value)
     {
 
@@ -49,7 +72,7 @@ class Wallet extends React.Component
     {
         return(
             <Contact_wrap>
-                <Navigation />
+                <LoggedNavigation />
                 <Grey_wrap>
                     <ContainerContact>
                         <Header_wrap>
@@ -68,15 +91,17 @@ class Wallet extends React.Component
                             <Total>
                                 <Tot>Total:</Tot>
                                 <Money>$72,454.27</Money>
+                                <Currency>USD</Currency>
                             </Total>
-                            <Currency>USD</Currency>
                         </Header_wrap>
                         <CoinTable>
-                            <Tableofcoin />
+                            <Table_wrap>
+                                <Tableofcoin />
+                            </Table_wrap>
                         </CoinTable>
                     </ContainerContact>
                     <ContainerContact2>
-                        <Header_wrap>
+                        <Header_wrap2>
                             <MY_wallet>
                                 <span>COINS</span>
                             </MY_wallet>
@@ -89,9 +114,11 @@ class Wallet extends React.Component
                                     onPressEnter={e => this.submitSearch(e)}
                                 />
                             </SearchCoin2>
-                        </Header_wrap>
+                        </Header_wrap2>
                         <CoinTable>
-                            <Tableofcoin />
+                            <Table_wrap>
+                                <Tableofcoin />
+                            </Table_wrap>
                         </CoinTable>
                     </ContainerContact2>
                     <WalletDetails/>

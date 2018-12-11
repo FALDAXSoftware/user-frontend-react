@@ -140,7 +140,8 @@ class LoggedNavigation extends Component {
             modal: 0,
             comingSoon: false,
             faldaxLogo:"",
-            faldax:""
+            faldax:"",
+            selected:''
         }
     }
     componentWillReceiveProps(props,newProps)
@@ -157,6 +158,18 @@ class LoggedNavigation extends Component {
             }
     }
     componentDidMount() {
+        console.log("wakeup",this.props);
+        if(this.props.location)
+        {
+            if(this.props.location.pathname.includes("trade"))
+            {
+                this.setState({selected:"2"})
+            }
+            else if(this.props.location.pathname.includes("wallet"))
+            {
+                this.setState({selected:"3"})
+            }
+        }
         if(this.props.theme!==undefined)
         {
             if(this.props.theme !== this.state.theme)
@@ -243,7 +256,7 @@ class LoggedNavigation extends Component {
                     selectedKeys={this.state.selected}
                 >
                     <Menu_item onClick={this.showComing} key="1">DASHBOARD</Menu_item>
-                    <Menu_item onClick={this.showComing} key="2">TRADE</Menu_item>
+                    <Menu_item key="2"><NavLink className="Nav_selected" to="/trade">TRADE</NavLink></Menu_item>
                     <Menu_item key="3"><NavLink className="Nav_selected" to="/wallet">Wallet</NavLink></Menu_item>
                     <Menu_item onClick={this.showComing} key="4">HISTORY</Menu_item>
                 </Menu_main>
@@ -254,8 +267,8 @@ class LoggedNavigation extends Component {
                     <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                     <Profile> PROFILE </Profile>
                     <a onClick={this.showComing} href="#">DASHBOARD</a>
-                    <a onClick={this.showComing} href="#">TRACE</a>
-                    <a onClick={this.showComing} href="#">WALLET</a>
+                    <Link to="/trade">TRADE</Link>
+                    <Link to="/wallet">WALLET</Link>
                     <a onClick={this.showComing} href="#">HISTORY</a>
                     <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
                 </SideNav>

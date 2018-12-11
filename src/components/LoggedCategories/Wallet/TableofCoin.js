@@ -8,13 +8,12 @@ import { Menu, Dropdown, Icon } from 'antd';
 import {Head,Sub_head,DropMenu,Col1,Bit_img,Bit_text,Bit,Bit_price,Price,Icon_wrap} from "../../../styled-components/loggedStyle/walletStyle";
 
 const Table_coin = styled(Table) `
-    
+    @media(max-width:1160px)
+    {
+        min-width:1160px;
+    }
 `
-const Table_wrap = styled.div `  
-    margin-left:-30px;
-    margin-right:-30px; 
-  
-`
+
 const menu = (
     <Menu>
       <Menu.Item key="0">INR</Menu.Item>
@@ -27,8 +26,7 @@ export default class TableofCoin extends React.Component
     render()
     {
         return(
-            <Table_wrap>
-                <Table_coin  condensed hover>
+                <Table_coin  condensed>
                     <thead>
                         <Head>
                             <Sub_head>Coins</Sub_head>
@@ -94,8 +92,7 @@ export default class TableofCoin extends React.Component
                             </td>
                         </Col1>
                     </tbody>
-                </Table_coin>
-            </Table_wrap>
+                </Table_coin>       
         );
     }
 }
