@@ -24,7 +24,7 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME == 'meghal-faldax') {
                         echo 'Deleting the old build.  '
-                        echo 'rm -r /var/empty/*'
+                        sh 'rm -r /var/empty/*'
                         echo 'Old build deleted, Deploying new build'
                         sh 'cp -a build/. /var/empty/'
                         echo 'Build Deployed. '
