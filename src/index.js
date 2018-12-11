@@ -19,7 +19,7 @@ store.subscribe(() =>{
   })
 /* Appication start from here */
 ReactDOM.render(
-    <Router>
+    <Router basename={'/faldax/frontend'}>
         <Provider store={store}>
             <App {...this.props}/>
         </Provider>
