@@ -83,7 +83,7 @@ export default class Homefirst extends Component {
                 </SubHeading>
             </Col>
             <ImageCol lg={10}>
-              <Img src="/images/logo-lg.png" width="80%" className="wow fadeInUp" data-wow-delay="1s" />
+              <Img src="/faldax/frontend/images/logo-lg.png" width="80%" className="wow fadeInUp" data-wow-delay="1s" />
             </ImageCol>
           </BannerRow>
         </Container>
