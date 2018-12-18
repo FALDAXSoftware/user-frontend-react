@@ -6,10 +6,7 @@ import styled from 'styled-components';
 
 /* Styled componets */
 const Graph_wrapper = styled.div`
-  background-color: #fff;
-  border: 1px solid #f1f1f1;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: ${props => props.theme.mode=="dark"?"#041b2c":"#fff"};
   padding: 12.5px;
   width: 100%;
 `;
@@ -17,12 +14,13 @@ const Graph_wrapper = styled.div`
 const Image_wrapper = styled.img`
     width: 25px;
     height: 25px;
+    background-color:${props => props.theme.mode=="dark"?"#041b2c":""};
 `;
 
 const Span_coin_name = styled.span`
     font-size: 16px;
     font-family: "Open sans";
-    color: rgba( 0, 0, 0, 0.231 );
+    color: ${props=>props.theme.mode=="dark"?"#617090":"rgba( 0, 0, 0, 0.231 )"};
     font-weight: bold;
     line-height: 1.125;
     text-align: left;
@@ -36,7 +34,7 @@ const Span_coin_name_wrapper = styled.div`
 const Span_coin_price = styled.span`
     font-size: 20px;
     font-family: "Open sans";
-    color: rgb( 0, 0, 0 );
+    color: ${props => props.theme.mode=="dark"?"white":"rgb( 0, 0, 0 )"};
     font-weight: bold;
     line-height: 1.1;
     text-align: left;
@@ -56,7 +54,9 @@ const Span_coin_percentage = styled.span`
 const Mini_graph = ({data}) => {
     const { coinName, image, price, percentage } = data;
     return (
-        <Graph_wrapper>
+        <Graph_wrapper className="9292">
+        {
+                                        console.log("ABCDF")}
             <Row>
                 <Span_coin_name_wrapper>
                     <Col xs={19} offset={5}>

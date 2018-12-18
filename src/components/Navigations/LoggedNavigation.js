@@ -169,6 +169,14 @@ class LoggedNavigation extends Component {
             {
                 this.setState({selected:"3"})
             }
+            else if(this.props.location.pathname.includes("dashboard"))
+            {
+                this.setState({selected:"1"})
+            }
+            else if(this.props.location.pathname.includes("history"))
+            {
+                this.setState({selected:"4"})
+            }
         }
         if(this.props.theme!==undefined)
         {
@@ -255,10 +263,10 @@ class LoggedNavigation extends Component {
                     defaultSelectedKeys={['1']}
                     selectedKeys={this.state.selected}
                 >
-                    <Menu_item onClick={this.showComing} key="1">DASHBOARD</Menu_item>
+                    <Menu_item key="1"><NavLink className="Nav_selected" to="/dashboard">DASHBOARD</NavLink></Menu_item>
                     <Menu_item key="2"><NavLink className="Nav_selected" to="/trade">TRADE</NavLink></Menu_item>
                     <Menu_item key="3"><NavLink className="Nav_selected" to="/wallet">Wallet</NavLink></Menu_item>
-                    <Menu_item onClick={this.showComing} key="4">HISTORY</Menu_item>
+                    <Menu_item key="4"><NavLink className="Nav_selected" to="/history">HISTORY</NavLink></Menu_item>
                 </Menu_main>
                 <RightCol>
                     <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />
@@ -269,7 +277,7 @@ class LoggedNavigation extends Component {
                     <a onClick={this.showComing} href="#">DASHBOARD</a>
                     <Link to="/trade">TRADE</Link>
                     <Link to="/wallet">WALLET</Link>
-                    <a onClick={this.showComing} href="#">HISTORY</a>
+                    <Link to="/history">HISTORY</Link>
                     <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
                 </SideNav>
                 <ComingSoon comingCancel={(e)=>this.comingCancel(e)} visible={this.state.comingSoon}/>

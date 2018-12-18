@@ -23,7 +23,7 @@ const WalletModal = styled(Modal)`
 const Label = styled.label`
     font-size: 13px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark"?"rgb( 255, 255, 255 )":"black"};
+    color: ${props => props.theme.mode=="dark" ? "rgb( 255, 255, 255 )" : "black" };
 
 `
 const Modal_wrap = styled.div`
@@ -51,7 +51,7 @@ const Title_div = styled.div`
 const Title = styled.span`
     font-size: 19.846px;
     font-family: "Open Sans";
-    color: rgb( 255, 255, 255 );
+    color: rgb(255, 255, 255);
     font-weight: bold;
     text-transform: uppercase;
 ` 

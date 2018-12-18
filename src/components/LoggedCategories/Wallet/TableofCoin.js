@@ -51,7 +51,7 @@ export default class TableofCoin extends React.Component
                     <tbody>
                         <Col1>
                             <td>
-                                <Bit_img src="./images/LoggedCat/Bit_img.png"/>
+                                <Bit_img src="/images/LoggedCat/Bit_img.png"/>
                                 <Bit_text><Bit>BITCOIN</Bit><Bit_price>0.5433 BTC</Bit_price></Bit_text>
                             </td>
                             <td><Price>$3605.99</Price></td>
@@ -65,7 +65,7 @@ export default class TableofCoin extends React.Component
                         </Col1>
                         <Col1>
                             <td>
-                                <Bit_img src="./images/LoggedCat/Bit_img.png"/>
+                                <Bit_img src="/images/LoggedCat/Bit_img.png"/>
                                 <Bit_text><Bit>BITCOIN</Bit><Bit_price>0.5433 BTC</Bit_price></Bit_text>
                             </td>
                             <td><Price>$3605.99</Price></td>
@@ -79,7 +79,7 @@ export default class TableofCoin extends React.Component
                         </Col1>
                         <Col1>
                             <td>
-                                <Bit_img src="./images/LoggedCat/Bit_img.png"/>
+                                <Bit_img src="/images/LoggedCat/Bit_img.png"/>
                                 <Bit_text><Bit>BITCOIN</Bit><Bit_price>0.5433 BTC</Bit_price></Bit_text>
                             </td>
                             <td><Price>$3605.99</Price></td>

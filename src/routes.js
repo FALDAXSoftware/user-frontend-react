@@ -11,7 +11,8 @@ import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom
 import HomePage from "../src/components/Landing/HomePage";
 import Wallet from "../src/components/LoggedCategories/Wallet/wallet";
 import Trade from "../src/components/LoggedCategories/Trade/trade"
-
+import History2 from "../src/components/LoggedCategories/History/history"
+import Dashboard from "../src/components/LoggedCategories/Dashboard/dashboard"
 const routes = [
     {
       exact:false,
@@ -32,6 +33,16 @@ const routes = [
       exact:false,
       path: "/trade",
       component:Trade 
+    },
+    {
+      exact:false,
+      path: "/history",
+      component:History2
+    },
+    {
+      exact:false,
+      path: "/dashboard",
+      component:Dashboard
     }
   ];
   

@@ -151,7 +151,7 @@ export default class WalletDetails extends React.Component
                         <Row>
                             <Col xxl={12} xl={12} lg={24} md={24}>
                                 <Left_Bit>
-                                    <CryptImg><img src="./images/LoggedCat/Bit_wallet.png"/></CryptImg>
+                                    <CryptImg><img src="/images/LoggedCat/Bit_wallet.png"/></CryptImg>
                                     <CryptAmt>
                                         <BTC_amt>0.05218<BTC>BTC</BTC></BTC_amt>
                                         <FIAT_amt>$874.23<AMT>USD</AMT></FIAT_amt>
