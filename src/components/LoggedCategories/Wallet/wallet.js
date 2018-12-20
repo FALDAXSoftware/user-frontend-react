@@ -1,49 +1,48 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {connect} from "react-redux"
-import { Row, Col, Tabs, Button,Table,Input,notification,Steps,Menu, Dropdown,Icon } from 'antd';
+import { Input } from 'antd';
 import styled from 'styled-components';
-
-import Tableofcoin from './TableofCoin'
+import Tableofcoin from './TableofCoin';
 import WalletDetails from './WalletDetails'
 import LoggedNavigation from '../../Navigations/LoggedNavigation';
 import CommonFooter from "../../Landing/Footers/Footer_home";
 import { Container } from '../../../styled-components/homepage/style';
-import {Contact_wrap, Grey_wrap} from "../../../styled-components/landingCategories/contactStyle"
-import {Header_wrap,SearchCoin,MY_wallet,Total,Tot,Money,Currency,CoinTable,SearchCoin2,Header_wrap2} from "../../../styled-components/loggedStyle/walletStyle";
+import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
+import {
+    Header_wrap, SearchCoin, MY_wallet, Total, Tot, Money, Currency, CoinTable,
+    SearchCoin2, Header_wrap2
+} from "../../../styled-components/loggedStyle/walletStyle";
 
 const Search = Input.Search;
 
-
 const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode=="dark" ? "#041422" : "white"}; 
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
     padding-bottom: 30px;
 `
 const ContainerContact2 = styled(ContainerContact)`
-    background-color:${props => props.theme.mode=="dark" ? "#041422" : "white"}; 
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
     padding-bottom: 30px;
     margin-top:50px;
 `
-
 const Inputsearch = styled(Search)`
     width: 100%;
     height: 40px;
     >input
     {
-        background-color:${props=>props.theme.mode=="dark"?"#020e18":""};
+        background-color:${props => props.theme.mode == "dark" ? "#020e18" : ""};
     }
     >span>i
     {
-        color:${props=>props.theme.mode=="dark"?"white":""};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
 `
-const Table_wrap = styled.div `  
+const Table_wrap = styled.div`  
     margin-left:-30px;
     margin-right:-30px; 
     @media(max-width:1160px)
@@ -51,26 +50,22 @@ const Table_wrap = styled.div `
         overflow:scroll
     }
 `
-class Wallet extends React.Component
-{
-    constructor(props)
-    {
+
+class Wallet extends Component {
+    constructor(props) {
         super(props);
         this.state = {
 
         };
     }
-    searchChange(value)
-    {
+    searchChange(value) {
 
     }
-    submitSearch(e)
-    {
+    submitSearch(e) {
 
     }
-    render()
-    {
-        return(
+    render() {
+        return (
             <Contact_wrap>
                 <LoggedNavigation />
                 <Grey_wrap>
@@ -83,7 +78,7 @@ class Wallet extends React.Component
                                 <Inputsearch
                                     placeholder="Search Coin"
                                     onChange={value => this.searchChange(value)}
-                                    style={{ }}
+                                    style={{}}
                                     className=""
                                     onPressEnter={e => this.submitSearch(e)}
                                 />
@@ -109,7 +104,7 @@ class Wallet extends React.Component
                                 <Inputsearch
                                     placeholder="Search Coin"
                                     onChange={value => this.searchChange(value)}
-                                    style={{ }}
+                                    style={{}}
                                     className=""
                                     onPressEnter={e => this.submitSearch(e)}
                                 />
@@ -121,7 +116,7 @@ class Wallet extends React.Component
                             </Table_wrap>
                         </CoinTable>
                     </ContainerContact2>
-                    <WalletDetails/>
+                    <WalletDetails />
                 </Grey_wrap>
                 <CommonFooter />
             </Contact_wrap>
@@ -129,4 +124,4 @@ class Wallet extends React.Component
     }
 }
 
-export default Wallet ;
+export default Wallet;

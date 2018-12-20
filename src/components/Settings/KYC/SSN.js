@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {connect} from "react-redux"
-import { Row, Col, Tabs, Button,Input,notification,Steps } from 'antd';
+import { connect } from "react-redux"
 import styled from 'styled-components';
-import {Button_wrap,Sub_wrap,Back_Button,Next_Button} from "./IDselect"
-import {kycFormAction,kycformData} from "../../../Actions/Settings/passwordChange"
+import { Button_wrap, Sub_wrap, Back_Button, Next_Button } from "./IDselect"
+import { kycFormAction } from "../../../Actions/Settings/passwordChange"
 
 const SSN_wrap = styled.div`
     width:42%;
@@ -29,7 +28,7 @@ const SSN_sub = styled.div`
 const SSN_label = styled.label`
     display:block;
     margin-bottom:10px;
-    color:${props =>props.theme.mode=="dark"?"white":""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
 const SSN_input = styled.input`
     display:block;
@@ -39,59 +38,49 @@ const SSN_input = styled.input`
     padding:5px;
     background-color:#f8f8f8;
     border:none;
-    color:${props => props.theme.mode=="dark"?"white":""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
     border-style: solid;
     border-width: 1px;
     border-color: rgb( 212, 218, 223 );
     border-radius: 5px;
-    background-color: ${props => props.theme.mode=="dark"?"#020f18":"rgb( 248, 248, 248 )"};      
+    background-color: ${props => props.theme.mode == "dark" ? "#020f18" : "rgb( 248, 248, 248 )"};      
 `
-class SSN extends React.Component
-{
-    constructor(props)
-    {
+
+class SSN extends Component {
+    constructor(props) {
         super(props);
         this.state = {
-            value_input:""
+            value_input: ""
         }
     }
-    next_step()
-    {
+    next_step() {
         var abcd = {};
-        if(this.state.value_input !== '')
-        {
+        if (this.state.value_input !== '') {
             abcd["ssn"] = this.state.value_input;
             abcd["steps"] = 3;
-            this.props.kycFormAction(this.props.isLoggedIn,abcd);
+            this.props.kycFormAction(this.props.isLoggedIn, abcd);
             this.props.next_step(5)
         }
-        else
-        {
-
-        }
     }
-    back_step()
-    {
+    back_step() {
         this.props.back_step(1)
     }
-    input_change(e)
-    {
-        this.setState({value_input:e.target.value})
+    input_change(e) {
+        this.setState({ value_input: e.target.value })
     }
-    render()
-    {
-        return(
+    render() {
+        return (
             <div>
                 <SSN_wrap>
                     <SSN_sub>
                         <SSN_label>SSN no.</SSN_label>
-                        <SSN_input onChange={this.input_change.bind(this)}/>
+                        <SSN_input onChange={this.input_change.bind(this)} />
                     </SSN_sub>
                 </SSN_wrap>
                 <Button_wrap>
                     <Sub_wrap>
                         <Back_Button onClick={this.back_step.bind(this)} type="primary">Back</Back_Button>
-                        <Next_Button onClick = {this.next_step.bind(this)} type="primary">Next</Next_Button>
+                        <Next_Button onClick={this.next_step.bind(this)} type="primary">Next</Next_Button>
                     </Sub_wrap>
                 </Button_wrap>
             </div>
@@ -102,12 +91,12 @@ class SSN extends React.Component
 const mapStateToProps = (state) => {
     /* console.log("personalDetails",state) */
     return {
-      ...state,
-        isLoggedIn : state.simpleReducer.isLoggedIn !==undefined?state.simpleReducer.isLoggedIn:""
+        ...state,
+        isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? state.simpleReducer.isLoggedIn : ""
     }
-  }
+}
 const mapDispatchToProps = dispatch => ({
-    kycFormAction:(is,data)=>dispatch(kycFormAction(is,data)),
+    kycFormAction: (is, data) => dispatch(kycFormAction(is, data)),
 })
 
-export default  connect(mapStateToProps,mapDispatchToProps)(SSN);
+export default connect(mapStateToProps, mapDispatchToProps)(SSN);

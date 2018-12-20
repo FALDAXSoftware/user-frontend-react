@@ -5,11 +5,13 @@ import { connect } from "react-redux"
 import { Row, Col, Input, notification, Progress, Spin } from 'antd';
 import styled from 'styled-components';
 import { createForm, formShape } from 'rc-form';
-import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { UserIconF, UserIconS, Email_req } from "../../Landing/User_forms/Login_Form"
 import { HeaderCol, Save, Spin_Ex } from "../Personaldetails/PersonalDetails"
-import { passwordChange, passwordChangeData, TF_Enable, QRData, verifyTF, verifyQRData, TF_Disable, disableAction } from "../../../Actions/Settings/passwordChange"
+import {
+    passwordChange, passwordChangeData, TF_Enable, QRData, verifyTF, verifyQRData,
+    TF_Disable, disableAction
+} from "../../../Actions/Settings/passwordChange";
+import { Eye, ActiveEye } from "../../../Constants/images";
 
 const Wrapper = styled.div``
 const ChangeRow = styled(Row)`
@@ -64,7 +66,6 @@ const Old = styled.div`
     {
         width:87%;
     }
-
 `
 const NewP = styled(Old)`
     margin-top:30px;
@@ -75,22 +76,20 @@ const Repeat = styled(Old)`
 export const Old_label = styled.label`
     font-size: 14.007px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? '#617090' : 'rgba( 80, 80, 80, 0.502 )'};
+    color: ${props => props.theme.mode == "dark" ? '#617090' : 'rgba( 80, 80, 80, 0.502 )'};
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
 `
 const New_label = styled(Old_label)`
-
 `
 const Repeat_label = styled(Old_label)`
-
 `
 export const OldInput = styled(Input)`
     margin-top:5px;
     width: 95%;
-    background-color:${props => props.theme.mode=="dark" ? '#041422' : '#f8f8f8'};
-    color:${props =>props.theme.mode=="dark"?'white':''}
+    background-color:${props => props.theme.mode == "dark" ? '#041422' : '#f8f8f8'};
+    color:${props => props.theme.mode == "dark" ? 'white' : ''}
     display:inline-block;
     font-family: "Open Sans";
     font-size:16;
@@ -105,10 +104,8 @@ export const OldInput = styled(Input)`
     }
 `
 const NewInput = styled(OldInput)`
-
 `
 const RepeatInput = styled(OldInput)`
-
 `
 const Button_div = styled.div`
     margin-top:30px;
@@ -127,13 +124,12 @@ const TwofactorRow = styled(Row)`
     margin-top:40px;
 `
 const TFCol = styled(Col)`
-    
 `
 const Head_TF = styled.p`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    color: ${props => props.theme.mode=="dark"?"#ffffff":"rgb( 80, 80, 80 )"};
+    color: ${props => props.theme.mode == "dark" ? "#ffffff" : "rgb( 80, 80, 80 )"};
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -142,20 +138,20 @@ const IsEnabled = styled.p`
     font-size: 15.008px;
     font-family: "Open Sans";
     margin-bottom:0px !important;
-    color: ${props => props.theme.mode=="dark"?"#617090" : "rgb( 80, 80, 80 )"};
+    color: ${props => props.theme.mode == "dark" ? "#617090" : "rgb( 80, 80, 80 )"};
     margin-top:20px;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
 `
 const Head_text = styled.p`
-    color:${props => props.theme.mode=="dark" ? "white" : "" };
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
 const BarRow = styled(Row)`
     width:81%;
     margin:0 auto;
     height:auto
-    background-color:${props => props.theme.mode=="dark" ? "#01090f" : "#f8f8f8"};
+    background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#f8f8f8"};
     margin-top:45px;
     border:1px solid #d6d6d6;
     border-radius:10px;
@@ -200,7 +196,7 @@ const Key_wrap = styled.div`
 const Key_text = styled.span`
     font-size: 13.007px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? "white" :"rgb( 80, 80, 80 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
     line-height: 1.846;
     text-align: center;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -211,7 +207,7 @@ const Key_text = styled.span`
 const Key = styled.p`
     font-size: 13.007px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? "white" :"#4c84ff"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "#4c84ff"};
     line-height: 1.846;
     text-align: center;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -219,12 +215,11 @@ const Key = styled.p`
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
 `
 const Right_Col = styled(Col)`
-
 `
 const Order_list = styled.ol`
     margin-top:50px;
     text-align:left;
-    color:${props => props.theme.mode=="dark"? "white" : ""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
 const LI = styled.li`
     margin-top:10px;
@@ -235,7 +230,7 @@ const TF_code = styled.div`
     margin-left:40px;
 `
 const TF_label = styled.label`
-color:${props => props.theme.mode=="dark" ? "#4c84ff" :""};
+    color:${props => props.theme.mode == "dark" ? "#4c84ff" : ""};
 `
 const TF_input = styled(Input)`
     width:148px;
@@ -274,11 +269,12 @@ const Progress_bar = styled(Progress)`
     width:100%;
     >div>.ant-progress-text
     {
-        color:${props => props.theme.mode=="dark"?"white":""};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
 `
 let password;
-class Passwordchange extends React.Component {
+
+class Passwordchange extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -338,18 +334,15 @@ class Passwordchange extends React.Component {
                 document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
                 this.props.passwordChange(this.props.isLoggedIn, value);
             } else {
-                if(value.current_password =='' || value.current_password ==null || value.current_password==undefined)
-                {
+                if (value.current_password == '' || value.current_password == null || value.current_password == undefined) {
                     document.querySelectorAll(".oldchange_msg")[0].style.display = "block";
                     this.setState({ current_msg: "Old password is required." })
                 }
-                if(value.new_password =='' || value.new_password ==null || value.new_password==undefined)
-                {
+                if (value.new_password == '' || value.new_password == null || value.new_password == undefined) {
                     document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
                     this.setState({ confirmPass_msg: "Repeat New password is required." })
                 }
-                if(value.confirm_password =='' || value.confirm_password ==null || value.confirm_password==undefined)
-                {
+                if (value.confirm_password == '' || value.confirm_password == null || value.confirm_password == undefined) {
                     document.querySelectorAll(".newchange_msg")[0].style.display = "block";
                     this.setState({ new_msg: "New password is required." })
                 }
@@ -391,9 +384,7 @@ class Passwordchange extends React.Component {
                     document.querySelector("#confirmchange_icon_success").style.display = "none"
                     document.querySelector("#confirmchange_icon_fail").style.display = "none"
                     document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
-                }
-                else
-                {
+                } else {
                     this.setState({ confirmIcon: false })
                     document.querySelector("#confirmchange_icon_success").style.display = "none"
                     document.querySelector("#confirmchange_icon_fail").style.display = "inline-block"
@@ -405,11 +396,11 @@ class Passwordchange extends React.Component {
             var bool = re.test(value);
             var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
             if (numb.test(value) || letters.test(value)) { this.setState({ stroke: "red", percent: 20 }) }
-            if (alphanum.test(value) && value.length < 60) {this.setState({ stroke: "orange", percent: 40 }) }
-            if (alphanum.test(value) && value.length == 6) {this.setState({ stroke: "yellow", percent: 60 }) }
-            if (re.test(value) && value.length == 6) {this.setState({ stroke: "#7CFC00", percent: 80 }) }
-            if (re.test(value) && value.length >= 10 && value.length < 60) {this.setState({ stroke: "#008000", percent: 100 }) }
-            if (re.test(value) && value.length > 60) {this.setState({ stroke: "red", percent: 0 }) }
+            if (alphanum.test(value) && value.length < 60) { this.setState({ stroke: "orange", percent: 40 }) }
+            if (alphanum.test(value) && value.length == 6) { this.setState({ stroke: "yellow", percent: 60 }) }
+            if (re.test(value) && value.length == 6) { this.setState({ stroke: "#7CFC00", percent: 80 }) }
+            if (re.test(value) && value.length >= 10 && value.length < 60) { this.setState({ stroke: "#008000", percent: 100 }) }
+            if (re.test(value) && value.length > 60) { this.setState({ stroke: "red", percent: 0 }) }
             if (value !== "") {
                 if (bool == true) {
                     this.setState({ newpassIcon: true, password: value })
@@ -459,8 +450,7 @@ class Passwordchange extends React.Component {
         /* console.log(this.props) */
         if (this.props.profileDetails.is_twofactor == true) {
             this.props.TF_Disable(this.props.isLoggedIn)
-        }
-        else
+        } else
             this.props.TF_Enable(this.props.isLoggedIn);
     }
     changeOTP(value, field) {
@@ -572,7 +562,7 @@ class Passwordchange extends React.Component {
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (typeEye == "password") ? <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "old")} /> : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "old")} />
+                                    (typeEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this, "old")} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "old")} />
                                 }
                                 <UserIconS id="passchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="passchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
@@ -587,7 +577,7 @@ class Passwordchange extends React.Component {
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (newEye == "password") ? <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "new")} />
+                                    (newEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "new")} />
                                 }
                                 <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
@@ -602,7 +592,7 @@ class Passwordchange extends React.Component {
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (repeatEye == "password") ? <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "repeat")} /> : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "repeat")} />
+                                    (repeatEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this, "repeat")} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "repeat")} />
                                 }
                                 <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />

@@ -1,89 +1,83 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { withRouter ,Link} from 'react-router-dom';
-import { connect } from "react-redux";
-import { Row, Col, Card, Icon, Avatar,Spin } from 'antd';
-import moment from 'moment';
+import { withRouter, Link } from 'react-router-dom';
+import { Spin } from 'antd';
 import styled from 'styled-components';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-
+import ReactHtmlParser from 'react-html-parser';
 import Navigation from '../Navigations/Navigation';
-import {Spin_Ex} from '../../styled-components/homepage/style'
+import { Spin_Ex } from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
-import {Contact_wrap,Grey_wrap,Headcontact,Career_Head,CareerD_body,Btn_div,Job_btn,Body_details,Body_p,Location_p,Details_p} from '../../styled-components/landingCategories/contactStyle';
+import {
+    Contact_wrap, Grey_wrap, Headcontact, Career_Head, CareerD_body, Btn_div,
+    Job_btn, Body_details, Body_p, Location_p, Details_p
+} from '../../styled-components/landingCategories/contactStyle';
 import { globalVariables } from "../../Globals"
 
 export const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode=="dark" ? "#041422" : "white"}; 
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
 `
 
-class CareerDetails extends React.Component
-{
-    constructor(props)
-    {
+class CareerDetails extends Component {
+    constructor(props) {
         super(props);
         this.state = {
-            jobID:null,
-            jobDetails:null,
-            loader:false
+            jobID: null,
+            jobDetails: null,
+            loader: false
         };
     }
-    componentDidMount()
-    {
-        if(this.props.location.search)
-        {
+    componentDidMount() {
+        if (this.props.location.search) {
             let arr = this.props.location.search.split('=');
-            if(arr[0].includes("jobID"))
-            {
-                this.setState({loader:true})
-                fetch(globalVariables.API_URL + `/jobs/get-job-detail?id=${arr[1]}`,{
-                    method:"get",
+            if (arr[0].includes("jobID")) {
+                this.setState({ loader: true })
+                fetch(globalVariables.API_URL + `/jobs/get-job-detail?id=${arr[1]}`, {
+                    method: "get",
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
                     }
                 })
-                .then(response => response.json())
-                .then((responseData) => {
-                    this.setState({jobID:arr[1],jobDetails:responseData.data,loader:false})
-                })
-                .catch(error => { })
+                    .then(response => response.json())
+                    .then((responseData) => {
+                        this.setState({ jobID: arr[1], jobDetails: responseData.data, loader: false })
+                    })
+                    .catch(error => { })
             }
         }
     }
-    render()
-    {
-        return(
+    render() {
+        return (
             <Contact_wrap>
                 <Navigation />
-                    <Grey_wrap>
-                        <ContainerContact>
-                            <Headcontact>
-                                        <Career_Head>Careers</Career_Head>
+                <Grey_wrap>
+                    <ContainerContact>
+                        <Headcontact>
+                            <Career_Head>Careers</Career_Head>
 
-                                        <hr/>
-                            </Headcontact>
-                            <CareerD_body>
-                                <Btn_div>
-                                {this.state.jobDetails!==null?
+                            <hr />
+                        </Headcontact>
+                        <CareerD_body>
+                            <Btn_div>
+                                {this.state.jobDetails !== null ?
                                     <Link to={`/applyjob?jobid=${this.state.jobID}&position=${this.state.jobDetails.position}`}><Job_btn>Apply job</Job_btn></Link>
-                                :""}
-                                </Btn_div>
-                                {this.state.jobDetails!==null?
-                                    <Body_details>
-                                        <Body_p>{this.state.jobDetails.position}</Body_p>
-                                        <Location_p>{this.state.jobDetails.location}</Location_p>
-                                        <Details_p>{ReactHtmlParser(this.state.jobDetails.job_desc)}</Details_p>
-                                    </Body_details>:''
-                                }
-                            </CareerD_body>
-                        </ContainerContact>
-                    </Grey_wrap>
-                <CommonFooter/>
+                                    : ""}
+                            </Btn_div>
+                            {this.state.jobDetails !== null ?
+                                <Body_details>
+                                    <Body_p>{this.state.jobDetails.position}</Body_p>
+                                    <Location_p>{this.state.jobDetails.location}</Location_p>
+                                    <Details_p>{ReactHtmlParser(this.state.jobDetails.job_desc)}</Details_p>
+                                </Body_details> : ''
+                            }
+                        </CareerD_body>
+                    </ContainerContact>
+                </Grey_wrap>
+                <CommonFooter />
                 {(this.state.loader) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : ""}

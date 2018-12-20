@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import styled from "styled-components";
-import { Select, Spin } from 'antd';
-import debounce from 'lodash/debounce';
+import { Select } from 'antd';
 import { globalVariables } from '../../../Globals';
 
 let { API_URL } = globalVariables;
 const Option = Select.Option;
-let Countries = [];
+var Countries = [];
 
-
-export default class CountryPick extends React.Component {
-
+export default class CountryPick extends Component {
     constructor(props) {
         super(props);
         this.state = {
             countries: [],
             country_selected: "",
-            CSS:'',
-            theme:''
+            CSS: '',
+            theme: ''
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -34,42 +30,36 @@ export default class CountryPick extends React.Component {
     }
     componentDidMount() {
         fetch(API_URL + '/users/countries', {
-                method: "get",
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: "Bearer " + this.props.isLoggedIn
-                }
-            })
+            method: "get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        })
             .then(response => response.json())
             .then((responseData) => {
                 this.setState({ countries: responseData.data, fetching: false, callOnce: true });
                 /* console.log(responseData) */
                 Countries = responseData.data;
-
             });
-            if(this.props.theme!==undefined)
-            {
-            
-                if(this.props.theme !== this.state.theme)
-                {
-                    if(this.props.theme==false)
-                    {
-                        this.setState({CSS:"Country_Select" });
-                    }
-                    else
-                    {
-                        this.setState({CSS:"Country_Select_night"})
-                    }
+
+        if (this.props.theme !== undefined) {
+            if (this.props.theme !== this.state.theme) {
+                if (this.props.theme == false) {
+                    this.setState({ CSS: "Country_Select" });
+                } else {
+                    this.setState({ CSS: "Country_Select_night" })
                 }
             }
+        }
     }
 
     render() {
         return (
             <Select
                 showSearch
-                value={this.state.country_selected !== "" ? this.state.country_selected : (this.props.kyc=="kyc"?"":this.props.profileDetails.country)}
+                value={this.state.country_selected !== "" ? this.state.country_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.country)}
                 placeholder="Select a Country"
                 className={this.state.CSS}
                 dropdownClassName="country_select_drop"
@@ -83,4 +73,3 @@ export default class CountryPick extends React.Component {
         );
     }
 }
-

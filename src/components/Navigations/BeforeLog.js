@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoon } from '@fortawesome/free-solid-svg-icons';
+import { Button, Modal } from 'antd';
 
 /* Styled-Components */
 
@@ -14,11 +12,10 @@ export const Day_night_mode = styled.div`
     cursor:pointer;
 `
 export const Exchange = styled.div`
-
     display:inline;
     font-size: 13px;
     font-family: "Open sans";
-    color: ${props => props.color ? "#1890ff" :(props.theme.mode=="dark"?"white":"black") };
+    color: ${props => props.color ? "#1890ff" : (props.theme.mode == "dark" ? "white" : "black")};
     font-weight: 600;
     text-transform: uppercase;
     padding-right: 22px;
@@ -37,7 +34,7 @@ const Login_text = styled.span`
     border-left: 1px solid #f0f0f0;
     font-size: 13px;
     font-family: "Open sans";
-    color:${props => props.theme.mode=="dark" ? "white" : "rgb( 40, 37, 40 )"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb( 40, 37, 40 )"};
     font-weight: bold;
     margin-right: 15px;
     padding-left: 30px;
@@ -93,7 +90,8 @@ const Open = styled.span`
         margin-right:15px;
     }
 `
-export default class Beforelog extends React.Component {
+
+export default class Beforelog extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -129,7 +127,6 @@ export default class Beforelog extends React.Component {
     render() {
         return (
             <div>
-
                 {/*  <Day_night_mode>
                             <span> <FontAwesomeIcon icon={faMoon} color='black' style={{transform: 'rotate(315deg)'}} /> </span>
                         </Day_night_mode>

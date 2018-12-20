@@ -1,17 +1,10 @@
 /* In-built Packages */
-
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card } from 'antd';
-import MenuItem from 'antd/lib/menu/MenuItem';
+import { Row, Col } from 'antd';
 import styled from 'styled-components'
 
 /* Components */
-
-const { Header, Content, Footer } = Layout;
-const { Meta } = Card;
-
-
 /* Styled-Components */
 
 const Third_Row = styled(Row)`
@@ -23,11 +16,9 @@ const Third_Wrap = styled.div`
     text-align: center;
 `
 const BlueCol = styled(Col)`
-
     @media (max-width: 1200px) {
         margin-bottom:50px;
     }
-
 `
 const Third_span = styled.span`
     font-size: 48px;
@@ -42,8 +33,7 @@ const Third_p = styled.p`
     line-height: 1.5; 
 `
 
-
-export default class About extends React.Component {
+export default class About extends Component {
     render() {
         return (
             <Third_Wrap>

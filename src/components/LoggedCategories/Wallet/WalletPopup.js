@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Modal, Icon, Input, notification } from 'antd';
-import { DropdownButton,MenuItem,ButtonToolbar } from 'react-bootstrap';
+import { Button, Modal, Input, notification } from 'antd';
+import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
 import styled from 'styled-components'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
 
 const WalletModal = styled(Modal)`
     >.ant-modal-content>.ant-modal-header
@@ -13,7 +11,7 @@ const WalletModal = styled(Modal)`
     }
     >.ant-modal-content>.ant-modal-body
     {
-        background-color:${props => props.theme.mode=="dark"?"#061a2b":""};
+        background-color:${props => props.theme.mode == "dark" ? "#061a2b" : ""};
     }
     >.ant-modal-content>.ant-modal-close>.ant-modal-close-x
     {
@@ -23,8 +21,7 @@ const WalletModal = styled(Modal)`
 const Label = styled.label`
     font-size: 13px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? "rgb( 255, 255, 255 )" : "black" };
-
+    color: ${props => props.theme.mode == "dark" ? "rgb( 255, 255, 255 )" : "black"};
 `
 const Modal_wrap = styled.div`
     width: 546px;
@@ -54,19 +51,18 @@ const Title = styled.span`
     color: rgb(255, 255, 255);
     font-weight: bold;
     text-transform: uppercase;
-` 
+`
 const Rediv = styled.div`
     margin-top:35px;
-
 `
 const WallInput = styled(Input)`
     height:48px;
     margin-top:10px;
     width:462px;
-    background-color:${props => props.theme.mode=="dark"?"#061a2b":"#f8f8f8" };
+    background-color:${props => props.theme.mode == "dark" ? "#061a2b" : "#f8f8f8"};
     
-    color:${props => props.theme.mode=="dark"?"white":""};
-    caret-color:${props =>props.theme.mode=="dark"?"white":""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    caret-color:${props => props.theme.mode == "dark" ? "white" : ""};
     @media(max-width:768px)
     {
         width:220px;
@@ -78,7 +74,7 @@ const Scan = styled.p`
     margin-bottom:0px;
     font-size: 13px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode=="dark"?"rgb( 76, 132, 255 )":""};
+    color:${props => props.theme.mode == "dark" ? "rgb( 76, 132, 255 )" : ""};
     @media(max-width:467px)
     {
         margin-left:0px;
@@ -95,8 +91,8 @@ const Sec_wrap = styled.div`
     }
 `
 const DropdownButtonS = styled(DropdownButton)`
-    background-color: ${props=>props.theme.mode=="dark"?"#01090f":"#f5f6fa"};
-    color:${props=>props.theme.mode=="dark"?"white":"black"};
+    background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
+    color:${props => props.theme.mode == "dark" ? "white" : "black"};
     border: none;
     border:1px solid #ccc;
     
@@ -120,20 +116,19 @@ const ButtonToolbarS = styled(ButtonToolbar)`
 const LeftInput = styled(Input)`
     height:48px;
     width:220px;
-    background-color:${props => props.theme.mode=="dark"?"#061a2b":"#f8f8f8" };
-    color:${props => props.theme.mode=="dark"?"white":""};
-    caret-color:${props =>props.theme.mode=="dark"?"white":""};
+    background-color:${props => props.theme.mode == "dark" ? "#061a2b" : "#f8f8f8"};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    caret-color:${props => props.theme.mode == "dark" ? "white" : ""};
     @media(max-width:767px)
     {
         display:block;
     }
-    
 `
 const RightInput = styled(Input)`
     height:48px;
-    background-color:${props => props.theme.mode=="dark"?"#061a2b":"#f8f8f8" };
-    color:${props => props.theme.mode=="dark"?"white":""};
-    caret-color:${props =>props.theme.mode=="dark"?"white":""};
+    background-color:${props => props.theme.mode == "dark" ? "#061a2b" : "#f8f8f8"};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    caret-color:${props => props.theme.mode == "dark" ? "white" : ""};
     width:220px;
     display:inline-block;
     margin-left:20px;
@@ -148,7 +143,7 @@ const Fee = styled.span`
     float:left;
     font-size: 12.012px;
     font-family: "Open Sans";
-    color: ${props=>props.theme.mode=="dark"?"white":"rgb( 255, 255, 255 )"}; 
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 255, 255, 255 )"}; 
     @media(max-width:767px)
     {
         float:none;
@@ -159,7 +154,7 @@ const TotPay = styled.span`
     float:right;
     font-size: 12.012px;
     font-family: "Open Sans";
-    color: ${props=>props.theme.mode=="dark"?"white":"rgb( 255, 255, 255 )"}; 
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 255, 255, 255 )"}; 
     @media(max-width:767px)
     {
         float:none;
@@ -180,21 +175,17 @@ const SendButton = styled(Button)`
     {
         width: 125px;
     }
-
 `
 
-class WalletPopup extends React.Component
-{
-    constructor(props)
-    {
+class WalletPopup extends Component {
+    constructor(props) {
         super(props);
         this.state = {
-            comingSoon: this.props.visible?true:'',
+            comingSoon: this.props.visible ? true : '',
             email_address: "",
             email_msg: "",
         }
     }
-   
 
     handleComing = (e) => {
         this.setState({
@@ -210,56 +201,56 @@ class WalletPopup extends React.Component
     }
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
-          message: head,
-          description: desc,
+            message: head,
+            description: desc,
         });
-      };
-    
-    render()
-    {
-        return(
-                <div>
-                    <WalletModal
-                        title={<Title_div><Title>WITHDRAW</Title></Title_div>}
-                        visible={this.props.visible}
-                        onOk={(e) => this.handleComing()}
-                        onCancel={(e) => this.comingCancel(e)}
-                        footer={null}
-                        width={656}
-                        height={460}
-                    >
-                        <Modal_wrap>
-                            <Rediv>
-                                <Label style={{display:"block"}}>Recieving Address</Label>
-                                <WallInput/>
-                                <Scan>Scan QR</Scan>
-                            </Rediv>
-                            <Rediv>
-                                <Label style={{display:"block"}}>Amount</Label>
-                                <Sec_wrap>
-                                    <LeftInput/>
-                                    <RightInput/>
-                                    <ButtonToolbarS>
-                                        <DropdownButtonS title="USD" id="dropdown-size-medium">
-                                            <MenuItem eventKey="1">Action</MenuItem>
-                                            <MenuItem eventKey="2">Another action</MenuItem>
-                                            <MenuItem eventKey="3">Something else here</MenuItem>
-                                            <MenuItem eventKey="4">Separated link</MenuItem>
-                                        </DropdownButtonS>
-                                    </ButtonToolbarS>
-                                </Sec_wrap>                                    
-                                <div style={{height:"25px",marginTop:"45px",width:"462px"}}>
-                                    <Fee>Fee:</Fee>
-                                    <TotPay>Total Payout:</TotPay>
-                                </div>
-                            </Rediv>
-                            <div style={{textAlign:"center",marginTop:"60px",display:"block"}}>
-                                <SendButton >SEND</SendButton>
+    };
+
+    render() {
+        return (
+            <div>
+                <WalletModal
+                    title={<Title_div><Title>WITHDRAW</Title></Title_div>}
+                    visible={this.props.visible}
+                    onOk={(e) => this.handleComing()}
+                    onCancel={(e) => this.comingCancel(e)}
+                    footer={null}
+                    width={656}
+                    height={460}
+                >
+                    <Modal_wrap>
+                        <Rediv>
+                            <Label style={{ display: "block" }}>Recieving Address</Label>
+                            <WallInput />
+                            <Scan>Scan QR</Scan>
+                        </Rediv>
+                        <Rediv>
+                            <Label style={{ display: "block" }}>Amount</Label>
+                            <Sec_wrap>
+                                <LeftInput />
+                                <RightInput />
+                                <ButtonToolbarS>
+                                    <DropdownButtonS title="USD" id="dropdown-size-medium">
+                                        <MenuItem eventKey="1">Action</MenuItem>
+                                        <MenuItem eventKey="2">Another action</MenuItem>
+                                        <MenuItem eventKey="3">Something else here</MenuItem>
+                                        <MenuItem eventKey="4">Separated link</MenuItem>
+                                    </DropdownButtonS>
+                                </ButtonToolbarS>
+                            </Sec_wrap>
+                            <div style={{ height: "25px", marginTop: "45px", width: "462px" }}>
+                                <Fee>Fee:</Fee>
+                                <TotPay>Total Payout:</TotPay>
                             </div>
-                        </Modal_wrap>
-                    </WalletModal>
-                </div>
+                        </Rediv>
+                        <div style={{ textAlign: "center", marginTop: "60px", display: "block" }}>
+                            <SendButton >SEND</SendButton>
+                        </div>
+                    </Modal_wrap>
+                </WalletModal>
+            </div>
         );
     }
 }
+
 export default WalletPopup;

@@ -1,13 +1,14 @@
 /* In-built Packages*/
-import React from 'react'
+import React, { Component } from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
-import { Button, notification, Icon, Form, Progress } from "antd";
+import { Button, notification, Icon, Progress } from "antd";
 import { connect } from 'react-redux';
 import "react-password-strength/dist/style.css";
 /* Components */
 import { Signup, clearSignUp } from '../../../Actions/Auth';
-import { Username, Form_wrap, Welcome_text, Email_label, Email_req, Phone_req, Pass_req } from "./Login_Form";
+import { Username, Form_wrap, Welcome_text, Email_label, Email_req, Pass_req } from "./Login_Form";
+import { ActiveEye, Eye } from '../../../Constants/images';
 /* Global Constants */
 
 /* Styled-Components */
@@ -33,9 +34,6 @@ const SubHeading = styled.span`
 font-size: 16px;
 font-family: "Open Sans";
 color: #a3a3a3;
-`
-const Email_lab = styled(Email_label)`
-  margin-top: 35px;
 `
 const FirstIconS = styled(Icon)`
   font-size:19px;
@@ -83,10 +81,8 @@ const Email = styled(Username)`
   display:inline-block;
 `
 const Full_req = styled(Email_req)`
-
 `
 const ConfirmPass_req = styled(Email_req)`
-
 `
 const Ph_Label = styled(Email_label)`
   margin-top:20px;
@@ -96,23 +92,6 @@ display:inline-block;
 padding-right:40px;
 `
 const Referral = styled(Username)``
-const Check_wrap = styled.div`
-  margin-top:35px;
-  width:76%;
-`
-const Remember = styled.div`
-  display: inline-block;
-`
-const Check = styled.input`
-  vertical-align:middle;
-`
-const Forgot = styled.a`
-  float:right;
-  font-size: 14px;
-  font-family: "OpenSans";
-  color: rgb( 15, 71, 123 );
-  text-align: left;
-`
 const Button_login = styled(Button)`
   width: 110px;
   background-color: #0f477b;
@@ -136,7 +115,6 @@ const Button_login = styled(Button)`
     border-color:#0f477b;
     background-color:white;
   }
-
 `
 const Sign = styled.div`
   margin-top: 30px;
@@ -153,7 +131,6 @@ const Sign_a = styled.a`
   font-family: "Open Sans";
   color:#0f477b;
   font-weight:bold;
-
 `
 const Progress_bar = styled(Progress)`
   width:77%;
@@ -171,7 +148,8 @@ function openNotificationWithIcon(type, head, desc) {
     description: desc,
   });
 };
-class Signup_Form extends React.Component {
+
+class Signup_Form extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -299,8 +277,7 @@ class Signup_Form extends React.Component {
             document.querySelector("#last_icon_fail").style.display = "inline-block"
             document.querySelectorAll(".last_sign")[0].style.display = "block";
             this.setState({ last_msg: "*Only numbers are not allowed" })
-          }
-          else {
+          } else {
             this.setState({ lastIcon: true })
             document.querySelector("#last_icon_success").style.display = "inline-block";
             document.querySelector("#last_icon_fail").style.display = "none";
@@ -324,11 +301,11 @@ class Signup_Form extends React.Component {
       var bool = re.test(value);
       var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
       if (numb.test(value) || letters.test(value)) { this.setState({ stroke: "red", percent: 20 }) }
-      if (alphanum.test(value) && value.length < 60) {this.setState({ stroke: "orange", percent: 40 }) }
-      if (alphanum.test(value) && value.length == 6) {this.setState({ stroke: "yellow", percent: 60 }) }
-      if (re.test(value) && value.length == 6) {this.setState({ stroke: "#7CFC00", percent: 80 }) }
-      if (re.test(value) && value.length >= 10 && value.length < 60) {this.setState({ stroke: "#008000", percent: 100 }) }
-      if (re.test(value) && value.length > 60) {this.setState({ stroke: "red", percent: 0 }) }
+      if (alphanum.test(value) && value.length < 60) { this.setState({ stroke: "orange", percent: 40 }) }
+      if (alphanum.test(value) && value.length == 6) { this.setState({ stroke: "yellow", percent: 60 }) }
+      if (re.test(value) && value.length == 6) { this.setState({ stroke: "#7CFC00", percent: 80 }) }
+      if (re.test(value) && value.length >= 10 && value.length < 60) { this.setState({ stroke: "#008000", percent: 100 }) }
+      if (re.test(value) && value.length > 60) { this.setState({ stroke: "red", percent: 0 }) }
       if (value !== "") {
         if (bool == true) {
           this.setState({ passIcon: true, password: value })
@@ -472,8 +449,8 @@ class Signup_Form extends React.Component {
             />
             {
               (this.state.repeatEye == "password") ?
-                <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "repeatEye")} />
-                : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "repeatEye")} />
+                <FAI src={Eye} onClick={this.handleEye.bind(this, "repeatEye")} />
+                : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "repeatEye")} />
             }
             <ConfirmIconS id="confirm_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
             <ConfirmIconF id="confirm_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
@@ -495,7 +472,6 @@ class Signup_Form extends React.Component {
           <Sign>
             Already have an account? <Sign_a onClick={() => this.dispModal()}>Login</Sign_a>
           </Sign>
-
         </Form_wrap>
       </div>
     );
@@ -503,7 +479,6 @@ class Signup_Form extends React.Component {
 }
 
 function mapStateToProps(state) {
-  /* console.log("Hello 123",state) */
   return ({
     isSignUp: state.simpleReducer.isSignUp !== undefined ? state.simpleReducer.isSignUp : undefined
   })

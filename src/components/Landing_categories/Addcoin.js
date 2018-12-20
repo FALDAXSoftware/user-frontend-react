@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { withRouter ,Link} from 'react-router-dom';
-import { connect } from "react-redux";
-import { Row, Col, Card, Icon, Avatar,Spin,notification } from 'antd';
-import moment from 'moment';
+import { Row, Col, Spin, notification } from 'antd';
 import styled from 'styled-components';
 import SimpleReactValidator from 'simple-react-validator';
 import "react-datepicker/dist/react-datepicker.css";
 
 import Navigation from '../Navigations/Navigation';
-import {Spin_Ex} from '../../styled-components/homepage/style'
+import { Spin_Ex } from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
-import {Contact_wrap,Grey_wrap,Head,Head_title,Subtitle,Head_desc,Body,BodyText,Body_form,Form_coin,CoinInput,URLInput,TargetInput,EmailInput,MsgInput,LeftP,RightInput,Left,OneDiv,TwoDiv,ThreeDiv,FourDiv,FiveDiv,AddButton,Msg,Right_input} from '../../styled-components/landingCategories/contactStyle';    
-import {globalVariables} from "../../Globals"
+import {
+    Contact_wrap, Grey_wrap, Head, Head_title, Subtitle, Head_desc, Body, BodyText,
+    Body_form, Form_coin, CoinInput, URLInput, TargetInput, EmailInput, MsgInput,
+    Left, OneDiv, TwoDiv, ThreeDiv, FourDiv, FiveDiv, AddButton, Msg, Right_input
+} from '../../styled-components/landingCategories/contactStyle';
+import { globalVariables } from "../../Globals"
 let { API_URL } = globalVariables;
 
 export const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode=="dark"?"#041422":"white"};
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -29,22 +30,17 @@ export const ContainerContact = styled(Container)`
     }
 `
 
-
-
-class MediaContact extends React.Component
-{
-    constructor(props)
-    {
+class MediaContact extends Component {
+    constructor(props) {
         super(props);
         this.state = {
-            fields:{
-                email:'',
-                message:'',
-                target_date:'',
-                url:'',
-                coin_name:'',
-                loader:false
-
+            fields: {
+                email: '',
+                message: '',
+                target_date: '',
+                url: '',
+                coin_name: '',
+                loader: false
             },
             startDate: null
         };
@@ -72,8 +68,8 @@ class MediaContact extends React.Component
     // }
     _onChangeFields(e) {
         let fields = this.state.fields;
-        let field = e.target.name; 
-       
+        let field = e.target.name;
+
         if (e.target.value.trim() == "") {
             fields[field] = "";
         } else {
@@ -81,25 +77,24 @@ class MediaContact extends React.Component
         }
         this.setState({ fields });
     }
-    dateChange(date)
-    {
+    dateChange(date) {
         let fields = this.state.fields;
-        if(date != null){
+        if (date != null) {
             fields["target_date"] = date.format("DD/MM/YYYY");
-        }else{
-            fields["target_date"] = date
+        } else {
+            fields["target_date"] = date;
         }
-        this.setState({ fields,startDate:date });
+        this.setState({ fields, startDate: date });
     }
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
-          message: head,
-          description: desc,
+            message: head,
+            description: desc,
         });
-      };
-    onSubmit(){
-        if( this.validator.allValid() ){
-            this.setState({loader:true})
+    };
+    onSubmit() {
+        if (this.validator.allValid()) {
+            this.setState({ loader: true })
             fetch(API_URL + "/users/add-coin-request", {
                 method: "post",
                 headers: {
@@ -110,48 +105,47 @@ class MediaContact extends React.Component
                 .then(response => response.json())
                 .then((responseData) => {
                     this.openNotificationWithIcon('success', 'Success', responseData.message);
-                    let fields={};
-                    fields["target_date"]='';
-                    fields['url']="";
-                    fields['coin_name']="";
-                    fields['email']="";
-                    fields['message']="";
-                                        
-                    this.setState({ fields:fields , startDate:null,loader:false},()=>{
+                    let fields = {};
+                    fields["target_date"] = '';
+                    fields['url'] = "";
+                    fields['coin_name'] = "";
+                    fields['email'] = "";
+                    fields['message'] = "";
+
+                    this.setState({ fields: fields, startDate: null, loader: false }, () => {
                         this.validator.hideMessages();
                         this.forceUpdate();
-                        
+
                     })
                 })
                 .catch(error => {
                 })
-          } else {
+        } else {
             this.validator.showMessages();
             // rerender to show messages for the first time
             this.forceUpdate();
-          }
+        }
     }
-    componentDidMount(){
+    componentDidMount() {
         document.getElementsByClassName("date-input")[0].setAttribute("readOnly", "readOnly")
     }
-    render()
-    {
 
-        return(
+    render() {
+        return (
             <Contact_wrap>
                 <Navigation />
-                    <Grey_wrap>
-                        <ContainerContact>
-                            <Head>
-                                <Head_title>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </Head_title>
-                                <Subtitle>Here are the requirements to list your coin:</Subtitle>
-                                <Head_desc>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Head_desc>
-                            </Head>
-                            <Body>
-                                <BodyText>Please fill out this form or email at relations@faldax.com to apply:</BodyText>
-                                <Body_form>
-                                    <Form_coin>
-                                        <OneDiv>
+                <Grey_wrap>
+                    <ContainerContact>
+                        <Head>
+                            <Head_title>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </Head_title>
+                            <Subtitle>Here are the requirements to list your coin:</Subtitle>
+                            <Head_desc>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Head_desc>
+                        </Head>
+                        <Body>
+                            <BodyText>Please fill out this form or email at relations@faldax.com to apply:</BodyText>
+                            <Body_form>
+                                <Form_coin>
+                                    <OneDiv>
                                         <Row>
                                             <Col xs={24} sm={8} xl={10}>
                                                 <Left>
@@ -160,13 +154,13 @@ class MediaContact extends React.Component
                                             </Col>
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
-                                                    <CoinInput name="coin_name" onChange={this._onChangeFields} value={this.state.fields.coin_name}/>
+                                                    <CoinInput name="coin_name" onChange={this._onChangeFields} value={this.state.fields.coin_name} />
                                                     {this.validator.message('coin_name', this.state.fields.coin_name, 'required|alpha_num|max:30', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
                                         </Row>
-                                        </OneDiv>
-                                        <TwoDiv>
+                                    </OneDiv>
+                                    <TwoDiv>
                                         <Row>
                                             <Col xs={24} sm={8} xl={10}>
                                                 <Left>
@@ -175,35 +169,35 @@ class MediaContact extends React.Component
                                             </Col>
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
-                                                    <URLInput name="url" onChange={this._onChangeFields} value={this.state.fields.url}/>
+                                                    <URLInput name="url" onChange={this._onChangeFields} value={this.state.fields.url} />
                                                     {this.validator.message('url', this.state.fields.url, 'required|url', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
                                         </Row>
-                                        </TwoDiv>
-                                        <ThreeDiv>
+                                    </TwoDiv>
+                                    <ThreeDiv>
                                         <Row>
                                             <Col xs={24} sm={8} xl={10}>
                                                 <Left>
                                                     <p>Target Date of Integration*</p>
-                                                </Left>    
+                                                </Left>
                                             </Col>
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input className="datePicker">
-                                                <TargetInput
-                                                    name="target_date"
-                                                    dateFormat="DD/MM/YYYY" 
-                                                    minDate={new Date()}
-                                                    selected={this.state.startDate}
-                                                    onChange={this.dateChange}
-                                                    className="date-input"
-                                                />
+                                                    <TargetInput
+                                                        name="target_date"
+                                                        dateFormat="DD/MM/YYYY"
+                                                        minDate={new Date()}
+                                                        selected={this.state.startDate}
+                                                        onChange={this.dateChange}
+                                                        className="date-input"
+                                                    />
                                                     {this.validator.message('target_date', this.state.fields.target_date, 'required', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
                                         </Row>
-                                        </ThreeDiv>
-                                        <FourDiv>
+                                    </ThreeDiv>
+                                    <FourDiv>
                                         <Row>
                                             <Col xs={24} sm={8} xl={10}>
                                                 <Left>
@@ -212,13 +206,13 @@ class MediaContact extends React.Component
                                             </Col>
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
-                                                    <EmailInput name="email" onChange={this._onChangeFields} value={this.state.fields.email}/>
+                                                    <EmailInput name="email" onChange={this._onChangeFields} value={this.state.fields.email} />
                                                     {this.validator.message('email', this.state.fields.email, 'required|validEmail', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
                                         </Row>
-                                        </FourDiv>
-                                        <FiveDiv>
+                                    </FourDiv>
+                                    <FiveDiv>
                                         <Row>
                                             <Col xs={24} sm={8} xl={10}>
                                                 <Msg>
@@ -227,19 +221,19 @@ class MediaContact extends React.Component
                                             </Col>
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
-                                                    <MsgInput name="message" onChange={this._onChangeFields} value={this.state.fields.message}/>
+                                                    <MsgInput name="message" onChange={this._onChangeFields} value={this.state.fields.message} />
                                                     {this.validator.message('message', this.state.fields.message, 'required', 'text-danger-validation')}
-                                                <AddButton onClick={this.onSubmit}>SUBMIT</AddButton>
+                                                    <AddButton onClick={this.onSubmit}>SUBMIT</AddButton>
                                                 </Right_input>
                                             </Col>
                                         </Row>
-                                        </FiveDiv>
-                                    </Form_coin>
-                                </Body_form>
-                            </Body>
-                        </ContainerContact>
-                    </Grey_wrap>
-                <CommonFooter/>
+                                    </FiveDiv>
+                                </Form_coin>
+                            </Body_form>
+                        </Body>
+                    </ContainerContact>
+                </Grey_wrap>
+                <CommonFooter />
                 {(this.state.loader) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : ""}

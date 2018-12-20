@@ -2,11 +2,9 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
-import { Row, Col, Tabs, Button, Input, notification, Steps, Icon } from 'antd';
+import { Steps, Icon } from 'antd';
 import styled from 'styled-components';
-import { createForm, formShape } from 'rc-form';
-
-
+import { createForm } from 'rc-form';
 /*Import Components*/
 import KYCForm from "./KYCForm"
 import IDselect from "./IDselect"
@@ -46,14 +44,11 @@ const Kyc_succ = styled.div`
     margin:auto;
     font-size: 20px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark"?"white":"rgb( 80, 80, 80 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
     margin-top:20px;
 `
-const kyc_check = styled(Icon)`
-`
 
-
-class KYC extends React.Component {
+class KYC extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -74,19 +69,15 @@ class KYC extends React.Component {
         }
     }
 
-
     next_step(a, type = null) {
         this.setState({ next: a })
         if (type == "Passport" || type == "Driver's license" || type == "Identity") {
             var b = a - 1
             this.setState({ nexts: b, docType: type })
-        }
-        else if (type == "ssn") {
-            /* console.log("ssn_original",type,a) */
+        } else if (type == "ssn") {
             var b = a
             this.setState({ nexts: b })
-        }
-        else
+        } else
             this.setState({ nexts: a })
 
     }
@@ -94,16 +85,18 @@ class KYC extends React.Component {
         this.setState({ next: a })
         this.setState({ nexts: a })
     }
+
     render() {
+        const { next } = this.state;
+        const { is_kyc_done } = this.state;
 
         return (
             <KYC_wrap>
-                {/* console.log(this.state) */}
-                {(this.props.is_kyc_done !== true && this.state.next !== 5) ?
+                {(is_kyc_done !== true && next !== 5) ?
                     <div>
                         <KYC_head>
                             Identity Verification
-                    </KYC_head>
+                        </KYC_head>
                         <KYC_progress>
                             <Steps direction="horizontal" size="small" current={this.state.nexts}>
                                 <Step />
@@ -116,22 +109,21 @@ class KYC extends React.Component {
                 {(this.state.next == 0 && this.props.is_kyc_done !== true) ?
                     <KYCForm back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""
                 }
-                {(this.state.next == 1 && this.props.is_kyc_done !== true) ? <IDselect {...this.props} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
-                {(this.state.next == 2 && this.props.is_kyc_done !== true) ? <SSN back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
-                {(this.state.next == 3 && this.props.is_kyc_done !== true) ? <DocUpload docText={this.state.docType} back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
+                {(next == 1 && is_kyc_done !== true) ? <IDselect {...this.props} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
+                {(next == 2 && is_kyc_done !== true) ? <SSN back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
+                {(next == 3 && is_kyc_done !== true) ? <DocUpload docText={this.state.docType} back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
             </KYC_wrap>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    /* console.log("personalDetails",state) */
     return {
         ...state,
         is_kyc_done: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].is_kyc_done : "",
         email: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].email : "",
         profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
-        theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
 
     }
 }

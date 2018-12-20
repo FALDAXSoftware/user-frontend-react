@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Modal, Icon, Input, notification } from 'antd';
+import { Button, Modal, Icon, notification } from 'antd';
 import styled from 'styled-components'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { globalVariables } from '../Globals'
-
+import { globalVariables } from '../Globals';
+import { LogoComing } from "../Constants/images";
 
 export const Modal_wrap = styled.div`
 width: 465px;
@@ -35,18 +34,15 @@ export const Email_input = styled.input`
 
     }
 `
-class ComingSoon extends React.Component
-{
-    constructor(props)
-    {
+class ComingSoon extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
-            comingSoon: this.props.visible?true:'',
+            comingSoon: this.props.visible ? true : '',
             email_address: "",
             email_msg: "",
         }
     }
-   
 
     handleComing = (e) => {
         this.setState({
@@ -78,11 +74,11 @@ class ComingSoon extends React.Component
     };
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
-          message: head,
-          description: desc,
+            message: head,
+            description: desc,
         });
-      };
-    
+    };
+
     send_email() {
         const values = { email: this.state.email_address };
         this.setState({ email_address: '' });
@@ -107,40 +103,38 @@ class ComingSoon extends React.Component
                         this.setState({ visible: false, email_msg: "" })
                     }
                 })
-                .catch(error => {  })
-        }
-        else {
+                .catch(error => { })
+        } else {
             this.setState({ email_msg: "*email address not valid" })
-            this.openNotificationWithIcon('error','Error','Please enter valid email address.');
+            this.openNotificationWithIcon('error', 'Error', 'Please enter valid email address.');
         }
     }
-    render()
-    {
-        return(
-                <div>
-                    <Modal
-                        title={<img src="/images/LogoComing.png" />}
-                        visible={this.props.visible}
-                        onOk={(e) => this.handleComing()}
-                        onCancel={(e) => this.comingCancel(e)}
-                        footer={null}
-                        width={605}
-                        height={460}
-                        className="simple-maps"
-                    >
-                        <Modal_wrap>
-                            <h3 style={{fontFamily: "Open Sans", fontSize: "40px", textAlign: "center" ,color: "rgb( 15, 71, 123 )",fontWeight:"600",marginTop: "40px"}}>Coming Soon</h3>
+    render() {
+        return (
+            <div>
+                <Modal
+                    title={<img src={LogoComing} />}
+                    visible={this.props.visible}
+                    onOk={(e) => this.handleComing()}
+                    onCancel={(e) => this.comingCancel(e)}
+                    footer={null}
+                    width={605}
+                    height={460}
+                    className="simple-maps"
+                >
+                    <Modal_wrap>
+                        <h3 style={{ fontFamily: "Open Sans", fontSize: "40px", textAlign: "center", color: "rgb( 15, 71, 123 )", fontWeight: "600", marginTop: "40px" }}>Coming Soon</h3>
 
-                            <Sub_wrap>
-                            <label style={{ color: 'black', fontWeight:"600" ,marginTop:"20px" }}> Please enter your email to get updates of FALDAX: </label>
+                        <Sub_wrap>
+                            <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Please enter your email to get updates of FALDAX: </label>
                             <Email_input placeholder="Please enter your email address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
-                            </Sub_wrap>
-                            <div style={{ marginTop: '20px', minHeight: '20px' }}>
-                                <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff',backgroundColor:"#0f477b",height:"45px" }} onClick={() => this.send_email()}>RECIEVE UPDATE</Button>
-                            </div>
-                        </Modal_wrap>
-                    </Modal>
-                </div>
+                        </Sub_wrap>
+                        <div style={{ marginTop: '20px', minHeight: '20px' }}>
+                            <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff', backgroundColor: "#0f477b", height: "45px" }} onClick={() => this.send_email()}>RECIEVE UPDATE</Button>
+                        </div>
+                    </Modal_wrap>
+                </Modal>
+            </div>
         );
     }
 }

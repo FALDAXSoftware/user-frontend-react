@@ -4,57 +4,50 @@ import { YearPicker, MonthPicker, DayPicker } from 'react-dropdown-date';
 import styled from "styled-components";
 
 const Picker_wrap = styled.div`
-
 `
 let fields = {};
-export default class Datepicker extends React.Component {
+
+export default class Datepicker extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            year: null, month: null, day: null,dayCSS:'',monthCSS:"",yearCSS:''
+            year: null, month: null, day: null, dayCSS: '', monthCSS: "", yearCSS: ''
         }
     }
-    componentDidMount()
-    {
-        if(this.props.theme!==undefined)
-        {
-           
-            if(this.props.theme !== this.state.theme)
-            {
-                if(this.props.theme==false)
-                this.setState({dayCSS:"profile-day" ,monthCSS:"profile-month",yearCSS:"profile-year"})
+
+    componentDidMount() {
+        if (this.props.theme !== undefined) {
+            if (this.props.theme !== this.state.theme) {
+                if (this.props.theme == false)
+                    this.setState({ dayCSS: "profile-day", monthCSS: "profile-month", yearCSS: "profile-year" })
                 else
-                this.setState({dayCSS:"profile-day-night" ,monthCSS:"profile-month-night",yearCSS:"profile-year-night"})
+                    this.setState({ dayCSS: "profile-day-night", monthCSS: "profile-month-night", yearCSS: "profile-year-night" })
             }
         }
     }
     onChangeDate(date, type) {
-        if(this.props.kyc!=="kyc")
-        {
+        if (this.props.kyc !== "kyc") {
             if (type == "year") {
                 this.setState({ year: date });
                 fields[type] = date;
-            }
-            else if(type=="month")
-            {
+            } else if (type == "month") {
                 let date1
-                this.setState({month:date});
-                if(date==0)date1="jan";
-                if(date==1)date1="feb";
-                if(date==2)date1="mar";
-                if(date==3)date1="apr";
-                if(date==4)date1="may";
-                if(date==5)date1="jun";
-                if(date==6)date1="jul";
-                if(date==7)date1="aug";
-                if(date==8)date1 = "sep";
-                if(date==9)date1="oct";
-                if(date==10)date1="nov";
-                if(date==11)date1="dec";
-                
+                this.setState({ month: date });
+                if (date == 0) date1 = "jan";
+                if (date == 1) date1 = "feb";
+                if (date == 2) date1 = "mar";
+                if (date == 3) date1 = "apr";
+                if (date == 4) date1 = "may";
+                if (date == 5) date1 = "jun";
+                if (date == 6) date1 = "jul";
+                if (date == 7) date1 = "aug";
+                if (date == 8) date1 = "sep";
+                if (date == 9) date1 = "oct";
+                if (date == 10) date1 = "nov";
+                if (date == 11) date1 = "dec";
+
                 fields[type] = date1;
-            }
-            else if (type == "day") {
+            } else if (type == "day") {
                 this.setState({ day: date });
                 fields[type] = date;
             }
@@ -67,39 +60,28 @@ export default class Datepicker extends React.Component {
 
             }
             this.props.onDateChange(fields, "dob")
-        }
-        else
-        {
+        } else {
             if (type == "year") {
                 this.setState({ year: date });
                 fields[type] = date;
-            }
-            else if(type=="month")
-            {
+            } else if (type == "month") {
                 let date1
-                this.setState({month:date});
-                date1 = '0'+date;
+                this.setState({ month: date });
+                date1 = '0' + date;
                 fields[type] = date1;
-            }
-            else if (type == "day") {
+            } else if (type == "day") {
                 this.setState({ day: date });
-                let date1 = '0'+date;
+                let date1 = '0' + date;
                 fields[type] = date1;
             }
             this.props.onDateChange(fields, "dob")
         }
-
-
-        
-
     }
+
     render() {
         let date, year, month, day
-        if(this.props.kyc!==undefined)
-        {
-        }
-        else
-        {
+        if (this.props.kyc !== undefined) {
+        } else {
             if (this.props.profileDetails.dob !== undefined && this.props.profileDetails.dob !== null) {
                 date = this.props.profileDetails.dob.split("/")
                 year = Number(date[0])
@@ -107,9 +89,9 @@ export default class Datepicker extends React.Component {
                 day = Number(date[2])
             }
         }
-        /* console.log(year,month,day) */
-        let higherDate = new Date().getFullYear()-18;
+        let higherDate = new Date().getFullYear() - 18;
         let lowerDate = higherDate - 100;
+
         return (
             <Picker_wrap>
                 <DayPicker
