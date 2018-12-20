@@ -74,7 +74,7 @@ class BlogComments extends Component {
             .catch(error => { })
     }
     onSubmit() {
-        if (this.state.commentTemp.trim() !== "") {
+        if (this.state.commentTemp && this.state.commentTemp.trim() !== "") {
             var obj = {};
             obj["blog_id"] = this.state.blogID;
             obj['comment'] = this.state.commentTemp;
