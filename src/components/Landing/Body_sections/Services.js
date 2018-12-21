@@ -5,7 +5,9 @@ import 'antd/dist/antd.css';
 import { Row, Col, Icon } from 'antd';
 import styled from 'styled-components';
 import Slider from "react-slick";
-import { Reliability, Inovation, Security, Accessibility } from '../../../Constants/images';
+import {
+  Reliability, Inovation, Security, Accessibility, ServideBg
+} from '../../../Constants/images';
 
 /* Import Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
@@ -13,7 +15,7 @@ import { Container } from '../../../styled-components/homepage/style';
 
 const Section = styled.section`
   width:100%;
-  background-image:url('/images/Homepage/service-bg.png');
+  background-image:url(${ServideBg});
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

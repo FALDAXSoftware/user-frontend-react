@@ -15,7 +15,9 @@ import {
     PostHead_span, PostHead_below, Right_Col, MsgIcon, SocialHead, Social_Li, LI1, LI2,
     Main_Wrap, Sub_wrap, Rel_post, Rel_img, Rel_p, Rel_name, Rel_span, TagSpan
 } from '../../styled-components/landingCategories/blogStyle';
-import { FBIcon, YoutubeIcon, LinkedinIcon, TweeterIcon, GoogleIcon } from '../../Constants/images';
+import {
+    FBIcon, YoutubeIcon, LinkedinIcon, TweeterIcon, GoogleIcon, BlogIcon
+} from '../../Constants/images';
 
 class BlogDetails extends Component {
     constructor(props) {
@@ -112,7 +114,7 @@ class BlogDetails extends Component {
                                             </Name>
                                         </Status>
                                         <Status className="blog-comment">
-                                            <Comment><MsgIcon src="/images/LandingCat/Blog/msg-icon.png" />{this.state.blogsData.comment_count} Comments</Comment>
+                                            <Comment><MsgIcon src={BlogIcon} />{this.state.blogsData.comment_count} Comments</Comment>
                                         </Status>
                                         <Head_image image={`${globalVariables.amazon_Bucket + this.state.blogsData.cover_image}`} />
                                         <div>

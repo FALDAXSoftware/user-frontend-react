@@ -11,7 +11,7 @@ import Afterlog from "./Afterlog"
 import { Logout } from '../../Actions/Auth';
 import { globalVariables } from "../../Globals";
 import ComingSoon from '../ComingSoon';
-import { FaldaxLogo, FaldaxWhite, WhiteLogo, Faldax } from "../../Constants/images";
+import { FaldaxLogo, FaldaxWhite, WhiteLogo, Faldax, Wallpaper } from "../../Constants/images";
 const { Header } = Layout;
 
 /* Styled Components */
@@ -84,7 +84,7 @@ const SideNav = styled.div`
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 0px;
-    background-image: url(./images/Homepage/wallpaper.png);
+    background-image: url(${Wallpaper});
     width: 0px;
     color: white;
     background-position: center;

@@ -15,6 +15,7 @@ import {
     Blog_p, Blogs_wrap, HR_tag, Meta_title, Meta_desc, Card_foot, Prev_next, Prev, Next,
     MsgIcon, CardCover
 } from '../../styled-components/landingCategories/blogStyle';
+import { BlogIcon } from "../../Constants/images";
 
 const Container_Blog = styled(Container)`
     margin-bottom: 80px;
@@ -68,6 +69,7 @@ class Blog extends Component {
             }
         }
     }
+
     BlogDetails(curr) {
         this.setState({ loader: true })
         fetch(globalVariables.API_URL + `/users/get-all-blogs?page=${curr}&limit=9`, {
@@ -85,7 +87,6 @@ class Blog extends Component {
                 }
             })
             .catch(error => { })
-
     }
 
     render() {
@@ -139,7 +140,7 @@ class Blog extends Component {
                                                     <Card
                                                         style={{ width: "100%" }}
                                                         cover={<CardCover alt="example" style={{ backgroundImage: `url(${img})` }} />}
-                                                        actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.admin_name}</Card_foot>, <Card_foot> <MsgIcon src="/images/LandingCat/Blog/msg-icon.png" />{result.comment_count} Comments</Card_foot>]}
+                                                        actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.admin_name}</Card_foot>, <Card_foot> <MsgIcon src={BlogIcon} />{result.comment_count} Comments</Card_foot>]}
                                                         bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
                                                         className={_self.state.blogCSS}
                                                     >
@@ -152,7 +153,6 @@ class Blog extends Component {
                                             </Col>);
                                     }) : ""
                                     }
-
                                 </Row>
                             </Blogs_wrap>
                         </Whole_wrap>

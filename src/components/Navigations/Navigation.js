@@ -137,7 +137,7 @@ const SideNav = styled.div`
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 0px;
-    background-image: url(./images/Homepage/wallpaper.png);
+    background-image: url(${Wallpaper});
     width: 0px;
     color: white;
     background-position: center;

@@ -140,7 +140,6 @@ const FAI = styled.img`
   cursor:pointer;
 `
 const Active_FAI = styled(FAI)`
-    
 `
 function openNotificationWithIcon(type, head, desc) {
   notification[type]({
@@ -432,7 +431,7 @@ class Signup_Form extends Component {
             })}
             />
             {
-              (this.state.PasswordtypeEye == "password") ? <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "new")} />
+              (this.state.PasswordtypeEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "new")} />
             }
             <PassIconS id="pass_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
             <PassIconF id="pass_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />

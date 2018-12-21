@@ -90,6 +90,8 @@ export const ActiveSSN = amazon_Bucket + 'faldax/assets/ssn-active.png';
 export const SSN = amazon_Bucket + 'faldax/assets/ssn.png';
 export const BankCard = amazon_Bucket + 'faldax/assets/Settings/cardAcc.png';
 export const DefaultProfile = amazon_Bucket + 'faldax/assets/Settings/def_profile.jpg';
+export const ServideBg = amazon_Bucket + 'faldax/assets/Homepage/service-bg.png';
+export const BlogIcon = amazon_Bucket + 'faldax/assets/LandingCat/Blog/msg-icon.png';
 
 export const AppStore = amazon_Bucket + 'faldax/assets/Homepage/appstore_icon.png';
 export const PlayStore = amazon_Bucket + 'faldax/assets/Homepage/playstore_icon.png';

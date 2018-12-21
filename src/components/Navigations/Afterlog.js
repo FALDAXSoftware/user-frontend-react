@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FooterLogo } from "../../Constants/images";
+import { FooterLogo, DefaultProfile } from "../../Constants/images";
 
 /* Components */
 import * as Logout from '../../Actions/Auth';
@@ -156,7 +156,7 @@ class Afterlog extends Component {
             if (this.props.profileDetails.profile_pic !== null && this.props.profileDetails.profile_pic !== undefined && this.props.profileDetails.profile_pic !== "") {
                 Avatar_img = globalVariables.amazon_Bucket + this.props.profileDetails.profile_pic;
             } else {
-                Avatar_img = "./images/Settings/def_profile.png";
+                Avatar_img = DefaultProfile;
             }
         }
         return (
