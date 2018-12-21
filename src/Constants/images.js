@@ -4,6 +4,9 @@ let amazon_Bucket = globalVariables.amazon_Bucket;
 
 export const Banner = amazon_Bucket + 'faldax/assets/Homepage/banner.png';
 export const LargeLogo = amazon_Bucket + 'faldax/assets/logo-lg.png';
+export const Wallpaper = amazon_Bucket + 'faldax/assets/Homepage/wallpaper.png';
+export const FaldaxLogin = amazon_Bucket + 'faldax/assets/Homepage/Faldax_Login.png';
+export const FaldaxLoginText = amazon_Bucket + 'faldax/assets/Homepage/Faldax_Login_text.png';
 export const LogoComing = amazon_Bucket + 'faldax/assets/LogoComing.png';
 export const FaldaxLogo = amazon_Bucket + 'faldax/assets/Homepage/Faldax_logo.png';
 export const FaldaxWhite = amazon_Bucket + 'faldax/assets/Homepage/faldax_white.png';

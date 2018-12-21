@@ -16,7 +16,9 @@ import Afterlog from "./Afterlog"
 import { Logout } from '../../Actions/Auth';
 import Reset_Form from "../Landing/User_forms/Reset_Form"
 import ComingSoon from '../ComingSoon';
-import { FaldaxLogo, FaldaxWhite, WhiteLogo, Faldax } from "../../Constants/images";
+import {
+    FaldaxLogo, FaldaxWhite, WhiteLogo, Faldax, FaldaxLogin, FaldaxLoginText, Wallpaper
+} from "../../Constants/images";
 
 const { Header } = Layout;
 
@@ -25,7 +27,7 @@ const Left_col = styled(Col)`
     min-height: 600px
 `
 const Right_Col = styled(Col)`
-    background-image:url("./images/Homepage/wallpaper.png");
+    background-image:url(${Wallpaper});
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -434,8 +436,8 @@ class Navigation extends Component {
                                 </Left_col>
                                 <Right_Col xl={{ span: 12 }} sm={{ span: 24 }}>
                                     <Logo_text_wrap>
-                                        <Faldaxlogo src="./images/Homepage/Faldax_Login.png" />
-                                        <Faldaxtext src="./images/Homepage/Faldax_Login_text.png" />
+                                        <Faldaxlogo src={FaldaxLogin} />
+                                        <Faldaxtext src={FaldaxLoginText} />
                                     </Logo_text_wrap>
                                 </Right_Col>
                             </Row>

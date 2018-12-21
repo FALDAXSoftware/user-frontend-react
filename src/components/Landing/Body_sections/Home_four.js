@@ -338,7 +338,7 @@ class Home_four extends Component {
                                                 }}
                                             >
                                                 <ZoomableGroup center={[0, 20]} disablePanning>
-                                                    <Geographies geography="/assets/world-50m.json">
+                                                    <Geographies geography={globalVariables.amazon_Bucket + "faldax/assets/world-50m.json"}>
                                                         {(geographies, projection) => geographies.map((geography, i) => geography.id !== "ATA" && (
                                                             <Geography
                                                                 key={i}
