@@ -12,7 +12,7 @@ import {
     faInternetExplorer, faInstagram, faFacebook, faTelegramPlane, faGoogle,
     faYoutube, faTwitter, faLinkedinIn
 } from '@fortawesome/free-brands-svg-icons';
-import { FooterLogo, FooterWhiteLogo } from '../../../Constants/images';
+import { FooterLogo, FooterWhiteLogo, AppStore, PlayStore } from '../../../Constants/images';
 
 /* Components */
 import ComingSoon from '../../ComingSoon';
@@ -344,8 +344,8 @@ class Footer_home extends Component {
                             <Store_Col xs={24} lg={2} xl={2}>
                                 <Download>Download</Download>
                                 <Store_Wrap>
-                                    <Appstore style={{ cursor: "pointer" }} onClick={this.showComing} src="/images/Homepage/appstore_icon.png" />
-                                    <Playstore style={{ cursor: "pointer" }} onClick={this.showComing} src="/images/Homepage/playstore_icon.png" />
+                                    <Appstore style={{ cursor: "pointer" }} onClick={this.showComing} src={AppStore} />
+                                    <Playstore style={{ cursor: "pointer" }} onClick={this.showComing} src={PlayStore} />
                                 </Store_Wrap>
                             </Store_Col>
                         </Row>

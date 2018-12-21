@@ -12,7 +12,7 @@ import { Spin_Ex } from '../../styled-components/homepage/style'
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { globalVariables } from "../../Globals";
-import { AboutPeople1, AboutPeople2, AboutPeople3 } from '../../Constants/images';
+import { AboutPeople1, AboutPeople2, AboutPeople3, AboutUs2 } from '../../Constants/images';
 let { API_URL } = globalVariables;
 
 /* Styled-Components */
@@ -275,7 +275,7 @@ export default class AboutUs extends Component {
                 <span style={{ fontWeight: 'bold', fontSize: '17px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
               </MissionContent>
               <div style={{ marginTop: '20px', minHeight: '270px' }}>
-                <About_Us_Image src="/images/about-us-image-2.jpg" />
+                <About_Us_Image src={AboutUs2} />
 
                 <Missiondesc style={{ fontFamily: "Open sans", fontSize: '16px', lineHeight: '24px' }}>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

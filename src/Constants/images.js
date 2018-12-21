@@ -55,6 +55,7 @@ export const Inovation = amazon_Bucket + 'faldax/assets/Homepage/inovation.png';
 export const Eye = amazon_Bucket + 'faldax/assets/Settings/eye.png';
 export const ActiveEye = amazon_Bucket + 'faldax/assets/Settings/active_eye.png';
 
+export const AboutUs2 = amazon_Bucket + 'faldax/assets/about-us-image-2.jpg';
 export const AboutPeople1 = amazon_Bucket + 'faldax/assets/about-us-people-1.jpg';
 export const AboutPeople2 = amazon_Bucket + 'faldax/assets/about-us-people-2.jpg';
 export const AboutPeople3 = amazon_Bucket + 'faldax/assets/about-us-people-3.jpg';
@@ -89,3 +90,6 @@ export const ActiveSSN = amazon_Bucket + 'faldax/assets/ssn-active.png';
 export const SSN = amazon_Bucket + 'faldax/assets/ssn.png';
 export const BankCard = amazon_Bucket + 'faldax/assets/Settings/cardAcc.png';
 export const DefaultProfile = amazon_Bucket + 'faldax/assets/Settings/def_profile.jpg';
+
+export const AppStore = amazon_Bucket + 'faldax/assets/Homepage/appstore_icon.png';
+export const PlayStore = amazon_Bucket + 'faldax/assets/Homepage/playstore_icon.png';
