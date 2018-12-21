@@ -160,9 +160,8 @@ export default class WalletDetails extends React.Component
                             </Col>
                             <Col xxl={12} xl={12} lg={24} md={24}>
                                 <Right_Bit>
-                                    <SendButton>SEND</SendButton>
-                                    <DepButton>DEPOSIT</DepButton>
-                                    <WithButton onClick={this.showModal}>WITHDRAW</WithButton>
+                                    <DepButton>SEND</DepButton>
+                                    <WithButton onClick={this.showModal}>RECIEVE</WithButton>
                                 </Right_Bit>
                             </Col>
                         </Row>
@@ -171,7 +170,7 @@ export default class WalletDetails extends React.Component
                 <Trans_table>
                     <TransTitle>Transaction History</TransTitle>
                     <CoinTable>
-                        <Tableofcoin />
+                        {/* <Tableofcoin /> */}
                     </CoinTable>
                 </Trans_table>
                 <WalletPopup comingCancel={(e)=>this.comingCancel(e)} visible={this.state.withdraw}/>

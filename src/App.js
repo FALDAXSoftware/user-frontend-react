@@ -30,7 +30,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      theme:""
+      theme:"light"
     }
   }
   componentDidUpdate(prevProps, prevState) {
@@ -54,7 +54,7 @@ class App extends Component {
   }
   componentDidMount() {
     window.scrollTo(0, 0);
-    if(this.props.theme!==undefined)
+    /* if(this.props.theme!==undefined)
         {
             if(this.props.theme !== this.state.theme)
             {
@@ -63,7 +63,7 @@ class App extends Component {
                 else
                 this.setState({theme: "dark"})
             }
-        }
+        } */
   }
   render() {
 

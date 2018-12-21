@@ -21,21 +21,11 @@ const menu = (
       <Menu.Item key="3">EUR</Menu.Item>
     </Menu>
   );
-let total=0;
-class TableofCoin extends React.Component
+export default class TableofCoin extends React.Component
 {
-    constructor(props)
-    {
-        super(props);
-    }
-    totalUSD(total)
-    {
-        this.props.totalUSD(total)
-    }
     render()
     {
         let {tableData} = this.props ;
-        var me = this;
         return(
                 <Table_coin  condensed>
                     <thead>
@@ -62,12 +52,12 @@ class TableofCoin extends React.Component
                     <tbody>
                         {console.log(this.props.tableData)}
                         {this.props.tableData!==undefined?Object.keys(tableData).map(function(index,key){
-                                console.log(total,Object.keys(tableData).length,index,key)
+                                console.log(index,key)
                                         return (
                                             <Col1>
                                                 <td>
                                                     <Bit_img src="/images/LoggedCat/Bit_img.png"/>
-                                                    <Bit_text><Bit>{tableData[index].coin_name}</Bit><Bit_price>0.5433 {tableData[index].coin_code}</Bit_price></Bit_text>
+                                                    <Bit_text><Bit_price>0.5433 {tableData[index].coin_code}</Bit_price></Bit_text>
                                                 </td>
                                                 <td>{tableData[index].USD!==undefined?<Price>$ {tableData[index].USD}</Price>:<Price>-</Price>}</td>
                                                 <td>{tableData[index].EUR!==undefined?<Price>{"\u20AC"} {tableData[index].EUR} </Price>:<Price>-</Price>}</td>
@@ -87,12 +77,3 @@ class TableofCoin extends React.Component
         );
     }
 }
-
-function mapStateToProps(state) {
-    console.log(state)
-    return ({
-       
-    })
-}
-
-export default connect(mapStateToProps)(TableofCoin);

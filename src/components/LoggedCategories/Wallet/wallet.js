@@ -1,17 +1,27 @@
+/* In-built Packages */
+
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import {connect} from "react-redux"
 import { Row, Col, Tabs, Button,Table,Input,notification,Steps,Menu, Dropdown,Icon } from 'antd';
 import styled from 'styled-components';
 
+/* components  */
 import Tableofcoin from './TableofCoin'
+import ListofCoins from './listofCoins'
 import WalletDetails from './WalletDetails'
 import LoggedNavigation from '../../Navigations/LoggedNavigation';
 import CommonFooter from "../../Landing/Footers/Footer_home";
 import { Container } from '../../../styled-components/homepage/style';
 import {Contact_wrap, Grey_wrap} from "../../../styled-components/landingCategories/contactStyle"
 import {Header_wrap,SearchCoin,MY_wallet,Total,Tot,Money,Currency,CoinTable,SearchCoin2,Header_wrap2} from "../../../styled-components/loggedStyle/walletStyle";
+import { globalVariables } from '../../../Globals';
 
+
+/* Actions */
+import {walletBal,getAllCoins}  from '../../../Actions/LoggedCat/walletActions'
+
+let { API_URL } = globalVariables;
 const Search = Input.Search;
 
 
@@ -57,8 +67,30 @@ class Wallet extends React.Component
     {
         super(props);
         this.state = {
-
+            mywallet:{},
+            myCoins:{},
+            total:null
         };
+    }
+    componentWillReceiveProps(props,newProps)
+    {
+        console.log("48484",props,newProps)
+        var total = 0;
+        if(this.props.walletDetails!==null)
+        {
+            var tableData=this.props.walletDetails.coins;
+            
+            Object.keys(tableData).map(function(index,key){
+                total = total + tableData[index].USD;
+            })
+            console.log("TOTAL",total)
+        }
+    }
+    componentDidMount()
+    {
+        console.log("DID HELLO")
+        this.props.walletBal(this.props.isLoggedIn);
+        this.props.getAllCoins(this.props.isLoggedIn)
     }
     searchChange(value)
     {
@@ -67,6 +99,11 @@ class Wallet extends React.Component
     submitSearch(e)
     {
 
+    }
+    totalCurr(total)
+    {
+        console.log(total)
+        this.setState({total:total})
     }
     render()
     {
@@ -95,14 +132,19 @@ class Wallet extends React.Component
                             </Total>
                         </Header_wrap>
                         <CoinTable>
+                            {console.log("data",this.state)}
                             <Table_wrap>
-                                <Tableofcoin />
+                                {
+                                    this.props.walletDetails!==null?
+                                        <Tableofcoin tableData={this.props.walletDetails.coins}/>
+                                    :""
+                                }
                             </Table_wrap>
                         </CoinTable>
                     </ContainerContact>
                     <ContainerContact2>
                         <Header_wrap2>
-                            <MY_wallet>
+                            <MY_wallet>                 
                                 <span>COINS</span>
                             </MY_wallet>
                             <SearchCoin2>
@@ -116,8 +158,11 @@ class Wallet extends React.Component
                             </SearchCoin2>
                         </Header_wrap2>
                         <CoinTable>
+                            {console.log(this.state.myCoins)}
                             <Table_wrap>
-                                <Tableofcoin />
+                               {this.props.allCoins!==null?
+                                    <ListofCoins tableData={this.props.allCoins.data.rows}/> 
+                                :""}
                             </Table_wrap>
                         </CoinTable>
                     </ContainerContact2>
@@ -128,5 +173,17 @@ class Wallet extends React.Component
         );
     }
 }
-
-export default Wallet ;
+function mapStateToProps(state) {
+    console.log(state)
+    return ({
+        walletDetails:state.walletReducer.walletData!==undefined ? state.walletReducer.walletData : null,
+        allCoins:state.walletReducer.allCoinsData!==undefined ? state.walletReducer.allCoinsData : null,
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+    })
+}
+const mapDispatchToProps = dispatch => ({
+    walletBal: (isLoggedIn, currency) => dispatch(walletBal(isLoggedIn, currency)),
+    getAllCoins: (isLoggedIn) => dispatch(getAllCoins(isLoggedIn))
+    
+})
+export default connect(mapStateToProps,mapDispatchToProps)(Wallet);

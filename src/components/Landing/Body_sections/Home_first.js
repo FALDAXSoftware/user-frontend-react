@@ -6,7 +6,8 @@ import styled from 'styled-components'
 
 /* Import Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
-
+import { globalVariables } from '../../../Globals';
+let { amazon_bucket } = globalVariables;
 /* Components */
 
 const Section = styled.section`
@@ -83,7 +84,7 @@ export default class Homefirst extends Component {
                 </SubHeading>
             </Col>
             <ImageCol lg={10}>
-              <Img src="/images/logo-lg.png" width="80%" className="wow fadeInUp" data-wow-delay="1s" />
+              <Img src={"https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/logo-lg.png"} width="80%" className="wow fadeInUp" data-wow-delay="1s" />
             </ImageCol>
           </BannerRow>
         </Container>
