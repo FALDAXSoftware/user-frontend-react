@@ -1,26 +1,25 @@
 /* In-built Packages */
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Tabs,Spin } from 'antd';
+import { Spin } from 'antd';
 import styled from 'styled-components';
 import Navigation from '../Navigations/Navigation';
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
-
 import CommonFooter from "../Landing/Footers/Footer_home"
-import {Spin_Ex} from '../../styled-components/homepage/style'
-import {globalVariables} from "../../Globals"
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import { Spin_Ex } from '../../styled-components/homepage/style'
+import { globalVariables } from "../../Globals";
+import ReactHtmlParser from 'react-html-parser';
 let { API_URL } = globalVariables;
 
 /* Styled-Components */
 const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom: 25px;
-  background-color: ${props => props.theme.mode=="dark"?"#01090f":"#f5f6fa"};
+  background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
 `;
 
 const ProfileDiv = styled.div`
-  background-color: ${props => props.theme.mode=="dark"? "#041422" :"#ffffff"};
+  background-color: ${props => props.theme.mode == "dark" ? "#041422" : "#ffffff"};
   margin:auto;
   width: 100%;
   max-width: 1170px;
@@ -38,7 +37,7 @@ const About_Faq_Title = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode=="dark" ? "white":""};
+  color:${props => props.theme.mode == "dark" ? "white" : ""};
   &:before {
     content: '';
     width: calc(50% - 85px);
@@ -61,10 +60,10 @@ const About_Faq_Title = styled.span`
   }
 `;
 export const FAQcontent = styled.div`
-  color:${props => props.theme.mode=="dark" ? "white" : ""} !important;
+  color:${props => props.theme.mode == "dark" ? "white" : ""} !important;
   &>h2
   {
-    color:${props => props.theme.mode=="dark" ? "white" : ""} !important;
+    color:${props => props.theme.mode == "dark" ? "white" : ""} !important;
   }
 `
 /* Component Defination Starts Here*/
@@ -74,25 +73,24 @@ export default class FaqPage extends React.Component {
     super();
     this.state = {
       team: 1,
-      aboutContent:"",
-      loader:false
+      aboutContent: "",
+      loader: false
     };
   }
-  componentDidMount()
-  {
-    this.setState({loader:true})
-    fetch(API_URL + "/users/static-page-json/faq",{
-      method:"get",
+  componentDidMount() {
+    this.setState({ loader: true })
+    fetch(API_URL + "/users/static-page-json/faq", {
+      method: "get",
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }
     })
-    .then(response => response.json())
-    .then((responseData) => {
-        this.setState({aboutContent:responseData.data.content,loader:false})
-    })
-    .catch(error => {  })
-    
+      .then(response => response.json())
+      .then((responseData) => {
+        this.setState({ aboutContent: responseData.data.content, loader: false })
+      })
+      .catch(error => { })
+
   }
   teamClick(value) {
     this.setState({ team: value });
@@ -117,15 +115,15 @@ export default class FaqPage extends React.Component {
               </div>
               <FAQcontent style={{ marginTop: '20px' }}>
                 <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
-                {ReactHtmlParser(this.state.aboutContent)} 
+                  {ReactHtmlParser(this.state.aboutContent)}
                 </span>
               </FAQcontent>
             </ProfileDiv>
           </ProfileWrapper>
           <CommonFooter />
           {(this.state.loader) ? <Spin_Ex className="Ex_spin">
-                    <Spin size="large" />
-                </Spin_Ex> : ""}
+            <Spin size="large" />
+          </Spin_Ex> : ""}
         </OverlayLoader>
       </div>
     );

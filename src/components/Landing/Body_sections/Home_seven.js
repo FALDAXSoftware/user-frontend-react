@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { ProPic1, ProPic2, ProPic3, Quote } from '../../../Constants/images';
 
 /* Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
@@ -107,28 +108,28 @@ export default class Home_fourth extends Component {
                                 <Slider {...settings}>
                                     <div>
                                         <Slide>
-                                            <Slide_img src="./images/Homepage/Pro_pic1.jpg" /><br />
+                                            <Slide_img src={ProPic1} /><br />
                                             <Slide_span>Robert Leonard</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src="./images/Homepage/Pro_pic2.jpg" /><br />
+                                            <Slide_img src={ProPic2} /><br />
                                             <Slide_span>Smit Jones</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src="./images/Homepage/Pro_pic3.jpg" /><br />
+                                            <Slide_img src={ProPic3} /><br />
                                             <Slide_span>William Johanas</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src="./images/Homepage/Pro_pic2.jpg" /><br />
+                                            <Slide_img src={ProPic2} /><br />
                                             <Slide_span>John Lopez</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
@@ -138,7 +139,7 @@ export default class Home_fourth extends Component {
                         </Col>
                         <Col xxl={{ span: 14 }} xl={{ span: 14 }} sm={{ span: 24 }}>
                             <Secondslider >
-                                <img src="./images/Homepage/quote.png" />
+                                <img src={Quote} />
                                 <Sub_slider>
                                     <Slider {...settings2}>
                                         <div>

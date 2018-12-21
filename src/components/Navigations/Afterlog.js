@@ -1,19 +1,20 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { withRouter ,Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal, Dropdown, Icon, Avatar, Input } from 'antd';
+import { Button, Menu, Modal, Dropdown, Icon, Input } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
+import { FooterLogo } from "../../Constants/images";
 
 /* Components */
 import * as Logout from '../../Actions/Auth';
-import { Day_night_mode, Exchange } from "./BeforeLog"
-import * as darkTheme from '../../Actions/Theme/themeAction'
+import { Day_night_mode, Exchange } from "./BeforeLog";
+import * as darkTheme from '../../Actions/Theme/themeAction';
 /* Constants */
-import { globalVariables } from '../../Globals'
+import { globalVariables } from '../../Globals';
 
 /* Styled-Components */
 const Right_div = styled.div`
@@ -26,7 +27,7 @@ const UserName = styled.div`
     display: inline-block;
     font-size: 13px;
     font-family: "Open sans";
-    color: ${props => props.theme.mode=="dark"?"white":"black"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
     font-weight: 600;
     @media(max-width: 576px)
     {
@@ -66,7 +67,6 @@ const DropDownDiv = styled(Dropdown)`
     {
         display: none;
     }
-    
     @media(max-width:576px)
     {
         margin-right : 10px;
@@ -95,32 +95,26 @@ display:inline;
     padding-right: 10px;
     cursor:pointer;
 `
-
-
-class Afterlog extends React.Component {
+class Afterlog extends Component {
     constructor(props) {
         super(props);
         this.state = {
             comingSoon: false,
-            selected:false,
-            fontColor:""
+            selected: false,
+            fontColor: ""
         };
     }
-    componentWillReceiveProps(props,newProps)
-    {
-        if(props.theme!==undefined)
-        {
-            if(props.theme !== this.state.theme)
-            {
-                if(props.theme==false)
-                this.setState({fontColor:"black" })
+    componentWillReceiveProps(props, newProps) {
+        if (props.theme !== undefined) {
+            if (props.theme !== this.state.theme) {
+                if (props.theme == false)
+                    this.setState({ fontColor: "black" })
                 else
-                this.setState({fontColor: "white"})
+                    this.setState({ fontColor: "white" })
             }
         }
     }
-    componentDidMount()
-    {
+    componentDidMount() {
         if (this.props.location.pathname == "/careers") {
             this.setState({ selected: true })
         }
@@ -140,12 +134,12 @@ class Afterlog extends React.Component {
         this.props.actions.theme.darkTheme(false);
         this.props.actions.auth.Logout();
     }
-    changetoDark()
-    {   let flag;
-        if(this.props.themeReducer.theme == true) 
-            flag=false;
+    changetoDark() {
+        let flag;
+        if (this.props.themeReducer.theme == true)
+            flag = false;
         else
-            flag=true;
+            flag = true;
         this.props.actions.theme.darkTheme(flag);
     }
     render() {
@@ -160,11 +154,8 @@ class Afterlog extends React.Component {
         let Avatar_img
         if (this.props.profileDetails !== undefined) {
             if (this.props.profileDetails.profile_pic !== null && this.props.profileDetails.profile_pic !== undefined && this.props.profileDetails.profile_pic !== "") {
-                /* console.log("aaaaaaaaaa") */
                 Avatar_img = globalVariables.amazon_Bucket + this.props.profileDetails.profile_pic;
-            }
-            else {
-                /* console.log("vbbbbbbbbbbbbb") */
+            } else {
                 Avatar_img = "./images/Settings/def_profile.png";
             }
         }
@@ -174,16 +165,15 @@ class Afterlog extends React.Component {
                     <Icon  style={{fontSize:"15px",color:"black"}} type="bell" theme="filled" />      
                 </Bell>*/}
                 <Day_night_mode onClick={this.changetoDark.bind(this)}>
-                    <span> <FontAwesomeIcon icon={faMoon} color={this.state.fontColor} style={{transform: 'rotate(315deg)'}} /> </span>
+                    <span> <FontAwesomeIcon icon={faMoon} color={this.state.fontColor} style={{ transform: 'rotate(315deg)' }} /> </span>
                 </Day_night_mode>
                 <Link to="/careers">
-                <Exchange color={this.state.selected}>
-                            <span> CAREERS </span>
-                </Exchange>
+                    <Exchange color={this.state.selected}>
+                        <span> CAREERS </span>
+                    </Exchange>
                 </Link>
                 <DropDownDiv className="Drop-main" overlay={DropdownItems} trigger={['click']}>
                     <AnchorName className="ant-dropdown-link" href="#">
-                        
                         <HeaderAvatar style={{ backgroundImage: "url('" + Avatar_img + "')" }} />
                         <UserName>
                             {this.props.prof_name}
@@ -194,7 +184,7 @@ class Afterlog extends React.Component {
                 <Open onClick={() => this.openNav()}>&#9776;</Open>
                 <div>
                     <Modal
-                        title={<img src="./images/Homepage/Footer_logo.png" />}
+                        title={<img src={FooterLogo} />}
                         visible={this.state.comingSoon}
                         onOk={(e) => this.handleComing()}
                         onCancel={(e) => this.comingCancel(e)}
@@ -220,17 +210,17 @@ class Afterlog extends React.Component {
 function mapStateToProps(state) {
     return ({
         ...state,
-        theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
     });
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-      actions: {
-        auth: bindActionCreators(Logout, dispatch),
-        theme: bindActionCreators(darkTheme, dispatch)
-      }
+        actions: {
+            auth: bindActionCreators(Logout, dispatch),
+            theme: bindActionCreators(darkTheme, dispatch)
+        }
     };
-  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Afterlog);

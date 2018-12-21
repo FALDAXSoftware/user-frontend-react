@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {connect} from "react-redux"
+import { connect } from "react-redux"
 import styled from 'styled-components';
 import { Table } from 'react-bootstrap';
 import { Menu, Dropdown, Icon } from 'antd';
 
-import {Head,Sub_head,DropMenu,Col1,Bit_img,Bit_text,Bit,Bit_price,Price,Icon_wrap} from "../../../styled-components/loggedStyle/walletStyle";
+import { Head, Sub_head, DropMenu, Col1, Bit_img, Bit_text, Bit, Bit_price, Price, Icon_wrap } from "../../../styled-components/loggedStyle/walletStyle";
 
-const Table_coin = styled(Table) `
+const Table_coin = styled(Table)`
     @media(max-width:1160px)
     {
         min-width:1160px;
@@ -16,9 +16,9 @@ const Table_coin = styled(Table) `
 
 const menu = (
     <Menu>
-      <Menu.Item key="0">INR</Menu.Item>
-      <Menu.Item key="1">USD</Menu.Item>
-      <Menu.Item key="3">EUR</Menu.Item>
+        <Menu.Item key="0">INR</Menu.Item>
+        <Menu.Item key="1">USD</Menu.Item>
+        <Menu.Item key="3">EUR</Menu.Item>
     </Menu>
   );
 let total=0;
@@ -43,15 +43,15 @@ class TableofCoin extends React.Component
                             <Sub_head>Coins</Sub_head>
                             <Sub_head>USD
                                 <Dropdown overlay={menu} trigger={['click']}>
-                                    <a className="ant-dropdown-link" style={{verticalAlign:"middle"}}href="#"><DropMenu type="down" /></a>
-                                </Dropdown>
-                            </Sub_head>
-                            <Sub_head>EUR
+                                <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
+                            </Dropdown>
+                        </Sub_head>
+                        <Sub_head>EUR
                                 <Dropdown overlay={menu} trigger={['click']}>
-                                    <a className="ant-dropdown-link" style={{verticalAlign:"middle"}}href="#"><DropMenu type="down" /></a>
-                                </Dropdown>
-                            </Sub_head>
-                            <Sub_head>INR
+                                <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
+                            </Dropdown>
+                        </Sub_head>
+                        <Sub_head>INR
                                 <Dropdown overlay={menu} trigger={['click']}>
                                     <a className="ant-dropdown-link" style={{verticalAlign:"middle"}}href="#"><DropMenu type="down" /></a>
                                 </Dropdown>

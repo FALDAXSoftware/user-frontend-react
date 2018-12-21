@@ -2,14 +2,17 @@
 
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Button, Layout, Modal, Icon, Input, notification } from 'antd';
+import { Row, Col, Layout } from 'antd';
 import styled from 'styled-components'
-import { BrowserRouter as Router, Link, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { globalVariables } from '../../../Globals'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInternetExplorer,faInstagram,faFacebook,faTelegramPlane,faGoogle,faYoutube, faTwitter, faLinkedinIn, faDiscord } from '@fortawesome/free-brands-svg-icons';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import {
+    faInternetExplorer, faInstagram, faFacebook, faTelegramPlane, faGoogle,
+    faYoutube, faTwitter, faLinkedinIn
+} from '@fortawesome/free-brands-svg-icons';
+import { FooterLogo, FooterWhiteLogo } from '../../../Constants/images';
 
 /* Components */
 import ComingSoon from '../../ComingSoon';
@@ -20,7 +23,7 @@ const { Footer } = Layout;
 
 /* Styled-Components */
 const Footer_main = styled(Footer)`
-    background-color:${props => props.theme.mode=="dark"?"#041422":"white"};
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
     text-align: left;
     padding: 25px 0px 0px 0px;
     border-top:2px solid #0f477b;
@@ -28,7 +31,7 @@ const Footer_main = styled(Footer)`
 const Footer_headers = styled.li`
     font-size: 14px;
     font-family: "Open sans";
-    color:${props => props.theme.mode=="dark"?"white":"rgba( 40, 37, 40, 0.8 )"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgba( 40, 37, 40, 0.8 )"};
     font-weight: bold;
     line-height: 1.714;
     width:100%;
@@ -42,7 +45,7 @@ const Footer_ul = styled.ul`
     list-style-type:none;
     padding: 0px;
     width:100%;
-    color:${props => props.theme.mode=="dark"?"white":"rgba( 40, 37, 40, 0.8 )"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgba( 40, 37, 40, 0.8 )"};
     font-size: 13px;
     font-family: "Open sans";
 
@@ -52,9 +55,10 @@ const Footer_ul = styled.ul`
     }
 `
 const LI = styled.li`
-
+    cursor: pointer;
 `
 const LI2 = styled.li`
+    cursor: pointer;
     @media(max-width:1406)
     {
         margin-top:20px;
@@ -72,7 +76,6 @@ const Icon_ul_1 = styled.ul`
     }
     ${LI}
     {
-        
         display:inline-block
     }
     ${LI2}
@@ -95,7 +98,6 @@ const Icon_ul_2 = styled.ul`
     padding: 0px;
     ${LI}
     {
-        
         display:inline-block
     }
     ${LI2}
@@ -112,7 +114,7 @@ const Download = styled.span`
     margin-top: 20px;
     font-size: 14px;
     font-family: "Open sans";
-    color: ${props => props.theme.mode=="dark"?"white":"rgba( 40, 37, 40, 0.8 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgba( 40, 37, 40, 0.8 )"};
     font-weight: bold;
     line-height: 1.714;
 
@@ -121,7 +123,6 @@ const Download = styled.span`
         margin-top:30px;
     }
 `
-
 const Store_Col = styled(Col)`
     margin-top: 20px;
     @media(max-width:1200px)
@@ -140,7 +141,6 @@ const Appstore = styled.img`
 const Playstore = styled.img`
     display: inline-block;
 `
-
 const Bottom_Footer = styled.div`
     height: 71px;
     width: 100%;
@@ -148,11 +148,10 @@ const Bottom_Footer = styled.div`
     align-items: center;
     justify-content: space-between;
 `;
-
 const Footer_Text = styled.span`
     font-size: 13px;
     font-family: "Open sans";
-    color: ${props => props.theme.mode=="dark"?"white":"rgba( 0, 0, 0, 0.8 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgba( 0, 0, 0, 0.8 )"};
     line-height: 1.846;
     float: left;
     verticle-align: middle;
@@ -161,7 +160,6 @@ const Footer_Text = styled.span`
         font-size: 9.5px;
     }
 `;
-
 const Footer_logo = styled.img`
     float: right;
     @media(max-width:375px)
@@ -169,13 +167,12 @@ const Footer_logo = styled.img`
         max-width: 120px;
     }
 `;
-
 const HR = styled.hr`
     margin-top: 30px;
     margin-bottom: 0px;
 `;
 const Footer_Link = styled(Link)`
-    color:${props => props.theme.mode=="dark"?"white":"rgb(0, 0, 0, 0.65)"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb(0, 0, 0, 0.65)"};
 `
 const FooterContainer = styled.div`
 @media(max-width:991px)
@@ -192,53 +189,49 @@ const FooterLinkCol = styled(Col)`
 const FontAwesomeIcons = styled(FontAwesomeIcon)`
     display:inline-block;
     font-size:25px;
-    color:${props => props.theme.mode=="dark"?"white":"#cccccc"};
+    color:${props => props.theme.mode == "dark" ? "white" : "#cccccc"};
 `
+
 class Footer_home extends Component {
     constructor(props) {
         super(props);
         this.state = {
             comingSoon: false,
-            contactDetails:[],
-            footerLogo:""
+            contactDetails: [],
+            footerLogo: ""
         };
     }
-    componentWillReceiveProps(props,newProps)
-    {
-        if(props.theme!==undefined)
-        {
-            if(props.theme !== this.state.theme)
-            {
-                if(props.theme==false)
-                this.setState({footerLogo:"/images/Homepage/Footer_logo.png"})
+    componentWillReceiveProps(props, newProps) {
+        if (props.theme !== undefined) {
+            if (props.theme !== this.state.theme) {
+                if (props.theme == false)
+                    this.setState({ footerLogo: FooterLogo })
                 else
-                this.setState({footerLogo:"/images/Homepage/footer_white_logo.png"})
+                    this.setState({ footerLogo: FooterWhiteLogo })
             }
         }
     }
-    componentDidMount()
-    {
-        if(this.props.theme!==undefined)
-        {
-                if(this.props.theme==false)
-                this.setState({footerLogo:"/images/Homepage/Footer_logo.png"})
-                else
-                this.setState({footerLogo:"/images/Homepage/footer_white_logo.png"})
+    componentDidMount() {
+        if (this.props.theme !== undefined) {
+            if (this.props.theme == false)
+                this.setState({ footerLogo: FooterLogo })
+            else
+                this.setState({ footerLogo: FooterWhiteLogo })
 
         }
-        fetch(globalVariables.API_URL + '/get-contact-details',{
-            method:"get",
+        fetch(globalVariables.API_URL + '/get-contact-details', {
+            method: "get",
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             }
         })
-        .then(response => response.json())
-        .then((responseData) => {
-            this.setState({contactDetails:responseData.data});
-        })
-        .catch(error => {
-        })
+            .then(response => response.json())
+            .then((responseData) => {
+                this.setState({ contactDetails: responseData.data });
+            })
+            .catch(error => {
+            })
     }
     comingCancel = (e) => {
         this.setState({
@@ -251,6 +244,8 @@ class Footer_home extends Component {
         });
     }
     render() {
+        const { contactDetails } = this.state;
+
         return (
             <Footer_main>
                 <Container>
@@ -264,24 +259,24 @@ class Footer_home extends Component {
                                     </li>
                                     <li style={{ cursor: "pointer" }}>
                                         <Footer_Link to="/contactus">Contact Us</Footer_Link>
-                                                </li>
+                                    </li>
                                     <li style={{ cursor: "pointer" }}>
                                         <Footer_Link to="/careers">Careers</Footer_Link>
-                                                </li>
+                                    </li>
                                     <li style={{ cursor: "pointer" }}>
                                         <Footer_Link to="/mediacontact">Media Contact</Footer_Link>
-                                                </li>
+                                    </li>
                                 </Footer_ul>
                             </FooterLinkCol>
                             <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                                 <Footer_ul>
                                     <Footer_headers>Lorem</Footer_headers>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                    <Footer_Link to="/addcoin">List your Token</Footer_Link>
-                                                    </li>
+                                        <Footer_Link to="/addcoin">List your Token</Footer_Link>
+                                    </li>
                                     <li style={{ cursor: "pointer" }}>
                                         <Footer_Link to="/news">News</Footer_Link>
-                                                    </li>
+                                    </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         Security
                                                     </li>
@@ -298,7 +293,7 @@ class Footer_home extends Component {
                                     </li>
                                     <li style={{ cursor: "pointer" }}>
                                         <Footer_Link to="/blogs">Blog</Footer_Link>
-                                                    </li>
+                                    </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         Support
                                                     </li>
@@ -315,35 +310,34 @@ class Footer_home extends Component {
                                 <Icon_ul_1_header>
                                     <Footer_headers>Social</Footer_headers>
                                 </Icon_ul_1_header>
-                                {this.state.contactDetails.length!==0?
+                                {this.state.contactDetails.length !== 0 ?
                                     <Icon_ul_1>
-
-                                        <LI style={{ cursor: "pointer" }}>
-                                            <a href={this.state.contactDetails.fb_profile}><FontAwesomeIcons icon={faFacebook} color={true} /></a>
+                                        <LI>
+                                            <a href={contactDetails.fb_profile}><FontAwesomeIcons icon={faFacebook} color={true} /></a>
                                         </LI>
-                                        <LI style={{ cursor: "pointer" }}>
-                                            <a href={this.state.contactDetails.twitter_profile}><FontAwesomeIcons icon={faTwitter} color={true} /></a>
+                                        <LI>
+                                            <a href={contactDetails.twitter_profile}><FontAwesomeIcons icon={faTwitter} color={true} /></a>
                                         </LI>
-                                        <LI style={{ cursor: "pointer" }}>
-                                            <a href={this.state.contactDetails.google_profile}><FontAwesomeIcons icon={faGoogle} color={true} /></a>
+                                        <LI>
+                                            <a href={contactDetails.google_profile}><FontAwesomeIcons icon={faGoogle} color={true} /></a>
                                         </LI>
-                                        <LI style={{ cursor: "pointer" }} >
-                                            <a href={this.state.contactDetails.youtube_profile}><FontAwesomeIcons icon={faYoutube} color={true} /></a>
+                                        <LI>
+                                            <a href={contactDetails.youtube_profile}><FontAwesomeIcons icon={faYoutube} color={true} /></a>
                                         </LI>
                                     </Icon_ul_1>
-                                :""}
+                                    : ""}
                                 <Icon_ul_2>
-                                    <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <a href={this.state.contactDetails.insta_profile}> <FontAwesomeIcons icon={faInstagram} color={true} /></a>
+                                    <LI2 onClick={this.showComing}>
+                                        <a href={contactDetails.insta_profile}> <FontAwesomeIcons icon={faInstagram} color={true} /></a>
                                     </LI2>
-                                    <LI2 style={{ cursor: "pointer" }}>
-                                        <a href={this.state.contactDetails.telegram_profile}><FontAwesomeIcons icon={faTelegramPlane} color={true} /></a>
+                                    <LI2>
+                                        <a href={contactDetails.telegram_profile}><FontAwesomeIcons icon={faTelegramPlane} color={true} /></a>
                                     </LI2>
-                                    <LI2 style={{ cursor: "pointer" }}>
-                                        <a href={this.state.contactDetails.linkedin_profile}><FontAwesomeIcons icon={faLinkedinIn} color={true} /></a>
+                                    <LI2>
+                                        <a href={contactDetails.linkedin_profile}><FontAwesomeIcons icon={faLinkedinIn} color={true} /></a>
                                     </LI2>
-                                    <LI2 style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <a href={this.state.contactDetails.faldax_url}><FontAwesomeIcons icon={faInternetExplorer} color={true} /></a>
+                                    <LI2 onClick={this.showComing}>
+                                        <a href={contactDetails.faldax_url}><FontAwesomeIcons icon={faInternetExplorer} color={true} /></a>
                                     </LI2>
                                 </Icon_ul_2>
                             </Col>
@@ -362,14 +356,14 @@ class Footer_home extends Component {
                         <Footer_logo src={this.state.footerLogo} />
                     </Bottom_Footer>
                 </Container>
-                <ComingSoon comingCancel={(e)=>this.comingCancel(e)} visible={this.state.comingSoon}/>
+                <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
             </Footer_main>
         );
     }
 }
 function mapStateToProps(state, ownProps) {
     return ({
-        theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
     });
 }
 

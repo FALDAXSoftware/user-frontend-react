@@ -7,4 +7,3 @@ export const globalVariables = {
 
     API_URL: 'http://192.168.2.32:1337' //Krina Local URL
 }
-

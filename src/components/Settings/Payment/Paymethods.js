@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { connect } from "react-redux"
-import { Input, Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal, Table, notification } from 'antd';
-import MenuItem from 'antd/lib/menu/MenuItem';
-import styled from 'styled-components';
-import { Payment_wrap, PayHead, PayForm, Bank, Bank_label, Bank_input, Button_payment, Button_sub, Button_cancel, Button_add, PayForm2, Lefty, Righty, Gap, Top, CardName, RemoveCard, Body_card, Body_center } from '../../../styled-components/settings/paymentStyle'
+import { Row, Col } from 'antd';
+import {
+    Payment_wrap, PayHead, PayForm, Bank, Bank_label, Bank_input, Button_payment,
+    Button_sub, Button_cancel, Button_add, PayForm2, Lefty, Righty, Gap, Top, CardName,
+    RemoveCard, Body_card, Body_center
+} from '../../../styled-components/settings/paymentStyle';
+import { BankCard } from "../../../Constants/images";
 
-
-class Paymethods extends React.Component {
+class Paymethods extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -56,7 +57,7 @@ class Paymethods extends React.Component {
                                         </Top>
                                         <Body_card>
                                             <Body_center>
-                                                <img src="/images/Settings/cardAcc.png" />
+                                                <img src={BankCard} />
                                                 <span>BG75FINV91501056322589</span>
                                             </Body_center>
                                         </Body_card>
@@ -74,7 +75,7 @@ class Paymethods extends React.Component {
                                         </Top>
                                         <Body_card>
                                             <Body_center>
-                                                <img src="/images/Settings/cardAcc.png" />
+                                                <img src={BankCard} />
                                                 <span>BG75FINV91501056322589</span>
                                             </Body_center>
                                         </Body_card>
@@ -97,7 +98,7 @@ class Paymethods extends React.Component {
                                         </Top>
                                         <Body_card>
                                             <Body_center>
-                                                <img src="/images/Settings/cardAcc.png" />
+                                                <img src={BankCard} />
                                                 <span>BG75FINV91501056322589</span>
                                             </Body_center>
                                         </Body_card>
@@ -116,7 +117,7 @@ class Paymethods extends React.Component {
                                         </Top>
                                         <Body_card>
                                             <Body_center>
-                                                <img src="/images/Settings/cardAcc.png" />
+                                                <img src={BankCard} />
                                                 <span>BG75FINV91501056322589</span>
                                             </Body_center>
                                         </Body_card>

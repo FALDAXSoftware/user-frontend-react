@@ -12,16 +12,14 @@ import CountryPick from "./Country"
 import { Email_req } from "../../Landing/User_forms/Login_Form"
 import { globalVariables } from "../../../Globals"
 import { profileupdateAction, removepicAction, getProfileDataAction, clearEditData } from "../../../Actions/Settings/settings"
-import { faAsterisk } from '@fortawesome/free-solid-svg-icons';
+import { DefaultProfile } from "../../../Constants/images";
 
-const { TextArea } = Input;
 /* Styled-Components */
-
 const Profile_wrap = styled.div`
     width: 71%;
     margin: auto;
 `
-export const HeaderCol = styled(Col) `
+export const HeaderCol = styled(Col)`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
@@ -31,61 +29,59 @@ export const HeaderCol = styled(Col) `
     margin-left:0px;
     font-family: "Open Sans";
 `
-const Main_row = styled(Row) `
+const Main_row = styled(Row)`
     margin-top:40px;
     margin-bottom:300px;
 `
-const Left_Col = styled(Col) `
-
+const Left_Col = styled(Col)`
 `
 const ImageDiv = styled.img`
     height: 160px;
     width: 160px;
 `
-const Image_input = styled(Input) `
+const Image_input = styled(Input)`
     display:none !important;
 `
 const Image_up = styled.div`
     margin-top:30px;
 `
 const Image_upload = styled.label`
-    color:${props => props.theme.mode=="dark" ? "#828a91" : "#0f477b" };
+    color:${props => props.theme.mode == "dark" ? "#828a91" : "#0f477b"};
     cursor:pointer;
     font-family:"Open Sans";
     font-weight:600;
 `
 const Remove = styled.div`
     margin-top:20px;
-    color:${props => props.theme.mode=="dark" ? "#828a91" : "#0f477b" };
+    color:${props => props.theme.mode == "dark" ? "#828a91" : "#0f477b"};
     cursor:pointer;
     font-family:"Open Sans";
     font-weight:600;
 `
-export const Right_Col = styled(Col) `
+export const Right_Col = styled(Col)`
     @media(max-width:992px)
     {
         margin-top: 60px;
     }
 `
-export const First_Row = styled(Row) `
+export const First_Row = styled(Row)`
     text-align:left;
 `
 export const First_name = styled.div`
     font-size: 14.007px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark"? "rgba( 152, 171, 215, 0.502 )" : "rgba( 80, 80, 80, 0.502 )"};
+    color: ${props => props.theme.mode == "dark" ? "rgba( 152, 171, 215, 0.502 )" : "rgba( 80, 80, 80, 0.502 )"};
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     margin-bottom:10px;
 `
-  
-export const First_input = styled(Input) `
+export const First_input = styled(Input)`
     font-family: "Open Sans";
     font-size:16;
     font-weight:600;
-    background-color:${props => props.theme.mode=="dark" ? "#020f18" : "#f8f8f8" };
-    color:${props => props.theme.mode=="dark" ? "white" : "" };
+    background-color:${props => props.theme.mode == "dark" ? "#020f18" : "#f8f8f8"};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
     width:89%;
     border:1px solid #dadfe3;
     padding:10px;
@@ -100,38 +96,36 @@ export const First_input = styled(Input) `
         box-shadow:none;
     }
 `
-export const First_Msg = styled(Email_req) `
+export const First_Msg = styled(Email_req)`
     display:block;
 `
-export const Last_Msg = styled(First_Msg) ``
-export const Country_Msg = styled(First_Msg) ``
-export const Dob_Msg = styled(First_Msg) ``
-export const Street_Msg = styled(First_Msg) ``
-export const City_Msg = styled(First_Msg) ``
-export const Postal_Msg = styled(First_Msg) ``
-export const Last_name = styled(First_name) `
+export const Last_Msg = styled(First_Msg)``
+export const Country_Msg = styled(First_Msg)``
+export const Dob_Msg = styled(First_Msg)``
+export const Street_Msg = styled(First_Msg)``
+export const City_Msg = styled(First_Msg)``
+export const Postal_Msg = styled(First_Msg)``
+export const Last_name = styled(First_name)`
     @media(max-width:768px)
     {
         margin-top:25px;
     }
 `
-export const Last_input = styled(First_input) `
+export const Last_input = styled(First_input)`
     width:90%;
     border:1px solid #dadfe3;
     @media(max-width:768px)
     {
         width:100%;
     }
-   
 `
-export const Second_Row = styled(Row) `
+export const Second_Row = styled(Row)`
     text-align:left;
     margin-top:25px;
 `
-export const Country = styled(First_name) `
-   
+export const Country = styled(First_name)`
 `
-export const Country_input = styled(First_input) `
+export const Country_input = styled(First_input)`
     @media(max-width:992px)
     {
         width:95%;
@@ -141,20 +135,18 @@ export const Country_input = styled(First_input) `
         width:100%;
     }
 `
-export const Date_birth = styled(First_name) `
+export const Date_birth = styled(First_name)`
     @media(max-width:992px)
     {
         margin-top:25px;
     }
-
 `
-export const Third_Row = styled(Second_Row) `
+export const Third_Row = styled(Second_Row)`
     text-align:left;
 `
-export const Street_Address = styled(First_name) `
-
+export const Street_Address = styled(First_name)`
 `
-export const Street_input = styled(First_input) `
+export const Street_input = styled(First_input)`
     width:95%;
     border:1px solid #dadfe3;
 
@@ -167,23 +159,22 @@ export const Street_input = styled(First_input) `
         width:100%;
     }
 `
-export const Fourth_Row = styled(Second_Row) `
+export const Fourth_Row = styled(Second_Row)`
     text-align:left;
 `
-export const City = styled(First_name) `
-
+export const City = styled(First_name)`
 `
-export const Postal = styled(First_name) `
+export const Postal = styled(First_name)`
     @media(max-width:768px)
     {
         margin-top:25px;
     }
 `
-export const Fifth_Row = styled(Row) `
+export const Fifth_Row = styled(Row)`
     text-align:left;
     margin-top:50px;
 `
-export const Save = styled(Button) `
+export const Save = styled(Button)`
     font-size: 13.217px;
     font-family: "Open Sans";
     color: rgb( 255, 255, 255 );
@@ -217,7 +208,7 @@ export const Spin_Ex = styled.div`
     height: 100%;
     z-index: 9999;
 `
-const Street_2_Col = styled(Col) `
+const Street_2_Col = styled(Col)`
     margin-top:15px; 
 `
 const Asterisk = styled.span`
@@ -261,7 +252,7 @@ class PersonalDetails extends Component {
         this.props.form.validateFields((error, value) => {
             let dataDate = "";
             const profileData = new FormData();
-            if (error == null && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.cityIcon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '' && this.props.profileDetails.country !== null) || ((this.state.countrySelected!==null && this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
+            if (error == null && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.cityIcon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '' && this.props.profileDetails.country !== null) || ((this.state.countrySelected !== null && this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
                 document.querySelectorAll(".first_msg")[0].style.display = "none";
                 document.querySelectorAll(".last_msg")[0].style.display = "none";
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
@@ -288,7 +279,7 @@ class PersonalDetails extends Component {
                 profileData.append('last_name', value.last_name);
                 profileData.append('country', country);
                 profileData.append('street_address', value.street_address)
-                if(value.street_address_2!==null && value.street_address_2!=="" && value.street_address_2!==undefined)
+                if (value.street_address_2 !== null && value.street_address_2 !== "" && value.street_address_2 !== undefined)
                     profileData.append('street_address_2', value.street_address_2)
                 profileData.append('city_town', value.city_town);
                 profileData.append('postal_code', number);
@@ -297,14 +288,10 @@ class PersonalDetails extends Component {
                 this.setState({ profileImg: undefined, profileImage: undefined, remove_pic: false })
                 if (this.state.profileImage !== null && this.state.profileImage !== undefined && !this.state.profileImg.includes("def_profile.jpg")) {
                     profileData.append('profile_pic', this.state.profileImage)
-
                 }
 
-                /* console.log(profileData) */
-
                 this.props.profileupdateAction(this.props.isLoggedIn, profileData);
-            }
-            else {
+            } else {
                 this.openNotificationWithProfile("error", "Error", "Please complete all required details to continue")
             }
             if (this.state.firstIcon == null && this.props.profileDetails.first_name == null) {
@@ -349,6 +336,7 @@ class PersonalDetails extends Component {
             }
         });
     }
+
     componentDidMount() {
         if (this.props.profileDetails !== undefined) {
             this.setState({
@@ -373,9 +361,7 @@ class PersonalDetails extends Component {
             if (this.state.profileImg !== undefined && this.state.profileImg !== null && this.state.profileImg !== "") {
                 this.setState({ profileImg: this.state.profileImg })
                 /*  this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic }) */
-
-            }
-            else {
+            } else {
                 this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic })
             }
         }
@@ -402,7 +388,7 @@ class PersonalDetails extends Component {
                     });
                 };
             } else {
-                if(file!==undefined)
+                if (file !== undefined)
                     this.openNotificationWithProfile("error", "Error", "Please upload only images");
             }
 
@@ -414,8 +400,8 @@ class PersonalDetails extends Component {
     removePic() {
         /* this.removeNotification("warning"); */
         document.getElementById("file").value = "";
-        if (this.state.profileImg !== "./images/Settings/def_profile.jpg") {
-            this.setState({ remove_pic: true, profileImg: "./images/Settings/def_profile.jpg", profileImage: undefined })
+        if (this.state.profileImg !== DefaultProfile) {
+            this.setState({ remove_pic: true, profileImg: DefaultProfile, profileImage: undefined })
         }
         /* 
         this.props.removepicAction(this.props.isLoggedIn, formData) */
@@ -455,26 +441,21 @@ class PersonalDetails extends Component {
                         this.setState({ firstIcon: false })
                         document.querySelectorAll(".first_msg")[0].style.display = "block";
                         this.setState({ firstmsg: "Only numbers are not allowed" })
-                    }
-                    else {
+                    } else {
                         this.setState({ firstIcon: true })
                         document.querySelectorAll(".first_msg")[0].style.display = "none";
                     }
-                }
-                else {
+                } else {
                     this.setState({ firstIcon: false })
                     document.querySelectorAll(".first_msg")[0].style.display = "block";
                     this.setState({ firstmsg: "First Name should have min. 2 and max. 15 characters and no special characters are allowed" })
                 }
-            }
-            else {
+            } else {
                 this.setState({ firstIcon: false })
                 document.querySelectorAll(".first_msg")[0].style.display = "block";
                 this.setState({ firstmsg: "First Name field is required" })
             }
-
-        }
-        else if (field == "last_name") {
+        } else if (field == "last_name") {
             var re = /^[a-zA-Z0-9]{2,15}$/;
             var bool = re.test(value);
             if (value !== "") {
@@ -484,118 +465,96 @@ class PersonalDetails extends Component {
                         this.setState({ lastIcon: false })
                         document.querySelectorAll(".last_msg")[0].style.display = "block";
                         this.setState({ lastmsg: "Only numbers are not allowed" })
-                    }
-                    else {
+                    } else {
                         this.setState({ lastIcon: true })
                         document.querySelectorAll(".last_msg")[0].style.display = "none";
                     }
-                }
-                else {
+                } else {
                     this.setState({ lastIcon: false })
                     document.querySelectorAll(".last_msg")[0].style.display = "block";
                     this.setState({ lastmsg: "Last Name should have min. 2 and max. 15 characters and no special characters are allowed" })
                 }
-            }
-            else {
+            } else {
                 this.setState({ lastIcon: false })
                 document.querySelectorAll(".last_msg")[0].style.display = "block";
                 this.setState({ lastmsg: "Last Name field is required" })
             }
-
-        }
-        else if (field == "country") {
+        } else if (field == "country") {
             if (value !== undefined || value !== null) {
                 this.setState({ countryIcon: true })
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
-            }
-            else {
+            } else {
                 this.setState({ countryIcon: true })
                 document.querySelectorAll(".country_msg")[0].style.display = "block";
                 this.setState({ dobmsg: "Country Field is required" })
             }
-        }
-        else if (field == "dob") {
+        } else if (field == "dob") {
             if ((value["day"] !== undefined && value["month"] !== undefined && value["year"] !== undefined) && (value["day"] !== "" && value["month"] !== "" && value["year"] !== "")) {
                 this.setState({ dobIcon: true })
                 document.querySelectorAll(".dob_msg")[0].style.display = "none";
-            }
-            else {
+            } else {
                 this.setState({ dobIcon: false })
                 document.querySelectorAll(".dob_msg")[0].style.display = "block";
                 this.setState({ dobmsg: "Date of Birth is required" })
             }
-        }
-        else if (field == "street_address") {
+        } else if (field == "street_address") {
             if (value !== "") {
                 if (value.length < 100) {
                     this.setState({ street1Icon: true })
                     document.querySelectorAll(".street1_msg")[0].style.display = "none";
-                }
-                else {
+                } else {
                     this.setState({ street1Icon: false })
                     document.querySelectorAll(".street1_msg")[0].style.display = "block";
                     this.setState({ street1msg: "Street Address limit is 100 characters" })
                 }
-            }
-            else {
+            } else {
                 this.setState({ street1Icon: false })
                 document.querySelectorAll(".street1_msg")[0].style.display = "block";
                 this.setState({ street1msg: "Street Address is required" })
             }
-        }
-        else if (field == "street_address_2") {
-
-
+        } else if (field == "street_address_2") {
             if (value.length < 100) {
                 this.setState({ street2Icon: true })
                 document.querySelectorAll(".street2_msg")[0].style.display = "none";
-            }
-            else {
+            } else {
                 this.setState({ street2Icon: false })
                 document.querySelectorAll(".street2_msg")[0].style.display = "block";
                 this.setState({ street2msg: "Street Address limit is 100 characters" })
             }
-
-        }
-        else if (field == "city_town") {
+        } else if (field == "city_town") {
             if (value !== "") {
                 if (value.length >= 2 && value.length <= 20) {
                     this.setState({ cityIcon: true })
                     document.querySelectorAll(".city_msg")[0].style.display = "none";
-                }
-                else {
+                } else {
                     this.setState({ cityIcon: false })
                     document.querySelectorAll(".city_msg")[0].style.display = "block";
                     this.setState({ citymsg: "City should have min. 2 and max. 20 characters" })
                 }
-            }
-            else {
+            } else {
                 this.setState({ cityIcon: false })
                 document.querySelectorAll(".city_msg")[0].style.display = "block";
                 this.setState({ citymsg: "City field is required" })
             }
-        }
-        else if (field == "postal_code") {
+        } else if (field == "postal_code") {
             if (value !== "") {
                 if (value.length >= 2 && value.length <= 20) {
                     this.setState({ postalIcon: true })
                     document.querySelectorAll(".postal_msg")[0].style.display = "none";
-                }
-                else {
+                } else {
                     this.setState({ postalIcon: false })
                     document.querySelectorAll(".postal_msg")[0].style.display = "block";
                     this.setState({ postalmsg: "Postal code should have min. 2 and max. 20 characters" })
                 }
-            }
-            else {
+            } else {
                 this.setState({ postalIcon: false })
                 document.querySelectorAll(".postal_msg")[0].style.display = "block";
                 this.setState({ postalmsg: "Postal Code is required" })
             }
         }
     }
+
     render() {
-        /* console.log(this.props) */
         let errors;
         let firstname = `${this.props.profileDetails.first_name}`
         const { getFieldProps, getFieldError } = this.props.form;
@@ -617,9 +576,9 @@ class PersonalDetails extends Component {
                             <Left_Col md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }} xxl={{ span: 6 }}>
                                 <div><ImageDiv src={this.state.profileImg} /></div>
                                 <div><Image_input type="file" onChange={this.handleProfile} name="file" id="file" /><Image_up><Image_upload htmlFor="file">Upload New Photo</Image_upload></Image_up></div>
-                               
+
                                 {(this.state.remove_pic !== true && ((this.props.profileDetails.profile_pic) ? (!this.props.profileDetails.profile_pic.includes("def_profile.jpg") ||
-                            ((this.state.profileImg!==undefined)?!this.state.profileImg.includes("def_profile.jpg"):true)) ? <Remove onClick={this.removePic.bind(this)}>Remove</Remove> : "" : ""))}
+                                    ((this.state.profileImg !== undefined) ? !this.state.profileImg.includes("def_profile.jpg") : true)) ? <Remove onClick={this.removePic.bind(this)}>Remove</Remove> : "" : ""))}
                             </Left_Col>
                             <Right_Col md={{ span: 24 }} lg={{ span: 15, offset: 3 }} xl={{ span: 15, offset: 3 }} xxl={{ span: 15, offset: 3 }}>
                                 <First_Row>
@@ -669,7 +628,7 @@ class PersonalDetails extends Component {
                                     <Street_Address>Street Address Line 2</Street_Address>
                                     <Street_input placeholder="Street Address" {...getFieldProps('street_address_2', {
                                         onChange(e) { me.onChangeField(e.target.value, "street_address_2") },
-                                        initialValue: profileDetails.street_address_2!==null?profileDetails.street_address_2:"", // have to write original onChange here if you need
+                                        initialValue: profileDetails.street_address_2 !== null ? profileDetails.street_address_2 : "", // have to write original onChange here if you need
                                         rules: [{ type: "string" }],
                                     })} />
                                     <Street_Msg className="street2_msg">{this.state.street2msg}</Street_Msg>

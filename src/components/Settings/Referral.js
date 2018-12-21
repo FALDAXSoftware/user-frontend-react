@@ -2,13 +2,11 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
-import { Input, Row, Col, Button, Layout, Menu, Breadcrumb, Card, Cardimport, Modal, Table, notification } from 'antd';
-import MenuItem from 'antd/lib/menu/MenuItem';
+import { Input, Row, Col, Table, notification } from 'antd';
 import styled from 'styled-components';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 /* Constants */
-const { Header, Content, Footer } = Layout;
 const Search = Input.Search;
 
 /* Styled Components */
@@ -28,17 +26,14 @@ const data = [{
     referral: "test3@test.com"
 }];
 
-
 /* Styled Components */
-
 const Parent_wrap = styled.div`
-    
 `
 const Header_text = styled.div`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    color:${props => props.theme.mode=="dark" ? "white" : "rgb( 80, 80, 80 )"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
     line-height: 2.4;
     margin-top:10px;
     text-align:center;
@@ -56,7 +51,7 @@ const Ref_div = styled.div`
     margin:auto;
     width:80%;
     height:140px;
-    background-color:${props => props.theme.mode=="dark" ? "041422" : "#fcfcfc"};
+    background-color:${props => props.theme.mode == "dark" ? "041422" : "#fcfcfc"};
     border:1px solid #d6d6d6;
     margin-top:40px;
     border-radius: 10px;
@@ -68,7 +63,6 @@ const Ref_leftcol = styled(Col)`
     padding-left: 35px;
     &:after 
     {
-    
         top: 8%;
         position: absolute;
         height: 84%;
@@ -110,7 +104,6 @@ const Ref_text = styled.div`
     }
 `
 const Ref_rightcol = styled(Col)`
-    
 `
 const Right_value = styled.div`
     text-align:center;
@@ -149,46 +142,42 @@ const Ref_acc = styled.div`
     margin:auto;
     width:80%;
     height:140px;
-    background-color:${props => props.theme.mode=="dark" ? "#041422" : "#ffffff"};
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "#ffffff"};
     border:1px solid #d6d6d6;
     margin-top:40px;
     border-radius: 10px;
     height:auto;
     margin-bottom:65px;
 `
-class Referral extends React.Component {
+
+class Referral extends Component {
     constructor(props) {
         super(props);
         this.state = {
             value: null,
             copied: false,
             tableData: [],
-            searchCSS:""
+            searchCSS: ""
         }
     }
-    componentWillReceiveProps(props,newProps)
-    {
-        if(this.props.theme!==undefined)
-        {
-            if(this.props.theme !== this.state.theme)
-            {
-                if(this.props.theme==false)
-                    this.setState({searchCSS:"Input_search_night"})
+    componentWillReceiveProps(props, newProps) {
+        if (this.props.theme !== undefined) {
+            if (this.props.theme !== this.state.theme) {
+                if (this.props.theme == false)
+                    this.setState({ searchCSS: "Input_search_night" })
                 else
-                    this.setState({searchCSS:"INPUT_search"})
+                    this.setState({ searchCSS: "INPUT_search" })
             }
         }
     }
     componentDidMount() {
         /* console.log(this.props.isLoggedIn) */
-        if(this.props.theme!==undefined)
-        {
-            if(this.props.theme !== this.state.theme)
-            {
-                if(this.props.theme==false)
-                    this.setState({searchCSS:"Input_search_night",referTable:"referral-table"})
+        if (this.props.theme !== undefined) {
+            if (this.props.theme !== this.state.theme) {
+                if (this.props.theme == false)
+                    this.setState({ searchCSS: "Input_search_night", referTable: "referral-table" })
                 else
-                    this.setState({searchCSS:"INPUT_search",referTable:"referral-table-night"})
+                    this.setState({ searchCSS: "INPUT_search", referTable: "referral-table-night" })
             }
         }
         fetch("http://18.191.87.133:8084/users/referredUsers", {

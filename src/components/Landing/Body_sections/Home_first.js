@@ -2,18 +2,18 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { Banner, LargeLogo } from '../../../Constants/images';
 
 /* Import Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
 import { globalVariables } from '../../../Globals';
 let { amazon_bucket } = globalVariables;
 /* Components */
-
 const Section = styled.section`
   width:100%;
   height:calc(100vh - 80px);
-  background-image:url('/images/Homepage/banner.png');
+  background-image:url(${Banner});
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -30,7 +30,6 @@ const Heading = styled.h2`
   @media (max-width: 991px) {
     text-align:center;
     padding-left:0px;
-    
   }
 `
 const HeadingBrand = styled.span`
@@ -84,7 +83,7 @@ export default class Homefirst extends Component {
                 </SubHeading>
             </Col>
             <ImageCol lg={10}>
-              <Img src={"https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/logo-lg.png"} width="80%" className="wow fadeInUp" data-wow-delay="1s" />
+              <Img src={LargeLogo} width="80%" className="wow fadeInUp" data-wow-delay="1s" />
             </ImageCol>
           </BannerRow>
         </Container>

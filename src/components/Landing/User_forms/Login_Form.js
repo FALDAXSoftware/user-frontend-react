@@ -4,8 +4,7 @@ import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import { Button, notification, Icon } from "antd";
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { Eye, ActiveEye } from '../../../Constants/images';
 
 /* Components */
 
@@ -138,21 +137,6 @@ const Check_wrap = styled.div`
     text-align:left;
   }
 `
-const Remember = styled.div`
-  display: inline-block;
-  font-size: 14px;
-  font-family: "Open Sans";
-  font-weight: bold;
-  color: black;
-
-  @media(max-width:400px)
-  {
-    display:block;
-  }
-`
-const Check = styled.input`
-  vertical-align:middle;
-`
 const Forgot = styled.a`
   float:right;
   font-size: 14px;
@@ -253,10 +237,9 @@ class Login_Form extends React.Component {
         var obj = {};
         obj["email"] = value.email;
         obj["password"] = value.password;
-        obj["device_type"] = 0 ; 
-        if(value.otp!==null && value.otp!=="" && value.otp!==undefined)
-        {
-          obj['otp']==value.otp;
+        obj["device_type"] = 0;
+        if (value.otp !== null && value.otp !== "" && value.otp !== undefined) {
+          obj['otp'] == value.otp;
         }
         this.props.Login(obj);
       } else {
@@ -361,7 +344,7 @@ class Login_Form extends React.Component {
   componentDidMount() {
     /* console.log(this.props) */
     var query = this.props.location.search.split("=")
-   /*  console.log(query) */
+    /*  console.log(query) */
     if (query[0] !== "" && this.props.location.pathname.includes("login")) {
       var queryObj = {};
       queryObj["email_verify_token"] = query[1]
@@ -430,7 +413,7 @@ class Login_Form extends React.Component {
           })}
           />
           {
-            (this.state.typeEye == "password") ? <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this)} /> : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this)} />
+            (this.state.typeEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this)} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this)} />
           }
           <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
           <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />

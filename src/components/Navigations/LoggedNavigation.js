@@ -1,8 +1,8 @@
 /* IN-built */
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Input, Button } from 'antd';
+import { Layout, Menu } from 'antd';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Link, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
 
@@ -10,7 +10,8 @@ import 'antd/dist/antd.css';
 import Afterlog from "./Afterlog"
 import { Logout } from '../../Actions/Auth';
 import { globalVariables } from "../../Globals";
-import ComingSoon from '../ComingSoon'
+import ComingSoon from '../ComingSoon';
+import { FaldaxLogo, FaldaxWhite, WhiteLogo, Faldax } from "../../Constants/images";
 const { Header } = Layout;
 
 /* Styled Components */
@@ -31,8 +32,8 @@ const Header_main = styled(Header)`
     width : 100%;
     padding:0;
     text-align:left;
-    background-color:${props => props.theme.mode=="dark"? "#041422":"white"};
-    box-shadow:${props => props.theme.mode=="dark"?"" : "0px 3px #f7f7f7"};
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
+    box-shadow:${props => props.theme.mode == "dark" ? "" : "0px 3px #f7f7f7"};
     height :80px;
     display:flex;
     align-items:center;
@@ -43,7 +44,7 @@ const Menu_main = styled(Menu)`
     text-align: right;
     border-bottom:0px;
     vertical-align: middle;
-    background-color:${props => props.theme.mode=="dark"? "#041422":"white"};
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
     @media(max-width:1200px)
     {
         display:none;
@@ -104,7 +105,6 @@ const SideNav = styled.div`
         display: none;
     }
 `
-
 const Close = styled.a`
     text-align:right;
 `
@@ -127,11 +127,12 @@ const RightCol = styled.div`
     margin-left:auto;
 `
 const NavLink = styled(Link)`
-    color: ${props => props.theme.mode=="dark"?"white":"black"} !important;
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"} !important;
     &:hover{
         color:#1890ff !important;
     }
 `
+
 class LoggedNavigation extends Component {
     constructor(props) {
         super(props);
@@ -139,53 +140,39 @@ class LoggedNavigation extends Component {
             visible: false,
             modal: 0,
             comingSoon: false,
-            faldaxLogo:"",
-            faldax:"",
-            selected:''
+            faldaxLogo: "",
+            faldax: "",
+            selected: ''
         }
     }
-    componentWillReceiveProps(props,newProps)
-    {
-        if(props.theme!==undefined)
-            {
-                if(props.theme !== this.state.theme)
-                {
-                    if(props.theme==false)
-                    this.setState({faldaxLogo:"/images/Homepage/Faldax_logo.png" ,faldax:"/images/Homepage/faldax.png"})
-                    else
-                    this.setState({faldax:"/images/Homepage/faldax_white.png",faldaxLogo: "/images/Homepage/logo_white.png"})
-                }
+    componentWillReceiveProps(props, newProps) {
+        if (props.theme !== undefined) {
+            if (props.theme !== this.state.theme) {
+                if (props.theme == false)
+                    this.setState({ faldaxLogo: FaldaxLogo, faldax: Faldax })
+                else
+                    this.setState({ faldax: FaldaxWhite, faldaxLogo: WhiteLogo })
             }
+        }
     }
     componentDidMount() {
-        console.log("wakeup",this.props);
-        if(this.props.location)
-        {
-            if(this.props.location.pathname.includes("trade"))
-            {
-                this.setState({selected:"2"})
-            }
-            else if(this.props.location.pathname.includes("wallet"))
-            {
-                this.setState({selected:"3"})
-            }
-            else if(this.props.location.pathname.includes("dashboard"))
-            {
-                this.setState({selected:"1"})
-            }
-            else if(this.props.location.pathname.includes("history"))
-            {
-                this.setState({selected:"4"})
+        if (this.props.location) {
+            if (this.props.location.pathname.includes("trade")) {
+                this.setState({ selected: "2" })
+            } else if (this.props.location.pathname.includes("wallet")) {
+                this.setState({ selected: "3" })
+            } else if (this.props.location.pathname.includes("dashboard")) {
+                this.setState({ selected: "1" })
+            } else if (this.props.location.pathname.includes("history")) {
+                this.setState({ selected: "4" })
             }
         }
-        if(this.props.theme!==undefined)
-        {
-            if(this.props.theme !== this.state.theme)
-            {
-                if(this.props.theme==false)
-                this.setState({faldaxLogo: "/images/Homepage/Faldax_logo.png",faldax:"/images/Homepage/faldax.png"})
+        if (this.props.theme !== undefined) {
+            if (this.props.theme !== this.state.theme) {
+                if (this.props.theme == false)
+                    this.setState({ faldaxLogo: FaldaxLogo, faldax: Faldax })
                 else
-                this.setState({faldax:"/images/Homepage/faldax_white.png",faldaxLogo: "/images/Homepage/logo_white.png"})
+                    this.setState({ faldax: FaldaxWhite, faldaxLogo: WhiteLogo })
             }
         }
     }
@@ -206,7 +193,6 @@ class LoggedNavigation extends Component {
     }
 
     logout() {
-
         this.props.Logout();
     }
 
@@ -280,16 +266,16 @@ class LoggedNavigation extends Component {
                     <Link to="/history">HISTORY</Link>
                     <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
                 </SideNav>
-                <ComingSoon comingCancel={(e)=>this.comingCancel(e)} visible={this.state.comingSoon}/>
+                <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
             </Header_main>
         );
     }
 }
+
 function mapStateToProps(state) {
-    /*  console.log(state) */
     return ({
-        profileDetails: state.simpleReducer.profileDetails!==undefined ? state.simpleReducer.profileDetails.data[0] : "",
-        theme:  state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
     });
 }
 const mapDispatchToProps = dispatch => ({

@@ -1,28 +1,28 @@
 /* In-built Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Tabs ,Spin} from 'antd';
+import { Spin } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faYoutube, faTwitter, faLinkedinIn, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import styled from 'styled-components';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser';
 
 import Navigation from '../Navigations/Navigation';
-import {Spin_Ex} from '../../styled-components/homepage/style'
+import { Spin_Ex } from '../../styled-components/homepage/style'
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
 import CommonFooter from "../Landing/Footers/Footer_home";
-import {globalVariables} from "../../Globals"
+import { globalVariables } from "../../Globals";
+import { AboutPeople1, AboutPeople2, AboutPeople3 } from '../../Constants/images';
 let { API_URL } = globalVariables;
-const TabPane = Tabs.TabPane;
 
 /* Styled-Components */
 const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom: 25px;
-  background-color: ${props => props.theme.mode=="dark"?"#01090f":"#f5f6fa"};
+  background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
 `
 const ProfileDiv = styled.div`
-  background-color: ${props => props.theme.mode=="dark"?"#041422":"#ffffff"};
+  background-color: ${props => props.theme.mode == "dark" ? "#041422" : "#ffffff"};
   margin:auto;
   width: 100%;
   max-width: 1170px;
@@ -33,14 +33,13 @@ const ProfileDiv = styled.div`
     padding: 15px;
   }
 `
-
 const About_Faldax_Title = styled.span`
   font-size: 40px;
   font-family: "Open sans";
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"};
+  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"};
   &:before {
     content: '';
     width: calc(50% - 235px);
@@ -63,7 +62,7 @@ const About_Faldax_Title = styled.span`
   }
 `;
 const AboutContent = styled.div`
-  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"};
+  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"};
   text-align:justify;
 `
 const Our_Mission = styled.span`
@@ -72,7 +71,7 @@ const Our_Mission = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"};
+  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"};
   &:before {
     content: '';
     width: calc(50% - 170px);
@@ -95,7 +94,7 @@ const Our_Mission = styled.span`
   }
 `
 const MissionContent = styled.div`
-  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"};
+  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"};
 `
 const Our_Team = styled.span`
   font-size: 40px;
@@ -103,7 +102,7 @@ const Our_Team = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"};
+  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"};
   &:before {
     content: '';
     width: calc(50% - 125px);
@@ -132,48 +131,14 @@ const About_Us_Image = styled.img`
   margin: 10px 30px 5px 0px;
 `
 const Missiondesc = styled.span`
-  color:${props => props.theme.mode=="dark"?"#ffffff":"#333333"}
+  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"}
 `
-
 /* Styled Components */
-
-const User_image = styled.div`
-  width: 100px;
-  height: 55px;
-  background: #fc5e5e;
-  position: relative;
-  margin: 10px auto;
-
-  &:before {
-    content: "";
-    width: 0;
-    height: 0;
-    position: absolute;
-    top: -25px;
-    left: 0;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
-    border-bottom: 25px solid #fc5e5e;
-  }
-  &:after {
-    content: "";
-    width: 0;
-    height: 0;
-    position: absolute;
-    bottom: -25px;
-    left: 0;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
-    border-top: 25px solid #fc5e5e;
-  }
-`;
-
-const FontAwesomeIcons = styled(FontAwesomeIcon) `
+const FontAwesomeIcons = styled(FontAwesomeIcon)`
   font-size: 16px;
   margin-top: 5px;
   color: ${props => props.color ? '#4c84ff' : '#878787'};
 `;
-
 const Hexagon = styled.div`
   overflow: hidden;
   visibility: hidden;
@@ -199,7 +164,6 @@ const Hexagon_In1 = styled.div`
       -o-transform: rotate(-60deg);
           transform: rotate(-60deg);
 `;
-
 const Hexagon_In2 = styled.div`
   width: 100%;
   height: 100%;
@@ -213,7 +177,6 @@ const Hexagon_In2 = styled.div`
       -o-transform: rotate(-60deg);
           transform: rotate(-60deg);
 `;
-
 const Team = styled.div`
   width: 255px;
   min-height: 310px;
@@ -223,23 +186,21 @@ const Team = styled.div`
   margin-left: 0px;
   margin-bottom: 0px;
   margin-top: 115px;
-  box-shadow: ${props => props.theme.mode=="dark"?"none":"-1px 2px 10px 4px #f1f1f1"};
+  box-shadow: ${props => props.theme.mode == "dark" ? "none" : "-1px 2px 10px 4px #f1f1f1"};
   cursor: pointer;
-  background-color:${props => props.theme.mode=="dark"?"#01090f":"#ffffff"};
+  background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#ffffff"};
 `;
-
 const TeamIn1 = styled.div`
-  color:${props => props.theme.mode=="dark"?"white":"#333333"};
+  color:${props => props.theme.mode == "dark" ? "white" : "#333333"};
   margin-top: 10px;
 `;
 const TeamIn2 = styled.div`
-  color:${props => props.theme.mode=="dark"?"white":"#333333"};
+  color:${props => props.theme.mode == "dark" ? "white" : "#333333"};
 `;
 const TeamIn3 = styled.div`
-  color:${props => props.theme.mode=="dark"?"white":"#5c5c5c"};
+  color:${props => props.theme.mode == "dark" ? "white" : "#5c5c5c"};
   padding: 13px 20px;
 `;
-
 const FontAwesomeDiv = styled.div`
   display: inline-block;
   border-radius: 50%;
@@ -248,7 +209,6 @@ const FontAwesomeDiv = styled.div`
   background-color: white;
   margin: 12px 7.5px
 `;
-
 const TeamIn4 = styled.div`
   width: 100%;
   height: 50px;
@@ -258,30 +218,29 @@ const TeamIn4 = styled.div`
 
 /* Component Defination Starts Here*/
 
-export default class AboutUs extends React.Component {
+export default class AboutUs extends Component {
   constructor() {
     super();
     this.state = {
       team: 1,
-      aboutContent:'',
-      loader:false
+      aboutContent: '',
+      loader: false
     };
   }
-  componentDidMount()
-  {
-    this.setState({loader:true})
-    fetch(API_URL + "/users/static-page-json/about",{
-      method:"get",
+  componentDidMount() {
+    this.setState({ loader: true })
+    fetch(API_URL + "/users/static-page-json/about", {
+      method: "get",
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }
     })
-    .then(response => response.json())
-    .then((responseData) => {
-        this.setState({aboutContent:responseData.data.content,loader:false})
-    })
-    .catch(error => { })
-    
+      .then(response => response.json())
+      .then((responseData) => {
+        this.setState({ aboutContent: responseData.data.content, loader: false })
+      })
+      .catch(error => { })
+
   }
   teamClick(value) {
     this.setState({ team: value });
@@ -306,7 +265,7 @@ export default class AboutUs extends React.Component {
               </div>
               <AboutContent style={{ marginTop: '20px' }}>
                 <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
-                {ReactHtmlParser(this.state.aboutContent)} 
+                  {ReactHtmlParser(this.state.aboutContent)}
                 </span>
               </AboutContent>
               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
@@ -336,7 +295,7 @@ export default class AboutUs extends React.Component {
                 <Team onClick={() => this.teamClick('1')}>
                   <Hexagon>
                     <Hexagon_In1>
-                      <Hexagon_In2 src="url(/images/about-us-people-1.jpg)">
+                      <Hexagon_In2 src={`url(${AboutPeople1})`}>
                       </Hexagon_In2>
                     </Hexagon_In1>
                   </Hexagon>
@@ -367,7 +326,7 @@ export default class AboutUs extends React.Component {
                 <Team onClick={() => this.teamClick('2')}>
                   <Hexagon>
                     <Hexagon_In1>
-                      <Hexagon_In2 src="url(/images/about-us-people-2.jpg)">
+                      <Hexagon_In2 src={`url(${AboutPeople2})`}>
                       </Hexagon_In2>
                     </Hexagon_In1>
                   </Hexagon>
@@ -398,7 +357,7 @@ export default class AboutUs extends React.Component {
                 <Team onClick={() => this.teamClick('3')}>
                   <Hexagon>
                     <Hexagon_In1>
-                      <Hexagon_In2 src="url(/images/about-us-people-3.jpg)">
+                      <Hexagon_In2 src={`url(${AboutPeople3})`}>
                       </Hexagon_In2>
                     </Hexagon_In1>
                   </Hexagon>
@@ -426,16 +385,14 @@ export default class AboutUs extends React.Component {
                     </FontAwesomeDiv>
                   </TeamIn4>
                 </Team>
-
               </div>
             </ProfileDiv>
           </ProfileWrapper>
           <CommonFooter />
           {(this.state.loader) ? <Spin_Ex className="Ex_spin">
-                    <Spin size="large" />
-                </Spin_Ex> : ""}
+            <Spin size="large" />
+          </Spin_Ex> : ""}
         </OverlayLoader>
-
       </div>
     );
   }

@@ -51,8 +51,7 @@ const Third_title = styled(Third_p)`
   font-size:20px;
   @media (max-width: 767px) {
     font-size: 13px;
-}
-`
+}`
 
 export default class Homethird extends Component {
     render() {

@@ -4,8 +4,7 @@ import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import { Button, notification, Icon } from "antd";
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { Eye, ActiveEye } from '../../../Constants/images';
 
 /* Components */
 import { resetAction } from '../../../Actions/Auth'
@@ -96,7 +95,7 @@ class ResetPassword extends Component {
       common_req: null,
       repeatEye: "password",
       newEye: "password",
-      confPass:""
+      confPass: ""
     }
   }
 
@@ -106,25 +105,22 @@ class ResetPassword extends Component {
 
   onChangeField(value, field) {
     if (field == "password") {
-      password=value;
-            if(this.state.confPass!==undefined)
-            {
-                /* console.log("abcd",this.state.confPass,value) */
-                if(this.state.confPass === value)
-                {
-                    this.setState({ confirmIcon: true })
-                    document.querySelector("#confirmchange_icon_success").style.display = "none"
-                    document.querySelector("#confirmchange_icon_fail").style.display = "none"
-                    document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
-                }
-                else{
-                  this.setState({ confirmIcon: false })
-                  document.querySelector("#confirmchange_icon_success").style.display = "none"
-                  document.querySelector("#confirmchange_icon_fail").style.display = "inline-block"
-                  document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
-                  this.setState({ confirmPass_msg: "*Confirm Password does not match." })
-                }
-              }
+      password = value;
+      if (this.state.confPass !== undefined) {
+        /* console.log("abcd",this.state.confPass,value) */
+        if (this.state.confPass === value) {
+          this.setState({ confirmIcon: true })
+          document.querySelector("#confirmchange_icon_success").style.display = "none"
+          document.querySelector("#confirmchange_icon_fail").style.display = "none"
+          document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
+        } else {
+          this.setState({ confirmIcon: false })
+          document.querySelector("#confirmchange_icon_success").style.display = "none"
+          document.querySelector("#confirmchange_icon_fail").style.display = "inline-block"
+          document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
+          this.setState({ confirmPass_msg: "*Confirm Password does not match." })
+        }
+      }
       var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
       var bool = re.test(value);
       var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
@@ -156,7 +152,7 @@ class ResetPassword extends Component {
     if (field == "confirm_password") {
       var bool = this.state.password === value ? true : false
       if (value !== "") {
-        this.setState({confPass:value})
+        this.setState({ confPass: value })
         if (bool == true) {
           this.setState({ confirmIcon: true })
           document.querySelector("#confirmchange_icon_success").style.display = "inline-block"
@@ -179,9 +175,9 @@ class ResetPassword extends Component {
   }
   openNotificationWithProfile = (type, head, desc) => {
     notification[type]({
-        message: head,
-        description: desc,
-        duration: 3,
+      message: head,
+      description: desc,
+      duration: 3,
     });
   };
   submit = () => {
@@ -203,7 +199,7 @@ class ResetPassword extends Component {
           document.querySelectorAll(".comp_pass")[0].style.display = "block";
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
           document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
-          this.openNotificationWithProfile("error","Error","Password do not match.")
+          this.openNotificationWithProfile("error", "Error", "Password do not match.")
         }
       } else {
         if (error.password !== undefined) {
@@ -276,15 +272,13 @@ class ResetPassword extends Component {
             })} />
             {
               (newEye == "password") ?
-                <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "new")} />
-                : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "new")} />
+                <FAI src={Eye} onClick={this.handleEye.bind(this, "new")} />
+                : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "new")} />
             }
             <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
             <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
             <Full_req className="pass_msg">{this.state.pass_msg}</Full_req>
           </div>
-
-
 
           <Passconfirm_Label>Confirm Password</Passconfirm_Label>
           <div>
@@ -295,8 +289,8 @@ class ResetPassword extends Component {
             />
             {
               (repeatEye == "password") ?
-                <FAI src="/images/Settings/eye.png" onClick={this.handleEye.bind(this, "confirm_password")} />
-                : <Active_FAI src="/images/Settings/active_eye.png" onClick={this.handleEye.bind(this, "confirm_password")} />
+                <FAI src={Eye} onClick={this.handleEye.bind(this, "confirm_password")} />
+                : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "confirm_password")} />
             }
             <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
             <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />

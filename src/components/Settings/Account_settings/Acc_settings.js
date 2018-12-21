@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux";
-import { Row, Col, Checkbox, Table, Button, notification, Spin, Divider, Tag, Modal } from 'antd';
+import { Row, Col, Checkbox, Table, Button, notification, Spin, Modal } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDesktop ,faMobileAlt } from '@fortawesome/free-solid-svg-icons';
+import { faDesktop, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { HeaderCol, Save, Spin_Ex } from "../Personaldetails/PersonalDetails"
+import { Spin_Ex } from "../Personaldetails/PersonalDetails"
 import { globalVariables } from '../../../Globals';
 
 import { deleteAccount } from "../../../Actions/Auth"
@@ -22,9 +22,9 @@ const columns = [{
     title: 'IP Address',
     dataIndex: 'IP',
     key: 'IP',
-},{
+}, {
     title: 'Device',
-    className:"column_device",
+    className: "column_device",
     dataIndex: 'Device',
     key: 'Device'
 }];
@@ -49,7 +49,7 @@ const Noti_Head = styled.div`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    color:${props => props.theme.mode=="dark" ? "white" : "rgb( 80, 80, 80 )"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
 `
 const Noti_desc = styled.div`
     font-size: 16.008px;
@@ -121,7 +121,7 @@ const Heading = styled.div`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    color: ${props => props.theme.mode=="dark"?"white":"rgb( 80, 80, 80 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
     line-height: 2.4;
     -moz-transform: matrix( 1,0,0,0.99859542519785,0,0);
     -webkit-transform: matrix( 1,0,0,0.99859542519785,0,0);
@@ -136,7 +136,7 @@ const Desc = styled.div`
     -ms-transform: matrix( 0.99956308705261,0,0,0.99832082554207,0,0);
 `
 const FontAwesomeIconS = styled(FontAwesomeIcon)`
-    color:${props => props.theme.mode=="dark"? 'white' : 'black'};
+    color:${props => props.theme.mode == "dark" ? 'white' : 'black'};
 `
 const Table_wrap = styled.div`
     margin-top:30px;
@@ -158,16 +158,14 @@ const Table_wrap = styled.div`
     }
 `
 const HR2 = styled(HR)`
-
 `
 const Delete_wrap = styled.div`
-
 `
 const Delete_head = styled.div`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    color: ${props => props.theme.mode=="dark"?"white":"rgb( 80, 80, 80 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
     -moz-transform: matrix( 1,0,0,0.99882784793165,0,0);
     -webkit-transform: matrix( 1,0,0,0.99882784793165,0,0);
     -ms-transform: matrix( 1,0,0,0.99882784793165,0,0);  
@@ -175,15 +173,14 @@ const Delete_head = styled.div`
 `
 const Delete_desc = styled.div`
     margin-top:30px;
-    color:${props => props.theme.mode=="dark"?"#3c4b64":""};
-
+    color:${props => props.theme.mode == "dark" ? "#3c4b64" : ""};
 `
 const Delete_btn = styled.div`
   margin-top:35px;
 `
 const Button_del = styled(Button)`
-  background-color:${props => props.theme.mode=="dark"?"#fd1010":"#fce8e8"};
-  color:${props => props.theme.mode=="dark"?"white":"#fe1f1f"};
+  background-color:${props => props.theme.mode == "dark" ? "#fd1010" : "#fce8e8"};
+  color:${props => props.theme.mode == "dark" ? "white" : "#fe1f1f"};
   border:none;
   width:240px;
   border-radius:40px;
@@ -209,78 +206,69 @@ const data_noti = [{
     key: '1',
     Notifications: "Deposits",
     Text: <Checkbox></Checkbox>,
-
     Email: <Checkbox></Checkbox>,
 }, {
     key: '2',
     Notifications: "Trade Execution",
     Text: <Checkbox></Checkbox>,
-
     Email: <Checkbox></Checkbox>,
 }, {
     key: '3',
     Notifications: "Withdrawals",
     Text: <Checkbox></Checkbox>,
-
     Email: <Checkbox></Checkbox>,
 }, {
     key: '4',
     Notifications: "Login",
     Text: <Checkbox></Checkbox>,
-
     Email: <Checkbox></Checkbox>,
 }, {
     key: '5',
     Notifications: "New Review",
     Text: <Checkbox></Checkbox>,
-
     Email: <Checkbox></Checkbox>,
-},
-{
+}, {
     key: '6',
     Notifications: "New Private Message",
     Text: <Checkbox></Checkbox>,
-
     Email: <Checkbox></Checkbox>,
 }, {
     key: '7',
     Notifications: "New Follower",
     Text: <Checkbox></Checkbox>,
-
     Email: <Checkbox></Checkbox>,
 }, {
     key: '8',
     Notifications: "Order Execution",
     Text: <Checkbox></Checkbox>,
-
     Email: <Checkbox></Checkbox>,
 }];
 const confirm = Modal.confirm;
-class Acc_settings extends React.Component {
+
+class Acc_settings extends Component {
     constructor(props) {
         super(props);
         this.state = {
             loginHistory: [],
-            notiCSS:'',
-            historyCSS:''
+            notiCSS: '',
+            historyCSS: ''
         }
     }
     onChange(e, abcd) {
         /* console.log(e,abcd,); */
     }
-    componentWillReceiveProps(props,newProps)
-    {
-       /*  console.log(this.props)
-        if(this.props.theme!==undefined)
-        {
-            if(this.props.theme !== this.state.theme)
-            {
-                if(this.props.theme==false)
-                    this.setState({searchCSS:"Input_search_night"})
-                else
-                    this.setState({searchCSS:"INPUT_search"})
-            }
-        } */
+    componentWillReceiveProps(props, newProps) {
+        /*  console.log(this.props)
+         if(this.props.theme!==undefined)
+         {
+             if(this.props.theme !== this.state.theme)
+             {
+                 if(this.props.theme==false)
+                     this.setState({searchCSS:"Input_search_night"})
+                 else
+                     this.setState({searchCSS:"INPUT_search"})
+             }
+         } */
     }
     componentDidMount() {
         var self = this;
@@ -298,15 +286,15 @@ class Acc_settings extends React.Component {
                 Object.keys(responseData.data).map(function (key, index) {
 
                     var deviceType;
-                    if(responseData.data[index].device_type==1) deviceType = <FontAwesomeIconS icon={faMobileAlt} />
-                    else if(responseData.data[index].device_type==0) deviceType = <FontAwesomeIconS icon={faDesktop} />
-                    else deviceType=<FontAwesomeIconS icon={faDesktop}/>
+                    if (responseData.data[index].device_type == 1) deviceType = <FontAwesomeIconS icon={faMobileAlt} />
+                    else if (responseData.data[index].device_type == 0) deviceType = <FontAwesomeIconS icon={faDesktop} />
+                    else deviceType = <FontAwesomeIconS icon={faDesktop} />
 
                     let temp = {
                         key: key,
                         date: moment.utc(responseData.data[index].created_at).local().format("MMM DD YYYY, HH:mm:ss"),
                         IP: responseData.data[index].ip.split(":")[3],
-                        Device:deviceType
+                        Device: deviceType
                     };
                     antTableData.push(temp);
                 });
@@ -317,16 +305,14 @@ class Acc_settings extends React.Component {
             })
             .catch(error => {/* console.log(error) */ })
 
-            if(this.props.theme!==undefined)
-            {
-                if(this.props.theme !== this.state.theme)
-                {
-                    if(this.props.theme==false)
-                        this.setState({notiCSS:"noti_table",historyCSS:'history_table'})
-                    else
-                        this.setState({notiCSS:"noti_table_night",historyCSS:"history_table_night"})
-                }
+        if (this.props.theme !== undefined) {
+            if (this.props.theme !== this.state.theme) {
+                if (this.props.theme == false)
+                    this.setState({ notiCSS: "noti_table", historyCSS: 'history_table' })
+                else
+                    this.setState({ notiCSS: "noti_table_night", historyCSS: "history_table_night" })
             }
+        }
     }
     deleteAccount() {
         /* console.log(this.props) */
@@ -343,7 +329,6 @@ class Acc_settings extends React.Component {
             onOk() {
                 me.deleteAccount()
                 return new Promise((resolve, reject) => {
-
                     setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
                 }).catch(() => console.log('Oops errors!'));
             },
@@ -357,6 +342,7 @@ class Acc_settings extends React.Component {
             duration: 3,
         });
     };
+
     render() {
         return (
             <Acc_wrap>

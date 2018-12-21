@@ -1,5 +1,5 @@
 /* In-built Packages*/
-import React from 'react'
+import React, { Component } from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import { Button, notification } from "antd";
@@ -7,12 +7,10 @@ import { Username, Form_wrap, Welcome_text, Email_label, Email_req } from "./Log
 import { connect } from "react-redux"
 
 /* Components */
-import { forgotAction, clearForgot } from "../../../Actions/Auth"
+import { forgotAction, clearForgot } from "../../../Actions/Auth";
 
 /* Global Constants */
-
 /* Styled-Components */
-
 const Login_head = styled.div`
   font-size: 30px;
   font-family: "Open Sans";
@@ -32,38 +30,6 @@ const Sub_text = styled.span`
     font-size: 16px;
     font-family: "Open Sans";
     color: rgb( 163, 163, 163 );  
-`
-
-const Full = styled.input`
-  display:block;
-  background-color: #f8f8f8;
-  border: 0px;
-  width: 76%;
-  margin-top:10px;
-  height:50px;
-`
-const Ph_Label = styled(Email_label)`
-  margin-top:20px;
-`
-const Password = styled(Username)`
-  
-`
-const Check_wrap = styled.div`
-  margin-top:35px;
-  width:76%;
-`
-const Remember = styled.div`
-  display: inline-block;
-`
-const Check = styled.input`
-  vertical-align:middle;
-`
-const Forgot = styled.a`
-  float:right;
-  font-size: 14px;
-  font-family: "Open Sans";
-  color: rgb( 15, 71, 123 );
-  text-align: left;
 `
 const Button_login = styled(Button)`
   width: 190px;;
@@ -85,16 +51,6 @@ const Button_login = styled(Button)`
     height:40px;
   }
 `
-const Sign = styled.div`
-  margin-top: 50px;
-  margin-bottom: 60px;
-`
-const Sign_a = styled.a`
-  font-size: 16px;
-  font-family: "Open Sans";
-  color:#0f477b;
-  font-weight:bold;
-`
 const Link_wrap = styled.div`
     margin-top:50px;
 `
@@ -108,7 +64,7 @@ const Back_link = styled.a`
     font-family: "Open Sans";
     color: rgb( 15, 71, 123 );   
 `
-class Forgot_Form extends React.Component {
+class Forgot_Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -158,7 +114,6 @@ class Forgot_Form extends React.Component {
       }
       this.props.clearForgot();
     }
-
   }
 
   openNotification = () => {
@@ -204,7 +159,6 @@ class Forgot_Form extends React.Component {
         </Form_wrap>
       </div>
     );
-
   }
 }
 
@@ -217,7 +171,6 @@ function mapStateToProps(state, ownProps) {
 const mapDispatchToProps = dispatch => ({
   forgotAction: (isLoggedIn) => dispatch(forgotAction(isLoggedIn)),
   clearForgot: () => dispatch(clearForgot())
-
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Forgot_Form));

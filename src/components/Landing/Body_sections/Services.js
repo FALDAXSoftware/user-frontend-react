@@ -2,9 +2,10 @@
 
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Layout, Card, Icon } from 'antd';
+import { Row, Col, Icon } from 'antd';
 import styled from 'styled-components';
 import Slider from "react-slick";
+import { Reliability, Inovation, Security, Accessibility } from '../../../Constants/images';
 
 /* Import Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
@@ -40,7 +41,6 @@ const Title = styled.span`
     text-align:center;
     font-size:36px;
   }
-
 `
 const Description = styled.p`
   color:white;
@@ -99,8 +99,7 @@ function SamplePrevArrow(props) {
   @media(max-width:1265px)
   {
     display:none;
-  }
-`
+  }`
 
   return (
     <PrevIcon type="left" theme="outlined" onClick={onClick} />
@@ -128,7 +127,7 @@ export default class Services extends Component {
           <Slider {...sliderSettings}>
             <SlideRow>
               <Col lg={{ span: 8 }}>
-                <Img src="/images/Homepage/service-logo/reliability.png" />
+                <Img src={Reliability} />
               </Col>
               <Col lg={{ span: 16 }}>
                 <Title>
@@ -141,7 +140,7 @@ export default class Services extends Component {
             </SlideRow>
             <SlideRow>
               <Col lg={{ span: 8 }}>
-                <Img src="/images/Homepage/service-logo/accessabilty.png" />
+                <Img src={Accessibility} />
               </Col>
               <Col lg={{ span: 16 }}>
                 <Title>
@@ -154,7 +153,7 @@ export default class Services extends Component {
             </SlideRow>
             <SlideRow>
               <Col lg={{ span: 8 }}>
-                <Img src="/images/Homepage/service-logo/security.png" />
+                <Img src={Security} />
               </Col>
               <Col lg={{ span: 16 }}>
                 <Title>
@@ -167,7 +166,7 @@ export default class Services extends Component {
             </SlideRow>
             <SlideRow>
               <Col lg={{ span: 8 }}>
-                <Img src="/images/Homepage/service-logo/inovation.png" />
+                <Img src={Inovation} />
               </Col>
               <Col lg={{ span: 16 }}>
                 <Title>

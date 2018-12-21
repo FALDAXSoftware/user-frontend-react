@@ -1,32 +1,30 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { withRouter, Link } from 'react-router-dom';
-import { connect } from "react-redux";
-import { Row, Col, Card, Icon, Avatar, Spin, notification } from 'antd';
-import moment from 'moment';
+import { Row, Col, Spin, notification } from 'antd';
 import styled from 'styled-components';
-import Dropzone from 'react-dropzone';
 import SimpleReactValidator from 'simple-react-validator';
-
 import Navigation from '../Navigations/Navigation';
-import {Spin_Ex} from '../../styled-components/homepage/style'
+import { Spin_Ex } from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
-import { Contact_wrap, Grey_wrap, Headcontact, Head_apply, Apply_wrap, Title_apply, Title_span, Form_apply, LeftWing, Labelone, InputOne, RightWing, InputTwo, InputThree, Gap, Btn_apply, FileSelectText,DropzoneStyle,IconS } from '../../styled-components/landingCategories/contactStyle';
-import Title from 'antd/lib/skeleton/Avatar';
+import {
+    Contact_wrap, Grey_wrap, Headcontact, Head_apply, Apply_wrap, Title_apply,
+    Title_span, Form_apply, LeftWing, Labelone, InputOne, RightWing, InputTwo,
+    InputThree, Gap, Btn_apply, FileSelectText, DropzoneStyle, IconS
+} from '../../styled-components/landingCategories/contactStyle';
 import { globalVariables } from "../../Globals"
 
 let { API_URL } = globalVariables;
 
 export const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode=="dark" ? "#041422" : "white"}; 
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
     padding-bottom: 30px;
 `
 
-class ApplyJob extends React.Component {
+class ApplyJob extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -43,10 +41,10 @@ class ApplyJob extends React.Component {
                 cover_letter: [],
                 linkedin_profile: '',
                 website_url: '',
-                loader:false,
-                position_flag:null,
-                coverLimit:null,
-                resumeLimit:null
+                loader: false,
+                position_flag: null,
+                coverLimit: null,
+                resumeLimit: null
             },
         };
         this._onChangeFields = this._onChangeFields.bind(this);
@@ -92,7 +90,7 @@ class ApplyJob extends React.Component {
                     return bool;
                 }
             },
-            coverLimit:{
+            coverLimit: {
                 message: 'Please upload the document of less than 2 mb.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
@@ -100,9 +98,9 @@ class ApplyJob extends React.Component {
                         return false;
                     }
                     return true;
-                } 
+                }
             },
-            resumeLimit:{
+            resumeLimit: {
                 message: 'Please upload the document of less than 2 mb.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
@@ -110,56 +108,49 @@ class ApplyJob extends React.Component {
                         return false;
                     }
                     return true;
-                } 
+                }
             }
         });
     }
-    componentDidMount()
-    {
-        if(this.props.location.search)
-            {
-                var arr = decodeURI(this.props.location.search).split("&");
-                var arr2 = arr[1].split("=");
-                this.setState({position_flag:arr2[1]});
-            }
+    componentDidMount() {
+        if (this.props.location.search) {
+            var arr = decodeURI(this.props.location.search).split("&");
+            var arr2 = arr[1].split("=");
+            this.setState({ position_flag: arr2[1] });
+        }
     }
     onDrop(type, files) {
         if (type == 'res') {
-            let flag = false,flagLimit=false;
+            let flag = false, flagLimit = false;
             if (files.length > 0) {
                 flag = true
-                if(files[0].size<=3000000)
-                {
-                   flagLimit=true;
+                if (files[0].size <= 3000000) {
+                    flagLimit = true;
                 }
             }
             this.setState({
                 flag_drop: flag,
-                resumeLimit:flagLimit,
+                resumeLimit: flagLimit,
                 fields: { ...this.state.fields, resume: files[0] }
             });
-        }
-        else {
-            let flag = false,flagLimit=false;
+        } else {
+            let flag = false, flagLimit = false;
             if (files.length > 0) {
                 flag = true
-                if(files[0].size<=3000000)
-                {
-                    flagLimit=true;
+                if (files[0].size <= 3000000) {
+                    flagLimit = true;
                 }
             }
             this.setState({
                 cover_flag: flag,
-                coverLimit:flagLimit,
+                coverLimit: flagLimit,
                 fields: { ...this.state.fields, cover_letter: files[0] }
             });
         }
     }
 
     onCancel() {
-        this.setState({
-            files: []
-        });
+        this.setState({ files: [] });
     }
     _onChangeFields(e) {
         let fields = this.state.fields;
@@ -181,11 +172,10 @@ class ApplyJob extends React.Component {
     onSubmit() {
         if (this.validator.allValid()) {
             let jobID;
-            if(this.props.location.search)
-            {
+            if (this.props.location.search) {
                 var arr = decodeURI(this.props.location.search).split("&");
                 var arr2 = arr[0].split("=");
-                jobID=arr2[1];
+                jobID = arr2[1];
             }
             let formdata = new FormData();
             formdata.append('first_name', this.state.fields['first_name']);
@@ -195,11 +185,11 @@ class ApplyJob extends React.Component {
             formdata.append('position', this.state.position_flag)
             formdata.append('website_url', this.state.fields['website_url'])
             formdata.append('linkedin_profile', this.state.fields['linkedin_profile'])
-            formdata.append('job_id',jobID);
+            formdata.append('job_id', jobID);
             formdata.append('cover_letter', this.state.fields['cover_letter'])
             formdata.append('resume', this.state.fields['resume'])
 
-            this.setState({loader:true});
+            this.setState({ loader: true });
             fetch(API_URL + "/apply-job",
                 {
                     method: "post",
@@ -218,13 +208,10 @@ class ApplyJob extends React.Component {
                     fields['cover_letter'] = "";
                     fields['linkedin_profile'] = ''
 
-                    this.setState({ fields: fields, flag_drop: null, cover_flag: null,loader:false }, () => {
+                    this.setState({ fields: fields, flag_drop: null, cover_flag: null, loader: false }, () => {
                         this.validator.hideMessages();
                         this.forceUpdate();
-
                     })
-
-
                 })
                 .catch(error => {
                 })
@@ -234,8 +221,8 @@ class ApplyJob extends React.Component {
             this.forceUpdate();
         }
     }
-    render() {
 
+    render() {
         return (
             <Contact_wrap>
                 <Navigation />
@@ -246,9 +233,9 @@ class ApplyJob extends React.Component {
                             <Apply_wrap>
                                 <Title_apply>
                                     {
-                                        this.state.position_flag!==null ?
+                                        this.state.position_flag !== null ?
                                             <Title_span>Apply For {this.state.position_flag} position</Title_span>
-                                        :""
+                                            : ""
                                     }
                                 </Title_apply>
                                 <Form_apply>
@@ -323,7 +310,7 @@ class ApplyJob extends React.Component {
                                                         </div>
                                                     }
                                                 </DropzoneStyle>
-                                                <span style={{fontSize:"12px",fontFamily:"Open Sans",color:"grey",fontStyle:"italic"}}>Supported format : .doc , .docx , .pdf.</span>
+                                                <span style={{ fontSize: "12px", fontFamily: "Open Sans", color: "grey", fontStyle: "italic" }}>Supported format : .doc , .docx , .pdf.</span>
                                                 {this.validator.message('resume', this.state.flag_drop, 'resumeRequired|resumeValid|resumeLimit', 'text-danger-validation')}
                                             </Col>
                                         </Row>
@@ -357,7 +344,7 @@ class ApplyJob extends React.Component {
                                                         </div>
                                                     }
                                                 </DropzoneStyle>
-                                                <span style={{fontSize:"12px",fontFamily:"Open Sans",color:"grey",fontStyle:"italic"}}>Supported format : .doc , .docx , .pdf.</span>
+                                                <span style={{ fontSize: "12px", fontFamily: "Open Sans", color: "grey", fontStyle: "italic" }}>Supported format : .doc , .docx , .pdf.</span>
                                                 {this.validator.message('cover', this.state.cover_flag, 'coverValid|coverLimit', 'text-danger-validation')}
                                             </Col>
                                         </Row>

@@ -1,28 +1,26 @@
 /* In-built Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Tabs ,Spin} from 'antd';
+import { Spin } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faYoutube, faTwitter, faLinkedinIn, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import styled from 'styled-components';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-
+import ReactHtmlParser from 'react-html-parser';
 import Navigation from '../Navigations/Navigation';
-import {Spin_Ex} from '../../styled-components/homepage/style'
+import { Spin_Ex } from '../../styled-components/homepage/style'
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
 import CommonFooter from "../Landing/Footers/Footer_home";
-import {globalVariables} from "../../Globals"
+import { globalVariables } from "../../Globals"
 let { API_URL } = globalVariables;
-const TabPane = Tabs.TabPane;
 
 /* Styled-Components */
 const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom: 25px;
-  background-color: ${props => props.theme.mode=="dark"?"#01090f":"#f5f6fa"};
+  background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
 `
 const ProfileDiv = styled.div`
-  background-color: ${props => props.theme.mode=="dark"? "#041422" :"#ffffff"};
+  background-color: ${props => props.theme.mode == "dark" ? "#041422" : "#ffffff"};
   margin:auto;
   width: 100%;
   max-width: 1170px;
@@ -33,14 +31,13 @@ const ProfileDiv = styled.div`
     padding: 15px;
   }
 `
-
 const About_Faldax_Title = styled.span`
   font-size: 40px;
   font-family: "Open sans";
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode=="dark" ? "white":""};
+  color:${props => props.theme.mode == "dark" ? "white" : ""};
   &:before {
     content: '';
     width: calc(50% - 235px);
@@ -63,7 +60,7 @@ const About_Faldax_Title = styled.span`
   }
 `;
 const Content = styled.div`
-  color:${props => props.theme.mode=="dark" ? "white" : ""} !important;
+  color:${props => props.theme.mode == "dark" ? "white" : ""} !important;
 `
 const Our_Mission = styled.span`
   font-size: 40px;
@@ -160,7 +157,7 @@ const User_image = styled.div`
   }
 `;
 
-const FontAwesomeIcons = styled(FontAwesomeIcon) `
+const FontAwesomeIcons = styled(FontAwesomeIcon)`
   font-size: 16px;
   margin-top: 5px;
   color: ${props => props.color ? '#4c84ff' : '#878787'};
@@ -246,30 +243,29 @@ const TeamIn4 = styled.div`
 
 /* Component Defination Starts Here*/
 
-export default class AboutUs extends React.Component {
+export default class AboutUs extends Component {
   constructor() {
     super();
     this.state = {
       team: 1,
-      aboutContent:'',
-      loader:false
+      aboutContent: '',
+      loader: false
     };
   }
-  componentDidMount()
-  {
-    this.setState({loader:true});
-    fetch(API_URL + "/users/static-page-json/policy",{
-      method:"get",
+  componentDidMount() {
+    this.setState({ loader: true });
+    fetch(API_URL + "/users/static-page-json/policy", {
+      method: "get",
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }
     })
-    .then(response => response.json())
-    .then((responseData) => {
-        this.setState({aboutContent:responseData.data.content,loader:false})
-    })
-    .catch(error => {  })
-    
+      .then(response => response.json())
+      .then((responseData) => {
+        this.setState({ aboutContent: responseData.data.content, loader: false })
+      })
+      .catch(error => { })
+
   }
   teamClick(value) {
     this.setState({ team: value });
@@ -294,10 +290,10 @@ export default class AboutUs extends React.Component {
               </div>
               <Content style={{ marginTop: '20px' }}>
                 <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
-                {ReactHtmlParser(this.state.aboutContent)} 
+                  {ReactHtmlParser(this.state.aboutContent)}
                 </span>
               </Content>
-{/*               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+              {/*               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                 <Our_Mission> OUR MISSION </Our_Mission>
               </div>
               <div style={{ marginTop: '25px' }}>
@@ -420,10 +416,9 @@ export default class AboutUs extends React.Component {
           </ProfileWrapper>
           <CommonFooter />
           {(this.state.loader) ? <Spin_Ex className="Ex_spin">
-                    <Spin size="large" />
-                </Spin_Ex> : ""}
+            <Spin size="large" />
+          </Spin_Ex> : ""}
         </OverlayLoader>
-
       </div>
     );
   }
