@@ -92,7 +92,7 @@ class KYC extends Component {
 
         return (
             <KYC_wrap>
-                {(is_kyc_done !== true && next !== 5) ?
+                {(this.props.is_kyc_done !== true && next !== 5) ?
                     <div>
                         <KYC_head>
                             Identity Verification
