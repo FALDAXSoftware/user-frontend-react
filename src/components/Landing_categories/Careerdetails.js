@@ -58,7 +58,6 @@ class CareerDetails extends Component {
                     <ContainerContact>
                         <Headcontact>
                             <Career_Head>Careers</Career_Head>
-
                             <hr />
                         </Headcontact>
                         <CareerD_body>

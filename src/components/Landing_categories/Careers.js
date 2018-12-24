@@ -20,6 +20,9 @@ export const ContainerContact = styled(Container)`
     padding-right:30px;
     padding-left:30px;
 `
+const CareerDiv = styled(Headcontact)`
+    text-align: center;
+`
 
 class Careers extends Component {
     constructor(props) {
@@ -52,14 +55,14 @@ class Careers extends Component {
                 <Navigation />
                 <Grey_wrap>
                     <ContainerContact>
-                        <Headcontact>
+                        <CareerDiv>
                             <Head_span>Careers</Head_span>
                             <hr />
-                        </Headcontact>
-                        <Career_desc>
+                        </CareerDiv>
+                        {/* <Career_desc>
                             <Desc_head>careers</Desc_head>
                             <Desc_body>{(this.state.careerDesc) ? ReactHtmlParser(this.state.careerDesc.content) : ''}</Desc_body>
-                        </Career_desc>
+                        </Career_desc> */}
                         <Job_wrap>
                             {this.state.Jobs.length > 0 ?
                                 this.state.Jobs.map(function (job, key) {

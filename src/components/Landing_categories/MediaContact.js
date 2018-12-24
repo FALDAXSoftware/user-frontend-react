@@ -30,6 +30,10 @@ export const ContainerContact = styled(Container)`
     }
 `
 
+const MediaDiv = styled(Headcontact)`
+  text-align:center;
+`
+
 class MediaContact extends Component {
     constructor(props) {
         super(props);
@@ -59,10 +63,10 @@ class MediaContact extends Component {
                 <Navigation />
                 <Grey_wrap>
                     <ContainerContact>
-                        <Headcontact>
+                        <MediaDiv>
                             <Head_span>Media Contact</Head_span>
                             <hr />
-                        </Headcontact>
+                        </MediaDiv>
                         <Career_wrap>
                             <Subhead>
                                 <Leftmedia>

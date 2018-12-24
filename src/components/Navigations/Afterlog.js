@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
-import { Button, Menu, Modal, Dropdown, Icon, Input } from 'antd';
+import { Button, Menu, Modal, Dropdown, Icon, Input, Tooltip } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoon } from '@fortawesome/free-solid-svg-icons';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FooterLogo, DefaultProfile } from "../../Constants/images";
@@ -101,20 +101,28 @@ class Afterlog extends Component {
         this.state = {
             comingSoon: false,
             selected: false,
-            fontColor: ""
+            fontColor: "",
         };
     }
     componentWillReceiveProps(props, newProps) {
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
                 if (props.theme == false)
-                    this.setState({ fontColor: "black" })
+                    this.setState({ fontColor: "black", themeIcon: faMoon, iconTitle: "Change to Night Mode" })
                 else
-                    this.setState({ fontColor: "white" })
+                    this.setState({ fontColor: "white", themeIcon: faSun, iconTitle: "Change to Day Mode" })
             }
         }
     }
     componentDidMount() {
+        if (this.props.theme !== undefined) {
+            if (this.props.theme !== this.state.theme) {
+                if (this.props.theme == false)
+                    this.setState({ fontColor: "black", themeIcon: faMoon, iconTitle: "Change to Night Mode" })
+                else
+                    this.setState({ fontColor: "white", themeIcon: faSun, iconTitle: "Change to Day Mode" })
+            }
+        }
         if (this.props.location.pathname == "/careers") {
             this.setState({ selected: true })
         }
@@ -136,10 +144,13 @@ class Afterlog extends Component {
     }
     changetoDark() {
         let flag;
-        if (this.props.themeReducer.theme == true)
+        if (this.props.themeReducer.theme == true) {
             flag = false;
-        else
+            this.setState({ themeIcon: faSun, iconTitle: "Change to Night Mode" })
+        } else {
+            this.setState({ themeIcon: faMoon, iconTitle: "Change to Day Mode" })
             flag = true;
+        }
         this.props.actions.theme.darkTheme(flag);
     }
     render() {
@@ -165,7 +176,7 @@ class Afterlog extends Component {
                     <Icon  style={{fontSize:"15px",color:"black"}} type="bell" theme="filled" />      
                 </Bell>*/}
                 <Day_night_mode onClick={this.changetoDark.bind(this)}>
-                    <span> <FontAwesomeIcon icon={faMoon} color={this.state.fontColor} style={{ transform: 'rotate(315deg)' }} /> </span>
+                    <span> <Tooltip placement="top" title={this.state.iconTitle}><FontAwesomeIcon icon={this.state.themeIcon} color={this.state.fontColor} style={{ transform: 'rotate(315deg)' }} /></Tooltip> </span>
                 </Day_night_mode>
                 <Link to="/careers">
                     <Exchange color={this.state.selected}>

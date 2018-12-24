@@ -1,17 +1,17 @@
 import styled from 'styled-components';
-import {Row,Col,Icon} from 'antd'
+import { Row, Col, Icon } from 'antd'
 import DatePicker from "react-datepicker";
 import Dropzone from 'react-dropzone';
 
 
 
 export const Headcontact = styled.div`
-   
+  
 `
 export const Head_span = styled.p`
     font-size: 20px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode=="dark" ? "white" : "rgb(51, 51, 51)"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb(51, 51, 51)"};
     font-weight: bold;
     text-transform: uppercase;
     line-height: 1.498;
@@ -28,7 +28,7 @@ export const Contact_wrap = styled.div`
 export const Grey_wrap = styled.div`
     padding-top:110px;
     padding-bottom:30px;
-    background-color:${props => props.theme.mode=="dark"?"#01090f":""};
+    background-color:${props => props.theme.mode == "dark" ? "#01090f" : ""};
 `
 export const Row_wrap = styled.div`
     padding-bottom:80px;
@@ -43,7 +43,7 @@ export const Left_col = styled.div`
 export const Sub_head = styled.p`
     font-size: 19.975px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode=="dark" ? "white" :"rgb( 51, 51, 51 )"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
     margin-top:30px;
     font-weight:600;
 `
@@ -54,13 +54,13 @@ export const First_label = styled.label`
     display:block;
     font-size: 13px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? "white" : "rgba( 0, 0, 0, 0.502 )"};
-    caret-color: ${props => props.theme.mode=="dark" ? "white" : ""};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgba( 0, 0, 0, 0.502 )"};
+    caret-color: ${props => props.theme.mode == "dark" ? "white" : ""};
 `
 export const First_input = styled.input`
     border:1px solid #e2e6ea;
-    background-color:${props => props.theme.mode=="dark"?"#020e18":"#f8f8f8"};
-    color:${props => props.theme.mode=="dark" ? "white" :""};
+    background-color:${props => props.theme.mode == "dark" ? "#020e18" : "#f8f8f8"};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
     border-radius:5px;
     min-height:45px;
     width:100%;
@@ -90,12 +90,12 @@ margin-top:30px;
 `
 export const Fourth_area = styled.textarea`
     border:1px solid #e2e6ea;
-    background-color:${props => props.theme.mode=="dark"? "#01090f" :"#f8f8f8"};
+    background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#f8f8f8"};
     border-radius:5px;
     min-height:145px;
     width:100%;
-    color:${props => props.theme.mode=="dark"?"white":""};
-    caret-color: ${props => props.theme.mode=="dark" ? "white" : ""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    caret-color: ${props => props.theme.mode == "dark" ? "white" : ""};
 `
 export const Fifth_div = styled.div`
     margin-top:30px;
@@ -177,7 +177,7 @@ export const Img3 = styled(Img2)`
 export const Sub_span = styled.span`
     font-size: 15.983px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? "white" :"rgb( 51, 51, 51 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
     font-weight:600;
     
 `
@@ -307,14 +307,14 @@ export const MediaLI = styled.li`
 export const Mediaspan = styled.span`
     font-size: 17.93px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode=="dark" ? "white" : "rgb(74, 74, 74)"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb(74, 74, 74)"};
     font-weight: bold;
     text-transform: uppercase;
 `
 export const MediaP = styled.p`
     font-size: 13.94px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode=="dark" ? "white" : "rgb(51, 51, 51)"}
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb(51, 51, 51)"}
     font-weight:600;
 `
 export const Blue_tag = styled.a`
@@ -334,7 +334,7 @@ export const Blue_tag_p = styled.a`
 export const Head = styled.div`
     padding-top:40px;
     margin-bottom:60px;
-    color:${props => props.theme.mode=="dark" ? "white" : "rgb(51, 51, 51)"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb(51, 51, 51)"};
     @media(max-width:480px)
     {
         padding-right:10px;
@@ -366,7 +366,7 @@ export const Body = styled.div`
 export const BodyText = styled.span`
     font-size: 20px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode=="dark" ? "white" : "rgb(51, 51, 51)"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb(51, 51, 51)"};
 
 `
 export const Body_form = styled.div`
@@ -389,7 +389,7 @@ export const Left = styled.div`
         margin-bottom:0px;
         font-size: 13px;
         font-family: "Open Sans";
-        color:${props => props.theme.mode=="dark" ? "white" : "rgb(0, 0, 0)"};
+        color:${props => props.theme.mode == "dark" ? "white" : "rgb(0, 0, 0)"};
         font-weight:600;
     }
     @media(max-width:1199px)
@@ -410,8 +410,8 @@ export const URLInput = styled(First_input)`
 `
 export const TargetInput = styled(DatePicker)`
     border:1px solid #e2e6ea;
-    background-color:${props => props.theme.mode=="dark"?"#020e18":"#f8f8f8"};
-    color:${props => props.theme.mode=="dark" ? "white" : ""};
+    background-color:${props => props.theme.mode == "dark" ? "#020e18" : "#f8f8f8"};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
     border-radius:5px;
     min-height:45px;
     width:100%;
@@ -424,9 +424,9 @@ export const EmailInput = styled(URLInput)`
 `
 export const MsgInput = styled(Fourth_area)`
     max-width:450px;
-    background-color:${props => props.theme.mode=="dark"?"#020e18":"#f8f8f8"};
-    caret-color: ${props => props.theme.mode=="dark" ? "white" : ""};
-    color:${props => props.theme.mode=="dark" ? "white" : ""};
+    background-color:${props => props.theme.mode == "dark" ? "#020e18" : "#f8f8f8"};
+    caret-color: ${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
 export const OneDiv = styled.div`
 
@@ -486,7 +486,7 @@ export const Title_apply = styled.div`
 export const Title_span = styled.span`
     font-size: 20px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? "white" :"rgb( 51, 51, 51 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
     font-weight: bold;
     text-transform: uppercase;  
 `
@@ -520,13 +520,13 @@ export const LeftWing = styled.div`
 export const Labelone = styled.label`
     font-size: 13px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? "white" :"rgb( 0, 0, 0 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 0, 0, 0 )"};
     font-weight:600;
 `
 export const InputOne = styled.input`
     border:1px solid #e2e6ea;
-    background-color: ${props => props.theme.mode=="dark" ? "#01090f" :"#f8f8f8"};
-    color:${props => props.theme.mode=="dark" ? "white" : "" };
+    background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f8f8f8"};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
     border-radius:5px;
     min-height:45px;
     width:100%;
@@ -556,14 +556,14 @@ export const Btn_apply = styled(AddButton)`
     cursor:pointer;
 `
 export const DropzoneStyle = styled(Dropzone)`
-    background-color: ${props => props.theme.mode=="dark" ? "#01090f" :"#f8f8f8"};
+    background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f8f8f8"};
 `
 export const IconS = styled(Icon)`
-    color:${props => props.theme.mode=="dark" ? "white" : ""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
 export const FileSelectText = styled.p`
     margin-bottom:0px;
-    color:${props => props.theme.mode=="dark" ? "white" : ""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
     display:block;
     max-width:300px;
     text-overflow:ellipsis;
@@ -604,28 +604,28 @@ export const Body_p = styled.p`
 export const Location_p = styled.p`
     font-size: 12.984px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? "white" : "rgba( 51, 51, 51, 0.6 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgba( 51, 51, 51, 0.6 )"};
 `
 export const Details_p = styled.p`
     font-size: 13.983px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? "white" :"rgb( 25, 25, 25 )"} !important;
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 25, 25, 25 )"} !important;
 `
 
 /* Careers Style */
 
 export const Career_desc = styled.div`
     margin-top:40px;
-`   
+`
 export const Desc_head = styled.p`
     font-size: 17.978px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? "white" :"rgb( 51, 51, 51 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
 `
 export const Desc_body = styled.p`
     font-size: 13.983px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? "white" :"rgb( 25, 25, 25 )"} !important;
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 25, 25, 25 )"} !important;
 `
 export const Job_wrap = styled.div`
     padding-bottom: 50px;
@@ -634,7 +634,7 @@ export const Job_head = styled.p`
     
     font-size: 17.978px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark"? "white" : "rgb( 51, 51, 51 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
     margin-bottom:15px;
     font-weight:600;
 `

@@ -14,6 +14,7 @@ import {
     SectionBlog, Whole_news, Blogs_wrap, Meta_title, Card_foot, Prev_next, Prev, Next,
     CardCover, Inputsearch, Search_wrap, RemoveButton, NoData
 } from '../../styled-components/landingCategories/blogStyle';
+import { Head_span, Headcontact } from '../../styled-components/landingCategories/contactStyle';
 
 const Container_Blog = styled(Container)`
     margin-bottom: 80px;
@@ -21,6 +22,13 @@ const Container_Blog = styled(Container)`
 const News_main = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#01090f" : "white"};
 `
+const MediaDiv = styled(Headcontact)`
+  text-align:center;
+  ${Head_span} {
+    padding-top: 10px;
+  }
+`
+
 const { Meta } = Card;
 const Search = Input.Search;
 
@@ -123,6 +131,9 @@ class Blog extends Component {
 
                 <Container_Blog style={{ minHeight: "100%" }}>
                     <SectionBlog>
+                        <MediaDiv>
+                            <Head_span>News</Head_span>
+                        </MediaDiv>
                         <Search_wrap>
                             <Inputsearch
                                 placeholder="Search News"
@@ -132,7 +143,7 @@ class Blog extends Component {
                                 onPressEnter={e => this.submitSearch(e)}
                                 value={this.state.searchV}
                             />
-                            {this.state.removeflag == true ? <RemoveButton onClick={this.removeSearch.bind(this)}>Remove Search <Icon type="close" /></RemoveButton> : ""}
+                            {this.state.removeflag == true ? <RemoveButton onClick={this.removeSearch.bind(this)}>Clear Search <Icon type="close" /></RemoveButton> : ""}
                         </Search_wrap>
                         <Whole_news>
                             <Blogs_wrap>

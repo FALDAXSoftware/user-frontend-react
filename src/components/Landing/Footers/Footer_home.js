@@ -10,7 +10,7 @@ import { globalVariables } from '../../../Globals'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faInternetExplorer, faInstagram, faFacebook, faTelegramPlane, faGoogle,
-    faYoutube, faTwitter, faLinkedinIn
+    faYoutube, faTwitter, faLinkedinIn, faDiscord
 } from '@fortawesome/free-brands-svg-icons';
 import { FooterLogo, FooterWhiteLogo, AppStore, PlayStore } from '../../../Constants/images';
 
@@ -253,55 +253,57 @@ class Footer_home extends Component {
                         <Row>
                             <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                                 <Footer_ul>
-                                    <Footer_headers>About Us</Footer_headers>
+                                    <Footer_headers>Information</Footer_headers>
                                     <li style={{ cursor: "pointer" }} >
-                                        <Footer_Link to="/about-us">About FALDAX</Footer_Link>
+                                        <Footer_Link to="/about-us">About Us</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }}>
                                         <Footer_Link to="/contactus">Contact Us</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/careers">Careers</Footer_Link>
+                                        <Footer_Link to="/mediacontact">Media Contact</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/mediacontact">Media Contact</Footer_Link>
+                                        <Footer_Link to="/blogs">Blog</Footer_Link>
+                                    </li>
+                                    <li style={{ cursor: "pointer" }}>
+                                        <Footer_Link to="/">Fees</Footer_Link>
                                     </li>
                                 </Footer_ul>
                             </FooterLinkCol>
                             <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                                 <Footer_ul>
-                                    <Footer_headers>Lorem</Footer_headers>
+                                    <Footer_headers>Support</Footer_headers>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <Footer_Link to="/addcoin">List your Token</Footer_Link>
+                                        <Footer_Link to="/addcoin">Open a Ticket</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/news">News</Footer_Link>
+                                        <Footer_Link to="/faq">FAQ</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        Security
+                                        API Documentation
                                                     </li>
                                     {/* <li style={{cursor:"pointer"}} onClick={this.showComing}>Language</li> */}
-                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>API Documentation</li>
+                                    <li style={{ cursor: "pointer" }}>
+                                        <Footer_Link to="/addcoin">List Your Token</Footer_Link>
+                                    </li>
+                                    <li style={{ cursor: "pointer" }} >
+                                        <Footer_Link to="/news">News</Footer_Link>
+                                    </li>
                                 </Footer_ul>
                             </FooterLinkCol>
 
                             <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                                 <Footer_ul>
-                                    <Footer_headers>For Users</Footer_headers>
+                                    <Footer_headers>Legal & Technical</Footer_headers>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <Footer_Link to="/faq">FAQ</Footer_Link>
-                                    </li>
-                                    <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/blogs">Blog</Footer_Link>
+                                        <Footer_Link to="/privacy">Policies</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        Support
-                                                    </li>
+                                        Service Availability
+                                    </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        Supported Countries
-                                                    </li>
-                                    <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/privacy">Legal & Privacy</Footer_Link>
+                                        Security
                                     </li>
                                 </Footer_ul>
                             </FooterLinkCol>
@@ -319,14 +321,14 @@ class Footer_home extends Component {
                                             <a href={contactDetails.twitter_profile}><FontAwesomeIcons icon={faTwitter} color={true} /></a>
                                         </LI>
                                         <LI>
-                                            <a href={contactDetails.google_profile}><FontAwesomeIcons icon={faGoogle} color={true} /></a>
+                                            <a href={contactDetails.linkedin_profile}><FontAwesomeIcons icon={faLinkedinIn} color={true} /></a>
                                         </LI>
                                         <LI>
-                                            <a href={contactDetails.youtube_profile}><FontAwesomeIcons icon={faYoutube} color={true} /></a>
+                                            <a href={contactDetails.discord_profile}><FontAwesomeIcons icon={faDiscord} color={true} /></a>
                                         </LI>
                                     </Icon_ul_1>
                                     : ""}
-                                <Icon_ul_2>
+                                {/* <Icon_ul_2>
                                     <LI2 onClick={this.showComing}>
                                         <a href={contactDetails.insta_profile}> <FontAwesomeIcons icon={faInstagram} color={true} /></a>
                                     </LI2>
@@ -339,7 +341,7 @@ class Footer_home extends Component {
                                     <LI2 onClick={this.showComing}>
                                         <a href={contactDetails.faldax_url}><FontAwesomeIcons icon={faInternetExplorer} color={true} /></a>
                                     </LI2>
-                                </Icon_ul_2>
+                                </Icon_ul_2> */}
                             </Col>
                             <Store_Col xs={24} lg={2} xl={2}>
                                 <Download>Download</Download>

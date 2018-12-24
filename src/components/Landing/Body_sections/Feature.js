@@ -10,6 +10,7 @@ import {
 /* Import Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
 /* Components */
+import ComingSoon from '../../ComingSoon';
 
 const Section = styled.section`
   background-image:url(${FeaturesBG});
@@ -138,6 +139,25 @@ function SamplePrevArrow(props) {
 }
 
 export default class Feature extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      comingSoon: false,
+    };
+  }
+
+  comingCancel = (e) => {
+    this.setState({
+      comingSoon: false,
+    });
+  }
+
+  showComing = () => {
+    this.setState({
+      comingSoon: true,
+    });
+  }
+
   render() {
     const settings = {
       dots: false,
@@ -167,7 +187,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Coin & Token Selection </Head1>
                       <Desc1 >
-                        FALDAX has 73 coins and tokens with plans to add hundreds more. We will always perform our due diligence in regards to any token added to the platform. Check out our <a href="" style={{ textDecoration: 'underline' }}>Token Knowledgebase</a> to learn about the coins that have been approved on FALDAX. <a href="" style={{ textDecoration: 'underline' }}>Click here</a> if you have created a token and would like to list it on FALDAX.
+                        FALDAX offers dozens of coins and tokens, with plans to include hundreds more. We will always do our part to ensure any token added to the platform is legitimate. Check out our Token Knowledgebase (this should link to our token knowledgebase page) for more details.<a href="/addcoin" target="_blank" > Click here</a> if you have created a token and would like to list it on FALDAX.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -182,7 +202,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Propritetary Code </Head1>
                       <Desc1 >
-                        Every line of code was written from scratch and have complete control over the source code. The development team has experience with projects for Google, Motorola, Unilever, Dove, The University of Florida, and hundreds of other companies.
+                        Every line of code is unique, and we retain complete control over all of it. Nothing is shared, open-source, or purchased from anyone else. Many exchanges are operating on pre-built code and have no way to verify code security. Taking the extra time to build everything from the ground up allows us to say that we know what is in our code with confidence.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -197,7 +217,8 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Advanced Charting Tools </Head1>
                       <Desc1 >
-                        We have integrated TradingView’s charting libraries which enable us to offer some of the most robust and feature-rich live charts available today. <a href="" style={{ textDecoration: 'underline' }}>Click here</a> to see a live demo of TradingView’s incredible charting tools.
+
+                        Many traders are familiar with the incredible suite of charting tools by TradingView, and we have partnered with TradvingView to offer them here. You can use these tools by activating the Advanced UI.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -227,7 +248,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Portfolio Management </Head1>
                       <Desc1 >
-                        Your portfolio should organize a lot of information and condense it into bit-sized chunks leaving you with a clear picture of your financial position. Your FALDAX portfolio does just that, but that is just the beginning. We have some incredible new features that will supercharge your portfolio coming in a few months. No other exchange has these features and as always with FALDAX, they are completely free for all users. <a href="" style={{ textDecoration: 'underline' }}>Click here</a> to enter your e-mail address to be notified when these features and other exciting news are released.
+                        A good portfolio management system should condense detailed information into a form that gives you a clear picture of your position at a glance. Your FALDAX portfolio will not disappoint. In fact, we have some incredible features that will supercharge your portfolio in development scheduled to release shortly after launch. No exchange offers these features, and they are free for all of our customers. <a href="javascript:void(0)" onClick={this.showComing}> Click here </a> to stay informed about these and other exciting news.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -242,7 +263,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Accounting </Head1>
                       <Desc1 >
-                        Export a specific transaction record or a record of every transaction you have ever made into a convenience Excel, CSV or PDF format with a few clicks. Hand it to your tax professional and enjoy the peace of mind knowing you have done your part.
+                        Many countries have strict tax reporting requirements regarding crypto. Even if that’s not true in your area, traders often want a copy of their trade history for their records. We make this easy by enabling our customers to export a detailed report of every transaction into an Excel, CSV or PDF format with a few simple clicks.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -255,9 +276,9 @@ export default class Feature extends Component {
                 <div>
                   <Row1>
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
-                      <Head1> Bank-Level Wallet Security* </Head1>
+                      <Head1> Best-In-Class Wallet Security </Head1>
                       <Desc1 >
-                        We have partnered with BitGo to ensure the safety of your digital assets. *Some tokens available at FALDAX are not supported by BitGo at this time. Check our <a href="" style={{ textDecoration: 'underline' }}>Token Knowledgebase</a> for more info.
+                        We have partnered with BitGo to ensure the safety of your most popular digital assets.<a href="https://www.bitgo.com/info/resources#multi-currency" target="_blank"> Here is a list</a> of all tokens that BitGo will secure for you on behalf of FALDAX. For any tokens not listed, you can expect that we are going above and beyond to ensure their security as well.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -272,7 +293,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Customizable Dashboard </Head1>
                       <Desc1 >
-                        All info blocks on your personal Dashboard can be shifted to any location on your screen.  The new positions are saved so everything is just the way you want it when you login.
+                        No one sees your dashboard except for you, so organize it the way that you want. Everything is kept the way that you left it when you return.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -287,7 +308,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Basic and Advanced UI </Head1>
                       <Desc1 >
-                        We started FALDAX to make the crypto trading experience better for everyone, experienced or not. The Basic UI makes buying and selling crypto simple and clear. The Advanced UI will provide even the most seasoned traders with all of the information they want and need.
+                        FALDAX exists because we believe every trader should have an incredible experience. The Basic UI offers just enough detail to buy and sell with confidence while the Advanced UI gives seasoned traders all of the information they want. Crypto is an incredible innovation, and we aim to make it accessible for everyone.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -302,7 +323,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Affiliate System </Head1>
                       <Desc1 >
-                        Every user can generate an affiliate link within their personal profile. Share your link with friends and family. As a ‘Thank You’ for helping FALDAX grow, Bitcoin will automatically be added to your Bitcoin wallet every time they make a trade! Just make sure they use your link to create their account.
+                        Generate a unique affiliate code within your profile and share it with friends and family. To thank you for helping us grow, you will receive a portion of any transaction fees we collect from their future trades, deposited directly into your wallet.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -316,7 +337,8 @@ export default class Feature extends Component {
             </Col>
           </Row>
         </Container>
-      </Section>
+        <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
+      </Section >
     );
   }
 }

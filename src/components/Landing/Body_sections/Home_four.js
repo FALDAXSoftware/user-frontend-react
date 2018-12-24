@@ -271,7 +271,7 @@ class Home_four extends Component {
                         {
                             modal === 1 ?
                                 <div>
-                                    <p>All FALDAX services are available here. Start trading now!</p>
+                                    <p>All services are available. Start trading now!</p>
                                     <div style={{ minHeight: '20px' }}>
                                         <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff', backgroundColor: "#0f477b", height: "45px" }} onClick={() => this.send_email()} disabled>TRADE NOW </Button>
                                     </div>
@@ -280,7 +280,7 @@ class Home_four extends Component {
                         {
                             modal === 2 ?
                                 <div>
-                                    <p>All FALDAX services are unavailable here due to legal reasons. We are constantly monitoring this situation in hopes of legislation changes. Please enter your e-mail address below if you would like updates.</p>
+                                    <p>The United States has Federal regulations as well as regulations that vary by state. FALDAX has complied with Federal requirements and is working to comply with the unique demands of each state. Our team has compiled the necessary documentation, and we anticipate approval soon. Tell your elected representatives that you want favorable and sensible crypto legislation by clicking <a target="_blank" href="https://www.usa.gov/elected-officials">this link. </a> Please enter your email address below to receive updates.</p>
                                     <label style={{ color: 'black', fontWeight: "600" }}> Email Address: </label>
                                     <Email_input placeholder="Please enter your email address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
                                     <div style={{ marginTop: '20px', minHeight: '20px' }}>
@@ -291,7 +291,7 @@ class Home_four extends Component {
                         {
                             modal === 3 ?
                                 <div>
-                                    <p>All FALDAX services are available here! This country has not made an official determination regarding cryptocurrency so their stance is considered 'Neutral'. We are continuously monitoring legislation changes and will update our operational status here and notify you if anything changes.</p>
+                                    <p>All services are available! This country has not made an official determination regarding cryptocurrency so their stance is considered 'Neutral'. We are continuously monitoring legislation changes and will update our operational status if anything changes.</p>
                                 </div> : ""
                         }
                         {
@@ -317,7 +317,7 @@ class Home_four extends Component {
                                         Service Availability
                                     </Heading>
                                     <SubHeading>
-                                        Mouse-over or click on your country to view our operational status
+                                        Click on a country for additional details
                   </SubHeading>
                                 </Col>
                             </Row>

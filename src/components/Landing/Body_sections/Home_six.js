@@ -61,19 +61,19 @@ export default class Homethird extends Component {
                     <Third_Row>
                         <Row>
                             <BlueCol xs={8}>
-                                <Third_title>Service Available in</Third_title>
+                                <Third_title>Accessible in</Third_title>
                                 <Third_span>211</Third_span>
                                 <Third_p>Countries</Third_p>
                             </BlueCol>
                             <BlueCol xs={8}>
-                                <Third_title>Support For</Third_title>
+                                <Third_title>Offering</Third_title>
                                 <Third_span>73+</Third_span>
                                 <Third_p>Coins & Tokens</Third_p>
                             </BlueCol>
                             <BlueCol xs={8}>
                                 <Third_title>Always</Third_title>
                                 <Third_span>0%</Third_span>
-                                <Third_p>Maker's Fee</Third_p>
+                                <Third_p>Maker Fee</Third_p>
                             </BlueCol>
                         </Row>
                     </Third_Row>
