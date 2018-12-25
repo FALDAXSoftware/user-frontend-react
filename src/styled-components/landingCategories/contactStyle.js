@@ -615,7 +615,7 @@ export const Details_p = styled.p`
 /* Careers Style */
 
 export const Career_desc = styled.div`
-    margin-top:40px;
+    margin-top:20px;
 `
 export const Desc_head = styled.p`
     font-size: 17.978px;
@@ -630,8 +630,7 @@ export const Desc_body = styled.p`
 export const Job_wrap = styled.div`
     padding-bottom: 50px;
 `
-export const Job_head = styled.p`
-    
+export const Job_head = styled.p`    
     font-size: 17.978px;
     font-family: "Open Sans";
     color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
