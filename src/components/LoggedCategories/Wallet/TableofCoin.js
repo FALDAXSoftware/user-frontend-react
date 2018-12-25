@@ -21,28 +21,24 @@ const menu = (
         <Menu.Item key="1">USD</Menu.Item>
         <Menu.Item key="3">EUR</Menu.Item>
     </Menu>
-  );
-let total=0;
-class TableofCoin extends React.Component
-{
-    constructor(props)
-    {
+);
+let total = 0;
+class TableofCoin extends React.Component {
+    constructor(props) {
         super(props);
     }
-    totalUSD(total)
-    {
+    totalUSD(total) {
         this.props.totalUSD(total)
     }
-    render()
-    {
-        let {tableData} = this.props ;
+    render() {
+        let { tableData } = this.props;
         var me = this;
-        return(
-                <Table_coin  condensed>
-                    <thead>
-                        <Head>
-                            <Sub_head>Coins</Sub_head>
-                            <Sub_head>USD
+        return (
+            <Table_coin condensed>
+                <thead>
+                    <Head>
+                        <Sub_head>Coins</Sub_head>
+                        <Sub_head>USD
                                 <Dropdown overlay={menu} trigger={['click']}>
                                 <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
                             </Dropdown>
@@ -94,7 +90,7 @@ class TableofCoin extends React.Component
 function mapStateToProps(state) {
     console.log(state)
     return ({
-       
+
     })
 }
 

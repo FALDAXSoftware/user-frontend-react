@@ -136,7 +136,7 @@ export default class Services extends Component {
                   Reliability
                 </Title>
                 <Description>
-                  All hardware is housed in some of the most secure and technologically advanced data centers on the planet. All data is replicated, in real-time, across three locations thousands of miles apart. Our proprietary code was created from the ground up by developers that have experience on enterprise-grade projects for companies such as Google, Motorola, Unilever, Pedigree, Dove and many more. The order management system is capable of at least 1,000,000+ transactions per second and built with an N+1 scaling philosophy to ensure seamless operations regardless of growth.
+                  Our technology stack is built upon some of the most technologically advanced enterprise solutions in the world. Production data is replicated, in real-time, across three locations thousands of miles apart. Our proprietary code is unique and created by a development team with experience on projects for companies such as Google, Motorola, Unilever, Pedigree, Dove and many more. The order management system is capable of at least 1,000,000+ transactions per second and built with an N+1 scaling philosophy to ensure seamless operations regardless of growth.
                 </Description>
               </Col>
             </SlideRow>
@@ -149,7 +149,7 @@ export default class Services extends Component {
                   Accessibility
                 </Title>
                 <Description>
-                  FALDAX was built with both novice and professional traders in mind. Building our own exchange allowed us to construct each component to our specific needs and design philosophies. Our personal trading experience assisted with identifying workflow and experience deficiencies with other exchanges. The end result is novice traders have the information necessary to make informed decisions without surprises while professional traders have a streamlined, feature-rich, data-centric, zero compromise interface.
+                  We believe that one platform can meet the needs of novice and professional traders without compromising anyone’s experience. Creating our exchange from the ground up allows us to construct each component according to specific needs and design philosophies. As traders ourselves, we understand that the experience other platforms offer leaves much room for improvement. At FALDAX, novice traders get the information they need to avoid surprises and make informed decisions while professional traders have a streamlined, feature-rich, data-centric, and zero-compromise interface that doesn’t slow them down.
                 </Description>
               </Col>
             </SlideRow>
@@ -162,7 +162,7 @@ export default class Services extends Component {
                   Security
                 </Title>
                 <Description>
-                  All hardware is housed in some of the most secure data centers on the planet. A complete description of the security and compliance standards followed can be found <a style={{ textDecoration: 'underline' }} href="https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/security-and-compliance.html" target="_blank">here</a>. Our proprietary code has been subjected to multiple 3rd party security and penetration tests. Strict internal data security procedures are documented and disseminated to all employees. All traffic between in and out of the network is encrypted.
+                  All hardware is located in some of the most secure data centers on the planet, and you can review a complete description of the security and compliance standards followed can <a href="https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/security-and-compliance.html" target="_blank">here.</a> The prestigious <a href="https://www.herjavecgroup.com/" target="_blank"> Herjavec Group </a> has conducted thorough security and penetration tests in addition to our own. We contract with the Herjavec Group and other third-party cybersecurity firms to monitor our systems in real-time for vulnerabilities. Internally, strict data security procedures are documented and disseminated to all employees. While security is never a guarantee, you can rest assured that we are doing our part to make FALDAX as safe as it can be.
                 </Description>
               </Col>
             </SlideRow>
@@ -175,7 +175,7 @@ export default class Services extends Component {
                   Innovation
                 </Title>
                 <Description>
-                  At launch, the features and functionality you are accustomed to from our competition will be available at FALDAX. However, we currently have seen features in development, never provided by an exchange before, that will be revolutionize your trading experience. Each feature will be released individually as they are completed, four to six months post launch - for free. We are committed to always pushing boundaries and expanding the services we offer to you, always at no additional cost.
+                  At launch, the features and functionality you are accustomed to on other exchanges will be available here. However, we currently have seven features in development, never offered by an exchange before, that will revolutionize your experience. We anticipate completion of these features between four to six months post-launch. FALDAX is always committed to push boundaries and expand the services offered, and rather than charging you for the innovations you have funded; we choose to reward your dedication to us by providing them at no additional cost. Welcome, to the way it should be.
                 </Description>
               </Col>
             </SlideRow>
