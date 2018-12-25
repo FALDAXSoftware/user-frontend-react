@@ -10,6 +10,7 @@ import Footer from '../src/components/Landing/Footers/Footer';
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import HomePage from "../src/components/Landing/HomePage";
 import Wallet from "../src/components/LoggedCategories/Wallet/wallet";
+import WalletDetails from "../src/components/LoggedCategories/Wallet/WalletDetails";
 import Trade from "../src/components/LoggedCategories/Trade/trade"
 import History2 from "../src/components/LoggedCategories/History/history"
 import Dashboard from "../src/components/LoggedCategories/Dashboard/dashboard"
@@ -28,6 +29,11 @@ const routes = [
       exact:false,
       path: "/wallet",
       component:Wallet 
+    },
+    {
+      exact:false,
+      path: "/walletDetails",
+      component:WalletDetails 
     },
     {
       exact:false,

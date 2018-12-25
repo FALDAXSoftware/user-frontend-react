@@ -65,7 +65,8 @@ class KYC extends Component {
             QR_img: null,
             otp_msg: null,
             next: 0,
-            nexts: 0
+            nexts: 0,
+            is_kyc_done:false
         }
     }
 
@@ -89,10 +90,10 @@ class KYC extends Component {
     render() {
         const { next } = this.state;
         const { is_kyc_done } = this.state;
-
+        console.log(is_kyc_done)
         return (
             <KYC_wrap>
-                {(is_kyc_done !== true && next !== 5) ?
+                {(this.props.is_kyc_done !== true && next !== 5) ?
                     <div>
                         <KYC_head>
                             Identity Verification

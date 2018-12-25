@@ -235,7 +235,8 @@ class Navigation extends Component {
             email_msg: "",
             selected: [],
             faldaxLogo: "",
-            faldax: ""
+            faldax: "",
+            qP:""
         }
     }
 
@@ -316,14 +317,25 @@ class Navigation extends Component {
 
         let queryParams
 
-        /* console.log("asdfas",this.props) */
-        if (this.props.queryParams !== undefined && this.props.queryParams !== "") {
-            queryParams = this.props.queryParams;
-            this.setState({
-                forgotParam: queryParams.split("="),
-                visible: true
-            })
+        console.log("asdfas",this.props)
+        if(this.props.location.pathname=="/signup")
+        {
+            queryParams = decodeURIComponent(this.props.queryParams)
+            let qP=queryParams.split("=")
+            console.log("sign up",qP[1])
+            this.setState({modal:1,visible: true,qP:qP[1]});
         }
+        else
+        {
+            if (this.props.queryParams !== undefined && this.props.queryParams !== "") {
+                console.log("INSIDE IF");
+                queryParams = this.props.queryParams;
+                this.setState({
+                    forgotParam: queryParams.split("="),
+                    visible: true
+                })
+            }
+        }   
         if (this.props.location.pathname == "/about-us") {
             this.setState({ selected: ['2'] })
         } else if (this.props.location.pathname == "/contactus") {
@@ -411,15 +423,15 @@ class Navigation extends Component {
                         >
                             <Row>
                                 <Left_col xl={{ span: 12 }} sm={{ span: 24 }}>
-                                    {/* console.log(this.state.modal) */}
-                                    {/* console.log(this.state.modal) */}
+                                    {console.log(this.state.modal)}
+                                    
                                     {
                                         modal == 0 || (this.state.forgotParam !== undefined && this.props.pathname.includes("login")) ?
                                             <Login_Form {...this.props} init="" forgotParam={this.state.forgotParam} dispModal={(pressed) => this.dispModal(pressed)} /> : ""
                                     }
                                     {
                                         modal == 1 ?
-                                            <Signup_Form {...this.props} init="" dispModal={(pressed) => this.dispModal(pressed)} /> : ""
+                                            <Signup_Form {...this.props} init="" dispModal={(pressed) => this.dispModal(pressed)} qP={this.state.qP} /> : ""
                                     }
                                     {
                                         modal == 2 ?
