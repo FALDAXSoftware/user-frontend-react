@@ -243,6 +243,14 @@ class Footer_home extends Component {
             comingSoon: true,
         });
     }
+    scrollMap()
+    {
+        var elmnt = document.getElementById("block-world-map");
+        if(elmnt!==null)
+        elmnt.scrollIntoView();
+        else
+        this.props.history.push("/#block-world-map");
+    }
     render() {
         const { contactDetails } = this.state;
 
@@ -299,7 +307,7 @@ class Footer_home extends Component {
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         <Footer_Link to="/privacy">Policies</Footer_Link>
                                     </li>
-                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                    <li style={{ cursor: "pointer" }} onClick={this.scrollMap.bind(this)}>
                                         Service Availability
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>

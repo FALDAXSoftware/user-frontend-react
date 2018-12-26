@@ -181,6 +181,9 @@ const SendButton = styled(Button)`
         width: 125px;
     }
 `
+const CopyToClipboardCSS = styled(CopyToClipboard)`
+    display:inline;
+`
 
 class WalletPopup extends Component {
     constructor(props) {
@@ -222,7 +225,7 @@ class WalletPopup extends Component {
     }
     openNotificationWithIcon = (type) => {
         notification[type]({
-            message: 'Referral Code Copied to Clipboard',
+            message: 'Address Copied to Clipboard',
             duration: 2
         });
     };
@@ -259,7 +262,7 @@ class WalletPopup extends Component {
     render() {
         return (
             <div>
-                {console.log(this.state.searchCSS)}
+                {console.log(this.state.receiveAdd)}
                 <WalletModal
                     title={<Title_div><Title>{this.props.title}</Title></Title_div>}
                     visible={this.props.visible}
@@ -279,7 +282,7 @@ class WalletPopup extends Component {
                                         <img src={this.state.receive.url} alt="no photo"/>
                                     </div>
                                     <div style={{marginTop:"20px"}}>
-                                    <CopyToClipboard text={this.state.value}
+                                    <CopyToClipboardCSS text={this.state.receive.receive_address}
                                         onCopy={() => this.setState({ copied: true })}>
                                         <div style={{ textAlign: 'left' }}>
                                             <Ref_input
@@ -291,7 +294,7 @@ class WalletPopup extends Component {
                                                 onSearch={value => this.SearchText()}
                                             />
                                         </div>
-                                    </CopyToClipboard>
+                                    </CopyToClipboardCSS>
                                     </div>
                                 </div>
                                 :""

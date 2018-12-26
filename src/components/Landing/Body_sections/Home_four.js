@@ -4,6 +4,7 @@ import { ComposableMap, ZoomableGroup, Geographies, Geography } from "react-simp
 import { geoAlbersUsa } from 'd3-geo';
 import { connect } from "react-redux";
 import { actions, } from "redux-tooltip";
+import {withRouter} from 'react-router-dom'
 import styled from 'styled-components';
 import tooltip from 'wsdm-tooltip';
 import { globalVariables } from '../../../Globals';
@@ -251,6 +252,17 @@ class Home_four extends Component {
                 }
             })
             .catch(error => { })
+        console.log("Home_four",this.props.location);
+        if(this.props.location!==undefined)
+        {
+            if(this.props.location.hash!=="" && this.props.location.hash!==undefined && this.props.location.hash=="#block-world-map")
+            {
+                var elmnt = document.getElementById("block-world-map");
+                console.log(document.getElementById("block-world-map"))
+                if(elmnt!==null)
+                elmnt.scrollIntoView();
+            }
+        }
     }
     render() {
         let self = this;
@@ -517,4 +529,4 @@ export default connect(
     (state) => {
         return { tooltip: state.tooltip.default };
     }
-)(Home_four);
+)(withRouter( Home_four));
