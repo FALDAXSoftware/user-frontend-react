@@ -76,11 +76,16 @@ class Wallet extends Component {
         if(this.props.walletDetails!==null)
         {
             var tableData=this.props.walletDetails.coins;
-            
-            Object.keys(tableData).map(function(index,key){
-                total = total + tableData[index].USD;
-            })
-            console.log("TOTAL",total)
+            if(tableData!==undefined)
+            {
+                Object.keys(tableData).map(function(index,key){
+                    console.log(tableData[index].USD)
+                    if(tableData[index].USD!==undefined)
+                    total = total + tableData[index].USD;
+                })
+                console.log("TOTAL",total)
+                this.setState({total});
+            }
         }
     }
     componentDidMount()
@@ -123,7 +128,7 @@ class Wallet extends Component {
                             </SearchCoin>
                             <Total>
                                 <Tot>Total:</Tot>
-                                <Money>$72,454.27</Money>
+                                <Money>${this.state.total!==null?this.state.total:""}</Money>
                                 <Currency>USD</Currency>
                             </Total>
                         </Header_wrap>
@@ -162,7 +167,6 @@ class Wallet extends Component {
                             </Table_wrap>
                         </CoinTable>
                     </ContainerContact2>
-                    <WalletDetails />
                 </Grey_wrap>
                 <CommonFooter />
             </Contact_wrap>

@@ -256,7 +256,7 @@ class Home_four extends Component {
         let self = this;
         const { modal, countries } = this.state;
         return (
-            <div>
+            <div id="block-world-map">
                 <div className="simple-maps">
                     <Modal
                         title={<img src={FooterLogo} />}

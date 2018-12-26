@@ -107,17 +107,24 @@ export const Head = styled.tr`
     height:40px;
     >th{
         vertical-align: middle !important;
-        padding-left:45px !important;
+        padding-left: ${props => props.wallet ? "":"45px !important"};
+        text-align:${props => props.wallet ? "center":""};
     }
 `
 export const Sub_head = styled.th`
     border-bottom: 0px;
 `
 export const Col1 = styled.tr`
-    height:90px;
+    height:${props => props.wallet ? "70px":"90px"};
     >td{
         vertical-align: middle !important;
-        padding-left:45px !important;
+        padding-left: ${props => props.wallet ? "":"45px !important"};
+        text-align:${props => props.wallet ? "center":""};
+        font-size: ${props => props.wallet ? "14px":""};
+        font-family: ${props => props.wallet ? "Open Sans" :""};
+        font-weight:  ${props => props.wallet ? "600" :""};
+        color: ${props => props.wallet ? "rgb( 33, 33, 33 )":""};
+        text-transform: ${props => props.wallet ? "uppercase":""};
     }
 `
 export const Bit_img = styled.img`
@@ -241,6 +248,7 @@ export const BTC = styled.span`
     font-size: 34.89px;
     font-family: "Open Sans";
     color:${props=>props.theme.mode=="dark" ?"white":"rgb( 80, 80, 80 )"};
+    text-transform:uppercase;
     @media(max-width:767px)
     {
         font-size:22px;

@@ -168,7 +168,8 @@ class Signup_Form extends Component {
       percent: 0,
       init: "",
       PasswordtypeEye: "password",
-      repeatEye: "password"
+      repeatEye: "password",
+      qP:""
     }
   }
 
@@ -186,7 +187,13 @@ class Signup_Form extends Component {
     }
     this.props.clearSignUp();
   }
-
+  componentDidMount()
+  {
+    if(this.props.qP!=="")
+    {
+      this.setState({qP:this.props.qP});
+    }
+  }
   submit = () => {
     this.props.form.validateFields((error, value) => {
       if (this.state.emailIcon == true && this.state.firstIcon == true && this.state.lastIcon == true && this.state.passIcon == true && this.state.confirmIcon == true) {
@@ -381,6 +388,7 @@ class Signup_Form extends Component {
     return (
       <div>
         <Form_wrap>
+          {console.log("Sign Up")}
           <Login_head>Sign Up</Login_head>
           <Welcome>A Better Trading Experience is Moments Away</Welcome>
           <SubHeading>Lets Get Started</SubHeading>
@@ -455,12 +463,12 @@ class Signup_Form extends Component {
             <ConfirmIconF id="confirm_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
           </div>
           <ConfirmPass_req className="confirmPass_sign">{this.state.confirmPass_msg}</ConfirmPass_req>
-
+          {console.log(this.props,this.state)}
           <Ph_Label>Referral Code</Ph_Label>
           <div>
             <Referral {...getFieldProps('referral_code', {
               onChange() {/* console.log("Hello How are You") */ }, // have to write original onChange here if you need
-              initialValue: me.props.init,
+              initialValue: this.state.qP==""?me.props.init:this.state.qP,
               rules: [{ type: "string", required: false }],
             })}
             />

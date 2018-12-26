@@ -122,6 +122,7 @@ class App extends Component {
                 <Route path='/reset-password' title="Login" component={HomePage} />
                 <Route path="/" exact title="Home" component={HomePage} />
                 <Route path="/login" exact title="Login" component={HomePage} />
+                <Route path="/signup" exact title="Signup" component={HomePage} />
                 <Route {...this.props} path="/about-us" exact title="About Us" component={AboutUs} />
                 <Route path="/faq" exact title="Faq Page" component={FaqPage} />
                 <Route path="/blogs" exact title='Blog' component={Blog} />

@@ -74,7 +74,7 @@ const Ref_leftcol = styled(Col)`
         // text-align:center;
     }
 `
-const Ref_input = styled(Search)`
+export const Ref_input = styled(Search)`
     width:86%;
     // margin-left:35px;
     text-align:left;

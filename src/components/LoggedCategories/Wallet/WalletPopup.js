@@ -4,6 +4,11 @@ import { Button, Modal, Input, notification } from 'antd';
 import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
 import styled from 'styled-components'
 
+import {Ref_input} from '../../Settings/Referral'
+import { globalVariables } from '../../../Globals';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+let { API_URL } = globalVariables;
 const WalletModal = styled(Modal)`
     >.ant-modal-content>.ant-modal-header
     {
@@ -181,12 +186,57 @@ class WalletPopup extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            value: null,
+            copied: false,
             comingSoon: this.props.visible ? true : '',
             email_address: "",
             email_msg: "",
+            receive:{},
+            receiveAdd:"receive_add"
         }
     }
+    componentWillReceiveProps(props,newProps)
+    {
+        console.log(props);
+    }
+    componentDidMount()
+    {
+        console.log(this.props)
+        if(this.props.title=="RECEIVE")
+        fetch(API_URL + "/wallet/get-qr-code/BTC" ,{
+            method:"get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization:"Bearer " + this.props.isLoggedIn
+            }
 
+        })
+        .then(response => response.json())
+        .then((responseData) => {
+            console.log(responseData)
+            this.setState({receive:responseData.receiveCoin})
+        })
+        .catch(error => {
+        })
+    }
+    openNotificationWithIcon = (type) => {
+        notification[type]({
+            message: 'Referral Code Copied to Clipboard',
+            duration: 2
+        });
+    };
+    SearchText() {
+        // Copy to clipboard example
+        document.querySelectorAll(".ant-input-search-button")[0].onclick = function () {
+            // Select the content
+            document.querySelectorAll(".receive_add > input")[0].select();
+            // Copy to the clipboard
+            document.execCommand('copy');
+        };
+        this.openNotificationWithIcon('success');
+    }
+    
     handleComing = (e) => {
         this.setState({
             comingSoon: false,
@@ -209,8 +259,9 @@ class WalletPopup extends Component {
     render() {
         return (
             <div>
+                {console.log(this.state.searchCSS)}
                 <WalletModal
-                    title={<Title_div><Title>WITHDRAW</Title></Title_div>}
+                    title={<Title_div><Title>{this.props.title}</Title></Title_div>}
                     visible={this.props.visible}
                     onOk={(e) => this.handleComing()}
                     onCancel={(e) => this.comingCancel(e)}
@@ -218,35 +269,64 @@ class WalletPopup extends Component {
                     width={656}
                     height={460}
                 >
-                    <Modal_wrap>
-                        <Rediv>
-                            <Label style={{ display: "block" }}>Recieving Address</Label>
-                            <WallInput />
-                            <Scan>Scan QR</Scan>
-                        </Rediv>
-                        <Rediv>
-                            <Label style={{ display: "block" }}>Amount</Label>
-                            <Sec_wrap>
-                                <LeftInput />
-                                <RightInput />
-                                <ButtonToolbarS>
-                                    <DropdownButtonS title="USD" id="dropdown-size-medium">
-                                        <MenuItem eventKey="1">Action</MenuItem>
-                                        <MenuItem eventKey="2">Another action</MenuItem>
-                                        <MenuItem eventKey="3">Something else here</MenuItem>
-                                        <MenuItem eventKey="4">Separated link</MenuItem>
-                                    </DropdownButtonS>
-                                </ButtonToolbarS>
-                            </Sec_wrap>
-                            <div style={{ height: "25px", marginTop: "45px", width: "462px" }}>
-                                <Fee>Fee:</Fee>
-                                <TotPay>Total Payout:</TotPay>
+                   {console.log(this.props.title)}
+                        {this.props.title=="RECEIVE"?
+                        <Modal_wrap>
+                            {Object.keys(this.state.receive).length>0
+                                ?
+                                <div style={{textAlign:"center",marginTop:"40px"}}>
+                                    <div>
+                                        <img src={this.state.receive.url} alt="no photo"/>
+                                    </div>
+                                    <div style={{marginTop:"20px"}}>
+                                    <CopyToClipboard text={this.state.value}
+                                        onCopy={() => this.setState({ copied: true })}>
+                                        <div style={{ textAlign: 'left' }}>
+                                            <Ref_input
+                                                value={this.state.receive.receive_address}
+                                                className={this.state.receiveAdd}
+                                                placeholder="Referral"
+                                                enterButton="Copy"
+                                                size="large"
+                                                onSearch={value => this.SearchText()}
+                                            />
+                                        </div>
+                                    </CopyToClipboard>
+                                    </div>
+                                </div>
+                                :""
+                            }
+                        </Modal_wrap>
+                        :
+                        <Modal_wrap>
+                            <Rediv>
+                                <Label style={{ display: "block" }}>Recieving Address</Label>
+                                <WallInput />
+                                <Scan>Scan QR</Scan>
+                            </Rediv>
+                            <Rediv>
+                                <Label style={{ display: "block" }}>Amount</Label>
+                                <Sec_wrap>
+                                    <LeftInput />
+                                    <RightInput />
+                                    <ButtonToolbarS>
+                                        <DropdownButtonS title="USD" id="dropdown-size-medium">
+                                            <MenuItem eventKey="1">Action</MenuItem>
+                                            <MenuItem eventKey="2">Another action</MenuItem>
+                                            <MenuItem eventKey="3">Something else here</MenuItem>
+                                            <MenuItem eventKey="4">Separated link</MenuItem>
+                                        </DropdownButtonS>
+                                    </ButtonToolbarS>
+                                </Sec_wrap>
+                                <div style={{ height: "25px", marginTop: "45px", width: "462px" }}>
+                                    <Fee>Fee:</Fee>
+                                    <TotPay>Total Payout:</TotPay>
+                                </div>
+                            </Rediv>
+                            <div style={{ textAlign: "center", marginTop: "60px", display: "block" }}>
+                                <SendButton >SEND</SendButton>
                             </div>
-                        </Rediv>
-                        <div style={{ textAlign: "center", marginTop: "60px", display: "block" }}>
-                            <SendButton >SEND</SendButton>
-                        </div>
-                    </Modal_wrap>
+                        </Modal_wrap>}
                 </WalletModal>
             </div>
         );
