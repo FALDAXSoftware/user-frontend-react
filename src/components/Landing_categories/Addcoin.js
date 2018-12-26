@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Spin, notification } from 'antd';
+import { Row, Col, Spin, notification, Select } from 'antd';
 import styled from 'styled-components';
 import SimpleReactValidator from 'simple-react-validator';
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,12 +10,15 @@ import { Spin_Ex } from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import {
-    Contact_wrap, Grey_wrap, Head, Head_title, Subtitle, Head_desc, Body, BodyText,
+    Contact_wrap, Grey_wrap, Head, Head_title, Head_desc, Body,
     Body_form, Form_coin, CoinInput, URLInput, TargetInput, EmailInput, MsgInput,
-    Left, OneDiv, TwoDiv, ThreeDiv, FourDiv, FiveDiv, AddButton, Msg, Right_input
+    Left, OneDiv, FifthDiv, SixthDiv, SeventhDiv, EigthDiv, AddButton, Msg, Right_input,
+    SecondDiv, ThirdDiv, FourthDiv, NineDiv, TenDiv, ElevenDiv, TwelveDiv, ThirteenDiv
 } from '../../styled-components/landingCategories/contactStyle';
-import { globalVariables } from "../../Globals"
+import { globalVariables } from "../../Globals";
+
 let { API_URL } = globalVariables;
+const Option = Select.Option;
 
 export const ContainerContact = styled(Container)`
     background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
@@ -28,6 +31,9 @@ export const ContainerContact = styled(Container)`
         padding-right:0px;
         padding-left:0px;
     }
+`
+export const TextAreaInput = styled(MsgInput)`
+    min-height: 60px;
 `
 
 class MediaContact extends Component {
@@ -42,7 +48,13 @@ class MediaContact extends Component {
                 coin_name: '',
                 loader: false
             },
-            startDate: null
+            startDate: null,
+            is_secure: '',
+            selectedCountry: '',
+            selectedReference: '',
+            isTextBox: false,
+            phoneCode: '',
+            countries: []
         };
         this._onChangeFields = this._onChangeFields.bind(this);
         this.dateChange = this.dateChange.bind(this);
@@ -59,13 +71,7 @@ class MediaContact extends Component {
             }
         });
     }
-    // handleForm(type,e)
-    // {
-    //     if(type=="email")
-    //     {
-    //         this.setState({email:e.target.value})
-    //     }
-    // }
+
     _onChangeFields(e) {
         let fields = this.state.fields;
         let field = e.target.name;
@@ -92,18 +98,58 @@ class MediaContact extends Component {
             description: desc,
         });
     };
+
+    componentDidMount() {
+        this._getAllCountries();
+        document.getElementsByClassName("date-input")[0].setAttribute("readOnly", "readOnly")
+    }
+
+    _getAllCountries = () => {
+        fetch(globalVariables.API_URL + "/users/countries", {
+            method: "GET",
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                if (responseData.status == 200) {
+                    this.setState({ countries: responseData.data });
+                }
+            })
+            .catch(error => { })
+    }
+
     onSubmit() {
+        const { selectedCountry, is_secure, phoneCode, selectedReference } = this.state;
+
         if (this.validator.allValid()) {
             this.setState({ loader: true })
+
+            let formdata = new FormData();
+            formdata.append('first_name', this.state.fields['first_name']);
+            formdata.append('last_name', this.state.fields['last_name'])
+            formdata.append('email', this.state.fields['email'])
+            formdata.append('target_date', this.state.fields['target_date'])
+            formdata.append('url', this.state.fields['url'])
+            formdata.append('message', this.state.fields['message'])
+            formdata.append('ref_site', selectedReference)
+            formdata.append('skype', this.state.fields['skype'])
+            formdata.append('country', selectedCountry)
+            formdata.append('title', this.state.fields['title'])
+            formdata.append('coin_name', this.state.fields['coin_name'])
+            formdata.append('elevator_pitch', this.state.fields['elevator_pitch'])
+            formdata.append('coin_symbol', this.state.fields['coin_symbol'])
+            formdata.append('phone', phoneCode + this.state.fields['phone'])
+            formdata.append('is_secure', is_secure)
+
             fetch(API_URL + "/users/add-coin-request", {
                 method: "post",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(this.state.fields)
+                // headers: {
+                //     'Content-Type': 'application/json',
+                // },
+                body: formdata
             })
                 .then(response => response.json())
                 .then((responseData) => {
+                    this.props.history.push('/thank-you');
                     this.openNotificationWithIcon('success', 'Success', responseData.message);
                     let fields = {};
                     fields["target_date"] = '';
@@ -111,8 +157,18 @@ class MediaContact extends Component {
                     fields['coin_name'] = "";
                     fields['email'] = "";
                     fields['message'] = "";
+                    fields['title'] = "";
+                    fields['skype'] = "";
+                    fields['last_name'] = "";
+                    fields['first_name'] = "";
+                    fields['phone'] = "";
+                    fields['coin_symbol'] = "";
+                    fields['elevator_pitch'] = "";
 
-                    this.setState({ fields: fields, startDate: null, loader: false }, () => {
+                    this.setState({
+                        fields: fields, startDate: null, loader: false,
+                        selectedCountry: '', selectedReference: '', is_secure: ''
+                    }, () => {
                         this.validator.hideMessages();
                         this.forceUpdate();
 
@@ -126,23 +182,66 @@ class MediaContact extends Component {
             this.forceUpdate();
         }
     }
-    componentDidMount() {
-        document.getElementsByClassName("date-input")[0].setAttribute("readOnly", "readOnly")
+
+
+    _changeSecurity = (isSecure) => {
+        this.setState({ is_secure: isSecure })
+    }
+
+    _changeCountry = (val) => {
+        this.setState({ selectedCountry: val });
+    }
+
+    _changePhoneCode = (val) => {
+        this.setState({ phoneCode: val });
+    }
+
+    _changeReference = (val) => {
+        if (val == 'Other') {
+            this.setState({ isTextBox: true, selectedReference: val });
+        } else {
+            this.setState({ isTextBox: false, selectedReference: val });
+        }
     }
 
     render() {
+        const { countries, isTextBox } = this.state;
+        let countryOptions = countries.map((country) => {
+            return (
+                <Option value={country.name}>{country.name}</Option>
+            )
+        })
+
+        let phoneCodeOptions = countries.map((country) => {
+            return (
+                <Option value={country.alpha3Code}>{country.alpha3Code}</Option>
+            )
+        })
+
         return (
             <Contact_wrap>
                 <Navigation />
                 <Grey_wrap>
                     <ContainerContact>
                         <Head>
-                            <Head_title>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </Head_title>
-                            <Subtitle>Here are the requirements to list your coin:</Subtitle>
-                            <Head_desc>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Head_desc>
+                            <Head_title>List Your Token</Head_title>
+                            {/* <Subtitle>Here are the requirements to list your coin:</Subtitle> */}
+                            <Head_desc>We speak to coin creators about struggles from their side of the crypto industry, and a common complaint is exchange access. Crypto, as a financial asset, is what gets the most attention but the beauty of crypto is the utility offered by tokens based on innovative ideas. We aim to help intelligent and motivated people like you focus on those ideas rather than the politics and logistics of proliferating your token. So, we made it easy:
+                                <li>Complete the form below.</li>
+                                <li> We will review your information and reply with relevant questions and next steps within 24 hours.</li>
+                            </Head_desc>
+                            <Head_desc>
+                                Why should you want to work with us?
+
+
+                                <li>We do not require you to pay us.</li>
+                                <li>We do not hold any of your tokens in reserve, escrow, hostage, etc.</li>
+                                <li>Our terms are simple, fair, and clear.</li>
+                                <li>We treat others with respect. Always.</li>
+                            </Head_desc>
                         </Head>
                         <Body>
-                            <BodyText>Please fill out this form or email at relations@faldax.com to apply:</BodyText>
+                            {/* <BodyText>Please fill out this form or email at relations@faldax.com to apply:</BodyText> */}
                             <Body_form>
                                 <Form_coin>
                                     <OneDiv>
@@ -160,7 +259,55 @@ class MediaContact extends Component {
                                             </Col>
                                         </Row>
                                     </OneDiv>
-                                    <TwoDiv>
+                                    <SecondDiv>
+                                        <Row>
+                                            <Col xs={24} sm={8} xl={10}>
+                                                <Left>
+                                                    <p>Coin/Token Symbol*</p>
+                                                </Left>
+                                            </Col>
+                                            <Col xs={24} sm={16} xl={14}>
+                                                <Right_input>
+                                                    <CoinInput name="coin_symbol" onChange={this._onChangeFields} value={this.state.fields.coin_symbol} />
+                                                    {this.validator.message('coin_symbol', this.state.fields.coin_symbol, 'required|alpha_num|max:30', 'text-danger-validation')}
+                                                </Right_input>
+                                            </Col>
+                                        </Row>
+                                    </SecondDiv>
+                                    <ThirdDiv>
+                                        <Row>
+                                            <Col xs={24} sm={8} xl={10}>
+                                                <Left>
+                                                    <p>Elevator Pitch*</p>
+                                                </Left>
+                                            </Col>
+                                            <Col xs={24} sm={16} xl={14}>
+                                                <Right_input>
+                                                    <TextAreaInput rows="2" name="elevator_pitch" onChange={this._onChangeFields} value={this.state.fields.elevator_pitch} />
+                                                    {this.validator.message('elevator_pitch', this.state.fields.elevator_pitch, 'required', 'text-danger-validation')}
+                                                </Right_input>
+                                            </Col>
+                                        </Row>
+                                    </ThirdDiv>
+                                    <FourthDiv>
+                                        <Row>
+                                            <Col xs={24} sm={8} xl={10}>
+                                                <Left>
+                                                    <p>Is your Coin/Token a security?*</p>
+                                                </Left>
+                                            </Col>
+                                            <Col xs={24} sm={16} xl={14}>
+                                                <Right_input>
+                                                    <Select style={{ width: 200, "marginLeft": "15px" }}
+                                                        onChange={this._changeSecurity}>
+                                                        <Option value="true">Yes</Option>
+                                                        <Option value="false">No</Option>
+                                                    </Select>
+                                                </Right_input>
+                                            </Col>
+                                        </Row>
+                                    </FourthDiv>
+                                    <FifthDiv>
                                         <Row>
                                             <Col xs={24} sm={8} xl={10}>
                                                 <Left>
@@ -174,12 +321,12 @@ class MediaContact extends Component {
                                                 </Right_input>
                                             </Col>
                                         </Row>
-                                    </TwoDiv>
-                                    <ThreeDiv>
+                                    </FifthDiv>
+                                    <SixthDiv>
                                         <Row>
                                             <Col xs={24} sm={8} xl={10}>
                                                 <Left>
-                                                    <p>Target Date of Integration*</p>
+                                                    <p>Anticipated Release Date*</p>
                                                 </Left>
                                             </Col>
                                             <Col xs={24} sm={16} xl={14}>
@@ -192,12 +339,12 @@ class MediaContact extends Component {
                                                         onChange={this.dateChange}
                                                         className="date-input"
                                                     />
-                                                    {this.validator.message('target_date', this.state.fields.target_date, 'required', 'text-danger-validation')}
+                                                    {this.validator.message('anticipated date', this.state.fields.target_date, 'required', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
                                         </Row>
-                                    </ThreeDiv>
-                                    <FourDiv>
+                                    </SixthDiv>
+                                    <SeventhDiv>
                                         <Row>
                                             <Col xs={24} sm={8} xl={10}>
                                                 <Left>
@@ -211,23 +358,158 @@ class MediaContact extends Component {
                                                 </Right_input>
                                             </Col>
                                         </Row>
-                                    </FourDiv>
-                                    <FiveDiv>
+                                    </SeventhDiv>
+                                    <EigthDiv>
                                         <Row>
                                             <Col xs={24} sm={8} xl={10}>
                                                 <Msg>
-                                                    <p>Message*</p>
+                                                    <p>Comments*</p>
                                                 </Msg>
                                             </Col>
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
                                                     <MsgInput name="message" onChange={this._onChangeFields} value={this.state.fields.message} />
-                                                    {this.validator.message('message', this.state.fields.message, 'required', 'text-danger-validation')}
-                                                    <AddButton onClick={this.onSubmit}>SUBMIT</AddButton>
+                                                    {this.validator.message('comments', this.state.fields.message, 'required', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
                                         </Row>
-                                    </FiveDiv>
+                                    </EigthDiv>
+                                    <NineDiv>
+                                        <Row>
+                                            <Col xs={24} sm={8} xl={10}>
+                                                <Left>
+                                                    <p>First Name*</p>
+                                                </Left>
+                                            </Col>
+                                            <Col xs={24} sm={16} xl={14}>
+                                                <Right_input>
+                                                    <CoinInput name="first_name" onChange={this._onChangeFields} value={this.state.fields.first_name} />
+                                                    {this.validator.message('first name', this.state.fields.first_name, 'required', 'text-danger-validation')}
+                                                </Right_input>
+                                            </Col>
+                                        </Row>
+                                    </NineDiv>
+                                    <TenDiv>
+                                        <Row>
+                                            <Col xs={24} sm={8} xl={10}>
+                                                <Left>
+                                                    <p>Last Name*</p>
+                                                </Left>
+                                            </Col>
+                                            <Col xs={24} sm={16} xl={14}>
+                                                <Right_input>
+                                                    <CoinInput name="last_name" onChange={this._onChangeFields} value={this.state.fields.last_name} />
+                                                    {this.validator.message('last name', this.state.fields.last_name, 'required', 'text-danger-validation')}
+                                                </Right_input>
+                                            </Col>
+                                        </Row>
+                                    </TenDiv>
+                                    <ElevenDiv>
+                                        <Row>
+                                            <Col xs={24} sm={8} xl={10}>
+                                                <Left>
+                                                    <p>Title*</p>
+                                                </Left>
+                                            </Col>
+                                            <Col xs={24} sm={16} xl={14}>
+                                                <Right_input>
+                                                    <CoinInput name="title" onChange={this._onChangeFields} value={this.state.fields.title} />
+                                                    {this.validator.message('title', this.state.fields.title, 'required', 'text-danger-validation')}
+                                                </Right_input>
+                                            </Col>
+                                        </Row>
+                                    </ElevenDiv>
+                                    <TwelveDiv>
+                                        <Row>
+                                            <Col xs={24} sm={8} xl={10}>
+                                                <Left>
+                                                    <p>Country*</p>
+                                                </Left>
+                                            </Col>
+                                            <Col xs={24} sm={16} xl={14}>
+                                                <Right_input>
+                                                    <Select style={{ width: 200, "marginLeft": "15px" }}
+                                                        onChange={this._changeCountry}>
+                                                        {countryOptions}
+                                                    </Select>
+                                                </Right_input>
+                                            </Col>
+                                        </Row>
+                                    </TwelveDiv>
+                                    <ThirteenDiv>
+                                        <Row>
+                                            <Col xs={24} sm={8} xl={10}>
+                                                <Left>
+                                                    <p>Phone*</p>
+                                                </Left>
+                                            </Col>
+                                            <Col xs={24} sm={16} xl={14}>
+                                                <Right_input>
+                                                    <Select style={{ width: 200, "marginLeft": "15px" }}
+                                                        onChange={this._changePhoneCode}>
+                                                        {phoneCodeOptions}
+                                                    </Select>
+                                                    <CoinInput name="phone" onChange={this._onChangeFields} value={this.state.fields.phone} />
+                                                </Right_input>
+                                            </Col>
+                                        </Row>
+                                    </ThirteenDiv>
+                                    <ThirteenDiv>
+                                        <Row>
+                                            <Col xs={24} sm={8} xl={10}>
+                                                <Left>
+                                                    <p>Skype</p>
+                                                </Left>
+                                            </Col>
+                                            <Col xs={24} sm={16} xl={14}>
+                                                <Right_input>
+                                                    <CoinInput name="skype" onChange={this._onChangeFields} value={this.state.fields.skype} />
+                                                </Right_input>
+                                            </Col>
+                                        </Row>
+                                    </ThirteenDiv>
+                                    <TwelveDiv>
+                                        <Row>
+                                            <Col xs={24} sm={8} xl={10}>
+                                                <Left>
+                                                    <p>How did you hear about us?**</p>
+                                                </Left>
+                                            </Col>
+                                            <Col xs={24} sm={16} xl={14}>
+                                                <Right_input>
+                                                    <Select style={{ width: 200, "marginLeft": "15px" }}
+                                                        onChange={this._changeReference}>
+                                                        <Option value="Facebook">Facebook</Option>
+                                                        <Option value="Twitter">Twitter</Option>
+                                                        <Option value="Reddit">Reddit</Option>
+                                                        <Option value="LinkedIn">LinkedIn</Option>
+                                                        <Option value="News Article">News Article</Option>
+                                                        <Option value="Word of mouth">Word of mouth</Option>
+                                                        <Option value="Other">Other</Option>
+                                                    </Select>
+                                                    {!isTextBox ? <AddButton onClick={this.onSubmit}>SUBMIT</AddButton> : ''}
+                                                </Right_input>
+                                            </Col>
+                                        </Row>
+                                    </TwelveDiv>
+                                    {
+                                        isTextBox ?
+                                            <ThirteenDiv>
+                                                <Row>
+                                                    <Col xs={24} sm={8} xl={10}>
+                                                        <Left>
+                                                            <p>Other</p>
+                                                        </Left>
+                                                    </Col>
+                                                    <Col xs={24} sm={16} xl={14}>
+                                                        <Right_input>
+                                                            <CoinInput name="other_site" onChange={this._onChangeFields} value={this.state.fields.other_site} />
+                                                            <AddButton onClick={this.onSubmit}>SUBMIT</AddButton>
+                                                        </Right_input>
+                                                    </Col>
+                                                </Row>
+                                            </ThirteenDiv> : ''
+                                    }
                                 </Form_coin>
                             </Body_form>
                         </Body>

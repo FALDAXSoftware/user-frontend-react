@@ -431,18 +431,35 @@ export const MsgInput = styled(Fourth_area)`
 export const OneDiv = styled.div`
 
 `
-export const TwoDiv = styled.div`
+export const FifthDiv = styled.div`
     margin-top:20px;
 `
-export const ThreeDiv = styled(TwoDiv)`
+export const SixthDiv = styled(FifthDiv)`
 
 `
-export const FourDiv = styled(TwoDiv)`
+export const SeventhDiv = styled(FifthDiv)`
 
 `
-export const FiveDiv = styled(TwoDiv)`
+export const EigthDiv = styled(FifthDiv)`
     
 `
+export const SecondDiv = styled(FifthDiv)`
+`
+export const ThirdDiv = styled(FifthDiv)`
+`
+export const FourthDiv = styled(FifthDiv)`
+`
+export const NineDiv = styled(FifthDiv)`
+`
+export const TenDiv = styled(FifthDiv)`
+`
+export const ElevenDiv = styled(FifthDiv)`
+`
+export const TwelveDiv = styled(FifthDiv)`
+`
+export const ThirteenDiv = styled(FifthDiv)`
+`
+
 export const AddButton = styled(Fifth_button)`
     margin-top:50px;
     display:block;
