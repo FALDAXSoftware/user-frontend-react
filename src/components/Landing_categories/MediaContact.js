@@ -111,7 +111,7 @@ class MediaContact extends Component {
                                     <LL_div sm={24} md={12}>
                                         <Col_wrap_r>
                                             <Mediaspan>Support CONTACT</Mediaspan>
-                                            <MediaP>Need customer support? For support requests and inquiries please visit <Link to="/contactus"><Blue_tag>faldax.com/support.</Blue_tag></Link></MediaP>
+                                            <MediaP>Need customer support? For support requests and inquiries please visit <Link to="/contactus"><Blue_tag>www.faldax.com/support.</Blue_tag></Link></MediaP>
                                         </Col_wrap_r>
                                     </LL_div>
                                 </RightRow>

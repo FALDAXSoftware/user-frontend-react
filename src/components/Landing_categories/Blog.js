@@ -16,6 +16,7 @@ import {
     MsgIcon, CardCover
 } from '../../styled-components/landingCategories/blogStyle';
 import { BlogIcon } from "../../Constants/images";
+import NoDataFound from "../../shared-components/No_data_found";
 
 const Container_Blog = styled(Container)`
     margin-bottom: 80px;
@@ -24,6 +25,35 @@ const { Meta } = Card;
 const Blog_main_wrap = styled.div`
     background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "white"};
 `
+const BlogTitle = styled.span`
+  font-size: 40px;
+  font-family: "Open sans";
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"};
+  &:before {
+    content: '';
+    width: calc(50% - 130px);
+    height: 1px;
+    display: inline-block;
+    background: #827777;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 1px);
+  }
+  &:after {
+    content: '';
+    width: calc(50% - 130px);
+    height: 1px;
+    display: inline-block;
+    background: #827777;
+    position: absolute;
+    right: 0;
+    top: calc(50% - 1px);
+  }
+`;
+
 class Blog extends Component {
     constructor(props) {
         super(props);
@@ -91,67 +121,75 @@ class Blog extends Component {
 
     render() {
         var _self = this;
+        const { blogsData } = this.state;
         return (
             <Blog_main_wrap>
                 <Navigation />
 
                 <Container_Blog style={{ minHeight: "100%" }}>
                     <SectionBlog>
+                        <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+                            <BlogTitle> BLOG </BlogTitle>
+                        </div>
                         <Mainimage>
                             <Row>
                                 <Col sm={24} md={12} lg={9} >
-                                    {this.state.blogsData !== '' ? Object.keys(this.state.blogsData.featuredBlog).length > 0 ?
-                                        <Link to={`/blogDetails?blogID=${this.state.blogsData.featuredBlog.id}`}>
+                                    {blogsData !== '' ? Object.keys(blogsData.featuredBlog).length > 0 ?
+                                        <Link to={`/blogDetails?blogID=${blogsData.featuredBlog.id}`}>
                                             <Lefthead>
                                                 <Subleft>
-                                                    <Eco>{this.state.blogsData.featuredBlog.tags}</Eco>
-                                                    <Head3>{this.state.blogsData.featuredBlog.title}</Head3>
-                                                    <Eco2>{this.state.blogsData.featuredBlog.admin_name}</Eco2>
+                                                    <Eco>{blogsData.featuredBlog.tags}</Eco>
+                                                    <Head3>{blogsData.featuredBlog.title}</Head3>
+                                                    <Eco2>{blogsData.featuredBlog.admin_name}</Eco2>
                                                 </Subleft>
                                             </Lefthead>
                                         </Link>
                                         : "" : ""}
                                 </Col>
-                                {this.state.blogsData !== '' ? Object.keys(this.state.blogsData.featuredBlog).length > 0 ?
+                                {blogsData !== '' ? Object.keys(blogsData.featuredBlog).length > 0 ?
                                     <Col sm={24} md={12} lg={15}>
-                                        <Righthead image={globalVariables.amazon_Bucket + this.state.blogsData.featuredBlog.cover_image}>
+                                        <Righthead image={globalVariables.amazon_Bucket + blogsData.featuredBlog.cover_image}>
                                         </Righthead>
                                     </Col> : "" : ""}
                             </Row>
                         </Mainimage>
                         <Whole_wrap>
-                            <Row>
-                                <Col span={3}>
-                                    <Blog_p>Latest Blogs</Blog_p>
-                                </Col>
-                                <Col span={21}>
-                                    <HR_tag />
-                                </Col>
-                            </Row>
+                            {blogsData && blogsData.data.length > 0 ?
+                                <Row>
+                                    <Col span={3}>
+                                        <Blog_p>Latest Blogs</Blog_p>
+                                    </Col>
+                                    <Col span={21}>
+                                        <HR_tag />
+                                    </Col>
+                                </Row>
+                                : ""}
                             <Blogs_wrap>
                                 <Row className="blog-card-row">
-                                    {this.state.blogsData.data !== undefined ? this.state.blogsData.data.map(function (result, key, index) {
-                                        var date = moment.utc(result.created_at).local().format("MMM DD,YYYY");
-                                        var img = globalVariables.amazon_Bucket + result.cover_image;
-                                        var tag = result.tags ? result.tags.split(',') : [];
-                                        return (
-                                            <Col key={key} xl={8} lg={12} md={{ sapn: 12 }} sm={24} className="blog-card-col">
-                                                <Link to={`/blogDetails?blogID=${result.id}`}>
-                                                    <Card
-                                                        style={{ width: "100%" }}
-                                                        cover={<CardCover alt="example" style={{ backgroundImage: `url(${img})` }} />}
-                                                        actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.admin_name}</Card_foot>, <Card_foot> <MsgIcon src={BlogIcon} />{result.comment_count} Comments</Card_foot>]}
-                                                        bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
-                                                        className={_self.state.blogCSS}
-                                                    >
-                                                        <Meta
-                                                            title={<Meta_title>{tag[0]}</Meta_title>}
-                                                            description={<Meta_desc>{result.title}</Meta_desc>}
-                                                        />
-                                                    </Card>
-                                                </Link>
-                                            </Col>);
-                                    }) : ""
+                                    {blogsData.data !== undefined ?
+                                        blogsData.data.length > 0 ?
+                                            blogsData.data.map(function (result, key, index) {
+                                                var date = moment.utc(result.created_at).local().format("MMM DD,YYYY");
+                                                var img = globalVariables.amazon_Bucket + result.cover_image;
+                                                var tag = result.tags ? result.tags.split(',') : [];
+                                                return (
+                                                    <Col key={key} xl={8} lg={12} md={{ sapn: 12 }} sm={24} className="blog-card-col">
+                                                        <Link to={`/blogDetails?blogID=${result.id}`}>
+                                                            <Card
+                                                                style={{ width: "100%" }}
+                                                                cover={<CardCover alt="example" style={{ backgroundImage: `url(${img})` }} />}
+                                                                actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.admin_name}</Card_foot>, <Card_foot> <MsgIcon src={BlogIcon} />{result.comment_count} Comments</Card_foot>]}
+                                                                bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
+                                                                className={_self.state.blogCSS}
+                                                            >
+                                                                <Meta
+                                                                    title={<Meta_title>{tag[0]}</Meta_title>}
+                                                                    description={<Meta_desc>{result.title}</Meta_desc>}
+                                                                />
+                                                            </Card>
+                                                        </Link>
+                                                    </Col>);
+                                            }) : <NoDataFound title="blogs" /> : ""
                                     }
                                 </Row>
                             </Blogs_wrap>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Col,Input,Button } from 'antd';
+import { Col, Input, Button } from 'antd';
 
 const Search = Input.Search;
 
@@ -8,7 +8,7 @@ export const SectionBlog = styled.section`
     padding-top:110px;
 `
 export const Mainimage = styled.div`
-   
+    margin-top: 40px;   
 `
 export const Lefthead = styled.div`
     background:#0f477b;
@@ -63,7 +63,7 @@ export const CardCover = styled.div`
 `
 export const Righthead = styled.div`
     min-height:420px;
-    background-image:url("${props=>props.image}");
+    background-image:url("${props => props.image}");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -78,7 +78,7 @@ export const Whole_wrap = styled.div`
 export const Blog_p = styled.p`
     font-size: 18px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode=="dark" ? "white" : "rgb( 0, 0, 0 )"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb( 0, 0, 0 )"};
     font-weight: bold;
     margin-bottom: 0px;
     vertical-align: middle;
@@ -116,7 +116,7 @@ export const Meta_title = styled.p`
 export const Meta_desc = styled.p`
     font-size: 18px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? "#4c84ff" : "rgb( 15, 71, 123 )"};
+    color: ${props => props.theme.mode == "dark" ? "#4c84ff" : "rgb( 15, 71, 123 )"};
     font-weight: bold;
     margin-bottom:8px;
     overflow:hidden;
@@ -127,7 +127,7 @@ export const Card_foot = styled.span`
     font-size: 12px;
     font-family: "Open Sans";
     font-weight:600;
-    color: ${props => props.theme.mode == "dark" ? "#b4b9bd" :"#666666"};  
+    color: ${props => props.theme.mode == "dark" ? "#b4b9bd" : "#666666"};  
     line-height:1;
 `
 export const Prev_next = styled.div`
@@ -150,8 +150,8 @@ export const Prev_next = styled.div`
 export const Prev = styled.div`
     margin-right:60px;
     border:none;
-    color:${props => props.theme.mode=="dark" ? "white" :"black"};
-    background:${props => props.theme.mode=="dark"? "#4c84ff" : "#f7f7f7"};
+    color:${props => props.theme.mode == "dark" ? "white" : "black"};
+    background:${props => props.theme.mode == "dark" ? "#4c84ff" : "#f7f7f7"};
     min-width:215px;
     min-height:40px;
     display: inline-flex;
@@ -161,7 +161,7 @@ export const Prev = styled.div`
     cursor:pointer;
     &:hover
     {
-        color:${props => props.theme.mode=="dark" ? "black" : '#1890ff'};
+        color:${props => props.theme.mode == "dark" ? "black" : '#1890ff'};
         
     }
     @media(max-width:576px)
@@ -174,8 +174,8 @@ export const Prev = styled.div`
 export const Next = styled.div`
     margin-left:60px;
     border:none;
-    color:${props => props.theme.mode=="dark" ? "white" :"black"};
-    background:${props => props.theme.mode=="dark"? "#4c84ff" : "#f7f7f7"};
+    color:${props => props.theme.mode == "dark" ? "white" : "black"};
+    background:${props => props.theme.mode == "dark" ? "#4c84ff" : "#f7f7f7"};
     min-width:215px;
     display: inline-flex;
     align-items: center;
@@ -185,7 +185,7 @@ export const Next = styled.div`
     cursor:pointer;
     &:hover
     {
-        color:${props => props.theme.mode=="dark" ? "black" : '#1890ff'};
+        color:${props => props.theme.mode == "dark" ? "black" : '#1890ff'};
         
     }
     @media(max-width:576px)
@@ -242,7 +242,7 @@ export const Name = styled.span`
     color: rgba( 102, 102, 102, 0.702 );
     font-weight:600;
 `
-export const Comment =styled.span`
+export const Comment = styled.span`
     font-size: 12px;
     font-family: "Open Sans";
     color: rgba( 102, 102, 102, 0.702 );
@@ -427,7 +427,7 @@ export const Main_Wrap = styled.div`
     margin-top:30px;
     margin-bottom:40px;
 `
-export const Sub_wrap =styled.div`
+export const Sub_wrap = styled.div`
     margin-left:-15px;
     margin-right:-15px;
 `
