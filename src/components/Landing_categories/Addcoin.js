@@ -4,6 +4,7 @@ import { Row, Col, Spin, notification, Select } from 'antd';
 import styled from 'styled-components';
 import SimpleReactValidator from 'simple-react-validator';
 import "react-datepicker/dist/react-datepicker.css";
+import 'react-intl-tel-input/dist/main.css';
 
 import Navigation from '../Navigations/Navigation';
 import { Spin_Ex } from '../../styled-components/homepage/style'
@@ -11,11 +12,12 @@ import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import {
     Contact_wrap, Grey_wrap, Head, Head_title, Head_desc, Body,
-    Body_form, Form_coin, CoinInput, URLInput, TargetInput, EmailInput, MsgInput,
+    Body_form, Form_coin, CoinInput,IntlTelInputS,SecurityInput,URLInput, TargetInput, EmailInput, MsgInput,
     Left, OneDiv, FifthDiv, SixthDiv, SeventhDiv, EigthDiv, AddButton, Msg, Right_input,
     SecondDiv, ThirdDiv, FourthDiv, NineDiv, TenDiv, ElevenDiv, TwelveDiv, ThirteenDiv
 } from '../../styled-components/landingCategories/contactStyle';
 import { globalVariables } from "../../Globals";
+import { Security } from '../../Constants/images';
 
 let { API_URL } = globalVariables;
 const Option = Select.Option;
@@ -46,6 +48,11 @@ class MediaContact extends Component {
                 target_date: '',
                 url: '',
                 coin_name: '',
+                is_secure:'',
+                country:'',
+                skype:'',
+                other_site:'',
+                is_secure:'',
                 loader: false
             },
             startDate: null,
@@ -130,15 +137,16 @@ class MediaContact extends Component {
             formdata.append('target_date', this.state.fields['target_date'])
             formdata.append('url', this.state.fields['url'])
             formdata.append('message', this.state.fields['message'])
-            formdata.append('ref_site', selectedReference)
+            formdata.append('ref_site', this.state.fields['ref_site'])
             formdata.append('skype', this.state.fields['skype'])
-            formdata.append('country', selectedCountry)
+            formdata.append('country', this.state.fields['country'])
             formdata.append('title', this.state.fields['title'])
             formdata.append('coin_name', this.state.fields['coin_name'])
             formdata.append('elevator_pitch', this.state.fields['elevator_pitch'])
             formdata.append('coin_symbol', this.state.fields['coin_symbol'])
             formdata.append('phone', phoneCode + this.state.fields['phone'])
-            formdata.append('is_secure', is_secure)
+            formdata.append('is_secure', this.state.fields['is_secure'])
+            formdata.append('other_site', this.state.fields['other_site'])
 
             fetch(API_URL + "/users/add-coin-request", {
                 method: "post",
@@ -151,19 +159,10 @@ class MediaContact extends Component {
                 .then((responseData) => {
                     this.props.history.push('/thank-you');
                     this.openNotificationWithIcon('success', 'Success', responseData.message);
-                    let fields = {};
-                    fields["target_date"] = '';
-                    fields['url'] = "";
-                    fields['coin_name'] = "";
-                    fields['email'] = "";
-                    fields['message'] = "";
-                    fields['title'] = "";
-                    fields['skype'] = "";
-                    fields['last_name'] = "";
-                    fields['first_name'] = "";
-                    fields['phone'] = "";
-                    fields['coin_symbol'] = "";
-                    fields['elevator_pitch'] = "";
+                    let fields = this.state.fields;
+                    Object.keys(fields).map(function(index){
+                        fields[index]=""
+                    })
 
                     this.setState({
                         fields: fields, startDate: null, loader: false,
@@ -185,25 +184,52 @@ class MediaContact extends Component {
 
 
     _changeSecurity = (isSecure) => {
-        this.setState({ is_secure: isSecure })
+        let fields = this.state.fields;
+        if (isSecure.trim() == "") {
+            fields['is_secure'] = "";
+        } else {
+            fields['is_secure'] = isSecure;
+        }
+        this.setState({ fields });
     }
 
     _changeCountry = (val) => {
-        this.setState({ selectedCountry: val });
-    }
-
-    _changePhoneCode = (val) => {
-        this.setState({ phoneCode: val });
-    }
-
-    _changeReference = (val) => {
-        if (val == 'Other') {
-            this.setState({ isTextBox: true, selectedReference: val });
+        let fields = this.state.fields;
+        if (val.trim() == "") {
+            fields['country'] = "";
         } else {
-            this.setState({ isTextBox: false, selectedReference: val });
+            fields['country'] = val;
+        }
+        this.setState({ fields });
+
+    }
+    _changeReference = (val) => {
+        var isTextBox;
+        if (val == 'Other') {
+            isTextBox=true;
+        } else {
+            isTextBox=false; 
+        }
+        let fields = this.state.fields;
+        if (val.trim() == "") {
+            fields['ref_site'] = "";
+        } else {
+            fields['ref_site'] = val;
+        }
+        this.setState({ fields,isTextBox });
+        
+    }
+    _changeNumber(a,mob,code)
+    {
+        console.log(a,mob,code);
+        if(mob.trim!=="")
+        {
+            var mobile = "+" + code.dialcode + mob;
+            let fields = this.state.fields;
+            fields['phone'] = mobile;
+            this.setState({ fields });
         }
     }
-
     render() {
         const { countries, isTextBox } = this.state;
         let countryOptions = countries.map((country) => {
@@ -227,17 +253,20 @@ class MediaContact extends Component {
                             <Head_title>List Your Token</Head_title>
                             {/* <Subtitle>Here are the requirements to list your coin:</Subtitle> */}
                             <Head_desc>We speak to coin creators about struggles from their side of the crypto industry, and a common complaint is exchange access. Crypto, as a financial asset, is what gets the most attention but the beauty of crypto is the utility offered by tokens based on innovative ideas. We aim to help intelligent and motivated people like you focus on those ideas rather than the politics and logistics of proliferating your token. So, we made it easy:
-                                <li>Complete the form below.</li>
-                                <li> We will review your information and reply with relevant questions and next steps within 24 hours.</li>
+                                <ul style={{marginTop:"20px !important"}}>
+                                    <li>Complete the form below.</li>
+                                    <li> We will review your information and reply with relevant questions and next steps within 24 hours.</li>
+                                </ul>
                             </Head_desc>
                             <Head_desc>
                                 Why should you want to work with us?
 
-
-                                <li>We do not require you to pay us.</li>
-                                <li>We do not hold any of your tokens in reserve, escrow, hostage, etc.</li>
-                                <li>Our terms are simple, fair, and clear.</li>
-                                <li>We treat others with respect. Always.</li>
+                                <ul style={{marginTop:"20px !important"}}>
+                                    <li>We do not require you to pay us.</li>
+                                    <li>We do not hold any of your tokens in reserve, escrow, hostage, etc.</li>
+                                    <li>Our terms are simple, fair, and clear.</li>
+                                    <li>We treat others with respect. Always.</li>
+                                </ul>
                             </Head_desc>
                         </Head>
                         <Body>
@@ -298,11 +327,12 @@ class MediaContact extends Component {
                                             </Col>
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
-                                                    <Select style={{ width: 200, "marginLeft": "15px" }}
-                                                        onChange={this._changeSecurity}>
-                                                        <Option value="true">Yes</Option>
-                                                        <Option value="false">No</Option>
-                                                    </Select>
+                                                    <SecurityInput style={{ width: 200, "marginLeft": "15px" }}
+                                                        onChange={this._changeSecurity} value={this.state.fields.is_secure}>
+                                                        <Option value='true'>Yes</Option>
+                                                        <Option value='false'>No</Option>
+                                                    </SecurityInput>
+                                                    {this.validator.message('is_secure', this.state.fields.is_secure, 'required', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
                                         </Row>
@@ -359,21 +389,6 @@ class MediaContact extends Component {
                                             </Col>
                                         </Row>
                                     </SeventhDiv>
-                                    <EigthDiv>
-                                        <Row>
-                                            <Col xs={24} sm={8} xl={10}>
-                                                <Msg>
-                                                    <p>Comments*</p>
-                                                </Msg>
-                                            </Col>
-                                            <Col xs={24} sm={16} xl={14}>
-                                                <Right_input>
-                                                    <MsgInput name="message" onChange={this._onChangeFields} value={this.state.fields.message} />
-                                                    {this.validator.message('comments', this.state.fields.message, 'required', 'text-danger-validation')}
-                                                </Right_input>
-                                            </Col>
-                                        </Row>
-                                    </EigthDiv>
                                     <NineDiv>
                                         <Row>
                                             <Col xs={24} sm={8} xl={10}>
@@ -404,6 +419,21 @@ class MediaContact extends Component {
                                             </Col>
                                         </Row>
                                     </TenDiv>
+                                    <EigthDiv>
+                                        <Row>
+                                            <Col xs={24} sm={8} xl={10}>
+                                                <Msg>
+                                                    <p>Comments*</p>
+                                                </Msg>
+                                            </Col>
+                                            <Col xs={24} sm={16} xl={14}>
+                                                <Right_input>
+                                                    <MsgInput name="message" onChange={this._onChangeFields} value={this.state.fields.message} />
+                                                    {this.validator.message('comments', this.state.fields.message, 'required', 'text-danger-validation')}
+                                                </Right_input>
+                                            </Col>
+                                        </Row>
+                                    </EigthDiv>
                                     <ElevenDiv>
                                         <Row>
                                             <Col xs={24} sm={8} xl={10}>
@@ -428,10 +458,11 @@ class MediaContact extends Component {
                                             </Col>
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
-                                                    <Select style={{ width: 200, "marginLeft": "15px" }}
+                                                    <SecurityInput style={{ width: 200, "marginLeft": "15px" }}
                                                         onChange={this._changeCountry}>
                                                         {countryOptions}
-                                                    </Select>
+                                                    </SecurityInput>
+                                                    {this.validator.message('country', this.state.fields.country, 'required', 'text-danger-validation')}
                                                 </Right_input>
                                             </Col>
                                         </Row>
@@ -440,16 +471,12 @@ class MediaContact extends Component {
                                         <Row>
                                             <Col xs={24} sm={8} xl={10}>
                                                 <Left>
-                                                    <p>Phone*</p>
+                                                    <p>Phone</p>
                                                 </Left>
                                             </Col>
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
-                                                    <Select style={{ width: 200, "marginLeft": "15px" }}
-                                                        onChange={this._changePhoneCode}>
-                                                        {phoneCodeOptions}
-                                                    </Select>
-                                                    <CoinInput name="phone" onChange={this._onChangeFields} value={this.state.fields.phone} />
+                                                    <IntlTelInputS onPhoneNumberChange={(a,b,c)=>this._changeNumber(a,b,c)} css={['intl-tel-input', 'form-control']} />
                                                 </Right_input>
                                             </Col>
                                         </Row>
@@ -472,12 +499,12 @@ class MediaContact extends Component {
                                         <Row>
                                             <Col xs={24} sm={8} xl={10}>
                                                 <Left>
-                                                    <p>How did you hear about us?**</p>
+                                                    <p>How did you hear about us?*</p>
                                                 </Left>
                                             </Col>
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
-                                                    <Select style={{ width: 200, "marginLeft": "15px" }}
+                                                    <SecurityInput style={{ width: 200, "marginLeft": "15px" }}
                                                         onChange={this._changeReference}>
                                                         <Option value="Facebook">Facebook</Option>
                                                         <Option value="Twitter">Twitter</Option>
@@ -486,9 +513,11 @@ class MediaContact extends Component {
                                                         <Option value="News Article">News Article</Option>
                                                         <Option value="Word of mouth">Word of mouth</Option>
                                                         <Option value="Other">Other</Option>
-                                                    </Select>
+                                                    </SecurityInput>
+                                                    {this.validator.message('ref_site', this.state.fields.ref_site, 'required', 'text-danger-validation')}
                                                     {!isTextBox ? <AddButton onClick={this.onSubmit}>SUBMIT</AddButton> : ''}
                                                 </Right_input>
+                                               
                                             </Col>
                                         </Row>
                                     </TwelveDiv>
@@ -504,8 +533,10 @@ class MediaContact extends Component {
                                                     <Col xs={24} sm={16} xl={14}>
                                                         <Right_input>
                                                             <CoinInput name="other_site" onChange={this._onChangeFields} value={this.state.fields.other_site} />
+                                                            {this.validator.message('other_site', this.state.fields.other_site, 'required', 'text-danger-validation')}
                                                             <AddButton onClick={this.onSubmit}>SUBMIT</AddButton>
                                                         </Right_input>
+                                                        
                                                     </Col>
                                                 </Row>
                                             </ThirteenDiv> : ''

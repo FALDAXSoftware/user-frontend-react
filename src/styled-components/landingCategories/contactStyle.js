@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { Row, Col, Icon } from 'antd'
+import { Row, Col, Icon,Select } from 'antd'
 import DatePicker from "react-datepicker";
 import Dropzone from 'react-dropzone';
-
+import IntlTelInput from 'react-intl-tel-input';
 
 
 export const Headcontact = styled.div`
@@ -348,6 +348,9 @@ export const Head_title = styled.span`
     text-transform: uppercase;
 `
 export const Head_desc = styled.p`
+    margin-top:10px;
+    & ul
+    {margin-top:10px;}a
     font-size: 13.985px;
     font-family: "Open Sans";
 `
@@ -401,9 +404,50 @@ export const Left = styled.div`
 export const Right_input = styled.div`
     padding-right:15px;
     padding-left:15px;
+    >.intl-tel-input 
+    {
+        width:450px;
+        @media(max-width:792px)
+        {
+            width:100% !important;
+        }
+    }   
+    & .form-control     
+    {
+        border:1px solid #e2e6ea;
+        background-color:${props => props.theme.mode == "dark" ? "#020e18" : "#f8f8f8"};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        border-radius:5px;
+        min-height:45px;
+        width:100%;
+        padding-left:5px;
+    }
 `
 export const CoinInput = styled(First_input)`
     max-width:450px;
+`
+export const SecurityInput = styled(Select)`
+    width:450px !important;
+    margin-left:0px !important;
+    @media(max-width:792px)
+    {
+        width:100% !important;
+    }
+    & .ant-select-selection
+    {
+        border:1px solid #e2e6ea;
+        background-color:${props => props.theme.mode == "dark" ? "#020e18" : "#f8f8f8"};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        border-radius:5px;
+        min-height:45px;
+        width:100%;
+        padding-left:5px;
+        
+    }
+
+`
+export const IntlTelInputS = styled(IntlTelInput)`
+    
 `
 export const URLInput = styled(First_input)`
     max-width:450px;
