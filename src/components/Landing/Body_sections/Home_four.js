@@ -292,7 +292,7 @@ class Home_four extends Component {
                         {
                             modal === 2 ?
                                 <div>
-                                    <p>The United States has Federal regulations as well as regulations that vary by state. FALDAX has complied with Federal requirements and is working to comply with the unique demands of each state. Our team has compiled the necessary documentation, and we anticipate approval soon. Tell your elected representatives that you want favorable and sensible crypto legislation by clicking <a target="_blank" href="https://www.usa.gov/elected-officials">this link. </a> Please enter your email address below to receive updates.</p>
+                                    <p>All services are unavailable due to legal concerns out of our control. We are monitoring the situation and hope that legislators enact forward-thinking and sensible solutions. Please enter your email address below to receive updates. Please enter your email address below to receive updates.</p>
                                     <label style={{ color: 'black', fontWeight: "600" }}> Email Address: </label>
                                     <Email_input placeholder="Please enter your email address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
                                     <div style={{ marginTop: '20px', minHeight: '20px' }}>
@@ -307,9 +307,9 @@ class Home_four extends Component {
                                 </div> : ""
                         }
                         {
-                            modal === "usa_neutral" ?
+                            modal === 4 ?
                                 <div>
-                                    <p>We are currently engaged in the licensing process in this state. Enter your e-mail address below and we will notify you the moment you can start trading.</p>
+                                    <p>The United States has Federal regulations as well as regulations that vary by state. FALDAX has complied with Federal requirements and is working to comply with the unique demands of each state. Our team has compiled the necessary documentation, and we anticipate approval soon. Tell your elected representatives that you want favorable and sensible crypto legislation by clicking <a target="_blank" href="https://www.usa.gov/elected-officials">this link. </a> Please enter your email address below to receive updates.</p>
                                     <label style={{ color: '#00a7ff' }}> Email Address: </label>
                                     <Input placeholder="Please enter your email address" style={{ color: '#00a7ff', borderColor: '#00a7ff' }} value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
                                     <div style={{ marginTop: '20px', minHeight: '20px' }}>
@@ -406,7 +406,7 @@ class Home_four extends Component {
                                                     <ZoomableGroup disablePanning>
                                                         <Geographies
                                                             disableOptimization
-                                                            geography={globalVariables.amazon_Bucket + "faldax/assets/us-albers-7.json"}
+                                                            geography={globalVariables.amazon_Bucket + "faldax/assets/Country/us-albers-7.json"}
                                                         >
                                                             {(geos, proj) =>
                                                                 geos.map((geo, i) => (
