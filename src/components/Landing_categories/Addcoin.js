@@ -51,6 +51,7 @@ class MediaContact extends Component {
                 is_secure:'',
                 country:'',
                 skype:'',
+                phone:'',
                 other_site:'',
                 is_secure:'',
                 loader: false
@@ -144,7 +145,7 @@ class MediaContact extends Component {
             formdata.append('coin_name', this.state.fields['coin_name'])
             formdata.append('elevator_pitch', this.state.fields['elevator_pitch'])
             formdata.append('coin_symbol', this.state.fields['coin_symbol'])
-            formdata.append('phone', phoneCode + this.state.fields['phone'])
+            formdata.append('phone', this.state.fields['phone'])
             formdata.append('is_secure', this.state.fields['is_secure'])
             formdata.append('other_site', this.state.fields['other_site'])
 
@@ -224,9 +225,12 @@ class MediaContact extends Component {
         console.log(a,mob,code);
         if(mob.trim!=="")
         {
-            var mobile = "+" + code.dialcode + mob;
+            var temp = `+${code.dialCode}` ;
+            var mobile =  temp.concat(mob);;
+
             let fields = this.state.fields;
             fields['phone'] = mobile;
+            console.log(mobile)
             this.setState({ fields });
         }
     }

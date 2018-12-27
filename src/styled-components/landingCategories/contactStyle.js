@@ -442,7 +442,7 @@ export const SecurityInput = styled(Select)`
         min-height:45px;
         width:100%;
         padding-left:5px;
-        
+        padding-top: 5px;
     }
 
 `
