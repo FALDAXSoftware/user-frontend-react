@@ -187,7 +187,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Coin & Token Selection </Head1>
                       <Desc1 >
-                        FALDAX offers dozens of coins and tokens, with plans to include hundreds more. We will always do our part to ensure any token added to the platform is legitimate. Check out our Token Knowledgebase (this should link to our token knowledgebase page) for more details.<a href="/addcoin" target="_blank" > Click here</a> if you have created a token and would like to list it on FALDAX.
+                        FALDAX offers dozens of coins and tokens, with plans to include hundreds more. We will always do our part to ensure any token added to the platform is legitimate. Check out our <a href="javascript:void(0)" onClick={this.showComing} >Token Knowledgebase</a> for more details.<a href="/addcoin" target="_blank" > Click here</a> if you have created a token and would like to list it on FALDAX.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
