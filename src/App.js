@@ -18,7 +18,8 @@ import BlogDetails from './components/Landing_categories/BlogDetails';
 import ContactUs from './components/Landing_categories/ContactUs';
 import CareerDetails from './components/Landing_categories/Careerdetails'
 import Careers from './components/Landing_categories/Careers'
-import MediaContact from './components/Landing_categories/MediaContact'
+import MediaContact from './components/Landing_categories/MediaContact';
+import Fees from './components/Landing_categories/Fees';
 import Addcoin from './components/Landing_categories/Addcoin'
 import ApplyJob from './components/Landing_categories/ApplyJob'
 import LegalPrivacy from './components/Landing_categories/LegalPrivacy'
@@ -37,15 +38,13 @@ class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.props.location !== prevProps.location) {
       console.log("APPPP")
-      if(this.props.location!==undefined)
-        {
-            if(this.props.location.hash!=="" && this.props.location.hash!==undefined && this.props.location.hash=="#block-world-map")
-            {
-              window.scrollTo(0, 1050);
-            }
-            else
-              window.scrollTo(0, 0);
-          }
+      if (this.props.location !== undefined) {
+        if (this.props.location.hash !== "" && this.props.location.hash !== undefined && this.props.location.hash == "#block-world-map") {
+          window.scrollTo(0, 1050);
+        }
+        else
+          window.scrollTo(0, 0);
+      }
     }
   }
   componentWillReceiveProps(props, newProps) {
@@ -140,6 +139,7 @@ class App extends Component {
                 <Route path="/careers" exact title='Careers' component={Careers} />
                 <Route path="/careerdetails" exact title='Careerdetails' component={CareerDetails} />
                 <Route path="/mediacontact" exact title='MediaContact' component={MediaContact} />
+                <Route path="/fees" exact title='Fees' component={Fees} />
                 <Route path="/addcoin" exact title='AddCoin' component={Addcoin} />
                 <Route path="/applyjob" exact title='ApplyJob' component={ApplyJob} />
                 <Route path="/privacy" exact title='privacy' component={LegalPrivacy} />
