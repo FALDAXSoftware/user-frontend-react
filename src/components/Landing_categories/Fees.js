@@ -5,11 +5,8 @@ import Navigation from '../Navigations/Navigation';
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import {
-    Contact_wrap, Grey_wrap, Head_span, Headcontact, Career_wrap
+    Contact_wrap, Grey_wrap, Career_wrap
 } from '../../styled-components/landingCategories/contactStyle';
-import {
-    MediaContactICon, MediaWhite, MediaFB, MediaGoogle, MediaLinkedin, MediaTweeter
-} from "../../Constants/images";
 import { Table } from 'react-bootstrap';
 import { fees } from "../../Constants/feeJson";
 
@@ -152,17 +149,17 @@ class Fees extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {
-                                        fees.map((fee) => {
-                                            return (
-                                                <tr>
-                                                    <td>{fee.maker}</td>
-                                                    <td>{fee.taker}</td>
-                                                    <td>{fee.volume}</td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
+                                        {
+                                            fees.map((fee) => {
+                                                return (
+                                                    <tr>
+                                                        <td>{fee.maker}</td>
+                                                        <td>{fee.taker}</td>
+                                                        <td>{fee.volume}</td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
                                     </tbody>
                                 </FeesTable>
                             </FeeDiv>
@@ -188,30 +185,30 @@ class Fees extends Component {
                                     Market Order:
                                 </HeadSub>
                                 <Desc>
-                                    A market order, considered the most basic of all order types, is a request to buy or sell an asset at the best available price in the Order Book. It is widely considered the fastest and most reliable way to enter or exit a trade and provides the most likely method of getting in or out of a trade quickly. For many large-cap, liquid assets, for instance, market orders fill nearly instantaneously.
-                                    Note that any time a trader seeks to execute a market order, this means the trader is willing to buy at the asking price or sell at the bid price. Thus, the person executing market order is immediately giving up the bid-ask spread.
-                                    For this reason, it’s sometimes a good idea to look closely at the bid-ask spread before placing a market order, especially for thinly traded assets. Failing to do so sometimes results in very high costs. This is doubly important for individuals who trade frequently, or anyone utilizing an automated trading system.
-                                    For example, say the bid-ask prices for shares of Excellent Industries are $18.50 and $20, respectively, with 100 shares available at the bid. If a trader places a market order to buy 500 shares, the first 100 will execute at $20. The next 400, however, fill at the best asking price for sellers of the next 400 shares. If the stock is very thinly traded, the next 400 shares might be executed at $22 or more. This is precisely why it’s a good idea to use limit orders for these types of assets. <a href="https://www.investopedia.com/terms/m/marketorder.asp" target="_blank" >(Source)</a>
+                                    <p>A market order, considered the most basic of all order types, is a request to buy or sell an asset at the best available price in the Order Book. It is widely considered the fastest and most reliable way to enter or exit a trade and provides the most likely method of getting in or out of a trade quickly. For many large-cap, liquid assets, for instance, market orders fill nearly instantaneously.</p>
+                                    <p>Note that any time a trader seeks to execute a market order, this means the trader is willing to buy at the asking price or sell at the bid price. Thus, the person executing market order is immediately giving up the bid-ask spread.</p>
+                                    <p>For this reason, it’s sometimes a good idea to look closely at the bid-ask spread before placing a market order, especially for thinly traded assets. Failing to do so sometimes results in very high costs. This is doubly important for individuals who trade frequently, or anyone utilizing an automated trading system.</p>
+                                    <p>For example, say the bid-ask prices for shares of Excellent Industries are $18.50 and $20, respectively, with 100 shares available at the bid. If a trader places a market order to buy 500 shares, the first 100 will execute at $20. The next 400, however, fill at the best asking price for sellers of the next 400 shares. If the stock is very thinly traded, the next 400 shares might be executed at $22 or more. This is precisely why it’s a good idea to use limit orders for these types of assets. <a href="https://www.investopedia.com/terms/m/marketorder.asp" target="_blank" >(Source)</a></p>
                                 </Desc>
 
                                 <HeadSub>
                                     Limit Order:
                                 </HeadSub>
                                 <Desc>
-                                    A limit order is an order to buy or sell at a set quantity and a specified limit price or better. Because a limit order is not a <a href="https://www.investopedia.com/terms/m/marketorder.asp" target="_blank"> market order</a>, it may not execute if the price set by the <a href="https://www.investopedia.com/terms/i/investor.asp" target="_blank">trader</a> cannot be met during the period in which it is left open. Limit orders also allow a limit to the length of time an order can be outstanding before being canceled.
-                                    While the execution of a limit order is not guaranteed, it does ensure that the trader does not miss the opportunity to buy or sell at the target price. Depending on the direction of the position, a limit order is sometimes referred to as a <a href="https://www.investopedia.com/terms/b/buy-limit-order.asp" target="_blank" >buy limit order</a> or a sell limit order. For example, an order that stipulates the buyer is not willing to pay more than $30 asset is a buy limit order, while a sell limit order may require the share price to be at least $30 to execute.
-                                    <a href="https://www.investopedia.com/terms/l/limitorder.asp" target="_blank" >(Source)</a>
+                                    <p>A limit order is an order to buy or sell at a set quantity and a specified limit price or better. Because a limit order is not a <a href="https://www.investopedia.com/terms/m/marketorder.asp" target="_blank"> market order</a>, it may not execute if the price set by the <a href="https://www.investopedia.com/terms/i/investor.asp" target="_blank">trader</a> cannot be met during the period in which it is left open. Limit orders also allow a limit to the length of time an order can be outstanding before being canceled.</p>
+                                    <p>While the execution of a limit order is not guaranteed, it does ensure that the trader does not miss the opportunity to buy or sell at the target price. Depending on the direction of the position, a limit order is sometimes referred to as a <a href="https://www.investopedia.com/terms/b/buy-limit-order.asp" target="_blank" >buy limit order</a> or a sell limit order. For example, an order that stipulates the buyer is not willing to pay more than $30 asset is a buy limit order, while a sell limit order may require the share price to be at least $30 to execute.
+                                    <a href="https://www.investopedia.com/terms/l/limitorder.asp" target="_blank" > (Source)</a></p>
                                 </Desc>
 
                                 <HeadSub>
                                     Stop-Limit Order:
                                 </HeadSub>
                                 <Desc>
-                                    A stop order is an order that becomes executable once a set price has been reached and is then filled at the current market price. A traditional stop order will be filled in its entirety, regardless of any changes in the current market price as the trades are completed.
-                                    A limit order is one that is set at a certain price. It is only executable at times the trade can be performed at the limit price or at a price that is considered more favorable than the limit price. If trading activity causes the price to become unfavorable in regards to the limit price, the activity related to the order will be ceased.
-                                    By combining the two orders, the <a href="https://www.investopedia.com/terms/i/investor.asp" target="_blank"> trader </a> has much greater precision in executing the trade. A stop order is filled <a href="https://www.investopedia.com/terms/a/atthemarket.asp" target="_blank" >at the market price</a> after the stop price has been hit, regardless if the price changes to an unfavorable position. This can lead to trades being completed at less than desirable prices should the market adjust quickly. By combining it with the features of a limit order, trading is halted once the pricing becomes unfavorable, based on the trader’s limit.
-                                    For example, assume that LTC is trading at $40 and a trader wants to buy once it begins to show rapid upward momentum. The trader has put in a stop-limit order to buy with the stop price at $45 and the limit price at $46. If the price of ABC Inc. moves above $45 stop price, the order is activated and turns into a limit order. As long as the order can be filled under $46, which is the limit price, the trade will be filled. If the asset gaps above $46, the order will not be filled.
-                                    <a href="https://www.investopedia.com/terms/s/stop-limitorder.asp" target="_blank" >(Source)</a>
+                                    <p>A stop order is an order that becomes executable once a set price has been reached and is then filled at the current market price. A traditional stop order will be filled in its entirety, regardless of any changes in the current market price as the trades are completed.</p>
+                                    <p>A limit order is one that is set at a certain price. It is only executable at times the trade can be performed at the limit price or at a price that is considered more favorable than the limit price. If trading activity causes the price to become unfavorable in regards to the limit price, the activity related to the order will be ceased.</p>
+                                    <p>By combining the two orders, the <a href="https://www.investopedia.com/terms/i/investor.asp" target="_blank"> trader </a> has much greater precision in executing the trade. A stop order is filled <a href="https://www.investopedia.com/terms/a/atthemarket.asp" target="_blank" >at the market price</a> after the stop price has been hit, regardless if the price changes to an unfavorable position. This can lead to trades being completed at less than desirable prices should the market adjust quickly. By combining it with the features of a limit order, trading is halted once the pricing becomes unfavorable, based on the trader’s limit.</p>
+                                    <p>For example, assume that LTC is trading at $40 and a trader wants to buy once it begins to show rapid upward momentum. The trader has put in a stop-limit order to buy with the stop price at $45 and the limit price at $46. If the price of ABC Inc. moves above $45 stop price, the order is activated and turns into a limit order. As long as the order can be filled under $46, which is the limit price, the trade will be filled. If the asset gaps above $46, the order will not be filled.
+                                    <a href="https://www.investopedia.com/terms/s/stop-limitorder.asp" target="_blank" > (Source)</a></p>
                                 </Desc>
                             </ParagraphDiv>
 
@@ -224,9 +221,9 @@ class Fees extends Component {
                                     For example:
                                 </HeadSub>
                                 <Desc>
-                                    Trader A creates a Market Buy Order for 1 BTC with XRP. The Order Management System (OMS) will find the least expensive BTC/XRP sell order on the Order Book and purchase it with Trader A’s XRP immediately. If the value of the BTC/XRP sell order is less than 1 BTC, the OMS will exhaust that sell order and find the next sell order by price to continue fulfilling Trader A’s Market Buy Order. This process continues until the entire Market Buy Order is fulfilled.
-                                    Result: Trader A is charged the ‘Taker’ fee (in XRP) because his order was executed immediately, and liquidity is removed from the Order Book. Trader B, who created the BTC/XRP sell order, is the Maker in this example because her sell order was sitting on the Order Book to be fulfilled. Trader B’s order type was a Limit or Stop-Limit Order.
-                                    Alternatively, if Trader A created a Market Sell Order with the same parameters, the OMS would search for BTC buy orders on the Order Book to fulfill it. Trader A’s Sell Order is the ‘Taker’ in this situation as well.
+                                    <p>Trader A creates a Market Buy Order for 1 BTC with XRP. The Order Management System (OMS) will find the least expensive BTC/XRP sell order on the Order Book and purchase it with Trader A’s XRP immediately. If the value of the BTC/XRP sell order is less than 1 BTC, the OMS will exhaust that sell order and find the next sell order by price to continue fulfilling Trader A’s Market Buy Order. This process continues until the entire Market Buy Order is fulfilled.</p>
+                                    <p>Result: Trader A is charged the ‘Taker’ fee (in XRP) because his order was executed immediately, and liquidity is removed from the Order Book. Trader B, who created the BTC/XRP sell order, is the Maker in this example because her sell order was sitting on the Order Book to be fulfilled. Trader B’s order type was a Limit or Stop-Limit Order.</p>
+                                    <p>Alternatively, if Trader A created a Market Sell Order with the same parameters, the OMS would search for BTC buy orders on the Order Book to fulfill it. Trader A’s Sell Order is the ‘Taker’ in this situation as well.</p>
                                 </Desc>
                             </ParagraphDiv>
 
