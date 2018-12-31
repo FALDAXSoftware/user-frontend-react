@@ -40,7 +40,7 @@ const SubHead = styled.p`
     font-size: 19.975px;
     font-family: "Open Sans";
     text-align: center;
-    color: black;
+    color: ${props => props.theme.mode=="dark" ? "white":"black"};
 `
 const FeesTable = styled(Table)`
     width: 40% !important;
@@ -50,7 +50,7 @@ const FeesTable = styled(Table)`
     >thead
     {
         background-color:${props => props.theme.mode == "dark" ? "#041422" : "#87addc"};
-        color:black;
+        color:${props => props.theme.mode == "dark" ? "white" : "black"} ;
         border:1px solid black;
     }
     >thead>tr>th
@@ -84,25 +84,26 @@ const FeesTable = styled(Table)`
    
 `
 const HeadSub = styled.div`
-    color: black;
+    color: ${props => props.theme.mode=="dark" ? "white":"black"};
     font-weight: bold;
 `
 const DescP = styled.p`
     color: black;
     font-family: "Open Sans";
+    color: ${props => props.theme.mode=="dark" ? "white":"black"};
 `
 const QueP = styled.p`
     font-size:20px;
-    color: black;
+    color: ${props => props.theme.mode=="dark" ? "white":"black"};
     font-family: "Open Sans";
 `
 const Desc = styled.p`
-    color: black;
     font-style: italic;
     font-family: "Open Sans";
     margin-left: 42px;
     margin-top:10px;
     text-align: justify;
+    color: ${props => props.theme.mode=="dark" ? "white":"black"};
     @media(max-width:992px)
     {
         margin-left:0px;
