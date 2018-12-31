@@ -19,10 +19,15 @@ export const ContainerContact = styled(Container)`
     padding-right:120px;
     padding-left:120px;
     padding-bottom:70px;
+    @media(max-width:992px)
+    {
+        padding-right:30px;
+        padding-left:30px;
+    }
     @media(max-width:480px)
     {
-        padding-right:0px;
-        padding-left:0px;
+        padding-right:10px;
+        padding-left:10px;
     }
 `
 const FeeDiv = styled.div`
@@ -41,6 +46,7 @@ const FeesTable = styled(Table)`
     width: 40% !important;
     margin-left: auto;
     margin-right: auto;
+    border:1px solid black;
     >thead
     {
         background-color:${props => props.theme.mode == "dark" ? "#041422" : "#87addc"};
@@ -58,17 +64,22 @@ const FeesTable = styled(Table)`
         text-align: center;
         height: 80px;
         border:1px solid black;
-        border-top:1px solid black;
+        border-top:1px solid black !important;
     }
     >tbody
     {
         color:${props => props.theme.mode == "dark" ? "white" : "black"} ;
+        border:1px solid black;
     }
     >tbody>tr>td{
         text-align:center;
         border: 1px solid black;
         border-top: 1px solid black;
         font-family: "Open Sans";
+    }
+    @media(max-width:992px)
+    {
+        width:100% !important;
     }
    
 `
@@ -92,6 +103,10 @@ const Desc = styled.p`
     margin-left: 42px;
     margin-top:10px;
     text-align: justify;
+    @media(max-width:992px)
+    {
+        margin-left:0px;
+    }
 `
 
 class Fees extends Component {
