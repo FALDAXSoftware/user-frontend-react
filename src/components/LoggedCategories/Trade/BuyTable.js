@@ -18,7 +18,10 @@ export const TableBuy = styled(Table)`
     }
     >tbody
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""} ;
+        color:${props => props.theme.mode == "dark" ? "white" : "black"} ;
+        font-size: 14px;
+        font-family: "Open Sans";
+        font-weight:600;
     }
     >tbody>tr:nth-of-type(odd)
     {

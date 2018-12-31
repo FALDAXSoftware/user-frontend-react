@@ -1,7 +1,8 @@
-import { Row, Col, Tabs, Button,Table,Input,notification,Steps,Menu, Dropdown,Icon } from 'antd';
+import { Row, Col, Tabs, Button, Table, Input,Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio } from 'antd';
 import styled from 'styled-components';
 
-
+const RadioGroup = Radio.Group;
+const RadioButton = Radio.Button;
 const Search = Input.Search;
 
 export const Row_wrap = styled.div`
@@ -11,11 +12,11 @@ export const Row_wrap2 = styled.div`
 `
 
 export const Left_div = styled.div`
-    background-color:${props => props.theme.mode=="dark"?"#041b2c":"white"};
+    background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     padding-top:30px;
     margin-right:30px;
     padding-bottom: 30px;
-    box-shadow: ${props =>props.theme.mode=="dark"? "" :"0px 0px 5px 5px rgb(241, 241, 241)"};
+    box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
     @media(max-width:991px)
     {
@@ -26,7 +27,7 @@ export const Left_div1 = styled(Left_div)`
     padding-top:30px;
     margin-right:30px;
     padding-bottom: 30px;
-    box-shadow: ${props =>props.theme.mode=="dark"? "" :"0px 0px 5px 5px rgb(241, 241, 241)"};
+    box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
     height:618px;
     @media(max-width:991px)
@@ -38,7 +39,7 @@ export const Left_div2 = styled(Left_div)`
     padding-top:30px;
     margin-right:0px;
     padding-bottom: 30px;
-    box-shadow: ${props =>props.theme.mode=="dark"? "" :"0px 0px 5px 5px rgb(241, 241, 241)"};
+    box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
 `
 export const Instru = styled.p`
@@ -46,7 +47,7 @@ export const Instru = styled.p`
     font-size: 19px;
     font-weight: bold;
     margin-left:30px;
-    color:${props => props.theme.mode=="dark"?"white":""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
 export const SearchInput = styled(Search)`
     display:inline-block;
@@ -55,7 +56,7 @@ export const SearchInput = styled(Search)`
     margin-right:25px;
     >.ant-input-suffix>i
     {
-        color:${props => props.theme.mode=="dark"?"white":""};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
     >input
     {
@@ -63,9 +64,9 @@ export const SearchInput = styled(Search)`
         border-left:0px;
         border-right:0px;
         border-radius:0px;
-        background-color:${props => props.theme.mode=="dark"?"#041b2c":""}
-        caret-color:${props => props.theme.mode=="dark"?"white":""}
-        color:${props =>props.theme.mode=="dark"?"white":""}
+        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : ""}
+        caret-color:${props => props.theme.mode == "dark" ? "white" : ""}
+        color:${props => props.theme.mode == "dark" ? "white" : ""}
     }
 `
 export const FIAT_wrap = styled.div`
@@ -82,8 +83,8 @@ export const FIAT = styled.div`
 export const Sect = styled(Button)`
     display:inline-block;
     padding:10px 15px;
-    background-color:${props => props.theme.mode=="dark"?"#041422":"#f5f6fa"};
-    color:${props => props.theme.mode=="dark"?"#617090":""};
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
+    color:${props => props.theme.mode == "dark" ? "#617090" : ""};
     border:none;
     height:auto;
     border-radius:0px;
@@ -97,8 +98,8 @@ export const Sect = styled(Button)`
     }
 `
 export const Right_div = styled.div`
-    background-color:${props => props.theme.mode=="dark"?"#041b2c":"white"};
-    box-shadow: ${props =>props.theme.mode=="dark"? "" :"0px 0px 5px 5px rgb(241, 241, 241)"};
+    background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
+    box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
 `
 export const Right_div1 = styled(Right_div)`
@@ -114,13 +115,16 @@ export const TableIns = styled(Table)`
     >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th
     {
         color:#174c7e;
-        background-color:${props => props.theme.mode=="dark"?"#041422":""};
+        background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
         font-weight:bold;
         border-bottom:0px;
     }
     >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-tbody>tr>td
     {
-        color:${props => props.theme.mode=="dark"?"white":""} 
+        color:${props => props.theme.mode == "dark" ? "white" : ""} ;
+        font-size: 14px;
+        font-weight:600;
+        font-family: "Open Sans";
     }
     >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th>span>.ant-table-column-sorter>.off>i
     {   
@@ -142,7 +146,7 @@ export const Tabs_right = styled(Tabs)`
 /* Market Style */
 
 export const Label = styled.label`
-    color:${props => props.theme.mode=="dark"?"white":""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
 export const Market_wrap = styled.div`
     padding-left:30px;
@@ -150,16 +154,20 @@ export const Market_wrap = styled.div`
 `
 export const Buy_wrap = styled.div``
 export const Buy_sell = styled.div`
-    width:200px;
+    width:100%;
     margin-left:auto;
     margin-right:auto;
     height:auto;
+    text-align:center;
 `
-
+export const BuySellRadio = styled(RadioButton)`
+    padding-left: 40px;
+    padding-right: 40px;
+`
 export const Buy = styled(Button)`
     display:inline-block;
-    background-color:${props=>props.theme.mode=="dark"?"#041422":"#f5f6fa"};
-    color:${props => props.theme.mode=="dark"?"white":""};
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
     width:50%;
     height:40px;
     border-top-right-radius:0px !important;
@@ -172,8 +180,8 @@ export const Buy = styled(Button)`
 `
 export const Sell = styled(Button)`
     display:inline-block;
-    background-color:${props=>props.theme.mode=="dark"?"#041422":"#f5f6fa"};
-    color:${props => props.theme.mode=="dark"?"white":""};
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
     width:50%;
     border-top-left-radius:0px !important;
     border-bottom-left-radius:0px !important;
@@ -183,15 +191,15 @@ export const Balance_wrap = styled.div`
     margin-top:30px;
 `
 export const Balance = styled.p`
-    color:${props => props.theme.mode=="dark"?"white":""}
+    color:${props => props.theme.mode == "dark" ? "white" : ""}
 `
 export const Total = styled.p`
-    color:${props => props.theme.mode=="dark"?"white":""}
+    color:${props => props.theme.mode == "dark" ? "white" : ""}
 `
 export const Check_wrap = styled.div`
     >.ant-checkbox-wrapper>span
     {
-        color:${props =>props.theme.mode=="dark"?"#617090":""}
+        color:${props => props.theme.mode == "dark" ? "#617090" : ""}
     }
 `
 export const ETH_wrap = styled.div`
@@ -204,15 +212,27 @@ export const AMTinput = styled(Input)`
     width:100%;
     border-radius:5px;
     border-radius:1px solid #cad0e6;
-    caret-color:${props => props.theme.mode=="dark"?'white':''};
-    color:${props => props.theme.mode=="dark"?'white':''};
-    background-color:${props=>props.theme.mode=="dark"?"#041b2c":""};
+    caret-color:${props => props.theme.mode == "dark" ? 'white' : ''};
+    color:${props => props.theme.mode == "dark" ? 'white' : ''};
+    background-color:${props => props.theme.mode == "dark" ? "#041b2c" : ""};
 `
 
 export const BTC_wrap = styled.div`
     margin-top:10px;
     
 `
+export const Willpay = styled.span`
+    font-size: 12px;
+    font-family: "Open Sans";
+    font-weight:600;
+    color: ${props => props.theme.mode=="dark"?'white':'rgb( 51, 51, 51 )'};
+`
+export const Willpay2 = styled.span`
+    font-size: 20px;
+    font-family: "NotoSansThai";
+    color: ${props => props.theme.mode=="dark"?'white':'rgb( 51, 51, 51 )'};
+    font-weight:600;
+`  
 export const Total_wrap = styled.div`
     >.ant-input-group-wrapper>.ant-input-group>.ant-input
     {
@@ -224,7 +244,7 @@ export const Total_wrap = styled.div`
     }
     >.ant-input-group-wrapper>.ant-input-group>.ant-input-group-addon
     {
-        background-color:${props=>props.theme.mode=="dark"?"#041b2c":"white"};
+        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
         border-left:0px;
         color:#c5c5c5;
     }
@@ -236,19 +256,25 @@ export const Totinput = styled(Input)`
     width:100%;
     border-radius:5px;
     border-radius:1px solid #cad0e6;
-    caret-color:${props => props.theme.mode=="dark"?'white':''};
-    color:${props => props.theme.mode=="dark"?'white':''};
-    background-color:${props=>props.theme.mode=="dark"?"#041b2c":""};
+    caret-color:${props => props.theme.mode == "dark" ? 'white' : ''};
+    color:${props => props.theme.mode == "dark" ? 'white' : ''};
+    background-color:${props => props.theme.mode == "dark" ? "#041b2c" : ""};
 `
 export const Pay = styled.div`
     margin-top:30px;
-    color:${props =>props.theme.mode=="dark"?"white":""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
 export const Esti = styled.div`
     margin-top:30px;
 `
+export const Best = styled.span`
+    font-size: 12px;
+    font-family: "Open Sans";
+    color: rgba( 51, 51, 51, 0.8 );  
+`
 export const ButtonETH = styled(Button)`
-    background-color:#64ba71;
+    background-color:${props => props.side == "Buy" ? '#64ba71' : '#ba6471'};
+    border-color:${props => props.side == "Buy" ? '#64ba71' : '#ba6471'};
     font-size: 15px;
     font-family: "Open Sans";
     color: rgb( 255, 255, 255 );
@@ -257,11 +283,22 @@ export const ButtonETH = styled(Button)`
     width:100%;
     height:50px;
     margin-bottom:30px;
+    &:hover,&:focus{
+        background-color:${props => props.side == "Buy" ? '#64ba71' : '#ba6471'};
+        color: rgb( 255, 255, 255 );
+        border-color:${props => props.side == "Buy" ? '#64ba71' : '#ba6471'};
+    }
 `
-export const Button_wrap=styled.div`
+export const StopCheck = styled(Checkbox)`
+    font-size: 14px;
+    font-family: "Open Sans";
+    font-weight:600;
+    color: ${props => props.theme.mode=="dark" ? "white":"rgb( 127, 127, 127 )"}    ;
+`
+export const Button_wrap = styled.div`
     margin-top:25px;
 `
-export const BBC_wrap= styled.div`
+export const BBC_wrap = styled.div`
     margin-left:30px;
     margin-right:30px;
 `
@@ -278,7 +315,7 @@ export const Total_BTC = styled.span`
     font-size: 13px;
     font-family: "Open Sans";
     font-weight:600;
-    color: ${props=>props.theme.mode=="dark"?'white':'rgb( 51, 51, 51 )'};      
+    color: ${props => props.theme.mode == "dark" ? 'white' : 'rgb( 51, 51, 51 )'};      
 `
 export const Buy_table = styled.div`
     margin-top:15px;
@@ -301,7 +338,7 @@ export const BBC_wrap2 = styled(BBC_wrap)`
 export const BBC2 = styled(BBC)`
     color:red;
 
-`   
+`
 
 
 /* Depth Chart */
