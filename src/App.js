@@ -61,7 +61,7 @@ class App extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     console.log("APPPPP")
-    /* if(this.props.theme!==undefined)
+    if(this.props.theme!==undefined)
         {
             if(this.props.theme !== this.state.theme)
             {
@@ -70,7 +70,7 @@ class App extends Component {
                 else
                 this.setState({theme: "dark"})
             }
-        } */
+        }
   }
   render() {
 
