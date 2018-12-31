@@ -26,6 +26,7 @@ export const ContainerContact = styled(Container)`
     }
 `
 const FeeDiv = styled.div`
+    margin-top:50px;
 `
 const ParagraphDiv = styled.div`
 `
@@ -42,22 +43,32 @@ const FeesTable = styled(Table)`
     margin-right: auto;
     >thead
     {
-        background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
+        background-color:${props => props.theme.mode == "dark" ? "#041422" : "#87addc"};
         color:black;
+        border:1px solid black;
+    }
+    >thead>tr>th
+    {
+        border:1px solid black;
+        font-family: "Open Sans";
     }
     >thead>tr>th
     {
         vertical-align: middle;
         text-align: center;
         height: 80px;
+        border:1px solid black;
+        border-top:1px solid black;
     }
     >tbody
     {
         color:${props => props.theme.mode == "dark" ? "white" : "black"} ;
     }
-    >tbody>td{
+    >tbody>tr>td{
+        text-align:center;
         border: 1px solid black;
         border-top: 1px solid black;
+        font-family: "Open Sans";
     }
    
 `
@@ -67,13 +78,20 @@ const HeadSub = styled.div`
 `
 const DescP = styled.p`
     color: black;
+    font-family: "Open Sans";
 `
 const QueP = styled.p`
+    font-size:20px;
     color: black;
+    font-family: "Open Sans";
 `
 const Desc = styled.p`
     color: black;
     font-style: italic;
+    font-family: "Open Sans";
+    margin-left: 42px;
+    margin-top:10px;
+    text-align: justify;
 `
 
 class Fees extends Component {
@@ -90,12 +108,12 @@ class Fees extends Component {
                 <Grey_wrap>
                     <ContainerContact>
                         <Career_wrap>
-                            <FeeDiv>
+                            <div>
                                 <SubHead>
                                     DEPOSIT FEES
                                 </SubHead>
                                 <DescP><b>Free.</b> FALDAX never charges you for depositing funds into your wallet.</DescP>
-                            </FeeDiv>
+                            </div>
 
                             <FeeDiv>
                                 <SubHead>
@@ -110,7 +128,7 @@ class Fees extends Component {
                                 <SubHead>
                                     TRADING FEES
                                 </SubHead>
-                                <FeesTable responsive bordered condensed>
+                                <FeesTable responsive bordered>
                                     <thead>
                                         <tr>
                                             <th>Maker</th>
@@ -118,33 +136,35 @@ class Fees extends Component {
                                             <th>Trade Volume (30-Day Trailing Average)</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
                                     {
                                         fees.map((fee) => {
                                             return (
-                                                <tbody>
+                                                <tr>
                                                     <td>{fee.maker}</td>
                                                     <td>{fee.taker}</td>
                                                     <td>{fee.volume}</td>
-                                                </tbody>
+                                                </tr>
                                             )
                                         })
                                     }
+                                    </tbody>
                                 </FeesTable>
                             </FeeDiv>
 
                             <ParagraphDiv>
                                 <QueP><b>Can Trading Fees Change?</b></QueP>
-                                <Desc>
+                                <DescP>
                                     They can, but we will never change something like that without ample notification and discussion with our customers. Trading Fees are not something that change on a regular basis and only do so after much planning and consideration.
-                            </Desc>
+                                </DescP>
                             </ParagraphDiv>
 
                             <ParagraphDiv>
                                 <QueP><b>What are Trading Fees?</b></QueP>
-                                <Desc>
+                                <DescP>
                                     FALDAX strives to offer customers incredible value by adding robust features and functionality to everyone that trades here, at no additional cost. The only source of revenue is fees collected per transaction and per withdrawal. Any improvements we make or features we add will be included, forever.
                                     Liquidity and price stability are the life-blood of any exchange, so we have adopted a taker-only fee model to encourage maker orders. To understand the logic behind who is charged the ‘Taker’ fee, you must first understand the differences between Order Types.
-                            </Desc>
+                                </DescP>
                             </ParagraphDiv>
 
                             <ParagraphDiv>
@@ -182,9 +202,9 @@ class Fees extends Component {
 
                             <ParagraphDiv>
                                 <QueP><b>What are Makers and Takers?</b></QueP>
-                                <Desc>
+                                <DescP>
                                     A common misconception is that sellers are ‘Makers’ and buyers are ‘Takers,’ which can be true but isn’t always the case. The better way to differentiate them is to first associate ‘Maker’ and ‘Taker’ with an order, rather than a trader. Then, think of a ‘Taker’ as an order that triggers immediately rather than staying on the Order Book for some time. From this perspective, you can see that a ‘Taker’ order can be a Buy or a Sell order.
-                            </Desc>
+                                </DescP>
                                 <HeadSub>
                                     For example:
                                 </HeadSub>
