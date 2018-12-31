@@ -243,13 +243,12 @@ class Footer_home extends Component {
             comingSoon: true,
         });
     }
-    scrollMap()
-    {
+    scrollMap() {
         var elmnt = document.getElementById("block-world-map");
-        if(elmnt!==null)
-        elmnt.scrollIntoView();
+        if (elmnt !== null)
+            elmnt.scrollIntoView();
         else
-        this.props.history.push("/#block-world-map");
+            this.props.history.push("/#block-world-map");
     }
     render() {
         const { contactDetails } = this.state;
@@ -275,7 +274,7 @@ class Footer_home extends Component {
                                         <Footer_Link to="/blogs">Blog</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/">Fees</Footer_Link>
+                                        <Footer_Link to="/fees">Fees</Footer_Link>
                                     </li>
                                 </Footer_ul>
                             </FooterLinkCol>

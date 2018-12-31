@@ -3,6 +3,7 @@ import { globalVariables } from '../Globals';
 let amazon_Bucket = globalVariables.amazon_Bucket;
 
 export const Banner = amazon_Bucket + 'faldax/assets/Homepage/banner.png';
+export const ComingImg = amazon_Bucket + 'faldax/assets/LOGO+WEB.png';
 export const LargeLogo = amazon_Bucket + 'faldax/assets/logo-lg.png';
 export const Wallpaper = amazon_Bucket + 'faldax/assets/Homepage/wallpaper.png';
 export const FaldaxLogin = amazon_Bucket + 'faldax/assets/Homepage/Faldax_Login.png';
