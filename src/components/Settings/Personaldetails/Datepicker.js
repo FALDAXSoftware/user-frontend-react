@@ -118,7 +118,6 @@ export default class Datepicker extends Component {
                     defaultValue={month ? month : ''}
                     // mandatory if end={} is given in YearPicker
                     endYearGiven
-                    caps
                     // mandatory
                     year={this.state.year}
                     // mandatory

@@ -12,12 +12,15 @@ export const CustomTable = styled.table`
     width:100%;
     table-layout: fixed;
     & td, & th{
-        padding:15px;
+        padding:7px;
     }
 `
 export const TableHeader = styled(CustomTable)`
     background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
-
+    >thead
+    {
+        color:#174c7e;
+    }
 `
 export const TableContent = styled(CustomTable)`
     >tbody

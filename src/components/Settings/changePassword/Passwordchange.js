@@ -25,6 +25,14 @@ const ChangeRow = styled(Row)`
         border-bottom: 1px solid #d6d6d6;
     }
 `
+const Passreq = styled(Email_req)`
+    margin-left:0px;
+    width:90%;
+    @media(max-width:510px)
+    {
+        width:85%;
+    }
+`
 const ChangeCol = styled.div`
     width:42%;
     height:auto;
@@ -58,13 +66,17 @@ const ChangeCol = styled.div`
     }
 `
 const Old = styled.div`
-    width: 95%; 
+    width: 635px; 
     margin:auto;
     text-align:left
     margin-top:35px;
     @media(max-width:720px)
     {
-        width:87%;
+        width:400px;
+    }
+    @media(max-width:510px)
+    {
+        width:260px;
     }
 `
 const NewP = styled(Old)`
@@ -96,11 +108,19 @@ export const OldInput = styled(Input)`
     height:auto;
     font-weight:600;
     padding:10px;
-    padding-right:35px;
+    padding-right:45px;
     &:focus, &:hover{
         border-color:#4c84ff;
         outline:0;
         box-shadow:none;
+    }
+    @media(max-width:720px)
+    {
+        width:370px;
+    }
+    @media(max-width:510px)
+    {
+        width:220px;
     }
 `
 const NewInput = styled(OldInput)`
@@ -567,7 +587,7 @@ class Passwordchange extends Component {
                                 <UserIconS id="passchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="passchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                             </div>
-                            <Email_req className="oldchange_msg">{current_msg}</Email_req>
+                            <Passreq className="oldchange_msg">{current_msg}</Passreq>
                         </Old>
                         <NewP>
                             <New_label>New Password*</New_label>
@@ -582,10 +602,10 @@ class Passwordchange extends Component {
                                 <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                             </div>
-                            <Email_req className="newchange_msg">{this.state.new_msg}</Email_req>
+                            <Passreq className="newchange_msg">{this.state.new_msg}</Passreq>
                         </NewP>
                         <Repeat>
-                            <Repeat_label>Repeat New Password*</Repeat_label>
+                            <Repeat_label>Re-Enter New Password*</Repeat_label>
                             <div>
                                 <RepeatInput type={repeatEye} {...getFieldProps('confirm_password', {
                                     onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
@@ -597,7 +617,7 @@ class Passwordchange extends Component {
                                 <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                             </div>
-                            <Email_req className="confirmchange_msg">{this.state.confirmPass_msg}</Email_req>
+                            <Passreq className="confirmchange_msg">{this.state.confirmPass_msg}</Passreq>
 
                             <Progress_bar type="line" size="small" percent={percent} strokeColor={this.state.stroke} />
                         </Repeat>
@@ -609,7 +629,7 @@ class Passwordchange extends Component {
                 <TwofactorRow>
                     <TFCol>
                         <Head_TF>Two-Factor Authentication</Head_TF>
-                        <IsEnabled> Two-Factor Authentication Status:
+                        <IsEnabled> Status:
                             {isEnabled == 'DISABLED' ?
                                 <span style={{ color: 'red' }}> {isEnabled}</span>
                                 : <span style={{ color: 'green' }}> {isEnabled}</span>
@@ -618,7 +638,7 @@ class Passwordchange extends Component {
                         <Head_text>
                             {isEnabled == 'DISABLED' ?
                                 <span>Two-Factor Authentication significantly increases the security of your account. We highly recommend that you enable it. </span>
-                                : <span>Way to go! You care about your security as much as we do. Thanks for enabling Two=Factor Authentication!</span>
+                                : <span>Way to go! You care about your security as much as we do. Thanks for enabling Two-Factor Authentication!</span>
                             }
                         </Head_text>
                         <Button_div>
@@ -651,7 +671,7 @@ class Passwordchange extends Component {
                                     <UserIconS id="otp_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                     <UserIconF id="otp_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                                 </div>
-                                <Email_req className="MSG_OTP">{this.state.otp_msg}</Email_req>
+                                <Passreq className="MSG_OTP">{this.state.otp_msg}</Passreq>
                             </TF_code>
                             <Enable>
                                 <E_button onClick={this.finalEnable.bind(this)}>

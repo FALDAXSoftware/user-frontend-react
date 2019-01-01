@@ -195,7 +195,7 @@ class Referral extends Component {
             })
             .catch(error => { /* console.log(error) */ })
         if (this.props.profileDetails.referral_code !== undefined) {
-            this.setState({ value: "http://localhost:3000/faldax/frontend/signup?refID="+this.props.profileDetails.referral_code })
+            this.setState({ value: "http://localhost:3000/signup?refID="+this.props.profileDetails.referral_code })
         }
     }
 
@@ -210,6 +210,7 @@ class Referral extends Component {
         // Copy to clipboard example
         document.querySelectorAll(".ant-input-search-button")[0].onclick = function () {
             // Select the content
+            if(document.querySelectorAll(".INPUT_search > input")[0]!==undefined)
             document.querySelectorAll(".INPUT_search > input")[0].select();
             // Copy to the clipboard
             document.execCommand('copy');

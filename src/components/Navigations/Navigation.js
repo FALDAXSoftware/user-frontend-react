@@ -357,6 +357,7 @@ class Navigation extends Component {
         const { modal } = this.state;
         return (
             <div>
+                {console.log("Navigation")}
                 <Header_main id="main">
                     <Logo onClick={() => this.props.history ? this.props.history.push("/") : ''}>
                         <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
