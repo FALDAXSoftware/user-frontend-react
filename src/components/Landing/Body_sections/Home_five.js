@@ -152,7 +152,7 @@ export default class Homesecond extends React.Component {
                             >
                                 <Meta_main
                                     title="Portfolio Management"
-                                    description=" Stop paying for portfolio managemnet software and enjoy our rbust, free of charge portfolio instead. We also have some exciting upcoming additions not offered anywhere else. Click this link provide your e-mail address to be notified when we announce these features!"
+                                    description=" Stop paying for portfolio managemnet software and enjoy our rbust, free of charge portfolio instead. We also have some exciting upcoming additions not offered anywhere else. Click this link provide your email address to be notified when we announce these features!"
                                 />
                                 <Card_span>Learn More <i className="material-icons right_arr">keyboard_arrow_right</i></Card_span>
                             </Card>

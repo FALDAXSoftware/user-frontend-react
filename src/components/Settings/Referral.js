@@ -195,7 +195,7 @@ class Referral extends Component {
             })
             .catch(error => { /* console.log(error) */ })
         if (this.props.profileDetails.referral_code !== undefined) {
-            this.setState({ value: this.props.profileDetails.referral_code })
+            this.setState({ value: "http://localhost:3000/faldax/frontend/signup?refID="+this.props.profileDetails.referral_code })
         }
     }
 

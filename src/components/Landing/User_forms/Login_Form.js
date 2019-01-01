@@ -238,8 +238,8 @@ class Login_Form extends React.Component {
         obj["email"] = value.email;
         obj["password"] = value.password;
         obj["device_type"] = 0;
-        if (value.otp !== null && value.otp !== "" && value.otp !== undefined) {
-          obj['otp'] == value.otp;
+        if (value.otp && value.otp !== null && value.otp.trim() !== "" && value.otp !== undefined) {
+          obj['otp'] = value.otp;
         }
         this.props.Login(obj);
       } else {

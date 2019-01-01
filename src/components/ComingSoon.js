@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { Button, Modal, Icon, notification } from 'antd';
 import styled from 'styled-components'
 import { globalVariables } from '../Globals';
-import { LogoComing } from "../Constants/images";
+import { ComingImg } from "../Constants/images";
 
 export const Modal_wrap = styled.div`
 width: 465px;
@@ -34,7 +34,7 @@ export const Email_input = styled.input`
 
     }
 `
-class ComingSoon extends React.Component {
+class ComingSoon extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -59,7 +59,7 @@ class ComingSoon extends React.Component {
     openNotification() {
         notification.open({
             message: 'Thank You',
-            description: 'You will recieve an Email shortly',
+            description: 'You will recieve an email shortly',
             duration: 6,
             icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
         });
@@ -113,7 +113,7 @@ class ComingSoon extends React.Component {
         return (
             <div>
                 <Modal
-                    title={<img src={LogoComing} />}
+                    title={<img src={ComingImg} />}
                     visible={this.props.visible}
                     onOk={(e) => this.handleComing()}
                     onCancel={(e) => this.comingCancel(e)}
@@ -126,15 +126,15 @@ class ComingSoon extends React.Component {
                         <h3 style={{ fontFamily: "Open Sans", fontSize: "40px", textAlign: "center", color: "rgb( 15, 71, 123 )", fontWeight: "600", marginTop: "40px" }}>Coming Soon</h3>
 
                         <Sub_wrap>
-                            <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Please enter your email to get updates of FALDAX: </label>
+                            <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Email Address: </label>
                             <Email_input placeholder="Please enter your email address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
                         </Sub_wrap>
                         <div style={{ marginTop: '20px', minHeight: '20px' }}>
-                            <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff', backgroundColor: "#0f477b", height: "45px" }} onClick={() => this.send_email()}>RECIEVE UPDATE</Button>
+                            <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff', backgroundColor: "#0f477b", height: "45px" }} onClick={() => this.send_email()}>SUBMIT</Button>
                         </div>
                     </Modal_wrap>
                 </Modal>
-            </div>
+            </div >
         );
     }
 }

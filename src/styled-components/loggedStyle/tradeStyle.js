@@ -1,4 +1,4 @@
-import { Row, Col, Tabs, Button, Table, Input, notification, Steps, Menu, Dropdown, Icon, Radio } from 'antd';
+import { Row, Col, Tabs, Button, Table, Input,Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio } from 'antd';
 import styled from 'styled-components';
 
 const RadioGroup = Radio.Group;
@@ -119,7 +119,10 @@ export const TableIns = styled(Table)`
     }
     >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-tbody>tr>td
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""} 
+        color:${props => props.theme.mode == "dark" ? "white" : ""} ;
+        font-size: 14px;
+        font-weight:600;
+        font-family: "Open Sans";
     }
     >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th>span>.ant-table-column-sorter>.off>i
     {   
@@ -216,6 +219,18 @@ export const BTC_wrap = styled.div`
     margin-top:10px;
     
 `
+export const Willpay = styled.span`
+    font-size: 12px;
+    font-family: "Open Sans";
+    font-weight:600;
+    color: ${props => props.theme.mode=="dark"?'white':'rgb( 51, 51, 51 )'};
+`
+export const Willpay2 = styled.span`
+    font-size: 20px;
+    font-family: "NotoSansThai";
+    color: ${props => props.theme.mode=="dark"?'white':'rgb( 51, 51, 51 )'};
+    font-weight:600;
+`  
 export const Total_wrap = styled.div`
     >.ant-input-group-wrapper>.ant-input-group>.ant-input
     {
@@ -250,6 +265,11 @@ export const Pay = styled.div`
 export const Esti = styled.div`
     margin-top:30px;
 `
+export const Best = styled.span`
+    font-size: 12px;
+    font-family: "Open Sans";
+    color: rgba( 51, 51, 51, 0.8 );  
+`
 export const ButtonETH = styled(Button)`
     background-color:${props => props.side == "Buy" ? '#64ba71' : '#ba6471'};
     border-color:${props => props.side == "Buy" ? '#64ba71' : '#ba6471'};
@@ -266,6 +286,12 @@ export const ButtonETH = styled(Button)`
         color: rgb( 255, 255, 255 );
         border-color:${props => props.side == "Buy" ? '#64ba71' : '#ba6471'};
     }
+`
+export const StopCheck = styled(Checkbox)`
+    font-size: 14px;
+    font-family: "Open Sans";
+    font-weight:600;
+    color: ${props => props.theme.mode=="dark" ? "white":"rgb( 127, 127, 127 )"}    ;
 `
 export const Button_wrap = styled.div`
     margin-top:25px;

@@ -33,18 +33,18 @@ export default class Datepicker extends Component {
             } else if (type == "month") {
                 let date1
                 this.setState({ month: date });
-                if (date == 0) date1 = "jan";
-                if (date == 1) date1 = "feb";
-                if (date == 2) date1 = "mar";
-                if (date == 3) date1 = "apr";
-                if (date == 4) date1 = "may";
-                if (date == 5) date1 = "jun";
-                if (date == 6) date1 = "jul";
-                if (date == 7) date1 = "aug";
-                if (date == 8) date1 = "sep";
-                if (date == 9) date1 = "oct";
-                if (date == 10) date1 = "nov";
-                if (date == 11) date1 = "dec";
+                if (date == 0) date1 = "January";
+                if (date == 1) date1 = "February";
+                if (date == 2) date1 = "March";
+                if (date == 3) date1 = "April";
+                if (date == 4) date1 = "May";
+                if (date == 5) date1 = "June";
+                if (date == 6) date1 = "July";
+                if (date == 7) date1 = "August";
+                if (date == 8) date1 = "September";
+                if (date == 9) date1 = "October";
+                if (date == 10) date1 = "November";
+                if (date == 11) date1 = "December";
 
                 fields[type] = date1;
             } else if (type == "day") {
@@ -116,12 +116,9 @@ export default class Datepicker extends Component {
 
                 <MonthPicker
                     defaultValue={month ? month : ''}
-                    // default is full name
-                    short
-                    // default is Titlecase
-                    caps
                     // mandatory if end={} is given in YearPicker
                     endYearGiven
+                    caps
                     // mandatory
                     year={this.state.year}
                     // mandatory

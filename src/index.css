@@ -439,7 +439,6 @@ table .ant-table-tbody > tr > td {
   }
   #profile-month
   {
-    text-transform:lowercase;
     background-color: #f8f8f8;
     font-family: "Open Sans";
     font-size:16;

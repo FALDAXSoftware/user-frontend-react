@@ -306,6 +306,7 @@ class Navigation extends Component {
         }
     }
     componentDidMount() {
+        console.log(this.props)
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme == false)
@@ -318,8 +319,11 @@ class Navigation extends Component {
         let queryParams
 
         if (this.props.location.pathname == "/signup") {
+            console.log("signup",this.props)
             queryParams = decodeURIComponent(this.props.queryParams)
+            
             let qP = queryParams.split("=")
+            console.log("signup QP",qP)
             this.setState({ modal: 1, visible: true, qP: qP[1] });
         } else {
             if (this.props.queryParams !== undefined && this.props.queryParams !== "") {

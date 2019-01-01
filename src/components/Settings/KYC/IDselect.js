@@ -148,7 +148,7 @@ class IDselect extends Component {
                                 <span className={`${this.state.background} license`}>
                                     <img src={ActiveLicence} className="active" />
                                     <img src={LicenceLogo} className="normal" />
-                                    <span className="text">Driving license</span>
+                                    <span className="text">Driver's license</span>
                                 </span>
                             </label>
                         </Select_Col2>
