@@ -76,8 +76,6 @@ export const FIAT_wrap = styled.div`
 `
 export const FIAT = styled.div`
     display:inline-block;
-    border-radius:5px;
-    border:1px solid #cad0e6;
     margin-right:25px;
 `
 export const Sect = styled(Button)`

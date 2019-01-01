@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Tabs, Input } from 'antd';
+import { Row, Col, Tabs, Input, Radio } from 'antd';
 import styled from 'styled-components';
 /* import Tableofcoin from './TableofCoin'
 import WalletDetails from './WalletDetails' */
@@ -10,6 +10,7 @@ import Market from "./Market";
 import Limit from "./Limit";
 import StopLimit from "./StopLimit";
 import BuyTable from './BuyTable';
+import SellTable from './SellTable';
 import HistoryTable from './HistoryTable';
 import DepthChart from './DepthChart';
 import OrderTrade from './OrderTrade';
@@ -22,7 +23,8 @@ import {
 } from "../../../styled-components/loggedStyle/tradeStyle";
 
 const Search = Input.Search;
-
+const RadioGroup = Radio.Group;
+const RadioButton = Radio.Button;
 const ContainerContact = styled(Container)`
     background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"} ;
     border-radius:5px;
@@ -126,27 +128,12 @@ class Trade extends Component {
                                         <SearchInput />
                                         <FIAT_wrap>
                                             <FIAT>
-                                                <Sect>
-                                                    <span>BTC</span>
-                                                </Sect>
-                                                <Sect>
-                                                    <span>ETH</span>
-                                                </Sect>
-                                                <Sect>
-                                                    <span>USDT</span>
-                                                </Sect>
-                                                <Sect>
-                                                    <span>DAI</span>
-                                                </Sect>
-                                                <Sect>
-                                                    <span>TUSD</span>
-                                                </Sect>
-                                                <Sect>
-                                                    <span>EURS</span>
-                                                </Sect>
-                                                <Sect>
-                                                    <span>FAVOURITES</span>
-                                                </Sect>
+                                                <RadioGroup defaultValue="a" size="large" buttonStyle="solid">
+                                                    <RadioButton value="a">Hangzhou</RadioButton>
+                                                    <RadioButton value="b">Shanghai</RadioButton>
+                                                    <RadioButton value="c">Beijing</RadioButton>
+                                                    <RadioButton value="d">Chengdu</RadioButton>
+                                                </RadioGroup>
                                             </FIAT>
                                         </FIAT_wrap>
                                         <InstruTable>
@@ -182,7 +169,7 @@ class Trade extends Component {
                                             <BBC2>SELLING BBC</BBC2>
                                             <Total_BTC>Total: 0.64834700 BTC</Total_BTC>
                                             <Buy_table>
-                                                <BuyTable />
+                                                <SellTable />
                                             </Buy_table>
                                         </BBC_wrap2>
                                     </Left_div>
