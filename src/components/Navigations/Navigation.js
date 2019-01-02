@@ -359,9 +359,11 @@ class Navigation extends Component {
             <div>
                 {console.log("Navigation")}
                 <Header_main id="main">
-                    <Logo onClick={() => this.props.history ? this.props.history.push("/") : ''}>
-                        <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
-                        <FALDAX src={this.state.faldax} />
+                    <Logo>
+                        <Link to="/">
+                            <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
+                            <FALDAX src={this.state.faldax} />
+                        </Link>
                     </Logo>
                     <Menu_main
                         mode="horizontal"

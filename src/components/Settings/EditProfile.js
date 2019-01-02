@@ -10,7 +10,7 @@ import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader'
 import PersonalDetails from './Personaldetails/PersonalDetails';
 import Referral from './Referral';
 import LoggedNavigation from '../Navigations/LoggedNavigation';
-import CommonFooter from "../Landing/Footers/Footer";
+import Footer_home from "../Landing/Footers/Footer_home";
 import Passwordchange from "./changePassword/Passwordchange";
 import Acc_settings from "./Account_settings/Acc_settings";
 import KYC from "./KYC/kyc"
@@ -55,7 +55,7 @@ class Editprofile extends Component {
                         </Tabs>
                     </ProfileDiv>
                 </ProfileWrapper>
-                <CommonFooter />
+                <Footer_home />
             </div>
         );
     }

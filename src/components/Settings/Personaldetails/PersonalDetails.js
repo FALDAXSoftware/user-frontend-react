@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { createForm, formShape } from 'rc-form';
 import { Row, Col, Input, Button, notification, Spin } from 'antd';
 import styled from 'styled-components';
+import moment from 'moment';
 
 /* Components */
 import Datepicker from "./Datepicker"
@@ -267,7 +268,7 @@ class PersonalDetails extends Component {
                 let number = value.postal_code;
                 let country = this.state.countrySelected;
                 if (this.state.Datedata !== undefined && this.state.Datedata !== null) {
-                    dataDate = this.state.Datedata.year + "/" + this.state.Datedata.month + "/" + this.state.Datedata.day
+                    dataDate = this.state.Datedata
                 } else {
                     dataDate = this.props.profileDetails.dob
                 }
@@ -345,6 +346,11 @@ class PersonalDetails extends Component {
         }
     }
     onDateChange(value, field) {
+        console.log("DatePICKER",value)
+        var tempDate = value.day+"/"+value.month+"/"+value.year;
+        
+        var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
+        console.log(tempDate,date)
         this.setState({ Datedata: value })
         this.onChangeField(value, field);
     }

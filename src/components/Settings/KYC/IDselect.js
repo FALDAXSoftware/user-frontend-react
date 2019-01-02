@@ -168,7 +168,7 @@ class IDselect extends Component {
                                 <span className={`${this.state.background} ssn`}>
                                     <img src={ActiveSSN} className="active" />
                                     <img src={SSN} className="normal" />
-                                    <span className="text">SSN</span>
+                                    <span className="text">Social Security Number</span>
                                 </span>
                             </label>
                         </Select_Col4>

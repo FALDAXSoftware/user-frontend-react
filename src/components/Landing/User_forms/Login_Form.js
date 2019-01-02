@@ -226,12 +226,12 @@ class Login_Form extends React.Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      /* console.log("validate Fields",error,value,this.state) */
+      console.log("validate Fields",error,value,this.state)
       if (error == null && this.state.emailIcon == true) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
-
+        
         /* if (this.props.forgotParam !== undefined) { value['email_verify_token'] = this.props.forgotParam[1]; } */
         /* console.log("I am in") */
         var obj = {};
@@ -241,6 +241,7 @@ class Login_Form extends React.Component {
         if (value.otp && value.otp !== null && value.otp.trim() !== "" && value.otp !== undefined) {
           obj['otp'] = value.otp;
         }
+        console.log(obj)
         this.props.Login(obj);
       } else {
         this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue.")
@@ -384,6 +385,7 @@ class Login_Form extends React.Component {
     }
   }
   render() {
+    console.log(this.props)
     if (this.props.isLoggedIn) {
       this.props.history.push("/editProfile");
     }
@@ -431,7 +433,7 @@ class Login_Form extends React.Component {
               <UserIconS id="otp_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
               <UserIconF id="otp_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
             </div>
-            <Email_req className="otp_msg">{this.state.otp_msg}</Email_req>
+            <Pass_req className="otp_msg">{this.state.otp_msg}</Pass_req>
           </div>
         }
         <Check_wrap>

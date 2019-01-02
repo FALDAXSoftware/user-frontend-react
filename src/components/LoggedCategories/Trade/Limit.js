@@ -18,6 +18,7 @@ class Limit extends Component {
             sellprice: 0.001,
             buyPrice: 0.002,
             amount: 0,
+            limit_price:0,
             total: 0
         }
         this.onChange = this.onChange.bind(this);
@@ -45,6 +46,7 @@ class Limit extends Component {
         if (name == "side") {
             obj["amount"] = 0;
             obj["total"] = 0;
+            obj['limit_price']=0;
         }
         this.setState({
             ...obj
@@ -52,9 +54,9 @@ class Limit extends Component {
             obj = {};
             if (this.state.amount > 0) {
                 if (this.state.side == "Buy") {
-                    obj["total"] = this.state.amount * this.state.buyPrice
+                    obj["total"] = this.state.amount * this.state.buyPrice;
                 } else if (this.state.side == "Sell") {
-                    obj["total"] = this.state.amount * this.state.sellprice
+                    obj["total"] = this.state.amount * this.state.sellprice;
                 }
             } else {
                 obj["total"] = 0;
@@ -74,10 +76,11 @@ class Limit extends Component {
             let params = {
                 symbol: self.state.crypto.toUpperCase() + "-" + self.state.currency.toUpperCase(),
                 side: self.state.side,
-                order_type: "Market",
-                orderQuantity: self.state.amount
+                order_type: "Limit",
+                orderQuantity: self.state.amount,
+                limit_price:self.state.limit_price
             }
-            fetch(API_URL + "/market/" + self.state.side.toLowerCase(), {
+            fetch(API_URL + "/limit/" + self.state.side.toLowerCase(), {
                 method: "post",
                 headers: {
                     Accept: 'application/json',
@@ -118,20 +121,47 @@ class Limit extends Component {
                 <Balance_wrap>
                     <Row>
                         <Col span={12}>
-                            <Balance>Balance 0 B</Balance>
+                            <Row>
+                                <Col span={12}>
+                                    <Balance>Balance</Balance>
+                                </Col>
+                                <Col span={12}>
+                                    <Balance>0 B</Balance>
+                                </Col>
+                            </Row>
                         </Col>
                         <Col span={12}>
-                            <Total>Total 0 B</Total>
+                            <Row>
+                                <Col span={12}>
+                                    <Total>Total</Total>
+                                </Col>
+                                <Col span={12}>
+                                    <Total>0 B</Total>
+                                </Col>
+                            </Row>
                         </Col>
                         <Col span={12}>
-                            <Balance>In Orders 0 B</Balance>
+                            <Row>
+                                <Col span={12}>
+                                    <Total>In orders</Total>
+                                </Col>
+                                <Col span={12}>
+                                    <Total>0 B</Total>
+                                </Col>
+                            </Row>
                         </Col>
                         <Col span={12}>
-                            <Total>Best ask 0 B</Total>
+                            <Row>
+                                <Col span={12}>
+                                    <Total>Best ask</Total>
+                                </Col>
+                                <Col span={12}>
+                                    <Total>0 B</Total>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </Balance_wrap>
-                <StopCheck onChange={this.onChangeCheck}>Stop</StopCheck>
                 <ETH_wrap>
                     <Label>Amount</Label>
 
@@ -143,7 +173,8 @@ class Limit extends Component {
                 <BTC_wrap>
                     <Label>Limit Price</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput type="number" addonAfter={this.state.currency} value={this.state.total} name="total" />
+                        <Totinput type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange}/>
+                        {this.validator.message('limit_price', this.state.limit_price, 'required|numeric|gtzero')}
                     </Total_wrap>
                 </BTC_wrap>
                 <BTC_wrap>

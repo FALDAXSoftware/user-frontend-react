@@ -556,7 +556,7 @@ table .ant-table-tbody > tr > td {
   }
   #profile-month-night
   {
-    text-transform:lowercase;
+    text-transform:capitalize;
     background-color: #020f18;
     color:white;
     font-family: "Open Sans";

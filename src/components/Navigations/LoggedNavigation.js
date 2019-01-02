@@ -70,6 +70,9 @@ const Menu_item = styled(Menu.Item)`
         padding:0px 8px;
     }
 `
+const NAV = styled.span`
+    color:${props => props.theme.mode="dark"?"white":""};
+`
 const FALDAX_LOGO = styled.img`
     padding-left:22px;
 `
@@ -146,6 +149,7 @@ class LoggedNavigation extends Component {
         }
     }
     componentWillReceiveProps(props, newProps) {
+        console.log(this.props)
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
                 if (props.theme == false)
@@ -167,6 +171,7 @@ class LoggedNavigation extends Component {
                 this.setState({ selected: "4" })
             }
         }
+        console.log(this.props)
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme == false)
@@ -233,26 +238,29 @@ class LoggedNavigation extends Component {
                 })
                 .catch(error => { /* console.log(error) */ })
         } else {
-            this.setState({ email_msg: "*email address not valid" })
+            
         }
     }
     render() {
         let prof_name = this.props.profileDetails.first_name !== null && this.props.profileDetails.first_name !== undefined ? (this.props.profileDetails.first_name + " " + this.props.profileDetails.last_name) : "User";
         return (
             <Header_main id="main">
-                <Logo onClick={() => this.props.history ? this.props.history.push("/") : ''}>
-                    <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
-                    <FALDAX src={this.state.faldax} />
+                <Logo>
+                    <Link to="/">
+                        {console.log(this.state)}
+                        <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
+                        <FALDAX src={this.state.faldax} />
+                    </Link>
                 </Logo>
                 <Menu_main
                     mode="horizontal"
                     defaultSelectedKeys={['1']}
                     selectedKeys={this.state.selected}
                 >
-                    <Menu_item key="1"><NavLink className="Nav_selected" to="/dashboard">DASHBOARD</NavLink></Menu_item>
-                    <Menu_item key="2"><NavLink className="Nav_selected" to="/trade">TRADE</NavLink></Menu_item>
-                    <Menu_item key="3"><NavLink className="Nav_selected" to="/wallet">Wallet</NavLink></Menu_item>
-                    <Menu_item key="4"><NavLink className="Nav_selected" to="/history">HISTORY</NavLink></Menu_item>
+                    <Menu_item key="1" onClick={this.showComing}>DASHBOARD</Menu_item>
+                    <Menu_item key="2" onClick={this.showComing}>TRADE</Menu_item>
+                    <Menu_item key="3" onClick={this.showComing}>Wallet</Menu_item>
+                    <Menu_item key="4" onClick={this.showComing}>HISTORY</Menu_item>
                 </Menu_main>
                 <RightCol>
                     <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />
@@ -261,9 +269,9 @@ class LoggedNavigation extends Component {
                     <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                     <Profile> PROFILE </Profile>
                     <a onClick={this.showComing} href="#">DASHBOARD</a>
-                    <Link to="/trade">TRADE</Link>
-                    <Link to="/wallet">WALLET</Link>
-                    <Link to="/history">HISTORY</Link>
+                    <a onClick={this.showComing} href="#">TRADE</a>
+                    <a onClick={this.showComing} href="#">WALLET</a>
+                    <a onClick={this.showComing} href="#">HISTORY</a>
                     <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
                 </SideNav>
                 <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
@@ -275,7 +283,7 @@ class LoggedNavigation extends Component {
 function mapStateToProps(state) {
     return ({
         profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
-        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme :""
     });
 }
 const mapDispatchToProps = dispatch => ({

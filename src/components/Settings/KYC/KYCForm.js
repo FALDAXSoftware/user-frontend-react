@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { Col, notification, Spin } from 'antd';
 import styled from 'styled-components';
 import SimpleReactValidator from 'simple-react-validator';
+import moment from 'moment';
 import {
     Spin_Ex, Save, Fifth_Row, Postal, City, Fourth_Row, Street_input, Street_Address,
     Third_Row, Date_birth, Country_input, Country, Second_Row, Last_input, Last_name,
@@ -81,8 +82,10 @@ class KYCForm extends Component {
         this._onChangeFields = this._onChangeFields.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
-    onDateChange(Datedata) {
-        var date = Datedata.day + "/" + Datedata.month + "/" + Datedata.year
+    onDateChange(value) {
+        var tempDate = value.day+"/"+value.month+"/"+value.year;
+        
+        var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
         let fields = this.state.fields;
         fields['dob'] = date;
         this.setState({ fields });

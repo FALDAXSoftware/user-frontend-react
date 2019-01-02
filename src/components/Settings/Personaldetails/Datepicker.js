@@ -65,14 +65,11 @@ export default class Datepicker extends Component {
                 this.setState({ year: date });
                 fields[type] = date;
             } else if (type == "month") {
-                let date1
                 this.setState({ month: date });
-                date1 = '0' + date;
-                fields[type] = date1;
+                fields[type] = date;
             } else if (type == "day") {
                 this.setState({ day: date });
-                let date1 = '0' + date;
-                fields[type] = date1;
+                fields[type] = date;
             }
             this.props.onDateChange(fields, "dob")
         }
