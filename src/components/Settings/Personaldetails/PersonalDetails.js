@@ -346,11 +346,11 @@ class PersonalDetails extends Component {
         }
     }
     onDateChange(value, field) {
-        console.log("DatePICKER",value)
-        var tempDate = value.day+"/"+value.month+"/"+value.year;
-        
+        console.log("DatePICKER", value)
+        var tempDate = value.day + "/" + value.month + "/" + value.year;
+
         var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
-        console.log(tempDate,date)
+        console.log(tempDate, date)
         this.setState({ Datedata: value })
         this.onChangeField(value, field);
     }

@@ -226,12 +226,12 @@ class Login_Form extends React.Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      console.log("validate Fields",error,value,this.state)
+      console.log("validate Fields", error, value, this.state)
       if (error == null && this.state.emailIcon == true) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
-        
+
         /* if (this.props.forgotParam !== undefined) { value['email_verify_token'] = this.props.forgotParam[1]; } */
         /* console.log("I am in") */
         var obj = {};
@@ -424,7 +424,7 @@ class Login_Form extends React.Component {
 
         {this.state.isOtpRequired &&
           <div>
-            <OtpLabel>Your Two Factor Authentiaction is ON. So Please Check Google Authenticator App in Your Device and add OTP here</OtpLabel>
+            <OtpLabel>Two-Factor Authentication is enabled for this account. Please enter your 2FA code below to proceed.</OtpLabel>
             <div>
               <Username id="otp-field" {...getFieldProps('otp', {
                 onChange(e) { me.onChangeField(e.target.value, "otp") }, // have to write original onChange here if you need

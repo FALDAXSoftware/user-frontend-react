@@ -304,7 +304,7 @@ class Footer_home extends Component {
                                 <Footer_ul>
                                     <Footer_headers>Legal & Technical</Footer_headers>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <Footer_Link to="/privacy">Policies</Footer_Link>
+                                        <Footer_Link to="/policy">Policies</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.scrollMap.bind(this)}>
                                         Service Availability

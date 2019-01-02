@@ -37,7 +37,7 @@ const SubHead = styled.p`
     font-size: 19.975px;
     font-family: "Open Sans";
     text-align: center;
-    color: ${props => props.theme.mode=="dark" ? "white":"black"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
 `
 const FeesTable = styled(Table)`
     width: 40% !important;
@@ -81,17 +81,17 @@ const FeesTable = styled(Table)`
    
 `
 const HeadSub = styled.div`
-    color: ${props => props.theme.mode=="dark" ? "white":"black"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
     font-weight: bold;
 `
 const DescP = styled.p`
     color: black;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark" ? "white":"black"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
 `
 const QueP = styled.p`
     font-size:20px;
-    color: ${props => props.theme.mode=="dark" ? "white":"black"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
     font-family: "Open Sans";
 `
 const Desc = styled.p`
@@ -100,7 +100,7 @@ const Desc = styled.p`
     margin-left: 42px;
     margin-top:10px;
     text-align: justify;
-    color: ${props => props.theme.mode=="dark" ? "white":"black"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
     @media(max-width:992px)
     {
         margin-left:0px;
@@ -196,8 +196,8 @@ class Fees extends Component {
                                     Limit Order:
                                 </HeadSub>
                                 <Desc>
-                                    <p>A limit order is an order to buy or sell at a set quantity and a specified limit price or better. Because a limit order is not a <a href="https://www.investopedia.com/terms/m/marketorder.asp" target="_blank"> market order</a>, it may not execute if the price set by the <a href="https://www.investopedia.com/terms/i/investor.asp" target="_blank">trader</a> cannot be met during the period in which it is left open. Limit orders also allow a limit to the length of time an order can be outstanding before being canceled.</p>
-                                    <p>While the execution of a limit order is not guaranteed, it does ensure that the trader does not miss the opportunity to buy or sell at the target price. Depending on the direction of the position, a limit order is sometimes referred to as a <a href="https://www.investopedia.com/terms/b/buy-limit-order.asp" target="_blank" >buy limit order</a> or a sell limit order. For example, an order that stipulates the buyer is not willing to pay more than $30 asset is a buy limit order, while a sell limit order may require the share price to be at least $30 to execute.
+                                    <p>A limit order is an order to buy or sell at a set quantity and a specified limit price or better. Because a limit order is not a market order, it may not execute if the price set by the trader cannot be met during the period in which it is left open. Limit orders also allow a limit to the length of time an order can be outstanding before being canceled.</p>
+                                    <p>While the execution of a limit order is not guaranteed, it does ensure that the trader does not miss the opportunity to buy or sell at the target price. Depending on the direction of the position, a limit order is sometimes referred to as a buy limit order or a sell limit order. For example, an order that stipulates the buyer is not willing to pay more than $30 asset is a buy limit order, while a sell limit order may require the share price to be at least $30 to execute.
                                     <a href="https://www.investopedia.com/terms/l/limitorder.asp" target="_blank" > (Source)</a></p>
                                 </Desc>
 
@@ -232,7 +232,7 @@ class Fees extends Component {
                     </ContainerContact>
                 </Grey_wrap>
                 <CommonFooter />
-            </Contact_wrap>
+            </Contact_wrap >
         );
     }
 }

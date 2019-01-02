@@ -4,7 +4,7 @@ import { ComposableMap, ZoomableGroup, Geographies, Geography } from "react-simp
 import { geoAlbersUsa } from 'd3-geo';
 import { connect } from "react-redux";
 import { actions, } from "redux-tooltip";
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import styled from 'styled-components';
 import tooltip from 'wsdm-tooltip';
 import { globalVariables } from '../../../Globals';
@@ -104,7 +104,7 @@ const CircleColor = styled.span`
     display:inline-block;
 `
 const LegendDiv = styled.div`
-    margin-top:-150px;
+    margin-top:-130px;
     width:200px;
     @media(max-width:767px)
     {
@@ -252,15 +252,13 @@ class Home_four extends Component {
                 }
             })
             .catch(error => { })
-        console.log("Home_four",this.props.location);
-        if(this.props.location!==undefined)
-        {
-            if(this.props.location.hash!=="" && this.props.location.hash!==undefined && this.props.location.hash=="#block-world-map")
-            {
+        console.log("Home_four", this.props.location);
+        if (this.props.location !== undefined) {
+            if (this.props.location.hash !== "" && this.props.location.hash !== undefined && this.props.location.hash == "#block-world-map") {
                 var elmnt = document.getElementById("block-world-map");
                 console.log(document.getElementById("block-world-map"))
-                if(elmnt!==null)
-                elmnt.scrollIntoView();
+                if (elmnt !== null)
+                    elmnt.scrollIntoView();
             }
         }
     }
@@ -529,4 +527,4 @@ export default connect(
     (state) => {
         return { tooltip: state.tooltip.default };
     }
-)(withRouter( Home_four));
+)(withRouter(Home_four));

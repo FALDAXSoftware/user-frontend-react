@@ -19,7 +19,7 @@ const Heading = styled.h2`
   font-size:42px;
   color:black;
   font-family:"Open sans";
-  margin-bottom:0px;
+  margin-bottom:20px;
 `
 const HeadingBrand = styled.span`
   font-weight: bold;
