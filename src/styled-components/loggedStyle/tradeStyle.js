@@ -1,4 +1,4 @@
-import { Row, Col, Tabs, Button, Table, Input,Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio } from 'antd';
+import { Row, Col, Tabs, Button, Table, Input, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio } from 'antd';
 import styled from 'styled-components';
 
 const RadioGroup = Radio.Group;
@@ -223,14 +223,14 @@ export const Willpay = styled.span`
     font-size: 12px;
     font-family: "Open Sans";
     font-weight:600;
-    color: ${props => props.theme.mode=="dark"?'white':'rgb( 51, 51, 51 )'};
+    color: ${props => props.theme.mode == "dark" ? 'white' : 'rgb( 51, 51, 51 )'};
 `
 export const Willpay2 = styled.span`
     font-size: 20px;
     font-family: "NotoSansThai";
-    color: ${props => props.theme.mode=="dark"?'white':'rgb( 51, 51, 51 )'};
+    color: ${props => props.theme.mode == "dark" ? 'white' : 'rgb( 51, 51, 51 )'};
     font-weight:600;
-`  
+`
 export const Total_wrap = styled.div`
     >.ant-input-group-wrapper>.ant-input-group>.ant-input
     {
@@ -291,7 +291,7 @@ export const StopCheck = styled(Checkbox)`
     font-size: 14px;
     font-family: "Open Sans";
     font-weight:600;
-    color: ${props => props.theme.mode=="dark" ? "white":"rgb( 127, 127, 127 )"}    ;
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 127, 127, 127 )"}    ;
 `
 export const Button_wrap = styled.div`
     margin-top:25px;
@@ -347,5 +347,40 @@ export const Instru2 = styled(Instru)`
 `
 
 export const WrapDepth = styled.div`
+
+`
+
+
+export const History_wrap = styled.div`
+`
+
+export const CustomTable = styled.table`
+    width:100%;
+    table-layout: fixed;
+    & td, & th{
+        padding:15px;
+        text-align:center;
+    }
+    font-family:"Open Sans";
+`
+export const TableHeader = styled(CustomTable)`
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
+    >thead
+    {
+        color:#174c7e;
+    }
+`
+export const TableContent = styled(CustomTable)`
+    >tbody
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : "black"} ;
+        font-size: 14px;
+        font-family: "Open Sans";
+        font-weight:600;
+    }
+    >tbody>tr:nth-of-type(even)
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
+    }
 
 `

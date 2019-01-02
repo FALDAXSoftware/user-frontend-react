@@ -135,7 +135,12 @@ const NavLink = styled(Link)`
         color:#1890ff !important;
     }
 `
-
+const LogNav = styled.span`
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"} !important;
+    &:hover{
+        color:#1890ff !important;
+    }
+`
 class LoggedNavigation extends Component {
     constructor(props) {
         super(props);
@@ -257,10 +262,10 @@ class LoggedNavigation extends Component {
                     defaultSelectedKeys={['1']}
                     selectedKeys={this.state.selected}
                 >
-                    <Menu_item key="1" onClick={this.showComing}>DASHBOARD</Menu_item>
-                    <Menu_item key="2" onClick={this.showComing}>TRADE</Menu_item>
-                    <Menu_item key="3" onClick={this.showComing}>Wallet</Menu_item>
-                    <Menu_item key="4" onClick={this.showComing}>HISTORY</Menu_item>
+                    <Menu_item key="1" onClick={this.showComing}><LogNav>DASHBOARD</LogNav></Menu_item>
+                    <Menu_item key="2" onClick={this.showComing}><LogNav>TRADE</LogNav></Menu_item>
+                    <Menu_item key="3" onClick={this.showComing}><LogNav>Wallet</LogNav></Menu_item>
+                    <Menu_item key="4" onClick={this.showComing}><LogNav>HISTORY</LogNav></Menu_item>
                 </Menu_main>
                 <RightCol>
                     <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />
