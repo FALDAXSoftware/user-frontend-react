@@ -17,9 +17,8 @@ import OrderTrade from './OrderTrade';
 import { Container } from '../../../styled-components/homepage/style';
 import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
 import {
-    Row_wrap, Left_div, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div,
-    FIAT_wrap, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC,
-    Total_BTC, Buy_table, BBC_wrap2, BBC2
+    Row_wrap, Left_div, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div,Buy_table,
+    FIAT_wrap, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2
 } from "../../../styled-components/loggedStyle/tradeStyle";
 var socketIOClient = require('socket.io-client');
 var sailsIOClient = require('sails.io.js');
@@ -156,27 +155,19 @@ class Trade extends Component {
                         </Row_wrap>
                         <Row_wrap2>
                             <Row>
-                                <Col md={24} lg={14}>
+                                <Col md={24} lg={12}>
                                     <Left_div>
                                         <Instru>ORDER BOOK BBC/BTC</Instru>
                                         <BBC_wrap>
-                                            <BBC>BUYING BBC</BBC>
-                                            <Total_BTC>Total: 0.64834700 BTC</Total_BTC>
-                                            <Buy_table>
-                                                <BuyTable io={io} />
-                                            </Buy_table>
+                                            <BuyTable io={io} />
                                         </BBC_wrap>
 
                                         <BBC_wrap2>
-                                            <BBC2>SELLING BBC</BBC2>
-                                            <Total_BTC>Total: 0.64834700 BTC</Total_BTC>
-                                            <Buy_table>
-                                                <SellTable io={io} />
-                                            </Buy_table>
+                                            <SellTable io={io} />
                                         </BBC_wrap2>
                                     </Left_div>
                                 </Col>
-                                <Col md={24} lg={10}>
+                                <Col md={24} lg={12}>
                                     <Right_div1>
                                         <DepthChart />
                                     </Right_div1>
