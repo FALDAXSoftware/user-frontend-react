@@ -1,97 +1,59 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
+import { History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 
 import { Scrollbars } from 'react-custom-scrollbars';
+import { globalVariables } from "../../../Globals";
+const APP_URL = globalVariables.API_URL;
 
-
-
-export const History_wrap = styled.div`
-`
-export const CustomTable = styled.table`
-    width:100%;
-    table-layout: fixed;
-    & td, & th{
-        padding:7px;
-    }
-`
-export const TableHeader = styled(CustomTable)`
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
-
-`
-export const TableContent = styled(CustomTable)`
-    >tbody
-    {
-        color:${props => props.theme.mode == "dark" ? "white" : "black"} ;
-        font-size: 14px;
-        font-family: "Open Sans";
-        font-weight:600;
-    }
-    >tbody>tr:nth-of-type(even)
-    {
-        background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
-    }
-
-`
-// export const TableBuy = styled(Table)`
-//     >thead
-//     {
-//         background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
-//         color:#174c7e;
-//         border:none;
-//     }
-//     >thead>tr>th
-//     {
-//         border:0px;
-//     }
-//     >tbody
-//     {
-//         color:${props => props.theme.mode == "dark" ? "white" : ""} ;
-//     }
-//     >tbody>tr:nth-of-type(even)
-//     {
-//         background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
-//     }
-// `
 
 class SellTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            crypto: "XRP",
+            currency: "BTC",
         }
+        this.updateData = this.updateData.bind(this);
     }
     componentDidMount() {
-        const data = [];
-        for (let i = 0; i < 100; i++) {
-            data.push({
-                my_size: 0.001,
-                amount: 0.05,
-                bid: 0.02,
-                total: 0.02,
+        let io = this.props.io
+        io.sails.url = APP_URL;
+
+        io.socket.get("/socket/get-sell-book?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
+            console.log(body, JWR);
+
+            if (body.status == 200) {
+                let res = body.data;
+                console.log("sellBoobk----------->", res);
+
+                this.updateData(res);
+            }
+        });
+        io.socket.on('sellbookUpdate', (data) => {
+            this.updateData(data);
+        });
+    }
+    updateData(data) {
+        const rows = [];
+        let sum = 0;
+        for (let i = 0; i < data.length; i++) {
+            const element = data[i];
+            sum = sum + element.quantity;
+            rows.push({
+                my_size: 0,
+                amount: element.quantity,
+                ask: element.price,
+                total: sum,
             });
         }
-        console.log(data);
-
         this.setState({
-            data: data
+            data: rows
         });
     }
     render() {
-        const columns = [{
-            title: 'MY SIZE',
-            dataIndex: 'my_size',
-        }, {
-            title: 'AMOUNT',
-            dataIndex: 'amount',
-        }, {
-            title: 'BID',
-            dataIndex: 'bid',
-        }, {
-            title: 'TOTAL',
-            dataIndex: 'total',
-        }
-        ]
         return (
             <History_wrap>
                 <div class="tbl-header">
@@ -100,7 +62,7 @@ class SellTable extends Component {
                             <tr>
                                 <th>MY SIZE</th>
                                 <th>AMOUNT</th>
-                                <th>BID</th>
+                                <th>ASK</th>
                                 <th>TOTAL</th>
                             </tr>
                         </thead>
@@ -115,7 +77,7 @@ class SellTable extends Component {
                                     <tr>
                                         <td>{element.my_size}</td>
                                         <td>{element.amount}</td>
-                                        <td>{element.bid}</td>
+                                        <td>{element.ask}</td>
                                         <td>{element.total}</td>
                                     </tr>
                                 ))
