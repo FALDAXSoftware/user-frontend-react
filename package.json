@@ -49,8 +49,10 @@
     "redux-devtools": "^3.4.1",
     "redux-thunk": "^2.3.0",
     "redux-tooltip": "^0.7.2",
+    "sails.io.js": "^1.2.1",
     "simple-react-validator": "^0.0.8",
     "slick-carousel": "^1.8.1",
+    "socket.io-client": "^2.2.0",
     "styled-components": "^3.4.5",
     "wsdm-tooltip": "^0.1.3"
   },

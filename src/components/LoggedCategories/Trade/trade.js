@@ -21,7 +21,9 @@ import {
     FIAT_wrap, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC,
     Total_BTC, Buy_table, BBC_wrap2, BBC2
 } from "../../../styled-components/loggedStyle/tradeStyle";
-
+var socketIOClient = require('socket.io-client');
+var sailsIOClient = require('sails.io.js');
+let io = sailsIOClient(socketIOClient);
 const Search = Input.Search;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
@@ -161,7 +163,7 @@ class Trade extends Component {
                                             <BBC>BUYING BBC</BBC>
                                             <Total_BTC>Total: 0.64834700 BTC</Total_BTC>
                                             <Buy_table>
-                                                <BuyTable />
+                                                <BuyTable io={io} />
                                             </Buy_table>
                                         </BBC_wrap>
 
@@ -169,7 +171,7 @@ class Trade extends Component {
                                             <BBC2>SELLING BBC</BBC2>
                                             <Total_BTC>Total: 0.64834700 BTC</Total_BTC>
                                             <Buy_table>
-                                                <SellTable />
+                                                <SellTable io={io} />
                                             </Buy_table>
                                         </BBC_wrap2>
                                     </Left_div>
