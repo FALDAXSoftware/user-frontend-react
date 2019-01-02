@@ -93,7 +93,7 @@ const Content = styled.div`
 /* Styled Components */
 /* Component Defination Starts Here*/
 
-export default class AboutUs extends Component {
+export default class Policy extends Component {
   constructor() {
     super();
     this.state = {

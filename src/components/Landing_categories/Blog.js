@@ -131,30 +131,30 @@ class Blog extends Component {
                         <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                             <BlogTitle> BLOG </BlogTitle>
                         </div>
-                        <Mainimage>
-                            <Row>
-                                <Col sm={24} md={12} lg={9} >
-                                    {blogsData !== '' ? Object.keys(blogsData.featuredBlog).length > 0 ?
-                                        <Link to={`/blogDetails?blogID=${blogsData.featuredBlog.id}`}>
-                                            <Lefthead>
-                                                <Subleft>
-                                                    <Eco>{blogsData.featuredBlog.tags}</Eco>
-                                                    <Head3>{blogsData.featuredBlog.title}</Head3>
-                                                    <Eco2>{blogsData.featuredBlog.admin_name}</Eco2>
-                                                </Subleft>
-                                            </Lefthead>
-                                        </Link>
-                                        : "" : ""}
-                                </Col>
-                                {blogsData !== '' ? Object.keys(blogsData.featuredBlog).length > 0 ?
-                                    <Col sm={24} md={12} lg={15}>
-                                        <Righthead image={globalVariables.amazon_Bucket + blogsData.featuredBlog.cover_image}>
-                                        </Righthead>
-                                    </Col> : "" : ""}
-                            </Row>
-                        </Mainimage>
+                        {blogsData !== '' ? Object.keys(blogsData.featuredBlog).length > 0 ?
+                            <Mainimage>
+                                <Row>
+                                    <Col sm={24} md={12} lg={9} >
+                                        
+                                            <Link to={`/blogDetails?blogID=${blogsData.featuredBlog.id}`}>
+                                                <Lefthead>
+                                                    <Subleft>
+                                                        <Eco>{blogsData.featuredBlog.tags}</Eco>
+                                                        <Head3>{blogsData.featuredBlog.title}</Head3>
+                                                        <Eco2>{blogsData.featuredBlog.admin_name}</Eco2>
+                                                    </Subleft>
+                                                </Lefthead>
+                                            </Link>
+                                    </Col>
+                                        <Col sm={24} md={12} lg={15}>
+                                            <Righthead image={globalVariables.amazon_Bucket + blogsData.featuredBlog.cover_image}>
+                                            </Righthead>
+                                        </Col>
+                                </Row>
+                            </Mainimage>
+                         : "" : ""}
                         <Whole_wrap>
-                            {blogsData && blogsData.data.length > 0 ?
+                            {blogsData.featuredBlog!==undefined ?Object.keys(blogsData.featuredBlog).length > 0 ?
                                 <Row>
                                     <Col span={3}>
                                         <Blog_p>Latest Blogs</Blog_p>
@@ -163,7 +163,7 @@ class Blog extends Component {
                                         <HR_tag />
                                     </Col>
                                 </Row>
-                                : ""}
+                                : "":""}
                             <Blogs_wrap>
                                 <Row className="blog-card-row">
                                     {blogsData.data !== undefined ?
