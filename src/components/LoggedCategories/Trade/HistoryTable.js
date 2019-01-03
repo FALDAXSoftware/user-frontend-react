@@ -2,75 +2,102 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import { Table } from 'react-bootstrap';
-
-const HTable = styled(Table)`
-    >thead
-    {
-        background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
-        color:#174c7e;
-        border:none;
-    }
-    >thead>tr>th
-    {
-        border:0px;
-    }
-    & tbody
-    {
-        color:${props => props.theme.mode == "dark" ? "white" : "black"} ;
-        font-size: 14px;
-        font-family: "Open Sans";
-        font-weight:600;
-    }
-    >tbody>tr:nth-of-type(odd)
-    {
-        background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f9f9f9"};
-    }
-`
-const History_wrap = styled.div`
+import { Scrollbars } from 'react-custom-scrollbars';
+import { globalVariables } from "../../../Globals";
+import moment from "moment";
+import { History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
+const APP_URL = globalVariables.API_URL;
+const BorderedHistoryWrap = styled(History_wrap)`
     margin-left:30px;
     margin-right:30px;
     border:1px solid #d8d8d8;
 `
-
 class HistoryTable extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+            crypto: "XRP",
+            currency: "BTC",
+        }
+        this.updateData = this.updateData.bind(this);
+    }
+    componentDidMount() {
+        console.log("Trade History Mount");
+
+        let io = this.props.io
+
+        io.sails.url = APP_URL;
+
+        io.socket.get("/socket/get-trade-history?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
+            console.log(body);
+            console.log(JWR);
+
+            if (body.status == 200) {
+                let res = body.data;
+                console.log("--tradehistory--------->", res);
+
+                this.updateData(res);
+            }
+        });
+        io.socket.on('tradeHistoryUpdate', (data) => {
+            this.updateData(data);
+        });
+    }
+    updateData(data) {
+        const rows = [];
+        for (let i = 0; i < data.length; i++) {
+            const element = data[i];
+            rows.push({
+                side: element.side,
+                amount: element.quantity,
+                fill_price: element.fill_price,
+                time: moment.utc(element.created_at).local().format("MMM D, YYYY, H:m:s"),
+                total: element.quantity * element.fill_price,
+            });
+        }
+        this.setState({
+            data: rows,
+        });
+    }
     render() {
         return (
-            <History_wrap>
-                <HTable striped responsive>
-                    <thead>
-                        <tr>
-                            <th>SIDE</th>
-                            <th>AMOUNT</th>
-                            <th>FILL PRICE</th>
-                            <th>TIME</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>0.50021</td>
-                            <td>0.50021</td>
-                            <td>0.50021</td>
-                            <td>0.50021</td>
-                            <td>0.50021</td>
-                        </tr>
-                        <tr>
-                            <td>0.50021</td>
-                            <td>0.50021</td>
-                            <td>0.50021</td>
-                            <td>0.50021</td>
-                            <td>0.50021</td>
-                        </tr>
-                        <tr>
-                            <td>0.50021</td>
-                            <td>0.50021</td>
-                            <td>0.50021</td>
-                            <td>0.50021</td>
-                            <td>0.50021</td>
-                        </tr>
-                    </tbody>
-                </HTable>
-            </History_wrap>
+            <BorderedHistoryWrap>
+                <div class="tbl-header">
+                    <TableHeader cellpadding="10px" cellspacing="0" border="0">
+                        <thead>
+                            <tr>
+                                <th>SIDE</th>
+                                <th>AMOUNT</th>
+                                <th>FILL PRICE</th>
+                                <th>TIME</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                    </TableHeader>
+                </div>
+                <div class="tbl-content">
+                    <Scrollbars
+                        style={{ height: 300 }}>
+                        <TableContent cellpadding="10px" cellspacing="0" border="0">
+                            <tbody>
+                                {this.state.data.map(element => (
+                                    <tr>
+                                        <td>{element.side}</td>
+                                        <td>{element.amount}</td>
+                                        <td>{element.fill_price}</td>
+                                        <td>{element.time}</td>
+                                        <td>{element.total}</td>
+                                    </tr>
+                                ))
+
+                                }
+
+                            </tbody>
+                        </TableContent>
+                    </Scrollbars>
+                </div>
+            </BorderedHistoryWrap>
         )
     }
 }
