@@ -356,8 +356,11 @@ table .ant-table-tbody > tr > td {
 /* Country Picker Day Mode */
 .Country_Select
 {
-  width:89%;
-  
+  width:85%;
+}
+.Country_Select:first-child
+{
+  margin-left:0px !important;
 }
 .Country_Select > .ant-select-selection
 {
@@ -427,8 +430,8 @@ table .ant-table-tbody > tr > td {
     font-size:16;
     font-weight:600;
     border-radius: 5px;
-    width:27%;
-    margin-left:12px;
+    width:30%;
+    margin-left:15px;
     border:1px solid #dadfe3;
     padding:10px 5px;
   }
@@ -444,8 +447,8 @@ table .ant-table-tbody > tr > td {
     font-size:16;
     font-weight:600;
     border-radius: 5px;
-    margin-left:12px;
-    width:27%;
+    margin-left:15px;
+    width:30%;
     border:1px solid #dadfe3;
     padding:10px 5px;
   }
@@ -461,7 +464,7 @@ table .ant-table-tbody > tr > td {
     font-size:16;
     font-weight:600;
     border-radius: 5px;
-    width:27%;
+    width:30%;
     border:1px solid #dadfe3;
     padding:10px 5px;
   }

@@ -1,4 +1,4 @@
-import { Row, Col, Tabs, Button, Table, Input, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio } from 'antd';
+import { Row, Col, Tabs, Button, Table, Input, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio  } from 'antd';
 import styled from 'styled-components';
 
 const RadioGroup = Radio.Group;
@@ -29,7 +29,7 @@ export const Left_div1 = styled(Left_div)`
     padding-bottom: 30px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
-    height:618px;
+    height:700px;
     @media(max-width:991px)
     {
         margin-right:0px;
@@ -78,6 +78,13 @@ export const FIAT = styled.div`
     display:inline-block;
     margin-right:25px;
 `
+export const RadioSelect = styled(RadioGroup)`
+    & .ant-radio-button-wrapper
+    {
+        background-color:${props => props.theme.mode=="dark"?"":"#f5f6fa"}
+    }
+
+`
 export const Sect = styled(Button)`
     display:inline-block;
     padding:10px 15px;
@@ -101,6 +108,7 @@ export const Right_div = styled.div`
     border-radius:5px;
 `
 export const Right_div1 = styled(Right_div)`
+    height:700px;
     @media(max-width:991px)
     {
         margin-top:30px;
