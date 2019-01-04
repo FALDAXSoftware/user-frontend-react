@@ -7,5 +7,7 @@ export const globalVariables = {
 
     //API_URL:'http://192.168.1.211:1337', //Mansi's URL
 
-    API_URL: 'http://192.168.3.32:1337' //Krina Local URL
+    //API_URL: 'http://192.168.3.32:1337', //Krina Local URL
+
+    API_URL: 'https://backend.faldax.com' //Client Live URL
 }
