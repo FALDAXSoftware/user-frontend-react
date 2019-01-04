@@ -61,6 +61,7 @@ const First_name_kyc = styled(First_name)``
 const First_Row_kyc = styled(First_Row)``
 const Right_Col_kyc = styled(Right_Col)`
 `
+const Sixth_Row_kyc= styled(Fourth_Row)``
 
 class KYCForm extends Component {
     constructor(props) {
@@ -160,16 +161,10 @@ class KYCForm extends Component {
                     </First_Row_kyc>
 
                     <Second_Row_kyc>
-                        <Col md={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 12 }} xxl={{ span: 12 }}>
-                            <Country_kyc>Country*</Country_kyc>
+                        <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             {/* console.log(this.props) */}
                             <CountryPick {...this.props} kyc="kyc" isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={(value) => this.onCountryChange(value)} />
                             {this.validator.message('country', this.state.fields.country, 'required', 'text-danger-validation')}
-                        </Col>
-                        <Col md={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 12 }} xxl={{ span: 12 }}>
-                            <Date_birth_kyc>Date of Birth*</Date_birth_kyc>
-                            <Datepicker {...this.props} kyc="kyc" onDateChange={(Data) => this.onDateChange(Data)} />
-                            {this.validator.message('dob', this.state.fields.dob, 'required', 'text-danger-validation')}
                         </Col>
                     </Second_Row_kyc>
 
@@ -188,18 +183,19 @@ class KYCForm extends Component {
                     </Third_Row_kyc>
 
                     <Fourth_Row_kyc>
-                        <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xxl={{ span: 12 }}>
-                            <City_kyc>City/Town*</City_kyc>
-                            <First_input_kyc name="city" onChange={this._onChangeFields} placeholder="City" />
-                            {this.validator.message('city', this.state.fields.city, 'required', 'text-danger-validation')}
+                        <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
+                            <Date_birth_kyc>Date of Birth*</Date_birth_kyc>
+                            <Datepicker {...this.props} kyc="kyc" onDateChange={(Data) => this.onDateChange(Data)} />
+                            {this.validator.message('dob', this.state.fields.dob, 'required', 'text-danger-validation')}
                         </Col>
+                    </Fourth_Row_kyc>
+                    <Sixth_Row_kyc>
                         <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xl={{ span: 12 }}>
                             <Postal_kyc>Postal Code*</Postal_kyc>
                             <Last_input_kyc name="zip" onChange={this._onChangeFields} placeholder="Postal Code" />
                             {this.validator.message('postal_code', this.state.fields.zip, 'required', 'text-danger-validation')}
                         </Col>
-                    </Fourth_Row_kyc>
-
+                    </Sixth_Row_kyc>
                     <Fifth_Row_kyc>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Save_kyc type="primary" onClick={this.onSubmit}>Next</Save_kyc>

@@ -346,12 +346,13 @@ class Acc_settings extends Component {
     render() {
         return (
             <Acc_wrap>
-                <Noti_Wrap>
+                {/* ----Notification code start ---- */}
+                {/* <Noti_Wrap>
                     <Noti_Head>
                         <span>Notifications</span>
                     </Noti_Head>
                     <Noti_desc>
-                        {/* <span>Automatic Email Notifications</span> */}
+                         <span>Automatic Email Notifications</span>
                     </Noti_desc>
                 </Noti_Wrap>
                 <Check_Wrap>
@@ -361,7 +362,8 @@ class Acc_settings extends Component {
                         dataSource={data_noti}
                         columns={columns_text} />
                 </Check_Wrap>
-                <HR />
+                <HR /> */}
+                {/* ----Notification code ends ---- */}
                 <Login_History>
                     <History_head>
                         <Heading>

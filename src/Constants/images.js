@@ -5,6 +5,7 @@ let amazon_Bucket = globalVariables.amazon_Bucket;
 export const Banner = amazon_Bucket + 'faldax/assets/Homepage/banner.png';
 export const ComingImg = amazon_Bucket + 'faldax/assets/LOGO+WEB.png';
 export const LargeLogo = amazon_Bucket + 'faldax/assets/logo-lg.png';
+export const ContactMap = amazon_Bucket + 'faldax/assets/LandingCat/contact_map.png';
 export const Wallpaper = amazon_Bucket + 'faldax/assets/Homepage/wallpaper.png';
 export const FaldaxLogin = amazon_Bucket + 'faldax/assets/Homepage/Faldax_Login.png';
 export const FaldaxLoginText = amazon_Bucket + 'faldax/assets/Homepage/Faldax_Login_text.png';
@@ -80,6 +81,7 @@ export const MediaFB = amazon_Bucket + 'faldax/assets/LandingCat/media_fb.png';
 export const MediaTweeter = amazon_Bucket + 'faldax/assets/LandingCat/media_tweet.png';
 export const MediaGoogle = amazon_Bucket + 'faldax/assets/LandingCat/media_google.png';
 export const MediaLinkedin = amazon_Bucket + 'faldax/assets/LandingCat/media_IN.png';
+export const MediaDiscord = amazon_Bucket + 'faldax/assets/LandingCat/discord.png'
 
 export const ActivePassport = amazon_Bucket + 'faldax/assets/passport-logo-active.png';
 export const PassportLogo = amazon_Bucket + 'faldax/assets/passport-logo.png';

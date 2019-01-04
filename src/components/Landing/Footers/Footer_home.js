@@ -282,7 +282,7 @@ class Footer_home extends Component {
                                 <Footer_ul>
                                     <Footer_headers>Support</Footer_headers>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        <Footer_Link to="/addcoin">Open a Ticket</Footer_Link>
+                                        Open a Ticket
                                     </li>
                                     <li style={{ cursor: "pointer" }}>
                                         <Footer_Link to="/faq">FAQ</Footer_Link>
@@ -322,16 +322,16 @@ class Footer_home extends Component {
                                 {this.state.contactDetails.length !== 0 ?
                                     <Icon_ul_1>
                                         <LI>
-                                            <a href={contactDetails.fb_profile}><FontAwesomeIcons icon={faFacebook} color={true} /></a>
+                                            <a target="_blank" href={contactDetails.fb_profile}><FontAwesomeIcons icon={faFacebook} color={true} /></a>
                                         </LI>
                                         <LI>
-                                            <a href={contactDetails.twitter_profile}><FontAwesomeIcons icon={faTwitter} color={true} /></a>
+                                            <a target="_blank" href={contactDetails.twitter_profile}><FontAwesomeIcons icon={faTwitter} color={true} /></a>
                                         </LI>
                                         <LI>
-                                            <a href={contactDetails.linkedin_profile}><FontAwesomeIcons icon={faLinkedinIn} color={true} /></a>
+                                            <a target="_blank" href={contactDetails.linkedin_profile}><FontAwesomeIcons icon={faLinkedinIn} color={true} /></a>
                                         </LI>
                                         <LI>
-                                            <a href={contactDetails.discord_profile}><FontAwesomeIcons icon={faDiscord} color={true} /></a>
+                                            <a target="_blank" href={contactDetails.discord_profile}><FontAwesomeIcons icon={faDiscord} color={true} /></a>
                                         </LI>
                                     </Icon_ul_1>
                                     : ""}
