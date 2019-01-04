@@ -28,8 +28,8 @@ volumes: [
               namespace = getNamespace(myRepo.GIT_BRANCH);
               if (namespace){
               sh "ls -la"
-              
-              withAWS(role:'admin', externalId: 'my-external-id', policy: '{"Version":"2012-10-17","Statement":[{"Sid":"Stmt1","Effect":"Deny","Action":"s3:DeleteObject","Resource":"*"}]}', duration: '3600', roleSessionName: 'my-custom-session-name') {
+              withAWS(credentials:'jenkins_s3_upload') {
+             // withAWS(role:'admin', externalId: 'my-external-id', policy: '{"Version":"2012-10-17","Statement":[{"Sid":"Stmt1","Effect":"Deny","Action":"s3:DeleteObject","Resource":"*"}]}', duration: '3600', roleSessionName: 'my-custom-session-name') {
             // do something
                  s3Upload(file:'.', bucket:'arn:aws:s3:::www.faldax.com', path:'')
 }
