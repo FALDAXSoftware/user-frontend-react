@@ -80,6 +80,7 @@ export const MediaFB = amazon_Bucket + 'faldax/assets/LandingCat/media_fb.png';
 export const MediaTweeter = amazon_Bucket + 'faldax/assets/LandingCat/media_tweet.png';
 export const MediaGoogle = amazon_Bucket + 'faldax/assets/LandingCat/media_google.png';
 export const MediaLinkedin = amazon_Bucket + 'faldax/assets/LandingCat/media_IN.png';
+export const MediaDiscord = amazon_Bucket + 'faldax/assets/LandingCat/discord.png'
 
 export const ActivePassport = amazon_Bucket + 'faldax/assets/passport-logo-active.png';
 export const PassportLogo = amazon_Bucket + 'faldax/assets/passport-logo.png';
