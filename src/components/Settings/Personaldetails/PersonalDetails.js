@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux";
 import { createForm, formShape } from 'rc-form';
-import { Row, Col, Input, Button, notification, Spin,Select } from 'antd';
+import { Row, Col, Input, Button, notification, Spin, Select } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 
@@ -236,10 +236,10 @@ class PersonalDetails extends Component {
             imageName: null,
             imageType: null,
             imagemsg: null, profileImage: null,
-            countrySelected:'',
-            stateSelected:'',
-            citySelected:'',
-            cities:null,
+            countrySelected: null,
+            stateSelected: null,
+            citySelected: null,
+            cities: null,
             spin_show: false,
             firstIcon: null,
             lastIcon: null,
@@ -284,9 +284,12 @@ class PersonalDetails extends Component {
                 profileData.append('first_name', value.first_name);
                 profileData.append('email', this.props.email);
                 profileData.append('last_name', value.last_name);
-                profileData.append('city_town', this.state.citySelected);
-                profileData.append('state', this.state.stateSelected);
-                profileData.append('country', this.state.countrySelected);
+                if (this.state.citySelected !== null)
+                    profileData.append('city_town', this.state.citySelected);
+                if (this.state.stateSelected !== null)
+                    profileData.append('state', this.state.stateSelected);
+                if (this.state.countrySelected !== null)
+                    profileData.append('country', this.state.countrySelected);
                 profileData.append('street_address', value.street_address)
                 if (value.street_address_2 !== null && value.street_address_2 !== "" && value.street_address_2 !== undefined)
                     profileData.append('street_address_2', value.street_address_2)
@@ -297,7 +300,7 @@ class PersonalDetails extends Component {
                 if (this.state.profileImage !== null && this.state.profileImage !== undefined && !this.state.profileImg.includes("def_profile.jpg")) {
                     profileData.append('profile_pic', this.state.profileImage)
                 }
-                console.log(value,this.state,this.props)
+                console.log(value, this.state, this.props)
                 this.props.profileupdateAction(this.props.isLoggedIn, profileData);
             } else {
                 this.openNotificationWithProfile("error", "Error", "Please complete all required details to continue")
@@ -312,7 +315,7 @@ class PersonalDetails extends Component {
                 document.querySelectorAll(".last_msg")[0].style.display = "block";
                 this.setState({ lastmsg: "Last Name field is required" })
             }
-            if ((this.state.countryIcon == null || this.state.countryIcon == false)  && (this.props.profileDetails.country == '' || this.props.profileDetails.country == null)) {
+            if ((this.state.countryIcon == null || this.state.countryIcon == false) && (this.props.profileDetails.country == '' || this.props.profileDetails.country == null)) {
                 this.setState({ countryIcon: false })
                 document.querySelectorAll(".country_msg")[0].style.display = "block";
                 this.setState({ countrymsg: "Country field is required" })
@@ -356,13 +359,13 @@ class PersonalDetails extends Component {
         this.setState({ Datedata: date })
         this.onChangeField(value, field);
     }
-    onCountryChange(country,state ,city) {
-        console.log(country,state ,city)
-        this.setState({ countrySelected: country ,stateSelected:state,citySelected:city})
+    onCountryChange(country, state, city) {
+        console.log(country, state, city)
+        this.setState({ countrySelected: country, stateSelected: state, citySelected: city })
         var loc = {
-            country:country,
-            state:state,
-            city:city
+            country: country,
+            state: state,
+            city: city
         }
         this.onChangeField(loc, 'country');
     }
@@ -495,8 +498,8 @@ class PersonalDetails extends Component {
                 this.setState({ lastmsg: "Last Name field is required" })
             }
         } else if (field == "country") {
-            console.log(value,this.state)
-            if ((this.state.countrySelected !== undefined && this.state.countrySelected !== null ) && (this.state.stateSelected!==null && this.state.stateSelected!==undefined) && (this.state.citySelected!==null || this.state.citySelected!==undefined) ) {
+            console.log(value, this.state)
+            if ((this.state.countrySelected !== undefined && this.state.countrySelected !== null) && (this.state.stateSelected !== null && this.state.stateSelected !== undefined) && (this.state.citySelected !== null || this.state.citySelected !== undefined)) {
                 this.setState({ countryIcon: true })
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
             } else {
@@ -505,7 +508,7 @@ class PersonalDetails extends Component {
                 this.setState({ countrymsg: "Country Field is required" })
             }
         } else if (field == "dob") {
-            console.log(value,field)
+            console.log(value, field)
             if ((value["day"]) && (value["month"]) && (value["year"])) {
                 this.setState({ dobIcon: true })
                 document.querySelectorAll(".dob_msg")[0].style.display = "none";
@@ -538,7 +541,7 @@ class PersonalDetails extends Component {
                 document.querySelectorAll(".street2_msg")[0].style.display = "block";
                 this.setState({ street2msg: "Street Address limit is 100 characters" })
             }
-        }  else if (field == "postal_code") {
+        } else if (field == "postal_code") {
             if (value !== "") {
                 if (value.length >= 2 && value.length <= 20) {
                     this.setState({ postalIcon: true })
@@ -632,7 +635,7 @@ class PersonalDetails extends Component {
                                 </Third_Row>
                                 <Fourth_Row>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
-                                        <CountryPick {...this.props} onCountryChange={(country,state,city) => this.onCountryChange(country,state,city)} />
+                                        <CountryPick {...this.props} onCountryChange={(country, state, city) => this.onCountryChange(country, state, city)} />
                                         <Country_Msg className="country_msg">{this.state.countrymsg}</Country_Msg>
                                     </Col>
                                 </Fourth_Row>

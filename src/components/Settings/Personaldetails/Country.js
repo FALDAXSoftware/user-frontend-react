@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import { Select,Row,Col } from 'antd';
+import { Select, Row, Col } from 'antd';
 import { globalVariables } from '../../../Globals';
 import CountryData from 'country-state-city';
 
@@ -52,63 +52,62 @@ export default class CountryPick extends Component {
         this.state = {
             countries: [],
             country_selected: "",
-            state_selected:'',
-            city_selected:'',
+            state_selected: '',
+            city_selected: '',
             CSS: '',
             theme: '',
-            states:[],
-            cities:[]
+            states: [],
+            cities: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeState = this.handleChangeState.bind(this);
         this.handleChangeCity = this.handleChangeCity.bind(this);
     }
 
-    handleChange(value,position) {
-         console.log(`selected ${value}`);
+    handleChange(value, position) {
+        console.log(`selected ${value}`);
 
         this.setState({ country_selected: value });
-        var newPosition = Number(position.key)+1;
+        var newPosition = Number(position.key);
         var states = CountryData.getStatesOfCountry(newPosition);
-        this.setState({states})
-        console.log("state",states,newPosition);
-        
+        this.setState({ states })
+        console.log("state >>>>>>>>>>>>>>>>>", states, newPosition);
+
     }
-    handleChangeState(value,position)
-    {
-        console.log(value,position)
+    handleChangeState(value, position) {
+        console.log('>>>>>>>STATE', value, position)
         this.setState({ state_selected: value });
-        var newPosition = Number(position.key)+1;
-        var cities = CountryData.getCitiesOfState(newPosition,);
-        this.setState({cities})
+        var statePosition = Number(position.key);
+        console.log('?????????????', statePosition)
+        var cities = CountryData.getCitiesOfState(statePosition);
+        this.setState({ cities })
     }
-    handleChangeCity(value,position)
-    {
-        console.log(value,position)
+    handleChangeCity(value, position) {
+        console.log(value, position)
         this.setState({ city_selected: value });
-        this.props.onCountryChange(this.state.country_selected,this.state.state_selected,value);
+        this.props.onCountryChange(this.state.country_selected, this.state.state_selected, value);
     }
     handleBlur() {
         /* console.log('blur'); */
     }
     componentDidMount() {
- /*        fetch(API_URL + '/users/countries', {
-            method: "get",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: "Bearer " + this.props.isLoggedIn
-            }
-        })
-            .then(response => response.json())
-            .then((responseData) => {
-                this.setState({ countries: responseData.data, fetching: false, callOnce: true });
-                 console.log(responseData) 
-                Countries = responseData.data;
-            }); */
-            let allCountries = CountryData.getAllCountries();
-            console.log(allCountries)
-            this.setState({ countries: allCountries, fetching: false, callOnce: true });
+        /*        fetch(API_URL + '/users/countries', {
+                   method: "get",
+                   headers: {
+                       Accept: 'application/json',
+                       'Content-Type': 'application/json',
+                       Authorization: "Bearer " + this.props.isLoggedIn
+                   }
+               })
+                   .then(response => response.json())
+                   .then((responseData) => {
+                       this.setState({ countries: responseData.data, fetching: false, callOnce: true });
+                        console.log(responseData) 
+                       Countries = responseData.data;
+                   }); */
+        let allCountries = CountryData.getAllCountries();
+        console.log(allCountries)
+        this.setState({ countries: allCountries, fetching: false, callOnce: true });
     }
 
     render() {
@@ -127,40 +126,40 @@ export default class CountryPick extends Component {
                         onBlur={this.handleBlur}
                         filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                     >
-                        {this.state.countries.map((country, index) => <Option key={index} value={country.name}>{country.name}</Option>)}
+                        {this.state.countries.map((country, index) => <Option key={country.id} value={country.name}>{country.name}</Option>)}
                     </SelectS>
                 </Col>
                 <Col md={8} xl={8}>
-                        <Country>State*</Country>
-                        <SelectS
-                                showSearch
-                                value={this.state.state_selected !== "" ? this.state.state_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.state)}
-                                placeholder="Select a State"
-                                className="Country_Select"
-                                dropdownClassName="country_select_drop"
-                                optionFilterProp="children"
-                                onChange={this.handleChangeState}
-                                onBlur={this.handleBlur}
-                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                            >
-                                {this.state.states.map((state, index) => <Option key={index} value={state.name}>{state.name}</Option>)}
-                        </SelectS>
+                    <Country>State*</Country>
+                    <SelectS
+                        showSearch
+                        value={this.state.state_selected !== "" ? this.state.state_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.state)}
+                        placeholder="Select a State"
+                        className="Country_Select"
+                        dropdownClassName="country_select_drop"
+                        optionFilterProp="children"
+                        onChange={this.handleChangeState}
+                        onBlur={this.handleBlur}
+                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    >
+                        {this.state.states.map((state, index) => <Option key={state.id} value={state.name}>{state.name}</Option>)}
+                    </SelectS>
                 </Col>
                 <Col md={8} xl={8}>
-                        <Country>City*</Country>
-                        <SelectS
-                                showSearch
-                                value={this.state.city_selected !== "" ? this.state.city_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.city_town)}
-                                placeholder="Select a Country"
-                                className="Country_Select"
-                                dropdownClassName="country_select_drop"
-                                optionFilterProp="children"
-                                onChange={this.handleChangeCity}
-                                onBlur={this.handleBlur}
-                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                            >
-                                {this.state.cities!==null?this.state.cities.map((city, index) => <Option key={index} value={city.name}>{city.name}</Option>):''}
-                        </SelectS>
+                    <Country>City*</Country>
+                    <SelectS
+                        showSearch
+                        value={this.state.city_selected !== "" ? this.state.city_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.city_town)}
+                        placeholder="Select a Country"
+                        className="Country_Select"
+                        dropdownClassName="country_select_drop"
+                        optionFilterProp="children"
+                        onChange={this.handleChangeCity}
+                        onBlur={this.handleBlur}
+                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    >
+                        {this.state.cities !== null ? this.state.cities.map((city, index) => <Option key={index} value={city.name}>{city.name}</Option>) : ''}
+                    </SelectS>
                 </Col>
             </Row>
         );
