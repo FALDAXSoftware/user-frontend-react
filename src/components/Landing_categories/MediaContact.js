@@ -12,7 +12,7 @@ import {
 } from '../../styled-components/landingCategories/contactStyle';
 import { globalVariables } from "../../Globals";
 import {
-    MediaContactICon, MediaWhite, MediaFB, MediaGoogle, MediaLinkedin, MediaTweeter
+    MediaContactICon, MediaWhite, MediaFB, MediaLinkedin, MediaTweeter, MediaDiscord
 } from "../../Constants/images";
 
 let { API_URL } = globalVariables;
@@ -102,8 +102,8 @@ class MediaContact extends Component {
                                                 <MediaUL>
                                                     <a href={`${contact.fb_profile}`}><MediaLI><img src={MediaFB} /></MediaLI></a>
                                                     <a href={`${contact.twitter_profile}`}><MediaLI><img src={MediaTweeter} /></MediaLI></a>
-                                                    <a href={`${contact.google_profile}`}><MediaLI><img src={MediaGoogle} /></MediaLI></a>
                                                     <a href={`${contact.linkedin_profile}`}><MediaLI><img src={MediaLinkedin} /></MediaLI></a>
+                                                    <a href={`${contact.discord_profile}`}><MediaLI><img src={MediaDiscord} /></MediaLI></a>
                                                 </MediaUL>
                                                 : ""}
                                         </Col_wrap_l>
