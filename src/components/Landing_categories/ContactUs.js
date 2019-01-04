@@ -11,7 +11,7 @@ import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import Contact_Map from "./Contact_Map";
 import {
-    MapIcon, BlueMarker, EmailIcon, CallIcon, CallBlue, BlueEmail
+    MapIcon, BlueMarker, EmailIcon, CallIcon, CallBlue, BlueEmail, ContactMap
 } from "../../Constants/images";
 import {
     Headcontact, Head_span, Contact_wrap, Grey_wrap, Row_wrap, Left_col, Sub_head,
@@ -29,6 +29,13 @@ export const ContainerContact = styled(Container)`
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
+`
+export const MapImage = styled.div`
+    background-position: center;
+    background-size: cover;
+    background-image: url(${ContactMap});
+    height: 555px;
+    width: 100%;
 `
 
 class ContactUs extends Component {
@@ -190,7 +197,8 @@ class ContactUs extends Component {
                                 </Col>
                                 <Col sm={24} xl={12}>
                                     <Map_wrap>
-                                        <Contact_Map />
+                                        <MapImage />
+                                        {/* <Contact_Map /> */}
                                     </Map_wrap>
                                 </Col>
                             </Row>
