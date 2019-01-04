@@ -185,19 +185,19 @@ class BlogDetails extends Component {
                                     </SocialHead>
                                     {contactDetails !== null ? <Social_Li>
                                         <LI1>
-                                            <a href={contactDetails.fb_profile}><img width="40" height="40" src={FBIcon} /></a>
+                                            <a target="_blank" href={contactDetails.fb_profile}><img width="40" height="40" src={FBIcon} /></a>
                                         </LI1>
                                         <LI2>
-                                            <a href={contactDetails.twitter_profile}><img width="40" height="40" src={TweeterIcon} /></a>
+                                            <a target="_blank" href={contactDetails.twitter_profile}><img width="40" height="40" src={TweeterIcon} /></a>
                                         </LI2>
                                         <LI2>
-                                            <a href={contactDetails.google_profile}><img width="40" height="40" src={GoogleIcon} /></a>
+                                            <a target="_blank" href={contactDetails.google_profile}><img width="40" height="40" src={GoogleIcon} /></a>
                                         </LI2>
                                         <LI2>
-                                            <a href={contactDetails.youtube_profile}><img width="40" height="40" src={YoutubeIcon} /></a>
+                                            <a target="_blank" href={contactDetails.youtube_profile}><img width="40" height="40" src={YoutubeIcon} /></a>
                                         </LI2>
                                         <LI2>
-                                            <a href={contactDetails.linkedin_profile}><img width="40" height="40" src={LinkedinIcon} /></a>
+                                            <a target="_blank" href={contactDetails.linkedin_profile}><img width="40" height="40" src={LinkedinIcon} /></a>
                                         </LI2>
                                     </Social_Li> : ""}
                                 </Right_Col>

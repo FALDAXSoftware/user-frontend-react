@@ -100,10 +100,10 @@ class MediaContact extends Component {
                                             <Mediaspan>MEDIA CONTACT</Mediaspan>
                                             {contact !== null ?
                                                 <MediaUL>
-                                                    <a href={`${contact.fb_profile}`}><MediaLI><img src={MediaFB} /></MediaLI></a>
-                                                    <a href={`${contact.twitter_profile}`}><MediaLI><img src={MediaTweeter} /></MediaLI></a>
-                                                    <a href={`${contact.linkedin_profile}`}><MediaLI><img src={MediaLinkedin} /></MediaLI></a>
-                                                    <a href={`${contact.discord_profile}`}><MediaLI><img src={MediaDiscord} /></MediaLI></a>
+                                                    <a target="_blank" href={`${contact.fb_profile}`}><MediaLI><img src={MediaFB} /></MediaLI></a>
+                                                    <a target="_blank" href={`${contact.twitter_profile}`}><MediaLI><img src={MediaTweeter} /></MediaLI></a>
+                                                    <a target="_blank" href={`${contact.linkedin_profile}`}><MediaLI><img src={MediaLinkedin} /></MediaLI></a>
+                                                    <a target="_blank" href={`${contact.discord_profile}`}><MediaLI><img src={MediaDiscord} /></MediaLI></a>
                                                 </MediaUL>
                                                 : ""}
                                         </Col_wrap_l>
