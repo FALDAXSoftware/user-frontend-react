@@ -45,6 +45,26 @@ const SelectS = styled(Select)`
         outline:0;
         box-shadow:none;
     }
+    @media(max-width:767px)
+    {
+        margin-top:0px;
+    }
+`
+const Select_wrap = styled.div`
+    @media(max-width:767px)
+    {
+        margin-top:25px;
+    }
+`   
+const Country_wrap = styled.div`
+    @media(max-width:991px)
+    {
+        margin-right:20px;
+    }
+    @media(max-width:767px)
+    {
+        margin-right:0px;
+    }
 `
 export default class CountryPick extends Component {
     constructor(props) {
@@ -56,7 +76,7 @@ export default class CountryPick extends Component {
             city_selected: null,
             countryID: "",
             stateID: "",
-            CSS: '',
+            CSS: "Country_Select",
             theme: '',
             states: [],
             cities: []
@@ -67,18 +87,15 @@ export default class CountryPick extends Component {
     }
 
     handleChange(value, position) {
-        console.log(`selected ${value}`);
         var newPosition = Number(position.key);
         var states = CountryData.getStatesOfCountry(newPosition);
 
-        this.setState({ city_selected: null, state_selected: null, country_selected: value, stateID: null, countryID: null, states });
+        this.setState({ city_selected: null, state_selected: null, country_selected: value, stateID: null, countryID: newPosition, states });
 
         this.props.onCountryChange(value, null, null, null, null);
-        console.log("state", states, newPosition);
 
     }
     handleChangeState(value, position) {
-        console.log(value, position)
         var newPosition = Number(position.key);
 
         var country = this.props.profileDetails.country !== undefined && this.state.country_selected == null ? this.props.profileDetails.country : this.state.country_selected;
@@ -88,14 +105,12 @@ export default class CountryPick extends Component {
         var countryID = this.props.profileDetails.country_id !== undefined && this.state.countryID == null ? this.props.profileDetails.country_id : this.state.countryID;
 
         var cities = CountryData.getCitiesOfState(newPosition);
-        console.log(cities, newPosition)
 
-        this.setState({ state_selected: value, city_selected: null, country_selected: country, stateID, countryID, cities });
+        this.setState({ state_selected: value, city_selected: null, country_selected: country, stateID:newPosition, cities });
 
         this.props.onCountryChange(country, value, null, stateID, countryID);
     }
     handleChangeCity(value, position) {
-        console.log(value, position, this.props)
         var state = this.props.profileDetails.state !== undefined && this.state.state_selected == null ? this.props.profileDetails.state : this.state.state_selected;
 
         var country = this.props.profileDetails.country !== undefined && this.state.country_selected == null ? this.props.profileDetails.country : this.state.country_selected;
@@ -128,73 +143,86 @@ export default class CountryPick extends Component {
                        Countries = responseData.data;
                    }); */
         let allCountries = CountryData.getAllCountries();
-        console.log(allCountries)
         this.setState({ countries: allCountries, fetching: false, callOnce: true });
-        console.log(this.props)
         if (this.props.profileDetails.country_id !== undefined) {
             var states = CountryData.getStatesOfCountry(this.props.profileDetails.country_id);
-            console.log(states)
             this.setState({ states })
             if (this.props.profileDetails.state_id !== undefined) {
                 var cities = CountryData.getCitiesOfState(this.props.profileDetails.state_id);
-                console.log(cities)
                 this.setState({ cities })
+            }
+        }
+        if(this.props.theme!==undefined && this.props.theme!=="")
+        {
+            if(this.props.theme==true)
+            {
+                this.setState({CSS:"Country_Select_night"});
+            }
+            if(this.props.theme==false)
+            {
+                this.setState({CSS:"Country_Select"});
             }
         }
     }
 
     render() {
         return (
+            <Country_wrap>
             <Row>
-                <Col md={8} xl={8}>
-                    <Country>Country*</Country>
-                    <SelectS
-                        showSearch
-                        value={this.state.country_selected !== null ? this.state.country_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.country)}
-                        placeholder="Select a Country"
-                        className="Country_Select"
-                        dropdownClassName="country_select_drop"
-                        optionFilterProp="children"
-                        onChange={this.handleChange}
-                        onBlur={this.handleBlur}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    >
-                        {this.state.countries.map((country, index) => <Option key={country.id} value={country.name}>{country.name}</Option>)}
-                    </SelectS>
+                <Col sm={24} md={8} xl={8} xxl={8}>
+                        <Country>Country*</Country>
+                        <SelectS
+                            showSearch
+                            value={this.state.country_selected !== null ? this.state.country_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.country)}
+                            placeholder="Select a Country"
+                            className={this.state.CSS}
+                            dropdownClassName="country_select_drop"
+                            optionFilterProp="children"
+                            onChange={this.handleChange}
+                            onBlur={this.handleBlur}
+                            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        >
+                            {this.state.countries.map((country, index) => <Option key={country.id} value={country.name}>{country.name}</Option>)}
+                        </SelectS>
                 </Col>
-                <Col md={8} xl={8}>
-                    <Country>State*</Country>
-                    <SelectS
-                        showSearch
-                        value={this.state.state_selected !== null ? this.state.state_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.state)}
-                        placeholder="Select a State"
-                        className="Country_Select"
-                        dropdownClassName="country_select_drop"
-                        optionFilterProp="children"
-                        onChange={this.handleChangeState}
-                        onBlur={this.handleBlur}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    >
-                        {this.state.states.map((state, index) => <Option key={state.id} value={state.name}>{state.name}</Option>)}
-                    </SelectS>
+                <Col sm={24} md={8} xl={8} xxl={8}>
+                    <Select_wrap>
+                        <Country>State*</Country>
+                        <SelectS
+                                showSearch
+                                value={this.state.state_selected !== null ? this.state.state_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.state)}
+                                placeholder="Select a State"
+                                className={this.state.CSS}
+                                dropdownClassName="country_select_drop"
+                                optionFilterProp="children"
+                                onChange={this.handleChangeState}
+                                onBlur={this.handleBlur}
+                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                            >
+                                {this.state.states.map((state, index) => <Option key={state.id} value={state.name}>{state.name}</Option>)}
+                        </SelectS>
+                    </Select_wrap>
                 </Col>
-                <Col md={8} xl={8}>
-                    <Country>City*</Country>
-                    <SelectS
-                        showSearch
-                        value={this.state.city_selected !== null ? this.state.city_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.city_town)}
-                        placeholder="Select a Country"
-                        className="Country_Select"
-                        dropdownClassName="country_select_drop"
-                        optionFilterProp="children"
-                        onChange={this.handleChangeCity}
-                        onBlur={this.handleBlur}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    >
-                        {this.state.cities !== null ? this.state.cities.map((city, index) => <Option key={city.id} value={city.name}>{city.name}</Option>) : ''}
-                    </SelectS>
+                <Col sm={24} md={8} xl={8} xxl={8}>
+                    <Select_wrap>
+                        <Country>City*</Country>
+                        <SelectS
+                                showSearch
+                                value={this.state.city_selected !== null ? this.state.city_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.city_town)}
+                                placeholder="Select a City"
+                                className={this.state.CSS}
+                                dropdownClassName="country_select_drop"
+                                optionFilterProp="children"
+                                onChange={this.handleChangeCity}
+                                onBlur={this.handleBlur}
+                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                            >
+                                {this.state.cities!==null?this.state.cities.map((city, index) => <Option key={city.id} value={city.name}>{city.name}</Option>):''}
+                        </SelectS>
+                    </Select_wrap>
                 </Col>
             </Row>
+            </Country_wrap>
         );
     }
 }

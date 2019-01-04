@@ -200,11 +200,9 @@ class WalletPopup extends Component {
     }
     componentWillReceiveProps(props,newProps)
     {
-        console.log(props);
     }
     componentDidMount()
     {
-        console.log(this.props)
         if(this.props.title=="RECEIVE")
         fetch(API_URL + "/wallet/get-qr-code/BTC" ,{
             method:"get",
@@ -217,7 +215,6 @@ class WalletPopup extends Component {
         })
         .then(response => response.json())
         .then((responseData) => {
-            console.log(responseData)
             this.setState({receive:responseData.receiveCoin})
         })
         .catch(error => {
@@ -262,7 +259,6 @@ class WalletPopup extends Component {
     render() {
         return (
             <div>
-                {console.log(this.state.receiveAdd)}
                 <WalletModal
                     title={<Title_div><Title>{this.props.title}</Title></Title_div>}
                     visible={this.props.visible}
@@ -272,7 +268,6 @@ class WalletPopup extends Component {
                     width={656}
                     height={460}
                 >
-                   {console.log(this.props.title)}
                         {this.props.title=="RECEIVE"?
                         <Modal_wrap>
                             {Object.keys(this.state.receive).length>0

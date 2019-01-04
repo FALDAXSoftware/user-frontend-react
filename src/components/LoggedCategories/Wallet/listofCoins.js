@@ -48,9 +48,7 @@ export default class TableofCoin extends React.Component {
                     </Head>
                 </thead>
                 <tbody>
-                    {console.log(this.props.tableData)}
                     {this.props.tableData !== undefined ? Object.keys(tableData).map(function (index, key) {
-                        console.log(index, key)
                         return (
                             <Col1>
                                 <td>

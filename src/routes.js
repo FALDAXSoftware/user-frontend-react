@@ -58,7 +58,6 @@ export default class AppRouter extends Component {
     /* console.log("asdasdasdasdasdasdasdasdasdasd", this.props) */
     return (
       <div>
-        {console.log("Routing ma error")}
         {routes.map(singleRoute => {
           const { path, exact, ...otherProps } = singleRoute;
           return (

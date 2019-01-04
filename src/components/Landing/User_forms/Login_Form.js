@@ -226,7 +226,6 @@ class Login_Form extends React.Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      console.log("validate Fields", error, value, this.state)
       if (error == null && this.state.emailIcon == true) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
@@ -241,7 +240,6 @@ class Login_Form extends React.Component {
         if (value.otp && value.otp !== null && value.otp.trim() !== "" && value.otp !== undefined) {
           obj['otp'] = value.otp;
         }
-        console.log(obj)
         this.props.Login(obj);
       } else {
         this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue.")
@@ -385,7 +383,6 @@ class Login_Form extends React.Component {
     }
   }
   render() {
-    console.log(this.props)
     if (this.props.isLoggedIn) {
       this.props.history.push("/editProfile");
     }

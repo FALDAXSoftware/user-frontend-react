@@ -71,7 +71,6 @@ class Wallet extends Component {
     }
     componentWillReceiveProps(props,newProps)
     {
-        console.log("48484",props,newProps)
         var total = 0;
         if(this.props.walletDetails!==null)
         {
@@ -79,18 +78,15 @@ class Wallet extends Component {
             if(tableData!==undefined)
             {
                 Object.keys(tableData).map(function(index,key){
-                    console.log(tableData[index].USD)
                     if(tableData[index].USD!==undefined)
                     total = total + tableData[index].USD;
                 })
-                console.log("TOTAL",total)
                 this.setState({total});
             }
         }
     }
     componentDidMount()
     {
-        console.log("DID HELLO")
         this.props.walletBal(this.props.isLoggedIn);
         this.props.getAllCoins(this.props.isLoggedIn)
     }
@@ -103,7 +99,6 @@ class Wallet extends Component {
     }
     totalCurr(total)
     {
-        console.log(total)
         this.setState({total:total})
     }
     render()
@@ -133,7 +128,6 @@ class Wallet extends Component {
                             </Total>
                         </Header_wrap>
                         <CoinTable>
-                            {console.log("data",this.state)}
                             <Table_wrap>
                                 {
                                     this.props.walletDetails!==null?
@@ -159,7 +153,6 @@ class Wallet extends Component {
                             </SearchCoin2>
                         </Header_wrap2>
                         <CoinTable>
-                            {console.log(this.state.myCoins)}
                             <Table_wrap>
                                {this.props.allCoins!==null?
                                     <ListofCoins tableData={this.props.allCoins.data.rows}/> 
@@ -174,7 +167,6 @@ class Wallet extends Component {
     }
 }
 function mapStateToProps(state) {
-    console.log(state)
     return ({
         walletDetails:state.walletReducer.walletData!==undefined ? state.walletReducer.walletData : null,
         allCoins:state.walletReducer.allCoinsData!==undefined ? state.walletReducer.allCoinsData : null,

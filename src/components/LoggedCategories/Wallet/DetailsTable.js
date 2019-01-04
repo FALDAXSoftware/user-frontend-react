@@ -39,7 +39,6 @@ class DetailsTable extends React.Component
     }
     componentWillReceiveProps(props,newProps)
     {
-        console.log(props,newProps)
         
     }
     componentDidMount()
@@ -55,7 +54,6 @@ class DetailsTable extends React.Component
     }
     render()
     {
-        console.log(this.state,this.props)
         let {tableData} = this.props ;
         var me = this;
         return(
@@ -80,12 +78,12 @@ class DetailsTable extends React.Component
                         </Head>
                     </thead>
                     <tbody>
-                        {console.log(this.props.tableData,Object.keys(this.state.walletDetails).length)}
+                        
                         {this.state.walletDetails!==null?Object.keys(this.state.walletDetails).length>0?Object.keys(this.state.walletDetails).map(function(index,key){
                                 var date_month = moment.utc(me.state.walletDetails[index].created_at).local().format("MMM");
                                 var date_day = moment.utc(me.state.walletDetails[index].created_at).local().format("DD");
                                 var details = me.state.walletDetails;
-                                console.log(Object.keys(me.state.walletDetails).length,index,key,me.state.walletDetails[index])
+                                
                                         return (
                                             <Col1 wallet>
                                                 <td>    
@@ -116,7 +114,6 @@ class DetailsTable extends React.Component
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return ({
        
     })

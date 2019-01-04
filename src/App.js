@@ -37,7 +37,6 @@ class App extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.props.location !== prevProps.location) {
-      console.log("APPPP")
       if (this.props.location !== undefined) {
         if (this.props.location.hash !== "" && this.props.location.hash !== undefined && this.props.location.hash == "#block-world-map") {
           window.scrollTo(0, 1050);
@@ -48,7 +47,6 @@ class App extends Component {
     }
   }
   componentWillReceiveProps(props, newProps) {
-    console.log("APPPPP",this.props)
     if (props.theme !== undefined) {
       if (props.theme !== this.state.theme) {
         if (props.theme == false)
@@ -60,7 +58,6 @@ class App extends Component {
   }
   componentDidMount() {
     window.scrollTo(0, 0);
-    console.log("APPPPP",this.props)
     if(this.props.theme!==undefined)
         {
             if(this.props.theme !== this.state.theme)

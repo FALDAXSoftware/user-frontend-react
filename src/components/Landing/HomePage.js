@@ -288,7 +288,6 @@ export default class NavigationBar extends Component {
     return (
       <div>
         <Layout>
-          {console.log("HomePage")}
           <Header_main {...this.props} />
           <Content_style>
             <Home_first />
