@@ -36,7 +36,7 @@ volumes: [
                 s3Delete(bucket:'www.faldax.com', path:'')
                  s3Upload(file:'build', bucket:'www.faldax.com', path:'')
                 }
-                sleep 9999
+                
               
                  }
 
