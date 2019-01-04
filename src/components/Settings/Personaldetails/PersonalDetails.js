@@ -116,17 +116,25 @@ export const Last_name = styled(First_name)`
 export const Last_input = styled(First_input)`
     width:90%;
     border:1px solid #dadfe3;
-    @media(max-width:768px)
+    @media(max-width:767px)
     {
         width:100%;
     }
 `
 export const Postal_input = styled(Last_input)`
     width:95%;
+    @media(max-width:767px)
+    {
+        width:100%;
+    }
 `
 export const Second_Row = styled(Row)`
     text-align:left;
     margin-top:25px;
+    @media(max-width:767px)
+    {
+        margin-top:0px;
+    }
 `
 export const Country = styled(First_name)`
 `
@@ -147,6 +155,7 @@ export const Date_birth = styled(First_name)`
     }
 `
 export const Third_Row = styled(Second_Row)`
+    margin-top:25px;
     text-align:left;
 `
 export const Street_Address = styled(First_name)`
@@ -166,6 +175,7 @@ export const Street_input = styled(First_input)`
 `
 export const Fourth_Row = styled(Second_Row)`
     text-align:left;
+    margin-top:25px;
 `
 export const City = styled(First_name)`
 `

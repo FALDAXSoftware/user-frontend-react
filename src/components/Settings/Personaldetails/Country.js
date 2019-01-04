@@ -45,6 +45,26 @@ const SelectS = styled(Select)`
         outline:0;
         box-shadow:none;
     }
+    @media(max-width:767px)
+    {
+        margin-top:0px;
+    }
+`
+const Select_wrap = styled.div`
+    @media(max-width:767px)
+    {
+        margin-top:25px;
+    }
+`   
+const Country_wrap = styled.div`
+    @media(max-width:991px)
+    {
+        margin-right:20px;
+    }
+    @media(max-width:767px)
+    {
+        margin-right:0px;
+    }
 `
 export default class CountryPick extends Component {
     constructor(props) {
@@ -149,24 +169,26 @@ export default class CountryPick extends Component {
 
     render() {
         return (
+            <Country_wrap>
             <Row>
-                <Col md={8} xl={8}>
-                    <Country>Country*</Country>
-                    <SelectS
-                        showSearch
-                        value={this.state.country_selected !== null ? this.state.country_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.country)}
-                        placeholder="Select a Country"
-                        className="Country_Select"
-                        dropdownClassName="country_select_drop"
-                        optionFilterProp="children"
-                        onChange={this.handleChange}
-                        onBlur={this.handleBlur}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    >
-                        {this.state.countries.map((country, index) => <Option key={country.id} value={country.name}>{country.name}</Option>)}
-                    </SelectS>
+                <Col sm={24} md={8} xl={8} xxl={8}>
+                        <Country>Country*</Country>
+                        <SelectS
+                            showSearch
+                            value={this.state.country_selected !== null ? this.state.country_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.country)}
+                            placeholder="Select a Country"
+                            className="Country_Select"
+                            dropdownClassName="country_select_drop"
+                            optionFilterProp="children"
+                            onChange={this.handleChange}
+                            onBlur={this.handleBlur}
+                            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        >
+                            {this.state.countries.map((country, index) => <Option key={country.id} value={country.name}>{country.name}</Option>)}
+                        </SelectS>
                 </Col>
-                <Col md={8} xl={8}>
+                <Col sm={24} md={8} xl={8} xxl={8}>
+                    <Select_wrap>
                         <Country>State*</Country>
                         <SelectS
                                 showSearch
@@ -181,8 +203,10 @@ export default class CountryPick extends Component {
                             >
                                 {this.state.states.map((state, index) => <Option key={state.id} value={state.name}>{state.name}</Option>)}
                         </SelectS>
+                    </Select_wrap>
                 </Col>
-                <Col md={8} xl={8}>
+                <Col sm={24} md={8} xl={8} xxl={8}>
+                    <Select_wrap>
                         <Country>City*</Country>
                         <SelectS
                                 showSearch
@@ -197,8 +221,10 @@ export default class CountryPick extends Component {
                             >
                                 {this.state.cities!==null?this.state.cities.map((city, index) => <Option key={city.id} value={city.name}>{city.name}</Option>):''}
                         </SelectS>
+                    </Select_wrap>
                 </Col>
             </Row>
+            </Country_wrap>
         );
     }
 }

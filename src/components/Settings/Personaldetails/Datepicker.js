@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
+import {Row,Col} from 'antd';
 import { YearPicker, MonthPicker, DayPicker } from 'react-dropdown-date';
 import styled from "styled-components";
 
@@ -92,61 +93,68 @@ export default class Datepicker extends Component {
 
         return (
             <Picker_wrap>
-                <DayPicker
-                    defaultValue={day ? day : ''}
-                    // mandatory
-                    year={this.state.year}
-                    // mandatory
-                    month={this.state.month}
-                    // mandatory if end={} is given in YearPicker
-                    endYearGiven
-                    // mandatory
-                    value={this.state.day}
-                    // mandatory
-                    onChange={(day) => {
-                        this.onChangeDate(day, "day")
-                        /* console.log(day); */
-                    }}
-                    id={this.state.dayCSS}
-                    name={'day'}
-                    optionClasses={'option-day'}
-                />
-
-                <MonthPicker
-                    defaultValue={month ? month : ''}
-                    // mandatory if end={} is given in YearPicker
-                    endYearGiven
-                    // mandatory
-                    year={this.state.year}
-                    // mandatory
-                    value={this.state.month}
-                    // mandatory
-                    onChange={(month) => {
-                        this.onChangeDate(month, "month")
-                        /*  console.log(month); */
-                    }}
-                    id={this.state.monthCSS}
-                    name={'month'}
-                    optionClasses={'option-month'}
-                />
-                <YearPicker
-                    defaultValue={year ? year : ''}
-                    // default is 1900
-                    start={lowerDate}
-                    // default is current year
-                    end={higherDate}
-                    // default is ASCENDING
-                    // mandatory
-                    value={this.state.year}
-                    // mandatory
-                    onChange={(year) => {
-                        this.onChangeDate(year, "year")
-                        /* console.log(year); */
-                    }}
-                    id={this.state.yearCSS}
-                    name={'year'}
-                    optionClasses={'option-year'}
-                />
+                <Row>
+                    <Col md={8} xl={8}>
+                        <DayPicker
+                            defaultValue={day ? day : ''}
+                            // mandatory
+                            year={this.state.year}
+                            // mandatory
+                            month={this.state.month}
+                            // mandatory if end={} is given in YearPicker
+                            endYearGiven
+                            // mandatory
+                            value={this.state.day}
+                            // mandatory
+                            onChange={(day) => {
+                                this.onChangeDate(day, "day")
+                                /* console.log(day); */
+                            }}
+                            id={this.state.dayCSS}
+                            name={'day'}
+                            optionClasses={'option-day'}
+                        />
+                    </Col>
+                    <Col md={8} xl={8}>
+                        <MonthPicker
+                            defaultValue={month ? month : ''}
+                            // mandatory if end={} is given in YearPicker
+                            endYearGiven
+                            // mandatory
+                            year={this.state.year}
+                            // mandatory
+                            value={this.state.month}
+                            // mandatory
+                            onChange={(month) => {
+                                this.onChangeDate(month, "month")
+                                /*  console.log(month); */
+                            }}
+                            id={this.state.monthCSS}
+                            name={'month'}
+                            optionClasses={'option-month'}
+                        />
+                    </Col>
+                    <Col md={8} xl={8}>
+                        <YearPicker
+                            defaultValue={year ? year : ''}
+                            // default is 1900
+                            start={lowerDate}
+                            // default is current year
+                            end={higherDate}
+                            // default is ASCENDING
+                            // mandatory
+                            value={this.state.year}
+                            // mandatory
+                            onChange={(year) => {
+                                this.onChangeDate(year, "year")
+                                /* console.log(year); */
+                            }}
+                            id={this.state.yearCSS}
+                            name={'year'}
+                            optionClasses={'option-year'}
+                        />
+                    </Col>
+                </Row>
             </Picker_wrap>
         );
     }
