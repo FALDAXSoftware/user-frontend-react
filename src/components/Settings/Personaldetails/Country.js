@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import { Select,Row,Col } from 'antd';
+import { Select, Row, Col } from 'antd';
 import { globalVariables } from '../../../Globals';
 import CountryData from 'country-state-city';
 
@@ -71,100 +71,96 @@ export default class CountryPick extends Component {
         super(props);
         this.state = {
             countries: [],
-            country_selected:null,
-            state_selected:null,
-            city_selected:null,
-            countryID:"",
-            stateID:"",
+            country_selected: null,
+            state_selected: null,
+            city_selected: null,
+            countryID: "",
+            stateID: "",
             CSS: '',
             theme: '',
-            states:[],
-            cities:[]
+            states: [],
+            cities: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeState = this.handleChangeState.bind(this);
         this.handleChangeCity = this.handleChangeCity.bind(this);
     }
 
-    handleChange(value,position) {
+    handleChange(value, position) {
         console.log(`selected ${value}`);
         var newPosition = Number(position.key);
         var states = CountryData.getStatesOfCountry(newPosition);
 
-        this.setState({ city_selected: null , state_selected:null , country_selected:value ,stateID:null,countryID:null,states });
+        this.setState({ city_selected: null, state_selected: null, country_selected: value, stateID: null, countryID: null, states });
 
-        this.props.onCountryChange(value,null,null,null,null);
-        console.log("state",states,newPosition);
-        
+        this.props.onCountryChange(value, null, null, null, null);
+        console.log("state", states, newPosition);
+
     }
-    handleChangeState(value,position)
-    {
-        console.log(value,position)
+    handleChangeState(value, position) {
+        console.log(value, position)
         var newPosition = Number(position.key);
 
-        var country = this.props.profileDetails.country!==undefined&&this.state.country_selected==null?this.props.profileDetails.country:this.state.country_selected;
+        var country = this.props.profileDetails.country !== undefined && this.state.country_selected == null ? this.props.profileDetails.country : this.state.country_selected;
 
-        var stateID = this.props.profileDetails.state_id!==undefined&&this.state.stateID==null?this.props.profileDetails.state_id:newPosition;
+        var stateID = this.props.profileDetails.state_id !== undefined && this.state.stateID == null ? this.props.profileDetails.state_id : newPosition;
 
-        var countryID = this.props.profileDetails.country_id!==undefined&&this.state.countryID==null?this.props.profileDetails.country_id:this.state.countryID;
+        var countryID = this.props.profileDetails.country_id !== undefined && this.state.countryID == null ? this.props.profileDetails.country_id : this.state.countryID;
 
         var cities = CountryData.getCitiesOfState(newPosition);
-        console.log(cities,newPosition)
+        console.log(cities, newPosition)
 
-        this.setState({ state_selected: value , city_selected:null , country_selected:country ,stateID,countryID,cities });
-        
-        this.props.onCountryChange(country,value,null,stateID,countryID);
+        this.setState({ state_selected: value, city_selected: null, country_selected: country, stateID, countryID, cities });
+
+        this.props.onCountryChange(country, value, null, stateID, countryID);
     }
-    handleChangeCity(value,position)
-    {
-        console.log(value,position,this.props)
-        var state = this.props.profileDetails.state!==undefined&&this.state.state_selected==null?this.props.profileDetails.state:this.state.state_selected;
+    handleChangeCity(value, position) {
+        console.log(value, position, this.props)
+        var state = this.props.profileDetails.state !== undefined && this.state.state_selected == null ? this.props.profileDetails.state : this.state.state_selected;
 
-        var country = this.props.profileDetails.country!==undefined&&this.state.country_selected==null?this.props.profileDetails.country:this.state.country_selected;
+        var country = this.props.profileDetails.country !== undefined && this.state.country_selected == null ? this.props.profileDetails.country : this.state.country_selected;
 
-        var stateID = this.props.profileDetails.state_id!==undefined&&this.state.stateID==null?this.props.profileDetails.state_id:this.state.stateID;
+        var stateID = this.props.profileDetails.state_id !== undefined && this.state.stateID == null ? this.props.profileDetails.state_id : this.state.stateID;
 
-        var countryID = this.props.profileDetails.country_id!==undefined&&this.state.countryID==null?
-        this.props.profileDetails.country_id:this.state.countryID;
-            
-        this.setState({ city_selected: value ,stateID,countryID });
-        this.props.onCountryChange(country,state,value,stateID,countryID);
-       
+        var countryID = this.props.profileDetails.country_id !== undefined && this.state.countryID == null ?
+            this.props.profileDetails.country_id : this.state.countryID;
+
+        this.setState({ city_selected: value, stateID, countryID });
+        this.props.onCountryChange(country, state, value, stateID, countryID);
+
     }
     handleBlur() {
         /* console.log('blur'); */
     }
     componentDidMount() {
- /*        fetch(API_URL + '/users/countries', {
-            method: "get",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: "Bearer " + this.props.isLoggedIn
+        /*        fetch(API_URL + '/users/countries', {
+                   method: "get",
+                   headers: {
+                       Accept: 'application/json',
+                       'Content-Type': 'application/json',
+                       Authorization: "Bearer " + this.props.isLoggedIn
+                   }
+               })
+                   .then(response => response.json())
+                   .then((responseData) => {
+                       this.setState({ countries: responseData.data, fetching: false, callOnce: true });
+                        console.log(responseData) 
+                       Countries = responseData.data;
+                   }); */
+        let allCountries = CountryData.getAllCountries();
+        console.log(allCountries)
+        this.setState({ countries: allCountries, fetching: false, callOnce: true });
+        console.log(this.props)
+        if (this.props.profileDetails.country_id !== undefined) {
+            var states = CountryData.getStatesOfCountry(this.props.profileDetails.country_id);
+            console.log(states)
+            this.setState({ states })
+            if (this.props.profileDetails.state_id !== undefined) {
+                var cities = CountryData.getCitiesOfState(this.props.profileDetails.state_id);
+                console.log(cities)
+                this.setState({ cities })
             }
-        })
-            .then(response => response.json())
-            .then((responseData) => {
-                this.setState({ countries: responseData.data, fetching: false, callOnce: true });
-                 console.log(responseData) 
-                Countries = responseData.data;
-            }); */
-            let allCountries = CountryData.getAllCountries();
-            console.log(allCountries)
-            this.setState({ countries: allCountries, fetching: false, callOnce: true });
-            console.log(this.props)
-            if(this.props.profileDetails.country_id!==undefined)
-            {
-                var states = CountryData.getStatesOfCountry(this.props.profileDetails.country_id);
-                console.log(states)
-                this.setState({states})
-                if(this.props.profileDetails.state_id!==undefined)
-                {
-                    var cities = CountryData.getCitiesOfState(this.props.profileDetails.state_id);
-                    console.log(cities)
-                    this.setState({cities})
-                }
-            }
+        }
     }
 
     render() {
