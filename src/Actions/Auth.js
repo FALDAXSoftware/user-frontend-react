@@ -27,7 +27,6 @@ export function deleteAccount(isLoggedIn, value) {
 
 
 export function Login(values) {
-    console.log(values)
     return (dispatch) => {
         fetch(API_URL + "/login", {
             method: "post",
@@ -38,13 +37,11 @@ export function Login(values) {
             body: JSON.stringify(values)
         }).then(response => response.json())
             .then((responseData) => {
-                console.log(responseData)
                 if (responseData.status == 200)
                     dispatch(loginAction(responseData))
                 else
                     dispatch(errorAction(responseData, "login"))
             }).catch(error => {
-                console.log(error)
             })
     }
 }

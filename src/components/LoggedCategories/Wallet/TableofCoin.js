@@ -57,9 +57,8 @@ class TableofCoin extends React.Component {
                         </Head>
                     </thead>
                     <tbody>
-                        {console.log(this.props.tableData)}
                         {this.props.tableData!==undefined?Object.keys(tableData).map(function(index,key){
-                                console.log(total,Object.keys(tableData).length,index,key)
+                                
                                         return (
                                             <Col1>
                                                 <td>
@@ -88,7 +87,6 @@ class TableofCoin extends React.Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return ({
 
     })

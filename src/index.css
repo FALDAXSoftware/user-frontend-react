@@ -547,8 +547,7 @@ table .ant-table-tbody > tr > td {
     font-size:16;
     font-weight:600;
     border-radius: 5px;
-    width:27%;
-    margin-left:12px;
+    width:85%;
     border:1px solid #dadfe3;
     padding:10px 5px;
 
@@ -567,8 +566,7 @@ table .ant-table-tbody > tr > td {
     font-size:16;
     font-weight:600;
     border-radius: 5px;
-    margin-left:12px;
-    width:27%;
+    width:85%;
     border:1px solid #dadfe3;
     padding:10px 5px;
   }
@@ -585,7 +583,7 @@ table .ant-table-tbody > tr > td {
     font-size:16;
     font-weight:600;
     border-radius: 5px;
-    width:27%;
+    width:85%;
     border:1px solid #dadfe3;
     padding:10px 5px;
   }
@@ -594,38 +592,40 @@ table .ant-table-tbody > tr > td {
     outline:0;
     box-shadow:none;
   }
-  @media(max-width:992px)
+  @media(max-width:991px)
   {
     #profile-year-night
     {
-      width:31%;
+      width:85%;
     }
     #profile-month-night
     {
-      width:30%;
+      width:85%;
     }
     #profile-day-night
     {
-      width:30%;
+      width:85%;
     }
     .Country_Select_night
     {
       width:95%;
     }
   }
-  @media(max-width:768px)
+  @media(max-width:767px)
   {
     #profile-year-night
     {
-      width:32%;
+      width:100%;
+      margin-top:15px;
     }
     #profile-month-night
     {
-      width:32%;
+      width:100%;
+      margin-top:15px;
     }
     #profile-day-night
     {
-      width:31%;
+      width:100%;
     }
     .Country_Select_night
     {
@@ -638,21 +638,21 @@ table .ant-table-tbody > tr > td {
     {
       margin-top:20px;
       display:block;
-      width:30%;
+      width:100%;
     }
     #profile-month-night
     {
       margin-top:20px;
       margin-left:0px;
       display:block;
-      width:30%;
+      width:100%;
     }
     #profile-day-night
     {
       margin-left:0px;
       margin-top:20px;
       display:block;
-      width:30%;
+      width:100%;
     }
   }
   

@@ -252,11 +252,9 @@ class Home_four extends Component {
                 }
             })
             .catch(error => { })
-        console.log("Home_four", this.props.location);
         if (this.props.location !== undefined) {
             if (this.props.location.hash !== "" && this.props.location.hash !== undefined && this.props.location.hash == "#block-world-map") {
                 var elmnt = document.getElementById("block-world-map");
-                console.log(document.getElementById("block-world-map"))
                 if (elmnt !== null)
                     elmnt.scrollIntoView();
             }

@@ -73,7 +73,6 @@ class Careers extends Component {
 
     }
     render() {
-        console.log(this.props);
         var me = this;
         return (
             <Contact_wrap>

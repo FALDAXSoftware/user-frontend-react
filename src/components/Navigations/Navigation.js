@@ -306,7 +306,6 @@ class Navigation extends Component {
         }
     }
     componentDidMount() {
-        console.log(this.props)
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme == false)
@@ -319,11 +318,9 @@ class Navigation extends Component {
         let queryParams
 
         if (this.props.location.pathname == "/signup") {
-            console.log("signup",this.props)
             queryParams = decodeURIComponent(this.props.queryParams)
             
             let qP = queryParams.split("=")
-            console.log("signup QP",qP)
             this.setState({ modal: 1, visible: true, qP: qP[1] });
         } else {
             if (this.props.queryParams !== undefined && this.props.queryParams !== "") {
@@ -357,7 +354,6 @@ class Navigation extends Component {
         const { modal } = this.state;
         return (
             <div>
-                {console.log("Navigation")}
                 <Header_main id="main">
                     <Logo>
                         <Link to="/">
@@ -424,7 +420,7 @@ class Navigation extends Component {
                         >
                             <Row>
                                 <Left_col xl={{ span: 12 }} sm={{ span: 24 }}>
-                                    {console.log(this.state.modal)}
+                                    
 
                                     {
                                         modal == 0 || (this.state.forgotParam !== undefined && this.props.pathname.includes("login")) ?

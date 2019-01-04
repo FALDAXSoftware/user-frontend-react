@@ -28,7 +28,6 @@ export default class History extends Component {
         for (let i = start; i < end; i++) {
             result.push(i);
         }
-        console.log(result);
         return result;
     }
     disabledDate(current) {
@@ -51,11 +50,9 @@ export default class History extends Component {
     }
 
     changeDate(date: moment, dateString: string) {
-        console.log(date, dateString)
     }
 
     onChangeCheck(checkedValues) {
-        console.log('checked = ', checkedValues);
     }
 
     render() {

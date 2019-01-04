@@ -76,7 +76,7 @@ export default class CountryPick extends Component {
             city_selected: null,
             countryID: "",
             stateID: "",
-            CSS: '',
+            CSS: "Country_Select",
             theme: '',
             states: [],
             cities: []
@@ -87,18 +87,15 @@ export default class CountryPick extends Component {
     }
 
     handleChange(value, position) {
-        console.log(`selected ${value}`);
         var newPosition = Number(position.key);
         var states = CountryData.getStatesOfCountry(newPosition);
 
-        this.setState({ city_selected: null, state_selected: null, country_selected: value, stateID: null, countryID: null, states });
+        this.setState({ city_selected: null, state_selected: null, country_selected: value, stateID: null, countryID: newPosition, states });
 
         this.props.onCountryChange(value, null, null, null, null);
-        console.log("state", states, newPosition);
 
     }
     handleChangeState(value, position) {
-        console.log(value, position)
         var newPosition = Number(position.key);
 
         var country = this.props.profileDetails.country !== undefined && this.state.country_selected == null ? this.props.profileDetails.country : this.state.country_selected;
@@ -108,14 +105,12 @@ export default class CountryPick extends Component {
         var countryID = this.props.profileDetails.country_id !== undefined && this.state.countryID == null ? this.props.profileDetails.country_id : this.state.countryID;
 
         var cities = CountryData.getCitiesOfState(newPosition);
-        console.log(cities, newPosition)
 
-        this.setState({ state_selected: value, city_selected: null, country_selected: country, stateID, countryID, cities });
+        this.setState({ state_selected: value, city_selected: null, country_selected: country, stateID:newPosition, cities });
 
         this.props.onCountryChange(country, value, null, stateID, countryID);
     }
     handleChangeCity(value, position) {
-        console.log(value, position, this.props)
         var state = this.props.profileDetails.state !== undefined && this.state.state_selected == null ? this.props.profileDetails.state : this.state.state_selected;
 
         var country = this.props.profileDetails.country !== undefined && this.state.country_selected == null ? this.props.profileDetails.country : this.state.country_selected;
@@ -148,17 +143,24 @@ export default class CountryPick extends Component {
                        Countries = responseData.data;
                    }); */
         let allCountries = CountryData.getAllCountries();
-        console.log(allCountries)
         this.setState({ countries: allCountries, fetching: false, callOnce: true });
-        console.log(this.props)
         if (this.props.profileDetails.country_id !== undefined) {
             var states = CountryData.getStatesOfCountry(this.props.profileDetails.country_id);
-            console.log(states)
             this.setState({ states })
             if (this.props.profileDetails.state_id !== undefined) {
                 var cities = CountryData.getCitiesOfState(this.props.profileDetails.state_id);
-                console.log(cities)
                 this.setState({ cities })
+            }
+        }
+        if(this.props.theme!==undefined && this.props.theme!=="")
+        {
+            if(this.props.theme==true)
+            {
+                this.setState({CSS:"Country_Select_night"});
+            }
+            if(this.props.theme==false)
+            {
+                this.setState({CSS:"Country_Select"});
             }
         }
     }
@@ -173,7 +175,7 @@ export default class CountryPick extends Component {
                             showSearch
                             value={this.state.country_selected !== null ? this.state.country_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.country)}
                             placeholder="Select a Country"
-                            className="Country_Select"
+                            className={this.state.CSS}
                             dropdownClassName="country_select_drop"
                             optionFilterProp="children"
                             onChange={this.handleChange}
@@ -190,7 +192,7 @@ export default class CountryPick extends Component {
                                 showSearch
                                 value={this.state.state_selected !== null ? this.state.state_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.state)}
                                 placeholder="Select a State"
-                                className="Country_Select"
+                                className={this.state.CSS}
                                 dropdownClassName="country_select_drop"
                                 optionFilterProp="children"
                                 onChange={this.handleChangeState}
@@ -207,8 +209,8 @@ export default class CountryPick extends Component {
                         <SelectS
                                 showSearch
                                 value={this.state.city_selected !== null ? this.state.city_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.city_town)}
-                                placeholder="Select a Country"
-                                className="Country_Select"
+                                placeholder="Select a City"
+                                className={this.state.CSS}
                                 dropdownClassName="country_select_drop"
                                 optionFilterProp="children"
                                 onChange={this.handleChangeCity}

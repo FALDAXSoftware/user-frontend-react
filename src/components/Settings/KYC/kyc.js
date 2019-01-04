@@ -90,7 +90,6 @@ class KYC extends Component {
     render() {
         const { next } = this.state;
         const { is_kyc_done } = this.state;
-        console.log(is_kyc_done)
         return (
             <KYC_wrap>
                 {(this.props.is_kyc_done !== true && next !== 5) ?

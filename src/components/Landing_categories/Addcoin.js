@@ -222,7 +222,6 @@ class MediaContact extends Component {
     }
     _changeNumber(a,mob,code)
     {
-        console.log(a,mob,code);
         if(mob.trim!=="")
         {
             var temp = `+${code.dialCode}` ;
@@ -230,7 +229,6 @@ class MediaContact extends Component {
 
             let fields = this.state.fields;
             fields['phone'] = mobile;
-            console.log(mobile)
             this.setState({ fields });
         }
     }

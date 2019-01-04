@@ -388,7 +388,6 @@ class Signup_Form extends Component {
     return (
       <div>
         <Form_wrap>
-          {console.log("Sign Up")}
           <Login_head>Sign Up</Login_head>
           <Welcome>A Better Trading Experience is Moments Away</Welcome>
           <SubHeading>Lets Get Started</SubHeading>
@@ -463,7 +462,6 @@ class Signup_Form extends Component {
             <ConfirmIconF id="confirm_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
           </div>
           <ConfirmPass_req className="confirmPass_sign">{this.state.confirmPass_msg}</ConfirmPass_req>
-          {console.log(this.props,this.state)}
           <Ph_Label>Referral Code</Ph_Label>
           <div>
             <Referral {...getFieldProps('referral_code', {

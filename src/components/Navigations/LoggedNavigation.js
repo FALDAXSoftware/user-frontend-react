@@ -154,7 +154,6 @@ class LoggedNavigation extends Component {
         }
     }
     componentWillReceiveProps(props, newProps) {
-        console.log(this.props)
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
                 if (props.theme == false)
@@ -176,7 +175,6 @@ class LoggedNavigation extends Component {
                 this.setState({ selected: "4" })
             }
         }
-        console.log(this.props)
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme == false)
