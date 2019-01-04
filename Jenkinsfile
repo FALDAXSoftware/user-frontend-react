@@ -30,6 +30,8 @@ volumes: [
               sh "ls -la"
               sh "npm install"
               sh "npm run build"
+              sh "ls -la" 
+              s3Upload(file:'build', bucket:'arn:aws:s3:::www.faldax.com', path:'')
               
                  }
 
