@@ -28,10 +28,11 @@ volumes: [
               namespace = getNamespace(myRepo.GIT_BRANCH);
               if (namespace){
               sh "ls -la"
+              s3Upload(file:'.', bucket:'arn:aws:s3:::www.faldax.com', path:'')
               sh "npm install"
               sh "npm run build"
               sh "ls -la" 
-              s3Upload(file:'build', bucket:'arn:aws:s3:::www.faldax.com', path:'')
+
               
                  }
 
