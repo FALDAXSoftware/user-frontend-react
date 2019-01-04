@@ -53,12 +53,13 @@ export default class Datepicker extends Component {
             }
             let propFields
             if (this.props.profileDetails.dob !== null) {
-                propFields = this.props.profileDetails.dob.split("/");
-                if (fields["day"] == undefined && propFields[2] !== undefined) { fields["day"] = propFields[2] }
-                if (fields["month"] == undefined && propFields[1] !== undefined) { fields["month"] = propFields[1] }
-                if (fields["year"] == undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
+                propFields = this.props.profileDetails.dob.split("-");
+                if (fields["day"] == undefined && propFields[2] !== undefined) { console.log("day");fields["day"] = propFields[2] }
+                if (fields["month"] == undefined && propFields[1] !== undefined) {console.log("month"); fields["month"] = propFields[1] }
+                if (fields["year"] == undefined && propFields[0] !== undefined) { console.log("year");fields["year"] = propFields[0] }
 
             }
+            console.log(fields)
             this.props.onDateChange(fields, "dob")
         } else {
             if (type == "year") {
@@ -80,10 +81,10 @@ export default class Datepicker extends Component {
         if (this.props.kyc !== undefined) {
         } else {
             if (this.props.profileDetails.dob !== undefined && this.props.profileDetails.dob !== null) {
-                date = this.props.profileDetails.dob.split("/")
-                year = Number(date[0])
+                date = this.props.profileDetails.dob.split("-")
+                year = Number(date[2])
                 month = date[1]
-                day = Number(date[2])
+                day = Number(date[0])
             }
         }
         let higherDate = new Date().getFullYear() - 18;

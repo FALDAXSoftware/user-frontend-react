@@ -19,8 +19,9 @@ import { Container } from '../../../styled-components/homepage/style';
 import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
 import {
     Row_wrap, Left_div, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
-    FIAT_wrap, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2
+    FIAT_wrap, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2,RadioSelect
 } from "../../../styled-components/loggedStyle/tradeStyle";
+
 var socketIOClient = require('socket.io-client');
 var sailsIOClient = require('sails.io.js');
 let io = sailsIOClient(socketIOClient);
@@ -140,12 +141,15 @@ class Trade extends Component {
                                         <SearchInput />
                                         <FIAT_wrap>
                                             <FIAT>
-                                                <RadioGroup defaultValue="a" size="large" buttonStyle="solid">
-                                                    <RadioButton value="a">Hangzhou</RadioButton>
-                                                    <RadioButton value="b">Shanghai</RadioButton>
-                                                    <RadioButton value="c">Beijing</RadioButton>
-                                                    <RadioButton value="d">Chengdu</RadioButton>
-                                                </RadioGroup>
+                                                <RadioSelect defaultValue="a" size="large" buttonStyle="solid">
+                                                    <RadioButton value="a">BTC</RadioButton>
+                                                    <RadioButton value="b">ETH</RadioButton>
+                                                    <RadioButton value="c">USDT</RadioButton>
+                                                    <RadioButton value="d">DAI</RadioButton>
+                                                    <RadioButton value="e">TUSD</RadioButton>
+                                                    <RadioButton value="f">EURS</RadioButton>
+                                                    <RadioButton value="g">FAVORITES</RadioButton>
+                                                </RadioSelect>
                                             </FIAT>
                                         </FIAT_wrap>
                                         <InstruTable>

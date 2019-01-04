@@ -145,7 +145,6 @@ class StopLimit extends Component {
                         </Col>
                     </Row>
                 </Balance_wrap>
-                <StopCheck onChange={this.onChangeCheck}>Checkbox</StopCheck>
                 <ETH_wrap>
                     <Label>Amount</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
