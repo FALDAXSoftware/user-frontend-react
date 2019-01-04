@@ -10,9 +10,8 @@ export const Container = styled.div`
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-    @media (min-width: 1200px) {
-        width: 1170px;
-    }
+    max-width:1170px;
+    width:100%;
 `;
 
 export const Section_1 = styled.div`
@@ -58,3 +57,16 @@ export const Container_row = styled(Row)`
         }
     }
 }`;
+export const Spin_Ex = styled.div`
+    text-align: center;
+    background: white;
+    border-radius: 4px;
+    margin: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f5f5f580;
+    height: 100%;
+    z-index: 9999;
+`
