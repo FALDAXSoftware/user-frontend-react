@@ -93,7 +93,7 @@ const SideNav = styled.div`
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    a
+    span
     {
         padding: 8px 32px;
         text-decoration: none;
@@ -102,13 +102,14 @@ const SideNav = styled.div`
         transition: 0.5s;
         line-height: 1.5;
         color:white;
+        cursor:pointer;
     }
     @media(min-width: 1200px)
     {
         display: none;
     }
 `
-const Close = styled.a`
+const Close = styled.span`
     text-align:right;
 `
 const Profile = styled.a`
@@ -271,10 +272,10 @@ class LoggedNavigation extends Component {
                 <SideNav id="mySidenav2">
                     <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                     <Profile> PROFILE </Profile>
-                    <a onClick={this.showComing} href="#">DASHBOARD</a>
-                    <a onClick={this.showComing} href="#">TRADE</a>
-                    <a onClick={this.showComing} href="#">WALLET</a>
-                    <a onClick={this.showComing} href="#">HISTORY</a>
+                    <span onClick={this.showComing}>DASHBOARD</span>
+                    <span onClick={this.showComing}>TRADE</span>
+                    <span onClick={this.showComing}>WALLET</span>
+                    <span onClick={this.showComing}>HISTORY</span>
                     <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
                 </SideNav>
                 <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
