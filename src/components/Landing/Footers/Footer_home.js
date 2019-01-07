@@ -361,7 +361,7 @@ class Footer_home extends Component {
                     </FooterContainer>
                     <HR />
                     <Bottom_Footer>
-                        <Footer_Text> ©2018 FALDAX. All Rights Reserved. </Footer_Text>
+                        <Footer_Text> ©{new Date().getFullYear()} FALDAX. All Rights Reserved. </Footer_Text>
                         <Footer_logo src={this.state.footerLogo} />
                     </Bottom_Footer>
                 </Container>

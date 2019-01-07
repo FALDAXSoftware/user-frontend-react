@@ -151,6 +151,14 @@ export const Main = styled.div`
         padding-left:10px;
         
     }
+    @media(max-width:576px)
+    {
+        width:80%;
+    }
+    @media(max-width:375px)
+    {
+        width:86%;
+    }
 `
 export const Img1 = styled.img`
     @media(max-width:480px)

@@ -39,11 +39,16 @@ const Open = styled.span`
     margin-right: 10px;
     font-size: 30px;
     cursor: pointer;
-    margin-top:10px;
+    margin-top:0px;
+    color:${props => props.theme.mode=="dark"?"white":"black"};
     @media(max-width:1200px)
     {
         display:inline-block;
         margin-right:15px;
+    }
+    @media(max-width:576px)
+    {
+        margin-top:2px;
     }
 `
 const HeaderAvatar = styled.div`
@@ -55,6 +60,10 @@ const HeaderAvatar = styled.div`
     border-radius: 50%;
     display: inline-block;
     vertical-align: middle;
+    @media(max-width:576px)
+    {
+        margin-right:0px;
+    }
 `
 const DropDownDiv = styled(Dropdown)`
     margin-right : 30px;
