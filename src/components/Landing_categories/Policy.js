@@ -55,13 +55,37 @@ const About_Faldax_Title = styled.span`
     right: 0;
     top: calc(50% - 1px);
   }
+  @media(max-width:767px)
+  {
+    &:before {
+      display:none;
+    }
+    &:after {
+      display:none;
+    }
+  }
 `;
 const FirstRow = styled(Row)`
-  padding-top: 20px
+  padding-top: 20px;
+  @media(max-width:767px)
+  {
+    & a
+    {
+      padding-top: 20px;
+    }
+  }
 `
 const SecondRow = styled(Row)`
   margin-top: 70px;
   margin-bottom: 50px;
+  @media(max-width:767px)
+  {
+    margin-top: 0px;
+    & a
+    {
+      padding-top: 20px;
+    }
+  }
 `
 const CustomCard = styled(Card)`
   width: 100%; 
@@ -88,6 +112,9 @@ const CardText = styled.h4`
 `
 const Content = styled.div`
   color:${props => props.theme.mode == "dark" ? "white" : ""} !important;
+`
+const Div_wrap = styled.div`
+  margin-top:20px;
 `
 
 /* Styled Components */
@@ -141,52 +168,60 @@ export default class Policy extends Component {
               <Content style={{ marginTop: '20px' }}>
                 {/* Blocks start */}
                 <FirstRow >
-                  <Col span={6} offset={5}>
-                    <a href="https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/pdf/FALDAX+Terms+of+Service+v3.pdf" target="_blank">
-                      <CustomCard>
-                        <PContainer>
-                          <CardText>
-                            Terms Of Use
-                      </CardText>
-                        </PContainer>
-                      </CustomCard>
-                    </a>
+                  <Col md={{span:6,offset:5}} xl={{span:6,offset:5}}>
+                    <Div_wrap>
+                      <a href="https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/pdf/FALDAX+Terms+of+Service+v3.pdf" target="_blank">
+                        <CustomCard>
+                          <PContainer>
+                            <CardText>
+                              Terms Of Use
+                        </CardText>
+                          </PContainer>
+                        </CustomCard>
+                      </a>
+                    </Div_wrap>
                   </Col>
-                  <Col span={6} offset={2}>
-                    <a href="https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/pdf/FALDAX+Privacy+Policy.pdf" target="_blank">
-                      <CustomCard>
-                        <PContainer>
-                          <CardText>
-                            Privacy Policy
-                      </CardText>
-                        </PContainer>
-                      </CustomCard>
-                    </a>
+                  <Col md={{span:6,offset:2}} xl={{span:6,offset:2}}>
+                    <Div_wrap>
+                      <a href="https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/pdf/FALDAX+Privacy+Policy.pdf" target="_blank">
+                        <CustomCard>
+                          <PContainer>
+                            <CardText>
+                              Privacy Policy
+                        </CardText>
+                          </PContainer>
+                        </CustomCard>
+                      </a>
+                    </Div_wrap>
                   </Col>
                 </FirstRow>
 
                 <SecondRow>
-                  <Col span={6} offset={5}>
-                    <a href="https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/pdf/FALDAX+Anti-Money+Laundering+Policy+v2.pdf" target="_blank">
-                      <CustomCard>
-                        <PContainer>
-                          <CardText>
-                            Anti-Money Laundering Policy
-                      </CardText>
-                        </PContainer>
-                      </CustomCard>
-                    </a>
+                  <Col md={{span:6,offset:5}} xl={{span:6,offset:5}}>
+                    <Div_wrap>
+                      <a href="https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/pdf/FALDAX+Anti-Money+Laundering+Policy+v2.pdf" target="_blank">
+                        <CustomCard>
+                          <PContainer>
+                            <CardText>
+                              Anti-Money Laundering Policy
+                        </CardText>
+                          </PContainer>
+                        </CustomCard>
+                      </a>
+                    </Div_wrap>
                   </Col>
-                  <Col span={6} offset={2}>
-                    <a href="https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/pdf/FALDAX+Cookie+Policy.pdf" target="_blank">
-                      <CustomCard>
-                        <PContainer>
-                          <CardText>
-                            Cookies Policy
-                      </CardText>
-                        </PContainer>
-                      </CustomCard>
-                    </a>
+                  <Col md={{span:6,offset:2}} xl={{span:6,offset:2}}>
+                    <Div_wrap>
+                      <a href="https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/pdf/FALDAX+Cookie+Policy.pdf" target="_blank">
+                        <CustomCard>
+                          <PContainer>
+                            <CardText>
+                              Cookies Policy
+                        </CardText>
+                          </PContainer>
+                        </CustomCard>
+                      </a>
+                    </Div_wrap>
                   </Col>
                 </SecondRow>
 
