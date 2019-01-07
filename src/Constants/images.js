@@ -59,8 +59,8 @@ export const ActiveEye = amazon_Bucket + 'faldax/assets/Settings/active_eye.png'
 
 export const AboutUs2 = amazon_Bucket + 'faldax/assets/about-us-image-2.jpg';
 export const AboutPeople1 = amazon_Bucket + 'faldax/assets/blake.png';
-export const AboutPeople2 = amazon_Bucket + 'faldax/assets/jon.jpg';
-export const AboutPeople3 = amazon_Bucket + 'faldax/assets/jeff.jpg';
+export const AboutPeople2 = amazon_Bucket + 'faldax/assets/jon.png';
+export const AboutPeople3 = amazon_Bucket + 'faldax/assets/jeff.png';
 
 export const FBIcon = amazon_Bucket + 'faldax/assets/LandingCat/Blog/fb_icon.png';
 export const TweeterIcon = amazon_Bucket + 'faldax/assets/LandingCat/Blog/tweet_icon.png';
