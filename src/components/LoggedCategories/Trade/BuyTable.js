@@ -25,7 +25,6 @@ class BuyTable extends Component {
 
             if (body.status == 200) {
                 let res = body.data;
-                console.log("----------->", res);
 
                 this.updateData(res);
             }
@@ -57,7 +56,6 @@ class BuyTable extends Component {
     render() {
         return (
             <div>
-                {console.log(this.state)}
                 <BBC>BUYING BBC</BBC>
                 <Total_BTC>Total: {this.state.lastsum} BTC</Total_BTC>
                 <Buy_table>

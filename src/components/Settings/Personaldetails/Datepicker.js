@@ -55,12 +55,11 @@ export default class Datepicker extends Component {
             let propFields
             if (this.props.profileDetails.dob !== null) {
                 propFields = this.props.profileDetails.dob.split("-");
-                if (fields["day"] == undefined && propFields[2] !== undefined) { console.log("day");fields["day"] = propFields[2] }
-                if (fields["month"] == undefined && propFields[1] !== undefined) {console.log("month"); fields["month"] = propFields[1] }
-                if (fields["year"] == undefined && propFields[0] !== undefined) { console.log("year");fields["year"] = propFields[0] }
+                if (fields["day"] == undefined && propFields[2] !== undefined) {fields["day"] = propFields[2] }
+                if (fields["month"] == undefined && propFields[1] !== undefined) {fields["month"] = propFields[1] }
+                if (fields["year"] == undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
 
             }
-            console.log(fields)
             this.props.onDateChange(fields, "dob")
         } else {
             if (type == "year") {

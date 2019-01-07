@@ -24,11 +24,11 @@ class SellTable extends Component {
         io.sails.url = APP_URL;
 
         io.socket.get("/socket/get-sell-book?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
-            console.log(body, JWR);
+        
 
             if (body.status == 200) {
                 let res = body.data;
-                console.log("sellBoobk----------->", res);
+                
 
                 this.updateData(res);
             }
@@ -60,7 +60,6 @@ class SellTable extends Component {
     render() {
         return (
             <div>
-                {console.log(this.state)}
                 <BBC2>SELLING BBC</BBC2>
                 <Total_BTC>Total:  {this.state.lastsum} BTC</Total_BTC>
                 <Buy_table>

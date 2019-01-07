@@ -105,7 +105,6 @@ class StopLimit extends Component {
         }
     }
     onChangeCheck(e) {
-        console.log(`checked = ${e.target.checked}`);
     }
     render() {
         const RadioGroup = Radio.Group;

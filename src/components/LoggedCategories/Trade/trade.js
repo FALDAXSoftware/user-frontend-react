@@ -121,11 +121,9 @@ class Trade extends Component {
 
     }
     onChange(pagination, filters, sorter) {
-        console.log('params', pagination, filters, sorter);
     }
 
     callback(key) {
-        console.log(key);
     }
     render() {
         return (

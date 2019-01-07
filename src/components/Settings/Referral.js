@@ -4,8 +4,10 @@ import 'antd/dist/antd.css';
 import { connect } from "react-redux"
 import { Input, Row, Col, Table, notification } from 'antd';
 import styled from 'styled-components';
+import { globalVariables } from '../../Globals';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
+let { API_URL } = globalVariables;
 /* Constants */
 const Search = Input.Search;
 
@@ -180,7 +182,7 @@ class Referral extends Component {
                     this.setState({ searchCSS: "INPUT_search", referTable: "referral-table-night" })
             }
         }
-        fetch("http://18.191.87.133:8084/users/referredUsers", {
+        fetch(`${API_URL}/users/referredUsers`, {
             method: "get",
             headers: {
                 Accept: 'application/json',
@@ -195,7 +197,7 @@ class Referral extends Component {
             })
             .catch(error => { /* console.log(error) */ })
         if (this.props.profileDetails.referral_code !== undefined) {
-            this.setState({ value: "http://localhost:3000/signup?refID="+this.props.profileDetails.referral_code })
+            this.setState({ value: "https//dev.faldax.com/signup?refID="+this.props.profileDetails.referral_code })
         }
     }
 

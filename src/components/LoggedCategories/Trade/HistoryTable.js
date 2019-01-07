@@ -29,19 +29,15 @@ class HistoryTable extends Component {
         this.updateData = this.updateData.bind(this);
     }
     componentDidMount() {
-        console.log("Trade History Mount");
 
         let io = this.props.io
 
         io.sails.url = APP_URL;
 
         io.socket.get("/socket/get-trade-history?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
-            console.log(body);
-            console.log(JWR);
 
             if (body.status == 200) {
                 let res = body.data;
-                console.log("--tradehistory--------->", res);
 
                 this.updateData(res);
             }
@@ -90,7 +86,6 @@ class HistoryTable extends Component {
                             <tbody>
                                 {this.state.data.map((element,index) => (
                                     <tr>
-                                        {console.log(element,index)}
                                         <SideType type={element.side}>{element.side}</SideType>
                                         <td>{element.amount}</td>
                                         {(index+1)<me.state.data.length?(element.fill_price>me.state.data[index+1].fill_price)

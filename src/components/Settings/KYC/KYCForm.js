@@ -50,7 +50,11 @@ const Date_birth_kyc = styled(Date_birth)`
 const Country_input_kyc = styled(Country_input)``
 const Country_kyc = styled(Country)``
 const Second_Row_kyc = styled(Second_Row)``
-const Last_input_kyc = styled(Last_input)``
+const Last_input_kyc = styled(Last_input)`
+`
+const Zip = styled(Last_input)`
+    width:95%;
+`
 const Last_name_kyc = styled(Last_name)``
 const First_Msg_kyc = styled(First_Msg)`
 `
@@ -66,7 +70,6 @@ const First_Row_kyc = styled(First_Row)``
 const Right_Col_kyc = styled(Right_Col)`
 `
 const Sixth_Row_kyc = styled(Fourth_Row)``
-
 class KYCForm extends Component {
     constructor(props) {
         super(props);
@@ -79,8 +82,9 @@ class KYCForm extends Component {
                 country: '',
                 address: '',
                 address_2: '',
-                city: '',
-                zip: ''
+                city_town: '',
+                zip: '',
+                state: ''
             }
         };
         this.validator = new SimpleReactValidator();
@@ -89,20 +93,20 @@ class KYCForm extends Component {
     }
     onDateChange(value) {
         var tempDate = value.day + "/" + value.month + "/" + value.year;
-
-        var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
-        let fields = this.state.fields;
-        fields['dob'] = date;
-        this.setState({ fields });
-    }
-    onCountryChange(country) {
-        let fields = this.state.fields;
-
-        if (country.trim() == "") {
-            fields['country'] = "";
-        } else {
-            fields['country'] = country;
+        if ((value.day !== "" && value.day !== undefined) && (value.year !== undefined && value.year !== "") && (value.month !== undefined && value.month !== "")) {
+            var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
+            let fields = this.state.fields;
+            fields['dob'] = date;
+            this.setState({ fields });
         }
+    }
+    onCountryChange(country, state, city, stateID, countryID) {
+        let fields = this.state.fields;
+        fields['country'] = country !== null ? country : "";
+        fields['state'] = state !== null ? state : "";
+        fields['city_town'] = city !== null ? city : '';
+        fields['state_id'] = stateID;
+        fields['country_id'] = countryID;
         this.setState({ fields });
     }
     openNotificationWithIcon(type, head, desc) {
@@ -165,10 +169,11 @@ class KYCForm extends Component {
                     </First_Row_kyc>
 
                     <Second_Row_kyc>
+
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
-                            {/* console.log(this.props) */}
-                            <CountryPick {...this.props} kyc="kyc" isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={(value) => this.onCountryChange(value)} />
-                            {this.validator.message('country', this.state.fields.country, 'required', 'text-danger-validation')}
+                            <Date_birth_kyc>Date of Birth*</Date_birth_kyc>
+                            <Datepicker {...this.props} kyc="kyc" onDateChange={(Data) => this.onDateChange(Data)} />
+                            {this.validator.message('dob', this.state.fields.dob, 'required', 'text-danger-validation')}
                         </Col>
                     </Second_Row_kyc>
 
@@ -188,15 +193,17 @@ class KYCForm extends Component {
 
                     <Fourth_Row_kyc>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
-                            <Date_birth_kyc>Date of Birth*</Date_birth_kyc>
-                            <Datepicker {...this.props} kyc="kyc" onDateChange={(Data) => this.onDateChange(Data)} />
-                            {this.validator.message('dob', this.state.fields.dob, 'required', 'text-danger-validation')}
+                            {/* console.log(this.props) */}
+                            <CountryPick {...this.props} kyc="kyc" isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={(country, state, city, stateID, countryID) => this.onCountryChange(country, state, city, stateID, countryID)} />
+                            <span>{this.validator.message('country', this.state.fields.country, 'required', 'text-danger-validation')}
+                                {this.validator.message('state', this.state.fields.state, 'required', 'text-danger-validation')}
+                                {this.validator.message('city', this.state.fields.city_town, 'required', 'text-danger-validation')}</span>
                         </Col>
                     </Fourth_Row_kyc>
                     <Sixth_Row_kyc>
-                        <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xl={{ span: 12 }}>
+                        <Col md={{ span: 12 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
                             <Postal_kyc>Postal Code*</Postal_kyc>
-                            <Last_input_kyc name="zip" onChange={this._onChangeFields} placeholder="Postal Code" />
+                            <Zip name="zip" onChange={this._onChangeFields} placeholder="Postal Code" />
                             {this.validator.message('postal_code', this.state.fields.zip, 'required', 'text-danger-validation')}
                         </Col>
                     </Sixth_Row_kyc>

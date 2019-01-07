@@ -55,8 +55,6 @@ const Mini_graph = ({ data }) => {
     const { coinName, image, price, percentage } = data;
     return (
         <Graph_wrapper className="9292">
-            {
-                console.log("ABCDF")}
             <Row>
                 <Span_coin_name_wrapper>
                     <Col xs={19} offset={5}>
