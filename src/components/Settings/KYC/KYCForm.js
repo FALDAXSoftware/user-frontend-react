@@ -22,11 +22,19 @@ const KYC_form = styled.div`
 `
 const Save_kyc = styled(Save)`
     margin-left:0px;
+    @media(max-width:992px)
+    {
+        width:70px;
+    }
 `
 const Fifth_Row_kyc = styled(Fifth_Row)`
     text-align:center
 `
 const Postal_kyc = styled(Postal)`
+    @media(max-width:767px)
+    {
+        margin-top:0px;
+    }
 `
 const City_kyc = styled(City)`
 `
@@ -42,6 +50,14 @@ const Street2_wrap = styled.div`
 const Third_Row_kyc = styled(Third_Row)`
 `
 const Date_birth_kyc = styled(Date_birth)`
+        @media(max-width:992px)
+        {
+            margin-top:0px;
+        }
+        @media(max-width:767px)
+        {
+            margin-top:25px;
+        }
 `
 const Country_input_kyc = styled(Country_input)``
 const Country_kyc = styled(Country)``
@@ -50,6 +66,14 @@ const Last_input_kyc = styled(Last_input)`
 `
 const Zip = styled(Last_input)`
     width:95%;
+    @media(max-width:991px)
+    {
+        width:95%;  
+    }
+    @media(max-width:767px)
+    {
+        width:100%;  
+    }
 `
 const Last_name_kyc = styled(Last_name)``
 const First_Msg_kyc = styled(First_Msg)`
@@ -198,7 +222,7 @@ class KYCForm extends Component {
                         </Col>
                     </Fourth_Row_kyc>
                     <Sixth_Row_kyc>
-                        <Col md={{ span: 12 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
+                        <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
                             <Postal_kyc>Postal Code*</Postal_kyc>
                             <Zip name="zip" onChange={this._onChangeFields} placeholder="Postal Code" />
                             {this.validator.message('postal_code', this.state.fields.zip, 'required', 'text-danger-validation')}

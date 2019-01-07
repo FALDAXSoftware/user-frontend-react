@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Row, Col, Icon,Select } from 'antd'
+import { Row, Col, Icon, Select } from 'antd'
 import DatePicker from "react-datepicker";
 import Dropzone from 'react-dropzone';
 import IntlTelInput from 'react-intl-tel-input';
@@ -133,6 +133,7 @@ export const Main_wrap1 = styled.div`
     }
 `
 export const Main_wrap2 = styled(Main_wrap1)`
+    border-right:none;
 `
 export const Main_wrap3 = styled(Main_wrap1)`
     border-right:0px;
@@ -149,6 +150,14 @@ export const Main = styled.div`
     {
         padding-left:10px;
         
+    }
+    @media(max-width:576px)
+    {
+        width:80%;
+    }
+    @media(max-width:375px)
+    {
+        width:86%;
     }
 `
 export const Img1 = styled.img`

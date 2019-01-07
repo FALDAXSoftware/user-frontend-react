@@ -16,11 +16,10 @@ const Country = styled.span`
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
-    margin-bottom:10px;
     display:block;
+    margin-bottom:10px;
 `
 const SelectS = styled(Select)`
-    margin-top:10px;
     & .Country_Select
     {
         width:85%;

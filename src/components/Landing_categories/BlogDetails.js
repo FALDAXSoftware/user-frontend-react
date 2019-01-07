@@ -184,9 +184,9 @@ class BlogDetails extends Component {
                                         <PostHead_span>Social Links</PostHead_span>
                                     </SocialHead>
                                     {contactDetails !== null ? <Social_Li>
-                                        <LI1>
+                                        {/* <LI1>
                                             <a target="_blank" href={contactDetails.fb_profile}><img width="40" height="40" src={FBIcon} /></a>
-                                        </LI1>
+                                        </LI1> */}
                                         <LI2>
                                             <a target="_blank" href={contactDetails.twitter_profile}><img width="40" height="40" src={TweeterIcon} /></a>
                                         </LI2>
