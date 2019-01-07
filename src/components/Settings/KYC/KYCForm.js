@@ -42,6 +42,10 @@ const Street2_wrap = styled.div`
 const Third_Row_kyc = styled(Third_Row)`
 `
 const Date_birth_kyc = styled(Date_birth)`
+@media(max-width:992px)
+{
+    margin-top:0px;
+}
 `
 const Country_input_kyc = styled(Country_input)``
 const Country_kyc = styled(Country)``
@@ -61,7 +65,7 @@ const First_name_kyc = styled(First_name)``
 const First_Row_kyc = styled(First_Row)``
 const Right_Col_kyc = styled(Right_Col)`
 `
-const Sixth_Row_kyc= styled(Fourth_Row)``
+const Sixth_Row_kyc = styled(Fourth_Row)``
 
 class KYCForm extends Component {
     constructor(props) {
@@ -84,8 +88,8 @@ class KYCForm extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
     onDateChange(value) {
-        var tempDate = value.day+"/"+value.month+"/"+value.year;
-        
+        var tempDate = value.day + "/" + value.month + "/" + value.year;
+
         var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
         let fields = this.state.fields;
         fields['dob'] = date;
