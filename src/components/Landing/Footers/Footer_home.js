@@ -318,9 +318,9 @@ class Footer_home extends Component {
                                 </Icon_ul_1_header>
                                 {this.state.contactDetails.length !== 0 ?
                                     <Icon_ul_1>
-                                        <LI>
+                                        {/* <LI>
                                             <a target="_blank" href={contactDetails.fb_profile}><FontAwesomeIcons icon={faFacebook} color={true} /></a>
-                                        </LI>
+                                        </LI> */}
                                         <LI>
                                             <a target="_blank" href={contactDetails.twitter_profile}><FontAwesomeIcons icon={faTwitter} color={true} /></a>
                                         </LI>

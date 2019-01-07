@@ -206,7 +206,7 @@ class ContactUs extends Component {
                         <hr />
                         <Subfoot_wrap>
                             <Row>
-                                <Col lg={24} xl={8}>
+                                <Col lg={24} xl={12}>
                                     <Main_wrap1>
                                         <Img1 src={this.state.marker} />
                                         <Main>
@@ -215,16 +215,16 @@ class ContactUs extends Component {
                                         </Main>
                                     </Main_wrap1>
                                 </Col>
-                                <Col lg={24} xl={8}>
+                                <Col lg={24} xl={12}>
                                     <Main_wrap2>
                                         <Img2 src={this.state.email} />
                                         <Main>
                                             <Sub_span>Email:</Sub_span>
-                                            <Sub_p>{contact.email}</Sub_p>
+                                            <Sub_p><a href={`mailto:${contact.email}`}>{contact.email} </a></Sub_p>
                                         </Main>
                                     </Main_wrap2>
                                 </Col>
-                                <Col lg={24} xl={8}>
+                                {/* <Col lg={24} xl={8}>
                                     <Main_wrap3>
                                         <Img3 src={this.state.call} />
                                         <Main>
@@ -232,7 +232,7 @@ class ContactUs extends Component {
                                             <Sub_p>{contact.phone}</Sub_p>
                                         </Main>
                                     </Main_wrap3>
-                                </Col>
+                                </Col> */}
                             </Row>
                         </Subfoot_wrap>
                     </ContainerContact>

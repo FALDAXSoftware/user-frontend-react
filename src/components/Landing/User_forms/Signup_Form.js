@@ -169,7 +169,7 @@ class Signup_Form extends Component {
       init: "",
       PasswordtypeEye: "password",
       repeatEye: "password",
-      qP:""
+      qP: ""
     }
   }
 
@@ -187,11 +187,9 @@ class Signup_Form extends Component {
     }
     this.props.clearSignUp();
   }
-  componentDidMount()
-  {
-    if(this.props.qP!=="")
-    {
-      this.setState({qP:this.props.qP});
+  componentDidMount() {
+    if (this.props.qP !== "") {
+      this.setState({ qP: this.props.qP });
     }
   }
   submit = () => {
@@ -323,7 +321,7 @@ class Signup_Form extends Component {
           document.querySelector("#pass_icon_success").style.display = "none"
           document.querySelector("#pass_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".pass_sign")[0].style.display = "block";
-          this.setState({ pass_msg: "Your password must contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+          this.setState({ pass_msg: "Your password must contain at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
         }
       } else {
         this.setState({ passIcon: false, percent: 0 })
@@ -466,7 +464,7 @@ class Signup_Form extends Component {
           <div>
             <Referral {...getFieldProps('referral_code', {
               onChange() {/* console.log("Hello How are You") */ }, // have to write original onChange here if you need
-              initialValue: this.state.qP==""?me.props.init:this.state.qP,
+              initialValue: this.state.qP == "" ? me.props.init : this.state.qP,
               rules: [{ type: "string", required: false }],
             })}
             />
