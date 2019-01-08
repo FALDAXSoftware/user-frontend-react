@@ -1,7 +1,7 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Layout, Menu, Modal } from 'antd';
+import { Row, Col, Layout, Menu, Modal, Icon } from 'antd';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -21,10 +21,19 @@ import {
 } from "../../Constants/images";
 
 const { Header } = Layout;
+const SubMenu = Menu.SubMenu;
 
 /* Modal Styled Components */
 const Left_col = styled(Col)`
     min-height: 600px
+`
+const DropMenu = styled(Menu)`
+    background: none;
+    color: white;
+`
+const SubMenuNav = styled(SubMenu)`
+    background: none;
+    color: white;
 `
 const Right_Col = styled(Col)`
     background-image:url(${Wallpaper});
@@ -399,6 +408,27 @@ class Navigation extends Component {
                         <a onClick={this.showComing} href="#">Exchange</a>
                         <Link to="/careers"><Why>Careers </Why></Link>
                         {/* <Why> Language </Why> */}
+                        <DropMenu mode="inline">
+                            <SubMenuNav key="sub1" title={'Information'}>
+                                <Menu.Item key="9"><NavLink className="Nav_selected" to="/about-us">About Us</NavLink></Menu.Item>
+                                <Menu.Item key="10"><NavLink className="Nav_selected" to="/contactus">Contact Us</NavLink></Menu.Item>
+                                <Menu.Item key="11"><NavLink className="Nav_selected" to="/media">Media Contact</NavLink></Menu.Item>
+                                <Menu.Item key="12"><NavLink className="Nav_selected" to="/blog">Blog</NavLink></Menu.Item>
+                                <Menu.Item key="13"><NavLink className="Nav_selected" to="/fees">Fees</NavLink></Menu.Item>
+                            </SubMenuNav>
+                            <SubMenuNav key="sub2" title={'Support'}>
+                                <Menu.Item key="9"><a onClick={this.showComing} href="#">Open a Ticket</a></Menu.Item>
+                                <Menu.Item key="10"><a onClick={this.showComing} href="#">FAQ</a></Menu.Item>
+                                <Menu.Item key="11"><a onClick={this.showComing} href="#">API Documentation</a></Menu.Item>
+                                <Menu.Item key="12"><NavLink className="Nav_selected" to="/addcoin">List Your Token</NavLink></Menu.Item>
+                                <Menu.Item key="12"><NavLink className="Nav_selected" to="/news">News</NavLink></Menu.Item>
+                            </SubMenuNav>
+                            <SubMenuNav key="sub3" title={'Legal & Technical'}>
+                                <Menu.Item key="9"><NavLink className="Nav_selected" to="/policy">Policies</NavLink></Menu.Item>
+                                <Menu.Item key="10">Service Availability</Menu.Item>
+                                <Menu.Item key="11"><a onClick={this.showComing} href="#">Security</a></Menu.Item>
+                            </SubMenuNav>
+                        </DropMenu>
                         {this.props.isLoggedIn &&
                             <ProfileLinkContainer>
                                 <a onClick={() => this.props.history.push('/editProfile')}>Profile</a>

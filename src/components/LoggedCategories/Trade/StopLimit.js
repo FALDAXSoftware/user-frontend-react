@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import 'antd/dist/antd.css';
 import { Row, Col, Checkbox, Radio, notification } from 'antd';
-import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap,StopCheck, Balance, Total, Check_wrap, ETH_wrap, BTC_wrap,Willpay,Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "../../../styled-components/loggedStyle/tradeStyle";
+import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, StopCheck, Balance, Total, Check_wrap, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "../../../styled-components/loggedStyle/tradeStyle";
 
 import { globalVariables } from "../../../Globals";
 let { API_URL } = globalVariables;
@@ -18,6 +18,8 @@ class StopLimit extends Component {
             sellprice: 0.001,
             buyPrice: 0.002,
             amount: 0,
+            stop_price: 0,
+            limit_price: 0,
             total: 0
         }
         this.onChange = this.onChange.bind(this);
@@ -74,10 +76,12 @@ class StopLimit extends Component {
             let params = {
                 symbol: self.state.crypto.toUpperCase() + "-" + self.state.currency.toUpperCase(),
                 side: self.state.side,
-                order_type: "Market",
-                orderQuantity: self.state.amount
+                order_type: "StopLimit",
+                orderQuantity: self.state.amount,
+                limit_price: self.state.limit_price,
+                stop_price: self.state.stop_price
             }
-            fetch(API_URL + "/market/" + self.state.side.toLowerCase(), {
+            fetch(API_URL + "/stop/limit/" + self.state.side.toLowerCase(), {
                 method: "post",
                 headers: {
                     Accept: 'application/json',
@@ -101,7 +105,7 @@ class StopLimit extends Component {
         }
     }
     onChangeCheck(e) {
-    }  
+    }
     render() {
         const RadioGroup = Radio.Group;
         return (
@@ -154,13 +158,13 @@ class StopLimit extends Component {
                 <BTC_wrap>
                     <Label>Stop Price</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total} name="total" />
+                        <Totinput type="number" addonAfter={this.state.currency} value={this.state.stop_price} name="stop_price" onChange={this.onChange} />
                     </Total_wrap>
                 </BTC_wrap>
                 <BTC_wrap>
                     <Label>Limit Price</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total} name="total" />
+                        <Totinput type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange} />
                     </Total_wrap>
                 </BTC_wrap>
                 <Pay>

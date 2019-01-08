@@ -13,7 +13,9 @@ import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { globalVariables } from "../../Globals";
 import { AboutPeople1, AboutPeople2, AboutPeople3, AboutUs2 } from '../../Constants/images';
+import ComingSoon from '../ComingSoon';
 let { API_URL } = globalVariables;
+
 
 /* Styled-Components */
 const ProfileWrapper = styled.div`
@@ -241,6 +243,7 @@ export default class AboutUs extends Component {
   constructor() {
     super();
     this.state = {
+      comingSoon: false,
       team: 1,
       aboutContent: '',
       loader: false
@@ -264,6 +267,12 @@ export default class AboutUs extends Component {
   teamClick(value) {
     this.setState({ team: value });
   }
+  comingCancel = (e) => {
+    this.setState({ comingSoon: false });
+  }
+  showComing = () => {
+    this.setState({ comingSoon: true });
+  }
 
   render() {
     return (
@@ -285,6 +294,7 @@ export default class AboutUs extends Component {
               <AboutContent style={{ marginTop: '20px' }}>
                 <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
                   {ReactHtmlParser(this.state.aboutContent)}
+                  <p>We are incredibly excited to share the details of these exciting features so please consider<a href="#" onClick={this.showComing}> subscribing to our mailing list</a> to receive updates as they are made available.</p>
                 </span>
               </AboutContent>
               {/* <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
@@ -379,6 +389,7 @@ export default class AboutUs extends Component {
             <Spin size="large" />
           </Spin_Ex> : ""}
         </OverlayLoader>
+        <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
       </div>
     );
   }
