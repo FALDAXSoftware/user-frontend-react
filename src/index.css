@@ -1227,3 +1227,16 @@ table .ant-table-tbody > tr > td {
 .react-datepicker__day-name, .react-datepicker__day {
   margin: 0.5rem !important;
 }
+
+/* Depth Chart CSS */
+
+#depth-chart1 canvas
+{
+  width:285px !important;
+  height:400px !important;
+}
+#depth-chart2 canvas
+{
+  width:285px !important;
+  height:400px !important;
+}
