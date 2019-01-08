@@ -58,16 +58,16 @@ class App extends Component {
   }
   componentDidMount() {
     window.scrollTo(0, 0);
-    if(this.props.theme!==undefined)
-        {
-            if(this.props.theme !== this.state.theme)
-            {
-                if(this.props.theme==false)
-                this.setState({theme: "light"})
-                else
-                this.setState({theme: "dark"})
-            }
-        }
+    // if(this.props.theme!==undefined)
+    //     {
+    //         if(this.props.theme !== this.state.theme)
+    //         {
+    //             if(this.props.theme==false)
+    //             this.setState({theme: "light"})
+    //             else
+    //             this.setState({theme: "dark"})
+    //         }
+    //     }
   }
   render() {
 
