@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux";
-import { Row, Col, Checkbox, Table, Button, notification, Spin, Modal } from 'antd';
+import { Row, Col, Checkbox, Table, Button, notification, Spin, Modal, Pagination } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDesktop, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
-
 import { Spin_Ex } from "../Personaldetails/PersonalDetails"
 import { globalVariables } from '../../../Globals';
-
 import { deleteAccount } from "../../../Actions/Auth"
 
 let { API_URL } = globalVariables;
@@ -251,7 +249,9 @@ class Acc_settings extends Component {
         this.state = {
             loginHistory: [],
             notiCSS: '',
-            historyCSS: ''
+            historyCSS: '',
+            historyCount: 0,
+            page: 1
         }
     }
     onChange(e, abcd) {
@@ -270,10 +270,17 @@ class Acc_settings extends Component {
              }
          } */
     }
-    componentDidMount() {
+
+    _handleHistoryPagination = (page) => {
+        this.setState({ page }, () => {
+            this._getAllLoginHistory(page);
+        })
+    }
+
+    _getAllLoginHistory = (curr) => {
         var self = this;
         var Data = {};
-        fetch(API_URL + "/users/login-history", {
+        fetch(API_URL + `/users/login-history?page=${curr}&limit=9`, {
             method: "get",
             headers: {
                 Authorization: "Bearer " + this.props.isLoggedIn
@@ -283,6 +290,7 @@ class Acc_settings extends Component {
             .then((responseData) => {
                 /*  console.log(responseData) */
                 let antTableData = [];
+                this.setState({ historyCount: responseData.historyCount })
                 Object.keys(responseData.data).map(function (key, index) {
 
                     var deviceType;
@@ -304,6 +312,10 @@ class Acc_settings extends Component {
                 })
             })
             .catch(error => {/* console.log(error) */ })
+    }
+
+    componentDidMount() {
+        this._getAllLoginHistory(1);
 
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
@@ -381,6 +393,15 @@ class Acc_settings extends Component {
                             dataSource={this.state.loginHistory}
                             columns={columns} />
                     </Table_wrap>
+
+                    <Pagination
+                        style={{ marginTop: '15px' }}
+                        className="ant-users-pagination"
+                        onChange={this._handleHistoryPagination.bind(this)}
+                        pageSize={10}
+                        current={this.state.page}
+                        total={this.state.historyCount}
+                    />
                 </Login_History>
                 <HR2 />
                 <Delete_wrap>
