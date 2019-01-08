@@ -295,7 +295,7 @@ class Login_Form extends React.Component {
     //       document.querySelector("#passlog_icon_success").style.display = "none"
     //       document.querySelector("#passlog_icon_fail").style.display = "inline-block"
     //       document.querySelectorAll(".pass_msg")[0].style.display = "block";
-    //       this.setState({ pass_msg: "Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+    //       this.setState({ pass_msg: "Your password contain at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
     //     }
     //   } else {
     //     this.setState({ passIcon: false })

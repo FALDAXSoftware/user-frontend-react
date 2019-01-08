@@ -319,7 +319,7 @@ class Navigation extends Component {
 
         if (this.props.location.pathname == "/signup") {
             queryParams = decodeURIComponent(this.props.queryParams)
-            
+
             let qP = queryParams.split("=")
             this.setState({ modal: 1, visible: true, qP: qP[1] });
         } else {
@@ -390,7 +390,7 @@ class Navigation extends Component {
                             </div>
                         }
                         <Link to="/">Home</Link>
-                        <a onClick={this.showComing} href="#">Features</a>
+                        {/* <a onClick={this.showComing} href="#">Features</a> */}
                         <Link to="/about-us">About</Link>
                         <a onClick={this.showComing} href="#">Security</a>
                         <Link to="/news">News</Link>
@@ -420,7 +420,7 @@ class Navigation extends Component {
                         >
                             <Row>
                                 <Left_col xl={{ span: 12 }} sm={{ span: 24 }}>
-                                    
+
 
                                     {
                                         modal == 0 || (this.state.forgotParam !== undefined && this.props.pathname.includes("login")) ?

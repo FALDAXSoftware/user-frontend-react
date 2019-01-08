@@ -181,10 +181,7 @@ const FooterContainer = styled.div`
 }
 `
 const FooterLinkCol = styled(Col)`
-@media(max-width:767px)
-{
-    display:none;
-}
+
 `
 const FontAwesomeIcons = styled(FontAwesomeIcon)`
     display:inline-block;
@@ -321,9 +318,9 @@ class Footer_home extends Component {
                                 </Icon_ul_1_header>
                                 {this.state.contactDetails.length !== 0 ?
                                     <Icon_ul_1>
-                                        <LI>
+                                        {/* <LI>
                                             <a target="_blank" href={contactDetails.fb_profile}><FontAwesomeIcons icon={faFacebook} color={true} /></a>
-                                        </LI>
+                                        </LI> */}
                                         <LI>
                                             <a target="_blank" href={contactDetails.twitter_profile}><FontAwesomeIcons icon={faTwitter} color={true} /></a>
                                         </LI>
@@ -361,7 +358,7 @@ class Footer_home extends Component {
                     </FooterContainer>
                     <HR />
                     <Bottom_Footer>
-                        <Footer_Text> ©2018 FALDAX. All Rights Reserved. </Footer_Text>
+                        <Footer_Text> ©{new Date().getFullYear()} FALDAX. All Rights Reserved. </Footer_Text>
                         <Footer_logo src={this.state.footerLogo} />
                     </Bottom_Footer>
                 </Container>

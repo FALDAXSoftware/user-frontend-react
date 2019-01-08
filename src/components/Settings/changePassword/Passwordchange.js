@@ -433,7 +433,7 @@ class Passwordchange extends Component {
                     document.querySelector("#newchange_icon_success").style.display = "none"
                     document.querySelector("#newchange_icon_fail").style.display = "inline-block"
                     document.querySelectorAll(".newchange_msg")[0].style.display = "block";
-                    this.setState({ new_msg: "Your password contains at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+                    this.setState({ new_msg: "Your password contain at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
                 }
             } else {
                 this.setState({ newpassIcon: false, percent: 0 })

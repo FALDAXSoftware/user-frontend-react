@@ -88,7 +88,7 @@ export const First_input = styled(Input)`
     border:1px solid #dadfe3;
     padding:10px;
     height:auto;
-    @media(max-width:768px)
+    @media(max-width:767px)
     {
         width:100%;
     }
@@ -108,7 +108,7 @@ export const Street_Msg = styled(First_Msg)``
 export const City_Msg = styled(First_Msg)``
 export const Postal_Msg = styled(First_Msg)``
 export const Last_name = styled(First_name)`
-    @media(max-width:768px)
+    @media(max-width:767px)
     {
         margin-top:25px;
     }
@@ -143,7 +143,7 @@ export const Country_input = styled(First_input)`
     {
         width:95%;
     }
-    @media(max-width:768px)
+    @media(max-width:767px)
     {
         width:100%;
     }
@@ -168,7 +168,7 @@ export const Street_input = styled(First_input)`
     {
         width:95%;
     }
-    @media(max-width:768px)
+    @media(max-width:767px)
     {
         width:100%;
     }
@@ -180,7 +180,7 @@ export const Fourth_Row = styled(Second_Row)`
 export const City = styled(First_name)`
 `
 export const Postal = styled(First_name)`
-    @media(max-width:768px)
+    @media(max-width:767px)
     {
         margin-top:25px;
     }

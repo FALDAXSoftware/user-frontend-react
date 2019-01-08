@@ -1,7 +1,7 @@
 /* In-built Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Spin } from 'antd';
+import { Spin, Row, Col } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faYoutube, faTwitter, faLinkedinIn, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import styled from 'styled-components';
@@ -178,8 +178,8 @@ const Hexagon_In2 = styled.div`
           transform: rotate(-60deg);
 `;
 const Team = styled.div`
-  width: 255px;
-  min-height: 310px;
+  // width: 255px;
+  // min-height: 310px;
   
   display: inline-block;
   margin: 15px;
@@ -193,13 +193,32 @@ const Team = styled.div`
 const TeamIn1 = styled.div`
   color:${props => props.theme.mode == "dark" ? "white" : "#333333"};
   margin-top: 10px;
+  @media(max-width:1199px)
+  {
+    text-align :left;
+    padding-left:20px;
+  }
 `;
 const TeamIn2 = styled.div`
   color:${props => props.theme.mode == "dark" ? "white" : "#333333"};
+  @media(max-width:1199px)
+  {
+    text-align :left;
+    padding-left:20px;
+  }
 `;
 const TeamIn3 = styled.div`
   color:${props => props.theme.mode == "dark" ? "white" : "#5c5c5c"};
+  min-height:400px;
   padding: 13px 20px;
+  @media(max-width:1199px)
+  {
+    text-align :left;
+  }
+  @media(max-width:1199px)
+  {
+    min-height:auto;
+  }
 `;
 const FontAwesomeDiv = styled.div`
   display: inline-block;
@@ -261,14 +280,14 @@ export default class AboutUs extends Component {
           <ProfileWrapper>
             <ProfileDiv>
               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
-                <About_Faldax_Title> ABOUT FALDAX STORY </About_Faldax_Title>
+                <About_Faldax_Title> ABOUT US </About_Faldax_Title>
               </div>
               <AboutContent style={{ marginTop: '20px' }}>
                 <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
                   {ReactHtmlParser(this.state.aboutContent)}
                 </span>
               </AboutContent>
-              <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+              {/* <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                 <Our_Mission> OUR MISSION </Our_Mission>
               </div>
               <MissionContent style={{ marginTop: '25px' }}>
@@ -287,104 +306,71 @@ export default class AboutUs extends Component {
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                           </Missiondesc>
-              </div>
+              </div> */}
               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                 <Our_Team> OUR TEAM </Our_Team>
               </div>
               <div style={{ marginTop: '25px', textAlign: 'center' }}>
-                <Team onClick={() => this.teamClick('1')}>
-                  <Hexagon>
-                    <Hexagon_In1>
-                      <Hexagon_In2 src={`url(${AboutPeople1})`}>
-                      </Hexagon_In2>
-                    </Hexagon_In1>
-                  </Hexagon>
-                  <TeamIn1>
-                    <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> MICHAEL GOLTSMAN </span>
-                  </TeamIn1>
-                  <TeamIn2>
-                    <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> co-founder </span>
-                  </TeamIn2>
-                  <TeamIn3>
-                    <p style={{ fontSize: '14px' }}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                  </TeamIn3>
-                  <TeamIn4 color={true}>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faLinkedinIn} color={true} />
-                    </FontAwesomeDiv>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faTwitter} color={true} />
-                    </FontAwesomeDiv>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faYoutube} color={true} />
-                    </FontAwesomeDiv>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faDiscord} color={true} />
-                    </FontAwesomeDiv>
-                  </TeamIn4>
-                </Team>
-                <Team onClick={() => this.teamClick('2')}>
-                  <Hexagon>
-                    <Hexagon_In1>
-                      <Hexagon_In2 src={`url(${AboutPeople2})`}>
-                      </Hexagon_In2>
-                    </Hexagon_In1>
-                  </Hexagon>
-                  <TeamIn1>
-                    <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> MICHAEL GOLTSMAN </span>
-                  </TeamIn1>
-                  <TeamIn2>
-                    <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> co-founder </span>
-                  </TeamIn2>
-                  <TeamIn3>
-                    <p style={{ fontSize: '14px' }}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                  </TeamIn3>
-                  <TeamIn4 color={true}>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faLinkedinIn} color={true} />
-                    </FontAwesomeDiv>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faTwitter} color={true} />
-                    </FontAwesomeDiv>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faYoutube} color={true} />
-                    </FontAwesomeDiv>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faDiscord} color={true} />
-                    </FontAwesomeDiv>
-                  </TeamIn4>
-                </Team>
-                <Team onClick={() => this.teamClick('3')}>
-                  <Hexagon>
-                    <Hexagon_In1>
-                      <Hexagon_In2 src={`url(${AboutPeople3})`}>
-                      </Hexagon_In2>
-                    </Hexagon_In1>
-                  </Hexagon>
-                  <TeamIn1>
-                    <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> MICHAEL GOLTSMAN </span>
-                  </TeamIn1>
-                  <TeamIn2>
-                    <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> co-founder </span>
-                  </TeamIn2>
-                  <TeamIn3>
-                    <p style={{ fontSize: '14px' }}> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                  </TeamIn3>
-                  <TeamIn4 color={true}>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faLinkedinIn} color={true} />
-                    </FontAwesomeDiv>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faTwitter} color={true} />
-                    </FontAwesomeDiv>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faYoutube} color={true} />
-                    </FontAwesomeDiv>
-                    <FontAwesomeDiv>
-                      <FontAwesomeIcons icon={faDiscord} color={true} />
-                    </FontAwesomeDiv>
-                  </TeamIn4>
-                </Team>
+                <Row type="flex" justify="center">
+                  <Col md={24} xl={6}>
+                    <Team onClick={() => this.teamClick('1')}>
+                      <Hexagon>
+                        <Hexagon_In1>
+                          <Hexagon_In2 src={`url(${AboutPeople1})`}>
+                          </Hexagon_In2>
+                        </Hexagon_In1>
+                      </Hexagon>
+                      <TeamIn1>
+                        <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> BLAKE FORD </span>
+                      </TeamIn1>
+                      <TeamIn2>
+                        <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> CEO/Founder </span>
+                      </TeamIn2>
+                      <TeamIn3>
+                        <p style={{ fontSize: '14px' }}> Blake has twelve years of IT, Sales, Project Management and Customer Service experience spread across multiple verticals and is proficient in various programming languages. He began trading crypto in early 2017 and was surprised by how cumbersome the experience was. Combining his love of new technology, entrepreneurial spirit, and technical skillset, he knew he could find a better way. On June 20th, 2017, Blake created FALDAX to re-shape the crypto exchange landscape by offering more to customers for less.</p>
+                      </TeamIn3>
+                    </Team>
+                  </Col>
+                  <Col md={24} xl={6}>
+                    <Team onClick={() => this.teamClick('1')}>
+                      <Hexagon>
+                        <Hexagon_In1>
+                          <Hexagon_In2 src={`url(${AboutPeople2})`}>
+                          </Hexagon_In2>
+                        </Hexagon_In1>
+                      </Hexagon>
+                      <TeamIn1>
+                        <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> JON LOWREY </span>
+                      </TeamIn1>
+                      <TeamIn2>
+                        <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> CTO/Co-Founder </span>
+                      </TeamIn2>
+                      <TeamIn3>
+                        <p style={{ fontSize: '14px' }}> Jon received his AS in Computer Engineering Technology and has 13 years of database administration and programming experience. Most of his IT experience was in the financial, non-profit, and political industries. One of Jon’s greatest strengths is his ability to recognize problems that can be solved programmatically and then creating the solution using his extensive programming skillset. </p>
+                      </TeamIn3>
+                    </Team>
+                  </Col>
+                  <Col md={24} xl={6}>
+                    <Team onClick={() => this.teamClick('1')}>
+                      <Hexagon>
+                        <Hexagon_In1>
+                          <Hexagon_In2 src={`url(${AboutPeople3})`}>
+                          </Hexagon_In2>
+                        </Hexagon_In1>
+                      </Hexagon>
+                      <TeamIn1>
+                        <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> JEFF ZYSEK </span>
+                      </TeamIn1>
+                      <TeamIn2>
+                        <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> COO/Co-Founder </span>
+                      </TeamIn2>
+                      <TeamIn3>
+                        <p style={{ fontSize: '14px' }}> Jeff received his BS in Management Information Systems from the University of South Florida and his MBA from the University of Florida. He has 25 years of IT, Customer Service, Sales, and Marketing experience. Some of his previous titles include I.T. Manager, Regional Director, Financial Consultant, and Account Executive.</p>
+                      </TeamIn3>
+                    </Team>
+                  </Col>
+                </Row>
+
               </div>
             </ProfileDiv>
           </ProfileWrapper>

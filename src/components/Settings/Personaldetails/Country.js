@@ -16,14 +16,10 @@ const Country = styled.span`
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
-    margin-bottom:10px;
     display:block;
-    @media (max-width: 768px){
-        margin-top: 25px;
-    }
+    margin-bottom:10px;
 `
 const SelectS = styled(Select)`
-    margin-top:10px;
     & .Country_Select
     {
         width:85%;
@@ -109,7 +105,7 @@ export default class CountryPick extends Component {
 
         var cities = CountryData.getCitiesOfState(newPosition);
 
-        this.setState({ state_selected: value, city_selected: null, country_selected: country, stateID:newPosition, cities });
+        this.setState({ state_selected: value, city_selected: null, country_selected: country, stateID: newPosition, cities });
 
         this.props.onCountryChange(country, value, null, stateID, countryID);
     }
@@ -155,15 +151,12 @@ export default class CountryPick extends Component {
                 this.setState({ cities })
             }
         }
-        if(this.props.theme!==undefined && this.props.theme!=="")
-        {
-            if(this.props.theme==true)
-            {
-                this.setState({CSS:"Country_Select_night"});
+        if (this.props.theme !== undefined && this.props.theme !== "") {
+            if (this.props.theme == true) {
+                this.setState({ CSS: "Country_Select_night" });
             }
-            if(this.props.theme==false)
-            {
-                this.setState({CSS:"Country_Select"});
+            if (this.props.theme == false) {
+                this.setState({ CSS: "Country_Select" });
             }
         }
     }
