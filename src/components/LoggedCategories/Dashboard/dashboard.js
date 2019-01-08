@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col } from 'antd';
+import { Row, Col, Progress } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareFull } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
@@ -10,10 +10,17 @@ import DashGraph from "./dashGraph";
 import RiseTable from "./RiseTable";
 import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle";
 import { ContainerContact } from "../../../styled-components/loggedStyle/historyStyle"
+import { connect } from "react-redux"
+import InfiniteScroll from 'react-infinite-scroller';
+import { Scrollbars } from 'react-custom-scrollbars';
+
 import {
     ActPortWrap, Lleft, Rright, Topic, Act_div, ActTable, High_low, Left_hl, Right_hl,
     Rise_fall, Newsdiv, News, Newslist, List, Listspan, Listp, Date
 } from "../../../styled-components/loggedStyle/dashStyle"
+import { globalVariables } from '../../../Globals';
+const moment = require('moment');
+let { API_URL } = globalVariables;
 
 
 const ContainerNew = styled(ContainerContact)`
@@ -22,28 +29,6 @@ const ContainerNew = styled(ContainerContact)`
 `
 const Body_wrap = styled.div`
 `
-const columns = [{
-    title: 'Date',
-    dataIndex: 'date',
-    key: 'date',
-}, {
-    title: 'Action',
-    dataIndex: 'action',
-    key: 'action',
-}, {
-    title: 'Amount',
-    dataIndex: 'amount',
-    key: 'amount',
-}, {
-    title: 'Completed',
-    key: 'completed',
-    dataIndex: 'completed',
-    render: completed => (
-        <span>
-            {completed.map(complete => complete)}
-        </span>
-    ),
-}];
 
 const data2 = [{
     key: '1',
@@ -187,8 +172,164 @@ const data = [
         ]
     }
 ];
+const activityColumns = [{
+    title: 'Date',
+    dataIndex: 'date',
+    key: 'date',
+}, {
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+}, {
+    title: 'Amount',
+    dataIndex: 'amount',
+    key: 'amount',
+}, {
+    title: 'Completed',
+    key: 'completed',
+    dataIndex: 'completed',
+    render: completed => (
+        <Progress percent={completed} />
+    ),
+}];
+const portfolioColumn = [{
+    title: 'Coin',
+    dataIndex: 'coin',
+    key: 'coin',
+}, {
+    title: 'Amount',
+    dataIndex: 'amount',
+    key: 'amount',
+}, {
+    title: 'Value',
+    dataIndex: 'value',
+    key: 'value',
+}, {
+    title: 'Change',
+    key: 'change',
+    dataIndex: 'change',
+}];
+class Dashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            activityData: [],
+            news: [],
+            hasMoreNews: true,
+            portfolioData: [],
+        }
+        this.loadNews = this.loadNews.bind(this);
+        this.loadActivity = this.loadActivity.bind(this);
+        this.loadPortfolio = this.loadPortfolio.bind(this);
+    }
 
-export default class Dashboard extends Component {
+    componentDidMount() {
+
+        var self = this;
+        self.loadNews(1);
+        self.loadActivity();
+        self.loadPortfolio();
+    }
+
+    loadActivity() {
+        var self = this;
+        fetch(`${API_URL}/dashboard/get-activity`, {
+            method: "get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }).then(response => response.json())
+            .then((responseData) => {
+                // console.log(responseData);
+                let activityData = [];
+                if (responseData.status == 200) {
+                    responseData.data.map(element => {
+                        activityData.push({
+                            date: moment.utc(element.created_at).local().format("MMMM DD, YYYY HH:mm"),
+                            action: element.side,
+                            amount: element.price + element.currency,
+                            completed: ((parseFloat(element.quantity) * 100) / parseFloat(element.fix_quantity))
+                        });
+                    });
+                    self.setState({
+                        activityData: activityData
+                    });
+                }
+
+            })
+            .catch(error => { /* console.log(error) */ })
+    }
+
+    loadPortfolio() {
+        var self = this;
+        fetch(`${API_URL}/dashboard/get-portfolio`, {
+            method: "get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                console.log(responseData);
+                let portfolioData = [];
+                if (responseData.status == 200) {
+                    responseData.data.map(element => {
+                        portfolioData.push({
+                            coin: element.name,
+                            amount: element.amount + element.symbol,
+                            value: element.average_price + element.fiat,
+                            change: element.percentchange + "%"
+                        });
+                    });
+                    self.setState({
+                        portfolioData: portfolioData
+                    });
+                }
+
+            })
+            .catch(error => { /* console.log(error) */ })
+    }
+
+    loadNews(page) {
+        console.log("load news call ", page);
+
+        var self = this;
+        fetch(`${API_URL}/users/get-all-news?limit=50&page=${page}`, {
+            method: "post",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                // console.log(responseData);
+                if (responseData.status == 200) {
+                    let news = self.state.news;
+                    responseData.data.map(element => {
+                        news.push(element);
+                    });
+
+                    let hasMoreNews = true;
+                    console.log(news.length >= parseInt(responseData.NewsCount));
+
+                    if (news.length >= parseInt(responseData.NewsCount)) {
+                        hasMoreNews = false;
+                    }
+                    self.setState({
+                        news: news,
+                        hasMoreNews: hasMoreNews
+                    });
+                }
+
+            })
+            .catch(error => { /* console.log(error) */ })
+    }
+
     render() {
         return (
             <div>
@@ -208,7 +349,7 @@ export default class Dashboard extends Component {
                                                     <span>ACTIVITY</span>
                                                 </Topic>
                                                 <Act_div>
-                                                    <ActTable pagination={false} columns={columns} dataSource={data2} />
+                                                    <ActTable pagination={false} columns={activityColumns} dataSource={this.state.activityData} />
                                                 </Act_div>
                                             </Lleft>
                                         </Col>
@@ -222,7 +363,7 @@ export default class Dashboard extends Component {
                                                     <Right_hl>^$12,342</Right_hl>
                                                 </High_low>
                                                 <Act_div>
-                                                    <ActTable pagination={false} columns={columns} dataSource={data2} />
+                                                    <ActTable pagination={false} columns={portfolioColumn} dataSource={this.state.portfolioData} />
                                                 </Act_div>
                                             </Rright>
                                         </Col>
@@ -234,20 +375,21 @@ export default class Dashboard extends Component {
                                 <Newsdiv>
                                     <News>NEWS</News>
                                     <Newslist>
-                                        <List>
-                                            <Date>August 17, 17:49</Date>
-                                            <Listspan>
-                                                <FontAwesomeIcon icon={faSquareFull} color='#d4d4d4' style={{ marginRight: "10px" }} />www.gmail.com
-                                            </Listspan>
-                                            <Listp>Ripple Picks Three Crypto Exchanges for International XRP Payments</Listp>
-                                        </List>
-                                        <List>
-                                            <Date>August 17, 17:49</Date>
-                                            <Listspan>
-                                                <FontAwesomeIcon icon={faSquareFull} color='#d4d4d4' style={{ marginRight: "10px" }} />www.gmail.com
-                                            </Listspan>
-                                            <Listp>Ripple Picks Three Crypto Exchanges for International XRP Payments</Listp>
-                                        </List>
+                                        <Scrollbars
+                                            style={{ height: 380 }}>
+                                            {
+                                                this.state.news.map((element, index) => (
+                                                    <List>
+                                                        <Date>{moment.utc(element.posted_at).format("MMMM DD, YYYY HH:mm")}</Date>
+                                                        <Listspan>
+                                                            <FontAwesomeIcon icon={faSquareFull} color='#d4d4d4' style={{ marginRight: "10px" }} />{element.owner}
+                                                        </Listspan>
+                                                        <Listp href={element.link} target="_blank">{element.title}</Listp>
+                                                    </List>
+                                                ))
+                                            }
+                                        </Scrollbars>
+
                                     </Newslist>
                                 </Newsdiv>
                             </ContainerNew>
@@ -259,3 +401,12 @@ export default class Dashboard extends Component {
         );
     }
 }
+function mapStateToProps(state) {
+    return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
+    })
+}
+
+export default connect(mapStateToProps)(Dashboard);

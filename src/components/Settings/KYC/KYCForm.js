@@ -104,7 +104,7 @@ class KYCForm extends Component {
                 address_2: '',
                 city_town: '',
                 zip: '',
-                state:''
+                state: ''
             }
         };
         this.validator = new SimpleReactValidator();
@@ -112,9 +112,8 @@ class KYCForm extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
     onDateChange(value) {
-        var tempDate = value.day+"/"+value.month+"/"+value.year;
-        if((value.day!==""&&value.day!==undefined) && (value.year!==undefined&&value.year!=="") && (value.month!==undefined &&value.month!==""))
-        {
+        var tempDate = value.day + "/" + value.month + "/" + value.year;
+        if ((value.day !== "" && value.day !== undefined) && (value.year !== undefined && value.year !== "") && (value.month !== undefined && value.month !== "")) {
             var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
             let fields = this.state.fields;
             fields['dob'] = date;
@@ -123,12 +122,12 @@ class KYCForm extends Component {
     }
     onCountryChange(country, state, city, stateID, countryID) {
         let fields = this.state.fields;
-        fields['country']=country!==null?country:"";
-        fields['state']=state!==null?state:"";
-        fields['city_town']= city!==null?city:'';
-        fields['state_id']=stateID;
-        fields['country_id']=countryID;
-        this.setState({fields});
+        fields['country'] = country !== null ? country : "";
+        fields['state'] = state !== null ? state : "";
+        fields['city_town'] = city !== null ? city : '';
+        fields['state_id'] = stateID;
+        fields['country_id'] = countryID;
+        this.setState({ fields });
     }
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
@@ -214,9 +213,9 @@ class KYCForm extends Component {
 
                     <Fourth_Row_kyc>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
-                                {/* console.log(this.props) */}
-                                <CountryPick {...this.props} kyc="kyc" isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={(country, state, city, stateID, countryID) => this.onCountryChange(country, state, city, stateID, countryID)} />
-                                <span>{this.validator.message('country', this.state.fields.country, 'required', 'text-danger-validation')}
+                            {/* console.log(this.props) */}
+                            <CountryPick {...this.props} kyc="kyc" isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={(country, state, city, stateID, countryID) => this.onCountryChange(country, state, city, stateID, countryID)} />
+                            <span>{this.validator.message('country', this.state.fields.country, 'required', 'text-danger-validation')}
                                 {this.validator.message('state', this.state.fields.state, 'required', 'text-danger-validation')}
                                 {this.validator.message('city', this.state.fields.city_town, 'required', 'text-danger-validation')}</span>
                         </Col>

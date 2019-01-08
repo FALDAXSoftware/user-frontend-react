@@ -19,7 +19,7 @@ import { Container } from '../../../styled-components/homepage/style';
 import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
 import {
     Row_wrap, Left_div, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
-    FIAT_wrap, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2,RadioSelect
+    FIAT_wrap, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect
 } from "../../../styled-components/loggedStyle/tradeStyle";
 
 var socketIOClient = require('socket.io-client');
@@ -108,6 +108,7 @@ class Trade extends Component {
         super(props);
     }
     componentDidMount() {
+
         io.sails.headers = {
             Accept: 'application/json',
             'Content-Type': 'application/json',

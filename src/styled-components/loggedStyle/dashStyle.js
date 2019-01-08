@@ -1,14 +1,14 @@
 
 import styled from 'styled-components';
-import { Row,Col,Table } from 'antd';
+import { Row, Col, Table } from 'antd';
 
 export const ActPortWrap = styled.div`
     margin-top:30px;
-    background-color:${props => props.theme.mode=="dark"?"#01090f":"#f5f6fa"};
+    background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
     
 `
 export const Lleft = styled.div`
-    background-color:${props => props.theme.mode=="dark"?"#041b2c":"white"};
+    background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     margin-right:15px;
     height:500px;
     padding-bottom:30px;
@@ -21,7 +21,7 @@ export const Lleft = styled.div`
     }
 `
 export const Rright = styled.div`
-    background-color:${props => props.theme.mode=="dark"?"#041b2c":"white"};
+    background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     margin-left:15px;
     height:500px;
     padding-bottom:30px;
@@ -50,13 +50,13 @@ export const Act_div = styled.div`
 export const ActTable = styled(Table)`
     & thead>tr>th
     {
-        background-color:${props=>props.theme.mode=="dark"?"#041b2c":"white"};
+        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
         border-bottom:1px solid #eeeeee;
-        color:${props=>props.theme.mode=="dark"?"#174c7e":"#7f7f7f"};
+        color:${props => props.theme.mode == "dark" ? "#174c7e" : "#7f7f7f"};
     }
     & tbody>tr>td
     {
-        color:${props => props.theme.mode=="dark"?"white":""};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
 `
 export const High_low = styled.div`
@@ -68,7 +68,7 @@ export const High_low = styled.div`
 export const Left_hl = styled.div`
     font-size: 24px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode=="dark"?"white":"rgb( 68, 68, 68 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 68, 68, 68 )"};
     font-weight:600;
 `
 export const Right_hl = styled.div`
@@ -80,7 +80,7 @@ export const Right_hl = styled.div`
 `
 export const Rise_fall = styled.div`
     margin-top:30px;
-    background-color:${props => props.theme.mode=="dark"?"#041b2c":"white"};
+    background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     padding-bottom: 40px;
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     border-radius: 5px;
@@ -90,7 +90,7 @@ export const Rise_fall = styled.div`
 `
 export const Newsdiv = styled.div`
     margin-top:30px;
-    background-color:${props => props.theme.mode=="dark"?"#041b2c":"white"};
+    background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     padding-bottom: 40px;
     padding-top:25px;
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -120,17 +120,20 @@ export const Listspan = styled.span`
     font-family: "Open Sans";
     color: rgb( 127, 127, 127 );  
 `
-export const Listp = styled.p`
+export const Listp = styled.a`
     font-size: 16px;
     font-family: "Open Sans";
     color: rgb( 76, 132, 255 );
     font-weight:600;
     margin-top:8px;
+    display:block;
+    margin-bottom:15px;
 `
 export const Date = styled.span`
     float:right;
     margin-top: 20px;
     font-size: 12px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode=="dark"?"#617090":"rgb( 97, 112, 144 )"};
+    color:${props => props.theme.mode == "dark" ? "#617090" : "rgb( 97, 112, 144 )"};
+    padding-right: 20px;
 `
