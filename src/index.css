@@ -1228,6 +1228,14 @@ table .ant-table-tbody > tr > td {
   margin: 0.5rem !important;
 }
 
+
+
+/*DashBoard Activity table CSS  */
+.dash-date
+{
+  width:145px;
+}
+
 /* Depth Chart CSS */
 
 #depth-chart1 canvas

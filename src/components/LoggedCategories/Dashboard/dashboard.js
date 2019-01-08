@@ -176,6 +176,7 @@ const activityColumns = [{
     title: 'Date',
     dataIndex: 'date',
     key: 'date',
+    className:"dash-date"
 }, {
     title: 'Action',
     dataIndex: 'action',
@@ -247,10 +248,10 @@ class Dashboard extends Component {
                 if (responseData.status == 200) {
                     responseData.data.map(element => {
                         activityData.push({
-                            date: moment.utc(element.created_at).local().format("MMMM DD, YYYY HH:mm"),
+                            date: moment.utc(element.created_at).local().format("MMMM DD,HH:mm"),
                             action: element.side,
                             amount: element.price + element.currency,
-                            completed: ((parseFloat(element.quantity) * 100) / parseFloat(element.fix_quantity))
+                            completed: ((parseFloat(element.quantity) * 100) / parseFloat(element.fix_quantity)),
                         });
                     });
                     self.setState({
@@ -349,7 +350,7 @@ class Dashboard extends Component {
                                                     <span>ACTIVITY</span>
                                                 </Topic>
                                                 <Act_div>
-                                                    <ActTable pagination={false} columns={activityColumns} dataSource={this.state.activityData} />
+                                                    <ActTable scroll={{ y: 320 }} pagination={false} columns={activityColumns} dataSource={this.state.activityData} />
                                                 </Act_div>
                                             </Lleft>
                                         </Col>
