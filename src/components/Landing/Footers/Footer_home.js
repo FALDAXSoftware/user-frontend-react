@@ -255,7 +255,7 @@ class Footer_home extends Component {
                 <Container>
                     <FooterContainer>
                         <Row>
-                            <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
+                            {/* <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                                 <Footer_ul>
                                     <Footer_headers>Information</Footer_headers>
                                     <li style={{ cursor: "pointer" }} >
@@ -281,13 +281,15 @@ class Footer_home extends Component {
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         Open a Ticket
                                     </li>
-                                    <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/faq">FAQ</Footer_Link>
+                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                        <Footer_Link to="/faq">
+                                        FAQ
+                                        </Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         API Documentation
                                                     </li>
-                                    {/* <li style={{cursor:"pointer"}} onClick={this.showComing}>Language</li> */}
+                                    <li style={{cursor:"pointer"}} onClick={this.showComing}>Language</li>
                                     <li style={{ cursor: "pointer" }}>
                                         <Footer_Link to="/addcoin">List Your Token</Footer_Link>
                                     </li>
@@ -310,7 +312,7 @@ class Footer_home extends Component {
                                         Security
                                     </li>
                                 </Footer_ul>
-                            </FooterLinkCol>
+                            </FooterLinkCol> */}
 
                             <Col xs={24} lg={5} xl={5}>
                                 <Icon_ul_1_header>
