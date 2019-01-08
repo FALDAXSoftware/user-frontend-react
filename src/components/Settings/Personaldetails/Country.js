@@ -54,7 +54,7 @@ const Select_wrap = styled.div`
     {
         margin-top:25px;
     }
-`   
+`
 const Country_wrap = styled.div`
     @media(max-width:991px)
     {
@@ -105,7 +105,7 @@ export default class CountryPick extends Component {
 
         var cities = CountryData.getCitiesOfState(newPosition);
 
-        this.setState({ state_selected: value, city_selected: null, country_selected: country, stateID:newPosition, cities });
+        this.setState({ state_selected: value, city_selected: null, country_selected: country, stateID: newPosition, cities });
 
         this.props.onCountryChange(country, value, null, stateID, countryID);
     }
@@ -151,15 +151,12 @@ export default class CountryPick extends Component {
                 this.setState({ cities })
             }
         }
-        if(this.props.theme!==undefined && this.props.theme!=="")
-        {
-            if(this.props.theme==true)
-            {
-                this.setState({CSS:"Country_Select_night"});
+        if (this.props.theme !== undefined && this.props.theme !== "") {
+            if (this.props.theme == true) {
+                this.setState({ CSS: "Country_Select_night" });
             }
-            if(this.props.theme==false)
-            {
-                this.setState({CSS:"Country_Select"});
+            if (this.props.theme == false) {
+                this.setState({ CSS: "Country_Select" });
             }
         }
     }
@@ -167,8 +164,8 @@ export default class CountryPick extends Component {
     render() {
         return (
             <Country_wrap>
-            <Row>
-                <Col sm={24} md={8} xl={8} xxl={8}>
+                <Row>
+                    <Col sm={24} md={8} xl={8} xxl={8}>
                         <Country>Country*</Country>
                         <SelectS
                             showSearch
@@ -183,11 +180,11 @@ export default class CountryPick extends Component {
                         >
                             {this.state.countries.map((country, index) => <Option key={country.id} value={country.name}>{country.name}</Option>)}
                         </SelectS>
-                </Col>
-                <Col sm={24} md={8} xl={8} xxl={8}>
-                    <Select_wrap>
-                        <Country>State*</Country>
-                        <SelectS
+                    </Col>
+                    <Col sm={24} md={8} xl={8} xxl={8}>
+                        <Select_wrap>
+                            <Country>State*</Country>
+                            <SelectS
                                 showSearch
                                 value={this.state.state_selected !== null ? this.state.state_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.state)}
                                 placeholder="Select a State"
@@ -199,13 +196,13 @@ export default class CountryPick extends Component {
                                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             >
                                 {this.state.states.map((state, index) => <Option key={state.id} value={state.name}>{state.name}</Option>)}
-                        </SelectS>
-                    </Select_wrap>
-                </Col>
-                <Col sm={24} md={8} xl={8} xxl={8}>
-                    <Select_wrap>
-                        <Country>City*</Country>
-                        <SelectS
+                            </SelectS>
+                        </Select_wrap>
+                    </Col>
+                    <Col sm={24} md={8} xl={8} xxl={8}>
+                        <Select_wrap>
+                            <Country>City*</Country>
+                            <SelectS
                                 showSearch
                                 value={this.state.city_selected !== null ? this.state.city_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.city_town)}
                                 placeholder="Select a City"
@@ -216,11 +213,11 @@ export default class CountryPick extends Component {
                                 onBlur={this.handleBlur}
                                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             >
-                                {this.state.cities!==null?this.state.cities.map((city, index) => <Option key={city.id} value={city.name}>{city.name}</Option>):''}
-                        </SelectS>
-                    </Select_wrap>
-                </Col>
-            </Row>
+                                {this.state.cities !== null ? this.state.cities.map((city, index) => <Option key={city.id} value={city.name}>{city.name}</Option>) : ''}
+                            </SelectS>
+                        </Select_wrap>
+                    </Col>
+                </Row>
             </Country_wrap>
         );
     }
