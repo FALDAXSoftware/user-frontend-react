@@ -64,6 +64,11 @@ const SubMenuNav = styled(SubMenu)`
         color:white;
         border-right:none;
     }
+    & .ant-menu-item-selected>a
+    {
+        color:white !important;
+        font-weight: normal !important;
+    }
     >.ant-menu
     {
         background:none;
