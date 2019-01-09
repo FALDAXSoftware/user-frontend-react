@@ -150,7 +150,7 @@ class Blog extends Component {
                                 <Row className="blog-card-row">
 
                                     {this.state.blogsData.data !== undefined ? this.state.blogsData.data.map(function (result, key, index) {
-                                        var date = moment.utc(result.created_at).local().format("MMM DD, YYYY");
+                                        var date = moment.utc(result.posted_at).local().format("MMM DD, YYYY");
                                         var img = result.cover_image;
                                         var tag = result.tags ? result.tags.split(',') : [];
                                         return (
