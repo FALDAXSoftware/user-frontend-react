@@ -34,6 +34,54 @@ const DropMenu = styled(Menu)`
 const SubMenuNav = styled(SubMenu)`
     background: none;
     color: white;
+    >.ant-menu-submenu-title
+    {
+        padding-left:0px !important;
+        font-size: 18px;
+        line-height:25px !important;
+        height:25px !important;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    & .ant-menu-item
+    {
+        padding-left:30px !important;
+    }
+    & .ant-menu-item:after
+    {
+        border-right:none;
+    }
+    & .ant-menu-item>a
+    {
+        color:white;
+    }
+    & .ant-menu-item>a:hover{
+        color:#1890ff !important;
+    }
+    & .ant-menu-item-selected
+    {
+        background-color:transparent !important;
+        color:white;
+        border-right:none;
+    }
+    & .ant-menu-item-selected>a
+    {
+        color:white !important;
+        font-weight: normal !important;
+    }
+    >.ant-menu
+    {
+        background:none;
+    }
+    >.ant-menu-submenu-title>.ant-menu-submenu-arrow:before 
+    {
+        color:white;
+        background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255));
+    }
+    >.ant-menu-submenu-title>.ant-menu-submenu-arrow:after 
+    {
+        background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255));
+    }
 `
 const Right_Col = styled(Col)`
     background-image:url(${Wallpaper});
@@ -152,7 +200,7 @@ const SideNav = styled.div`
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    a
+    >a
     {
         padding: 8px 32px;
         text-decoration: none;
@@ -162,8 +210,12 @@ const SideNav = styled.div`
         line-height: 1.5;
         color:white;
     }
-    a:hover{
+    >a:hover{
         color:#1890ff !important;
+    }
+    & .ant-menu-inline
+    {
+        border-right:none;
     }
     @media(min-width: 1320px)
     {
@@ -230,6 +282,12 @@ const ProfileLinkContainer = styled.div`
     @media(min-width:361px)
     {
         display: none;
+    }
+`
+const CarLink = styled(Link)`
+    @media(min-width:671px)
+    {
+        display:none !important;
     }
 `
 class Navigation extends Component {
@@ -406,29 +464,40 @@ class Navigation extends Component {
                         <Link to="/contactus">Contact</Link>
                         <Link to="/addcoin">List Your Token</Link>
                         <a onClick={this.showComing} href="#">Exchange</a>
-                        <Link to="/careers"><Why>Careers </Why></Link>
+                        <CarLink to="/careers">Careers</CarLink>
                         {/* <Why> Language </Why> */}
-                        <DropMenu mode="inline">
-                            <SubMenuNav key="sub1" title={'Information'}>
-                                <Menu.Item key="9"><NavLink className="Nav_selected" to="/about-us">About Us</NavLink></Menu.Item>
-                                <Menu.Item key="10"><NavLink className="Nav_selected" to="/contactus">Contact Us</NavLink></Menu.Item>
-                                <Menu.Item key="11"><NavLink className="Nav_selected" to="/media">Media Contact</NavLink></Menu.Item>
-                                <Menu.Item key="12"><NavLink className="Nav_selected" to="/blog">Blog</NavLink></Menu.Item>
-                                <Menu.Item key="13"><NavLink className="Nav_selected" to="/fees">Fees</NavLink></Menu.Item>
-                            </SubMenuNav>
-                            <SubMenuNav key="sub2" title={'Support'}>
-                                <Menu.Item key="9"><a onClick={this.showComing} href="#">Open a Ticket</a></Menu.Item>
-                                <Menu.Item key="10"><a onClick={this.showComing} href="#">FAQ</a></Menu.Item>
-                                <Menu.Item key="11"><a onClick={this.showComing} href="#">API Documentation</a></Menu.Item>
-                                <Menu.Item key="12"><NavLink className="Nav_selected" to="/addcoin">List Your Token</NavLink></Menu.Item>
-                                <Menu.Item key="12"><NavLink className="Nav_selected" to="/news">News</NavLink></Menu.Item>
-                            </SubMenuNav>
-                            <SubMenuNav key="sub3" title={'Legal & Technical'}>
-                                <Menu.Item key="9"><NavLink className="Nav_selected" to="/policy">Policies</NavLink></Menu.Item>
-                                <Menu.Item key="10">Service Availability</Menu.Item>
-                                <Menu.Item key="11"><a onClick={this.showComing} href="#">Security</a></Menu.Item>
-                            </SubMenuNav>
-                        </DropMenu>
+                        <a>
+                            <DropMenu mode="inline">
+                                <SubMenuNav key="sub1" title={'Information'}>
+                                    <Menu.Item key="9"><Link to="/about-us">About Us</Link></Menu.Item>
+                                    <Menu.Item key="10"><Link to="/contactus">Contact Us</Link></Menu.Item>
+                                    <Menu.Item key="11"><Link to="/mediacontact">Media Contact</Link></Menu.Item>
+                                    <Menu.Item key="12"><Link to="/blogs">Blog</Link></Menu.Item>
+                                    <Menu.Item key="13"><Link to="/fees">Fees</Link></Menu.Item>
+                                </SubMenuNav>
+                            </DropMenu>
+                        </a>
+                        <a>
+                            <DropMenu mode="inline">
+                                <SubMenuNav key="sub2" title={'Support'}>
+                                    <Menu.Item key="9"><a onClick={this.showComing} href="#">Open a Ticket</a></Menu.Item>
+                                    <Menu.Item key="10"><a onClick={this.showComing} href="#">FAQ</a></Menu.Item>
+                                    <Menu.Item key="11"><a onClick={this.showComing} href="#">API Documentation</a></Menu.Item>
+                                    <Menu.Item key="12"><Link to="/addcoin">List Your Token</Link></Menu.Item>
+                                    <Menu.Item key="12"><Link to="/news">News</Link></Menu.Item>
+                                </SubMenuNav>
+                            </DropMenu>
+                        </a>
+                        <a>
+                            <DropMenu mode="inline">
+                                <SubMenuNav key="sub3" title={'Legal & Technical'}>
+                                    <Menu.Item key="9"><Link to="/policy">Policies</Link></Menu.Item>
+                                    <Menu.Item key="10"><a onClick={this.showComing} href="#">Service Availability</a></Menu.Item>
+                                    <Menu.Item key="11"><a onClick={this.showComing} href="#">Security</a></Menu.Item>
+                                </SubMenuNav>
+                            </DropMenu>
+                        </a>
+                        
                         {this.props.isLoggedIn &&
                             <ProfileLinkContainer>
                                 <a onClick={() => this.props.history.push('/editProfile')}>Profile</a>

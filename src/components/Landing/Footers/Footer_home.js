@@ -181,7 +181,10 @@ const FooterContainer = styled.div`
 }
 `
 const FooterLinkCol = styled(Col)`
-
+    @media(max-width:575px)
+    {
+        display:none;
+    }
 `
 const FontAwesomeIcons = styled(FontAwesomeIcon)`
     display:inline-block;
