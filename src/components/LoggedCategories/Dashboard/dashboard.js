@@ -19,6 +19,7 @@ import {
     Rise_fall, Newsdiv, News, Newslist, List, Listspan, Listp, Date
 } from "../../../styled-components/loggedStyle/dashStyle"
 import { globalVariables } from '../../../Globals';
+
 const moment = require('moment');
 let { API_URL } = globalVariables;
 
@@ -176,7 +177,7 @@ const activityColumns = [{
     title: 'Date',
     dataIndex: 'date',
     key: 'date',
-    className:"dash-date"
+    className: "dash-date"
 }, {
     title: 'Action',
     dataIndex: 'action',
@@ -210,6 +211,7 @@ const portfolioColumn = [{
     key: 'change',
     dataIndex: 'change',
 }];
+let io = null;
 class Dashboard extends Component {
     constructor(props) {
         super(props);
@@ -219,6 +221,10 @@ class Dashboard extends Component {
             hasMoreNews: true,
             portfolioData: [],
         }
+        // console.log("====>", this.props);
+
+        io = this.props.io;
+        io.sails.url = API_URL;
         this.loadNews = this.loadNews.bind(this);
         this.loadActivity = this.loadActivity.bind(this);
         this.loadPortfolio = this.loadPortfolio.bind(this);
@@ -230,6 +236,11 @@ class Dashboard extends Component {
         self.loadNews(1);
         self.loadActivity();
         self.loadPortfolio();
+        io.sails.headers = {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: "Bearer " + this.props.isLoggedIn
+        }
     }
 
     loadActivity() {
@@ -340,7 +351,7 @@ class Dashboard extends Component {
                         <Body_wrap>
                             <ContainerNew>
                                 <div>
-                                    <DashGraph data={data} />
+                                    <DashGraph data={data} io={io} />
                                 </div>
                                 <ActPortWrap>
                                     <Row>

@@ -55,11 +55,23 @@ export default class DashGraph extends Component {
                 <Container>
                     <Container_row className="789">
                         <RowofCol className="123">
-                            {this.props.data.map((chartData, index) =>
+                            <Col sm={12} md={6} lg={6} style={{ padding: '10px' }}>
+                                <Mini_graph crypto="XRP" currency="BTC" data={this.props.data[0]} total={4} io={this.props.io} lineColor="#ffab30" />
+                            </Col>
+                            <Col sm={12} md={6} lg={6} style={{ padding: '10px' }}>
+                                <Mini_graph crypto="XRP" currency="BTC" data={this.props.data[0]} total={4} io={this.props.io} lineColor="#ffab30" />
+                            </Col>
+                            <Col sm={12} md={6} lg={6} style={{ padding: '10px' }}>
+                                <Mini_graph crypto="XRP" currency="BTC" data={this.props.data[0]} total={4} io={this.props.io} lineColor="#ffab30" />
+                            </Col>
+                            <Col sm={12} md={6} lg={6} style={{ padding: '10px' }}>
+                                <Mini_graph crypto="XRP" currency="BTC" data={this.props.data[0]} total={4} io={this.props.io} lineColor="#ffab30" />
+                            </Col>
+                            {/* {this.props.data.map((chartData, index) =>
                                 <Col sm={12} md={6} lg={6} key={index} style={{ padding: '10px' }}>
-                                    <Mini_graph data={chartData} total={4} />
+                                    <Mini_graph data={chartData} total={4} io={this.props.io} />
                                 </Col>
-                            )}
+                            )} */}
                         </RowofCol>
                     </Container_row>
                 </Container>

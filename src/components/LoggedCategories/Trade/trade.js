@@ -22,9 +22,9 @@ import {
     FIAT_wrap, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect
 } from "../../../styled-components/loggedStyle/tradeStyle";
 
-var socketIOClient = require('socket.io-client');
-var sailsIOClient = require('sails.io.js');
-let io = sailsIOClient(socketIOClient);
+// var socketIOClient = require('socket.io-client');
+// var sailsIOClient = require('sails.io.js');
+// let io = sailsIOClient(socketIOClient);
 const Search = Input.Search;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
@@ -102,10 +102,11 @@ const data = [{
     change: "+0.92%"
 }];
 const TabPane = Tabs.TabPane;
-
+let io = null;
 class Trade extends Component {
     constructor(props) {
         super(props);
+        io = this.props.io;
     }
     componentDidMount() {
 
