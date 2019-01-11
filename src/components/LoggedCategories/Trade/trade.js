@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
-import { Row, Col, Tabs, Input, Radio } from 'antd';
+import { Row, Col, Tabs, Input, Radio, Select } from 'antd';
 import styled from 'styled-components';
 /* import Tableofcoin from './TableofCoin'
 import WalletDetails from './WalletDetails' */
@@ -19,13 +19,16 @@ import { Container } from '../../../styled-components/homepage/style';
 import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
 import {
     Row_wrap, Left_div, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
-    FIAT_wrap, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect
+    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect,
 } from "../../../styled-components/loggedStyle/tradeStyle";
+import { globalVariables } from '../../../Globals';
 
+let { API_URL } = globalVariables;
 var socketIOClient = require('socket.io-client');
 var sailsIOClient = require('sails.io.js');
 let io = sailsIOClient(socketIOClient);
 const Search = Input.Search;
+const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const ContainerContact = styled(Container)`
@@ -106,6 +109,15 @@ const TabPane = Tabs.TabPane;
 class Trade extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            timePeriod: "1",
+            status: "1",
+            crypto: "XRP",
+            currency: "BTC",
+            orderTradeData: {}
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.statusChange = this.statusChange.bind(this);
     }
     componentDidMount() {
 
@@ -114,6 +126,7 @@ class Trade extends Component {
             'Content-Type': 'application/json',
             Authorization: "Bearer " + this.props.isLoggedIn
         }
+        this.orderSocket(this.state.timePeriod, this.state.status);
     }
     searchChange(value) {
 
@@ -125,6 +138,60 @@ class Trade extends Component {
     }
 
     callback(key) {
+    }
+    handleChange(value) {
+        console.log(value); // { key: "lucy", label: "Lucy (101)" }
+        this.setState({ timePeriod: value.key });
+        this.orderSocket(value.key, this.state.status);
+    }
+    statusChange(e) {
+        console.log(e);
+        var status;
+        if (e.target.value == "a") {
+            status = 1;
+        }
+        else if (e.target.value == "b") {
+            status = 2;
+        }
+        else if (e.target.value == "c") {
+            status = 3;
+        }
+        this.setState({ status });
+        this.orderSocket(this.state.timePeriod, status);
+    }
+    orderSocket(month, filter_type) {
+        console.log("orderSocket")
+        io.socket.get(`/socket/get-user-trade-data?room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`, (body, JWR) => {
+
+
+            if (body.status == 200) {
+                let res = body.data;
+
+
+                this.updateMyOrder(res);
+            }
+        });
+    }
+    updateMyOrder(response) {
+        this.setState({ orderTradeData: response })
+    }
+    cancelOrder(id, side, type) {
+        console.log(id, side, type)
+        fetch(API_URL + `/cancel-pending-order?id=${id}&side=${side}&order_type=${type}`, {
+            method: "get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                console.log(responseData)
+            })
+            .catch(error => {
+            })
     }
     render() {
         return (
@@ -202,8 +269,27 @@ class Trade extends Component {
                             <Row>
                                 <Col span={24}>
                                     <Left_div2>
-                                        <Instru>MY ORDERS AND TRADES</Instru>
-                                        <OrderTrade />
+                                        <div style={{ margin: "0px" }}>
+                                            <Instru>MY ORDERS AND TRADES</Instru>
+                                            <div style={{ display: "inline-block", float: "right" }}>
+                                                <Select labelInValue defaultValue={{ key: '1' }} style={{ width: 120, marginRight: "30px" }} onChange={this.handleChange}>
+                                                    <Option value="1">1 month</Option>
+                                                    <Option value="3">3 month</Option>
+                                                    <Option value="6">6 month</Option>
+                                                    <Option value="12">12 month</Option>
+                                                </Select>
+                                                <FIAT_wrap2>
+                                                    <FIAT>
+                                                        <RadioSelect onChange={this.statusChange} defaultValue="a" size="large" buttonStyle="solid">
+                                                            <RadioButton value="a">COMPLETED</RadioButton>
+                                                            <RadioButton value="b">PENDING</RadioButton>
+                                                            <RadioButton value="c">CANCELED</RadioButton>
+                                                        </RadioSelect>
+                                                    </FIAT>
+                                                </FIAT_wrap2>
+                                            </div>
+                                        </div>
+                                        <OrderTrade pending={this.state.status} cancelOrder={(id, side, type) => { this.cancelOrder(id, side, type) }} orderTradeData={this.state.orderTradeData} />
                                     </Left_div2>
                                 </Col>
                             </Row>

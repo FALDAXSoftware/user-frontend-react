@@ -95,7 +95,8 @@ class WalletDetails extends Component {
             send:false,
             walletDetails:{},
             total:null,
-            loader:false
+            loader:false,
+            coin_code:""
         };
     }
     componentDidMount()
@@ -133,7 +134,7 @@ class WalletDetails extends Component {
                 })
                 .then(response => response.json())
                 .then((responseData) => {
-                    this.setState({walletDetails:responseData.walletTransData,loader:false});
+                    this.setState({walletDetails:responseData.walletTransData,loader:false,coin_code:coin_name[1]});
                 })
                 .catch(error => {
                 })
@@ -155,6 +156,7 @@ class WalletDetails extends Component {
     }
     render() {
         var tempDetails = null;
+        if(this.state.walletDetails!==null && this.state.walletDetails!==undefined)
         if(Object.keys(this.state.walletDetails).length>0)
         {
             tempDetails = this.state.walletDetails;
@@ -240,14 +242,14 @@ class WalletDetails extends Component {
                                 }
                             </CoinTable>
                         </Trans_table>
-                        {this.state.send==true?
-                            <WalletPopup isLoggedIn={this.props.isLoggedIn} title="SEND" comingCancel={(e) => this.comingCancel(e)} visible={this.state.send} />
+                        {this.state.withdraw==true?
+                            <WalletPopup coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="RECEIVE" comingCancel={(e) => this.comingCancel(e)} visible={this.state.withdraw} />
                             :
                             ""
                         }
-                        {this.state.withdraw==true
+                        {this.state.send==true
                             ?
-                            <WalletPopup isLoggedIn={this.props.isLoggedIn}  title="RECEIVE" comingCancel={(e) => this.comingCancel(e)} visible={this.state.withdraw} />
+                            <WalletPopup coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn}  title="SEND" comingCancel={(e) => this.comingCancel(e)} visible={this.state.send} />
                             :
                             ""
                         }

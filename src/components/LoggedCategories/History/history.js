@@ -50,6 +50,7 @@ export default class History extends Component {
     }
 
     changeDate(date: moment, dateString: string) {
+        
     }
 
     onChangeCheck(checkedValues) {

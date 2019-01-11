@@ -1,5 +1,6 @@
-import { Row, Col, Tabs, Button, Table, Input, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio  } from 'antd';
+import { Row, Col, Tabs, Button, Table, Input, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio } from 'antd';
 import styled from 'styled-components';
+import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
 
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
@@ -74,14 +75,19 @@ export const FIAT_wrap = styled.div`
     justify-content: flex-end;
     margin-top:5px;
 `
+export const FIAT_wrap2 = styled.div`
+    display: inline-block;
+    float: right;
+`
 export const FIAT = styled.div`
     display:inline-block;
     margin-right:25px;
 `
+
 export const RadioSelect = styled(RadioGroup)`
     & .ant-radio-button-wrapper
     {
-        background-color:${props => props.theme.mode=="dark"?"":"#f5f6fa"}
+        background-color:${props => props.theme.mode == "dark" ? "" : "#f5f6fa"}
     }
 
 `
@@ -389,6 +395,38 @@ export const TableContent = styled(CustomTable)`
     >tbody>tr:nth-of-type(even)
     {
         background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
+    }
+
+`
+
+
+/* My orders and Trade */
+export const Dropwrap = styled.div`
+    display:inline-block;
+    width: 165px;
+    margin-right:20px;
+    @media(max-width:456px)
+    {
+        width: 80px;
+    }
+
+`
+export const ButtonToolbarOne = styled(ButtonToolbar)`
+    >.btn-group
+    {
+        width:100%;
+    }
+
+`
+export const DropdownButtonOne = styled(DropdownButton)`
+    background-color: ${props => props.theme.mode == "dark" ? "#01090f" : ""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    width:100%;
+    text-align:left;
+    >.caret
+    {
+        float:right;
+        margin-top: 8px;
     }
 
 `
