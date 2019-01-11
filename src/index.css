@@ -942,6 +942,10 @@ table .ant-table-tbody > tr > td {
 
   .Card-Blog .ant-card-actions li > span{
     line-height: 1;  
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
 
