@@ -169,7 +169,8 @@ class Signup_Form extends Component {
       init: "",
       PasswordtypeEye: "password",
       repeatEye: "password",
-      qP: ""
+      qP: "",
+      isSignDisable: false
     }
   }
 
@@ -179,11 +180,13 @@ class Signup_Form extends Component {
   componentWillReceiveProps(props, newProps) {
     if (props.isSignUp) {
       if (props.isSignUp.status == 200) {
+        console.log('signed up')
         // this.openNotificationWithIcon('success', 'Sign In', props.isSignUp.message);
         this.props.dispModal("thankyou");
       } else {
         this.openNotificationWithIcon('error', 'Sign In', props.isSignUp.err);
       }
+      this.setState({ isSignDisable: false });
     }
     this.props.clearSignUp();
   }
@@ -195,6 +198,7 @@ class Signup_Form extends Component {
   submit = () => {
     this.props.form.validateFields((error, value) => {
       if (this.state.emailIcon == true && this.state.firstIcon == true && this.state.lastIcon == true && this.state.passIcon == true && this.state.confirmIcon == true) {
+        this.setState({ isSignDisable: true });
         document.querySelectorAll("#email_icon_success")[0].style.display = "none";
         document.querySelectorAll("#first_icon_success")[0].style.display = "none";
         document.querySelectorAll("#last_icon_success")[0].style.display = "none";
@@ -471,7 +475,7 @@ class Signup_Form extends Component {
           </div>
 
           {(errors = getFieldError('required')) ? errors.join(',') : null}
-          <Button_login onClick={this.submit}>SIgn Up</Button_login>
+          <Button_login onClick={this.submit} disabled={this.state.isSignDisable}>Sign Up</Button_login>
           <Sign>
             Already have an account? <Sign_a onClick={() => this.dispModal()}>Login</Sign_a>
           </Sign>

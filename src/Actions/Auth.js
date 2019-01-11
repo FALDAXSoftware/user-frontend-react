@@ -47,7 +47,7 @@ export function Login(values) {
 }
 export function clearLogin() {
     return (dispatch) => {
-        dispatch(loginAction()) 
+        dispatch(loginAction())
     }
 }
 export const loginAction = (data) => dispatch => {
