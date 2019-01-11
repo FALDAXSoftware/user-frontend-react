@@ -371,8 +371,12 @@ export const History_wrap = styled.div`
 export const CustomTable = styled.table`
     width:100%;
     table-layout: fixed;
-    & td, & th{
-        padding:15px;
+    & td{
+        padding:8px;
+        text-align:center;
+    }
+    & th{
+        padding:9px;
         text-align:center;
     }
     font-family:"Open Sans";
@@ -382,6 +386,7 @@ export const TableHeader = styled(CustomTable)`
     >thead
     {
         color:#174c7e;
+        height:35px;
     }
 `
 export const TableContent = styled(CustomTable)`

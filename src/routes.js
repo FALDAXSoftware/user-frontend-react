@@ -14,6 +14,9 @@ import WalletDetails from "../src/components/LoggedCategories/Wallet/WalletDetai
 import Trade from "../src/components/LoggedCategories/Trade/trade"
 import History2 from "../src/components/LoggedCategories/History/history"
 import Dashboard from "../src/components/LoggedCategories/Dashboard/dashboard"
+var socketIOClient = require('socket.io-client');
+var sailsIOClient = require('sails.io.js');
+let io = sailsIOClient(socketIOClient);
 const routes = [
   {
     exact: false,
@@ -38,7 +41,7 @@ const routes = [
   {
     exact: false,
     path: "/trade",
-    component: Trade
+    component: () => (<Trade io={io} />),
   },
   {
     exact: false,
@@ -48,7 +51,8 @@ const routes = [
   {
     exact: false,
     path: "/dashboard",
-    component: Dashboard
+    component: () => (<Dashboard io={io} />),
+    io: io
   }
 ];
 

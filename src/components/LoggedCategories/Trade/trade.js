@@ -24,9 +24,9 @@ import {
 import { globalVariables } from '../../../Globals';
 
 let { API_URL } = globalVariables;
-var socketIOClient = require('socket.io-client');
+/* var socketIOClient = require('socket.io-client');
 var sailsIOClient = require('sails.io.js');
-let io = sailsIOClient(socketIOClient);
+let io = sailsIOClient(socketIOClient); */
 const Search = Input.Search;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -105,7 +105,7 @@ const data = [{
     change: "+0.92%"
 }];
 const TabPane = Tabs.TabPane;
-
+let io = null;
 class Trade extends Component {
     constructor(props) {
         super(props);
@@ -118,6 +118,7 @@ class Trade extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.statusChange = this.statusChange.bind(this);
+        io = this.props.io;
     }
     componentDidMount() {
 

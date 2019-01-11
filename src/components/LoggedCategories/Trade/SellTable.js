@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import {BBC2,Total_BTC,Buy_table,History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
+import { BBC2, Total_BTC, Buy_table, History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 
 import { Scrollbars } from 'react-custom-scrollbars';
 import { globalVariables } from "../../../Globals";
@@ -15,7 +15,7 @@ class SellTable extends Component {
             data: [],
             crypto: "XRP",
             currency: "BTC",
-            lastsum:0
+            lastsum: 0
         }
         this.updateData = this.updateData.bind(this);
     }
@@ -24,11 +24,11 @@ class SellTable extends Component {
         io.sails.url = APP_URL;
 
         io.socket.get("/socket/get-sell-book?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
-        
+
 
             if (body.status == 200) {
                 let res = body.data;
-                
+
 
                 this.updateData(res);
             }
@@ -78,7 +78,7 @@ class SellTable extends Component {
                         </div>
                         <div class="tbl-content">
                             <Scrollbars
-                                style={{ height: 300 }}>
+                                style={{ height: 165 }}>
                                 <TableContent cellpadding="10px" cellspacing="0" border="0">
                                     <tbody>
                                         {this.state.data.map(element => (
