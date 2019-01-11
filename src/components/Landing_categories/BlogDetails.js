@@ -49,25 +49,27 @@ class BlogDetails extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                this.setState({ loader: false, blogsData: responseData.data, blogID: blogID })
+                console.log('>>>>responseData', JSON.parse(responseData.data.body))
+                this.setState({ loader: false, blogsData: JSON.parse(responseData.data.body), blogID: blogID })
             })
             .catch(error => {
             })
         var ObjRel = {}; ObjRel['blog_id'] = blogID
-        fetch(globalVariables.API_URL + '/get-related-blog', {
-            method: "post",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(ObjRel)
-        })
-            .then(response => response.json())
-            .then((responseData) => {
-                this.setState({ relatedPosts: responseData.data.blogs, loader: false })
-            })
-            .catch(error => {
-            })
+        // fetch(globalVariables.API_URL + '/get-related-blog', {
+        //     method: "post",
+        //     headers: {
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(ObjRel)
+        // })
+        //     .then(response => response.json())
+        //     .then((responseData) => {
+        //         console.log('>>>>responseData', responseData)
+        //         this.setState({ relatedPosts: responseData.data.blogs, loader: false })
+        //     })
+        //     .catch(error => {
+        //     })
     }
     componentDidMount() {
         var blogID = null;
@@ -85,6 +87,7 @@ class BlogDetails extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
+
                 this.setState({ contactDetails: responseData.data, loader: false });
             })
             .catch(error => {
@@ -93,7 +96,7 @@ class BlogDetails extends Component {
 
     render() {
         const { contactDetails } = this.state;
-        var Tags = this.state.blogsData !== undefined && this.state.blogsData !== '' && this.state.blogsData !== null ? (this.state.blogsData.tags !== null ? this.state.blogsData.tags.split(',') : "") : "";
+        //var Tags = this.state.blogsData !== undefined && this.state.blogsData !== '' && this.state.blogsData !== null ? (this.state.blogsData.tags !== null ? this.state.blogsData.tags.split(',') : "") : "";
 
         return (
             <div>
@@ -104,30 +107,30 @@ class BlogDetails extends Component {
                             <Row>
                                 <Col sm={24} md={24} lg={24} xl={17} xxl={17}>
                                     <Left_col>
-                                        <Meta_title>{this.state.blogsData.tags.split(',')[0]}</Meta_title>
+                                        {/* <Meta_title>{this.state.blogsData.tags.split(',')[0]}</Meta_title> */}
                                         <Blog_desc>{this.state.blogsData.title}</Blog_desc>
                                         <Status className="blog-date">
                                             <Date>{moment.utc(this.state.blogsData.created_at).local().format("MMM DD,YYYY")}</Date>
                                         </Status>
                                         <Status>
-                                            <Name>{this.state.blogsData.admin_name}
+                                            <Name>{this.state.blogsData.author_name}
                                             </Name>
                                         </Status>
                                         <Status className="blog-comment">
                                             <Comment><MsgIcon src={BlogIcon} />{this.state.blogsData.comment_count} Comments</Comment>
                                         </Status>
-                                        <Head_image image={`${globalVariables.amazon_Bucket + this.state.blogsData.cover_image}`} />
+                                        <Head_image image={`${this.state.blogsData.featured_image}`} />
                                         <div>
-                                            {ReactHtmlParser(this.state.blogsData.description)}
+                                            {ReactHtmlParser(this.state.blogsData.post_body)}
                                         </div>
-                                        <div style={{ marginTop: "30px", marginBottom: "50px" }}>
+                                        {/* <div style={{ marginTop: "30px", marginBottom: "50px" }}>
                                             <h2 style={{ marginBottom: "30px" }}>Tags</h2>
                                             {Tags !== '' ? Tags.map(function (Tag) {
                                                 return (
                                                     <TagSpan>{Tag}</TagSpan>
                                                 );
                                             }) : ""}
-                                        </div>
+                                        </div> */}
                                         {this.state.relatedPosts.length > 0 ?
                                             <div>
                                                 <PostHead_below>
@@ -193,9 +196,9 @@ class BlogDetails extends Component {
                                         <LI2>
                                             <a target="_blank" href={contactDetails.google_profile}><img width="40" height="40" src={GoogleIcon} /></a>
                                         </LI2>
-                                        <LI2>
+                                        {/* <LI2>
                                             <a target="_blank" href={contactDetails.youtube_profile}><img width="40" height="40" src={YoutubeIcon} /></a>
-                                        </LI2>
+                                        </LI2> */}
                                         <LI2>
                                             <a target="_blank" href={contactDetails.linkedin_profile}><img width="40" height="40" src={LinkedinIcon} /></a>
                                         </LI2>
