@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import { DatePicker, Checkbox } from 'antd';

@@ -107,6 +107,10 @@ class Trade extends Component {
     constructor(props) {
         super(props);
         io = this.props.io;
+        this.state = {
+            InsCurrency: "BTC",
+        }
+        this.onInsChange = this.onInsChange.bind(this);
     }
     componentDidMount() {
 
@@ -115,6 +119,13 @@ class Trade extends Component {
             'Content-Type': 'application/json',
             Authorization: "Bearer " + this.props.isLoggedIn
         }
+    }
+    onInsChange(e) {
+        console.log(e.target.value);
+        this.setState({
+            InsCurrency: e.target.value
+        });
+
     }
     searchChange(value) {
 
@@ -141,13 +152,13 @@ class Trade extends Component {
                                         <SearchInput />
                                         <FIAT_wrap>
                                             <FIAT>
-                                                <RadioSelect defaultValue="a" size="large" buttonStyle="solid">
-                                                    <RadioButton value="a">BTC</RadioButton>
-                                                    <RadioButton value="b">ETH</RadioButton>
-                                                    <RadioButton value="c">USDT</RadioButton>
+                                                <RadioSelect value={this.state.InsCurrency} size="large" buttonStyle="solid" onChange={this.onInsChange}>
+                                                    <RadioButton value="BTC">BTC</RadioButton>
+                                                    <RadioButton value="ETH">ETH</RadioButton>
+                                                    {/* <RadioButton value="c">USDT</RadioButton>
                                                     <RadioButton value="d">DAI</RadioButton>
                                                     <RadioButton value="e">TUSD</RadioButton>
-                                                    <RadioButton value="f">EURS</RadioButton>
+                                                    <RadioButton value="f">EURS</RadioButton> */}
                                                     <RadioButton value="g">FAVORITES</RadioButton>
                                                 </RadioSelect>
                                             </FIAT>
