@@ -14,7 +14,10 @@ import {
     EXPButton, Dropwrap, Dropwrap2, ButtonToolbarOne, DropdownButtonOne, Datediv, RangePickerS
 } from "../../../styled-components/loggedStyle/historyStyle"
 import { CSVLink, CSVDownload } from "react-csv";
+import { globalVariables } from '../../../Globals';
+import { Button } from 'antd/lib/radio';
 
+let { API_URL } = globalVariables;
 const csvData = [
     ["firstname", "lastname", "email"],
     ["Ahmed", "Tomi", "ah@smthing.co.com"],
@@ -28,8 +31,8 @@ const CheckboxGroup = Checkbox.Group;
 const options = [
     { label: 'BUY', value: 'BUY' },
     { label: 'SELL', value: 'SELL' },
-    { label: 'DEPOSIT', value: 'DEPOSIT' },
-    { label: 'WITHDRAW', value: 'WITHDRAW' },
+    { label: 'SEND', value: 'SEND' },
+    { label: 'RECEIVE', value: 'RECEIVE' },
 ];
 
 class History extends Component {
@@ -37,10 +40,40 @@ class History extends Component {
         super(props);
         this.state = {
             coinList: [],
-
+            toDate: moment().format("YYYY-MM-DD"),
+            fromDate: moment(moment().subtract(1, 'months'), "YYYY-MM-DD").format("YYYY-MM-DD"),
+            historyData: [],
+            sell: true,
+            buy: true,
+            send: true,
+            receive: true
         }
+        this.historyResult = this.historyResult.bind(this);
+        this.changeDate = this.changeDate.bind(this);
+        this.onChangeCheck = this.onChangeCheck.bind(this);
+        this.repeatClick = this.repeatClick.bind(this);
     }
     componentDidMount() {
+        this.historyResult();
+    }
+    historyResult() {
+
+        fetch(API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}&symbol=ETH-BTC`, {
+            method: "get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                /*  this.setState({myCoins:responseData}); */
+                this.setState({ historyData: responseData.data });
+            })
+            .catch(error => {
+            })
     }
     range(start, end) {
         const result = [];
@@ -51,7 +84,7 @@ class History extends Component {
     }
     disabledDate(current) {
         // Can not select days before today and today
-        return current && current < moment().endOf('day');
+        return current && current > moment().endOf('day');
     }
     isabledRangeTime(_, type) {
         if (type === 'start') {
@@ -69,11 +102,50 @@ class History extends Component {
     }
 
     changeDate(date, dateString) {
+        var self = this;
         console.log(date, dateString)
+        var fromDate = "";
+        fromDate = dateString[0].format();
+        var toDate = ""
+        toDate = dateString[1].format();
+        console.log("dates ---- ", fromDate, toDate);
+
+        this.setState({ toDate, fromDate }, () => {
+            self.historyResult();
+        });
+
     }
 
     onChangeCheck(checkedValues) {
-        console.log(checkedValues)
+        var self = this;
+        var send, receive, sell, buy;
+        if (checkedValues.includes("SEND")) {
+            send = true;
+        }
+        else {
+            send = false;
+        }
+        if (checkedValues.includes("RECEIVE")) {
+            receive = true;
+        }
+        else {
+            receive = false;
+        }
+        if (checkedValues.includes("BUY")) {
+            buy = true;
+        }
+        else {
+            buy = false;
+        }
+        if (checkedValues.includes("SELL")) {
+            sell = true;
+        }
+        else {
+            sell = false;
+        }
+        this.setState({ send, receive, sell, buy }, () => {
+            self.historyResult();
+        });
     }
     selectChange1(value) {
         console.log(value)
@@ -81,7 +153,90 @@ class History extends Component {
     selectChange2(value) {
         console.log(value)
     }
+    repeatClick(data) {
+        console.log(data)
+        if (data.order_type == "Limit") {
+            let params = {
+                symbol: data.symbol,
+                side: data.side,
+                order_type: data.order_type,
+                orderQuantity: data.quantity,
+                limit_price: data.limit_price
+            };
+            fetch(API_URL + "/limit/" + data.side.toLowerCase(), {
+                method: "post",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer " + this.props.isLoggedIn
+                },
+                body: JSON.stringify(params)
+            }).then(response => response.json())
+                .then((responseData) => {
+                    if (responseData.status == 200) {
+                        this.historyResult();
+                    } else {
+                    }
+                }).catch(error => {
+
+                });
+        }
+        else if (data.order_type == "StopLimit") {
+            let params = {
+                symbol: data.symbol,
+                side: data.side,
+                order_type: data.order_type,
+                orderQuantity: data.quantity,
+                limit_price: data.limit_price,
+                stop_price: data.stop_price
+            }
+            fetch(API_URL + "/stop/limit/" + data.side.toLowerCase(), {
+                method: "post",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer " + this.props.isLoggedIn
+                },
+                body: JSON.stringify(params)
+            }).then(response => response.json())
+                .then((responseData) => {
+                    if (responseData.status == 200) {
+                        this.historyResult();
+                    } else {
+
+                    }
+                }).catch(error => {
+
+                });
+        }
+        else if (data.order_type == "Market") {
+            let params = {
+                symbol: data.symbol,
+                side: data.side,
+                order_type: data.order_type,
+                orderQuantity: data.quantity
+            }
+            fetch(API_URL + "/market/" + data.side.toLowerCase(), {
+                method: "post",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer " + this.props.isLoggedIn
+                },
+                body: JSON.stringify(params)
+            }).then(response => response.json())
+                .then((responseData) => {
+                    if (responseData.status == 200) {
+                        this.historyResult();
+                    } else {
+
+                    }
+                }).catch(error => {
+                });
+        }
+    }
     render() {
+        var self = this;
         return (
             <div>
                 <Contact_wrap>
@@ -108,13 +263,14 @@ class History extends Component {
                                             disabledDate={this.disabledDate}
                                             disabledTime={this.disabledRangeTime}
                                             onChange={this.changeDate}
+                                            defaultValue={[moment(moment().subtract(1, 'months'), "YYYY-MM-DD"), moment(moment(), "YYYY-MM-DD")]}
                                             format="YYYY-MM-DD"
                                         />
                                     </Datediv>
-                                    <EXPButton onChange={() => { <CSVDownload data={csvData} target="_blank" /> }}>EXPORT</EXPButton>
+                                    <EXPButton><CSVLink data={csvData}>EXPORT</CSVLink></EXPButton>
                                 </Filter>
                                 <div style={{ paddingLeft: "15px", marginTop: "20px" }}>
-                                    <CheckboxGroup options={options} onChange={this.onChangeCheck} />
+                                    <CheckboxGroup options={options} defaultValue={['SEND', 'RECEIVE', 'SELL', 'BUY']} onChange={this.onChangeCheck} />
                                 </div>
                             </HeadHis>
                             <His_wrap>
@@ -130,40 +286,27 @@ class History extends Component {
                                                 <th>Amount</th>
                                                 <th>FEE</th>
                                                 <th>Volume</th>
-                                                <th>repeat</th>
+                                                <th>Repeat</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                            </tr>
+                                            {this.state.historyData.length > 0 ?
+                                                this.state.historyData.map(function (temp) {
+                                                    console.log(temp)
+                                                    var date = moment.utc(temp.created_at).local().format("MMM DD,YYYY HH:mm:ss");
+                                                    return (<tr>
+                                                        <td>{temp.symbol}</td>
+                                                        <td>{date}</td>
+                                                        <td>{temp.side}</td>
+                                                        <td>{temp.fill_price}</td>
+                                                        <td>{temp.quantity}</td>
+                                                        <td>{temp.maker_fee}</td>
+                                                        <td>{temp.fill_price * temp.quantity}</td>
+                                                        <td><Button onChange={() => self.repeatClick(temp)}>Repeat</Button></td>
+                                                    </tr>);
+                                                })
+                                                : ""
+                                            }
                                         </tbody>
                                     </HisTable>
                                 </Tablediv>
@@ -172,7 +315,7 @@ class History extends Component {
                     </Grey_wrap>
                     <CommonFooter />
                 </Contact_wrap>
-            </div>
+            </div >
         );
     }
 }

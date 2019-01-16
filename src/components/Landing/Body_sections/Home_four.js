@@ -255,6 +255,7 @@ class Home_four extends Component {
         if (this.props.location !== undefined) {
             if (this.props.location.hash !== "" && this.props.location.hash !== undefined && this.props.location.hash == "#block-world-map") {
                 var elmnt = document.getElementById("block-world-map");
+                console.log(elmnt)
                 if (elmnt !== null)
                     elmnt.scrollIntoView();
             }
