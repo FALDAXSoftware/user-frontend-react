@@ -31,7 +31,6 @@ class History extends Component {
         }
     }
     componentDidMount() {
-
     }
     range(start, end) {
         const result = [];
@@ -172,5 +171,11 @@ class History extends Component {
 }
 
 
-
-export default History;
+function mapStateToProps(state) {
+    return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
+    })
+}
+export default connect(mapStateToProps)(History);
