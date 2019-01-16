@@ -102,7 +102,7 @@ class Blog extends Component {
 
     BlogDetails(curr) {
         this.setState({ loader: true })
-        fetch(globalVariables.API_URL + `/users/get-all-blogs?page=${curr}&limit=9`, {
+        fetch(globalVariables.API_URL + `/users/get-all-blogs?page=${curr - 1}`, {
             method: "get",
             headers: {
                 Accept: 'application/json',
@@ -113,7 +113,7 @@ class Blog extends Component {
             .then((responseData) => {
                 if (responseData.status == 200) {
                     var numb = Number(curr)
-                    this.setState({ nxtPage: numb + 1, blogsData: responseData, currPage: curr, prevPage: numb - 1, totalPage: Math.ceil(responseData.BlogCount / 9), loader: false })
+                    this.setState({ nxtPage: numb + 1, blogsData: responseData.data.objects, currPage: curr, prevPage: numb - 1, totalPage: Math.ceil(responseData.data.total_count / 9), loader: false })
                 }
             })
             .catch(error => { })
@@ -131,30 +131,30 @@ class Blog extends Component {
                         <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                             <BlogTitle> BLOG </BlogTitle>
                         </div>
-                        {blogsData !== '' ? Object.keys(blogsData.featuredBlog).length > 0 ?
+                        {/* {blogsData !== '' ? Object.keys(blogsData.featuredBlog).length > 0 ?
                             <Mainimage>
                                 <Row>
                                     <Col sm={24} md={12} lg={9} >
-                                        
-                                            <Link to={`/blogDetails?blogID=${blogsData.featuredBlog.id}`}>
-                                                <Lefthead>
-                                                    <Subleft>
-                                                        <Eco>{blogsData.featuredBlog.tags}</Eco>
-                                                        <Head3>{blogsData.featuredBlog.title}</Head3>
-                                                        <Eco2>{blogsData.featuredBlog.admin_name}</Eco2>
-                                                    </Subleft>
-                                                </Lefthead>
-                                            </Link>
+
+                                        <Link to={`/blogDetails?blogID=${blogsData.featuredBlog.id}`}>
+                                            <Lefthead>
+                                                <Subleft>
+                                                    <Eco>{blogsData.featuredBlog.tags}</Eco>
+                                                    <Head3>{blogsData.featuredBlog.title}</Head3>
+                                                    <Eco2>{blogsData.featuredBlog.admin_name}</Eco2>
+                                                </Subleft>
+                                            </Lefthead>
+                                        </Link>
                                     </Col>
-                                        <Col sm={24} md={12} lg={15}>
-                                            <Righthead image={globalVariables.amazon_Bucket + blogsData.featuredBlog.cover_image}>
-                                            </Righthead>
-                                        </Col>
+                                    <Col sm={24} md={12} lg={15}>
+                                        <Righthead image={globalVariables.amazon_Bucket + blogsData.featuredBlog.featured_image}>
+                                        </Righthead>
+                                    </Col>
                                 </Row>
                             </Mainimage>
-                         : "" : ""}
+                            : "" : ""} */}
                         <Whole_wrap>
-                            {blogsData.featuredBlog!==undefined ?Object.keys(blogsData.featuredBlog).length > 0 ?
+                            {blogsData.featuredBlog !== undefined ? Object.keys(blogsData.featuredBlog).length > 0 ?
                                 <Row>
                                     <Col span={3}>
                                         <Blog_p>Latest Blogs</Blog_p>
@@ -163,22 +163,23 @@ class Blog extends Component {
                                         <HR_tag />
                                     </Col>
                                 </Row>
-                                : "":""}
+                                : "" : ""}
                             <Blogs_wrap>
                                 <Row className="blog-card-row">
-                                    {blogsData.data !== undefined ?
-                                        blogsData.data.length > 0 ?
-                                            blogsData.data.map(function (result, key, index) {
-                                                var date = moment.utc(result.created_at).local().format("MMM DD,YYYY");
-                                                var img = globalVariables.amazon_Bucket + result.cover_image;
+                                    {blogsData !== undefined ?
+                                        blogsData.length > 0 ?
+                                            blogsData.map(function (result, key, index) {
+                                                console.log('>>>>>>>>>>>>', result)
+                                                var date = moment(result.publish_date).format('MMM DD,YYYY');
+                                                //var img = globalVariables.amazon_Bucket + result.featured_image;
                                                 var tag = result.tags ? result.tags.split(',') : [];
                                                 return (
                                                     <Col key={key} xl={8} lg={12} md={{ sapn: 12 }} sm={24} className="blog-card-col">
                                                         <Link to={`/blogDetails?blogID=${result.id}`}>
                                                             <Card
                                                                 style={{ width: "100%" }}
-                                                                cover={<CardCover alt="example" style={{ backgroundImage: `url(${img})` }} />}
-                                                                actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.admin_name}</Card_foot>, <Card_foot> <MsgIcon src={BlogIcon} />{result.comment_count} Comments</Card_foot>]}
+                                                                cover={<CardCover alt="example" style={{ backgroundImage: `url(${result.featured_image})` }} />}
+                                                                actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.author_name}</Card_foot>, <Card_foot> <MsgIcon src={BlogIcon} />{result.comment_count} Comments</Card_foot>]}
                                                                 bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
                                                                 className={_self.state.blogCSS}
                                                             >
