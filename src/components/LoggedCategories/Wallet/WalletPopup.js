@@ -3,13 +3,18 @@ import 'antd/dist/antd.css';
 import { Button, Modal, Input, notification } from 'antd';
 import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
 import styled from 'styled-components'
+import SimpleReactValidator from "simple-react-validator";
 
-import {Ref_input} from '../../Settings/Referral'
+import { Ref_input } from '../../Settings/Referral'
 import { globalVariables } from '../../../Globals';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 let { API_URL } = globalVariables;
 const WalletModal = styled(Modal)`
+    width:656px !important;
+    height:460px;
+    margin-left:auto;
+    margin-right:auto;
     >.ant-modal-content>.ant-modal-header
     {
         padding:0px;
@@ -22,6 +27,14 @@ const WalletModal = styled(Modal)`
     {
         color:white;
     }
+    @media(max-width:767px)
+    {
+        width:500px !important;
+    }
+    @media(max-width:575px)
+    {
+        width:300px !important;
+    }
 `
 const Label = styled.label`
     font-size: 13px;
@@ -29,18 +42,11 @@ const Label = styled.label`
     color: ${props => props.theme.mode == "dark" ? "rgb( 255, 255, 255 )" : "black"};
 `
 const Modal_wrap = styled.div`
-    width: 546px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     padding-bottom:60px;
-    @media(max-width:576px)
-    {
-        width:350px;   
-    }
-    @media(max-width:425px)
-    {
-        width:256px;
-    }
+
 `
 const Title_div = styled.div`
     background-color:#4c84ff;
@@ -63,15 +69,11 @@ const Rediv = styled.div`
 const WallInput = styled(Input)`
     height:48px;
     margin-top:10px;
-    width:462px;
+    width:100%;
     background-color:${props => props.theme.mode == "dark" ? "#061a2b" : "#f8f8f8"};
-    
+    display:block;
     color:${props => props.theme.mode == "dark" ? "white" : ""};
     caret-color:${props => props.theme.mode == "dark" ? "white" : ""};
-    @media(max-width:768px)
-    {
-        width:220px;
-    }
 `
 const Scan = styled.p`
     display:inline-block;
@@ -184,6 +186,15 @@ const SendButton = styled(Button)`
 const CopyToClipboardCSS = styled(CopyToClipboard)`
     display:inline;
 `
+const Send_wrap = styled.div`
+    text-align: center; 
+    margin-top: 60px;
+    display: block;
+    @media(max-width:767px)
+    {
+        margin-top:20px;
+    }
+`
 
 class WalletPopup extends Component {
     constructor(props) {
@@ -194,38 +205,49 @@ class WalletPopup extends Component {
             comingSoon: this.props.visible ? true : '',
             email_address: "",
             email_msg: "",
-            receive:{},
-            receiveAdd:"receive_add"
-        }
-    }
-    componentWillReceiveProps(props,newProps)
-    {
-    }
-    componentDidMount()
-    {
-        if(this.props.title=="RECEIVE")
-        fetch(API_URL + "/wallet/get-qr-code/BTC" ,{
-            method:"get",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization:"Bearer " + this.props.isLoggedIn
+            receive: {},
+            receiveAdd: "receive_add",
+            sendFields: {
+                amount: "",
+                destination_address: ""
             }
-
-        })
-        .then(response => response.json())
-        .then((responseData) => {
-            this.setState({receive:responseData.receiveCoin})
-        })
-        .catch(error => {
-        })
-    }
-    openNotificationWithIcon = (type) => {
-        notification[type]({
-            message: 'Address Copied to Clipboard',
-            duration: 2
+        }
+        this.validator = new SimpleReactValidator({
+            gtzero: {  // name the rule
+                message: 'value must be greater than zero',
+                rule: (val, params, validator) => {
+                    if (val > 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                required: true  // optional
+            }
         });
-    };
+        this.sendChange = this.sendChange.bind(this);
+        this.sendSubmit = this.sendSubmit.bind(this);
+    }
+    componentWillReceiveProps(props, newProps) {
+    }
+    componentDidMount() {
+        if (this.props.title == "RECEIVE")
+            fetch(`${API_URL}/wallet/get-qr-code/${this.props.coin_code}`, {
+                method: "get",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer " + this.props.isLoggedIn
+                }
+
+            })
+                .then(response => response.json())
+                .then((responseData) => {
+                    this.setState({ receive: responseData.receiveCoin })
+                })
+                .catch(error => {
+                })
+    }
     SearchText() {
         // Copy to clipboard example
         document.querySelectorAll(".ant-input-search-button")[0].onclick = function () {
@@ -234,9 +256,9 @@ class WalletPopup extends Component {
             // Copy to the clipboard
             document.execCommand('copy');
         };
-        this.openNotificationWithIcon('success');
+        this.openNotificationWithIcon('success', "", "Address Copied to Clipboard");
     }
-    
+
     handleComing = (e) => {
         this.setState({
             comingSoon: false,
@@ -255,7 +277,43 @@ class WalletPopup extends Component {
             description: desc,
         });
     };
-
+    sendSubmit() {
+        if (this.validator.allValid()) {
+            console.log(this.state)
+            var values = this.state.sendFields;
+            values["coin_code"] = this.props.coin_code;
+            fetch(API_URL + "/wallet/send", {
+                method: "post",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer " + this.props.isLoggedIn
+                },
+                body: JSON.stringify(values)
+            }).then(response => response.json())
+                .then((responseData) => {
+                    if (responseData.status == 200) {
+                        console.log(responseData)
+                        this.openNotificationWithIcon("success", "Successfully Sent", responseData.message)
+                    }
+                    else {
+                        console.log(responseData)
+                        this.openNotificationWithIcon("warning", "Balance low", responseData.message)
+                    }
+                }).catch(error => {
+                })
+        }
+        else {
+            this.validator.showMessages();
+            this.forceUpdate();
+        }
+    }
+    sendChange(e) {
+        var fields = this.state.sendFields;
+        var name = e.target.name;
+        fields[name] = e.target.value;
+        this.setState({ sendFields: fields });
+    }
     render() {
         return (
             <div>
@@ -265,48 +323,48 @@ class WalletPopup extends Component {
                     onOk={(e) => this.handleComing()}
                     onCancel={(e) => this.comingCancel(e)}
                     footer={null}
-                    width={656}
-                    height={460}
                 >
-                        {this.props.title=="RECEIVE"?
+                    {this.props.title == "RECEIVE" ?
                         <Modal_wrap>
-                            {Object.keys(this.state.receive).length>0
+                            {Object.keys(this.state.receive).length > 0
                                 ?
-                                <div style={{textAlign:"center",marginTop:"40px"}}>
+                                <div style={{ textAlign: "center", marginTop: "40px" }}>
                                     <div>
-                                        <img src={this.state.receive.url} alt="no photo"/>
+                                        <img src={this.state.receive.url} alt="no photo" />
                                     </div>
-                                    <div style={{marginTop:"20px"}}>
-                                    <CopyToClipboardCSS text={this.state.receive.receive_address}
-                                        onCopy={() => this.setState({ copied: true })}>
-                                        <div style={{ textAlign: 'left' }}>
-                                            <Ref_input
-                                                value={this.state.receive.receive_address}
-                                                className={this.state.receiveAdd}
-                                                placeholder="Referral"
-                                                enterButton="Copy"
-                                                size="large"
-                                                onSearch={value => this.SearchText()}
-                                            />
-                                        </div>
-                                    </CopyToClipboardCSS>
+                                    <div style={{ marginTop: "20px" }}>
+                                        <CopyToClipboardCSS text={this.state.receive.receive_address}
+                                            onCopy={() => this.setState({ copied: true })}>
+                                            <div style={{ textAlign: 'left' }}>
+                                                <Ref_input
+                                                    value={this.state.receive.receive_address}
+                                                    className={this.state.receiveAdd}
+                                                    placeholder="Referral"
+                                                    enterButton="Copy"
+                                                    size="large"
+                                                    onSearch={value => this.SearchText()}
+                                                />
+                                            </div>
+                                        </CopyToClipboardCSS>
                                     </div>
                                 </div>
-                                :""
+                                : ""
                             }
                         </Modal_wrap>
                         :
                         <Modal_wrap>
                             <Rediv>
-                                <Label style={{ display: "block" }}>Recieving Address</Label>
-                                <WallInput />
-                                <Scan>Scan QR</Scan>
+                                <Label style={{ display: "block" }}>Destination Address</Label>
+                                <WallInput value={this.state.sendFields.destination_address} name="destination_address" onChange={this.sendChange} />
+                                {/* <Scan>Scan QR</Scan> */}
+                                {this.validator.message('destination_address', this.state.sendFields.destination_address, 'required|alpha_num|min:15|max:120', 'text-danger')}
                             </Rediv>
                             <Rediv>
                                 <Label style={{ display: "block" }}>Amount</Label>
-                                <Sec_wrap>
-                                    <LeftInput />
-                                    <RightInput />
+                                {/* <Sec_wrap> */}
+                                <WallInput type="number" value={this.state.sendFields.amount} name="amount" onChange={this.sendChange} />
+                                {this.validator.message('amount', this.state.sendFields.amount, 'required|numeric|gtzero', 'text-danger')}
+                                {/*  <RightInput />
                                     <ButtonToolbarS>
                                         <DropdownButtonS title="USD" id="dropdown-size-medium">
                                             <MenuItem eventKey="1">Action</MenuItem>
@@ -314,16 +372,16 @@ class WalletPopup extends Component {
                                             <MenuItem eventKey="3">Something else here</MenuItem>
                                             <MenuItem eventKey="4">Separated link</MenuItem>
                                         </DropdownButtonS>
-                                    </ButtonToolbarS>
-                                </Sec_wrap>
+                                    </ButtonToolbarS> */}
+                                {/* </Sec_wrap> */}
                                 <div style={{ height: "25px", marginTop: "45px", width: "462px" }}>
                                     <Fee>Fee:</Fee>
                                     <TotPay>Total Payout:</TotPay>
                                 </div>
                             </Rediv>
-                            <div style={{ textAlign: "center", marginTop: "60px", display: "block" }}>
-                                <SendButton >SEND</SendButton>
-                            </div>
+                            <Send_wrap>
+                                <SendButton onClick={this.sendSubmit}>SEND</SendButton>
+                            </Send_wrap>
                         </Modal_wrap>}
                 </WalletModal>
             </div>

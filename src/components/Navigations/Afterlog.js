@@ -39,7 +39,7 @@ const Open = styled.span`
     margin-right: 10px;
     font-size: 30px;
     cursor: pointer;
-    margin-top:0px;
+    margin-top:10px;
     color:${props => props.theme.mode=="dark"?"white":"black"};
     @media(max-width:1200px)
     {
@@ -48,7 +48,7 @@ const Open = styled.span`
     }
     @media(max-width:576px)
     {
-        margin-top:2px;
+        margin-top:12px;
     }
 `
 const HeaderAvatar = styled.div`
