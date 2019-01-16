@@ -14,7 +14,6 @@ import {
     SectionBlog, Whole_news, Blogs_wrap, Meta_title, Card_foot, Prev_next, Prev, Next,
     CardCover, Inputsearch, Search_wrap, RemoveButton, NoData
 } from '../../styled-components/landingCategories/blogStyle';
-import { Head_span, Headcontact } from '../../styled-components/landingCategories/contactStyle';
 
 const Container_Blog = styled(Container)`
     margin-bottom: 80px;
@@ -22,12 +21,43 @@ const Container_Blog = styled(Container)`
 const News_main = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#01090f" : "white"};
 `
-const MediaDiv = styled(Headcontact)`
-  text-align:center;
-  ${Head_span} {
-    padding-top: 10px;
+const NewsTitle = styled.span`
+  font-size: 40px;
+  font-family: "Open sans";
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  color:${props => props.theme.mode == "dark" ? "white" : ""};
+  &:before {
+    content: '';
+    width: calc(50% - 140px);
+    height: 1px;
+    display: inline-block;
+    background: #827777;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 1px);
   }
-`
+  &:after {
+    content: '';
+    width: calc(50% - 140px);
+    height: 1px;
+    display: inline-block;
+    background: #827777;
+    position: absolute;
+    right: 0;
+    top: calc(50% - 1px);
+  }
+  @media(max-width:767px)
+  {
+    &:before {
+      display:none;
+    }
+    &:after {
+      display:none;
+    }
+  }
+`;
 
 const { Meta } = Card;
 const Search = Input.Search;
@@ -131,9 +161,9 @@ class Blog extends Component {
 
                 <Container_Blog style={{ minHeight: "100%" }}>
                     <SectionBlog>
-                        <MediaDiv>
-                            <Head_span>News</Head_span>
-                        </MediaDiv>
+                        <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+                            <NewsTitle>News </NewsTitle>
+                        </div>
                         <Search_wrap>
                             <Inputsearch
                                 placeholder="Search News"

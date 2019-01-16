@@ -136,7 +136,7 @@ export default class Services extends Component {
                   Reliability
                 </Title>
                 <Description>
-                  Our technology stack is built upon some of the most technologically advanced enterprise solutions in the world. Production data is replicated, in real-time, across three locations thousands of miles apart. Our proprietary code is unique and created by a development team with experience on projects for companies such as Google, Motorola, Unilever, Pedigree, Dove and many more. The order management system is capable of at least 1,000,000+ transactions per second and built with an N+1 scaling philosophy to ensure seamless operations regardless of growth.
+                  FALDAX is built upon proven enterprise technology solutions. All data from production systems is replicated, in real-time, across three locations thousands of miles apart. Our proprietary code is written and maintained by our experienced developers who have prior experience working for companies such as Google, Motorola, Unilever, Pedigree, Dove and many more. The order management system is capable of at least 1,000,000+ transactions per second and built with an N+1 scaling philosophy to ensure seamless operations regardless of growth.
                 </Description>
               </Col>
             </SlideRow>
@@ -149,7 +149,7 @@ export default class Services extends Component {
                   Accessibility
                 </Title>
                 <Description>
-                  We believe that one platform can meet the needs of novice and professional traders without compromising anyone’s experience. Creating our exchange from the ground up allows us to construct each component according to specific needs and design philosophies. As traders ourselves, we understand that the experience other platforms offer leaves much room for improvement. At FALDAX, novice traders get the information they need to avoid surprises and make informed decisions while professional traders have a streamlined, feature-rich, data-centric, and zero-compromise interface that doesn’t slow them down.
+                  As traders ourselves, we know that there is room for improvement in this space.We believe that one platform can meet the needs of novice and professional traders without compromising anyone’s experience. Creating our exchange from the ground up allows us to construct each component according to specific needs and design philosophies. At FALDAX, novice traders get the information they need to avoid surprises and make informed decisions while professional traders have a streamlined, feature-rich, data-centric, and zero-compromise interface that doesn’t slow them down.
                 </Description>
               </Col>
             </SlideRow>
@@ -162,7 +162,7 @@ export default class Services extends Component {
                   Security
                 </Title>
                 <Description>
-                  All hardware is located in some of the most secure data centers on the planet, and you can review a complete description of the security and compliance standards followed can <a href="https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/security-and-compliance.html" target="_blank">here.</a> The prestigious <a href="https://www.herjavecgroup.com/" target="_blank"> Herjavec Group </a> has conducted thorough security and penetration tests in addition to our own. We contract with the Herjavec Group and other third-party cybersecurity firms to monitor our systems in real-time for vulnerabilities. Internally, strict data security procedures are documented and disseminated to all employees. While security is never a guarantee, you can rest assured that we are doing our part to make FALDAX as safe as it can be.
+                  Production hardware is located in high-security AWS data centers. Documentation of the security and compliance standards followed by AWS are available <a href="https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/security-and-compliance.html" target="_blank" >at this link.</a> The prestigious <a href="https://www.herjavecgroup.com/" target="_blank"> Herjavec Group </a> is scheduled to conduct security and penetration tests in addition to our internal testing. The Herjavec Group and other third-party cyber security firms will monitor our systems in real-time for vulnerabilities. Internally, strict data security procedures are documented and disseminated to all employees. While security is never a guarantee, you can rest assured that we are doing our part to make FALDAX as safe as possible.
                 </Description>
               </Col>
             </SlideRow>
@@ -175,7 +175,7 @@ export default class Services extends Component {
                   Innovation
                 </Title>
                 <Description>
-                  At launch, the features and functionality you are accustomed to on other exchanges will be available here. However, we currently have seven features in development, never offered by an exchange before, that will revolutionize your experience. We anticipate completion of these features between four to six months post-launch. FALDAX is always committed to push boundaries and expand the services offered, and rather than charging you for the innovations you have funded; we choose to reward your dedication to us by providing them at no additional cost. Welcome, to the way it should be.
+                  FALDAX offers the features and functionality you are accustomed to. Our initial focus is to offer a customer-centric exchange on par with other exchanges. But our mission continues to grow, and we currently have seven features in development that will revolutionize your experience. We expect development to conclude between four to six months after initial launch. FALDAX is committed to pushing boundaries and expanding the services we offer. We know you could trade somewhere else so to thank you, we are happy to offer all new features at no additional cost. Sign up for our newsletter to receive updates on these features in the near future!
                 </Description>
               </Col>
             </SlideRow>

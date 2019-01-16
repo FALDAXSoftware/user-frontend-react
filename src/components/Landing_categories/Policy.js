@@ -8,7 +8,7 @@ import { Spin_Ex } from '../../styled-components/homepage/style'
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { globalVariables } from "../../Globals"
-let { API_URL } = globalVariables;
+let { API_URL, amazon_Bucket } = globalVariables;
 
 /* Styled-Components */
 const ProfileWrapper = styled.div`
@@ -168,22 +168,22 @@ export default class Policy extends Component {
               <Content style={{ marginTop: '20px' }}>
                 {/* Blocks start */}
                 <FirstRow >
-                  <Col md={{span:6,offset:5}} xl={{span:6,offset:5}}>
+                  <Col md={{ span: 6, offset: 5 }} xl={{ span: 6, offset: 5 }}>
                     <Div_wrap>
-                      <a href="https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/pdf/FALDAX+Terms+of+Service+v3.pdf" target="_blank">
+                      <a href={amazon_Bucket + "faldax/assets/pdf/FALDAX+Terms+of+Service.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
                             <CardText>
-                              Terms Of Use
+                              Terms of Service
                         </CardText>
                           </PContainer>
                         </CustomCard>
                       </a>
                     </Div_wrap>
                   </Col>
-                  <Col md={{span:6,offset:2}} xl={{span:6,offset:2}}>
+                  <Col md={{ span: 6, offset: 2 }} xl={{ span: 6, offset: 2 }}>
                     <Div_wrap>
-                      <a href="https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/pdf/FALDAX+Privacy+Policy.pdf" target="_blank">
+                      <a href={amazon_Bucket + "faldax/assets/pdf/FALDAX+Privacy+Policy.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
                             <CardText>
@@ -197,9 +197,9 @@ export default class Policy extends Component {
                 </FirstRow>
 
                 <SecondRow>
-                  <Col md={{span:6,offset:5}} xl={{span:6,offset:5}}>
+                  <Col md={{ span: 6, offset: 5 }} xl={{ span: 6, offset: 5 }}>
                     <Div_wrap>
-                      <a href="https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/pdf/FALDAX+Anti-Money+Laundering+Policy+v2.pdf" target="_blank">
+                      <a href={amazon_Bucket + "faldax/assets/pdf/FALDAX+Anti-Money+Laundering+Policy+v2.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
                             <CardText>
@@ -210,9 +210,9 @@ export default class Policy extends Component {
                       </a>
                     </Div_wrap>
                   </Col>
-                  <Col md={{span:6,offset:2}} xl={{span:6,offset:2}}>
+                  <Col md={{ span: 6, offset: 2 }} xl={{ span: 6, offset: 2 }}>
                     <Div_wrap>
-                      <a href="https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/assets/pdf/FALDAX+Cookie+Policy.pdf" target="_blank">
+                      <a href={amazon_Bucket + "faldax/assets/pdf/FALDAX+Cookie+Policy.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
                             <CardText>

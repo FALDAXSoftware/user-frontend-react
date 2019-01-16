@@ -341,7 +341,6 @@ export const Blue_tag_p = styled.a`
 /* Add Coin Style */
 
 export const Head = styled.div`
-    padding-top:40px;
     margin-bottom:60px;
     color:${props => props.theme.mode == "dark" ? "white" : "rgb(51, 51, 51)"};
     @media(max-width:480px)
