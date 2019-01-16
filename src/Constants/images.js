@@ -51,7 +51,7 @@ export const ProPic3 = amazon_Bucket + 'faldax/assets/Homepage/Pro_pic3.jpg';
 
 export const Reliability = amazon_Bucket + 'faldax/assets/Homepage/reliability.png';
 export const Accessibility = amazon_Bucket + 'faldax/assets/Homepage/accessabilty.png';
-export const Security = amazon_Bucket + 'faldax/assets/Homepage/security.png';
+export const Security = amazon_Bucket + 'faldax/assets/Homepage/Security.png';
 export const Inovation = amazon_Bucket + 'faldax/assets/Homepage/inovation.png';
 
 export const Eye = amazon_Bucket + 'faldax/assets/Settings/eye.png';
@@ -60,7 +60,7 @@ export const ActiveEye = amazon_Bucket + 'faldax/assets/Settings/active_eye.png'
 export const AboutUs2 = amazon_Bucket + 'faldax/assets/about-us-image-2.jpg';
 export const AboutPeople1 = amazon_Bucket + 'faldax/assets/blake.png';
 export const AboutPeople2 = amazon_Bucket + 'faldax/assets/jon.png';
-export const AboutPeople3 = amazon_Bucket + 'faldax/assets/jeff.png';
+export const AboutPeople3 = amazon_Bucket + 'faldax/assets/jeff.jpg';
 
 export const FBIcon = amazon_Bucket + 'faldax/assets/LandingCat/Blog/fb_icon.png';
 export const TweeterIcon = amazon_Bucket + 'faldax/assets/LandingCat/Blog/tweet_icon.png';

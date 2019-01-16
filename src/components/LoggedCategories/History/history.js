@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import 'antd/dist/antd.css';
 import moment from 'moment';
-import { DatePicker, Checkbox } from 'antd';
+import { DatePicker, Checkbox, Select } from 'antd';
 import { MenuItem } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +13,16 @@ import {
     ContainerContact, His_title, His_wrap, Tablediv, HisTable, HeadHis, Filter,
     EXPButton, Dropwrap, Dropwrap2, ButtonToolbarOne, DropdownButtonOne, Datediv, RangePickerS
 } from "../../../styled-components/loggedStyle/historyStyle"
+import { CSVLink, CSVDownload } from "react-csv";
 
+const csvData = [
+    ["firstname", "lastname", "email"],
+    ["Ahmed", "Tomi", "ah@smthing.co.com"],
+    ["Raed", "Labes", "rl@smthing.co.com"],
+    ["Yezzi", "Min l3b", "ymin@cocococo.com"]
+];
+
+const Option = Select.Option;
 const { RangePicker } = DatePicker;
 const CheckboxGroup = Checkbox.Group;
 const options = [
@@ -22,7 +32,16 @@ const options = [
     { label: 'WITHDRAW', value: 'WITHDRAW' },
 ];
 
-export default class History extends Component {
+class History extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            coinList: [],
+
+        }
+    }
+    componentDidMount() {
+    }
     range(start, end) {
         const result = [];
         for (let i = start; i < end; i++) {
@@ -49,12 +68,19 @@ export default class History extends Component {
         };
     }
 
-    changeDate(date: moment, dateString: string) {
+    changeDate(date, dateString) {
+        console.log(date, dateString)
     }
 
     onChangeCheck(checkedValues) {
+        console.log(checkedValues)
     }
-
+    selectChange1(value) {
+        console.log(value)
+    }
+    selectChange2(value) {
+        console.log(value)
+    }
     render() {
         return (
             <div>
@@ -65,27 +91,17 @@ export default class History extends Component {
                             <HeadHis>
                                 <Filter>
                                     <div style={{ display: "inline-flex", width: "390px", alignItems: "center" }}>
-                                        <Dropwrap>
-                                            <ButtonToolbarOne>
-                                                <DropdownButtonOne title="Bitcoin" id="dropdown-size-medium">
-                                                    <MenuItem eventKey="1">Action</MenuItem>
-                                                    <MenuItem eventKey="2">Another action</MenuItem>
-                                                    <MenuItem eventKey="3">Something else here</MenuItem>
-                                                    <MenuItem eventKey="4">Separated link</MenuItem>
-                                                </DropdownButtonOne>
-                                            </ButtonToolbarOne>
-                                        </Dropwrap>
+                                        <Select style={{ width: 120 }} onChange={this.selectChange1}>
+                                            <Option value="jack">Jack</Option>
+                                            <Option value="lucy">Lucy</Option>
+                                            <Option value="Yiminghe">yiminghe</Option>
+                                        </Select>
                                         <FontAwesomeIcon icon={faExchangeAlt} color='#909090' style={{ margin: "0px 20px" }} />
-                                        <Dropwrap2>
-                                            <ButtonToolbarOne>
-                                                <DropdownButtonOne title="Bitcoin" id="dropdown-size-medium">
-                                                    <MenuItem eventKey="1">Action</MenuItem>
-                                                    <MenuItem eventKey="2">Another action</MenuItem>
-                                                    <MenuItem eventKey="3">Something else here</MenuItem>
-                                                    <MenuItem eventKey="4">Separated link</MenuItem>
-                                                </DropdownButtonOne>
-                                            </ButtonToolbarOne>
-                                        </Dropwrap2>
+                                        <Select style={{ width: 120 }} onChange={this.selectChange2}>
+                                            <Option value="jack">Jack</Option>
+                                            <Option value="lucy">Lucy</Option>
+                                            <Option value="Yiminghe">yiminghe</Option>
+                                        </Select>
                                     </div>
                                     <Datediv>
                                         <RangePickerS
@@ -95,10 +111,10 @@ export default class History extends Component {
                                             format="YYYY-MM-DD"
                                         />
                                     </Datediv>
-                                    <EXPButton>EXPORT</EXPButton>
+                                    <EXPButton onChange={() => { <CSVDownload data={csvData} target="_blank" /> }}>EXPORT</EXPButton>
                                 </Filter>
                                 <div style={{ paddingLeft: "15px", marginTop: "20px" }}>
-                                    <CheckboxGroup options={options} defaultValue={['Apple']} onChange={this.onChangeCheck} />
+                                    <CheckboxGroup options={options} onChange={this.onChangeCheck} />
                                 </div>
                             </HeadHis>
                             <His_wrap>
@@ -160,3 +176,13 @@ export default class History extends Component {
         );
     }
 }
+
+
+function mapStateToProps(state) {
+    return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
+    })
+}
+export default connect(mapStateToProps)(History);

@@ -73,7 +73,7 @@ export default class Homethird extends Component {
                             <BlueCol xs={8}>
                                 <Third_title>Always</Third_title>
                                 <Third_span>0%</Third_span>
-                                <Third_p>Maker Fee</Third_p>
+                                <Third_p>Maker Fees</Third_p>
                             </BlueCol>
                         </Row>
                     </Third_Row>
