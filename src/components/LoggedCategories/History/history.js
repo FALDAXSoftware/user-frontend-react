@@ -22,7 +22,17 @@ const options = [
     { label: 'WITHDRAW', value: 'WITHDRAW' },
 ];
 
-export default class History extends Component {
+class History extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            coinList: [],
+
+        }
+    }
+    componentDidMount() {
+
+    }
     range(start, end) {
         const result = [];
         for (let i = start; i < end; i++) {
@@ -49,7 +59,7 @@ export default class History extends Component {
         };
     }
 
-    changeDate(date: moment, dateString: string) {
+    changeDate(date, dateString) {
     }
 
     onChangeCheck(checkedValues) {
@@ -160,3 +170,7 @@ export default class History extends Component {
         );
     }
 }
+
+
+
+export default History;
