@@ -75,11 +75,10 @@ class OrderTrade extends Component {
                         style={{ height: 300 }}>
                         <TableContent cellpadding="10px" cellspacing="0" border="0">
                             <tbody>
-                                {console.log(this.props.orderTradeData)}
                                 {this.props.orderTradeData.length > 0
                                     ?
                                     this.props.orderTradeData.map(function (data) {
-                                        console.log(data)
+                                        // console.log(data)
                                         var date = moment.utc(data.created_at).local().format("MMM DD,YYYY HH:mm:ss");
                                         return (
                                             <tr>

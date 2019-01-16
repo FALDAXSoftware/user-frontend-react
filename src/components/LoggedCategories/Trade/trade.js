@@ -114,15 +114,14 @@ class Trade extends Component {
             status: "1",
             crypto: "XRP",
             currency: "BTC",
-            orderTradeData: {}
+            orderTradeData: {},
+            InsCurrency: "BTC",
         };
         this.handleChange = this.handleChange.bind(this);
         this.statusChange = this.statusChange.bind(this);
         io = this.props.io;
-        this.state = {
-            InsCurrency: "BTC",
-        }
         this.onInsChange = this.onInsChange.bind(this);
+        this.getInstrumentData = this.getInstrumentData.bind(this);
     }
     componentDidMount() {
 
@@ -132,13 +131,24 @@ class Trade extends Component {
             Authorization: "Bearer " + this.props.isLoggedIn
         }
         this.orderSocket(this.state.timePeriod, this.state.status);
+        this.getInstrumentData();
     }
     onInsChange(e) {
+        var self = this;
         console.log(e.target.value);
         this.setState({
             InsCurrency: e.target.value
+        }, () => {
+            self.getInstrumentData();
         });
 
+    }
+    getInstrumentData() {
+        var self = this;
+        io.socket.get(`/socket/get-instrument-data?coin=${self.state.InsCurrency}`, (body, JWR) => {
+            console.log("---------------ins-------------->", body);
+
+        });
     }
     searchChange(value) {
 
@@ -222,11 +232,7 @@ class Trade extends Component {
                                                 <RadioSelect value={this.state.InsCurrency} size="large" buttonStyle="solid" onChange={this.onInsChange}>
                                                     <RadioButton value="BTC">BTC</RadioButton>
                                                     <RadioButton value="ETH">ETH</RadioButton>
-                                                    {/* <RadioButton value="c">USDT</RadioButton>
-                                                    <RadioButton value="d">DAI</RadioButton>
-                                                    <RadioButton value="e">TUSD</RadioButton>
-                                                    <RadioButton value="f">EURS</RadioButton> */}
-                                                    <RadioButton value="g">FAVORITES</RadioButton>
+                                                    {/* <RadioButton value="g">FAVORITES</RadioButton> */}
                                                 </RadioSelect>
                                             </FIAT>
                                         </FIAT_wrap>
