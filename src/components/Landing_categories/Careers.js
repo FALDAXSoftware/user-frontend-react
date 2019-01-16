@@ -119,10 +119,6 @@ class Careers extends Component {
                         <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                             <CareerTitle>Careers </CareerTitle>
                         </div>
-                        {/* <CareerDiv>
-                            <Head_span>Careers</Head_span>
-                            <hr />
-                        </CareerDiv> */}
                         {/* <Career_desc>
                             <Desc_head>careers</Desc_head>
                             <Desc_body>{(this.state.careerDesc) ? ReactHtmlParser(this.state.careerDesc.content) : ''}</Desc_body>

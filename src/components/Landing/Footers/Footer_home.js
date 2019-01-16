@@ -281,8 +281,8 @@ class Footer_home extends Component {
                             <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                                 <Footer_ul>
                                     <Footer_headers>Support</Footer_headers>
-                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        Open a Ticket
+                                    <li style={{ cursor: "pointer" }} >
+                                        <Footer_Link to="/open-ticket"> Open a Ticket</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         {/* <Footer_Link to="/faq"> */}

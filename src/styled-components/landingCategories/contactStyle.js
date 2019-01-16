@@ -196,14 +196,14 @@ export const Sub_p = styled.p`
     color: ${props => props.theme.mode ? "#7e868d" : "rgba( 51, 51, 51, 0.502 )"};
     margin-bottom:0px !important;
 `
-
-
-
-
 /* Media Contact File */
 
 export const Career_wrap = styled.div`
     padding-top: 45px;
+    &.hbspt-form
+    {
+        display:flex;
+    }
 `
 export const Subhead = styled.div`
     text-align:center;
