@@ -4,112 +4,8 @@ import { Row, Col } from 'antd';
 import styled from 'styled-components';
 import { Instru2, WrapDepth } from '../../../styled-components/loggedStyle/tradeStyle';
 import { Line } from 'react-chartjs-2';
-var askDepthTotal = 0;
-var bidDepthTotal = 0;
-var askData = [{
-    x: 0.03488199,
-    y: 0.01973404
-},
-{
-    x: 0.034882,
-    y: 1.29036632
-},
-{
-    x: 0.03491599,
-    y: 0.78322948
-}];
-var bidData = [{
-    x: 0.03488111,
-    y: 0.2331816
-},
-{
-    x: 0.03484626,
-    y: 0.18811583
-},
-{
-    x: 0.03473547,
-    y: 1.832
-}];
-for (var i = 0; i < askData.length; i++) {
-    askDepthTotal += askData[i]["y"];
-    askData[i]["y"] = askDepthTotal;
-}
+import { privateEncrypt } from 'crypto';
 
-for (var i = 0; i < bidData.length; i++) {
-    bidDepthTotal += bidData[i]["y"];
-    bidData[i]["y"] = bidDepthTotal;
-}
-console.log("askdata", askData);
-console.log("bidData", bidData);
-
-const data1 = {
-    type: 'scatter',
-    // labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-        {
-            lineTension: 0.1,
-            backgroundColor: '#dbeed9',
-            borderColor: 'rgba(93, 193, 78, 0.52)',
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: 'rgba(93, 193, 78, 0.52)',
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: 'rgba(93, 193, 78, 0.52)',
-            pointHoverBorderColor: 'rgba(93, 193, 78, 0.52)',
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: bidData
-        },
-        {
-            lineTension: 0.1,
-            backgroundColor: '#fcd3de',
-            borderColor: 'rgba(229, 90, 122, 0.52)',
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: 'rgba(229, 90, 122, 0.52)',
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: 'rgba(229, 90, 122, 0.52)',
-            pointHoverBorderColor: 'rgba(229, 90, 122, 0.52)',
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: askData
-        }
-    ]
-};
-// const data2 = {
-//     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-//     datasets: [
-//         {
-//             lineTension: 0.1,
-//             backgroundColor: '#fcd3de',
-//             borderColor: '#e55a7a',
-//             borderCapStyle: 'butt',
-//             borderDash: [],
-//             borderDashOffset: 0.0,
-//             borderJoinStyle: 'miter',
-//             pointBorderColor: '#e55a7a',
-//             pointBackgroundColor: '#fff',
-//             pointBorderWidth: 1,
-//             pointHoverRadius: 5,
-//             pointHoverBackgroundColor: '#e55a7a',
-//             pointHoverBorderColor: '#e55a7a',
-//             pointHoverBorderWidth: 2,
-//             pointRadius: 1,
-//             pointHitRadius: 10,
-//             data: [65, 59, 80, 81, 56, 55, 40]
-//         }
-//     ]
-// };
 const Chart2_wrap = styled.div`
     transform : rotateY(180deg);
     height:400px;
@@ -124,28 +20,170 @@ const Chart1_wrap = styled.div`
 const Line1 = styled(Line)`
 
   `
+let io = null;
 class DepthChart extends Component {
+    constructor(props) {
+        super(props);
+        io = this.props.io;
+        this.state = {
+            crypto: "XRP",
+            currency: "BTC",
+            data: {
+                type: 'scatter',
+                datasets: [
+                    {
+                        lineTension: 0.1,
+                        backgroundColor: '#dbeed9',
+                        borderColor: 'rgba(93, 193, 78, 1)',
+                        borderCapStyle: 'butt',
+                        borderDash: [],
+                        borderDashOffset: 0.0,
+                        borderJoinStyle: 'miter',
+                        pointBorderColor: 'rgba(93, 193, 78, 0.52)',
+                        pointBackgroundColor: '#fff',
+                        borderWidth: 1,
+                        pointBorderWidth: 1,
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: 'rgba(93, 193, 78, 0.52)',
+                        pointHoverBorderColor: 'rgba(93, 193, 78, 0.52)',
+                        pointHoverBorderWidth: 2,
+                        pointRadius: 1,
+                        pointHitRadius: 10,
+                        data: []
+                    },
+                    {
+                        lineTension: 0.1,
+                        backgroundColor: '#fcd3de',
+                        borderColor: 'rgba(229, 90, 122, 1)',
+                        borderCapStyle: 'butt',
+                        borderDash: [],
+                        borderDashOffset: 0.0,
+                        borderJoinStyle: 'miter',
+                        pointBorderColor: 'rgba(229, 90, 122, 0.52)',
+                        pointBackgroundColor: '#fff',
+                        borderWidth: 1,
+                        pointBorderWidth: 1,
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: 'rgba(229, 90, 122, 0.52)',
+                        pointHoverBorderColor: 'rgba(229, 90, 122, 0.52)',
+                        pointHoverBorderWidth: 2,
+                        pointRadius: 1,
+                        pointHitRadius: 10,
+                        data: []
+                    }
+                ]
+            }
+        };
+        this.updateGraph = this.updateGraph.bind(this);
+    }
+    componentDidMount() {
+        io.socket.get("/socket/get-depth-chart-data?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
+
+
+            if (body.status == 200) {
+                let res = body.data;
+                this.updateGraph(res);
+            }
+        });
+    }
+    updateGraph(data) {
+        console.log(data);
+        var self = this;
+        var askData = [];
+        var bidData = [];
+        for (let index = 0; index < data.buyDetails.length; index++) {
+            const element = data.buyDetails[index];
+            bidData.push({
+                x: element.price,
+                y: element.quantity
+            });
+
+        }
+        for (let index = 0; index < data.sellDetails.length; index++) {
+            const element = data.sellDetails[index];
+            askData.push({
+                x: element.price,
+                y: element.quantity
+            });
+        }
+        var askDepthTotal = 0;
+        var bidDepthTotal = 0;
+        for (var i = 0; i < askData.length; i++) {
+            askDepthTotal += askData[i]["y"];
+            askData[i]["y"] = askDepthTotal;
+            askData[i]["label"] = self.state.crypto + "/" + self.state.currency;
+        }
+
+        for (var i = 0; i < bidData.length; i++) {
+            bidDepthTotal += bidData[i]["y"];
+            bidData[i]["y"] = bidDepthTotal;
+            bidData[i]["label"] = self.state.crypto + "/" + self.state.currency;
+        }
+
+        let graphData = this.state.data
+        graphData.datasets[0][data] = bidData;
+        graphData.datasets[1][data] = askData;
+        console.log("-=-=-=-=-=-", askData);
+
+        this.setState({
+            data: graphData
+        }, () => {
+            console.log(self.refs.chart.chartInstance);
+            self.refs.chart.chartInstance.data.datasets[0].data = bidData;
+            self.refs.chart.chartInstance.data.datasets[1].data = askData;
+            self.refs.chart.chartInstance.update();
+        });
+    }
     render() {
+        var self = this;
         return (
             <WrapDepth>
                 <Instru2>Market Depth BBC/BTC</Instru2>
                 <Row>
                     <Col xl={24}>
                         <Chart1_wrap id="depth-chart1">
-                            <Line1 data={data1} options={{
+                            <Line data={this.state.data} options={{
                                 elements: {
                                     line: {
                                         tension: 0, // disables bezier curves
                                     }
-                                }, legend: null, scales: { xAxes: [{ display: false, type: 'linear', position: 'bottom' }] }
-                            }} height={300} />
+                                }, tooltips: {
+                                    backgroundColor: "#fff",
+                                    borderColor: "#1C2331",
+                                    borderWidth: 1,
+                                    titleFontColor: "#1C2331",
+                                    displayColors: false,
+                                    callbacks: {
+                                        title: function (tooltipItem) {
+                                            // console.log();
+
+                                            return self.state.data.datasets[tooltipItem[0].datasetIndex].data[tooltipItem[0].index].label;
+                                        },
+                                        // afterBody: function (tooltipItem) {
+                                        //     var multistringText = ["Price - " + Number(tooltipItem.xLabel)];
+                                        //     // do some stuff
+                                        //     multistringText.push("Volume - " + Number(tooltipItem.yLabel));
+
+                                        //     return multistringText;
+                                        // },
+                                        label: function (tooltipItem) {
+                                            return ["Price - " + Number(tooltipItem.xLabel), "Volume - " + Number(tooltipItem.yLabel)];
+                                        },
+                                        labelTextColor: function (tooltipItem, chart) {
+                                            return 'gray';
+                                        }
+                                    }
+                                }, legend: null, scales: {
+                                    xAxes: [{
+                                        display: true, type: 'linear', position: 'bottom', gridLines: {
+                                            display: false,
+                                            color: "#FFFFFF",
+                                        }
+                                    }]
+                                }
+                            }} height={300} ref="chart" />
                         </Chart1_wrap>
                     </Col>
-                    {/* <Col xl={12}>
-                        <Chart2_wrap id="depth-chart2">
-                            <Line2 data={data2} options={{ legend: null, scales: { xAxes: [{ display: false }] } }} height={300} />
-                        </Chart2_wrap>
-                    </Col> */}
                 </Row>
             </WrapDepth>
         )

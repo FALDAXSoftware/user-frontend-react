@@ -244,7 +244,7 @@ class Footer_home extends Component {
         });
     }
     scrollMap() {
-        var elmnt = document.getElementById("block-world-map");
+        var elmnt = document.getElementById("map-scroll");
         if (elmnt !== null)
             elmnt.scrollIntoView();
         else

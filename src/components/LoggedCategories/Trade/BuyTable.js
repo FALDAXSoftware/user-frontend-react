@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import { Buy_table,BBC,Total_BTC,History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
+import { Buy_table, BBC, Total_BTC, History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 import { Scrollbars } from 'react-custom-scrollbars';
 import { globalVariables } from "../../../Globals";
 
@@ -14,7 +14,7 @@ class BuyTable extends Component {
             data: [],
             crypto: "XRP",
             currency: "BTC",
-            lastsum:0
+            lastsum: 0
         }
         this.updateData = this.updateData.bind(this);
     }
@@ -46,7 +46,7 @@ class BuyTable extends Component {
                 bid: element.price,
                 total: sum,
             });
-            lastsum=sum
+            lastsum = sum
         }
         this.setState({
             data: rows,
@@ -74,7 +74,7 @@ class BuyTable extends Component {
                         </div>
                         <div class="tbl-content">
                             <Scrollbars
-                                style={{ height: 300 }}>
+                                style={{ height: 165 }}>
                                 <TableContent cellpadding="10px" cellspacing="0" border="0">
                                     <tbody>
                                         {this.state.data.map(element => (

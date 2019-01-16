@@ -248,17 +248,19 @@ class Home_four extends Component {
                 if (responseData.state == 200) {
                     self.setState({
                         countries: responseData.countries
+                    }, () => {
+                        if (self.props.location !== undefined) {
+                            if (self.props.location.hash !== "" && self.props.location.hash !== undefined && self.props.location.hash == "#block-world-map") {
+                                var elmnt = document.getElementById("map-scroll");
+                                if (elmnt !== null)
+                                    elmnt.scrollIntoView(true);
+                            }
+                        }
                     });
                 }
             })
             .catch(error => { })
-        if (this.props.location !== undefined) {
-            if (this.props.location.hash !== "" && this.props.location.hash !== undefined && this.props.location.hash == "#block-world-map") {
-                var elmnt = document.getElementById("block-world-map");
-                if (elmnt !== null)
-                    elmnt.scrollIntoView();
-            }
-        }
+
     }
     render() {
         let self = this;
