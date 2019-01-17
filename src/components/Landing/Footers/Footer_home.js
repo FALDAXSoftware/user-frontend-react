@@ -332,9 +332,9 @@ class Footer_home extends Component {
                                         <LI>
                                             <a target="_blank" href={contactDetails.linkedin_profile}><FontAwesomeIcons icon={faLinkedinIn} color={true} /></a>
                                         </LI>
-                                        <LI>
+                                        {/* <LI>
                                             <a target="_blank" href={contactDetails.discord_profile}><FontAwesomeIcons icon={faDiscord} color={true} /></a>
-                                        </LI>
+                                        </LI> */}
                                     </Icon_ul_1>
                                     : ""}
                                 {/* <Icon_ul_2>

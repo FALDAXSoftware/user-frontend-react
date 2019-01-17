@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import { BBC2, Total_BTC, Buy_table, History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
@@ -20,6 +21,14 @@ class SellTable extends Component {
         this.updateData = this.updateData.bind(this);
     }
     componentDidMount() {
+        var self = this;
+        if (this.props.cryptoPair !== undefined && this.props.cryptoPair !== "") {
+            this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
+                self.sellTableData();
+            })
+        }
+    }
+    sellTableData() {
         let io = this.props.io
         io.sails.url = APP_URL;
 
@@ -57,6 +66,22 @@ class SellTable extends Component {
             lastsum
         });
     }
+    componentWillReceiveProps(props, newProps) {
+        console.log(props)
+        var self = this;
+        if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
+            if (props.cryptoPair.crypto !== this.state.crypto) {
+                this.setState({ crypto: props.cryptoPair.crypto }, () => {
+                    self.sellTableData();
+                })
+            }
+            if (props.cryptoPair.currency !== this.state.currency) {
+                this.setState({ currency: props.cryptoPair.currency }, () => {
+                    self.sellTableData();
+                })
+            }
+        }
+    }
     render() {
         return (
             <div>
@@ -86,7 +111,7 @@ class SellTable extends Component {
                                                 <td>{element.my_size}</td>
                                                 <td>{element.amount}</td>
                                                 <td>{element.ask}</td>
-                                                <td>{element.total}</td>
+                                                <td>{element.total.toFixed(4)}</td>
                                             </tr>
                                         ))
 
@@ -104,4 +129,14 @@ class SellTable extends Component {
     }
 }
 
-export default SellTable;
+
+function mapStateToProps(state) {
+    return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : ""
+        /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
+    })
+}
+
+export default connect(mapStateToProps)(SellTable);

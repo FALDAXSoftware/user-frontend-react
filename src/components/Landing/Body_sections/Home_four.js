@@ -260,7 +260,6 @@ class Home_four extends Component {
                 }
             })
             .catch(error => { })
-
     }
     render() {
         let self = this;

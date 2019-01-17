@@ -36,7 +36,9 @@ export const HTable = styled(Table)`
 {
     background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f9f9f9"};
 }`
-
+const SideType = styled.td`
+    color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
+`
 
 class OrderTrade extends Component {
     constructor(props) {
@@ -59,8 +61,8 @@ class OrderTrade extends Component {
                             <tr>
                                 <th>SIDE</th>
                                 <th>AMOUNT</th>
-                                <th>PRICE</th>
-                                <th>FILLED</th>
+                                {self.props.pending !== 2 ? <th>PRICE</th> : <th>LIMIT PRICE</th>}
+                                {self.props.pending !== 2 ? <th>FILLED</th> : <th>STOP PRICE</th>}
                                 <th>FILL PRICE</th>
                                 <th>TYPE</th>
                                 <th>TIME</th>
@@ -80,18 +82,19 @@ class OrderTrade extends Component {
                                 {this.props.orderTradeData.length > 0
                                     ?
                                     this.props.orderTradeData.map(function (data) {
-                                        // console.log(data)
+                                        console.log(data)
                                         var date = moment.utc(data.created_at).local().format("MMM DD,YYYY HH:mm:ss");
+                                        var Filled = data.fix_quantity - data.quantity;
                                         return (
                                             <tr>
-                                                <td>{data.side}</td>
+                                                <SideType type={data.side}>{data.side}</SideType>
                                                 <td>{data.quantity}</td>
-                                                <td>{data.order_type == "Market" ? data.order_type : data.limit_price}</td>
-                                                <td>{data.fix_quantity - data.quantity}</td>
+                                                <td>{self.props.pending !== 2 ? (data.order_type == "Market" ? data.order_type : data.limit_price) : data.limit_price}</td>
+                                                <SideType type={data.side}>{self.props.pending !== 2 ? Filled.toFixed(4) : (data.stop_price !== undefined ? data.stop_price : 0)}</SideType>
                                                 <td>{data.fill_price}</td>
                                                 <td>{data.order_type}</td>
                                                 <td>{date}</td>
-                                                <td>{data.quantity * data.fill_price}</td>
+                                                <td>{(data.quantity * data.fill_price).toFixed(4)}</td>
                                                 {self.props.pending == 2 ? <th ><span onClick={() => self.cancelOrder(data.id, data.side, data.order_type)}><Icon style={{ color: "#279CED", fontSize: "18px" }
                                                 } type="close-circle" /></span></th> : ''}
                                             </tr>

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import 'antd/dist/antd.css';
 import { Row, Col, Checkbox, Radio, notification } from 'antd';
-import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Total, Check_wrap, ETH_wrap, BTC_wrap,Willpay,Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti,Best, Button_wrap, ButtonETH,StopCheck } from "../../../styled-components/loggedStyle/tradeStyle";
+import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Total, Check_wrap, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Best, Button_wrap, ButtonETH, StopCheck } from "../../../styled-components/loggedStyle/tradeStyle";
 
 import { globalVariables } from "../../../Globals";
 let { API_URL } = globalVariables;
@@ -13,12 +13,12 @@ class Limit extends Component {
         super(props);
         this.state = {
             side: "Buy",
-            crypto: "XRP",
-            currency: "BTC",
+            crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
+            currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
             sellprice: 0.001,
             buyPrice: 0.002,
             amount: 0,
-            limit_price:0,
+            limit_price: 0,
             total: 0
         }
         this.onChange = this.onChange.bind(this);
@@ -37,6 +37,17 @@ class Limit extends Component {
             }
         });
     }
+    componentWillReceiveProps(props, newProps) {
+        console.log(props)
+        if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
+            if (props.cryptoPair.crypto !== this.state.crypto) {
+                this.setState({ crypto: props.cryptoPair.crypto })
+            }
+            if (props.cryptoPair.currency !== this.state.currency) {
+                this.setState({ currency: props.cryptoPair.currency })
+            }
+        }
+    }
     onChange(e) {
         var self = this;
         let obj = {};
@@ -46,7 +57,7 @@ class Limit extends Component {
         if (name == "side") {
             obj["amount"] = 0;
             obj["total"] = 0;
-            obj['limit_price']=0;
+            obj['limit_price'] = 0;
         }
         this.setState({
             ...obj
@@ -78,7 +89,7 @@ class Limit extends Component {
                 side: self.state.side,
                 order_type: "Limit",
                 orderQuantity: self.state.amount,
-                limit_price:self.state.limit_price
+                limit_price: self.state.limit_price
             }
             fetch(API_URL + "/limit/" + self.state.side.toLowerCase(), {
                 method: "post",
@@ -104,7 +115,7 @@ class Limit extends Component {
         }
     }
     onChangeCheck(e) {
-    }  
+    }
     render() {
         const RadioGroup = Radio.Group;
         return (
@@ -172,7 +183,7 @@ class Limit extends Component {
                 <BTC_wrap>
                     <Label>Limit Price</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange}/>
+                        <Totinput type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange} />
                         {this.validator.message('limit_price', this.state.limit_price, 'required|numeric|gtzero')}
                     </Total_wrap>
                 </BTC_wrap>
@@ -219,7 +230,8 @@ class Limit extends Component {
 function mapStateToProps(state) {
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
-        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : ""
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }

@@ -139,10 +139,10 @@ class Mini_graph extends React.Component {
                         <Image_wrapper src={image} />
                     </Col>
                     <Col xs={11} md={12}>
-                        <Span_coin_price> {price}{this.props.currency} </Span_coin_price>
+                        <Span_coin_price> {price.toFixed(2)} {this.props.currency} </Span_coin_price>
                     </Col>
                     <Col xs={8} md={7}>
-                        <Span_coin_percentage value={percentage}> {percentage === 0 ? '' : percentage >= 0 ? '+' : ''}{percentage}% </Span_coin_percentage>
+                        <Span_coin_percentage value={percentage}> {percentage === 0 ? '' : percentage >= 0 ? '+' : ''}{percentage.toFixed(4)}% </Span_coin_percentage>
                     </Col>
                 </Row>
                 <Row>
