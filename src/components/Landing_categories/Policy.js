@@ -170,7 +170,7 @@ export default class Policy extends Component {
                 <FirstRow >
                   <Col md={{ span: 6, offset: 5 }} xl={{ span: 6, offset: 5 }}>
                     <Div_wrap>
-                      <a href={amazon_Bucket + "faldax/assets/pdf/FALDAX+Terms+of+Service.pdf"} target="_blank">
+                      <a href={amazon_Bucket + "assets/pdf/FALDAX+Terms+of+Service.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
                             <CardText>
@@ -183,7 +183,7 @@ export default class Policy extends Component {
                   </Col>
                   <Col md={{ span: 6, offset: 2 }} xl={{ span: 6, offset: 2 }}>
                     <Div_wrap>
-                      <a href={amazon_Bucket + "faldax/assets/pdf/FALDAX+Privacy+Policy.pdf"} target="_blank">
+                      <a href={amazon_Bucket + "assets/pdf/FALDAX+Privacy+Policy.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
                             <CardText>
@@ -199,7 +199,7 @@ export default class Policy extends Component {
                 <SecondRow>
                   <Col md={{ span: 6, offset: 5 }} xl={{ span: 6, offset: 5 }}>
                     <Div_wrap>
-                      <a href={amazon_Bucket + "faldax/assets/pdf/FALDAX+Anti-Money+Laundering+Policy+v2.pdf"} target="_blank">
+                      <a href={amazon_Bucket + "assets/pdf/FALDAX+Anti-Money+Laundering+Policy+v2.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
                             <CardText>
@@ -212,7 +212,7 @@ export default class Policy extends Component {
                   </Col>
                   <Col md={{ span: 6, offset: 2 }} xl={{ span: 6, offset: 2 }}>
                     <Div_wrap>
-                      <a href={amazon_Bucket + "faldax/assets/pdf/FALDAX+Cookie+Policy.pdf"} target="_blank">
+                      <a href={amazon_Bucket + "assets/pdf/FALDAX+Cookie+Policy.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
                             <CardText>
