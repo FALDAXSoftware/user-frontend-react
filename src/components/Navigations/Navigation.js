@@ -244,6 +244,35 @@ const LOG = styled.span`
         text-decoration:underline;
     }
 `
+const Fin_sign = styled.a`
+    text-decoration: none;
+    font-size: 18px;
+    /* display: block; */
+    /* float: right; */
+    display: inline-flex;
+    float: right;
+    margin-top: 15px;
+    /* justify-content: flex-end; */
+    transition: 0.5s;
+    line-height: 1.5;
+    color: white;
+`
+const Fin_log = styled.a`
+text-decoration: none;
+font-size: 18px;
+/* display: block; */
+transition: 0.5s;
+line-height: 1.5;
+color: white;
+`
+const Fin_div = styled.div`
+    padding: 0px 32px;
+    display:none;
+    @media(max-width:480px)
+    {
+        display:block;
+    }
+`
 const SIGN = styled.span`
     display:inline-block;
     width:50%;
@@ -451,10 +480,10 @@ class Navigation extends Component {
                     <SideNav id="mySidenav">
                         <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                         {!this.props.isLoggedIn &&
-                            <div>
-                                <a onClick={this.dispModal.bind(this, "login")}>Login</a>
-                                <a onClick={this.dispModal.bind(this, "signup")}>Signup</a>
-                            </div>
+                            <Fin_div>
+                                <Fin_log onClick={this.dispModal.bind(this, "login")}>Login</Fin_log>
+                                <Fin_sign onClick={this.dispModal.bind(this, "signup")}>Signup</Fin_sign>
+                            </Fin_div>
                         }
                         <Link to="/">Home</Link>
                         {/* <a onClick={this.showComing} href="#">Features</a> */}
@@ -497,7 +526,7 @@ class Navigation extends Component {
                                 </SubMenuNav>
                             </DropMenu>
                         </a>
-                        
+
                         {this.props.isLoggedIn &&
                             <ProfileLinkContainer>
                                 <a onClick={() => this.props.history.push('/editProfile')}>Profile</a>
