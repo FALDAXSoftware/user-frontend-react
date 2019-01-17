@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import { Table } from 'react-bootstrap';
@@ -14,8 +15,8 @@ const BorderedHistoryWrap = styled(History_wrap)`
     margin-right:30px;
     border:1px solid #d8d8d8;
 `
-const SideType= styled.td`
-    color:${props => props.type=="Sell"?"#f13239":"#4fb153"};
+const SideType = styled.td`
+    color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
 `
 const FontAwesomeIconA = styled(FontAwesomeIcon)``
 class HistoryTable extends Component {
@@ -29,7 +30,30 @@ class HistoryTable extends Component {
         this.updateData = this.updateData.bind(this);
     }
     componentDidMount() {
-
+        var self = this;
+        if (this.props.cryptoPair !== undefined && this.props.cryptoPair !== "") {
+            this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
+                self.historyData();
+            })
+        }
+    }
+    componentWillReceiveProps(props, newProps) {
+        console.log(props)
+        var self = this;
+        if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
+            if (props.cryptoPair.crypto !== this.state.crypto) {
+                this.setState({ crypto: props.cryptoPair.crypto }, () => {
+                    self.historyData();
+                })
+            }
+            if (props.cryptoPair.currency !== this.state.currency) {
+                this.setState({ currency: props.cryptoPair.currency }, () => {
+                    self.historyData();
+                })
+            }
+        }
+    }
+    historyData() {
         let io = this.props.io
 
         io.sails.url = APP_URL;
@@ -47,6 +71,7 @@ class HistoryTable extends Component {
         });
     }
     updateData(data) {
+        console.log(data)
         const rows = [];
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
@@ -84,18 +109,18 @@ class HistoryTable extends Component {
                         style={{ height: 300 }}>
                         <TableContent cellpadding="10px" cellspacing="0" border="0">
                             <tbody>
-                                {this.state.data.map((element,index) => (
+                                {this.state.data.map((element, index) => (
                                     <tr>
                                         <SideType type={element.side}>{element.side}</SideType>
                                         <td>{element.amount}</td>
-                                        {(index+1)<me.state.data.length?(element.fill_price>me.state.data[index+1].fill_price)
+                                        {(index + 1) < me.state.data.length ? (element.fill_price > me.state.data[index + 1].fill_price)
                                             ?
-                                            <td>{element.fill_price} <img style={{marginBottom:"3px"}} src="/images/up-right.png"/></td>:
-                                           <td>{element.fill_price} <img style={{marginBottom:"3px"}} src="/images/down-right.png"/></td>
-                                           :<td>{element.fill_price} </td>
+                                            <td>{element.fill_price} <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /></td> :
+                                            <td>{element.fill_price} <img style={{ marginBottom: "3px" }} src="/images/down-right.png" /></td>
+                                            : <td>{element.fill_price} </td>
                                         }
                                         <td>{element.time}</td>
-                                        <td>{element.total}</td>
+                                        <td>{element.total.toFixed(4)}</td>
                                     </tr>
                                 ))
 
@@ -110,4 +135,13 @@ class HistoryTable extends Component {
     }
 }
 
-export default HistoryTable;
+function mapStateToProps(state) {
+    return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : ""
+        /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
+    })
+}
+
+export default connect(mapStateToProps)(HistoryTable);

@@ -17,6 +17,7 @@ import DepthChart from './DepthChart';
 import OrderTrade from './OrderTrade';
 import { Container } from '../../../styled-components/homepage/style';
 import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
+import { cryptoCurrency } from '../../../Actions/LoggedCat/tradeActions'
 import {
     Row_wrap, Left_div, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
     FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect,
@@ -25,6 +26,7 @@ import { globalVariables } from '../../../Globals';
 
 let { API_URL } = globalVariables;
 /* var socketIOClient = require('socket.io-client');
+        io.sails.url = API_URL;
 var sailsIOClient = require('sails.io.js');
 let io = sailsIOClient(socketIOClient); */
 const Search = Input.Search;
@@ -41,6 +43,7 @@ const Inputsearch = styled(Search)`
     width: 100%;
     height: 40px;
     >input
+    io.sails.url = API_URL;
     {
         background-color:${props => props.theme.mode == "dark" ? "#020e18" : ""};
     }
@@ -70,12 +73,14 @@ const columns = [{
     title: 'Volume',
     dataIndex: 'volume',
     defaultSortOrder: 'ascend',
+    render: text => text.toFixed(4),
     sorter: (a, b) => a.volume - b.volume
 },
 {
     title: 'Change',
     dataIndex: 'change',
     defaultSortOrder: 'ascend',
+    render: text => text.toFixed(4),
     sorter: (a, b) => a.change - b.change
 }];
 
@@ -121,6 +126,7 @@ class Trade extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.statusChange = this.statusChange.bind(this);
         io = this.props.io;
+        io.sails.url = API_URL;
         this.onInsChange = this.onInsChange.bind(this);
         this.getInstrumentData = this.getInstrumentData.bind(this);
         this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
@@ -135,16 +141,21 @@ class Trade extends Component {
         this.getInstrumentData();
     }
     onInsChange(e) {
+        console.log(this.props)
         var self = this;
         // console.log(e.target.value);
+        let cryptoPair = {
+            crypto: self.state.crypto,
+            currency: e.target.value
+        };
         this.setState({
             InsCurrency: e.target.value,
             InsData: [],
         }, () => {
+            self.props.cryptoCurrency(cryptoPair);
             self.getInstrumentData();
         });
-
-    }
+    } io
     getInstrumentData() {
         var self = this;
         // console.log("get instrument data");
@@ -236,7 +247,16 @@ class Trade extends Component {
             .catch(error => {
             })
     }
+    currencyPair(crypto) {
+        let cryptoPair = {
+            crypto: crypto,
+            currency: this.state.InsCurrency
+        };
+        console.log(this.props)
+        this.props.cryptoCurrency(cryptoPair)
+    }
     render() {
+        var self = this;
         return (
             <Contact_wrap>
                 <LoggedNavigation />
@@ -258,7 +278,14 @@ class Trade extends Component {
                                             </FIAT>
                                         </FIAT_wrap>
                                         <InstruTable>
-                                            <TableIns pagination={false} columns={columns} dataSource={this.state.InsData} onChange={this.onChange} />
+                                            <TableIns
+                                                InsCurrency onRow={(record, rowIndex) => {
+                                                    console.log(record, rowIndex)
+                                                    return {
+                                                        onClick: (event) => { self.currencyPair(record.name) },       // click row
+                                                    };
+                                                }}
+                                                pagination={false} columns={columns} dataSource={this.state.InsData} onChange={this.onChange} />
                                         </InstruTable>
                                     </Left_div1>
                                 </Col>
@@ -342,11 +369,16 @@ class Trade extends Component {
 }
 
 function mapStateToProps(state) {
+    console.log(state)
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
-        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : ""
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }
+const mapDispatchToProps = dispatch => ({
+    cryptoCurrency: (Pair) => dispatch(cryptoCurrency(Pair)),
+})
 
-export default connect(mapStateToProps)(Trade);
+export default connect(mapStateToProps, mapDispatchToProps)(Trade);

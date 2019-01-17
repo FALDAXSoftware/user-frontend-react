@@ -173,6 +173,9 @@ const data = [
         ]
     }
 ];
+const SideType = styled.td`
+    color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
+`
 const activityColumns = [{
     title: 'Date',
     dataIndex: 'date',
@@ -182,6 +185,7 @@ const activityColumns = [{
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
+    render: text => <SideType type={text}>{text}</SideType>
 }, {
     title: 'Amount',
     dataIndex: 'amount',
@@ -261,7 +265,7 @@ class Dashboard extends Component {
                         activityData.push({
                             date: moment.utc(element.created_at).local().format("MMMM DD,HH:mm"),
                             action: element.side,
-                            amount: element.price + element.currency,
+                            amount: element.price.toFixed(4) + " " + element.currency,
                             completed: ((parseFloat(element.quantity) * 100) / parseFloat(element.fix_quantity)),
                         });
                     });
@@ -292,8 +296,8 @@ class Dashboard extends Component {
                     responseData.data.map(element => {
                         portfolioData.push({
                             coin: element.name,
-                            amount: element.amount + element.symbol,
-                            value: element.average_price + element.fiat,
+                            amount: element.amount.toFixed(4) + " " + element.symbol,
+                            value: "$ " + element.average_price,
                             change: element.percentchange + "%"
                         });
                     });

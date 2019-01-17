@@ -3,20 +3,24 @@ export default (state = {}, action) => {
 
         case "WALLET_DATA":
             return {
-            ...state,
-            walletData:action.payload
-            }  
+                ...state,
+                walletData: action.payload
+            }
 
         case "ALLCOINS_DATA":
             return {
-            ...state,
-            allCoinsData:action.payload
-            }  
-            
+                ...state,
+                allCoinsData: action.payload
+            }
+        case "CRYPT_PAIR":
+            return {
+                ...state,
+                cryptoPair: action.payload
+            }
 
         default:
-        /* console.log("default") */
-        return { ...state };
-  }
+            /* console.log("default") */
+            return { ...state };
+    }
 
 }
