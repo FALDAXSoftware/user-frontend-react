@@ -321,7 +321,7 @@ class Footer_home extends Component {
                                 <Icon_ul_1_header>
                                     <Footer_headers>Social</Footer_headers>
                                 </Icon_ul_1_header>
-                                {this.state.contactDetails.length !== 0 ?
+                                {this.state.contactDetails !== undefined ? this.state.contactDetails.length !== 0 ?
                                     <Icon_ul_1>
                                         <LI>
                                             <a target="_blank" href={contactDetails.fb_profile}><FontAwesomeIcons icon={faFacebook} color={true} /></a>
@@ -336,7 +336,7 @@ class Footer_home extends Component {
                                             <a target="_blank" href={contactDetails.discord_profile}><FontAwesomeIcons icon={faDiscord} color={true} /></a>
                                         </LI> */}
                                     </Icon_ul_1>
-                                    : ""}
+                                    : "" : ""}
                                 {/* <Icon_ul_2>
                                     <LI2 onClick={this.showComing}>
                                         <a href={contactDetails.insta_profile}> <FontAwesomeIcons icon={faInstagram} color={true} /></a>

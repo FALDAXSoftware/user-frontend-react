@@ -84,7 +84,7 @@ const SignupButton = styled(Button)`
 `
 const Open = styled.span`
     display:none;
-    @media(max-width:1320px)
+    @media(max-width:1200px)
     {
         display:inline-block;
         margin-right:15px;
