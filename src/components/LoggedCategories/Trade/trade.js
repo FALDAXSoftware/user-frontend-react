@@ -116,15 +116,16 @@ class Trade extends Component {
             currency: "BTC",
             orderTradeData: {},
             InsCurrency: "BTC",
+            InsData: [],
         };
         this.handleChange = this.handleChange.bind(this);
         this.statusChange = this.statusChange.bind(this);
         io = this.props.io;
         this.onInsChange = this.onInsChange.bind(this);
         this.getInstrumentData = this.getInstrumentData.bind(this);
+        this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
     }
     componentDidMount() {
-
         io.sails.headers = {
             Accept: 'application/json',
             'Content-Type': 'application/json',
@@ -135,9 +136,10 @@ class Trade extends Component {
     }
     onInsChange(e) {
         var self = this;
-        console.log(e.target.value);
+        // console.log(e.target.value);
         this.setState({
-            InsCurrency: e.target.value
+            InsCurrency: e.target.value,
+            InsData: [],
         }, () => {
             self.getInstrumentData();
         });
@@ -145,9 +147,28 @@ class Trade extends Component {
     }
     getInstrumentData() {
         var self = this;
-        io.socket.get(`/socket/get-instrument-data?coin=${self.state.InsCurrency}`, (body, JWR) => {
-            console.log("---------------ins-------------->", body);
+        // console.log("get instrument data");
 
+        io.socket.get(`/socket/get-instrument-data?coin=${self.state.InsCurrency}`, (body, JWR) => {
+            if (body.status == 200) {
+                self.updateInstrumentsData(body.data)
+            }
+        });
+    }
+    updateInstrumentsData(data) {
+        console.log(data);
+        let res = [];
+        for (let index = 0; index < data.length; index++) {
+            const element = data[index];
+            res.push({
+                name: element.name.split('-')[0],
+                price: element.last_price,
+                volume: element.volume,
+                change: element.percentChange
+            });
+        }
+        this.setState({
+            InsData: res
         });
     }
     searchChange(value) {
@@ -237,7 +258,7 @@ class Trade extends Component {
                                             </FIAT>
                                         </FIAT_wrap>
                                         <InstruTable>
-                                            <TableIns pagination={false} columns={columns} dataSource={data} onChange={this.onChange} />
+                                            <TableIns pagination={false} columns={columns} dataSource={this.state.InsData} onChange={this.onChange} />
                                         </InstruTable>
                                     </Left_div1>
                                 </Col>
