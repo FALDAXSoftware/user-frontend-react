@@ -1,16 +1,12 @@
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import rootReducer from './Reducers/rootReducer';
 
-import {
-    createStore,
-    combineReducers,
-} from "redux"
-  
-import { reducer as tooltip } from "redux-tooltip"
-  
-const appReducer = (state = {}, action) => {
-    switch (action.type) {
-        default:
-        return state
-    }
+export default function configureStore(initialState) 
+{
+    return createStore(
+        rootReducer,
+        initialState,
+        applyMiddleware(thunk)
+    );
 }
-
-export default createStore(combineReducers({ appReducer, tooltip }));

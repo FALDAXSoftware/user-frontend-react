@@ -1,0 +1,95 @@
+import React, { Component } from 'react';
+import 'antd/dist/antd.css';
+import { connect } from "react-redux"
+import styled from 'styled-components';
+import { Table } from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import { Menu, Dropdown, Icon } from 'antd';
+
+import { Head, Sub_head, DropMenu, Col1, Bit_img, Bit_text, Bit, Bit_price, Price, Icon_wrap } from "../../../styled-components/loggedStyle/walletStyle";
+
+const Table_coin = styled(Table)`
+    @media(max-width:1160px)
+    {
+        min-width:1160px;
+    }
+`
+
+const menu = (
+    <Menu>
+        <Menu.Item key="0">INR</Menu.Item>
+        <Menu.Item key="1">USD</Menu.Item>
+        <Menu.Item key="3">EUR</Menu.Item>
+    </Menu>
+);
+let total = 0;
+class TableofCoin extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    totalUSD(total) {
+        this.props.totalUSD(total)
+    }
+    render() {
+        let { tableData } = this.props;
+        var me = this;
+        return (
+            <Table_coin condensed>
+                <thead>
+                    <Head>
+                        <Sub_head>Coins</Sub_head>
+                        <Sub_head>USD
+                                <Dropdown overlay={menu} trigger={['click']}>
+                                <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
+                            </Dropdown>
+                        </Sub_head>
+                        <Sub_head>EUR
+                                <Dropdown overlay={menu} trigger={['click']}>
+                                <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
+                            </Dropdown>
+                        </Sub_head>
+                        <Sub_head>INR
+                                <Dropdown overlay={menu} trigger={['click']}>
+                                    <a className="ant-dropdown-link" style={{verticalAlign:"middle"}}href="#"><DropMenu type="down" /></a>
+                                </Dropdown>
+                            </Sub_head>
+                            <Sub_head></Sub_head>
+                        </Head>
+                    </thead>
+                    <tbody>
+                        {this.props.tableData!==undefined?Object.keys(tableData).map(function(index,key){
+                                
+                                        return (
+                                            <Col1>
+                                                <td>
+                                                    <Bit_img src="/images/LoggedCat/Bit_img.png"/>
+                                                    <Bit_text><Bit>{tableData[index].coin_name}</Bit><Bit_price>{tableData[index].balance} {tableData[index].coin_code}</Bit_price></Bit_text>
+                                                </td>
+                                                <td>{tableData[index].USD!==undefined?<Price>$ {tableData[index].USD}</Price>:<Price>-</Price>}</td>
+                                                <td>{tableData[index].EUR!==undefined?<Price>{"\u20AC"} {tableData[index].EUR} </Price>:<Price>-</Price>}</td>
+                                                <td>{tableData[index].INR!==undefined?<Price>&#8377; {tableData[index].INR} </Price>:<Price>-</Price>}</td>
+                                                <td>
+                                                    <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
+                                                        <Icon_wrap>
+                                                            <Icon type="right" />                                
+                                                        </Icon_wrap>
+                                                    </Link>
+                                                </td>
+                                            </Col1>
+                                        );
+                                    })
+                            
+                        :""}
+                    </tbody>
+                </Table_coin>       
+        );
+    }
+}
+
+function mapStateToProps(state) {
+    return ({
+
+    })
+}
+
+export default connect(mapStateToProps)(TableofCoin);
