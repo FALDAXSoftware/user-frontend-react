@@ -17,6 +17,7 @@ import DepthChart from './DepthChart';
 import OrderTrade from './OrderTrade';
 import { Container } from '../../../styled-components/homepage/style';
 import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
+import { cryptoCurrency } from '../../../Actions/LoggedCat/tradeActions'
 import {
     Row_wrap, Left_div, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
     FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect,
@@ -76,6 +77,7 @@ const columns = [{
     title: 'Change',
     dataIndex: 'change',
     defaultSortOrder: 'ascend',
+    render: text => text.toFixed(4),
     sorter: (a, b) => a.change - b.change
 }];
 
@@ -114,20 +116,67 @@ class Trade extends Component {
             status: "1",
             crypto: "XRP",
             currency: "BTC",
-            orderTradeData: {}
+            orderTradeData: {},
+            InsCurrency: "BTC",
+            InsData: [],
         };
         this.handleChange = this.handleChange.bind(this);
         this.statusChange = this.statusChange.bind(this);
         io = this.props.io;
+        this.onInsChange = this.onInsChange.bind(this);
+        this.getInstrumentData = this.getInstrumentData.bind(this);
+        this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
     }
     componentDidMount() {
-
         io.sails.headers = {
             Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: "Bearer " + this.props.isLoggedIn
         }
         this.orderSocket(this.state.timePeriod, this.state.status);
+        this.getInstrumentData();
+    }
+    onInsChange(e) {
+        console.log(this.props)
+        var self = this;
+        // console.log(e.target.value);
+        let cryptoPair = {
+            crypto: self.state.crypto,
+            currency: e.target.value
+        };
+        this.setState({
+            InsCurrency: e.target.value,
+            InsData: [],
+        }, () => {
+            self.props.cryptoCurrency(cryptoPair);
+            self.getInstrumentData();
+        });
+    }
+    getInstrumentData() {
+        var self = this;
+        // console.log("get instrument data");
+
+        io.socket.get(`/socket/get-instrument-data?coin=${self.state.InsCurrency}`, (body, JWR) => {
+            if (body.status == 200) {
+                self.updateInstrumentsData(body.data)
+            }
+        });
+    }
+    updateInstrumentsData(data) {
+        console.log(data);
+        let res = [];
+        for (let index = 0; index < data.length; index++) {
+            const element = data[index];
+            res.push({
+                name: element.name.split('-')[0],
+                price: element.last_price,
+                volume: element.volume,
+                change: element.percentChange
+            });
+        }
+        this.setState({
+            InsData: res
+        });
     }
     searchChange(value) {
 
@@ -194,7 +243,16 @@ class Trade extends Component {
             .catch(error => {
             })
     }
+    currencyPair(crypto) {
+        let cryptoPair = {
+            crypto: crypto,
+            currency: this.state.InsCurrency
+        };
+        console.log(this.props)
+        this.props.cryptoCurrency(cryptoPair)
+    }
     render() {
+        var self = this;
         return (
             <Contact_wrap>
                 <LoggedNavigation />
@@ -208,19 +266,22 @@ class Trade extends Component {
                                         <SearchInput />
                                         <FIAT_wrap>
                                             <FIAT>
-                                                <RadioSelect defaultValue="a" size="large" buttonStyle="solid">
-                                                    <RadioButton value="a">BTC</RadioButton>
-                                                    <RadioButton value="b">ETH</RadioButton>
-                                                    <RadioButton value="c">USDT</RadioButton>
-                                                    <RadioButton value="d">DAI</RadioButton>
-                                                    <RadioButton value="e">TUSD</RadioButton>
-                                                    <RadioButton value="f">EURS</RadioButton>
-                                                    <RadioButton value="g">FAVORITES</RadioButton>
+                                                <RadioSelect value={this.state.InsCurrency} size="large" buttonStyle="solid" onChange={this.onInsChange}>
+                                                    <RadioButton value="BTC">BTC</RadioButton>
+                                                    <RadioButton value="ETH">ETH</RadioButton>
+                                                    {/* <RadioButton value="g">FAVORITES</RadioButton> */}
                                                 </RadioSelect>
                                             </FIAT>
                                         </FIAT_wrap>
                                         <InstruTable>
-                                            <TableIns pagination={false} columns={columns} dataSource={data} onChange={this.onChange} />
+                                            <TableIns
+                                                InsCurrency onRow={(record, rowIndex) => {
+                                                    console.log(record, rowIndex)
+                                                    return {
+                                                        onClick: (event) => { self.currencyPair(record.name) },       // click row
+                                                    };
+                                                }}
+                                                pagination={false} columns={columns} dataSource={this.state.InsData} onChange={this.onChange} />
                                         </InstruTable>
                                     </Left_div1>
                                 </Col>
@@ -304,11 +365,16 @@ class Trade extends Component {
 }
 
 function mapStateToProps(state) {
+    console.log(state)
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
-        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : ""
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }
+const mapDispatchToProps = dispatch => ({
+    cryptoCurrency: (Pair) => dispatch(cryptoCurrency(Pair)),
+})
 
-export default connect(mapStateToProps)(Trade);
+export default connect(mapStateToProps, mapDispatchToProps)(Trade);

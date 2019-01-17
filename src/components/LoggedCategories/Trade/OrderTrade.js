@@ -36,7 +36,9 @@ export const HTable = styled(Table)`
 {
     background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f9f9f9"};
 }`
-
+const SideType = styled.td`
+    color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
+`
 
 class OrderTrade extends Component {
     constructor(props) {
@@ -75,22 +77,21 @@ class OrderTrade extends Component {
                         style={{ height: 300 }}>
                         <TableContent cellpadding="10px" cellspacing="0" border="0">
                             <tbody>
-                                {console.log(this.props.orderTradeData)}
                                 {this.props.orderTradeData.length > 0
                                     ?
                                     this.props.orderTradeData.map(function (data) {
-                                        console.log(data)
+                                        // console.log(data)
                                         var date = moment.utc(data.created_at).local().format("MMM DD,YYYY HH:mm:ss");
                                         return (
                                             <tr>
-                                                <td>{data.side}</td>
+                                                <SideType type={data.side}>{data.side}</SideType>
                                                 <td>{data.quantity}</td>
                                                 <td>{data.order_type == "Market" ? data.order_type : data.limit_price}</td>
-                                                <td>{data.fix_quantity - data.quantity}</td>
+                                                <SideType type={data.side}>{data.fix_quantity - data.quantity}</SideType>
                                                 <td>{data.fill_price}</td>
                                                 <td>{data.order_type}</td>
                                                 <td>{date}</td>
-                                                <td>{data.quantity * data.fill_price}</td>
+                                                <td>{(data.quantity * data.fill_price).toFixed(4)}</td>
                                                 {self.props.pending == 2 ? <th ><span onClick={() => self.cancelOrder(data.id, data.side, data.order_type)}><Icon style={{ color: "#279CED", fontSize: "18px" }
                                                 } type="close-circle" /></span></th> : ''}
                                             </tr>

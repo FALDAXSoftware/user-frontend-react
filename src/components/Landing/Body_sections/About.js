@@ -85,6 +85,7 @@ export default class About extends Component {
                 </Paragraph>
             </Col>
           </Row>
+          <span id="map-scroll"></span>
         </Container>
         <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
       </Section>

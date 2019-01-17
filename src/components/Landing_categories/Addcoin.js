@@ -11,13 +11,12 @@ import { Spin_Ex } from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import {
-    Contact_wrap, Grey_wrap, Head, Head_title, Head_desc, Body,
-    Body_form, Form_coin, CoinInput,IntlTelInputS,SecurityInput,URLInput, TargetInput, EmailInput, MsgInput,
+    Contact_wrap, Grey_wrap, Head, Head_desc, Body,
+    Body_form, Form_coin, CoinInput, IntlTelInputS, SecurityInput, URLInput, TargetInput, EmailInput, MsgInput,
     Left, OneDiv, FifthDiv, SixthDiv, SeventhDiv, EigthDiv, AddButton, Msg, Right_input,
-    SecondDiv, ThirdDiv, FourthDiv, NineDiv, TenDiv, ElevenDiv, TwelveDiv, ThirteenDiv
+    SecondDiv, ThirdDiv, FourthDiv, NineDiv, TenDiv, ElevenDiv, TwelveDiv, ThirteenDiv,
 } from '../../styled-components/landingCategories/contactStyle';
 import { globalVariables } from "../../Globals";
-import { Security } from '../../Constants/images';
 
 let { API_URL } = globalVariables;
 const Option = Select.Option;
@@ -37,6 +36,43 @@ export const ContainerContact = styled(Container)`
 export const TextAreaInput = styled(MsgInput)`
     min-height: 60px;
 `
+const TokenTitle = styled.span`
+  font-size: 40px;
+  font-family: "Open sans";
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  color:${props => props.theme.mode == "dark" ? "white" : ""};
+  &:before {
+    content: '';
+    width: calc(50% - 190px);
+    height: 1px;
+    display: inline-block;
+    background: #827777;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 1px);
+  }
+  &:after {
+    content: '';
+    width: calc(50% - 190px);
+    height: 1px;
+    display: inline-block;
+    background: #827777;
+    position: absolute;
+    right: 0;
+    top: calc(50% - 1px);
+  }
+  @media(max-width:767px)
+  {
+    &:before {
+      display:none;
+    }
+    &:after {
+      display:none;
+    }
+  }
+`;
 
 class MediaContact extends Component {
     constructor(props) {
@@ -48,12 +84,12 @@ class MediaContact extends Component {
                 target_date: '',
                 url: '',
                 coin_name: '',
-                is_secure:'',
-                country:'',
-                skype:'',
-                phone:'',
-                other_site:'',
-                is_secure:'',
+                is_secure: '',
+                country: '',
+                skype: '',
+                phone: '',
+                other_site: '',
+                is_secure: '',
                 loader: false
             },
             startDate: null,
@@ -126,8 +162,6 @@ class MediaContact extends Component {
     }
 
     onSubmit() {
-        const { selectedCountry, is_secure, phoneCode, selectedReference } = this.state;
-
         if (this.validator.allValid()) {
             this.setState({ loader: true })
 
@@ -151,9 +185,6 @@ class MediaContact extends Component {
 
             fetch(API_URL + "/users/add-coin-request", {
                 method: "post",
-                // headers: {
-                //     'Content-Type': 'application/json',
-                // },
                 body: formdata
             })
                 .then(response => response.json())
@@ -161,8 +192,8 @@ class MediaContact extends Component {
                     this.props.history.push('/thank-you');
                     this.openNotificationWithIcon('success', 'Success', responseData.message);
                     let fields = this.state.fields;
-                    Object.keys(fields).map(function(index){
-                        fields[index]=""
+                    Object.keys(fields).map(function (index) {
+                        fields[index] = ""
                     })
 
                     this.setState({
@@ -171,7 +202,6 @@ class MediaContact extends Component {
                     }, () => {
                         this.validator.hideMessages();
                         this.forceUpdate();
-
                     })
                 })
                 .catch(error => {
@@ -182,7 +212,6 @@ class MediaContact extends Component {
             this.forceUpdate();
         }
     }
-
 
     _changeSecurity = (isSecure) => {
         let fields = this.state.fields;
@@ -207,9 +236,9 @@ class MediaContact extends Component {
     _changeReference = (val) => {
         var isTextBox;
         if (val == 'Other') {
-            isTextBox=true;
+            isTextBox = true;
         } else {
-            isTextBox=false; 
+            isTextBox = false;
         }
         let fields = this.state.fields;
         if (val.trim() == "") {
@@ -217,16 +246,13 @@ class MediaContact extends Component {
         } else {
             fields['ref_site'] = val;
         }
-        this.setState({ fields,isTextBox });
-        
+        this.setState({ fields, isTextBox });
     }
-    _changeNumber(a,mob,code)
-    {
-        if(mob.trim!=="")
-        {
-            var temp = `+${code.dialCode}` ;
-            var mobile =  temp.concat(mob);;
 
+    _changeNumber(a, mob, code) {
+        if (mob.trim !== "") {
+            var temp = `+${code.dialCode}`;
+            var mobile = temp.concat(mob);;
             let fields = this.state.fields;
             fields['phone'] = mobile;
             this.setState({ fields });
@@ -251,11 +277,14 @@ class MediaContact extends Component {
                 <Navigation />
                 <Grey_wrap>
                     <ContainerContact>
+                        <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+                            <TokenTitle>List Your Token </TokenTitle>
+                        </div>
                         <Head>
-                            <Head_title>List Your Token</Head_title>
+                            {/* <Head_title>List Your Token</Head_title> */}
                             {/* <Subtitle>Here are the requirements to list your coin:</Subtitle> */}
                             <Head_desc>We speak to coin creators about struggles from their side of the crypto industry, and a common complaint is exchange access. Crypto, as a financial asset, is what gets the most attention but the beauty of crypto is the utility offered by tokens based on innovative ideas. We aim to help intelligent and motivated people like you focus on those ideas rather than the politics and logistics of proliferating your token. So, we made it easy:
-                                <ul style={{marginTop:"20px !important"}}>
+                                <ul style={{ marginTop: "20px !important" }}>
                                     <li>Complete the form below.</li>
                                     <li> We will review your information and reply with relevant questions and next steps within 24 hours.</li>
                                 </ul>
@@ -263,7 +292,7 @@ class MediaContact extends Component {
                             <Head_desc>
                                 Why should you want to work with us?
 
-                                <ul style={{marginTop:"20px !important"}}>
+                                <ul style={{ marginTop: "20px !important" }}>
                                     <li>We do not require you to pay us.</li>
                                     <li>We do not hold any of your tokens in reserve, escrow, hostage, etc.</li>
                                     <li>Our terms are simple, fair, and clear.</li>
@@ -478,7 +507,7 @@ class MediaContact extends Component {
                                             </Col>
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
-                                                    <IntlTelInputS onPhoneNumberChange={(a,b,c)=>this._changeNumber(a,b,c)} css={['intl-tel-input', 'form-control']} />
+                                                    <IntlTelInputS onPhoneNumberChange={(a, b, c) => this._changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
                                                 </Right_input>
                                             </Col>
                                         </Row>
@@ -519,7 +548,7 @@ class MediaContact extends Component {
                                                     {this.validator.message('ref_site', this.state.fields.ref_site, 'required', 'text-danger-validation')}
                                                     {!isTextBox ? <AddButton onClick={this.onSubmit}>SUBMIT</AddButton> : ''}
                                                 </Right_input>
-                                               
+
                                             </Col>
                                         </Row>
                                     </TwelveDiv>
@@ -538,7 +567,7 @@ class MediaContact extends Component {
                                                             {this.validator.message('other_site', this.state.fields.other_site, 'required', 'text-danger-validation')}
                                                             <AddButton onClick={this.onSubmit}>SUBMIT</AddButton>
                                                         </Right_input>
-                                                        
+
                                                     </Col>
                                                 </Row>
                                             </ThirteenDiv> : ''

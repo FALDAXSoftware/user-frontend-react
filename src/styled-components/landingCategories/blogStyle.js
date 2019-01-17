@@ -496,6 +496,7 @@ export const Inputsearch = styled(Search)`
 `
 export const Search_wrap = styled.div`
     text-align:right;
+    margin-top:35px;
 `
 export const Whole_news = styled(Whole_wrap)`
     margin-top:30px;

@@ -86,7 +86,7 @@ class SellTable extends Component {
                                                 <td>{element.my_size}</td>
                                                 <td>{element.amount}</td>
                                                 <td>{element.ask}</td>
-                                                <td>{element.total}</td>
+                                                <td>{element.total.toFixed(4)}</td>
                                             </tr>
                                         ))
 

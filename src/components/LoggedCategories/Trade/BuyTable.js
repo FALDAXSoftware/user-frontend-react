@@ -82,7 +82,7 @@ class BuyTable extends Component {
                                                 <td>{element.my_size}</td>
                                                 <td>{element.amount}</td>
                                                 <td>{element.bid}</td>
-                                                <td>{element.total}</td>
+                                                <td>{element.total.toFixed(4)}</td>
                                             </tr>
                                         ))
 

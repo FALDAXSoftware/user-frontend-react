@@ -14,8 +14,8 @@ const BorderedHistoryWrap = styled(History_wrap)`
     margin-right:30px;
     border:1px solid #d8d8d8;
 `
-const SideType= styled.td`
-    color:${props => props.type=="Sell"?"#f13239":"#4fb153"};
+const SideType = styled.td`
+    color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
 `
 const FontAwesomeIconA = styled(FontAwesomeIcon)``
 class HistoryTable extends Component {
@@ -84,18 +84,18 @@ class HistoryTable extends Component {
                         style={{ height: 300 }}>
                         <TableContent cellpadding="10px" cellspacing="0" border="0">
                             <tbody>
-                                {this.state.data.map((element,index) => (
+                                {this.state.data.map((element, index) => (
                                     <tr>
                                         <SideType type={element.side}>{element.side}</SideType>
                                         <td>{element.amount}</td>
-                                        {(index+1)<me.state.data.length?(element.fill_price>me.state.data[index+1].fill_price)
+                                        {(index + 1) < me.state.data.length ? (element.fill_price > me.state.data[index + 1].fill_price)
                                             ?
-                                            <td>{element.fill_price} <img style={{marginBottom:"3px"}} src="/images/up-right.png"/></td>:
-                                           <td>{element.fill_price} <img style={{marginBottom:"3px"}} src="/images/down-right.png"/></td>
-                                           :<td>{element.fill_price} </td>
+                                            <td>{element.fill_price} <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /></td> :
+                                            <td>{element.fill_price} <img style={{ marginBottom: "3px" }} src="/images/down-right.png" /></td>
+                                            : <td>{element.fill_price} </td>
                                         }
                                         <td>{element.time}</td>
-                                        <td>{element.total}</td>
+                                        <td>{element.total.toFixed(4)}</td>
                                     </tr>
                                 ))
 

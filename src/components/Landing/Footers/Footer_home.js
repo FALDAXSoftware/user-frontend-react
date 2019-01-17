@@ -244,7 +244,7 @@ class Footer_home extends Component {
         });
     }
     scrollMap() {
-        var elmnt = document.getElementById("block-world-map");
+        var elmnt = document.getElementById("map-scroll");
         if (elmnt !== null)
             elmnt.scrollIntoView();
         else
@@ -281,8 +281,8 @@ class Footer_home extends Component {
                             <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                                 <Footer_ul>
                                     <Footer_headers>Support</Footer_headers>
-                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        Open a Ticket
+                                    <li style={{ cursor: "pointer" }} >
+                                        <Footer_Link to="/open-ticket"> Open a Ticket</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         {/* <Footer_Link to="/faq"> */}
@@ -323,9 +323,9 @@ class Footer_home extends Component {
                                 </Icon_ul_1_header>
                                 {this.state.contactDetails.length !== 0 ?
                                     <Icon_ul_1>
-                                        {/* <LI>
+                                        <LI>
                                             <a target="_blank" href={contactDetails.fb_profile}><FontAwesomeIcons icon={faFacebook} color={true} /></a>
-                                        </LI> */}
+                                        </LI>
                                         <LI>
                                             <a target="_blank" href={contactDetails.twitter_profile}><FontAwesomeIcons icon={faTwitter} color={true} /></a>
                                         </LI>

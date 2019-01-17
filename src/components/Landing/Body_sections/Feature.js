@@ -187,7 +187,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Coin & Token Selection </Head1>
                       <Desc1 >
-                        FALDAX offers dozens of coins and tokens, with plans to include hundreds more. We will always do our part to ensure any token added to the platform is legitimate. Check out our <a href="javascript:void(0)" onClick={this.showComing} >Token Knowledgebase</a> for more details.<a href="/addcoin" target="_blank" > Click here</a> if you have created a token and would like to list it on FALDAX.
+                        FALDAX offers dozens of coins and tokens, with plans to include hundreds more. We will always do our part to ensure any token added to the platform is legitimate. Visit our Token Knowledgebase for more details. <a href="/addcoin" target="_blank" >Click here </a> if you have created a token and are interested in listing it on FALDAX.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -200,9 +200,9 @@ export default class Feature extends Component {
                 <div>
                   <Row1>
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
-                      <Head1> Propritetary Code </Head1>
+                      <Head1> Proprietary Code </Head1>
                       <Desc1 >
-                        Every line of code is unique, and we retain complete control over all of it. Nothing is shared, open-source, or purchased from anyone else. Many exchanges are operating on pre-built code and have no way to verify code security. Taking the extra time to build everything from the ground up allows us to say that we know what is in our code with confidence.
+                        FALDAX is built from scratch and we retain 100% ownership and control of all source code. Many exchanges operate using licensed code with no way to guarantee its integrity or add innovative features to enhance a trader’s experience. Without control of the code, it can be modified or even revoked by the company or individual it is licensed from. The extra time, effort, and money spent creating FALDAX translates to better security, more features, company stability, and the freedom to adapt quickly to the needs of our customers, regulatory, and market changes. We know what is in our code and stand by it with confidence.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -217,8 +217,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Advanced Charting Tools </Head1>
                       <Desc1 >
-
-                        Many traders are familiar with the incredible suite of charting tools by TradingView, and we have partnered with TradvingView to offer them here. You can use these tools by activating the Advanced UI.
+                        Traders are familiar with the incredible TradingView charting tools, and FALDAX is partnered with TradvingView to offer them as well. Access to these tools are available by selecting the 'Advanced UI' option.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -248,7 +247,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Portfolio Management </Head1>
                       <Desc1 >
-                        A good portfolio management system should condense detailed information into a form that gives you a clear picture of your position at a glance. Your FALDAX portfolio will not disappoint. In fact, we have some incredible features that will supercharge your portfolio in development scheduled to release shortly after launch. No exchange offers these features, and they are free for all of our customers. <a href="javascript:void(0)" onClick={this.showComing}> Click here </a> to stay informed about these and other exciting news.
+                        FALDAX offers a portfolio manager much like other serious exchanges. However, multiple unique features that will supercharge your portfolio are actively in development and are expected  to release shortly after launch. No exchange offers what our advanced portfolio manager will and of course, these features are available to everyone at no additional cost. <a href="https://newsletteremailaddresscapturepopup.faldax.com/" target="_blank"> Click here </a> to receive updates about these and other exciting innovations by FALDAX.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -263,7 +262,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Accounting </Head1>
                       <Desc1 >
-                        Many countries have strict tax reporting requirements regarding crypto. Even if that’s not true in your area, traders often want a copy of their trade history for their records. We make this easy by enabling our customers to export a detailed report of every transaction into an Excel, CSV or PDF format with a few simple clicks.
+                        Many countries impose strict tax reporting requirements for crypto transactions. Regardless, traders often want a copy of their trade history for their records anyway. FALDAX makes this easy by enabling customers to export a detailed report of every transaction into an Excel, CSV or PDF format.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -276,9 +275,9 @@ export default class Feature extends Component {
                 <div>
                   <Row1>
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
-                      <Head1> Best-In-Class Wallet Security </Head1>
+                      <Head1> Best-in-Class Wallet Security </Head1>
                       <Desc1 >
-                        We have partnered with BitGo to ensure the safety of your most popular digital assets.<a href="https://www.bitgo.com/info/resources#multi-currency" target="_blank"> Here is a list</a> of all tokens that BitGo will secure for you on behalf of FALDAX. For any tokens not listed, you can expect that we are going above and beyond to ensure their security as well.
+                        FALDAX is partnered with BitGo to ensure the security of most digital assets available on the exchange. <a href="https://www.bitgo.com/info/resources#multi-currency" target="_blank" > Click </a>here for a list of all tokens that BitGo secures on behalf of FALDAX. Tokens not listed there are secured by FALDAX on custom nodes per asset. You can rest assured that we are leveraging every technique, resource, and partner to ensure their security as well.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -293,7 +292,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Customizable Dashboard </Head1>
                       <Desc1 >
-                        No one sees your dashboard except for you, so organize it the way that you want. Everything is kept the way that you left it when you return.
+                        FALDAX allows traders to arrange their dashboard according to their unique preferences. The changes are stored server-side so the Dashboard will look the same no matter which computer a trader logs in from.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -308,7 +307,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Basic and Advanced UI </Head1>
                       <Desc1 >
-                        FALDAX exists because we believe every trader should have an incredible experience. The Basic UI offers just enough detail to buy and sell with confidence while the Advanced UI gives seasoned traders all of the information they want. Crypto is an incredible innovation, and we aim to make it accessible for everyone.
+                        A core component of the FALDAX mission is to grow the crypto industry. Accomplishing is this task is possible, in part, by removing artificial barriers to entry such as UI complexity. The FALDAX Basic UI is a non-intimidating view offering just enough information to buy and sell with confidence while the Advanced UI provides seasoned traders with every detail.  The incredible innovation of crypto is something to be celebrated, and FALDAX  aims to make it accessible for everyone.
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>
@@ -323,7 +322,7 @@ export default class Feature extends Component {
                     <Col_Left xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} xl={{ span: 16 }} xxl={{ span: 16 }}>
                       <Head1> Affiliate System </Head1>
                       <Desc1 >
-                        Generate a unique affiliate code within your profile and share it with friends and family. To thank you for helping us grow, you will receive a portion of any transaction fees we collect from their future trades, deposited directly into your wallet.
+                        FALDAX enables customers to generate unique affiliate links directly within their personal profile. When the link is shared and used to create a new account, a portion of any fees collected from transactions made on that account are automatically deposited into the wallet of the link’s owner. FALDAX does not impose limits on the amount income earned through the affiliate system. Start sharing your personal affiliate link today!
                         </Desc1>
                     </Col_Left>
                     <Col_Right lg={{ span: 8 }} xl={{ span: 8 }} xxl={{ span: 8 }}>

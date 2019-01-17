@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import 'antd/dist/antd.css';
 import { Row, Col, Checkbox, Radio, notification } from 'antd';
-import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Total, Check_wrap, ETH_wrap, BTC_wrap,Willpay,Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "../../../styled-components/loggedStyle/tradeStyle";
+import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Total, Check_wrap, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "../../../styled-components/loggedStyle/tradeStyle";
 
 import { globalVariables } from "../../../Globals";
 let { API_URL } = globalVariables;
@@ -13,8 +13,8 @@ class Market extends Component {
         super(props);
         this.state = {
             side: "Buy",
-            crypto: "XRP",
-            currency: "BTC",
+            crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
+            currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
             sellprice: 0.001,
             buyPrice: 0.002,
             amount: 0,
@@ -35,6 +35,17 @@ class Market extends Component {
                 required: true  // optional
             }
         });
+    }
+    componentWillReceiveProps(props, newProps) {
+        console.log(props)
+        if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
+            if (props.cryptoPair.crypto !== this.state.crypto) {
+                this.setState({ crypto: props.cryptoPair.crypto })
+            }
+            if (props.cryptoPair.currency !== this.state.currency) {
+                this.setState({ currency: props.cryptoPair.currency })
+            }
+        }
     }
     onChange(e) {
         var self = this;
@@ -183,7 +194,8 @@ class Market extends Component {
 function mapStateToProps(state) {
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
-        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : ""
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }

@@ -46,6 +46,43 @@ const ApplyBtn = styled(Button)`
     color: white;
     float: right;
 `
+const CareerTitle = styled.span`
+  font-size: 40px;
+  font-family: "Open sans";
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  color:${props => props.theme.mode == "dark" ? "white" : ""};
+  &:before {
+    content: '';
+    width: calc(50% - 140px);
+    height: 1px;
+    display: inline-block;
+    background: #827777;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 1px);
+  }
+  &:after {
+    content: '';
+    width: calc(50% - 140px);
+    height: 1px;
+    display: inline-block;
+    background: #827777;
+    position: absolute;
+    right: 0;
+    top: calc(50% - 1px);
+  }
+  @media(max-width:767px)
+  {
+    &:before {
+      display:none;
+    }
+    &:after {
+      display:none;
+    }
+  }
+`;
 
 class Careers extends Component {
     constructor(props) {
@@ -79,10 +116,9 @@ class Careers extends Component {
                 <Navigation />
                 <Grey_wrap>
                     <ContainerContact>
-                        <CareerDiv>
-                            <Head_span>Careers</Head_span>
-                            <hr />
-                        </CareerDiv>
+                        <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+                            <CareerTitle>Careers </CareerTitle>
+                        </div>
                         {/* <Career_desc>
                             <Desc_head>careers</Desc_head>
                             <Desc_body>{(this.state.careerDesc) ? ReactHtmlParser(this.state.careerDesc.content) : ''}</Desc_body>
