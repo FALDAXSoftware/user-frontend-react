@@ -61,8 +61,8 @@ class OrderTrade extends Component {
                             <tr>
                                 <th>SIDE</th>
                                 <th>AMOUNT</th>
-                                <th>PRICE</th>
-                                <th>FILLED</th>
+                                {self.props.pending !== 2 ? <th>PRICE</th> : <th>LIMIT PRICE</th>}
+                                {self.props.pending !== 2 ? <th>FILLED</th> : <th>STOP PRICE</th>}
                                 <th>FILL PRICE</th>
                                 <th>TYPE</th>
                                 <th>TIME</th>
@@ -80,14 +80,15 @@ class OrderTrade extends Component {
                                 {this.props.orderTradeData.length > 0
                                     ?
                                     this.props.orderTradeData.map(function (data) {
-                                        // console.log(data)
+                                        console.log(data)
                                         var date = moment.utc(data.created_at).local().format("MMM DD,YYYY HH:mm:ss");
+                                        var Filled = data.fix_quantity - data.quantity;
                                         return (
                                             <tr>
                                                 <SideType type={data.side}>{data.side}</SideType>
                                                 <td>{data.quantity}</td>
-                                                <td>{data.order_type == "Market" ? data.order_type : data.limit_price}</td>
-                                                <SideType type={data.side}>{data.fix_quantity - data.quantity}</SideType>
+                                                <td>{self.props.pending !== 2 ? (data.order_type == "Market" ? data.order_type : data.limit_price) : data.limit_price}</td>
+                                                <SideType type={data.side}>{self.props.pending !== 2 ? Filled.toFixed(4) : (data.stop_price !== undefined ? data.stop_price : 0)}</SideType>
                                                 <td>{data.fill_price}</td>
                                                 <td>{data.order_type}</td>
                                                 <td>{date}</td>

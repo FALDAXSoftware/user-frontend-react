@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import { Table } from 'react-bootstrap';
@@ -29,7 +30,30 @@ class HistoryTable extends Component {
         this.updateData = this.updateData.bind(this);
     }
     componentDidMount() {
-
+        var self = this;
+        if (this.props.cryptoPair !== undefined && this.props.cryptoPair !== "") {
+            this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
+                self.historyData();
+            })
+        }
+    }
+    componentWillReceiveProps(props, newProps) {
+        console.log(props)
+        var self = this;
+        if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
+            if (props.cryptoPair.crypto !== this.state.crypto) {
+                this.setState({ crypto: props.cryptoPair.crypto }, () => {
+                    self.historyData();
+                })
+            }
+            if (props.cryptoPair.currency !== this.state.currency) {
+                this.setState({ currency: props.cryptoPair.currency }, () => {
+                    self.historyData();
+                })
+            }
+        }
+    }
+    historyData() {
         let io = this.props.io
 
         io.sails.url = APP_URL;
@@ -47,6 +71,7 @@ class HistoryTable extends Component {
         });
     }
     updateData(data) {
+        console.log(data)
         const rows = [];
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
@@ -110,4 +135,13 @@ class HistoryTable extends Component {
     }
 }
 
-export default HistoryTable;
+function mapStateToProps(state) {
+    return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : ""
+        /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
+    })
+}
+
+export default connect(mapStateToProps)(HistoryTable);

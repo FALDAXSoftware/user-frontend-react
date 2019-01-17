@@ -26,6 +26,7 @@ import { globalVariables } from '../../../Globals';
 
 let { API_URL } = globalVariables;
 /* var socketIOClient = require('socket.io-client');
+        io.sails.url = API_URL;
 var sailsIOClient = require('sails.io.js');
 let io = sailsIOClient(socketIOClient); */
 const Search = Input.Search;
@@ -42,6 +43,7 @@ const Inputsearch = styled(Search)`
     width: 100%;
     height: 40px;
     >input
+    io.sails.url = API_URL;
     {
         background-color:${props => props.theme.mode == "dark" ? "#020e18" : ""};
     }
@@ -71,6 +73,7 @@ const columns = [{
     title: 'Volume',
     dataIndex: 'volume',
     defaultSortOrder: 'ascend',
+    render: text => text.toFixed(4),
     sorter: (a, b) => a.volume - b.volume
 },
 {
@@ -123,6 +126,7 @@ class Trade extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.statusChange = this.statusChange.bind(this);
         io = this.props.io;
+        io.sails.url = API_URL;
         this.onInsChange = this.onInsChange.bind(this);
         this.getInstrumentData = this.getInstrumentData.bind(this);
         this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
@@ -151,7 +155,7 @@ class Trade extends Component {
             self.props.cryptoCurrency(cryptoPair);
             self.getInstrumentData();
         });
-    }
+    } io
     getInstrumentData() {
         var self = this;
         // console.log("get instrument data");
