@@ -75,6 +75,8 @@ class OrderTrade extends Component {
                         style={{ height: 300 }}>
                         <TableContent cellpadding="10px" cellspacing="0" border="0">
                             <tbody>
+                                {console.log("----------->", this.props.orderTradeData)}
+
                                 {this.props.orderTradeData.length > 0
                                     ?
                                     this.props.orderTradeData.map(function (data) {

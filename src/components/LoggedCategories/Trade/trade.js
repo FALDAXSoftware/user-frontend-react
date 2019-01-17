@@ -164,7 +164,7 @@ class Trade extends Component {
                 name: element.name.split('-')[0],
                 price: element.last_price,
                 volume: element.volume,
-                change: element.percentChange
+                change: parseFloat(element.percentChange).toFixed(2) + "%"
             });
         }
         this.setState({
