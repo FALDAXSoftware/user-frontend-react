@@ -235,6 +235,7 @@ class History extends Component {
                 });
         }
     }
+    getSide
     render() {
         var self = this;
         return (
@@ -290,6 +291,7 @@ class History extends Component {
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {console.log(this.state.historyData)}
                                             {this.state.historyData.length > 0 ?
                                                 this.state.historyData.map(function (temp) {
                                                     console.log(temp)
@@ -324,7 +326,8 @@ class History extends Component {
 function mapStateToProps(state) {
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
-        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+        profileData: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : {}
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }
