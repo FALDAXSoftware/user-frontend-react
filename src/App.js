@@ -106,7 +106,7 @@ class App extends Component {
               } else {
                 return <Redirect
                   to={{
-                    pathname: '/',
+                    pathname: '/login',
                     state: { from: props.location },
                   }}
                 />

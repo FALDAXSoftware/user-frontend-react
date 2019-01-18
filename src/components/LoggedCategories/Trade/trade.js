@@ -20,7 +20,7 @@ import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCateg
 import { cryptoCurrency } from '../../../Actions/LoggedCat/tradeActions'
 import {
     Row_wrap, Left_div, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
-    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect,
+    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder
 } from "../../../styled-components/loggedStyle/tradeStyle";
 import { globalVariables } from '../../../Globals';
 
@@ -123,11 +123,13 @@ class Trade extends Component {
             orderTradeData: {},
             InsCurrency: "BTC",
             InsData: [],
+            userBal: {},
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.statusChange = this.statusChange.bind(this);
         io = this.props.io;
         io.sails.url = API_URL;
+        this.handleChange = this.handleChange.bind(this);
+        this.statusChange = this.statusChange.bind(this);
+        this.getUserBal = this.getUserBal.bind(this);
         this.onInsChange = this.onInsChange.bind(this);
         this.getInstrumentData = this.getInstrumentData.bind(this);
         this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
@@ -137,12 +139,14 @@ class Trade extends Component {
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
                 this.setState({ crypto: props.cryptoPair.crypto, prevRoom: props.cryptoPair.prevRoom }, () => {
-                    self.orderSocket(self.state.timePeriod, self.state.status)
+                    self.orderSocket(self.state.timePeriod, self.state.status);
+                    self.getUserBal();
                 })
             }
             if (props.cryptoPair.currency !== this.state.currency) {
                 this.setState({ currency: props.cryptoPair.currency, prevRoom: props.cryptoPair.prevRoom }, () => {
                     self.orderSocket(self.state.timePeriod, self.state.status)
+                    self.getUserBal();
                 })
             }
         }
@@ -155,6 +159,7 @@ class Trade extends Component {
         }
         this.orderSocket(this.state.timePeriod, this.state.status);
         this.getInstrumentData();
+        this.getUserBal();
     }
     onInsChange(e) {
         console.log(this.props)
@@ -287,6 +292,23 @@ class Trade extends Component {
         console.log(this.props)
         this.props.cryptoCurrency(cryptoPair)
     }
+    getUserBal() {
+        var URL;
+        console.log("getUserBal")
+        if (Object.keys(this.state.prevRoom).length > 0)
+            URL = `/socket/get-user-balance?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`
+        else
+            URL = `/socket/get-user-balance?room=${this.state.crypto}-${this.state.currency}`
+        io.socket.get(URL, (body, JWR) => {
+
+
+            if (body.status == 200) {
+                let res = body.data;
+                console.log(res);
+                this.setState({ userBal: res })
+            }
+        });
+    }
     render() {
         var self = this;
         return (
@@ -324,9 +346,9 @@ class Trade extends Component {
                                 <Col md={24} lg={10}>
                                     <Right_div1>
                                         <Tabs_right defaultActiveKey="1" onChange={this.callback}>
-                                            <TabPane tab="Market" key="1"><Market /></TabPane>
-                                            <TabPane tab="Limit" key="2"><Limit /></TabPane>
-                                            <TabPane tab="Stop-Limit" key="3"><StopLimit /></TabPane>
+                                            <TabPane tab="Market" key="1"><Market userBal={this.state.userBal} /></TabPane>
+                                            <TabPane tab="Limit" key="2"><Limit userBal={this.state.userBal} /></TabPane>
+                                            <TabPane tab="Stop-Limit" key="3"><StopLimit userBal={this.state.userBal} /></TabPane>
                                         </Tabs_right>
                                     </Right_div1>
                                 </Col>
@@ -347,9 +369,9 @@ class Trade extends Component {
                                     </Left_div>
                                 </Col>
                                 <Col md={24} lg={12}>
-                                    <Right_div1>
+                                    <Right_div>
                                         <DepthChart io={io} />
-                                    </Right_div1>
+                                    </Right_div>
                                 </Col>
                             </Row>
                         </Row_wrap2>
@@ -367,9 +389,9 @@ class Trade extends Component {
                             <Row>
                                 <Col span={24}>
                                     <Left_div2>
-                                        <div style={{ margin: "0px" }}>
-                                            <Instru>MY ORDERS AND TRADES</Instru>
-                                            <div style={{ display: "inline-block", float: "right" }}>
+                                        <Orderwrap>
+                                            <InstruOrder>MY ORDERS AND TRADES</InstruOrder>
+                                            <div style={{ display: "inline-flex", marginLeft: "auto", alignItems: "center" }}>
                                                 <Select labelInValue defaultValue={{ key: '1' }} style={{ width: 120, marginRight: "30px" }} onChange={this.handleChange}>
                                                     <Option value="1">1 month</Option>
                                                     <Option value="3">3 month</Option>
@@ -386,7 +408,7 @@ class Trade extends Component {
                                                     </FIAT>
                                                 </FIAT_wrap2>
                                             </div>
-                                        </div>
+                                        </Orderwrap>
                                         <OrderTrade pending={this.state.status} cancelOrder={(id, side, type) => { this.cancelOrder(id, side, type) }} orderTradeData={this.state.orderTradeData} />
                                     </Left_div2>
                                 </Col>
