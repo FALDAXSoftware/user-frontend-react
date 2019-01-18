@@ -14,6 +14,7 @@ import WalletDetails from "../src/components/LoggedCategories/Wallet/WalletDetai
 import Trade from "../src/components/LoggedCategories/Trade/trade"
 import History2 from "../src/components/LoggedCategories/History/history"
 import Dashboard from "../src/components/LoggedCategories/Dashboard/dashboard"
+import OpenTicket from "./components/Landing_categories/OpenTicket";
 import { globalVariables } from './Globals';
 let { API_URL } = globalVariables;
 var socketIOClient = require('socket.io-client');
@@ -56,6 +57,12 @@ const routes = [
     exact: false,
     path: "/dashboard",
     component: () => (<Dashboard io={io} />),
+    io: io
+  },
+  {
+    exact: false,
+    path: "/open-ticket",
+    component: () => (<OpenTicket io={io} />),
     io: io
   }
 ];
