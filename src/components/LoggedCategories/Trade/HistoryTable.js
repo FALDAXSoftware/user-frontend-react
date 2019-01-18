@@ -57,8 +57,14 @@ class HistoryTable extends Component {
         let io = this.props.io
 
         io.sails.url = APP_URL;
-
-        io.socket.get("/socket/get-trade-history?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
+        var URL;
+        if (this.props.cryptoPair.prevRoom !== undefined && Object.keys(this.props.cryptoPair.prevRoom).length > 0) {
+            URL = `/socket/get-trade-history?prevRoom=${this.props.cryptoPair.prevRoom.crypto}-${this.props.cryptoPair.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`
+        }
+        else {
+            URL = `/socket/get-trade-history?room=${this.state.crypto}-${this.state.currency}`
+        }
+        io.socket.get(URL, (body, JWR) => {
 
             if (body.status == 200) {
                 let res = body.data;
