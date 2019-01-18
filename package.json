@@ -45,6 +45,7 @@
     "react-scripts": "1.1.5",
     "react-simple-maps": "^0.12.1",
     "react-slick": "^0.23.1",
+    "react-swipe-events": "^1.0.3",
     "react-user-avatar": "^1.10.0",
     "react-wow": "^1.0.0",
     "reactjs-localstorage": "^0.0.7",

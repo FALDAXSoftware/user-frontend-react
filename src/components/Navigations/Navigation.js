@@ -1,7 +1,7 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Layout, Menu, Modal, Icon } from 'antd';
+import { Row, Col, Layout, Menu, Modal, Icon, Button } from 'antd';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -16,6 +16,7 @@ import Afterlog from "./Afterlog"
 import { Logout } from '../../Actions/Auth';
 import Reset_Form from "../Landing/User_forms/Reset_Form"
 import ComingSoon from '../ComingSoon';
+import ReactSwipeEvents from 'react-swipe-events'
 import {
     FaldaxLogo, FaldaxWhite, WhiteLogo, Faldax, FaldaxLogin, FaldaxLoginText, Wallpaper
 } from "../../Constants/images";
@@ -244,15 +245,22 @@ const LOG = styled.span`
         text-decoration:underline;
     }
 `
+const ButtonLog = styled(Button)`
+    background-color: white;
+    border-color: #0f477b;
+    color: #0f477b;
+    border-radius: 20px;
+    font-size: 13px;
+    font-family: "Open sans";
+    font-weight: bold;
+    padding: 7px 20px 8px;
+    height: auto;
+`
 const Fin_sign = styled.a`
     text-decoration: none;
     font-size: 18px;
-    /* display: block; */
-    /* float: right; */
     display: inline-flex;
-    float: right;
-    margin-top: 15px;
-    /* justify-content: flex-end; */
+    margin-left:auto;
     transition: 0.5s;
     line-height: 1.5;
     color: white;
@@ -260,7 +268,6 @@ const Fin_sign = styled.a`
 const Fin_log = styled.a`
 text-decoration: none;
 font-size: 18px;
-/* display: block; */
 transition: 0.5s;
 line-height: 1.5;
 color: white;
@@ -270,7 +277,8 @@ const Fin_div = styled.div`
     display:none;
     @media(max-width:480px)
     {
-        display:block;
+        display:flex;
+        align-items:center;
     }
 `
 const SIGN = styled.span`
@@ -308,6 +316,19 @@ const NavLink = styled(Link)`
     }
 `
 const ProfileLinkContainer = styled.div`
+    >a
+    {
+        padding: 8px 32px;
+        text-decoration: none;
+        font-size: 18px;
+        display: block;
+        transition: 0.5s;
+        line-height: 1.5;
+        color:white;
+    }
+    >a:hover{
+        color:#1890ff !important;
+    }
     @media(min-width:361px)
     {
         display: none;
@@ -392,6 +413,7 @@ class Navigation extends Component {
         });
     }
     componentWillReceiveProps(props, newProps) {
+        console.log("LOGIN PROPS", props)
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
                 if (props.theme == false)
@@ -400,8 +422,22 @@ class Navigation extends Component {
                     this.setState({ faldax: FaldaxWhite, faldaxLogo: WhiteLogo })
             }
         }
+        if (props.location.pathname !== undefined)
+            if (props.location.pathname == "/login") {
+                if (props.location.hash == "#openTicket") {
+                    console.log("#openTicket")
+                    this.setState({ modal: 0, visible: true });
+                }
+            }
     }
     componentDidMount() {
+        if (this.props.location.pathname !== undefined)
+            if (this.props.location.pathname == "/login") {
+                if (this.props.location.hash == "#openTicket") {
+                    console.log("#openTicket")
+                    this.setState({ modal: 0, visible: true });
+                }
+            }
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme == false)
@@ -477,63 +513,66 @@ class Navigation extends Component {
                             <Beforelog {...this.props} dispModal={(pressed) => this.dispModal(pressed)} openNav={() => this.openNav()} />
                         }
                     </Right_div>
-                    <SideNav id="mySidenav">
-                        <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
-                        {!this.props.isLoggedIn &&
-                            <Fin_div>
-                                <Fin_log onClick={this.dispModal.bind(this, "login")}>Login</Fin_log>
-                                <Fin_sign onClick={this.dispModal.bind(this, "signup")}>Signup</Fin_sign>
-                            </Fin_div>
-                        }
-                        <Link to="/">Home</Link>
-                        {/* <a onClick={this.showComing} href="#">Features</a> */}
-                        <Link to="/about-us">About</Link>
-                        <a onClick={this.showComing} href="#">Security</a>
-                        <Link to="/news">News</Link>
-                        <Link to="/contactus">Contact</Link>
-                        <Link to="/addcoin">List Your Token</Link>
-                        <a onClick={this.showComing} href="#">Exchange</a>
-                        <CarLink to="/careers">Careers</CarLink>
-                        {/* <Why> Language </Why> */}
-                        <a>
-                            <DropMenu mode="inline">
-                                <SubMenuNav key="sub1" title={'Information'}>
-                                    <Menu.Item key="9"><Link to="/about-us">About Us</Link></Menu.Item>
-                                    <Menu.Item key="10"><Link to="/contactus">Contact Us</Link></Menu.Item>
-                                    <Menu.Item key="11"><Link to="/mediacontact">Media Contact</Link></Menu.Item>
-                                    <Menu.Item key="12"><Link to="/blogs">Blog</Link></Menu.Item>
-                                    <Menu.Item key="13"><Link to="/fees">Fees</Link></Menu.Item>
-                                </SubMenuNav>
-                            </DropMenu>
-                        </a>
-                        <a>
-                            <DropMenu mode="inline">
-                                <SubMenuNav key="sub2" title={'Support'}>
-                                    <Menu.Item key="9"><a onClick={this.showComing} href="#">Open a Ticket</a></Menu.Item>
-                                    <Menu.Item key="10"><a onClick={this.showComing} href="#">FAQ</a></Menu.Item>
-                                    <Menu.Item key="11"><a onClick={this.showComing} href="#">API Documentation</a></Menu.Item>
-                                    <Menu.Item key="12"><Link to="/addcoin">List Your Token</Link></Menu.Item>
-                                    <Menu.Item key="12"><Link to="/news">News</Link></Menu.Item>
-                                </SubMenuNav>
-                            </DropMenu>
-                        </a>
-                        <a>
-                            <DropMenu mode="inline">
-                                <SubMenuNav key="sub3" title={'Legal & Technical'}>
-                                    <Menu.Item key="9"><Link to="/policy">Policies</Link></Menu.Item>
-                                    <Menu.Item key="10"><a onClick={this.showComing} href="#">Service Availability</a></Menu.Item>
-                                    <Menu.Item key="11"><a onClick={this.showComing} href="#">Security</a></Menu.Item>
-                                </SubMenuNav>
-                            </DropMenu>
-                        </a>
-
-                        {this.props.isLoggedIn &&
-                            <ProfileLinkContainer>
-                                <a onClick={() => this.props.history.push('/editProfile')}>Profile</a>
-                                <a onClick={this.logout.bind(this)}>Logout</a>
-                            </ProfileLinkContainer>
-                        }
-                    </SideNav>
+                    <ReactSwipeEvents
+                        onSwipedRight={() => { this.closeNav() }}
+                    >
+                        <SideNav id="mySidenav">
+                            <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
+                            {!this.props.isLoggedIn &&
+                                <Fin_div>
+                                    <Fin_log onClick={this.dispModal.bind(this, "login")}><ButtonLog type="primary">Login</ButtonLog></Fin_log>
+                                    <Fin_sign onClick={this.dispModal.bind(this, "signup")}><ButtonLog type="primary">Signup</ButtonLog></Fin_sign>
+                                </Fin_div>
+                            }
+                            <Link to="/">Home</Link>
+                            {/* <a onClick={this.showComing} href="#">Features</a> */}
+                            <Link to="/about-us">About</Link>
+                            <a onClick={this.showComing} href="#">Security</a>
+                            <Link to="/news">News</Link>
+                            <Link to="/contactus">Contact</Link>
+                            <Link to="/addcoin">List Your Token</Link>
+                            <a onClick={this.showComing} href="#">Exchange</a>
+                            {this.props.isLoggedIn ? <CarLink to="/careers">Careers</CarLink> : ""}
+                            {/* <Why> Language </Why> */}
+                            <a>
+                                <DropMenu mode="inline">
+                                    <SubMenuNav key="sub1" title={'Information'}>
+                                        <Menu.Item key="9"><Link to="/about-us">About Us</Link></Menu.Item>
+                                        <Menu.Item key="10"><Link to="/contactus">Contact Us</Link></Menu.Item>
+                                        <Menu.Item key="11"><Link to="/mediacontact">Media Contact</Link></Menu.Item>
+                                        <Menu.Item key="12"><Link to="/blogs">Blog</Link></Menu.Item>
+                                        <Menu.Item key="13"><Link to="/fees">Fees</Link></Menu.Item>
+                                    </SubMenuNav>
+                                </DropMenu>
+                            </a>
+                            <a>
+                                <DropMenu mode="inline">
+                                    <SubMenuNav key="sub2" title={'Support'}>
+                                        <Menu.Item key="9"><a onClick={this.showComing} href="#">Open a Ticket</a></Menu.Item>
+                                        <Menu.Item key="10"><a onClick={this.showComing} href="#">FAQ</a></Menu.Item>
+                                        <Menu.Item key="11"><a onClick={this.showComing} href="#">API Documentation</a></Menu.Item>
+                                        <Menu.Item key="12"><Link to="/addcoin">List Your Token</Link></Menu.Item>
+                                        <Menu.Item key="12"><Link to="/news">News</Link></Menu.Item>
+                                    </SubMenuNav>
+                                </DropMenu>
+                            </a>
+                            <a>
+                                <DropMenu mode="inline">
+                                    <SubMenuNav key="sub3" title={'Legal & Technical'}>
+                                        <Menu.Item key="9"><Link to="/policy">Policies</Link></Menu.Item>
+                                        <Menu.Item key="10"><a onClick={this.showComing} href="#">Service Availability</a></Menu.Item>
+                                        <Menu.Item key="11"><a onClick={this.showComing} href="#">Security</a></Menu.Item>
+                                    </SubMenuNav>
+                                </DropMenu>
+                            </a>
+                            {this.props.isLoggedIn &&
+                                <ProfileLinkContainer>
+                                    <Link to="/editProfile">Profile</Link>
+                                    <a onClick={this.logout.bind(this)}>Logout</a>
+                                </ProfileLinkContainer>
+                            }
+                        </SideNav>
+                    </ReactSwipeEvents>
                     <div>
                         <Modal
                             visible={this.state.visible}
@@ -582,7 +621,7 @@ class Navigation extends Component {
                     </div>
                     <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
                 </Header_main>
-            </div>
+            </div >
         );
     }
 }

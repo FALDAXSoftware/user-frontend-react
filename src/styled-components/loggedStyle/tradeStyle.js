@@ -19,6 +19,7 @@ export const Left_div = styled.div`
     padding-bottom: 30px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
+    height:640px;
     @media(max-width:991px)
     {
         margin-right:0px;
@@ -42,6 +43,7 @@ export const Left_div2 = styled(Left_div)`
     padding-bottom: 30px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
+    height:auto;
 `
 export const Instru = styled.p`
     display:inline-block;
@@ -81,7 +83,7 @@ export const FIAT_wrap2 = styled.div`
 `
 export const FIAT = styled.div`
     display:inline-block;
-    margin-right:25px;
+    margin-right:30px;
 `
 
 export const RadioSelect = styled(RadioGroup)`
@@ -112,6 +114,7 @@ export const Right_div = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
+    height:640px;
 `
 export const Right_div1 = styled(Right_div)`
     height:700px;
@@ -406,6 +409,14 @@ export const TableContent = styled(CustomTable)`
 
 
 /* My orders and Trade */
+export const InstruOrder = styled(Instru)`
+    margin-bottom:0px !important;
+`
+export const Orderwrap = styled.div`
+display: flex;
+align-items: center;
+margin-bottom:20px;
+`
 export const Dropwrap = styled.div`
     display:inline-block;
     width: 165px;

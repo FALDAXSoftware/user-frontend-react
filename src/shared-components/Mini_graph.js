@@ -1,6 +1,7 @@
 /* In-build packages */
 import React from 'react';
 import { Row, Col } from 'antd';
+import { connect } from "react-redux";
 import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
 import { globalVariables } from '../Globals';
@@ -94,6 +95,16 @@ class Mini_graph extends React.Component {
     }
     componentDidMount() {
         var self = this;
+<<<<<<< HEAD
+=======
+        if (this.props.cryptoPair !== undefined && this.props.cryptoPair !== "") {
+            this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
+                self.historyData();
+            })
+        }
+    }
+    miniGraph() {
+>>>>>>> 1a67a3c3f84a4810c73b8b96f3de908b0792b077
         io.socket.get("/socket/get-card-data?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
 
 
@@ -105,6 +116,22 @@ class Mini_graph extends React.Component {
         io.socket.on("cardDataUpdate", function (data) {
             self.updateGraph(data);
         });
+    }
+    componentWillReceiveProps(props, newProps) {
+        console.log(props)
+        var self = this;
+        if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
+            if (props.cryptoPair.crypto !== this.state.crypto) {
+                this.setState({ crypto: props.cryptoPair.crypto }, () => {
+                    self.miniGraph();
+                })
+            }
+            if (props.cryptoPair.currency !== this.state.currency) {
+                this.setState({ currency: props.cryptoPair.currency }, () => {
+                    self.miniGraph();
+                })
+            }
+        }
     }
     updateGraph(data) {
         var self = this;
@@ -161,4 +188,14 @@ class Mini_graph extends React.Component {
     }
 }
 
-export default Mini_graph;
+
+function mapStateToProps(state) {
+    return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : ""
+        /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
+    })
+}
+
+export default connect(mapStateToProps)(Mini_graph);

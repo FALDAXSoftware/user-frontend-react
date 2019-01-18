@@ -9,6 +9,7 @@ import 'antd/dist/antd.css';
 /* Components */
 import Afterlog from "./Afterlog"
 import { Logout } from '../../Actions/Auth';
+import ReactSwipeEvents from 'react-swipe-events'
 import { globalVariables } from "../../Globals";
 import ComingSoon from '../ComingSoon';
 import { FaldaxLogo, FaldaxWhite, WhiteLogo, Faldax, Wallpaper } from "../../Constants/images";
@@ -71,7 +72,7 @@ const Menu_item = styled(Menu.Item)`
     }
 `
 const NAV = styled.span`
-    color:${props => props.theme.mode="dark"?"white":""};
+    color:${props => props.theme.mode = "dark" ? "white" : ""};
 `
 const FALDAX_LOGO = styled.img`
     padding-left:22px;
@@ -101,7 +102,7 @@ const SideNav = styled.div`
         display: block;
         transition: 0.5s;
         line-height: 1.5;
-        color:white;
+        color:white !important;
         cursor:pointer;
     }
     @media(min-width: 1200px)
@@ -118,7 +119,7 @@ const Profile = styled.a`
         display: none !important;
     }
 `
-const LogoutStyle = styled.a`
+const LogoutStyle = styled.span`
     @media(min-width: 361px)
     {
         display: none !important;
@@ -140,6 +141,21 @@ const LogNav = styled.span`
     color: ${props => props.theme.mode == "dark" ? "white" : "black"} !important;
     &:hover{
         color:#1890ff !important;
+    }
+`
+const CarLink = styled(Link)`
+    color:white !important;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    transition: 0.5s;
+    line-height: 1.5;
+    color:white !important;
+    cursor:pointer;
+    text-transform:uppercase;
+    @media(min-width:671px)
+    {
+        display:none !important;
     }
 `
 class LoggedNavigation extends Component {
@@ -242,7 +258,7 @@ class LoggedNavigation extends Component {
                 })
                 .catch(error => { /* console.log(error) */ })
         } else {
-            
+
         }
     }
     render() {
@@ -269,15 +285,20 @@ class LoggedNavigation extends Component {
                 <RightCol>
                     <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />
                 </RightCol>
-                <SideNav id="mySidenav2">
-                    <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
-                    <Profile> PROFILE </Profile>
-                    <span onClick={this.showComing}>DASHBOARD</span>
-                    <span onClick={this.showComing}>TRADE</span>
-                    <span onClick={this.showComing}>WALLET</span>
-                    <span onClick={this.showComing}>HISTORY</span>
-                    <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
-                </SideNav>
+                <ReactSwipeEvents
+                    onSwipedRight={() => { this.closeNav() }}
+                >
+                    <SideNav id="mySidenav2">
+                        <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
+                        <LogoutStyle to="/editProfile">PROFILE</LogoutStyle>
+                        <span onClick={this.showComing}>DASHBOARD</span>
+                        <span onClick={this.showComing}>TRADE</span>
+                        <span onClick={this.showComing}>WALLET</span>
+                        <span onClick={this.showComing}>HISTORY</span>
+                        <span><CarLink to="/careers">Careers</CarLink></span>
+                        <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
+                    </SideNav>
+                </ReactSwipeEvents>
                 <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
             </Header_main>
         );
@@ -287,7 +308,7 @@ class LoggedNavigation extends Component {
 function mapStateToProps(state) {
     return ({
         profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
-        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme :""
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
     });
 }
 const mapDispatchToProps = dispatch => ({
