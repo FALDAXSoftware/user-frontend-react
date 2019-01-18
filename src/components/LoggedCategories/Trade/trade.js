@@ -80,7 +80,7 @@ const columns = [{
     title: 'Change',
     dataIndex: 'change',
     defaultSortOrder: 'ascend',
-    render: text => text.toFixed(4),
+    render: text => parseFloat(text).toFixed(4),
     sorter: (a, b) => a.change - b.change
 }];
 
@@ -200,7 +200,7 @@ class Trade extends Component {
                 name: element.name.split('-')[0],
                 price: element.last_price,
                 volume: element.volume,
-                change: element.percentChange
+                change: parseFloat(element.percentChange).toFixed(2) + "%"
             });
         }
         this.setState({
@@ -334,7 +334,7 @@ class Trade extends Component {
                                         <InstruTable>
                                             <TableIns
                                                 InsCurrency onRow={(record, rowIndex) => {
-                                                    console.log(record, rowIndex)
+                                                    // console.log(record, rowIndex)
                                                     return {
                                                         onClick: (event) => { self.currencyPair(record.name) },       // click row
                                                     };

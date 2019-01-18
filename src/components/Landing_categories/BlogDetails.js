@@ -183,26 +183,26 @@ class BlogDetails extends Component {
                                                         </Row>
                                                     </Sub_wrap_right>
                                         </Main_Wrap> */}
-                                    <SocialHead>
+                                    {/* <SocialHead>
                                         <PostHead_span>Social Links</PostHead_span>
                                     </SocialHead>
                                     {contactDetails !== null ? <Social_Li>
-                                        {/* <LI1>
+                                        <LI1>
                                             <a target="_blank" href={contactDetails.fb_profile}><img width="40" height="40" src={FBIcon} /></a>
-                                        </LI1> */}
+                                        </LI1>
                                         <LI2>
                                             <a target="_blank" href={contactDetails.twitter_profile}><img width="40" height="40" src={TweeterIcon} /></a>
                                         </LI2>
                                         <LI2>
                                             <a target="_blank" href={contactDetails.google_profile}><img width="40" height="40" src={GoogleIcon} /></a>
                                         </LI2>
-                                        {/* <LI2>
+                                        <LI2>
                                             <a target="_blank" href={contactDetails.youtube_profile}><img width="40" height="40" src={YoutubeIcon} /></a>
-                                        </LI2> */}
+                                        </LI2>
                                         <LI2>
                                             <a target="_blank" href={contactDetails.linkedin_profile}><img width="40" height="40" src={LinkedinIcon} /></a>
                                         </LI2>
-                                    </Social_Li> : ""}
+                                    </Social_Li> : ""} */}
                                 </Right_Col>
                             </Row>
                         </BD_mainWrap>

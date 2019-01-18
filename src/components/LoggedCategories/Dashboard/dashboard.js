@@ -175,6 +175,7 @@ const data = [
 ];
 const SideType = styled.td`
     color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
+    font-weight: 600;
 `
 const activityColumns = [{
     title: 'Date',
@@ -190,10 +191,12 @@ const activityColumns = [{
     title: 'Amount',
     dataIndex: 'amount',
     key: 'amount',
+    className: "amount"
 }, {
     title: 'Completed',
     key: 'completed',
     dataIndex: 'completed',
+    className: "progress-bar-container",
     render: completed => (
         <Progress percent={completed} />
     ),
@@ -202,18 +205,22 @@ const portfolioColumn = [{
     title: 'Coin',
     dataIndex: 'coin',
     key: 'coin',
+    className: "coin"
 }, {
     title: 'Amount',
     dataIndex: 'amount',
     key: 'amount',
+    className: "amount"
 }, {
     title: 'Value',
     dataIndex: 'value',
     key: 'value',
+    className: "value"
 }, {
     title: 'Change',
     key: 'change',
     dataIndex: 'change',
+    className: 'change'
 }];
 let io = null;
 class Dashboard extends Component {
@@ -224,6 +231,9 @@ class Dashboard extends Component {
             news: [],
             hasMoreNews: true,
             portfolioData: [],
+            total: 0,
+            diffrence: 0,
+            userFiat: "USD",
         }
         // console.log("====>", this.props);
 
@@ -293,15 +303,19 @@ class Dashboard extends Component {
                 console.log(responseData);
                 let portfolioData = [];
                 if (responseData.status == 200) {
-                    responseData.data.map(element => {
+                    let userFiat = responseData.data.fiat;
+                    responseData.data.portfolioData.map(element => {
                         portfolioData.push({
                             coin: element.name,
                             amount: element.amount.toFixed(4) + " " + element.symbol,
-                            value: "$ " + element.average_price,
+                            value: element.average_price + ' ' + userFiat,
                             change: element.percentchange + "%"
                         });
                     });
                     self.setState({
+                        total: responseData.data.total,
+                        diffrence: responseData.data.diffrence,
+                        userFiat: userFiat,
                         portfolioData: portfolioData
                     });
                 }
@@ -365,7 +379,7 @@ class Dashboard extends Component {
                                                     <span>ACTIVITY</span>
                                                 </Topic>
                                                 <Act_div>
-                                                    <ActTable scroll={{ y: 320 }} pagination={false} columns={activityColumns} dataSource={this.state.activityData} />
+                                                    <ActTable scroll={{ y: 320 }} pagination={false} columns={activityColumns} dataSource={this.state.activityData} className="activity-table" />
                                                 </Act_div>
                                             </Lleft>
                                         </Col>
@@ -375,19 +389,19 @@ class Dashboard extends Component {
                                                     <span>PORTFOLIO</span>
                                                 </Topic>
                                                 <High_low>
-                                                    <Left_hl>$465,454</Left_hl>
-                                                    <Right_hl>^$12,342</Right_hl>
+                                                    <Left_hl>{this.state.total} {this.state.userFiat}</Left_hl>
+                                                    <Right_hl>^{this.state.diffrence} {this.state.userFiat}</Right_hl>
                                                 </High_low>
                                                 <Act_div>
-                                                    <ActTable pagination={false} columns={portfolioColumn} dataSource={this.state.portfolioData} />
+                                                    <ActTable scroll={{ y: 250 }} pagination={false} columns={portfolioColumn} dataSource={this.state.portfolioData} className="portfolio-table" />
                                                 </Act_div>
                                             </Rright>
                                         </Col>
                                     </Row>
                                 </ActPortWrap>
-                                <Rise_fall>
+                                {/* <Rise_fall>
                                     <RiseTable />
-                                </Rise_fall>
+                                </Rise_fall> */}
                                 <Newsdiv>
                                     <News>NEWS</News>
                                     <Newslist>
