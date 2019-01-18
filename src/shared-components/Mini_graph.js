@@ -95,16 +95,14 @@ class Mini_graph extends React.Component {
     }
     componentDidMount() {
         var self = this;
-<<<<<<< HEAD
-=======
         if (this.props.cryptoPair !== undefined && this.props.cryptoPair !== "") {
             this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
-                self.historyData();
+                self.miniGraph();
             })
         }
     }
     miniGraph() {
->>>>>>> 1a67a3c3f84a4810c73b8b96f3de908b0792b077
+        var self = this;
         io.socket.get("/socket/get-card-data?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
 
 
