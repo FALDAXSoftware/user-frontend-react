@@ -1,4 +1,4 @@
-import { Row, Col, Tabs, Button, Table, Input, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio } from 'antd';
+import { Row, Col, Tabs, Button, Table, Input, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio, Select } from 'antd';
 import styled from 'styled-components';
 import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
 
@@ -80,6 +80,11 @@ export const FIAT_wrap = styled.div`
 export const FIAT_wrap2 = styled.div`
     display: inline-block;
     float: right;
+    & .ant-radio-button-wrapper
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
 `
 export const FIAT = styled.div`
     display:inline-block;
@@ -409,40 +414,50 @@ export const TableContent = styled(CustomTable)`
 
 
 /* My orders and Trade */
+export const Selectmonth = styled(Select)`
+    & .ant-select-selection
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+    & .anticon
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+`
 export const InstruOrder = styled(Instru)`
-    margin-bottom:0px !important;
+    margin-bottom: 0px!important;
 `
 export const Orderwrap = styled.div`
 display: flex;
 align-items: center;
-margin-bottom:20px;
+margin-bottom: 20px;
 `
 export const Dropwrap = styled.div`
-    display:inline-block;
-    width: 165px;
-    margin-right:20px;
-    @media(max-width:456px)
-    {
-        width: 80px;
-    }
+display: inline - block;
+width: 165px;
+margin-right:20px;
+@media(max-width: 456px)
+{
+    width: 80px;
+}
 
 `
 export const ButtonToolbarOne = styled(ButtonToolbar)`
-    >.btn-group
-    {
-        width:100%;
+    >.btn-group{
+    width: 100 %;
     }
 
 `
 export const DropdownButtonOne = styled(DropdownButton)`
-    background-color: ${props => props.theme.mode == "dark" ? "#01090f" : ""};
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
-    width:100%;
-    text-align:left;
+background-color: ${ props => props.theme.mode == "dark" ? "#01090f" : ""};
+color: ${ props => props.theme.mode == "dark" ? "white" : ""};
+width: 100 %;
+text-align: left;
     >.caret
-    {
-        float:right;
-        margin-top: 8px;
-    }
+{
+    float: right;
+    margin-top: 8px;
+}
 
 `
