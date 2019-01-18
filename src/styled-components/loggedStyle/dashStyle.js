@@ -38,7 +38,7 @@ export const Topic = styled.div`
     font-size: 14px;
     font-family: "Open Sans";
     color: rgb( 127, 127, 127 );
-    font-weight: bold; 
+    font-weight: 700; 
     padding-top:25px;
     padding-left:25px;
 `

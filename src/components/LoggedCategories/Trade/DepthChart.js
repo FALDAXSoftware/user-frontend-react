@@ -77,6 +77,8 @@ class DepthChart extends Component {
         this.updateGraph = this.updateGraph.bind(this);
     }
     componentDidMount() {
+        console.log("did mount");
+
         io.socket.get("/socket/get-depth-chart-data?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
 
 
@@ -87,52 +89,78 @@ class DepthChart extends Component {
         });
     }
     updateGraph(data) {
-        console.log(data);
+        console.log("depth", data.buyDetails, data.sellDetails);
         var self = this;
-        var askData = [];
-        var bidData = [];
+        let askData = [];
+        let bidData = [];
         for (let index = 0; index < data.buyDetails.length; index++) {
-            const element = data.buyDetails[index];
+            let element = data.buyDetails[index];
             bidData.push({
                 x: element.price,
                 y: element.quantity
             });
 
         }
-        for (let index = 0; index < data.sellDetails.length; index++) {
-            const element = data.sellDetails[index];
+        for (let sellIndex = 0; sellIndex < data.sellDetails.length; sellIndex++) {
+            let element = data.sellDetails[sellIndex];
             askData.push({
                 x: element.price,
-                y: element.quantity
+                y: element.quantitycardDataUpdate
             });
         }
-        var askDepthTotal = 0;
-        var bidDepthTotal = 0;
-        for (var i = 0; i < askData.length; i++) {
+        let askDepthTotal = 0;
+        let bidDepthTotal = 0;
+        let askDataArray = [];
+        let bidDataArray = [];
+        for (let i = 0; i < askData.length; i++) {
             askDepthTotal += askData[i]["y"];
-            askData[i]["y"] = askDepthTotal;
-            askData[i]["label"] = self.state.crypto + "/" + self.state.currency;
+            askDataArray.push({
+                x: askData[i]["x"],
+                y: askDepthTotal,
+                label: self.state.crypto + "/" + self.state.currency + i
+            });
+            // askData[i]["y"] = askDepthTotal;
+            // askData[i]["label"] = self.state.crypto + "/" + self.state.currency;
         }
 
-        for (var i = 0; i < bidData.length; i++) {
-            bidDepthTotal += bidData[i]["y"];
-            bidData[i]["y"] = bidDepthTotal;
-            bidData[i]["label"] = self.state.crypto + "/" + self.state.currency;
+        for (let j = 0; j < bidData.length; j++) {
+            bidDepthTotal += bidData[j]["y"];
+            bidDataArray.push({
+                x: bidData[j]["x"],
+                y: bidDepthTotal,
+                label: self.state.crypto + "/" + self.state.currency + j
+            });
+            // bidData[i]["y"] = bidDepthTotal;
+            // bidData[i]["label"] = self.state.crypto + "/" + self.state.currency;
         }
 
-        let graphData = this.state.data
-        graphData.datasets[0][data] = bidData;
-        graphData.datasets[1][data] = askData;
-        console.log("-=-=-=-=-=-", askData);
+        // let graphData = this.state.data
+        // graphData.datasets[0][data] = bidDataArray;
+        // graphData.datasets[1][data] = askDataArray;
+        console.log("-=-=-=-=-=-", bidDataArray);
+        console.log("-=-=-=-=-=-", askDataArray);
+        // console.log(self.refs.chart.chartInstance);
+        // self.refs.chart.chartInstance.data.datasets[0].data = [];
+        // self.refs.chart.chartInstance.data.datasets[1].data = [];
+        let datasets = self.refs.chart.chartInstance.data.datasets
+        datasets[1].data = [...askDataArray];
+        datasets[0].data = [...bidDataArray];
+        self.refs.chart.chartInstance.data.datasets = [...datasets];
+        console.log(self.refs.chart.chartInstance.data.datasets);
 
-        this.setState({
-            data: graphData
-        }, () => {
-            console.log(self.refs.chart.chartInstance);
-            self.refs.chart.chartInstance.data.datasets[0].data = bidData;
-            self.refs.chart.chartInstance.data.datasets[1].data = askData;
+        console.log(self.refs.chart.chartInstance);
+        // console.log();
+
+
+        setTimeout(() => {
             self.refs.chart.chartInstance.update();
-        });
+        }, 1000);
+
+        // this.setState({
+        //     data: graphData
+        // }, () => {
+
+        // });
     }
     render() {
         var self = this;
@@ -155,9 +183,8 @@ class DepthChart extends Component {
                                     displayColors: false,
                                     callbacks: {
                                         title: function (tooltipItem) {
-                                            // console.log();
 
-                                            return self.state.data.datasets[tooltipItem[0].datasetIndex].data[tooltipItem[0].index].label;
+                                            return self.state.crypto + "/" + self.state.currency;
                                         },
                                         // afterBody: function (tooltipItem) {
                                         //     var multistringText = ["Price - " + Number(tooltipItem.xLabel)];
