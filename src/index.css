@@ -1252,3 +1252,40 @@ table .ant-table-tbody > tr > td {
   /* width:285px !important; */
   height:400px !important;
 }
+.activity-table tr td.dash-date{
+  font-weight: 600;
+  color: black;
+}
+.activity-table .amount{
+  width: 120px;
+}
+.activity-table tr td.amount{
+  font-weight: 600;
+  color: black;
+}
+.activity-table .progress-bar-container{
+  width: 170px;
+}
+.activity-table .ant-table{
+  font-family: "Open sans" !important;
+}
+.portfolio-table{
+  font-family: "Open sans" !important;
+}
+.portfolio-table .coin{
+  width: 150px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.portfolio-table .amount{
+  width: 130px;
+  text-align: center;
+}
+.portfolio-table .value{
+  text-align: center;
+  width: 130px;
+}
+.portfolio-table .change{
+  text-align: center;
+}

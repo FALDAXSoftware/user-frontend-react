@@ -40,25 +40,55 @@ class History extends Component {
         super(props);
         this.state = {
             coinList: [],
+            drop1List: [],
+            drop2List: [],
             toDate: moment().format("YYYY-MM-DD"),
             fromDate: moment(moment().subtract(1, 'months'), "YYYY-MM-DD").format("YYYY-MM-DD"),
             historyData: [],
             sell: true,
             buy: true,
             send: true,
-            receive: true
+            receive: true,
+            drop1Value: '',
+            drop2Value: '',
         }
         this.historyResult = this.historyResult.bind(this);
         this.changeDate = this.changeDate.bind(this);
         this.onChangeCheck = this.onChangeCheck.bind(this);
         this.repeatClick = this.repeatClick.bind(this);
+        this.loadCoinList = this.loadCoinList.bind(this);
+        this.selectChange1 = this.selectChange1.bind(this);
+        this.selectChange2 = this.selectChange2.bind(this);
     }
     componentDidMount() {
         this.historyResult();
+        this.loadCoinList();
+    }
+    loadCoinList() {
+        var self = this;
+        fetch(API_URL + "/coin-list", {
+            method: "get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            },
+        }).then(response => response.json())
+            .then((responseData) => {
+                self.setState({
+                    coinList: responseData.data,
+                    drop1List: responseData.data,
+                    drop2List: responseData.data
+                });
+            }).catch(error => {
+            });
     }
     historyResult() {
-
-        fetch(API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}&symbol=ETH-BTC`, {
+        let url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}`;
+        if (this.state.drop1Value != '' && this.state.drop1Value != '') {
+            url = url + '&symbol=' + this.state.drop1Value + '-' + this.state.drop2Value
+        }
+        fetch(url, {
             method: "get",
             headers: {
                 Accept: 'application/json',
@@ -148,10 +178,39 @@ class History extends Component {
         });
     }
     selectChange1(value) {
-        console.log(value)
+        var self = this;
+        let coinList = [...this.state.coinList];
+        for (let index = 0; index < coinList.length; index++) {
+            const element = coinList[index];
+            if (element.coin == value) {
+                coinList.splice(index, 1);
+                break;
+            }
+        }
+        this.setState({
+            drop2List: coinList,
+            drop1Value: value
+        }, () => {
+            self.historyResult();
+        });
     }
     selectChange2(value) {
-        console.log(value)
+        var self = this;
+        let coinList = [...this.state.coinList];
+        for (let index = 0; index < coinList.length; index++) {
+            const element = coinList[index];
+            if (element.coin == value) {
+                coinList.splice(index, 1);
+                break;
+            }
+        }
+        this.setState({
+            drop1List: coinList,
+            drop2Value: value
+
+        }, () => {
+            self.historyResult();
+        });
     }
     repeatClick(data) {
         console.log(data)
@@ -235,7 +294,6 @@ class History extends Component {
                 });
         }
     }
-    getSide
     render() {
         var self = this;
         return (
@@ -248,15 +306,19 @@ class History extends Component {
                                 <Filter>
                                     <div style={{ display: "inline-flex", width: "390px", alignItems: "center" }}>
                                         <Select style={{ width: 120 }} onChange={this.selectChange1}>
-                                            <Option value="jack">Jack</Option>
-                                            <Option value="lucy">Lucy</Option>
-                                            <Option value="Yiminghe">yiminghe</Option>
+                                            {
+                                                this.state.drop1List.map(element => (
+                                                    <Option value={element.coin}>{element.coin}</Option>
+                                                ))
+                                            }
                                         </Select>
                                         <FontAwesomeIcon icon={faExchangeAlt} color='#909090' style={{ margin: "0px 20px" }} />
                                         <Select style={{ width: 120 }} onChange={this.selectChange2}>
-                                            <Option value="jack">Jack</Option>
-                                            <Option value="lucy">Lucy</Option>
-                                            <Option value="Yiminghe">yiminghe</Option>
+                                            {
+                                                this.state.drop2List.map(element => (
+                                                    <Option value={element.coin}>{element.coin}</Option>
+                                                ))
+                                            }
                                         </Select>
                                     </div>
                                     <Datediv>
