@@ -413,6 +413,7 @@ class Navigation extends Component {
         });
     }
     componentWillReceiveProps(props, newProps) {
+        console.log("LOGIN PROPS", props)
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
                 if (props.theme == false)
@@ -421,8 +422,22 @@ class Navigation extends Component {
                     this.setState({ faldax: FaldaxWhite, faldaxLogo: WhiteLogo })
             }
         }
+        if (props.location.pathname !== undefined)
+            if (props.location.pathname == "/login") {
+                if (props.location.hash == "#openTicket") {
+                    console.log("#openTicket")
+                    this.setState({ modal: 0, visible: true });
+                }
+            }
     }
     componentDidMount() {
+        if (this.props.location.pathname !== undefined)
+            if (this.props.location.pathname == "/login") {
+                if (this.props.location.hash == "#openTicket") {
+                    console.log("#openTicket")
+                    this.setState({ modal: 0, visible: true });
+                }
+            }
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme == false)

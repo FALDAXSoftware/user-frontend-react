@@ -129,36 +129,97 @@ class StopLimit extends Component {
                         </RadioGroup>
                     </Buy_sell>
                 </Buy_wrap>
-                <Balance_wrap>
-                    <Row>
-                        <Col span={12}>
+                {Object.keys(this.props.userBal).length > 0 ?
+                    this.state.side == "Buy" ?
+                        <Balance_wrap>
                             <Row>
                                 <Col span={12}>
-                                    <Balance>Balance</Balance>
+                                    <Row>
+                                        <Col span={12}>
+                                            <Balance>Balance</Balance>
+                                        </Col>
+                                        <Col span={12}>
+                                            <Balance>{this.props.userBal.currency[0].placed_balance} B</Balance>
+                                        </Col>
+                                    </Row>
                                 </Col>
                                 <Col span={12}>
-                                    <Balance>0 B</Balance>
+                                    <Row>
+                                        <Col span={12}>
+                                            <Total>Total</Total>
+                                        </Col>
+                                        <Col span={12}>
+                                            <Total>{this.props.userBal.currency[0].balance} B</Total>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                                <Col span={12}>
+                                    <Row>
+                                        <Col span={12}>
+                                            <Total>In orders</Total>
+                                        </Col>
+                                        <Col span={12}>
+                                            <Total>{this.props.userBal.currency[0].balance - this.props.userBal.currency[0].placed_balance} B</Total>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                                <Col span={12}>
+                                    <Row>
+                                        <Col span={12}>
+                                            <Total>Best ask</Total>
+                                        </Col>
+                                        <Col span={12}>
+                                            <Total>{this.props.userBal.buyPay} B</Total>
+                                        </Col>
+                                    </Row>
                                 </Col>
                             </Row>
-                        </Col>
-                        <Col span={12}>
+                        </Balance_wrap> :
+                        <Balance_wrap>
                             <Row>
                                 <Col span={12}>
-                                    <Total>Total</Total>
+                                    <Row>
+                                        <Col span={12}>
+                                            <Balance>Balance</Balance>
+                                        </Col>
+                                        <Col span={12}>
+                                            <Balance>{this.props.userBal.crypto[0].placed_balance} B</Balance>
+                                        </Col>
+                                    </Row>
                                 </Col>
                                 <Col span={12}>
-                                    <Total>0 B</Total>
+                                    <Row>
+                                        <Col span={12}>
+                                            <Total>Total</Total>
+                                        </Col>
+                                        <Col span={12}>
+                                            <Total>{this.props.userBal.crypto[0].balance} B</Total>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                                <Col span={12}>
+                                    <Row>
+                                        <Col span={12}>
+                                            <Total>In orders</Total>
+                                        </Col>
+                                        <Col span={12}>
+                                            <Total>{this.props.userBal.crypto[0].balance - this.props.userBal.crypto[0].placed_balance} B</Total>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                                <Col span={12}>
+                                    <Row>
+                                        <Col span={12}>
+                                            <Total>Best ask</Total>
+                                        </Col>
+                                        <Col span={12}>
+                                            <Total>{this.props.userBal.sellPay} B</Total>
+                                        </Col>
+                                    </Row>
                                 </Col>
                             </Row>
-                        </Col>
-                        <Col span={12}>
-                            <Balance>In Orders 0 B</Balance>
-                        </Col>
-                        <Col span={12}>
-                            <Total>Best ask 0 B</Total>
-                        </Col>
-                    </Row>
-                </Balance_wrap>
+                        </Balance_wrap>
+                    : ""}
                 <ETH_wrap>
                     <Label>Amount</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
@@ -178,32 +239,71 @@ class StopLimit extends Component {
                         <Totinput type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange} />
                     </Total_wrap>
                 </BTC_wrap>
-                <Pay>
-                    <Row>
-                        <Col span={12}>
-                            <Willpay>you will approximately pay</Willpay>
-                        </Col>
-                        <Col span={12}>
-                            <Willpay2>$</Willpay2>
-                        </Col>
-                    </Row>
-                    <Esti>
-                        <Row>
-                            <Col span={12}>
-                                Estimated Best Price
+                {Object.keys(this.props.userBal).length > 0 ?
+                    this.state.side == "Buy" ?
+                        <Pay>
+
+                            <Row>
+                                <Col span={12}>
+                                    <div>
+                                        <Willpay>you will approximately pay</Willpay>
+                                    </div>
+                                </Col>
+                                <Col span={12}>
+                                    <div>
+                                        <Willpay2>{this.props.userBal.buyPay} $</Willpay2>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Esti>
+                                <Row>
+                                    <Col span={12}>
+                                        Estimated Best Price
                             </Col>
-                            <Col span={12}>
-                                $
+                                    <Col span={12}>
+                                        {this.props.userBal.buyPay} $
                             </Col>
-                            <Col span={12}>
-                                Fee 0.1%
+                                    <Col span={12}>
+                                        Fee 0.1%
                             </Col>
-                            <Col span={12}>
-                                $
+                                    <Col span={12}>
+                                        {this.props.userBal.buyEstimatedPrice} $
                             </Col>
-                        </Row>
-                    </Esti>
-                </Pay>
+                                </Row>
+                            </Esti>
+                        </Pay>
+                        :
+                        <Pay>
+
+                            <Row>
+                                <Col span={12}>
+                                    <div>
+                                        <Willpay>you will approximately pay</Willpay>
+                                    </div>
+                                </Col>
+                                <Col span={12}>
+                                    <div>
+                                        <Willpay2>{this.props.userBal.sellPay} $</Willpay2>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Esti>
+                                <Row>
+                                    <Col span={12}>
+                                        Estimated Best Price
+                            </Col>
+                                    <Col span={12}>
+                                        {this.props.userBal.sellPay} $
+                            </Col>
+                                    <Col span={12}>
+                                        Fee 0.1%
+                            </Col>
+                                    <Col span={12}>
+                                        {this.props.userBal.sellEstimatedPrice} $
+                            </Col>
+                                </Row>
+                            </Esti>
+                        </Pay> : ""}
                 <Button_wrap>
                     <ButtonETH side={this.state.side} onClick={this.onSubmit}>{this.state.side.toUpperCase()} ETH</ButtonETH>
                 </Button_wrap>

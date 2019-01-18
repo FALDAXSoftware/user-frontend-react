@@ -282,7 +282,8 @@ class Footer_home extends Component {
                                 <Footer_ul>
                                     <Footer_headers>Support</Footer_headers>
                                     <li style={{ cursor: "pointer" }} >
-                                        <Footer_Link to="/open-ticket"> Open a Ticket</Footer_Link>
+                                        {this.props.isLoggedIn ? <Footer_Link to="/open-ticket"> Open a Ticket</Footer_Link>
+                                            : <Footer_Link to="/login#openTicket"> Open a Ticket</Footer_Link>}
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         {/* <Footer_Link to="/faq"> */}
@@ -374,6 +375,7 @@ class Footer_home extends Component {
 }
 function mapStateToProps(state, ownProps) {
     return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn ? true : false,
         theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
     });
 }
