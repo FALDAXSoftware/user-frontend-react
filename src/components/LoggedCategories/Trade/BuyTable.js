@@ -32,8 +32,16 @@ class BuyTable extends Component {
     buyTableData() {
         let io = this.props.io
         io.sails.url = APP_URL;
-        console.log(this.state)
-        io.socket.get("/socket/get-buy-book?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
+
+        var URL;
+        if (this.props.cryptoPair.prevRoom !== undefined && Object.keys(this.props.cryptoPair.prevRoom).length > 0) {
+            URL = `/socket/get-buy-book?prevRoom=${this.props.cryptoPair.prevRoom.crypto}-${this.props.cryptoPair.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`
+        }
+        else {
+            URL = `/socket/get-buy-book?room=${this.state.crypto}-${this.state.currency}`
+        }
+        console.log(this.state, URL)
+        io.socket.get(URL, (body, JWR) => {
 
             if (body.status == 200) {
                 let res = body.data;
@@ -42,11 +50,12 @@ class BuyTable extends Component {
             }
         });
         io.socket.on('buybookUpdate', (data) => {
-            console.log(data)
+
             this.updateData(data);
         });
     }
     updateData(data) {
+        console.log(data)
         const rows = [];
         let sum = 0;
         let lastsum
@@ -89,7 +98,7 @@ class BuyTable extends Component {
                 <Total_BTC>Total: {this.state.lastsum} BTC</Total_BTC>
                 <Buy_table>
                     <History_wrap>
-                        <div class="tbl-header">
+                        <div className="tbl-header">
                             <TableHeader cellpadding="10px" cellspacing="0" border="0">
                                 <thead>
                                     <tr>

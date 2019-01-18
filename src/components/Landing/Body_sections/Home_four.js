@@ -347,7 +347,7 @@ class Home_four extends Component {
                                                 }}
                                             >
                                                 <ZoomableGroup center={[0, 20]} disablePanning>
-                                                    <Geographies geography={globalVariables.amazon_Bucket + "faldax/assets/world-50m.json"}>
+                                                    <Geographies geography={globalVariables.amazon_Bucket + "assets/world-50m.json"}>
                                                         {(geographies, projection) => geographies.map((geography, i) => geography.id !== "ATA" && (
                                                             <Geography
                                                                 key={i}
@@ -403,7 +403,7 @@ class Home_four extends Component {
                                                     <ZoomableGroup disablePanning>
                                                         <Geographies
                                                             disableOptimization
-                                                            geography={globalVariables.amazon_Bucket + "faldax/assets/Country/us-albers-7.json"}
+                                                            geography={globalVariables.amazon_Bucket + "assets/Country/us-albers-7.json"}
                                                         >
                                                             {(geos, proj) =>
                                                                 geos.map((geo, i) => (

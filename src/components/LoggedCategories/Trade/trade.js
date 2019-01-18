@@ -119,6 +119,7 @@ class Trade extends Component {
             status: "1",
             crypto: "XRP",
             currency: "BTC",
+            prevRoom: {},
             orderTradeData: {},
             InsCurrency: "BTC",
             InsData: [],
@@ -130,6 +131,21 @@ class Trade extends Component {
         this.onInsChange = this.onInsChange.bind(this);
         this.getInstrumentData = this.getInstrumentData.bind(this);
         this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
+    }
+    componentWillReceiveProps(props, newProps) {
+        var self = this;
+        if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
+            if (props.cryptoPair.crypto !== this.state.crypto) {
+                this.setState({ crypto: props.cryptoPair.crypto, prevRoom: props.cryptoPair.prevRoom }, () => {
+                    self.orderSocket(self.state.timePeriod, self.state.status)
+                })
+            }
+            if (props.cryptoPair.currency !== this.state.currency) {
+                this.setState({ currency: props.cryptoPair.currency, prevRoom: props.cryptoPair.prevRoom }, () => {
+                    self.orderSocket(self.state.timePeriod, self.state.status)
+                })
+            }
+        }
     }
     componentDidMount() {
         io.sails.headers = {
@@ -146,7 +162,11 @@ class Trade extends Component {
         // console.log(e.target.value);
         let cryptoPair = {
             crypto: self.state.crypto,
-            currency: e.target.value
+            currency: e.target.value,
+            prevRoom: {
+                crypto: self.state.crypto,
+                currency: self.state.InsCurrency
+            }
         };
         this.setState({
             InsCurrency: e.target.value,
@@ -214,8 +234,15 @@ class Trade extends Component {
         this.orderSocket(this.state.timePeriod, status);
     }
     orderSocket(month, filter_type) {
-        console.log("orderSocket")
-        io.socket.get(`/socket/get-user-trade-data?room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`, (body, JWR) => {
+
+        var URL;
+
+        if (Object.keys(this.state.prevRoom).length > 0)
+            URL = `/socket/get-user-trade-data?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`
+        else
+            URL = `/socket/get-user-trade-data?room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`
+        console.log("orderSocket", URL, month, filter_type)
+        io.socket.get(URL, (body, JWR) => {
 
 
             if (body.status == 200) {
@@ -227,6 +254,7 @@ class Trade extends Component {
         });
     }
     updateMyOrder(response) {
+        console.log(response)
         this.setState({ orderTradeData: response })
     }
     cancelOrder(id, side, type) {
@@ -250,7 +278,11 @@ class Trade extends Component {
     currencyPair(crypto) {
         let cryptoPair = {
             crypto: crypto,
-            currency: this.state.InsCurrency
+            currency: this.state.InsCurrency,
+            prevRoom: {
+                crypto: this.state.crypto,
+                currency: this.state.InsCurrency
+            }
         };
         console.log(this.props)
         this.props.cryptoCurrency(cryptoPair)
