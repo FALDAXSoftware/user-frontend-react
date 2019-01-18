@@ -316,6 +316,19 @@ const NavLink = styled(Link)`
     }
 `
 const ProfileLinkContainer = styled.div`
+    >a
+    {
+        padding: 8px 32px;
+        text-decoration: none;
+        font-size: 18px;
+        display: block;
+        transition: 0.5s;
+        line-height: 1.5;
+        color:white;
+    }
+    >a:hover{
+        color:#1890ff !important;
+    }
     @media(min-width:361px)
     {
         display: none;
@@ -537,10 +550,9 @@ class Navigation extends Component {
                                     </SubMenuNav>
                                 </DropMenu>
                             </a>
-
                             {this.props.isLoggedIn &&
                                 <ProfileLinkContainer>
-                                    <a onClick={() => this.props.history.push('/editProfile')}>Profile</a>
+                                    <Link to="/editProfile">Profile</Link>
                                     <a onClick={this.logout.bind(this)}>Logout</a>
                                 </ProfileLinkContainer>
                             }
