@@ -25,7 +25,7 @@ import ApplyJob from './components/Landing_categories/ApplyJob'
 import Policy from './components/Landing_categories/Policy'
 import News from './components/Landing_categories/News';
 import ThankYou from "./shared-components/thank_you";
-import OpenTicket from "./components/Landing_categories/OpenTicket";
+
 library.add(faStroopwafel);
 
 /* Component defination start here */
@@ -106,7 +106,7 @@ class App extends Component {
               } else {
                 return <Redirect
                   to={{
-                    pathname: '/login',
+                    pathname: '/',
                     state: { from: props.location },
                   }}
                 />
@@ -143,7 +143,6 @@ class App extends Component {
                 <Route path="/applyjob" exact title='ApplyJob' component={ApplyJob} />
                 <Route path="/policy" exact title='policy' component={Policy} />
                 <Route path="/news" exact title='News' component={News} />
-                <Route path="/open-ticket" exact title='Open a Ticket' component={OpenTicket} />
                 <Route path="/thank-you" exact title='Thank You' component={ThankYou} />
                 <RestrictedRoute
                   path="/"
