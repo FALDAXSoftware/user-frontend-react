@@ -119,7 +119,7 @@ const Profile = styled.a`
         display: none !important;
     }
 `
-const LogoutStyle = styled.a`
+const LogoutStyle = styled.span`
     @media(min-width: 361px)
     {
         display: none !important;
@@ -290,7 +290,7 @@ class LoggedNavigation extends Component {
                 >
                     <SideNav id="mySidenav2">
                         <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
-                        <Profile> PROFILE </Profile>
+                        <LogoutStyle to="/editProfile">PROFILE</LogoutStyle>
                         <span onClick={this.showComing}>DASHBOARD</span>
                         <span onClick={this.showComing}>TRADE</span>
                         <span onClick={this.showComing}>WALLET</span>
