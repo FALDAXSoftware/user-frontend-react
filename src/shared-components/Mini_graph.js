@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
 import { globalVariables } from '../Globals';
-let { API_URL } = globalVariables;
+let { API_URL, amazon_Bucket } = globalVariables;
 
 /* Styled componets */
 const Graph_wrapper = styled.div`
@@ -61,7 +61,7 @@ class Mini_graph extends React.Component {
             crypto: this.props.crypto,
             currency: this.props.currency,
             data: {
-                image: '/images/Homepage/imgpsh_fullsize_1.png',
+                image: 'coin/defualt_coin.png',
                 coinName: this.props.crypto + "/" + this.props.currency,
                 price: 0,
                 percentage: 0,
@@ -73,6 +73,7 @@ class Mini_graph extends React.Component {
                         backgroundColor: 'rgba(75,192,192,0.4)',
                         borderColor: this.props.lineColor,
                         borderCapStyle: 'butt',
+                        borderWidth: 1,
                         borderDash: [],
                         borderDashOffset: 0.0,
                         borderJoinStyle: 'miter',
@@ -96,11 +97,12 @@ class Mini_graph extends React.Component {
         var self = this;
         if (this.props.cryptoPair !== undefined && this.props.cryptoPair !== "") {
             this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
-                self.historyData();
+                self.miniGraph();
             })
         }
     }
     miniGraph() {
+        var self = this;
         io.socket.get("/socket/get-card-data?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
 
 
@@ -108,6 +110,9 @@ class Mini_graph extends React.Component {
                 let res = body.data;
                 this.updateGraph(res);
             }
+        });
+        io.socket.on("cardDataUpdate", function (data) {
+            self.updateGraph(data);
         });
     }
     componentWillReceiveProps(props, newProps) {
@@ -128,12 +133,13 @@ class Mini_graph extends React.Component {
     }
     updateGraph(data) {
         var self = this;
-        console.log(data);
+        console.log("card data - ", data);
         let dataArray = [];
         data.tradeChartDetails.map(element => {
             dataArray.push(element.price);
         });
         let graphOptions = this.state.data;
+        graphOptions.image = (!this.coin_icon || this.coin_icon == "" || this.coin_icon == null) ? "coin/defualt_coin.png" : data.icon;
         graphOptions.datasets.data = dataArray;
         graphOptions.price = Math.round(data.average_price * 100) / 100;
         graphOptions.percentage = data.percentchange;
@@ -161,18 +167,18 @@ class Mini_graph extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={5}>
-                        <Image_wrapper src={image} />
+                        <Image_wrapper src={amazon_Bucket + image} />
                     </Col>
                     <Col xs={11} md={12}>
                         <Span_coin_price> {price.toFixed(2)} {this.props.currency} </Span_coin_price>
                     </Col>
                     <Col xs={8} md={7}>
-                        <Span_coin_percentage value={percentage}> {percentage === 0 ? '' : percentage >= 0 ? '+' : ''}{percentage.toFixed(4)}% </Span_coin_percentage>
+                        <Span_coin_percentage value={percentage}> {percentage === 0 ? '' : percentage >= 0 ? '+' : ''}{Math.abs(percentage.toFixed(2))}% </Span_coin_percentage>
                     </Col>
                 </Row>
-                <Row>
+                <Row style={{ paddingTop: "10px" }}>
                     <Col sm={24}>
-                        <Line data={this.state.data} options={{ tooltips: { enabled: false }, legend: null, scales: { xAxes: [{ display: false }], yAxes: [{ display: false }] } }} height={108} ref="chart" />
+                        <Line data={this.state.data} options={{ tooltips: { enabled: false }, legend: null, scales: { xAxes: [{ display: false }], yAxes: [{ display: false }] } }} height={100} ref="chart" />
                     </Col>
                 </Row>
             </Graph_wrapper>
