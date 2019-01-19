@@ -32,6 +32,10 @@ export const Left_div1 = styled(Left_div)`
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
     height:700px;
+    @media(max-width:575px)
+    {
+        height:auto;
+    }
     @media(max-width:991px)
     {
         margin-right:0px;
@@ -51,6 +55,10 @@ export const Instru = styled.p`
     font-weight: bold;
     margin-left:30px;
     color:${props => props.theme.mode == "dark" ? "white" : ""};
+    @media(max-width:575px)
+    {
+        display:block;
+    }
 `
 export const SearchInput = styled(Search)`
     display:inline-block;
@@ -71,11 +79,23 @@ export const SearchInput = styled(Search)`
         caret-color:${props => props.theme.mode == "dark" ? "white" : ""}
         color:${props => props.theme.mode == "dark" ? "white" : ""}
     }
+    @media(max-width:575px)
+    {
+        margin-left:25px;
+        margin-right:0px;
+        float:none;
+    }
 `
 export const FIAT_wrap = styled.div`
     display: flex;
     justify-content: flex-end;
     margin-top:5px;
+    @media(max-width:575px)
+    {
+        justify-content:flex-start;
+        margin-top:20px;
+        margin-left:25px;
+    }
 `
 export const FIAT_wrap2 = styled.div`
     display: inline-block;
@@ -123,6 +143,10 @@ export const Right_div = styled.div`
 `
 export const Right_div1 = styled(Right_div)`
     height:700px;
+    @media(max-width:575px)
+    {
+        height:auto;
+    }
     @media(max-width:991px)
     {
         margin-top:30px;
@@ -154,6 +178,13 @@ export const TableIns = styled(Table)`
     {   
         color:#4c84ff;
     }
+    @media(max-width:375px)
+    {
+        >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th
+        {
+            padding: 10px 12px;
+        }
+    }
 `
 export const Tabs_right = styled(Tabs)`
     >.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav-animated
@@ -183,6 +214,12 @@ export const Buy_sell = styled.div`
 export const BuySellRadio = styled(RadioButton)`
     padding-left: 40px;
     padding-right: 40px;
+    @media(max-width:375px)
+    {
+        border-radius: 4px 4px 4px 4px !important; 
+        margin-top: 15px;
+        width: 115px;
+    }
 `
 export const Buy = styled(Button)`
     display:inline-block;
