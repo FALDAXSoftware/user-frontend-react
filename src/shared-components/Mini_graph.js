@@ -117,7 +117,7 @@ class Mini_graph extends React.Component {
     }
     componentWillReceiveProps(props, newProps) {
         console.log(props)
-        var self = this;
+        /* var self = this;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
                 this.setState({ crypto: props.cryptoPair.crypto }, () => {
@@ -129,7 +129,7 @@ class Mini_graph extends React.Component {
                     self.miniGraph();
                 })
             }
-        }
+        } */
     }
     updateGraph(data) {
         var self = this;

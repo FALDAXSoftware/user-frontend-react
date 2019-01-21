@@ -20,7 +20,7 @@ import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCateg
 import { cryptoCurrency } from '../../../Actions/LoggedCat/tradeActions'
 import {
     Row_wrap, Left_div, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
-    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder
+    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder, Selectmonth
 } from "../../../styled-components/loggedStyle/tradeStyle";
 import { globalVariables } from '../../../Globals';
 
@@ -80,7 +80,12 @@ const columns = [{
     title: 'Change',
     dataIndex: 'change',
     defaultSortOrder: 'ascend',
-    render: text => parseFloat(text).toFixed(4),
+    render: (text) => {
+        if (text < 0)
+            return (<span style={{ color: "red" }}>{Math.abs(text) + "%"}</span>);
+        else
+            return (<span style={{ color: "green" }}>{Math.abs(text) + "%"}</span>)
+    },
     sorter: (a, b) => a.change - b.change
 }];
 
@@ -123,6 +128,7 @@ class Trade extends Component {
             orderTradeData: {},
             InsCurrency: "BTC",
             InsData: [],
+            searchedInstu: [],
             userBal: {},
         };
         io = this.props.io;
@@ -200,7 +206,7 @@ class Trade extends Component {
                 name: element.name.split('-')[0],
                 price: element.last_price,
                 volume: element.volume,
-                change: parseFloat(element.percentChange).toFixed(2) + "%"
+                change: parseFloat(element.percentChange).toFixed(2),
             });
         }
         this.setState({
@@ -309,6 +315,28 @@ class Trade extends Component {
             }
         });
     }
+    searchInstu(e) {
+        console.log("megh", e.target.value.trim() !== "")
+        var search = e.target.value;
+        if (search.trim() !== "") {
+            console.log("finally i am in");
+            var searchedInstu = this.state.InsData.filter(function (temp) {
+                console.log(temp, temp.name.includes(search))
+                if (temp.name.toLowerCase().includes(search.toLowerCase())) {
+                    console.log(temp, search)
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            })
+            console.log(searchedInstu)
+            this.setState({ searchedInstu });
+        }
+        else {
+            this.setState({ searchedInstu: [] });
+        }
+    }
     render() {
         var self = this;
         return (
@@ -321,7 +349,10 @@ class Trade extends Component {
                                 <Col md={24} lg={14}>
                                     <Left_div1>
                                         <Instru>INSTRUMENTS</Instru>
-                                        <SearchInput />
+                                        {this.state.InsData.length > 0 ? <SearchInput
+                                            onChange={(e) => this.searchInstu(e)}
+                                            style={{ width: 200 }}
+                                        /> : ""}
                                         <FIAT_wrap>
                                             <FIAT>
                                                 <RadioSelect value={this.state.InsCurrency} size="large" buttonStyle="solid" onChange={this.onInsChange}>
@@ -339,7 +370,7 @@ class Trade extends Component {
                                                         onClick: (event) => { self.currencyPair(record.name) },       // click row
                                                     };
                                                 }}
-                                                pagination={false} columns={columns} dataSource={this.state.InsData} onChange={this.onChange} />
+                                                pagination={false} columns={columns} dataSource={this.state.searchedInstu.length == 0 ? this.state.InsData : this.state.searchedInstu} onChange={this.onChange} />
                                         </InstruTable>
                                     </Left_div1>
                                 </Col>
@@ -392,12 +423,12 @@ class Trade extends Component {
                                         <Orderwrap>
                                             <InstruOrder>MY ORDERS AND TRADES</InstruOrder>
                                             <div style={{ display: "inline-flex", marginLeft: "auto", alignItems: "center" }}>
-                                                <Select labelInValue defaultValue={{ key: '1' }} style={{ width: 120, marginRight: "30px" }} onChange={this.handleChange}>
+                                                <Selectmonth labelInValue defaultValue={{ key: '1' }} style={{ width: 120, marginRight: "30px" }} onChange={this.handleChange}>
                                                     <Option value="1">1 month</Option>
                                                     <Option value="3">3 month</Option>
                                                     <Option value="6">6 month</Option>
                                                     <Option value="12">12 month</Option>
-                                                </Select>
+                                                </Selectmonth>
                                                 <FIAT_wrap2>
                                                     <FIAT>
                                                         <RadioSelect onChange={this.statusChange} defaultValue="a" size="large" buttonStyle="solid">

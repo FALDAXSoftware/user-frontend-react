@@ -33,7 +33,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      theme: "light"
+      theme: this.props.theme == false ? "light" : "dark"
     }
   }
   componentDidUpdate(prevProps, prevState) {

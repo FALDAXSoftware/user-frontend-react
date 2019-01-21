@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import 'antd/dist/antd.css';
-import { Row, Col, Checkbox, Radio, notification } from 'antd';
-import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, StopCheck, Balance, Total, Check_wrap, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "../../../styled-components/loggedStyle/tradeStyle";
+import { Row, Col, Radio, notification } from 'antd';
+import {
+    Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Total,
+    ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay,
+    Esti, Button_wrap, ButtonETH
+} from "../../../styled-components/loggedStyle/tradeStyle";
 
 import { globalVariables } from "../../../Globals";
 let { API_URL } = globalVariables;
@@ -20,7 +24,11 @@ class StopLimit extends Component {
             amount: 0,
             stop_price: 0,
             limit_price: 0,
-            total: 0
+            total: 0,
+            buyPayAmt: '',
+            buyEstPrice: '',
+            sellEstPrice: '',
+            sellPayAmt: ''
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -39,7 +47,7 @@ class StopLimit extends Component {
         });
     }
     componentWillReceiveProps(props, newProps) {
-        console.log(props)
+        this.setState({ userBalFees: props.userBal.fees })
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
                 this.setState({ crypto: props.cryptoPair.crypto })
@@ -53,6 +61,7 @@ class StopLimit extends Component {
         var self = this;
         let obj = {};
         let name = e.target.name;
+
         let value = e.target.value;
         obj[name] = value;
         if (name == "side") {
@@ -63,11 +72,19 @@ class StopLimit extends Component {
             ...obj
         }, () => {
             obj = {};
-            if (this.state.amount > 0) {
+            if (this.state.amount >= 0 && this.state.stop_price > 0) {
                 if (this.state.side == "Buy") {
-                    obj["total"] = this.state.amount * this.state.buyPrice
+                    obj["total"] = this.state.amount * this.props.userBal.buyPay;
+                    self.setState({
+                        buyPayAmt: this.state.amount * this.props.userBal.buyPay,
+                        buyEstPrice: this.state.amount * this.props.userBal.buyEstimatedPrice
+                    })
                 } else if (this.state.side == "Sell") {
-                    obj["total"] = this.state.amount * this.state.sellprice
+                    obj["total"] = this.state.amount * this.props.userBal.sellPay;
+                    self.setState({
+                        sellPayAmt: this.state.amount * this.props.userBal.sellPay,
+                        sellEstPrice: this.state.amount * this.props.userBal.sellEstimatedPrice
+                    })
                 }
             } else {
                 obj["total"] = 0;
@@ -118,7 +135,9 @@ class StopLimit extends Component {
     onChangeCheck(e) {
     }
     render() {
+        const { userBalFees, buyEstPrice, buyPayAmt, sellEstPrice, sellPayAmt } = this.state;
         const RadioGroup = Radio.Group;
+
         return (
             <Market_wrap>
                 <Buy_wrap>
@@ -133,43 +152,43 @@ class StopLimit extends Component {
                     this.state.side == "Buy" ?
                         <Balance_wrap>
                             <Row>
-                                <Col span={12}>
+                                <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
                                             <Balance>Balance</Balance>
                                         </Col>
                                         <Col span={12}>
-                                            <Balance>{this.props.userBal.currency[0].placed_balance} B</Balance>
+                                            <Balance>{this.props.userBal.currency[0].placed_balance.toFixed(2)} B</Balance>
                                         </Col>
                                     </Row>
                                 </Col>
-                                <Col span={12}>
+                                <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
                                             <Total>Total</Total>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.currency[0].balance} B</Total>
+                                            <Total>{this.props.userBal.currency[0].balance.toFixed(2)} B</Total>
                                         </Col>
                                     </Row>
                                 </Col>
-                                <Col span={12}>
+                                <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
                                             <Total>In orders</Total>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.currency[0].balance - this.props.userBal.currency[0].placed_balance} B</Total>
+                                            <Total>{(this.props.userBal.currency[0].balance - this.props.userBal.currency[0].placed_balance).toFixed(2)} B</Total>
                                         </Col>
                                     </Row>
                                 </Col>
-                                <Col span={12}>
+                                <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
                                             <Total>Best ask</Total>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.buyPay} B</Total>
+                                            <Total>{buyPayAmt} B</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -177,43 +196,43 @@ class StopLimit extends Component {
                         </Balance_wrap> :
                         <Balance_wrap>
                             <Row>
-                                <Col span={12}>
+                                <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
                                             <Balance>Balance</Balance>
                                         </Col>
                                         <Col span={12}>
-                                            <Balance>{this.props.userBal.crypto[0].placed_balance} B</Balance>
+                                            <Balance>{this.props.userBal.crypto[0].placed_balance.toFixed(2)} B</Balance>
                                         </Col>
                                     </Row>
                                 </Col>
-                                <Col span={12}>
+                                <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
                                             <Total>Total</Total>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.crypto[0].balance} B</Total>
+                                            <Total>{this.props.userBal.crypto[0].balance.toFixed(2)} B</Total>
                                         </Col>
                                     </Row>
                                 </Col>
-                                <Col span={12}>
+                                <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
                                             <Total>In orders</Total>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.crypto[0].balance - this.props.userBal.crypto[0].placed_balance} B</Total>
+                                            <Total>{(this.props.userBal.crypto[0].balance - this.props.userBal.crypto[0].placed_balance).toFixed(2)} B</Total>
                                         </Col>
                                     </Row>
                                 </Col>
-                                <Col span={12}>
+                                <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
                                             <Total>Best ask</Total>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.sellPay} B</Total>
+                                            <Total>{this.props.userBal.sellPay.toFixed(2)} B</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -239,68 +258,72 @@ class StopLimit extends Component {
                         <Totinput type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange} />
                     </Total_wrap>
                 </BTC_wrap>
+                <BTC_wrap>
+                    <Label>Total</Label>
+                    <Total_wrap style={{ marginBottom: 16 }}>
+                        <Totinput readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total_price} name="total_price" onChange={this.onChange} />
+                    </Total_wrap>
+                </BTC_wrap>
                 {Object.keys(this.props.userBal).length > 0 ?
                     this.state.side == "Buy" ?
                         <Pay>
-
                             <Row>
-                                <Col span={12}>
+                                <Col xs={15} sm={12}>
                                     <div>
                                         <Willpay>you will approximately pay</Willpay>
                                     </div>
                                 </Col>
-                                <Col span={12}>
+                                <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{this.props.userBal.buyPay} $</Willpay2>
+                                        <Willpay2>{buyPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
                             <Esti>
                                 <Row>
-                                    <Col span={12}>
+                                    <Col xs={15} sm={12}>
                                         Estimated Best Price
-                            </Col>
-                                    <Col span={12}>
-                                        {this.props.userBal.buyPay} $
-                            </Col>
-                                    <Col span={12}>
-                                        Fee 0.1%
-                            </Col>
-                                    <Col span={12}>
-                                        {this.props.userBal.buyEstimatedPrice} $
-                            </Col>
+                                    </Col>
+                                    <Col xs={9} sm={12}>
+                                        {buyPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                    </Col>
+                                    <Col xs={15} sm={12}>
+                                        Fee {userBalFees} %
+                                    </Col>
+                                    <Col xs={9} sm={12}>
+                                        {buyEstPrice} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                    </Col>
                                 </Row>
                             </Esti>
                         </Pay>
                         :
                         <Pay>
-
                             <Row>
-                                <Col span={12}>
+                                <Col xs={15} sm={12}>
                                     <div>
-                                        <Willpay>you will approximately pay</Willpay>
+                                        <Willpay>you will approximately receive</Willpay>
                                     </div>
                                 </Col>
-                                <Col span={12}>
+                                <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{this.props.userBal.sellPay} $</Willpay2>
+                                        <Willpay2>{sellPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
                             <Esti>
                                 <Row>
-                                    <Col span={12}>
+                                    <Col xs={15} sm={12}>
                                         Estimated Best Price
                             </Col>
-                                    <Col span={12}>
-                                        {this.props.userBal.sellPay} $
+                                    <Col xs={9} sm={12}>
+                                        {sellPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                    </Col>
+                                    <Col xs={15} sm={12}>
+                                        Fee {userBalFees} %
                             </Col>
-                                    <Col span={12}>
-                                        Fee 0.1%
-                            </Col>
-                                    <Col span={12}>
-                                        {this.props.userBal.sellEstimatedPrice} $
-                            </Col>
+                                    <Col xs={9} sm={12}>
+                                        {sellEstPrice} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                    </Col>
                                 </Row>
                             </Esti>
                         </Pay> : ""}

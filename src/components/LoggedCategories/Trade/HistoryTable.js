@@ -121,8 +121,8 @@ class HistoryTable extends Component {
                                         <td>{element.amount}</td>
                                         {(index + 1) < me.state.data.length ? (element.fill_price > me.state.data[index + 1].fill_price)
                                             ?
-                                            <td>{element.fill_price} <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /></td> :
-                                            <td>{element.fill_price} <img style={{ marginBottom: "3px" }} src="/images/down-right.png" /></td>
+                                            <td>{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td> :
+                                            <td>{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/down-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/down_white.png" />}</td>
                                             : <td>{element.fill_price} </td>
                                         }
                                         <td>{element.time}</td>
