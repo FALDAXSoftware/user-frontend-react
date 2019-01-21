@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Progress } from 'antd';
+import { Row, Col, Progress, Spin } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareFull } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
@@ -13,16 +13,16 @@ import { ContainerContact } from "../../../styled-components/loggedStyle/history
 import { connect } from "react-redux"
 import InfiniteScroll from 'react-infinite-scroller';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { Spin_Ex } from "../../Settings/Personaldetails/PersonalDetails";
 
 import {
     ActPortWrap, Lleft, Rright, Topic, Act_div, ActTable, High_low, Left_hl, Right_hl,
     Rise_fall, Newsdiv, News, Newslist, List, Listspan, Listp, Date
 } from "../../../styled-components/loggedStyle/dashStyle"
 import { globalVariables } from '../../../Globals';
+import moment from 'moment';
 
-const moment = require('moment');
 let { API_URL } = globalVariables;
-
 
 const ContainerNew = styled(ContainerContact)`
     padding:0px;
@@ -30,27 +30,6 @@ const ContainerNew = styled(ContainerContact)`
 `
 const Body_wrap = styled.div`
 `
-
-const data2 = [{
-    key: '1',
-    date: 'John Brown',
-    action: 32,
-    amount: 'New York No. 1 Lake Park',
-    completed: ['nice', 'developer'],
-}, {
-    key: '2',
-    date: 'Jim Green',
-    action: 42,
-    amount: 'London No. 1 Lake Park',
-    completed: ['loser'],
-}, {
-    key: '3',
-    date: 'Joe Black',
-    action: 32,
-    amount: 'Sidney No. 1 Lake Park',
-    completed: ['cool', 'teacher'],
-}];
-
 const data = [
     {
         image: '/images/Homepage/imgpsh_fullsize_1.png',
@@ -222,6 +201,7 @@ const portfolioColumn = [{
     dataIndex: 'change',
     className: 'change'
 }];
+
 let io = null;
 class Dashboard extends Component {
     constructor(props) {
@@ -234,8 +214,9 @@ class Dashboard extends Component {
             total: 0,
             diffrence: 0,
             userFiat: "USD",
+            activityLoader: false,
+            newsLoader: false
         }
-        // console.log("====>", this.props);
 
         io = this.props.io;
         io.sails.url = API_URL;
@@ -245,7 +226,6 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-
         var self = this;
         self.loadNews(1);
         self.loadActivity();
@@ -259,6 +239,8 @@ class Dashboard extends Component {
 
     loadActivity() {
         var self = this;
+        self.setState({ activityLoader: true });
+
         fetch(`${API_URL}/dashboard/get-activity`, {
             method: "get",
             headers: {
@@ -280,12 +262,13 @@ class Dashboard extends Component {
                         });
                     });
                     self.setState({
-                        activityData: activityData
+                        activityData: activityData, activityLoader: false
                     });
                 }
-
             })
-            .catch(error => { /* console.log(error) */ })
+            .catch(error => {
+                self.setState({ activityLoader: false });
+            })
     }
 
     loadPortfolio() {
@@ -319,15 +302,15 @@ class Dashboard extends Component {
                         portfolioData: portfolioData
                     });
                 }
-
             })
             .catch(error => { /* console.log(error) */ })
     }
 
     loadNews(page) {
         console.log("load news call ", page);
-
         var self = this;
+        self.setState({ newsLoader: true })
+
         fetch(`${API_URL}/users/get-all-news?limit=50&page=${page}`, {
             method: "post",
             headers: {
@@ -351,16 +334,20 @@ class Dashboard extends Component {
                         hasMoreNews = false;
                     }
                     self.setState({
+                        newsLoader: false,
                         news: news,
                         hasMoreNews: hasMoreNews
                     });
                 }
-
             })
-            .catch(error => { /* console.log(error) */ })
+            .catch(error => {
+                self.setState({ newsLoader: true })
+            })
     }
 
     render() {
+        const { newsLoader, news, activityLoader, activityData, userFiat } = this.state;
+
         return (
             <div>
                 <Contact_wrap>
@@ -379,8 +366,15 @@ class Dashboard extends Component {
                                                     <span>ACTIVITY</span>
                                                 </Topic>
                                                 <Act_div>
-                                                    <ActTable scroll={{ y: 320 }} pagination={false} columns={activityColumns} dataSource={this.state.activityData} className="activity-table" />
+                                                    <ActTable scroll={{ y: 320 }} pagination={false} columns={activityColumns} dataSource={activityData} className="activity-table" />
+
                                                 </Act_div>
+                                                {(true == true) ?
+                                                    <Spin_Ex className="Ex_spin">
+                                                        <Spin size="small" />
+                                                    </Spin_Ex>
+                                                    : ""
+                                                }
                                             </Lleft>
                                         </Col>
                                         <Col sm={24} lg={12}>
@@ -389,8 +383,8 @@ class Dashboard extends Component {
                                                     <span>PORTFOLIO</span>
                                                 </Topic>
                                                 <High_low>
-                                                    <Left_hl>{this.state.total} {this.state.userFiat}</Left_hl>
-                                                    <Right_hl>^{this.state.diffrence} {this.state.userFiat}</Right_hl>
+                                                    <Left_hl>{this.state.total} {userFiat}</Left_hl>
+                                                    <Right_hl>^{this.state.diffrence} {userFiat}</Right_hl>
                                                 </High_low>
                                                 <Act_div>
                                                     <ActTable scroll={{ y: 250 }} pagination={false} columns={portfolioColumn} dataSource={this.state.portfolioData} className="portfolio-table" />
@@ -408,7 +402,7 @@ class Dashboard extends Component {
                                         <Scrollbars
                                             style={{ height: 380 }}>
                                             {
-                                                this.state.news.map((element, index) => (
+                                                news.map((element, index) => (
                                                     <List>
                                                         <Date>{moment.utc(element.posted_at).format("MMMM DD, YYYY HH:mm")}</Date>
                                                         <Listspan>
@@ -419,8 +413,13 @@ class Dashboard extends Component {
                                                 ))
                                             }
                                         </Scrollbars>
-
                                     </Newslist>
+                                    {/* {(newsLoader == true) ?
+                                        <Spin_Ex className="Ex_spin">
+                                            <Spin size="small" />
+                                        </Spin_Ex>
+                                        : ""
+                                    } */}
                                 </Newsdiv>
                             </ContainerNew>
                         </Body_wrap>
@@ -431,6 +430,7 @@ class Dashboard extends Component {
         );
     }
 }
+
 function mapStateToProps(state) {
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
