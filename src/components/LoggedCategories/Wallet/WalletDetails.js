@@ -19,7 +19,7 @@ import {
 } from "../../../styled-components/loggedStyle/walletStyle";
 import { globalVariables } from '../../../Globals';
 
-let { API_URL } = globalVariables;
+let { API_URL, amazon_Bucket } = globalVariables;
 const Option = Select.Option;
 
 const Search = Input.Search;
@@ -86,6 +86,10 @@ const DropdownButtonOne = styled(DropdownButton)`
         float:right;
         margin-top: 8px;
     }
+`
+const CoinImage = styled.img`
+    width: 60px;
+    height: 60px;
 `
 
 class WalletDetails extends Component {
@@ -156,6 +160,7 @@ class WalletDetails extends Component {
             if (Object.keys(this.state.walletDetails).length > 0) {
                 tempDetails = this.state.walletDetails;
             }
+
         return (
             <Contact_wrap>
                 <LoggedNavigation />
@@ -205,7 +210,7 @@ class WalletDetails extends Component {
                                 <Row>
                                     <Col xxl={12} xl={12} lg={24} md={24}>
                                         <Left_Bit>
-                                            <CryptImg><img src="/images/LoggedCat/Bit_wallet.png" /></CryptImg>
+                                            <CryptImg><CoinImage src={((tempDetails !== null && tempDetails[0].coin_icon !== null) ? amazon_Bucket + tempDetails[0].coin_icon : amazon_Bucket + "coin/defualt_coin.png")} /></CryptImg>
                                             <CryptAmt>
                                                 <BTC_amt>0.05218<BTC>{tempDetails !== null ? tempDetails[0].coin_code : ""}</BTC></BTC_amt>
                                                 <FIAT_amt>$874.23<AMT>USD</AMT></FIAT_amt>
