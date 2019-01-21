@@ -1,6 +1,6 @@
 
 import styled from 'styled-components';
-import { Row, Col, Table } from 'antd';
+import { Row, Col, Table, Spin } from 'antd';
 
 export const ActPortWrap = styled.div`
     margin-top:30px;
@@ -136,4 +136,18 @@ export const Date = styled.span`
     font-family: "Open Sans";
     color:${props => props.theme.mode == "dark" ? "#617090" : "rgb( 97, 112, 144 )"};
     padding-right: 20px;
+`
+
+export const Spin_single = styled.div`
+    text-align: center;
+    background: white;
+    border-radius: 4px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f5f5f580;
+    height: 100%;
+    z-index: 999;
 `

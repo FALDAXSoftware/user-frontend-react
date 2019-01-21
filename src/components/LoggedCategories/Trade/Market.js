@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import 'antd/dist/antd.css';
-import { Row, Col, Radio, notification } from 'antd';
+import { Row, Col, Checkbox, Radio, notification, Spin } from 'antd';
 import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Total, Check_wrap, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "../../../styled-components/loggedStyle/tradeStyle";
-
+import {
+    Spin_single
+} from "../../../styled-components/loggedStyle/dashStyle"
 import { globalVariables } from "../../../Globals";
 let { API_URL } = globalVariables;
 
@@ -19,10 +21,11 @@ class Market extends Component {
             buyPrice: 0.002,
             amount: 0,
             total: 0,
-            buyPayAmt: '',
-            buyEstPrice: '',
-            sellEstPrice: '',
-            sellPayAmt: ''
+            Loader: false,
+            buyPayAmt: 0,
+            buyEstPrice: 0,
+            sellEstPrice: 0,
+            sellPayAmt: 0
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -95,6 +98,7 @@ class Market extends Component {
     };
     onSubmit() {
         var self = this;
+        self.setState({ Loader: true });
         if (this.validator.allValid()) {
             let params = {
                 symbol: self.state.crypto.toUpperCase() + "-" + self.state.currency.toUpperCase(),
@@ -113,6 +117,7 @@ class Market extends Component {
             }).then(response => response.json())
                 .then((responseData) => {
                     if (responseData.status == 200) {
+                        this.setState({ Loader: false });
                         self.openNotificationWithIcon('success', 'Success', responseData.message);
                     } else {
                         self.openNotificationWithIcon('error', 'Error', responseData.err);
@@ -232,7 +237,6 @@ class Market extends Component {
                     : ""}
                 <ETH_wrap>
                     <Label>Amount</Label>
-
                     <Total_wrap style={{ marginBottom: 16 }}>
                         <AMTinput type="number" addonAfter={this.state.crypto} value={this.state.amount} name="amount" onChange={this.onChange} />
                         {this.validator.message('amount', this.state.amount, 'required|numeric|gtzero')}
@@ -310,6 +314,12 @@ class Market extends Component {
                 <Button_wrap>
                     <ButtonETH side={this.state.side} onClick={this.onSubmit}>{this.state.side.toUpperCase()} ETH</ButtonETH>
                 </Button_wrap>
+                {(this.state.Loader == true) ?
+                    <Spin_single className="Single_spin">
+                        <Spin size="small" />
+                    </Spin_single>
+                    : ""
+                }
             </Market_wrap>
         )
     }

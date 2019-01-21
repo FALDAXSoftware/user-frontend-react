@@ -169,11 +169,14 @@ class WalletDetails extends Component {
                                             <span>BITCOIN</span>
                                         </MY_wallet>
                                         <WalletCoin>
-                                            <Select defaultValue="lucy" style={{ width: "100%" }}>
-                                                <Option value="jack">Jack</Option>
-                                                <Option value="lucy">Lucy</Option>
-                                                <Option value="Yiminghe">yiminghe</Option>
-                                            </Select>
+                                            {this.props.walletDetails !== null ?
+                                                <Select defaultValue="" style={{ width: "100%" }}>
+                                                    <Option value="jack">Jack</Option>
+                                                    <Option value="lucy">Lucy</Option>
+                                                    <Option value="Yiminghe">yiminghe</Option>
+                                                </Select>
+                                                : ""
+                                            }
                                         </WalletCoin>
                                     </Left_head>
                                 </Col>
