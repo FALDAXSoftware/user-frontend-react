@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import 'antd/dist/antd.css';
-import { Row, Col, Checkbox, Radio, notification } from 'antd';
-import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, StopCheck, Balance, Total, Check_wrap, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "../../../styled-components/loggedStyle/tradeStyle";
+import { Row, Col, Radio, notification } from 'antd';
+import {
+    Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Total,
+    ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay,
+    Esti, Button_wrap, ButtonETH
+} from "../../../styled-components/loggedStyle/tradeStyle";
 
 import { globalVariables } from "../../../Globals";
 let { API_URL } = globalVariables;
@@ -43,7 +47,6 @@ class StopLimit extends Component {
         });
     }
     componentWillReceiveProps(props, newProps) {
-        console.log(props)
         this.setState({ userBalFees: props.userBal.fees })
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -132,7 +135,7 @@ class StopLimit extends Component {
     onChangeCheck(e) {
     }
     render() {
-        const { userBalFees, buyEstimatedPrice, buyPayAmt, sellEstPrice, sellPayAmt } = this.state;
+        const { userBalFees, buyEstPrice, buyPayAmt, sellEstPrice, sellPayAmt } = this.state;
         const RadioGroup = Radio.Group;
 
         return (
@@ -288,7 +291,7 @@ class StopLimit extends Component {
                                         Fee {userBalFees} %
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {buyEstimatedPrice} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {buyEstPrice} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                 </Row>
                             </Esti>

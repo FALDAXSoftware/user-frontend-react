@@ -45,7 +45,6 @@ class Market extends Component {
     }
 
     componentWillReceiveProps(props, newProps) {
-        console.log('cwrp', props)
         this.setState({ userBalFees: props.userBal.fees })
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -74,16 +73,16 @@ class Market extends Component {
             if (this.state.amount >= 0) {
                 if (this.state.side == "Buy") {
                     self.setState({
-                        buyPayAmt: this.state.amount * this.props.userBal.buyPay,
-                        buyEstPrice: this.state.amount * this.props.userBal.buyEstimatedPrice
+                        buyPayAmt: Number(this.state.amount) * this.props.userBal.buyPay,
+                        buyEstPrice: Number(this.state.amount) * this.props.userBal.buyEstimatedPrice
                     })
-                    obj["total"] = this.state.amount * this.state.buyPrice
+                    obj["total"] = Number(this.state.amount) * this.props.userBal.buyPay
                 } else if (this.state.side == "Sell") {
                     self.setState({
-                        sellPayAmt: this.state.amount * this.props.userBal.sellPay,
-                        sellEstPrice: this.state.amount * this.props.userBal.sellEstimatedPrice
+                        sellPayAmt: Number(this.state.amount) * this.props.userBal.sellPay,
+                        sellEstPrice: Number(this.state.amount) * this.props.userBal.sellEstimatedPrice
                     })
-                    obj["total"] = this.state.amount * this.state.sellprice
+                    obj["total"] = Number(this.state.amount) * this.props.userBal.sellPay
                 }
             } else {
                 obj["total"] = 0;
