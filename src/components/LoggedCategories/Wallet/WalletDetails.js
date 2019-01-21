@@ -97,8 +97,9 @@ class WalletDetails extends Component {
             walletDetails: {},
             total: null,
             loader: false,
-            coin_code: ""
+            coin_code: "",
         };
+        this.changeCoins = this.changeCoins.bind(this);
     }
     componentDidMount() {
         this.setState({ loader: true });
@@ -150,6 +151,10 @@ class WalletDetails extends Component {
         else
             this.setState({ withdraw: true });
     }
+    changeCoins(value) {
+        console.log(this.props, value);
+        this.props.history.push(`/walletDetails?coinID=${value}`)
+    }
     render() {
         var tempDetails = null;
         if (this.state.walletDetails !== null && this.state.walletDetails !== undefined)
@@ -168,15 +173,17 @@ class WalletDetails extends Component {
                                         <MY_wallet>
                                             <span>BITCOIN</span>
                                         </MY_wallet>
+                                        {console.log(tempDetails)}
                                         <WalletCoin>
-                                            {this.props.walletDetails !== null ?
-                                                <Select defaultValue="" style={{ width: "100%" }}>
-                                                    <Option value="jack">Jack</Option>
-                                                    <Option value="lucy">Lucy</Option>
-                                                    <Option value="Yiminghe">yiminghe</Option>
-                                                </Select>
-                                                : ""
-                                            }
+                                            <Select onChange={this.changeCoins} defaultValue={tempDetails == null ? "" : tempDetails.length > 0 ? tempDetails[0].coin_code : ""} style={{ width: "100%" }}>
+                                                {this.props.walletDetails !== null ?
+                                                    this.props.walletDetails.coins.map(function (temp) {
+                                                        return (
+                                                            <Option value={temp.coin}>{temp.coin}</Option>
+                                                        );
+                                                    }) : ""
+                                                }
+                                            </Select>
                                         </WalletCoin>
                                     </Left_head>
                                 </Col>
