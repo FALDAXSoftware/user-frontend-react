@@ -31,7 +31,7 @@ export const Left_div1 = styled(Left_div)`
     padding-bottom: 30px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
-    height:700px;
+    height:800px;
     @media(max-width:575px)
     {
         height:auto;
@@ -105,6 +105,10 @@ export const FIAT_wrap2 = styled.div`
         background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
         color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
+    @media(max-width:596px)
+    {
+        margin-top:20px;
+    }
 `
 export const FIAT = styled.div`
     display:inline-block;
@@ -142,7 +146,7 @@ export const Right_div = styled.div`
     height:640px;
 `
 export const Right_div1 = styled(Right_div)`
-    height:700px;
+    height:800px;
     @media(max-width:575px)
     {
         height:auto;
@@ -411,6 +415,7 @@ export const WrapDepth = styled.div`
 
 
 export const History_wrap = styled.div`
+    overflow-x:scroll;
 `
 
 export const CustomTable = styled.table`
@@ -452,6 +457,14 @@ export const TableContent = styled(CustomTable)`
 
 /* My orders and Trade */
 export const Selectmonth = styled(Select)`
+& .ant-select-selection--single
+{
+    height:40px !important;
+}
+& .ant-select-selection__rendered
+{
+    line-height:40px !important;
+}
     & .ant-select-selection
     {
         background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
@@ -467,6 +480,7 @@ export const InstruOrder = styled(Instru)`
 `
 export const Orderwrap = styled.div`
 display: flex;
+flex-wrap:wrap;
 align-items: center;
 margin-bottom: 20px;
 `

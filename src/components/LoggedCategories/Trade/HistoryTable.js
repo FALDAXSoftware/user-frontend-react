@@ -6,14 +6,20 @@ import { Table } from 'react-bootstrap';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { globalVariables } from "../../../Globals";
 import moment from "moment";
+import { Spin } from 'antd';
 import { History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import {
+    Spin_single
+} from "../../../styled-components/loggedStyle/dashStyle"
+import { OTwrap } from "./OrderTrade"
 const APP_URL = globalVariables.API_URL;
 const BorderedHistoryWrap = styled(History_wrap)`
     margin-left:30px;
     margin-right:30px;
     border:1px solid #d8d8d8;
+    overflow-x:scroll;
 `
 const SideType = styled.td`
     color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
@@ -26,6 +32,7 @@ class HistoryTable extends Component {
             data: [],
             crypto: "XRP",
             currency: "BTC",
+            loader: false
         }
         this.updateData = this.updateData.bind(this);
     }
@@ -55,7 +62,7 @@ class HistoryTable extends Component {
     }
     historyData() {
         let io = this.props.io
-
+        this.setState({ loader: true })
         io.sails.url = APP_URL;
         var URL;
         if (this.props.cryptoPair.prevRoom !== undefined && Object.keys(this.props.cryptoPair.prevRoom).length > 0) {
@@ -91,51 +98,62 @@ class HistoryTable extends Component {
         }
         this.setState({
             data: rows,
+            loader: false
         });
     }
     render() {
         var me = this;
         return (
             <BorderedHistoryWrap>
-                <div class="tbl-header">
-                    <TableHeader cellpadding="10px" cellspacing="0" border="0">
-                        <thead>
-                            <tr>
-                                <th>SIDE</th>
-                                <th>AMOUNT</th>
-                                <th>FILL PRICE</th>
-                                <th>TIME</th>
-                                <th>TOTAL</th>
-                            </tr>
-                        </thead>
-                    </TableHeader>
-                </div>
-                <div class="tbl-content">
-                    <Scrollbars
-                        style={{ height: 300 }}>
-                        <TableContent cellpadding="10px" cellspacing="0" border="0">
-                            <tbody>
-                                {this.state.data.map((element, index) => (
-                                    <tr>
-                                        <SideType type={element.side}>{element.side}</SideType>
-                                        <td>{element.amount}</td>
-                                        {(index + 1) < me.state.data.length ? (element.fill_price > me.state.data[index + 1].fill_price)
-                                            ?
-                                            <td>{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td> :
-                                            <td>{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/down-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/down_white.png" />}</td>
-                                            : <td>{element.fill_price} </td>
-                                        }
-                                        <td>{element.time}</td>
-                                        <td>{element.total.toFixed(4)}</td>
-                                    </tr>
-                                ))
+                <OTwrap>
+                    <div class="tbl-header">
+                        <TableHeader cellpadding="10px" cellspacing="0" border="0">
+                            <thead>
+                                <tr>
+                                    <th>SIDE</th>
+                                    <th>AMOUNT</th>
+                                    <th>FILL PRICE</th>
+                                    <th>TIME</th>
+                                    <th>TOTAL</th>
+                                </tr>
+                            </thead>
+                        </TableHeader>
+                    </div>
+                </OTwrap>
+                <OTwrap>
+                    <div class="tbl-content">
+                        <Scrollbars
+                            style={{ height: 300 }}>
+                            <TableContent cellpadding="10px" cellspacing="0" border="0">
+                                <tbody>
+                                    {this.state.data.map((element, index) => (
+                                        <tr>
+                                            <SideType type={element.side}>{element.side}</SideType>
+                                            <td>{element.amount}</td>
+                                            {(index + 1) < me.state.data.length ? (element.fill_price > me.state.data[index + 1].fill_price)
+                                                ?
+                                                <td>{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td> :
+                                                <td>{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/down-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/down_white.png" />}</td>
+                                                : <td>{element.fill_price} </td>
+                                            }
+                                            <td>{element.time}</td>
+                                            <td>{element.total.toFixed(4)}</td>
+                                        </tr>
+                                    ))
 
-                                }
+                                    }
 
-                            </tbody>
-                        </TableContent>
-                    </Scrollbars>
-                </div>
+                                </tbody>
+                            </TableContent>
+                        </Scrollbars>
+                    </div>
+                </OTwrap>
+                {(this.state.loader == true) ?
+                    <Spin_single className="Full_spin">
+                        <Spin size="small" />
+                    </Spin_single>
+                    : ""
+                }
             </BorderedHistoryWrap>
         )
     }

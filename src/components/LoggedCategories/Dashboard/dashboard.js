@@ -17,7 +17,7 @@ import { Spin_Ex } from "../../Settings/Personaldetails/PersonalDetails";
 
 import {
     ActPortWrap, Lleft, Rright, Topic, Act_div, ActTable, High_low, Left_hl, Right_hl,
-    Rise_fall, Newsdiv, News, Newslist, List, Listspan, Listp, Date
+    Rise_fall, Newsdiv, News, Newslist, List, Listspan, Listp, Date, Spin_single
 } from "../../../styled-components/loggedStyle/dashStyle"
 import { globalVariables } from '../../../Globals';
 import moment from 'moment';
@@ -177,7 +177,7 @@ const activityColumns = [{
     dataIndex: 'completed',
     className: "progress-bar-container",
     render: completed => (
-        <Progress percent={completed} />
+        <Progress percent={completed.toFixed(2)} />
     ),
 }];
 const portfolioColumn = [{
@@ -215,7 +215,8 @@ class Dashboard extends Component {
             diffrence: 0,
             userFiat: "USD",
             activityLoader: false,
-            newsLoader: false
+            newsLoader: false,
+            portfolioLoader: false
         }
 
         io = this.props.io;
@@ -257,7 +258,7 @@ class Dashboard extends Component {
                         activityData.push({
                             date: moment.utc(element.created_at).local().format("MMMM DD,HH:mm"),
                             action: element.side,
-                            amount: element.price.toFixed(4) + " " + element.currency,
+                            amount: element.price.toFixed(2) + " " + element.currency,
                             completed: ((parseFloat(element.quantity) * 100) / parseFloat(element.fix_quantity)),
                         });
                     });
@@ -273,6 +274,8 @@ class Dashboard extends Component {
 
     loadPortfolio() {
         var self = this;
+        self.setState({ portfolioLoader: true });
+
         fetch(`${API_URL}/dashboard/get-portfolio`, {
             method: "get",
             headers: {
@@ -299,7 +302,8 @@ class Dashboard extends Component {
                         total: responseData.data.total,
                         diffrence: responseData.data.diffrence,
                         userFiat: userFiat,
-                        portfolioData: portfolioData
+                        portfolioData: portfolioData,
+                        portfolioLoader: false
                     });
                 }
             })
@@ -369,10 +373,10 @@ class Dashboard extends Component {
                                                     <ActTable scroll={{ y: 320 }} pagination={false} columns={activityColumns} dataSource={activityData} className="activity-table" />
 
                                                 </Act_div>
-                                                {(true == true) ?
-                                                    <Spin_Ex className="Ex_spin">
+                                                {(this.state.activityLoader == true) ?
+                                                    <Spin_single className="Single_spin">
                                                         <Spin size="small" />
-                                                    </Spin_Ex>
+                                                    </Spin_single>
                                                     : ""
                                                 }
                                             </Lleft>
@@ -389,6 +393,12 @@ class Dashboard extends Component {
                                                 <Act_div>
                                                     <ActTable scroll={{ y: 250 }} pagination={false} columns={portfolioColumn} dataSource={this.state.portfolioData} className="portfolio-table" />
                                                 </Act_div>
+                                                {(this.state.portfolioLoader == true) ?
+                                                    <Spin_single className="Single_spin">
+                                                        <Spin size="small" />
+                                                    </Spin_single>
+                                                    : ""
+                                                }
                                             </Rright>
                                         </Col>
                                     </Row>
@@ -413,13 +423,8 @@ class Dashboard extends Component {
                                                 ))
                                             }
                                         </Scrollbars>
+
                                     </Newslist>
-                                    {/* {(newsLoader == true) ?
-                                        <Spin_Ex className="Ex_spin">
-                                            <Spin size="small" />
-                                        </Spin_Ex>
-                                        : ""
-                                    } */}
                                 </Newsdiv>
                             </ContainerNew>
                         </Body_wrap>

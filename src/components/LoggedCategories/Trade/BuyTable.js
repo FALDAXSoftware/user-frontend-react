@@ -5,8 +5,19 @@ import styled from 'styled-components';
 import { Buy_table, BBC, Total_BTC, History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 import { Scrollbars } from 'react-custom-scrollbars';
 import { globalVariables } from "../../../Globals";
-
+import { Spin } from 'antd';
+import {
+    Spin_single
+} from "../../../styled-components/loggedStyle/dashStyle"
+import { OTwrap } from './OrderTrade';
 const APP_URL = globalVariables.API_URL;
+const OTwrap2 = styled(OTwrap)`
+    min-width:auto;
+    @media(max-width:991px)
+    {
+        min-width:767px;
+    }
+`
 
 class BuyTable extends Component {
     constructor(props) {
@@ -16,7 +27,8 @@ class BuyTable extends Component {
             crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
             currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
             currency: "BTC",
-            lastsum: 0
+            lastsum: 0,
+            loader: false
         }
         this.updateData = this.updateData.bind(this);
     }
@@ -32,7 +44,7 @@ class BuyTable extends Component {
     buyTableData() {
         let io = this.props.io
         io.sails.url = APP_URL;
-
+        this.setState({ loader: true });
         var URL;
         if (this.props.cryptoPair.prevRoom !== undefined && Object.keys(this.props.cryptoPair.prevRoom).length > 0) {
             URL = `/socket/get-buy-book?prevRoom=${this.props.cryptoPair.prevRoom.crypto}-${this.props.cryptoPair.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`
@@ -71,6 +83,7 @@ class BuyTable extends Component {
             lastsum = sum
         }
         this.setState({
+            loader: false,
             data: rows,
             lastsum
         });
@@ -98,40 +111,50 @@ class BuyTable extends Component {
                 <Total_BTC>Total: {this.state.lastsum} {this.props.cryptoPair.crypto}</Total_BTC>
                 <Buy_table>
                     <History_wrap>
-                        <div className="tbl-header">
-                            <TableHeader cellpadding="10px" cellspacing="0" border="0">
-                                <thead>
-                                    <tr>
-                                        <th>MY SIZE</th>
-                                        <th>AMOUNT</th>
-                                        <th>BID</th>
-                                        <th>TOTAL</th>
-                                    </tr>
-                                </thead>
-                            </TableHeader>
-                        </div>
-                        <div class="tbl-content">
-                            <Scrollbars
-                                style={{ height: 165 }}>
-                                <TableContent cellpadding="10px" cellspacing="0" border="0">
-                                    <tbody>
-                                        {this.state.data.map(element => (
-                                            <tr>
-                                                <td>{element.my_size}</td>
-                                                <td>{element.amount}</td>
-                                                <td>{element.bid}</td>
-                                                <td>{element.total.toFixed(4)}</td>
-                                            </tr>
-                                        ))
+                        <OTwrap2>
+                            <div className="tbl-header">
+                                <TableHeader cellpadding="10px" cellspacing="0" border="0">
+                                    <thead>
+                                        <tr>
+                                            <th>MY SIZE</th>
+                                            <th>AMOUNT</th>
+                                            <th>BID</th>
+                                            <th>TOTAL</th>
+                                        </tr>
+                                    </thead>
+                                </TableHeader>
+                            </div>
+                        </OTwrap2>
+                        <OTwrap2>
+                            <div class="tbl-content">
+                                <Scrollbars
+                                    style={{ height: 165 }}>
+                                    <TableContent cellpadding="10px" cellspacing="0" border="0">
+                                        <tbody>
+                                            {this.state.data.map(element => (
+                                                <tr>
+                                                    <td>{element.my_size}</td>
+                                                    <td>{element.amount}</td>
+                                                    <td>{element.bid}</td>
+                                                    <td>{element.total.toFixed(4)}</td>
+                                                </tr>
+                                            ))
 
-                                        }
+                                            }
 
-                                    </tbody>
-                                </TableContent>
-                            </Scrollbars>
-                        </div>
+                                        </tbody>
+                                    </TableContent>
+                                </Scrollbars>
+                            </div>
+                        </OTwrap2>
                     </History_wrap>
                 </Buy_table>
+                {(this.state.Loader == true) ?
+                    <Spin_single className="Single_spin">
+                        <Spin size="small" />
+                    </Spin_single>
+                    : ""
+                }
             </div>
         )
     }

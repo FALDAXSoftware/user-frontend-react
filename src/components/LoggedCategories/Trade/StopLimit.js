@@ -240,7 +240,7 @@ class StopLimit extends Component {
                     </Total_wrap>
                 </BTC_wrap>
                 <BTC_wrap>
-                    <Label>Limit Price</Label>
+                    <Label>Total</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
                         <Totinput type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange} />
                     </Total_wrap>
