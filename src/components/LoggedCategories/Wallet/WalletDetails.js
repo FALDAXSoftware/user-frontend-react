@@ -221,7 +221,7 @@ class WalletDetails extends Component {
                             </Row>
                         </Header_wrap>
                         <Detail_wrap>
-                            <Address>Bitcoin Address:<b style={{ color: "black" }}>{tempDetails !== null ? tempDetails[0].source_address : ""}</b></Address>
+                            <Address>Bitcoin Address:<b style={{ color: "black" }}>{walletUserDetails !== null ? walletUserDetails[0].receive_address : ""}</b></Address>
                             <hr />
                             <Row_wrap>
                                 <Row>
