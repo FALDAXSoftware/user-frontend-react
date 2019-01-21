@@ -19,7 +19,7 @@ import {
 } from "../../../styled-components/loggedStyle/walletStyle";
 import { globalVariables } from '../../../Globals';
 
-let { API_URL } = globalVariables;
+let { API_URL, amazon_Bucket } = globalVariables;
 const Option = Select.Option;
 
 const Search = Input.Search;
@@ -87,6 +87,10 @@ const DropdownButtonOne = styled(DropdownButton)`
         margin-top: 8px;
     }
 `
+const CoinImage = styled.img`
+    width: 60px;
+    height: 60px;
+`
 
 class WalletDetails extends Component {
     constructor(props) {
@@ -98,6 +102,7 @@ class WalletDetails extends Component {
             total: null,
             loader: false,
             coin_code: "",
+            walletUserData: []
         };
         this.changeCoins = this.changeCoins.bind(this);
     }
@@ -131,7 +136,11 @@ class WalletDetails extends Component {
                 })
                     .then(response => response.json())
                     .then((responseData) => {
-                        this.setState({ walletDetails: responseData.walletTransData, loader: false, coin_code: coin_name[1] });
+                        this.setState({
+                            walletDetails: responseData.walletTransData,
+                            loader: false, coin_code: coin_name[1],
+                            walletUserData: responseData.walletUserData
+                        });
                     })
                     .catch(error => {
                     })
@@ -156,11 +165,19 @@ class WalletDetails extends Component {
         this.props.history.push(`/walletDetails?coinID=${value}`)
     }
     render() {
+        const { walletUserData } = this.state;
         var tempDetails = null;
+        var walletUserDetails = null;
         if (this.state.walletDetails !== null && this.state.walletDetails !== undefined)
             if (Object.keys(this.state.walletDetails).length > 0) {
                 tempDetails = this.state.walletDetails;
             }
+
+        if (this.state.walletUserData !== null && this.state.walletUserData !== undefined)
+            if (Object.keys(this.state.walletUserData).length > 0) {
+                walletUserDetails = this.state.walletUserData;
+            }
+        var def = tempDetails == null ? "" : (tempDetails.length > 0 ? tempDetails[0].coin_code : "")
         return (
             <Contact_wrap>
                 <LoggedNavigation />
@@ -175,7 +192,7 @@ class WalletDetails extends Component {
                                         </MY_wallet>
                                         {console.log(tempDetails)}
                                         <WalletCoin>
-                                            <Select onChange={this.changeCoins} defaultValue={tempDetails == null ? "" : tempDetails.length > 0 ? tempDetails[0].coin_code : ""} style={{ width: "100%" }}>
+                                            <Select onChange={this.changeCoins} defaultValue={`${def}`} style={{ width: "100%" }}>
                                                 {this.props.walletDetails !== null ?
                                                     this.props.walletDetails.coins.map(function (temp) {
                                                         return (
@@ -194,13 +211,11 @@ class WalletDetails extends Component {
                                             <Money>${this.state.total !== null ? this.state.total : ""}</Money>
                                             <Currency>USD</Currency>
                                         </WallTotal>
-                                        {console.log(this.props)}
-                                        <Select defaultValue="lucy" style={{ width: 200, marginLeft: "auto" }}>
-                                            <Option value="jack">Jack</Option>
-                                            <Option value="lucy">Lucy</Option>
-                                            <Option value="Yiminghe">yiminghe</Option>
-                                        </Select>
-
+                                        {/* <Select defaultValue="USD" style={{ width: 200, marginLeft: "auto" }}>
+                                            <Option value="USD">USD</Option>
+                                            <Option value="EUR">EUR</Option>
+                                            <Option value="INR">INR</Option>
+                                        </Select> */}
                                     </Right_head>
                                 </Col>
                             </Row>
@@ -212,9 +227,11 @@ class WalletDetails extends Component {
                                 <Row>
                                     <Col xxl={12} xl={12} lg={24} md={24}>
                                         <Left_Bit>
-                                            <CryptImg><img src="/images/LoggedCat/Bit_wallet.png" /></CryptImg>
+                                            <CryptImg><CoinImage src={((tempDetails !== null && tempDetails[0].coin_icon !== null) ? amazon_Bucket + tempDetails[0].coin_icon : amazon_Bucket + "coin/defualt_coin.png")} /></CryptImg>
                                             <CryptAmt>
-                                                <BTC_amt>0.05218<BTC>{tempDetails !== null ? tempDetails[0].coin_code : ""}</BTC></BTC_amt>
+                                                <BTC_amt>
+                                                    {walletUserDetails !== null ? walletUserDetails[0].balance.toFixed(4) : ''}
+                                                    <BTC>{tempDetails !== null ? tempDetails[0].coin_code : ""}</BTC></BTC_amt>
                                                 <FIAT_amt>$874.23<AMT>USD</AMT></FIAT_amt>
                                             </CryptAmt>
                                         </Left_Bit>
