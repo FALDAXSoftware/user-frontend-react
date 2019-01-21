@@ -18,7 +18,11 @@ class Market extends Component {
             sellprice: 0.001,
             buyPrice: 0.002,
             amount: 0,
-            total: 0
+            total: 0,
+            buyPayAmt: '',
+            buyEstPrice: '',
+            sellEstPrice: '',
+            sellPayAmt: ''
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -36,8 +40,10 @@ class Market extends Component {
             }
         });
     }
+
     componentWillReceiveProps(props, newProps) {
-        console.log(props)
+        console.log('cwrp', props)
+        this.setState({ userBalFees: props.userBal.fees })
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
                 this.setState({ crypto: props.cryptoPair.crypto })
@@ -61,10 +67,19 @@ class Market extends Component {
             ...obj
         }, () => {
             obj = {};
-            if (this.state.amount > 0) {
+
+            if (this.state.amount >= 0) {
                 if (this.state.side == "Buy") {
+                    self.setState({
+                        buyPayAmt: this.state.amount * this.props.userBal.buyPay,
+                        buyEstPrice: this.state.amount * this.props.userBal.buyEstimatedPrice
+                    })
                     obj["total"] = this.state.amount * this.state.buyPrice
                 } else if (this.state.side == "Sell") {
+                    self.setState({
+                        sellPayAmt: this.state.amount * this.props.userBal.sellPay,
+                        sellEstPrice: this.state.amount * this.props.userBal.sellEstimatedPrice
+                    })
                     obj["total"] = this.state.amount * this.state.sellprice
                 }
             } else {
@@ -112,7 +127,9 @@ class Market extends Component {
         }
     }
     render() {
+        const { buyPayAmt, buyEstPrice, sellEstPrice, sellPayAmt, amount } = this.state;
         const RadioGroup = Radio.Group;
+
         return (
             <Market_wrap>
                 <Buy_wrap>
@@ -231,7 +248,6 @@ class Market extends Component {
                 {Object.keys(this.props.userBal).length > 0 ?
                     this.state.side == "Buy" ?
                         <Pay>
-
                             <Row>
                                 <Col xs={15} sm={12}>
                                     <div>
@@ -240,7 +256,7 @@ class Market extends Component {
                                 </Col>
                                 <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{this.props.userBal.buyPay.toFixed(2)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
+                                        <Willpay2>{buyPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
@@ -250,20 +266,19 @@ class Market extends Component {
                                         Estimated Best Price
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {this.props.userBal.buyPay.toFixed(2)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {buyPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                     <Col xs={15} sm={12}>
-                                        Fee 0.1%
+                                        Fee {this.state.userBalFees} %
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {this.props.userBal.buyEstimatedPrice.toFixed(2)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {buyEstPrice} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                 </Row>
                             </Esti>
                         </Pay>
                         :
                         <Pay>
-
                             <Row>
                                 <Col xs={15} sm={12}>
                                     <div>
@@ -272,7 +287,7 @@ class Market extends Component {
                                 </Col>
                                 <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{this.props.userBal.sellPay.toFixed(2)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
+                                        <Willpay2>{sellPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
@@ -282,13 +297,13 @@ class Market extends Component {
                                         Estimated Best Price
                             </Col>
                                     <Col xs={9} sm={12}>
-                                        {this.props.userBal.sellPay.toFixed(2)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {sellPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                     <Col xs={15} sm={12}>
-                                        Fee 0.1%
+                                        Fee {this.state.userBalFees} %
                             </Col>
                                     <Col xs={9} sm={12}>
-                                        {this.props.userBal.sellEstimatedPrice.toFixed(2)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {sellEstPrice} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                 </Row>
                             </Esti>

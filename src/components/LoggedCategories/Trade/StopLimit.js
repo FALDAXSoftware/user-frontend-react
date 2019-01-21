@@ -20,7 +20,11 @@ class StopLimit extends Component {
             amount: 0,
             stop_price: 0,
             limit_price: 0,
-            total: 0
+            total: 0,
+            buyPayAmt: '',
+            buyEstPrice: '',
+            sellEstPrice: '',
+            sellPayAmt: ''
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -40,6 +44,7 @@ class StopLimit extends Component {
     }
     componentWillReceiveProps(props, newProps) {
         console.log(props)
+        this.setState({ userBalFees: props.userBal.fees })
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
                 this.setState({ crypto: props.cryptoPair.crypto })
@@ -53,6 +58,7 @@ class StopLimit extends Component {
         var self = this;
         let obj = {};
         let name = e.target.name;
+
         let value = e.target.value;
         obj[name] = value;
         if (name == "side") {
@@ -63,11 +69,19 @@ class StopLimit extends Component {
             ...obj
         }, () => {
             obj = {};
-            if (this.state.amount > 0) {
+            if (this.state.amount >= 0 && this.state.stop_price > 0) {
                 if (this.state.side == "Buy") {
-                    obj["total"] = this.state.amount * this.state.buyPrice
+                    obj["total"] = this.state.amount * this.props.userBal.buyPay;
+                    self.setState({
+                        buyPayAmt: this.state.amount * this.props.userBal.buyPay,
+                        buyEstPrice: this.state.amount * this.props.userBal.buyEstimatedPrice
+                    })
                 } else if (this.state.side == "Sell") {
-                    obj["total"] = this.state.amount * this.state.sellprice
+                    obj["total"] = this.state.amount * this.props.userBal.sellPay;
+                    self.setState({
+                        sellPayAmt: this.state.amount * this.props.userBal.sellPay,
+                        sellEstPrice: this.state.amount * this.props.userBal.sellEstimatedPrice
+                    })
                 }
             } else {
                 obj["total"] = 0;
@@ -118,7 +132,9 @@ class StopLimit extends Component {
     onChangeCheck(e) {
     }
     render() {
+        const { userBalFees, buyEstimatedPrice, buyPayAmt, sellEstPrice, sellPayAmt } = this.state;
         const RadioGroup = Radio.Group;
+
         return (
             <Market_wrap>
                 <Buy_wrap>
@@ -169,7 +185,7 @@ class StopLimit extends Component {
                                             <Total>Best ask</Total>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.buyPay.toFixed(2)} B</Total>
+                                            <Total>{buyPayAmt} B</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -240,15 +256,14 @@ class StopLimit extends Component {
                     </Total_wrap>
                 </BTC_wrap>
                 <BTC_wrap>
-                    <Label>Limit Price</Label>
+                    <Label>Total</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange} />
+                        <Totinput readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total_price} name="total_price" onChange={this.onChange} />
                     </Total_wrap>
                 </BTC_wrap>
                 {Object.keys(this.props.userBal).length > 0 ?
                     this.state.side == "Buy" ?
                         <Pay>
-
                             <Row>
                                 <Col xs={15} sm={12}>
                                     <div>
@@ -257,7 +272,7 @@ class StopLimit extends Component {
                                 </Col>
                                 <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{this.props.userBal.buyPay.toFixed(2)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
+                                        <Willpay2>{buyPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
@@ -267,20 +282,19 @@ class StopLimit extends Component {
                                         Estimated Best Price
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {this.props.userBal.buyPay.toFixed(2)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {buyPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                     <Col xs={15} sm={12}>
-                                        Fee 0.1%
+                                        Fee {userBalFees} %
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {this.props.userBal.buyEstimatedPrice.toFixed(2)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {buyEstimatedPrice} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                 </Row>
                             </Esti>
                         </Pay>
                         :
                         <Pay>
-
                             <Row>
                                 <Col xs={15} sm={12}>
                                     <div>
@@ -289,7 +303,7 @@ class StopLimit extends Component {
                                 </Col>
                                 <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{this.props.userBal.sellPay.toFixed(2)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
+                                        <Willpay2>{sellPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
@@ -299,13 +313,13 @@ class StopLimit extends Component {
                                         Estimated Best Price
                             </Col>
                                     <Col xs={9} sm={12}>
-                                        {this.props.userBal.sellPay.toFixed(2)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {sellPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                     <Col xs={15} sm={12}>
-                                        Fee 0.1%
+                                        Fee {userBalFees} %
                             </Col>
                                     <Col xs={9} sm={12}>
-                                        {this.props.userBal.sellEstimatedPrice.toFixed(2)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {sellEstPrice} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                 </Row>
                             </Esti>
