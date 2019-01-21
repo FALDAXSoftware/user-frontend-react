@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import 'antd/dist/antd.css';
-import { Row, Col, Checkbox, Radio, notification } from 'antd';
+import { Row, Col, Radio, notification } from 'antd';
 import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Total, Check_wrap, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "../../../styled-components/loggedStyle/tradeStyle";
 
 import { globalVariables } from "../../../Globals";
@@ -42,7 +42,6 @@ class Market extends Component {
     }
 
     componentWillReceiveProps(props, newProps) {
-        console.log('cwrp', props)
         this.setState({ userBalFees: props.userBal.fees })
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -71,16 +70,16 @@ class Market extends Component {
             if (this.state.amount >= 0) {
                 if (this.state.side == "Buy") {
                     self.setState({
-                        buyPayAmt: this.state.amount * this.props.userBal.buyPay,
-                        buyEstPrice: this.state.amount * this.props.userBal.buyEstimatedPrice
+                        buyPayAmt: Number(this.state.amount) * this.props.userBal.buyPay,
+                        buyEstPrice: Number(this.state.amount) * this.props.userBal.buyEstimatedPrice
                     })
-                    obj["total"] = this.state.amount * this.state.buyPrice
+                    obj["total"] = Number(this.state.amount) * this.props.userBal.buyPay
                 } else if (this.state.side == "Sell") {
                     self.setState({
-                        sellPayAmt: this.state.amount * this.props.userBal.sellPay,
-                        sellEstPrice: this.state.amount * this.props.userBal.sellEstimatedPrice
+                        sellPayAmt: Number(this.state.amount) * this.props.userBal.sellPay,
+                        sellEstPrice: Number(this.state.amount) * this.props.userBal.sellEstimatedPrice
                     })
-                    obj["total"] = this.state.amount * this.state.sellprice
+                    obj["total"] = Number(this.state.amount) * this.props.userBal.sellPay
                 }
             } else {
                 obj["total"] = 0;

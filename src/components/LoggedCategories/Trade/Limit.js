@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import 'antd/dist/antd.css';
-import { Row, Col, Checkbox, Radio, notification } from 'antd';
+import { Row, Col, Radio, notification } from 'antd';
 import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Total, Check_wrap, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Best, Button_wrap, ButtonETH, StopCheck } from "../../../styled-components/loggedStyle/tradeStyle";
 
 import { globalVariables } from "../../../Globals";
@@ -20,10 +20,10 @@ class Limit extends Component {
             amount: 0,
             limit_price: 0,
             total: 0,
-            buyPayAmt: '',
-            buyEstPrice: '',
-            sellEstPrice: '',
-            sellPayAmt: ''
+            buyPayAmt: 0,
+            buyEstPrice: 0,
+            sellEstPrice: 0,
+            sellPayAmt: 0
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -42,7 +42,6 @@ class Limit extends Component {
         });
     }
     componentWillReceiveProps(props, newProps) {
-        console.log('>>>>>>', props)
         this.setState({ userBalFees: props.userBal.fees })
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -57,7 +56,6 @@ class Limit extends Component {
         var self = this;
         let obj = {};
         let name = e.target.name;
-        console.log('nane>>>>>>>>>', name)
         let value = e.target.value;
         obj[name] = value;
         if (name == "side") {
@@ -68,23 +66,23 @@ class Limit extends Component {
         this.setState({
             ...obj
         }, () => {
-            console.log('this.stateeee', this.state);
             obj = {};
-            if (this.state.amount >= 0 && this.state.limit_price > 0) {
+            if (this.state.amount > 0 && this.state.limit_price > 0) {
                 if (this.state.side == "Buy") {
-                    obj["total"] = this.state.amount * this.props.userBal.buyPay;
+                    obj["total"] = Number(this.state.amount) * this.props.userBal.buyPay;
                     self.setState({
-                        buyPayAmt: this.state.amount * this.props.userBal.buyPay,
-                        buyEstPrice: this.state.amount * this.props.userBal.buyEstimatedPrice
+                        buyPayAmt: Number(this.state.amount) * this.props.userBal.buyPay,
+                        buyEstPrice: Number(this.state.amount) * this.props.userBal.buyEstimatedPrice
                     })
                 } else if (this.state.side == "Sell") {
                     self.setState({
-                        sellPayAmt: this.state.amount * this.props.userBal.sellPay,
-                        sellEstPrice: this.state.amount * this.props.userBal.sellEstimatedPrice
+                        sellPayAmt: Number(this.state.amount) * this.props.userBal.sellPay,
+                        sellEstPrice: Number(this.state.amount) * this.props.userBal.sellEstimatedPrice
                     })
-                    obj["total"] = this.state.amount * this.props.userBal.sellPay;
+                    obj["total"] = Number(this.state.amount) * this.props.userBal.sellPay;
                 }
             } else {
+                console.log('ELSE')
                 obj["total"] = 0;
             }
             self.setState({ ...obj });
@@ -132,8 +130,9 @@ class Limit extends Component {
     onChangeCheck(e) {
     }
     render() {
-        const { userBalFees, buyEstimatedPrice, buyPayAmt, sellEstPrice, sellPayAmt } = this.state;
+        const { userBalFees, buyEstPrice, buyPayAmt, sellEstPrice, sellPayAmt } = this.state;
         const RadioGroup = Radio.Group;
+        console.log('buyEstimatedPrice', buyEstPrice)
 
         return (
             <Market_wrap>
@@ -239,7 +238,6 @@ class Limit extends Component {
                     : ""}
                 <ETH_wrap>
                     <Label>Amount</Label>
-
                     <Total_wrap style={{ marginBottom: 16 }}>
                         <AMTinput type="number" addonAfter={this.state.crypto} value={this.state.amount} name="amount" onChange={this.onChange} />
                         {this.validator.message('amount', this.state.amount, 'required|numeric|gtzero')}
@@ -285,7 +283,7 @@ class Limit extends Component {
                                         Fee {userBalFees} %
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {buyEstimatedPrice} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {buyEstPrice} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                 </Row>
                             </Esti>
