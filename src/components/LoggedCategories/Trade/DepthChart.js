@@ -28,6 +28,7 @@ class DepthChart extends Component {
         this.state = {
             crypto: "XRP",
             currency: "BTC",
+            loader: false,
             data: {
                 type: 'scatter',
                 datasets: [
@@ -78,7 +79,7 @@ class DepthChart extends Component {
     }
     componentDidMount() {
         console.log("did mount");
-
+        this.setState({ loader: true })
         io.socket.get("/socket/get-depth-chart-data?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
 
 
@@ -151,6 +152,7 @@ class DepthChart extends Component {
         console.log(self.refs.chart.chartInstance);
         // console.log();
 
+        this.setState({ loader: true })
 
         setTimeout(() => {
             self.refs.chart.chartInstance.update();
