@@ -20,7 +20,7 @@ let { API_URL } = globalVariables;
 var socketIOClient = require('socket.io-client');
 var sailsIOClient = require('sails.io.js');
 let io = sailsIOClient(socketIOClient);
-io.sails.url = API_URL;
+// io.sails.url = API_URL;
 
 const routes = [
   {

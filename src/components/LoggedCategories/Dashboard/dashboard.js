@@ -220,7 +220,6 @@ class Dashboard extends Component {
         }
 
         io = this.props.io;
-        io.sails.url = API_URL;
         this.loadNews = this.loadNews.bind(this);
         this.loadActivity = this.loadActivity.bind(this);
         this.loadPortfolio = this.loadPortfolio.bind(this);
@@ -231,6 +230,7 @@ class Dashboard extends Component {
         self.loadNews(1);
         self.loadActivity();
         self.loadPortfolio();
+        io.sails.url = API_URL;
         io.sails.headers = {
             Accept: 'application/json',
             'Content-Type': 'application/json',
@@ -275,7 +275,6 @@ class Dashboard extends Component {
     loadPortfolio() {
         var self = this;
         self.setState({ portfolioLoader: true });
-
         fetch(`${API_URL}/dashboard/get-portfolio`, {
             method: "get",
             headers: {
