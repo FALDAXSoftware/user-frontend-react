@@ -207,9 +207,9 @@ class WalletDetails extends Component {
                                 <Col xxl={12} xl={12} lg={12} sm={24}>
                                     <Right_head>
                                         <WallTotal>
-                                            <Tot>Total:</Tot>
+                                            {/* <Tot>Total:</Tot>
                                             <Money>${this.state.total !== null ? this.state.total : ""}</Money>
-                                            <Currency>USD</Currency>
+                                            <Currency>USD</Currency> */}
                                         </WallTotal>
                                         {/* <Select defaultValue="USD" style={{ width: 200, marginLeft: "auto" }}>
                                             <Option value="USD">USD</Option>
@@ -221,7 +221,7 @@ class WalletDetails extends Component {
                             </Row>
                         </Header_wrap>
                         <Detail_wrap>
-                            <Address>Bitcoin Address:<b style={{ color: "black" }}>{walletUserDetails !== null ? walletUserDetails[0].receive_address : ""}</b></Address>
+                            <Address>Bitcoin Address : <b style={{ color: "black" }}>{walletUserDetails !== null ? walletUserDetails[0].receive_address : ""}</b></Address>
                             <hr />
                             <Row_wrap>
                                 <Row>
@@ -232,7 +232,7 @@ class WalletDetails extends Component {
                                                 <BTC_amt>
                                                     {walletUserDetails !== null ? walletUserDetails[0].balance.toFixed(4) : ''}
                                                     <BTC>{tempDetails !== null ? tempDetails[0].coin_code : ""}</BTC></BTC_amt>
-                                                <FIAT_amt>$874.23<AMT>USD</AMT></FIAT_amt>
+                                                {/* <FIAT_amt>$874.23<AMT>USD</AMT></FIAT_amt> */}
                                             </CryptAmt>
                                         </Left_Bit>
                                     </Col>
