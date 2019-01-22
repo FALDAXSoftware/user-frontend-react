@@ -19,7 +19,6 @@ export default (state = {}, action) => {
             }
 
         default:
-            /* console.log("default") */
             return { ...state };
     }
 
