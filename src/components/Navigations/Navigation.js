@@ -425,7 +425,6 @@ class Navigation extends Component {
         if (props.location.pathname !== undefined)
             if (props.location.pathname == "/login") {
                 if (props.location.hash == "#openTicket") {
-                    console.log("#openTicket")
                     this.setState({ modal: 0, visible: true });
                 }
             }
@@ -434,7 +433,6 @@ class Navigation extends Component {
         if (this.props.location.pathname !== undefined)
             if (this.props.location.pathname == "/login") {
                 if (this.props.location.hash == "#openTicket") {
-                    console.log("#openTicket")
                     this.setState({ modal: 0, visible: true });
                 }
             }
@@ -466,11 +464,13 @@ class Navigation extends Component {
         if (this.props.location.pathname == "/about-us") {
             this.setState({ selected: ['2'] })
         } else if (this.props.location.pathname == "/contactus") {
-            this.setState({ selected: ['5'] })
-        } else if (this.props.location.pathname == "/addcoin") {
             this.setState({ selected: ['6'] })
+        } else if (this.props.location.pathname == "/blogs") {
+            this.setState({ selected: ['3'] })
+        } else if (this.props.location.pathname == "/addcoin") {
+            this.setState({ selected: ['7'] })
         } else if (this.props.location.pathname.includes("news")) {
-            this.setState({ selected: ['4'] })
+            this.setState({ selected: ['5'] })
         } else {
             if (this.props.location.pathname == "/")
                 this.setState({ selected: ['1'] })
@@ -501,11 +501,12 @@ class Navigation extends Component {
                         <Menu_item key="1"><NavLink className="Nav_selected" to="/">HOME</NavLink></Menu_item>
                         {/* <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item> */}
                         <Menu_item key="2"><NavLink className="Nav_selected" to="/about-us">ABOUT</NavLink></Menu_item>
-                        <Menu_item key="3" onClick={this.showComing}><NavLink className="Nav_selected" to="#">SECURITY</NavLink></Menu_item>
-                        <Menu_item key="4" ><NavLink className="Nav_selected" to="/news">NEWS</NavLink></Menu_item>
-                        <Menu_item key="5" ><NavLink className="Nav_selected" to="/contactus">CONTACT</NavLink></Menu_item>
-                        <Menu_item key="6" ><NavLink className="Nav_selected" to="/addcoin">LIST YOUR TOKEN</NavLink></Menu_item>
-                        <Menu_item key="7" onClick={this.showComing}><NavLink className="Nav_selected" to="#">EXCHANGE</NavLink></Menu_item>
+                        <Menu_item key="3"><NavLink className="Nav_selected" to="/blogs">BLOG</NavLink></Menu_item>
+                        <Menu_item key="4" onClick={this.showComing}><NavLink className="Nav_selected" to="#">SECURITY</NavLink></Menu_item>
+                        <Menu_item key="5" ><NavLink className="Nav_selected" to="/news">NEWS</NavLink></Menu_item>
+                        <Menu_item key="6" ><NavLink className="Nav_selected" to="/contactus">CONTACT</NavLink></Menu_item>
+                        <Menu_item key="7" ><NavLink className="Nav_selected" to="/addcoin">LIST YOUR TOKEN</NavLink></Menu_item>
+                        <Menu_item key="8" onClick={this.showComing}><NavLink className="Nav_selected" to="#">EXCHANGE</NavLink></Menu_item>
                     </Menu_main>
                     {/* console.log(this.props) */}
                     <Right_div>
