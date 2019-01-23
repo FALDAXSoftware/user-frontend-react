@@ -108,6 +108,7 @@ class WalletDetails extends Component {
         this.changeCoins = this.changeCoins.bind(this);
     }
     componentDidMount() {
+        var self = this;
         this.setState({ loader: true });
         var total = 0;
         if (this.props.walletDetails !== null) {
@@ -120,9 +121,13 @@ class WalletDetails extends Component {
                 this.setState({ total });
             }
         }
+        console.log(this.props.location);
+
         if (this.props.location !== undefined) {
             if (this.props.location.search.includes('coinID')) {
                 var coin_name = this.props.location.search.split('=');
+                console.log(coin_name);
+
                 fetch(API_URL + "/wallet-details", {
                     method: "post",
                     headers: {
@@ -133,8 +138,7 @@ class WalletDetails extends Component {
                     body: JSON.stringify({
                         coinReceive: coin_name[1]
                     })
-                })
-                    .then(response => response.json())
+                }).then(response => response.json())
                     .then((responseData) => {
                         let transDetails = null;
                         let walletUserDetails = null;
@@ -150,12 +154,17 @@ class WalletDetails extends Component {
                                 walletUserDetails = responseData.walletUserData;
                             }
                         }
+                        console.log("--=-=---", coin_name);
 
-                        this.setState({
-                            defaultCoin: transDetails[0].coin,
+                        self.setState({
+                            defaultCoin: coin_name[1],
                             walletDetails: transDetails,
-                            loader: false, coin_code: coin_name[1],
+                            loader: false,
+                            coin_code: coin_name[1],
                             walletUserData: walletUserDetails
+                        }, () => {
+                            console.log("set state", self.state);
+
                         });
                     })
                     .catch(error => {
@@ -183,6 +192,7 @@ class WalletDetails extends Component {
         })
     }
     render() {
+        var self = this;
         const { walletUserData, defaultCoin, walletDetails } = this.state;
 
         return (
@@ -233,7 +243,7 @@ class WalletDetails extends Component {
                                 <Row>
                                     <Col xxl={12} xl={12} lg={24} md={24}>
                                         <Left_Bit>
-                                            <CryptImg><CoinImage src={((walletUserData.length > 0 && walletUserData[0].coin_icon !== null) ? amazon_Bucket + walletUserData[0].coin_icon : amazon_Bucket + "coin/defualt_coin.png")} /></CryptImg>
+                                            <CryptImg><CoinImage src={((walletUserData.length > 0 && walletUserData[0].coin_icon !== null && walletUserData[0].coin_icon != undefined) ? amazon_Bucket + walletUserData[0].coin_icon : amazon_Bucket + "coin/defualt_coin.png")} /></CryptImg>
                                             <CryptAmt>
                                                 <BTC_amt>
                                                     {walletUserData.length > 0 ? walletUserData[0].balance.toFixed(4) : ''}
@@ -265,7 +275,12 @@ class WalletDetails extends Component {
                                 }
                             </CoinTable>
                         </Trans_table>
+                        {
+                            console.log("wallet", self.state)
+
+                        }
                         {this.state.withdraw == true ?
+
                             <WalletPopup coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="RECEIVE" comingCancel={(e) => this.comingCancel(e)} visible={this.state.withdraw} />
                             :
                             ""
