@@ -14,7 +14,7 @@ export function walletBal(isLoggedIn, currency = null) {
                 Authorization: "Bearer " + isLoggedIn
             },
             body: JSON.stringify({
-                currency: "USD,EUR,INR",
+                currency: currency,
             })
 
         })
