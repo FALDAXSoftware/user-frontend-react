@@ -188,7 +188,7 @@ class Trade extends Component {
     } io
     getInstrumentData() {
         var self = this;
-        // console.log("get instrument data");
+        console.log("get instrument data");
 
         io.socket.get(`/socket/get-instrument-data?coin=${self.state.InsCurrency}`, (body, JWR) => {
             if (body.status == 200) {
@@ -315,6 +315,10 @@ class Trade extends Component {
                 this.setState({ userBal: res, userBalLoader: false })
             }
         });
+        io.socket.on('orderUpdate', (data) => {
+
+            this.setState({ userBal: data, userBalLoader: false })
+        });
     }
     searchInstu(e) {
         console.log("megh", e.target.value.trim() !== "")
@@ -358,7 +362,7 @@ class Trade extends Component {
                                             <FIAT>
                                                 <RadioSelect value={this.state.InsCurrency} size="large" buttonStyle="solid" onChange={this.onInsChange}>
                                                     <RadioButton value="BTC">BTC</RadioButton>
-                                                    <RadioButton value="ETH">ETH</RadioButton>
+
                                                     {/* <RadioButton value="g">FAVORITES</RadioButton> */}
                                                 </RadioSelect>
                                             </FIAT>
@@ -415,7 +419,7 @@ class Trade extends Component {
                                 </Col>
                                 <Col md={24} lg={12}>
                                     <Right_div>
-                                        <DepthChart io={io} />
+                                        {/* <DepthChart io={io} /> */}
                                     </Right_div>
                                 </Col>
                             </Row>
