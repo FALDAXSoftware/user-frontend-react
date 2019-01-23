@@ -104,7 +104,37 @@ class BuyTable extends Component {
             }
         }
     }
+
     render() {
+        var self = this;
+        var presentArr = [];
+        console.log(this.state.data)
+        let result = [];
+        if (this.state.data.length > 0) {
+            result = this.state.data.filter(function (element1, index1) {
+                if (presentArr.includes(element1.bid)) {
+
+                    return false;
+                }
+                else {
+                    presentArr.push(element1.bid)
+                    var obj = {
+                        my_size: element1.my_size,
+                        amount: element1.amount,
+                        bid: element1.bid,
+                        total: element1.total
+                    };
+                    self.state.data.map(function (element2, index2) {
+                        if (element1.bid == element2.bid) {
+                            obj.amount += element2.amount;
+                            obj.total += element2.total;
+                        }
+                    })
+                    return obj;
+                }
+            })
+            console.log("15 min", result)
+        }
         return (
             <div>
                 <BBC>BUYING {this.props.cryptoPair.crypto}</BBC>
@@ -131,7 +161,7 @@ class BuyTable extends Component {
                                     style={{ height: 165 }}>
                                     <TableContent cellpadding="10px" cellspacing="0" border="0">
                                         <tbody>
-                                            {this.state.data.map(element => (
+                                            {result.length ? result.map(element => (
                                                 <tr>
                                                     <td>{element.my_size}</td>
                                                     <td>{element.amount}</td>
@@ -139,7 +169,7 @@ class BuyTable extends Component {
                                                     <td>{element.total.toFixed(4)}</td>
                                                 </tr>
                                             ))
-
+                                                : ""
                                             }
 
                                         </tbody>
