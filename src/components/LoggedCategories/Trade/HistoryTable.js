@@ -126,7 +126,7 @@ class HistoryTable extends Component {
                             style={{ height: 300 }}>
                             <TableContent cellpadding="10px" cellspacing="0" border="0">
                                 <tbody>
-                                    {this.state.data.map((element, index) => (
+                                    {this.state.data.length > 0 ? this.state.data.map((element, index) => (
                                         <tr>
                                             <SideType type={element.side}>{element.side}</SideType>
                                             <td>{element.amount}</td>
@@ -140,7 +140,10 @@ class HistoryTable extends Component {
                                             <td>{element.total.toFixed(4)}</td>
                                         </tr>
                                     ))
-
+                                        : <p style={{
+                                            textAlign: "center", fontWeight: "normal",
+                                            color: "black"
+                                        }}>No Data Found</p>
                                     }
 
                                 </tbody>

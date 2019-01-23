@@ -1,6 +1,8 @@
 /* In-built Packages*/
 import React, { Component } from 'react'
 import styled from 'styled-components';
+
+
 import { Form_wrap, Welcome_text } from "./Login_Form";
 
 /* Components */
@@ -40,6 +42,7 @@ class Thank_You extends Component {
           <Welcome_text>We have sent a confirmation email.</Welcome_text>
           <Sub_text>Please check your email.</Sub_text>
         </Form_wrap>
+
       </div>
     );
   }
