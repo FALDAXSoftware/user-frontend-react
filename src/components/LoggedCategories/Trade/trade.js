@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
-import { Row, Col, Tabs, Input, Radio, Select } from 'antd';
+import { Row, Col, Tabs, Input, Radio, Select, Spin } from 'antd';
 import styled from 'styled-components';
 /* import Tableofcoin from './TableofCoin'
 import WalletDetails from './WalletDetails' */
@@ -20,8 +20,11 @@ import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCateg
 import { cryptoCurrency } from '../../../Actions/LoggedCat/tradeActions'
 import {
     Row_wrap, Left_div, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
-    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder
+    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder, Selectmonth
 } from "../../../styled-components/loggedStyle/tradeStyle";
+import {
+    Spin_single
+} from "../../../styled-components/loggedStyle/dashStyle"
 import { globalVariables } from '../../../Globals';
 
 let { API_URL } = globalVariables;
@@ -39,25 +42,17 @@ const ContainerContact = styled(Container)`
     max-width:1170px;
     padding-bottom: 30px;
 `
-const Inputsearch = styled(Search)`
-    width: 100%;
-    height: 40px;
-    >input
-    io.sails.url = API_URL;
+const OrderTradeWrap = styled.div`
+    display:inline-flex;
+    margin-left:auto;
+    align-items:center;
+    @media(max-width:856px)
     {
-        background-color:${props => props.theme.mode == "dark" ? "#020e18" : ""};
-    }
-    >span>i
-    {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
-    }
-`
-const Table_wrap = styled.div`  
-    margin-left:-30px;
-    margin-right:-30px; 
-    @media(max-width:1160px)
-    {
-        overflow:scroll
+        display:flex;
+        width:100%;
+        margin-left:30px;
+        margin-top:10px;
+        flex-wrap:wrap;
     }
 `
 const columns = [{
@@ -80,7 +75,12 @@ const columns = [{
     title: 'Change',
     dataIndex: 'change',
     defaultSortOrder: 'ascend',
-    render: text => parseFloat(text).toFixed(4),
+    render: (text) => {
+        if (text < 0)
+            return (<span style={{ color: "red" }}>{Math.abs(text) + "%"}</span>);
+        else
+            return (<span style={{ color: "green" }}>{Math.abs(text) + "%"}</span>)
+    },
     sorter: (a, b) => a.change - b.change
 }];
 
@@ -123,7 +123,10 @@ class Trade extends Component {
             orderTradeData: {},
             InsCurrency: "BTC",
             InsData: [],
+            searchedInstu: [],
             userBal: {},
+            insLoader: false,
+            userBalLoader: false
         };
         io = this.props.io;
         io.sails.url = API_URL;
@@ -165,6 +168,7 @@ class Trade extends Component {
         console.log(this.props)
         var self = this;
         // console.log(e.target.value);
+        self.setState({ insLoader: true });
         let cryptoPair = {
             crypto: self.state.crypto,
             currency: e.target.value,
@@ -176,6 +180,7 @@ class Trade extends Component {
         this.setState({
             InsCurrency: e.target.value,
             InsData: [],
+
         }, () => {
             self.props.cryptoCurrency(cryptoPair);
             self.getInstrumentData();
@@ -200,11 +205,12 @@ class Trade extends Component {
                 name: element.name.split('-')[0],
                 price: element.last_price,
                 volume: element.volume,
-                change: parseFloat(element.percentChange).toFixed(2) + "%"
+                change: parseFloat(element.percentChange).toFixed(2),
             });
         }
         this.setState({
-            InsData: res
+            InsData: res,
+            insLoader: false
         });
     }
     searchChange(value) {
@@ -241,7 +247,7 @@ class Trade extends Component {
     orderSocket(month, filter_type) {
 
         var URL;
-
+        this.setState({ orderTradeLoader: true })
         if (Object.keys(this.state.prevRoom).length > 0)
             URL = `/socket/get-user-trade-data?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`
         else
@@ -260,7 +266,7 @@ class Trade extends Component {
     }
     updateMyOrder(response) {
         console.log(response)
-        this.setState({ orderTradeData: response })
+        this.setState({ orderTradeData: response, orderTradeLoader: false })
     }
     cancelOrder(id, side, type) {
         console.log(id, side, type)
@@ -275,7 +281,7 @@ class Trade extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                console.log(responseData)
+                this.orderSocket(this.state.timePeriod, this.state.status)
             })
             .catch(error => {
             })
@@ -294,6 +300,7 @@ class Trade extends Component {
     }
     getUserBal() {
         var URL;
+        this.setState({ userBalLoader: true });
         console.log("getUserBal")
         if (Object.keys(this.state.prevRoom).length > 0)
             URL = `/socket/get-user-balance?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`
@@ -305,9 +312,31 @@ class Trade extends Component {
             if (body.status == 200) {
                 let res = body.data;
                 console.log(res);
-                this.setState({ userBal: res })
+                this.setState({ userBal: res, userBalLoader: false })
             }
         });
+    }
+    searchInstu(e) {
+        console.log("megh", e.target.value.trim() !== "")
+        var search = e.target.value;
+        if (search.trim() !== "") {
+            console.log("finally i am in");
+            var searchedInstu = this.state.InsData.filter(function (temp) {
+                console.log(temp, temp.name.includes(search))
+                if (temp.name.toLowerCase().includes(search.toLowerCase())) {
+                    console.log(temp, search)
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            })
+            console.log(searchedInstu)
+            this.setState({ searchedInstu });
+        }
+        else {
+            this.setState({ searchedInstu: [] });
+        }
     }
     render() {
         var self = this;
@@ -321,7 +350,10 @@ class Trade extends Component {
                                 <Col md={24} lg={14}>
                                     <Left_div1>
                                         <Instru>INSTRUMENTS</Instru>
-                                        <SearchInput />
+                                        {this.state.InsData.length > 0 ? <SearchInput
+                                            onChange={(e) => this.searchInstu(e)}
+                                            style={{ width: 200 }}
+                                        /> : ""}
                                         <FIAT_wrap>
                                             <FIAT>
                                                 <RadioSelect value={this.state.InsCurrency} size="large" buttonStyle="solid" onChange={this.onInsChange}>
@@ -339,8 +371,14 @@ class Trade extends Component {
                                                         onClick: (event) => { self.currencyPair(record.name) },       // click row
                                                     };
                                                 }}
-                                                pagination={false} columns={columns} dataSource={this.state.InsData} onChange={this.onChange} />
+                                                pagination={false} columns={columns} dataSource={this.state.searchedInstu.length == 0 ? this.state.InsData : this.state.searchedInstu} onChange={this.onChange} />
                                         </InstruTable>
+                                        {(this.state.insLoader == true) ?
+                                            <Spin_single className="Single_spin">
+                                                <Spin size="small" />
+                                            </Spin_single>
+                                            : ""
+                                        }
                                     </Left_div1>
                                 </Col>
                                 <Col md={24} lg={10}>
@@ -350,6 +388,12 @@ class Trade extends Component {
                                             <TabPane tab="Limit" key="2"><Limit userBal={this.state.userBal} /></TabPane>
                                             <TabPane tab="Stop-Limit" key="3"><StopLimit userBal={this.state.userBal} /></TabPane>
                                         </Tabs_right>
+                                        {(this.state.userBalLoader == true) ?
+                                            <Spin_single className="Single_spin">
+                                                <Spin size="small" />
+                                            </Spin_single>
+                                            : ""
+                                        }
                                     </Right_div1>
                                 </Col>
                             </Row>
@@ -366,6 +410,7 @@ class Trade extends Component {
                                         <BBC_wrap2>
                                             <SellTable io={io} />
                                         </BBC_wrap2>
+
                                     </Left_div>
                                 </Col>
                                 <Col md={24} lg={12}>
@@ -391,13 +436,13 @@ class Trade extends Component {
                                     <Left_div2>
                                         <Orderwrap>
                                             <InstruOrder>MY ORDERS AND TRADES</InstruOrder>
-                                            <div style={{ display: "inline-flex", marginLeft: "auto", alignItems: "center" }}>
-                                                <Select labelInValue defaultValue={{ key: '1' }} style={{ width: 120, marginRight: "30px" }} onChange={this.handleChange}>
+                                            <OrderTradeWrap >
+                                                <Selectmonth labelInValue defaultValue={{ key: '1' }} style={{ width: 120, marginRight: "30px" }} onChange={this.handleChange}>
                                                     <Option value="1">1 month</Option>
                                                     <Option value="3">3 month</Option>
                                                     <Option value="6">6 month</Option>
                                                     <Option value="12">12 month</Option>
-                                                </Select>
+                                                </Selectmonth>
                                                 <FIAT_wrap2>
                                                     <FIAT>
                                                         <RadioSelect onChange={this.statusChange} defaultValue="a" size="large" buttonStyle="solid">
@@ -407,9 +452,15 @@ class Trade extends Component {
                                                         </RadioSelect>
                                                     </FIAT>
                                                 </FIAT_wrap2>
-                                            </div>
+                                            </OrderTradeWrap>
                                         </Orderwrap>
                                         <OrderTrade pending={this.state.status} cancelOrder={(id, side, type) => { this.cancelOrder(id, side, type) }} orderTradeData={this.state.orderTradeData} />
+                                        {(this.state.orderTradeLoader == true) ?
+                                            <Spin_single className="Full_spin">
+                                                <Spin size="small" />
+                                            </Spin_single>
+                                            : ""
+                                        }
                                     </Left_div2>
                                 </Col>
                             </Row>

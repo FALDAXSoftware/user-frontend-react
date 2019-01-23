@@ -1,4 +1,4 @@
-import { Row, Col, Tabs, Button, Table, Input, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio } from 'antd';
+import { Row, Col, Tabs, Button, Table, Input, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio, Select } from 'antd';
 import styled from 'styled-components';
 import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
 
@@ -31,7 +31,11 @@ export const Left_div1 = styled(Left_div)`
     padding-bottom: 30px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
-    height:700px;
+    height:800px;
+    @media(max-width:575px)
+    {
+        height:auto;
+    }
     @media(max-width:991px)
     {
         margin-right:0px;
@@ -51,6 +55,10 @@ export const Instru = styled.p`
     font-weight: bold;
     margin-left:30px;
     color:${props => props.theme.mode == "dark" ? "white" : ""};
+    @media(max-width:575px)
+    {
+        display:block;
+    }
 `
 export const SearchInput = styled(Search)`
     display:inline-block;
@@ -71,15 +79,36 @@ export const SearchInput = styled(Search)`
         caret-color:${props => props.theme.mode == "dark" ? "white" : ""}
         color:${props => props.theme.mode == "dark" ? "white" : ""}
     }
+    @media(max-width:575px)
+    {
+        margin-left:25px;
+        margin-right:0px;
+        float:none;
+    }
 `
 export const FIAT_wrap = styled.div`
     display: flex;
     justify-content: flex-end;
     margin-top:5px;
+    @media(max-width:575px)
+    {
+        justify-content:flex-start;
+        margin-top:20px;
+        margin-left:25px;
+    }
 `
 export const FIAT_wrap2 = styled.div`
     display: inline-block;
     float: right;
+    & .ant-radio-button-wrapper
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+    @media(max-width:596px)
+    {
+        margin-top:20px;
+    }
 `
 export const FIAT = styled.div`
     display:inline-block;
@@ -117,7 +146,11 @@ export const Right_div = styled.div`
     height:640px;
 `
 export const Right_div1 = styled(Right_div)`
-    height:700px;
+    height:800px;
+    @media(max-width:575px)
+    {
+        height:auto;
+    }
     @media(max-width:991px)
     {
         margin-top:30px;
@@ -149,6 +182,13 @@ export const TableIns = styled(Table)`
     {   
         color:#4c84ff;
     }
+    @media(max-width:375px)
+    {
+        >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th
+        {
+            padding: 10px 12px;
+        }
+    }
 `
 export const Tabs_right = styled(Tabs)`
     >.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav-animated
@@ -178,6 +218,12 @@ export const Buy_sell = styled.div`
 export const BuySellRadio = styled(RadioButton)`
     padding-left: 40px;
     padding-right: 40px;
+    @media(max-width:375px)
+    {
+        border-radius: 4px 4px 4px 4px !important; 
+        margin-top: 15px;
+        width: 115px;
+    }
 `
 export const Buy = styled(Button)`
     display:inline-block;
@@ -369,6 +415,7 @@ export const WrapDepth = styled.div`
 
 
 export const History_wrap = styled.div`
+    overflow-x:scroll;
 `
 
 export const CustomTable = styled.table`
@@ -409,40 +456,59 @@ export const TableContent = styled(CustomTable)`
 
 
 /* My orders and Trade */
+export const Selectmonth = styled(Select)`
+& .ant-select-selection--single
+{
+    height:40px !important;
+}
+& .ant-select-selection__rendered
+{
+    line-height:40px !important;
+}
+    & .ant-select-selection
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+    & .anticon
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+`
 export const InstruOrder = styled(Instru)`
-    margin-bottom:0px !important;
+    margin-bottom: 0px!important;
 `
 export const Orderwrap = styled.div`
 display: flex;
+flex-wrap:wrap;
 align-items: center;
-margin-bottom:20px;
+margin-bottom: 20px;
 `
 export const Dropwrap = styled.div`
-    display:inline-block;
-    width: 165px;
-    margin-right:20px;
-    @media(max-width:456px)
-    {
-        width: 80px;
-    }
+display: inline - block;
+width: 165px;
+margin-right:20px;
+@media(max-width: 456px)
+{
+    width: 80px;
+}
 
 `
 export const ButtonToolbarOne = styled(ButtonToolbar)`
-    >.btn-group
-    {
-        width:100%;
+    >.btn-group{
+    width: 100 %;
     }
 
 `
 export const DropdownButtonOne = styled(DropdownButton)`
-    background-color: ${props => props.theme.mode == "dark" ? "#01090f" : ""};
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
-    width:100%;
-    text-align:left;
+background-color: ${ props => props.theme.mode == "dark" ? "#01090f" : ""};
+color: ${ props => props.theme.mode == "dark" ? "white" : ""};
+width: 100 %;
+text-align: left;
     >.caret
-    {
-        float:right;
-        margin-top: 8px;
-    }
+{
+    float: right;
+    margin-top: 8px;
+}
 
 `

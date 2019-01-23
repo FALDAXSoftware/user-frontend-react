@@ -16,6 +16,7 @@ import {
 import { CSVLink, CSVDownload } from "react-csv";
 import { globalVariables } from '../../../Globals';
 import { Button } from 'antd/lib/radio';
+import NoDataFound from '../../../shared-components/No_data_found'
 
 let { API_URL } = globalVariables;
 const csvData = [
@@ -84,6 +85,7 @@ class History extends Component {
             });
     }
     historyResult() {
+        console.log(this.state)
         let url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}`;
         if (this.state.drop1Value != '' && this.state.drop1Value != '') {
             url = url + '&symbol=' + this.state.drop1Value + '-' + this.state.drop2Value
@@ -330,7 +332,7 @@ class History extends Component {
                                             format="YYYY-MM-DD"
                                         />
                                     </Datediv>
-                                    <EXPButton><CSVLink data={csvData}>EXPORT</CSVLink></EXPButton>
+                                    <EXPButton><CSVLink data={this.state.historyData}>EXPORT</CSVLink></EXPButton>
                                 </Filter>
                                 <div style={{ paddingLeft: "15px", marginTop: "20px" }}>
                                     <CheckboxGroup options={options} defaultValue={['SEND', 'RECEIVE', 'SELL', 'BUY']} onChange={this.onChangeCheck} />
@@ -358,18 +360,20 @@ class History extends Component {
                                                 this.state.historyData.map(function (temp) {
                                                     console.log(temp)
                                                     var date = moment.utc(temp.created_at).local().format("MMM DD,YYYY HH:mm:ss");
+                                                    var side = Number(temp.user_id) == self.props.profileData.id ? temp.side : temp.side == "Buy" ? "Sell" : "Buy";
+                                                    var fee = Number(temp.user_id) == self.props.profileData.id ? temp.user_fee.toFixed(2) : temp.requested_fee.toFixed(2);
                                                     return (<tr>
                                                         <td>{temp.symbol}</td>
                                                         <td>{date}</td>
-                                                        <td>{temp.side}</td>
+                                                        <td>{side}</td>
                                                         <td>{temp.fill_price}</td>
                                                         <td>{temp.quantity}</td>
-                                                        <td>{temp.maker_fee}</td>
+                                                        <td>{fee}</td>
                                                         <td>{temp.fill_price * temp.quantity}</td>
                                                         <td><Button onChange={() => self.repeatClick(temp)}>Repeat</Button></td>
                                                     </tr>);
                                                 })
-                                                : ""
+                                                : <span>No Data Found</span>
                                             }
                                         </tbody>
                                     </HisTable>

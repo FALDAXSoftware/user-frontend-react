@@ -825,7 +825,7 @@ table .ant-table-tbody > tr > td {
 
 
 
-  /*  */
+  /*Spinner Loader  */
   .Ex_spin .ant-spin
   {
     opacity: 1;
@@ -836,7 +836,26 @@ table .ant-table-tbody > tr > td {
     margin-top: 20%;
     /* margin-top: calc(50% - 10px ); */
   }
-
+  .Single_spin .ant-spin
+  {
+    opacity: 1;
+    position: static;
+    display: inline-block;
+    /* margin: auto; */
+    /* position: relative; */
+    margin-top: 45%;
+    /* margin-top: calc(50% - 10px ); */
+  }
+  .Full_spin .ant-spin
+  {
+    opacity: 1;
+    position: static;
+    display: inline-block;
+    /* margin: auto; */
+    /* position: relative; */
+    margin-top:20%;
+    /* margin-top: calc(50% - 10px ); */
+  }
 
 
   /* Navigation Slection */

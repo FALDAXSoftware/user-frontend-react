@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Input } from 'antd';
+import { Input, Spin } from 'antd';
 import { connect } from "react-redux"
 import styled from 'styled-components';
 
@@ -12,14 +12,15 @@ import ListofCoins from './listofCoins'
 import WalletDetails from './WalletDetails'
 import LoggedNavigation from '../../Navigations/LoggedNavigation';
 import CommonFooter from "../../Landing/Footers/Footer_home";
+import { Spin_Ex } from '../../../styled-components/homepage/style'
 import { Container } from '../../../styled-components/homepage/style';
-import {Contact_wrap, Grey_wrap} from "../../../styled-components/landingCategories/contactStyle"
-import {Header_wrap,SearchCoin,MY_wallet,Total,Tot,Money,Currency,CoinTable,SearchCoin2,Header_wrap2} from "../../../styled-components/loggedStyle/walletStyle";
+import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
+import { Header_wrap, SearchCoin, MY_wallet, Total, Tot, Money, Currency, CoinTable, SearchCoin2, Header_wrap2 } from "../../../styled-components/loggedStyle/walletStyle";
 import { globalVariables } from '../../../Globals';
 
 
 /* Actions */
-import {walletBal,getAllCoins}  from '../../../Actions/LoggedCat/walletActions'
+import { walletBal, getAllCoins } from '../../../Actions/LoggedCat/walletActions'
 
 let { API_URL } = globalVariables;
 const Search = Input.Search;
@@ -64,46 +65,81 @@ class Wallet extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mywallet:{},
-            myCoins:{},
-            total:null
+            mywallet: {},
+            myCoins: {},
+            total: null,
+            searchedCoins: [],
+            searchedWallet: []
         };
+        this.currChangeWallet = this.currChangeWallet.bind(this);
+        this.currChangeList = this.currChangeList.bind(this);
+        this.searchChangeCoins = this.searchChangeCoins.bind(this);
+        this.searchChangeWallet = this.searchChangeWallet.bind(this);
     }
-    componentWillReceiveProps(props,newProps)
-    {
+    componentWillReceiveProps(props, newProps) {
         var total = 0;
-        if(this.props.walletDetails!==null)
-        {
-            var tableData=this.props.walletDetails.coins;
-            if(tableData!==undefined)
-            {
-                Object.keys(tableData).map(function(index,key){
-                    if(tableData[index].USD!==undefined)
-                    total = total + tableData[index].USD;
+        if (this.props.walletDetails !== null) {
+            var tableData = this.props.walletDetails.coins;
+            if (tableData !== undefined) {
+                Object.keys(tableData).map(function (index, key) {
+                    if (tableData[index].USD !== undefined)
+                        total = total + tableData[index].USD;
                 })
-                this.setState({total});
+                this.setState({ total });
             }
         }
     }
-    componentDidMount()
-    {
-        this.props.walletBal(this.props.isLoggedIn);
-        this.props.getAllCoins(this.props.isLoggedIn)
+    componentDidMount() {
+        this.props.walletBal(this.props.isLoggedIn, "USD,EUR,INR");
+        this.props.getAllCoins(this.props.isLoggedIn, "USD,EUR,INR");
     }
-    searchChange(value)
-    {
 
+    searchChangeWallet(e) {
+        var search = e.target.value;
+        if (search.trim() !== "") {
+            var searchedWallet = this.props.walletDetails.coins.filter(function (temp) {
+                if (temp.coin.toLowerCase().includes(search.toLowerCase()) || temp.coin_name.toLowerCase().includes(search.toLowerCase()) || temp.coin_code.toLowerCase().includes(search.toLowerCase())) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            })
+            this.setState({ searchedWallet });
+        }
+        else {
+            this.setState({ searchedWallet: [] });
+        }
     }
-    submitSearch(e) {
+    searchChangeCoins(e) {
+        var search = e.target.value;
+        if (search.trim() !== "") {
+            var searchedCoins = this.props.allCoins.data.rows.filter(function (temp) {
+                if (temp.coin.toLowerCase().includes(search.toLowerCase()) || temp.coin_name.toLowerCase().includes(search.toLowerCase()) || temp.coin_code.toLowerCase().includes(search.toLowerCase())) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            })
+            this.setState({ searchedCoins });
+        }
+        else {
+            this.setState({ searchedCoins: [] });
+        }
+    }
+    totalCurr(total) {
+        this.setState({ total: total })
+    }
+    currChangeList(currency) {
+        this.props.getAllCoins(this.props.isLoggedIn, currency);
+    }
+    currChangeWallet(currency) {
 
+        this.props.walletBal(this.props.isLoggedIn, currency);
     }
-    totalCurr(total)
-    {
-        this.setState({total:total})
-    }
-    render()
-    {
-        return(
+    render() {
+        return (
             <Contact_wrap>
                 <LoggedNavigation />
                 <Grey_wrap>
@@ -115,67 +151,75 @@ class Wallet extends Component {
                             <SearchCoin>
                                 <Inputsearch
                                     placeholder="Search Coin"
-                                    onChange={value => this.searchChange(value)}
+                                    onChange={value => this.searchChangeWallet(value)}
                                     style={{}}
                                     className=""
-                                    onPressEnter={e => this.submitSearch(e)}
                                 />
                             </SearchCoin>
                             <Total>
                                 <Tot>Total:</Tot>
-                                <Money>${this.state.total!==null?this.state.total:""}</Money>
+                                <Money>${this.state.total !== null ? this.state.total : ""}</Money>
                                 <Currency>USD</Currency>
                             </Total>
                         </Header_wrap>
                         <CoinTable>
                             <Table_wrap>
+                                {console.log(this.props, this.state)}
                                 {
-                                    this.props.walletDetails!==null?
-                                        <Tableofcoin tableData={this.props.walletDetails.coins}/>
-                                    :""
+                                    this.props.walletDetails !== null ?
+                                        this.state.searchedWallet.length == 0 ? <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.walletDetails.coins} />
+                                            : <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedWallet} /> : ""
                                 }
                             </Table_wrap>
                         </CoinTable>
                     </ContainerContact>
                     <ContainerContact2>
                         <Header_wrap2>
-                            <MY_wallet>                 
+                            <MY_wallet>
                                 <span>COINS</span>
                             </MY_wallet>
                             <SearchCoin2>
                                 <Inputsearch
                                     placeholder="Search Coin"
-                                    onChange={value => this.searchChange(value)}
+                                    onChange={value => this.searchChangeCoins(value)}
                                     style={{}}
                                     className=""
-                                    onPressEnter={e => this.submitSearch(e)}
                                 />
                             </SearchCoin2>
                         </Header_wrap2>
                         <CoinTable>
+                            con
                             <Table_wrap>
-                               {this.props.allCoins!==null?
-                                    <ListofCoins tableData={this.props.allCoins.data.rows}/> 
-                                :""}
+                                {this.props.allCoins !== null ?
+                                    (this.state.searchedCoins.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.state.searchedCoins} /> : (this.props.allCoins.data.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.props.allCoins.data} /> : ""))
+                                    : ""}
                             </Table_wrap>
                         </CoinTable>
                     </ContainerContact2>
                 </Grey_wrap>
                 <CommonFooter />
+                {(this.props.loader == true) ?
+                    <Spin_Ex className="Ex_spin">
+                        <Spin size="large" />
+                    </Spin_Ex>
+                    : ""
+                }
             </Contact_wrap>
         );
     }
 }
 function mapStateToProps(state) {
     return ({
-        walletDetails:state.walletReducer.walletData!==undefined ? state.walletReducer.walletData : null,
-        allCoins:state.walletReducer.allCoinsData!==undefined ? state.walletReducer.allCoinsData : null,
+        walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData : null,
+        allCoins: state.walletReducer.allCoinsData !== undefined ? state.walletReducer.allCoinsData : null,
         isLoggedIn: state.simpleReducer.isLoggedIn,
+        loader: state.simpleReducer.loader ? state.simpleReducer.loader : false
     })
 }
 const mapDispatchToProps = dispatch => ({
     walletBal: (isLoggedIn, currency) => dispatch(walletBal(isLoggedIn, currency)),
-    getAllCoins: (isLoggedIn) => dispatch(getAllCoins(isLoggedIn))
-    
+    getAllCoins: (isLoggedIn, currency) => dispatch(getAllCoins(isLoggedIn, currency)),
+
+
 })
-export default connect(mapStateToProps,mapDispatchToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

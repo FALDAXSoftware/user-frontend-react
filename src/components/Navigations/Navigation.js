@@ -1,7 +1,7 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Layout, Menu, Modal, Icon, Button } from 'antd';
+import { Row, Col, Layout, Menu, Modal, Button } from 'antd';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -118,7 +118,6 @@ const Faldaxtext = styled.img`
     margin-top:20px;
     cursor:pointer;
 `
-
 /* Styled Components */
 const FALDAX = styled.img`
     margin-left: 15px;
@@ -183,7 +182,6 @@ const Menu_item = styled(Menu.Item)`
 const FALDAX_LOGO = styled.img`
     padding-left:22px;
 `
-
 const SideNav = styled.div`
     height: 100%;
     width: 0;
@@ -281,19 +279,6 @@ const Fin_div = styled.div`
         align-items:center;
     }
 `
-const SIGN = styled.span`
-    display:inline-block;
-    width:50%;
-    
-    color: white;
-    @media(max-width:480px)
-    {
-        &:hover{
-            color:#1890ff !important;
-            text-decoration:underline;
-        }
-    }
-`
 const Why = styled.a`
     padding:0px !important;
     display:none !important;
@@ -373,7 +358,6 @@ class Navigation extends Component {
         }
     }
     dispModal(pressed) {
-        /* console.log(pressed) */
         if (pressed == "login")
             this.setState({ modal: 0 })
         else if (pressed == "signup")
@@ -395,25 +379,18 @@ class Navigation extends Component {
     }
 
     handleCancel = (e) => {
-
         this.setState({ visible: false, modal: 5 });
     }
     handleAfterClose = (e) => {
         this.setState({ modal: 5 });
     }
     comingCancel = (e) => {
-        /* console.log(e); */
-        this.setState({
-            comingSoon: false,
-        });
+        this.setState({ comingSoon: false });
     }
     showComing = () => {
-        this.setState({
-            comingSoon: true,
-        });
+        this.setState({ comingSoon: true });
     }
     componentWillReceiveProps(props, newProps) {
-        console.log("LOGIN PROPS", props)
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
                 if (props.theme == false)
@@ -425,7 +402,6 @@ class Navigation extends Component {
         if (props.location.pathname !== undefined)
             if (props.location.pathname == "/login") {
                 if (props.location.hash == "#openTicket") {
-                    console.log("#openTicket")
                     this.setState({ modal: 0, visible: true });
                 }
             }
@@ -434,7 +410,6 @@ class Navigation extends Component {
         if (this.props.location.pathname !== undefined)
             if (this.props.location.pathname == "/login") {
                 if (this.props.location.hash == "#openTicket") {
-                    console.log("#openTicket")
                     this.setState({ modal: 0, visible: true });
                 }
             }
@@ -451,7 +426,6 @@ class Navigation extends Component {
 
         if (this.props.location.pathname == "/signup") {
             queryParams = decodeURIComponent(this.props.queryParams)
-
             let qP = queryParams.split("=")
             this.setState({ modal: 1, visible: true, qP: qP[1] });
         } else {
@@ -466,11 +440,13 @@ class Navigation extends Component {
         if (this.props.location.pathname == "/about-us") {
             this.setState({ selected: ['2'] })
         } else if (this.props.location.pathname == "/contactus") {
-            this.setState({ selected: ['5'] })
-        } else if (this.props.location.pathname == "/addcoin") {
             this.setState({ selected: ['6'] })
+        } else if (this.props.location.pathname == "/blogs") {
+            this.setState({ selected: ['3'] })
+        } else if (this.props.location.pathname == "/addcoin") {
+            this.setState({ selected: ['7'] })
         } else if (this.props.location.pathname.includes("news")) {
-            this.setState({ selected: ['4'] })
+            this.setState({ selected: ['5'] })
         } else {
             if (this.props.location.pathname == "/")
                 this.setState({ selected: ['1'] })
@@ -501,11 +477,12 @@ class Navigation extends Component {
                         <Menu_item key="1"><NavLink className="Nav_selected" to="/">HOME</NavLink></Menu_item>
                         {/* <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item> */}
                         <Menu_item key="2"><NavLink className="Nav_selected" to="/about-us">ABOUT</NavLink></Menu_item>
-                        <Menu_item key="3" onClick={this.showComing}><NavLink className="Nav_selected" to="#">SECURITY</NavLink></Menu_item>
-                        <Menu_item key="4" ><NavLink className="Nav_selected" to="/news">NEWS</NavLink></Menu_item>
-                        <Menu_item key="5" ><NavLink className="Nav_selected" to="/contactus">CONTACT</NavLink></Menu_item>
-                        <Menu_item key="6" ><NavLink className="Nav_selected" to="/addcoin">LIST YOUR TOKEN</NavLink></Menu_item>
-                        <Menu_item key="7" onClick={this.showComing}><NavLink className="Nav_selected" to="#">EXCHANGE</NavLink></Menu_item>
+                        <Menu_item key="3"><NavLink className="Nav_selected" to="/blogs">BLOG</NavLink></Menu_item>
+                        <Menu_item key="4" onClick={this.showComing}><NavLink className="Nav_selected" to="#">SECURITY</NavLink></Menu_item>
+                        <Menu_item key="5" ><NavLink className="Nav_selected" to="/news">NEWS</NavLink></Menu_item>
+                        <Menu_item key="6" ><NavLink className="Nav_selected" to="/contactus">CONTACT</NavLink></Menu_item>
+                        <Menu_item key="7" ><NavLink className="Nav_selected" to="/addcoin">LIST YOUR TOKEN</NavLink></Menu_item>
+                        <Menu_item key="8" onClick={this.showComing}><NavLink className="Nav_selected" to="#">EXCHANGE</NavLink></Menu_item>
                     </Menu_main>
                     {/* console.log(this.props) */}
                     <Right_div>
@@ -527,6 +504,7 @@ class Navigation extends Component {
                             <Link to="/">Home</Link>
                             {/* <a onClick={this.showComing} href="#">Features</a> */}
                             <Link to="/about-us">About</Link>
+                            <Link to="/blogs">Blog</Link>
                             <a onClick={this.showComing} href="#">Security</a>
                             <Link to="/news">News</Link>
                             <Link to="/contactus">Contact</Link>
@@ -540,7 +518,7 @@ class Navigation extends Component {
                                         <Menu.Item key="9"><Link to="/about-us">About Us</Link></Menu.Item>
                                         <Menu.Item key="10"><Link to="/contactus">Contact Us</Link></Menu.Item>
                                         <Menu.Item key="11"><Link to="/mediacontact">Media Contact</Link></Menu.Item>
-                                        <Menu.Item key="12"><Link to="/blogs">Blog</Link></Menu.Item>
+                                        {/* <Menu.Item key="12"><Link to="/blogs">Blog</Link></Menu.Item> */}
                                         <Menu.Item key="13"><Link to="/fees">Fees</Link></Menu.Item>
                                     </SubMenuNav>
                                 </DropMenu>

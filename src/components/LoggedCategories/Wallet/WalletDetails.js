@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Input,Spin } from 'antd';
+import { Row, Col, Input, Spin, Select } from 'antd';
 import { connect } from "react-redux"
 import styled from 'styled-components';
 
@@ -11,7 +11,7 @@ import { Container } from '../../../styled-components/homepage/style';
 import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
 import DetailsTable from './DetailsTable'
 import { Spin_Ex } from '../../../styled-components/homepage/style'
-import {Contact_wrap, Grey_wrap} from "../../../styled-components/landingCategories/contactStyle"   
+import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
 import {
     Header_wrap, MY_wallet, WalletCoin, Tot, Money, Currency, CoinTable, Detail_wrap,
     Address, Row_wrap, Left_Bit, CryptImg, CryptAmt, Right_Bit, BTC, BTC_amt, FIAT_amt, AMT,
@@ -19,7 +19,8 @@ import {
 } from "../../../styled-components/loggedStyle/walletStyle";
 import { globalVariables } from '../../../Globals';
 
-let { API_URL } = globalVariables;
+let { API_URL, amazon_Bucket } = globalVariables;
+const Option = Select.Option;
 
 const Search = Input.Search;
 
@@ -86,58 +87,80 @@ const DropdownButtonOne = styled(DropdownButton)`
         margin-top: 8px;
     }
 `
+const CoinImage = styled.img`
+    width: 60px;
+    height: 60px;
+`
 
 class WalletDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
             withdraw: false,
-            send:false,
-            walletDetails:{},
-            total:null,
-            loader:false,
-            coin_code:""
+            send: false,
+            walletDetails: {},
+            total: null,
+            loader: false,
+            coin_code: "",
+            walletUserData: [],
+            defaultCoin: ''
         };
+        this.changeCoins = this.changeCoins.bind(this);
     }
-    componentDidMount()
-    {
-        this.setState({loader:true});
+    componentDidMount() {
+        this.setState({ loader: true });
         var total = 0;
-        if(this.props.walletDetails!==null)
-        {
-            var tableData=this.props.walletDetails.coins;
-            if(tableData!==undefined)
-            {
-                Object.keys(tableData).map(function(index,key){
-                    if(tableData[index].USD!==undefined)
-                    total = total + tableData[index].USD;
+        if (this.props.walletDetails !== null) {
+            var tableData = this.props.walletDetails.coins;
+            if (tableData !== undefined) {
+                Object.keys(tableData).map(function (index, key) {
+                    if (tableData[index].USD !== undefined)
+                        total = total + tableData[index].USD;
                 })
-                this.setState({total});
+                this.setState({ total });
             }
         }
-        if(this.props.location !== undefined)
-        {
-            if(this.props.location.search.includes('coinID'))
-            {
+        if (this.props.location !== undefined) {
+            if (this.props.location.search.includes('coinID')) {
                 var coin_name = this.props.location.search.split('=');
-                fetch(API_URL + "/wallet-details" ,{
-                    method:"post",
+                fetch(API_URL + "/wallet-details", {
+                    method: "post",
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
-                        Authorization:"Bearer " + this.props.isLoggedIn
+                        Authorization: "Bearer " + this.props.isLoggedIn
                     },
-                    body:JSON.stringify({
-                        coinReceive:coin_name[1]
+                    body: JSON.stringify({
+                        coinReceive: coin_name[1]
                     })
-        
                 })
-                .then(response => response.json())
-                .then((responseData) => {
-                    this.setState({walletDetails:responseData.walletTransData,loader:false,coin_code:coin_name[1]});
-                })
-                .catch(error => {
-                })
+                    .then(response => response.json())
+                    .then((responseData) => {
+                        let transDetails = null;
+                        let walletUserDetails = null;
+
+                        if (responseData.walletTransData) {
+                            if (Object.keys(responseData.walletTransData).length > 0) {
+                                transDetails = responseData.walletTransData;
+                            }
+                        }
+
+                        if (responseData.walletUserData) {
+                            if (Object.keys(responseData.walletUserData).length > 0) {
+                                walletUserDetails = responseData.walletUserData;
+                            }
+                        }
+
+                        this.setState({
+                            defaultCoin: transDetails[0].coin,
+                            walletDetails: transDetails,
+                            loader: false, coin_code: coin_name[1],
+                            walletUserData: walletUserDetails
+                        });
+                    })
+                    .catch(error => {
+                        this.setState({ loader: false });
+                    })
             }
         }
     }
@@ -145,22 +168,23 @@ class WalletDetails extends Component {
         /* console.log(e); */
         this.setState({
             withdraw: false,
-            send:false
+            send: false
         });
     }
     showModal = (e) => {
-        if(e.target.name=="SEND")
-        this.setState({send:true});
+        if (e.target.name == "SEND")
+            this.setState({ send: true });
         else
-        this.setState({ withdraw: true });
+            this.setState({ withdraw: true });
+    }
+    changeCoins(value) {
+        this.setState({ defaultCoin: value }, () => {
+            this.props.history.push(`/walletDetails?coinID=${value}`)
+        })
     }
     render() {
-        var tempDetails = null;
-        if(this.state.walletDetails!==null && this.state.walletDetails!==undefined)
-        if(Object.keys(this.state.walletDetails).length>0)
-        {
-            tempDetails = this.state.walletDetails;
-        }
+        const { walletUserData, defaultCoin, walletDetails } = this.state;
+
         return (
             <Contact_wrap>
                 <LoggedNavigation />
@@ -174,48 +198,47 @@ class WalletDetails extends Component {
                                             <span>BITCOIN</span>
                                         </MY_wallet>
                                         <WalletCoin>
-                                            <ButtonToolbarOne>
-                                                <DropdownButtonOne title="Bitcoin" id="dropdown-size-medium">
-                                                    <MenuItem eventKey="1">Action</MenuItem>
-                                                    <MenuItem eventKey="2">Another action</MenuItem>
-                                                    <MenuItem eventKey="3">Something else here</MenuItem>
-                                                    <MenuItem eventKey="4">Separated link</MenuItem>
-                                                </DropdownButtonOne>
-                                            </ButtonToolbarOne>
+                                            {this.props.walletDetails !== null ?
+                                                <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
+                                                    {this.props.walletDetails.coins.map(function (temp) {
+                                                        return (
+                                                            <Option value={temp.coin}>{temp.coin}</Option>
+                                                        );
+                                                    })}
+                                                </Select> : ""
+                                            }
                                         </WalletCoin>
                                     </Left_head>
                                 </Col>
                                 <Col xxl={12} xl={12} lg={12} sm={24}>
                                     <Right_head>
                                         <WallTotal>
-                                            <Tot>Total:</Tot>
-                                            <Money>${this.state.total!==null?this.state.total:""}</Money>
-                                            <Currency>USD</Currency>
+                                            {/* <Tot>Total:</Tot>
+                                            <Money>${this.state.total !== null ? this.state.total : ""}</Money>
+                                            <Currency>USD</Currency> */}
                                         </WallTotal>
-
-                                        <ButtonToolbarS>
-                                            <DropdownButtonS title="USD" id="dropdown-size-medium">
-                                                <MenuItem eventKey="1">Action</MenuItem>
-                                                <MenuItem eventKey="2">Another action</MenuItem>
-                                                <MenuItem eventKey="3">Something else here</MenuItem>
-                                                <MenuItem eventKey="4">Separated link</MenuItem>
-                                            </DropdownButtonS>
-                                        </ButtonToolbarS>
+                                        {/* <Select defaultValue="USD" style={{ width: 200, marginLeft: "auto" }}>
+                                            <Option value="USD">USD</Option>
+                                            <Option value="EUR">EUR</Option>
+                                            <Option value="INR">INR</Option>
+                                        </Select> */}
                                     </Right_head>
                                 </Col>
                             </Row>
                         </Header_wrap>
                         <Detail_wrap>
-                            <Address>Bitcoin Address:<b style={{ color: "black" }}>{}</b></Address>
+                            <Address>Bitcoin Address : <b style={{ color: "black" }}>{walletUserData.length > 0 ? walletUserData[0].receive_address : ""}</b></Address>
                             <hr />
                             <Row_wrap>
                                 <Row>
                                     <Col xxl={12} xl={12} lg={24} md={24}>
                                         <Left_Bit>
-                                            <CryptImg><img src="/images/LoggedCat/Bit_wallet.png" /></CryptImg>
+                                            <CryptImg><CoinImage src={((walletUserData.length > 0 && walletUserData[0].coin_icon !== null) ? amazon_Bucket + walletUserData[0].coin_icon : amazon_Bucket + "coin/defualt_coin.png")} /></CryptImg>
                                             <CryptAmt>
-                                                <BTC_amt>0.05218<BTC>{tempDetails!==null?tempDetails[0].coin_code:""}</BTC></BTC_amt>
-                                                <FIAT_amt>$874.23<AMT>USD</AMT></FIAT_amt>
+                                                <BTC_amt>
+                                                    {walletUserData.length > 0 ? walletUserData[0].balance.toFixed(4) : ''}
+                                                    <BTC>{walletUserData.length > 0 ? walletUserData[0].coin_code : ""}</BTC></BTC_amt>
+                                                {/* <FIAT_amt>$874.23<AMT>USD</AMT></FIAT_amt> */}
                                             </CryptAmt>
                                         </Left_Bit>
                                     </Col>
@@ -232,29 +255,29 @@ class WalletDetails extends Component {
                             <TransTitle>Transaction History</TransTitle>
                             <CoinTable>
                                 {
-                                    this.state.walletDetails!==null
-                                    ?
-                                        Object.keys(this.state.walletDetails).length>0
+                                    this.state.walletDetails !== null
                                         ?
-                                        <DetailsTable wallet={this.state.walletDetails}/>
-                                        :""
-                                    :""
+                                        Object.keys(this.state.walletDetails).length > 0
+                                            ?
+                                            <DetailsTable wallet={this.state.walletDetails} />
+                                            : ""
+                                        : ""
                                 }
                             </CoinTable>
                         </Trans_table>
-                        {this.state.withdraw==true?
+                        {this.state.withdraw == true ?
                             <WalletPopup coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="RECEIVE" comingCancel={(e) => this.comingCancel(e)} visible={this.state.withdraw} />
                             :
                             ""
                         }
-                        {this.state.send==true
+                        {this.state.send == true
                             ?
-                            <WalletPopup coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn}  title="SEND" comingCancel={(e) => this.comingCancel(e)} visible={this.state.send} />
+                            <WalletPopup coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="SEND" comingCancel={(e) => this.comingCancel(e)} visible={this.state.send} />
                             :
                             ""
                         }
                     </ContainerContact2>
-                    </Grey_wrap>
+                </Grey_wrap>
                 <CommonFooter />
                 {(this.state.loader) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
@@ -266,8 +289,8 @@ class WalletDetails extends Component {
 
 function mapStateToProps(state) {
     return ({
-        walletDetails:state.walletReducer.walletData!==undefined ? state.walletReducer.walletData : null,
-        allCoins:state.walletReducer.allCoinsData!==undefined ? state.walletReducer.allCoinsData : null,
+        walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData : null,
+        allCoins: state.walletReducer.allCoinsData !== undefined ? state.walletReducer.allCoinsData : null,
         isLoggedIn: state.simpleReducer.isLoggedIn,
     })
 }

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {Row, Col, Tabs, Button,Table,Input,notification,Steps,Icon } from 'antd';
+import { Row, Col, Tabs, Button, Table, Input, notification, Steps, Icon } from 'antd';
 
 export const Header_wrap = styled.div`
     padding-top:30px;
@@ -34,7 +34,7 @@ export const MY_wallet = styled.div`
     {
             font-size: 20px;
             font-family: "Open Sans";
-            color: ${props=>props.theme.mode=="dark"?"white":"rgb( 51, 51, 51 )"};
+            color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
             font-weight: bold;
             text-transform: uppercase; 
     }
@@ -60,14 +60,14 @@ export const Total = styled.div`
 export const Tot = styled.span`
     font-size: 18px;
     font-family: "Open Sans";
-    color: ${props=>props.theme.mode=="dark"?"#828a91":"rgba( 80, 80, 80, 0.502 )"};  
+    color: ${props => props.theme.mode == "dark" ? "#828a91" : "rgba( 80, 80, 80, 0.502 )"};  
     font-weight:600;
 `
 export const Money = styled.span`
     font-size: 36px;
     padding-left:15px;
     font-family: "Open Sans";
-    color: ${props=>props.theme.mode=="dark"?"white":"rgb( 80, 80, 80 )"};  
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};  
     font-weight:600;
     @media(max-width:767px)
     {
@@ -77,7 +77,7 @@ export const Money = styled.span`
 export const Currency = styled.span`
     font-size: 18px;
     font-family: "Open Sans";
-    color:${props=>props.theme.mode=="dark"?"white":"rgb( 80, 80, 80 )"};  
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};  
     font-weight:600;
     padding-left:10px;
     @media(max-width:767px)
@@ -98,7 +98,7 @@ export const Tableofcoin = styled(Table)`
     margin-top:25px;
 `
 export const Head = styled.tr`
-    background-color:${props=>props.theme.mode=="dark"?"#061a2b":"#f5f6fa"};
+    background-color:${props => props.theme.mode == "dark" ? "#061a2b" : "#f5f6fa"};
     font-size: 13px;
     font-family: "Open Sans";
     color: rgb( 23, 76, 126 );
@@ -107,28 +107,29 @@ export const Head = styled.tr`
     height:40px;
     >th{
         vertical-align: middle !important;
-        padding-left: ${props => props.wallet ? "":"45px !important"};
-        text-align:${props => props.wallet ? "center":""};
+        padding-left: ${props => props.wallet ? "" : "45px !important"};
+        text-align:${props => props.wallet ? "center" : ""};
     }
 `
 export const Sub_head = styled.th`
     border-bottom: 0px;
 `
 export const Col1 = styled.tr`
-    height:${props => props.wallet ? "70px":"90px"};
+    height:${props => props.wallet ? "70px" : "90px"};
     >td{
         vertical-align: middle !important;
-        padding-left: ${props => props.wallet ? "":"45px !important"};
-        text-align:${props => props.wallet ? "center":""};
-        font-size: ${props => props.wallet ? "14px":""};
-        font-family: ${props => props.wallet ? "Open Sans" :""};
-        font-weight:  ${props => props.wallet ? "600" :""};
-        color: ${props => props.wallet ? "rgb( 33, 33, 33 )":""};
-        text-transform: ${props => props.wallet ? "uppercase":""};
+        padding-left: ${props => props.wallet ? "" : "45px !important"};
+        text-align:${props => props.wallet ? "center" : ""};
+        font-size: ${props => props.wallet ? "14px" : ""};
+        font-family: ${props => props.wallet ? "Open Sans" : ""};
+        font-weight:  ${props => props.wallet ? "600" : ""};
+        color: ${props => props.wallet ? "rgb( 33, 33, 33 )" : ""};
+        text-transform: ${props => props.wallet ? "uppercase" : ""};
     }
 `
 export const Bit_img = styled.img`
     vertical-align:middle;
+    width:20px;
 `
 export const Bit_text = styled.div`
     vertical-align:middle;
@@ -149,7 +150,7 @@ export const Bit = styled.p`
 export const Bit_price = styled.p`
     font-size: 23.991px;
     font-family: "Open Sans";
-    color: ${props=>props.theme.mode=="dark"?"white":"rgb( 51, 51, 51 )"}; 
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"}; 
     font-weight:600;
     text-transform: uppercase;  
     @media(max-width:767px)
@@ -160,7 +161,7 @@ export const Bit_price = styled.p`
 export const Price = styled.p`
     font-size: 19.993px;
     font-family: "Open Sans";
-    color: ${props=>props.theme.mode=="dark"?"white":"rgba( 51, 51, 51, 0.702 )"};  
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgba( 51, 51, 51, 0.702 )"};  
     font-weight:600;
     vertical-align: middle;
     margin-bottom: 0px;
@@ -198,11 +199,11 @@ export const Detail_wrap = styled.div`
 export const Address = styled.div`
     font-size: 13.995px;
     font-family: "Open Sans";
-    color: ${props=>props.theme.mode=="dark"?"#68727a":"rgba( 33, 33, 33, 0.502 )"};
+    color: ${props => props.theme.mode == "dark" ? "#68727a" : "rgba( 33, 33, 33, 0.502 )"};
     margin-left:15px;
     >b
     {
-        color: ${props=>props.theme.mode=="dark"?"white !important":"rgba( 33, 33, 33, 0.502 )"};
+        color: ${props => props.theme.mode == "dark" ? "white !important" : "rgba( 33, 33, 33, 0.502 )"};
     }
 `
 export const Row_wrap = styled.div`
@@ -238,16 +239,16 @@ export const BTC_amt = styled.span`
     font-size: 71.775px;
     font-family: "Open Sans";
     line-height:1.2;
-    color:${props=>props.theme.mode=="dark" ?"white":"rgb( 80, 80, 80 )"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
     @media(max-width:767px)
     {
         font-size:40px;
     }
-`   
+`
 export const BTC = styled.span`
     font-size: 34.89px;
     font-family: "Open Sans";
-    color:${props=>props.theme.mode=="dark" ?"white":"rgb( 80, 80, 80 )"};
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
     text-transform:uppercase;
     @media(max-width:767px)
     {
@@ -318,7 +319,7 @@ export const Trans_table = styled.div`
 export const TransTitle = styled.p`
     font-size: 20px;
     font-family: "Open Sans";
-    color: ${props=>props.theme.mode=="dark"?"white":"rgb( 51, 51, 51 )"};
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
     padding-left:25px;
     margin-top:30px;
     font-weight: bold;
@@ -326,7 +327,7 @@ export const TransTitle = styled.p`
 `
 export const WalletCoin = styled(SearchCoin)`
     margin-top:0px;
-`   
+`
 export const Left_head = styled.div`
     height:70px;
     display:flex;
