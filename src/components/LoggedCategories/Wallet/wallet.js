@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Input } from 'antd';
+import { Input, Spin } from 'antd';
 import { connect } from "react-redux"
 import styled from 'styled-components';
 
@@ -12,6 +12,7 @@ import ListofCoins from './listofCoins'
 import WalletDetails from './WalletDetails'
 import LoggedNavigation from '../../Navigations/LoggedNavigation';
 import CommonFooter from "../../Landing/Footers/Footer_home";
+import { Spin_Ex } from '../../../styled-components/homepage/style'
 import { Container } from '../../../styled-components/homepage/style';
 import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
 import { Header_wrap, SearchCoin, MY_wallet, Total, Tot, Money, Currency, CoinTable, SearchCoin2, Header_wrap2 } from "../../../styled-components/loggedStyle/walletStyle";
@@ -70,6 +71,8 @@ class Wallet extends Component {
             searchedCoins: [],
             searchedWallet: []
         };
+        this.currChangeWallet = this.currChangeWallet.bind(this);
+        this.currChangeList = this.currChangeList.bind(this);
         this.searchChangeCoins = this.searchChangeCoins.bind(this);
         this.searchChangeWallet = this.searchChangeWallet.bind(this);
     }
@@ -87,9 +90,10 @@ class Wallet extends Component {
         }
     }
     componentDidMount() {
-        this.props.walletBal(this.props.isLoggedIn);
-        this.props.getAllCoins(this.props.isLoggedIn)
+        this.props.walletBal(this.props.isLoggedIn, "USD,EUR,INR");
+        this.props.getAllCoins(this.props.isLoggedIn, "USD,EUR,INR");
     }
+
     searchChangeWallet(e) {
         var search = e.target.value;
         if (search.trim() !== "") {
@@ -127,6 +131,13 @@ class Wallet extends Component {
     totalCurr(total) {
         this.setState({ total: total })
     }
+    currChangeList(currency) {
+        this.props.getAllCoins(this.props.isLoggedIn, currency);
+    }
+    currChangeWallet(currency) {
+
+        this.props.walletBal(this.props.isLoggedIn, currency);
+    }
     render() {
         return (
             <Contact_wrap>
@@ -156,8 +167,8 @@ class Wallet extends Component {
                                 {console.log(this.props, this.state)}
                                 {
                                     this.props.walletDetails !== null ?
-                                        this.state.searchedWallet.length == 0 ? <Tableofcoin tableData={this.props.walletDetails.coins} />
-                                            : <Tableofcoin tableData={this.state.searchedWallet} /> : ""
+                                        this.state.searchedWallet.length == 0 ? <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.walletDetails.coins} />
+                                            : <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedWallet} /> : ""
                                 }
                             </Table_wrap>
                         </CoinTable>
@@ -180,13 +191,19 @@ class Wallet extends Component {
                             con
                             <Table_wrap>
                                 {this.props.allCoins !== null ?
-                                    (this.state.searchedCoins.length > 0 ? <ListofCoins tableData={this.state.searchedCoins} /> : (this.props.allCoins.data.length > 0 ? <ListofCoins tableData={this.props.allCoins.data} /> : ""))
+                                    (this.state.searchedCoins.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.state.searchedCoins} /> : (this.props.allCoins.data.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.props.allCoins.data} /> : ""))
                                     : ""}
                             </Table_wrap>
                         </CoinTable>
                     </ContainerContact2>
                 </Grey_wrap>
                 <CommonFooter />
+                {(this.props.loader == true) ?
+                    <Spin_Ex className="Ex_spin">
+                        <Spin size="large" />
+                    </Spin_Ex>
+                    : ""
+                }
             </Contact_wrap>
         );
     }
@@ -196,11 +213,13 @@ function mapStateToProps(state) {
         walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData : null,
         allCoins: state.walletReducer.allCoinsData !== undefined ? state.walletReducer.allCoinsData : null,
         isLoggedIn: state.simpleReducer.isLoggedIn,
+        loader: state.simpleReducer.loader ? state.simpleReducer.loader : false
     })
 }
 const mapDispatchToProps = dispatch => ({
     walletBal: (isLoggedIn, currency) => dispatch(walletBal(isLoggedIn, currency)),
-    getAllCoins: (isLoggedIn) => dispatch(getAllCoins(isLoggedIn))
+    getAllCoins: (isLoggedIn, currency) => dispatch(getAllCoins(isLoggedIn, currency)),
+
 
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

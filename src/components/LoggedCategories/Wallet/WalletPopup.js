@@ -239,7 +239,6 @@ class WalletPopup extends Component {
                     'Content-Type': 'application/json',
                     Authorization: "Bearer " + this.props.isLoggedIn
                 }
-
             })
                 .then(response => response.json())
                 .then((responseData) => {
