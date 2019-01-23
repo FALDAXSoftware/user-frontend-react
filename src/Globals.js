@@ -1,9 +1,7 @@
 export const globalVariables = {
     HubSpotKey: "e2032f87-8de8-4e18-8f16-f4210e714245",
 
-    amazon_Bucket: process.env.REACT_APP_ENV_URL == 'production' ?
-        "https://s3.us-east-2.amazonaws.com/production-static-asset/" :
-        "https://s3.ap-south-1.amazonaws.com/varshalteamprivatebucket/faldax/",
+    amazon_Bucket: "https://s3.us-east-2.amazonaws.com/production-static-asset/",
 
     //API_URL: 'http://18.191.87.133:8084', //Live URL
 
