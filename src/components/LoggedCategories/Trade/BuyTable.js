@@ -18,7 +18,10 @@ const OTwrap2 = styled(OTwrap)`
         min-width:767px;
     }
 `
+const NDF = styled.p`
+    text-align : center;
 
+`
 class BuyTable extends Component {
     constructor(props) {
         super(props);
@@ -28,7 +31,8 @@ class BuyTable extends Component {
             currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
             currency: "BTC",
             lastsum: 0,
-            loader: false
+            loader: false,
+            result: []
         }
         this.updateData = this.updateData.bind(this);
     }
@@ -82,10 +86,42 @@ class BuyTable extends Component {
             });
             lastsum = sum
         }
+        var preArr = [];
+        var final_result = [];
+        console.log(rows)
+        for (let i = 0; i < rows.length; i++) {
+
+            if (preArr.includes(rows[i].bid)) {
+
+            }
+            else {
+                var count = 0;
+                var result = {
+                    amount: rows[i].amount,
+                    total: rows[i].total
+                };
+                preArr.push(rows[i].bid)
+                for (let j = 0; j < rows.length; j++) {
+                    console.log(i !== j)
+                    if (i !== j) {
+                        if (rows[i].bid == rows[j].bid) {
+                            result.amount = result.amount + rows[j].amount;
+                            result.total = result.total + rows[j].total;
+                        }
+                    }
+                }
+                result.bid = rows[i].bid;
+                result.my_size = rows[i].my_size;
+                console.log(result.bid, count)
+                final_result.push(result);
+            }
+        }
+        console.log(final_result, preArr)
         this.setState({
             loader: false,
             data: rows,
-            lastsum
+            lastsum,
+            result: final_result
         });
     }
     componentWillReceiveProps(props, newProps) {
@@ -106,35 +142,6 @@ class BuyTable extends Component {
     }
 
     render() {
-        var self = this;
-        var presentArr = [];
-        console.log(this.state.data)
-        let result = [];
-        if (this.state.data.length > 0) {
-            result = this.state.data.filter(function (element1, index1) {
-                if (presentArr.includes(element1.bid)) {
-
-                    return false;
-                }
-                else {
-                    presentArr.push(element1.bid)
-                    var obj = {
-                        my_size: element1.my_size,
-                        amount: element1.amount,
-                        bid: element1.bid,
-                        total: element1.total
-                    };
-                    self.state.data.map(function (element2, index2) {
-                        if (element1.bid == element2.bid) {
-                            obj.amount += element2.amount;
-                            obj.total += element2.total;
-                        }
-                    })
-                    return obj;
-                }
-            })
-            console.log("15 min", result)
-        }
         return (
             <div>
                 <BBC>BUYING {this.props.cryptoPair.crypto}</BBC>
@@ -160,19 +167,22 @@ class BuyTable extends Component {
                                 <Scrollbars
                                     style={{ height: 165 }}>
                                     <TableContent cellpadding="10px" cellspacing="0" border="0">
-                                        <tbody>
-                                            {result.length ? result.map(element => (
-                                                <tr>
-                                                    <td>{element.my_size}</td>
-                                                    <td>{element.amount}</td>
-                                                    <td>{element.bid}</td>
-                                                    <td>{element.total.toFixed(4)}</td>
-                                                </tr>
-                                            ))
-                                                : ""
-                                            }
+                                        {console.log(this.state.result)}
+                                        {this.state.result.length ?
+                                            <tbody>
+                                                {this.state.result.map(element => (
+                                                    <tr>
+                                                        <td>{element.my_size}</td>
+                                                        <td>{element.amount}</td>
+                                                        <td>{element.bid}</td>
+                                                        <td>{element.total.toFixed(4)}</td>
+                                                    </tr>
+                                                ))
+                                                }
 
-                                        </tbody>
+                                            </tbody>
+                                            : <NDF>No Data Found</NDF>
+                                        }
                                     </TableContent>
                                 </Scrollbars>
                             </div>

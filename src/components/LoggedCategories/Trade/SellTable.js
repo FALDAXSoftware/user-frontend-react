@@ -29,7 +29,8 @@ class SellTable extends Component {
             crypto: "XRP",
             currency: "BTC",
             lastsum: 0,
-            loader: false
+            loader: false,
+            result: []
         }
         this.updateData = this.updateData.bind(this);
     }
@@ -83,10 +84,42 @@ class SellTable extends Component {
             });
             lastsum = sum;
         }
+        var preArr = [];
+        var final_result = [];
+        console.log(rows)
+        for (let i = 0; i < rows.length; i++) {
+
+            if (preArr.includes(rows[i].ask)) {
+
+            }
+            else {
+                var count = 0;
+                var result = {
+                    amount: rows[i].amount,
+                    total: rows[i].total
+                };
+                preArr.push(rows[i].ask)
+                for (let j = 0; j < rows.length; j++) {
+                    console.log(i !== j)
+                    if (i !== j) {
+                        if (rows[i].ask == rows[j].ask) {
+                            result.amount = result.amount + rows[j].amount;
+                            result.total = result.total + rows[j].total;
+                        }
+                    }
+                }
+                result.ask = rows[i].ask;
+                result.my_size = rows[i].my_size;
+                console.log(result.ask, count)
+                final_result.push(result);
+            }
+        }
+        console.log(final_result, preArr)
         this.setState({
             loader: false,
             data: rows,
             lastsum,
+            result: final_result
         });
     }
     componentWillReceiveProps(props, newProps) {
@@ -106,35 +139,7 @@ class SellTable extends Component {
         }
     }
     render() {
-        var self = this;
-        var presentArr = [];
-        console.log(this.state.data)
-        let result = [];
-        if (this.state.data.length > 0) {
-            result = this.state.data.filter(function (element1, index1) {
-                if (presentArr.includes(element1.ask)) {
 
-                    return false;
-                }
-                else {
-                    presentArr.push(element1.ask)
-                    var obj = {
-                        my_size: element1.my_size,
-                        amount: element1.amount,
-                        ask: element1.ask,
-                        total: element1.total
-                    };
-                    self.state.data.map(function (element2, index2) {
-                        if (element1.ask == element2.ask) {
-                            obj.amount += element2.amount;
-                            obj.total += element2.total;
-                        }
-                    })
-                    return obj;
-                }
-            })
-            console.log("15 min", result)
-        }
         return (
             <div>
                 <BBC2>SELLING {this.props.cryptoPair.crypto}</BBC2>
@@ -161,7 +166,7 @@ class SellTable extends Component {
                                     style={{ height: 165 }}>
                                     <TableContent cellpadding="10px" cellspacing="0" border="0">
                                         <tbody>
-                                            {result.length ? result.map(function (element, index) {
+                                            {this.state.result.length ? this.state.result.map(function (element, index) {
                                                 return (
                                                     < tr >
                                                         <td>{element.my_size}</td>
