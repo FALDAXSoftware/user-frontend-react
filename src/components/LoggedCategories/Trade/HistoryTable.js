@@ -141,8 +141,8 @@ class HistoryTable extends Component {
                                         </tr>
                                     ))
                                         : <p style={{
-                                            textAlign: "center", fontWeight: "normal",
-                                            color: "black"
+                                            textAlign: "center", fontWeight: "600", fontSize: "17px",
+                                            color: "black", marginTop: "30px", fontFamily: "Open Sans"
                                         }}>No Data Found</p>
                                     }
 

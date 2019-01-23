@@ -124,7 +124,7 @@ class TableofCoin extends React.Component {
 
                                     return (
                                         <Col1>
-                                            <td>
+                                            <td style={{ textAlign: "left" }}>
                                                 <Bit_img src={img} />
                                                 <Bit_text><Bit>{tableData[index].coin_name}</Bit><Bit_price>{tableData[index].balance} {tableData[index].coin_code}</Bit_price></Bit_text>
                                             </td>
@@ -143,8 +143,8 @@ class TableofCoin extends React.Component {
                                 })
 
                                     : <p style={{
-                                        textAlign: "center", fontWeight: "normal",
-                                        color: "black"
+                                        textAlign: "center", fontWeight: "600", fontSize: "17px",
+                                        color: "black", marginTop: "30px", fontFamily: "Open Sans"
                                     }}>No Data Found</p> : ""}
                             </tbody>
                         </TableContent>

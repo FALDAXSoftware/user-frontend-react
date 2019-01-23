@@ -176,9 +176,10 @@ class Blog extends Component {
                                                     return (
                                                         <Col key={key} xl={8} lg={12} md={{ sapn: 12 }} sm={24} className="blog-card-col">
                                                             <Link to={`/blogDetails?blogID=${result.id}`}>
+                                                                {console.log(result.featured_image, DefaultBlog)}
                                                                 <Card
                                                                     style={{ width: "100%" }}
-                                                                    cover={<ardCover alt="example" style={{ backgroundImage: `url(${result.featured_image ? result.featured_image : DefaultBlog})` }} />}
+                                                                    cover={<CardCover alt="example" style={{ backgroundImage: `url(${result.featured_image ? result.featured_image : DefaultBlog})` }} />}
                                                                     actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.blog_author.display_name}</Card_foot>, <Card_foot> <MsgIcon src={BlogIcon} />{result.comment_count} Comments</Card_foot>]}
                                                                     bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
                                                                     className={_self.state.blogCSS}
