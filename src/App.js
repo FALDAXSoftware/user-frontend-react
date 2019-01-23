@@ -25,9 +25,11 @@ import ApplyJob from './components/Landing_categories/ApplyJob'
 import Policy from './components/Landing_categories/Policy'
 import News from './components/Landing_categories/News';
 import ThankYou from "./shared-components/thank_you";
+// import dotenv from 'dotenv';
 
+// dotenv.config();
 library.add(faStroopwafel);
-require('dotenv').config()
+// require('dotenv').config()
 
 /* Component defination start here */
 class App extends Component {

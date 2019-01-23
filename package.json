@@ -42,7 +42,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^4.0.8",
-    "react-scripts": "2.1.3",
+    "react-scripts": "1.1.5",
     "react-simple-maps": "^0.12.1",
     "react-slick": "^0.23.1",
     "react-swipe-events": "^1.0.3",
@@ -69,11 +69,5 @@
   "secure": false,
   "devDependencies": {
     "dotenv": "^6.2.0"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  }
 }
