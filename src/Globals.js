@@ -11,9 +11,9 @@ export const globalVariables = {
 
     //API_URL: 'http://192.168.3.32:1337', //Krina Local URL
 
-    API_URL: process.env.REACT_APP_ENV_URL == 'production' ?
-        'https://prod-backend.faldax.com' :
-        'https://dev-backend.faldax.com',
+    // API_URL: process.env.REACT_APP_ENV_URL == 'production' ?
+    //     'https://prod-backend.faldax.com' :
+    //     'https://dev-backend.faldax.com',
 
-    // API_URL: 'http://13.58.130.154:8989' //Client Live URL
+    API_URL: 'https://dev-backend.faldax.com' //Client Live URL
 }
