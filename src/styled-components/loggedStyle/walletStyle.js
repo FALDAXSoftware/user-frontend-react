@@ -148,7 +148,7 @@ export const Bit = styled.p`
     text-transform: uppercase;  
 `
 export const Bit_price = styled.p`
-    font-size: 23.991px;
+    font-size: 20px;
     font-family: "Open Sans";
     color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"}; 
     font-weight:600;

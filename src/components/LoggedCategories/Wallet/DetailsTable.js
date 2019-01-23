@@ -59,21 +59,24 @@ class DetailsTable extends React.Component {
                             SEND/RECIEVE
                             </Sub_head>
                         <Sub_head>
-                            BITCOIN ADDRESS
+                            SOURCE ADDRESS
+                            </Sub_head>
+                        <Sub_head>
+                            DESTINATION ADDRESS
                             </Sub_head>
                         <Sub_head>
                             AMOUNT
                             </Sub_head>
-                        <Sub_head>USD
+                        {/* <Sub_head>USD
                                 <Dropdown overlay={menu} trigger={['click']}>
                                 <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
                             </Dropdown>
-                        </Sub_head>
+                        </Sub_head> */}
                     </Head>
                 </thead>
                 <tbody>
 
-                    {this.state.walletDetails !== null ? Object.keys(this.state.walletDetails).length < 0 ? Object.keys(this.state.walletDetails).map(function (index, key) {
+                    {this.state.walletDetails !== null ? Object.keys(this.state.walletDetails).length > 0 ? Object.keys(this.state.walletDetails).map(function (index, key) {
                         var date_month = moment.utc(me.state.walletDetails[index].created_at).local().format("MMM");
                         var date_day = moment.utc(me.state.walletDetails[index].created_at).local().format("DD");
                         var details = me.state.walletDetails;
@@ -91,19 +94,22 @@ class DetailsTable extends React.Component {
                                     {details[index].source_address}
                                 </td>
                                 <td>
-                                    {details[index].amount}
+                                    {details[index].destination_address}
                                 </td>
                                 <td>
-
+                                    {details[index].amount}
                                 </td>
+                                {/* <td>
+
+                                </td> */}
                             </Col1>
                         );
                     })
 
-                        : <p style={{
-                            textAlign: "center", fontWeight: "normal",
-                            color: "black"
-                        }}>No Data Found</p> : ""}
+                        : <tr><td colspan="5" style={{
+                            textAlign: "center", fontWeight: "600", fontSize: "17px",
+                            color: "black", paddingTop: "30px", fontFamily: "Open Sans"
+                        }}>No Data Found</td></tr> : ""}
                 </tbody>
             </Table_coin>
         );

@@ -117,7 +117,7 @@ export default class TableofCoin extends React.Component {
                                         img = amazon_Bucket + "coin/defualt_coin.png"
                                     return (
                                         <Col1>
-                                            <td>
+                                            <td style={{ textAlign: "left" }}>
                                                 <Bit_img src={img} />
                                                 <Bit_text><Bit_price>0.5433 {tableData[index].coin_code}</Bit_price></Bit_text>
                                             </td>
@@ -132,8 +132,8 @@ export default class TableofCoin extends React.Component {
                                         </Col1>
                                     );
                                 }) : <p style={{
-                                    textAlign: "center", fontWeight: "normal",
-                                    color: "black"
+                                    textAlign: "center", fontWeight: "600", fontSize: "17px",
+                                    color: "black", marginTop: "30px", fontFamily: "Open Sans"
                                 }}>No Data Found</p>
 
                                     : ""}
