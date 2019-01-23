@@ -188,7 +188,7 @@ class Trade extends Component {
     } io
     getInstrumentData() {
         var self = this;
-        // console.log("get instrument data");
+        console.log("get instrument data");
 
         io.socket.get(`/socket/get-instrument-data?coin=${self.state.InsCurrency}`, (body, JWR) => {
             if (body.status == 200) {
@@ -314,6 +314,10 @@ class Trade extends Component {
                 console.log(res);
                 this.setState({ userBal: res, userBalLoader: false })
             }
+        });
+        io.socket.on('orderUpdate', (data) => {
+
+            this.setState({ userBal: data, userBalLoader: false })
         });
     }
     searchInstu(e) {

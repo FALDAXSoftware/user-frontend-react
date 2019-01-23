@@ -176,7 +176,10 @@ class SellTable extends Component {
                                                     </tr>
                                                 );
                                             })
-                                                : ""
+                                                : <p style={{
+                                                    textAlign: "center", fontWeight: "normal",
+                                                    color: "black"
+                                                }}>No Data Found</p>
                                             }
 
                                         </tbody>
