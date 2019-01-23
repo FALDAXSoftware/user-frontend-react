@@ -13,10 +13,11 @@ import { Spin_Ex } from '../../styled-components/homepage/style'
 import {
     SectionBlog, Mainimage, Lefthead, Subleft, Eco, Head3, Eco2, Righthead, Whole_wrap,
     Blog_p, Blogs_wrap, HR_tag, Meta_title, Meta_desc, Card_foot, Prev_next, Prev, Next,
-    MsgIcon, CardCover
+    MsgIcon, CardCover, BlogDesc, ReadMore
 } from '../../styled-components/landingCategories/blogStyle';
-import { BlogIcon } from "../../Constants/images";
+import { BlogIcon, DefaultBlog } from "../../Constants/images";
 import NoDataFound from "../../shared-components/No_data_found";
+import ReactHtmlParser from "react-html-parser";
 
 const Container_Blog = styled(Container)`
     margin-bottom: 80px;
@@ -169,28 +170,36 @@ class Blog extends Component {
                                     {blogsData !== undefined ?
                                         blogsData.length > 0 ?
                                             blogsData.map(function (result, key, index) {
-                                                console.log('>>>>>>>>>>>>', result)
                                                 var date = moment(result.publish_date).format('MMM DD,YYYY');
-                                                //var img = globalVariables.amazon_Bucket + result.featured_image;
                                                 var tag = result.tags ? result.tags.split(',') : [];
-                                                return (
-                                                    <Col key={key} xl={8} lg={12} md={{ sapn: 12 }} sm={24} className="blog-card-col">
-                                                        <Link to={`/blogDetails?blogID=${result.id}`}>
-                                                            <Card
-                                                                style={{ width: "100%" }}
-                                                                cover={<CardCover alt="example" style={{ backgroundImage: `url(${result.featured_image})` }} />}
-                                                                actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.author_name}</Card_foot>, <Card_foot> <MsgIcon src={BlogIcon} />{result.comment_count} Comments</Card_foot>]}
-                                                                bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
-                                                                className={_self.state.blogCSS}
-                                                            >
-                                                                <Meta
-                                                                    title={<Meta_title>{tag[0]}</Meta_title>}
-                                                                    description={<Meta_desc>{result.title}</Meta_desc>}
-                                                                />
-                                                            </Card>
-                                                        </Link>
-                                                    </Col>);
+                                                if (result.is_published == true)
+                                                    return (
+                                                        <Col key={key} xl={8} lg={12} md={{ sapn: 12 }} sm={24} className="blog-card-col">
+                                                            <Link to={`/blogDetails?blogID=${result.id}`}>
+                                                                <Card
+                                                                    style={{ width: "100%" }}
+                                                                    cover={<ardCover alt="example" style={{ backgroundImage: `url(${result.featured_image ? result.featured_image : DefaultBlog})` }} />}
+                                                                    actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.blog_author.display_name}</Card_foot>, <Card_foot> <MsgIcon src={BlogIcon} />{result.comment_count} Comments</Card_foot>]}
+                                                                    bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
+                                                                    className={_self.state.blogCSS}
+                                                                >
+                                                                    <Meta
+                                                                        title={<Meta_title>{tag[0]}</Meta_title>}
+                                                                        description={<Meta_desc>
+                                                                            {result.title}
+                                                                            <BlogDesc>
+                                                                                {ReactHtmlParser(result.post_body)}
+                                                                            </BlogDesc>
+                                                                            <ReadMore><a href={`/blogDetails?blogID=${result.id}`} class="button">read more</a></ReadMore>
+                                                                        </Meta_desc>}
+                                                                    />
+                                                                </Card>
+                                                            </Link>
+                                                        </Col>)
+                                                else
+                                                    return ""
                                             }) : <NoDataFound title="blogs" /> : ""
+
                                     }
                                 </Row>
                             </Blogs_wrap>
