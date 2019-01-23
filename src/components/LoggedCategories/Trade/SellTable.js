@@ -72,7 +72,7 @@ class SellTable extends Component {
         console.log(data)
         const rows = [];
         let sum = 0;
-        let lastsum
+        let lastsum = 0;
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
             sum = sum + element.quantity;
@@ -143,7 +143,7 @@ class SellTable extends Component {
         return (
             <div>
                 <BBC2>SELLING {this.props.cryptoPair.crypto}</BBC2>
-                <Total_BTC>Total:  {this.state.lastsum.toFixed(4)} {this.props.cryptoPair.currency}</Total_BTC>
+                <Total_BTC>Total:  {this.state.lastsum !== undefined && this.state.lastsum ? this.state.lastsum.toFixed(4) : ""} {this.props.cryptoPair.currency}</Total_BTC>
                 <Buy_table>
                     <History_wrap>
                         <OTwrap2>
@@ -177,8 +177,8 @@ class SellTable extends Component {
                                                 );
                                             })
                                                 : <p style={{
-                                                    textAlign: "center", fontWeight: "normal",
-                                                    color: "black"
+                                                    textAlign: "center", fontWeight: "600", fontSize: "17px",
+                                                    color: "black", marginTop: "30px", fontFamily: "Open Sans"
                                                 }}>No Data Found</p>
                                             }
 

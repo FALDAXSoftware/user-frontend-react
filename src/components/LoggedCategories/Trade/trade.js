@@ -141,12 +141,14 @@ class Trade extends Component {
         var self = this;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
+                console.log("CWRP CRYPTO");
                 this.setState({ crypto: props.cryptoPair.crypto, prevRoom: props.cryptoPair.prevRoom }, () => {
                     self.orderSocket(self.state.timePeriod, self.state.status);
                     self.getUserBal();
                 })
             }
             if (props.cryptoPair.currency !== this.state.currency) {
+                console.log("CWRP CURRENCY");
                 this.setState({ currency: props.cryptoPair.currency, prevRoom: props.cryptoPair.prevRoom }, () => {
                     self.orderSocket(self.state.timePeriod, self.state.status)
                     self.getUserBal();
@@ -155,6 +157,7 @@ class Trade extends Component {
         }
     }
     componentDidMount() {
+        console.log("DID TRADE")
         io.sails.headers = {
             Accept: 'application/json',
             'Content-Type': 'application/json',
@@ -306,6 +309,7 @@ class Trade extends Component {
             URL = `/socket/get-user-balance?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`
         else
             URL = `/socket/get-user-balance?room=${this.state.crypto}-${this.state.currency}`
+        console.log(this.state, this.state.prevRoom)
         io.socket.get(URL, (body, JWR) => {
 
 
@@ -419,7 +423,7 @@ class Trade extends Component {
                                 </Col>
                                 <Col md={24} lg={12}>
                                     <Right_div>
-                                        <DepthChart io={io} />
+                                        {/* <DepthChart io={io} /> */}
                                     </Right_div>
                                 </Col>
                             </Row>
