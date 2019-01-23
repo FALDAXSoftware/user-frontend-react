@@ -177,9 +177,10 @@ class Wallet extends Component {
                             </SearchCoin2>
                         </Header_wrap2>
                         <CoinTable>
+                            con
                             <Table_wrap>
                                 {this.props.allCoins !== null ?
-                                    this.state.searchedCoins.length > 0 ? <ListofCoins tableData={this.state.searchedCoins} /> : <ListofCoins tableData={this.props.allCoins.data.rows} />
+                                    (this.state.searchedCoins.length > 0 ? <ListofCoins tableData={this.state.searchedCoins} /> : (this.props.allCoins.data.length > 0 ? <ListofCoins tableData={this.props.allCoins.data} /> : ""))
                                     : ""}
                             </Table_wrap>
                         </CoinTable>

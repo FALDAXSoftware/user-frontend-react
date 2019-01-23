@@ -106,10 +106,39 @@ class SellTable extends Component {
         }
     }
     render() {
+        var self = this;
+        var presentArr = [];
+        console.log(this.state.data)
+        let result = [];
+        if (this.state.data.length > 0) {
+            result = this.state.data.filter(function (element1, index1) {
+                if (presentArr.includes(element1.ask)) {
+
+                    return false;
+                }
+                else {
+                    presentArr.push(element1.ask)
+                    var obj = {
+                        my_size: element1.my_size,
+                        amount: element1.amount,
+                        ask: element1.ask,
+                        total: element1.total
+                    };
+                    self.state.data.map(function (element2, index2) {
+                        if (element1.ask == element2.ask) {
+                            obj.amount += element2.amount;
+                            obj.total += element2.total;
+                        }
+                    })
+                    return obj;
+                }
+            })
+            console.log("15 min", result)
+        }
         return (
             <div>
                 <BBC2>SELLING {this.props.cryptoPair.crypto}</BBC2>
-                <Total_BTC>Total:  {this.state.lastsum} {this.props.cryptoPair.currency}</Total_BTC>
+                <Total_BTC>Total:  {this.state.lastsum.toFixed(4)} {this.props.cryptoPair.currency}</Total_BTC>
                 <Buy_table>
                     <History_wrap>
                         <OTwrap2>
@@ -132,15 +161,17 @@ class SellTable extends Component {
                                     style={{ height: 165 }}>
                                     <TableContent cellpadding="10px" cellspacing="0" border="0">
                                         <tbody>
-                                            {this.state.data.map(element => (
-                                                <tr>
-                                                    <td>{element.my_size}</td>
-                                                    <td>{element.amount}</td>
-                                                    <td>{element.ask}</td>
-                                                    <td>{element.total.toFixed(4)}</td>
-                                                </tr>
-                                            ))
-
+                                            {result.length ? result.map(function (element, index) {
+                                                return (
+                                                    < tr >
+                                                        <td>{element.my_size}</td>
+                                                        <td>{element.amount.toFixed(4)}</td>
+                                                        <td>{element.ask}</td>
+                                                        <td>{element.total.toFixed(4)}</td>
+                                                    </tr>
+                                                );
+                                            })
+                                                : ""
                                             }
 
                                         </tbody>

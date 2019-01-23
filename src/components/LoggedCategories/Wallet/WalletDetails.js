@@ -102,7 +102,8 @@ class WalletDetails extends Component {
             total: null,
             loader: false,
             coin_code: "",
-            walletUserData: []
+            walletUserData: [],
+            defaultCoin: ''
         };
         this.changeCoins = this.changeCoins.bind(this);
     }
@@ -132,17 +133,33 @@ class WalletDetails extends Component {
                     body: JSON.stringify({
                         coinReceive: coin_name[1]
                     })
-
                 })
                     .then(response => response.json())
                     .then((responseData) => {
+                        let transDetails = null;
+                        let walletUserDetails = null;
+
+                        if (responseData.walletTransData) {
+                            if (Object.keys(responseData.walletTransData).length > 0) {
+                                transDetails = responseData.walletTransData;
+                            }
+                        }
+
+                        if (responseData.walletUserData) {
+                            if (Object.keys(responseData.walletUserData).length > 0) {
+                                walletUserDetails = responseData.walletUserData;
+                            }
+                        }
+
                         this.setState({
-                            walletDetails: responseData.walletTransData,
+                            defaultCoin: transDetails[0].coin,
+                            walletDetails: transDetails,
                             loader: false, coin_code: coin_name[1],
-                            walletUserData: responseData.walletUserData
+                            walletUserData: walletUserDetails
                         });
                     })
                     .catch(error => {
+                        this.setState({ loader: false });
                     })
             }
         }
@@ -161,23 +178,13 @@ class WalletDetails extends Component {
             this.setState({ withdraw: true });
     }
     changeCoins(value) {
-        console.log(this.props, value);
-        this.props.history.push(`/walletDetails?coinID=${value}`)
+        this.setState({ defaultCoin: value }, () => {
+            this.props.history.push(`/walletDetails?coinID=${value}`)
+        })
     }
     render() {
-        const { walletUserData } = this.state;
-        var tempDetails = null;
-        var walletUserDetails = null;
-        if (this.state.walletDetails !== null && this.state.walletDetails !== undefined)
-            if (Object.keys(this.state.walletDetails).length > 0) {
-                tempDetails = this.state.walletDetails;
-            }
+        const { walletUserData, defaultCoin, walletDetails } = this.state;
 
-        if (this.state.walletUserData !== null && this.state.walletUserData !== undefined)
-            if (Object.keys(this.state.walletUserData).length > 0) {
-                walletUserDetails = this.state.walletUserData;
-            }
-        var def = tempDetails == null ? "" : (tempDetails.length > 0 ? tempDetails[0].coin_code : "")
         return (
             <Contact_wrap>
                 <LoggedNavigation />
@@ -190,26 +197,25 @@ class WalletDetails extends Component {
                                         <MY_wallet>
                                             <span>BITCOIN</span>
                                         </MY_wallet>
-                                        {console.log(tempDetails)}
                                         <WalletCoin>
-                                            <Select onChange={this.changeCoins} defaultValue={`${def}`} style={{ width: "100%" }}>
-                                                {this.props.walletDetails !== null ?
-                                                    this.props.walletDetails.coins.map(function (temp) {
+                                            {this.props.walletDetails !== null ?
+                                                <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
+                                                    {this.props.walletDetails.coins.map(function (temp) {
                                                         return (
                                                             <Option value={temp.coin}>{temp.coin}</Option>
                                                         );
-                                                    }) : ""
-                                                }
-                                            </Select>
+                                                    })}
+                                                </Select> : ""
+                                            }
                                         </WalletCoin>
                                     </Left_head>
                                 </Col>
                                 <Col xxl={12} xl={12} lg={12} sm={24}>
                                     <Right_head>
                                         <WallTotal>
-                                            <Tot>Total:</Tot>
+                                            {/* <Tot>Total:</Tot>
                                             <Money>${this.state.total !== null ? this.state.total : ""}</Money>
-                                            <Currency>USD</Currency>
+                                            <Currency>USD</Currency> */}
                                         </WallTotal>
                                         {/* <Select defaultValue="USD" style={{ width: 200, marginLeft: "auto" }}>
                                             <Option value="USD">USD</Option>
@@ -221,18 +227,18 @@ class WalletDetails extends Component {
                             </Row>
                         </Header_wrap>
                         <Detail_wrap>
-                            <Address>Bitcoin Address:<b style={{ color: "black" }}>{tempDetails !== null ? tempDetails[0].source_address : ""}</b></Address>
+                            <Address>Bitcoin Address : <b style={{ color: "black" }}>{walletUserData.length > 0 ? walletUserData[0].receive_address : ""}</b></Address>
                             <hr />
                             <Row_wrap>
                                 <Row>
                                     <Col xxl={12} xl={12} lg={24} md={24}>
                                         <Left_Bit>
-                                            <CryptImg><CoinImage src={((tempDetails !== null && tempDetails[0].coin_icon !== null) ? amazon_Bucket + tempDetails[0].coin_icon : amazon_Bucket + "coin/defualt_coin.png")} /></CryptImg>
+                                            <CryptImg><CoinImage src={((walletUserData.length > 0 && walletUserData[0].coin_icon !== null) ? amazon_Bucket + walletUserData[0].coin_icon : amazon_Bucket + "coin/defualt_coin.png")} /></CryptImg>
                                             <CryptAmt>
                                                 <BTC_amt>
-                                                    {walletUserDetails !== null ? walletUserDetails[0].balance.toFixed(4) : ''}
-                                                    <BTC>{tempDetails !== null ? tempDetails[0].coin_code : ""}</BTC></BTC_amt>
-                                                <FIAT_amt>$874.23<AMT>USD</AMT></FIAT_amt>
+                                                    {walletUserData.length > 0 ? walletUserData[0].balance.toFixed(4) : ''}
+                                                    <BTC>{walletUserData.length > 0 ? walletUserData[0].coin_code : ""}</BTC></BTC_amt>
+                                                {/* <FIAT_amt>$874.23<AMT>USD</AMT></FIAT_amt> */}
                                             </CryptAmt>
                                         </Left_Bit>
                                     </Col>
