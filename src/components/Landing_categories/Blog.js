@@ -187,10 +187,10 @@ class Blog extends Component {
                                                                         title={<Meta_title>{tag[0]}</Meta_title>}
                                                                         description={<Meta_desc>
                                                                             {result.title}
-                                                                            <BlogDesc>
+                                                                            {/* <BlogDesc>
                                                                                 {ReactHtmlParser(result.post_body)}
                                                                             </BlogDesc>
-                                                                            <ReadMore><a href={`/blogDetails?blogID=${result.id}`} class="button">read more</a></ReadMore>
+                                                                            <ReadMore><a href={`/blogDetails?blogID=${result.id}`} class="button">read more</a></ReadMore> */}
                                                                         </Meta_desc>}
                                                                     />
                                                                 </Card>
