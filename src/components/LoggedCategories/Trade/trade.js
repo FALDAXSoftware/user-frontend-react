@@ -372,7 +372,7 @@ class Trade extends Component {
                                             <FIAT>
                                                 <RadioSelect value={this.state.InsCurrency} size="large" buttonStyle="solid" onChange={this.onInsChange}>
                                                     <RadioButton value="BTC">BTC</RadioButton>
-
+                                                    <RadioButton value="XRP">XRP</RadioButton>
                                                     {/* <RadioButton value="g">FAVORITES</RadioButton> */}
                                                 </RadioSelect>
                                             </FIAT>
