@@ -349,7 +349,7 @@ class Navigation extends Component {
         if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
             document.getElementById("mySidenav").style.width = "250px";
             document.getElementById("main").style.marginRight = "250px";
-            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+            // document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
     }
     closeNav() {

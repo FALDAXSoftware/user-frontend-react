@@ -206,7 +206,7 @@ class LoggedNavigation extends Component {
         if (document.getElementById("mySidenav2") !== undefined && document.getElementById("mySidenav2") !== null) {
             document.getElementById("mySidenav2").style.width = "250px";
             document.getElementById("main").style.marginRight = "250px";
-            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+            // document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
     }
     closeNav() {

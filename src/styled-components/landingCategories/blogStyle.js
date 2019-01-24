@@ -114,11 +114,12 @@ export const Meta_title = styled.p`
     }
 `
 export const BlogDesc = styled.p`
-    font-size: 14px;
-    font-family: verdana, geneva;
+    font-size: 12px;
+    font-family: verdana,geneva;
     overflow: hidden;
-    max-height: 42px;
+    max-height: 40px;
     color: black;
+    font-weight: normal;
 `
 export const ReadMore = styled.p`
     font-size: 12px;
@@ -132,9 +133,7 @@ export const Meta_desc = styled.p`
     color: ${props => props.theme.mode == "dark" ? "#4c84ff" : "rgb( 15, 71, 123 )"};
     font-weight: bold;
     margin-bottom:8px;
-    overflow:hidden;
     text-overflow:ellipsis;
-    white-space:nowrap;
 `
 export const Card_foot = styled.span`
     font-size: 12px;
