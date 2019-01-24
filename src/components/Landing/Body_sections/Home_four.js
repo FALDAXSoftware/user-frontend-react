@@ -215,7 +215,7 @@ class Home_four extends Component {
     openNotification() {
         notification.open({
             message: 'Thank You',
-            description: 'You will recieve an Email shortly',
+            description: 'You will receive an Email shortly',
             duration: 6,
             icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
         });

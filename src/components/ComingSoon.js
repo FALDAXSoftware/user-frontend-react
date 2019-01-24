@@ -59,7 +59,7 @@ class ComingSoon extends Component {
     openNotification() {
         notification.open({
             message: 'Thank You',
-            description: 'You will recieve an email shortly',
+            description: 'You will receive an email shortly',
             duration: 6,
             icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
         });

@@ -222,6 +222,13 @@ const SideNav = styled.div`
     {
         display: none;
     }
+    @media(min-width:576px)
+    {
+        & .DROP
+        {
+        display:none;
+        }
+    }
 `
 const Login_SignUp = styled.a`
     display:none !important;
@@ -514,7 +521,7 @@ class Navigation extends Component {
                             <a onClick={this.showComing} href="#">Exchange</a>
                             {this.props.isLoggedIn ? <CarLink to="/careers">Careers</CarLink> : ""}
                             {/* <Why> Language </Why> */}
-                            <a>
+                            <a className="DROP">
                                 <DropMenu mode="inline">
                                     <SubMenuNav key="sub1" title={'Information'}>
                                         <Menu.Item key="9"><Link to="/about-us">About Us</Link></Menu.Item>
@@ -525,7 +532,7 @@ class Navigation extends Component {
                                     </SubMenuNav>
                                 </DropMenu>
                             </a>
-                            <a>
+                            <a className="DROP">
                                 <DropMenu mode="inline">
                                     <SubMenuNav key="sub2" title={'Support'}>
                                         <Menu.Item key="9"><a onClick={this.showComing} href="#">Open a Ticket</a></Menu.Item>
@@ -536,7 +543,7 @@ class Navigation extends Component {
                                     </SubMenuNav>
                                 </DropMenu>
                             </a>
-                            <a>
+                            <a className="DROP">
                                 <DropMenu mode="inline">
                                     <SubMenuNav key="sub3" title={'Legal & Technical'}>
                                         <Menu.Item key="9"><Link to="/policy">Policies</Link></Menu.Item>
@@ -601,6 +608,7 @@ class Navigation extends Component {
                     </div>
                     <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
                 </Header_main>
+                {console.log(this.props)}
                 {(this.props.loader == true) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : ""}
