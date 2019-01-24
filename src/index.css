@@ -1,9 +1,16 @@
 body {
   margin: 0;
   padding: 0 !important;
-  
   font-family: sans-serif;
 }
+
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  width: 100%;
+}
+
 
 /* .App {
   margin-left: 210px !important;
@@ -912,8 +919,9 @@ table .ant-table-tbody > tr > td {
   .Card-Blog
   {
     /* width:370px !important; */
-    border: 0px !important;
+    /* border: 0px !important; */
     margin-bottom: 30px !important;
+
   }
   .Card-Blog .ant-card-actions
   {
@@ -952,13 +960,15 @@ table .ant-table-tbody > tr > td {
     white-space: nowrap;
     text-align: left;
   }
-
+  .Card-Blog .ant-card-actions li span.auth-foot{
+    text-overflow: ellipsis !important;
+  }
   .Card-Blog .ant-card-actions li > span{
     line-height: 1;  
     max-width: 100%;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
+    /* text-overflow: ellipsis; */
   }
 
 

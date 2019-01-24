@@ -254,7 +254,7 @@ class WalletDetails extends Component {
                                     <Col xxl={12} xl={12} lg={24} md={24}>
                                         <Right_Bit>
                                             <DepButton name="SEND" onClick={this.showModal}>SEND</DepButton>
-                                            <WithButton name="RECIEVE" onClick={this.showModal}>RECIEVE</WithButton>
+                                            <WithButton name="RECEIVE" onClick={this.showModal}>RECEIVE</WithButton>
                                         </Right_Bit>
                                     </Col>
                                 </Row>

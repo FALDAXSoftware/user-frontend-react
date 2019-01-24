@@ -66,7 +66,7 @@ class KYC extends Component {
             otp_msg: null,
             next: 0,
             nexts: 0,
-            is_kyc_done:false
+            is_kyc_done: false
         }
     }
 
@@ -105,7 +105,7 @@ class KYC extends Component {
                             </Steps>
                         </KYC_progress>
                     </div>
-                    : <Done_wrap><Icon style={{ fontSize: "50px" }} type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> <Kyc_succ><span><b>Thank you.</b> <br />All of your information has been recieved and will be reviewed by our Identity Verification team. You will recieve a notification and an email within 24 hours informing you of our decision. If you don't hear anything after 24 hours, please visit the support page to let us know.</span></Kyc_succ></Done_wrap>}
+                    : <Done_wrap><Icon style={{ fontSize: "50px" }} type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> <Kyc_succ><span><b>Thank you.</b> <br />All of your information has been received and will be reviewed by our Identity Verification team. You will receive a notification and an email within 24 hours informing you of our decision. If you don't hear anything after 24 hours, please visit the support page to let us know.</span></Kyc_succ></Done_wrap>}
                 {(this.state.next == 0 && this.props.is_kyc_done !== true) ?
                     <KYCForm back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""
                 }

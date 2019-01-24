@@ -56,7 +56,7 @@ class DetailsTable extends React.Component {
                     <Head wallet>
                         <Sub_head>Date</Sub_head>
                         <Sub_head>
-                            SEND/RECIEVE
+                            SEND/RECEIVE
                             </Sub_head>
                         <Sub_head>
                             SOURCE ADDRESS
@@ -88,7 +88,7 @@ class DetailsTable extends React.Component {
                                     <div>{date_day}</div>
                                 </td>
                                 <td>
-                                    {details[index].transaction_type == "buy" ? <span><Icon style={{ color: "green", fontSize: "20px" }} type="download" /> RECIEVED</span> : <span><Icon style={{ color: "red", fontSize: "20px" }} type="upload" /> SENT</span>}
+                                    {details[index].transaction_type == "buy" ? <span><Icon style={{ color: "green", fontSize: "20px" }} type="download" /> RECEIVED</span> : <span><Icon style={{ color: "red", fontSize: "20px" }} type="upload" /> SENT</span>}
                                 </td>
                                 <td>
                                     {details[index].source_address}

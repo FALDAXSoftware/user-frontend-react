@@ -85,11 +85,12 @@ export function Signup(values) {
             .then((responseData) => {
                 if (responseData.status == 200) {
                     dispatch(signupAction(responseData));
-                    dispatch(removeLoader());
+
                 }
                 else {
                     dispatch(errorAction(responseData))
                 }
+                dispatch(removeLoader());
             }).catch(error => {
             })
     }
