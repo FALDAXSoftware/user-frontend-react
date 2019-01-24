@@ -265,21 +265,27 @@ class Trade extends Component {
 
                 this.updateMyOrder(res);
             }
+            this.setState({ orderTradeLoader: false })
         });
     }
     updateMyOrder(response) {
         console.log(response)
-        this.setState({ orderTradeData: response, orderTradeLoader: false })
+        this.setState({ orderTradeData: response })
     }
     cancelOrder(id, side, type) {
         console.log(id, side, type)
-        fetch(API_URL + `/cancel-pending-order?id=${id}&side=${side}&order_type=${type}`, {
-            method: "get",
+        fetch(API_URL + `/cancel-pending-order`, {
+            method: "post",
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
                 Authorization: "Bearer " + this.props.isLoggedIn
-            }
+            },
+            body: JSON.stringify({
+                id: id,
+                side: side,
+                order_type: type
+            })
 
         })
             .then(response => response.json())

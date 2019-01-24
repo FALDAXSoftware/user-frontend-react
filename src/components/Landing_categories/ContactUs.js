@@ -100,7 +100,9 @@ class ContactUs extends Component {
             .then((responseData) => {
                 this.setState({ contact: responseData.data, loader: false });
             })
-            .catch(error => { })
+            .catch(error => {
+                console.log(error)
+            })
     }
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
