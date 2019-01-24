@@ -211,9 +211,9 @@ class WalletDetails extends Component {
                                             <span>{this.state.walletUserData.length > 0 ? this.state.walletUserData[0].coin_name : "COIN"}</span>
                                         </MY_wallet>
                                         <WalletCoin>
-                                            {this.props.walletDetails !== null ?
+                                            {this.props.walletDetails !== null && this.props.walletDetails !== undefined ?
                                                 <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
-                                                    {this.props.walletDetails.coins.map(function (temp) {
+                                                    {this.props.walletDetails.map(function (temp) {
                                                         return (
                                                             <Option value={temp.coin}>{temp.coin}</Option>
                                                         );
@@ -269,9 +269,9 @@ class WalletDetails extends Component {
                             <TransTitle>Transaction History</TransTitle>
                             <CoinTable>
                                 {
-                                    this.state.walletDetails !== null
+                                    this.state.walletDetails !== null && this.state.walletDetails !== null
                                         ?
-                                        Object.keys(this.state.walletDetails).length > 0
+                                        this.state.walletDetails.length > 0
                                             ?
                                             <DetailsTable wallet={this.state.walletDetails} />
                                             : ""
@@ -308,7 +308,7 @@ class WalletDetails extends Component {
 
 function mapStateToProps(state) {
     return ({
-        walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData : null,
+        walletDetails: state.walletReducer.walletData.balanceData !== undefined ? state.walletReducer.walletData.balanceData.balanceWallet : null,
         allCoins: state.walletReducer.allCoinsData !== undefined ? state.walletReducer.allCoinsData : null,
         isLoggedIn: state.simpleReducer.isLoggedIn,
     })

@@ -114,7 +114,7 @@ class TableofCoin extends React.Component {
                         style={{ height: 600 }}>
                         <TableContent cellpadding="10px" cellspacing="0" border="0">
                             <tbody>
-                                {tableData !== undefined ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
+                                {tableData !== undefined && tableData !== null ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
                                     var img;
                                     if (tableData[index].coin_icon == null)
                                         img = amazon_Bucket + tableData[index].coin_icon
