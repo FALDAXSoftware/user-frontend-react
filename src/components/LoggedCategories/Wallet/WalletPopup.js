@@ -231,6 +231,8 @@ class WalletPopup extends Component {
     componentWillReceiveProps(props, newProps) {
     }
     componentDidMount() {
+        console.log("wallet popup", this.props.coin_code);
+
         if (this.props.title == "RECEIVE")
             fetch(`${API_URL}/wallet/get-qr-code/${this.props.coin_code}`, {
                 method: "get",

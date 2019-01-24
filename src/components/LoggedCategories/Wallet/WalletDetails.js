@@ -121,9 +121,13 @@ class WalletDetails extends Component {
                 this.setState({ total });
             }
         }
+        console.log(this.props.location);
+
         if (this.props.location !== undefined) {
             if (this.props.location.search.includes('coinID')) {
                 var coin_name = this.props.location.search.split('=');
+                console.log(coin_name);
+
                 fetch(API_URL + "/wallet-details", {
                     method: "post",
                     headers: {
@@ -134,8 +138,7 @@ class WalletDetails extends Component {
                     body: JSON.stringify({
                         coinReceive: coin_name[1]
                     })
-                })
-                    .then(response => response.json())
+                }).then(response => response.json())
                     .then((responseData) => {
                         let transDetails = null;
                         let walletUserDetails = null;
@@ -151,6 +154,7 @@ class WalletDetails extends Component {
                                 walletUserDetails = responseData.walletUserData;
                             }
                         }
+                        console.log("--=-=---", coin_name);
 
                         self.setState({
                             walletUserData: walletUserDetails,
@@ -190,6 +194,7 @@ class WalletDetails extends Component {
         })
     }
     render() {
+        var self = this;
         const { walletUserData, defaultCoin, walletDetails } = this.state;
 
         return (
@@ -206,9 +211,9 @@ class WalletDetails extends Component {
                                             <span>{this.state.walletUserData.length > 0 ? this.state.walletUserData[0].coin_name : "COIN"}</span>
                                         </MY_wallet>
                                         <WalletCoin>
-                                            {this.props.walletDetails !== null ?
+                                            {this.props.walletDetails !== null && this.props.walletDetails !== undefined ?
                                                 <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
-                                                    {this.props.walletDetails.coins.map(function (temp) {
+                                                    {this.props.walletDetails.map(function (temp) {
                                                         return (
                                                             <Option value={temp.coin}>{temp.coin}</Option>
                                                         );
@@ -264,9 +269,9 @@ class WalletDetails extends Component {
                             <TransTitle>Transaction History</TransTitle>
                             <CoinTable>
                                 {
-                                    this.state.walletDetails !== null
+                                    this.state.walletDetails !== null && this.state.walletDetails !== null
                                         ?
-                                        Object.keys(this.state.walletDetails).length > 0
+                                        this.state.walletDetails.length > 0
                                             ?
                                             <DetailsTable wallet={this.state.walletDetails} />
                                             : ""
@@ -274,7 +279,12 @@ class WalletDetails extends Component {
                                 }
                             </CoinTable>
                         </Trans_table>
+                        {
+                            console.log("wallet", self.state)
+
+                        }
                         {this.state.withdraw == true ?
+
                             <WalletPopup coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="RECEIVE" comingCancel={(e) => this.comingCancel(e)} visible={this.state.withdraw} />
                             :
                             ""
@@ -298,7 +308,7 @@ class WalletDetails extends Component {
 
 function mapStateToProps(state) {
     return ({
-        walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData : null,
+        walletDetails: state.walletReducer.walletData.balanceData !== undefined ? state.walletReducer.walletData.balanceData.balanceWallet : null,
         allCoins: state.walletReducer.allCoinsData !== undefined ? state.walletReducer.allCoinsData : null,
         isLoggedIn: state.simpleReducer.isLoggedIn,
     })

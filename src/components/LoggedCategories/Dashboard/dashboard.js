@@ -254,6 +254,8 @@ class Dashboard extends Component {
                 // console.log(responseData);
                 let activityData = [];
                 if (responseData.status == 200) {
+                    console.log("------>amount0------>", responseData.data);
+
                     responseData.data.map(element => {
                         activityData.push({
                             date: moment.utc(element.created_at).local().format("MMMM DD,HH:mm"),
