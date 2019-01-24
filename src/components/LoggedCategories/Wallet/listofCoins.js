@@ -32,6 +32,7 @@ export default class TableofCoin extends React.Component {
     }
     render() {
         var me = this;
+        console.log(this.props)
         let { tableData } = this.props;
         const onClick1 = ({ key }) => {
             console.log(key, this.props)
@@ -109,7 +110,8 @@ export default class TableofCoin extends React.Component {
                         style={{ height: 600 }}>
                         <TableContent cellpadding="10px" cellspacing="0" border="0">
                             <tbody>
-                                {tableData !== undefined ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
+                                {console.log(tableData)}
+                                {tableData !== undefined && tableData !== null ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
                                     var img;
                                     if (tableData[index].coin_icon !== null)
                                         img = amazon_Bucket + tableData[index].coin_icon

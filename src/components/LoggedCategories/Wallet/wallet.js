@@ -68,8 +68,8 @@ class Wallet extends Component {
             mywallet: {},
             myCoins: {},
             total: null,
-            searchedCoins: [],
-            searchedWallet: []
+            searchedCoins: null,
+            searchedWallet: null
         };
         this.currChangeWallet = this.currChangeWallet.bind(this);
         this.currChangeList = this.currChangeList.bind(this);
@@ -79,7 +79,7 @@ class Wallet extends Component {
     componentWillReceiveProps(props, newProps) {
         var total = 0;
         if (this.props.walletDetails !== null) {
-            var tableData = this.props.walletDetails.coins;
+            var tableData = this.props.walletDetails;
             if (tableData !== undefined) {
                 Object.keys(tableData).map(function (index, key) {
                     if (tableData[index].USD !== undefined)
@@ -96,37 +96,53 @@ class Wallet extends Component {
 
     searchChangeWallet(e) {
         var search = e.target.value;
-        if (search.trim() !== "") {
-            var searchedWallet = this.props.walletDetails.coins.filter(function (temp) {
-                if (temp.coin.toLowerCase().includes(search.toLowerCase()) || temp.coin_name.toLowerCase().includes(search.toLowerCase()) || temp.coin_code.toLowerCase().includes(search.toLowerCase())) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            })
-            this.setState({ searchedWallet });
+        if (search !== "") {
+            if (search.trim() !== "") {
+                var searchedWallet = this.props.walletDetails.filter(function (temp) {
+                    if (temp.coin.toLowerCase().includes(search.toLowerCase()) || temp.coin_name.toLowerCase().includes(search.toLowerCase()) || temp.coin_code.toLowerCase().includes(search.toLowerCase())) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                })
+                this.setState({ searchedWallet });
+            }
+            else {
+                this.setState({ searchedWallet: [] });
+            }
         }
         else {
-            this.setState({ searchedWallet: [] });
+            this.setState({ searchedWallet: null });
         }
     }
     searchChangeCoins(e) {
+        console.log("searc h change coin");
+
         var search = e.target.value;
-        if (search.trim() !== "") {
-            var searchedCoins = this.props.allCoins.data.rows.filter(function (temp) {
-                if (temp.coin.toLowerCase().includes(search.toLowerCase()) || temp.coin_name.toLowerCase().includes(search.toLowerCase()) || temp.coin_code.toLowerCase().includes(search.toLowerCase())) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            })
-            this.setState({ searchedCoins });
+        console.log("search", search);
+        if (search !== "") {
+            if (search.trim() !== "") {
+                console.log("after trim");
+
+                var searchedCoins = this.props.nowalletBalance.filter(function (temp) {
+                    if (temp.coin.toLowerCase().includes(search.toLowerCase()) || temp.coin_name.toLowerCase().includes(search.toLowerCase()) || temp.coin_code.toLowerCase().includes(search.toLowerCase())) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
+                this.setState({ searchedCoins });
+            }
+            else {
+                this.setState({ searchedCoins: [] });
+            }
         }
         else {
-            this.setState({ searchedCoins: [] });
+            this.setState({ searchedCoins: null });
         }
+
     }
     totalCurr(total) {
         this.setState({ total: total })
@@ -167,8 +183,7 @@ class Wallet extends Component {
                                 {console.log(this.props, this.state)}
                                 {
                                     this.props.walletDetails !== null ?
-                                        this.state.searchedWallet.length == 0 ? <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.walletDetails.coins} />
-                                            : <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedWallet} /> : ""
+                                        this.state.searchedWallet !== null ? <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedWallet} /> : <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.walletDetails} /> : ""
                                 }
                             </Table_wrap>
                         </CoinTable>
@@ -189,9 +204,15 @@ class Wallet extends Component {
                         </Header_wrap2>
                         <CoinTable>
                             <Table_wrap>
-                                {this.props.allCoins !== null ?
+                                {/* {this.props.allCoins !== null ?
                                     (this.state.searchedCoins.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.state.searchedCoins} /> : (this.props.allCoins.data.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.props.allCoins.data} /> : ""))
-                                    : ""}
+                                    : ""} */}
+                                {console.log(this.props.nowalletBalance)}
+                                {
+                                    this.props.nowalletBalance !== null ?
+                                        this.state.searchedCoins !== null ? <ListofCoins currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedCoins} />
+                                            : <ListofCoins currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.nowalletBalance} /> : ""
+                                }
                             </Table_wrap>
                         </CoinTable>
                     </ContainerContact2>
@@ -208,8 +229,11 @@ class Wallet extends Component {
     }
 }
 function mapStateToProps(state) {
+    console.log(state);
+
     return ({
-        walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData : null,
+        walletDetails: state.walletReducer.walletData.balanceData !== undefined ? state.walletReducer.walletData.balanceData.balanceWallet : null,
+        nowalletBalance: state.walletReducer.walletData.balanceData !== undefined ? state.walletReducer.walletData.balanceData.nonBalanceWallet : null,
         allCoins: state.walletReducer.allCoinsData !== undefined ? state.walletReducer.allCoinsData : null,
         isLoggedIn: state.simpleReducer.isLoggedIn,
         loader: state.simpleReducer.loader ? state.simpleReducer.loader : false
