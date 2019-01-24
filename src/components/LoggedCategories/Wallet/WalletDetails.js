@@ -98,7 +98,7 @@ class WalletDetails extends Component {
         this.state = {
             withdraw: false,
             send: false,
-            walletDetails: {},
+            walletDetails: [],
             total: null,
             loader: false,
             coin_code: "",
@@ -157,17 +157,19 @@ class WalletDetails extends Component {
                         console.log("--=-=---", coin_name);
 
                         self.setState({
-                            defaultCoin: coin_name[1],
+                            walletUserData: walletUserDetails,
+                            defaultCoin: walletUserDetails[0].coin,
                             walletDetails: transDetails,
-                            loader: false,
-                            coin_code: coin_name[1],
-                            walletUserData: walletUserDetails
+                            loader: false, coin_code: coin_name[1],
+
                         }, () => {
-                            console.log("set state", self.state);
+                            console.log("state update");
 
                         });
                     })
                     .catch(error => {
+                        console.log(error);
+
                         this.setState({ loader: false });
                     })
             }
@@ -205,7 +207,8 @@ class WalletDetails extends Component {
                                 <Col xxl={12} xl={12} lg={12} sm={24}>
                                     <Left_head>
                                         <MY_wallet>
-                                            <span>BITCOIN</span>
+                                            {console.log(this.state)}
+                                            <span>{this.state.walletUserData.length > 0 ? this.state.walletUserData[0].coin_name : "COIN"}</span>
                                         </MY_wallet>
                                         <WalletCoin>
                                             {this.props.walletDetails !== null ?
@@ -237,13 +240,14 @@ class WalletDetails extends Component {
                             </Row>
                         </Header_wrap>
                         <Detail_wrap>
-                            <Address>Bitcoin Address : <b style={{ color: "black" }}>{walletUserData.length > 0 ? walletUserData[0].receive_address : ""}</b></Address>
+                            <Address>{this.state.walletUserData.length > 0 ? this.state.walletUserData[0].coin_name.toUpperCase() : "COIN"} Address : <b style={{ color: "black" }}>{walletUserData.length > 0 ? walletUserData[0].receive_address : ""}</b></Address>
                             <hr />
                             <Row_wrap>
                                 <Row>
                                     <Col xxl={12} xl={12} lg={24} md={24}>
+                                        {console.log(walletUserData, "DEJSDJBSD")}
                                         <Left_Bit>
-                                            <CryptImg><CoinImage src={((walletUserData.length > 0 && walletUserData[0].coin_icon !== null && walletUserData[0].coin_icon != undefined) ? amazon_Bucket + walletUserData[0].coin_icon : amazon_Bucket + "coin/defualt_coin.png")} /></CryptImg>
+                                            <CryptImg><CoinImage src={((walletUserData.length > 0 && walletUserData[0].coin_icon !== null && walletUserData[0].coin_icon !== undefined) ? amazon_Bucket + walletUserData[0].coin_icon : amazon_Bucket + "coin/defualt_coin.png")} /></CryptImg>
                                             <CryptAmt>
                                                 <BTC_amt>
                                                     {walletUserData.length > 0 ? walletUserData[0].balance.toFixed(4) : ''}

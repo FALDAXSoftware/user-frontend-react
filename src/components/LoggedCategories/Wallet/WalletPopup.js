@@ -257,7 +257,7 @@ class WalletPopup extends Component {
             // Copy to the clipboard
             document.execCommand('copy');
         };
-        this.openNotificationWithIcon('success', "", "Address Copied to Clipboard");
+        this.openNotificationWithIcon('success', "Copied", "Address Copied to Clipboard");
     }
 
     handleComing = (e) => {

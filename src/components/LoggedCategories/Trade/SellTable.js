@@ -72,7 +72,7 @@ class SellTable extends Component {
         console.log(data)
         const rows = [];
         let sum = 0;
-        let lastsum
+        let lastsum = 0;
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
             sum = sum + element.quantity;
@@ -177,8 +177,8 @@ class SellTable extends Component {
                                                 );
                                             })
                                                 : <p style={{
-                                                    textAlign: "center", fontWeight: "normal",
-                                                    color: "black"
+                                                    textAlign: "center", fontWeight: "600", fontSize: "17px",
+                                                    color: "black", marginTop: "30px", fontFamily: "Open Sans"
                                                 }}>No Data Found</p>
                                             }
 

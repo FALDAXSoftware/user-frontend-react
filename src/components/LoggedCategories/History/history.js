@@ -373,7 +373,10 @@ class History extends Component {
                                                         <td><Button onChange={() => self.repeatClick(temp)}>Repeat</Button></td>
                                                     </tr>);
                                                 })
-                                                : <span>No Data Found</span>
+                                                : <p style={{
+                                                    textAlign: "center", fontWeight: "600", fontSize: "17px",
+                                                    color: "black", marginTop: "30px", fontFamily: "Open Sans"
+                                                }}>No Data Found</p>
                                             }
                                         </tbody>
                                     </HisTable>
