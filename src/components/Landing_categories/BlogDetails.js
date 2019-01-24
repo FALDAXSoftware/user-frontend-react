@@ -91,6 +91,7 @@ class BlogDetails extends Component {
                 this.setState({ contactDetails: responseData.data, loader: false });
             })
             .catch(error => {
+                console.log(error)
             })
     }
 
