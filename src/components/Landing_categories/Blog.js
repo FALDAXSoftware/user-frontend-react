@@ -142,7 +142,7 @@ class Blog extends Component {
                         <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                             <BlogTitle> BLOG </BlogTitle>
                         </div>
-                        {/* <Row>
+                        <Row>
                             <Masonry
                                 breakpointCols={breakpointColumnsObj}
                                 originLeft={false}
@@ -183,7 +183,7 @@ class Blog extends Component {
                                         }) : <NoDataFound title="blogs" /> : ""
                                 }
                             </Masonry>
-                        </Row> */}
+                        </Row>
                         {/* {blogsData !== '' ? Object.keys(blogsData.featuredBlog).length > 0 ?
                             <Mainimage>
                                 <Row>
@@ -217,7 +217,7 @@ class Blog extends Component {
                                     </Col>
                                 </Row>
                                 : "" : ""}
-                            <Blogs_wrap>
+                            {/* <Blogs_wrap>
                                 <Row className="blog-card-row">
                                     {blogsData !== undefined ?
                                         blogsData.length > 0 ?
@@ -256,7 +256,7 @@ class Blog extends Component {
 
                                     }
                                 </Row>
-                            </Blogs_wrap>
+                            </Blogs_wrap> */}
                         </Whole_wrap>
                         <Prev_next>
                             {(this.state.currPage > 1 && this.state.currPage <= this.state.totalPage) ? <Link to={`/blogs?blogPage=${this.state.nxtPage - 2}`}><Prev><i style={{ verticalAlign: "middle", textDecoration: "none" }} className="material-icons">keyboard_backspace</i><span style={{ verticalAlign: "middle" }}>Previous Articles</span></Prev></Link> : ""}
