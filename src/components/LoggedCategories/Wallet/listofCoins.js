@@ -109,7 +109,7 @@ export default class TableofCoin extends React.Component {
                         style={{ height: 600 }}>
                         <TableContent cellpadding="10px" cellspacing="0" border="0">
                             <tbody>
-                                {this.props.tableData !== undefined ? Object.keys(tableData).map(function (index, key) {
+                                {tableData !== undefined ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
                                     var img;
                                     if (tableData[index].coin_icon !== null)
                                         img = amazon_Bucket + tableData[index].coin_icon
@@ -131,7 +131,10 @@ export default class TableofCoin extends React.Component {
                                             </td>
                                         </Col1>
                                     );
-                                })
+                                }) : <p style={{
+                                    textAlign: "center", fontWeight: "normal",
+                                    color: "black"
+                                }}>No Data Found</p>
 
                                     : ""}
                             </tbody>

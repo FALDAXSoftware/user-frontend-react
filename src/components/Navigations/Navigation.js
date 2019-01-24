@@ -17,6 +17,8 @@ import { Logout } from '../../Actions/Auth';
 import Reset_Form from "../Landing/User_forms/Reset_Form"
 import ComingSoon from '../ComingSoon';
 import ReactSwipeEvents from 'react-swipe-events'
+import { Spin_Ex } from '../../styled-components/homepage/style'
+import { Spin } from 'antd';
 import {
     FaldaxLogo, FaldaxWhite, WhiteLogo, Faldax, FaldaxLogin, FaldaxLoginText, Wallpaper
 } from "../../Constants/images";
@@ -599,6 +601,9 @@ class Navigation extends Component {
                     </div>
                     <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
                 </Header_main>
+                {(this.props.loader == true) ? <Spin_Ex className="Ex_spin">
+                    <Spin size="large" />
+                </Spin_Ex> : ""}
             </div >
         );
     }
@@ -610,7 +615,8 @@ function mapStateToProps(state, ownProps) {
         queryParams: ownProps && ownProps.location && ownProps.location.search ? ownProps.location.search : '',
         pathname: ownProps && ownProps.location && ownProps.location.pathname ? ownProps.location.pathname : '',
         profileDetails: state.simpleReducer.profileDetails ? state.simpleReducer.profileDetails.data[0] : "",
-        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+        loader: state.simpleReducer.loader ? state.simpleReducer.loader : false
     });
 }
 const mapDispatchToProps = dispatch => ({

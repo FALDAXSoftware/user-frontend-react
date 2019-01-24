@@ -113,6 +113,19 @@ export const Meta_title = styled.p`
         text-decoration:none;
     }
 `
+export const BlogDesc = styled.p`
+    font-size: 14px;
+    font-family: verdana, geneva;
+    overflow: hidden;
+    max-height: 42px;
+    color: black;
+`
+export const ReadMore = styled.p`
+    font-size: 12px;
+    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+`
 export const Meta_desc = styled.p`
     font-size: 18px;
     font-family: "Open Sans";

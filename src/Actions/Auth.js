@@ -73,6 +73,7 @@ export const Logout = (Data) => dispatch => {
 
 export function Signup(values) {
     return (dispatch) => {
+        dispatch(addLoader());
         fetch(API_URL + "/users/create", {
             method: "post",
             headers: {
@@ -83,7 +84,8 @@ export function Signup(values) {
         }).then(response => response.json())
             .then((responseData) => {
                 if (responseData.status == 200) {
-                    dispatch(signupAction(responseData))
+                    dispatch(signupAction(responseData));
+                    dispatch(removeLoader());
                 }
                 else {
                     dispatch(errorAction(responseData))

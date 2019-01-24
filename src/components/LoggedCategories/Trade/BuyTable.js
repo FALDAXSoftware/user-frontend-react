@@ -20,6 +20,8 @@ const OTwrap2 = styled(OTwrap)`
 `
 const NDF = styled.p`
     text-align : center;
+    font-weight: normal;
+    color:black; 
 
 `
 class BuyTable extends Component {
