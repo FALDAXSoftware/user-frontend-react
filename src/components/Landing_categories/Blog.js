@@ -18,6 +18,7 @@ import {
 import { BlogIcon, DefaultBlog } from "../../Constants/images";
 import NoDataFound from "../../shared-components/No_data_found";
 import ReactHtmlParser from "react-html-parser";
+import Masonry from 'react-masonry-css'
 
 const Container_Blog = styled(Container)`
     margin-bottom: 80px;
@@ -112,15 +113,24 @@ class Blog extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
+                this.setState({ loader: false })
                 if (responseData.status == 200) {
                     var numb = Number(curr)
-                    this.setState({ nxtPage: numb + 1, blogsData: responseData.data.objects, currPage: curr, prevPage: numb - 1, totalPage: Math.ceil(responseData.data.total_count / 9), loader: false })
+                    this.setState({ nxtPage: numb + 1, blogsData: responseData.data.objects, currPage: curr, prevPage: numb - 1, totalPage: Math.ceil(responseData.data.total_count / 9) })
                 }
             })
-            .catch(error => { })
+            .catch(error => {
+                this.setState({ loader: false })
+            })
     }
 
     render() {
+        const breakpointColumnsObj = {
+            default: 3,
+            1100: 3,
+            700: 2,
+            500: 1
+        };
         var _self = this;
         const { blogsData } = this.state;
         return (
@@ -132,6 +142,48 @@ class Blog extends Component {
                         <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                             <BlogTitle> BLOG </BlogTitle>
                         </div>
+                        {/* <Row>
+                            <Masonry
+                                breakpointCols={breakpointColumnsObj}
+                                originLeft={false}
+                                className="my-masonry-grid"
+                                columnClassName="my-masonry-grid_column">
+                                {blogsData !== undefined ?
+                                    blogsData.length > 0 ?
+                                        blogsData.map(function (result, key, index) {
+                                            var date = moment(result.publish_date).format('MMM DD,YYYY');
+                                            var tag = result.tags ? result.tags.split(',') : [];
+                                            if (result.is_published == true)
+                                                return (
+                                                    <div key={key} className="my-masonry-grid_column blog-card-col">
+                                                        <Link to={`/blogDetails?blogID=${result.id}`}>
+                                                            {console.log(result.featured_image, DefaultBlog)}
+                                                            <Card
+                                                                style={{ width: "100%" }}
+                                                                cover={<CardCover alt="example" style={{ backgroundImage: `url(${result.featured_image ? result.featured_image : DefaultBlog})` }} />}
+                                                                actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.blog_author.display_name}</Card_foot>, <Card_foot> <MsgIcon src={BlogIcon} />{result.comment_count} Comments</Card_foot>]}
+                                                                bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
+                                                                className={_self.state.blogCSS}
+                                                            >
+                                                                <Meta
+                                                                    title={<Meta_title>{tag[0]}</Meta_title>}
+                                                                    description={<Meta_desc>
+                                                                        {result.title}
+                                                                        <BlogDesc>
+                                                                            {ReactHtmlParser(result.post_body.length > 280 ? result.post_body.substr(0, 280) + "..." : result.post_body)}
+                                                                        </BlogDesc>
+                                                                        <ReadMore><a href={`/blogDetails?blogID=${result.id}`} class="button">Read more</a></ReadMore>
+                                                                    </Meta_desc>}
+                                                                />
+                                                            </Card>
+                                                        </Link>
+                                                    </div>)
+                                            else
+                                                return ""
+                                        }) : <NoDataFound title="blogs" /> : ""
+                                }
+                            </Masonry>
+                        </Row> */}
                         {/* {blogsData !== '' ? Object.keys(blogsData.featuredBlog).length > 0 ?
                             <Mainimage>
                                 <Row>
@@ -170,7 +222,7 @@ class Blog extends Component {
                                     {blogsData !== undefined ?
                                         blogsData.length > 0 ?
                                             blogsData.map(function (result, key, index) {
-                                                var date = moment(result.publish_date).format('MMM DD,YYYY');
+                                                var date = moment(result.publish_date).format('MMM DD, YYYY');
                                                 var tag = result.tags ? result.tags.split(',') : [];
                                                 if (result.is_published == true)
                                                     return (
@@ -180,18 +232,19 @@ class Blog extends Component {
                                                                 <Card
                                                                     style={{ width: "100%" }}
                                                                     cover={<CardCover alt="example" style={{ backgroundImage: `url(${result.featured_image ? result.featured_image : DefaultBlog})` }} />}
-                                                                    actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.blog_author.display_name}</Card_foot>, <Card_foot> <MsgIcon src={BlogIcon} />{result.comment_count} Comments</Card_foot>]}
+                                                                    actions={[<Card_foot>{date}</Card_foot>, <Card_foot className="auth-foot">{result.blog_author.display_name}</Card_foot>, <Card_foot className="comment-foot"> <MsgIcon src={BlogIcon} />{result.comment_count} Comments</Card_foot>]}
                                                                     bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
                                                                     className={_self.state.blogCSS}
                                                                 >
+
                                                                     <Meta
                                                                         title={<Meta_title>{tag[0]}</Meta_title>}
                                                                         description={<Meta_desc>
                                                                             {result.title}
                                                                             <BlogDesc>
-                                                                                {ReactHtmlParser(result.post_body)}
+                                                                                {result.short_desc}
+                                                                                <a href={`/blogDetails?blogID=${result.id}`} class="button">Read more</a>
                                                                             </BlogDesc>
-                                                                            <ReadMore><a href={`/blogDetails?blogID=${result.id}`} class="button">read more</a></ReadMore>
                                                                         </Meta_desc>}
                                                                     />
                                                                 </Card>

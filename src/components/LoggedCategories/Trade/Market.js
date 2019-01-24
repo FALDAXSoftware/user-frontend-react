@@ -98,7 +98,7 @@ class Market extends Component {
     };
     onSubmit() {
         var self = this;
-        self.setState({ Loader: true });
+
         if (this.validator.allValid()) {
             let params = {
                 symbol: self.state.crypto.toUpperCase() + "-" + self.state.currency.toUpperCase(),
@@ -106,6 +106,7 @@ class Market extends Component {
                 order_type: "Market",
                 orderQuantity: self.state.amount
             }
+            self.setState({ Loader: true });
             fetch(API_URL + "/market/" + self.state.side.toLowerCase(), {
                 method: "post",
                 headers: {
@@ -116,8 +117,9 @@ class Market extends Component {
                 body: JSON.stringify(params)
             }).then(response => response.json())
                 .then((responseData) => {
+                    this.setState({ Loader: false });
                     if (responseData.status == 200) {
-                        this.setState({ Loader: false });
+
                         self.openNotificationWithIcon('success', 'Success', responseData.message);
                     } else {
                         self.openNotificationWithIcon('error', 'Error', responseData.err);

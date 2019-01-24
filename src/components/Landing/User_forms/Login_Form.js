@@ -1,11 +1,11 @@
 /* In-built Packages*/
 import React from 'react'
 import { createForm, formShape } from 'rc-form';
-import styled from 'styled-components';
-import { Button, notification, Icon } from "antd";
+import styled, { consolidateStreamedStyles } from 'styled-components';
+import { Button, notification, Icon, Spin } from "antd";
 import { connect } from 'react-redux';
 import { Eye, ActiveEye } from '../../../Constants/images';
-
+import { Spin_Ex } from '../../../styled-components/homepage/style'
 /* Components */
 
 import { Login, clearLogin } from '../../../Actions/Auth';
@@ -120,6 +120,7 @@ export const Pass_req = styled.label`
   color:red;
   font-size:11px;
   width:76%;
+  font-weight:normal;
 `
 const OtpLabel = styled(Email_label)`
     width: 76%;
@@ -217,7 +218,9 @@ class Login_Form extends React.Component {
       otpIcon: null,
       typeEye: "password",
       isOtpRequired: false,
+      loader: false
     }
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   static propTypes = {
@@ -226,7 +229,8 @@ class Login_Form extends React.Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      if (error == null && this.state.emailIcon == true) {
+      console.log(error, value, this.state)
+      if (error == null && this.state.emailIcon == true && this.state.passIcon == true) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
@@ -242,6 +246,26 @@ class Login_Form extends React.Component {
         }
         this.props.Login(obj);
       } else {
+        if (error !== null) {
+          console.log("here", error);
+
+          if (error['password'] !== undefined) {
+            console.log("if in")
+            this.setState({ passIcon: false })
+            document.querySelector("#passlog_icon_success").style.display = "none"
+            document.querySelector("#passlog_icon_fail").style.display = "none"
+            document.querySelectorAll(".pass_msg")[0].style.display = "block";
+            this.setState({ pass_msg: "*password is required" })
+          }
+          if (error['email'] !== undefined) {
+
+            this.setState({ emailIcon: false })
+            document.querySelector("#userlog_icon_success").style.display = "none"
+            document.querySelector("#userlog_icon_fail").style.display = "none"
+            document.querySelectorAll(".user_msg")[0].style.display = "block";
+            if (this.state.email_msg == null) this.setState({ email_msg: "*email is required" })
+          }
+        }
         this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue.")
       }
     });
@@ -276,6 +300,21 @@ class Login_Form extends React.Component {
           document.querySelectorAll(".user_msg")[0].style.display = "block";
           this.setState({ email_msg: "*Email address is not valid" })
         }
+      }
+    }
+    else if (field == "password") {
+      let val = value.trim();
+      if (val !== "") {
+        this.setState({ passIcon: true, password: value })
+        document.querySelector("#passlog_icon_success").style.display = "none"
+        document.querySelector("#passlog_icon_fail").style.display = "none"
+        document.querySelectorAll(".pass_msg")[0].style.display = "none";
+      } else {
+        this.setState({ passIcon: false })
+        document.querySelector("#passlog_icon_success").style.display = "none"
+        document.querySelector("#passlog_icon_fail").style.display = "none"
+        document.querySelectorAll(".pass_msg")[0].style.display = "block";
+        this.setState({ pass_msg: "*password is required" })
       }
     }
     //password shouldn't have validation except required. 
@@ -346,7 +385,8 @@ class Login_Form extends React.Component {
     /*  console.log(query) */
     if (query[0] !== "" && this.props.location.pathname.includes("login")) {
       var queryObj = {};
-      queryObj["email_verify_token"] = query[1]
+      queryObj["email_verify_token"] = query[1];
+      this.setState({ loader: true })
       fetch(API_URL + "/users/verify-user", {
         method: "post",
         headers: {
@@ -356,8 +396,10 @@ class Login_Form extends React.Component {
       })
         .then(response => response.json())
         .then((responseData) => {
-          if (responseData.status == 200)
+          this.setState({ loader: false })
+          if (responseData.status == 200) {
             this.openNotificationWithIcon('success', 'Verified', responseData.message);
+          }
           else
             this.openNotificationWithIcon('error', 'Not Verified', responseData.err)
         })
@@ -382,6 +424,11 @@ class Login_Form extends React.Component {
       this.props.clearLogin();
     }
   }
+  handleSubmit(event) {
+    console.log("I m x\ca")
+    this.submit();
+    event.preventDefault();
+  }
   render() {
     if (this.props.isLoggedIn) {
       this.props.history.push("/editProfile");
@@ -395,44 +442,47 @@ class Login_Form extends React.Component {
         <Login_head>Login</Login_head>
         <Welcome_text>Welcome Back!</Welcome_text>
         <Email_label>Email Address</Email_label>
-        <div>
-          <Username {...getFieldProps('email', {
-            onChange(e) { me.onChangeField(e.target.value, "username") }, // have to write original onChange here if you need
-            rules: [{ type: "email", required: true }],
-          })} />
-          <UserIconS id="userlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-          <UserIconF id="userlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-        </div>
-        <Email_req className="user_msg">{this.state.email_msg}</Email_req>
-        <Ph_Label>Password</Ph_Label>
-        <div>
-          <Password id="logPass" type={this.state.typeEye} {...getFieldProps('password', {
-            onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
-            rules: [{ type: "string", required: true, min: 5 }],
-          })}
-          />
-          {
-            (this.state.typeEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this)} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this)} />
-          }
-          <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-          <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-        </div>
-        <Pass_req className="pass_msg">{this.state.pass_msg}</Pass_req>
-
-        {this.state.isOtpRequired &&
+        <form onSubmit={this.handleSubmit}>
           <div>
-            <OtpLabel>Two-Factor Authentication is enabled for this account. Please enter your 2FA code below to proceed.</OtpLabel>
-            <div>
-              <Username id="otp-field" {...getFieldProps('otp', {
-                onChange(e) { me.onChangeField(e.target.value, "otp") }, // have to write original onChange here if you need
-                rules: [{ required: false }],
-              })} />
-              <UserIconS id="otp_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-              <UserIconF id="otp_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-            </div>
-            <Pass_req className="otp_msg">{this.state.otp_msg}</Pass_req>
+            <Username {...getFieldProps('email', {
+              onChange(e) { me.onChangeField(e.target.value, "username") }, // have to write original onChange here if you need
+              rules: [{ type: "email", required: true }],
+            })} />
+            <UserIconS id="userlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+            <UserIconF id="userlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
           </div>
-        }
+          <Email_req className="user_msg">{this.state.email_msg}</Email_req>
+          <Ph_Label>Password</Ph_Label>
+          <div>
+            <Password id="logPass" type={this.state.typeEye} {...getFieldProps('password', {
+              onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
+              rules: [{ type: "string", required: true, min: 5 }],
+            })}
+            />
+            {
+              (this.state.typeEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this)} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this)} />
+            }
+            <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+            <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+          </div>
+          <Pass_req className="pass_msg">{this.state.pass_msg}</Pass_req>
+
+          {this.state.isOtpRequired &&
+            <div>
+              <OtpLabel>Two-Factor Authentication is enabled for this account. Please enter your 2FA code below to proceed.</OtpLabel>
+              <div>
+                <Username id="otp-field" {...getFieldProps('otp', {
+                  onChange(e) { me.onChangeField(e.target.value, "otp") }, // have to write original onChange here if you need
+                  rules: [{ required: false }],
+                })} />
+                <UserIconS id="otp_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                <UserIconF id="otp_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+              </div>
+              <Pass_req className="otp_msg">{this.state.otp_msg}</Pass_req>
+            </div>
+          }
+          <input style={{ display: "none" }} type="submit" value="Submit" />
+        </form>
         <Check_wrap>
           {/* <Remember>
             <Check type="checkbox" /> Remember Me</Remember> */}
@@ -444,6 +494,9 @@ class Login_Form extends React.Component {
         <Sign>
           No account? <Sign_a onClick={() => this.dispModal("signup")}>Sign Up</Sign_a>
         </Sign>
+        {(this.state.loader == true) ? <Spin_Ex className="Ex_spin">
+          <Spin size="large" />
+        </Spin_Ex> : ""}
       </Form_wrap>
     );
   }

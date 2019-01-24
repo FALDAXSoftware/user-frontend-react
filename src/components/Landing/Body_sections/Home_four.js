@@ -215,9 +215,9 @@ class Home_four extends Component {
     openNotification() {
         notification.open({
             message: 'Thank You',
-            description: 'You will recieve an Email shortly',
+            description: 'You will receive an Email shortly',
             duration: 6,
-            icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+            icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
         });
     };
     openNotification1() {
@@ -225,7 +225,7 @@ class Home_four extends Component {
             message: 'Error',
             description: 'Sorry, There is some error',
             duration: 6,
-            icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+            icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
         });
     };
     countryColor(text) {
