@@ -121,7 +121,7 @@ class Forgot_Form extends Component {
       message: 'Password Reset Link Sent',
       description: 'The link to reset the password is sent to your Email Address',
       duration: 6,
-      icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+      icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
     });
   };
 

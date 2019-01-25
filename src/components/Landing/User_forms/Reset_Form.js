@@ -250,7 +250,7 @@ class ResetPassword extends Component {
     notification.open({
       message: 'Password Changed Successfully',
       duration: 3,
-      icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+      icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
     });
   };
 

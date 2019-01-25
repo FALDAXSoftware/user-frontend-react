@@ -83,7 +83,7 @@ class Wallet extends Component {
             if (tableData !== undefined) {
                 Object.keys(tableData).map(function (index, key) {
                     if (tableData[index].USD !== undefined)
-                        total = total + tableData[index].USD;
+                        total = total + (tableData[index].USD * tableData[index].balance);
                 })
                 this.setState({ total });
             }
@@ -174,7 +174,7 @@ class Wallet extends Component {
                             </SearchCoin>
                             <Total>
                                 <Tot>Total:</Tot>
-                                <Money>${this.state.total !== null ? this.state.total : ""}</Money>
+                                <Money>${this.state.total !== null ? parseFloat(this.state.total).toFixed(4) : ""}</Money>
                                 <Currency>USD</Currency>
                             </Total>
                         </Header_wrap>
@@ -210,8 +210,8 @@ class Wallet extends Component {
                                 {console.log(this.props.nowalletBalance)}
                                 {
                                     this.props.nowalletBalance !== null ?
-                                        this.state.searchedCoins !== null ? <ListofCoins currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedCoins} />
-                                            : <ListofCoins currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.nowalletBalance} /> : ""
+                                        this.state.searchedCoins !== null ? <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedCoins} />
+                                            : <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.nowalletBalance} /> : ""
                                 }
                             </Table_wrap>
                         </CoinTable>
