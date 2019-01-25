@@ -76,17 +76,6 @@ const ButtonToolbarOne = styled(ButtonToolbar)`
         width:100%;
     }
 `
-const DropdownButtonOne = styled(DropdownButton)`
-    background-color: ${props => props.theme.mode == "dark" ? "#01090f" : ""};
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
-    width:100%;
-    text-align:left;
-    >.caret
-    {
-        float:right;
-        margin-top: 8px;
-    }
-`
 const CoinImage = styled.img`
     width: 60px;
     height: 60px;
@@ -103,7 +92,8 @@ class WalletDetails extends Component {
             loader: false,
             coin_code: "",
             walletUserData: [],
-            defaultCoin: ''
+            defaultCoin: '',
+            loader: false
         };
         this.changeCoins = this.changeCoins.bind(this);
     }
@@ -116,18 +106,15 @@ class WalletDetails extends Component {
             if (tableData !== undefined) {
                 Object.keys(tableData).map(function (index, key) {
                     if (tableData[index].USD !== undefined)
-                        total = total + tableData[index].USD;
+                        total = total + parseFloat(tableData[index].USD) * (tableData[index].balance);
                 })
                 this.setState({ total });
             }
         }
-        console.log(this.props.location);
 
         if (this.props.location !== undefined) {
             if (this.props.location.search.includes('coinID')) {
                 var coin_name = this.props.location.search.split('=');
-                console.log(coin_name);
-
                 fetch(API_URL + "/wallet-details", {
                     method: "post",
                     headers: {
@@ -154,8 +141,6 @@ class WalletDetails extends Component {
                                 walletUserDetails = responseData.walletUserData;
                             }
                         }
-                        console.log("--=-=---", coin_name);
-
                         self.setState({
                             walletUserData: walletUserDetails,
                             defaultCoin: walletUserDetails[0].coin,
@@ -164,12 +149,10 @@ class WalletDetails extends Component {
 
                         }, () => {
                             console.log("state update");
-
                         });
                     })
                     .catch(error => {
                         console.log(error);
-
                         this.setState({ loader: false });
                     })
             }
@@ -245,7 +228,6 @@ class WalletDetails extends Component {
                             <Row_wrap>
                                 <Row>
                                     <Col xxl={12} xl={12} lg={24} md={24}>
-                                        {console.log(walletUserData, "DEJSDJBSD")}
                                         <Left_Bit>
                                             <CryptImg><CoinImage src={((walletUserData.length > 0 && walletUserData[0].coin_icon !== null && walletUserData[0].coin_icon !== undefined) ? amazon_Bucket + walletUserData[0].coin_icon : amazon_Bucket + "coin/defualt_coin.png")} /></CryptImg>
                                             <CryptAmt>
@@ -274,15 +256,17 @@ class WalletDetails extends Component {
                                         this.state.walletDetails.length > 0
                                             ?
                                             <DetailsTable wallet={this.state.walletDetails} />
-                                            : ""
-                                        : ""
+                                            : <p style={{
+                                                textAlign: "center", fontWeight: "600", fontSize: "17px",
+                                                color: "black", marginTop: "30px", fontFamily: "Open Sans"
+                                            }}>No Data Found</p>
+                                        : <p style={{
+                                            textAlign: "center", fontWeight: "600", fontSize: "17px",
+                                            color: "black", marginTop: "30px", fontFamily: "Open Sans"
+                                        }}>No Data Found</p>
                                 }
                             </CoinTable>
                         </Trans_table>
-                        {
-                            console.log("wallet", self.state)
-
-                        }
                         {this.state.withdraw == true ?
 
                             <WalletPopup coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="RECEIVE" comingCancel={(e) => this.comingCancel(e)} visible={this.state.withdraw} />
@@ -298,7 +282,7 @@ class WalletDetails extends Component {
                     </ContainerContact2>
                 </Grey_wrap>
                 <CommonFooter />
-                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+                {(this.props.loader && this.state.lodaer) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : ""}
             </Contact_wrap>
@@ -308,9 +292,10 @@ class WalletDetails extends Component {
 
 function mapStateToProps(state) {
     return ({
-        walletDetails: state.walletReducer.walletData.balanceData !== undefined ? state.walletReducer.walletData.balanceData.balanceWallet : null,
+        walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData.balanceWallet : null,
         allCoins: state.walletReducer.allCoinsData !== undefined ? state.walletReducer.allCoinsData : null,
         isLoggedIn: state.simpleReducer.isLoggedIn,
+        loader: state.simpleReducer.loader ? state.simpleReducer.loader : false
     })
 }
 

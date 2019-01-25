@@ -53,14 +53,9 @@ class SellTable extends Component {
         else {
             URL = `/socket/get-sell-book?room=${this.state.crypto}-${this.state.currency}`
         }
-        console.log(URL)
         io.socket.get(URL, (body, JWR) => {
-
-
             if (body.status == 200) {
                 let res = body.data;
-
-
                 this.updateData(res);
             }
         });
@@ -69,13 +64,12 @@ class SellTable extends Component {
         });
     }
     updateData(data) {
-        console.log(data)
         const rows = [];
         let sum = 0;
         let lastsum = 0;
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
-            sum = sum + element.quantity;
+            sum = sum + element.quantity * element.price;
             rows.push({
                 my_size: 0,
                 amount: element.quantity,
@@ -86,11 +80,8 @@ class SellTable extends Component {
         }
         var preArr = [];
         var final_result = [];
-        console.log(rows)
         for (let i = 0; i < rows.length; i++) {
-
             if (preArr.includes(rows[i].ask)) {
-
             }
             else {
                 var count = 0;
@@ -104,17 +95,15 @@ class SellTable extends Component {
                     if (i !== j) {
                         if (rows[i].ask == rows[j].ask) {
                             result.amount = result.amount + rows[j].amount;
-                            result.total = result.total + rows[j].total;
+                            result.total = result.total;
                         }
                     }
                 }
                 result.ask = rows[i].ask;
                 result.my_size = rows[i].my_size;
-                console.log(result.ask, count)
                 final_result.push(result);
             }
         }
-        console.log(final_result, preArr)
         this.setState({
             loader: false,
             data: rows,
@@ -123,7 +112,6 @@ class SellTable extends Component {
         });
     }
     componentWillReceiveProps(props, newProps) {
-        console.log(props)
         var self = this;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -139,7 +127,6 @@ class SellTable extends Component {
         }
     }
     render() {
-
         return (
             <div>
                 <BBC2>SELLING {this.props.cryptoPair.crypto}</BBC2>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
-import { Row, Col, Tabs, Input, Radio, Select, Spin } from 'antd';
+import { Row, Col, Tabs, Input, Radio, Select, Spin, notification } from 'antd';
 import styled from 'styled-components';
 /* import Tableofcoin from './TableofCoin'
 import WalletDetails from './WalletDetails' */
@@ -58,7 +58,16 @@ const OrderTradeWrap = styled.div`
 const columns = [{
     title: 'Name',
     dataIndex: 'name',
-    sorter: (a, b) => a.name.length - b.name.length,
+    sorter: (a, b, sortOrder) => {
+        var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+        var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+            return -1;
+        }
+        if (nameA > nameB) {
+            return 1;
+        }
+    },
 }, {
     title: 'Price',
     dataIndex: 'price',
@@ -69,7 +78,8 @@ const columns = [{
     dataIndex: 'volume',
     defaultSortOrder: 'ascend',
     render: text => text.toFixed(4),
-    sorter: (a, b) => a.volume - b.volume
+    sorter: (a, b) => a.volume - b.volume,
+    sortDirections: ['descend', 'ascend'],
 },
 {
     title: 'Change',
@@ -84,31 +94,6 @@ const columns = [{
     sorter: (a, b) => a.change - b.change
 }];
 
-const data = [{
-    key: '1',
-    name: 'John Brown',
-    price: 32,
-    volume: 'New York No. 1 Lake Park',
-    change: "+0.92%"
-}, {
-    key: '2',
-    name: 'Jim Green',
-    price: 42,
-    volume: 'London No. 1 Lake Park',
-    change: "+0.92%"
-}, {
-    key: '3',
-    name: 'Joe Black',
-    price: 32,
-    volume: 'Sidney No. 1 Lake Park',
-    change: "+0.92%"
-}, {
-    key: '4',
-    name: 'Jim Red',
-    price: 32,
-    volume: 'London No. 2 Lake Park',
-    change: "+0.92%"
-}];
 const TabPane = Tabs.TabPane;
 let io = null;
 class Trade extends Component {
@@ -157,6 +142,7 @@ class Trade extends Component {
         }
     }
     componentDidMount() {
+        var self = this;
         console.log("DID TRADE")
         io.sails.headers = {
             Accept: 'application/json',
@@ -166,6 +152,11 @@ class Trade extends Component {
         this.orderSocket(this.state.timePeriod, this.state.status);
         this.getInstrumentData();
         this.getUserBal();
+        io.socket.on('orderUpdated', (data) => {
+            self.orderSocket(self.state.timePeriod, self.state.status);
+            self.getUserBal();
+
+        });
     }
     onInsChange(e) {
         console.log(this.props)
@@ -198,6 +189,10 @@ class Trade extends Component {
                 self.updateInstrumentsData(body.data)
             }
         });
+        io.socket.on('instrumentUpdate', (data) => {
+            self.updateInstrumentsData(data)
+        });
+
     }
     updateInstrumentsData(data) {
         console.log(data);
@@ -290,11 +285,22 @@ class Trade extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                this.orderSocket(this.state.timePeriod, this.state.status)
+                if (responseData.status == 200) {
+                    this.orderSocket(this.state.timePeriod, this.state.status)
+                    this.openNotificationWithIcon("success", "Successfull", "Your order has been successfully cancelled")
+                }
+                else
+                    this.openNotificationWithIcon("error", "Error", responseData.err)
             })
             .catch(error => {
             })
     }
+    openNotificationWithIcon(type, head, desc) {
+        notification[type]({
+            message: head,
+            description: desc,
+        });
+    };
     currencyPair(crypto) {
         let cryptoPair = {
             crypto: crypto,
@@ -429,7 +435,7 @@ class Trade extends Component {
                                 </Col>
                                 <Col md={24} lg={12}>
                                     <Right_div>
-                                        {/* <DepthChart io={io} /> */}
+                                        <DepthChart io={io} />
                                     </Right_div>
                                 </Col>
                             </Row>

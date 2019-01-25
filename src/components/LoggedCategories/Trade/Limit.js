@@ -82,7 +82,6 @@ class Limit extends Component {
                     obj["total"] = Number(this.state.amount) * this.props.userBal.sellPay;
                 }
             } else {
-                console.log('ELSE')
                 obj["total"] = 0;
             }
             self.setState({ ...obj });
@@ -132,7 +131,6 @@ class Limit extends Component {
     render() {
         const { userBalFees, buyEstPrice, buyPayAmt, sellEstPrice, sellPayAmt } = this.state;
         const RadioGroup = Radio.Group;
-        console.log('buyEstimatedPrice', buyEstPrice)
 
         return (
             <Market_wrap>
@@ -320,7 +318,7 @@ class Limit extends Component {
                             </Esti>
                         </Pay> : ""}
                 <Button_wrap>
-                    <ButtonETH side={this.state.side} onClick={this.onSubmit}>{this.state.side.toUpperCase()} ETH</ButtonETH>
+                    <ButtonETH side={this.state.side} onClick={this.onSubmit}>{this.state.side.toUpperCase()} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</ButtonETH>
                 </Button_wrap>
             </Market_wrap>
         )

@@ -94,6 +94,9 @@ const SideNav = styled.div`
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    & span a{
+        color: white;
+    }
     span
     {
         padding: 8px 32px;
@@ -277,10 +280,10 @@ class LoggedNavigation extends Component {
                     defaultSelectedKeys={['1']}
                     selectedKeys={this.state.selected}
                 >
-                    <Menu_item key="1" onClick={this.showComing}><LogNav>DASHBOARD</LogNav></Menu_item>
-                    <Menu_item key="2" onClick={this.showComing}><LogNav>TRADE</LogNav></Menu_item>
-                    <Menu_item key="3" onClick={this.showComing}><LogNav>Wallet</LogNav></Menu_item>
-                    <Menu_item key="4" onClick={this.showComing}><LogNav>HISTORY</LogNav></Menu_item>
+                    <Menu_item key="1"><NavLink className="Nav_selected" to="/dashboard">DASHBOARD</NavLink></Menu_item>
+                    <Menu_item key="2"><NavLink className="Nav_selected" to="/trade">TRADE</NavLink></Menu_item>
+                    <Menu_item key="3"><NavLink className="Nav_selected" to="/wallet">WALLET</NavLink></Menu_item>
+                    <Menu_item key="4"><NavLink className="Nav_selected" to="/history">HISTORY</NavLink></Menu_item>
                 </Menu_main>
                 <RightCol>
                     <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />
@@ -291,10 +294,10 @@ class LoggedNavigation extends Component {
                     <SideNav id="mySidenav2">
                         <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                         <LogoutStyle to="/editProfile">PROFILE</LogoutStyle>
-                        <span onClick={this.showComing}>DASHBOARD</span>
-                        <span onClick={this.showComing}>TRADE</span>
-                        <span onClick={this.showComing}>WALLET</span>
-                        <span onClick={this.showComing}>HISTORY</span>
+                        <span> <Link to="/dashboard">DASHBOARD</Link></span>
+                        <span> <Link to="/trade">TRADE</Link></span>
+                        <span> <Link to="/wallet">WALLET</Link></span>
+                        <span> <Link to="/history">HISTORY</Link></span>
                         <span><CarLink to="/careers">Careers</CarLink></span>
                         <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
                     </SideNav>
