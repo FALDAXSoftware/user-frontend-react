@@ -69,7 +69,7 @@ class SellTable extends Component {
         let lastsum = 0;
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
-            sum = sum + element.quantity;
+            sum = sum + element.quantity * element.price;
             rows.push({
                 my_size: 0,
                 amount: element.quantity,
@@ -95,7 +95,7 @@ class SellTable extends Component {
                     if (i !== j) {
                         if (rows[i].ask == rows[j].ask) {
                             result.amount = result.amount + rows[j].amount;
-                            result.total = result.total + rows[j].total;
+                            result.total = result.total;
                         }
                     }
                 }
