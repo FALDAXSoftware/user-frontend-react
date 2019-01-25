@@ -58,7 +58,16 @@ const OrderTradeWrap = styled.div`
 const columns = [{
     title: 'Name',
     dataIndex: 'name',
-    sorter: (a, b) => a.name.length - b.name.length,
+    sorter: (a, b, sortOrder) => {
+        var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+        var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+            return -1;
+        }
+        if (nameA > nameB) {
+            return 1;
+        }
+    },
 }, {
     title: 'Price',
     dataIndex: 'price',
@@ -69,7 +78,8 @@ const columns = [{
     dataIndex: 'volume',
     defaultSortOrder: 'ascend',
     render: text => text.toFixed(4),
-    sorter: (a, b) => a.volume - b.volume
+    sorter: (a, b) => a.volume - b.volume,
+    sortDirections: ['descend', 'ascend'],
 },
 {
     title: 'Change',
@@ -84,31 +94,6 @@ const columns = [{
     sorter: (a, b) => a.change - b.change
 }];
 
-const data = [{
-    key: '1',
-    name: 'John Brown',
-    price: 32,
-    volume: 'New York No. 1 Lake Park',
-    change: "+0.92%"
-}, {
-    key: '2',
-    name: 'Jim Green',
-    price: 42,
-    volume: 'London No. 1 Lake Park',
-    change: "+0.92%"
-}, {
-    key: '3',
-    name: 'Joe Black',
-    price: 32,
-    volume: 'Sidney No. 1 Lake Park',
-    change: "+0.92%"
-}, {
-    key: '4',
-    name: 'Jim Red',
-    price: 32,
-    volume: 'London No. 2 Lake Park',
-    change: "+0.92%"
-}];
 const TabPane = Tabs.TabPane;
 let io = null;
 class Trade extends Component {
