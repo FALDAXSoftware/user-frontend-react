@@ -25,6 +25,7 @@ const SideType = styled.td`
     color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
 `
 const FontAwesomeIconA = styled(FontAwesomeIcon)``
+var io = null;
 class HistoryTable extends Component {
     constructor(props) {
         super(props);
@@ -41,6 +42,9 @@ class HistoryTable extends Component {
         if (this.props.cryptoPair !== undefined && this.props.cryptoPair !== "") {
             this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
                 self.historyData();
+                io.socket.on('instrumentUpdate', (data) => {
+                    self.updateData(data)
+                });
             })
         }
     }
@@ -61,7 +65,7 @@ class HistoryTable extends Component {
         }
     }
     historyData() {
-        let io = this.props.io
+        io = this.props.io
         this.setState({ loader: true })
         io.sails.url = APP_URL;
         var URL;

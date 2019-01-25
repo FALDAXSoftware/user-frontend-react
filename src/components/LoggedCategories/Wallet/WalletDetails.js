@@ -117,7 +117,7 @@ class WalletDetails extends Component {
             if (tableData !== undefined) {
                 Object.keys(tableData).map(function (index, key) {
                     if (tableData[index].USD !== undefined)
-                        total = total + tableData[index].USD;
+                        total = total + parseFloat(tableData[index].USD) * (tableData[index].balance);
                 })
                 this.setState({ total });
             }
@@ -245,7 +245,6 @@ class WalletDetails extends Component {
                             <Row_wrap>
                                 <Row>
                                     <Col xxl={12} xl={12} lg={24} md={24}>
-                                        {console.log(walletUserData, "DEJSDJBSD")}
                                         <Left_Bit>
                                             <CryptImg><CoinImage src={((walletUserData.length > 0 && walletUserData[0].coin_icon !== null && walletUserData[0].coin_icon !== undefined) ? amazon_Bucket + walletUserData[0].coin_icon : amazon_Bucket + "coin/defualt_coin.png")} /></CryptImg>
                                             <CryptAmt>
@@ -285,10 +284,6 @@ class WalletDetails extends Component {
                                 }
                             </CoinTable>
                         </Trans_table>
-                        {
-                            console.log("wallet", self.state)
-
-                        }
                         {this.state.withdraw == true ?
 
                             <WalletPopup coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="RECEIVE" comingCancel={(e) => this.comingCancel(e)} visible={this.state.withdraw} />

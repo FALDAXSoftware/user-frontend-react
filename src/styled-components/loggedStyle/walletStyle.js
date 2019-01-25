@@ -124,7 +124,7 @@ export const Col1 = styled.tr`
         font-family: ${props => props.wallet ? "Open Sans" : ""};
         font-weight:  ${props => props.wallet ? "600" : ""};
         color: ${props => props.wallet ? "rgb( 33, 33, 33 )" : ""};
-        text-transform: ${props => props.wallet ? "uppercase" : ""};
+        
     }
 `
 export const Bit_img = styled.img`

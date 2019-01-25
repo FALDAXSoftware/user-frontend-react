@@ -314,7 +314,7 @@ class Market extends Component {
                             </Esti>
                         </Pay> : ""}
                 <Button_wrap>
-                    <ButtonETH side={this.state.side} onClick={this.onSubmit}>{this.state.side.toUpperCase()} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</ButtonETH>
+                    <ButtonETH side={this.state.side} onClick={this.onSubmit}>{this.state.side.toUpperCase()} {this.props.cryptoPair.currency}</ButtonETH>
                 </Button_wrap>
                 {(this.state.Loader == true) ?
                     <Spin_single className="Single_spin">
