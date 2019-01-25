@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
-import { Row, Col, Tabs, Input, Radio, Select, Spin } from 'antd';
+import { Row, Col, Tabs, Input, Radio, Select, Spin, notification } from 'antd';
 import styled from 'styled-components';
 /* import Tableofcoin from './TableofCoin'
 import WalletDetails from './WalletDetails' */
@@ -290,11 +290,22 @@ class Trade extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                this.orderSocket(this.state.timePeriod, this.state.status)
+                if (responseData.status == 200) {
+                    this.orderSocket(this.state.timePeriod, this.state.status)
+                    this.openNotificationWithIcon("success", "Successfull", "Your order has been successfully cancelled")
+                }
+                else
+                    this.openNotificationWithIcon("error", "Error", responseData.err)
             })
             .catch(error => {
             })
     }
+    openNotificationWithIcon(type, head, desc) {
+        notification[type]({
+            message: head,
+            description: desc,
+        });
+    };
     currencyPair(crypto) {
         let cryptoPair = {
             crypto: crypto,

@@ -177,7 +177,7 @@ class BuyTable extends Component {
                                                 {this.state.result.map(element => (
                                                     <tr>
                                                         <td>{element.my_size}</td>
-                                                        <td>{element.amount}</td>
+                                                        <td>{element.amount.toFixed(4)}</td>
                                                         <td>{element.bid}</td>
                                                         <td>{element.total.toFixed(4)}</td>
                                                     </tr>

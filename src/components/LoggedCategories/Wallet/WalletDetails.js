@@ -103,7 +103,8 @@ class WalletDetails extends Component {
             loader: false,
             coin_code: "",
             walletUserData: [],
-            defaultCoin: ''
+            defaultCoin: '',
+            loader: false
         };
         this.changeCoins = this.changeCoins.bind(this);
     }
@@ -127,7 +128,6 @@ class WalletDetails extends Component {
             if (this.props.location.search.includes('coinID')) {
                 var coin_name = this.props.location.search.split('=');
                 console.log(coin_name);
-
                 fetch(API_URL + "/wallet-details", {
                     method: "post",
                     headers: {
@@ -274,8 +274,14 @@ class WalletDetails extends Component {
                                         this.state.walletDetails.length > 0
                                             ?
                                             <DetailsTable wallet={this.state.walletDetails} />
-                                            : ""
-                                        : ""
+                                            : <p style={{
+                                                textAlign: "center", fontWeight: "600", fontSize: "17px",
+                                                color: "black", marginTop: "30px", fontFamily: "Open Sans"
+                                            }}>No Data Found</p>
+                                        : <p style={{
+                                            textAlign: "center", fontWeight: "600", fontSize: "17px",
+                                            color: "black", marginTop: "30px", fontFamily: "Open Sans"
+                                        }}>No Data Found</p>
                                 }
                             </CoinTable>
                         </Trans_table>
@@ -298,7 +304,7 @@ class WalletDetails extends Component {
                     </ContainerContact2>
                 </Grey_wrap>
                 <CommonFooter />
-                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+                {(this.props.loader && this.state.lodaer) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : ""}
             </Contact_wrap>
@@ -308,9 +314,10 @@ class WalletDetails extends Component {
 
 function mapStateToProps(state) {
     return ({
-        walletDetails: state.walletReducer.walletData.balanceData !== undefined ? state.walletReducer.walletData.balanceData.balanceWallet : null,
+        walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData.balanceWallet : null,
         allCoins: state.walletReducer.allCoinsData !== undefined ? state.walletReducer.allCoinsData : null,
         isLoggedIn: state.simpleReducer.isLoggedIn,
+        loader: state.simpleReducer.loader ? state.simpleReducer.loader : false
     })
 }
 
