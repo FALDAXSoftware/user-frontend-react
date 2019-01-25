@@ -232,8 +232,8 @@ function mapStateToProps(state) {
     console.log(state);
 
     return ({
-        walletDetails: state.walletReducer.walletData.balanceData !== undefined ? state.walletReducer.walletData.balanceData.balanceWallet : null,
-        nowalletBalance: state.walletReducer.walletData.balanceData !== undefined ? state.walletReducer.walletData.balanceData.nonBalanceWallet : null,
+        walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData.balanceWallet : null,
+        nowalletBalance: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData.nonBalanceWallet : null,
         allCoins: state.walletReducer.allCoinsData !== undefined ? state.walletReducer.allCoinsData : null,
         isLoggedIn: state.simpleReducer.isLoggedIn,
         loader: state.simpleReducer.loader ? state.simpleReducer.loader : false

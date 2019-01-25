@@ -13,6 +13,8 @@ import { FooterLogo, DefaultProfile } from "../../Constants/images";
 import * as Logout from '../../Actions/Auth';
 import { Day_night_mode, Exchange } from "./BeforeLog";
 import * as darkTheme from '../../Actions/Theme/themeAction';
+import * as walletData from '../../Actions/LoggedCat/walletActions'
+import * as allCoinsData from '../../Actions/LoggedCat/walletActions'
 /* Constants */
 import { globalVariables } from '../../Globals';
 
@@ -40,7 +42,7 @@ const Open = styled.span`
     font-size: 30px;
     cursor: pointer;
     margin-top:10px;
-    color:${props => props.theme.mode=="dark"?"white":"black"};
+    color:${props => props.theme.mode == "dark" ? "white" : "black"};
     @media(max-width:1200px)
     {
         display:inline-block;
@@ -148,6 +150,8 @@ class Afterlog extends Component {
     }
     logout() {
         /* console.log("hello Logout") */
+        this.props.actions.allCoins.allCoinsData();
+        this.props.actions.wallet.walletData();
         this.props.actions.theme.darkTheme(false);
         this.props.actions.auth.Logout();
     }
@@ -238,7 +242,9 @@ function mapDispatchToProps(dispatch) {
     return {
         actions: {
             auth: bindActionCreators(Logout, dispatch),
-            theme: bindActionCreators(darkTheme, dispatch)
+            theme: bindActionCreators(darkTheme, dispatch),
+            wallet: bindActionCreators(walletData, dispatch),
+            allCoins: bindActionCreators(allCoinsData, dispatch),
         }
     };
 }
