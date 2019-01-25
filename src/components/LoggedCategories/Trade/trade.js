@@ -157,6 +157,7 @@ class Trade extends Component {
         }
     }
     componentDidMount() {
+        var self = this;
         console.log("DID TRADE")
         io.sails.headers = {
             Accept: 'application/json',
@@ -166,6 +167,11 @@ class Trade extends Component {
         this.orderSocket(this.state.timePeriod, this.state.status);
         this.getInstrumentData();
         this.getUserBal();
+        io.socket.on('orderUpdated', (data) => {
+            self.orderSocket(self.state.timePeriod, self.state.status);
+            self.getUserBal();
+
+        });
     }
     onInsChange(e) {
         console.log(this.props)
@@ -198,6 +204,10 @@ class Trade extends Component {
                 self.updateInstrumentsData(body.data)
             }
         });
+        io.socket.on('instrumentUpdate', (data) => {
+            self.updateInstrumentsData(data)
+        });
+
     }
     updateInstrumentsData(data) {
         console.log(data);
