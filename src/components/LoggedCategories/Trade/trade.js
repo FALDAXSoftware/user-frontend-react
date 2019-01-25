@@ -429,7 +429,7 @@ class Trade extends Component {
                                 </Col>
                                 <Col md={24} lg={12}>
                                     <Right_div>
-                                        {/* <DepthChart io={io} /> */}
+                                        <DepthChart io={io} />
                                     </Right_div>
                                 </Col>
                             </Row>

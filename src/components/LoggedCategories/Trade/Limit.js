@@ -82,7 +82,6 @@ class Limit extends Component {
                     obj["total"] = Number(this.state.amount) * this.props.userBal.sellPay;
                 }
             } else {
-                console.log('ELSE')
                 obj["total"] = 0;
             }
             self.setState({ ...obj });
@@ -132,7 +131,6 @@ class Limit extends Component {
     render() {
         const { userBalFees, buyEstPrice, buyPayAmt, sellEstPrice, sellPayAmt } = this.state;
         const RadioGroup = Radio.Group;
-        console.log('buyEstimatedPrice', buyEstPrice)
 
         return (
             <Market_wrap>

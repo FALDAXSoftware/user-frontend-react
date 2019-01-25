@@ -24,7 +24,6 @@ const BorderedHistoryWrap = styled(History_wrap)`
 const SideType = styled.td`
     color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
 `
-const FontAwesomeIconA = styled(FontAwesomeIcon)``
 class HistoryTable extends Component {
     constructor(props) {
         super(props);
@@ -45,7 +44,6 @@ class HistoryTable extends Component {
         }
     }
     componentWillReceiveProps(props, newProps) {
-        console.log(props)
         var self = this;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -84,7 +82,6 @@ class HistoryTable extends Component {
         });
     }
     updateData(data) {
-        console.log(data)
         const rows = [];
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
@@ -145,7 +142,6 @@ class HistoryTable extends Component {
                                             color: "black", marginTop: "30px", fontFamily: "Open Sans"
                                         }}>No Data Found</p>
                                     }
-
                                 </tbody>
                             </TableContent>
                         </Scrollbars>
