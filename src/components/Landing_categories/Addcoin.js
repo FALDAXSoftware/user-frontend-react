@@ -507,7 +507,7 @@ class MediaContact extends Component {
                                             </Col>
                                             <Col xs={24} sm={16} xl={14}>
                                                 <Right_input>
-                                                    <IntlTelInputS onPhoneNumberChange={(a, b, c) => this._changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
+                                                    <IntlTelInputS separateDialCode={true} onPhoneNumberChange={(a, b, c) => this._changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
                                                 </Right_input>
                                             </Col>
                                         </Row>
