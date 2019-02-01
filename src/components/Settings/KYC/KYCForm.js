@@ -10,6 +10,7 @@ import {
     Third_Row, Date_birth, Country_input, Country, Second_Row, Last_input, Last_name,
     First_Msg, First_input, First_name, First_Row, Right_Col
 } from '../Personaldetails/PersonalDetails'
+import { IntlTelInputS } from "../../../styled-components/landingCategories/contactStyle"
 import Datepicker from "../Personaldetails/Datepicker"
 import CountryPick from "../Personaldetails/Country"
 import { kycFormAction, kycformData } from "../../../Actions/Settings/passwordChange"
@@ -78,6 +79,32 @@ const Zip = styled(Last_input)`
 const Last_name_kyc = styled(Last_name)``
 const First_Msg_kyc = styled(First_Msg)`
 `
+const PhoneDiv = styled.div`
+>.intl-tel-input 
+{
+    width:95%;
+
+    @media(max-width:992px)
+    {
+        width:95%;
+    }
+    @media(max-width:767px)
+    {
+        width:100%;
+    }
+}   
+& .form-control     
+{
+    border:1px solid #e2e6ea;
+    background-color:${props => props.theme.mode == "dark" ? "#020e18" : "#f8f8f8"};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    border-radius:5px;
+    min-height:45px;
+    width:100%;
+    padding-left:5px;
+}
+
+`
 const Last_Msg_kyc = styled(First_Msg)``
 const Country_Msg_kyc = styled(First_Msg)``
 const Dob_Msg_kyc = styled(First_Msg)``
@@ -96,6 +123,8 @@ class KYCForm extends Component {
         this.state = {
             countrymsg: null,
             dobmsg: null,
+            phoneCountry: [],
+            countrychange: false,
             fields: {
                 first_name: '',
                 last_name: '',
@@ -110,6 +139,7 @@ class KYCForm extends Component {
         this.validator = new SimpleReactValidator();
         this._onChangeFields = this._onChangeFields.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onCountryName = this.onCountryName.bind(this);
     }
     onDateChange(value) {
         var tempDate = value.day + "/" + value.month + "/" + value.year;
@@ -119,6 +149,14 @@ class KYCForm extends Component {
             fields['dob'] = date;
             this.setState({ fields });
         }
+    }
+    onCountryName(name) {
+        var name2 = name.toLowerCase();
+        console.log("Hello KYC");
+        var arr = [];
+        console.log()
+        arr.push(name2);
+        this.setState({ phoneCountry: arr, countrychange: true });
     }
     onCountryChange(country, state, city, stateID, countryID) {
         let fields = this.state.fields;
@@ -158,9 +196,20 @@ class KYCForm extends Component {
         }
         this.setState({ fields });
     }
+    _changeNumber(a, mob, code) {
+        console.log(a, mob, code)
+        if (mob.trim !== "") {
+            var temp = `+${code.dialCode}`;
+            var mobile = temp.concat(mob);;
+            let fields = this.state.fields;
+            fields['phone_number'] = mobile;
+            this.setState({ fields });
+        }
+    }
     onSubmit() {
         if (this.validator.allValid()) {
             var profileData = this.state.fields;
+            console.log(this.state)
             profileData["steps"] = 1;
             this.props.kycFormAction(this.props.isLoggedIn, profileData);
         } else {
@@ -214,12 +263,29 @@ class KYCForm extends Component {
                     <Fourth_Row_kyc>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             {/* console.log(this.props) */}
-                            <CountryPick {...this.props} kyc="kyc" isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={(country, state, city, stateID, countryID) => this.onCountryChange(country, state, city, stateID, countryID)} />
+                            <CountryPick {...this.props} onCountryName={(name) => { this.onCountryName(name) }} kyc="kyc" isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={(country, state, city, stateID, countryID) => this.onCountryChange(country, state, city, stateID, countryID)} />
                             <span>{this.validator.message('country', this.state.fields.country, 'required', 'text-danger-validation')}
                                 {this.validator.message('state', this.state.fields.state, 'required', 'text-danger-validation')}
                                 {this.validator.message('city', this.state.fields.city_town, 'required', 'text-danger-validation')}</span>
                         </Col>
                     </Fourth_Row_kyc>
+                    <Sixth_Row_kyc>
+                        <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
+                            <Postal_kyc>Mobile No.*</Postal_kyc>
+                            {(this.state.countrychange == true) ?
+
+                                <PhoneDiv>
+                                    {console.log("before", this.state)}
+                                    < IntlTelInputS preferredCountries={[]} onlyCountries={this.state.phoneCountry} separateDialCode={true}
+                                        onPhoneNumberChange={(a, b, c) => this._changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
+                                </PhoneDiv>
+                                :
+                                ""
+
+                            }
+                            {this.validator.message('phone_number', this.state.fields.phone_number, 'required', 'text-danger-validation')}
+                        </Col>
+                    </Sixth_Row_kyc>
                     <Sixth_Row_kyc>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
                             <Postal_kyc>Postal Code*</Postal_kyc>
