@@ -133,7 +133,8 @@ class KYCForm extends Component {
                 address_2: '',
                 city_town: '',
                 zip: '',
-                state: ''
+                state: '',
+                displayCountry: false
             }
         };
         this.validator = new SimpleReactValidator();
@@ -159,13 +160,23 @@ class KYCForm extends Component {
         this.setState({ phoneCountry: arr, countrychange: true });
     }
     onCountryChange(country, state, city, stateID, countryID) {
+        let self = this;
         let fields = this.state.fields;
         fields['country'] = country !== null ? country : "";
         fields['state'] = state !== null ? state : "";
         fields['city_town'] = city !== null ? city : '';
         fields['state_id'] = stateID;
         fields['country_id'] = countryID;
-        this.setState({ fields });
+        this.setState({ fields }, () => {
+            // To rerender the mobile input field
+            self.setState({
+                displayCountry: false,
+            }, () => {
+                self.setState({
+                    displayCountry: true,
+                });
+            });
+        });
     }
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
@@ -275,9 +286,12 @@ class KYCForm extends Component {
                             {(this.state.countrychange == true) ?
 
                                 <PhoneDiv>
-                                    {console.log("before", this.state)}
-                                    < IntlTelInputS preferredCountries={[]} onlyCountries={this.state.phoneCountry} separateDialCode={true}
-                                        onPhoneNumberChange={(a, b, c) => this._changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
+                                    {console.log("before", this.state.phoneCountry)}
+                                    {
+                                        this.state.displayCountry &&
+                                        < IntlTelInputS defaultCountry={this.state.phoneCountry[0]} separateDialCode={true}
+                                            onPhoneNumberChange={(a, b, c) => this._changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
+                                    }
                                 </PhoneDiv>
                                 :
                                 ""
