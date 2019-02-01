@@ -128,51 +128,92 @@ class IDselect extends Component {
         return (
             <div>
                 <KYC_type_select_row>
-                    <Row>
-                        <Select_text md={{ span: 24 }}>
-                            Select ID type
+                    {console.log("SSN", this.props.countryFlag)}
+                    {this.props.countryFlag == true ?
+                        <Row>
+                            <Select_text md={{ span: 24 }}>
+                                Select ID type
                         </Select_text>
-                        <Select_Col1 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
-                            <label className="kyc-radio-container">
-                                <input id="passport" type="radio" name="kyc_type" />
-                                <span className={`${this.state.background}`}>
-                                    <img src={ActivePassport} className="active" />
-                                    <img src={PassportLogo} className="normal" />
-                                    <span className="text">Passport</span>
-                                </span>
-                            </label>
-                        </Select_Col1>
-                        <Select_Col2 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
-                            <label className="kyc-radio-container">
-                                <input id="license" type="radio" name="kyc_type" />
-                                <span className={`${this.state.background} license`}>
-                                    <img src={ActiveLicence} className="active" />
-                                    <img src={LicenceLogo} className="normal" />
-                                    <span className="text">Driver's license</span>
-                                </span>
-                            </label>
-                        </Select_Col2>
-                        <Select_Col3 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
-                            <label className="kyc-radio-container">
-                                <input id="identity" type="radio" name="kyc_type" />
-                                <span className={`${this.state.background} identity`}>
-                                    <img src={ActiveIdentity} className="active" />
-                                    <img src={IdentityLogo} className="normal" />
-                                    <span className="text">Identity</span>
-                                </span>
-                            </label>
-                        </Select_Col3>
-                        <Select_Col4 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
-                            <label className="kyc-radio-container">
-                                <input id="ssn" type="radio" name="kyc_type" />
-                                <span className={`${this.state.background} ssn`}>
-                                    <img src={ActiveSSN} className="active" />
-                                    <img src={SSN} className="normal" />
-                                    <span className="text">Social Security Number</span>
-                                </span>
-                            </label>
-                        </Select_Col4>
-                    </Row>
+
+                            <Select_Col1 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
+                                <label className="kyc-radio-container">
+                                    <input id="passport" type="radio" name="kyc_type" />
+                                    <span className={`${this.state.background}`}>
+                                        <img src={ActivePassport} className="active" />
+                                        <img src={PassportLogo} className="normal" />
+                                        <span className="text">Passport</span>
+                                    </span>
+                                </label>
+                            </Select_Col1>
+                            <Select_Col2 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
+                                <label className="kyc-radio-container">
+                                    <input id="license" type="radio" name="kyc_type" />
+                                    <span className={`${this.state.background} license`}>
+                                        <img src={ActiveLicence} className="active" />
+                                        <img src={LicenceLogo} className="normal" />
+                                        <span className="text">Driver's license</span>
+                                    </span>
+                                </label>
+                            </Select_Col2>
+                            <Select_Col3 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
+                                <label className="kyc-radio-container">
+                                    <input id="identity" type="radio" name="kyc_type" />
+                                    <span className={`${this.state.background} identity`}>
+                                        <img src={ActiveIdentity} className="active" />
+                                        <img src={IdentityLogo} className="normal" />
+                                        <span className="text">Identity</span>
+                                    </span>
+                                </label>
+                            </Select_Col3>
+
+                            <Select_Col4 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
+                                <label className="kyc-radio-container">
+                                    <input id="ssn" type="radio" name="kyc_type" />
+                                    <span className={`${this.state.background} ssn`}>
+                                        <img src={ActiveSSN} className="active" />
+                                        <img src={SSN} className="normal" />
+                                        <span className="text">Social Security Number</span>
+                                    </span>
+                                </label>
+                            </Select_Col4>
+
+                        </Row>
+                        : <Row>
+                            <Select_text md={{ span: 24 }}>
+                                Select ID type
+                    </Select_text>
+
+                            <Select_Col1 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 8 }}>
+                                <label className="kyc-radio-container">
+                                    <input id="passport" type="radio" name="kyc_type" />
+                                    <span className={`${this.state.background}`}>
+                                        <img src={ActivePassport} className="active" />
+                                        <img src={PassportLogo} className="normal" />
+                                        <span className="text">Passport</span>
+                                    </span>
+                                </label>
+                            </Select_Col1>
+                            <Select_Col2 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 8 }}>
+                                <label className="kyc-radio-container">
+                                    <input id="license" type="radio" name="kyc_type" />
+                                    <span className={`${this.state.background} license`}>
+                                        <img src={ActiveLicence} className="active" />
+                                        <img src={LicenceLogo} className="normal" />
+                                        <span className="text">Driver's license</span>
+                                    </span>
+                                </label>
+                            </Select_Col2>
+                            <Select_Col3 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 8 }}>
+                                <label className="kyc-radio-container">
+                                    <input id="identity" type="radio" name="kyc_type" />
+                                    <span className={`${this.state.background} identity`}>
+                                        <img src={ActiveIdentity} className="active" />
+                                        <img src={IdentityLogo} className="normal" />
+                                        <span className="text">Identity</span>
+                                    </span>
+                                </label>
+                            </Select_Col3>
+                        </Row>}
                 </KYC_type_select_row>
                 <Button_wrap>
                     <Sub_wrap>
