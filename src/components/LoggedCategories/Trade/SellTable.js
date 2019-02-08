@@ -65,8 +65,6 @@ class SellTable extends Component {
 
             if (body.status == 200) {
                 let res = body.data;
-
-
                 this.updateData(res);
             }
         });
@@ -75,7 +73,6 @@ class SellTable extends Component {
         });
     }
     updateData(data) {
-        console.log(data)
         const rows = [];
         let sum = 0;
         let lastsum = 0;
@@ -92,11 +89,8 @@ class SellTable extends Component {
         }
         var preArr = [];
         var final_result = [];
-        console.log(rows)
         for (let i = 0; i < rows.length; i++) {
-
             if (preArr.includes(rows[i].ask)) {
-
             }
             else {
                 var count = 0;
@@ -116,11 +110,9 @@ class SellTable extends Component {
                 }
                 result.ask = rows[i].ask;
                 result.my_size = rows[i].my_size;
-                console.log(result.ask, count)
                 final_result.push(result);
             }
         }
-        console.log(final_result, preArr)
         this.setState({
             loader: false,
             data: rows,
@@ -129,7 +121,6 @@ class SellTable extends Component {
         });
     }
     componentWillReceiveProps(props, newProps) {
-        console.log(props)
         var self = this;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -145,7 +136,6 @@ class SellTable extends Component {
         }
     }
     render() {
-
         return (
             <div>
                 <BBC2>SELLING {this.props.cryptoPair.crypto}</BBC2>
