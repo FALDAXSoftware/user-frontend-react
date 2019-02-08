@@ -105,7 +105,6 @@ class DetailsTable extends React.Component {
                             </Col1>
                         );
                     })
-
                         : <tr><td colspan="5" style={{
                             textAlign: "center", fontWeight: "600", fontSize: "17px",
                             color: "black", paddingTop: "30px", fontFamily: "Open Sans"

@@ -228,11 +228,8 @@ class WalletPopup extends Component {
         this.sendChange = this.sendChange.bind(this);
         this.sendSubmit = this.sendSubmit.bind(this);
     }
-    componentWillReceiveProps(props, newProps) {
-    }
-    componentDidMount() {
-        console.log("wallet popup", this.props.coin_code);
 
+    componentDidMount() {
         if (this.props.title == "RECEIVE")
             fetch(`${API_URL}/wallet/get-qr-code/${this.props.coin_code}`, {
                 method: "get",
@@ -241,14 +238,14 @@ class WalletPopup extends Component {
                     'Content-Type': 'application/json',
                     Authorization: "Bearer " + this.props.isLoggedIn
                 }
-            })
-                .then(response => response.json())
+            }).then(response => response.json())
                 .then((responseData) => {
                     this.setState({ receive: responseData.receiveCoin })
                 })
                 .catch(error => {
                 })
     }
+
     SearchText() {
         // Copy to clipboard example
         document.querySelectorAll(".ant-input-search-button")[0].onclick = function () {
@@ -280,7 +277,6 @@ class WalletPopup extends Component {
     };
     sendSubmit() {
         if (this.validator.allValid()) {
-            console.log(this.state)
             var values = this.state.sendFields;
             values["coin_code"] = this.props.coin_code;
             fetch(API_URL + "/wallet/send", {
@@ -294,17 +290,13 @@ class WalletPopup extends Component {
             }).then(response => response.json())
                 .then((responseData) => {
                     if (responseData.status == 200) {
-                        console.log(responseData)
                         this.openNotificationWithIcon("success", "Successfully Sent", responseData.message)
-                    }
-                    else {
-                        console.log(responseData)
+                    } else {
                         this.openNotificationWithIcon("warning", "Balance low", responseData.message)
                     }
                 }).catch(error => {
                 })
-        }
-        else {
+        } else {
             this.validator.showMessages();
             this.forceUpdate();
         }

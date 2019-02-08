@@ -94,6 +94,9 @@ const SideNav = styled.div`
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    & span a{
+        color: white;
+    }
     span
     {
         padding: 8px 32px;
@@ -295,10 +298,10 @@ class LoggedNavigation extends Component {
                     <SideNav id="mySidenav2">
                         <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                         <LogoutStyle to="/editProfile">PROFILE</LogoutStyle>
-                        <span onClick={this.showComing}>DASHBOARD</span>
-                        <span onClick={this.showComing}>TRADE</span>
-                        <span onClick={this.showComing}>WALLET</span>
-                        <span onClick={this.showComing}>HISTORY</span>
+                        <span> <Link to="/dashboard">DASHBOARD</Link></span>
+                        <span> <Link to="/trade">TRADE</Link></span>
+                        <span> <Link to="/wallet">WALLET</Link></span>
+                        <span> <Link to="/history">HISTORY</Link></span>
                         <span><CarLink to="/careers">Careers</CarLink></span>
                         <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
                     </SideNav>

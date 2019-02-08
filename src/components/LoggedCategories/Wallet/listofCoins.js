@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { connect } from "react-redux"
 import styled from 'styled-components';
 import { Table } from 'react-bootstrap';
 import { Menu, Dropdown, Icon } from 'antd';
@@ -18,7 +17,7 @@ const Table_coin = styled(Table)`
     }
 `
 
-export default class TableofCoin extends React.Component {
+export default class TableofCoin extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -32,10 +31,8 @@ export default class TableofCoin extends React.Component {
     }
     render() {
         var me = this;
-        console.log(this.props)
         let { tableData } = this.props;
         const onClick1 = ({ key }) => {
-            console.log(key, this.props)
             var curr, sign;
             if (key == 1) { curr = "INR"; sign = "\u20B9"; }
             else if (key == 2) { curr = "USD"; sign = "$"; }
@@ -50,7 +47,6 @@ export default class TableofCoin extends React.Component {
             this.setState({ drop2: curr, curr2: sign }, () => { me.props.currChange(`${me.state.drop1},${curr},${me.state.drop3}`) });
         };
         const onClick3 = ({ key }) => {
-            console.log(key == 3, this.state)
             var curr, sign;
             if (key == 1) { curr = "INR"; sign = "\u20B9"; }
             else if (key == 2) { curr = "USD"; sign = "$"; }
