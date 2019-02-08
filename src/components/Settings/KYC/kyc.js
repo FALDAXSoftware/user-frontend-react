@@ -66,11 +66,13 @@ class KYC extends Component {
             otp_msg: null,
             next: 0,
             nexts: 0,
-            is_kyc_done: false
+            is_kyc_done: false,
+            countryChange: null,
         }
     }
 
-    next_step(a, type = null) {
+    next_step(a, type = null, countryChange = null) {
+        console.log("showSSN", countryChange)
         this.setState({ next: a })
         if (type == "Passport" || type == "Driver's license" || type == "Identity") {
             var b = a - 1
@@ -80,7 +82,9 @@ class KYC extends Component {
             this.setState({ nexts: b })
         } else
             this.setState({ nexts: a })
-
+        if (countryChange !== null) {
+            this.setState({ countryChange })
+        }
     }
     back_step(a) {
         this.setState({ next: a })
@@ -107,9 +111,9 @@ class KYC extends Component {
                     </div>
                     : <Done_wrap><Icon style={{ fontSize: "50px" }} type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> <Kyc_succ><span><b>Thank you.</b> <br />All of your information has been received and will be reviewed by our Identity Verification team. You will receive a notification and an email within 24 hours informing you of our decision. If you don't hear anything after 24 hours, please visit the support page to let us know.</span></Kyc_succ></Done_wrap>}
                 {(this.state.next == 0 && this.props.is_kyc_done !== true) ?
-                    <KYCForm back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""
+                    <KYCForm back_step={(a) => this.back_step(a)} next_step={(a, type, ssn) => this.next_step(a, type, ssn)} /> : ""
                 }
-                {(next == 1 && is_kyc_done !== true) ? <IDselect {...this.props} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
+                {(next == 1 && is_kyc_done !== true) ? <IDselect {...this.props} countryFlag={this.state.countryChange} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
                 {(next == 2 && is_kyc_done !== true) ? <SSN back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
                 {(next == 3 && is_kyc_done !== true) ? <DocUpload docText={this.state.docType} back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
             </KYC_wrap>

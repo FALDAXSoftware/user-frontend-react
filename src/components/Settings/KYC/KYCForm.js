@@ -125,6 +125,7 @@ class KYCForm extends Component {
             dobmsg: null,
             phoneCountry: [],
             countrychange: false,
+            showSSN: false,
             fields: {
                 first_name: '',
                 last_name: '',
@@ -157,7 +158,10 @@ class KYCForm extends Component {
         var arr = [];
         console.log()
         arr.push(name2);
-        this.setState({ phoneCountry: arr, countrychange: true });
+        if (name2 == 'us' || name2 == 'ca')
+            this.setState({ phoneCountry: arr, countrychange: true, showSSN: true });
+        else
+            this.setState({ phoneCountry: arr, countrychange: true });
     }
     onCountryChange(country, state, city, stateID, countryID) {
         let self = this;
@@ -189,7 +193,8 @@ class KYCForm extends Component {
             if (props.kycData.status == 200) {
                 //this.openNotificationWithIcon("success","KYC",props.kycData.message)
                 this.props.kycformData();
-                this.props.next_step(1);
+                console.log("showSSN", this.state.showSSN)
+                this.props.next_step(1, null, this.state.showSSN);
             } else {
                 this.openNotificationWithIcon("error", "KYC", props.kycData.err)
                 this.props.kycformData();
@@ -279,26 +284,27 @@ class KYCForm extends Component {
                                 {this.validator.message('city', this.state.fields.city_town, 'required', 'text-danger-validation')}</span>
                         </Col>
                     </Fourth_Row_kyc>
-                    <Sixth_Row_kyc>
-                        <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
-                            <Postal_kyc>Mobile No.*</Postal_kyc>
-                            {(this.state.countrychange == true) ?
+                    {(this.state.countrychange == true) ?
+                        <Sixth_Row_kyc>
+                            <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
+                                <Postal_kyc>Mobile No.*</Postal_kyc>
+
 
                                 <PhoneDiv>
                                     {console.log("before", this.state.phoneCountry)}
                                     {
                                         this.state.displayCountry &&
-                                        < IntlTelInputS defaultCountry={this.state.phoneCountry[0]} separateDialCode={true}
+                                        < IntlTelInputS allowDropdown={false} preferredCountries={[]} onlyCountries={this.state.phoneCountry} defaultCountry={this.state.phoneCountry[0]} separateDialCode={true}
                                             onPhoneNumberChange={(a, b, c) => this._changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
                                     }
                                 </PhoneDiv>
-                                :
-                                ""
 
-                            }
-                            {this.validator.message('phone_number', this.state.fields.phone_number, 'required', 'text-danger-validation')}
-                        </Col>
-                    </Sixth_Row_kyc>
+                                {this.validator.message('phone_number', this.state.fields.phone_number, 'required', 'text-danger-validation')}
+                            </Col>
+                        </Sixth_Row_kyc>
+                        :
+                        ""
+                    }
                     <Sixth_Row_kyc>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
                             <Postal_kyc>Postal Code*</Postal_kyc>
