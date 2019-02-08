@@ -249,7 +249,6 @@ class KYCForm extends Component {
                     </First_Row_kyc>
 
                     <Second_Row_kyc>
-
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Date_birth_kyc>Date of Birth*</Date_birth_kyc>
                             <Datepicker {...this.props} kyc="kyc" onDateChange={(Data) => this.onDateChange(Data)} />
