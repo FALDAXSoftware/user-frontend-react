@@ -26,6 +26,7 @@ import {
     Spin_single
 } from "../../../styled-components/loggedStyle/dashStyle"
 import { globalVariables } from '../../../Globals';
+import { widget } from '../../../charting_library/charting_library.min';
 
 let { API_URL } = globalVariables;
 /* var socketIOClient = require('socket.io-client');
@@ -54,6 +55,9 @@ const OrderTradeWrap = styled.div`
         margin-top:10px;
         flex-wrap:wrap;
     }
+`
+const Grey_wrap_trade = styled(Grey_wrap)`
+    padding-top:80px;
 `
 const columns = [{
     title: 'Name',
@@ -97,6 +101,22 @@ const columns = [{
 const TabPane = Tabs.TabPane;
 let io = null;
 class Trade extends Component {
+    static defaultProps = {
+        symbol: 'AAPL',
+        interval: 'D',
+        containerId: 'tv_chart_container',
+        datafeedUrl: 'https://demo_feed.tradingview.com',
+        libraryPath: '/charting_library/',
+        chartsStorageUrl: 'https://saveload.tradingview.com',
+        chartsStorageApiVersion: '1.1',
+        clientId: 'tradingview.com',
+        userId: 'public_user_id',
+        fullscreen: false,
+        autosize: true,
+        studiesOverrides: {},
+    };
+
+    tvWidget = null;
     constructor(props) {
         super(props);
         this.state = {
@@ -114,7 +134,7 @@ class Trade extends Component {
             userBalLoader: false
         };
         io = this.props.io;
-        io.sails.url = API_URL;
+        // io.sails.url = API_URL;
         this.handleChange = this.handleChange.bind(this);
         this.statusChange = this.statusChange.bind(this);
         this.getUserBal = this.getUserBal.bind(this);
@@ -157,6 +177,45 @@ class Trade extends Component {
             self.getUserBal();
 
         });
+        console.log(window);
+
+        const widgetOptions = {
+            symbol: this.props.symbol,
+            // BEWARE: no trailing slash is expected in feed URL
+            datafeed: new window.Datafeeds.UDFCompatibleDatafeed(this.props.datafeedUrl),
+            interval: this.props.interval,
+            container_id: this.props.containerId,
+            library_path: this.props.libraryPath,
+
+            locale: 'en',
+            disabled_features: ['use_localstorage_for_settings'],
+            enabled_features: ['study_templates'],
+            charts_storage_url: this.props.chartsStorageUrl,
+            charts_storage_api_version: this.props.chartsStorageApiVersion,
+            client_id: this.props.clientId,
+            user_id: this.props.userId,
+            fullscreen: this.props.fullscreen,
+            autosize: this.props.autosize,
+            studies_overrides: this.props.studiesOverrides,
+        };
+
+        const tvWidget = new widget(widgetOptions);
+        this.tvWidget = tvWidget;
+
+        tvWidget.onChartReady(() => {
+            const button = tvWidget.createButton()
+                .attr('title', 'Click to show a notification popup')
+                .addClass('apply-common-tooltip')
+                .on('click', () => tvWidget.showNoticeDialog({
+                    title: 'Notification',
+                    body: 'TradingView Charting Library API works correctly',
+                    callback: () => {
+                        console.log('Noticed!');
+                    },
+                }));
+
+            button[0].innerHTML = 'Check API';
+        });
     }
     onInsChange(e) {
         console.log(this.props)
@@ -184,7 +243,17 @@ class Trade extends Component {
         var self = this;
         console.log("get instrument data");
 
-        io.socket.get(`/socket/get-instrument-data?coin=${self.state.InsCurrency}`, (body, JWR) => {
+        io.socket.request({
+            method: 'GET',
+            url: `/socket/get-instrument-data?coin=${self.state.InsCurrency}`,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }, (body, JWR) => {
+            console.log("get instrument data", body);
+
             if (body.status == 200) {
                 self.updateInstrumentsData(body.data)
             }
@@ -251,7 +320,15 @@ class Trade extends Component {
         else
             URL = `/socket/get-user-trade-data?room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`
         console.log("orderSocket", URL, month, filter_type)
-        io.socket.get(URL, (body, JWR) => {
+        io.socket.request({
+            method: 'GET',
+            url: URL,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }, (body, JWR) => {
 
 
             if (body.status == 200) {
@@ -322,7 +399,15 @@ class Trade extends Component {
         else
             URL = `/socket/get-user-balance?room=${this.state.crypto}-${this.state.currency}`
         console.log(this.state, this.state.prevRoom)
-        io.socket.get(URL, (body, JWR) => {
+        io.socket.request({
+            method: 'GET',
+            url: URL,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }, (body, JWR) => {
 
 
             if (body.status == 200) {
@@ -358,12 +443,26 @@ class Trade extends Component {
             this.setState({ searchedInstu: [] });
         }
     }
+    componentWillUnmount() {
+        if (this.tvWidget !== null) {
+            this.tvWidget.remove();
+            this.tvWidget = null;
+        }
+    }
     render() {
         var self = this;
         return (
             <Contact_wrap>
                 <LoggedNavigation />
-                <Grey_wrap>
+                <Grey_wrap_trade>
+                    <Row>
+                        <Col>
+                            <div
+                                id={this.props.containerId}
+                                className={'TVChartContainer'}
+                            />
+                        </Col>
+                    </Row>
                     <ContainerContact>
                         <Row_wrap>
                             <Row>
@@ -486,7 +585,7 @@ class Trade extends Component {
                             </Row>
                         </Row_wrap2>
                     </ContainerContact>
-                </Grey_wrap>
+                </Grey_wrap_trade>
                 <CommonFooter />
             </Contact_wrap>
         );

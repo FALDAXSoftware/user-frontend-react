@@ -177,7 +177,7 @@ const activityColumns = [{
     dataIndex: 'completed',
     className: "progress-bar-container",
     render: completed => (
-        <Progress percent={completed.toFixed(1)} />
+        <Progress percent={completed} />
     ),
 }];
 const portfolioColumn = [{
@@ -259,7 +259,7 @@ class Dashboard extends Component {
                             date: moment.utc(element.created_at).local().format("MMMM DD,HH:mm"),
                             action: element.side,
                             amount: element.price.toFixed(2) + " " + element.currency,
-                            completed: ((parseFloat(element.quantity) * 100) / parseFloat(element.fix_quantity)),
+                            completed: parseInt((parseFloat(element.quantity) * 100) / parseFloat(element.fix_quantity)),
                         });
                     });
                     self.setState({
