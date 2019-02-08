@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
@@ -80,9 +82,16 @@ class DepthChart extends Component {
     componentDidMount() {
         console.log("did mount");
         this.setState({ loader: true })
-        io.socket.get("/socket/get-depth-chart-data?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
-
-
+        let URL = "/socket/get-depth-chart-data?room=" + this.state.crypto + "-" + this.state.currency
+        io.socket.request({
+            method: 'GET',
+            url: URL,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }, (body, JWR) => {
             if (body.status == 200) {
                 let res = body.data;
                 this.updateGraph(res);
@@ -219,4 +228,11 @@ class DepthChart extends Component {
     }
 }
 
-export default DepthChart;
+function mapStateToProps(state) {
+    console.log(state)
+    return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+    })
+}
+
+export default connect(mapStateToProps)(DepthChart);

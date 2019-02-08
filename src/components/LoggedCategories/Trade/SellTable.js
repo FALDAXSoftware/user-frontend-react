@@ -26,8 +26,8 @@ class SellTable extends Component {
         super(props);
         this.state = {
             data: [],
-            crypto: "XRP",
-            currency: "BTC",
+            crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
+            currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
             lastsum: 0,
             loader: false,
             result: []
@@ -36,11 +36,9 @@ class SellTable extends Component {
     }
     componentDidMount() {
         var self = this;
-        if (this.props.cryptoPair !== undefined && this.props.cryptoPair !== "") {
-            this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
-                self.sellTableData();
-            })
-        }
+        self.sellTableData();
+        // this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
+        // })
     }
     sellTableData() {
         let io = this.props.io
@@ -54,7 +52,15 @@ class SellTable extends Component {
             URL = `/socket/get-sell-book?room=${this.state.crypto}-${this.state.currency}`
         }
         console.log(URL)
-        io.socket.get(URL, (body, JWR) => {
+        io.socket.request({
+            method: 'GET',
+            url: URL,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }, (body, JWR) => {
 
 
             if (body.status == 200) {

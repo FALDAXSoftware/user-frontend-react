@@ -31,22 +31,18 @@ class HistoryTable extends Component {
         super(props);
         this.state = {
             data: [],
-            crypto: "XRP",
-            currency: "BTC",
+            crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
+            currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
             loader: false
         }
         this.updateData = this.updateData.bind(this);
     }
     componentDidMount() {
         var self = this;
-        if (this.props.cryptoPair !== undefined && this.props.cryptoPair !== "") {
-            this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
-                self.historyData();
-                io.socket.on('instrumentUpdate', (data) => {
-                    self.updateData(data)
-                });
-            })
-        }
+        self.historyData();
+        io.socket.on('instrumentUpdate', (data) => {
+            self.updateData(data)
+        });
     }
     componentWillReceiveProps(props, newProps) {
         console.log(props)
@@ -75,7 +71,15 @@ class HistoryTable extends Component {
         else {
             URL = `/socket/get-trade-history?room=${this.state.crypto}-${this.state.currency}`
         }
-        io.socket.get(URL, (body, JWR) => {
+        io.socket.request({
+            method: 'GET',
+            url: URL,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }, (body, JWR) => {
 
             if (body.status == 200) {
                 let res = body.data;

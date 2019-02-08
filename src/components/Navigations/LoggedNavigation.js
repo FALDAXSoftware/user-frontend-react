@@ -277,10 +277,14 @@ class LoggedNavigation extends Component {
                     defaultSelectedKeys={['1']}
                     selectedKeys={this.state.selected}
                 >
-                    <Menu_item key="1" onClick={this.showComing}><LogNav>DASHBOARD</LogNav></Menu_item>
+                    <Menu_item key="1" onClick={this.showComing}><NavLink className="Nav_selected" to="/dashboard">DASHBOARD</NavLink></Menu_item>
+                    <Menu_item key="2" onClick={this.showComing}><NavLink className="Nav_selected" to="/trade">TRADE</NavLink></Menu_item>
+                    <Menu_item key="3" onClick={this.showComing}><NavLink className="Nav_selected" to="/wallet">Wallet</NavLink></Menu_item>
+                    <Menu_item key="4" onClick={this.showComing}><NavLink className="Nav_selected" to="/history">HISTORY</NavLink></Menu_item>
+                    {/* <Menu_item key="1" onClick={this.showComing}><LogNav>DASHBOARD</LogNav></Menu_item>
                     <Menu_item key="2" onClick={this.showComing}><LogNav>TRADE</LogNav></Menu_item>
                     <Menu_item key="3" onClick={this.showComing}><LogNav>Wallet</LogNav></Menu_item>
-                    <Menu_item key="4" onClick={this.showComing}><LogNav>HISTORY</LogNav></Menu_item>
+                    <Menu_item key="4" onClick={this.showComing}><LogNav>HISTORY</LogNav></Menu_item> */}
                 </Menu_main>
                 <RightCol>
                     <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />

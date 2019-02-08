@@ -17,10 +17,10 @@ import Dashboard from "../src/components/LoggedCategories/Dashboard/dashboard"
 import OpenTicket from "./components/Landing_categories/OpenTicket";
 import { globalVariables } from './Globals';
 let { API_URL } = globalVariables;
-var socketIOClient = require('socket.io-client');
-var sailsIOClient = require('sails.io.js');
+const socketIOClient = require('socket.io-client');
+const sailsIOClient = require('sails.io.js');
 let io = sailsIOClient(socketIOClient);
-// io.sails.url = API_URL;
+io.sails.url = API_URL;
 
 const routes = [
   {
