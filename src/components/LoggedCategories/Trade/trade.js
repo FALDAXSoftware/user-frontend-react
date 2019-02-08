@@ -101,22 +101,6 @@ const columns = [{
 const TabPane = Tabs.TabPane;
 let io = null;
 class Trade extends Component {
-    static defaultProps = {
-        symbol: 'AAPL',
-        interval: 'D',
-        containerId: 'tv_chart_container',
-        datafeedUrl: 'https://demo_feed.tradingview.com',
-        libraryPath: '/charting_library/',
-        chartsStorageUrl: 'https://saveload.tradingview.com',
-        chartsStorageApiVersion: '1.1',
-        clientId: 'tradingview.com',
-        userId: 'public_user_id',
-        fullscreen: false,
-        autosize: true,
-        studiesOverrides: {},
-    };
-
-    tvWidget = null;
     constructor(props) {
         super(props);
         this.state = {
@@ -179,43 +163,6 @@ class Trade extends Component {
         });
         console.log(window);
 
-        const widgetOptions = {
-            symbol: this.props.symbol,
-            // BEWARE: no trailing slash is expected in feed URL
-            datafeed: new window.Datafeeds.UDFCompatibleDatafeed(this.props.datafeedUrl),
-            interval: this.props.interval,
-            container_id: this.props.containerId,
-            library_path: this.props.libraryPath,
-
-            locale: 'en',
-            disabled_features: ['use_localstorage_for_settings'],
-            enabled_features: ['study_templates'],
-            charts_storage_url: this.props.chartsStorageUrl,
-            charts_storage_api_version: this.props.chartsStorageApiVersion,
-            client_id: this.props.clientId,
-            user_id: this.props.userId,
-            fullscreen: this.props.fullscreen,
-            autosize: this.props.autosize,
-            studies_overrides: this.props.studiesOverrides,
-        };
-
-        const tvWidget = new widget(widgetOptions);
-        this.tvWidget = tvWidget;
-
-        tvWidget.onChartReady(() => {
-            const button = tvWidget.createButton()
-                .attr('title', 'Click to show a notification popup')
-                .addClass('apply-common-tooltip')
-                .on('click', () => tvWidget.showNoticeDialog({
-                    title: 'Notification',
-                    body: 'TradingView Charting Library API works correctly',
-                    callback: () => {
-                        console.log('Noticed!');
-                    },
-                }));
-
-            button[0].innerHTML = 'Check API';
-        });
     }
     onInsChange(e) {
         console.log(this.props)
@@ -457,10 +404,7 @@ class Trade extends Component {
                 <Grey_wrap_trade>
                     <Row>
                         <Col>
-                            <div
-                                id={this.props.containerId}
-                                className={'TVChartContainer'}
-                            />
+                            <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} />
                         </Col>
                     </Row>
                     <ContainerContact>
