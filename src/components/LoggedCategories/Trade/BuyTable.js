@@ -77,7 +77,6 @@ class BuyTable extends Component {
             }
         });
         io.socket.on('buybookUpdate', (data) => {
-
             this.updateData(data);
         });
     }
@@ -176,7 +175,9 @@ class BuyTable extends Component {
                         <OTwrap2>
                             <div class="tbl-content">
                                 <Scrollbars
-                                    style={{ height: 165 }}>
+                                    style={{ height: 165 }}
+                                    className="scrollbar"
+                                    hideTracksWhenNotNeeded={true}>
                                     <TableContent cellpadding="10px" cellspacing="0" border="0">
                                         {console.log(this.state.result)}
                                         {this.state.result.length ?

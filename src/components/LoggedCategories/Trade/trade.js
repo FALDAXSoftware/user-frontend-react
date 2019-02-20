@@ -390,12 +390,12 @@ class Trade extends Component {
             this.setState({ searchedInstu: [] });
         }
     }
-    componentWillUnmount() {
-        if (this.tvWidget !== null) {
-            this.tvWidget.remove();
-            this.tvWidget = null;
-        }
-    }
+    // componentWillUnmount() {
+    //     if (this.tvWidget !== null) {
+    //         this.tvWidget.remove();
+    //         this.tvWidget = null;
+    //     }
+    // }
     render() {
         var self = this;
         return (
@@ -501,14 +501,14 @@ class Trade extends Component {
                                             <InstruOrder>MY ORDERS AND TRADES</InstruOrder>
                                             <OrderTradeWrap >
                                                 <Selectmonth labelInValue defaultValue={{ key: '1' }} style={{ width: 120, marginRight: "30px" }} onChange={this.handleChange}>
-                                                    <Option value="1">1 month</Option>
-                                                    <Option value="3">3 month</Option>
-                                                    <Option value="6">6 month</Option>
-                                                    <Option value="12">12 month</Option>
+                                                    <Option value="1">1 Month</Option>
+                                                    <Option value="3">3 Months</Option>
+                                                    <Option value="6">6 Months</Option>
+                                                    <Option value="12">12 Months</Option>
                                                 </Selectmonth>
                                                 <FIAT_wrap2>
                                                     <FIAT>
-                                                        <RadioSelect onChange={this.statusChange} defaultValue="a" size="large" buttonStyle="solid">
+                                                        <RadioSelect onChange={this.statusChange} defaultValue="a" size="large" buttonStyle="solid" className="order-tab-select">
                                                             <RadioButton value="a">COMPLETED</RadioButton>
                                                             <RadioButton value="b">PENDING</RadioButton>
                                                             <RadioButton value="c">CANCELED</RadioButton>

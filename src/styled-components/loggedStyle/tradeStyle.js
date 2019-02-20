@@ -54,7 +54,7 @@ export const Instru = styled.p`
     font-size: 19px;
     font-weight: bold;
     margin-left:30px;
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode == "dark" ? "white" : "#333333"};
     @media(max-width:575px)
     {
         display:block;
@@ -116,9 +116,13 @@ export const FIAT = styled.div`
 `
 
 export const RadioSelect = styled(RadioGroup)`
+    font-family: "Open Sans";
+    
     & .ant-radio-button-wrapper
     {
-        background-color:${props => props.theme.mode == "dark" ? "" : "#f5f6fa"}
+        font-weight:600 !important;
+        background-color:${props => props.theme.mode == "dark" ? "" : "#f5f6fa"};
+        font-size:13px;
     }
 
 `
@@ -415,7 +419,7 @@ export const WrapDepth = styled.div`
 
 
 export const History_wrap = styled.div`
-    overflow-x:scroll;
+
 `
 
 export const CustomTable = styled.table`
@@ -457,6 +461,8 @@ export const TableContent = styled(CustomTable)`
 
 /* My orders and Trade */
 export const Selectmonth = styled(Select)`
+font-family: "Open Sans";
+        font-weight:700;
 & .ant-select-selection--single
 {
     height:40px !important;
@@ -468,7 +474,7 @@ export const Selectmonth = styled(Select)`
     & .ant-select-selection
     {
         background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode == "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
     }
     & .anticon
     {

@@ -159,7 +159,9 @@ class SellTable extends Component {
                         <OTwrap2>
                             <div class="tbl-content">
                                 <Scrollbars
-                                    style={{ height: 165 }}>
+                                    style={{ height: 165 }}
+                                    className="scrollbar"
+                                    hideTracksWhenNotNeeded={true}>
                                     <TableContent cellpadding="10px" cellspacing="0" border="0">
                                         <tbody>
                                             {this.state.result.length ? this.state.result.map(function (element, index) {

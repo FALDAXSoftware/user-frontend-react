@@ -345,6 +345,11 @@ class Dashboard extends Component {
             })
     }
 
+    getDomainFromUrl(url) {
+        var arr = url.split("/");
+        var result = arr[2];
+        return result;
+    }
     render() {
         const { newsLoader, news, activityLoader, activityData, userFiat } = this.state;
 
@@ -406,13 +411,27 @@ class Dashboard extends Component {
                                     <News>NEWS</News>
                                     <Newslist>
                                         <Scrollbars
-                                            style={{ height: 380 }}>
+                                            style={{ height: 380 }}
+                                            hideTracksWhenNotNeeded={true}
+                                            className="scrollbar news">
                                             {
                                                 news.map((element, index) => (
                                                     <List>
                                                         <Date>{moment.utc(element.posted_at).format("MMMM DD, YYYY HH:mm")}</Date>
                                                         <Listspan>
-                                                            <FontAwesomeIcon icon={faSquareFull} color='#d4d4d4' style={{ marginRight: "10px" }} />{element.owner}
+                                                            {element.owner == "bitcoinist" &&
+                                                                <img src="/images/bitcoinist.png" style={{ marginRight: "10px", height: "20px" }} />
+                                                            }
+                                                            {element.owner == "cointelegraph" &&
+                                                                <img src="/images/cointelegraph.ico" style={{ marginRight: "10px", height: "20px" }} />
+                                                            }
+                                                            {element.owner == "bitcoin" &&
+                                                                <img src="/images/bitcoin.png" style={{ marginRight: "10px", height: "20px" }} />
+                                                            }
+                                                            {element.owner != "bitcoinist" && element.owner != "cointelegraph" && element.owner != "bitcoin" &&
+                                                                <FontAwesomeIcon icon={faSquareFull} color='#d4d4d4' style={{ marginRight: "10px" }} />
+                                                            }
+                                                            {this.getDomainFromUrl(element.link)}
                                                         </Listspan>
                                                         <Listp href={element.link} target="_blank">{element.title}</Listp>
                                                     </List>

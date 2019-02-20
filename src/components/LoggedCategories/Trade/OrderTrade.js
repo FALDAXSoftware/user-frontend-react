@@ -13,7 +13,7 @@ export const Order_wrap = styled.div`
     margin-left:30px;
     margin-right:30px;
     border:1px solid #d8d8d8;
-    overflow-x:scroll;
+    
 `
 export const HTable = styled(Table)`
 >thead
@@ -81,7 +81,8 @@ class OrderTrade extends Component {
                 <OTwrap>
                     <div class="tbl-content">
                         <Scrollbars
-                            style={{ height: 300 }}>
+                            style={{ height: 300 }}
+                            className="scrollbar">
                             <TableContent cellpadding="10px" cellspacing="0" border="0">
                                 <tbody>
                                     {this.props.orderTradeData.length > 0

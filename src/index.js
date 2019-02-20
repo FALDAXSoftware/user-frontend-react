@@ -15,6 +15,7 @@ import Navigation from './components/Navigations/Navigation';
 let persisteState = loadState();
 let store = configureStore(persisteState);
 store.subscribe(() => {
+
     saveState(store.getState())
 })
 /* Appication start from here */

@@ -95,8 +95,8 @@ class Mini_graph extends React.Component {
     }
     componentDidMount() {
         var self = this;
-        if (this.props.cryptoPair !== undefined && this.props.cryptoPair !== "") {
-            this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
+        if (this.props.crypto !== undefined && this.props.currency !== undefined) {
+            this.setState({ crypto: this.props.crypto, currency: this.props.currency }, () => {
                 self.miniGraph();
             })
         }
@@ -114,6 +114,7 @@ class Mini_graph extends React.Component {
             }
         }, (body, JWR) => {
 
+            // console.log("card body", body);
 
             if (body.status == 200) {
                 let res = body.data;
