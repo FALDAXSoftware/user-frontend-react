@@ -7,13 +7,25 @@ import { Icon } from 'antd';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import { History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
+import { TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 
 export const Order_wrap = styled.div`
     margin-left:30px;
     margin-right:30px;
     border:1px solid #d8d8d8;
     overflow-x:scroll;
+    &::-webkit-scrollbar {
+        width: 0.5em;
+        height: 0.5em;
+       }
+     
+       &::-webkit-scrollbar-thumb {
+        background-color: ${props => props.theme.mode == 'dark' ? '#041624' : ''};
+        border-radius: 3px;
+       }
+        &::-webkit-scrollbar-track{
+            background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
+        }
 `
 export const HTable = styled(Table)`
 >thead
@@ -39,6 +51,14 @@ export const HTable = styled(Table)`
 }`
 const SideType = styled.td`
     color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
+`
+const NDF = styled.p`
+    text-align: center; 
+    font-weight: 600;
+    font-size: 17px;
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    margin-top: 30px;
+    font-family: Open Sans;
 `
 export const OTwrap = styled.div`
     min-width:767px;
@@ -104,10 +124,7 @@ class OrderTrade extends Component {
                                                 </tr>
                                             );
                                         })
-                                        : <p style={{
-                                            textAlign: "center", fontWeight: "600", fontSize: "17px",
-                                            color: "black", marginTop: "30px", fontFamily: "Open Sans"
-                                        }}>No Data Found</p>
+                                        : <NDF >No Data Found</NDF>
                                     }
                                 </tbody>
                             </TableContent>

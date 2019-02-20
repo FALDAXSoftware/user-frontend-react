@@ -34,9 +34,7 @@ const BorderedHistoryWrap = styled(History_wrap)`
             background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
         }
      
-       
-       }
-    }
+
 `
 const SideType = styled.td`
     color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};

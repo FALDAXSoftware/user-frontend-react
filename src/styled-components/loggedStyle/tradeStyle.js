@@ -189,6 +189,14 @@ export const TableIns = styled(Table)`
             padding: 10px 12px;
         }
     }
+    & .ant-table-tbody>tr>td
+    {
+        cursor:pointer;
+    }
+    & .ant-table-tbody>tr:hover>td
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : ""};
+    }
 `
 export const Tabs_right = styled(Tabs)`
     >.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav-animated
@@ -415,9 +423,23 @@ export const WrapDepth = styled.div`
 
 
 export const History_wrap = styled.div`
-    overflow-x:scroll;
-`
 
+`
+export const History_wrap1 = styled.div`
+    overflow-x:scroll;
+    &::-webkit-scrollbar {
+    width: 0.5em;
+    height: 0.5em;
+    }
+
+    &::-webkit-scrollbar-thumb {
+    background-color: ${props => props.theme.mode == 'dark' ? '#041624' : ''};
+    border-radius: 3px;
+    }
+    &::-webkit-scrollbar-track{
+        background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
+    }
+`
 export const CustomTable = styled.table`
     width:100%;
     table-layout: fixed;

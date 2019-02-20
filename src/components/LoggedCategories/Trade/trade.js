@@ -390,12 +390,12 @@ class Trade extends Component {
             this.setState({ searchedInstu: [] });
         }
     }
-    componentWillUnmount() {
+    /* componentWillUnmount() {
         if (this.tvWidget !== null) {
             this.tvWidget.remove();
             this.tvWidget = null;
         }
-    }
+    } */
     render() {
         var self = this;
         return (

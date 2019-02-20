@@ -140,6 +140,10 @@ const Appstore = styled.img`
 `
 const Playstore = styled.img`
     display: inline-block;
+    @media(max-width:991px)
+    {
+        margin-left:10px;
+    }
 `
 const Bottom_Footer = styled.div`
     height: 71px;
