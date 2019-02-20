@@ -1227,9 +1227,9 @@ table .ant-table-tbody > tr > td {
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
   background: #f1f1f1; 
-}
+} */
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
@@ -1281,23 +1281,7 @@ table .ant-table-tbody > tr > td {
   /* width:285px !important; */
   height:400px !important;
 }
-.activity-table tr td.dash-date{
-  font-weight: 600;
-  color: black;
-}
-.activity-table .amount{
-  width: 120px;
-}
-.activity-table tr td.amount{
-  font-weight: 600;
-  color: black;
-}
-.activity-table .progress-bar-container{
-  width: 170px;
-}
-.activity-table .ant-table{
-  font-family: "Open sans" !important;
-}
+
 .portfolio-table{
   font-family: "Open sans" !important;
 }

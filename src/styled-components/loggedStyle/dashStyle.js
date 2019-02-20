@@ -48,16 +48,165 @@ export const Act_div = styled.div`
     margin-right:25px;
 `
 export const ActTable = styled(Table)`
+    & tr>.dash-date{
+        font-weight: 600;
+        color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    }
+    & .ant-table-header
+    {
+        background:none;
+    }
     & thead>tr>th
     {
         background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
-        border-bottom:1px solid #eeeeee;
+        border-bottom:${props => props.theme.mode == "dark" ? "1px solid #334553" : "1px solid #eeeeee"};
+        color:${props => props.theme.mode == "dark" ? "#174c7e" : "#7f7f7f"} !important;
+    }
+    & tbody>tr>td
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
+        border-bottom:${props => props.theme.mode == "dark" ? "1px solid #334553" : ""}
+    }
+    & .amount{
+    width: 120px;
+    }
+    & tr td.amount{
+    font-weight: 600;
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    }
+    & .progress-bar-container{
+    width: 170px;
+    }
+    & .ant-table{
+    font-family: "Open sans" !important;
+    }
+    & .ant-table-placeholder
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : ""}
+        color:${props => props.theme.mode == "dark" ? "white" : ""}
+    }
+    & .ant-table-tbody>tr:hover>td
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : ""};
+    }
+     & .ant-table-body
+    {
+    &::-webkit-scrollbar {
+        width: 0.5em;
+        height: 0.5em;
+       }
+     
+       &::-webkit-scrollbar-thumb {
+        background-color: ${props => props.theme.mode == 'dark' ? '#041624' : ''};
+        border-radius: 3px;
+       }
+        &::-webkit-scrollbar-track{
+            background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
+        }
+     
+        &:hover {
+         background: #072135;
+        }
+       }
+    }
+   /*  & .ant-table-header
+    {
+        ::-webkit-scrollbar {
+        width: 0.5em;
+        height: 0.5em;
+       }
+     
+        ::-webkit-scrollbar-thumb {
+        background-color: #041624;
+        border-radius: 3px;
+     
+        :hover {
+         background: #072135;
+        }
+       }
+    }  */
+`
+export const PortTable = styled(Table)`
+& .ant-table-header
+  {
+      background:none;
+  }
+    & thead>tr>th
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
+        border-bottom:${props => props.theme.mode == "dark" ? "1px solid #334553" : "1px solid #eeeeee"};
         color:${props => props.theme.mode == "dark" ? "#174c7e" : "#7f7f7f"};
     }
     & tbody>tr>td
     {
         color:${props => props.theme.mode == "dark" ? "white" : ""};
+        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
+        border-bottom:${props => props.theme.mode == "dark" ? "1px solid #334553" : ""}
     }
+    & .coin{
+        width: 150px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    & .amount{
+    width: 130px;
+    text-align: center;
+    }
+    & .value{
+    text-align: center;
+    width: 130px;
+    }
+    & .change{
+    text-align: center;
+    }
+    & .ant-table-placeholder
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : ""}
+        color:${props => props.theme.mode == "dark" ? "white" : ""}
+    } 
+    & .ant-table-tbody>tr:hover>td
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : ""};
+    }
+    & .ant-table-body
+    {
+    &::-webkit-scrollbar {
+        width: 0.5em;
+        height: 0.5em;
+       }
+     
+       &::-webkit-scrollbar-thumb {
+        background-color: ${props => props.theme.mode == 'dark' ? '#041624' : ''};
+        border-radius: 3px;
+       }
+        &::-webkit-scrollbar-track{
+            background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
+        }
+     
+        &:hover {
+         background: #072135;
+        }
+       }
+    }
+    /*
+    & .ant-table-header
+    {
+        ::-webkit-scrollbar {
+        width: 0.5em;
+        height: 0.5em;
+       }
+     
+        ::-webkit-scrollbar-thumb {
+        background-color: #041624;
+        border-radius: 3px;
+     
+        :hover {
+         background: #072135;
+        }
+       }
+    } */
 `
 export const High_low = styled.div`
     display: flex;
@@ -112,7 +261,7 @@ export const Newslist = styled.div`
     margin-right:30px;
 `
 export const List = styled.div`
-    border-bottom:1px solid #ddd;
+    border-bottom: ${props => props.theme.mode == "dark" ? "1px solid #33465e" : "1px solid #eeeeee"};
     margin-top:20px;
 `
 export const Listspan = styled.span`

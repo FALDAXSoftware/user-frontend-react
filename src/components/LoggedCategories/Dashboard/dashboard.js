@@ -16,7 +16,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { Spin_Ex } from "../../Settings/Personaldetails/PersonalDetails";
 
 import {
-    ActPortWrap, Lleft, Rright, Topic, Act_div, ActTable, High_low, Left_hl, Right_hl,
+    ActPortWrap, Lleft, Rright, Topic, Act_div, ActTable, PortTable, High_low, Left_hl, Right_hl,
     Rise_fall, Newsdiv, News, Newslist, List, Listspan, Listp, Date, Spin_single
 } from "../../../styled-components/loggedStyle/dashStyle"
 import { globalVariables } from '../../../Globals';
@@ -372,7 +372,6 @@ class Dashboard extends Component {
                                                 </Topic>
                                                 <Act_div>
                                                     <ActTable scroll={{ y: 320 }} pagination={false} columns={activityColumns} dataSource={activityData} className="activity-table" />
-
                                                 </Act_div>
                                                 {(this.state.activityLoader == true) ?
                                                     <Spin_single className="Single_spin">
@@ -392,7 +391,7 @@ class Dashboard extends Component {
                                                     <Right_hl>^{this.state.diffrence} {userFiat}</Right_hl>
                                                 </High_low>
                                                 <Act_div>
-                                                    <ActTable scroll={{ y: 250 }} pagination={false} columns={portfolioColumn} dataSource={this.state.portfolioData} className="portfolio-table" />
+                                                    <PortTable scroll={{ y: 250 }} pagination={false} columns={portfolioColumn} dataSource={this.state.portfolioData} className="portfolio-table" />
                                                 </Act_div>
                                                 {(this.state.portfolioLoader == true) ?
                                                     <Spin_single className="Single_spin">

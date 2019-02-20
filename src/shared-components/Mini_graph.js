@@ -47,7 +47,7 @@ const Span_coin_price = styled.span`
 const Span_coin_percentage = styled.span`
     font-size: 14px;
     font-family: "Open sans";
-    color: ${props => props.value === 0 ? 'black' : props.value <= 0 ? 'red' : '#34a539'}
+    color: ${props => props.value === 0 ? (props => props.theme.mode == "dark" ? 'white' : 'black') : props.value <= 0 ? 'red' : '#34a539'}
     line-height: 1.286;
     text-align: left;
     line-height: 25px;
