@@ -103,7 +103,16 @@ class Mini_graph extends React.Component {
     }
     miniGraph() {
         var self = this;
-        io.socket.get("/socket/get-card-data?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
+        let URL = "/socket/get-card-data?room=" + this.state.crypto + "-" + this.state.currency
+        io.socket.request({
+            method: 'GET',
+            url: URL,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }, (body, JWR) => {
 
 
             if (body.status == 200) {

@@ -76,17 +76,6 @@ const ButtonToolbarOne = styled(ButtonToolbar)`
         width:100%;
     }
 `
-const DropdownButtonOne = styled(DropdownButton)`
-    background-color: ${props => props.theme.mode == "dark" ? "#01090f" : ""};
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
-    width:100%;
-    text-align:left;
-    >.caret
-    {
-        float:right;
-        margin-top: 8px;
-    }
-`
 const CoinImage = styled.img`
     width: 60px;
     height: 60px;
@@ -122,12 +111,10 @@ class WalletDetails extends Component {
                 this.setState({ total });
             }
         }
-        console.log(this.props.location);
 
         if (this.props.location !== undefined) {
             if (this.props.location.search.includes('coinID')) {
                 var coin_name = this.props.location.search.split('=');
-                console.log(coin_name);
                 fetch(API_URL + "/wallet-details", {
                     method: "post",
                     headers: {
@@ -154,8 +141,6 @@ class WalletDetails extends Component {
                                 walletUserDetails = responseData.walletUserData;
                             }
                         }
-                        console.log("--=-=---", coin_name);
-
                         self.setState({
                             walletUserData: walletUserDetails,
                             defaultCoin: walletUserDetails[0].coin,
@@ -164,12 +149,10 @@ class WalletDetails extends Component {
 
                         }, () => {
                             console.log("state update");
-
                         });
                     })
                     .catch(error => {
                         console.log(error);
-
                         this.setState({ loader: false });
                     })
             }

@@ -177,7 +177,7 @@ const activityColumns = [{
     dataIndex: 'completed',
     className: "progress-bar-container",
     render: completed => (
-        <Progress percent={completed.toFixed(2)} />
+        <Progress percent={completed} />
     ),
 }];
 const portfolioColumn = [{
@@ -254,14 +254,12 @@ class Dashboard extends Component {
                 // console.log(responseData);
                 let activityData = [];
                 if (responseData.status == 200) {
-                    console.log("------>amount0------>", responseData.data);
-
                     responseData.data.map(element => {
                         activityData.push({
                             date: moment.utc(element.created_at).local().format("MMMM DD,HH:mm"),
                             action: element.side,
                             amount: element.price.toFixed(2) + " " + element.currency,
-                            completed: ((parseFloat(element.quantity) * 100) / parseFloat(element.fix_quantity)),
+                            completed: parseInt((parseFloat(element.quantity) * 100) / parseFloat(element.fix_quantity)),
                         });
                     });
                     self.setState({
@@ -287,7 +285,6 @@ class Dashboard extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                console.log(responseData);
                 let portfolioData = [];
                 if (responseData.status == 200) {
                     let userFiat = responseData.data.fiat;
@@ -312,7 +309,6 @@ class Dashboard extends Component {
     }
 
     loadNews(page) {
-        console.log("load news call ", page);
         var self = this;
         self.setState({ newsLoader: true })
 
@@ -333,7 +329,6 @@ class Dashboard extends Component {
                     });
 
                     let hasMoreNews = true;
-                    console.log(news.length >= parseInt(responseData.NewsCount));
 
                     if (news.length >= parseInt(responseData.NewsCount)) {
                         hasMoreNews = false;

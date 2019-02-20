@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import { DatePicker, Checkbox, Select } from 'antd';
-import { MenuItem } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import LoggedNavigation from '../../Navigations/LoggedNavigation';
@@ -16,15 +15,8 @@ import {
 import { CSVLink, CSVDownload } from "react-csv";
 import { globalVariables } from '../../../Globals';
 import { Button } from 'antd/lib/radio';
-import NoDataFound from '../../../shared-components/No_data_found'
 
 let { API_URL } = globalVariables;
-const csvData = [
-    ["firstname", "lastname", "email"],
-    ["Ahmed", "Tomi", "ah@smthing.co.com"],
-    ["Raed", "Labes", "rl@smthing.co.com"],
-    ["Yezzi", "Min l3b", "ymin@cocococo.com"]
-];
 
 const Option = Select.Option;
 const { RangePicker } = DatePicker;
@@ -32,8 +24,7 @@ const CheckboxGroup = Checkbox.Group;
 const options = [
     { label: 'BUY', value: 'BUY' },
     { label: 'SELL', value: 'SELL' },
-    { label: 'SEND', value: 'SEND' },
-    { label: 'RECEIVE', value: 'RECEIVE' },
+
 ];
 
 class History extends Component {
@@ -85,7 +76,6 @@ class History extends Component {
             });
     }
     historyResult() {
-        console.log(this.state)
         let url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}`;
         if (this.state.drop1Value != '' && this.state.drop1Value != '') {
             url = url + '&symbol=' + this.state.drop1Value + '-' + this.state.drop2Value
@@ -97,9 +87,7 @@ class History extends Component {
                 'Content-Type': 'application/json',
                 Authorization: "Bearer " + this.props.isLoggedIn
             }
-
-        })
-            .then(response => response.json())
+        }).then(response => response.json())
             .then((responseData) => {
                 /*  this.setState({myCoins:responseData}); */
                 this.setState({ historyData: responseData.data });
@@ -135,17 +123,14 @@ class History extends Component {
 
     changeDate(date, dateString) {
         var self = this;
-        console.log(date, dateString)
         var fromDate = "";
         fromDate = dateString[0].format();
         var toDate = ""
         toDate = dateString[1].format();
-        console.log("dates ---- ", fromDate, toDate);
 
         this.setState({ toDate, fromDate }, () => {
             self.historyResult();
         });
-
     }
 
     onChangeCheck(checkedValues) {
@@ -153,26 +138,22 @@ class History extends Component {
         var send, receive, sell, buy;
         if (checkedValues.includes("SEND")) {
             send = true;
-        }
-        else {
+        } else {
             send = false;
         }
         if (checkedValues.includes("RECEIVE")) {
             receive = true;
-        }
-        else {
+        } else {
             receive = false;
         }
         if (checkedValues.includes("BUY")) {
             buy = true;
-        }
-        else {
+        } else {
             buy = false;
         }
         if (checkedValues.includes("SELL")) {
             sell = true;
-        }
-        else {
+        } else {
             sell = false;
         }
         this.setState({ send, receive, sell, buy }, () => {
@@ -215,7 +196,6 @@ class History extends Component {
         });
     }
     repeatClick(data) {
-        console.log(data)
         if (data.order_type == "Limit") {
             let params = {
                 symbol: data.symbol,
@@ -346,7 +326,7 @@ class History extends Component {
                                             <tr>
                                                 <th>Coin</th>
                                                 <th>Date</th>
-                                                <th>Action</th>
+                                                <th>Side</th>
                                                 <th>Filled price</th>
                                                 <th>Amount</th>
                                                 <th>FEE</th>
@@ -355,10 +335,8 @@ class History extends Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {console.log(this.state.historyData)}
                                             {this.state.historyData.length > 0 ?
-                                                this.state.historyData.map(function (temp) {
-                                                    console.log(temp)
+                                                this.state.historyData.map(function(temp) {
                                                     var date = moment.utc(temp.created_at).local().format("MMM DD,YYYY HH:mm:ss");
                                                     var side = Number(temp.user_id) == self.props.profileData.id ? temp.side : temp.side == "Buy" ? "Sell" : "Buy";
                                                     var fee = Number(temp.user_id) == self.props.profileData.id ? temp.user_fee.toFixed(2) : temp.requested_fee.toFixed(2);
@@ -366,17 +344,17 @@ class History extends Component {
                                                         <td>{temp.symbol}</td>
                                                         <td>{date}</td>
                                                         <td>{side}</td>
-                                                        <td>{temp.fill_price}</td>
-                                                        <td>{temp.quantity}</td>
+                                                        <td>{temp.fill_price.toFixed(2)}</td>
+                                                        <td>{temp.quantity.toFixed(2)}</td>
                                                         <td>{fee}</td>
-                                                        <td>{temp.fill_price * temp.quantity}</td>
+                                                        <td>{(temp.fill_price * temp.quantity).toFixed(2)}</td>
                                                         <td><Button onChange={() => self.repeatClick(temp)}>Repeat</Button></td>
                                                     </tr>);
                                                 })
-                                                : <p style={{
+                                                : <tr><td colSpan="8" style={{
                                                     textAlign: "center", fontWeight: "600", fontSize: "17px",
                                                     color: "black", marginTop: "30px", fontFamily: "Open Sans"
-                                                }}>No Data Found</p>
+                                                }}>No Data Found</td></tr>
                                             }
                                         </tbody>
                                     </HisTable>

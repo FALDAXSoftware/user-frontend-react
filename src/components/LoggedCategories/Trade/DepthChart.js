@@ -1,26 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
 import { Instru2, WrapDepth } from '../../../styled-components/loggedStyle/tradeStyle';
 import { Line } from 'react-chartjs-2';
-import { privateEncrypt } from 'crypto';
 
-const Chart2_wrap = styled.div`
-    transform : rotateY(180deg);
-    height:400px;
-    
-  `
-const Line2 = styled(Line)`
-  
-  `
 const Chart1_wrap = styled.div`
     height:400px
   `
-const Line1 = styled(Line)`
-
-  `
 let io = null;
+
 class DepthChart extends Component {
     constructor(props) {
         super(props);
@@ -29,68 +20,32 @@ class DepthChart extends Component {
             crypto: "XRP",
             currency: "BTC",
             loader: false,
-            data: {
-                type: 'scatter',
-                datasets: [
-                    {
-                        lineTension: 0.1,
-                        backgroundColor: '#dbeed9',
-                        borderColor: 'rgba(93, 193, 78, 1)',
-                        borderCapStyle: 'butt',
-                        borderDash: [],
-                        borderDashOffset: 0.0,
-                        borderJoinStyle: 'miter',
-                        pointBorderColor: 'rgba(93, 193, 78, 0.52)',
-                        pointBackgroundColor: '#fff',
-                        borderWidth: 1,
-                        pointBorderWidth: 1,
-                        pointHoverRadius: 5,
-                        pointHoverBackgroundColor: 'rgba(93, 193, 78, 0.52)',
-                        pointHoverBorderColor: 'rgba(93, 193, 78, 0.52)',
-                        pointHoverBorderWidth: 2,
-                        pointRadius: 1,
-                        pointHitRadius: 10,
-                        data: []
-                    },
-                    {
-                        lineTension: 0.1,
-                        backgroundColor: '#fcd3de',
-                        borderColor: 'rgba(229, 90, 122, 1)',
-                        borderCapStyle: 'butt',
-                        borderDash: [],
-                        borderDashOffset: 0.0,
-                        borderJoinStyle: 'miter',
-                        pointBorderColor: 'rgba(229, 90, 122, 0.52)',
-                        pointBackgroundColor: '#fff',
-                        borderWidth: 1,
-                        pointBorderWidth: 1,
-                        pointHoverRadius: 5,
-                        pointHoverBackgroundColor: 'rgba(229, 90, 122, 0.52)',
-                        pointHoverBorderColor: 'rgba(229, 90, 122, 0.52)',
-                        pointHoverBorderWidth: 2,
-                        pointRadius: 1,
-                        pointHitRadius: 10,
-                        data: []
-                    }
-                ]
-            }
+            askData: [],
+            bidData: [],
         };
         this.updateGraph = this.updateGraph.bind(this);
     }
+
     componentDidMount() {
-        console.log("did mount");
         this.setState({ loader: true })
-        io.socket.get("/socket/get-depth-chart-data?room=" + this.state.crypto + "-" + this.state.currency, (body, JWR) => {
-
-
+        let URL = "/socket/get-depth-chart-data?room=" + this.state.crypto + "-" + this.state.currency
+        io.socket.request({
+            method: 'GET',
+            url: URL,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }, (body, JWR) => {
             if (body.status == 200) {
                 let res = body.data;
                 this.updateGraph(res);
             }
         });
     }
+
     updateGraph(data) {
-        console.log("depth", data.buyDetails, data.sellDetails);
         var self = this;
         let askData = [];
         let bidData = [];
@@ -100,13 +55,12 @@ class DepthChart extends Component {
                 x: element.price,
                 y: element.quantity
             });
-
         }
         for (let sellIndex = 0; sellIndex < data.sellDetails.length; sellIndex++) {
             let element = data.sellDetails[sellIndex];
             askData.push({
                 x: element.price,
-                y: element.quantitycardDataUpdate
+                y: element.quantity
             });
         }
         let askDepthTotal = 0;
@@ -118,7 +72,7 @@ class DepthChart extends Component {
             askDataArray.push({
                 x: askData[i]["x"],
                 y: askDepthTotal,
-                label: self.state.crypto + "/" + self.state.currency + i
+                // label: self.state.crypto + "/" + self.state.currency + i
             });
             // askData[i]["y"] = askDepthTotal;
             // askData[i]["label"] = self.state.crypto + "/" + self.state.currency;
@@ -129,7 +83,7 @@ class DepthChart extends Component {
             bidDataArray.push({
                 x: bidData[j]["x"],
                 y: bidDepthTotal,
-                label: self.state.crypto + "/" + self.state.currency + j
+                // label: self.state.crypto + "/" + self.state.currency + j
             });
             // bidData[i]["y"] = bidDepthTotal;
             // bidData[i]["label"] = self.state.crypto + "/" + self.state.currency;
@@ -138,25 +92,56 @@ class DepthChart extends Component {
         // let graphData = this.state.data
         // graphData.datasets[0][data] = bidDataArray;
         // graphData.datasets[1][data] = askDataArray;
-        console.log("-=-=-=-=-=-", bidDataArray);
-        console.log("-=-=-=-=-=-", askDataArray);
-        // console.log(self.refs.chart.chartInstance);
-        // self.refs.chart.chartInstance.data.datasets[0].data = [];
-        // self.refs.chart.chartInstance.data.datasets[1].data = [];
-        let datasets = self.refs.chart.chartInstance.data.datasets
-        datasets[1].data = [...askDataArray];
-        datasets[0].data = [...bidDataArray];
-        self.refs.chart.chartInstance.data.datasets = [...datasets];
-        console.log(self.refs.chart.chartInstance.data.datasets);
 
-        console.log(self.refs.chart.chartInstance);
+        self.setState({
+            bidData: bidDataArray,
+            askData: askDataArray
+        }, () => {
+            self.forceUpdate();
+            self.refs.chart.chartInstance.update();
+        });
+        // console.log(self.refs.chart.chartInstance);
+        // let data1 = self.refs.chart.chartInstance.data.datasets[0].data;
+        // let data2 = self.refs.chart.chartInstance.data.datasets[1].data
+        // // self.refs.chart.chartInstance.data.datasets[0].data = [...bidDataArray];
+        // // self.refs.chart.chartInstance.data.datasets[1].data = [...askDataArray];
+        // let data1length = self.refs.chart.chartInstance.data.datasets[0].data.length;
+        // for (let index = 0; index < data1length; index++) {
+        //     self.refs.chart.chartInstance.data.datasets[0].data.pop();
+        // }
+        // for (let index = 0; index < bidDataArray.length; index++) {
+        //     const element = bidDataArray[index];
+        //     self.refs.chart.chartInstance.data.datasets[0].data.push(element);
+        // }
+        // self.refs.chart.chartInstance.update();
+
+        // let data2length = self.refs.chart.chartInstance.data.datasets[1].data.length;
+        // for (let index = 0; index < data2length; index++) {
+        //     self.refs.chart.chartInstance.data.datasets[1].data.pop();
+        // }
+        // for (let index = 0; index < askDataArray.length; index++) {
+        //     const element = askDataArray[index];
+        //     self.refs.chart.chartInstance.data.datasets[1].data.push(element);
+        // }
+
+        // self.refs.chart.chartInstance.update();
+        // console.log(self.refs.chart.chartInstance.data.datasets);
+
+        //var datasets = [...self.refs.chart.chartInstance.data.datasets]
+        // console.log("DATASET", datasets);
+        // datasets[0].data = [...bidDataArray];
+        // datasets[1].data = [...askDataArray];
+        // self.refs.chart.chartInstance.data.datasets = [...datasets];
+        // console.log(self.refs.chart.chartInstance.data.datasets);
+
+        // console.log(self.refs.chart.chartInstance);
         // console.log();
 
-        this.setState({ loader: true })
+        // this.setState({ loader: true })
 
-        setTimeout(() => {
-            self.refs.chart.chartInstance.update();
-        }, 1000);
+        // setTimeout(() => {
+        //     self.refs.chart.chartInstance.update();
+        // }, 1000);
 
         // this.setState({
         //     data: graphData
@@ -166,43 +151,38 @@ class DepthChart extends Component {
     }
     render() {
         var self = this;
+        let graphData = {
+            type: 'line',
+            datasets: [{
+                label: "Bid",
+                backgroundColor: '#dbeed9',
+                borderColor: 'rgba(93, 193, 78, 1)',
+                borderJoinStyle: 'miter',
+                borderCapStyle: 'butt',
+                borderWidth: 1,
+                data: [...self.state.bidData]
+            }, {
+                label: "Ask",
+                backgroundColor: '#fcd3de',
+                borderColor: 'rgba(229, 90, 122, 1)',
+                borderJoinStyle: 'miter',
+                borderCapStyle: 'butt',
+                borderWidth: 1,
+                data: [...this.state.askData]
+            }]
+        }
+
         return (
             <WrapDepth>
                 <Instru2>Market Depth BBC/BTC</Instru2>
                 <Row>
                     <Col xl={24}>
                         <Chart1_wrap id="depth-chart1">
-                            <Line data={this.state.data} options={{
-                                elements: {
-                                    line: {
-                                        tension: 0, // disables bezier curves
-                                    }
-                                }, tooltips: {
-                                    backgroundColor: "#fff",
-                                    borderColor: "#1C2331",
-                                    borderWidth: 1,
-                                    titleFontColor: "#1C2331",
-                                    displayColors: false,
-                                    callbacks: {
-                                        title: function (tooltipItem) {
-
-                                            return self.state.crypto + "/" + self.state.currency;
-                                        },
-                                        // afterBody: function (tooltipItem) {
-                                        //     var multistringText = ["Price - " + Number(tooltipItem.xLabel)];
-                                        //     // do some stuff
-                                        //     multistringText.push("Volume - " + Number(tooltipItem.yLabel));
-
-                                        //     return multistringText;
-                                        // },
-                                        label: function (tooltipItem) {
-                                            return ["Price - " + Number(tooltipItem.xLabel), "Volume - " + Number(tooltipItem.yLabel)];
-                                        },
-                                        labelTextColor: function (tooltipItem, chart) {
-                                            return 'gray';
-                                        }
-                                    }
-                                }, legend: null, scales: {
+                            <Line data={graphData} height={300} options={{
+                                legend: {
+                                    display: false
+                                },
+                                scales: {
                                     xAxes: [{
                                         display: true, type: 'linear', position: 'bottom', gridLines: {
                                             display: false,
@@ -210,7 +190,7 @@ class DepthChart extends Component {
                                         }
                                     }]
                                 }
-                            }} height={300} ref="chart" />
+                            }} ref="chart" />
                         </Chart1_wrap>
                     </Col>
                 </Row>
@@ -219,4 +199,11 @@ class DepthChart extends Component {
     }
 }
 
-export default DepthChart;
+function mapStateToProps(state) {
+    console.log(state)
+    return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+    })
+}
+
+export default connect(mapStateToProps)(DepthChart);

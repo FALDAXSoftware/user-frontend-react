@@ -26,6 +26,7 @@ import {
     Spin_single
 } from "../../../styled-components/loggedStyle/dashStyle"
 import { globalVariables } from '../../../Globals';
+import { widget } from '../../../charting_library/charting_library.min';
 
 let { API_URL } = globalVariables;
 /* var socketIOClient = require('socket.io-client');
@@ -54,6 +55,9 @@ const OrderTradeWrap = styled.div`
         margin-top:10px;
         flex-wrap:wrap;
     }
+`
+const Grey_wrap_trade = styled(Grey_wrap)`
+    padding-top:80px;
 `
 const columns = [{
     title: 'Name',
@@ -114,7 +118,7 @@ class Trade extends Component {
             userBalLoader: false
         };
         io = this.props.io;
-        io.sails.url = API_URL;
+        // io.sails.url = API_URL;
         this.handleChange = this.handleChange.bind(this);
         this.statusChange = this.statusChange.bind(this);
         this.getUserBal = this.getUserBal.bind(this);
@@ -157,6 +161,8 @@ class Trade extends Component {
             self.getUserBal();
 
         });
+        console.log(window);
+
     }
     onInsChange(e) {
         console.log(this.props)
@@ -184,7 +190,17 @@ class Trade extends Component {
         var self = this;
         console.log("get instrument data");
 
-        io.socket.get(`/socket/get-instrument-data?coin=${self.state.InsCurrency}`, (body, JWR) => {
+        io.socket.request({
+            method: 'GET',
+            url: `/socket/get-instrument-data?coin=${self.state.InsCurrency}`,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }, (body, JWR) => {
+            console.log("get instrument data", body);
+
             if (body.status == 200) {
                 self.updateInstrumentsData(body.data)
             }
@@ -251,7 +267,15 @@ class Trade extends Component {
         else
             URL = `/socket/get-user-trade-data?room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`
         console.log("orderSocket", URL, month, filter_type)
-        io.socket.get(URL, (body, JWR) => {
+        io.socket.request({
+            method: 'GET',
+            url: URL,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }, (body, JWR) => {
 
 
             if (body.status == 200) {
@@ -322,7 +346,15 @@ class Trade extends Component {
         else
             URL = `/socket/get-user-balance?room=${this.state.crypto}-${this.state.currency}`
         console.log(this.state, this.state.prevRoom)
-        io.socket.get(URL, (body, JWR) => {
+        io.socket.request({
+            method: 'GET',
+            url: URL,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }, (body, JWR) => {
 
 
             if (body.status == 200) {
@@ -358,12 +390,23 @@ class Trade extends Component {
             this.setState({ searchedInstu: [] });
         }
     }
+    componentWillUnmount() {
+        if (this.tvWidget !== null) {
+            this.tvWidget.remove();
+            this.tvWidget = null;
+        }
+    }
     render() {
         var self = this;
         return (
             <Contact_wrap>
                 <LoggedNavigation />
-                <Grey_wrap>
+                <Grey_wrap_trade>
+                    <Row>
+                        <Col>
+                            <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} />
+                        </Col>
+                    </Row>
                     <ContainerContact>
                         <Row_wrap>
                             <Row>
@@ -435,7 +478,7 @@ class Trade extends Component {
                                 </Col>
                                 <Col md={24} lg={12}>
                                     <Right_div>
-                                        {/* <DepthChart io={io} /> */}
+                                        <DepthChart io={io} />
                                     </Right_div>
                                 </Col>
                             </Row>
@@ -486,7 +529,7 @@ class Trade extends Component {
                             </Row>
                         </Row_wrap2>
                     </ContainerContact>
-                </Grey_wrap>
+                </Grey_wrap_trade>
                 <CommonFooter />
             </Contact_wrap>
         );

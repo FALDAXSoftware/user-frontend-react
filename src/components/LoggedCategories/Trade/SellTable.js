@@ -26,8 +26,8 @@ class SellTable extends Component {
         super(props);
         this.state = {
             data: [],
-            crypto: "XRP",
-            currency: "BTC",
+            crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
+            currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
             lastsum: 0,
             loader: false,
             result: []
@@ -36,11 +36,9 @@ class SellTable extends Component {
     }
     componentDidMount() {
         var self = this;
-        if (this.props.cryptoPair !== undefined && this.props.cryptoPair !== "") {
-            this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
-                self.sellTableData();
-            })
-        }
+        self.sellTableData();
+        // this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
+        // })
     }
     sellTableData() {
         let io = this.props.io
@@ -54,13 +52,19 @@ class SellTable extends Component {
             URL = `/socket/get-sell-book?room=${this.state.crypto}-${this.state.currency}`
         }
         console.log(URL)
-        io.socket.get(URL, (body, JWR) => {
+        io.socket.request({
+            method: 'GET',
+            url: URL,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }, (body, JWR) => {
 
 
             if (body.status == 200) {
                 let res = body.data;
-
-
                 this.updateData(res);
             }
         });
@@ -69,7 +73,6 @@ class SellTable extends Component {
         });
     }
     updateData(data) {
-        console.log(data)
         const rows = [];
         let sum = 0;
         let lastsum = 0;
@@ -86,11 +89,8 @@ class SellTable extends Component {
         }
         var preArr = [];
         var final_result = [];
-        console.log(rows)
         for (let i = 0; i < rows.length; i++) {
-
             if (preArr.includes(rows[i].ask)) {
-
             }
             else {
                 var count = 0;
@@ -110,11 +110,9 @@ class SellTable extends Component {
                 }
                 result.ask = rows[i].ask;
                 result.my_size = rows[i].my_size;
-                console.log(result.ask, count)
                 final_result.push(result);
             }
         }
-        console.log(final_result, preArr)
         this.setState({
             loader: false,
             data: rows,
@@ -123,7 +121,6 @@ class SellTable extends Component {
         });
     }
     componentWillReceiveProps(props, newProps) {
-        console.log(props)
         var self = this;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -139,7 +136,6 @@ class SellTable extends Component {
         }
     }
     render() {
-
         return (
             <div>
                 <BBC2>SELLING {this.props.cryptoPair.crypto}</BBC2>
