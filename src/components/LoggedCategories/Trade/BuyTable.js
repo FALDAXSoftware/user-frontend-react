@@ -19,12 +19,14 @@ const OTwrap2 = styled(OTwrap)`
     }
 `
 const NDF = styled.p`
-    text-align : center;
-    font-weight: 600;
-    font-size:17px;
-    color:black; 
     margin-top:30px;
-    font-family:Open Sans;
+        background: none;
+        border-bottom: 0px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: ${props => props.theme.mode == "dark" ? "white" : ""};
+        font-family: "Open Sans";
 `
 class BuyTable extends Component {
     constructor(props) {
@@ -77,7 +79,6 @@ class BuyTable extends Component {
             }
         });
         io.socket.on('buybookUpdate', (data) => {
-
             this.updateData(data);
         });
     }
@@ -176,7 +177,9 @@ class BuyTable extends Component {
                         <OTwrap2>
                             <div class="tbl-content">
                                 <Scrollbars
-                                    style={{ height: 165 }}>
+                                    style={{ height: 165 }}
+                                    className="scrollbar"
+                                    hideTracksWhenNotNeeded={true}>
                                     <TableContent cellpadding="10px" cellspacing="0" border="0">
                                         {console.log(this.state.result)}
                                         {this.state.result.length ?

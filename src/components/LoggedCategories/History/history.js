@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import styled from 'styled-components'
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import { DatePicker, Checkbox, Select } from 'antd';
@@ -26,7 +27,40 @@ const options = [
     { label: 'SELL', value: 'SELL' },
 
 ];
-
+const Select1 = styled(Select)`
+    & .ant-select-selection
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#01090f" : ""};
+    }
+    & .ant-select-arrow>i
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+    & .ant-select-selection-selected-value
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+`
+const Select2 = styled(Select)`
+& .ant-select-selection
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#01090f" : ""};
+    }
+    & .ant-select-arrow>i
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+    & .ant-select-selection-selected-value
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+`
+const CheckboxGroupS = styled(CheckboxGroup)`
+    & .ant-checkbox-group-item>span
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+`
 class History extends Component {
     constructor(props) {
         super(props);
@@ -287,21 +321,21 @@ class History extends Component {
                             <HeadHis>
                                 <Filter>
                                     <div style={{ display: "inline-flex", width: "390px", alignItems: "center" }}>
-                                        <Select style={{ width: 120 }} onChange={this.selectChange1}>
+                                        <Select1 showSearch style={{ width: 120 }} onChange={this.selectChange1}>
                                             {
                                                 this.state.drop1List.map(element => (
                                                     <Option value={element.coin}>{element.coin}</Option>
                                                 ))
                                             }
-                                        </Select>
+                                        </Select1>
                                         <FontAwesomeIcon icon={faExchangeAlt} color='#909090' style={{ margin: "0px 20px" }} />
-                                        <Select style={{ width: 120 }} onChange={this.selectChange2}>
+                                        <Select2 showSearch style={{ width: 120 }} onChange={this.selectChange2}>
                                             {
                                                 this.state.drop2List.map(element => (
                                                     <Option value={element.coin}>{element.coin}</Option>
                                                 ))
                                             }
-                                        </Select>
+                                        </Select2>
                                     </div>
                                     <Datediv>
                                         <RangePickerS
@@ -315,7 +349,7 @@ class History extends Component {
                                     <EXPButton><CSVLink data={this.state.historyData}>EXPORT</CSVLink></EXPButton>
                                 </Filter>
                                 <div style={{ paddingLeft: "15px", marginTop: "20px" }}>
-                                    <CheckboxGroup options={options} defaultValue={['SEND', 'RECEIVE', 'SELL', 'BUY']} onChange={this.onChangeCheck} />
+                                    <CheckboxGroupS options={options} defaultValue={['SEND', 'RECEIVE', 'SELL', 'BUY']} onChange={this.onChangeCheck} />
                                 </div>
                             </HeadHis>
                             <His_wrap>
@@ -331,12 +365,12 @@ class History extends Component {
                                                 <th>Amount</th>
                                                 <th>FEE</th>
                                                 <th>Volume</th>
-                                                <th>Repeat</th>
+                                                {/* <th>Repeat</th> */}
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {this.state.historyData.length > 0 ?
-                                                this.state.historyData.map(function(temp) {
+                                                this.state.historyData.map(function (temp) {
                                                     var date = moment.utc(temp.created_at).local().format("MMM DD,YYYY HH:mm:ss");
                                                     var side = Number(temp.user_id) == self.props.profileData.id ? temp.side : temp.side == "Buy" ? "Sell" : "Buy";
                                                     var fee = Number(temp.user_id) == self.props.profileData.id ? temp.user_fee.toFixed(2) : temp.requested_fee.toFixed(2);
@@ -348,7 +382,7 @@ class History extends Component {
                                                         <td>{temp.quantity.toFixed(2)}</td>
                                                         <td>{fee}</td>
                                                         <td>{(temp.fill_price * temp.quantity).toFixed(2)}</td>
-                                                        <td><Button onChange={() => self.repeatClick(temp)}>Repeat</Button></td>
+                                                        {/* <td><Button onChange={() => self.repeatClick(temp)}>Repeat</Button></td> */}
                                                     </tr>);
                                                 })
                                                 : <tr><td colSpan="8" style={{

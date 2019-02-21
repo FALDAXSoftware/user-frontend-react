@@ -54,7 +54,7 @@ export const Instru = styled.p`
     font-size: 19px;
     font-weight: bold;
     margin-left:30px;
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode == "dark" ? "white" : "#333333"};
     @media(max-width:575px)
     {
         display:block;
@@ -105,7 +105,7 @@ export const FIAT_wrap2 = styled.div`
         background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
         color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
-    @media(max-width:596px)
+    @media(max-width:535px)
     {
         margin-top:20px;
     }
@@ -116,11 +116,21 @@ export const FIAT = styled.div`
 `
 
 export const RadioSelect = styled(RadioGroup)`
+    font-family: "Open Sans";
+    
     & .ant-radio-button-wrapper
     {
-        background-color:${props => props.theme.mode == "dark" ? "" : "#f5f6fa"}
+        font-weight:600 !important;
+        background-color:${props => props.theme.mode == "dark" ? "" : "#f5f6fa"};
+        font-size:13px;
     }
-
+    @media(max-width:460px)
+    {
+        & .ant-radio-button-wrapper
+        {
+            padding: 0 4px;
+        }
+    }
 `
 export const Sect = styled(Button)`
     display:inline-block;
@@ -144,6 +154,10 @@ export const Right_div = styled.div`
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
     height:640px;
+    @media(max-width:991px)
+    {
+        margin-top:30px;
+    }
 `
 export const Right_div1 = styled(Right_div)`
     height:800px;
@@ -184,9 +198,14 @@ export const TableIns = styled(Table)`
     }
     @media(max-width:375px)
     {
+
         >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th
         {
             padding: 10px 12px;
+        }
+        & .ant-table-tbody>tr>td
+        {
+            padding: 12px 12px ;
         }
     }
     & .ant-table-tbody>tr>td
@@ -197,12 +216,32 @@ export const TableIns = styled(Table)`
     {
         background-color:${props => props.theme.mode == "dark" ? "#041b2c" : ""};
     }
+    & .ant-table-placeholder
+    {
+        position: relative;
+        padding: 60px 16px;
+        background: none;
+        border-bottom: 0px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: ${props => props.theme.mode == "dark" ? "white" : ""};
+        z-index: 1;
+        font-family: "Open Sans";
+    }
 `
 export const Tabs_right = styled(Tabs)`
     >.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav-animated
     {
         display: flex !important;
         justify-content:center !important;
+    }
+    @media(max-width:475px)
+    {
+        >.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav-animated>div
+        {
+            width:100%;
+        }
     }
 `
 
@@ -479,6 +518,8 @@ export const TableContent = styled(CustomTable)`
 
 /* My orders and Trade */
 export const Selectmonth = styled(Select)`
+font-family: "Open Sans";
+        font-weight:700;
 & .ant-select-selection--single
 {
     height:40px !important;
@@ -490,7 +531,7 @@ export const Selectmonth = styled(Select)`
     & .ant-select-selection
     {
         background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode == "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
     }
     & .anticon
     {

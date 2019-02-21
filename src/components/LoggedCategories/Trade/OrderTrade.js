@@ -101,7 +101,8 @@ class OrderTrade extends Component {
                 <OTwrap>
                     <div class="tbl-content">
                         <Scrollbars
-                            style={{ height: 300 }}>
+                            style={{ height: 300 }}
+                            className="scrollbar">
                             <TableContent cellpadding="10px" cellspacing="0" border="0">
                                 <tbody>
                                     {this.props.orderTradeData.length > 0

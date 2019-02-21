@@ -1306,3 +1306,27 @@ table .ant-table-tbody > tr > td {
   height: calc(100vh - 150px);
   margin-bottom: 30px;
 }
+div.scrollbar>div:first-child{
+  overflow: auto !important;
+}
+div.scrollbar>div:nth-child(3){
+  width: 9px !important;
+  right: 0px !important;
+  bottom: 0px !important;
+  top: 0px !important;
+  border-radius:0px !important;
+  border: 1px solid #d8d8d8;
+  border-right: none;
+  border-bottom: none;
+  padding: 2px;
+  background-color: white; 
+}
+div.scrollbar.news>div:nth-child(3){
+  border: none !important;
+}
+div.scrollbar>div:nth-child(3)>div{
+  border-radius: 2px !important;
+}
+.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){
+  background: #4c84ff !important;
+}

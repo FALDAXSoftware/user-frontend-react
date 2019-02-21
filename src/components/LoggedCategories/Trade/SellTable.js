@@ -20,7 +20,16 @@ const OTwrap2 = styled(OTwrap)`
         min-width:767px;
     }
 `
-
+const NDF = styled.p`
+    margin-top:30px;
+        background: none;
+        border-bottom: 0px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: ${props => props.theme.mode == "dark" ? "white" : ""};
+        font-family: "Open Sans";
+`
 class SellTable extends Component {
     constructor(props) {
         super(props);
@@ -159,7 +168,9 @@ class SellTable extends Component {
                         <OTwrap2>
                             <div class="tbl-content">
                                 <Scrollbars
-                                    style={{ height: 165 }}>
+                                    style={{ height: 165 }}
+                                    className="scrollbar"
+                                    hideTracksWhenNotNeeded={true}>
                                     <TableContent cellpadding="10px" cellspacing="0" border="0">
                                         <tbody>
                                             {this.state.result.length ? this.state.result.map(function (element, index) {
@@ -172,10 +183,7 @@ class SellTable extends Component {
                                                     </tr>
                                                 );
                                             })
-                                                : <p style={{
-                                                    textAlign: "center", fontWeight: "600", fontSize: "17px",
-                                                    color: "black", marginTop: "30px", fontFamily: "Open Sans"
-                                                }}>No Data Found</p>
+                                                : <NDF>No Data Found</NDF>
                                             }
 
                                         </tbody>

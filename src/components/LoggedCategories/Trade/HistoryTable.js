@@ -20,7 +20,6 @@ const BorderedHistoryWrap = styled(History_wrap)`
     margin-right:30px;
     border:1px solid #d8d8d8;
     overflow-x:scroll;
-
     &::-webkit-scrollbar {
         width: 0.5em;
         height: 0.5em;
@@ -144,7 +143,9 @@ class HistoryTable extends Component {
                 <OTwrap>
                     <div class="tbl-content">
                         <Scrollbars
-                            style={{ height: 300 }}>
+                            style={{ height: 300 }}
+                            className="scrollbar"
+                            hideTracksWhenNotNeeded={true}>
                             <TableContent cellpadding="10px" cellspacing="0" border="0">
                                 <tbody>
                                     {this.state.data.length > 0 ? this.state.data.map((element, index) => (
