@@ -8,7 +8,7 @@ import 'antd/dist/antd.css';
 
 /* Components */
 import Afterlog from "./Afterlog"
-import { Logout } from '../../Actions/Auth';
+import { LogoutUser } from '../../Actions/Auth';
 import ReactSwipeEvents from 'react-swipe-events'
 import { globalVariables } from "../../Globals";
 import ComingSoon from '../ComingSoon';
@@ -221,7 +221,12 @@ class LoggedNavigation extends Component {
     }
 
     logout() {
-        this.props.Logout();
+        let formData = {
+            user_id: this.props.profileDetails.id,
+            jwt_token: this.props.isLoggedIn
+        }
+        this.props.LogoutUser(this.props.isLoggedIn, formData)
+        //this.props.Logout();
     }
 
     showComing = () => {
@@ -270,7 +275,6 @@ class LoggedNavigation extends Component {
             <Header_main id="main">
                 <Logo>
                     <Link to="/">
-                        {console.log(this.state)}
                         <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
                         <FALDAX src={this.state.faldax} />
                     </Link>
@@ -315,7 +319,8 @@ function mapStateToProps(state) {
     });
 }
 const mapDispatchToProps = dispatch => ({
-    Logout: () => dispatch(Logout())
+    // Logout: () => dispatch(Logout()),
+    LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation));

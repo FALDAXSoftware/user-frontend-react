@@ -16,15 +16,12 @@ export function deleteAccount(isLoggedIn, value) {
         }).then(response => response.json())
             .then((responseData) => {
                 if (responseData.status == 200)
-                    dispatch(Logout(responseData))
-
-                dispatch(removeLoader())
+                    // dispatch(Logout(responseData))
+                    dispatch(removeLoader())
             }).catch(error => {
             })
     }
 }
-
-
 
 export function Login(values) {
     return (dispatch) => {
@@ -45,6 +42,34 @@ export function Login(values) {
             })
     }
 }
+
+export function LogoutUser(isLoggedIn, value) {
+    console.log('>>>>>CALL', isLoggedIn, value)
+    return (dispatch) => {
+        dispatch(addLoader())
+        fetch(API_URL + "/logout", {
+            method: "post",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + isLoggedIn
+            },
+            body: JSON.stringify(value)
+        }).then(response => response.json())
+            .then((responseData) => {
+                if (responseData.status == 200) {
+                    console.log('>>>>>responseData', responseData)
+                    dispatch({
+                        type: 'LOGOUT',
+                        payload: responseData
+                    })
+                }
+                dispatch(removeLoader())
+            }).catch(error => {
+            })
+    }
+}
+
 export function clearLogin() {
     return (dispatch) => {
         dispatch(loginAction())
@@ -64,12 +89,12 @@ export const otpRequiredAction = (data) => dispatch => {
     })
 }
 
-export const Logout = (Data) => dispatch => {
-    dispatch({
-        type: 'LOGOUT',
-        payload: Data
-    })
-}
+// export const Logout = (Data) => dispatch => {
+//     dispatch({
+//         type: 'LOGOUT',
+//         payload: Data
+//     })
+// }
 
 export function Signup(values) {
     return (dispatch) => {
@@ -85,9 +110,7 @@ export function Signup(values) {
             .then((responseData) => {
                 if (responseData.status == 200) {
                     dispatch(signupAction(responseData));
-
-                }
-                else {
+                } else {
                     dispatch(errorAction(responseData))
                 }
                 dispatch(removeLoader());
@@ -169,5 +192,4 @@ export const errorAction = (error, status = "") => dispatch => {
         payload: error,
         status: status
     })
-
 }

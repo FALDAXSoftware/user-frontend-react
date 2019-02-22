@@ -13,7 +13,7 @@ import Forgot_Form from "../Landing/User_forms/Forgot_Form"
 import Thank_You from "../Landing/User_forms/Thank_You"
 import Beforelog from "./BeforeLog"
 import Afterlog from "./Afterlog"
-import { Logout } from '../../Actions/Auth';
+import { LogoutUser } from '../../Actions/Auth';
 import Reset_Form from "../Landing/User_forms/Reset_Form"
 import ComingSoon from '../ComingSoon';
 import ReactSwipeEvents from 'react-swipe-events'
@@ -464,7 +464,12 @@ class Navigation extends Component {
         }
     }
     logout() {
-        this.props.Logout();
+        let formData = {
+            user_id: this.props.profileDetails.id,
+            jwt_token: this.props.isLoggedIn
+        }
+        this.props.LogoutUser(this.props.isLoggedIn, formData)
+        //this.props.Logout();
     }
     render() {
         let prof_name = this.props.profileDetails.first_name !== null && this.props.profileDetails.first_name !== undefined ? (this.props.profileDetails.first_name + " " + this.props.profileDetails.last_name) : "User";
@@ -628,7 +633,8 @@ function mapStateToProps(state, ownProps) {
     });
 }
 const mapDispatchToProps = dispatch => ({
-    Logout: () => dispatch(Logout())
+    //Logout: () => dispatch(Logout()),
+    LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navigation));
