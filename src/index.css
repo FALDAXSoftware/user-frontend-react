@@ -1305,6 +1305,7 @@ table .ant-table-tbody > tr > td {
 .TVChartContainer{
   height: calc(100vh - 150px);
   margin-bottom: 30px;
+  margin-top: 20px;
 }
 div.scrollbar>div:first-child{
   overflow: auto !important;
