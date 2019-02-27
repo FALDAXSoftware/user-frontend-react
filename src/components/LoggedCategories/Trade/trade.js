@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
-import { Row, Col, Tabs, Input, Radio, Select, Spin, notification } from 'antd';
+import { Row, Col, Tabs, Input, Radio, Select, Spin, notification, Switch, Icon } from 'antd';
 import styled from 'styled-components';
+import { widget } from '../../../charting_library/charting_library.min';
+import { Responsive, WidthProvider } from 'react-grid-layout';
+import 'react-grid-layout/css/styles.css'
+import 'react-resizable/css/styles.css'
 /* import Tableofcoin from './TableofCoin'
 import WalletDetails from './WalletDetails' */
+import Loader from '../../../shared-components/Loader'
 import LoggedNavigation from '../../Navigations/LoggedNavigation';
 import CommonFooter from "../../Landing/Footers/Footer_home";
 import Market from "./Market";
@@ -19,7 +24,7 @@ import { Container } from '../../../styled-components/homepage/style';
 import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
 import { cryptoCurrency } from '../../../Actions/LoggedCat/tradeActions'
 import {
-    Row_wrap, Left_div, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
+    Row_wrap, Left_div, EditDiv, SwitchS, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
     FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder, Selectmonth
 } from "../../../styled-components/loggedStyle/tradeStyle";
 import {
@@ -27,6 +32,10 @@ import {
 } from "../../../styled-components/loggedStyle/dashStyle"
 import { globalVariables } from '../../../Globals';
 import TraddingViewChart from "../../TraddingViewChart";
+
+
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
+
 let { API_URL } = globalVariables;
 /* var socketIOClient = require('socket.io-client');
 io.sails.url = API_URL;
@@ -58,6 +67,7 @@ const OrderTradeWrap = styled.div`
 const Grey_wrap_trade = styled(Grey_wrap)`
     padding-top:80px;
 `
+
 const columns = [{
     title: 'Name',
     dataIndex: 'name',
@@ -167,7 +177,6 @@ class Trade extends Component {
         console.log(this.props)
         var self = this;
         // console.log(e.target.value);
-        self.setState({ insLoader: true });
         let cryptoPair = {
             crypto: self.state.crypto,
             currency: e.target.value,
@@ -188,7 +197,7 @@ class Trade extends Component {
     getInstrumentData() {
         var self = this;
         console.log("get instrument data");
-
+        self.setState({ insLoader: true });
         io.socket.request({
             method: 'GET',
             url: `/socket/get-instrument-data?coin=${self.state.InsCurrency}`,
@@ -389,14 +398,65 @@ class Trade extends Component {
             this.setState({ searchedInstu: [] });
         }
     }
-    // componentWillUnmount() {
-    //     if (this.tvWidget !== null) {
-    //         this.tvWidget.remove();
-    //         this.tvWidget = null;
-    //     }
-    // }
+    /* componentWillUnmount() {
+        if (this.tvWidget !== null) {
+            this.tvWidget.remove();
+            this.tvWidget = null;
+        }
+    } */
+    onChangeLay(layout) {
+        console.log(layout)
+    }
+    popWindow() {
+        console.log("HEYY BUDDY DOUBLE")
+        var newWindow = window.open("localhost:3000/trade", "", "width=300, height=200");
+    }
     render() {
         var self = this;
+        var layouts = {
+            lg: [
+                { i: 'a', x: 0, y: 0, w: 4, h: 2, minW: 4 },
+                { i: 'b', x: 4, y: 0, w: 4, h: 2, minW: 4, static: true },
+                { i: 'c', x: 8, y: 0, w: 4, h: 2, minW: 4 },
+                { i: 'd', x: 0, y: 1, w: 12, h: 2, minW: 4 },
+                { i: 'e', x: 0, y: 2, w: 12, h: 2, minW: 4 },
+                { i: 'f', x: 0, y: 3, w: 12, h: 2, minW: 4 }
+            ],
+            md: [
+                { i: 'a', x: 0, y: 0, w: 5, h: 2, minW: 5 },
+                { i: 'b', x: 5, y: 0, w: 5, h: 2, minW: 5 },
+                { i: 'c', x: 0, y: 1, w: 5, h: 2, minW: 5 },
+                { i: 'd', x: 5, y: 1, w: 5, h: 2, minW: 5 },
+                { i: 'e', x: 0, y: 2, w: 10, h: 2, minW: 5 },
+                { i: 'f', x: 0, y: 3, w: 10, h: 2, minW: 5 }
+            ],
+            sm: [
+                { i: 'a', x: 0, y: 0, w: 6, h: 2, minW: 6 },
+                { i: 'b', x: 0, y: 1, w: 6, h: 2, minW: 6 },
+                { i: 'c', x: 0, y: 2, w: 6, h: 2, minW: 6 },
+                { i: 'd', x: 0, y: 3, w: 6, h: 2, minW: 6 },
+                { i: 'e', x: 0, y: 4, w: 6, h: 2, minW: 6 },
+                { i: 'f', x: 0, y: 5, w: 6, h: 2, minW: 6 }
+            ],
+
+            xs: [
+                { i: 'a', x: 0, y: 0, w: 4, h: 2, minW: 4 },
+                { i: 'b', x: 0, y: 1, w: 4, h: 2, minW: 4 },
+                { i: 'c', x: 0, y: 2, w: 4, h: 2, minW: 4 },
+                { i: 'd', x: 0, y: 3, w: 4, h: 2, minW: 4 },
+                { i: 'e', x: 0, y: 4, w: 4, h: 2, minW: 4 },
+                { i: 'f', x: 0, y: 5, w: 4, h: 2, minW: 4 }
+            ],
+            xxs: [
+                { i: 'a', x: 0, y: 0, w: 2, h: 2, minW: 2 },
+                { i: 'b', x: 0, y: 1, w: 2, h: 2, minW: 2 },
+                { i: 'c', x: 0, y: 2, w: 2, h: 2, minW: 2 },
+                { i: 'd', x: 0, y: 3, w: 2, h: 2, minW: 2 },
+                { i: 'e', x: 0, y: 4, w: 2, h: 2, minW: 2 },
+                { i: 'f', x: 0, y: 5, w: 2, h: 2, minW: 2 }
+
+            ]
+        };
         return (
             <Contact_wrap>
                 <LoggedNavigation />
@@ -407,131 +467,148 @@ class Trade extends Component {
                             <TraddingViewChart />
                         </Col>
                     </Row>
-                    <ContainerContact>
-                        <Row_wrap>
-                            <Row>
-                                <Col md={24} lg={14}>
-                                    <Left_div1>
-                                        <Instru>INSTRUMENTS</Instru>
-                                        {this.state.InsData.length > 0 ? <SearchInput
-                                            onChange={(e) => this.searchInstu(e)}
-                                            style={{ width: 200 }}
-                                        /> : ""}
-                                        <FIAT_wrap>
-                                            <FIAT>
-                                                <RadioSelect value={this.state.InsCurrency} size="large" buttonStyle="solid" onChange={this.onInsChange}>
-                                                    <RadioButton value="BTC">BTC</RadioButton>
-                                                    <RadioButton value="XRP">XRP</RadioButton>
-                                                    {/* <RadioButton value="g">FAVORITES</RadioButton> */}
-                                                </RadioSelect>
-                                            </FIAT>
-                                        </FIAT_wrap>
-                                        <InstruTable>
-                                            <TableIns
-                                                InsCurrency onRow={(record, rowIndex) => {
-                                                    // console.log(record, rowIndex)
-                                                    return {
-                                                        onClick: (event) => { self.currencyPair(record.name) },       // click row
-                                                    };
-                                                }}
-                                                pagination={false} columns={columns} dataSource={this.state.searchedInstu.length == 0 ? this.state.InsData : this.state.searchedInstu} onChange={this.onChange} />
-                                        </InstruTable>
-                                        {(this.state.insLoader == true) ?
-                                            <Spin_single className="Single_spin">
-                                                <Spin size="small" />
-                                            </Spin_single>
-                                            : ""
-                                        }
-                                    </Left_div1>
-                                </Col>
-                                <Col md={24} lg={10}>
-                                    <Right_div1>
-                                        <Tabs_right defaultActiveKey="1" onChange={this.callback}>
-                                            <TabPane tab="Market" key="1"><Market userBal={this.state.userBal} /></TabPane>
-                                            <TabPane tab="Limit" key="2"><Limit userBal={this.state.userBal} /></TabPane>
-                                            <TabPane tab="Stop-Limit" key="3"><StopLimit userBal={this.state.userBal} /></TabPane>
-                                        </Tabs_right>
-                                        {(this.state.userBalLoader == true) ?
-                                            <Spin_single className="Single_spin">
-                                                <Spin size="small" />
-                                            </Spin_single>
-                                            : ""
-                                        }
-                                    </Right_div1>
-                                </Col>
-                            </Row>
-                        </Row_wrap>
-                        <Row_wrap2>
-                            <Row>
-                                <Col md={24} lg={12}>
-                                    <Left_div>
-                                        <Instru>ORDER BOOK BBC/BTC</Instru>
-                                        <BBC_wrap>
-                                            <BuyTable io={io} />
-                                        </BBC_wrap>
+                    <Row>
+                        <Col>
+                            <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+                                <Select defaultValue="lucy" style={{ width: 120 }} >
+                                    <Option value="jack">Jack</Option>
+                                    <Option value="edit">Edit Layout</Option>
+                                </Select>
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <ResponsiveReactGridLayout className="layout" layouts={layouts}
+                                breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+                                cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                            /* onLayoutChange={(layout: Layout) => this.onChangeLay(layout)} */
+                            >
+                                <div key="a">
+                                    <div onDoubleClick={this.popWindow.bind(this)} style={{ height: "100%", width: "100%", overflow: "auto" }}>
+                                        {
+                                            this.state.insLoader == false ?
+                                                <Left_div1>
+                                                    <Instru>INSTRUMENTS</Instru>
+                                                    {this.state.InsData.length > 0 ? <SearchInput
+                                                        onChange={(e) => this.searchInstu(e)}
+                                                        style={{ width: 200 }}
+                                                    /> : ""}
+                                                    <FIAT_wrap>
+                                                        <FIAT>
+                                                            <RadioSelect value={this.state.InsCurrency} size="large" buttonStyle="solid" onChange={this.onInsChange}>
+                                                                <RadioButton value="BTC">BTC</RadioButton>
+                                                                <RadioButton value="XRP">XRP</RadioButton>
+                                                            </RadioSelect>
+                                                        </FIAT>
+                                                    </FIAT_wrap>
+                                                    <InstruTable>
+                                                        <TableIns
+                                                            InsCurrency onRow={(record, rowIndex) => {
+                                                                return {
+                                                                    onClick: (event) => { self.currencyPair(record.name) },       // click row
+                                                                };
+                                                            }}
+                                                            pagination={false} columns={columns} dataSource={this.state.searchedInstu.length == 0 ? this.state.InsData : this.state.searchedInstu} onChange={this.onChange} />
+                                                    </InstruTable>
+                                                    {(this.state.insLoader == true) ?
+                                                        <Spin_single className="Single_spin">
+                                                            <Spin size="small" />
+                                                        </Spin_single>
+                                                        : ""
+                                                    }
 
-                                        <BBC_wrap2>
-                                            <SellTable io={io} />
-                                        </BBC_wrap2>
 
-                                    </Left_div>
-                                </Col>
-                                <Col md={24} lg={12}>
-                                    <Right_div>
-                                        <DepthChart io={io} />
-                                    </Right_div>
-                                </Col>
-                            </Row>
-                        </Row_wrap2>
-                        <Row_wrap2>
-                            <Row>
-                                <Col span={24}>
-                                    <Left_div2>
-                                        <Instru>ORDER HISTORY</Instru>
-                                        <HistoryTable io={io} />
-                                    </Left_div2>
-                                </Col>
-                            </Row>
-                        </Row_wrap2>
-                        <Row_wrap2>
-                            <Row>
-                                <Col span={24}>
-                                    <Left_div2>
-                                        <Orderwrap>
-                                            <InstruOrder>MY ORDERS AND TRADES</InstruOrder>
-                                            <OrderTradeWrap >
-                                                <Selectmonth labelInValue defaultValue={{ key: '1' }} style={{ width: 120, marginRight: "30px" }} onChange={this.handleChange}>
-                                                    <Option value="1">1 Month</Option>
-                                                    <Option value="3">3 Months</Option>
-                                                    <Option value="6">6 Months</Option>
-                                                    <Option value="12">12 Months</Option>
-                                                </Selectmonth>
-                                                <FIAT_wrap2>
-                                                    <FIAT>
-                                                        <RadioSelect onChange={this.statusChange} defaultValue="a" size="large" buttonStyle="solid" className="order-tab-select">
-                                                            <RadioButton value="a">COMPLETED</RadioButton>
-                                                            <RadioButton value="b">PENDING</RadioButton>
-                                                            <RadioButton value="c">CANCELED</RadioButton>
-                                                        </RadioSelect>
-                                                    </FIAT>
-                                                </FIAT_wrap2>
-                                            </OrderTradeWrap>
-                                        </Orderwrap>
-                                        <OrderTrade pending={this.state.status} cancelOrder={(id, side, type) => { this.cancelOrder(id, side, type) }} orderTradeData={this.state.orderTradeData} />
-                                        {(this.state.orderTradeLoader == true) ?
-                                            <Spin_single className="Full_spin">
-                                                <Spin size="small" />
-                                            </Spin_single>
-                                            : ""
+                                                </Left_div1>
+                                                :
+                                                <Loader color="#1990ff" width="50" height='50' />
                                         }
-                                    </Left_div2>
-                                </Col>
-                            </Row>
-                        </Row_wrap2>
-                    </ContainerContact>
-                </Grey_wrap_trade>
+                                    </div>
+                                </div>
+                                <div key="b">
+                                    <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
+                                        {this.state.userBalLoader == false ?
+                                            <Right_div1>
+                                                <Tabs_right defaultActiveKey="1" onChange={this.callback}>
+                                                    <TabPane tab="Market" key="1"><Market userBal={this.state.userBal} /></TabPane>
+                                                    <TabPane tab="Limit" key="2"><Limit userBal={this.state.userBal} /></TabPane>
+                                                    <TabPane tab="Stop-Limit" key="3"><StopLimit userBal={this.state.userBal} /></TabPane>
+                                                </Tabs_right>
+                                            </Right_div1>
+                                            :
+                                            <Loader color="#1990ff" width="50" height='50' />
+                                        }
+                                    </div>
+                                </div>
+                                <div key="c">
+                                    <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
+                                        <Left_div>
+                                            <Instru>ORDER BOOK BBC/BTC</Instru>
+                                            <BBC_wrap>
+                                                <BuyTable io={io} />
+                                            </BBC_wrap>
+
+                                            <BBC_wrap2>
+                                                <SellTable io={io} />
+                                            </BBC_wrap2>
+
+                                        </Left_div>
+                                    </div>
+                                </div>
+                                <div key="d" >
+                                    <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
+                                        <Right_div>
+                                            <DepthChart io={io} />
+                                        </Right_div>
+                                    </div>
+                                </div>
+                                <div key="e">
+                                    <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
+                                        <Left_div2>
+                                            <Instru>ORDER HISTORY</Instru>
+                                            <HistoryTable io={io} />
+                                        </Left_div2>
+                                    </div>
+                                </div>
+                                <div key="f">
+                                    <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
+                                        <Left_div2>
+                                            <Orderwrap>
+                                                <InstruOrder>MY ORDERS AND TRADES</InstruOrder>
+                                                <OrderTradeWrap >
+                                                    <Selectmonth labelInValue defaultValue={{ key: '1' }} style={{ width: 120, marginRight: "30px" }} onChange={this.handleChange}>
+                                                        <Option value="1">1 Month</Option>
+                                                        <Option value="3">3 Months</Option>
+                                                        <Option value="6">6 Months</Option>
+                                                        <Option value="12">12 Months</Option>
+                                                    </Selectmonth>
+                                                    <FIAT_wrap2>
+                                                        <FIAT>
+                                                            <RadioSelect onChange={this.statusChange} defaultValue="a" size="large" buttonStyle="solid" className="order-tab-select">
+                                                                <RadioButton value="a">COMPLETED</RadioButton>
+                                                                <RadioButton value="b">PENDING</RadioButton>
+                                                                <RadioButton value="c">CANCELED</RadioButton>
+                                                            </RadioSelect>
+                                                        </FIAT>
+                                                    </FIAT_wrap2>
+                                                </OrderTradeWrap>
+                                            </Orderwrap>
+                                            <OrderTrade pending={this.state.status} cancelOrder={(id, side, type) => { this.cancelOrder(id, side, type) }} orderTradeData={this.state.orderTradeData} />
+                                            {(this.state.orderTradeLoader == true) ?
+                                                <Spin_single className="Full_spin">
+                                                    <Spin size="small" />
+                                                </Spin_single>
+                                                : ""
+                                            }
+                                        </Left_div2>
+                                    </div>
+                                </div>
+                            </ResponsiveReactGridLayout>
+                        </Col >
+                    </Row >
+                </Grey_wrap_trade >
                 <CommonFooter />
-            </Contact_wrap>
+            </Contact_wrap >
         );
     }
 }

@@ -19,7 +19,7 @@ const BorderedHistoryWrap = styled(History_wrap)`
     margin-left:30px;
     margin-right:30px;
     border:1px solid #d8d8d8;
-
+    overflow-x:scroll;
     &::-webkit-scrollbar {
         width: 0.5em;
         height: 0.5em;
@@ -33,9 +33,7 @@ const BorderedHistoryWrap = styled(History_wrap)`
             background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
         }
      
-       
-       }
-    }
+
 `
 const SideType = styled.td`
     color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};

@@ -609,9 +609,9 @@ class Navigation extends Component {
                     <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
                 </Header_main>
                 {console.log(this.props)}
-                {(this.props.loader == true) ? <Spin_Ex className="Ex_spin">
+                {/* (this.props.loader == true) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
-                </Spin_Ex> : ""}
+                </Spin_Ex> : "" */}
             </div >
         );
     }

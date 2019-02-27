@@ -155,6 +155,7 @@ class Wallet extends Component {
         this.props.walletBal(this.props.isLoggedIn, currency);
     }
     render() {
+        let {profileDetails} = this.props;
         return (
             <Contact_wrap>
                 <LoggedNavigation />
@@ -162,7 +163,7 @@ class Wallet extends Component {
                     <ContainerContact>
                         <Header_wrap>
                             <MY_wallet>
-                                <span>MY WALLET</span>
+                                <span>{profileDetails!==""?(profileDetails.first_name+"'s"):""} WALLET</span>
                             </MY_wallet>
                             <SearchCoin>
                                 <Inputsearch
@@ -236,7 +237,8 @@ function mapStateToProps(state) {
         nowalletBalance: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData.nonBalanceWallet : null,
         allCoins: state.walletReducer.allCoinsData !== undefined ? state.walletReducer.allCoinsData : null,
         isLoggedIn: state.simpleReducer.isLoggedIn,
-        loader: state.simpleReducer.loader ? state.simpleReducer.loader : false
+        loader: state.simpleReducer.loader ? state.simpleReducer.loader : false,
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
     })
 }
 const mapDispatchToProps = dispatch => ({

@@ -1,4 +1,4 @@
-import { Row, Col, Tabs, Button, Table, Input, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio, Select } from 'antd';
+import { Row, Col, Tabs, Button, Table, Input, Switch, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio, Select } from 'antd';
 import styled from 'styled-components';
 import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
 
@@ -15,7 +15,6 @@ export const Row_wrap2 = styled.div`
 export const Left_div = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     padding-top:30px;
-    margin-right:30px;
     padding-bottom: 30px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
@@ -25,9 +24,23 @@ export const Left_div = styled.div`
         margin-right:0px;
     }
 `
+export const EditDiv = styled(Left_div)`
+    display:flex;
+    justify-content:center;
+    height:auto;
+    & .editText
+    {
+        color: black;
+    font-size: 14px;
+    font-family: "Open Sans";
+    font-weight: 600;
+    }
+`
+export const SwitchS = styled(Switch)`
+    margin-left:15px;
+`
 export const Left_div1 = styled(Left_div)`
     padding-top:30px;
-    margin-right:30px;
     padding-bottom: 30px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
@@ -105,7 +118,7 @@ export const FIAT_wrap2 = styled.div`
         background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
         color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
-    @media(max-width:596px)
+    @media(max-width:535px)
     {
         margin-top:20px;
     }
@@ -124,7 +137,13 @@ export const RadioSelect = styled(RadioGroup)`
         background-color:${props => props.theme.mode == "dark" ? "" : "#f5f6fa"};
         font-size:13px;
     }
-
+    @media(max-width:460px)
+    {
+        & .ant-radio-button-wrapper
+        {
+            padding: 0 4px;
+        }
+    }
 `
 export const Sect = styled(Button)`
     display:inline-block;
@@ -148,6 +167,10 @@ export const Right_div = styled.div`
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
     height:640px;
+    @media(max-width:991px)
+    {
+        margin-top:30px;
+    }
 `
 export const Right_div1 = styled(Right_div)`
     height:800px;
@@ -188,10 +211,36 @@ export const TableIns = styled(Table)`
     }
     @media(max-width:375px)
     {
+
         >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th
         {
             padding: 10px 12px;
         }
+        & .ant-table-tbody>tr>td
+        {
+            padding: 12px 12px ;
+        }
+    }
+    & .ant-table-tbody>tr>td
+    {
+        cursor:pointer;
+    }
+    & .ant-table-tbody>tr:hover>td
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : ""};
+    }
+    & .ant-table-placeholder
+    {
+        position: relative;
+        padding: 60px 16px;
+        background: none;
+        border-bottom: 0px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: ${props => props.theme.mode == "dark" ? "white" : ""};
+        z-index: 1;
+        font-family: "Open Sans";
     }
 `
 export const Tabs_right = styled(Tabs)`
@@ -199,6 +248,13 @@ export const Tabs_right = styled(Tabs)`
     {
         display: flex !important;
         justify-content:center !important;
+    }
+    @media(max-width:475px)
+    {
+        >.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav-animated>div
+        {
+            width:100%;
+        }
     }
 `
 
@@ -421,7 +477,21 @@ export const WrapDepth = styled.div`
 export const History_wrap = styled.div`
 
 `
+export const History_wrap1 = styled.div`
+    overflow-x:scroll;
+    &::-webkit-scrollbar {
+    width: 0.5em;
+    height: 0.5em;
+    }
 
+    &::-webkit-scrollbar-thumb {
+    background-color: ${props => props.theme.mode == 'dark' ? '#041624' : ''};
+    border-radius: 3px;
+    }
+    &::-webkit-scrollbar-track{
+        background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
+    }
+`
 export const CustomTable = styled.table`
     width:100%;
     table-layout: fixed;

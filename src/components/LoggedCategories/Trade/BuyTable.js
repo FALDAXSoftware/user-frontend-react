@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import { Buy_table, BBC, Total_BTC, History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
+import { Buy_table, BBC, Total_BTC, History_wrap1, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 import { Scrollbars } from 'react-custom-scrollbars';
 import { globalVariables } from "../../../Globals";
 import { Spin } from 'antd';
@@ -19,12 +19,14 @@ const OTwrap2 = styled(OTwrap)`
     }
 `
 const NDF = styled.p`
-    text-align : center;
-    font-weight: 600;
-    font-size:17px;
-    color:black; 
     margin-top:30px;
-    font-family:Open Sans;
+        background: none;
+        border-bottom: 0px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: ${props => props.theme.mode == "dark" ? "white" : ""};
+        font-family: "Open Sans";
 `
 class BuyTable extends Component {
     constructor(props) {
@@ -157,7 +159,7 @@ class BuyTable extends Component {
                 <BBC>BUYING {this.props.cryptoPair.crypto}</BBC>
                 <Total_BTC>Total: {this.state.lastsum} {this.props.cryptoPair.crypto}</Total_BTC>
                 <Buy_table>
-                    <History_wrap>
+                    <History_wrap1>
                         <OTwrap2>
                             <div className="tbl-header">
                                 <TableHeader cellpadding="10px" cellspacing="0" border="0">
@@ -199,7 +201,7 @@ class BuyTable extends Component {
                                 </Scrollbars>
                             </div>
                         </OTwrap2>
-                    </History_wrap>
+                    </History_wrap1>
                 </Buy_table>
                 {(this.state.Loader == true) ?
                     <Spin_single className="Single_spin">
