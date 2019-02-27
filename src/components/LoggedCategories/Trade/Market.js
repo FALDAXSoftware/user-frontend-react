@@ -61,6 +61,7 @@ class Market extends Component {
         let name = e.target.name;
         let value = e.target.value;
         obj[name] = value;
+        console.log(name, value)
         if (name == "side") {
             obj["amount"] = 0;
             obj["total"] = 0;
@@ -117,7 +118,7 @@ class Market extends Component {
                 body: JSON.stringify(params)
             }).then(response => response.json())
                 .then((responseData) => {
-                    this.setState({ Loader: false });
+                    this.setState({ Loader: false, total: 0, amount: 0 });
                     if (responseData.status == 200) {
 
                         self.openNotificationWithIcon('success', 'Success', responseData.message);

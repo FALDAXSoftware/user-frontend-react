@@ -1,4 +1,4 @@
-import { Row, Col, Tabs, Button, Table, Input, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio, Select } from 'antd';
+import { Row, Col, Tabs, Button, Table, Input, Switch, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio, Select } from 'antd';
 import styled from 'styled-components';
 import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
 
@@ -15,7 +15,6 @@ export const Row_wrap2 = styled.div`
 export const Left_div = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     padding-top:30px;
-    margin-right:30px;
     padding-bottom: 30px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
@@ -25,9 +24,23 @@ export const Left_div = styled.div`
         margin-right:0px;
     }
 `
+export const EditDiv = styled(Left_div)`
+    display:flex;
+    justify-content:center;
+    height:auto;
+    & .editText
+    {
+        color: black;
+    font-size: 14px;
+    font-family: "Open Sans";
+    font-weight: 600;
+    }
+`
+export const SwitchS = styled(Switch)`
+    margin-left:15px;
+`
 export const Left_div1 = styled(Left_div)`
     padding-top:30px;
-    margin-right:30px;
     padding-bottom: 30px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;

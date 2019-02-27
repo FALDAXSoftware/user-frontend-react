@@ -125,12 +125,25 @@ class TableofCoin extends React.Component {
                                     return (
                                         <Col1>
                                             <td style={{ textAlign: "left" }}>
+                                            <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
                                                 <Bit_img src={img} />
                                                 <Bit_text><Bit>{tableData[index].coin_name}</Bit><Bit_price>{parseFloat(tableData[index].balance).toFixed(4)} {tableData[index].coin_code}</Bit_price></Bit_text>
+                                                </Link>
                                             </td>
-                                            <td>{tableData[index].USD !== undefined ? <Price>{me.state.curr1} {parseFloat(parseFloat(tableData[index].USD) * parseFloat(tableData[index].balance)).toFixed(4)}</Price> : <Price>-</Price>}</td>
-                                            <td>{tableData[index].EUR !== undefined ? <Price>{me.state.curr2} {parseFloat(parseFloat(tableData[index].EUR) * parseFloat(tableData[index].balance)).toFixed(4)} </Price> : <Price>-</Price>}</td>
-                                            <td>{tableData[index].INR !== undefined ? <Price><span>{me.state.curr3}</span> {parseFloat(parseFloat(tableData[index].INR) * parseFloat(tableData[index].balance)).toFixed(4)} </Price> : <Price>-</Price>}</td>
+                                            <td>
+                                            <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
+                                            {tableData[index].USD !== undefined ? <Price>{me.state.curr1} {parseFloat(parseFloat(tableData[index].USD) * parseFloat(tableData[index].balance)).toFixed(4)}</Price> : <Price>-</Price>}
+                                            </Link>
+                                            </td>
+                                            <td>
+                                            <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
+                                            {tableData[index].EUR !== undefined ? <Price>{me.state.curr2} {parseFloat(parseFloat(tableData[index].EUR) * parseFloat(tableData[index].balance)).toFixed(4)} </Price> : <Price>-</Price>}
+                                            </Link>
+                                            </td>
+                                            <td><Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
+                                            {tableData[index].INR !== undefined ? <Price><span>{me.state.curr3}</span> {parseFloat(parseFloat(tableData[index].INR) * parseFloat(tableData[index].balance)).toFixed(4)} </Price> : <Price>-</Price>}
+                                            </Link>
+                                            </td>
                                             <td>
                                                 <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
                                                     <Icon_wrap>
