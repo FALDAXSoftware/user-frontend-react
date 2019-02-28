@@ -53,6 +53,8 @@ class BuyTable extends Component {
     buyTableData() {
         let io = this.props.io
         io.sails.url = APP_URL;
+
+        this.props.loaderfunc(true);
         this.setState({ loader: true });
         var URL;
         if (this.props.cryptoPair.prevRoom !== undefined && Object.keys(this.props.cryptoPair.prevRoom).length > 0) {
@@ -129,6 +131,7 @@ class BuyTable extends Component {
             }
         }
         console.log(final_result, preArr)
+        this.props.loaderfunc(false);
         this.setState({
             loader: false,
             data: rows,

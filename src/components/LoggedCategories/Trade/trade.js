@@ -15,9 +15,8 @@ import CommonFooter from "../../Landing/Footers/Footer_home";
 import Market from "./Market";
 import Limit from "./Limit";
 import StopLimit from "./StopLimit";
-import BuyTable from './BuyTable';
-import SellTable from './SellTable';
-import HistoryTable from './HistoryTable';
+import BuySell from './BuySell';
+import OrderHIstory from './orderHistory'
 import DepthChart from './DepthChart';
 import OrderTrade from './OrderTrade';
 import { Container } from '../../../styled-components/homepage/style';
@@ -123,7 +122,9 @@ class Trade extends Component {
             searchedInstu: [],
             userBal: {},
             insLoader: false,
-            userBalLoader: false
+            userBalLoader: false,
+            buySellLoader: false,
+            hisLoader: false,
         };
         io = this.props.io;
         // io.sails.url = API_URL;
@@ -410,6 +411,13 @@ class Trade extends Component {
         console.log("HEYY BUDDY DOUBLE")
         var newWindow = window.open("localhost:3000/trade", "", "width=300, height=200");
     }
+    buySellLoaderFunc(loader) {
+        this.setState({ buySellLoader: loader })
+    }
+    hisFunc(loader) {
+        console.log(loader)
+        this.setState({ hisLoader: loader });
+    }
     render() {
         var self = this;
         var layouts = {
@@ -468,7 +476,7 @@ class Trade extends Component {
                     <Row>
                         <Col>
                             <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
-                                <Select defaultValue="lucy" style={{ width: 120 }} >
+                                <Select defaultValue="edit" style={{ width: 320 }} >
                                     <Option value="jack">Jack</Option>
                                     <Option value="edit">Edit Layout</Option>
                                 </Select>
@@ -485,72 +493,62 @@ class Trade extends Component {
                                 <div key="a">
                                     <div onDoubleClick={this.popWindow.bind(this)} style={{ height: "100%", width: "100%", overflow: "auto" }}>
                                         {
-                                            this.state.insLoader == false ?
-                                                <Left_div1>
-                                                    <Instru>INSTRUMENTS</Instru>
-                                                    {this.state.InsData.length > 0 ? <SearchInput
-                                                        onChange={(e) => this.searchInstu(e)}
-                                                        style={{ width: 200 }}
-                                                    /> : ""}
-                                                    <FIAT_wrap>
-                                                        <FIAT>
-                                                            <RadioSelect value={this.state.InsCurrency} size="large" buttonStyle="solid" onChange={this.onInsChange}>
-                                                                <RadioButton value="BTC">BTC</RadioButton>
-                                                                <RadioButton value="XRP">XRP</RadioButton>
-                                                            </RadioSelect>
-                                                        </FIAT>
-                                                    </FIAT_wrap>
-                                                    <InstruTable>
-                                                        <TableIns
-                                                            InsCurrency onRow={(record, rowIndex) => {
-                                                                return {
-                                                                    onClick: (event) => { self.currencyPair(record.name) },       // click row
-                                                                };
-                                                            }}
-                                                            pagination={false} columns={columns} dataSource={this.state.searchedInstu.length == 0 ? this.state.InsData : this.state.searchedInstu} onChange={this.onChange} />
-                                                    </InstruTable>
-                                                    {(this.state.insLoader == true) ?
-                                                        <Spin_single className="Single_spin">
-                                                            <Spin size="small" />
-                                                        </Spin_single>
-                                                        : ""
-                                                    }
+                                            this.state.insLoader == true ?
 
-
-                                                </Left_div1>
-                                                :
                                                 <Loader color="#1990ff" width="50" height='50' />
+                                                : ""
                                         }
+                                        <Left_div1>
+                                            <Instru>INSTRUMENTS</Instru>
+                                            {this.state.InsData.length > 0 ? <SearchInput
+                                                onChange={(e) => this.searchInstu(e)}
+                                                style={{ width: 200 }}
+                                            /> : ""}
+                                            <FIAT_wrap>
+                                                <FIAT>
+                                                    <RadioSelect value={this.state.InsCurrency} size="large" buttonStyle="solid" onChange={this.onInsChange}>
+                                                        <RadioButton value="BTC">BTC</RadioButton>
+                                                        <RadioButton value="XRP">XRP</RadioButton>
+                                                    </RadioSelect>
+                                                </FIAT>
+                                            </FIAT_wrap>
+                                            <InstruTable>
+                                                <TableIns
+                                                    InsCurrency onRow={(record, rowIndex) => {
+                                                        return {
+                                                            onClick: (event) => { self.currencyPair(record.name) },       // click row
+                                                        };
+                                                    }}
+                                                    pagination={false} columns={columns} dataSource={this.state.searchedInstu.length == 0 ? this.state.InsData : this.state.searchedInstu} onChange={this.onChange} />
+                                            </InstruTable>
+                                        </Left_div1>
+
                                     </div>
                                 </div>
                                 <div key="b">
                                     <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
-                                        {this.state.userBalLoader == false ?
-                                            <Right_div1>
-                                                <Tabs_right defaultActiveKey="1" onChange={this.callback}>
-                                                    <TabPane tab="Market" key="1"><Market userBal={this.state.userBal} /></TabPane>
-                                                    <TabPane tab="Limit" key="2"><Limit userBal={this.state.userBal} /></TabPane>
-                                                    <TabPane tab="Stop-Limit" key="3"><StopLimit userBal={this.state.userBal} /></TabPane>
-                                                </Tabs_right>
-                                            </Right_div1>
-                                            :
+                                        {this.state.userBalLoader == true ?
                                             <Loader color="#1990ff" width="50" height='50' />
+                                            : ""
                                         }
+                                        <Right_div1>
+                                            <Tabs_right defaultActiveKey="1" onChange={this.callback}>
+                                                <TabPane tab="Market" key="1"><Market userBal={this.state.userBal} /></TabPane>
+                                                <TabPane tab="Limit" key="2"><Limit userBal={this.state.userBal} /></TabPane>
+                                                <TabPane tab="Stop-Limit" key="3"><StopLimit userBal={this.state.userBal} /></TabPane>
+                                            </Tabs_right>
+                                        </Right_div1>
+
                                     </div>
                                 </div>
                                 <div key="c">
                                     <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
-                                        <Left_div>
-                                            <Instru>ORDER BOOK BBC/BTC</Instru>
-                                            <BBC_wrap>
-                                                <BuyTable io={io} />
-                                            </BBC_wrap>
-
-                                            <BBC_wrap2>
-                                                <SellTable io={io} />
-                                            </BBC_wrap2>
-
-                                        </Left_div>
+                                        {this.state.buySellLoader == true
+                                            ?
+                                            <Loader color="#1990ff" width="50" height='50' />
+                                            : ""
+                                        }
+                                        <BuySell buySellLoader={(loader) => { this.buySellLoaderFunc(loader) }} io={io} />
                                     </div>
                                 </div>
                                 <div key="d" >
@@ -562,14 +560,20 @@ class Trade extends Component {
                                 </div>
                                 <div key="e">
                                     <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
-                                        <Left_div2>
-                                            <Instru>ORDER HISTORY</Instru>
-                                            <HistoryTable io={io} />
-                                        </Left_div2>
+                                        {this.state.hisLoader == true
+                                            ?
+                                            <Loader color="#1990ff" width="50" height='50' />
+                                            : ""
+                                        }
+                                        <OrderHIstory io={io} hisFunc={(loader) => this.hisFunc(loader)} />
                                     </div>
                                 </div>
                                 <div key="f">
                                     <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
+                                        {this.state.orderTradeLoader == true ?
+                                            <Loader color="#1990ff" width="50" height='50' />
+                                            : ""
+                                        }
                                         <Left_div2>
                                             <Orderwrap>
                                                 <InstruOrder>MY ORDERS AND TRADES</InstruOrder>
@@ -592,12 +596,6 @@ class Trade extends Component {
                                                 </OrderTradeWrap>
                                             </Orderwrap>
                                             <OrderTrade pending={this.state.status} cancelOrder={(id, side, type) => { this.cancelOrder(id, side, type) }} orderTradeData={this.state.orderTradeData} />
-                                            {(this.state.orderTradeLoader == true) ?
-                                                <Spin_single className="Full_spin">
-                                                    <Spin size="small" />
-                                                </Spin_single>
-                                                : ""
-                                            }
                                         </Left_div2>
                                     </div>
                                 </div>

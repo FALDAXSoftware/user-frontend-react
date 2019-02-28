@@ -53,12 +53,13 @@ class HistoryTable extends Component {
     }
     componentDidMount() {
         var self = this;
+        console.log("hay hay")
         self.historyData();
         io.socket.on('instrumentUpdate', (data) => {
             self.updateData(data)
         });
     }
-    componentWillReceiveProps(props, newProps) {
+    /* componentWillReceiveProps(props, newProps) {
         var self = this;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -72,9 +73,10 @@ class HistoryTable extends Component {
                 })
             }
         }
-    }
+    } */
     historyData() {
         io = this.props.io
+        this.props.hisFunc(true);
         this.setState({ loader: true })
         io.sails.url = APP_URL;
         var URL;
@@ -96,12 +98,14 @@ class HistoryTable extends Component {
 
             if (body.status == 200) {
                 let res = body.data;
-
+                console.log(res)
+                this.props.hisFunc(false);
                 this.updateData(res);
             }
         });
         io.socket.on('tradeHistoryUpdate', (data) => {
             this.updateData(data);
+
         });
     }
     updateData(data) {
@@ -116,10 +120,12 @@ class HistoryTable extends Component {
                 total: element.quantity * element.fill_price,
             });
         }
+
         this.setState({
             data: rows,
             loader: false
         });
+
     }
     render() {
         var me = this;
@@ -172,12 +178,6 @@ class HistoryTable extends Component {
                         </Scrollbars>
                     </div>
                 </OTwrap>
-                {(this.state.loader == true) ?
-                    <Spin_single className="Full_spin">
-                        <Spin size="small" />
-                    </Spin_single>
-                    : ""
-                }
             </BorderedHistoryWrap>
         )
     }
