@@ -4,6 +4,10 @@ import styled from 'styled-components';
 const LoaderDiv = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     height:100%;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 4;
     >div
     {
         display:flex;

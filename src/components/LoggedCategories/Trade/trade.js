@@ -419,6 +419,9 @@ class Trade extends Component {
         console.log(loader)
         this.setState({ hisLoader: loader });
     }
+    depthLoaderFunc(loader) {
+        this.setState({ depthLoader: loader });
+    }
     render() {
         var self = this;
         var layouts = {
@@ -555,8 +558,13 @@ class Trade extends Component {
                                 </div>
                                 <div key="d" >
                                     <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
+                                        {
+                                            this.state.depthLoader == true ?
+                                                <Loader color="#1990ff" width="50" height='50' />
+                                                : ""
+                                        }
                                         <Right_div>
-                                            <DepthChart io={io} />
+                                            <DepthChart depthLoaderFunc={(loader) => this.depthLoaderFunc(loader)} io={io} />
                                         </Right_div>
                                     </div>
                                 </div>

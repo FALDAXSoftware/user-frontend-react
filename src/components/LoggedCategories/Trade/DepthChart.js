@@ -27,7 +27,8 @@ class DepthChart extends Component {
     }
 
     componentDidMount() {
-        this.setState({ loader: true })
+
+        this.props.depthLoaderFunc(true);
         let URL = "/socket/get-depth-chart-data?room=" + this.state.crypto + "-" + this.state.currency
         io.socket.request({
             method: 'GET',
@@ -100,6 +101,8 @@ class DepthChart extends Component {
             self.forceUpdate();
             self.refs.chart.chartInstance.update();
         });
+
+        this.props.depthLoaderFunc(false);
         // console.log(self.refs.chart.chartInstance);
         // let data1 = self.refs.chart.chartInstance.data.datasets[0].data;
         // let data2 = self.refs.chart.chartInstance.data.datasets[1].data
