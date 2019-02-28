@@ -30,13 +30,14 @@ import {
     Spin_single
 } from "../../../styled-components/loggedStyle/dashStyle"
 import { globalVariables } from '../../../Globals';
+import TraddingViewChart from "../../TraddingViewChart";
 
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 let { API_URL } = globalVariables;
 /* var socketIOClient = require('socket.io-client');
-        io.sails.url = API_URL;
+io.sails.url = API_URL;
 var sailsIOClient = require('sails.io.js');
 let io = sailsIOClient(socketIOClient); */
 const Search = Input.Search;
@@ -44,7 +45,7 @@ const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"} ;
+    background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
     border-radius:5px;
     max-width:1170px;
     padding-bottom: 30px;
@@ -470,7 +471,8 @@ class Trade extends Component {
                 <Grey_wrap_trade>
                     <Row>
                         <Col>
-                            <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} />
+                            {/* <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} /> */}
+                            <TraddingViewChart />
                         </Col>
                     </Row>
                     <Row>
