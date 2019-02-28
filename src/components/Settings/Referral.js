@@ -197,7 +197,7 @@ class Referral extends Component {
             })
             .catch(error => { /* console.log(error) */ })
         if (this.props.profileDetails.referral_code !== undefined) {
-            this.setState({ value: "https//dev.faldax.com/signup?refID="+this.props.profileDetails.referral_code })
+            this.setState({ value: "https//dev.faldax.com/signup?refID=" + this.props.profileDetails.referral_code })
         }
     }
 
@@ -212,8 +212,8 @@ class Referral extends Component {
         // Copy to clipboard example
         document.querySelectorAll(".ant-input-search-button")[0].onclick = function () {
             // Select the content
-            if(document.querySelectorAll(".INPUT_search > input")[0]!==undefined)
-            document.querySelectorAll(".INPUT_search > input")[0].select();
+            if (document.querySelectorAll(".INPUT_search > input")[0] !== undefined)
+                document.querySelectorAll(".INPUT_search > input")[0].select();
             // Copy to the clipboard
             document.execCommand('copy');
         };
@@ -243,10 +243,10 @@ class Referral extends Component {
                                 </div>
                             </CopyToClipboard>
                         </Ref_leftcol>
-                        {/* <Ref_rightcol sm={24} md={6}>
+                        <Ref_rightcol sm={24} md={6}>
                             <Right_text>Total Earned</Right_text>
                             <Right_value>3.0850 BTC</Right_value>
-                        </Ref_rightcol> */}
+                        </Ref_rightcol>
                     </Row>
                 </Ref_div>
                 <Ref_acc>
