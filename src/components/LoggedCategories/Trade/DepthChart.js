@@ -27,7 +27,7 @@ class DepthChart extends Component {
     }
 
     componentDidMount() {
-
+        console.log("DEPTH DID MOUNT")
         this.props.depthLoaderFunc(true);
         let URL = "/socket/get-depth-chart-data?room=" + this.state.crypto + "-" + this.state.currency
         io.socket.request({

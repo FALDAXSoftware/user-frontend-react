@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
-import { Row, Col, Tabs, Input, Radio, Select, Spin, notification, Switch, Icon } from 'antd';
+import { Row, Col, Tabs, Input, Radio, Select, notification, Icon } from 'antd';
 import styled from 'styled-components';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faYoutube, faTwitter, faLinkedinIn, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { widget } from '../../../charting_library/charting_library.min';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css'
@@ -23,7 +26,7 @@ import { Container } from '../../../styled-components/homepage/style';
 import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
 import { cryptoCurrency } from '../../../Actions/LoggedCat/tradeActions'
 import {
-    Row_wrap, Left_div, EditDiv, SwitchS, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
+    Row_wrap, Left_div, EditDiv, SwitchS, Layout, SaveButton, EditButton, TVBar, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
     FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder, Selectmonth
 } from "../../../styled-components/loggedStyle/tradeStyle";
 import {
@@ -126,6 +129,8 @@ class Trade extends Component {
             userBalLoader: false,
             buySellLoader: false,
             hisLoader: false,
+            editState: false,
+            saveState: true
         };
         io = this.props.io;
         // io.sails.url = API_URL;
@@ -422,6 +427,18 @@ class Trade extends Component {
     depthLoaderFunc(loader) {
         this.setState({ depthLoader: loader });
     }
+    editLayout() {
+        if (this.state.editState == false)
+            this.setState({ editState: true, saveState: false });
+        else
+            this.setState({ editState: false });
+    }
+    saveLayout() {
+        if (this.state.saveState == false)
+            this.setState({ saveState: true, editState: false });
+        else
+            this.setState({ saveState: false });
+    }
     render() {
         var self = this;
         var layouts = {
@@ -474,25 +491,32 @@ class Trade extends Component {
                 <Grey_wrap_trade>
                     <Row>
                         <Col>
-                            {/* <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} /> */}
-                            <TraddingViewChart />
+                            <Layout>
+                                <EditButton onClick={this.editLayout.bind(this)} disabled={this.state.editState}>Edit Layout</EditButton>
+                                <SaveButton onClick={this.saveLayout.bind(this)} disabled={this.state.saveState}>Save</SaveButton>
+                            </Layout>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
-                                <Select defaultValue="edit" style={{ width: 320 }} >
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="edit">Edit Layout</Option>
-                                </Select>
+                            {/* <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} /> */}
+                            <div style={{ marginLeft:"10px",marginRight:"10px",    backgroundColor:"#eceff1" }}>
+                                <TVBar>
+                                    <Icon type="arrows-alt" style={{ fontSize: '30px' }} />
+                                </TVBar>
+                                <TraddingViewChart />
                             </div>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <ResponsiveReactGridLayout className="layout" layouts={layouts}
+                            <ResponsiveReactGridLayout
+                                className="layout"
+                                layouts={layouts}
                                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                                 cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                                isDraggable={this.state.editState}
+                                isResizable={this.state.editState}
                             /* onLayoutChange={(layout: Layout) => this.onChangeLay(layout)} */
                             >
                                 <div key="a">

@@ -11,7 +11,24 @@ export const Row_wrap = styled.div`
 export const Row_wrap2 = styled.div`
     margin-top:25px;
 `
-
+export const Layout = styled.div`
+display: flex;
+justify-content: center;
+margin-bottom: 15px;
+margin-top: 40px;
+`
+export const SaveButton = styled(Button)`
+    margin-left:15px;
+`
+export const EditButton = styled(Button)`
+    margin-right:15px;
+`
+export const TVBar = styled.div`
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    background-color:white;
+`
 export const Left_div = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     padding-top:30px;
