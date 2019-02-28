@@ -178,7 +178,7 @@ class DepthChart extends Component {
                 <Row>
                     <Col xl={24}>
                         <Chart1_wrap id="depth-chart1">
-                            <Line data={graphData} height={300} options={{
+                            <Line data={graphData} options={{
                                 legend: {
                                     display: false
                                 },

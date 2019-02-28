@@ -124,7 +124,8 @@ class Trade extends Component {
             searchedInstu: [],
             userBal: {},
             insLoader: false,
-            userBalLoader: false
+            userBalLoader: false,
+            instrumentTableHeight: 100
         };
         io = this.props.io;
         // io.sails.url = API_URL;
@@ -134,6 +135,7 @@ class Trade extends Component {
         this.onInsChange = this.onInsChange.bind(this);
         this.getInstrumentData = this.getInstrumentData.bind(this);
         this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
+        this.onLayoutChange = this.onLayoutChange.bind(this);
     }
     componentWillReceiveProps(props, newProps) {
         var self = this;
@@ -193,7 +195,7 @@ class Trade extends Component {
             self.props.cryptoCurrency(cryptoPair);
             self.getInstrumentData();
         });
-    } io
+    }
     getInstrumentData() {
         var self = this;
         console.log("get instrument data");
@@ -404,8 +406,22 @@ class Trade extends Component {
             this.tvWidget = null;
         }
     } */
-    onChangeLay(layout) {
-        console.log(layout)
+    onLayoutChange(layout, oldItem, newItem) {
+        let self = this;
+        if (oldItem.i == "instruments") {
+            if (oldItem.h != newItem.h) {
+                console.log(newItem);
+                let newHeight = 0;
+                if (newItem.h == 2) {
+                    newHeight = 100;
+                } else {
+                    newHeight = 100 + (160 * (newItem - 2))
+                }
+                self.setState({
+                    instrumentTableHeight: newHeight
+                });
+            }
+        }
     }
     popWindow() {
         console.log("HEYY BUDDY DOUBLE")
@@ -415,24 +431,24 @@ class Trade extends Component {
         var self = this;
         var layouts = {
             lg: [
-                { i: 'a', x: 0, y: 0, w: 4, h: 2, minW: 4 },
-                { i: 'b', x: 4, y: 0, w: 4, h: 2, minW: 4, static: true },
+                { i: 'instruments', x: 0, y: 0, w: 4, h: 2, minW: 4, minH: 2 },
+                { i: 'tradeAction', x: 4, y: 0, w: 4, h: 2, minW: 4, minH: 2 },
                 { i: 'c', x: 8, y: 0, w: 4, h: 2, minW: 4 },
                 { i: 'd', x: 0, y: 1, w: 12, h: 2, minW: 4 },
                 { i: 'e', x: 0, y: 2, w: 12, h: 2, minW: 4 },
                 { i: 'f', x: 0, y: 3, w: 12, h: 2, minW: 4 }
             ],
             md: [
-                { i: 'a', x: 0, y: 0, w: 5, h: 2, minW: 5 },
-                { i: 'b', x: 5, y: 0, w: 5, h: 2, minW: 5 },
+                { i: 'instruments', x: 0, y: 0, w: 5, h: 2, minW: 5 },
+                { i: 'tradeAction', x: 5, y: 0, w: 5, h: 2, minW: 5 },
                 { i: 'c', x: 0, y: 1, w: 5, h: 2, minW: 5 },
                 { i: 'd', x: 5, y: 1, w: 5, h: 2, minW: 5 },
                 { i: 'e', x: 0, y: 2, w: 10, h: 2, minW: 5 },
                 { i: 'f', x: 0, y: 3, w: 10, h: 2, minW: 5 }
             ],
             sm: [
-                { i: 'a', x: 0, y: 0, w: 6, h: 2, minW: 6 },
-                { i: 'b', x: 0, y: 1, w: 6, h: 2, minW: 6 },
+                { i: 'instruments', x: 0, y: 0, w: 6, h: 2, minW: 6 },
+                { i: 'tradeAction', x: 0, y: 1, w: 6, h: 2, minW: 6 },
                 { i: 'c', x: 0, y: 2, w: 6, h: 2, minW: 6 },
                 { i: 'd', x: 0, y: 3, w: 6, h: 2, minW: 6 },
                 { i: 'e', x: 0, y: 4, w: 6, h: 2, minW: 6 },
@@ -440,16 +456,16 @@ class Trade extends Component {
             ],
 
             xs: [
-                { i: 'a', x: 0, y: 0, w: 4, h: 2, minW: 4 },
-                { i: 'b', x: 0, y: 1, w: 4, h: 2, minW: 4 },
+                { i: 'instruments', x: 0, y: 0, w: 4, h: 2, minW: 4 },
+                { i: 'tradeAction', x: 0, y: 1, w: 4, h: 2, minW: 4 },
                 { i: 'c', x: 0, y: 2, w: 4, h: 2, minW: 4 },
                 { i: 'd', x: 0, y: 3, w: 4, h: 2, minW: 4 },
                 { i: 'e', x: 0, y: 4, w: 4, h: 2, minW: 4 },
                 { i: 'f', x: 0, y: 5, w: 4, h: 2, minW: 4 }
             ],
             xxs: [
-                { i: 'a', x: 0, y: 0, w: 2, h: 2, minW: 2 },
-                { i: 'b', x: 0, y: 1, w: 2, h: 2, minW: 2 },
+                { i: 'instruments', x: 0, y: 0, w: 2, h: 2, minW: 2 },
+                { i: 'tradeAction', x: 0, y: 1, w: 2, h: 2, minW: 2 },
                 { i: 'c', x: 0, y: 2, w: 2, h: 2, minW: 2 },
                 { i: 'd', x: 0, y: 3, w: 2, h: 2, minW: 2 },
                 { i: 'e', x: 0, y: 4, w: 2, h: 2, minW: 2 },
@@ -482,9 +498,8 @@ class Trade extends Component {
                             <ResponsiveReactGridLayout className="layout" layouts={layouts}
                                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                                 cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                            /* onLayoutChange={(layout: Layout) => this.onChangeLay(layout)} */
-                            >
-                                <div key="a">
+                                onResize={this.onLayoutChange}>
+                                <div key="instruments" >
                                     <div onDoubleClick={this.popWindow.bind(this)} style={{ height: "100%", width: "100%", overflow: "auto" }}>
                                         {
                                             this.state.insLoader == false ?
@@ -509,7 +524,7 @@ class Trade extends Component {
                                                                     onClick: (event) => { self.currencyPair(record.name) },       // click row
                                                                 };
                                                             }}
-                                                            pagination={false} columns={columns} dataSource={this.state.searchedInstu.length == 0 ? this.state.InsData : this.state.searchedInstu} onChange={this.onChange} />
+                                                            pagination={false} columns={columns} dataSource={this.state.searchedInstu.length == 0 ? this.state.InsData : this.state.searchedInstu} onChange={this.onChange} scroll={{ y: self.state.instrumentTableHeight }} />
                                                     </InstruTable>
                                                     {(this.state.insLoader == true) ?
                                                         <Spin_single className="Single_spin">
@@ -525,11 +540,11 @@ class Trade extends Component {
                                         }
                                     </div>
                                 </div>
-                                <div key="b">
-                                    <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
+                                <div key="tradeAction">
+                                    <div style={{ height: "100%", width: "100%" }}>
                                         {this.state.userBalLoader == false ?
                                             <Right_div1>
-                                                <Tabs_right defaultActiveKey="1" onChange={this.callback}>
+                                                <Tabs_right defaultActiveKey="1" onChange={this.callback} className="tardeActionCard">
                                                     <TabPane tab="Market" key="1"><Market userBal={this.state.userBal} /></TabPane>
                                                     <TabPane tab="Limit" key="2"><Limit userBal={this.state.userBal} /></TabPane>
                                                     <TabPane tab="Stop-Limit" key="3"><StopLimit userBal={this.state.userBal} /></TabPane>

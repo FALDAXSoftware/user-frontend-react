@@ -41,10 +41,10 @@ export const SwitchS = styled(Switch)`
 `
 export const Left_div1 = styled(Left_div)`
     padding-top:30px;
-    padding-bottom: 30px;
+    padding-bottom: 8px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
-    height:800px;
+    height:100%;
     @media(max-width:575px)
     {
         height:auto;
@@ -173,7 +173,7 @@ export const Right_div = styled.div`
     }
 `
 export const Right_div1 = styled(Right_div)`
-    height:800px;
+    height:100%;
     @media(max-width:575px)
     {
         height:auto;
@@ -244,6 +244,7 @@ export const TableIns = styled(Table)`
     }
 `
 export const Tabs_right = styled(Tabs)`
+
     >.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav-animated
     {
         display: flex !important;
