@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
-import { Row, Col, Tabs, Input, Radio, Select, notification, Icon, Menu } from 'antd';
+import { Row, Col, Tabs, Input, Radio, Select, notification, Icon, Menu,Tooltip } from 'antd';
 import styled from 'styled-components';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,8 +26,8 @@ import { Container } from '../../../styled-components/homepage/style';
 import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
 import { cryptoCurrency } from '../../../Actions/LoggedCat/tradeActions'
 import {
-    Row_wrap, Left_div, EditDiv, SwitchS, Layout, SaveButton, EditButton, TVBar, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
-    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder, Selectmonth, SettingDropdown
+    Row_wrap, Left_div, EditDiv, SwitchS, Layout, SaveButton, EditButton, MainTV, TVBar, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
+    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder, Selectmonth,SettingDropdown
 } from "../../../styled-components/loggedStyle/tradeStyle";
 import {
     Spin_single
@@ -38,7 +38,7 @@ import TraddingViewChart from "../../TraddingViewChart";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-let { API_URL } = globalVariables;
+let { API_URL, tvChartURL } = globalVariables;
 /* var socketIOClient = require('socket.io-client');
 io.sails.url = API_URL;
 var sailsIOClient = require('sails.io.js');
@@ -565,12 +565,19 @@ class Trade extends Component {
                     <Row>
                         <Col>
                             {/* <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} /> */}
-                            <div style={{ marginLeft: "10px", marginRight: "10px", backgroundColor: "#eceff1" }}>
+                            <MainTV >
                                 <TVBar>
-                                    <Icon type="arrows-alt" style={{ fontSize: '30px' }} />
+                                    <div>
+                                        <span>{this.state.crypto}-{this.state.currency}</span>
+                                    </div>
+                                    <div onClick={() => { window.open(tvChartURL, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes'); }} style={{ marginLeft: "auto" }}>
+                                        <Tooltip placement="topLeft" title={"Chart in New Window"}>
+                                            <Icon type="select" style={{ fontSize: '26px' }} />
+                                        </Tooltip>
+                                    </div>
                                 </TVBar>
-                                <TraddingViewChart />
-                            </div>
+                                <TraddingViewChart theme={this.props.theme} />
+                            </MainTV>
                         </Col>
                     </Row>
                     <Row>

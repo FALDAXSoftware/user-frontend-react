@@ -25,6 +25,7 @@ import ApplyJob from './components/Landing_categories/ApplyJob'
 import Policy from './components/Landing_categories/Policy'
 import News from './components/Landing_categories/News';
 import ThankYou from "./shared-components/thank_you";
+import Chart from "../src/components/TraddingViewChart"
 // import dotenv from 'dotenv';
 
 // dotenv.config();
@@ -147,6 +148,8 @@ class App extends Component {
                                 <Route path="/policy" exact title='policy' component={Policy} />
                                 <Route path="/news" exact title='News' component={News} />
                                 <Route path="/thank-you" exact title='Thank You' component={ThankYou} />
+
+                                <Route path="/Chart" exact title='Trading View' component={Chart} />
                                 <RestrictedRoute
                                     path="/"
                                     component={AppRouter}

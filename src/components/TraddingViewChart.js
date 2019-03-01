@@ -1,7 +1,17 @@
 import React from "react";
 import { widget } from "../charting_library/charting_library.min";
 import { globalVariables } from "../Globals";
+
+import styled from 'styled-components';
 const API_URL = globalVariables.API_URL;
+
+const TVChart = styled.div`
+    margin-top:0px;
+  height: calc(100vh - 150px);
+
+`
+
+
 class TraddingViewChart extends React.Component {
     static defaultProps = {
         symbol: 'XRP-BTC',
@@ -51,6 +61,7 @@ class TraddingViewChart extends React.Component {
             fullscreen: this.props.fullscreen,
             autosize: this.props.autosize,
             studies_overrides: this.props.studiesOverrides,
+            theme: this.props.theme == true ? "Dark" : "Light"
         };
 
         const tvWidget = new widget(widgetOptions);
@@ -73,7 +84,7 @@ class TraddingViewChart extends React.Component {
     }
     render() {
         return (
-            <div id={this.props.containerId} className={'TVChartContainer'} />
+            <TVChart id={this.props.containerId} className={'TVChartContainer'} />
         );
     }
 }

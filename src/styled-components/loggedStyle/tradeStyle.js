@@ -23,11 +23,31 @@ export const SaveButton = styled(Button)`
 export const EditButton = styled(Button)`
     margin-right:15px;
 `
+export const MainTV = styled.div`
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: ${props => props.theme.mode == "dark" ? "#2e3141" : "#eceff1"};
+`
 export const TVBar = styled.div`
     display:flex;
-    justify-content:flex-end;
     align-items:center;
-    background-color:white;
+    background-color:${props => props.theme.mode == "dark" ? "#131722" : "white"};
+    width: calc(100% - 12px);
+    margin: 0 auto;
+    border-bottom:  ${props => props.theme.mode == "dark" ? "1px solid #2e3141" : "1px solid #eceff1"};
+    height: 38px ;
+    padding: 0px 6px;
+    >div>span
+    {
+        font-weight: "normal";
+        font-size: "17px";
+        color: ${props => props.theme.mode == "dark" ? "rgb(217, 217, 217)" : "rgb(85, 85, 85)"};
+    }
+    >div>i
+    {
+        font-size:"26px";
+        color:${props => props.theme.mode == "dark" ? "#687786;" : ""};
+    }
 `
 export const Left_div = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
