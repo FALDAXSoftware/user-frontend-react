@@ -507,7 +507,6 @@ class Trade extends Component {
                                     </div>
                                     <div onClick={() => { window.open(tvChartURL, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes'); }} style={{ marginLeft: "auto" }}>
                                         <Tooltip placement="topLeft" title={"Chart in New Window"}>
-                                            <Icon type="select" style={{ fontSize: '26px' }} />
                                         </Tooltip>
                                     </div>
                                 </TVBar>
@@ -523,8 +522,7 @@ class Trade extends Component {
                                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                                 cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                                 isDraggable={this.state.editState}
-                                isResizable={this.state.editState}
-                            /* onLayoutChange={(layout: Layout) => this.onChangeLay(layout)} */
+                                isResizable={this.state.editState}                            /* onLayoutChange={(layout: Layout) => this.onChangeLay(layout)} */
                             >
                                 <div key="a">
                                     <div onDoubleClick={this.popWindow.bind(this)} style={{ height: "100%", width: "100%", overflow: "auto" }}>

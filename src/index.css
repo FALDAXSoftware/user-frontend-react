@@ -1330,3 +1330,9 @@ div.scrollbar>div:nth-child(3)>div{
 .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){
   background: #4c84ff !important;
 }
+
+/* React Grid Layout CSS */
+.react-grid-item.react-grid-placeholder
+{
+  background: #1890ff !important;
+}
