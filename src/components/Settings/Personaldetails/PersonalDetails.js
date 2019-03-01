@@ -25,7 +25,8 @@ export const HeaderCol = styled(Col)`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    color: ${props => props.theme.mode == "dark" ? "white" : "#505050"};
+    /* color: ${props => props.theme.mode == "dark" ? "white" : "#505050"}; */
+    color:#8290a2;
     margin-top: 20px;
     padding-bottom: 12px;
     margin-left:0px;
@@ -48,14 +49,16 @@ const Image_up = styled.div`
     margin-top:30px;
 `
 const Image_upload = styled.label`
-    color:${props => props.theme.mode == "dark" ? "#828a91" : "#0f477b"};
+    /* color:${props => props.theme.mode == "dark" ? "#828a91" : "#0f477b"}; */
+    color:#00bdd2;
     cursor:pointer;
     font-family:"Open Sans";
     font-weight:600;
 `
 const Remove = styled.div`
     margin-top:20px;
-    color:${props => props.theme.mode == "dark" ? "#828a91" : "#0f477b"};
+    /* color:${props => props.theme.mode == "dark" ? "#828a91" : "#0f477b"}; */
+    color:#00bdd2;
     cursor:pointer;
     font-family:"Open Sans";
     font-weight:600;
@@ -93,7 +96,7 @@ export const First_input = styled(Input)`
         width:100%;
     }
     &:focus, &:hover{
-        border-color:#4c84ff;
+        border-color:#00bcd2;
         outline:0;
         box-shadow:none;
     }
@@ -192,7 +195,8 @@ export const Fifth_Row = styled(Row)`
 export const Save = styled(Button)`
     font-size: 13.217px;
     font-family: "Open Sans";
-    color: rgb( 255, 255, 255 );
+    color: black;
+    border:1px solid black;
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
@@ -200,8 +204,7 @@ export const Save = styled(Button)`
     -webkit-transform: matrix( 1.2195120140195,0,0,1.20991183157525,0,0);
     -ms-transform: matrix( 1.2195120140195,0,0,1.20991183157525,0,0);  
     border-radius: 24px;
-    background-color: rgb( 76, 132, 255 );
-    box-shadow: 0px 4px 10px 0px rgba(76, 132, 255, 0.33);
+    background-color: #00bdd2;
     margin-left: 10px;
     width: 15%;
     height:40px;
@@ -374,7 +377,7 @@ class PersonalDetails extends Component {
         this.onChangeField(value, field);
     }
     onCountryChange(country, state, city, stateID, countryID) {
-        this.setState({ countrySelected: country, stateSelected: state, citySelected: city, stateID:stateID, countryID:countryID })
+        this.setState({ countrySelected: country, stateSelected: state, citySelected: city, stateID: stateID, countryID: countryID })
         var loc = {
             country: country,
             state: state,

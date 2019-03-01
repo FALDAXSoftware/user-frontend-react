@@ -26,7 +26,7 @@ const Footer_main = styled(Footer)`
     background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
     text-align: left;
     padding: 25px 0px 0px 0px;
-    border-top:2px solid #0f477b;
+    border-top:2px solid #00bcd2;
 `
 const Footer_headers = styled.li`
     font-size: 14px;

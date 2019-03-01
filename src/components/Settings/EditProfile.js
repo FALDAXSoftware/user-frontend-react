@@ -29,6 +29,22 @@ const ProfileDiv = styled.div`
   margin:auto;
   width:95%;
   border-radius: 7px;
+  & .ant-tabs-content 
+  {
+    background-color: #f0f3f2;
+  }
+  & .ant-tabs-bar
+  {
+      margin-bottom:0px;
+  }
+  & .ant-tabs-tab-active
+  {
+      color:#00bdd2;
+  }
+  & .ant-tabs-ink-bar
+  {
+    background-color: #00bdd2;
+  }
 `
 
 class Editprofile extends Component {
