@@ -7,13 +7,12 @@ import { Icon } from 'antd';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import { TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
+import { TableHeader, TableContent, ScrollTableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 
 export const Order_wrap = styled.div`
     margin-left:30px;
     margin-right:30px;
     border:1px solid #d8d8d8;
-    overflow-x:scroll;
     &::-webkit-scrollbar {
         width: 0.5em;
         height: 0.5em;
@@ -61,7 +60,7 @@ const NDF = styled.p`
     font-family: Open Sans;
 `
 export const OTwrap = styled.div`
-    min-width:767px;
+    
 `
 
 class OrderTrade extends Component {
@@ -99,9 +98,9 @@ class OrderTrade extends Component {
                     </div>
                 </OTwrap>
                 <OTwrap>
-                    <div class="tbl-content">
+                    <ScrollTableContent >
                         <Scrollbars
-                            style={{ height: 300 }}
+                            style={{ height: this.props.height }}
                             className="scrollbar">
                             <TableContent cellpadding="10px" cellspacing="0" border="0">
                                 <tbody>
@@ -130,7 +129,7 @@ class OrderTrade extends Component {
                                 </tbody>
                             </TableContent>
                         </Scrollbars>
-                    </div>
+                    </ScrollTableContent>
                 </OTwrap>
             </Order_wrap>
         )
