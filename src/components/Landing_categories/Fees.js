@@ -9,6 +9,10 @@ import {
 } from '../../styled-components/landingCategories/contactStyle';
 import { Table } from 'react-bootstrap';
 import { fees } from "../../Constants/feeJson";
+import { globalVariables } from '../../Globals';
+import { connect } from "react-redux"
+
+let { API_URL } = globalVariables;
 
 export const ContainerContact = styled(Container)`
     background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
@@ -111,7 +115,29 @@ class Fees extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            feesData: []
         };
+    }
+
+    componentDidMount = () => {
+        this._getAllFees();
+    }
+
+    _getAllFees = () => {
+        fetch(`${API_URL}/get-all-fee`, {
+            method: "get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                /* console.log(responseData); */
+                this.setState({ feesData: responseData.data })
+            })
+            .catch(error => { /* console.log(error) */ })
     }
 
     render() {
@@ -151,12 +177,12 @@ class Fees extends Component {
                                     </thead>
                                     <tbody>
                                         {
-                                            fees.map((fee) => {
+                                            this.state.feesData.map((fee) => {
                                                 return (
                                                     <tr>
-                                                        <td>{fee.maker}</td>
-                                                        <td>{fee.taker}</td>
-                                                        <td>{fee.volume}</td>
+                                                        <td>{fee.maker_fee}</td>
+                                                        <td>{fee.taker_fee}</td>
+                                                        <td>{fee.trade_volume}</td>
                                                     </tr>
                                                 )
                                             })
@@ -237,4 +263,9 @@ class Fees extends Component {
     }
 }
 
-export default Fees;
+function mapStateToProps(state) {
+    return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+    })
+}
+export default connect(mapStateToProps)(Fees);
