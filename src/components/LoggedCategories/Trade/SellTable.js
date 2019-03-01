@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import { BBC2, Total_BTC, Buy_table, History_wrap1, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
+import { BBC2, Total_BTC, Buy_table, History_wrap1, TableHeader, TableContent, ScrollTableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 import { Spin } from 'antd';
 import {
     Spin_single
@@ -166,7 +166,7 @@ class SellTable extends Component {
                             </div>
                         </OTwrap2>
                         <OTwrap2>
-                            <div class="tbl-content">
+                            <ScrollTableContent >
                                 <Scrollbars
                                     style={{ height: 165 }}
                                     className="scrollbar"
@@ -190,7 +190,7 @@ class SellTable extends Component {
                                     </TableContent>
                                 </Scrollbars>
 
-                            </div>
+                            </ScrollTableContent>
                         </OTwrap2>
                     </History_wrap1>
                 </Buy_table>

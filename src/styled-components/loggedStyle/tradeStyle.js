@@ -78,10 +78,10 @@ export const SwitchS = styled(Switch)`
 `
 export const Left_div1 = styled(Left_div)`
     padding-top:30px;
-    padding-bottom: 30px;
+    padding-bottom: 8px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
-    height:800px;
+    height:100%;
     @media(max-width:575px)
     {
         height:auto;
@@ -94,7 +94,7 @@ export const Left_div1 = styled(Left_div)`
 export const Left_div2 = styled(Left_div)`
     padding-top:30px;
     margin-right:0px;
-    padding-bottom: 30px;
+    padding-bottom: 22px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
     height:auto;
@@ -210,7 +210,7 @@ export const Right_div = styled.div`
     }
 `
 export const Right_div1 = styled(Right_div)`
-    height:800px;
+    height:100%;
     @media(max-width:575px)
     {
         height:auto;
@@ -224,32 +224,47 @@ export const InstruTable = styled.div`
     margin-top:25px;
 `
 export const TableIns = styled(Table)`
-    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th
+    & .ant-table-column-sorter
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""} ;
+    }
+    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-header
+    {
+        background:${props => props.theme.mode == "dark" ? "#041422" : ""};
+        margin-bottom: 0px !important;
+        overflow-x: hidden;
+    }
+    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-body
+    {
+        background:none;
+    }
+    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-header>table>.ant-table-thead>tr>th
     {
         color:#174c7e;
         background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
         font-weight:bold;
         border-bottom:0px;
     }
-    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-tbody>tr>td
+    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-body>table>.ant-table-tbody>tr>td
     {
         color:${props => props.theme.mode == "dark" ? "white" : ""} ;
+        background-color:transparent;
         font-size: 14px;
         font-weight:600;
         font-family: "Open Sans";
     }
-    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th>span>.ant-table-column-sorter>.off>i
+    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-body>table>.ant-table-thead>tr>th>span>.ant-table-column-sorter>.off>i
     {   
         color:#606f8e;
     }
-    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th>span>.ant-table-column-sorter>.on>i
+    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-body>table>.ant-table-thead>tr>th>span>.ant-table-column-sorter>.on>i
     {   
         color:#4c84ff;
     }
     @media(max-width:375px)
     {
 
-        >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th
+        >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-body>table>.ant-table-thead>tr>th
         {
             padding: 10px 12px;
         }
@@ -281,6 +296,7 @@ export const TableIns = styled(Table)`
     }
 `
 export const Tabs_right = styled(Tabs)`
+
     >.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav-animated
     {
         display: flex !important;
@@ -515,7 +531,7 @@ export const History_wrap = styled.div`
 
 `
 export const History_wrap1 = styled.div`
-    overflow-x:scroll;
+    overflow-x:auto;
     &::-webkit-scrollbar {
     width: 0.5em;
     height: 0.5em;
@@ -624,4 +640,42 @@ text-align: left;
     margin-top: 8px;
 }
 
+`
+export const ScrollTableContent = styled.div`
+    overflow-x:auto;
+    & .scrollbar>div:first-child{
+        overflow: auto !important;
+    }
+    & .scrollbar>div:nth-child(3){
+        width: 9px !important;
+        right: 0px !important;
+        bottom: 0px !important;
+        top: 0px !important;
+        border-radius:0px !important;
+        border: 1px solid #d8d8d8;
+        border-right: none;
+        border-bottom: none;
+        padding: 2px;
+        background-color: white; 
+    }
+    & .scrollbar.news>div:nth-child(3){
+        border: none !important;
+    }
+    & .scrollbar>div:nth-child(3)>div{
+        border-radius: 2px !important;
+    }
+`
+export const SettingDropdown = styled(Dropdown)`
+    position: fixed;
+    top: 90px;
+    left: 0px;
+    background: white;
+    color: #1890ff;
+    cursor:pointer;
+    padding: 3px 12px;
+    font-size: 20px;
+    border: 1px solid lightgray;
+    z-index: 9999;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
 `
