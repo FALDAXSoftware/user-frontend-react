@@ -422,7 +422,7 @@ table .ant-table-tbody > tr > td {
 {
   margin-top: 10px !important;
 }
-.ant-dropdown-placement-bottomLeft
+.ant-dropdown-placement-bottomLeft,.ant-dropdown-placement-bottomRight
 {
   position:fixed !important;
 }

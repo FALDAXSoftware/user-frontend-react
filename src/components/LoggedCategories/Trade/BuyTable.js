@@ -178,7 +178,7 @@ class BuyTable extends Component {
                             </div>
                         </OTwrap2>
                         <OTwrap2>
-                            <ScrollTableContent class="tbl-content">
+                            <ScrollTableContent>
                                 <Scrollbars
                                     style={{ height: 165 }}
                                     className="scrollbar"

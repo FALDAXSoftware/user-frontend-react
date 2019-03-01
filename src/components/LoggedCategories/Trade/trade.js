@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
-import { Row, Col, Tabs, Input, Radio, Select, Spin, notification, Switch, Icon } from 'antd';
+import { Row, Col, Tabs, Input, Radio, Select, notification, Icon, Menu } from 'antd';
 import styled from 'styled-components';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faYoutube, faTwitter, faLinkedinIn, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { widget } from '../../../charting_library/charting_library.min';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css'
@@ -23,8 +26,8 @@ import { Container } from '../../../styled-components/homepage/style';
 import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
 import { cryptoCurrency } from '../../../Actions/LoggedCat/tradeActions'
 import {
-    Row_wrap, Left_div, EditDiv, SwitchS, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
-    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder, Selectmonth
+    Row_wrap, Left_div, EditDiv, SwitchS, Layout, SaveButton, EditButton, TVBar, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
+    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder, Selectmonth, SettingDropdown
 } from "../../../styled-components/loggedStyle/tradeStyle";
 import {
     Spin_single
@@ -128,12 +131,14 @@ class Trade extends Component {
             userBal: {},
             insLoader: false,
             userBalLoader: false,
-            instrumentTableHeight: 100,
+            instrumentTableHeight: 260,
             orderHistoryTableHeight: 170,
             myOrderTableHeight: 155,
             buySellLoader: false,
             hisLoader: false,
-            depthLoader: false
+            depthLoader: false,
+            editState: false,
+            saveState: true
         };
         io = this.props.io;
         // io.sails.url = API_URL;
@@ -253,7 +258,7 @@ class Trade extends Component {
     }
     onChange(pagination, filters, sorter) {
     }
-
+    class = "tbl-content"
     callback(key) {
     }
     handleChange(value) {
@@ -478,13 +483,25 @@ class Trade extends Component {
     depthLoaderFunc(loader) {
         this.setState({ depthLoader: loader });
     }
+    editLayout() {
+        if (this.state.editState == false)
+            this.setState({ editState: true, saveState: false });
+        else
+            this.setState({ editState: false });
+    }
+    saveLayout() {
+        if (this.state.saveState == false)
+            this.setState({ saveState: true, editState: false });
+        else
+            this.setState({ saveState: false });
+    }
     render() {
         var self = this;
         var layouts = {
             lg: [
-                { i: 'instruments', x: 0, y: 0, w: 4, h: 2, minW: 4, minH: 2 },
-                { i: 'tradeAction', x: 4, y: 0, w: 4, h: 2, minW: 4, minH: 2, maxH: 5 },
-                { i: 'c', x: 8, y: 0, w: 4, h: 2 },
+                { i: 'instruments', x: 0, y: 0, w: 4, h: 3, minW: 4, minH: 2 },
+                { i: 'tradeAction', x: 4, y: 0, w: 4, h: 3, minW: 4, minH: 2, maxH: 5 },
+                { i: 'c', x: 8, y: 0, w: 3, h: 2 },
                 { i: 'd', x: 0, y: 1, w: 12, h: 2, minW: 4 },
                 { i: 'orderHistory', x: 0, y: 2, w: 12, h: 2, minW: 4 },
                 { i: 'myorder', x: 0, y: 3, w: 12, h: 2, minW: 6, minH: 2 }
@@ -524,33 +541,50 @@ class Trade extends Component {
 
             ]
         };
+        const menu = (
+            <Menu className="SettingMenu">
+                <Menu.Item key="1">Edit Layout</Menu.Item>
+                <Menu.Item key="2">Full Screen</Menu.Item>
+            </Menu>
+        );
         return (
             <Contact_wrap>
+                <SettingDropdown overlay={menu} placement="bottomLeft" trigger={["click"]} overlayClassName="dropSettings">
+                    <Icon type="setting" />
+                </SettingDropdown>
                 <LoggedNavigation />
                 <Grey_wrap_trade>
                     <Row>
                         <Col>
-                            {/* <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} /> */}
-                            <TraddingViewChart />
+                            <Layout>
+                                <EditButton onClick={this.editLayout.bind(this)} disabled={this.state.editState}>Edit Layout</EditButton>
+                                <SaveButton onClick={this.saveLayout.bind(this)} disabled={this.state.saveState}>Save</SaveButton>
+                            </Layout>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
-                                <Select defaultValue="edit" style={{ width: 320 }} >
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="edit">Edit Layout</Option>
-                                </Select>
+                            {/* <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} /> */}
+                            <div style={{ marginLeft: "10px", marginRight: "10px", backgroundColor: "#eceff1" }}>
+                                <TVBar>
+                                    <Icon type="arrows-alt" style={{ fontSize: '30px' }} />
+                                </TVBar>
+                                <TraddingViewChart />
                             </div>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <ResponsiveReactGridLayout className="layout" layouts={layouts}
+                            <ResponsiveReactGridLayout
+                                className="layout"
+                                layouts={layouts}
                                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                                 cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                                onResize={this.onLayoutChange}>
-                                <div key="instruments" >
+                                onResize={this.onLayoutChange}
+                                isDraggable={this.state.editState}
+                                isResizable={this.state.editState}
+                            >
+                                <div key="instruments">
                                     <div onDoubleClick={this.popWindow.bind(this)} style={{ height: "100%", width: "100%", overflow: "auto" }}>
                                         {
                                             this.state.insLoader == true ?
