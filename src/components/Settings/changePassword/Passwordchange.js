@@ -13,7 +13,10 @@ import {
 } from "../../../Actions/Settings/passwordChange";
 import { Eye, ActiveEye } from "../../../Constants/images";
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+    background-color:#f0f3f2;
+    height:100%;
+`
 const ChangeRow = styled(Row)`
     &:after 
     {
@@ -110,7 +113,7 @@ export const OldInput = styled(Input)`
     padding:10px;
     padding-right:45px;
     &:focus, &:hover{
-        border-color:#4c84ff;
+        border-color: #00bcd2;
         outline:0;
         box-shadow:none;
     }
@@ -132,7 +135,7 @@ const Button_div = styled.div`
     margin-bottom:50px;
 `
 const NewButton = styled(Save)`
-    border:none;
+    border: 1px solid black;
     width:auto;
     &:hover
     {
@@ -227,7 +230,8 @@ const Key_text = styled.span`
 const Key = styled.p`
     font-size: 13.007px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "#4c84ff"};
+    /* color: ${props => props.theme.mode == "dark" ? "white" : "#4c84ff"}; */
+    color:#00bdd2;
     line-height: 1.846;
     text-align: center;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -264,7 +268,7 @@ const Enable = styled.div`
     margin-top: 30px;
 `
 const E_button = styled(Save)`
-    border:none;
+    border:1px solid black;
     width:auto;
     &:hover
     {

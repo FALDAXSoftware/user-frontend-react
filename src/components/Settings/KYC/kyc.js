@@ -30,7 +30,15 @@ const KYC_progress = styled.div`
     margin-top:50px;
     margin-left:auto;
     margin-right:auto;
-
+    & .ant-steps-item-icon
+    {
+        background:#00bdd2;
+        border:1px solid white;
+    }
+    & .anticon-check
+    {
+        color:white;
+    }
     @media(max-width:480px)
     {
         display:none;

@@ -55,9 +55,10 @@ export const Back_Button = styled(Button)`
     line-height: 2.875;
     width:120px;
     border-radius: 24px;
-    color:#2d69eb;
-    background-color: rgb( 255, 255, 255 );
-    box-shadow: 0px 3px 10px 0px rgb( 164, 164, 164 );  
+    color:black;
+    background-color:white;
+    border:1px solid black;
+    
     margin-right:10px;
 `
 export const Next_Button = styled(Button)`
@@ -67,7 +68,9 @@ export const Next_Button = styled(Button)`
     text-transform: uppercase;
     font-family: "Open Sans";
     border-radius: 24px;
-    background-color:#4c84ff;
+    background-color:#00bdd2;
+    color:black;
+    border:1px solid black;
     height:50px;
     width:120px;
 `
