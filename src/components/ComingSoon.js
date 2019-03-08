@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import { globalVariables } from '../Globals';
 import { ComingImg } from "../Constants/images";
 
+const API_URL = globalVariables.API_URL;
+
 export const Modal_wrap = styled.div`
 width: 465px;
 margin-left: auto;
@@ -125,13 +127,14 @@ class ComingSoon extends Component {
                     <Modal_wrap>
                         <h3 style={{ fontFamily: "Open Sans", fontSize: "40px", textAlign: "center", color: "rgb( 15, 71, 123 )", fontWeight: "600", marginTop: "40px" }}>Coming Soon</h3>
 
-                        <Sub_wrap>
+                        {/* <Sub_wrap>
                             <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>
                             <Email_input placeholder="Email Address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
                         </Sub_wrap>
                         <div style={{ marginTop: '20px', minHeight: '20px' }}>
                             <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff', backgroundColor: "#0f477b", height: "45px" }} onClick={() => this.send_email()}>SUBMIT</Button>
-                        </div>
+                        </div> */}
+                        <iframe style={{ border: 'none' }} height="1100px" width="100%" src={API_URL + "/get-subscriber-form"}></iframe>
                     </Modal_wrap>
                 </Modal>
             </div >
