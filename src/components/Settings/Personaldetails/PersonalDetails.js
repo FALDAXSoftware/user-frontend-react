@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux";
 import { createForm, formShape } from 'rc-form';
-import { Row, Col, Input, Button, notification, Spin, Select } from 'antd';
+import { Row, Col, Input, Button, notification, Spin, Select, Radio } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 
@@ -16,6 +16,7 @@ import { profileupdateAction, removepicAction, getProfileDataAction, clearEditDa
 import { DefaultProfile } from "../../../Constants/images";
 
 const Option = Select.Option;
+const RadioGroup = Radio.Group;
 /* Styled-Components */
 const Profile_wrap = styled.div`
     width: 71%;
@@ -25,8 +26,7 @@ export const HeaderCol = styled(Col)`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    /* color: ${props => props.theme.mode == "dark" ? "white" : "#505050"}; */
-    color:#8290a2;
+    color: ${props => props.theme.mode == "dark" ? "white" : "#505050"};
     margin-top: 20px;
     padding-bottom: 12px;
     margin-left:0px;
@@ -49,16 +49,14 @@ const Image_up = styled.div`
     margin-top:30px;
 `
 const Image_upload = styled.label`
-    /* color:${props => props.theme.mode == "dark" ? "#828a91" : "#0f477b"}; */
-    color:#00bdd2;
+    color:${props => props.theme.mode == "dark" ? "#828a91" : "#0f477b"};
     cursor:pointer;
     font-family:"Open Sans";
     font-weight:600;
 `
 const Remove = styled.div`
     margin-top:20px;
-    /* color:${props => props.theme.mode == "dark" ? "#828a91" : "#0f477b"}; */
-    color:#00bdd2;
+    color:${props => props.theme.mode == "dark" ? "#828a91" : "#0f477b"};
     cursor:pointer;
     font-family:"Open Sans";
     font-weight:600;
@@ -96,7 +94,7 @@ export const First_input = styled(Input)`
         width:100%;
     }
     &:focus, &:hover{
-        border-color:#00bcd2;
+        border-color:rgb(0, 170, 250);
         outline:0;
         box-shadow:none;
     }
@@ -192,26 +190,39 @@ export const Fifth_Row = styled(Row)`
     text-align:left;
     margin-top:50px;
 `
+export const Sixth_Row = styled(Row)`
+text-align:left;
+margin-top:25px;
+& .ant-radio-wrapper
+{
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
+}
+`
+export const FIAT = styled(First_name)`
+
+`
+export const FIAT_Msg = styled(Postal_Msg)``
 export const Save = styled(Button)`
-    font-size: 13.217px;
-    font-family: "Open Sans";
-    color: black;
-    border:1px solid black;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    -moz-transform: matrix( 1.2195120140195,0,0,1.20991183157525,0,0);
-    -webkit-transform: matrix( 1.2195120140195,0,0,1.20991183157525,0,0);
-    -ms-transform: matrix( 1.2195120140195,0,0,1.20991183157525,0,0);  
-    border-radius: 24px;
-    background-color: #00bdd2;
-    margin-left: 10px;
-    width: 15%;
-    height:40px;
-    @media(max-width:600px)
-    {
-        width:100px;   
-    }
+font-size: 13.217px;
+font-family: "Open Sans";
+color: rgb( 255, 255, 255 );
+font-weight: bold;
+text-transform: uppercase;
+text-align: center;
+-moz-transform: matrix( 1.2195120140195,0,0,1.20991183157525,0,0);
+-webkit-transform: matrix( 1.2195120140195,0,0,1.20991183157525,0,0);
+-ms-transform: matrix( 1.2195120140195,0,0,1.20991183157525,0,0);  
+border-radius: 24px;
+background-color: rgb( 76, 132, 255 );
+box-shadow: 0px 4px 10px 0px rgba(76, 132, 255, 0.33);
+margin-left: 10px;
+width: 15%;
+height:40px;
+@media(max-width:600px)
+{
+    width:100px;   
+}
+
 `
 export const Spin_Ex = styled.div`
     text-align: center;
@@ -245,6 +256,8 @@ class PersonalDetails extends Component {
             street2msg: null,
             citymsg: null,
             postalmsg: null,
+            fiatmsg: null,
+            dfmsg: null,
             profileImg: undefined,
             imageName: null,
             imageType: null,
@@ -262,18 +275,36 @@ class PersonalDetails extends Component {
             street1Icon: null,
             street2Icon: null,
             postalIcon: null,
-            remove_pic: false
+            fiatIcon: null,
+            dateFIcon: null,
+            remove_pic: false,
+            fiat: "",
+            date_format: ""
         }
         this.handleProfile = this.handleProfile.bind(this);
     }
     static propTypes = {
         form: formShape,
     };
+    onChangeFormat = (e) => {
+        this.setState({
+            date_format: e.target.value,
+        });
+        console.log("date_format", e.target.value);
+        this.onChangeField(e.target.value, "date_format");
+    }
+    onChangeFiat = (e) => {
+        console.log('radio checked', e.target.value);
+        this.setState({
+            fiat: e.target.value,
+        });
+        this.onChangeField(e.target.value, "fiat");
+    }
     submit = () => {
         this.props.form.validateFields((error, value) => {
             let dataDate = "";
             const profileData = new FormData();
-            if (error == null && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '' && this.props.profileDetails.country !== null) || ((this.state.countrySelected !== null && this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
+            if (error == null && this.state.fiatIcon !== false && this.state.dateFIcon !== false && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '' && this.props.profileDetails.country !== null) || ((this.state.countrySelected !== null && this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
                 document.querySelectorAll(".first_msg")[0].style.display = "none";
                 document.querySelectorAll(".last_msg")[0].style.display = "none";
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
@@ -313,6 +344,13 @@ class PersonalDetails extends Component {
                 if (value.street_address_2 !== null && value.street_address_2 !== "" && value.street_address_2 !== undefined)
                     profileData.append('street_address_2', value.street_address_2)
                 profileData.append('postal_code', number);
+
+                var fiat = this.state.fiat !== "" ? this.state.fiat : this.props.profileDetails.fiat;
+                var date_format = this.state.date_format !== "" ? this.state.date_format : this.props.profileDetails.date_format;
+
+                profileData.append('fiat', fiat)
+                profileData.append('date_format', date_format)
+
                 if (this.state.Datedata !== undefined)
                     profileData.append('dob', this.state.Datedata);
                 profileData.append('remove_pic', this.state.remove_pic)
@@ -327,27 +365,27 @@ class PersonalDetails extends Component {
             if (this.state.firstIcon == null && this.props.profileDetails.first_name == null) {
                 this.setState({ firstIcon: false })
                 document.querySelectorAll(".first_msg")[0].style.display = "block";
-                this.setState({ firstmsg: "First Name field is required" })
+                this.setState({ firstmsg: "First Name field is required." })
             }
             if (this.state.lastIcon == null && this.props.profileDetails.last_name == null) {
                 this.setState({ lastIcon: false })
                 document.querySelectorAll(".last_msg")[0].style.display = "block";
-                this.setState({ lastmsg: "Last Name field is required" })
+                this.setState({ lastmsg: "Last Name field is required." })
             }
             if ((this.state.countryIcon == null || this.state.countryIcon == false) && (this.props.profileDetails.country == '' || this.props.profileDetails.country == null)) {
                 this.setState({ countryIcon: false })
                 document.querySelectorAll(".country_msg")[0].style.display = "block";
-                this.setState({ countrymsg: "Country field is required" })
+                this.setState({ countrymsg: "Country field is required." })
             }
             if (this.state.dobIcon == null && this.state.Datedata == undefined && this.props.profileDetails.dob == null) {
                 this.setState({ dobIcon: false })
                 document.querySelectorAll(".dob_msg")[0].style.display = "block";
-                this.setState({ dobmsg: "Date of Birth is required" })
+                this.setState({ dobmsg: "Date of Birth is required." })
             }
             if (this.state.street1Icon == null && this.props.profileDetails.street_address == null) {
                 this.setState({ street1Icon: false })
                 document.querySelectorAll(".street1_msg")[0].style.display = "block";
-                this.setState({ street1msg: "Street Address is required" })
+                this.setState({ street1msg: "Street Address is required." })
             }
             /* if (this.state.street2Icon == null && this.props.profileDetails.street_address_2 == null) {
                 this.setState({ street2Icon: false })
@@ -357,7 +395,22 @@ class PersonalDetails extends Component {
             if (this.state.postalIcon == null && this.props.profileDetails.postal_code == null) {
                 this.setState({ postalIcon: false })
                 document.querySelectorAll(".postal_msg")[0].style.display = "block";
-                this.setState({ postalmsg: "Postal Code is required" })
+                this.setState({ postalmsg: "Postal Code is required." })
+            }
+            console.log(this.state.fiatIcon, this.props.profileDetails)
+            if (this.state.fiatIcon == false && this.props.profileDetails.fiat == "") {
+
+                console.log(this.props.profileDetails)
+                this.setState({ fiatIcon: false })
+                document.querySelectorAll(".fiat_msg")[0].style.display = "block";
+                this.setState({ fiatmsg: "currency is required." })
+            }
+            console.log(this.state.dateFIcon, this.props.profileDetails.date_format)
+            if (this.state.dateFIcon !== true && this.props.profileDetails.date_format == "") {
+                console.log(this.props.profileDetails)
+                this.setState({ dateFIcon: false })
+                document.querySelectorAll(".df_msg")[0].style.display = "block";
+                this.setState({ dfmsg: "currency is required." })
             }
         });
     }
@@ -570,6 +623,30 @@ class PersonalDetails extends Component {
                 this.setState({ postalmsg: "Postal Code is required" })
             }
         }
+        else if (field == "fiat") {
+            console.log(this.state, field, value)
+            if (value !== "") {
+                this.setState({ fiatIcon: true })
+                document.querySelectorAll(".fiat_msg")[0].style.display = "none";
+            }
+            else {
+                this.setState({ fiatIcon: false })
+                document.querySelectorAll(".fiat_msg")[0].style.display = "block";
+                this.setState({ fiatmsg: "currency is required" })
+            }
+        }
+        else if (field == "date_format") {
+            console.log("date_format", this.state, field, value)
+            if (value !== "") {
+                this.setState({ dateFIcon: true })
+                document.querySelectorAll(".df_msg")[0].style.display = "none";
+            }
+            else {
+                this.setState({ dateFIcon: false })
+                document.querySelectorAll(".df_msg")[0].style.display = "block";
+                this.setState({ dfmsg: "currency is required" })
+            }
+        }
     }
 
     render() {
@@ -663,11 +740,35 @@ class PersonalDetails extends Component {
                                         <Postal_Msg className="postal_msg">{this.state.postalmsg}</Postal_Msg>
                                     </Col>
                                 </Fourth_Row>
+                                <Sixth_Row>
+                                    <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
+                                        <FIAT>Currency*</FIAT>
+                                        <RadioGroup onChange={this.onChangeFiat} value={this.state.fiat !== "" ? this.state.fiat : profileDetails.fiat}>
+                                            <Radio value={"USD"}>USD</Radio>
+                                            <Radio value={"INR"}>INR</Radio>
+                                            <Radio value={"EUR"}>EUR</Radio>
+                                        </RadioGroup>
+                                        <FIAT_Msg className="fiat_msg">{this.state.fiatmsg}</FIAT_Msg>
+                                    </Col>
+                                </Sixth_Row>
+                                <Sixth_Row>
+                                    {console.log(this.state, this.props)}
+                                    <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
+                                        <FIAT>Date Format*</FIAT>
+                                        <RadioGroup onChange={this.onChangeFormat} value={this.state.date_format !== "" ? this.state.date_format : profileDetails.date_format}>
+                                            <Radio value={"MM/DD/YYYY"}>MM/DD/YYYY</Radio>
+                                            <Radio value={"DD/MM/YYYY"}>DD/MM/YYYY</Radio>
+                                            <Radio value={"MMM DD,YYYY"}>MMM DD,YYYY</Radio>
+                                        </RadioGroup>
+                                        <FIAT_Msg className="df_msg">{this.state.dfmsg}</FIAT_Msg>
+                                    </Col>
+                                </Sixth_Row>
                                 <Fifth_Row>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                                         <Save type="primary" onClick={this.submit}>Save</Save>
                                     </Col>
                                 </Fifth_Row>
+
                             </Right_Col>
                             {(this.props.loader == true) ?
                                 <Spin_Ex className="Ex_spin">

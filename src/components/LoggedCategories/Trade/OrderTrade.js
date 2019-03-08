@@ -107,7 +107,13 @@ class OrderTrade extends Component {
                                     {this.props.orderTradeData.length > 0
                                         ?
                                         this.props.orderTradeData.map(function (data) {
-                                            var date = moment.utc(data.created_at).local().format("MMM DD,YYYY HH:mm:ss");
+                                            var date
+                                            if (self.props.profileDetails.date_format == "MM/DD/YYYY")
+                                                date = moment.utc(data.created_at).local().format("MM/DD/YYYY, H:m:s")
+                                            else if (self.props.profileDetails.date_format == "DD/MM/YYYY")
+                                                date = moment.utc(data.created_at).local().format("DD/MM/YYYY, H:m:s")
+                                            else
+                                                date = moment.utc(data.created_at).local().format("MMM D, YYYY, H:m:s")
                                             var Filled = data.fix_quantity - data.quantity;
                                             return (
                                                 <tr>

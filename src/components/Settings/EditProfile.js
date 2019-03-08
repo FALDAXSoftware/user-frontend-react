@@ -29,22 +29,17 @@ const ProfileDiv = styled.div`
   margin:auto;
   width:95%;
   border-radius: 7px;
-  & .ant-tabs-content 
-  {
-    background-color: #f0f3f2;
-  }
-  & .ant-tabs-bar
-  {
-      margin-bottom:0px;
-  }
-  & .ant-tabs-tab-active
-  {
-      color:#00bdd2;
-  }
-  & .ant-tabs-ink-bar
-  {
-    background-color: #00bdd2;
-  }
+  
+`
+const TabsStyle = styled(Tabs)`
+    & .ant-tabs-tab-active
+    {
+        color:rgb(0, 170, 250);   
+    }
+    & .ant-tabs-ink-bar
+    {
+        background-color:rgb(0, 170, 250);   
+    }
 `
 
 class Editprofile extends Component {
@@ -61,14 +56,14 @@ class Editprofile extends Component {
                 <LoggedNavigation />
                 <ProfileWrapper>
                     <ProfileDiv>
-                        <Tabs className="profile-tabs" defaultActiveKey="1" >
+                        <TabsStyle className="profile-tabs" defaultActiveKey="1" >
                             <TabPane tab="Personal Details" key="1"><PersonalDetails {...this.props} /></TabPane>
                             <TabPane tab="Security" key="2" ><Passwordchange {...this.props} /></TabPane>
                             <TabPane tab="Account Settings" key="3"><Acc_settings {...this.props} /></TabPane>
                             <TabPane tab="Identity Verification" key="4"><KYC /></TabPane>
                             <TabPane tab="Referral" key="5"><Referral {...this.props} /></TabPane>
                             {/* <TabPane tab="Payment Methods" key="6"><Paymethods/></TabPane> */}
-                        </Tabs>
+                        </TabsStyle>
                     </ProfileDiv>
                 </ProfileWrapper>
                 <Footer_home />

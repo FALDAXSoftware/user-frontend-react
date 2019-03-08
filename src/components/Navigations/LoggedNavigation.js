@@ -28,17 +28,16 @@ const Logo = styled.div`
     cursor:pointer;
 `
 const Header_main = styled(Header)`
-    position:fixed;
-    z-index: 1000;
-    width : 100%;
-    padding:0;
-    text-align:left;
-    /* background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; */
-    background-color:#23262d;
-    box-shadow:${props => props.theme.mode == "dark" ? "" : "0px 3px #f7f7f7"};
-    height :80px;
-    display:flex;
-    align-items:center;
+position:fixed;
+z-index: 1000;
+width : 100%;
+padding:0;
+text-align:left;
+background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
+box-shadow:${props => props.theme.mode == "dark" ? "" : "0px 3px #f7f7f7"};
+height :80px;
+display:flex;
+align-items:center;
 `
 const Menu_main = styled(Menu)`
     display:inline-block;
@@ -46,8 +45,7 @@ const Menu_main = styled(Menu)`
     text-align: right;
     border-bottom:0px;
     vertical-align: middle;
-    background-color:#23262d;
-    /* background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; */
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
     @media(max-width:1200px)
     {
         display:none;
@@ -58,23 +56,20 @@ const Menu_main = styled(Menu)`
     }
 `
 const Menu_item = styled(Menu.Item)`
-    padding:0px 18px;
-    font-size: 13px;
-    font-family: "Open sans";
-    
-    font-weight: bold;
-    text-transform: uppercase;      
-    vertical-align: unset;
-    float: left;
-    border-bottom:0px !important;
-    & .Nav_selected
-    {
-        color: #98a9b4 !important;
-    }
-    @media(max-width:1365px)
-    {
-        padding:0px 8px;
-    }
+padding:0px 18px;
+font-size: 13px;
+font-family: "Open sans";
+color: rgb( 40, 37, 40 );
+font-weight: bold;
+text-transform: uppercase;      
+vertical-align: unset;
+float: left;
+border-bottom:0px !important;
+
+@media(max-width:1365px)
+{
+    padding:0px 8px;
+}
 `
 const NAV = styled.span`
     color:${props => props.theme.mode = "dark" ? "white" : ""};
@@ -140,8 +135,7 @@ const RightCol = styled.div`
     margin-left:auto;
 `
 const NavLink = styled(Link)`
-    /* color: ${props => props.theme.mode == "dark" ? "white" : "black"} !important; */
-    color:#98a9b4;
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"} !important;
     &:hover{
         color:#1890ff !important;
     }

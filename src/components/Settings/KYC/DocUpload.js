@@ -84,7 +84,7 @@ const ButtonUp = styled.button`
     background-color: ${props => props.theme.mode == "dark" ? "#01090f" : 'white'};
     color: ${props => props.theme.mode == "dark" ? "white" : ""};
     box-shadow: none;
-    border: 1px solid #4c84ff;
+    border: 1px solid rgb(0,170,250);
     border-radius: 20px;
     cursor: pointer;
     &:focus{
@@ -96,7 +96,7 @@ const Plus = styled.span`
     height: 40px;
     display: block;
     margin: 0 auto;
-    background-color: #4c84ff;
+    background-color: rgb(0,170,250);
     text-align: center;
     border-radius: 50%;
     color: white;
@@ -111,6 +111,7 @@ font-size: 18px;
 const ButtonUp2 = styled(ButtonUp)`
 `
 const Plus2 = styled(Plus)`
+    
 `
 const Plus_text2 = styled(Plus_text)`
 `

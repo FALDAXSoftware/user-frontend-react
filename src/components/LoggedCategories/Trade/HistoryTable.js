@@ -112,11 +112,18 @@ class HistoryTable extends Component {
         const rows = [];
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
+            var date
+            if (this.props.profileDetails.date_format == "MM/DD/YYYY")
+                date = moment.utc(element.created_at).local().format("MM/DD/YYYY, H:m:s")
+            else if (this.props.profileDetails.date_format == "DD/MM/YYYY")
+                date = moment.utc(element.created_at).local().format("DD/MM/YYYY, H:m:s")
+            else
+                date = moment.utc(element.created_at).local().format("MMM D, YYYY, H:m:s")
             rows.push({
                 side: element.side,
                 amount: element.quantity,
                 fill_price: element.fill_price,
-                time: moment.utc(element.created_at).local().format("MMM D, YYYY, H:m:s"),
+                time: date,
                 total: element.quantity * element.fill_price,
             });
         }
@@ -187,7 +194,8 @@ function mapStateToProps(state) {
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
         theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
-        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : ""
+        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : "",
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }

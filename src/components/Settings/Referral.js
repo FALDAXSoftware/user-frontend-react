@@ -82,6 +82,11 @@ export const Ref_input = styled(Search)`
     text-align:left;
     margin-top:5px;
     margin-bottom: 32px;
+    & .ant-btn-primary
+    {
+        background-color: rgb(0, 170, 250);
+        border-color: rgb(0, 170, 250);
+    }
     @media(max-width:768px)
     {
         margin-left:auto;
@@ -111,7 +116,7 @@ const Right_value = styled.div`
     text-align:center;
     font-size: 20.01px;
     font-family: "Open sans";
-    color: rgb( 0, 0, 0 );
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 0, 0, 0 )"};
     font-weight:bold;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);

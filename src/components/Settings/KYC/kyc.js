@@ -21,7 +21,7 @@ const KYC_head = styled.div`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    color: rgb( 80, 80, 80 );
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
     margin-top:20px;
 `
 const KYC_progress = styled.div`
@@ -32,10 +32,10 @@ const KYC_progress = styled.div`
     margin-right:auto;
     & .ant-steps-item-icon
     {
-        background:#00bdd2;
-        border:1px solid white;
+        background-color:rgb(0,170,250);
+        border-color:rgb(0,170,250);
     }
-    & .anticon-check
+    & .ant-steps-finish-icon
     {
         color:white;
     }

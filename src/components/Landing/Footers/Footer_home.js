@@ -26,7 +26,8 @@ const Footer_main = styled(Footer)`
     background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
     text-align: left;
     padding: 25px 0px 0px 0px;
-    border-top:2px solid #00bcd2;
+    border-top:2px solid #0f3b61
+    /* border-top:2px solid #00bcd2; */
 `
 const Footer_headers = styled.li`
     font-size: 14px;
@@ -265,7 +266,7 @@ class Footer_home extends Component {
                             <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                                 <Footer_ul>
                                     <Footer_headers>Information</Footer_headers>
-                                    <li style={{ cursor: "pointer" }} >
+                                    <li style={{ cursor: "pointer" }}>
                                         <Footer_Link to="/about-us">About Us</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }}>

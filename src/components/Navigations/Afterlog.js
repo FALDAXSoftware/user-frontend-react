@@ -29,8 +29,7 @@ const UserName = styled.div`
     display: inline-block;
     font-size: 13px;
     font-family: "Open sans";
-    /* color: ${props => props.theme.mode == "dark" ? "white" : "black"}; */
-    color:#00bdd2;
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
     font-weight: 600;
     @media(max-width: 576px)
     {
@@ -193,9 +192,9 @@ class Afterlog extends Component {
                 {/*  <Bell>
                     <Icon  style={{fontSize:"15px",color:"black"}} type="bell" theme="filled" />      
                 </Bell>*/}
-                {/* <Day_night_mode onClick={this.changetoDark.bind(this)}>
+                <Day_night_mode onClick={this.changetoDark.bind(this)}>
                     <span> <Tooltip placement="top" title={this.state.iconTitle}><FontAwesomeIcon icon={this.state.themeIcon} color={this.state.fontColor} style={{ transform: 'rotate(315deg)' }} /></Tooltip> </span>
-                </Day_night_mode> */}
+                </Day_night_mode>
                 <Link to="/careers">
                     <Exchange color={this.state.selected}>
                         <span> CAREERS </span>

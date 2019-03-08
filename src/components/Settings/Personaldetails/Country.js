@@ -90,7 +90,7 @@ export default class CountryPick extends Component {
         console.log(value, position)
         var countrySelected = CountryData.getCountryById(newPosition);
         console.log(countrySelected);
-        var states = CountryData.getStatesOfCountry(newPosition);
+        var states = CountryData.getStatesOfCountry(newPosition + 1);
 
         this.setState({ city_selected: null, state_selected: null, country_selected: value, stateID: null, countryID: newPosition, states });
 

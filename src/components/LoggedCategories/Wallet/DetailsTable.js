@@ -77,15 +77,13 @@ class DetailsTable extends React.Component {
                 <tbody>
 
                     {this.state.walletDetails !== null ? Object.keys(this.state.walletDetails).length > 0 ? Object.keys(this.state.walletDetails).map(function (index, key) {
-                        var date_month = moment.utc(me.state.walletDetails[index].created_at).local().format("MMM");
-                        var date_day = moment.utc(me.state.walletDetails[index].created_at).local().format("DD");
+                        var date = moment.utc(me.state.walletDetails[index].created_at).local().format(`${me.props.profileDetails.date_format}`);
                         var details = me.state.walletDetails;
 
                         return (
                             <Col1 wallet>
                                 <td>
-                                    <div>{date_month}</div>
-                                    <div>{date_day}</div>
+                                    <div>{date}</div>
                                 </td>
                                 <td>
                                     {details[index].transaction_type == "buy" ? <span><Icon style={{ color: "green", fontSize: "20px" }} type="download" /> RECEIVED</span> : <span><Icon style={{ color: "red", fontSize: "20px" }} type="upload" /> SENT</span>}
@@ -115,10 +113,11 @@ class DetailsTable extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    return ({
-
-    })
+const mapStateToProps = (state) => {
+    return {
+        ...state,
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
+    }
 }
 
 export default connect(mapStateToProps)(DetailsTable);
