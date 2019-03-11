@@ -151,8 +151,7 @@ class AddCoin extends Component {
     _getAllCountries = () => {
         fetch(globalVariables.API_URL + "/users/countries", {
             method: "GET",
-        })
-            .then(response => response.json())
+        }).then(response => response.json())
             .then((responseData) => {
                 if (responseData.status == 200) {
                     this.setState({ countries: responseData.data });

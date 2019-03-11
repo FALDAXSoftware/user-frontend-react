@@ -54,8 +54,8 @@ const P_tag = styled.p`
     display:block;
 `
 
-/* Component Defination Starts here */
-export default class Home_fourth extends Component {
+/* Component Definition Starts here */
+export default class HomeSeven extends Component {
     constructor(props) {
         super(props);
         this.state = {

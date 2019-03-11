@@ -154,6 +154,8 @@ class Blog extends Component {
     }
 
     render() {
+        const { searchClass, searchV, removeflag, blogsData, nxtPage, totalPage, currPage,
+            loader } = this.state;
         var _self = this;
         return (
             <News_main>
@@ -169,17 +171,17 @@ class Blog extends Component {
                                 placeholder="Search News"
                                 onChange={value => this.searchChange(value)}
                                 style={{ width: "100%" }}
-                                className={this.state.searchClass}
+                                className={searchClass}
                                 onPressEnter={e => this.submitSearch(e)}
-                                value={this.state.searchV}
+                                value={searchV}
                             />
-                            {this.state.removeflag == true ? <RemoveButton onClick={this.removeSearch.bind(this)}>Clear Search <Icon type="close" /></RemoveButton> : ""}
+                            {removeflag == true ? <RemoveButton onClick={this.removeSearch.bind(this)}>Clear Search <Icon type="close" /></RemoveButton> : ""}
                         </Search_wrap>
                         <Whole_news>
                             <Blogs_wrap>
                                 <Row className="blog-card-row">
 
-                                    {this.state.blogsData.data !== undefined ? this.state.blogsData.data.map(function (result, key, index) {
+                                    {blogsData.data !== undefined ? blogsData.data.map(function (result, key, index) {
                                         var date = moment.utc(result.posted_at).local().format("MMM DD, YYYY");
                                         var img = result.cover_image;
                                         var tag = result.tags ? result.tags.split(',') : [];
@@ -195,27 +197,26 @@ class Blog extends Component {
                                                     >
                                                         <Meta
                                                             title={<Meta_title className="news-title">{result.title}</Meta_title>}
-                                                        /*   */
                                                         />
                                                     </Card>
                                                 </a>
                                             </Col>);
                                     }) : ""
                                     }
-                                    {this.state.blogsData !== undefined && this.state.blogsData !== '' ? (this.state.blogsData.data.length == 0 ? <NoData>No Data Found</NoData> : "") : ""}
+                                    {blogsData !== undefined && blogsData !== '' ? (blogsData.data.length == 0 ? <NoData>No Data Found</NoData> : "") : ""}
                                 </Row>
                             </Blogs_wrap>
                         </Whole_news>
                         <Prev_next>
-                            {(this.state.currPage > 1 && this.state.currPage <= this.state.totalPage) ? <Link to={`/news?newsPage=${this.state.nxtPage - 2}`}><Prev><i style={{ verticalAlign: "middle", textDecoration: "none" }} className="material-icons">keyboard_backspace</i><span style={{ verticalAlign: "middle" }}>Previous Articles</span></Prev></Link> : ""}
+                            {(currPage > 1 && currPage <= totalPage) ? <Link to={`/news?newsPage=${nxtPage - 2}`}><Prev><i style={{ verticalAlign: "middle", textDecoration: "none" }} className="material-icons">keyboard_backspace</i><span style={{ verticalAlign: "middle" }}>Previous Articles</span></Prev></Link> : ""}
 
-                            {(this.state.nxtPage <= this.state.totalPage) ? <Link to={`/news?newsPage=${this.state.nxtPage}`}><Next><span style={{ verticalAlign: "middle", textDecoration: "none" }}>Next Articles</span><i style={{ verticalAlign: "middle", transform: "rotate(180deg)" }} className="material-icons">keyboard_backspace</i></Next></Link> : ""}
+                            {(nxtPage <= totalPage) ? <Link to={`/news?newsPage=${nxtPage}`}><Next><span style={{ verticalAlign: "middle", textDecoration: "none" }}>Next Articles</span><i style={{ verticalAlign: "middle", transform: "rotate(180deg)" }} className="material-icons">keyboard_backspace</i></Next></Link> : ""}
                         </Prev_next>
                     </SectionBlog>
                 </Container_Blog>
 
                 <CommonFooter />
-                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+                {(loader) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : ""}
             </News_main>

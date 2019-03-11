@@ -773,8 +773,8 @@ function getFromLS(key) {
                         { i: 'instruments', x: 0, y: 1, w: 4, h: 3, minW: 4, minH: 2 },
                         { i: 'tradeAction', x: 4, y: 1, w: 4, h: 3, minW: 4, minH: 2, maxH: 5 },
                         { i: 'buysellBook', x: 8, y: 1, w: 4, h: 3, minW: 3, minH: 3 },
-                        { i: 'depthChart', x: 0, y: 2, w: 12, h: 2, minW: 4 },
-                        { i: 'orderHistory', x: 0, y: 3, w: 12, h: 2, minW: 4 },
+                        { i: 'depthChart', x: 0, y: 2, w: 6, h: 3, minW: 4 },
+                        { i: 'orderHistory', x: 7, y: 2, w: 6, h: 3, minW: 4 },
                         { i: 'myorder', x: 0, y: 4, w: 12, h: 2, minW: 6, minH: 2 }
                     ],
                     md: [

@@ -40,14 +40,12 @@ const FirstIconS = styled(Icon)`
   display:none;
   margin-left:8px;
   margin-bottom: -4px;
-
 `
 const FirstIconF = styled(Icon)`
   font-size:19px;
   display:none;
   margin-left:8px;
   margin-bottom: -4px;
-
 `
 const LastIconS = styled(FirstIconS)`
 `
@@ -58,22 +56,21 @@ const EmailIconS = styled(FirstIconS)`
 const EmailIconF = styled(FirstIconF)`
 `
 const PassIconS = styled(FirstIconS)`
-margin-left:18px;
+  margin-left:18px;
   margin-bottom: -4px;
 `
 const PassIconF = styled(FirstIconF)`
-margin-left:18px;
+  margin-left:18px;
   margin-bottom: -4px;
 `
 const ConfirmIconS = styled(FirstIconS)`
-margin-left:18px;
+  margin-left:18px;
   margin-bottom: -4px;
 `
 const ConfirmIconF = styled(FirstIconF)`
-margin-left:18px;
+  margin-left:18px;
   margin-bottom: -4px;
 `
-
 const Full = styled(Username)`
   display:inline-block;
 `
@@ -88,8 +85,8 @@ const Ph_Label = styled(Email_label)`
   margin-top:20px;
 `
 const Password = styled(Username)`
-display:inline-block;
-padding-right:40px;
+  display:inline-block;
+  padding-right:40px;
 `
 const Referral = styled(Username)``
 const Button_login = styled(Button)`
@@ -141,14 +138,7 @@ const FAI = styled.img`
 `
 const Active_FAI = styled(FAI)`
 `
-function openNotificationWithIcon(type, head, desc) {
-  notification[type]({
-    message: head,
-    description: desc,
-  });
-};
-
-class Signup_Form extends Component {
+class SignupForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -181,8 +171,6 @@ class Signup_Form extends Component {
   componentWillReceiveProps(props, newProps) {
     if (props.isSignUp) {
       if (props.isSignUp.status == 200) {
-        console.log('signed up')
-        // this.openNotificationWithIcon('success', 'Sign In', props.isSignUp.message);
         this.props.dispModal("thankyou");
       } else {
         this.openNotificationWithIcon('error', 'Sign In', props.isSignUp.err);
@@ -384,7 +372,6 @@ class Signup_Form extends Component {
     }
   }
   handleSubmit(event) {
-    console.log("I m x\ca")
     this.submit();
     event.preventDefault();
   }
@@ -503,4 +490,4 @@ const mapDispatchToProps = dispatch => ({
   clearSignUp: () => dispatch(clearSignUp())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Signup_Form))
+export default connect(mapStateToProps, mapDispatchToProps)(createForm()(SignupForm))

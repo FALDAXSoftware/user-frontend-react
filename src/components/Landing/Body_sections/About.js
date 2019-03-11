@@ -47,15 +47,11 @@ export default class About extends Component {
   }
 
   comingCancel = (e) => {
-    this.setState({
-      comingSoon: false,
-    });
+    this.setState({ comingSoon: false });
   }
 
   showComing = () => {
-    this.setState({
-      comingSoon: true,
-    });
+    this.setState({ comingSoon: true });
   }
 
   render() {

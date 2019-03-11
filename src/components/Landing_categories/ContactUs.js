@@ -143,7 +143,6 @@ class ContactUs extends Component {
                     this.setState({ fields: fields }, () => {
                         this.validator.hideMessages();
                         this.forceUpdate();
-
                     })
                 })
                 .catch(error => {

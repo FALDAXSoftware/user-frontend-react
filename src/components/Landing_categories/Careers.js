@@ -18,9 +18,6 @@ export const ContainerContact = styled(Container)`
     padding-right:30px;
     padding-left:30px;
 `
-const CareerDiv = styled(Headcontact)`
-    text-align: center;
-`
 const Cat_head = styled(Job_head)`
     font-size: 25px;
     font-weight: 650;

@@ -41,8 +41,7 @@ class CareerDetails extends Component {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
                     }
-                })
-                    .then(response => response.json())
+                }).then(response => response.json())
                     .then((responseData) => {
                         this.setState({ jobID: arr[1], jobDetails: responseData.data, loader: false })
                     })
@@ -50,7 +49,9 @@ class CareerDetails extends Component {
             }
         }
     }
+
     render() {
+        const { jobDetails, jobID, loader } = this.state;
         return (
             <Contact_wrap>
                 <Navigation />
@@ -62,22 +63,22 @@ class CareerDetails extends Component {
                         </Headcontact>
                         <CareerD_body>
                             <Btn_div>
-                                {this.state.jobDetails !== null ?
-                                    <Link to={`/applyjob?jobid=${this.state.jobID}&position=${this.state.jobDetails.position}`}><Job_btn>Apply job</Job_btn></Link>
+                                {jobDetails !== null ?
+                                    <Link to={`/applyjob?jobid=${jobID}&position=${jobDetails.position}`}><Job_btn>Apply job</Job_btn></Link>
                                     : ""}
                             </Btn_div>
-                            {this.state.jobDetails !== null ?
+                            {jobDetails !== null ?
                                 <Body_details>
-                                    <Body_p>{this.state.jobDetails.position}</Body_p>
-                                    <Location_p>{this.state.jobDetails.location}</Location_p>
-                                    <Details_p>{ReactHtmlParser(this.state.jobDetails.job_desc)}</Details_p>
+                                    <Body_p>{jobDetails.position}</Body_p>
+                                    <Location_p>{jobDetails.location}</Location_p>
+                                    <Details_p>{ReactHtmlParser(jobDetails.job_desc)}</Details_p>
                                 </Body_details> : ''
                             }
                         </CareerD_body>
                     </ContainerContact>
                 </Grey_wrap>
                 <CommonFooter />
-                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+                {(loader) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : ""}
             </Contact_wrap>

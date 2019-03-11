@@ -113,12 +113,12 @@ const CardText = styled.h4`
 const Content = styled.div`
   color:${props => props.theme.mode == "dark" ? "white" : ""} !important;
 `
-const Div_wrap = styled.div`
+const DivWrap = styled.div`
   margin-top:20px;
 `
 
 /* Styled Components */
-/* Component Defination Starts Here*/
+/* Component Definition Starts Here*/
 
 export default class Policy extends Component {
   constructor() {
@@ -142,13 +142,13 @@ export default class Policy extends Component {
         this.setState({ aboutContent: responseData.data.content, loader: false })
       })
       .catch(error => { })
-
   }
   teamClick(value) {
     this.setState({ team: value });
   }
 
   render() {
+    const { loader } = this.state;
     return (
       <div>
         <Navigation />
@@ -169,7 +169,7 @@ export default class Policy extends Component {
                 {/* Blocks start */}
                 <FirstRow >
                   <Col md={{ span: 6, offset: 5 }} xl={{ span: 6, offset: 5 }}>
-                    <Div_wrap>
+                    <DivWrap>
                       <a href={amazon_Bucket + "assets/pdf/FALDAX+Terms+of+Service.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
@@ -179,10 +179,10 @@ export default class Policy extends Component {
                           </PContainer>
                         </CustomCard>
                       </a>
-                    </Div_wrap>
+                    </DivWrap>
                   </Col>
                   <Col md={{ span: 6, offset: 2 }} xl={{ span: 6, offset: 2 }}>
-                    <Div_wrap>
+                    <DivWrap>
                       <a href={amazon_Bucket + "assets/pdf/FALDAX+Privacy+Policy.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
@@ -192,13 +192,13 @@ export default class Policy extends Component {
                           </PContainer>
                         </CustomCard>
                       </a>
-                    </Div_wrap>
+                    </DivWrap>
                   </Col>
                 </FirstRow>
 
                 <SecondRow>
                   <Col md={{ span: 6, offset: 5 }} xl={{ span: 6, offset: 5 }}>
-                    <Div_wrap>
+                    <DivWrap>
                       <a href={amazon_Bucket + "assets/pdf/FALDAX+Anti-Money+Laundering+Policy+v2.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
@@ -208,10 +208,10 @@ export default class Policy extends Component {
                           </PContainer>
                         </CustomCard>
                       </a>
-                    </Div_wrap>
+                    </DivWrap>
                   </Col>
                   <Col md={{ span: 6, offset: 2 }} xl={{ span: 6, offset: 2 }}>
-                    <Div_wrap>
+                    <DivWrap>
                       <a href={amazon_Bucket + "assets/pdf/FALDAX+Cookie+Policy.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
@@ -221,7 +221,7 @@ export default class Policy extends Component {
                           </PContainer>
                         </CustomCard>
                       </a>
-                    </Div_wrap>
+                    </DivWrap>
                   </Col>
                 </SecondRow>
 
@@ -230,7 +230,7 @@ export default class Policy extends Component {
             </ProfileDiv>
           </ProfileWrapper>
           <CommonFooter />
-          {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+          {(loader) ? <Spin_Ex className="Ex_spin">
             <Spin size="large" />
           </Spin_Ex> : ""}
         </OverlayLoader>

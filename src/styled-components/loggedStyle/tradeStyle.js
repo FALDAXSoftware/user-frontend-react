@@ -201,7 +201,7 @@ export const Right_div = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
-    height:640px;
+    height:100%;
     @media(max-width:991px)
     {
         margin-top:30px;
