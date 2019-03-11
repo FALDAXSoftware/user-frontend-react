@@ -123,8 +123,7 @@ export const Col1 = styled.tr`
         font-size: ${props => props.wallet ? "14px" : ""};
         font-family: ${props => props.wallet ? "Open Sans" : ""};
         font-weight:  ${props => props.wallet ? "600" : ""};
-        color: ${props => props.wallet ? "rgb( 33, 33, 33 )" : ""};
-        
+        color: ${props => props.wallet ? props.theme.mode == "dark" ? "white" : "rgb( 33, 33, 33 )" : ""};
     }
 `
 export const Bit_img = styled.img`
