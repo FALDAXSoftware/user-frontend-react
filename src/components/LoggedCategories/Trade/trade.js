@@ -37,6 +37,7 @@ import TraddingViewChart from "../../TraddingViewChart";
 
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
+const originalLayouts = getFromLS("layouts") || {};
 
 let { API_URL, tvChartURL } = globalVariables;
 /* var socketIOClient = require('socket.io-client');
@@ -67,7 +68,7 @@ const OrderTradeWrap = styled.div`
     }
 `
 const Grey_wrap_trade = styled(Grey_wrap)`
-    padding-top:80px;
+    padding-top:120px;
 `
 
 const columns = [{
@@ -138,7 +139,8 @@ class Trade extends Component {
             hisLoader: false,
             depthLoader: false,
             editState: false,
-            saveState: true
+            saveState: true,
+            layouts: JSON.parse(JSON.stringify(originalLayouts))
         };
         io = this.props.io;
         // io.sails.url = API_URL;
@@ -420,8 +422,12 @@ class Trade extends Component {
             this.tvWidget = null;
         }
     } */
+
+    /* RGL starts here */
+
     onLayoutChange(layout, oldItem, newItem) {
         let self = this;
+        console.log(layout, oldItem, newItem)
         if (oldItem.i == "instruments") {
             if (oldItem.h != newItem.h) {
                 let newHeight = 0;
@@ -468,8 +474,22 @@ class Trade extends Component {
             }
 
         }
-
+        console.log("Hello 2", oldItem)
+        this.saveToLS("layouts", oldItem);
+        this.setState({ layouts: oldItem });
     }
+    saveToLS(key, value) {
+        if (global.localStorage) {
+            global.localStorage.setItem(
+                "rgl-8",
+                JSON.stringify({
+                    [key]: value
+                })
+            );
+        }
+    }
+    /* RGL ends here */
+
     popWindow() {
         console.log("HEYY BUDDY DOUBLE")
         var newWindow = window.open("localhost:3000/trade", "", "width=300, height=200");
@@ -521,55 +541,12 @@ class Trade extends Component {
     }
     render() {
         var self = this;
-        var layouts = {
-            lg: [
-                { i: 'instruments', x: 0, y: 0, w: 4, h: 3, minW: 4, minH: 2 },
-                { i: 'tradeAction', x: 4, y: 0, w: 4, h: 3, minW: 4, minH: 2, maxH: 5 },
-                { i: 'c', x: 8, y: 0, w: 3, h: 2 },
-                { i: 'd', x: 0, y: 1, w: 12, h: 2, minW: 4 },
-                { i: 'orderHistory', x: 0, y: 2, w: 12, h: 2, minW: 4 },
-                { i: 'myorder', x: 0, y: 3, w: 12, h: 2, minW: 6, minH: 2 }
-            ],
-            md: [
-                { i: 'instruments', x: 0, y: 0, w: 5, h: 2, minW: 5 },
-                { i: 'tradeAction', x: 5, y: 0, w: 5, h: 2, minW: 5 },
-                { i: 'c', x: 0, y: 1, w: 5, h: 2, minW: 5 },
-                { i: 'd', x: 5, y: 1, w: 5, h: 2, minW: 5 },
-                { i: 'orderHistory', x: 0, y: 2, w: 10, h: 2, minW: 5 },
-                { i: 'myorder', x: 0, y: 3, w: 10, h: 2, minW: 5 }
-            ],
-            sm: [
-                { i: 'instruments', x: 0, y: 0, w: 6, h: 2, minW: 6 },
-                { i: 'tradeAction', x: 0, y: 1, w: 6, h: 2, minW: 6 },
-                { i: 'c', x: 0, y: 2, w: 6, h: 2, minW: 6 },
-                { i: 'd', x: 0, y: 3, w: 6, h: 2, minW: 6 },
-                { i: 'orderHistory', x: 0, y: 4, w: 6, h: 2, minW: 6 },
-                { i: 'myorder', x: 0, y: 5, w: 6, h: 2, minW: 6 }
-            ],
 
-            xs: [
-                { i: 'instruments', x: 0, y: 0, w: 4, h: 2, minW: 4 },
-                { i: 'tradeAction', x: 0, y: 1, w: 4, h: 2, minW: 4 },
-                { i: 'c', x: 0, y: 2, w: 4, h: 2, minW: 4 },
-                { i: 'd', x: 0, y: 3, w: 4, h: 2, minW: 4 },
-                { i: 'orderHistory', x: 0, y: 4, w: 4, h: 2, minW: 4 },
-                { i: 'myorder', x: 0, y: 5, w: 4, h: 2, minW: 4 }
-            ],
-            xxs: [
-                { i: 'instruments', x: 0, y: 0, w: 2, h: 2, minW: 2 },
-                { i: 'tradeAction', x: 0, y: 1, w: 2, h: 2, minW: 2 },
-                { i: 'c', x: 0, y: 2, w: 2, h: 2, minW: 2 },
-                { i: 'd', x: 0, y: 3, w: 2, h: 2, minW: 2 },
-                { i: 'orderHistory', x: 0, y: 4, w: 2, h: 2, minW: 2 },
-                { i: 'myorder', x: 0, y: 5, w: 2, h: 2, minW: 2 }
-
-            ]
-        };
         const menu = (
             <Menu className="SettingMenu">
-                <Menu.Item key="1"><Icon type="layout" /> Edit Layout</Menu.Item>
-                <Menu.Divider />
+                <Menu.Item onClick={this.editLayout.bind(this)} disabled={this.state.editState} key="1">Edit Layout</Menu.Item>
                 <Menu.Item key="2" onClick={this.goFullScreen}><Icon type="fullscreen" /> Full Screen</Menu.Item>
+                <Menu.Item onClick={this.saveLayout.bind(this)} disabled={this.state.saveState} key="2">Save</Menu.Item>
             </Menu>
         );
         return (
@@ -579,43 +556,49 @@ class Trade extends Component {
                 </SettingDropdown>
                 <LoggedNavigation />
                 <Grey_wrap_trade>
-                    <Row>
+                    {/* <Row>
                         <Col>
                             <Layout>
-                                <EditButton onClick={this.editLayout.bind(this)} disabled={this.state.editState}>Edit Layout</EditButton>
-                                <SaveButton onClick={this.saveLayout.bind(this)} disabled={this.state.saveState}>Save</SaveButton>
+                                <EditButton  >Edit Layout</EditButton>
+                                <SaveButton>Save</SaveButton>
                             </Layout>
                         </Col>
-                    </Row>
+                    </Row> */}
                     <Row>
                         <Col>
                             {/* <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} /> */}
-                            <MainTV >
-                                <TVBar>
-                                    <div>
-                                        <span>{this.state.crypto}-{this.state.currency}</span>
-                                    </div>
-                                    <div onClick={() => { window.open(tvChartURL, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes'); }} style={{ marginLeft: "auto" }}>
-                                        <Tooltip placement="topLeft" title={"Chart in New Window"}>
-                                            <Icon type="select" style={{ fontSize: '26px' }} />
-                                        </Tooltip>
-                                    </div>
-                                </TVBar>
-                                <TraddingViewChart theme={this.props.theme} />
-                            </MainTV>
+
                         </Col>
                     </Row>
                     <Row>
                         <Col>
                             <ResponsiveReactGridLayout
                                 className="layout"
-                                layouts={layouts}
+                                layouts={this.state.layouts}
                                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                                 cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                                onResize={this.onLayoutChange}
                                 isDraggable={this.state.editState}
                                 isResizable={this.state.editState}
+                                onLayoutChange={(layout, layouts) =>
+                                    this.onLayoutChange(layout, layouts)
+                                }
                             >
+                                <div key="tradeView">
+                                    <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
+                                        <MainTV >
+                                            <TVBar>
+                                                <div>
+                                                    <span>{this.state.crypto}-{this.state.currency}</span>
+                                                </div>
+                                                <div onClick={() => { window.open(tvChartURL, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes'); }} style={{ marginLeft: "auto" }}>
+                                                    <Tooltip placement="topLeft" title={"Chart in New Window"}>
+                                                    </Tooltip>
+                                                </div>
+                                            </TVBar>
+                                            <TraddingViewChart theme={this.props.theme} />
+                                        </MainTV>
+                                    </div>
+                                </div>
                                 <div key="instruments">
                                     <div onDoubleClick={this.popWindow.bind(this)} style={{ height: "100%", width: "100%", overflow: "auto" }}>
                                         {
@@ -667,7 +650,7 @@ class Trade extends Component {
 
                                     </div>
                                 </div>
-                                <div key="c">
+                                <div key="buysellBook">
                                     <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
                                         {this.state.buySellLoader == true
                                             ?
@@ -677,7 +660,7 @@ class Trade extends Component {
                                         <BuySell buySellLoader={(loader) => { this.buySellLoaderFunc(loader) }} io={io} />
                                     </div>
                                 </div>
-                                <div key="d" >
+                                <div key="depthChart" >
                                     <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
                                         {
                                             this.state.depthLoader == true ?
@@ -726,7 +709,7 @@ class Trade extends Component {
                                                     </FIAT_wrap2>
                                                 </OrderTradeWrap>
                                             </Orderwrap>
-                                            <OrderTrade pending={this.state.status} cancelOrder={(id, side, type) => { this.cancelOrder(id, side, type) }} orderTradeData={this.state.orderTradeData} height={self.state.myOrderTableHeight} />
+                                            <OrderTrade profileDetails={this.props.profileDetails} pending={this.state.status} cancelOrder={(id, side, type) => { this.cancelOrder(id, side, type) }} orderTradeData={this.state.orderTradeData} height={self.state.myOrderTableHeight} />
                                         </Left_div2>
                                     </div>
                                 </div>
@@ -745,7 +728,8 @@ function mapStateToProps(state) {
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
         theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
-        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : ""
+        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : "",
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }
@@ -754,3 +738,63 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trade);
+
+
+function getFromLS(key) {
+    let ls = {};
+    if (global.localStorage) {
+        try {
+            ls = JSON.parse(global.localStorage.getItem("rgl-8")) || {
+                layouts: {
+                    lg: [
+                        { i: "tradeView", x: 0, y: 0, w: 12, h: 6, minW: 6, minH: 3 },
+                        { i: 'instruments', x: 0, y: 1, w: 4, h: 3, minW: 4, minH: 2 },
+                        { i: 'tradeAction', x: 4, y: 1, w: 4, h: 3, minW: 4, minH: 2, maxH: 5 },
+                        { i: 'buysellBook', x: 8, y: 1, w: 3, h: 2 },
+                        { i: 'depthChart', x: 0, y: 2, w: 12, h: 2, minW: 4 },
+                        { i: 'orderHistory', x: 0, y: 3, w: 12, h: 2, minW: 4 },
+                        { i: 'myorder', x: 0, y: 4, w: 12, h: 2, minW: 6, minH: 2 }
+                    ],
+                    md: [
+                        { i: 'instruments', x: 0, y: 0, w: 5, h: 2, minW: 5 },
+                        { i: 'tradeAction', x: 5, y: 0, w: 5, h: 2, minW: 5 },
+                        { i: 'buysellBook', x: 0, y: 1, w: 5, h: 2, minW: 5 },
+                        { i: 'depthChart', x: 5, y: 1, w: 5, h: 2, minW: 5 },
+                        { i: 'orderHistory', x: 0, y: 2, w: 10, h: 2, minW: 5 },
+                        { i: 'myorder', x: 0, y: 3, w: 10, h: 2, minW: 5 }
+                    ],
+                    sm: [
+                        { i: 'instruments', x: 0, y: 0, w: 6, h: 2, minW: 6 },
+                        { i: 'tradeAction', x: 0, y: 1, w: 6, h: 2, minW: 6 },
+                        { i: 'buysellBook', x: 0, y: 2, w: 6, h: 2, minW: 6 },
+                        { i: 'depthChart', x: 0, y: 3, w: 6, h: 2, minW: 6 },
+                        { i: 'orderHistory', x: 0, y: 4, w: 6, h: 2, minW: 6 },
+                        { i: 'myorder', x: 0, y: 5, w: 6, h: 2, minW: 6 }
+                    ],
+
+                    xs: [
+                        { i: 'instruments', x: 0, y: 0, w: 4, h: 2, minW: 4 },
+                        { i: 'tradeAction', x: 0, y: 1, w: 4, h: 2, minW: 4 },
+                        { i: 'buysellBook', x: 0, y: 2, w: 4, h: 2, minW: 4 },
+                        { i: 'depthChart', x: 0, y: 3, w: 4, h: 2, minW: 4 },
+                        { i: 'orderHistory', x: 0, y: 4, w: 4, h: 2, minW: 4 },
+                        { i: 'myorder', x: 0, y: 5, w: 4, h: 2, minW: 4 }
+                    ],
+                    xxs: [
+                        { i: 'instruments', x: 0, y: 0, w: 2, h: 2, minW: 2 },
+                        { i: 'tradeAction', x: 0, y: 1, w: 2, h: 2, minW: 2 },
+                        { i: 'buysellBook', x: 0, y: 2, w: 2, h: 2, minW: 2 },
+                        { i: 'depthChart', x: 0, y: 3, w: 2, h: 2, minW: 2 },
+                        { i: 'orderHistory', x: 0, y: 4, w: 2, h: 2, minW: 2 },
+                        { i: 'myorder', x: 0, y: 5, w: 2, h: 2, minW: 2 }
+
+                    ]
+                }
+            };
+            console.log("Hello 1", ls)
+        } catch (e) {
+            /*Ignore*/
+        }
+    }
+    return ls[key];
+}

@@ -20,6 +20,7 @@ const Country = styled.span`
     margin-bottom:10px;
 `
 const SelectS = styled(Select)`
+width:85%;
     & .Country_Select
     {
         width:85%;
@@ -44,9 +45,14 @@ const SelectS = styled(Select)`
         outline:0;
         box-shadow:none;
     }
+    @media(max-width:991px)
+    {
+        width:93%;
+    }
     @media(max-width:767px)
     {
         margin-top:0px;
+        width:100%;
     }
 `
 const Select_wrap = styled.div`
@@ -90,7 +96,7 @@ export default class CountryPick extends Component {
         console.log(value, position)
         var countrySelected = CountryData.getCountryById(newPosition);
         console.log(countrySelected);
-        var states = CountryData.getStatesOfCountry(newPosition);
+        var states = CountryData.getStatesOfCountry(newPosition + 1);
 
         this.setState({ city_selected: null, state_selected: null, country_selected: value, stateID: null, countryID: newPosition, states });
 

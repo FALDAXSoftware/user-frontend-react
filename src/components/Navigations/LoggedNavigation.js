@@ -8,7 +8,7 @@ import 'antd/dist/antd.css';
 
 /* Components */
 import Afterlog from "./Afterlog"
-import { Logout } from '../../Actions/Auth';
+import { LogoutUser } from '../../Actions/Auth';
 import ReactSwipeEvents from 'react-swipe-events'
 import { globalVariables } from "../../Globals";
 import ComingSoon from '../ComingSoon';
@@ -28,16 +28,16 @@ const Logo = styled.div`
     cursor:pointer;
 `
 const Header_main = styled(Header)`
-    position:fixed;
-    z-index: 1000;
-    width : 100%;
-    padding:0;
-    text-align:left;
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
-    box-shadow:${props => props.theme.mode == "dark" ? "" : "0px 3px #f7f7f7"};
-    height :80px;
-    display:flex;
-    align-items:center;
+position:fixed;
+z-index: 1000;
+width : 100%;
+padding:0;
+text-align:left;
+background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
+box-shadow:${props => props.theme.mode == "dark" ? "" : "0px 3px #f7f7f7"};
+height :80px;
+display:flex;
+align-items:center;
 `
 const Menu_main = styled(Menu)`
     display:inline-block;
@@ -56,20 +56,20 @@ const Menu_main = styled(Menu)`
     }
 `
 const Menu_item = styled(Menu.Item)`
-    padding:0px 18px;
-    font-size: 13px;
-    font-family: "Open sans";
-    color: rgb( 40, 37, 40 );
-    font-weight: bold;
-    text-transform: uppercase;      
-    vertical-align: unset;
-    float: left;
-    border-bottom:0px !important;
+padding:0px 18px;
+font-size: 13px;
+font-family: "Open sans";
+color: rgb( 40, 37, 40 );
+font-weight: bold;
+text-transform: uppercase;      
+vertical-align: unset;
+float: left;
+border-bottom:0px !important;
 
-    @media(max-width:1365px)
-    {
-        padding:0px 8px;
-    }
+@media(max-width:1365px)
+{
+    padding:0px 8px;
+}
 `
 const NAV = styled.span`
     color:${props => props.theme.mode = "dark" ? "white" : ""};
@@ -221,7 +221,12 @@ class LoggedNavigation extends Component {
     }
 
     logout() {
-        this.props.Logout();
+        let formData = {
+            user_id: this.props.profileDetails.id,
+            jwt_token: this.props.isLoggedIn
+        }
+        this.props.LogoutUser(this.props.isLoggedIn, formData)
+        //this.props.Logout();
     }
 
     showComing = () => {
@@ -270,7 +275,6 @@ class LoggedNavigation extends Component {
             <Header_main id="main">
                 <Logo>
                     <Link to="/">
-                        {console.log(this.state)}
                         <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
                         <FALDAX src={this.state.faldax} />
                     </Link>
@@ -319,7 +323,8 @@ function mapStateToProps(state) {
     });
 }
 const mapDispatchToProps = dispatch => ({
-    Logout: () => dispatch(Logout())
+    // Logout: () => dispatch(Logout()),
+    LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation));

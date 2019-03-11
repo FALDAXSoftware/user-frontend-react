@@ -47,29 +47,31 @@ export const Button_wrap = styled.div`
 export const Sub_wrap = styled.div`
 `
 export const Back_Button = styled(Button)`
-    font-size: 13.217px;
-    font-family: "Open Sans";
-    height:50px;
-    font-weight: bold;
-    text-transform: uppercase;
-    line-height: 2.875;
-    width:120px;
-    border-radius: 24px;
-    color:#2d69eb;
-    background-color: rgb( 255, 255, 255 );
-    box-shadow: 0px 3px 10px 0px rgb( 164, 164, 164 );  
-    margin-right:10px;
+font-size: 13.217px;
+font-family: "Open Sans";
+height:50px;
+font-weight: bold;
+text-transform: uppercase;
+line-height: 2.875;
+width:120px;
+border-radius: 24px;
+color:#2d69eb;
+background-color: rgb( 255, 255, 255 );
+box-shadow: 0px 3px 10px 0px rgb( 164, 164, 164 );  
+margin-right:10px;
+
 `
 export const Next_Button = styled(Button)`
-    margin-left:10px;
-    font-size: 13.217px;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-family: "Open Sans";
-    border-radius: 24px;
-    background-color:#4c84ff;
-    height:50px;
-    width:120px;
+margin-left:10px;
+font-size: 13.217px;
+font-weight: bold;
+text-transform: uppercase;
+font-family: "Open Sans";
+border-radius: 24px;
+background-color:#4c84ff;
+height:50px;
+width:120px;
+
 `
 
 class IDselect extends Component {

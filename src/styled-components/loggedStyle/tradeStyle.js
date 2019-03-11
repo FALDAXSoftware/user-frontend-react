@@ -24,8 +24,6 @@ export const EditButton = styled(Button)`
     margin-right:15px;
 `
 export const MainTV = styled.div`
-    margin-left: 10px;
-    margin-right: 10px;
     background-color: ${props => props.theme.mode == "dark" ? "#2e3141" : "#eceff1"};
 `
 export const TVBar = styled.div`

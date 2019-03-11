@@ -371,7 +371,7 @@ class History extends Component {
                                         <tbody>
                                             {this.state.historyData.length > 0 ?
                                                 this.state.historyData.map(function (temp) {
-                                                    var date = moment.utc(temp.created_at).local().format("MMM DD,YYYY HH:mm:ss");
+                                                    var date = moment.utc(temp.created_at).local().format(`${self.props.profileData.date_format} HH:mm:ss`);
                                                     var side = Number(temp.user_id) == self.props.profileData.id ? temp.side : temp.side == "Buy" ? "Sell" : "Buy";
                                                     var fee = Number(temp.user_id) == self.props.profileData.id ? temp.user_fee.toFixed(2) : temp.requested_fee.toFixed(2);
                                                     return (<tr>

@@ -184,6 +184,28 @@ const Button_del = styled(Button)`
   border-radius:40px;
   height:50px;
 `
+const PaginationS = styled(Pagination)`
+    & .ant-pagination-item-link
+    {
+        background-color: ${props => props.theme.mode == "dark" ? "#041421" : ""};
+    }
+    & .ant-pagination-item-link>i
+    {
+        color: ${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+    & .ant-pagination-item
+    {
+        background-color: ${props => props.theme.mode == "dark" ? "#041421" : ""};
+    }
+    & .ant-pagination-item>a
+    {
+        color: ${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+    & .ant-pagination-item-link .ant-pagination-item-ellipsis
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+`
 const columns_text = [, {
     title: 'Notifications',
     dataIndex: 'Notifications',
@@ -394,7 +416,7 @@ class Acc_settings extends Component {
                             columns={columns} />
                     </Table_wrap>
 
-                    <Pagination
+                    <PaginationS
                         style={{ marginTop: '15px' }}
                         className="ant-users-pagination"
                         onChange={this._handleHistoryPagination.bind(this)}

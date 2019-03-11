@@ -74,7 +74,7 @@ const TokenTitle = styled.span`
   }
 `;
 
-class MediaContact extends Component {
+class AddCoin extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -145,7 +145,7 @@ class MediaContact extends Component {
 
     componentDidMount() {
         this._getAllCountries();
-        document.getElementsByClassName("date-input")[0].setAttribute("readOnly", "readOnly")
+        //document.getElementsByClassName("date-input")[0].setAttribute("readOnly", "readOnly")
     }
 
     _getAllCountries = () => {
@@ -300,8 +300,8 @@ class MediaContact extends Component {
                                 </ul>
                             </Head_desc>
                         </Head>
-                        <Body>
-                            {/* <BodyText>Please fill out this form or email at relations@faldax.com to apply:</BodyText> */}
+                        <iframe style={{ border: 'none' }} height="1100px" width="100%" src={API_URL + "/get-list-token-form"}></iframe>
+                        {/* <Body>
                             <Body_form>
                                 <Form_coin>
                                     <OneDiv>
@@ -574,7 +574,7 @@ class MediaContact extends Component {
                                     }
                                 </Form_coin>
                             </Body_form>
-                        </Body>
+                        </Body> */}
                     </ContainerContact>
                 </Grey_wrap>
                 <CommonFooter />
@@ -586,4 +586,4 @@ class MediaContact extends Component {
     }
 }
 
-export default MediaContact;
+export default AddCoin;

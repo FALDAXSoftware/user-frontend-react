@@ -13,7 +13,8 @@ import {
 } from "../../../Actions/Settings/passwordChange";
 import { Eye, ActiveEye } from "../../../Constants/images";
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+`
 const ChangeRow = styled(Row)`
     &:after 
     {
@@ -110,7 +111,7 @@ export const OldInput = styled(Input)`
     padding:10px;
     padding-right:45px;
     &:focus, &:hover{
-        border-color:#4c84ff;
+        border-color: rgb(0, 170, 250);;
         outline:0;
         box-shadow:none;
     }
@@ -132,12 +133,13 @@ const Button_div = styled.div`
     margin-bottom:50px;
 `
 const NewButton = styled(Save)`
-    border:none;
+    border: none;
     width:auto;
     &:hover
     {
-        background-color: rgb( 76, 132, 255 );
-        color:black;
+        color: #fff;
+        background-color: #40a9ff;
+        border-color: #40a9ff;
     }
 `
 const TwofactorRow = styled(Row)`
@@ -227,7 +229,7 @@ const Key_text = styled.span`
 const Key = styled.p`
     font-size: 13.007px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "#4c84ff"};
+    color: ${props => props.theme.mode == "dark" ? "rgb(0,170,250)" : "rgb(0,170,250)"};
     line-height: 1.846;
     text-align: center;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -250,7 +252,7 @@ const TF_code = styled.div`
     margin-left:40px;
 `
 const TF_label = styled.label`
-    color:${props => props.theme.mode == "dark" ? "#4c84ff" : ""};
+    color:${props => props.theme.mode == "dark" ? "rgb(0,170,250)" : ""};
 `
 const TF_input = styled(Input)`
     width:148px;
@@ -268,8 +270,9 @@ const E_button = styled(Save)`
     width:auto;
     &:hover
     {
-        background-color: rgb( 76, 132, 255 );
-        color:black;
+        color: #fff;
+        background-color: #40a9ff;
+        border-color: #40a9ff;
     }
 `
 const FAI = styled.img`

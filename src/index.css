@@ -382,7 +382,7 @@ table .ant-table-tbody > tr > td {
   font-weight:600;
 }
 .Country_Select > .ant-select-selection:hover,.Country_Select > .ant-select-selection:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
 }
@@ -409,7 +409,7 @@ table .ant-table-tbody > tr > td {
   font-weight:600;
 }
 .Country_Select_night > .ant-select-selection:hover,.Country_Select > .ant-select-selection:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
 }
@@ -443,7 +443,7 @@ table .ant-table-tbody > tr > td {
     padding:10px 5px;
   }
   #profile-year:hover,#profile-year:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
   }
@@ -459,7 +459,7 @@ table .ant-table-tbody > tr > td {
     padding:10px 5px;
   }
   #profile-month:hover,#profile-month:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
   }
@@ -475,7 +475,7 @@ table .ant-table-tbody > tr > td {
     padding:10px 5px;
   }
   #profile-day:hover,#profile-day:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
   }
@@ -559,7 +559,7 @@ table .ant-table-tbody > tr > td {
 
   }
   #profile-year-night:hover,#profile-year-night:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
   }
@@ -577,7 +577,7 @@ table .ant-table-tbody > tr > td {
     padding:10px 5px;
   }
   #profile-month-night:hover,#profile-month-night:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
   }
@@ -594,7 +594,7 @@ table .ant-table-tbody > tr > td {
     padding:10px 5px;
   }
   #profile-day-night:hover,#profile-day-night:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
   }
@@ -761,8 +761,8 @@ table .ant-table-tbody > tr > td {
                                 border-radius: 10px;
   }
   label.kyc-radio-container input:checked ~ .background{
-    background-color: #2d69eb;
-    box-shadow: 0px 3px 10px 0px rgb( 45, 105, 235 );
+    background-color: rgb(0,170,250);
+    box-shadow: 0px 3px 10px 0px rgb(0,170,250);
   }
   label.kyc-radio-container input:checked ~ .background .text{
     /* color: red; */
@@ -806,8 +806,8 @@ table .ant-table-tbody > tr > td {
                                 border-radius: 10px;
   }
   label.kyc-radio-container input:checked ~ .background-night{
-    background-color: #2d69eb;
-    box-shadow: 0px 3px 10px 0px rgb( 45, 105, 235 );
+    background-color: rgb(0,170,250);
+    box-shadow: 0px 3px 10px 0px rgb(0,170,250);
   }
   label.kyc-radio-container input:checked ~ .background-night .text{
     /* color: red; */
@@ -1330,8 +1330,12 @@ div.scrollbar>div:nth-child(3)>div{
 .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){
   background: #4c84ff !important;
 }
+/* React Grid Layout CSS */
+.react-grid-item.react-grid-placeholder
+{
+  background: #1890ff !important;
+}
 .ant-tabs.ant-tabs-top.tardeActionCard{
-  height: 100%;
   width: 100%;
   padding-bottom: 15px;
 }

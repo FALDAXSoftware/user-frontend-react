@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { FooterLogo, DefaultProfile } from "../../Constants/images";
 
 /* Components */
-import * as Logout from '../../Actions/Auth';
+import * as LogoutUser from '../../Actions/Auth';
 import { Day_night_mode, Exchange } from "./BeforeLog";
 import * as darkTheme from '../../Actions/Theme/themeAction';
 import * as walletData from '../../Actions/LoggedCat/walletActions'
@@ -87,7 +87,7 @@ const DownIcon = styled(Icon)`
    height: 10px;
    margin-bottom: 5px;
    padding-left: 10px;
-   color: #dee2ed;
+   color: #b7b7b7;
 `
 const AnchorName = styled.a`
   font-size: 13pt;
@@ -149,11 +149,15 @@ class Afterlog extends Component {
         this.props.openNav();
     }
     logout() {
-        /* console.log("hello Logout") */
+        let formData = {
+            user_id: this.props.profileDetails.id,
+            jwt_token: this.props.isLoggedIn
+        }
+        console.log("hello Logout", this.props)
         this.props.actions.allCoins.allCoinsData();
         this.props.actions.wallet.walletData();
         this.props.actions.theme.darkTheme(false);
-        this.props.actions.auth.Logout();
+        this.props.actions.auth.LogoutUser(this.props.isLoggedIn, formData);
     }
     changetoDark() {
         let flag;
@@ -234,6 +238,7 @@ class Afterlog extends Component {
 function mapStateToProps(state) {
     return ({
         ...state,
+        isLoggedIn: state.simpleReducer.isLoggedIn ? state.simpleReducer.isLoggedIn : '',
         theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
     });
 }
@@ -241,10 +246,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         actions: {
-            auth: bindActionCreators(Logout, dispatch),
+            auth: bindActionCreators(LogoutUser, dispatch),
             theme: bindActionCreators(darkTheme, dispatch),
             wallet: bindActionCreators(walletData, dispatch),
             allCoins: bindActionCreators(allCoinsData, dispatch),
+            //LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+
         }
     };
 }

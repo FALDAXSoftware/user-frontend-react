@@ -255,8 +255,15 @@ class Dashboard extends Component {
                 let activityData = [];
                 if (responseData.status == 200) {
                     responseData.data.map(element => {
+                        var date;
+                        if (this.props.profileDetails.date_format == "MM/DD/YYYY")
+                            date = moment.utc(element.created_at).local().format("MM/DD/YYYY, H:m:s")
+                        else if (this.props.profileDetails.date_format == "DD/MM/YYYY")
+                            date = moment.utc(element.created_at).local().format("DD/MM/YYYY, H:m:s")
+                        else
+                            date = moment.utc(element.created_at).local().format("MMM D, YYYY, H:m:s")
                         activityData.push({
-                            date: moment.utc(element.created_at).local().format("MMMM DD,HH:mm"),
+                            date: date,
                             action: element.side,
                             amount: element.price.toFixed(2) + " " + element.currency,
                             completed: parseInt((parseFloat(element.quantity) * 100) / parseFloat(element.fix_quantity)),
@@ -415,8 +422,9 @@ class Dashboard extends Component {
                                             className="scrollbar news">
                                             {
                                                 news.map((element, index) => (
+
                                                     <List>
-                                                        <Date>{moment.utc(element.posted_at).format("MMMM DD, YYYY HH:mm")}</Date>
+                                                        <Date>{moment.utc(element.posted_at).format(`${this.props.profileDetails.date_format} HH:mm`)}</Date>
                                                         <Listspan>
                                                             {element.owner == "bitcoinist" &&
                                                                 <img src="/images/bitcoinist.png" style={{ marginRight: "10px", height: "20px" }} />
@@ -452,8 +460,9 @@ class Dashboard extends Component {
 
 function mapStateToProps(state) {
     return ({
-        isLoggedIn: state.simpleReducer.isLoggedIn,
-        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        isLoggedIn: state.simpleReducer.isLoggedIn,/* 
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "", */
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }
