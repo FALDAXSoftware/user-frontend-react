@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import { BBC2, Total_BTC, Buy_table, History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
+import { BBC2, Total_BTC, Buy_table, History_wrap1, TableHeader, TableContent, ScrollTableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 import { Spin } from 'antd';
 import {
     Spin_single
@@ -20,7 +20,16 @@ const OTwrap2 = styled(OTwrap)`
         min-width:767px;
     }
 `
-
+const NDF = styled.p`
+    margin-top:30px;
+        background: none;
+        border-bottom: 0px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: ${props => props.theme.mode == "dark" ? "white" : ""};
+        font-family: "Open Sans";
+`
 class SellTable extends Component {
     constructor(props) {
         super(props);
@@ -141,7 +150,7 @@ class SellTable extends Component {
                 <BBC2>SELLING {this.props.cryptoPair.crypto}</BBC2>
                 <Total_BTC>Total:  {this.state.lastsum && this.state.lastsum.toFixed(4)} {this.props.cryptoPair.currency}</Total_BTC>
                 <Buy_table>
-                    <History_wrap>
+                    <History_wrap1>
                         <OTwrap2>
                             <div class="tbl-header">
                                 <TableHeader cellpadding="10px" cellspacing="0" border="0">
@@ -157,9 +166,11 @@ class SellTable extends Component {
                             </div>
                         </OTwrap2>
                         <OTwrap2>
-                            <div class="tbl-content">
+                            <ScrollTableContent >
                                 <Scrollbars
-                                    style={{ height: 165 }}>
+                                    style={{ height: 165 }}
+                                    className="scrollbar"
+                                    hideTracksWhenNotNeeded={true}>
                                     <TableContent cellpadding="10px" cellspacing="0" border="0">
                                         <tbody>
                                             {this.state.result.length ? this.state.result.map(function (element, index) {
@@ -172,19 +183,16 @@ class SellTable extends Component {
                                                     </tr>
                                                 );
                                             })
-                                                : <p style={{
-                                                    textAlign: "center", fontWeight: "600", fontSize: "17px",
-                                                    color: "black", marginTop: "30px", fontFamily: "Open Sans"
-                                                }}>No Data Found</p>
+                                                : <NDF>No Data Found</NDF>
                                             }
 
                                         </tbody>
                                     </TableContent>
                                 </Scrollbars>
 
-                            </div>
+                            </ScrollTableContent>
                         </OTwrap2>
-                    </History_wrap>
+                    </History_wrap1>
                 </Buy_table>
                 {(this.state.Loader == true) ?
                     <Spin_single className="Single_spin">

@@ -21,9 +21,13 @@ export const loadState = () => {
 
 export const saveState = (state) => {
   try {
-    const serializedState = JSON.stringify(state);
+    let stateCopy = { ...state }
+    // delete stateCopy.walletReducer.cryptoPair;
+    console.log("---------------", state);
+
+    const serializedState = JSON.stringify(stateCopy);
     /* console.log(serializedState); */
     localStorage.setItem('state', serializedState);
-  } catch (err) {}
+  } catch (err) { }
 
 }

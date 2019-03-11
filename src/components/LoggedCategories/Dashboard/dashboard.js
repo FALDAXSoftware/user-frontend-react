@@ -16,7 +16,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { Spin_Ex } from "../../Settings/Personaldetails/PersonalDetails";
 
 import {
-    ActPortWrap, Lleft, Rright, Topic, Act_div, ActTable, High_low, Left_hl, Right_hl,
+    ActPortWrap, Lleft, Rright, Topic, Act_div, ActTable, PortTable, High_low, Left_hl, Right_hl,
     Rise_fall, Newsdiv, News, Newslist, List, Listspan, Listp, Date, Spin_single
 } from "../../../styled-components/loggedStyle/dashStyle"
 import { globalVariables } from '../../../Globals';
@@ -255,8 +255,15 @@ class Dashboard extends Component {
                 let activityData = [];
                 if (responseData.status == 200) {
                     responseData.data.map(element => {
+                        var date;
+                        if (this.props.profileDetails.date_format == "MM/DD/YYYY")
+                            date = moment.utc(element.created_at).local().format("MM/DD/YYYY, H:m:s")
+                        else if (this.props.profileDetails.date_format == "DD/MM/YYYY")
+                            date = moment.utc(element.created_at).local().format("DD/MM/YYYY, H:m:s")
+                        else
+                            date = moment.utc(element.created_at).local().format("MMM D, YYYY, H:m:s")
                         activityData.push({
-                            date: moment.utc(element.created_at).local().format("MMMM DD,HH:mm"),
+                            date: date,
                             action: element.side,
                             amount: element.price.toFixed(2) + " " + element.currency,
                             completed: parseInt((parseFloat(element.quantity) * 100) / parseFloat(element.fix_quantity)),
@@ -345,6 +352,11 @@ class Dashboard extends Component {
             })
     }
 
+    getDomainFromUrl(url) {
+        var arr = url.split("/");
+        var result = arr[2];
+        return result;
+    }
     render() {
         const { newsLoader, news, activityLoader, activityData, userFiat } = this.state;
 
@@ -367,7 +379,6 @@ class Dashboard extends Component {
                                                 </Topic>
                                                 <Act_div>
                                                     <ActTable scroll={{ y: 320 }} pagination={false} columns={activityColumns} dataSource={activityData} className="activity-table" />
-
                                                 </Act_div>
                                                 {(this.state.activityLoader == true) ?
                                                     <Spin_single className="Single_spin">
@@ -387,7 +398,7 @@ class Dashboard extends Component {
                                                     <Right_hl>^{this.state.diffrence} {userFiat}</Right_hl>
                                                 </High_low>
                                                 <Act_div>
-                                                    <ActTable scroll={{ y: 250 }} pagination={false} columns={portfolioColumn} dataSource={this.state.portfolioData} className="portfolio-table" />
+                                                    <PortTable scroll={{ y: 250 }} pagination={false} columns={portfolioColumn} dataSource={this.state.portfolioData} className="portfolio-table" />
                                                 </Act_div>
                                                 {(this.state.portfolioLoader == true) ?
                                                     <Spin_single className="Single_spin">
@@ -406,13 +417,28 @@ class Dashboard extends Component {
                                     <News>NEWS</News>
                                     <Newslist>
                                         <Scrollbars
-                                            style={{ height: 380 }}>
+                                            style={{ height: 380 }}
+                                            hideTracksWhenNotNeeded={true}
+                                            className="scrollbar news">
                                             {
                                                 news.map((element, index) => (
+
                                                     <List>
-                                                        <Date>{moment.utc(element.posted_at).format("MMMM DD, YYYY HH:mm")}</Date>
+                                                        <Date>{moment.utc(element.posted_at).format(`${this.props.profileDetails.date_format} HH:mm`)}</Date>
                                                         <Listspan>
-                                                            <FontAwesomeIcon icon={faSquareFull} color='#d4d4d4' style={{ marginRight: "10px" }} />{element.owner}
+                                                            {element.owner == "bitcoinist" &&
+                                                                <img src="/images/bitcoinist.png" style={{ marginRight: "10px", height: "20px" }} />
+                                                            }
+                                                            {element.owner == "cointelegraph" &&
+                                                                <img src="/images/cointelegraph.ico" style={{ marginRight: "10px", height: "20px" }} />
+                                                            }
+                                                            {element.owner == "bitcoin" &&
+                                                                <img src="/images/bitcoin.png" style={{ marginRight: "10px", height: "20px" }} />
+                                                            }
+                                                            {element.owner != "bitcoinist" && element.owner != "cointelegraph" && element.owner != "bitcoin" &&
+                                                                <FontAwesomeIcon icon={faSquareFull} color='#d4d4d4' style={{ marginRight: "10px" }} />
+                                                            }
+                                                            {this.getDomainFromUrl(element.link)}
                                                         </Listspan>
                                                         <Listp href={element.link} target="_blank">{element.title}</Listp>
                                                     </List>
@@ -434,8 +460,9 @@ class Dashboard extends Component {
 
 function mapStateToProps(state) {
     return ({
-        isLoggedIn: state.simpleReducer.isLoggedIn,
-        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        isLoggedIn: state.simpleReducer.isLoggedIn,/* 
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "", */
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }

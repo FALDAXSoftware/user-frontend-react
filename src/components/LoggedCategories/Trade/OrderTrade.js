@@ -7,13 +7,24 @@ import { Icon } from 'antd';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import { History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
+import { TableHeader, TableContent, ScrollTableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 
 export const Order_wrap = styled.div`
     margin-left:30px;
     margin-right:30px;
     border:1px solid #d8d8d8;
-    overflow-x:scroll;
+    &::-webkit-scrollbar {
+        width: 0.5em;
+        height: 0.5em;
+       }
+     
+       &::-webkit-scrollbar-thumb {
+        background-color: ${props => props.theme.mode == 'dark' ? '#041624' : ''};
+        border-radius: 3px;
+       }
+        &::-webkit-scrollbar-track{
+            background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
+        }
 `
 export const HTable = styled(Table)`
 >thead
@@ -40,8 +51,16 @@ export const HTable = styled(Table)`
 const SideType = styled.td`
     color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
 `
+const NDF = styled.p`
+    text-align: center; 
+    font-weight: 600;
+    font-size: 17px;
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    margin-top: 30px;
+    font-family: Open Sans;
+`
 export const OTwrap = styled.div`
-    min-width:767px;
+    
 `
 
 class OrderTrade extends Component {
@@ -79,15 +98,22 @@ class OrderTrade extends Component {
                     </div>
                 </OTwrap>
                 <OTwrap>
-                    <div class="tbl-content">
+                    <ScrollTableContent >
                         <Scrollbars
-                            style={{ height: 300 }}>
+                            style={{ height: this.props.height }}
+                            className="scrollbar">
                             <TableContent cellpadding="10px" cellspacing="0" border="0">
                                 <tbody>
                                     {this.props.orderTradeData.length > 0
                                         ?
                                         this.props.orderTradeData.map(function (data) {
-                                            var date = moment.utc(data.created_at).local().format("MMM DD,YYYY HH:mm:ss");
+                                            var date
+                                            if (self.props.profileDetails.date_format == "MM/DD/YYYY")
+                                                date = moment.utc(data.created_at).local().format("MM/DD/YYYY, H:m:s")
+                                            else if (self.props.profileDetails.date_format == "DD/MM/YYYY")
+                                                date = moment.utc(data.created_at).local().format("DD/MM/YYYY, H:m:s")
+                                            else
+                                                date = moment.utc(data.created_at).local().format("MMM D, YYYY, H:m:s")
                                             var Filled = data.fix_quantity - data.quantity;
                                             return (
                                                 <tr>
@@ -104,15 +130,12 @@ class OrderTrade extends Component {
                                                 </tr>
                                             );
                                         })
-                                        : <p style={{
-                                            textAlign: "center", fontWeight: "600", fontSize: "17px",
-                                            color: "black", marginTop: "30px", fontFamily: "Open Sans"
-                                        }}>No Data Found</p>
+                                        : <NDF >No Data Found</NDF>
                                     }
                                 </tbody>
                             </TableContent>
                         </Scrollbars>
-                    </div>
+                    </ScrollTableContent>
                 </OTwrap>
             </Order_wrap>
         )

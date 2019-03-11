@@ -114,6 +114,7 @@ class Limit extends Component {
             }).then(response => response.json())
                 .then((responseData) => {
                     if (responseData.status == 200) {
+                        this.setState({ limit_price: 0, total: 0, amount: 0 });
                         self.openNotificationWithIcon('success', 'Success', responseData.message);
                     } else {
                         self.openNotificationWithIcon('error', 'Error', responseData.err);

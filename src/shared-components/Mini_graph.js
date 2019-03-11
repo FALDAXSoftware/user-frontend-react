@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
 import { globalVariables } from '../Globals';
+const moment = require('moment');
 let { API_URL, amazon_Bucket } = globalVariables;
 
 /* Styled componets */
@@ -47,7 +48,7 @@ const Span_coin_price = styled.span`
 const Span_coin_percentage = styled.span`
     font-size: 14px;
     font-family: "Open sans";
-    color: ${props => props.value === 0 ? 'black' : props.value <= 0 ? 'red' : '#34a539'}
+    color: ${props => props.value === 0 ? (props => props.theme.mode == "dark" ? 'white' : 'black') : props.value <= 0 ? 'red' : '#34a539'}
     line-height: 1.286;
     text-align: left;
     line-height: 25px;
@@ -65,6 +66,8 @@ class Mini_graph extends React.Component {
                 coinName: this.props.crypto + "/" + this.props.currency,
                 price: 0,
                 percentage: 0,
+                type: 'line',
+                timeStamps: [],
                 // labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
                 datasets: [
                     {
@@ -95,8 +98,8 @@ class Mini_graph extends React.Component {
     }
     componentDidMount() {
         var self = this;
-        if (this.props.cryptoPair !== undefined && this.props.cryptoPair !== "") {
-            this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
+        if (this.props.crypto !== undefined && this.props.currency !== undefined) {
+            this.setState({ crypto: this.props.crypto, currency: this.props.currency }, () => {
                 self.miniGraph();
             })
         }
@@ -114,6 +117,7 @@ class Mini_graph extends React.Component {
             }
         }, (body, JWR) => {
 
+            // console.log("card body", body);
 
             if (body.status == 200) {
                 let res = body.data;
@@ -144,12 +148,15 @@ class Mini_graph extends React.Component {
         var self = this;
         console.log("card data - ", data);
         let dataArray = [];
+        let timeStampArray = [];
         data.tradeChartDetails.map(element => {
-            dataArray.push(element.price);
+            dataArray.push(element.fill_price);
+            timeStampArray.push(moment.utc(element.created_at).unix());
         });
         let graphOptions = this.state.data;
         graphOptions.image = (!this.coin_icon || this.coin_icon == "" || this.coin_icon == null) ? "coin/defualt_coin.png" : data.icon;
-        graphOptions.datasets.data = dataArray;
+        graphOptions.datasets[0].data = dataArray;
+        graphOptions.timeStamps = timeStampArray;
         graphOptions.price = Math.round(data.average_price * 100) / 100;
         graphOptions.percentage = data.percentchange;
         console.log(graphOptions);
@@ -157,13 +164,44 @@ class Mini_graph extends React.Component {
         this.setState({
             data: graphOptions
         }, () => {
+            console.log("dataArray", dataArray);
+
+            // self.refs.chart.chartInstance.data.datasets[0].data = dataArray;
+            // self.refs.chart.chartInstance.update();
             console.log(self.refs.chart.chartInstance);
-            self.refs.chart.chartInstance.data.datasets[0].data = dataArray;
+            self.forceUpdate();
             self.refs.chart.chartInstance.update();
         });
 
     }
     render() {
+        let graphData = {
+            type: "line",
+            labels: [...this.state.data.timeStamps],
+            datasets: [
+                {
+                    fill: false,
+                    // bezierCurve: false,
+                    backgroundColor: 'rgba(75,192,192,0.4)',
+                    borderColor: this.props.lineColor,
+                    borderCapStyle: 'butt',
+                    borderWidth: 1,
+                    borderDashOffset: 0.0,
+                    pointBorderColor: this.props.lineColor,
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 1,
+                    pointHoverBackgroundColor: this.props.lineColor,
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointHoverBorderWidth: 1,
+                    pointRadius: 0,
+                    pointHitRadius: 1,
+                    data: [...this.state.data.datasets[0].data]
+                }
+            ]
+        }
+        console.log("from render", graphData, this.state);
+
         const { coinName, image, price, percentage } = this.state.data;
         return (
             <Graph_wrapper className="9292">
@@ -186,8 +224,29 @@ class Mini_graph extends React.Component {
                     </Col>
                 </Row>
                 <Row style={{ paddingTop: "10px" }}>
-                    <Col sm={24}>
-                        <Line data={this.state.data} options={{ tooltips: { enabled: false }, legend: null, scales: { xAxes: [{ display: false }], yAxes: [{ display: false }] } }} height={100} ref="chart" />
+                    <Col span={24}>
+                        <Line data={graphData} options={{
+                            tooltips: {
+                                enabled: false
+                            },
+                            legend: {
+                                display: false
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: false,
+                                    scaleLabel: {
+                                        display: false
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: false,
+                                    scaleLabel: {
+                                        display: false
+                                    }
+                                }]
+                            }
+                        }} height={100} redraw={true} ref="chart" />
                     </Col>
                 </Row>
             </Graph_wrapper>

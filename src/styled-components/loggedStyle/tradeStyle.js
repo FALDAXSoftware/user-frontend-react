@@ -1,4 +1,4 @@
-import { Row, Col, Tabs, Button, Table, Input, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio, Select } from 'antd';
+import { Row, Col, Tabs, Button, Table, Input, Switch, Checkbox, notification, Steps, Menu, Dropdown, Icon, Radio, Select } from 'antd';
 import styled from 'styled-components';
 import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
 
@@ -11,11 +11,45 @@ export const Row_wrap = styled.div`
 export const Row_wrap2 = styled.div`
     margin-top:25px;
 `
-
+export const Layout = styled.div`
+display: flex;
+justify-content: center;
+margin-bottom: 15px;
+margin-top: 40px;
+`
+export const SaveButton = styled(Button)`
+    margin-left:15px;
+`
+export const EditButton = styled(Button)`
+    margin-right:15px;
+`
+export const MainTV = styled.div`
+    background-color: ${props => props.theme.mode == "dark" ? "#2e3141" : "#eceff1"};
+`
+export const TVBar = styled.div`
+    display:flex;
+    align-items:center;
+    background-color:${props => props.theme.mode == "dark" ? "#131722" : "white"};
+    width: calc(100% - 12px);
+    margin: 0 auto;
+    border-bottom:  ${props => props.theme.mode == "dark" ? "1px solid #2e3141" : "1px solid #eceff1"};
+    height: 38px ;
+    padding: 0px 6px;
+    >div>span
+    {
+        font-weight: "normal";
+        font-size: "17px";
+        color: ${props => props.theme.mode == "dark" ? "rgb(217, 217, 217)" : "rgb(85, 85, 85)"};
+    }
+    >div>i
+    {
+        font-size:"26px";
+        color:${props => props.theme.mode == "dark" ? "#687786;" : ""};
+    }
+`
 export const Left_div = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     padding-top:30px;
-    margin-right:30px;
     padding-bottom: 30px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
@@ -25,13 +59,27 @@ export const Left_div = styled.div`
         margin-right:0px;
     }
 `
+export const EditDiv = styled(Left_div)`
+    display:flex;
+    justify-content:center;
+    height:auto;
+    & .editText
+    {
+        color: black;
+    font-size: 14px;
+    font-family: "Open Sans";
+    font-weight: 600;
+    }
+`
+export const SwitchS = styled(Switch)`
+    margin-left:15px;
+`
 export const Left_div1 = styled(Left_div)`
     padding-top:30px;
-    margin-right:30px;
-    padding-bottom: 30px;
+    padding-bottom: 8px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
-    height:800px;
+    height:100%;
     @media(max-width:575px)
     {
         height:auto;
@@ -44,7 +92,7 @@ export const Left_div1 = styled(Left_div)`
 export const Left_div2 = styled(Left_div)`
     padding-top:30px;
     margin-right:0px;
-    padding-bottom: 30px;
+    padding-bottom: 22px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
     height:auto;
@@ -54,7 +102,7 @@ export const Instru = styled.p`
     font-size: 19px;
     font-weight: bold;
     margin-left:30px;
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode == "dark" ? "white" : "#333333"};
     @media(max-width:575px)
     {
         display:block;
@@ -105,7 +153,7 @@ export const FIAT_wrap2 = styled.div`
         background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
         color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
-    @media(max-width:596px)
+    @media(max-width:535px)
     {
         margin-top:20px;
     }
@@ -116,11 +164,21 @@ export const FIAT = styled.div`
 `
 
 export const RadioSelect = styled(RadioGroup)`
+    font-family: "Open Sans";
+    
     & .ant-radio-button-wrapper
     {
-        background-color:${props => props.theme.mode == "dark" ? "" : "#f5f6fa"}
+        font-weight:600 !important;
+        background-color:${props => props.theme.mode == "dark" ? "" : "#f5f6fa"};
+        font-size:13px;
     }
-
+    @media(max-width:460px)
+    {
+        & .ant-radio-button-wrapper
+        {
+            padding: 0 4px;
+        }
+    }
 `
 export const Sect = styled(Button)`
     display:inline-block;
@@ -144,9 +202,13 @@ export const Right_div = styled.div`
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
     height:640px;
+    @media(max-width:991px)
+    {
+        margin-top:30px;
+    }
 `
 export const Right_div1 = styled(Right_div)`
-    height:800px;
+    height:100%;
     @media(max-width:575px)
     {
         height:auto;
@@ -160,41 +222,90 @@ export const InstruTable = styled.div`
     margin-top:25px;
 `
 export const TableIns = styled(Table)`
-    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th
+    & .ant-table-column-sorter
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""} ;
+    }
+    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-header
+    {
+        background:${props => props.theme.mode == "dark" ? "#041422" : ""};
+        margin-bottom: 0px !important;
+        overflow-x: hidden;
+    }
+    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-body
+    {
+        background:none;
+    }
+    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-header>table>.ant-table-thead>tr>th
     {
         color:#174c7e;
         background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
         font-weight:bold;
         border-bottom:0px;
     }
-    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-tbody>tr>td
+    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-body>table>.ant-table-tbody>tr>td
     {
         color:${props => props.theme.mode == "dark" ? "white" : ""} ;
+        background-color:transparent;
         font-size: 14px;
         font-weight:600;
         font-family: "Open Sans";
     }
-    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th>span>.ant-table-column-sorter>.off>i
+    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-body>table>.ant-table-thead>tr>th>span>.ant-table-column-sorter>.off>i
     {   
         color:#606f8e;
     }
-    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th>span>.ant-table-column-sorter>.on>i
+    >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-body>table>.ant-table-thead>tr>th>span>.ant-table-column-sorter>.on>i
     {   
         color:#4c84ff;
     }
     @media(max-width:375px)
     {
-        >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th
+
+        >.ant-spin-nested-loading>.ant-spin-container>.ant-table>.ant-table-content>.ant-table-scroll>.ant-table-body>table>.ant-table-thead>tr>th
         {
             padding: 10px 12px;
         }
+        & .ant-table-tbody>tr>td
+        {
+            padding: 12px 12px ;
+        }
+    }
+    & .ant-table-tbody>tr>td
+    {
+        cursor:pointer;
+    }
+    & .ant-table-tbody>tr:hover>td
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : ""};
+    }
+    & .ant-table-placeholder
+    {
+        position: relative;
+        padding: 60px 16px;
+        background: none;
+        border-bottom: 0px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: ${props => props.theme.mode == "dark" ? "white" : ""};
+        z-index: 1;
+        font-family: "Open Sans";
     }
 `
 export const Tabs_right = styled(Tabs)`
+
     >.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav-animated
     {
         display: flex !important;
         justify-content:center !important;
+    }
+    @media(max-width:475px)
+    {
+        >.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav-animated>div
+        {
+            width:100%;
+        }
     }
 `
 
@@ -415,9 +526,23 @@ export const WrapDepth = styled.div`
 
 
 export const History_wrap = styled.div`
-    overflow-x:scroll;
-`
 
+`
+export const History_wrap1 = styled.div`
+    overflow-x:auto;
+    &::-webkit-scrollbar {
+    width: 0.5em;
+    height: 0.5em;
+    }
+
+    &::-webkit-scrollbar-thumb {
+    background-color: ${props => props.theme.mode == 'dark' ? '#041624' : ''};
+    border-radius: 3px;
+    }
+    &::-webkit-scrollbar-track{
+        background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
+    }
+`
 export const CustomTable = styled.table`
     width:100%;
     table-layout: fixed;
@@ -457,6 +582,8 @@ export const TableContent = styled(CustomTable)`
 
 /* My orders and Trade */
 export const Selectmonth = styled(Select)`
+font-family: "Open Sans";
+        font-weight:700;
 & .ant-select-selection--single
 {
     height:40px !important;
@@ -468,7 +595,7 @@ export const Selectmonth = styled(Select)`
     & .ant-select-selection
     {
         background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode == "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
     }
     & .anticon
     {
@@ -511,4 +638,42 @@ text-align: left;
     margin-top: 8px;
 }
 
+`
+export const ScrollTableContent = styled.div`
+    overflow-x:auto;
+    & .scrollbar>div:first-child{
+        overflow: auto !important;
+    }
+    & .scrollbar>div:nth-child(3){
+        width: 9px !important;
+        right: 0px !important;
+        bottom: 0px !important;
+        top: 0px !important;
+        border-radius:0px !important;
+        border: 1px solid #d8d8d8;
+        border-right: none;
+        border-bottom: none;
+        padding: 2px;
+        background-color: white; 
+    }
+    & .scrollbar.news>div:nth-child(3){
+        border: none !important;
+    }
+    & .scrollbar>div:nth-child(3)>div{
+        border-radius: 2px !important;
+    }
+`
+export const SettingDropdown = styled(Dropdown)`
+    position: fixed;
+    top: 90px;
+    left: 0px;
+    background: white;
+    color: #1890ff;
+    cursor:pointer;
+    padding: 3px 12px;
+    font-size: 20px;
+    border: 1px solid lightgray;
+    z-index: 9999;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
 `

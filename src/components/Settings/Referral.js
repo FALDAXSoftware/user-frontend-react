@@ -82,6 +82,11 @@ export const Ref_input = styled(Search)`
     text-align:left;
     margin-top:5px;
     margin-bottom: 32px;
+    & .ant-btn-primary
+    {
+        background-color: rgb(0, 170, 250);
+        border-color: rgb(0, 170, 250);
+    }
     @media(max-width:768px)
     {
         margin-left:auto;
@@ -111,7 +116,7 @@ const Right_value = styled.div`
     text-align:center;
     font-size: 20.01px;
     font-family: "Open sans";
-    color: rgb( 0, 0, 0 );
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 0, 0, 0 )"};
     font-weight:bold;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -197,7 +202,7 @@ class Referral extends Component {
             })
             .catch(error => { /* console.log(error) */ })
         if (this.props.profileDetails.referral_code !== undefined) {
-            this.setState({ value: "https//dev.faldax.com/signup?refID="+this.props.profileDetails.referral_code })
+            this.setState({ value: "https//dev.faldax.com/signup?refID=" + this.props.profileDetails.referral_code })
         }
     }
 
@@ -212,8 +217,8 @@ class Referral extends Component {
         // Copy to clipboard example
         document.querySelectorAll(".ant-input-search-button")[0].onclick = function () {
             // Select the content
-            if(document.querySelectorAll(".INPUT_search > input")[0]!==undefined)
-            document.querySelectorAll(".INPUT_search > input")[0].select();
+            if (document.querySelectorAll(".INPUT_search > input")[0] !== undefined)
+                document.querySelectorAll(".INPUT_search > input")[0].select();
             // Copy to the clipboard
             document.execCommand('copy');
         };
@@ -243,10 +248,10 @@ class Referral extends Component {
                                 </div>
                             </CopyToClipboard>
                         </Ref_leftcol>
-                        {/* <Ref_rightcol sm={24} md={6}>
+                        <Ref_rightcol sm={24} md={6}>
                             <Right_text>Total Earned</Right_text>
                             <Right_value>3.0850 BTC</Right_value>
-                        </Ref_rightcol> */}
+                        </Ref_rightcol>
                     </Row>
                 </Ref_div>
                 <Ref_acc>

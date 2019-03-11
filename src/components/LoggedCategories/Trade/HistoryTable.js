@@ -7,7 +7,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { globalVariables } from "../../../Globals";
 import moment from "moment";
 import { Spin } from 'antd';
-import { History_wrap, TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
+import { History_wrap, TableHeader, TableContent, ScrollTableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -19,7 +19,21 @@ const BorderedHistoryWrap = styled(History_wrap)`
     margin-left:30px;
     margin-right:30px;
     border:1px solid #d8d8d8;
-    overflow-x:scroll;
+    overflow-x:auto;
+    &::-webkit-scrollbar {
+        width: 0.5em;
+        height: 0.5em;
+       }
+     
+       &::-webkit-scrollbar-thumb {
+        background-color: ${props => props.theme.mode == 'dark' ? '#041624' : ''};
+        border-radius: 3px;
+       }
+        &::-webkit-scrollbar-track{
+            background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
+        }
+     
+
 `
 const SideType = styled.td`
     color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
@@ -39,12 +53,13 @@ class HistoryTable extends Component {
     }
     componentDidMount() {
         var self = this;
+        console.log("hay hay")
         self.historyData();
         io.socket.on('instrumentUpdate', (data) => {
             self.updateData(data)
         });
     }
-    componentWillReceiveProps(props, newProps) {
+    /* componentWillReceiveProps(props, newProps) {
         var self = this;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -58,9 +73,10 @@ class HistoryTable extends Component {
                 })
             }
         }
-    }
+    } */
     historyData() {
         io = this.props.io
+        this.props.hisFunc(true);
         this.setState({ loader: true })
         io.sails.url = APP_URL;
         var URL;
@@ -82,30 +98,41 @@ class HistoryTable extends Component {
 
             if (body.status == 200) {
                 let res = body.data;
-
+                console.log(res)
+                this.props.hisFunc(false);
                 this.updateData(res);
             }
         });
         io.socket.on('tradeHistoryUpdate', (data) => {
             this.updateData(data);
+
         });
     }
     updateData(data) {
         const rows = [];
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
+            var date
+            if (this.props.profileDetails.date_format == "MM/DD/YYYY")
+                date = moment.utc(element.created_at).local().format("MM/DD/YYYY, H:m:s")
+            else if (this.props.profileDetails.date_format == "DD/MM/YYYY")
+                date = moment.utc(element.created_at).local().format("DD/MM/YYYY, H:m:s")
+            else
+                date = moment.utc(element.created_at).local().format("MMM D, YYYY, H:m:s")
             rows.push({
                 side: element.side,
                 amount: element.quantity,
                 fill_price: element.fill_price,
-                time: moment.utc(element.created_at).local().format("MMM D, YYYY, H:m:s"),
+                time: date,
                 total: element.quantity * element.fill_price,
             });
         }
+
         this.setState({
             data: rows,
             loader: false
         });
+
     }
     render() {
         var me = this;
@@ -113,37 +140,39 @@ class HistoryTable extends Component {
             <BorderedHistoryWrap>
                 <OTwrap>
                     <div class="tbl-header">
-                        <TableHeader cellpadding="10px" cellspacing="0" border="0">
+                        <TableHeader cellpadding="10px" cellspacing="0" border="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th>SIDE</th>
-                                    <th>AMOUNT</th>
-                                    <th>FILL PRICE</th>
-                                    <th>TIME</th>
-                                    <th>TOTAL</th>
+                                    <th width="10%">SIDE</th>
+                                    <th width="20%">AMOUNT</th>
+                                    <th width="20%">FILL PRICE</th>
+                                    <th width="25%">TIME</th>
+                                    <th width="25%">TOTAL</th>
                                 </tr>
                             </thead>
                         </TableHeader>
                     </div>
                 </OTwrap>
                 <OTwrap>
-                    <div class="tbl-content">
+                    <ScrollTableContent>
                         <Scrollbars
-                            style={{ height: 300 }}>
-                            <TableContent cellpadding="10px" cellspacing="0" border="0">
+                            style={{ height: this.props.height }}
+                            className="scrollbar"
+                            hideTracksWhenNotNeeded={true}>
+                            <TableContent cellpadding="10px" cellspacing="0" border="0" width="100%">
                                 <tbody>
                                     {this.state.data.length > 0 ? this.state.data.map((element, index) => (
                                         <tr>
-                                            <SideType type={element.side}>{element.side}</SideType>
-                                            <td>{element.amount}</td>
+                                            <SideType type={element.side} width="10%">{element.side}</SideType>
+                                            <td width="20%">{element.amount}</td>
                                             {(index + 1) < me.state.data.length ? (element.fill_price > me.state.data[index + 1].fill_price)
                                                 ?
-                                                <td>{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td> :
-                                                <td>{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/down-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/down_white.png" />}</td>
+                                                <td width="20%">{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td> :
+                                                <td width="20%">{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/down-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/down_white.png" />}</td>
                                                 : <td>{element.fill_price} </td>
                                             }
-                                            <td>{element.time}</td>
-                                            <td>{element.total.toFixed(4)}</td>
+                                            <td width="25%">{element.time}</td>
+                                            <td width="25%">{element.total.toFixed(4)}</td>
                                         </tr>
                                     ))
                                         : <p style={{
@@ -154,14 +183,8 @@ class HistoryTable extends Component {
                                 </tbody>
                             </TableContent>
                         </Scrollbars>
-                    </div>
+                    </ScrollTableContent>
                 </OTwrap>
-                {(this.state.loader == true) ?
-                    <Spin_single className="Full_spin">
-                        <Spin size="small" />
-                    </Spin_single>
-                    : ""
-                }
             </BorderedHistoryWrap>
         )
     }
@@ -171,7 +194,8 @@ function mapStateToProps(state) {
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
         theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
-        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : ""
+        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : "",
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }
