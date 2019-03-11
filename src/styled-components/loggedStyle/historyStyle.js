@@ -1,5 +1,5 @@
-import { Row, Col, Tabs, Button,Input,notification,Steps,Menu, Dropdown,Icon,Checkbox,DatePicker } from 'antd';
-import { DropdownButton,MenuItem,ButtonToolbar } from 'react-bootstrap';
+import { Row, Col, Tabs, Button, Input, notification, Steps, Menu, Dropdown, Icon, Checkbox, DatePicker } from 'antd';
+import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
 import styled from 'styled-components';
 import { Table } from 'react-bootstrap';
 import { Container } from '../homepage/style';
@@ -7,15 +7,16 @@ import { Container } from '../homepage/style';
 const { RangePicker } = DatePicker;
 
 export const ContainerContact = styled(Container)`
-    background-color:${props =>props.theme.mode=="dark"?"#041422":"white"} ;
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"} ;
     border-radius:5px;
     max-width:1170px;
     padding-bottom: 30px;
+    min-height:1000px;
 `
 export const His_title = styled.span`
     font-size: 20px;
     font-family: "Open Sans";
-    color:${ props => props.theme.mode=="dark"?"white":"rgb( 51, 51, 51 )"};
+    color:${ props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
     font-weight: bold;
     text-transform: uppercase; 
     margin-top:25px;
@@ -33,7 +34,7 @@ export const HisTable = styled(Table)`
     margin-bottom:0px;
     >thead
     {
-        background-color:${props => props.theme.mode=="dark" ? "#041422" : "#f5f6fa"};
+        background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
         color:#174c7e;
         border:none;
         
@@ -46,7 +47,7 @@ export const HisTable = styled(Table)`
     }
     >tbody
     {
-        color:${props => props.theme.mode=="dark" ? "white": ""} ;
+        color:${props => props.theme.mode == "dark" ? "white" : ""} ;
     }
     >tbody>tr>td
     {
@@ -56,7 +57,7 @@ export const HisTable = styled(Table)`
         font-size: 14px;
         font-weight:600;
         font-family: "Open Sans";
-        color: ${props => props.theme.mode=="dark"?"white":"rgb( 33, 33, 33 )"};
+        color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 33, 33, 33 )"};
         text-transform: uppercase;
     }
     >tbody>tr>td
@@ -69,7 +70,7 @@ export const HisTable = styled(Table)`
     }
     >tbody>tr:nth-of-type(odd)
     {
-        background-color:${props => props.theme.mode=="dark"? "#041422" : "#f9f9f9" };
+        background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f9f9f9"};
     }
 `
 export const HeadHis = styled.div`
@@ -117,8 +118,8 @@ export const ButtonToolbarOne = styled(ButtonToolbar)`
 `
 
 export const DropdownButtonOne = styled(DropdownButton)`
-    background-color: ${props=>props.theme.mode=="dark"?"#01090f":""};
-    color:${props=>props.theme.mode=="dark"?"white":""};
+    background-color: ${props => props.theme.mode == "dark" ? "#01090f" : ""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
     width:100%;
     text-align:left;
     >.caret
@@ -152,18 +153,18 @@ export const Datediv = styled.div`
 export const RangePickerS = styled(RangePicker)`
     >.ant-calendar-picker-input
     {
-        background-color:${props => props.theme.mode=="dark"?"#01090f":""};
+        background-color:${props => props.theme.mode == "dark" ? "#01090f" : ""};
     }
     >.ant-calendar-picker-input>.ant-calendar-range-picker-input
     {
-        color:${props => props.theme.mode=="dark"?"white":""};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
     >.ant-calendar-picker-input>.ant-calendar-range-picker-separator
     {
-        color:${props => props.theme.mode=="dark"?"white":""};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
     >.ant-calendar-picker-input>.ant-calendar-picker-icon
     {
-        color:${props => props.theme.mode=="dark"?"white":""};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
 `
