@@ -80,7 +80,14 @@ const CoinImage = styled.img`
     width: 60px;
     height: 60px;
 `
-
+const NDF = styled.p`
+    text-align: center; 
+    font-weight: 600;
+    font-size: 17px;
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"}; 
+    margin-top: 30px;
+    font-family: "Open Sans";
+`
 class WalletDetails extends Component {
     constructor(props) {
         super(props);
@@ -256,14 +263,8 @@ class WalletDetails extends Component {
                                         this.state.walletDetails.length > 0
                                             ?
                                             <DetailsTable wallet={this.state.walletDetails} />
-                                            : <p style={{
-                                                textAlign: "center", fontWeight: "600", fontSize: "17px",
-                                                color: "black", marginTop: "30px", fontFamily: "Open Sans"
-                                            }}>No Data Found</p>
-                                        : <p style={{
-                                            textAlign: "center", fontWeight: "600", fontSize: "17px",
-                                            color: "black", marginTop: "30px", fontFamily: "Open Sans"
-                                        }}>No Data Found</p>
+                                            : <NDF >No Data Found</NDF>
+                                        : <NDF >No Data Found</NDF>
                                 }
                             </CoinTable>
                         </Trans_table>

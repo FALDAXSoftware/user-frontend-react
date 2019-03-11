@@ -40,6 +40,14 @@ const Select1 = styled(Select)`
     {
         color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
+    & .ant-select-search__field
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+    & .ant-select-search__field
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
 `
 const Select2 = styled(Select)`
 & .ant-select-selection
@@ -54,12 +62,24 @@ const Select2 = styled(Select)`
     {
         color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
+    & .ant-select-search__field
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
 `
 const CheckboxGroupS = styled(CheckboxGroup)`
     & .ant-checkbox-group-item>span
     {
         color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
+`
+const NDF = styled.td`
+    text-align: center;
+    font-weight: 600;
+    font-size: 17px;
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    margin-top: 30px;
+    font-family: "Open Sans";
 `
 class History extends Component {
     constructor(props) {
@@ -158,9 +178,9 @@ class History extends Component {
     changeDate(date, dateString) {
         var self = this;
         var fromDate = "";
-        fromDate = dateString[0].format();
+        fromDate = dateString[0]
         var toDate = ""
-        toDate = dateString[1].format();
+        toDate = dateString[1]
 
         this.setState({ toDate, fromDate }, () => {
             self.historyResult();
@@ -385,10 +405,7 @@ class History extends Component {
                                                         {/* <td><Button onChange={() => self.repeatClick(temp)}>Repeat</Button></td> */}
                                                     </tr>);
                                                 })
-                                                : <tr><td colSpan="8" style={{
-                                                    textAlign: "center", fontWeight: "600", fontSize: "17px",
-                                                    color: "black", marginTop: "30px", fontFamily: "Open Sans"
-                                                }}>No Data Found</td></tr>
+                                                : <tr><NDF colSpan="8" >No Data Found</NDF></tr>
                                             }
                                         </tbody>
                                     </HisTable>
