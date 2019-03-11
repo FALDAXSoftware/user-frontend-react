@@ -671,11 +671,12 @@ export const SettingDropdown = styled(Dropdown)`
     left: 0px;
     background: white;
     color: #1890ff;
-    cursor:pointer;
-    padding: 3px 12px;
+    cursor: pointer;
+    padding: 7px 7px;
     font-size: 20px;
     border: 1px solid lightgray;
     z-index: 9999;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 `

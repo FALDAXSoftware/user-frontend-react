@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
-import { Row, Col, Tabs, Input, Radio, Select, notification, Icon, Menu,Tooltip } from 'antd';
+import { Row, Col, Tabs, Input, Radio, Select, notification, Icon, Menu, Tooltip } from 'antd';
 import styled from 'styled-components';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,7 +27,7 @@ import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCateg
 import { cryptoCurrency } from '../../../Actions/LoggedCat/tradeActions'
 import {
     Row_wrap, Left_div, EditDiv, SwitchS, Layout, SaveButton, EditButton, MainTV, TVBar, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
-    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder, Selectmonth,SettingDropdown
+    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder, Selectmonth, SettingDropdown
 } from "../../../styled-components/loggedStyle/tradeStyle";
 import {
     Spin_single
@@ -149,6 +149,7 @@ class Trade extends Component {
         this.getInstrumentData = this.getInstrumentData.bind(this);
         this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
         this.onLayoutChange = this.onLayoutChange.bind(this);
+        this.goFullScreen = this.goFullScreen.bind(this);
     }
     componentWillReceiveProps(props, newProps) {
         var self = this;
@@ -495,6 +496,29 @@ class Trade extends Component {
         else
             this.setState({ saveState: false });
     }
+    goFullScreen() {
+        let body = document.getElementsByTagName("body");
+        let element = body[0];
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) { /* Firefox */
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) { /* IE/Edge */
+            element.msRequestFullscreen();
+        }
+    }
+    exitFullScreen() {
+        if (document.exitFullscreen)
+            document.exitFullscreen();
+        else if (document.mozCancelFullScreen)
+            document.mozCancelFullScreen();
+        else if (document.webkitExitFullscreen)
+            document.webkitExitFullscreen();
+        else if (document.msExitFullscreen)
+            document.msExitFullscreen();
+    }
     render() {
         var self = this;
         var layouts = {
@@ -543,8 +567,9 @@ class Trade extends Component {
         };
         const menu = (
             <Menu className="SettingMenu">
-                <Menu.Item key="1">Edit Layout</Menu.Item>
-                <Menu.Item key="2">Full Screen</Menu.Item>
+                <Menu.Item key="1"><Icon type="layout" /> Edit Layout</Menu.Item>
+                <Menu.Divider />
+                <Menu.Item key="2" onClick={this.goFullScreen}><Icon type="fullscreen" /> Full Screen</Menu.Item>
             </Menu>
         );
         return (

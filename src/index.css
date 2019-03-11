@@ -1346,3 +1346,23 @@ div.scrollbar>div:nth-child(3)>div{
   width: 25%;
   text-align: center !important;
 }
+.dropSettings{
+  left: 12px !important;
+  
+}
+.dropSettings ul{
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.32) !important;
+}
+/* .dropSettings ul:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 29%;
+  width: 0;
+  height: 0;
+  border: 9px solid transparent;
+  border-bottom-color: #ffffff;
+  border-top: 0;
+  margin-left: -20px;
+  margin-top: 1px;
+} */
