@@ -124,31 +124,10 @@ export default class Policy extends Component {
   constructor() {
     super();
     this.state = {
-      team: 1,
-      aboutContent: '',
-      loader: false
     };
-  }
-  componentDidMount() {
-    this.setState({ loader: true });
-    fetch(API_URL + "/users/static-page-json/policy", {
-      method: "get",
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then((responseData) => {
-        this.setState({ aboutContent: responseData.data.content, loader: false })
-      })
-      .catch(error => { })
-  }
-  teamClick(value) {
-    this.setState({ team: value });
   }
 
   render() {
-    const { loader } = this.state;
     return (
       <div>
         <Navigation />
@@ -224,15 +203,11 @@ export default class Policy extends Component {
                     </DivWrap>
                   </Col>
                 </SecondRow>
-
                 {/* Blocks end */}
               </Content>
             </ProfileDiv>
           </ProfileWrapper>
           <CommonFooter />
-          {(loader) ? <Spin_Ex className="Ex_spin">
-            <Spin size="large" />
-          </Spin_Ex> : ""}
         </OverlayLoader>
       </div>
     );

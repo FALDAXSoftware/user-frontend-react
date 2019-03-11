@@ -579,8 +579,6 @@ class Navigation extends Component {
                         >
                             <Row>
                                 <Left_col xl={{ span: 12 }} sm={{ span: 24 }}>
-
-
                                     {
                                         modal == 0 || (this.state.forgotParam !== undefined && this.props.pathname.includes("login")) ?
                                             <Login_Form {...this.props} init="" forgotParam={this.state.forgotParam} dispModal={(pressed) => this.dispModal(pressed)} /> : ""
@@ -613,7 +611,6 @@ class Navigation extends Component {
                     </div>
                     <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
                 </Header_main>
-                {console.log(this.props)}
                 {/* (this.props.loader == true) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : "" */}
