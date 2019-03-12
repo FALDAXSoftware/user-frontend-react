@@ -477,6 +477,10 @@ class Login_Form extends React.Component {
     this.submit();
     event.preventDefault();
   }
+
+  _goToForgotPwd = () => {
+    this.props.history.push('/forgot-password')
+  }
   render() {
     if (this.props.isLoggedIn) {
       this.props.history.push("/editProfile");
@@ -545,7 +549,7 @@ class Login_Form extends React.Component {
                   <Check_wrap>
                     {/* <Remember>
                 <Check type="checkbox" /> Remember Me</Remember> */}
-                    <Forgot onClick={() => this.dispModal("forgot")}>Forgot Password?</Forgot>
+                    <Forgot onClick={this._goToForgotPwd}>Forgot Password?</Forgot>
                   </Check_wrap>
 
                   {(errors = getFieldError('required')) ? errors.join(',') : null}

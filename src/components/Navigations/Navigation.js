@@ -14,7 +14,6 @@ import Thank_You from "../Landing/User_forms/Thank_You"
 import Beforelog from "./BeforeLog"
 import Afterlog from "./Afterlog"
 import { LogoutUser } from '../../Actions/Auth';
-import Reset_Form from "../Landing/User_forms/Reset_Form"
 import ComingSoon from '../ComingSoon';
 import ReactSwipeEvents from 'react-swipe-events'
 import { Spin_Ex } from '../../styled-components/homepage/style'
@@ -440,10 +439,7 @@ class Navigation extends Component {
         } else {
             if (this.props.queryParams !== undefined && this.props.queryParams !== "") {
                 queryParams = this.props.queryParams;
-                this.setState({
-                    forgotParam: queryParams.split("="),
-                    visible: true
-                })
+                this.setState({ forgotParam: queryParams.split("="), visible: true })
             }
         }
         if (this.props.location.pathname == "/about-us") {
@@ -511,8 +507,8 @@ class Navigation extends Component {
                             <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                             {!this.props.isLoggedIn &&
                                 <Fin_div>
-                                    <Fin_log onClick={this.dispModal.bind(this, "login")}><ButtonLog type="primary">Login</ButtonLog></Fin_log>
-                                    <Fin_sign onClick={this.dispModal.bind(this, "signup")}><ButtonLog type="primary">Signup</ButtonLog></Fin_sign>
+                                    <Fin_log onClick={() => this.props.history.push("/login")}><ButtonLog type="primary">Login</ButtonLog></Fin_log>
+                                    <Fin_sign onClick={() => this.props.history.push("/signup")}><ButtonLog type="primary">Signup</ButtonLog></Fin_sign>
                                 </Fin_div>
                             }
                             <Link to="/">Home</Link>
@@ -579,26 +575,26 @@ class Navigation extends Component {
                         >
                             <Row>
                                 <Left_col xl={{ span: 12 }} sm={{ span: 24 }}>
-                                    {
+                                    {/* {
                                         modal == 0 || (this.state.forgotParam !== undefined && this.props.pathname.includes("login")) ?
                                             <Login_Form {...this.props} init="" forgotParam={this.state.forgotParam} dispModal={(pressed) => this.dispModal(pressed)} /> : ""
                                     }
                                     {
                                         modal == 1 ?
                                             <Signup_Form {...this.props} init="" dispModal={(pressed) => this.dispModal(pressed)} qP={this.state.qP} /> : ""
-                                    }
-                                    {
+                                    } */}
+                                    {/* {
                                         modal == 2 ?
                                             <Forgot_Form {...this.props} init="" dispModal={(pressed) => this.dispModal(pressed)} /> : ""
-                                    }
+                                    } */}
                                     {
                                         modal == 4 ?
                                             <Thank_You {...this.props} /> : ""
                                     }
-                                    {
+                                    {/* {
                                         this.state.forgotParam !== undefined && this.props.pathname.includes("reset-password") ?
                                             <Reset_Form {...this.props} forgotParam={this.state.forgotParam} dispModal={(pressed) => this.dispModal(pressed)} /> : ""
-                                    }
+                                    } */}
                                 </Left_col>
                                 <Right_Col xl={{ span: 12 }} sm={{ span: 24 }}>
                                     <Logo_text_wrap>

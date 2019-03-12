@@ -11,7 +11,9 @@ import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 /* Components */
 import HomePage from './components/Landing/HomePage';
-import Login from "./components/Landing/User_forms/Login_Form"
+import Login from "./components/Landing/User_forms/Login_Form";
+import ForgotForm from "./components/Landing/User_forms/Forgot_Form";
+import ResetPassword from "./components/Landing/User_forms/Reset_Form";
 import FaqPage from './components/Landing_categories/FaqPage';
 import AboutUs from './components/Landing_categories/About_us';
 import Blog from './components/Landing_categories/Blog';
@@ -131,9 +133,10 @@ class App extends Component {
                     <Route
                         render={({ location }) => (
                             <Switch location={location}>
-                                <Route path='/reset-password' title="Login" component={HomePage} />
                                 <Route path="/" exact title="Home" component={HomePage} />
+                                <Route path='/reset-password' title="Reset Password" component={ResetPassword} />
                                 <Route path="/login" exact title="Login" component={Login} />
+                                <Route path="/forgot-password" exact title="Forgot Password" component={ForgotForm} />
                                 <Route path="/signup" exact title="Signup" component={HomePage} />
                                 <Route {...this.props} path="/about-us" exact title="About Us" component={AboutUs} />
                                 <Route path="/faq" exact title="Faq Page" component={FaqPage} />
