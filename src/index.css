@@ -3,7 +3,12 @@ body {
   padding: 0 !important;
   font-family: sans-serif;
 }
-
+#root{
+  height:inherit;
+}
+.App{
+  height:inherit;
+}
 .my-masonry-grid {
   display: -webkit-box; /* Not needed if autoprefixing */
   display: -ms-flexbox; /* Not needed if autoprefixing */

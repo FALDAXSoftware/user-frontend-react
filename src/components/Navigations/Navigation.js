@@ -368,7 +368,7 @@ class Navigation extends Component {
     }
     dispModal(pressed) {
         if (pressed == "login")
-            this.setState({ modal: 0 })
+            this.props.history.push("/login")
         else if (pressed == "signup")
             this.setState({ modal: 1 })
         else if (pressed == "thankyou")
