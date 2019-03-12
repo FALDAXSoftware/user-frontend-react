@@ -1,13 +1,8 @@
 /* In-built Packages*/
 import React, { Component } from 'react'
 import { createForm, formShape } from 'rc-form';
-<<<<<<< HEAD
 import styled, { consolidateStreamedStyles } from 'styled-components';
 import { Row, Col, Button, notification, Icon, Spin } from "antd";
-=======
-import styled from 'styled-components';
-import { Button, notification, Icon, Spin } from "antd";
->>>>>>> 6cd2c0b3c5eb98e98582ae87d4add8dbb05c3ae3
 import { connect } from 'react-redux';
 import { Eye, ActiveEye } from '../../../Constants/images';
 import { Spin_Ex } from '../../../styled-components/homepage/style'
@@ -585,4 +580,4 @@ const mapDispatchToProps = dispatch => ({
   clearLogin: () => dispatch(clearLogin())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(createForm()(LoginForm));
+export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Login_Form));
