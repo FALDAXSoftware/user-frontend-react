@@ -12,7 +12,6 @@ let { API_URL } = globalVariables;
 const Search = Input.Search;
 
 /* Styled Components */
-
 const columns = [{
     title: 'Accounts Referred',
     dataIndex: 'email',
@@ -28,7 +27,6 @@ const data = [{
     referral: "test3@test.com"
 }];
 
-/* Styled Components */
 const Parent_wrap = styled.div`
 `
 const Header_text = styled.div`
@@ -38,15 +36,6 @@ const Header_text = styled.div`
     color:${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
     line-height: 2.4;
     margin-top:10px;
-    text-align:center;
-`
-const Header_p = styled.div`
-    font-size: 16.008px;
-    font-family: "Open sans";
-    color: rgb( 80, 80, 80 );
-    -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
-    -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
-    -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     text-align:center;
 `
 const Ref_div = styled.div`
@@ -59,7 +48,6 @@ const Ref_div = styled.div`
     border-radius: 10px;
     height:auto;
 `
-/* ADD CONTENT="" */
 const Ref_leftcol = styled(Col)`
     text-align:left;
     padding-left: 35px;
@@ -178,7 +166,6 @@ class Referral extends Component {
         }
     }
     componentDidMount() {
-        /* console.log(this.props.isLoggedIn) */
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme == false)
@@ -197,7 +184,6 @@ class Referral extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                /* console.log(responseData); */
                 this.setState({ tableData: responseData.data })
             })
             .catch(error => { /* console.log(error) */ })
@@ -229,7 +215,6 @@ class Referral extends Component {
         return (
             <Parent_wrap>
                 <Header_text>Referral Program</Header_text>
-                {/* <Header_p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Header_p> */}
                 <Ref_div>
                     <Row>
                         <Ref_leftcol sm={24} md={18}>
@@ -274,4 +259,5 @@ function mapStateToProps(state) {
         profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : ""
     })
 }
+
 export default connect(mapStateToProps)(Referral);

@@ -180,7 +180,7 @@ class BuyTable extends Component {
                         <OTwrap2>
                             <ScrollTableContent>
                                 <Scrollbars
-                                    style={{ height: 165 }}
+                                    style={{ height: this.props.height }}
                                     className="scrollbar"
                                     hideTracksWhenNotNeeded={true}>
                                     <TableContent cellpadding="10px" cellspacing="0" border="0">

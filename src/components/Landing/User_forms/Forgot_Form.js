@@ -64,7 +64,7 @@ const Back_link = styled.a`
     font-family: "Open Sans";
     color: rgb( 15, 71, 123 );   
 `
-class Forgot_Form extends Component {
+class ForgotForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -151,9 +151,7 @@ class Forgot_Form extends Component {
           {(errors = getFieldError('required')) ? errors.join(',') : null}
           <Button_login onClick={this.submit}>Send Reset Link</Button_login>
           <Link_wrap>
-            <Icon className="material-icons">
-              keyboard_backspace
-                    </Icon>
+            <Icon className="material-icons">keyboard_backspace</Icon>
             <Back_link onClick={() => this.dispModal("login")}> Back To Login </Back_link>
           </Link_wrap>
         </Form_wrap>
@@ -173,4 +171,4 @@ const mapDispatchToProps = dispatch => ({
   clearForgot: () => dispatch(clearForgot())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Forgot_Form));
+export default connect(mapStateToProps, mapDispatchToProps)(createForm()(ForgotForm));

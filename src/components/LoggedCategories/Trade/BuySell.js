@@ -15,11 +15,11 @@ export default class BuySell extends React.Component {
             <Left_div>
                 <Instru>ORDER BOOK BBC/BTC</Instru>
                 <BBC_wrap>
-                    <BuyTable loaderfunc={(loader) => { this.loaderfunc(loader) }} io={this.props.io} />
+                    <BuyTable loaderfunc={(loader) => { this.loaderfunc(loader) }} io={this.props.io} height={this.props.height} />
                 </BBC_wrap>
 
                 <BBC_wrap2>
-                    <SellTable io={this.props.io} />
+                    <SellTable io={this.props.io} height={this.props.height} />
                 </BBC_wrap2>
             </Left_div>
         );

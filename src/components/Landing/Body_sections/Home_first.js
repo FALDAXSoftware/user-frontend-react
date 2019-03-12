@@ -7,8 +7,6 @@ import { Banner, LargeLogo } from '../../../Constants/images';
 
 /* Import Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
-import { globalVariables } from '../../../Globals';
-let { amazon_bucket } = globalVariables;
 /* Components */
 const Section = styled.section`
   width:100%;
@@ -68,7 +66,7 @@ const Img = styled.img`
 const ImageCol = styled(Col)`
   text-align:center;
 `
-export default class Homefirst extends Component {
+export default class HomeFirst extends Component {
   render() {
     return (
       <Section>

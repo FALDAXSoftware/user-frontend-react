@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faYoutube, faTwitter, faLinkedinIn, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import styled from 'styled-components';
 import ReactHtmlParser from 'react-html-parser';
-
 import Navigation from '../Navigations/Navigation';
 import { Spin_Ex } from '../../styled-components/homepage/style'
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
@@ -15,7 +14,6 @@ import { globalVariables } from "../../Globals";
 import { AboutPeople1, AboutPeople2, AboutPeople3, AboutUs2 } from '../../Constants/images';
 import ComingSoon from '../ComingSoon';
 let { API_URL } = globalVariables;
-
 
 /* Styled-Components */
 const ProfileWrapper = styled.div`
@@ -156,7 +154,6 @@ const Hexagon = styled.div`
   margin-top: -92px;
   margin-left: 49px;
 `;
-
 const Hexagon_In1 = styled.div`
   overflow: hidden;
   width: 100%;
@@ -237,7 +234,7 @@ const TeamIn4 = styled.div`
   color: 'white';
 `;
 
-/* Component Defination Starts Here*/
+/* Component Definition Starts Here*/
 
 export default class AboutUs extends Component {
   constructor() {
@@ -256,8 +253,7 @@ export default class AboutUs extends Component {
       headers: {
         'Content-Type': 'application/json'
       }
-    })
-      .then(response => response.json())
+    }).then(response => response.json())
       .then((responseData) => {
         this.setState({ aboutContent: responseData.data.content, loader: false })
       })
@@ -275,6 +271,7 @@ export default class AboutUs extends Component {
   }
 
   render() {
+    const { aboutContent, loader, comingSoon } = this.state;
     return (
       <div>
         <Navigation />
@@ -293,7 +290,7 @@ export default class AboutUs extends Component {
               </div>
               <AboutContent style={{ marginTop: '20px' }}>
                 <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
-                  {ReactHtmlParser(this.state.aboutContent)}
+                  {ReactHtmlParser(aboutContent)}
                   <p>We are incredibly excited to share the details of these exciting features so please consider<a href="#" onClick={this.showComing}> subscribing to our mailing list</a> to receive updates as they are made available.</p>
                 </span>
               </AboutContent>
@@ -380,16 +377,15 @@ export default class AboutUs extends Component {
                     </Team>
                   </Col>
                 </Row>
-
               </div>
             </ProfileDiv>
           </ProfileWrapper>
           <CommonFooter />
-          {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+          {(loader) ? <Spin_Ex className="Ex_spin">
             <Spin size="large" />
           </Spin_Ex> : ""}
         </OverlayLoader>
-        <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
+        <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={comingSoon} />
       </div>
     );
   }

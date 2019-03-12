@@ -224,7 +224,6 @@ const Key_text = styled.span`
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
-
 `
 const Key = styled.p`
     font-size: 13.007px;
@@ -297,7 +296,7 @@ const Progress_bar = styled(Progress)`
 `
 let password;
 
-class Passwordchange extends Component {
+class PasswordChange extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -321,10 +320,7 @@ class Passwordchange extends Component {
     static propTypes = {
         form: formShape,
     };
-    /* passwordChange()
-    {
-        this.props.passwordChange();
-    } */
+
     handleEye(type) {
         if (type == "old") {
             if (this.state.typeEye == "password") {
@@ -348,10 +344,7 @@ class Passwordchange extends Component {
     }
     submit = () => {
         this.props.form.validateFields((error, value) => {
-            /* console.log("-----<<<...",error,value)
-            console.log(this.state,this.props) */
             if (error == null && this.state.newpassIcon == true && this.state.confirmIcon == true) {
-                /*  console.log("HELLO !@#") */
                 document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
                 document.querySelectorAll(".newchange_msg")[0].style.display = "none";
                 document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
@@ -363,7 +356,7 @@ class Passwordchange extends Component {
                 }
                 if (value.new_password == '' || value.new_password == null || value.new_password == undefined) {
                     document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
-                    this.setState({ confirmPass_msg: "Repeat New password is required." })
+                    this.setState({ confirmPass_msg: "confirm password is required." })
                 }
                 if (value.confirm_password == '' || value.confirm_password == null || value.confirm_password == undefined) {
                     document.querySelectorAll(".newchange_msg")[0].style.display = "block";
@@ -427,7 +420,6 @@ class Passwordchange extends Component {
             if (value !== "") {
                 if (bool == true) {
                     this.setState({ newpassIcon: true, password: value })
-
                     document.querySelector("#newchange_icon_success").style.display = "inline-block"
                     document.querySelector("#newchange_icon_fail").style.display = "none"
                     document.querySelectorAll(".newchange_msg")[0].style.display = "none";
@@ -469,15 +461,15 @@ class Passwordchange extends Component {
             }
         }
     }
+
     TF_AUTH() {
-        /* console.log(this.props) */
         if (this.props.profileDetails.is_twofactor == true) {
             this.props.TF_Disable(this.props.isLoggedIn)
         } else
             this.props.TF_Enable(this.props.isLoggedIn);
     }
+
     changeOTP(value, field) {
-        /* console.log(this.props,value,field) */
         if (field == "otp") {
             var re = /^\b[a-zA-Z0-9]{6}\b|\b[a-zA-Z0-9]{6}\b/;
             var bool = re.test(value);
@@ -693,7 +685,6 @@ class Passwordchange extends Component {
 }
 
 function mapStateToProps(state) {
-    /*  console.log(state) */
     return ({
         passChange: state.simpleReducer.changePass !== undefined ? state.simpleReducer.changePass : false,
         profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
@@ -715,4 +706,4 @@ const mapDispatchToProps = dispatch => ({
     disableAction: () => dispatch(disableAction())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Passwordchange));
+export default connect(mapStateToProps, mapDispatchToProps)(createForm()(PasswordChange));

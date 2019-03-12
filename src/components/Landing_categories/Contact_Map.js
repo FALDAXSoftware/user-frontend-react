@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Component } from "react"
 import { compose, withProps } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import styled from "styled-components";
@@ -28,7 +28,7 @@ const MyMapComponent = compose(
   </GoogleMap>
 )
 
-class Contact_Map extends React.Component {
+class ContactMap extends Component {
   state = {
     isMarkerShown: false,
   }
@@ -58,4 +58,4 @@ class Contact_Map extends React.Component {
   }
 }
 
-export default Contact_Map;
+export default ContactMap;

@@ -1,8 +1,7 @@
 /* In-built Packages */
-
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Layout, Card } from 'antd';
+import { Card } from 'antd';
 import styled from 'styled-components';
 import Slider from "react-slick";
 import {
@@ -67,7 +66,7 @@ function SamplePrevArrow(props) {
     );
 }
 
-export default class Homesecond extends React.Component {
+export default class HomeFive extends Component {
     render() {
         var settings = {
             dots: false,
@@ -107,8 +106,8 @@ export default class Homesecond extends React.Component {
                 }
             ]
         };
-        return (
 
+        return (
             <Second_Wrap>
                 <Second_head>
                     <Second_head_span>Features</Second_head_span>
@@ -272,7 +271,6 @@ export default class Homesecond extends React.Component {
                     </Slider>
                 </div>
             </Second_Wrap>
-
         );
     }
 }

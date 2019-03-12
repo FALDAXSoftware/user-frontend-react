@@ -52,15 +52,6 @@ const ReactSimpleMapWrapper = styled.div`
   background-image: "-ms-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%)";
 `;
 
-const Forth_head_p = styled.p`
-    font-family: 'Open sans';
-    font-size: 13px;
-    color: rgb(40, 37, 40);
-    line-height: 1.143;
-    text-align: center;
-    margin-top: 15px;
-`;
-
 const Back_link = styled.a`
     vertical-align: middle;
     font-size: 14px;
@@ -96,7 +87,6 @@ const Section = styled(Section_3)`
   padding-top:50px;
   padding-bottom:50px;
 `
-
 const CircleColor = styled.span`
     height:20px;
     width:20px;
@@ -113,8 +103,8 @@ const LegendDiv = styled.div`
 `
 //Myanmar, Somaliland new added
 
-/* Component defination start here */
-class Home_four extends Component {
+/* Component definition start here */
+class HomeFour extends Component {
     constructor() {
         super();
         this.handleMove = this.handleMove.bind(this);
@@ -185,8 +175,8 @@ class Home_four extends Component {
         const values = { email: this.state.email_address };
         this.setState({ email_address: '' });
         var re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
-        if (re.test(this.state.email_address)) {
 
+        if (re.test(this.state.email_address)) {
             this.setState({ email_msg: "" })
             fetch(globalVariables.API_URL + "/users/email-subscription", {
                 method: "post",
@@ -195,8 +185,7 @@ class Home_four extends Component {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(values)
-            })
-                .then(response => response.json())
+            }).then(response => response.json())
                 .then((responseData) => {
                     if (responseData.status == 500) {
                         this.openNotification1();
@@ -206,8 +195,7 @@ class Home_four extends Component {
                     }
                 })
                 .catch(error => { })
-        }
-        else {
+        } else {
             this.setState({ email_msg: "*email address not valid" })
         }
     }
@@ -526,4 +514,4 @@ export default connect(
     (state) => {
         return { tooltip: state.tooltip.default };
     }
-)(withRouter(Home_four));
+)(withRouter(HomeFour));

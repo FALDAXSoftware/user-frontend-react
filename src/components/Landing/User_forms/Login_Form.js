@@ -1,8 +1,13 @@
 /* In-built Packages*/
-import React from 'react'
+import React, { Component } from 'react'
 import { createForm, formShape } from 'rc-form';
+<<<<<<< HEAD
 import styled, { consolidateStreamedStyles } from 'styled-components';
 import { Row, Col, Button, notification, Icon, Spin } from "antd";
+=======
+import styled from 'styled-components';
+import { Button, notification, Icon, Spin } from "antd";
+>>>>>>> 6cd2c0b3c5eb98e98582ae87d4add8dbb05c3ae3
 import { connect } from 'react-redux';
 import { Eye, ActiveEye } from '../../../Constants/images';
 import { Spin_Ex } from '../../../styled-components/homepage/style'
@@ -268,10 +273,13 @@ const FAI = styled.img`
   cursor:pointer;
 `
 const Active_FAI = styled(FAI)`
-    
 `
 
+<<<<<<< HEAD
 class Login_Form extends React.Component {
+=======
+class LoginForm extends Component {
+>>>>>>> 6cd2c0b3c5eb98e98582ae87d4add8dbb05c3ae3
   constructor(props) {
     super(props);
     this.state = {
@@ -300,8 +308,6 @@ class Login_Form extends React.Component {
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
 
-        /* if (this.props.forgotParam !== undefined) { value['email_verify_token'] = this.props.forgotParam[1]; } */
-        /* console.log("I am in") */
         var obj = {};
         obj["email"] = value.email;
         obj["password"] = value.password;
@@ -312,10 +318,7 @@ class Login_Form extends React.Component {
         this.props.Login(obj);
       } else {
         if (error !== null) {
-          console.log("here", error);
-
           if (error['password'] !== undefined) {
-            console.log("if in")
             this.setState({ passIcon: false })
             document.querySelector("#passlog_icon_success").style.display = "none"
             document.querySelector("#passlog_icon_fail").style.display = "none"
@@ -323,7 +326,6 @@ class Login_Form extends React.Component {
             this.setState({ pass_msg: "password is required" })
           }
           if (error['email'] !== undefined) {
-
             this.setState({ emailIcon: false })
             document.querySelector("#userlog_icon_success").style.display = "none"
             document.querySelector("#userlog_icon_fail").style.display = "none"
@@ -353,7 +355,6 @@ class Login_Form extends React.Component {
       var bool = re.test(String(value).toLowerCase());
       if (value !== "") {
         if (bool == true) {
-          /* console.log("EmailICON is true") */
           this.setState({ emailIcon: true })
           document.querySelector("#userlog_icon_success").style.display = "inline-block"
           document.querySelector("#userlog_icon_fail").style.display = "none"
@@ -366,8 +367,7 @@ class Login_Form extends React.Component {
           this.setState({ email_msg: "Email address is not valid" })
         }
       }
-    }
-    else if (field == "password") {
+    } else if (field == "password") {
       let val = value.trim();
       if (val !== "") {
         this.setState({ passIcon: true, password: value })
@@ -433,9 +433,7 @@ class Login_Form extends React.Component {
     }
   }
   handleEye(e) {
-    /* console.log("Hello i  am here",document.getElementById("logPass"),document.getElementById("logPass").type) */
     if (document.getElementById("logPass").type !== undefined) {
-      /* console.log("I am in") */
       if (document.getElementById("logPass").type == "password") {
         this.setState({ typeEye: "text" })
       } else {
@@ -445,9 +443,7 @@ class Login_Form extends React.Component {
   }
 
   componentDidMount() {
-    /* console.log(this.props) */
     var query = this.props.location.search.split("=")
-    /*  console.log(query) */
     if (query[0] !== "" && this.props.location.pathname.includes("login")) {
       var queryObj = {};
       queryObj["email_verify_token"] = query[1];
@@ -464,8 +460,7 @@ class Login_Form extends React.Component {
           this.setState({ loader: false })
           if (responseData.status == 200) {
             this.openNotificationWithIcon('success', 'Verified', responseData.message);
-          }
-          else
+          } else
             this.openNotificationWithIcon('error', 'Not Verified', responseData.err)
         })
         .catch(error => { /* console.log(error) */ })
@@ -477,20 +472,17 @@ class Login_Form extends React.Component {
       if (props.errorStatus.status == 200) {
         this.openNotificationWithIcon('success', 'Login Successful', props.errorStatus.message);
         /* this.props.dispModal("login"); */
-      }
-      else if (props.errorStatus.status == 201) {
+      } else if (props.errorStatus.status == 201) {
         this.setState({ isOtpRequired: true });
         // document.querySelector("#otp-field").focus();
         /* this.openNotificationWithIcon('error', 'Error', props.errorStatus.err); */
-      }
-      else {
+      } else {
         this.openNotificationWithIcon('error', 'Error', props.errorStatus.err);
       }
       this.props.clearLogin();
     }
   }
   handleSubmit(event) {
-    console.log("I m x\ca")
     this.submit();
     event.preventDefault();
   }
@@ -585,7 +577,6 @@ class Login_Form extends React.Component {
 }
 
 function mapStateToProps(state) {
-  /*   console.log(state) */
   return ({
     isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
     errorStatus: state.simpleReducer.errorStatus !== undefined ? state.simpleReducer.errorStatus : undefined,
@@ -598,4 +589,4 @@ const mapDispatchToProps = dispatch => ({
   clearLogin: () => dispatch(clearLogin())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Login_Form));
+export default connect(mapStateToProps, mapDispatchToProps)(createForm()(LoginForm));

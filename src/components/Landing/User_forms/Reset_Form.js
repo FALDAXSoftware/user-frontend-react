@@ -107,7 +107,6 @@ class ResetPassword extends Component {
     if (field == "password") {
       password = value;
       if (this.state.confPass !== undefined) {
-        /* console.log("abcd",this.state.confPass,value) */
         if (this.state.confPass === value) {
           this.setState({ confirmIcon: true })
           document.querySelector("#confirmchange_icon_success").style.display = "none"
@@ -183,14 +182,12 @@ class ResetPassword extends Component {
   submit = () => {
     this.props.form.validateFields((error, value) => {
       let url = this.props.location.search.split('=')
-      /* console.log(error, value); */
       if (error == null) {
         if (value.password == value.confirm_password) {
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
           document.querySelectorAll(".comp_pass")[0].style.display = "block";
           document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
           this.setState({ pass_msg: null, confirmPass_msg: null });
-          /* console.log(value,this.props) */
           this.props.resetAction({ password: value.password, reset_token: url[1] });
           this.props.dispModal("login")
           this.openNotification();
@@ -213,11 +210,9 @@ class ResetPassword extends Component {
         }
         if (error.confirm_password !== undefined) {
           if (error.confirm_password.errors[0].message !== undefined && error.confirm_password.errors[0].message !== null) {
-            /* console.log("Password ELse") */
             document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
             this.setState({ confirmPass_msg: "*Confirm password is required" })
           } else {
-            /* console.log("Confirm ELse") */
             document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
             this.setState({ confrimPass_msg: null })
           }

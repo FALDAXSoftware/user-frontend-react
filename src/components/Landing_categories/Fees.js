@@ -8,7 +8,6 @@ import {
     Contact_wrap, Grey_wrap, Career_wrap
 } from '../../styled-components/landingCategories/contactStyle';
 import { Table } from 'react-bootstrap';
-import { fees } from "../../Constants/feeJson";
 import { globalVariables } from '../../Globals';
 import { connect } from "react-redux"
 

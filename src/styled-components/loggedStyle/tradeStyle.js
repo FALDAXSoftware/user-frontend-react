@@ -25,6 +25,7 @@ export const EditButton = styled(Button)`
 `
 export const MainTV = styled.div`
     background-color: ${props => props.theme.mode == "dark" ? "#2e3141" : "#eceff1"};
+    height:calc( 100% - 38px );
 `
 export const TVBar = styled.div`
     display:flex;
@@ -53,7 +54,6 @@ export const Left_div = styled.div`
     padding-bottom: 30px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
-    height:640px;
     @media(max-width:991px)
     {
         margin-right:0px;
@@ -201,7 +201,7 @@ export const Right_div = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
-    height:640px;
+    height:100%;
     @media(max-width:991px)
     {
         margin-top:30px;
@@ -666,14 +666,15 @@ export const ScrollTableContent = styled.div`
 export const SettingDropdown = styled(Dropdown)`
     position: fixed;
     top: 90px;
-    left: 0px;
+    right: 0px;
     background: white;
     color: #1890ff;
-    cursor:pointer;
-    padding: 3px 12px;
+    cursor: pointer;
+    padding: 7px 7px;
     font-size: 20px;
     border: 1px solid lightgray;
     z-index: 9999;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 `
