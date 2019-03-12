@@ -370,7 +370,7 @@ class Navigation extends Component {
         if (pressed == "login")
             this.props.history.push("/login")
         else if (pressed == "signup")
-            this.setState({ modal: 1 })
+            this.props.history.push("/signup")
         else if (pressed == "thankyou")
             this.setState({ modal: 4 });
         else

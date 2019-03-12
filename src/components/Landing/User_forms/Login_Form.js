@@ -69,8 +69,8 @@ const HorImg = styled.img`
   {
     display:block;
     width:400px;
-    margin-top:30px;
-    margin-bottom:30px;
+    margin-top:20px;
+    margin-bottom:20px;
   }
   @media(max-width:575px)
   {
@@ -309,20 +309,28 @@ class Login_Form extends React.Component {
         this.props.Login(obj);
       } else {
         if (error !== null) {
-          if (error['password'] !== undefined) {
+          console.log(error['password'], value.password)
+          if (error['password'] !== undefined && (value.password == "" || value.password == undefined)) {
             this.setState({ passIcon: false })
             document.querySelector("#passlog_icon_success").style.display = "none"
             document.querySelector("#passlog_icon_fail").style.display = "none"
             document.querySelectorAll(".pass_msg")[0].style.display = "block";
-            this.setState({ pass_msg: "password is required" })
+            this.setState({ pass_msg: "Password is required" })
           }
           if (error['email'] !== undefined) {
             this.setState({ emailIcon: false })
             document.querySelector("#userlog_icon_success").style.display = "none"
-            document.querySelector("#userlog_icon_fail").style.display = "none"
+            document.querySelector("#userlog_icon_fail").style.display = "inline-block"
             document.querySelectorAll(".user_msg")[0].style.display = "block";
-            if (this.state.email_msg == null) this.setState({ email_msg: "email is required" })
+            if (this.state.email_msg == null) this.setState({ email_msg: "Email is required" })
           }
+        }
+        else {
+          this.setState({ otpIcon: false })
+          document.querySelector("#otp_icon_success").style.display = "none";
+          document.querySelector("#otp_icon_fail").style.display = "inline-block";
+          document.querySelectorAll(".otp_msg")[0].style.display = "block";
+          this.setState({ otp_msg: "Otp required." })
         }
 
       }
@@ -330,7 +338,7 @@ class Login_Form extends React.Component {
   }
 
   dispModal(pressed) {
-    this.props.dispModal(pressed)
+    this.props.history.push('/signup')
   }
 
   openNotificationWithIcon(type, head, desc) {
@@ -358,6 +366,13 @@ class Login_Form extends React.Component {
           this.setState({ email_msg: "Email address is not valid" })
         }
       }
+      else {
+        this.setState({ emailIcon: false })
+        document.querySelector("#userlog_icon_fail").style.display = "inline-block"
+        document.querySelector("#userlog_icon_success").style.display = "none"
+        document.querySelectorAll(".user_msg")[0].style.display = "block";
+        this.setState({ email_msg: "Email address is required" })
+      }
     } else if (field == "password") {
       let val = value.trim();
       if (val !== "") {
@@ -370,7 +385,7 @@ class Login_Form extends React.Component {
         document.querySelector("#passlog_icon_success").style.display = "none"
         document.querySelector("#passlog_icon_fail").style.display = "none"
         document.querySelectorAll(".pass_msg")[0].style.display = "block";
-        this.setState({ pass_msg: "password is required" })
+        this.setState({ pass_msg: "Password is required" })
       }
     }
     //password shouldn't have validation except required. 
@@ -410,15 +425,15 @@ class Login_Form extends React.Component {
           document.querySelectorAll(".otp_msg")[0].style.display = "none";
         } else {
           this.setState({ otpIcon: false })
-          document.querySelector("#otp_icon_success").style.display = "none"
-          document.querySelector("#otp_icon_fail").style.display = "inline-block"
+          document.querySelector("#otp_icon_success").style.display = "none";
+          document.querySelector("#otp_icon_fail").style.display = "inline-block";
           document.querySelectorAll(".otp_msg")[0].style.display = "block";
           this.setState({ otp_msg: "Otp should have 6 characters." })
         }
       } else {
         this.setState({ otpIcon: false })
-        document.querySelector("#otp_icon_success").style.display = "none"
-        document.querySelector("#otp_icon_fail").style.display = "none"
+        document.querySelector("#otp_icon_success").style.display = "none";
+        document.querySelector("#otp_icon_fail").style.display = "none";
         document.querySelectorAll(".otp_msg")[0].style.display = "none";
       }
     }

@@ -2,26 +2,112 @@
 import React, { Component } from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
-import { Button, notification, Icon, Progress } from "antd";
+import { Row, Col, Button, notification, Icon, Progress } from "antd";
 import { connect } from 'react-redux';
 import "react-password-strength/dist/style.css";
 /* Components */
 import { Signup, clearSignUp } from '../../../Actions/Auth';
-import { Username, Form_wrap, Welcome_text, Email_label, Email_req, Pass_req } from "./Login_Form";
+import { Username, Welcome_text, Email_label, Email_req, Pass_req } from "./Login_Form";
 import { ActiveEye, Eye } from '../../../Constants/images';
 /* Global Constants */
 
 /* Styled-Components */
+export const LoginWrap = styled.div`
+background-color:#f0f3f2;
+  min-height:100%;
+`
+const RowWrap = styled(Row)`
+  min-height:100%;
+  
+  @media(max-width:991px)
+  {
+    min-height:100%;
+  }
+`
+const ColLeft = styled(Col)`
+min-height:100vh;
+@media(max-width:991px)
+  {
+
+    min-height:auto;
+    height:auto;
+  }
+`
+const ColRight = styled(Col)`
+min-height:100%;
+@media(max-width:991px)
+  {
+    height:auto;
+  }
+`
+const LeftWrap = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(/images/LoginBanner.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  @media(max-width:991px)
+  {
+    height:auto;
+  }
+`
+const VertImg = styled.img`
+  @media(max-width:991px)
+  {
+    display:none;
+  }
+`
+const HorImg = styled.img`
+  display:none;
+  @media(max-width:991px)
+  {
+    display:block;
+    width:400px;
+    margin-top:20px;
+    margin-bottom:20px;
+  }
+  @media(max-width:575px)
+  {
+    width:250px;    
+  }
+`
+export const Form_wrap = styled.div`
+  padding-left:80px;
+  background-color:#f0f3f2;
+  min-height: 100vh;
+  @media(max-width:991px)
+  {
+    min-height: auto;
+    padding-top:30px;
+  }
+  @media(max-width:767px)
+  {
+    padding: 30px;
+    
+  }
+`
+const RightWrap = styled.div`
+  overflow:auto;
+  height: 100vh;
+  @media(max-width:991px)
+  {
+    height:auto;
+  }
+`
 const Login_head = styled.div`
   font-size: 30px;
   font-family: "Open Sans";
-  color: rgb( 15, 71, 123 );
+  color: black;
   font-weight: bold;
   text-transform: uppercase;
   text-align: left;
   padding-bottom: 10px;
-  border-bottom: 3px solid #dbe4eb;
+  border-bottom: 3px solid #ced9e0;
   display: inline-block;
+  margin-top:30px;
   @media(min-width:1024px) and  (max-width:1440px)
   {
     padding-bottom:0px;
@@ -91,22 +177,29 @@ const Password = styled(Username)`
 const Referral = styled(Username)``
 const Button_login = styled(Button)`
   width: 110px;
-  background-color: #0f477b;
+  background-color: rgb(0, 170, 250);
   color: white;
   margin-top: 50px;
-  height: 45px;
+  height: 48px;
   letter-spacing:3px;
   color: white;
   font-size: 16px;
   font-size: 13.217px;
   font-family: "Open Sans";
   font-weight: bold;
+  border-radius:30px;
   text-transform: uppercase;
   line-height: 2.875;
-  @media (min-width:1024px) and (max-width:1440px)
-  {
-    margin-top: 20px;
-  }
+  &:hover{
+    color:black;
+    border:1px solid black;
+    background-color: rgb(0, 170, 250);
+}
+@media(max-width:400px)
+{
+  display:block;
+  margin-top: 30px;
+}
   &:hover{
     color:#0f477b;
     border-color:#0f477b;
@@ -124,10 +217,14 @@ const Sign = styled.div`
   }
 `
 const Sign_a = styled.a`
-  font-size: 16px;
-  font-family: "Open Sans";
+font-size: 16px;
+font-family: "Open Sans";
+color:rgb(0, 170, 250);
+font-weight:bold;
+&:hover
+{
   color:#0f477b;
-  font-weight:bold;
+}
 `
 const Progress_bar = styled(Progress)`
   width:77%;
@@ -347,7 +444,7 @@ class SignupForm extends Component {
   }
 
   dispModal() {
-    this.props.dispModal("login")
+    this.props.history.push('/login');
   }
 
   openNotificationWithIcon(type, head, desc) {
@@ -381,100 +478,113 @@ class SignupForm extends Component {
     var me = this;
 
     return (
-      <div>
-        <Form_wrap>
-          <Login_head>Sign Up</Login_head>
-          <Welcome>A Better Trading Experience is Moments Away</Welcome>
-          <SubHeading>Lets Get Started</SubHeading>
-          <form onSubmit={this.handleSubmit}>
-            <Email_label>First Name</Email_label>
-            <div>
-              <Full {...getFieldProps('first_name', {
-                onChange(e) { me.onChangeField(e.target.value, "firstname") }, // have to write original onChange here if you need
-                initialValue: me.props.init,
-                rules: [{ type: "string", required: true }],
-              })} />
-              <FirstIconS id="first_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-              <FirstIconF id="first_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-            </div>
-            <Full_req className="first_sign">{this.state.first_msg}</Full_req>
+      <LoginWrap>
+        <RowWrap >
+          <ColLeft sm={24} lg={12}>
+            <LeftWrap >
+              <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
+              <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+            </LeftWrap>
+          </ColLeft>
+          <ColRight sm={24} lg={12}>
+            <Form_wrap>
+              <RightWrap >
+                <Login_head>Sign Up</Login_head>
+                <Welcome>A Better Trading Experience is Moments Away</Welcome>
+                <SubHeading>Lets Get Started</SubHeading>
+                <form onSubmit={this.handleSubmit}>
+                  <Email_label>First Name</Email_label>
+                  <div>
+                    <Full {...getFieldProps('first_name', {
+                      onChange(e) { me.onChangeField(e.target.value, "firstname") }, // have to write original onChange here if you need
+                      initialValue: me.props.init,
+                      rules: [{ type: "string", required: true }],
+                    })} />
+                    <FirstIconS id="first_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                    <FirstIconF id="first_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                  </div>
+                  <Full_req className="first_sign">{this.state.first_msg}</Full_req>
 
-            <Ph_Label>Last Name</Ph_Label>
-            <div>
-              <Full {...getFieldProps('last_name', {
-                onChange(e) { me.onChangeField(e.target.value, "lastname") }, // have to write original onChange here if you need
-                initialValue: me.props.init,
-                rules: [{ type: "string", required: true }],
-              })} />
-              <LastIconS id="last_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-              <LastIconF id="last_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-            </div>
-            <Full_req className="last_sign">{this.state.last_msg}</Full_req>
+                  <Ph_Label>Last Name</Ph_Label>
+                  <div>
+                    <Full {...getFieldProps('last_name', {
+                      onChange(e) { me.onChangeField(e.target.value, "lastname") }, // have to write original onChange here if you need
+                      initialValue: me.props.init,
+                      rules: [{ type: "string", required: true }],
+                    })} />
+                    <LastIconS id="last_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                    <LastIconF id="last_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                  </div>
+                  <Full_req className="last_sign">{this.state.last_msg}</Full_req>
 
-            <Ph_Label>Email Address</Ph_Label>
-            <div>
-              <Email {...getFieldProps('email', {
-                onChange(e) { me.onChangeField(e.target.value, "email") }, // have to write original onChange here if you need
-                initialValue: me.props.init,
-                rules: [{ type: "email", required: true }],
-              })}
-              />
-              <EmailIconS id="email_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-              <EmailIconF id="email_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-            </div>
-            <Email_req className="email_sign">{this.state.email_msg}</Email_req>
+                  <Ph_Label>Email Address</Ph_Label>
+                  <div>
+                    <Email {...getFieldProps('email', {
+                      onChange(e) { me.onChangeField(e.target.value, "email") }, // have to write original onChange here if you need
+                      initialValue: me.props.init,
+                      rules: [{ type: "email", required: true }],
+                    })}
+                    />
+                    <EmailIconS id="email_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                    <EmailIconF id="email_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                  </div>
+                  <Email_req className="email_sign">{this.state.email_msg}</Email_req>
 
-            <Ph_Label>Password</Ph_Label>
-            <div>
-              <Password type={this.state.PasswordtypeEye} {...getFieldProps('password', {
-                onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
-                initialValue: me.props.init,
-                rules: [{ type: "string", required: true, min: 8 }],
-              })}
-              />
-              {
-                (this.state.PasswordtypeEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "new")} />
-              }
-              <PassIconS id="pass_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-              <PassIconF id="pass_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-            </div>
-            <Progress_bar type="line" size="small" percent={this.state.percent} strokeColor={this.state.stroke} />
-            <Pass_req className="pass_sign">{this.state.pass_msg}</Pass_req>
-            <Ph_Label>Confirm Password</Ph_Label>
-            <div>
-              <Password type={this.state.repeatEye} {...getFieldProps('confirm_password', {
-                onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
-                initialValue: me.props.init,
-                rules: [{ type: "string", required: true, min: 8 }],
-              })}
-              />
-              {
-                (this.state.repeatEye == "password") ?
-                  <FAI src={Eye} onClick={this.handleEye.bind(this, "repeatEye")} />
-                  : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "repeatEye")} />
-              }
-              <ConfirmIconS id="confirm_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-              <ConfirmIconF id="confirm_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-            </div>
-            <ConfirmPass_req className="confirmPass_sign">{this.state.confirmPass_msg}</ConfirmPass_req>
-            <Ph_Label>Referral Code</Ph_Label>
-            <div>
-              <Referral {...getFieldProps('referral_code', {
-                onChange() {/* console.log("Hello How are You") */ }, // have to write original onChange here if you need
-                initialValue: this.state.qP == "" ? me.props.init : this.state.qP,
-                rules: [{ type: "string", required: false }],
-              })}
-              />
-            </div>
-            <input style={{ display: "none" }} type="submit" value="Submit" />
-          </form>
-          {(errors = getFieldError('required')) ? errors.join(',') : null}
-          <Button_login onClick={this.submit} disabled={this.state.isSignDisable}>Sign Up</Button_login>
-          <Sign>
-            Already have an account? <Sign_a onClick={() => this.dispModal()}>Login</Sign_a>
-          </Sign>
-        </Form_wrap>
-      </div>
+                  <Ph_Label>Password</Ph_Label>
+                  <div>
+                    <Password type={this.state.PasswordtypeEye} {...getFieldProps('password', {
+                      onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
+                      initialValue: me.props.init,
+                      rules: [{ type: "string", required: true, min: 8 }],
+                    })}
+                    />
+                    {
+                      (this.state.PasswordtypeEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "new")} />
+                    }
+                    <PassIconS id="pass_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                    <PassIconF id="pass_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                  </div>
+                  <Progress_bar type="line" size="small" percent={this.state.percent} strokeColor={this.state.stroke} />
+                  <Pass_req className="pass_sign">{this.state.pass_msg}</Pass_req>
+                  <Ph_Label>Confirm Password</Ph_Label>
+                  <div>
+                    <Password type={this.state.repeatEye} {...getFieldProps('confirm_password', {
+                      onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
+                      initialValue: me.props.init,
+                      rules: [{ type: "string", required: true, min: 8 }],
+                    })}
+                    />
+                    {
+                      (this.state.repeatEye == "password") ?
+                        <FAI src={Eye} onClick={this.handleEye.bind(this, "repeatEye")} />
+                        : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "repeatEye")} />
+                    }
+                    <ConfirmIconS id="confirm_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                    <ConfirmIconF id="confirm_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                  </div>
+                  <ConfirmPass_req className="confirmPass_sign">{this.state.confirmPass_msg}</ConfirmPass_req>
+                  <Ph_Label>Referral Code</Ph_Label>
+                  <div>
+                    <Referral {...getFieldProps('referral_code', {
+                      onChange() {/* console.log("Hello How are You") */ }, // have to write original onChange here if you need
+                      initialValue: this.state.qP == "" ? me.props.init : this.state.qP,
+                      rules: [{ type: "string", required: false }],
+                    })}
+                    />
+                  </div>
+                  <input style={{ display: "none" }} type="submit" value="Submit" />
+                </form>
+                {(errors = getFieldError('required')) ? errors.join(',') : null}
+                <Button_login onClick={this.submit} disabled={this.state.isSignDisable}>Sign Up</Button_login>
+                <Sign>
+                  Already have an account? <Sign_a onClick={() => this.dispModal()}>Login</Sign_a>
+                </Sign>
+              </RightWrap>
+            </Form_wrap>
+          </ColRight>
+
+        </RowWrap>
+      </LoginWrap>
     );
   }
 }
