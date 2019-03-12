@@ -275,11 +275,7 @@ const FAI = styled.img`
 const Active_FAI = styled(FAI)`
 `
 
-<<<<<<< HEAD
 class Login_Form extends React.Component {
-=======
-class LoginForm extends Component {
->>>>>>> 6cd2c0b3c5eb98e98582ae87d4add8dbb05c3ae3
   constructor(props) {
     super(props);
     this.state = {
