@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
-import { Button, notification, Icon } from "antd";
+import { Button, notification, Icon, Row, Col } from "antd";
 import { connect } from 'react-redux';
 import { Eye, ActiveEye } from '../../../Constants/images';
 
@@ -51,7 +51,7 @@ const Password = styled(Username)`
 margin-top:15px;
 padding-right:40px;
 `
-const Button_login = styled(Button)`
+const ResetButton = styled(Button)`
   width: 110px;
   background-color: #0f477b;
   color: white;
@@ -73,6 +73,63 @@ const Button_login = styled(Button)`
     color:#0f477b;
     border-color:#0f477b;
     background-color:white;
+  }
+`
+const RowWrap = styled(Row)`
+  min-height:100%;
+  
+  @media(max-width:991px)
+  {
+    min-height:100%;
+  }
+`
+const ColLeft = styled(Col)`
+min-height:100vh;
+@media(max-width:991px)
+  {
+    min-height:auto;
+    height:auto;
+  }
+`
+const ColRight = styled(Col)`
+min-height:100%;
+@media(max-width:991px)
+  {
+    height:auto;
+  }
+`
+const LeftWrap = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(/images/LoginBanner.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  @media(max-width:991px)
+  {
+    height:auto;
+  }
+`
+const VertImg = styled.img`
+  @media(max-width:991px)
+  {
+    display:none;
+  }
+`
+const HorImg = styled.img`
+  display:none;
+  @media(max-width:991px)
+  {
+    display:block;
+    width:400px;
+    margin-top:30px;
+    margin-bottom:30px;
+  }
+  @media(max-width:575px)
+  {
+    width:250px;    
   }
 `
 const FAI = styled.img`
@@ -189,9 +246,8 @@ class ResetPassword extends Component {
           document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
           this.setState({ pass_msg: null, confirmPass_msg: null });
           this.props.resetAction({ password: value.password, reset_token: url[1] });
-          this.props.dispModal("login")
+          this.props.history.push("/login")
           this.openNotification();
-          this.props.history.push("login");
         } else {
           document.querySelectorAll(".comp_pass")[0].style.display = "block";
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
@@ -202,7 +258,7 @@ class ResetPassword extends Component {
         if (error.password !== undefined) {
           if (error.password.errors[0].message !== undefined && error.password.errors[0].message !== null) {
             document.querySelectorAll(".pass_msg")[0].style.display = "block";
-            this.setState({ pass_msg: "*Password is required" })
+            this.setState({ pass_msg: "Password is required" })
           } else {
             document.querySelectorAll(".pass_msg")[0].style.display = "none";
             this.setState({ pass_msg: null })
@@ -211,7 +267,7 @@ class ResetPassword extends Component {
         if (error.confirm_password !== undefined) {
           if (error.confirm_password.errors[0].message !== undefined && error.confirm_password.errors[0].message !== null) {
             document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
-            this.setState({ confirmPass_msg: "*Confirm password is required" })
+            this.setState({ confirmPass_msg: "Confirm password is required" })
           } else {
             document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
             this.setState({ confrimPass_msg: null })
@@ -219,10 +275,6 @@ class ResetPassword extends Component {
         }
       }
     });
-  }
-
-  dispModal() {
-    this.props.dispModal("login")
   }
 
   handleEye(type) {
@@ -257,45 +309,55 @@ class ResetPassword extends Component {
 
     return (
       <div>
-        <Form_wrap>
-          <Login_head>Reset Password</Login_head>
-          <Pass_label>Password</Pass_label>
-          <div>
-            <Full type={newEye} {...getFieldProps('password', {
-              onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
-              rules: [{ type: "string", required: true, max: 16 }],
-            })} />
-            {
-              (newEye == "password") ?
-                <FAI src={Eye} onClick={this.handleEye.bind(this, "new")} />
-                : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "new")} />
-            }
-            <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-            <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-            <Full_req className="pass_msg">{this.state.pass_msg}</Full_req>
-          </div>
+        <RowWrap >
+          <ColLeft sm={24} lg={12}>
+            <LeftWrap >
+              <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
+              <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+            </LeftWrap>
+          </ColLeft>
+          <ColRight sm={24} lg={12}>
+            <Form_wrap>
+              <Login_head>Reset Password</Login_head>
+              <Pass_label>Password</Pass_label>
+              <div>
+                <Full type={newEye} {...getFieldProps('password', {
+                  onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
+                  rules: [{ type: "string", required: true, max: 16 }],
+                })} />
+                {
+                  (newEye == "password") ?
+                    <FAI src={Eye} onClick={this.handleEye.bind(this, "new")} />
+                    : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "new")} />
+                }
+                <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                <Full_req className="pass_msg">{this.state.pass_msg}</Full_req>
+              </div>
 
-          <Passconfirm_Label>Confirm Password</Passconfirm_Label>
-          <div>
-            <Password type={repeatEye} {...getFieldProps('confirm_password', {
-              onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
-              rules: [{ type: "string", required: true, max: 16 }],
-            })}
-            />
-            {
-              (repeatEye == "password") ?
-                <FAI src={Eye} onClick={this.handleEye.bind(this, "confirm_password")} />
-                : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "confirm_password")} />
-            }
-            <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-            <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-            <Password_req className="confirmchange_msg">{this.state.confirmPass_msg}</Password_req>
-          </div>
+              <Passconfirm_Label>Confirm Password</Passconfirm_Label>
+              <div>
+                <Password type={repeatEye} {...getFieldProps('confirm_password', {
+                  onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
+                  rules: [{ type: "string", required: true, max: 16 }],
+                })}
+                />
+                {
+                  (repeatEye == "password") ?
+                    <FAI src={Eye} onClick={this.handleEye.bind(this, "confirm_password")} />
+                    : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "confirm_password")} />
+                }
+                <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                <Password_req className="confirmchange_msg">{this.state.confirmPass_msg}</Password_req>
+              </div>
 
-          <Common_req className="comp_pass">{this.state.common_req}</Common_req>
-          {(errors = getFieldError('required')) ? errors.join(',') : null}
-          <Button_login onClick={this.submit}>Reset</Button_login>
-        </Form_wrap>
+              <Common_req className="comp_pass">{this.state.common_req}</Common_req>
+              {(errors = getFieldError('required')) ? errors.join(',') : null}
+              <ResetButton onClick={this.submit}>Reset</ResetButton>
+            </Form_wrap>
+          </ColRight>
+        </RowWrap>
       </div>
     );
   }
