@@ -432,7 +432,7 @@ class Navigation extends Component {
 
         let queryParams
 
-        if (this.props.location.pathname == "/signup") {
+        /* if (this.props.location.pathname == "/signup") {
             queryParams = decodeURIComponent(this.props.queryParams)
             let qP = queryParams.split("=")
             this.setState({ modal: 1, visible: true, qP: qP[1] });
@@ -441,7 +441,7 @@ class Navigation extends Component {
                 queryParams = this.props.queryParams;
                 this.setState({ forgotParam: queryParams.split("="), visible: true })
             }
-        }
+        } */
         if (this.props.location.pathname == "/about-us") {
             this.setState({ selected: ['2'] })
         } else if (this.props.location.pathname == "/contactus") {
