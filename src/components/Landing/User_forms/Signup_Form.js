@@ -9,6 +9,7 @@ import "react-password-strength/dist/style.css";
 import { Signup, clearSignUp } from '../../../Actions/Auth';
 import { Username, Welcome_text, Email_label, Email_req, Pass_req } from "./Login_Form";
 import { ActiveEye, Eye } from '../../../Constants/images';
+import { isFormField } from 'rc-form/lib/createFormField';
 /* Global Constants */
 
 /* Styled-Components */
@@ -234,6 +235,7 @@ const FAI = styled.img`
   cursor:pointer;
 `
 const Active_FAI = styled(FAI)`
+  width:24px;
 `
 class SignupForm extends Component {
   constructor(props) {
@@ -301,16 +303,21 @@ class SignupForm extends Component {
         obj['device_type'] = 0;
         this.props.Signup(obj);
       } else {
+        console.log(error)
         if (error['first_name'] !== undefined) {
           this.onChangeField(value.first_name, 'firstname')
-        } else if (error['last_name'] !== undefined) {
-          this.onChangeField(value.first_name, 'lastname')
-        } else if (error['email'] !== undefined) {
-          this.onChangeField(value.first_name, 'lastname')
-        } else if (error['password'] !== undefined) {
-          this.onChangeField(value.first_name, 'lastname')
-        } else if (error['confirm_password'] !== undefined) {
-          this.onChangeField(value.first_name, 'lastname')
+        }
+        if (error['last_name'] !== undefined) {
+          this.onChangeField(value.last_name, 'lastname')
+        }
+        if (error['email'] !== undefined) {
+          this.onChangeField(value.email, 'email')
+        }
+        if (error['password'] !== undefined) {
+          this.onChangeField(value.password, 'password')
+        }
+        if (error['confirm_password'] !== undefined) {
+          this.onChangeField(value.confirm_password, 'confirm_password')
         }
         //this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue")
       }
@@ -320,7 +327,7 @@ class SignupForm extends Component {
     if (field == "email") {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       var bool = re.test(String(value).toLowerCase());
-      if (value !== "") {
+      if (value !== "" && value !== undefined) {
         if (bool == true) {
           this.setState({ emailIcon: true })
           document.querySelector("#email_icon_success").style.display = "inline-block"
@@ -336,9 +343,11 @@ class SignupForm extends Component {
       } else {
         this.setState({ emailIcon: false })
         document.querySelector("#email_icon_success").style.display = "none"
-        document.querySelector("#email_icon_fail").style.display = "none"
-        document.querySelectorAll(".email_sign")[0].style.display = "none";
-        this.setState({ email_msg: "Email address is required" })
+        document.querySelector("#email_icon_fail").style.display = "inline-block"
+        document.querySelectorAll(".email_sign")[0].style.display = "block";
+        if (value == "" || value == undefined) {
+          this.setState({ email_msg: "Email address is required" })
+        }
       }
     } else if (field == "firstname") {
       var re = /^[a-zA-Z0-9]{2,15}$/;
@@ -377,7 +386,7 @@ class SignupForm extends Component {
     } else if (field == "lastname") {
       var re = /^[a-zA-Z0-9]{2,15}$/;
       var bool = re.test(value);
-      if (value !== "") {
+      if (value !== "" && value !== undefined) {
         if (bool == true) {
           var regexnum = /^[0-9]*$/;
           if (regexnum.test(value)) {
@@ -402,8 +411,11 @@ class SignupForm extends Component {
       } else {
         this.setState({ lastIcon: false })
         document.querySelector("#last_icon_success").style.display = "none";
-        document.querySelector("#last_icon_fail").style.display = "none";
-        document.querySelectorAll(".last_sign")[0].style.display = "none";
+        document.querySelector("#last_icon_fail").style.display = "inline-block";
+        document.querySelectorAll(".last_sign")[0].style.display = "block";
+        if (value == "" || value == undefined) {
+          this.setState({ last_msg: "Last Name is required" })
+        }
       }
     } else if (field == "password") {
       var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
@@ -415,7 +427,7 @@ class SignupForm extends Component {
       if (re.test(value) && value.length == 6) { this.setState({ stroke: "#7CFC00", percent: 80 }) }
       if (re.test(value) && value.length >= 10 && value.length < 60) { this.setState({ stroke: "#008000", percent: 100 }) }
       if (re.test(value) && value.length > 60) { this.setState({ stroke: "red", percent: 0 }) }
-      if (value !== "") {
+      if (value !== "" && value !== undefined) {
         if (bool == true) {
           this.setState({ passIcon: true, password: value })
           document.querySelector("#pass_icon_success").style.display = "inline-block"
@@ -431,12 +443,15 @@ class SignupForm extends Component {
       } else {
         this.setState({ passIcon: false, percent: 0 })
         document.querySelector("#pass_icon_success").style.display = "none"
-        document.querySelector("#pass_icon_fail").style.display = "none"
-        document.querySelectorAll(".pass_sign")[0].style.display = "none";
+        document.querySelector("#pass_icon_fail").style.display = "inline-block"
+        document.querySelectorAll(".pass_sign")[0].style.display = "block";
+        if (value == "" || value == undefined) {
+          this.setState({ pass_msg: "Password is required" })
+        }
       }
     } else if (field == "confirm_password") {
       var bool = this.state.password == value ? true : false
-      if (value !== "") {
+      if (value !== "" && value !== undefined) {
         if (bool == true) {
           this.setState({ confirmIcon: true })
           document.querySelector("#confirm_icon_success").style.display = "inline-block"
@@ -452,8 +467,17 @@ class SignupForm extends Component {
       } else {
         this.setState({ confirmIcon: false })
         document.querySelector("#confirm_icon_success").style.display = "none"
-        document.querySelector("#confirm_icon_fail").style.display = "none"
-        document.querySelectorAll(".confirmPass_sign")[0].style.display = "none";
+        console.log(bool)
+        if (bool == false) {
+          document.querySelector("#confirm_icon_fail").style.display = "none"
+          document.querySelectorAll(".confirmPass_sign")[0].style.display = "block";
+          this.setState({ confirmPass_msg: "*Password doesn't match" })
+        }
+        else {
+          document.querySelector("#confirm_icon_fail").style.display = "none"
+          document.querySelectorAll(".confirmPass_sign")[0].style.display = "none";
+        }
+
       }
     }
   }
@@ -503,12 +527,12 @@ class SignupForm extends Component {
           </ColLeft>
           <ColRight sm={24} lg={12}>
             <Form_wrap>
-              <RightWrap  className="wow fadeInDown" >
+              <RightWrap className="wow fadeInDown" >
                 <Login_head>Sign Up</Login_head>
                 <Welcome>A Better Trading Experience is Moments Away</Welcome>
                 <SubHeading>Lets Get Started</SubHeading>
                 <form onSubmit={this.handleSubmit}>
-                  <Email_label>First Name</Email_label>
+                  <Email_label>First Name*</Email_label>
                   <div>
                     <Full {...getFieldProps('first_name', {
                       onChange(e) { me.onChangeField(e.target.value, "firstname") }, // have to write original onChange here if you need
@@ -520,7 +544,7 @@ class SignupForm extends Component {
                   </div>
                   <Full_req className="first_sign">{this.state.first_msg}</Full_req>
 
-                  <Ph_Label>Last Name</Ph_Label>
+                  <Ph_Label>Last Name*</Ph_Label>
                   <div>
                     <Full {...getFieldProps('last_name', {
                       onChange(e) { me.onChangeField(e.target.value, "lastname") }, // have to write original onChange here if you need
@@ -532,7 +556,7 @@ class SignupForm extends Component {
                   </div>
                   <Full_req className="last_sign">{this.state.last_msg}</Full_req>
 
-                  <Ph_Label>Email Address</Ph_Label>
+                  <Ph_Label>Email Address*</Ph_Label>
                   <div>
                     <Email {...getFieldProps('email', {
                       onChange(e) { me.onChangeField(e.target.value, "email") }, // have to write original onChange here if you need
@@ -545,7 +569,7 @@ class SignupForm extends Component {
                   </div>
                   <Email_req className="email_sign">{this.state.email_msg}</Email_req>
 
-                  <Ph_Label>Password</Ph_Label>
+                  <Ph_Label>Password*</Ph_Label>
                   <div>
                     <Password type={this.state.PasswordtypeEye} {...getFieldProps('password', {
                       onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
