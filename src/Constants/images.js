@@ -55,7 +55,7 @@ export const Security = amazon_Bucket + 'assets/Homepage/Security.png';
 export const Inovation = amazon_Bucket + 'assets/Homepage/inovation.png';
 
 export const Eye = amazon_Bucket + 'assets/Settings/eye.png';
-export const ActiveEye = amazon_Bucket + 'assets/Settings/active_eye.png';
+export const ActiveEye = amazon_Bucket + 'assets/Settings/sliced_eye.png';
 
 export const AboutUs2 = amazon_Bucket + 'assets/about-us-image-2.jpg';
 export const AboutPeople1 = amazon_Bucket + 'assets/blake.png';

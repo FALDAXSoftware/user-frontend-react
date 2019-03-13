@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
-import { Button, notification } from "antd";
+import { Button, notification, Row, Col } from "antd";
 import { Username, Form_wrap, Welcome_text, Email_label, Email_req } from "./Login_Form";
 import { connect } from "react-redux"
 
@@ -11,15 +11,73 @@ import { forgotAction, clearForgot } from "../../../Actions/Auth";
 
 /* Global Constants */
 /* Styled-Components */
+const RowWrap = styled(Row)`
+  min-height:100%;
+  
+  @media(max-width:991px)
+  {
+    min-height:100vh;
+    background-color:#f0f3f2;
+  }
+`
+const ColLeft = styled(Col)`
+  min-height:100vh;
+  @media(max-width:991px)
+  {
+    min-height:auto;
+    height:auto;
+  }
+`
+const ColRight = styled(Col)`
+  min-height:100%;
+  @media(max-width:991px)
+  {
+    height:auto;
+  }
+`
+const LeftWrap = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(/images/LoginBanner.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  @media(max-width:991px)
+  {
+    height:auto;
+  }
+`
+const VertImg = styled.img`
+  @media(max-width:991px)
+  {
+    display:none;
+  }
+`
+const HorImg = styled.img`
+  display:none;
+  @media(max-width:991px)
+  {
+    display:block;
+    width:400px;
+    margin-top:30px;
+    margin-bottom:30px;
+  }
+  @media(max-width:575px)
+  {
+    width:250px;    
+  }
+`
 const Login_head = styled.div`
   font-size: 30px;
   font-family: "Open Sans";
-  color: rgb( 15, 71, 123 );
+  color: rgb( 35, 38, 45 );
   font-weight: bold;
   text-transform: uppercase;
-  text-align: left;                                                                                         
+  text-align: left;
   padding-bottom: 10px;
-  border-bottom: 3px solid #dbe4eb;
+  border-bottom: 3px solid #ced9e0;
   display: inline-block;
   @media(max-width :400px)
   {
@@ -32,17 +90,18 @@ const Sub_text = styled.span`
     color: rgb( 163, 163, 163 );  
 `
 const Button_login = styled(Button)`
-  width: 190px;;
-  background-color: #0f477b;
+  width: auto;
+  background-color: rgb(0, 170, 250);
   color: white;
   margin-top: 50px;
-  height: 45px;
+  height: 48px;
   letter-spacing:3px;
   color: white;
   font-size: 16px;
   font-size: 13.217px;
   font-family: "Open Sans";
   font-weight: bold;
+  border-radius:30px;
   text-transform: uppercase;
   line-height: 2.875;
   @media (min-width:1024px) (max-width:1440px)
@@ -50,21 +109,60 @@ const Button_login = styled(Button)`
     width:40%;
     height:40px;
   }
+  @media(max-width:991px)
+  {
+    display:block;
+  }
+  @media(max-width:575px)
+  {
+    margin-top:30px;
+    margin-bottom:0px;
+  }
 `
 const Link_wrap = styled.div`
-    margin-top:50px;
+  margin-top:50px;
+  margin-bottom:50px;
+  >i
+  {
+    vertical-align: middle;
+    color:rgb(0, 170, 250);
+    cursor:pointer;
+  }
+  >a
+  {
+    vertical-align: middle;
+    font-size: 16px;
+    font-family: "Open Sans";
+    color:rgb(0, 170, 250);
+    &:hover
+    {
+      color:#0f477b;
+    }
+  }
+  &:hover
+  {
+    >a,i
+    {
+    color:#0f477b;
+    }
+  }
+`
+const RightWrap = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  @media(max-width:991px)
+  {
+    height:auto;
+  }
 `
 export const Icon = styled.i`
-    vertical-align: middle;
-    color: rgb( 15, 71, 123 );    
+    
 `
 const Back_link = styled.a`
-    vertical-align: middle;
-    font-size: 14px;
-    font-family: "Open Sans";
-    color: rgb( 15, 71, 123 );   
+    
 `
-class Forgot_Form extends Component {
+class ForgotForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,7 +173,6 @@ class Forgot_Form extends Component {
   static propTypes = {
     form: formShape,
   };
-
   submit = () => {
     this.props.form.validateFields((error, value) => {
       if (error !== null && error !== undefined) {
@@ -83,9 +180,9 @@ class Forgot_Form extends Component {
           if (error.email.errors[0].message !== undefined && error.email.errors[0].message !== null) {
             document.querySelectorAll(".email_msg")[0].style.display = "block";
             if (value.email == "" || value.email == undefined)
-              this.setState({ email_msg: `*${error.email.errors[0].message}` })
+              this.setState({ email_msg: `${error.email.errors[0].message}` })
             else
-              this.setState({ email_msg: "*Email address is not valid" })
+              this.setState({ email_msg: "Email address is not valid" })
           } else {
             document.querySelectorAll(".email_msg")[0].style.display = "none";
             this.setState({ email_msg: null })
@@ -94,7 +191,6 @@ class Forgot_Form extends Component {
       } else {
         document.querySelectorAll(".email_msg")[0].style.display = "none";
         this.setState({ email_msg: null });
-        // this.openNotification();
         this.props.forgotAction(value);
       }
     });
@@ -108,7 +204,6 @@ class Forgot_Form extends Component {
     if (props.forgot) {
       if (props.forgot.status == 200) {
         this.openNotificationWithIcon('success', 'Login Successful', props.forgot.message);
-        /* this.props.dispModal("login"); */
       } else {
         this.openNotificationWithIcon('error', 'Error', props.forgot.err);
       }
@@ -138,25 +233,37 @@ class Forgot_Form extends Component {
 
     return (
       <div>
-        <Form_wrap>
-          <Login_head>Forgot Password</Login_head>
-          <Welcome_text>Forgot Password?</Welcome_text>
-          <Sub_text>Don't worry, It happen's to the best of us.</Sub_text>
-          <Email_label>Email Address</Email_label>
-          <Username {...getFieldProps('email', {
-            onChange() { /* console.log("Hello How are You") */ }, // have to write original onChange here if you need
-            rules: [{ type: "email", required: true }],
-          })} />
-          <Email_req className="email_msg">{this.state.email_msg}</Email_req>
-          {(errors = getFieldError('required')) ? errors.join(',') : null}
-          <Button_login onClick={this.submit}>Send Reset Link</Button_login>
-          <Link_wrap>
-            <Icon className="material-icons">
-              keyboard_backspace
-                    </Icon>
-            <Back_link onClick={() => this.dispModal("login")}> Back To Login </Back_link>
-          </Link_wrap>
-        </Form_wrap>
+        <RowWrap >
+          <ColLeft sm={24} lg={12}>
+            <LeftWrap >
+              <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
+              <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+            </LeftWrap>
+          </ColLeft>
+          <ColRight sm={24} lg={12}>
+            <Form_wrap>
+              <RightWrap className="wow fadeInDown" >
+                <div style={{ width: "100%" }}>
+                  <Login_head>Forgot Password</Login_head>
+                  <Welcome_text>Forgot Password?</Welcome_text>
+                  <Sub_text>Don't worry, It happen's to the best of us.</Sub_text>
+                  <Email_label>Email Address</Email_label>
+                  <Username {...getFieldProps('email', {
+                    onChange() { /* console.log("Hello How are You") */ }, // have to write original onChange here if you need
+                    rules: [{ type: "email", required: true }],
+                  })} />
+                  <Email_req className="email_msg">{this.state.email_msg}</Email_req>
+                  {(errors = getFieldError('required')) ? errors.join(',') : null}
+                  <Button_login onClick={this.submit}>Send Reset Link</Button_login>
+                  <Link_wrap>
+                    <Icon className="material-icons">keyboard_backspace</Icon>
+                    <Back_link onClick={() => this.props.history.push("/login")}> Back To Login </Back_link>
+                  </Link_wrap>
+                </div>
+              </RightWrap>
+            </Form_wrap>
+          </ColRight>
+        </RowWrap>
       </div>
     );
   }
@@ -173,4 +280,4 @@ const mapDispatchToProps = dispatch => ({
   clearForgot: () => dispatch(clearForgot())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Forgot_Form));
+export default connect(mapStateToProps, mapDispatchToProps)(createForm()(ForgotForm));

@@ -33,7 +33,6 @@ export const Email_input = styled.input`
     margin-top: 5px;
     @media(max-width:576px)
     {
-
     }
 `
 class ComingSoon extends Component {
@@ -47,17 +46,14 @@ class ComingSoon extends Component {
     }
 
     handleComing = (e) => {
-        this.setState({
-            comingSoon: false,
-        });
+        this.setState({ comingSoon: false });
     }
 
     comingCancel = (e) => {
-        this.setState({
-            comingSoon: false,
-        });
+        this.setState({ comingSoon: false });
         this.props.comingCancel(e);
     }
+
     openNotification() {
         notification.open({
             message: 'Thank You',
@@ -121,12 +117,11 @@ class ComingSoon extends Component {
                     onCancel={(e) => this.comingCancel(e)}
                     footer={null}
                     width={605}
-                    height={460}
+                    height={490}
                     className="simple-maps"
                 >
                     <Modal_wrap>
                         <h3 style={{ fontFamily: "Open Sans", fontSize: "40px", textAlign: "center", color: "rgb( 15, 71, 123 )", fontWeight: "600", marginTop: "40px" }}>Coming Soon</h3>
-
                         {/* <Sub_wrap>
                             <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>
                             <Email_input placeholder="Email Address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
@@ -134,11 +129,12 @@ class ComingSoon extends Component {
                         <div style={{ marginTop: '20px', minHeight: '20px' }}>
                             <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff', backgroundColor: "#0f477b", height: "45px" }} onClick={() => this.send_email()}>SUBMIT</Button>
                         </div> */}
-                        <iframe style={{ border: 'none' }} height="1100px" width="100%" src={API_URL + "/get-subscriber-form"}></iframe>
+                        <iframe style={{ border: 'none' }} height="300px" width="100%" src={API_URL + "/get-subscriber-form"}></iframe>
                     </Modal_wrap>
                 </Modal>
             </div >
         );
     }
 }
+
 export default ComingSoon;

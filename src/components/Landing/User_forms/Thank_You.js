@@ -1,8 +1,6 @@
 /* In-built Packages*/
 import React, { Component } from 'react'
 import styled from 'styled-components';
-
-
 import { Form_wrap, Welcome_text } from "./Login_Form";
 
 /* Components */
@@ -29,7 +27,7 @@ const Sub_text = styled.span`
     color: rgb( 163, 163, 163 );
 `
 
-class Thank_You extends Component {
+class ThankYou extends Component {
   constructor(props) {
     super(props);
   }
@@ -48,4 +46,4 @@ class Thank_You extends Component {
   }
 }
 
-export default Thank_You;
+export default ThankYou;

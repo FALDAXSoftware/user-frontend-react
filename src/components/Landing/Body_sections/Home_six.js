@@ -1,5 +1,4 @@
 /* In-built Packages */
-
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
@@ -8,7 +7,6 @@ import { Container } from '../../../styled-components/homepage/style';
 
 /* Components */
 /* Styled-Components */
-
 const Third_Row = styled(Row)`
     padding-top: 50px;
     padding-bottom: 20px;
@@ -21,11 +19,9 @@ const BlueCol = styled(Col)`
     @media (max-width: 1200px) {
         margin-bottom:30px;
     }
-
     @media (max-width: 480px) {
         width:100%;
     }
-
 `
 const Third_span = styled.span`
     font-size: 55px;
@@ -53,7 +49,7 @@ const Third_title = styled(Third_p)`
     font-size: 13px;
 }`
 
-export default class Homethird extends Component {
+export default class HomeSix extends Component {
     render() {
         return (
             <Third_Wrap>

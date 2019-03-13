@@ -1,8 +1,8 @@
 /* In-built Packages*/
-import React from 'react'
+import React, { Component } from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled, { consolidateStreamedStyles } from 'styled-components';
-import { Button, notification, Icon, Spin } from "antd";
+import { Row, Col, Button, notification, Icon, Spin } from "antd";
 import { connect } from 'react-redux';
 import { Eye, ActiveEye } from '../../../Constants/images';
 import { Spin_Ex } from '../../../styled-components/homepage/style'
@@ -15,71 +15,139 @@ let { API_URL } = globalVariables;
 /* Global Constants */
 
 /* Styled-Components */
-export const Form_wrap = styled.div`
-  padding-left:60px;
-  padding-top:50px;
-  min-height:630px;
-  @media(min-width:1024px) and  (max-width:1440px)
+export const LoginWrap = styled.div`
+background-color:#f0f3f2;
+  min-height:100%;
+`
+const RowWrap = styled(Row)`
+  min-height:100%;
+  
+  @media(max-width:991px)
   {
-    padding: 30px;
-    padding-top: 10px;
+    min-height:100%;
+  }
+`
+const ColLeft = styled(Col)`
+min-height:100vh;
+@media(max-width:991px)
+  {
+
+    min-height:auto;
+    height:auto;
+  }
+`
+const ColRight = styled(Col)`
+min-height:100%;
+@media(max-width:991px)
+  {
+    height:auto;
+  }
+`
+const LeftWrap = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(/images/LoginBanner.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  @media(max-width:991px)
+  {
+    height:auto;
+  }
+`
+const VertImg = styled.img`
+  @media(max-width:991px)
+  {
+    display:none;
+  }
+`
+const HorImg = styled.img`
+  display:none;
+  @media(max-width:991px)
+  {
+    display:block;
+    width:400px;
+    margin-top:20px;
+    margin-bottom:20px;
+  }
+  @media(max-width:575px)
+  {
+    width:250px;    
+  }
+`
+export const Form_wrap = styled.div`
+  padding-left:100px;
+  
+  background-color:#f0f3f2;
+  min-height: 100vh;
+  @media(max-width:991px)
+  {
+    min-height: auto;
+    padding-top:30px;
   }
   @media(max-width:767px)
   {
     padding: 30px;
+    
   }
 `
+const RightWrap = styled.div`
+display: flex;
+align-items: center;
+height: 100vh;
+@media(max-width:991px)
+{
+  height:auto;
+}
+`
+
 const Login_head = styled.div`
   font-size: 30px;
   font-family: "Open Sans";
-  color: rgb( 15, 71, 123 );
+  color: rgb( 35, 38, 45 );
   font-weight: bold;
   text-transform: uppercase;
   text-align: left;
   padding-bottom: 10px;
-  border-bottom: 3px solid #dbe4eb;
+  border-bottom: 3px solid #ced9e0;
   display: inline-block;
-  @media(min-width:1024px) and  (max-width:1440px)
-  {
-    padding-bottom:0px;
-  }
+  
+  
 `
 export const Welcome_text = styled.div`
   font-size: 24px;
   font-family: "Open Sans";
-  color: rgb( 0, 0, 0 );
+  color: #829099;
   font-weight: 600;
-  margin-top:50px;
-  @media(min-width:1024px) and  (max-width:1440px)
-  {
-    margin-top: 15px;
-  }
+  margin-top:28px;
+  
 `
 export const Email_label = styled.div`
   font-size: 14px;
   font-family: "Open Sans";
   color: black;
-  margin-top: 40px;
-  @media(min-width:1024px) and  (max-width:1440px)
-  {
-    margin-top: 25px;
-  }
+  margin-top: 30px;
 `
 export const Username = styled.input`
   display:block;
   background-color: #f8f8f8;
   padding-left:5px;
-  border: 0px;
   width: 76%;
+  border:1px solid #d4dadf;
   margin-top:10px;
+  transition:1s;
+  border-radius:5px;
   height:50px;
   font-size:16px;
   display:inline-block;
   outline-color: #e0e0e0;
-  @media(min-width:1024px) and (max-width:1440px)
-  {
-    height:35px;
-  }
+  &:focus, &:hover{
+    border:1px solid rgb(0, 170, 250);
+    outline:0;
+    box-shadow:none;
+}
   @media(max-width:767px)
   {
     width: 85%;
@@ -127,12 +195,8 @@ const OtpLabel = styled(Email_label)`
     text-align: justify;
 `
 const Check_wrap = styled.div`
-  margin-top:35px;
+  margin-top:20px;
   width:76%;
-  @media(min-width:1024px) and  (max-width:1440px)
-  {
-    margin-top: 20px;
-  }
   @media(max-width:767px){
     width:100%;
     text-align:left;
@@ -142,8 +206,12 @@ const Forgot = styled.a`
   float:right;
   font-size: 14px;
   font-family: "Open Sans";
-  color: rgb( 15, 71, 123 );
+  color:rgb(0, 170, 250);
   text-align: left;
+  &:hover
+  {
+    color:#0f477b;
+  }
   @media(max-width:767px)
   {
     float:none;
@@ -151,16 +219,17 @@ const Forgot = styled.a`
 `
 const Button_login = styled(Button)`
   width: 110px;
-  background-color: #0f477b;
+  background-color: rgb(0, 170, 250);
   color: white;
   margin-top: 50px;
-  height: 45px;
+  height: 48px;
   letter-spacing:3px;
   color: white;
   font-size: 16px;
   font-size: 13.217px;
   font-family: "Open Sans";
   font-weight: bold;
+  border-radius:30px;
   text-transform: uppercase;
   line-height: 2.875;
   @media(max-width:400px)
@@ -168,44 +237,39 @@ const Button_login = styled(Button)`
     display:block;
     margin-top: 30px;
   }
-  @media (min-width:1024px) and (max-width:1440px)
-  {
-    margin-top: 40px;
-  }
   &:hover{
-    color:#0f477b;
-    border-color:#0f477b;
-    background-color:white;
+    color:black;
+    border:1px solid black;
+    background-color: rgb(0, 170, 250);
   }
 `
 const Sign = styled.div`
-  margin-top: 50px;
-  margin-bottom: 60px;
+  margin-top: 40px;
   font-size: 16px;
   font-family: "Open Sans";
+  color:black;
   @media(max-width:400px)
   {
     margin-top: 30px;
-  }
-  @media (min-width:1024px) and (max-width:1440px)
-  {
-    margin-top: 30px;
-    margin-bottom: 10px;
   }
 `
 const Sign_a = styled.a`
   font-size: 16px;
   font-family: "Open Sans";
-  color:#0f477b;
+  color:rgb(0, 170, 250);
   font-weight:bold;
+  &:hover
+  {
+    color:#0f477b;
+  }
 `
 const FAI = styled.img`
   margin-left:-35px;
   cursor:pointer;
 `
 const Active_FAI = styled(FAI)`
-    
 `
+
 class Login_Form extends React.Component {
   constructor(props) {
     super(props);
@@ -229,14 +293,12 @@ class Login_Form extends React.Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      console.log(error, value, this.state)
-      if (error == null && this.state.emailIcon == true && this.state.passIcon == true) {
+      // console.log(error, value, this.state)
+      if (error == null && this.state.emailIcon == true && this.state.passIcon == true && (this.state.isOtpRequired == true ? this.state.otpIcon == true : true)) { 
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
 
-        /* if (this.props.forgotParam !== undefined) { value['email_verify_token'] = this.props.forgotParam[1]; } */
-        /* console.log("I am in") */
         var obj = {};
         obj["email"] = value.email;
         obj["password"] = value.password;
@@ -247,32 +309,32 @@ class Login_Form extends React.Component {
         this.props.Login(obj);
       } else {
         if (error !== null) {
-          console.log("here", error);
-
-          if (error['password'] !== undefined) {
-            console.log("if in")
+          console.log(error['password'], value.password)
+          if (error['password'] !== undefined && (value.password == "" || value.password == undefined)) {
             this.setState({ passIcon: false })
             document.querySelector("#passlog_icon_success").style.display = "none"
             document.querySelector("#passlog_icon_fail").style.display = "none"
             document.querySelectorAll(".pass_msg")[0].style.display = "block";
-            this.setState({ pass_msg: "*password is required" })
+            this.setState({ pass_msg: "Password is required" })
           }
           if (error['email'] !== undefined) {
-
             this.setState({ emailIcon: false })
             document.querySelector("#userlog_icon_success").style.display = "none"
-            document.querySelector("#userlog_icon_fail").style.display = "none"
+            document.querySelector("#userlog_icon_fail").style.display = "inline-block"
             document.querySelectorAll(".user_msg")[0].style.display = "block";
-            if (this.state.email_msg == null) this.setState({ email_msg: "*email is required" })
+            if (this.state.email_msg == null) this.setState({ email_msg: "Email is required" })
           }
         }
-        this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue.")
+        else {
+          this.onChangeField(value.otp, "otp")
+        }
+
       }
     });
   }
 
   dispModal(pressed) {
-    this.props.dispModal(pressed)
+    this.props.history.push('/signup')
   }
 
   openNotificationWithIcon(type, head, desc) {
@@ -288,7 +350,6 @@ class Login_Form extends React.Component {
       var bool = re.test(String(value).toLowerCase());
       if (value !== "") {
         if (bool == true) {
-          /* console.log("EmailICON is true") */
           this.setState({ emailIcon: true })
           document.querySelector("#userlog_icon_success").style.display = "inline-block"
           document.querySelector("#userlog_icon_fail").style.display = "none"
@@ -298,11 +359,17 @@ class Login_Form extends React.Component {
           document.querySelector("#userlog_icon_fail").style.display = "inline-block"
           document.querySelector("#userlog_icon_success").style.display = "none"
           document.querySelectorAll(".user_msg")[0].style.display = "block";
-          this.setState({ email_msg: "*Email address is not valid" })
+          this.setState({ email_msg: "Email address is not valid" })
         }
       }
-    }
-    else if (field == "password") {
+      else {
+        this.setState({ emailIcon: false })
+        document.querySelector("#userlog_icon_fail").style.display = "inline-block"
+        document.querySelector("#userlog_icon_success").style.display = "none"
+        document.querySelectorAll(".user_msg")[0].style.display = "block";
+        this.setState({ email_msg: "Email address is required" })
+      }
+    } else if (field == "password") {
       let val = value.trim();
       if (val !== "") {
         this.setState({ passIcon: true, password: value })
@@ -314,7 +381,7 @@ class Login_Form extends React.Component {
         document.querySelector("#passlog_icon_success").style.display = "none"
         document.querySelector("#passlog_icon_fail").style.display = "none"
         document.querySelectorAll(".pass_msg")[0].style.display = "block";
-        this.setState({ pass_msg: "*password is required" })
+        this.setState({ pass_msg: "Password is required" })
       }
     }
     //password shouldn't have validation except required. 
@@ -354,23 +421,22 @@ class Login_Form extends React.Component {
           document.querySelectorAll(".otp_msg")[0].style.display = "none";
         } else {
           this.setState({ otpIcon: false })
-          document.querySelector("#otp_icon_success").style.display = "none"
-          document.querySelector("#otp_icon_fail").style.display = "inline-block"
+          document.querySelector("#otp_icon_success").style.display = "none";
+          document.querySelector("#otp_icon_fail").style.display = "inline-block";
           document.querySelectorAll(".otp_msg")[0].style.display = "block";
-          this.setState({ otp_msg: "*Otp should have 6 characters." })
+          this.setState({ otp_msg: "Otp should have 6 characters." })
         }
       } else {
         this.setState({ otpIcon: false })
-        document.querySelector("#otp_icon_success").style.display = "none"
-        document.querySelector("#otp_icon_fail").style.display = "none"
-        document.querySelectorAll(".otp_msg")[0].style.display = "none";
+        document.querySelector("#otp_icon_success").style.display = "none";
+        document.querySelector("#otp_icon_fail").style.display = "inline-block";
+        document.querySelectorAll(".otp_msg")[0].style.display = "block";
+        this.setState({ otp_msg: "Otp is required." })
       }
     }
   }
   handleEye(e) {
-    /* console.log("Hello i  am here",document.getElementById("logPass"),document.getElementById("logPass").type) */
     if (document.getElementById("logPass").type !== undefined) {
-      /* console.log("I am in") */
       if (document.getElementById("logPass").type == "password") {
         this.setState({ typeEye: "text" })
       } else {
@@ -380,9 +446,7 @@ class Login_Form extends React.Component {
   }
 
   componentDidMount() {
-    /* console.log(this.props) */
     var query = this.props.location.search.split("=")
-    /*  console.log(query) */
     if (query[0] !== "" && this.props.location.pathname.includes("login")) {
       var queryObj = {};
       queryObj["email_verify_token"] = query[1];
@@ -399,8 +463,7 @@ class Login_Form extends React.Component {
           this.setState({ loader: false })
           if (responseData.status == 200) {
             this.openNotificationWithIcon('success', 'Verified', responseData.message);
-          }
-          else
+          } else
             this.openNotificationWithIcon('error', 'Not Verified', responseData.err)
         })
         .catch(error => { /* console.log(error) */ })
@@ -412,22 +475,23 @@ class Login_Form extends React.Component {
       if (props.errorStatus.status == 200) {
         this.openNotificationWithIcon('success', 'Login Successful', props.errorStatus.message);
         /* this.props.dispModal("login"); */
-      }
-      else if (props.errorStatus.status == 201) {
+      } else if (props.errorStatus.status == 201) {
         this.setState({ isOtpRequired: true });
         // document.querySelector("#otp-field").focus();
         /* this.openNotificationWithIcon('error', 'Error', props.errorStatus.err); */
-      }
-      else {
+      } else {
         this.openNotificationWithIcon('error', 'Error', props.errorStatus.err);
       }
       this.props.clearLogin();
     }
   }
   handleSubmit(event) {
-    console.log("I m x\ca")
     this.submit();
     event.preventDefault();
+  }
+
+  _goToForgotPwd = () => {
+    this.props.history.push('/forgot-password')
   }
   render() {
     if (this.props.isLoggedIn) {
@@ -438,72 +502,88 @@ class Login_Form extends React.Component {
     const { getFieldProps, getFieldError } = this.props.form;
 
     return (
-      <Form_wrap>
-        <Login_head>Login</Login_head>
-        <Welcome_text>Welcome Back!</Welcome_text>
-        <Email_label>Email Address</Email_label>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <Username {...getFieldProps('email', {
-              onChange(e) { me.onChangeField(e.target.value, "username") }, // have to write original onChange here if you need
-              rules: [{ type: "email", required: true }],
-            })} />
-            <UserIconS id="userlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-            <UserIconF id="userlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-          </div>
-          <Email_req className="user_msg">{this.state.email_msg}</Email_req>
-          <Ph_Label>Password</Ph_Label>
-          <div>
-            <Password id="logPass" type={this.state.typeEye} {...getFieldProps('password', {
-              onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
-              rules: [{ type: "string", required: true, min: 5 }],
-            })}
-            />
-            {
-              (this.state.typeEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this)} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this)} />
-            }
-            <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-            <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-          </div>
-          <Pass_req className="pass_msg">{this.state.pass_msg}</Pass_req>
+      <LoginWrap>
+        <RowWrap >
+          <ColLeft sm={24} lg={12}>
+            <LeftWrap >
+              <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
+              <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+            </LeftWrap>
+          </ColLeft>
+          <ColRight sm={24} lg={12}>
+            <Form_wrap>
+              <RightWrap >
+                <div className="wow fadeInDown" style={{ width: "100%" }}>
+                  <Login_head>Login</Login_head>
+                  <Welcome_text>Welcome To FALDAX!</Welcome_text>
+                  <Email_label>Email Address*</Email_label>
+                  <form onSubmit={this.handleSubmit}>
+                    <div>
+                      <Username disabled={this.state.isOtpRequired} {...getFieldProps('email', {
+                        onChange(e) { me.onChangeField(e.target.value, "username") }, // have to write original onChange here if you need
+                        rules: [{ type: "email", required: true }],
+                      })} />
+                      <UserIconS id="userlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                      <UserIconF id="userlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                    </div>
+                    <Email_req className="user_msg">{this.state.email_msg}</Email_req>
+                    <Ph_Label>Password*</Ph_Label>
+                    <div>
+                      <Password disabled={this.state.isOtpRequired} id="logPass" type={this.state.typeEye} {...getFieldProps('password', {
+                        onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
+                        rules: [{ type: "string", required: true, min: 5 }],
+                      })}
+                      />
+                      {
+                        (this.state.typeEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this)} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this)} />
+                      }
+                      <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                      <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                    </div>
+                    <Pass_req className="pass_msg">{this.state.pass_msg}</Pass_req>
 
-          {this.state.isOtpRequired &&
-            <div>
-              <OtpLabel>Two-Factor Authentication is enabled for this account. Please enter your 2FA code below to proceed.</OtpLabel>
-              <div>
-                <Username id="otp-field" {...getFieldProps('otp', {
-                  onChange(e) { me.onChangeField(e.target.value, "otp") }, // have to write original onChange here if you need
-                  rules: [{ required: false }],
-                })} />
-                <UserIconS id="otp_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-                <UserIconF id="otp_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-              </div>
-              <Pass_req className="otp_msg">{this.state.otp_msg}</Pass_req>
-            </div>
-          }
-          <input style={{ display: "none" }} type="submit" value="Submit" />
-        </form>
-        <Check_wrap>
-          {/* <Remember>
-            <Check type="checkbox" /> Remember Me</Remember> */}
-          <Forgot onClick={() => this.dispModal("forgot")}>Forgot Password?</Forgot>
-        </Check_wrap>
+                    {this.state.isOtpRequired &&
+                      <div>
+                        <OtpLabel>Two-Factor Authentication is enabled for this account. Please enter your 2FA code below to proceed.</OtpLabel>
+                        <div>
+                          <Username id="otp-field" {...getFieldProps('otp', {
+                            onChange(e) { me.onChangeField(e.target.value, "otp") }, // have to write original onChange here if you need
+                            rules: [{ required: false }],
+                          })} />
+                          <UserIconS id="otp_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                          <UserIconF id="otp_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                        </div>
+                        <Pass_req className="otp_msg">{this.state.otp_msg}</Pass_req>
+                      </div>
+                    }
+                    <input style={{ display: "none" }} type="submit" value="Submit" />
+                  </form>
+                  <Check_wrap>
+                    {/* <Remember>
+                <Check type="checkbox" /> Remember Me</Remember> */}
+                    <Forgot onClick={this._goToForgotPwd}>Forgot Password?</Forgot>
+                  </Check_wrap>
 
-        {(errors = getFieldError('required')) ? errors.join(',') : null}
-        <Button_login onClick={this.submit}>LOGIN</Button_login>
-        <Sign>
-          No account? <Sign_a onClick={() => this.dispModal("signup")}>Sign Up</Sign_a>
-        </Sign>
-        {(this.state.loader == true) ? <Spin_Ex className="Ex_spin">
-          <Spin size="large" />
-        </Spin_Ex> : ""}
-      </Form_wrap>
+                  {(errors = getFieldError('required')) ? errors.join(',') : null}
+                  <Button_login onClick={this.submit}>LOGIN</Button_login>
+                  <Sign>
+                    No account? <Sign_a onClick={() => this.dispModal("signup")}>Sign Up</Sign_a>
+                  </Sign>
+                  {(this.state.loader == true) ? <Spin_Ex className="Ex_spin">
+                    <Spin size="large" />
+                  </Spin_Ex> : ""}
+                </div>
+              </RightWrap>
+            </Form_wrap>
+          </ColRight>
+
+        </RowWrap>
+      </LoginWrap>
     );
   }
 }
 
 function mapStateToProps(state) {
-  /*   console.log(state) */
   return ({
     isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
     errorStatus: state.simpleReducer.errorStatus !== undefined ? state.simpleReducer.errorStatus : undefined,

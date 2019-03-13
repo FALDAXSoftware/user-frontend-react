@@ -68,7 +68,7 @@ const OrderTradeWrap = styled.div`
     }
 `
 const Grey_wrap_trade = styled(Grey_wrap)`
-    padding-top:120px;
+    padding-top:82px;
 `
 
 const columns = [{
@@ -135,6 +135,7 @@ class Trade extends Component {
             instrumentTableHeight: 260,
             orderHistoryTableHeight: 170,
             myOrderTableHeight: 155,
+            buySellOrderHeight: 91,
             buySellLoader: false,
             hisLoader: false,
             depthLoader: false,
@@ -151,6 +152,8 @@ class Trade extends Component {
         this.getInstrumentData = this.getInstrumentData.bind(this);
         this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
         this.onLayoutChange = this.onLayoutChange.bind(this);
+        this.goFullScreen = this.goFullScreen.bind(this);
+        this.handleLayoutResize = this.handleLayoutResize.bind(this);
     }
     componentWillReceiveProps(props, newProps) {
         var self = this;
@@ -423,8 +426,7 @@ class Trade extends Component {
     } */
 
     /* RGL starts here */
-
-    onLayoutChange(layout, oldItem, newItem) {
+    handleLayoutResize(layout, oldItem, newItem) {
         let self = this;
         console.log(layout, oldItem, newItem)
         if (oldItem.i == "instruments") {
@@ -473,8 +475,24 @@ class Trade extends Component {
             }
 
         }
+        if (oldItem.i == "buysellBook") {
+            if (oldItem.h != newItem.h) {
+                let newHeight = 0;
+                if (newItem.h == 3) {
+                    newHeight = 91;
+                } else {
+                    newHeight = 91 + (80 * (newItem.h - 3))
+                }
+                self.setState({
+                    buySellOrderHeight: newHeight
+
+                });
+            }
+        }
+    }
+    onLayoutChange(layout, oldItem, newItem) {
         console.log("Hello 2", oldItem)
-        this.saveToLS("layouts", oldItem);
+
         this.setState({ layouts: oldItem });
     }
     saveToLS(key, value) {
@@ -510,10 +528,37 @@ class Trade extends Component {
             this.setState({ editState: false });
     }
     saveLayout() {
-        if (this.state.saveState == false)
+        if (this.state.saveState == false) {
             this.setState({ saveState: true, editState: false });
-        else
+            this.saveToLS("layouts", this.state.layouts);
+        }
+        else {
             this.setState({ saveState: false });
+        }
+
+    }
+    goFullScreen() {
+        let body = document.getElementsByTagName("body");
+        let element = body[0];
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) { /* Firefox */
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) { /* IE/Edge */
+            element.msRequestFullscreen();
+        }
+    }
+    exitFullScreen() {
+        if (document.exitFullscreen)
+            document.exitFullscreen();
+        else if (document.mozCancelFullScreen)
+            document.mozCancelFullScreen();
+        else if (document.webkitExitFullscreen)
+            document.webkitExitFullscreen();
+        else if (document.msExitFullscreen)
+            document.msExitFullscreen();
     }
     render() {
         var self = this;
@@ -521,6 +566,7 @@ class Trade extends Component {
         const menu = (
             <Menu className="SettingMenu">
                 <Menu.Item onClick={this.editLayout.bind(this)} disabled={this.state.editState} key="1">Edit Layout</Menu.Item>
+                <Menu.Item key="2" onClick={this.goFullScreen}><Icon type="fullscreen" /> Full Screen</Menu.Item>
                 <Menu.Item onClick={this.saveLayout.bind(this)} disabled={this.state.saveState} key="2">Save</Menu.Item>
             </Menu>
         );
@@ -557,9 +603,10 @@ class Trade extends Component {
                                 onLayoutChange={(layout, layouts) =>
                                     this.onLayoutChange(layout, layouts)
                                 }
+                                onResize={this.handleLayoutResize}
                             >
                                 <div key="tradeView">
-                                    <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
+                                    <div style={{ height: "100%", width: "100%" }}>
                                         <MainTV >
                                             <TVBar>
                                                 <div>
@@ -632,7 +679,7 @@ class Trade extends Component {
                                             <Loader color="#1990ff" width="50" height='50' />
                                             : ""
                                         }
-                                        <BuySell buySellLoader={(loader) => { this.buySellLoaderFunc(loader) }} io={io} />
+                                        <BuySell buySellLoader={(loader) => { this.buySellLoaderFunc(loader) }} io={io} height={this.state.buySellOrderHeight} />
                                     </div>
                                 </div>
                                 <div key="depthChart" >
@@ -725,9 +772,9 @@ function getFromLS(key) {
                         { i: "tradeView", x: 0, y: 0, w: 12, h: 6, minW: 6, minH: 3 },
                         { i: 'instruments', x: 0, y: 1, w: 4, h: 3, minW: 4, minH: 2 },
                         { i: 'tradeAction', x: 4, y: 1, w: 4, h: 3, minW: 4, minH: 2, maxH: 5 },
-                        { i: 'buysellBook', x: 8, y: 1, w: 3, h: 2 },
-                        { i: 'depthChart', x: 0, y: 2, w: 12, h: 2, minW: 4 },
-                        { i: 'orderHistory', x: 0, y: 3, w: 12, h: 2, minW: 4 },
+                        { i: 'buysellBook', x: 8, y: 1, w: 4, h: 3, minW: 3, minH: 3 },
+                        { i: 'depthChart', x: 0, y: 2, w: 6, h: 3, minW: 4 },
+                        { i: 'orderHistory', x: 7, y: 2, w: 6, h: 3, minW: 4 },
                         { i: 'myorder', x: 0, y: 4, w: 12, h: 2, minW: 6, minH: 2 }
                     ],
                     md: [

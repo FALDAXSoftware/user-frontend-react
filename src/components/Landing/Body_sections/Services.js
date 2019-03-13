@@ -1,5 +1,4 @@
 /* In-built Packages */
-
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Row, Col, Icon } from 'antd';
@@ -109,7 +108,6 @@ function SamplePrevArrow(props) {
 }
 
 export default class Services extends Component {
-
   render() {
     const sliderSettings = {
       dots: false,

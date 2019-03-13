@@ -268,9 +268,9 @@ const SpanCoinChange = styled.span`
     color: ${props => props.value === 0 ? 'black' : props.value <= 0 ? 'red' : '#34a539'}
 `;
 
-/* Component Defination Starts Here*/
+/* Component Definition Starts Here*/
 
-export default class NavigationBar extends Component {
+export default class HomePage extends Component {
   constructor() {
     super();
     this.state = { pagination: {} };

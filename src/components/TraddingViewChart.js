@@ -7,7 +7,7 @@ const API_URL = globalVariables.API_URL;
 
 const TVChart = styled.div`
     margin-top:0px;
-  height: calc(100vh - 150px);
+    height: 100%;
 
 `
 

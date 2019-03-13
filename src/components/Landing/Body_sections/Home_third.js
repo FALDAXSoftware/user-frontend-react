@@ -30,8 +30,8 @@ const Third_head_p = styled.p`
     text-align: center;
 `;
 
-/* Component defination start here */
-const Home_third = ({ loading, columns, dataSource, pagination, handleTableChange }) => {
+/* Component definition start here */
+const HomeThird = ({ loading, columns, dataSource, pagination, handleTableChange }) => {
     return (
         <Section_2>
             <Container>
@@ -61,4 +61,4 @@ const Home_third = ({ loading, columns, dataSource, pagination, handleTableChang
     );
 }
 
-export default Home_third;
+export default HomeThird;

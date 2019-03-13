@@ -8,7 +8,7 @@ import { Instru2, WrapDepth } from '../../../styled-components/loggedStyle/trade
 import { Line } from 'react-chartjs-2';
 
 const Chart1_wrap = styled.div`
-    height:400px
+    height:100%;
   `
 let io = null;
 

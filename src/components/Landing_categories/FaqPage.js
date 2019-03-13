@@ -1,5 +1,5 @@
 /* In-built Packages */
-import React from 'react';
+import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Spin } from 'antd';
 import styled from 'styled-components';
@@ -66,9 +66,9 @@ export const FAQcontent = styled.div`
     color:${props => props.theme.mode == "dark" ? "white" : ""} !important;
   }
 `
-/* Component Defination Starts Here*/
 
-export default class FaqPage extends React.Component {
+/* Component Definition Starts Here*/
+export default class FaqPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -97,6 +97,7 @@ export default class FaqPage extends React.Component {
   }
 
   render() {
+    const { aboutContent, loader } = this.state;
     return (
       <div>
         <Navigation />
@@ -115,13 +116,13 @@ export default class FaqPage extends React.Component {
               </div>
               <FAQcontent style={{ marginTop: '20px' }}>
                 <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
-                  {ReactHtmlParser(this.state.aboutContent)}
+                  {ReactHtmlParser(aboutContent)}
                 </span>
               </FAQcontent>
             </ProfileDiv>
           </ProfileWrapper>
           <CommonFooter />
-          {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+          {(loader) ? <Spin_Ex className="Ex_spin">
             <Spin size="large" />
           </Spin_Ex> : ""}
         </OverlayLoader>

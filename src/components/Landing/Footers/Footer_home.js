@@ -1,5 +1,4 @@
 /* In-built Packages */
-
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Row, Col, Layout } from 'antd';
@@ -65,7 +64,6 @@ const LI2 = styled.li`
         margin-top:20px;
     }
 `
-// display: inline-block;
 const Icon_ul_1 = styled.ul`
     display: inline-block;
     list-style-type:none;
@@ -118,7 +116,6 @@ const Download = styled.span`
     color: ${props => props.theme.mode == "dark" ? "white" : "rgba( 40, 37, 40, 0.8 )"};
     font-weight: bold;
     line-height: 1.714;
-
     @media(max-width:1200px)
     {
         margin-top:30px;
@@ -197,7 +194,7 @@ const FontAwesomeIcons = styled(FontAwesomeIcon)`
     color:${props => props.theme.mode == "dark" ? "white" : "#cccccc"};
 `
 
-class Footer_home extends Component {
+class FooterHome extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -222,16 +219,15 @@ class Footer_home extends Component {
                 this.setState({ footerLogo: FooterLogo })
             else
                 this.setState({ footerLogo: FooterWhiteLogo })
-
         }
+
         fetch(globalVariables.API_URL + '/get-contact-details', {
             method: "get",
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             }
-        })
-            .then(response => response.json())
+        }).then(response => response.json())
             .then((responseData) => {
                 this.setState({ contactDetails: responseData.data });
             })
@@ -239,14 +235,10 @@ class Footer_home extends Component {
             })
     }
     comingCancel = (e) => {
-        this.setState({
-            comingSoon: false,
-        });
+        this.setState({ comingSoon: false });
     }
     showComing = () => {
-        this.setState({
-            comingSoon: true,
-        });
+        this.setState({ comingSoon: true });
     }
     scrollMap() {
         var elmnt = document.getElementById("map-scroll");
@@ -385,4 +377,4 @@ function mapStateToProps(state, ownProps) {
     });
 }
 
-export default connect(mapStateToProps)(withRouter(Footer_home));
+export default connect(mapStateToProps)(withRouter(FooterHome));

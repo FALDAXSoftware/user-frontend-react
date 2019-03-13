@@ -151,8 +151,7 @@ class AddCoin extends Component {
     _getAllCountries = () => {
         fetch(globalVariables.API_URL + "/users/countries", {
             method: "GET",
-        })
-            .then(response => response.json())
+        }).then(response => response.json())
             .then((responseData) => {
                 if (responseData.status == 200) {
                     this.setState({ countries: responseData.data });
@@ -300,7 +299,7 @@ class AddCoin extends Component {
                                 </ul>
                             </Head_desc>
                         </Head>
-                        <iframe style={{ border: 'none' }} height="1100px" width="100%" src={API_URL + "/get-list-token-form"}></iframe>
+                        <iframe style={{ border: 'none' }} height="1800px" width="100%" src={API_URL + "/get-list-token-form"}></iframe>
                         {/* <Body>
                             <Body_form>
                                 <Form_coin>
