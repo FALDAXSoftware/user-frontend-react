@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import './index.css';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker, { unregister } from './registerServiceWorker';
 import App from './App';
 
 /* Redux store */
@@ -34,4 +34,6 @@ ReactDOM.render(
     ,
     document.getElementById('root')
 );
-registerServiceWorker();
+// registerServiceWorker();
+unregister();
+

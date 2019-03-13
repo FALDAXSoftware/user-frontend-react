@@ -20,7 +20,7 @@ class TraddingViewChart extends React.Component {
         containerId: 'tv_chart_container',
         // datafeedUrl: 'https://demo_feed.tradingview.com',
         datafeedUrl: `${API_URL}/tradingview`,
-        libraryPath: '/charting_library/',
+        libraryPath: `${process.env.PUBLIC_URL}/charting_library/`,
         chartsStorageUrl: 'https://saveload.tradingview.com',
         chartsStorageApiVersion: '1.1',
         clientId: 'tradingview.com',
