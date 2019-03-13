@@ -4,7 +4,6 @@ import 'antd/dist/antd.css';
 import { connect } from "react-redux"
 import { Tabs } from 'antd';
 import styled from 'styled-components';
-import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader'
 
 /* Components */
 import PersonalDetails from './Personaldetails/PersonalDetails';

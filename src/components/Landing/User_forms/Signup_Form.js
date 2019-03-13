@@ -283,6 +283,7 @@ class SignupForm extends Component {
   }
   submit = () => {
     this.props.form.validateFields((error, value) => {
+      console.log('value', value, error)
       if (this.state.emailIcon == true && this.state.firstIcon == true && this.state.lastIcon == true && this.state.passIcon == true && this.state.confirmIcon == true) {
         this.setState({ isSignDisable: true });
         document.querySelectorAll("#email_icon_success")[0].style.display = "none";
@@ -300,7 +301,18 @@ class SignupForm extends Component {
         obj['device_type'] = 0;
         this.props.Signup(obj);
       } else {
-        this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue")
+        if (error['first_name'] !== undefined) {
+          this.onChangeField(value.first_name, 'firstname')
+        } else if (error['last_name'] !== undefined) {
+          this.onChangeField(value.first_name, 'lastname')
+        } else if (error['email'] !== undefined) {
+          this.onChangeField(value.first_name, 'lastname')
+        } else if (error['password'] !== undefined) {
+          this.onChangeField(value.first_name, 'lastname')
+        } else if (error['confirm_password'] !== undefined) {
+          this.onChangeField(value.first_name, 'lastname')
+        }
+        //this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue")
       }
     });
   }
@@ -319,18 +331,19 @@ class SignupForm extends Component {
           document.querySelector("#email_icon_fail").style.display = "inline-block"
           document.querySelector("#email_icon_success").style.display = "none"
           document.querySelectorAll(".email_sign")[0].style.display = "block";
-          this.setState({ email_msg: "*Email address is not valid" })
+          this.setState({ email_msg: "Email address is not valid" })
         }
       } else {
         this.setState({ emailIcon: false })
         document.querySelector("#email_icon_success").style.display = "none"
         document.querySelector("#email_icon_fail").style.display = "none"
         document.querySelectorAll(".email_sign")[0].style.display = "none";
+        this.setState({ email_msg: "Email address is required" })
       }
     } else if (field == "firstname") {
       var re = /^[a-zA-Z0-9]{2,15}$/;
       var bool = re.test(value);
-      if (value !== "") {
+      if (value !== "" && value !== undefined) {
         if (bool == true) {
           var regexnum = /^[0-9]*$/;
           if (regexnum.test(value)) {
@@ -339,8 +352,7 @@ class SignupForm extends Component {
             document.querySelector("#first_icon_fail").style.display = "inline-block"
             document.querySelectorAll(".first_sign")[0].style.display = "block";
             this.setState({ first_msg: "*Only numbers are not allowed" })
-          }
-          else {
+          } else {
             this.setState({ firstIcon: true })
             document.querySelector("#first_icon_success").style.display = "inline-block"
             document.querySelector("#first_icon_fail").style.display = "none"
@@ -356,8 +368,11 @@ class SignupForm extends Component {
       } else {
         this.setState({ firstIcon: false })
         document.querySelector("#first_icon_success").style.display = "none"
-        document.querySelector("#first_icon_fail").style.display = "none"
-        document.querySelectorAll(".first_sign")[0].style.display = "none";
+        document.querySelector("#first_icon_fail").style.display = "inline-block"
+        document.querySelectorAll(".first_sign")[0].style.display = "block";
+        if (value == "" || value == undefined) {
+          this.setState({ first_msg: "First name is required." })
+        }
       }
     } else if (field == "lastname") {
       var re = /^[a-zA-Z0-9]{2,15}$/;
