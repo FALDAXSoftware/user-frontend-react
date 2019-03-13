@@ -32,6 +32,7 @@ import News from './components/Landing_categories/News';
 import ThankYou from "./shared-components/thank_you";
 import Chart from "../src/components/TraddingViewChart"
 import { Signup } from './Actions/Auth';
+import SignupSuccess from './components/Landing/User_forms/Signup_success';
 // import dotenv from 'dotenv';
 
 // dotenv.config();
@@ -40,140 +41,141 @@ library.add(faStroopwafel);
 
 /* Component defination start here */
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            theme: this.props.theme == false ? "light" : "dark"
+  constructor(props) {
+    super(props);
+    this.state = {
+      theme: this.props.theme == false ? "light" : "dark"
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.location !== prevProps.location) {
+      if (this.props.location !== undefined) {
+        if (this.props.location.hash !== "" && this.props.location.hash !== undefined && this.props.location.hash == "#block-world-map") {
+          window.scrollTo(0, 1050);
         }
+        else
+          window.scrollTo(0, 0);
+      }
     }
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props.location !== prevProps.location) {
-            if (this.props.location !== undefined) {
-                if (this.props.location.hash !== "" && this.props.location.hash !== undefined && this.props.location.hash == "#block-world-map") {
-                    window.scrollTo(0, 1050);
-                }
-                else
-                    window.scrollTo(0, 0);
-            }
-        }
+  }
+  componentWillReceiveProps(props, newProps) {
+    if (props.theme !== undefined) {
+      if (props.theme !== this.state.theme) {
+        if (props.theme == false)
+          this.setState({ theme: "light" })
+        else
+          this.setState({ theme: "dark" })
+      }
     }
-    componentWillReceiveProps(props, newProps) {
-        if (props.theme !== undefined) {
-            if (props.theme !== this.state.theme) {
-                if (props.theme == false)
-                    this.setState({ theme: "light" })
-                else
-                    this.setState({ theme: "dark" })
-            }
-        }
-    }
-    componentDidMount() {
-        window.scrollTo(0, 0);
-        // if(this.props.theme!==undefined)
-        //     {
-        //         if(this.props.theme !== this.state.theme)
-        //         {
-        //             if(this.props.theme==false)
-        //             this.setState({theme: "light"})
-        //             else
-        //             this.setState({theme: "dark"})
-        //         }
-        //     }
-    }
-    render() {
+  }
+  componentDidMount() {
+    window.scrollTo(0, 0);
+    // if(this.props.theme!==undefined)
+    //     {
+    //         if(this.props.theme !== this.state.theme)
+    //         {
+    //             if(this.props.theme==false)
+    //             this.setState({theme: "light"})
+    //             else
+    //             this.setState({theme: "dark"})
+    //         }
+    //     }
+  }
+  render() {
 
-        const { isLoggedIn } = this.props
+    const { isLoggedIn } = this.props
 
-        const RestrictedRoute = ({
-            component: Component,
-            isLoggedIn,
-            ...rest
-        }) => (
+    const RestrictedRoute = ({
+      component: Component,
+      isLoggedIn,
+      ...rest
+    }) => (
 
-                <Route
-                    {...rest}
-                    render={props => {
+        <Route
+          {...rest}
+          render={props => {
 
-                        if (isLoggedIn) {
-                            if (props.location.pathname == '/') {
-                                return <Redirect
-                                    to={{
-                                        pathname: '/home',
-                                        state: { from: props.location },
-                                    }}
-                                />
-                            } else {
-                                return <Component {...props} />
-                            }
-                        } else {
-                            if (props.location.pathname == '/') {
-                                return <Redirect
-                                    to={{
-                                        pathname: '/home',
-                                        state: { from: props.location },
-                                    }}
-                                />
-                            } else {
-                                return <Redirect
-                                    to={{
-                                        pathname: '/login',
-                                        state: { from: props.location },
-                                    }}
-                                />
-                            }
-
-                        }
-                    }}
+            if (isLoggedIn) {
+              if (props.location.pathname == '/') {
+                return <Redirect
+                  to={{
+                    pathname: '/home',
+                    state: { from: props.location },
+                  }}
                 />
-            );
+              } else {
+                return <Component {...props} />
+              }
+            } else {
+              if (props.location.pathname == '/') {
+                return <Redirect
+                  to={{
+                    pathname: '/home',
+                    state: { from: props.location },
+                  }}
+                />
+              } else {
+                return <Redirect
+                  to={{
+                    pathname: '/login',
+                    state: { from: props.location },
+                  }}
+                />
+              }
 
-        let theme = {
-            mode: this.state.theme
-        }
-        return (
-            <div className="App">
-                <ThemeProvider theme={theme}>
-                    <Route
-                        render={({ location }) => (
-                            <Switch location={location}>
-                                <Route path="/" exact title="Home" component={HomePage} />
-                                <Route path='/reset-password' title="Reset Password" component={ResetPassword} />
-                                <Route path="/login" exact title="Login" component={Login} />
-                                <Route path="/signup" exact title="Signup" component={SignupForm} />
-                                <Route path="/forgot-password" exact title="Forgot Password" component={ForgotForm} />
-                                <Route {...this.props} path="/about-us" exact title="About Us" component={AboutUs} />
-                                <Route path="/faq" exact title="Faq Page" component={FaqPage} />
-                                <Route path="/blogs" exact title='Blog' component={Blog} />
-                                <Route path="/blogDetails" exact title='Blog' component={BlogDetails} />
-                                <Route path="/contactus" exact title='Contact' component={ContactUs} />
-                                <Route path="/careers" exact title='Careers' component={Careers} />
-                                <Route path="/careerdetails" exact title='Careerdetails' component={CareerDetails} />
-                                <Route path="/mediacontact" exact title='MediaContact' component={MediaContact} />
-                                <Route path="/fees" exact title='Fees' component={Fees} />
-                                <Route path="/addcoin" exact title='AddCoin' component={Addcoin} />
-                                <Route path="/applyjob" exact title='ApplyJob' component={ApplyJob} />
-                                <Route path="/policy" exact title='policy' component={Policy} />
-                                <Route path="/news" exact title='News' component={News} />
-                                <Route path="/thank-you" exact title='Thank You' component={ThankYou} />
+            }
+          }}
+        />
+      );
 
-                                <Route path="/Chart" exact title='Trading View' component={Chart} />
-                                <RestrictedRoute
-                                    path="/"
-                                    component={AppRouter}
-                                    isLoggedIn={isLoggedIn} />
-                            </Switch>
-                        )} />
-                </ThemeProvider>
-            </div>
-        );
+    let theme = {
+      mode: this.state.theme
     }
+    return (
+      <div className="App">
+        <ThemeProvider theme={theme}>
+          <Route
+            render={({ location }) => (
+              <Switch location={location}>
+                <Route path="/" exact title="Home" component={HomePage} />
+                <Route path='/reset-password' title="Reset Password" component={ResetPassword} />
+                <Route path="/login" exact title="Login" component={Login} />
+                <Route path="/signup" exact title="Signup" component={SignupForm} />
+                <Route path="/forgot-password" exact title="Forgot Password" component={ForgotForm} />
+                <Route {...this.props} path="/about-us" exact title="About Us" component={AboutUs} />
+                <Route path="/faq" exact title="Faq Page" component={FaqPage} />
+                <Route path="/blogs" exact title='Blog' component={Blog} />
+                <Route path="/blogDetails" exact title='Blog' component={BlogDetails} />
+                <Route path="/contactus" exact title='Contact' component={ContactUs} />
+                <Route path="/careers" exact title='Careers' component={Careers} />
+                <Route path="/careerdetails" exact title='Careerdetails' component={CareerDetails} />
+                <Route path="/mediacontact" exact title='MediaContact' component={MediaContact} />
+                <Route path="/fees" exact title='Fees' component={Fees} />
+                <Route path="/addcoin" exact title='AddCoin' component={Addcoin} />
+                <Route path="/applyjob" exact title='ApplyJob' component={ApplyJob} />
+                <Route path="/policy" exact title='policy' component={Policy} />
+                <Route path="/news" exact title='News' component={News} />
+                <Route path="/thank-you" exact title='Thank You' component={ThankYou} />
+                <Route path="/signup-success" exact title='Thank You' component={SignupSuccess} />
+
+                <Route path="/Chart" exact title='Trading View' component={Chart} />
+                <RestrictedRoute
+                  path="/"
+                  component={AppRouter}
+                  isLoggedIn={isLoggedIn} />
+              </Switch>
+            )} />
+        </ThemeProvider>
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state, ownProps) {
-    return ({
-        isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
-        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
-    })
+  return ({
+    isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
+    theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+  })
 }
 
 export default withRouter(connect(mapStateToProps, null)(App));

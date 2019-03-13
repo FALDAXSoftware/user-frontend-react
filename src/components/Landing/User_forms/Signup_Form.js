@@ -9,7 +9,6 @@ import "react-password-strength/dist/style.css";
 import { Signup, clearSignUp } from '../../../Actions/Auth';
 import { Username, Welcome_text, Email_label, Email_req, Pass_req } from "./Login_Form";
 import { ActiveEye, Eye } from '../../../Constants/images';
-import { isFormField } from 'rc-form/lib/createFormField';
 /* Global Constants */
 
 /* Styled-Components */
@@ -270,7 +269,8 @@ class SignupForm extends Component {
   componentWillReceiveProps(props, newProps) {
     if (props.isSignUp) {
       if (props.isSignUp.status == 200) {
-        this.props.dispModal("thankyou");
+        //this.props.dispModal("thankyou");
+        this.props.history.push('/signup-success');
       } else {
         this.openNotificationWithIcon('error', 'Sign In', props.isSignUp.err);
       }
@@ -291,7 +291,6 @@ class SignupForm extends Component {
   }
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      console.log('value', value, error)
       if (this.state.emailIcon == true && this.state.firstIcon == true && this.state.lastIcon == true && this.state.passIcon == true && this.state.confirmIcon == true) {
         this.setState({ isSignDisable: true });
         document.querySelectorAll("#email_icon_success")[0].style.display = "none";
@@ -309,7 +308,6 @@ class SignupForm extends Component {
         obj['device_type'] = 0;
         this.props.Signup(obj);
       } else {
-        console.log(error)
         if (error['first_name'] !== undefined) {
           this.onChangeField(value.first_name, 'firstname')
         }
@@ -473,17 +471,14 @@ class SignupForm extends Component {
       } else {
         this.setState({ confirmIcon: false })
         document.querySelector("#confirm_icon_success").style.display = "none"
-        console.log(bool)
         if (bool == false) {
           document.querySelector("#confirm_icon_fail").style.display = "none"
           document.querySelectorAll(".confirmPass_sign")[0].style.display = "block";
           this.setState({ confirmPass_msg: "*Password doesn't match" })
-        }
-        else {
+        } else {
           document.querySelector("#confirm_icon_fail").style.display = "none"
           document.querySelectorAll(".confirmPass_sign")[0].style.display = "none";
         }
-
       }
     }
   }
@@ -622,12 +617,11 @@ class SignupForm extends Component {
                 {(errors = getFieldError('required')) ? errors.join(',') : null}
                 <Button_login onClick={this.submit} disabled={this.state.isSignDisable}>Sign Up</Button_login>
                 <Sign>
-                  Already have an account? <Sign_a onClick={() => this.dispModal()}>Login</Sign_a>
+                  Already have an account? <Sign_a onClick={this.dispModal}>Login</Sign_a>
                 </Sign>
               </RightWrap>
             </Form_wrap>
           </ColRight>
-
         </RowWrap>
       </LoginWrap>
     );
