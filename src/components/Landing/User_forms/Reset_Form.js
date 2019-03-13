@@ -246,7 +246,7 @@ class ResetPassword extends Component {
           document.querySelector("#confirmchange_icon_success").style.display = "none"
           document.querySelector("#confirmchange_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
-          this.setState({ confirmPass_msg: "*Confirm Password does not match." })
+          this.setState({ confirmPass_msg: "Confirm Password does not match." })
         }
       } else {
         this.setState({ confirmIcon: false })
@@ -268,13 +268,14 @@ class ResetPassword extends Component {
       let url = this.props.location.search.split('=')
       if (error == null) {
         if (value.password == value.confirm_password) {
+          this.props.resetAction({ password: value.password, reset_token: url[1] });
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
           document.querySelectorAll(".comp_pass")[0].style.display = "block";
           document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
-          this.setState({ pass_msg: null, confirmPass_msg: null });
-          this.props.resetAction({ password: value.password, reset_token: url[1] });
-          this.props.history.push("/login")
-          this.openNotification();
+          this.setState({ pass_msg: null, confirmPass_msg: null }, () => {
+            this.props.history.push("/login")
+            this.openNotification();
+          });
         } else {
           document.querySelectorAll(".comp_pass")[0].style.display = "block";
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
