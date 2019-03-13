@@ -326,11 +326,7 @@ class Login_Form extends React.Component {
           }
         }
         else {
-          this.setState({ otpIcon: false })
-          document.querySelector("#otp_icon_success").style.display = "none";
-          document.querySelector("#otp_icon_fail").style.display = "inline-block";
-          document.querySelectorAll(".otp_msg")[0].style.display = "block";
-          this.setState({ otp_msg: "Otp required." })
+          this.onChangeField(value.otp, "otp")
         }
 
       }
@@ -433,8 +429,9 @@ class Login_Form extends React.Component {
       } else {
         this.setState({ otpIcon: false })
         document.querySelector("#otp_icon_success").style.display = "none";
-        document.querySelector("#otp_icon_fail").style.display = "none";
-        document.querySelectorAll(".otp_msg")[0].style.display = "none";
+        document.querySelector("#otp_icon_fail").style.display = "inline-block";
+        document.querySelectorAll(".otp_msg")[0].style.display = "block";
+        this.setState({ otp_msg: "Otp is required." })
       }
     }
   }
@@ -516,13 +513,13 @@ class Login_Form extends React.Component {
           <ColRight sm={24} lg={12}>
             <Form_wrap>
               <RightWrap >
-                <div style={{ width: "100%" }}>
+                <div className="wow fadeInDown" style={{ width: "100%" }}>
                   <Login_head>Login</Login_head>
                   <Welcome_text>Welcome To FALDAX!</Welcome_text>
                   <Email_label>Email Address*</Email_label>
                   <form onSubmit={this.handleSubmit}>
                     <div>
-                      <Username {...getFieldProps('email', {
+                      <Username disabled={this.state.isOtpRequired} {...getFieldProps('email', {
                         onChange(e) { me.onChangeField(e.target.value, "username") }, // have to write original onChange here if you need
                         rules: [{ type: "email", required: true }],
                       })} />
@@ -532,7 +529,7 @@ class Login_Form extends React.Component {
                     <Email_req className="user_msg">{this.state.email_msg}</Email_req>
                     <Ph_Label>Password*</Ph_Label>
                     <div>
-                      <Password id="logPass" type={this.state.typeEye} {...getFieldProps('password', {
+                      <Password disabled={this.state.isOtpRequired} id="logPass" type={this.state.typeEye} {...getFieldProps('password', {
                         onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
                         rules: [{ type: "string", required: true, min: 5 }],
                       })}

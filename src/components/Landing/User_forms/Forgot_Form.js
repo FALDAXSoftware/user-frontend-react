@@ -16,20 +16,21 @@ const RowWrap = styled(Row)`
   
   @media(max-width:991px)
   {
-    min-height:100%;
+    min-height:100vh;
+    background-color:#f0f3f2;
   }
 `
 const ColLeft = styled(Col)`
-min-height:100vh;
-@media(max-width:991px)
+  min-height:100vh;
+  @media(max-width:991px)
   {
     min-height:auto;
     height:auto;
   }
 `
 const ColRight = styled(Col)`
-min-height:100%;
-@media(max-width:991px)
+  min-height:100%;
+  @media(max-width:991px)
   {
     height:auto;
   }
@@ -71,12 +72,12 @@ const HorImg = styled.img`
 const Login_head = styled.div`
   font-size: 30px;
   font-family: "Open Sans";
-  color: rgb( 15, 71, 123 );
+  color: rgb( 35, 38, 45 );
   font-weight: bold;
   text-transform: uppercase;
-  text-align: left;                                                                                         
+  text-align: left;
   padding-bottom: 10px;
-  border-bottom: 3px solid #dbe4eb;
+  border-bottom: 3px solid #ced9e0;
   display: inline-block;
   @media(max-width :400px)
   {
@@ -89,17 +90,18 @@ const Sub_text = styled.span`
     color: rgb( 163, 163, 163 );  
 `
 const Button_login = styled(Button)`
-  width: 190px;;
-  background-color: #0f477b;
+  width: auto;
+  background-color: rgb(0, 170, 250);
   color: white;
   margin-top: 50px;
-  height: 45px;
+  height: 48px;
   letter-spacing:3px;
   color: white;
   font-size: 16px;
   font-size: 13.217px;
   font-family: "Open Sans";
   font-weight: bold;
+  border-radius:30px;
   text-transform: uppercase;
   line-height: 2.875;
   @media (min-width:1024px) (max-width:1440px)
@@ -107,28 +109,58 @@ const Button_login = styled(Button)`
     width:40%;
     height:40px;
   }
+  @media(max-width:991px)
+  {
+    display:block;
+  }
+  @media(max-width:575px)
+  {
+    margin-top:30px;
+    margin-bottom:0px;
+  }
 `
 const Link_wrap = styled.div`
-    margin-top:50px;
+  margin-top:50px;
+  margin-bottom:50px;
+  >i
+  {
+    vertical-align: middle;
+    color:rgb(0, 170, 250);
+    cursor:pointer;
+  }
+  >a
+  {
+    vertical-align: middle;
+    font-size: 16px;
+    font-family: "Open Sans";
+    color:rgb(0, 170, 250);
+    &:hover
+    {
+      color:#0f477b;
+    }
+  }
+  &:hover
+  {
+    >a,i
+    {
+    color:#0f477b;
+    }
+  }
 `
 const RightWrap = styled.div`
-display: flex;
-align-items: center;
-height: 100vh;
-@media(max-width:991px)
-{
-  height:auto;
-}
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  @media(max-width:991px)
+  {
+    height:auto;
+  }
 `
 export const Icon = styled.i`
-    vertical-align: middle;
-    color: rgb( 15, 71, 123 );    
+    
 `
 const Back_link = styled.a`
-    vertical-align: middle;
-    font-size: 14px;
-    font-family: "Open Sans";
-    color: rgb( 15, 71, 123 );   
+    
 `
 class ForgotForm extends Component {
   constructor(props) {
@@ -210,7 +242,7 @@ class ForgotForm extends Component {
           </ColLeft>
           <ColRight sm={24} lg={12}>
             <Form_wrap>
-              <RightWrap >
+              <RightWrap className="wow fadeInDown" >
                 <div style={{ width: "100%" }}>
                   <Login_head>Forgot Password</Login_head>
                   <Welcome_text>Forgot Password?</Welcome_text>

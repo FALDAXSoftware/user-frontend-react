@@ -488,7 +488,7 @@ class SignupForm extends Component {
           </ColLeft>
           <ColRight sm={24} lg={12}>
             <Form_wrap>
-              <RightWrap >
+              <RightWrap  className="wow fadeInDown" >
                 <Login_head>Sign Up</Login_head>
                 <Welcome>A Better Trading Experience is Moments Away</Welcome>
                 <SubHeading>Lets Get Started</SubHeading>
