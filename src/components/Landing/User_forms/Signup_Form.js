@@ -279,8 +279,14 @@ class SignupForm extends Component {
     this.props.clearSignUp();
   }
   componentDidMount() {
-    if (this.props.qP !== "") {
-      this.setState({ qP: this.props.qP });
+    let queryParams
+    if (this.props.location.pathname == "/signup") {
+      if (this.props.location.search !== "") {
+        let qP = this.props.location.search.split("=")
+        if (qP[0].includes("refID")) {
+          this.setState({ qP: qP[1] });
+        }
+      }
     }
   }
   submit = () => {
