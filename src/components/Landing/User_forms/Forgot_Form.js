@@ -104,6 +104,10 @@ const Button_login = styled(Button)`
   border-radius:30px;
   text-transform: uppercase;
   line-height: 2.875;
+  @media(min-width:1773px)
+  {
+    display:block;
+  }
   @media (min-width:1024px) (max-width:1440px)
   {
     width:40%;
@@ -254,7 +258,7 @@ class ForgotForm extends Component {
                   })} />
                   <Email_req className="email_msg">{this.state.email_msg}</Email_req>
                   {(errors = getFieldError('required')) ? errors.join(',') : null}
-                  <Button_login onClick={this.submit}>Send Reset Link</Button_login>
+                  <Button_login onClick={this.submit}>SEND RESET PASSWORD LINK</Button_login>
                   <Link_wrap>
                     <Icon className="material-icons">keyboard_backspace</Icon>
                     <Back_link onClick={() => this.props.history.push("/login")}> Back To Login </Back_link>

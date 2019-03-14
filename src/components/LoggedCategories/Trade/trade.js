@@ -614,6 +614,7 @@ class Trade extends Component {
                                                 </div>
                                                 <div onClick={() => { window.open(tvChartURL, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes'); }} style={{ marginLeft: "auto" }}>
                                                     <Tooltip placement="topLeft" title={"Chart in New Window"}>
+                                                        <Icon type="select" style={{ fontSize: '26px' }} />
                                                     </Tooltip>
                                                 </div>
                                             </TVBar>
