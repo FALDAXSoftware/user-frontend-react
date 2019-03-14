@@ -261,6 +261,7 @@ class SignupForm extends Component {
       isSignDisable: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.dispModal = this.dispModal.bind(this);
   }
 
   static propTypes = {
