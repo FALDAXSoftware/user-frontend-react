@@ -9,7 +9,6 @@ import "react-password-strength/dist/style.css";
 import { Signup, clearSignUp } from '../../../Actions/Auth';
 import { Username, Welcome_text, Email_label, Email_req, Pass_req } from "./Login_Form";
 import { ActiveEye, Eye } from '../../../Constants/images';
-import { isFormField } from 'rc-form/lib/createFormField';
 /* Global Constants */
 
 /* Styled-Components */
@@ -263,6 +262,7 @@ class SignupForm extends Component {
       isSignDisable: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.dispModal = this.dispModal.bind(this);
   }
 
   static propTypes = {
@@ -271,7 +271,8 @@ class SignupForm extends Component {
   componentWillReceiveProps(props, newProps) {
     if (props.isSignUp) {
       if (props.isSignUp.status == 200) {
-        this.props.dispModal("thankyou");
+        //this.props.dispModal("thankyou");
+        this.props.history.push('/signup-success');
       } else {
         this.openNotificationWithIcon('error', 'Sign In', props.isSignUp.err);
       }
@@ -292,7 +293,6 @@ class SignupForm extends Component {
   }
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      console.log('value', value, error)
       if (this.state.emailIcon == true && this.state.firstIcon == true && this.state.lastIcon == true && this.state.passIcon == true && this.state.confirmIcon == true) {
         this.setState({ isSignDisable: true });
         document.querySelectorAll("#email_icon_success")[0].style.display = "none";
@@ -310,7 +310,6 @@ class SignupForm extends Component {
         obj['device_type'] = 0;
         this.props.Signup(obj);
       } else {
-        console.log(error)
         if (error['first_name'] !== undefined) {
           this.onChangeField(value.first_name, 'firstname')
         }
@@ -379,7 +378,7 @@ class SignupForm extends Component {
           document.querySelector("#first_icon_success").style.display = "none"
           document.querySelector("#first_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".first_sign")[0].style.display = "block";
-          this.setState({ first_msg: "*First Name should have min. 2 and max. 15 characters and no special characters are allowed" })
+          this.setState({ first_msg: "*First Name must have min 2, max 15 characters and no special characters are allowed." })
         }
       } else {
         this.setState({ firstIcon: false })
@@ -413,7 +412,7 @@ class SignupForm extends Component {
           document.querySelector("#last_icon_success").style.display = "none";
           document.querySelector("#last_icon_fail").style.display = "inline-block";
           document.querySelectorAll(".last_sign")[0].style.display = "block";
-          this.setState({ last_msg: "*Last Name should have min. 2 and max. 15 characters and no special characters are allowed" })
+          this.setState({ last_msg: "*Last Name must have min 2, max 15 characters and no special characters are allowed." })
         }
       } else {
         this.setState({ lastIcon: false })
@@ -482,17 +481,14 @@ class SignupForm extends Component {
       } else {
         this.setState({ confirmIcon: false })
         document.querySelector("#confirm_icon_success").style.display = "none"
-        console.log(bool)
         if (bool == false) {
           document.querySelector("#confirm_icon_fail").style.display = "none"
           document.querySelectorAll(".confirmPass_sign")[0].style.display = "block";
           this.setState({ confirmPass_msg: "*Password doesn't match" })
-        }
-        else {
+        } else {
           document.querySelector("#confirm_icon_fail").style.display = "none"
           document.querySelectorAll(".confirmPass_sign")[0].style.display = "none";
         }
-
       }
     }
   }
@@ -631,12 +627,11 @@ class SignupForm extends Component {
                 {(errors = getFieldError('required')) ? errors.join(',') : null}
                 <Button_login onClick={this.submit} disabled={this.state.isSignDisable}>Sign Up</Button_login>
                 <Sign>
-                  Already have an account? <Sign_a onClick={() => this.dispModal()}>Login</Sign_a>
+                  Already have an account? <Sign_a onClick={this.dispModal}>Login</Sign_a>
                 </Sign>
               </RightWrap>
             </Form_wrap>
           </ColRight>
-
         </RowWrap>
       </LoginWrap>
     );

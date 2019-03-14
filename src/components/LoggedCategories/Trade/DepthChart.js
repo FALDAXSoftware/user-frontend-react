@@ -8,7 +8,7 @@ import { Instru2, WrapDepth } from '../../../styled-components/loggedStyle/trade
 import { Line } from 'react-chartjs-2';
 
 const Chart1_wrap = styled.div`
-    height:100%;
+    height:90%;
   `
 let io = null;
 
@@ -73,10 +73,7 @@ class DepthChart extends Component {
             askDataArray.push({
                 x: askData[i]["x"],
                 y: askDepthTotal,
-                // label: self.state.crypto + "/" + self.state.currency + i
             });
-            // askData[i]["y"] = askDepthTotal;
-            // askData[i]["label"] = self.state.crypto + "/" + self.state.currency;
         }
 
         for (let j = 0; j < bidData.length; j++) {
@@ -84,15 +81,8 @@ class DepthChart extends Component {
             bidDataArray.push({
                 x: bidData[j]["x"],
                 y: bidDepthTotal,
-                // label: self.state.crypto + "/" + self.state.currency + j
             });
-            // bidData[i]["y"] = bidDepthTotal;
-            // bidData[i]["label"] = self.state.crypto + "/" + self.state.currency;
         }
-
-        // let graphData = this.state.data
-        // graphData.datasets[0][data] = bidDataArray;
-        // graphData.datasets[1][data] = askDataArray;
 
         self.setState({
             bidData: bidDataArray,
@@ -103,57 +93,11 @@ class DepthChart extends Component {
         });
 
         this.props.depthLoaderFunc(false);
-        // console.log(self.refs.chart.chartInstance);
-        // let data1 = self.refs.chart.chartInstance.data.datasets[0].data;
-        // let data2 = self.refs.chart.chartInstance.data.datasets[1].data
-        // // self.refs.chart.chartInstance.data.datasets[0].data = [...bidDataArray];
-        // // self.refs.chart.chartInstance.data.datasets[1].data = [...askDataArray];
-        // let data1length = self.refs.chart.chartInstance.data.datasets[0].data.length;
-        // for (let index = 0; index < data1length; index++) {
-        //     self.refs.chart.chartInstance.data.datasets[0].data.pop();
-        // }
-        // for (let index = 0; index < bidDataArray.length; index++) {
-        //     const element = bidDataArray[index];
-        //     self.refs.chart.chartInstance.data.datasets[0].data.push(element);
-        // }
-        // self.refs.chart.chartInstance.update();
-
-        // let data2length = self.refs.chart.chartInstance.data.datasets[1].data.length;
-        // for (let index = 0; index < data2length; index++) {
-        //     self.refs.chart.chartInstance.data.datasets[1].data.pop();
-        // }
-        // for (let index = 0; index < askDataArray.length; index++) {
-        //     const element = askDataArray[index];
-        //     self.refs.chart.chartInstance.data.datasets[1].data.push(element);
-        // }
-
-        // self.refs.chart.chartInstance.update();
-        // console.log(self.refs.chart.chartInstance.data.datasets);
-
-        //var datasets = [...self.refs.chart.chartInstance.data.datasets]
-        // console.log("DATASET", datasets);
-        // datasets[0].data = [...bidDataArray];
-        // datasets[1].data = [...askDataArray];
-        // self.refs.chart.chartInstance.data.datasets = [...datasets];
-        // console.log(self.refs.chart.chartInstance.data.datasets);
-
-        // console.log(self.refs.chart.chartInstance);
-        // console.log();
-
-        // this.setState({ loader: true })
-
-        // setTimeout(() => {
-        //     self.refs.chart.chartInstance.update();
-        // }, 1000);
-
-        // this.setState({
-        //     data: graphData
-        // }, () => {
-
-        // });
     }
     render() {
         var self = this;
+        console.log("------------", this.props.height);
+
         let graphData = {
             type: 'line',
             datasets: [{
@@ -181,7 +125,9 @@ class DepthChart extends Component {
                 <Row>
                     <Col xl={24}>
                         <Chart1_wrap id="depth-chart1">
-                            <Line data={graphData} options={{
+                            <Line height={this.props.height} data={graphData} options={{
+                                responsive: true,
+                                maintainAspectRatio: false,
                                 legend: {
                                     display: false
                                 },

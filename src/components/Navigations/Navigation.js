@@ -7,17 +7,12 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 /* Components */
-import Login_Form from "../Landing/User_forms/Login_Form"
-import Signup_Form from "../Landing/User_forms/Signup_Form"
-import Forgot_Form from "../Landing/User_forms/Forgot_Form"
-import Thank_You from "../Landing/User_forms/Thank_You"
 import Beforelog from "./BeforeLog"
 import Afterlog from "./Afterlog"
 import { LogoutUser } from '../../Actions/Auth';
 import ComingSoon from '../ComingSoon';
 import ReactSwipeEvents from 'react-swipe-events'
 import { Spin_Ex } from '../../styled-components/homepage/style'
-import { Spin } from 'antd';
 import {
     FaldaxLogo, FaldaxWhite, WhiteLogo, Faldax, FaldaxLogin, FaldaxLoginText, Wallpaper
 } from "../../Constants/images";
@@ -26,9 +21,6 @@ const { Header } = Layout;
 const SubMenu = Menu.SubMenu;
 
 /* Modal Styled Components */
-const Left_col = styled(Col)`
-    min-height: 600px
-`
 const DropMenu = styled(Menu)`
     background: none;
     color: white;
@@ -370,11 +362,11 @@ class Navigation extends Component {
             this.props.history.push("/login")
         else if (pressed == "signup")
             this.props.history.push("/signup")
-        else if (pressed == "thankyou")
-            this.setState({ modal: 4 });
+        // else if (pressed == "thankyou")
+        //     this.setState({ modal: 4 });
         else
             this.setState({ modal: 2 })
-        this.showModal();
+        //this.showModal();
         this.setState({ forgotParam: undefined })
     }
 
@@ -561,50 +553,6 @@ class Navigation extends Component {
                             }
                         </SideNav>
                     </ReactSwipeEvents>
-                    <div>
-                        <Modal
-                            visible={this.state.visible}
-                            onOk={this.handleOk}
-                            onCancel={this.handleCancel}
-                            afterClose={this.handleAfterClose}
-                            footer={null}
-                            className="Login-Modal"
-                            style={{ borderRadius: "0px" }}
-                            bodyStyle={{ padding: "0px" }}
-                            width="70%"
-                        >
-                            <Row>
-                                <Left_col xl={{ span: 12 }} sm={{ span: 24 }}>
-                                    {/* {
-                                        modal == 0 || (this.state.forgotParam !== undefined && this.props.pathname.includes("login")) ?
-                                            <Login_Form {...this.props} init="" forgotParam={this.state.forgotParam} dispModal={(pressed) => this.dispModal(pressed)} /> : ""
-                                    }
-                                    {
-                                        modal == 1 ?
-                                            <Signup_Form {...this.props} init="" dispModal={(pressed) => this.dispModal(pressed)} qP={this.state.qP} /> : ""
-                                    } */}
-                                    {/* {
-                                        modal == 2 ?
-                                            <Forgot_Form {...this.props} init="" dispModal={(pressed) => this.dispModal(pressed)} /> : ""
-                                    } */}
-                                    {
-                                        modal == 4 ?
-                                            <Thank_You {...this.props} /> : ""
-                                    }
-                                    {/* {
-                                        this.state.forgotParam !== undefined && this.props.pathname.includes("reset-password") ?
-                                            <Reset_Form {...this.props} forgotParam={this.state.forgotParam} dispModal={(pressed) => this.dispModal(pressed)} /> : ""
-                                    } */}
-                                </Left_col>
-                                <Right_Col xl={{ span: 12 }} sm={{ span: 24 }}>
-                                    <Logo_text_wrap>
-                                        <Faldaxlogo src={FaldaxLogin} />
-                                        <Faldaxtext src={FaldaxLoginText} />
-                                    </Logo_text_wrap>
-                                </Right_Col>
-                            </Row>
-                        </Modal>
-                    </div>
                     <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
                 </Header_main>
                 {/* (this.props.loader == true) ? <Spin_Ex className="Ex_spin">
