@@ -133,9 +133,10 @@ class Trade extends Component {
             insLoader: false,
             userBalLoader: false,
             instrumentTableHeight: 260,
-            orderHistoryTableHeight: 170,
+            orderHistoryTableHeight: 330,
             myOrderTableHeight: 155,
             buySellOrderHeight: 91,
+            depthChartHeight: 380,
             buySellLoader: false,
             hisLoader: false,
             depthLoader: false,
@@ -153,7 +154,7 @@ class Trade extends Component {
         this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
         this.onLayoutChange = this.onLayoutChange.bind(this);
         this.goFullScreen = this.goFullScreen.bind(this);
-        this.handleLayoutResize = this.handleLayoutResize.bind(this);
+        // this.handleLayoutResize = this.handleLayoutResize.bind(this);
     }
     componentWillReceiveProps(props, newProps) {
         var self = this;
@@ -426,74 +427,134 @@ class Trade extends Component {
     } */
 
     /* RGL starts here */
-    handleLayoutResize(layout, oldItem, newItem) {
+    // handleLayoutResize(layout, oldItem, newItem) {
+    //     let self = this;
+    //     console.log(layout, oldItem, newItem)
+    //     if (oldItem.i == "instruments") {
+    //         if (oldItem.h != newItem.h) {
+    //             let newHeight = 0;
+    //             if (newItem.h == 2) {
+    //                 newHeight = 100;
+    //             } else {
+    //                 newHeight = 100 + (160 * (newItem.h - 2))
+    //             }
+    //             self.setState({
+    //                 instrumentTableHeight: newHeight
+    //             });
+    //         }
+    //     }
+
+    //     if (oldItem.i == "orderHistory") {
+
+    //         if (oldItem.h != newItem.h) {
+    //             let newHeight = 0;
+    //             if (newItem.h == 2) {
+    //                 newHeight = 170;
+    //             } else {
+    //                 newHeight = 170 + (160 * (newItem.h - 2))
+    //             }
+    //             self.setState({
+    //                 orderHistoryTableHeight: newHeight
+
+    //             });
+    //         }
+
+    //     }
+    //     if (oldItem.i == "myorder") {
+
+    //         if (oldItem.h != newItem.h) {
+    //             let newHeight = 0;
+    //             if (newItem.h == 2) {
+    //                 newHeight = 155;
+    //             } else {
+    //                 newHeight = 155 + (160 * (newItem.h - 2))
+    //             }
+    //             self.setState({
+    //                 myOrderTableHeight: newHeight
+
+    //             });
+    //         }
+
+    //     }
+    //     if (oldItem.i == "buysellBook") {
+    //         if (oldItem.h != newItem.h) {
+    //             let newHeight = 0;
+    //             if (newItem.h == 3) {
+    //                 newHeight = 91;
+    //             } else {
+    //                 newHeight = 91 + (80 * (newItem.h - 3))
+    //             }
+    //             self.setState({
+    //                 buySellOrderHeight: newHeight
+
+    //             });
+    //         }
+    //     }
+    // }
+    onLayoutChange(currentLayout, wholeLayout) {
         let self = this;
-        console.log(layout, oldItem, newItem)
-        if (oldItem.i == "instruments") {
-            if (oldItem.h != newItem.h) {
+        let instrumentTableHeight, orderHistoryTableHeight, myOrderTableHeight, buySellOrderHeight, depthChartHeight;
+        console.log(currentLayout);
+
+        for (let index = 0; index < currentLayout.length; index++) {
+            const element = currentLayout[index];
+            if (element.i == "instruments") {
                 let newHeight = 0;
-                if (newItem.h == 2) {
+                if (element.h == 2) {
                     newHeight = 100;
                 } else {
-                    newHeight = 100 + (160 * (newItem.h - 2))
+                    newHeight = 100 + (160 * (element.h - 2))
                 }
-                self.setState({
-                    instrumentTableHeight: newHeight
-                });
+                instrumentTableHeight = newHeight;
             }
-        }
-
-        if (oldItem.i == "orderHistory") {
-
-            if (oldItem.h != newItem.h) {
+            if (element.i == "orderHistory") {
                 let newHeight = 0;
-                if (newItem.h == 2) {
+                if (element.h == 2) {
                     newHeight = 170;
                 } else {
-                    newHeight = 170 + (160 * (newItem.h - 2))
+                    newHeight = 170 + (160 * (element.h - 2))
                 }
-                self.setState({
-                    orderHistoryTableHeight: newHeight
-
-                });
+                orderHistoryTableHeight = newHeight;
             }
+            if (element.i == "myorder") {
 
-        }
-        if (oldItem.i == "myorder") {
-
-            if (oldItem.h != newItem.h) {
                 let newHeight = 0;
-                if (newItem.h == 2) {
+                if (element.h == 2) {
                     newHeight = 155;
                 } else {
-                    newHeight = 155 + (160 * (newItem.h - 2))
+                    newHeight = 155 + (160 * (element.h - 2))
                 }
-                self.setState({
-                    myOrderTableHeight: newHeight
-
-                });
+                myOrderTableHeight = newHeight;
             }
 
-        }
-        if (oldItem.i == "buysellBook") {
-            if (oldItem.h != newItem.h) {
+            if (element.i == "buysellBook") {
                 let newHeight = 0;
-                if (newItem.h == 3) {
+                if (element.h == 3) {
                     newHeight = 91;
                 } else {
-                    newHeight = 91 + (80 * (newItem.h - 3))
+                    newHeight = 91 + (80 * (element.h - 3))
                 }
-                self.setState({
-                    buySellOrderHeight: newHeight
+                buySellOrderHeight = newHeight;
+            }
+            if (element.i == "depthChart") {
+                let newHeight = 0;
+                if (element.h == 3) {
+                    newHeight = 380;
+                } else {
+                    newHeight = 380 + (160 * (element.h - 3))
+                }
+                depthChartHeight = newHeight;
 
-                });
             }
         }
-    }
-    onLayoutChange(layout, oldItem, newItem) {
-        console.log("Hello 2", oldItem)
-
-        this.setState({ layouts: oldItem });
+        this.setState({
+            layouts: wholeLayout,
+            instrumentTableHeight,
+            orderHistoryTableHeight,
+            myOrderTableHeight,
+            buySellOrderHeight,
+            depthChartHeight
+        });
     }
     saveToLS(key, value) {
         if (global.localStorage) {
@@ -603,7 +664,7 @@ class Trade extends Component {
                                 onLayoutChange={(layout, layouts) =>
                                     this.onLayoutChange(layout, layouts)
                                 }
-                                onResize={this.handleLayoutResize}
+
                             >
                                 <div key="tradeView">
                                     <div style={{ height: "100%", width: "100%" }}>
@@ -690,7 +751,7 @@ class Trade extends Component {
                                                 : ""
                                         }
                                         <Right_div>
-                                            <DepthChart depthLoaderFunc={(loader) => this.depthLoaderFunc(loader)} io={io} />
+                                            <DepthChart depthLoaderFunc={(loader) => this.depthLoaderFunc(loader)} io={io} height={this.state.depthChartHeight} />
                                         </Right_div>
                                     </div>
                                 </div>
@@ -773,7 +834,7 @@ function getFromLS(key) {
                         { i: 'instruments', x: 0, y: 1, w: 4, h: 3, minW: 4, minH: 2 },
                         { i: 'tradeAction', x: 4, y: 1, w: 4, h: 3, minW: 4, minH: 2, maxH: 5 },
                         { i: 'buysellBook', x: 8, y: 1, w: 4, h: 3, minW: 3, minH: 3 },
-                        { i: 'depthChart', x: 0, y: 2, w: 6, h: 3, minW: 4 },
+                        { i: 'depthChart', x: 0, y: 2, w: 6, h: 3, minH: 3, maxH: 3, minW: 4 },
                         { i: 'orderHistory', x: 7, y: 2, w: 6, h: 3, minW: 4 },
                         { i: 'myorder', x: 0, y: 4, w: 12, h: 2, minW: 6, minH: 2 }
                     ],
