@@ -376,7 +376,7 @@ class SignupForm extends Component {
           document.querySelector("#first_icon_success").style.display = "none"
           document.querySelector("#first_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".first_sign")[0].style.display = "block";
-          this.setState({ first_msg: "*First Name should have min. 2 and max. 15 characters and no special characters are allowed" })
+          this.setState({ first_msg: "*First Name must have min 2, max 15 characters and no special characters are allowed." })
         }
       } else {
         this.setState({ firstIcon: false })
@@ -410,7 +410,7 @@ class SignupForm extends Component {
           document.querySelector("#last_icon_success").style.display = "none";
           document.querySelector("#last_icon_fail").style.display = "inline-block";
           document.querySelectorAll(".last_sign")[0].style.display = "block";
-          this.setState({ last_msg: "*Last Name should have min. 2 and max. 15 characters and no special characters are allowed" })
+          this.setState({ last_msg: "*Last Name must have min 2, max 15 characters and no special characters are allowed." })
         }
       } else {
         this.setState({ lastIcon: false })
