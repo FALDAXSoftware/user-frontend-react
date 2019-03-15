@@ -81,53 +81,93 @@ class SellTable extends Component {
             this.updateData(data);
         });
     }
+    // updateData(data) {
+    //     const rows = [];
+    //     let sum = 0;
+    //     let lastsum = 0;
+    //     for (let i = 0; i < data.length; i++) {
+    //         const element = data[i];
+    //         sum = sum + element.quantity * element.price;
+    //         rows.push({
+    //             my_size: 0,
+    //             amount: element.quantity,
+    //             ask: element.price,
+    //             total: sum,
+    //         });
+    //         lastsum = sum;
+    //     }
+    //     var preArr = [];
+    //     var final_result = [];
+    //     for (let i = 0; i < rows.length; i++) {
+    //         if (preArr.includes(rows[i].ask)) {
+    //         }
+    //         else {
+    //             var count = 0;
+    //             var result = {
+    //                 amount: rows[i].amount,
+    //                 total: rows[i].total
+    //             };
+    //             preArr.push(rows[i].ask)
+    //             for (let j = 0; j < rows.length; j++) {
+    //                 console.log(i !== j)
+    //                 if (i !== j) {
+    //                     if (rows[i].ask == rows[j].ask) {
+    //                         result.amount = result.amount + rows[j].amount;
+    //                         result.total = result.total;
+    //                     }
+    //                 }
+    //             }
+    //             result.ask = rows[i].ask;
+    //             result.my_size = rows[i].my_size;
+    //             final_result.push(result);
+    //         }
+    //     }
+    //     this.setState({
+    //         loader: false,
+    //         data: rows,
+    //         lastsum,
+    //         result: final_result
+    //     });
+    // }
     updateData(data) {
-        const rows = [];
+        // console.log("buyrow------------", data);
+        const row = [];
         let sum = 0;
-        let lastsum = 0;
-        for (let i = 0; i < data.length; i++) {
-            const element = data[i];
-            sum = sum + element.quantity * element.price;
-            rows.push({
-                my_size: 0,
-                amount: element.quantity,
-                ask: element.price,
-                total: sum,
-            });
-            lastsum = sum;
-        }
-        var preArr = [];
-        var final_result = [];
-        for (let i = 0; i < rows.length; i++) {
-            if (preArr.includes(rows[i].ask)) {
-            }
-            else {
-                var count = 0;
-                var result = {
-                    amount: rows[i].amount,
-                    total: rows[i].total
-                };
-                preArr.push(rows[i].ask)
-                for (let j = 0; j < rows.length; j++) {
-                    console.log(i !== j)
-                    if (i !== j) {
-                        if (rows[i].ask == rows[j].ask) {
-                            result.amount = result.amount + rows[j].amount;
-                            result.total = result.total;
-                        }
-                    }
+        for (let index = 0; index < data.length; index++) {
+            const element = data[index];
+            let isAdded = false;
+            for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
+                const internalElement = row[internalIndex];
+                if (internalElement.ask == element.price) {
+                    row[internalIndex].amount += element.quantity;
+                    isAdded = true;
+                    break;
                 }
-                result.ask = rows[i].ask;
-                result.my_size = rows[i].my_size;
-                final_result.push(result);
+            }
+            if (!isAdded) {
+                row.push({
+                    my_size: 0,
+                    amount: element.quantity,
+                    ask: element.price,
+                    // total: sum,
+                });
             }
         }
+
+        for (let index = 0; index < row.length; index++) {
+            const element = row[index];
+            sum += element.amount * element.ask;
+            row[index]["total"] = sum;
+        }
+        // this.props.loaderfunc(false);
         this.setState({
             loader: false,
-            data: rows,
-            lastsum,
-            result: final_result
+            // data: rows,
+            lastsum: sum,
+            result: row
         });
+        console.log("buyrow------------", row);
+
     }
     componentWillReceiveProps(props, newProps) {
         var self = this;

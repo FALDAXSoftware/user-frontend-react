@@ -84,60 +84,100 @@ class BuyTable extends Component {
             this.updateData(data);
         });
     }
+    // updateData(data) {
+    //     console.log(data)
+    //     const rows = [];
+    //     let sum = 0;
+    //     let lastsum
+    //     for (let i = 0; i < data.length; i++) {
+    //         const element = data[i];
+    //         sum = sum + element.quantity * element.price;
+    //         rows.push({
+    //             my_size: 0,
+    //             amount: element.quantity,
+    //             bid: element.price,
+    //             total: sum,
+    //         });
+    //         lastsum = sum
+    //     }
+    //     var preArr = [];
+    //     var final_result = [];
+    //     console.log(rows)
+    //     for (let i = 0; i < rows.length; i++) {
+
+    //         if (preArr.includes(rows[i].bid)) {
+
+    //         }
+    //         else {
+    //             var count = 0;
+    //             var result = {
+    //                 amount: rows[i].amount,
+    //                 total: rows[i].total
+    //             };
+    //             preArr.push(rows[i].bid)
+    //             for (let j = 0; j < rows.length; j++) {
+    //                 console.log(i !== j)
+    //                 if (i !== j) {
+    //                     if (rows[i].bid == rows[j].bid) {
+    //                         result.amount = result.amount + rows[j].amount;
+    //                         result.total = result.total;
+    //                     }
+    //                 }
+    //             }
+    //             result.bid = rows[i].bid;
+    //             result.my_size = rows[i].my_size;
+    //             console.log(result.bid, count)
+    //             final_result.push(result);
+    //         }
+    //     }
+    //     console.log(final_result, preArr)
+    //     this.props.loaderfunc(false);
+    //     this.setState({
+    //         loader: false,
+    //         data: rows,
+    //         lastsum,
+    //         result: final_result
+    //     });
+    // }
     updateData(data) {
-        console.log(data)
-        const rows = [];
+        // console.log("buyrow------------", data);
+        const row = [];
         let sum = 0;
-        let lastsum
-        for (let i = 0; i < data.length; i++) {
-            const element = data[i];
-            sum = sum + element.quantity * element.price;
-            rows.push({
-                my_size: 0,
-                amount: element.quantity,
-                bid: element.price,
-                total: sum,
-            });
-            lastsum = sum
-        }
-        var preArr = [];
-        var final_result = [];
-        console.log(rows)
-        for (let i = 0; i < rows.length; i++) {
-
-            if (preArr.includes(rows[i].bid)) {
-
-            }
-            else {
-                var count = 0;
-                var result = {
-                    amount: rows[i].amount,
-                    total: rows[i].total
-                };
-                preArr.push(rows[i].bid)
-                for (let j = 0; j < rows.length; j++) {
-                    console.log(i !== j)
-                    if (i !== j) {
-                        if (rows[i].bid == rows[j].bid) {
-                            result.amount = result.amount + rows[j].amount;
-                            result.total = result.total;
-                        }
-                    }
+        for (let index = 0; index < data.length; index++) {
+            const element = data[index];
+            let isAdded = false;
+            for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
+                const internalElement = row[internalIndex];
+                if (internalElement.bid == element.price) {
+                    row[internalIndex].amount += element.quantity;
+                    isAdded = true;
+                    break;
                 }
-                result.bid = rows[i].bid;
-                result.my_size = rows[i].my_size;
-                console.log(result.bid, count)
-                final_result.push(result);
+            }
+            if (!isAdded) {
+                row.push({
+                    my_size: 0,
+                    amount: element.quantity,
+                    bid: element.price,
+                    // total: sum,
+                });
             }
         }
-        console.log(final_result, preArr)
+
+        for (let index = row.length - 1; index >= 0; index--) {
+            const element = row[index];
+            sum += element.amount * element.bid;
+            row[index]["total"] = sum;
+        }
         this.props.loaderfunc(false);
         this.setState({
             loader: false,
-            data: rows,
-            lastsum,
-            result: final_result
+            // data: rows,
+            lastsum: sum,
+            result: row
         });
+        console.log("buyrow------------", row);
+
     }
     componentWillReceiveProps(props, newProps) {
         console.log(props)

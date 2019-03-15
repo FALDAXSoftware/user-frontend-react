@@ -68,7 +68,7 @@ const OrderTradeWrap = styled.div`
     }
 `
 const Grey_wrap_trade = styled(Grey_wrap)`
-    padding-top:82px;
+    padding-top:120px;
 `
 
 const columns = [{
@@ -674,8 +674,8 @@ class Trade extends Component {
                                                     <span>{this.state.crypto}-{this.state.currency}</span>
                                                 </div>
                                                 <div onClick={() => { window.open(tvChartURL, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes'); }} style={{ marginLeft: "auto" }}>
-                                                    <Tooltip placement="topLeft" title={"Chart in New Window"}>
-                                                        <Icon type="select" style={{ fontSize: '26px' }} />
+                                                    <Tooltip placement="bottomLeft" title={"Chart in New Window"}>
+                                                        <Icon type="arrows-alt" />
                                                     </Tooltip>
                                                 </div>
                                             </TVBar>
