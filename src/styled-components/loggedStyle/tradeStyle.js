@@ -44,7 +44,8 @@ export const TVBar = styled.div`
     }
     >div>i
     {
-        font-size:"26px";
+        cursor:pointer;
+        font-size:26px;
         color:${props => props.theme.mode == "dark" ? "#687786;" : ""};
     }
 `

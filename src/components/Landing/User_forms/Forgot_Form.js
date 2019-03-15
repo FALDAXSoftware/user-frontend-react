@@ -104,6 +104,10 @@ const Button_login = styled(Button)`
   border-radius:30px;
   text-transform: uppercase;
   line-height: 2.875;
+  @media(min-width:1773px)
+  {
+    display:block;
+  }
   @media (min-width:1024px) (max-width:1440px)
   {
     width:40%;
@@ -176,11 +180,11 @@ class ForgotForm extends Component {
   submit = () => {
     this.props.form.validateFields((error, value) => {
       if (error !== null && error !== undefined) {
-        if (error.email !== undefined) {
-          if (error.email.errors[0].message !== undefined && error.email.errors[0].message !== null) {
+        if (error.Email !== undefined) {
+          if (error.Email.errors[0].message !== undefined && error.Email.errors[0].message !== null) {
             document.querySelectorAll(".email_msg")[0].style.display = "block";
-            if (value.email == "" || value.email == undefined)
-              this.setState({ email_msg: `${error.email.errors[0].message}` })
+            if (value.Email == "" || value.Email == undefined)
+              this.setState({ email_msg: `${error.Email.errors[0].message}` })
             else
               this.setState({ email_msg: "Email address is not valid" })
           } else {
@@ -191,6 +195,8 @@ class ForgotForm extends Component {
       } else {
         document.querySelectorAll(".email_msg")[0].style.display = "none";
         this.setState({ email_msg: null });
+        value.email = value.Email;
+        value.Email = "";
         this.props.forgotAction(value);
       }
     });
@@ -248,13 +254,13 @@ class ForgotForm extends Component {
                   <Welcome_text>Forgot Password?</Welcome_text>
                   <Sub_text>Don't worry, It happen's to the best of us.</Sub_text>
                   <Email_label>Email Address</Email_label>
-                  <Username {...getFieldProps('email', {
+                  <Username {...getFieldProps('Email', {
                     onChange() { /* console.log("Hello How are You") */ }, // have to write original onChange here if you need
                     rules: [{ type: "email", required: true }],
                   })} />
                   <Email_req className="email_msg">{this.state.email_msg}</Email_req>
                   {(errors = getFieldError('required')) ? errors.join(',') : null}
-                  <Button_login onClick={this.submit}>Send Reset Link</Button_login>
+                  <Button_login onClick={this.submit}>SEND RESET PASSWORD LINK</Button_login>
                   <Link_wrap>
                     <Icon className="material-icons">keyboard_backspace</Icon>
                     <Back_link onClick={() => this.props.history.push("/login")}> Back To Login </Back_link>
