@@ -173,7 +173,7 @@ const HR = styled.hr`
     margin-top: 30px;
     margin-bottom: 0px;
 `;
-const Footer_Link = styled(Link)`
+const Footer_Link = styled.a`
     color:${props => props.theme.mode == "dark" ? "white" : "rgb(0, 0, 0, 0.65)"};
 `
 const FooterContainer = styled.div`
@@ -259,19 +259,19 @@ class FooterHome extends Component {
                                 <Footer_ul>
                                     <Footer_headers>Information</Footer_headers>
                                     <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/about-us">About Us</Footer_Link>
+                                        <Footer_Link href={`${globalVariables.WordpressSiteURL}/about-us`}>About Us</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/contactus">Contact Us</Footer_Link>
+                                        <Footer_Link href={`${globalVariables.WordpressSiteURL}/contact-us`}>Contact Us</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/mediacontact">Media Contact</Footer_Link>
+                                        <Footer_Link href={`${globalVariables.WordpressSiteURL}/media-contact`}>Media Contact</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/blogs">Blog</Footer_Link>
+                                        <Footer_Link href={`${globalVariables.WordpressSiteURL}/blogs`}>Blog</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/fees">Fees</Footer_Link>
+                                        <Footer_Link href={`${globalVariables.WordpressSiteURL}/fee`}>Fees</Footer_Link>
                                     </li>
                                 </Footer_ul>
                             </FooterLinkCol>
@@ -279,8 +279,8 @@ class FooterHome extends Component {
                                 <Footer_ul>
                                     <Footer_headers>Support</Footer_headers>
                                     <li style={{ cursor: "pointer" }} >
-                                        {this.props.isLoggedIn ? <Footer_Link to="/open-ticket"> Open a Ticket</Footer_Link>
-                                            : <Footer_Link to="/login#openTicket"> Open a Ticket</Footer_Link>}
+                                        {this.props.isLoggedIn ? <Footer_Link href="/open-ticket"> Open a Ticket</Footer_Link>
+                                            : <Footer_Link href="/login#openTicket"> Open a Ticket</Footer_Link>}
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         {/* <Footer_Link to="/faq"> */}
@@ -292,10 +292,10 @@ class FooterHome extends Component {
                                                     </li>
                                     {/* <li style={{cursor:"pointer"}} onClick={this.showComing}>Language</li> */}
                                     <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/addcoin">List Your Token</Footer_Link>
+                                        <Footer_Link href={`${globalVariables.WordpressSiteURL}/list-your-token`}>List Your Token</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }} >
-                                        <Footer_Link to="/news">News</Footer_Link>
+                                        <Footer_Link href={`${globalVariables.WordpressSiteURL}/news`}>News</Footer_Link>
                                     </li>
                                 </Footer_ul>
                             </FooterLinkCol>
@@ -304,7 +304,7 @@ class FooterHome extends Component {
                                 <Footer_ul>
                                     <Footer_headers>Legal & Technical</Footer_headers>
                                     <li style={{ cursor: "pointer" }}>
-                                        <Footer_Link to="/policy">Policies</Footer_Link>
+                                        <Footer_Link href={`${globalVariables.WordpressSiteURL}/policies`}>Policies</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.scrollMap.bind(this)}>
                                         Service Availability

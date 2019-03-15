@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import PersonalDetails from './Personaldetails/PD';
 import Referral from './Referral';
 import LoggedNavigation from '../Navigations/LoggedNavigation';
+import Navigation from '../Navigations/Navigation';
 import Footer_home from "../Landing/Footers/Footer_home";
 import Passwordchange from "./changePassword/Passwordchange";
 import Acc_settings from "./Account_settings/Acc_settings";
@@ -51,8 +52,8 @@ class Editprofile extends Component {
     render() {
         return (
             <div>
-                {/* console.log(this.props.loader) */}
-                <LoggedNavigation />
+                {/* <LoggedNavigation /> */}
+                <Navigation />
                 <ProfileWrapper>
                     <ProfileDiv>
                         <TabsStyle className="profile-tabs" defaultActiveKey="1" >

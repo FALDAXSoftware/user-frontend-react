@@ -221,7 +221,7 @@ class ForgotForm extends Component {
     notification.open({
       message: 'Password Reset Link Sent',
       description: 'The link to reset the password is sent to your Email Address',
-      duration: 6,
+      duration: 5,
       icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
     });
   };
