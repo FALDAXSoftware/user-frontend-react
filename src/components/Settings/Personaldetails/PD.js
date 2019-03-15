@@ -383,7 +383,22 @@ class PersonalDetails extends Component {
     }
     submitForm() {
         if (this.validator.allValid()) {
-            alert('You submitted the form and stuff!');
+            let { fields } = this.state;
+            this.setState({ profileImg: undefined, profileImage: undefined, remove_pic: false })
+            if (this.state.profileImage !== null && this.state.profileImage !== undefined && !this.state.profileImg.includes("def_profile.jpg")) {
+                profileData.append('profile_pic', this.state.profileImage)
+            }
+            const profileData = new FormData();
+            profileData.append('first_name', fields.first_name);
+            profileData.append('email', fields.email);
+            profileData.append('last_name', fields.last_name);
+            profileData.append('city_town', fields.citySelected);
+            profileData.append('street_address', fields.street_address)
+            profileData.append('street_address_2', fields.street_address_2);
+            profileData.append('postal_code', fields.postal_code);
+            profileData.append('fiat', fields.fiat)
+            profileData.append('date_format', fields.date_format)
+
         } else {
             this.validator.showMessages();
             // rerender to show messages for the first time
@@ -437,13 +452,13 @@ class PersonalDetails extends Component {
                                 <Third_Row>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                                         <Street_Address>Street Address Line 1*</Street_Address>
-                                        <Street_input value={fields.street_address !== null ? fields.street_address : profileDetails.street_address} name="address" onChange={this._onChangeFields} placeholder="Street Address" />
+                                        <Street_input value={fields.street_address !== null ? fields.street_address : profileDetails.street_address} name="street_address" onChange={this.onChangeField} placeholder="Street Address" />
                                         {this.validator.message('street_address', fields.street_address !== null ? fields.street_address : profileDetails.street_address, 'required', 'text-danger-validation')}
                                     </Col>
                                 </Third_Row>
                                 <Third_Row>
                                     <Street_Address>Street Address Line 2</Street_Address>
-                                    <Street_input value={fields.street_address_2 !== null ? fields.street_address_2 : profileDetails.street_address_2} name="address_2" onChange={this._onChangeFields} placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} />
+                                    <Street_input value={fields.street_address_2 !== null ? fields.street_address_2 : profileDetails.street_address_2} name="street_address_2" onChange={this.onChangeField} placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} />
                                 </Third_Row>
                                 <Fourth_Row>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
@@ -456,7 +471,7 @@ class PersonalDetails extends Component {
                                 <Fourth_Row>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} >
                                         <Postal>Postal Code*</Postal>
-                                        <Postal_input value={fields.postal_code !== null ? fields.postal_code : profileDetails.postal_code} name="zip" onChange={this._onChangeFields} placeholder="Postal Code" />
+                                        <Postal_input value={fields.postal_code !== null ? fields.postal_code : profileDetails.postal_code} name="postal_code" onChange={this.onChangeField} placeholder="Postal Code" />
                                         {this.validator.message('postal_code', fields.postal_code !== null ? fields.postal_code : profileDetails.postal_code, 'required', 'text-danger-validation')}
                                     </Col>
                                 </Fourth_Row>

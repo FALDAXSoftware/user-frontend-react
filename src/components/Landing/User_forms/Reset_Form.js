@@ -180,7 +180,8 @@ class ResetPassword extends Component {
       common_req: null,
       repeatEye: "password",
       newEye: "password",
-      confPass: ""
+      confPass: null,
+      password: null
     }
   }
 
@@ -189,31 +190,25 @@ class ResetPassword extends Component {
   };
 
   onChangeField(value, field) {
+    var self = this;
     if (field == "password") {
       password = value;
-      if (this.state.confPass !== undefined) {
-        if (this.state.confPass === value) {
-          this.setState({ confirmIcon: true })
-          document.querySelector("#confirmchange_icon_success").style.display = "none"
-          document.querySelector("#confirmchange_icon_fail").style.display = "none"
-          document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
-        } else {
-          this.setState({ confirmIcon: false })
-          document.querySelector("#confirmchange_icon_success").style.display = "none"
-          document.querySelector("#confirmchange_icon_fail").style.display = "inline-block"
-          document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
-          this.setState({ confirmPass_msg: "*Confirm Password does not match." })
+      this.setState({ password: value }, () => {
+        console.log(self.state.confPass)
+        if (self.state.confPass !== null && self.state.password !== null) {
+          self.onChangeField(self.state.confPass, "confirm_password")
         }
-      }
-      var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
+      });
+      var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,60}$/;
       var bool = re.test(value);
       var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
-      if (numb.test(value) || letters.test(value)) { this.setState({ status: "active", stroke: "red", percent: 20 }) }
-      if (alphanum.test(value)) { this.setState({ status: "active", stroke: "orange", percent: 40 }) }
-      if (alphanum.test(value) && value.length == 6) { this.setState({ status: "exception", stroke: "yellow", percent: 60 }) }
-      if (re.test(value) && value.length == 6) { this.setState({ status: "success", stroke: "#7CFC00", percent: 80 }) }
-      if (re.test(value) && value.length >= 10) { this.setState({ status: "success", stroke: "#008000", percent: 100 }) }
-      if (value !== "") {
+      if (numb.test(value) || letters.test(value)) { console.log("1 test"); this.setState({ stroke: "red", percent: 20 }) }
+      if (alphanum.test(value) && value.length < 6) { console.log("2 test"); this.setState({ stroke: "orange", percent: 40 }) }
+      if (alphanum.test(value) && value.length == 8) { console.log("3 test"); this.setState({ stroke: "yellow", percent: 60 }) }
+      if (re.test(value) && value.length > 8 && value.length < 60) { console.log("4 test"); this.setState({ stroke: "#7CFC00", percent: 80 }) }
+      if (re.test(value) && value.length > 10 && value.length < 60) { console.log("5 test"); this.setState({ stroke: "#008000", percent: 100 }) }
+      if (value.length > 60) { console.log("6 test"); this.setState({ stroke: "red", percent: 0 }) }
+      if (value !== "" && value !== undefined) {
         if (bool == true) {
           this.setState({ newpassIcon: true, password: value })
           document.querySelector("#newchange_icon_success").style.display = "inline-block"
@@ -224,7 +219,7 @@ class ResetPassword extends Component {
           document.querySelector("#newchange_icon_success").style.display = "none"
           document.querySelector("#newchange_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".pass_msg")[0].style.display = "block";
-          this.setState({ pass_msg: "Your password must contain at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+          this.setState({ pass_msg: "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters." })
         }
       } else {
         this.setState({ newpassIcon: false, percent: 0 })
@@ -235,6 +230,7 @@ class ResetPassword extends Component {
     }
     if (field == "confirm_password") {
       var bool = this.state.password === value ? true : false
+      console.log(this.state.password, value)
       if (value !== "") {
         this.setState({ confPass: value })
         if (bool == true) {

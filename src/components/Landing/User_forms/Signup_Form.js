@@ -245,6 +245,7 @@ class SignupForm extends Component {
       email_msg: null,
       pass_msg: null,
       password: null,
+      confirm_password: null,
       confirmPass_msg: null,
       emailIcon: false,
       firstIcon: false,
@@ -423,18 +424,23 @@ class SignupForm extends Component {
         }
       }
     } else if (field == "password") {
-      var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
+      var self = this;
+      var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,60}$/;
       var bool = re.test(value);
       var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
-      if (numb.test(value) || letters.test(value)) { this.setState({ stroke: "red", percent: 20 }) }
-      if (alphanum.test(value) && value.length < 60) { this.setState({ stroke: "orange", percent: 40 }) }
-      if (alphanum.test(value) && value.length == 6) { this.setState({ stroke: "yellow", percent: 60 }) }
-      if (re.test(value) && value.length == 6) { this.setState({ stroke: "#7CFC00", percent: 80 }) }
-      if (re.test(value) && value.length >= 10 && value.length < 60) { this.setState({ stroke: "#008000", percent: 100 }) }
-      if (re.test(value) && value.length > 60) { this.setState({ stroke: "red", percent: 0 }) }
+      this.setState({ password: value }, () => {
+        if (self.state.confirm_password !== null && self.state.password !== null)
+          self.onChangeField(self.state.confirm_password, "confirm_password")
+      });
+      if (numb.test(value) || letters.test(value)) { console.log("1 test"); this.setState({ stroke: "red", percent: 20 }) }
+      if (alphanum.test(value) && value.length < 6) { console.log("2 test"); this.setState({ stroke: "orange", percent: 40 }) }
+      if (alphanum.test(value) && value.length == 8) { console.log("3 test"); this.setState({ stroke: "yellow", percent: 60 }) }
+      if (re.test(value) && value.length > 8 && value.length < 60) { console.log("4 test"); this.setState({ stroke: "#7CFC00", percent: 80 }) }
+      if (re.test(value) && value.length > 10 && value.length < 60) { console.log("5 test"); this.setState({ stroke: "#008000", percent: 100 }) }
+      if (value.length > 60) { console.log("6 test"); this.setState({ stroke: "red", percent: 0 }) }
       if (value !== "" && value !== undefined) {
         if (bool == true) {
-          this.setState({ passIcon: true, password: value })
+          this.setState({ passIcon: true })
           document.querySelector("#pass_icon_success").style.display = "inline-block"
           document.querySelector("#pass_icon_fail").style.display = "none"
           document.querySelectorAll(".pass_sign")[0].style.display = "none";
@@ -443,7 +449,7 @@ class SignupForm extends Component {
           document.querySelector("#pass_icon_success").style.display = "none"
           document.querySelector("#pass_icon_fail").style.display = "inline-block"
           document.querySelectorAll(".pass_sign")[0].style.display = "block";
-          this.setState({ pass_msg: "Your password must contain at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+          this.setState({ pass_msg: "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters." })
         }
       } else {
         this.setState({ passIcon: false, percent: 0 })
@@ -454,8 +460,11 @@ class SignupForm extends Component {
           this.setState({ pass_msg: "Password is required" })
         }
       }
+
     } else if (field == "confirm_password") {
       var bool = this.state.password == value ? true : false
+      this.setState({ confirm_password: value })
+      console.log(bool, this.state.password, value)
       if (value !== "" && value !== undefined) {
         if (bool == true) {
           this.setState({ confirmIcon: true })
