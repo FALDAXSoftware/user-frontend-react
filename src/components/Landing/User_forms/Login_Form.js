@@ -294,7 +294,7 @@ class Login_Form extends React.Component {
   submit = () => {
     this.props.form.validateFields((error, value) => {
       // console.log(error, value, this.state)
-      if (error == null && this.state.emailIcon == true && this.state.passIcon == true && (this.state.isOtpRequired == true ? this.state.otpIcon == true : true)) { 
+      if (error == null && this.state.emailIcon == true && this.state.passIcon == true && (this.state.isOtpRequired == true ? this.state.otpIcon == true : true)) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
@@ -341,6 +341,7 @@ class Login_Form extends React.Component {
     notification[type]({
       message: head,
       description: desc,
+      duration: 5
     });
   };
 

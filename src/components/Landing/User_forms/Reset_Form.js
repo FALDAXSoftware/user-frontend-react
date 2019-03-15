@@ -14,7 +14,6 @@ import {
 } from "./Login_Form";
 
 /* Global Constants */
-
 /* Styled-Components */
 const Login_head = styled.div`
 font-size: 30px;
@@ -136,8 +135,7 @@ const HorImg = styled.img`
   }
 `
 const Form_wrap = styled.div`
-  padding-left:100px;
-  
+  padding-left:100px;  
   background-color:#f0f3f2;
   min-height: 100vh;
   display:flex;
@@ -194,7 +192,6 @@ class ResetPassword extends Component {
     if (field == "password") {
       password = value;
       this.setState({ password: value }, () => {
-        console.log(self.state.confPass)
         if (self.state.confPass !== null && self.state.password !== null) {
           self.onChangeField(self.state.confPass, "confirm_password")
         }
@@ -230,7 +227,6 @@ class ResetPassword extends Component {
     }
     if (field == "confirm_password") {
       var bool = this.state.password === value ? true : false
-      console.log(this.state.password, value)
       if (value !== "") {
         this.setState({ confPass: value })
         if (bool == true) {
@@ -277,23 +273,19 @@ class ResetPassword extends Component {
       body: JSON.stringify(form)
     }).then(response => response.json())
       .then((responseData) => {
-        console.log('>>>>>responseData', responseData)
         if (responseData.status == 200) {
-          console.log('>>>>>responseData', responseData)
           this.openNotificationWithProfile("success", "Success", "Password changed successfully..")
           this.props.history.push("/login")
         } else {
           this.openNotificationWithProfile("error", "Error", responseData.err)
         }
       }).catch(error => {
-        console.log('>>>>>error', error)
         this.openNotificationWithProfile("error", "Error", "are re error ai")
       })
   }
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      let url = this.props.location.search.split('=')
       if (error == null) {
         if (value.password == value.confirm_password) {
           this._resetPassword(value)
@@ -350,6 +342,7 @@ class ResetPassword extends Component {
     notification[type]({
       message: head,
       description: desc,
+      duration: 5
     });
   };
 

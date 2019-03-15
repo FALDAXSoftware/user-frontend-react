@@ -237,416 +237,415 @@ const Active_FAI = styled(FAI)`
   width:24px;
 `
 class SignupForm extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      first_msg: null,
-      last_msg: null,
-      email_msg: null,
-      pass_msg: null,
-      password: null,
-      confirm_password: null,
-      confirmPass_msg: null,
-      emailIcon: false,
-      firstIcon: false,
-      lastIcon: false,
-      passIcon: false,
-      confirmIcon: false,
-      stroke: "",
-      status: "",
-      percent: 0,
-      init: "",
-      PasswordtypeEye: "password",
-      repeatEye: "password",
-      qP: "",
-      isSignDisable: false
+    constructor(props) {
+        super(props)
+        this.state = {
+            first_msg: null,
+            last_msg: null,
+            email_msg: null,
+            pass_msg: null,
+            password: null,
+            confirm_password: null,
+            confirmPass_msg: null,
+            emailIcon: false,
+            firstIcon: false,
+            lastIcon: false,
+            passIcon: false,
+            confirmIcon: false,
+            stroke: "",
+            status: "",
+            percent: 0,
+            init: "",
+            PasswordtypeEye: "password",
+            repeatEye: "password",
+            qP: "",
+            isSignDisable: false
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.dispModal = this.dispModal.bind(this);
     }
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.dispModal = this.dispModal.bind(this);
-  }
 
-  static propTypes = {
-    form: formShape,
-  };
-  componentWillReceiveProps(props, newProps) {
-    if (props.isSignUp) {
-      if (props.isSignUp.status == 200) {
-        //this.props.dispModal("thankyou");
-        this.props.history.push('/signup-success');
-      } else {
-        this.openNotificationWithIcon('error', 'Sign In', props.isSignUp.err);
-      }
-      this.setState({ isSignDisable: false });
+    static propTypes = {
+        form: formShape,
+    };
+    componentWillReceiveProps(props, newProps) {
+        if (props.isSignUp) {
+            if (props.isSignUp.status == 200) {
+                //this.props.dispModal("thankyou");
+                this.props.history.push('/signup-success');
+            } else {
+                this.openNotificationWithIcon('error', 'Sign In', props.isSignUp.err);
+            }
+            this.setState({ isSignDisable: false });
+        }
+        this.props.clearSignUp();
     }
-    this.props.clearSignUp();
-  }
-  componentDidMount() {
-    let queryParams
-    if (this.props.location.pathname == "/signup") {
-      if (this.props.location.search !== "") {
-        let qP = this.props.location.search.split("=")
-        if (qP[0].includes("refID")) {
-          this.setState({ qP: qP[1] });
+    componentDidMount() {
+        let queryParams
+        if (this.props.location.pathname == "/signup") {
+            if (this.props.location.search !== "") {
+                let qP = this.props.location.search.split("=")
+                if (qP[0].includes("refID")) {
+                    this.setState({ qP: qP[1] });
+                }
+            }
         }
-      }
     }
-  }
-  submit = () => {
-    this.props.form.validateFields((error, value) => {
-      if (this.state.emailIcon == true && this.state.firstIcon == true && this.state.lastIcon == true && this.state.passIcon == true && this.state.confirmIcon == true) {
-        this.setState({ isSignDisable: true });
-        document.querySelectorAll("#email_icon_success")[0].style.display = "none";
-        document.querySelectorAll("#first_icon_success")[0].style.display = "none";
-        document.querySelectorAll("#last_icon_success")[0].style.display = "none";
-        document.querySelectorAll("#pass_icon_success")[0].style.display = "none";
-        document.querySelectorAll("#confirm_icon_success")[0].style.display = "none";
-        var obj = {};
-        obj['first_name'] = value.first_name;
-        obj['last_name'] = value.last_name;
-        obj['email'] = value.email;
-        obj['password'] = value.password;
-        obj['confirm_password'] = value.confirm_password;
-        obj['referral_code'] = value.referral_code;
-        obj['device_type'] = 0;
-        this.props.Signup(obj);
-      } else {
-        if (error['first_name'] !== undefined) {
-          this.onChangeField(value.first_name, 'firstname')
-        }
-        if (error['last_name'] !== undefined) {
-          this.onChangeField(value.last_name, 'lastname')
-        }
-        if (error['email'] !== undefined) {
-          this.onChangeField(value.email, 'email')
-        }
-        if (error['password'] !== undefined) {
-          this.onChangeField(value.password, 'password')
-        }
-        if (error['confirm_password'] !== undefined) {
-          this.onChangeField(value.confirm_password, 'confirm_password')
-        }
-        //this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue")
-      }
-    });
-  }
-  onChangeField(value, field) {
-    if (field == "email") {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      var bool = re.test(String(value).toLowerCase());
-      if (value !== "" && value !== undefined) {
-        if (bool == true) {
-          this.setState({ emailIcon: true })
-          document.querySelector("#email_icon_success").style.display = "inline-block"
-          document.querySelector("#email_icon_fail").style.display = "none"
-          document.querySelectorAll(".email_sign")[0].style.display = "none";
-        } else {
-          this.setState({ emailIcon: false })
-          document.querySelector("#email_icon_fail").style.display = "inline-block"
-          document.querySelector("#email_icon_success").style.display = "none"
-          document.querySelectorAll(".email_sign")[0].style.display = "block";
-          this.setState({ email_msg: "Email address is not valid" })
-        }
-      } else {
-        this.setState({ emailIcon: false })
-        document.querySelector("#email_icon_success").style.display = "none"
-        document.querySelector("#email_icon_fail").style.display = "inline-block"
-        document.querySelectorAll(".email_sign")[0].style.display = "block";
-        if (value == "" || value == undefined) {
-          this.setState({ email_msg: "Email address is required" })
-        }
-      }
-    } else if (field == "firstname") {
-      var re = /^[a-zA-Z0-9]{2,15}$/;
-      var bool = re.test(value);
-      if (value !== "" && value !== undefined) {
-        if (bool == true) {
-          var regexnum = /^[0-9]*$/;
-          if (regexnum.test(value)) {
-            this.setState({ firstIcon: false })
-            document.querySelector("#first_icon_success").style.display = "none"
-            document.querySelector("#first_icon_fail").style.display = "inline-block"
-            document.querySelectorAll(".first_sign")[0].style.display = "block";
-            this.setState({ first_msg: "*Only numbers are not allowed" })
-          } else {
-            this.setState({ firstIcon: true })
-            document.querySelector("#first_icon_success").style.display = "inline-block"
-            document.querySelector("#first_icon_fail").style.display = "none"
-            document.querySelectorAll(".first_sign")[0].style.display = "none";
-          }
-        } else {
-          this.setState({ firstIcon: false })
-          document.querySelector("#first_icon_success").style.display = "none"
-          document.querySelector("#first_icon_fail").style.display = "inline-block"
-          document.querySelectorAll(".first_sign")[0].style.display = "block";
-          this.setState({ first_msg: "*First Name must have min 2, max 15 characters and no special characters are allowed." })
-        }
-      } else {
-        this.setState({ firstIcon: false })
-        document.querySelector("#first_icon_success").style.display = "none"
-        document.querySelector("#first_icon_fail").style.display = "inline-block"
-        document.querySelectorAll(".first_sign")[0].style.display = "block";
-        if (value == "" || value == undefined) {
-          this.setState({ first_msg: "First name is required." })
-        }
-      }
-    } else if (field == "lastname") {
-      var re = /^[a-zA-Z0-9]{2,15}$/;
-      var bool = re.test(value);
-      if (value !== "" && value !== undefined) {
-        if (bool == true) {
-          var regexnum = /^[0-9]*$/;
-          if (regexnum.test(value)) {
-            this.setState({ lastIcon: false })
-            document.querySelector("#last_icon_success").style.display = "none"
-            document.querySelector("#last_icon_fail").style.display = "inline-block"
-            document.querySelectorAll(".last_sign")[0].style.display = "block";
-            this.setState({ last_msg: "*Only numbers are not allowed" })
-          } else {
-            this.setState({ lastIcon: true })
-            document.querySelector("#last_icon_success").style.display = "inline-block";
-            document.querySelector("#last_icon_fail").style.display = "none";
-            document.querySelectorAll(".last_sign")[0].style.display = "none";
-          }
-        } else {
-          this.setState({ lastIcon: false })
-          document.querySelector("#last_icon_success").style.display = "none";
-          document.querySelector("#last_icon_fail").style.display = "inline-block";
-          document.querySelectorAll(".last_sign")[0].style.display = "block";
-          this.setState({ last_msg: "*Last Name must have min 2, max 15 characters and no special characters are allowed." })
-        }
-      } else {
-        this.setState({ lastIcon: false })
-        document.querySelector("#last_icon_success").style.display = "none";
-        document.querySelector("#last_icon_fail").style.display = "inline-block";
-        document.querySelectorAll(".last_sign")[0].style.display = "block";
-        if (value == "" || value == undefined) {
-          this.setState({ last_msg: "Last Name is required" })
-        }
-      }
-    } else if (field == "password") {
-      var self = this;
-      var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,60}$/;
-      var bool = re.test(value);
-      var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
-      this.setState({ password: value }, () => {
-        if (self.state.confirm_password !== null && self.state.password !== null)
-          self.onChangeField(self.state.confirm_password, "confirm_password")
-      });
-      if (numb.test(value) || letters.test(value)) { console.log("1 test"); this.setState({ stroke: "red", percent: 20 }) }
-      if (alphanum.test(value) && value.length < 6) { console.log("2 test"); this.setState({ stroke: "orange", percent: 40 }) }
-      if (alphanum.test(value) && value.length == 8) { console.log("3 test"); this.setState({ stroke: "yellow", percent: 60 }) }
-      if (re.test(value) && value.length > 8 && value.length < 60) { console.log("4 test"); this.setState({ stroke: "#7CFC00", percent: 80 }) }
-      if (re.test(value) && value.length > 10 && value.length < 60) { console.log("5 test"); this.setState({ stroke: "#008000", percent: 100 }) }
-      if (value.length > 60) { console.log("6 test"); this.setState({ stroke: "red", percent: 0 }) }
-      if (value !== "" && value !== undefined) {
-        if (bool == true) {
-          this.setState({ passIcon: true })
-          document.querySelector("#pass_icon_success").style.display = "inline-block"
-          document.querySelector("#pass_icon_fail").style.display = "none"
-          document.querySelectorAll(".pass_sign")[0].style.display = "none";
-        } else {
-          this.setState({ passIcon: false })
-          document.querySelector("#pass_icon_success").style.display = "none"
-          document.querySelector("#pass_icon_fail").style.display = "inline-block"
-          document.querySelectorAll(".pass_sign")[0].style.display = "block";
-          this.setState({ pass_msg: "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters." })
-        }
-      } else {
-        this.setState({ passIcon: false, percent: 0 })
-        document.querySelector("#pass_icon_success").style.display = "none"
-        document.querySelector("#pass_icon_fail").style.display = "inline-block"
-        document.querySelectorAll(".pass_sign")[0].style.display = "block";
-        if (value == "" || value == undefined) {
-          this.setState({ pass_msg: "Password is required" })
-        }
-      }
-
-    } else if (field == "confirm_password") {
-      var bool = this.state.password == value ? true : false
-      this.setState({ confirm_password: value })
-      console.log(bool, this.state.password, value)
-      if (value !== "" && value !== undefined) {
-        if (bool == true) {
-          this.setState({ confirmIcon: true })
-          document.querySelector("#confirm_icon_success").style.display = "inline-block"
-          document.querySelector("#confirm_icon_fail").style.display = "none"
-          document.querySelectorAll(".confirmPass_sign")[0].style.display = "none";
-        } else {
-          this.setState({ confirmIcon: false })
-          document.querySelector("#confirm_icon_success").style.display = "none"
-          document.querySelector("#confirm_icon_fail").style.display = "inline-block"
-          document.querySelectorAll(".confirmPass_sign")[0].style.display = "block";
-          this.setState({ confirmPass_msg: "*Password doesn't match" })
-        }
-      } else {
-        this.setState({ confirmIcon: false })
-        document.querySelector("#confirm_icon_success").style.display = "none"
-        if (bool == false) {
-          document.querySelector("#confirm_icon_fail").style.display = "none"
-          document.querySelectorAll(".confirmPass_sign")[0].style.display = "block";
-          this.setState({ confirmPass_msg: "*Password doesn't match" })
-        } else {
-          document.querySelector("#confirm_icon_fail").style.display = "none"
-          document.querySelectorAll(".confirmPass_sign")[0].style.display = "none";
-        }
-      }
+    submit = () => {
+        this.props.form.validateFields((error, value) => {
+            if (this.state.emailIcon == true && this.state.firstIcon == true && this.state.lastIcon == true && this.state.passIcon == true && this.state.confirmIcon == true) {
+                this.setState({ isSignDisable: true });
+                document.querySelectorAll("#email_icon_success")[0].style.display = "none";
+                document.querySelectorAll("#first_icon_success")[0].style.display = "none";
+                document.querySelectorAll("#last_icon_success")[0].style.display = "none";
+                document.querySelectorAll("#pass_icon_success")[0].style.display = "none";
+                document.querySelectorAll("#confirm_icon_success")[0].style.display = "none";
+                var obj = {};
+                obj['first_name'] = value.first_name;
+                obj['last_name'] = value.last_name;
+                obj['email'] = value.email;
+                obj['password'] = value.password;
+                obj['confirm_password'] = value.confirm_password;
+                obj['referral_code'] = value.referral_code;
+                obj['device_type'] = 0;
+                this.props.Signup(obj);
+            } else {
+                if (error['first_name'] !== undefined) {
+                    this.onChangeField(value.first_name, 'firstname')
+                }
+                if (error['last_name'] !== undefined) {
+                    this.onChangeField(value.last_name, 'lastname')
+                }
+                if (error['email'] !== undefined) {
+                    this.onChangeField(value.email, 'email')
+                }
+                if (error['password'] !== undefined) {
+                    this.onChangeField(value.password, 'password')
+                }
+                if (error['confirm_password'] !== undefined) {
+                    this.onChangeField(value.confirm_password, 'confirm_password')
+                }
+                //this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue")
+            }
+        });
     }
-  }
-
-  dispModal() {
-    this.props.history.push('/login');
-  }
-
-  openNotificationWithIcon(type, head, desc) {
-    notification[type]({
-      message: head,
-      description: desc,
-    });
-  };
-  handleEye(type) {
-    if (type == "new") {
-      if (this.state.PasswordtypeEye == "password") {
-        this.setState({ PasswordtypeEye: "text" })
-      } else {
-        this.setState({ PasswordtypeEye: "password" })
-      }
-    } else {
-      if (this.state.repeatEye == "password") {
-        this.setState({ repeatEye: "text" })
-      } else {
-        this.setState({ repeatEye: "password" })
-      }
-    }
-  }
-  handleSubmit(event) {
-    this.submit();
-    event.preventDefault();
-  }
-  render() {
-    let errors;
-    const { getFieldProps, getFieldError } = this.props.form;
-    var me = this;
-
-    return (
-      <LoginWrap>
-        <RowWrap >
-          <ColLeft sm={24} lg={12}>
-            <LeftWrap >
-              <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
-              <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
-            </LeftWrap>
-          </ColLeft>
-          <ColRight sm={24} lg={12}>
-            <Form_wrap>
-              <RightWrap className="wow fadeInDown" >
-                <Login_head>Sign Up</Login_head>
-                <Welcome>A Better Trading Experience is Moments Away</Welcome>
-                <SubHeading>Lets Get Started</SubHeading>
-                <form onSubmit={this.handleSubmit}>
-                  <Email_label>First Name*</Email_label>
-                  <div>
-                    <Full {...getFieldProps('first_name', {
-                      onChange(e) { me.onChangeField(e.target.value, "firstname") }, // have to write original onChange here if you need
-                      initialValue: me.props.init,
-                      rules: [{ type: "string", required: true }],
-                    })} />
-                    <FirstIconS id="first_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-                    <FirstIconF id="first_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-                  </div>
-                  <Full_req className="first_sign">{this.state.first_msg}</Full_req>
-
-                  <Ph_Label>Last Name*</Ph_Label>
-                  <div>
-                    <Full {...getFieldProps('last_name', {
-                      onChange(e) { me.onChangeField(e.target.value, "lastname") }, // have to write original onChange here if you need
-                      initialValue: me.props.init,
-                      rules: [{ type: "string", required: true }],
-                    })} />
-                    <LastIconS id="last_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-                    <LastIconF id="last_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-                  </div>
-                  <Full_req className="last_sign">{this.state.last_msg}</Full_req>
-
-                  <Ph_Label>Email Address*</Ph_Label>
-                  <div>
-                    <Email {...getFieldProps('email', {
-                      onChange(e) { me.onChangeField(e.target.value, "email") }, // have to write original onChange here if you need
-                      initialValue: me.props.init,
-                      rules: [{ type: "email", required: true }],
-                    })}
-                    />
-                    <EmailIconS id="email_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-                    <EmailIconF id="email_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-                  </div>
-                  <Email_req className="email_sign">{this.state.email_msg}</Email_req>
-
-                  <Ph_Label>Password*</Ph_Label>
-                  <div>
-                    <Password type={this.state.PasswordtypeEye} {...getFieldProps('password', {
-                      onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
-                      initialValue: me.props.init,
-                      rules: [{ type: "string", required: true, min: 8 }],
-                    })}
-                    />
-                    {
-                      (this.state.PasswordtypeEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "new")} />
+    onChangeField(value, field) {
+        if (field == "email") {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            var bool = re.test(String(value).toLowerCase());
+            if (value !== "" && value !== undefined) {
+                if (bool == true) {
+                    this.setState({ emailIcon: true })
+                    document.querySelector("#email_icon_success").style.display = "inline-block"
+                    document.querySelector("#email_icon_fail").style.display = "none"
+                    document.querySelectorAll(".email_sign")[0].style.display = "none";
+                } else {
+                    this.setState({ emailIcon: false })
+                    document.querySelector("#email_icon_fail").style.display = "inline-block"
+                    document.querySelector("#email_icon_success").style.display = "none"
+                    document.querySelectorAll(".email_sign")[0].style.display = "block";
+                    this.setState({ email_msg: "Email address is not valid" })
+                }
+            } else {
+                this.setState({ emailIcon: false })
+                document.querySelector("#email_icon_success").style.display = "none"
+                document.querySelector("#email_icon_fail").style.display = "inline-block"
+                document.querySelectorAll(".email_sign")[0].style.display = "block";
+                if (value == "" || value == undefined) {
+                    this.setState({ email_msg: "Email address is required" })
+                }
+            }
+        } else if (field == "firstname") {
+            var re = /^[a-zA-Z0-9]{2,15}$/;
+            var bool = re.test(value);
+            if (value !== "" && value !== undefined) {
+                if (bool == true) {
+                    var regexnum = /^[0-9]*$/;
+                    if (regexnum.test(value)) {
+                        this.setState({ firstIcon: false })
+                        document.querySelector("#first_icon_success").style.display = "none"
+                        document.querySelector("#first_icon_fail").style.display = "inline-block"
+                        document.querySelectorAll(".first_sign")[0].style.display = "block";
+                        this.setState({ first_msg: "*Only numbers are not allowed" })
+                    } else {
+                        this.setState({ firstIcon: true })
+                        document.querySelector("#first_icon_success").style.display = "inline-block"
+                        document.querySelector("#first_icon_fail").style.display = "none"
+                        document.querySelectorAll(".first_sign")[0].style.display = "none";
                     }
-                    <PassIconS id="pass_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-                    <PassIconF id="pass_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-                  </div>
-                  <Progress_bar type="line" size="small" percent={this.state.percent} strokeColor={this.state.stroke} />
-                  <Pass_req className="pass_sign">{this.state.pass_msg}</Pass_req>
-                  <Ph_Label>Confirm Password</Ph_Label>
-                  <div>
-                    <Password type={this.state.repeatEye} {...getFieldProps('confirm_password', {
-                      onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
-                      initialValue: me.props.init,
-                      rules: [{ type: "string", required: true, min: 8 }],
-                    })}
-                    />
-                    {
-                      (this.state.repeatEye == "password") ?
-                        <FAI src={Eye} onClick={this.handleEye.bind(this, "repeatEye")} />
-                        : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "repeatEye")} />
+                } else {
+                    this.setState({ firstIcon: false })
+                    document.querySelector("#first_icon_success").style.display = "none"
+                    document.querySelector("#first_icon_fail").style.display = "inline-block"
+                    document.querySelectorAll(".first_sign")[0].style.display = "block";
+                    this.setState({ first_msg: "*First Name must have min 2, max 15 characters and no special characters are allowed." })
+                }
+            } else {
+                this.setState({ firstIcon: false })
+                document.querySelector("#first_icon_success").style.display = "none"
+                document.querySelector("#first_icon_fail").style.display = "inline-block"
+                document.querySelectorAll(".first_sign")[0].style.display = "block";
+                if (value == "" || value == undefined) {
+                    this.setState({ first_msg: "First name is required." })
+                }
+            }
+        } else if (field == "lastname") {
+            var re = /^[a-zA-Z0-9]{2,15}$/;
+            var bool = re.test(value);
+            if (value !== "" && value !== undefined) {
+                if (bool == true) {
+                    var regexnum = /^[0-9]*$/;
+                    if (regexnum.test(value)) {
+                        this.setState({ lastIcon: false })
+                        document.querySelector("#last_icon_success").style.display = "none"
+                        document.querySelector("#last_icon_fail").style.display = "inline-block"
+                        document.querySelectorAll(".last_sign")[0].style.display = "block";
+                        this.setState({ last_msg: "*Only numbers are not allowed" })
+                    } else {
+                        this.setState({ lastIcon: true })
+                        document.querySelector("#last_icon_success").style.display = "inline-block";
+                        document.querySelector("#last_icon_fail").style.display = "none";
+                        document.querySelectorAll(".last_sign")[0].style.display = "none";
                     }
-                    <ConfirmIconS id="confirm_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-                    <ConfirmIconF id="confirm_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-                  </div>
-                  <ConfirmPass_req className="confirmPass_sign">{this.state.confirmPass_msg}</ConfirmPass_req>
-                  <Ph_Label>Referral Code</Ph_Label>
-                  <div>
-                    <Referral {...getFieldProps('referral_code', {
-                      onChange() {/* console.log("Hello How are You") */ }, // have to write original onChange here if you need
-                      initialValue: this.state.qP == "" ? me.props.init : this.state.qP,
-                      rules: [{ type: "string", required: false }],
-                    })}
-                    />
-                  </div>
-                  <input style={{ display: "none" }} type="submit" value="Submit" />
-                </form>
-                {(errors = getFieldError('required')) ? errors.join(',') : null}
-                <Button_login onClick={this.submit} disabled={this.state.isSignDisable}>Sign Up</Button_login>
-                <Sign>
-                  Already have an account? <Sign_a onClick={this.dispModal}>Login</Sign_a>
-                </Sign>
-              </RightWrap>
-            </Form_wrap>
-          </ColRight>
-        </RowWrap>
-      </LoginWrap>
-    );
-  }
+                } else {
+                    this.setState({ lastIcon: false })
+                    document.querySelector("#last_icon_success").style.display = "none";
+                    document.querySelector("#last_icon_fail").style.display = "inline-block";
+                    document.querySelectorAll(".last_sign")[0].style.display = "block";
+                    this.setState({ last_msg: "*Last Name must have min 2, max 15 characters and no special characters are allowed." })
+                }
+            } else {
+                this.setState({ lastIcon: false })
+                document.querySelector("#last_icon_success").style.display = "none";
+                document.querySelector("#last_icon_fail").style.display = "inline-block";
+                document.querySelectorAll(".last_sign")[0].style.display = "block";
+                if (value == "" || value == undefined) {
+                    this.setState({ last_msg: "Last Name is required" })
+                }
+            }
+        } else if (field == "password") {
+            var self = this;
+            var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,60}$/;
+            var bool = re.test(value);
+            var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
+            this.setState({ password: value }, () => {
+                if (self.state.confirm_password !== null && self.state.password !== null)
+                    self.onChangeField(self.state.confirm_password, "confirm_password")
+            });
+            if (numb.test(value) || letters.test(value)) { console.log("1 test"); this.setState({ stroke: "red", percent: 20 }) }
+            if (alphanum.test(value) && value.length < 6) { console.log("2 test"); this.setState({ stroke: "orange", percent: 40 }) }
+            if (alphanum.test(value) && value.length == 8) { console.log("3 test"); this.setState({ stroke: "yellow", percent: 60 }) }
+            if (re.test(value) && value.length > 8 && value.length < 60) { console.log("4 test"); this.setState({ stroke: "#7CFC00", percent: 80 }) }
+            if (re.test(value) && value.length > 10 && value.length < 60) { console.log("5 test"); this.setState({ stroke: "#008000", percent: 100 }) }
+            if (value.length > 60) { console.log("6 test"); this.setState({ stroke: "red", percent: 0 }) }
+            if (value !== "" && value !== undefined) {
+                if (bool == true) {
+                    this.setState({ passIcon: true })
+                    document.querySelector("#pass_icon_success").style.display = "inline-block"
+                    document.querySelector("#pass_icon_fail").style.display = "none"
+                    document.querySelectorAll(".pass_sign")[0].style.display = "none";
+                } else {
+                    this.setState({ passIcon: false })
+                    document.querySelector("#pass_icon_success").style.display = "none"
+                    document.querySelector("#pass_icon_fail").style.display = "inline-block"
+                    document.querySelectorAll(".pass_sign")[0].style.display = "block";
+                    this.setState({ pass_msg: "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters." })
+                }
+            } else {
+                this.setState({ passIcon: false, percent: 0 })
+                document.querySelector("#pass_icon_success").style.display = "none"
+                document.querySelector("#pass_icon_fail").style.display = "inline-block"
+                document.querySelectorAll(".pass_sign")[0].style.display = "block";
+                if (value == "" || value == undefined) {
+                    this.setState({ pass_msg: "Password is required" })
+                }
+            }
+        } else if (field == "confirm_password") {
+            var bool = this.state.password == value ? true : false
+            this.setState({ confirm_password: value })
+            if (value !== "" && value !== undefined) {
+                if (bool == true) {
+                    this.setState({ confirmIcon: true })
+                    document.querySelector("#confirm_icon_success").style.display = "inline-block"
+                    document.querySelector("#confirm_icon_fail").style.display = "none"
+                    document.querySelectorAll(".confirmPass_sign")[0].style.display = "none";
+                } else {
+                    this.setState({ confirmIcon: false })
+                    document.querySelector("#confirm_icon_success").style.display = "none"
+                    document.querySelector("#confirm_icon_fail").style.display = "inline-block"
+                    document.querySelectorAll(".confirmPass_sign")[0].style.display = "block";
+                    this.setState({ confirmPass_msg: "*Password doesn't match" })
+                }
+            } else {
+                this.setState({ confirmIcon: false })
+                document.querySelector("#confirm_icon_success").style.display = "none"
+                if (bool == false) {
+                    document.querySelector("#confirm_icon_fail").style.display = "none"
+                    document.querySelectorAll(".confirmPass_sign")[0].style.display = "block";
+                    this.setState({ confirmPass_msg: "*Password doesn't match" })
+                } else {
+                    document.querySelector("#confirm_icon_fail").style.display = "none"
+                    document.querySelectorAll(".confirmPass_sign")[0].style.display = "none";
+                }
+            }
+        }
+    }
+
+    dispModal() {
+        this.props.history.push('/login');
+    }
+
+    openNotificationWithIcon(type, head, desc) {
+        notification[type]({
+            message: head,
+            description: desc,
+            duration: 5
+        });
+    };
+    handleEye(type) {
+        if (type == "new") {
+            if (this.state.PasswordtypeEye == "password") {
+                this.setState({ PasswordtypeEye: "text" })
+            } else {
+                this.setState({ PasswordtypeEye: "password" })
+            }
+        } else {
+            if (this.state.repeatEye == "password") {
+                this.setState({ repeatEye: "text" })
+            } else {
+                this.setState({ repeatEye: "password" })
+            }
+        }
+    }
+    handleSubmit(event) {
+        this.submit();
+        event.preventDefault();
+    }
+    render() {
+        let errors;
+        const { getFieldProps, getFieldError } = this.props.form;
+        var me = this;
+
+        return (
+            <LoginWrap>
+                <RowWrap >
+                    <ColLeft sm={24} lg={12}>
+                        <LeftWrap >
+                            <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
+                            <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+                        </LeftWrap>
+                    </ColLeft>
+                    <ColRight sm={24} lg={12}>
+                        <Form_wrap>
+                            <RightWrap className="wow fadeInDown" >
+                                <Login_head>Sign Up</Login_head>
+                                <Welcome>A Better Trading Experience is Moments Away</Welcome>
+                                <SubHeading>Lets Get Started</SubHeading>
+                                <form onSubmit={this.handleSubmit}>
+                                    <Email_label>First Name*</Email_label>
+                                    <div>
+                                        <Full {...getFieldProps('first_name', {
+                                            onChange(e) { me.onChangeField(e.target.value, "firstname") }, // have to write original onChange here if you need
+                                            initialValue: me.props.init,
+                                            rules: [{ type: "string", required: true }],
+                                        })} />
+                                        <FirstIconS id="first_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                                        <FirstIconF id="first_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                                    </div>
+                                    <Full_req className="first_sign">{this.state.first_msg}</Full_req>
+
+                                    <Ph_Label>Last Name*</Ph_Label>
+                                    <div>
+                                        <Full {...getFieldProps('last_name', {
+                                            onChange(e) { me.onChangeField(e.target.value, "lastname") }, // have to write original onChange here if you need
+                                            initialValue: me.props.init,
+                                            rules: [{ type: "string", required: true }],
+                                        })} />
+                                        <LastIconS id="last_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                                        <LastIconF id="last_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                                    </div>
+                                    <Full_req className="last_sign">{this.state.last_msg}</Full_req>
+
+                                    <Ph_Label>Email Address*</Ph_Label>
+                                    <div>
+                                        <Email {...getFieldProps('email', {
+                                            onChange(e) { me.onChangeField(e.target.value, "email") }, // have to write original onChange here if you need
+                                            initialValue: me.props.init,
+                                            rules: [{ type: "email", required: true }],
+                                        })}
+                                        />
+                                        <EmailIconS id="email_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                                        <EmailIconF id="email_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                                    </div>
+                                    <Email_req className="email_sign">{this.state.email_msg}</Email_req>
+
+                                    <Ph_Label>Password*</Ph_Label>
+                                    <div>
+                                        <Password type={this.state.PasswordtypeEye} {...getFieldProps('password', {
+                                            onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
+                                            initialValue: me.props.init,
+                                            rules: [{ type: "string", required: true, min: 8 }],
+                                        })}
+                                        />
+                                        {
+                                            (this.state.PasswordtypeEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "new")} />
+                                        }
+                                        <PassIconS id="pass_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                                        <PassIconF id="pass_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                                    </div>
+                                    <Progress_bar type="line" size="small" percent={this.state.percent} strokeColor={this.state.stroke} />
+                                    <Pass_req className="pass_sign">{this.state.pass_msg}</Pass_req>
+                                    <Ph_Label>Confirm Password</Ph_Label>
+                                    <div>
+                                        <Password type={this.state.repeatEye} {...getFieldProps('confirm_password', {
+                                            onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
+                                            initialValue: me.props.init,
+                                            rules: [{ type: "string", required: true, min: 8 }],
+                                        })}
+                                        />
+                                        {
+                                            (this.state.repeatEye == "password") ?
+                                                <FAI src={Eye} onClick={this.handleEye.bind(this, "repeatEye")} />
+                                                : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "repeatEye")} />
+                                        }
+                                        <ConfirmIconS id="confirm_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                                        <ConfirmIconF id="confirm_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                                    </div>
+                                    <ConfirmPass_req className="confirmPass_sign">{this.state.confirmPass_msg}</ConfirmPass_req>
+                                    <Ph_Label>Referral Code</Ph_Label>
+                                    <div>
+                                        <Referral {...getFieldProps('referral_code', {
+                                            onChange() {/* console.log("Hello How are You") */ }, // have to write original onChange here if you need
+                                            initialValue: this.state.qP == "" ? me.props.init : this.state.qP,
+                                            rules: [{ type: "string", required: false }],
+                                        })}
+                                        />
+                                    </div>
+                                    <input style={{ display: "none" }} type="submit" value="Submit" />
+                                </form>
+                                {(errors = getFieldError('required')) ? errors.join(',') : null}
+                                <Button_login onClick={this.submit} disabled={this.state.isSignDisable}>Sign Up</Button_login>
+                                <Sign>
+                                    Already have an account? <Sign_a onClick={this.dispModal}>Login</Sign_a>
+                                </Sign>
+                            </RightWrap>
+                        </Form_wrap>
+                    </ColRight>
+                </RowWrap>
+            </LoginWrap>
+        );
+    }
 }
 
 function mapStateToProps(state) {
-  return ({
-    isSignUp: state.simpleReducer.isSignUp !== undefined ? state.simpleReducer.isSignUp : undefined
-  })
+    return ({
+        isSignUp: state.simpleReducer.isSignUp !== undefined ? state.simpleReducer.isSignUp : undefined
+    })
 }
 
 const mapDispatchToProps = dispatch => ({
-  Signup: (values) => dispatch(Signup(values)),
-  clearSignUp: () => dispatch(clearSignUp())
+    Signup: (values) => dispatch(Signup(values)),
+    clearSignUp: () => dispatch(clearSignUp())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(SignupForm))
