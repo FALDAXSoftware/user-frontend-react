@@ -98,7 +98,7 @@ export default class CountryPick extends Component {
         console.log(countrySelected);
         var states = CountryData.getStatesOfCountry(newPosition + 1);
 
-        this.setState({ city_selected: null, state_selected: null, country_selected: value, stateID: null, countryID: newPosition, states });
+        this.setState({ city_selected: "", state_selected: "", country_selected: value, stateID: null, countryID: newPosition, states });
 
         console.log(this.props)
         if (this.props.kyc == "kyc") {
@@ -119,7 +119,7 @@ export default class CountryPick extends Component {
 
         var cities = CountryData.getCitiesOfState(newPosition);
 
-        this.setState({ state_selected: value, city_selected: null, country_selected: country, stateID: newPosition, cities });
+        this.setState({ state_selected: value, city_selected: "", country_selected: country, stateID: newPosition, cities });
 
         this.props.onCountryChange(country, value, null, stateID, countryID);
     }
@@ -158,10 +158,13 @@ export default class CountryPick extends Component {
         let allCountries = CountryData.getAllCountries();
         this.setState({ countries: allCountries, fetching: false, callOnce: true });
         if (this.props.profileDetails.country_id !== undefined) {
-            console.log(allCountries, this.props)
-            var states = CountryData.getStatesOfCountry(this.props.profileDetails.country_id);
+            console.log("123456 Country", allCountries, this.props)
+            var country = Number(this.props.profileDetails.country_id) + 1;
+            var states = CountryData.getStatesOfCountry(country);
+            console.log("123456 States", states)
             this.setState({ states })
             if (this.props.profileDetails.state_id !== undefined) {
+                console.log("123456 cities", cities)
                 var cities = CountryData.getCitiesOfState(this.props.profileDetails.state_id);
                 this.setState({ cities })
             }
