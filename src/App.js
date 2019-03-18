@@ -80,6 +80,7 @@ class App extends Component {
     //             this.setState({theme: "dark"})
     //         }
     //     }
+    console.log("HELLO App")
   }
   render() {
 

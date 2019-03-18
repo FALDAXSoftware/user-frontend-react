@@ -13,7 +13,7 @@ import 'react-resizable/css/styles.css'
 /* import Tableofcoin from './TableofCoin'
 import WalletDetails from './WalletDetails' */
 import Loader from '../../../shared-components/Loader'
-import LoggedNavigation from '../../Navigations/LoggedNavigation';
+import Navigation from '../../Navigations/Navigation';
 import CommonFooter from "../../Landing/Footers/Footer_home";
 import Market from "./Market";
 import Limit from "./Limit";
@@ -142,6 +142,7 @@ class Trade extends Component {
             depthLoader: false,
             editState: false,
             saveState: true,
+            isFullscreen: false,
             layouts: JSON.parse(JSON.stringify(originalLayouts))
         };
         io = this.props.io;
@@ -154,6 +155,7 @@ class Trade extends Component {
         this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
         this.onLayoutChange = this.onLayoutChange.bind(this);
         this.goFullScreen = this.goFullScreen.bind(this);
+        this.exitFullScreen = this.exitFullScreen.bind(this);
         // this.handleLayoutResize = this.handleLayoutResize.bind(this);
     }
     componentWillReceiveProps(props, newProps) {
@@ -610,6 +612,9 @@ class Trade extends Component {
         } else if (element.msRequestFullscreen) { /* IE/Edge */
             element.msRequestFullscreen();
         }
+        this.setState({
+            isFullscreen: true
+        });
     }
     exitFullScreen() {
         if (document.exitFullscreen)
@@ -620,6 +625,10 @@ class Trade extends Component {
             document.webkitExitFullscreen();
         else if (document.msExitFullscreen)
             document.msExitFullscreen();
+
+        this.setState({
+            isFullscreen: false
+        });
     }
     render() {
         var self = this;
@@ -627,7 +636,12 @@ class Trade extends Component {
         const menu = (
             <Menu className="SettingMenu">
                 <Menu.Item onClick={this.editLayout.bind(this)} disabled={this.state.editState} key="1">Edit Layout</Menu.Item>
-                <Menu.Item key="2" onClick={this.goFullScreen}><Icon type="fullscreen" /> Full Screen</Menu.Item>
+                {self.state.isFullscreen &&
+                    <Menu.Item key="2" onClick={this.exitFullScreen}><Icon type="fullscreen-exit" />Exit Full Screen</Menu.Item>
+                }
+                {!self.state.isFullscreen &&
+                    <Menu.Item key="2" onClick={this.goFullScreen}><Icon type="fullscreen" /> Full Screen</Menu.Item>
+                }
                 <Menu.Item onClick={this.saveLayout.bind(this)} disabled={this.state.saveState} key="2">Save</Menu.Item>
             </Menu>
         );
@@ -636,7 +650,7 @@ class Trade extends Component {
                 <SettingDropdown overlay={menu} placement="bottomLeft" trigger={["click"]} overlayClassName="dropSettings">
                     <Icon type="setting" />
                 </SettingDropdown>
-                <LoggedNavigation />
+                <Navigation />
                 <Grey_wrap_trade>
                     {/* <Row>
                         <Col>
