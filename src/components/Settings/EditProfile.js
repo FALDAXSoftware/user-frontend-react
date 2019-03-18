@@ -29,7 +29,7 @@ const ProfileDiv = styled.div`
   margin:auto;
   width:95%;
   border-radius: 7px;
-  
+  min-height:1300px;
 `
 const TabsStyle = styled(Tabs)`
     & .ant-tabs-tab-active
@@ -41,14 +41,28 @@ const TabsStyle = styled(Tabs)`
         background-color:rgb(0, 170, 250);   
     }
 `
-
+var ActKey = "1";
 class Editprofile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            actKey: ActKey
+        },
+            this.handleChange = this.handleChange.bind(this);
+    }
+    componentDidMount() {
+        if (this.props.theme !== "") {
+            this.setState({
+                actKey: ActKey
+            });
         }
     }
-
+    handleChange(key) {
+        ActKey = key
+        this.setState({
+            actKey: ActKey
+        })
+    }
     render() {
         return (
             <div>
@@ -56,7 +70,7 @@ class Editprofile extends Component {
                 <Navigation />
                 <ProfileWrapper>
                     <ProfileDiv>
-                        <TabsStyle className="profile-tabs" defaultActiveKey="1" >
+                        <TabsStyle activeKey={this.state.actKey} onChange={this.handleChange} className="profile-tabs" >
                             <TabPane tab="Personal Details" key="1"><PersonalDetails {...this.props} /></TabPane>
                             <TabPane tab="Security" key="2" ><Passwordchange {...this.props} /></TabPane>
                             <TabPane tab="Account Settings" key="3"><Acc_settings {...this.props} /></TabPane>

@@ -124,7 +124,7 @@ class OrderTrade extends Component {
                                                     <td>{data.fill_price}</td>
                                                     <td>{data.order_type}</td>
                                                     <td>{date}</td>
-                                                    <td>{(data.quantity * data.fill_price).toFixed(4)}</td>
+                                                    <td>{self.props.pending == 2 ? (data.quantity * data.limit_price).toFixed(4) : (data.quantity * data.fill_price).toFixed(4)}</td>
                                                     {self.props.pending == 2 ? <th ><span onClick={() => self.cancelOrder(data.id, data.side, data.order_type)}><Icon style={{ color: "#279CED", fontSize: "18px" }
                                                     } type="close-circle" /></span></th> : ''}
                                                 </tr>

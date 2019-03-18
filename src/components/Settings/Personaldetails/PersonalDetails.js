@@ -566,13 +566,14 @@ class PersonalDetails extends Component {
                 this.setState({ lastmsg: "Last Name field is required" })
             }
         } else if (field == "country") {
+            console.log(value)
             if ((value.country !== undefined && value.country !== null) && (value.state !== null && value.state !== undefined) && (value.city !== null && value.city !== undefined)) {
                 this.setState({ countryIcon: true })
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
             } else {
                 this.setState({ countryIcon: false })
                 document.querySelectorAll(".country_msg")[0].style.display = "block";
-                this.setState({ countrymsg: "Country Field is required" })
+                this.setState({ countrymsg: "Country , State and City Field is required" })
             }
         } else if (field == "dob") {
             if ((value["day"]) && (value["month"]) && (value["year"])) {
