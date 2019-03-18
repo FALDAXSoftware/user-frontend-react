@@ -158,6 +158,7 @@ export default class CountryPick extends Component {
         let allCountries = CountryData.getAllCountries();
         this.setState({ countries: allCountries, fetching: false, callOnce: true });
         if (this.props.profileDetails.country_id !== undefined) {
+            console.log(allCountries, this.props)
             var states = CountryData.getStatesOfCountry(this.props.profileDetails.country_id);
             this.setState({ states })
             if (this.props.profileDetails.state_id !== undefined) {

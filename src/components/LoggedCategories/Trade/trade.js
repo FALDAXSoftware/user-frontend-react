@@ -13,7 +13,7 @@ import 'react-resizable/css/styles.css'
 /* import Tableofcoin from './TableofCoin'
 import WalletDetails from './WalletDetails' */
 import Loader from '../../../shared-components/Loader'
-import LoggedNavigation from '../../Navigations/LoggedNavigation';
+import Navigation from '../../Navigations/Navigation';
 import CommonFooter from "../../Landing/Footers/Footer_home";
 import Market from "./Market";
 import Limit from "./Limit";
@@ -636,7 +636,7 @@ class Trade extends Component {
                 <SettingDropdown overlay={menu} placement="bottomLeft" trigger={["click"]} overlayClassName="dropSettings">
                     <Icon type="setting" />
                 </SettingDropdown>
-                <LoggedNavigation />
+                <Navigation />
                 <Grey_wrap_trade>
                     {/* <Row>
                         <Col>
