@@ -167,7 +167,7 @@ class Afterlog extends Component {
             this.setState({ themeIcon: faMoon, iconTitle: "Change to Day Mode" })
             flag = true;
         }
-        this.props.actions.theme.darkTheme(flag);
+        /* this.props.actions.theme.darkTheme(flag); */
     }
     render() {
         const DropdownItems = (
