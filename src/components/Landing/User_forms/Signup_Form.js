@@ -425,9 +425,8 @@ class SignupForm extends Component {
       }
     } else if (field == "password") {
       var self = this;
-      var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,60}$/;
+      var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,60}$/;
       var bool = re.test(value);
-      console.log(bool)
       var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
       this.setState({ password: value }, () => {
         if (self.state.confirm_password !== null && self.state.password !== null)
@@ -461,11 +460,9 @@ class SignupForm extends Component {
           this.setState({ pass_msg: "Password is required" })
         }
       }
-
     } else if (field == "confirm_password") {
       var bool = this.state.password == value ? true : false
       this.setState({ confirm_password: value })
-      console.log(bool, this.state.password, value)
       if (value !== "" && value !== undefined) {
         if (bool == true) {
           this.setState({ confirmIcon: true })
@@ -502,6 +499,7 @@ class SignupForm extends Component {
     notification[type]({
       message: head,
       description: desc,
+      duration: 5
     });
   };
   handleEye(type) {

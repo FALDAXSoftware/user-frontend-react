@@ -477,7 +477,7 @@ class PersonalDetails extends Component {
                                 </Fourth_Row>
                                 <Sixth_Row>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
-                                        <FIAT>Currency*</FIAT>
+                                        <FIAT>Default Currency*</FIAT>
                                         <RadioGroup onChange={this.onChangeFiat} value={fields.fiat !== null ? fields.fiat : profileDetails.fiat}>
                                             <Radio value={"USD"}>USD</Radio>
                                             <Radio value={"INR"}>INR</Radio>
@@ -487,9 +487,8 @@ class PersonalDetails extends Component {
                                     </Col>
                                 </Sixth_Row>
                                 <Sixth_Row>
-                                    {console.log(this.state, this.props)}
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
-                                        <FIAT>Date Format*</FIAT>
+                                        <FIAT>Default Date Format*</FIAT>
                                         <RadioGroup onChange={this.onChangeFormat} value={fields.date_format !== null ? fields.date_format : profileDetails.date_format}>
                                             <Radio value={"MM/DD/YYYY"}>MM/DD/YYYY</Radio>
                                             <Radio value={"DD/MM/YYYY"}>DD/MM/YYYY</Radio>
@@ -503,7 +502,6 @@ class PersonalDetails extends Component {
                                         <Save type="primary" onClick={this.submitForm}>Save</Save>
                                     </Col>
                                 </Fifth_Row>
-
                             </Right_Col>
                             {(this.props.loader == true) ?
                                 <Spin_Ex className="Ex_spin">

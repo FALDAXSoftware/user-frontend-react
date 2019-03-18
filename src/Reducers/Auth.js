@@ -3,45 +3,41 @@ export default (state = {}, action) => {
   switch (action.type) {
 
     case 'LOGIN':
-    if(action.payload!==undefined)
-    {
+      if (action.payload !== undefined) {
         return {
           ...state,
           isLoggedIn: action.payload.token,
           errorStatus: action.payload
         }
       }
-    else
-    {
-      return {
-        ...state,
-        errorStatus:undefined
+      else {
+        return {
+          ...state,
+          errorStatus: undefined
+        }
       }
-    }
 
     case 'otpRequired':
-    return{
-      ...state,
-      isOtpRequired:true,
-      OtpParams:action.payload
-    }
+      return {
+        ...state,
+        isOtpRequired: true,
+        OtpParams: action.payload
+      }
 
     case 'ERROR':
-        /* console.log(action.payload) */
-        if(action.status=="login")
-        {
-          return{
-            ...state,
-            errorStatus:action.payload
-          }
+      /* console.log(action.payload) */
+      if (action.status == "login") {
+        return {
+          ...state,
+          errorStatus: action.payload
         }
-        else
-        {
-          return {
-            ...state,
-            isSignUp: action.payload
-          }
+      }
+      else {
+        return {
+          ...state,
+          isSignUp: action.payload
         }
+      }
 
     case 'LOGOUT':
       return {
@@ -64,7 +60,7 @@ export default (state = {}, action) => {
 
     case "EDITPROFILE":
       /* console.log("EDITPROFILE",action.payload) */
-      return { ...state , update:action.payload}
+      return { ...state, update: action.payload }
 
     case "ADDPROFILE":
       /* console.log("ADDPROFILE", action.payload) */
@@ -88,12 +84,16 @@ export default (state = {}, action) => {
       }
 
     case "RESET":
-      return { ...state }
-    
+      console.log(action.payload)
+      return {
+        ...state,
+        resetPass: action.payload
+      }
+
     case "CHANGEPASSWORD":
       return {
         ...state,
-        changePass:action.payload
+        changePass: action.payload
       }
 
     default:

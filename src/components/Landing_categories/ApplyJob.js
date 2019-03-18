@@ -167,6 +167,7 @@ class ApplyJob extends Component {
         notification[type]({
             message: head,
             description: desc,
+            duration: 5
         });
     };
     onSubmit() {

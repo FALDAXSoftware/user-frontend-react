@@ -294,7 +294,7 @@ class Login_Form extends React.Component {
   submit = () => {
     this.props.form.validateFields((error, value) => {
       // console.log(error, value, this.state)
-      if (error == null && this.state.emailIcon == true && this.state.passIcon == true && (this.state.isOtpRequired == true ? this.state.otpIcon == true : true)) { 
+      if (error == null && this.state.emailIcon == true && this.state.passIcon == true && (this.state.isOtpRequired == true ? this.state.otpIcon == true : true)) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
@@ -341,6 +341,7 @@ class Login_Form extends React.Component {
     notification[type]({
       message: head,
       description: desc,
+      duration: 5
     });
   };
 
@@ -446,10 +447,10 @@ class Login_Form extends React.Component {
   }
 
   componentDidMount() {
-    var query = this.props.location.search.split("=")
-    if (query[0] !== "" && this.props.location.pathname.includes("login")) {
+    var query = this.props.location.search
+    if (this.getUrlParameter("token")) {
       var queryObj = {};
-      queryObj["email_verify_token"] = query[1];
+      queryObj["email_verify_token"] = this.getUrlParameter("token");
       this.setState({ loader: true })
       fetch(API_URL + "/users/verify-user", {
         method: "post",
@@ -467,9 +468,9 @@ class Login_Form extends React.Component {
             this.openNotificationWithIcon('error', 'Not Verified', responseData.err)
         })
         .catch(error => { /* console.log(error) */ })
-
     }
   }
+
   componentWillReceiveProps(props, newProps) {
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
@@ -492,6 +493,20 @@ class Login_Form extends React.Component {
 
   _goToForgotPwd = () => {
     this.props.history.push('/forgot-password')
+  }
+  getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+      sURLVariables = sPageURL.split('&'),
+      sParameterName,
+      i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+      sParameterName = sURLVariables[i].split('=');
+
+      if (sParameterName[0] === sParam) {
+        return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+      }
+    }
   }
   render() {
     if (this.props.isLoggedIn) {

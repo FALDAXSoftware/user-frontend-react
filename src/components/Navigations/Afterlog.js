@@ -101,7 +101,7 @@ const AnchorName = styled.a`
   }
 `
 const Bell = styled.div`
-display:inline;
+    display:inline;
     font-size: 13px;
     padding-right: 10px;
     cursor:pointer;
@@ -153,7 +153,6 @@ class Afterlog extends Component {
             user_id: this.props.profileDetails.id,
             jwt_token: this.props.isLoggedIn
         }
-        console.log("hello Logout", this.props)
         this.props.actions.allCoins.allCoinsData();
         this.props.actions.wallet.walletData();
         this.props.actions.theme.darkTheme(false);
@@ -251,7 +250,6 @@ function mapDispatchToProps(dispatch) {
             wallet: bindActionCreators(walletData, dispatch),
             allCoins: bindActionCreators(allCoinsData, dispatch),
             //LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
-
         }
     };
 }

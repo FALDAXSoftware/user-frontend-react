@@ -4,7 +4,6 @@ import 'antd/dist/antd.css';
 import { Button, Modal } from 'antd';
 
 /* Styled-Components */
-
 export const Day_night_mode = styled.div`
     display:inline;
     font-size: 13px;
@@ -105,25 +104,17 @@ export default class Beforelog extends Component {
         this.props.openNav()
     }
     showComing = () => {
-        /*  console.log(" onClick={this.showComming}") */
-        this.setState({
-            comingSoon: true,
-        });
+        this.setState({ comingSoon: true });
     }
 
     handleComing = (e) => {
-        /* console.log(e); */
-        this.setState({
-            comingSoon: false,
-        });
+        this.setState({ comingSoon: false });
     }
 
     comingCancel = (e) => {
-        /* console.log(e); */
-        this.setState({
-            comingSoon: false,
-        });
+        this.setState({ comingSoon: false });
     }
+
     render() {
         return (
             <div>

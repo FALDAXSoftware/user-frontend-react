@@ -5,6 +5,7 @@ import { Row, Col, Layout, Menu, Modal, Button } from 'antd';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { globalVariables } from "../../Globals";
 
 /* Components */
 import Beforelog from "./BeforeLog"
@@ -77,45 +78,16 @@ const SubMenuNav = styled(SubMenu)`
         background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255));
     }
 `
-const Right_Col = styled(Col)`
-    background-image:url(${Wallpaper});
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    @media(max-width:1200px)
-    {
-        display:none;
-    }
-`
-const Logo_text_wrap = styled.div`
-    display: table-cell;
-    vertical-align: middle;
-    top: calc(50% - 96px);
-    position: absolute;
-    width: 100%;
-`
 const Faldaxlogo = styled.img`
     display: block;
     margin-left: auto;
     margin-right: auto;
     cursor:pointer;
 `
-const Faldaxtext = styled.img`
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:20px;
-    cursor:pointer;
-`
 /* Styled Components */
 const FALDAX = styled.img`
     margin-left: 15px;
     cursor:pointer;
-
     @media(max-width:1320px)
     {
         margin-top:3px;
@@ -221,19 +193,6 @@ const SideNav = styled.div`
         }
     }
 `
-const Login_SignUp = styled.a`
-    display:none !important;
-    div
-    {
-        list-style-type:none;
-        
-    }
-    @media(max-width:480px)
-    {
-        display:block !important;        
-        height:50px;
-    }
-`
 const LOG = styled.span`
     display:inline-block;
     width:50%;
@@ -294,7 +253,7 @@ const Right_div = styled.div`
     margin-left:auto;
     height:100%;
 `
-const NavLink = styled(Link)`
+const NavLink = styled.a`
     color: ${props => props.theme.mode == "dark" ? "white" : "black"} !important;
     &:hover{
         color:#1890ff !important;
@@ -343,7 +302,6 @@ class Navigation extends Component {
     }
 
     openNav() {
-        /* console.log('open nav'); */
         if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
             document.getElementById("mySidenav").style.width = "250px";
             document.getElementById("main").style.marginRight = "250px";
@@ -436,11 +394,11 @@ class Navigation extends Component {
         } */
         if (this.props.location.pathname == "/about-us") {
             this.setState({ selected: ['2'] })
-        } else if (this.props.location.pathname == "/contactus") {
+        } else if (this.props.location.pathname == "/contact-us") {
             this.setState({ selected: ['6'] })
         } else if (this.props.location.pathname == "/blogs") {
             this.setState({ selected: ['3'] })
-        } else if (this.props.location.pathname == "/addcoin") {
+        } else if (this.props.location.pathname == "/list-your-token") {
             this.setState({ selected: ['7'] })
         } else if (this.props.location.pathname.includes("news")) {
             this.setState({ selected: ['5'] })
@@ -466,27 +424,26 @@ class Navigation extends Component {
             <div>
                 <Header_main id="main">
                     <Logo>
-                        <Link to="/">
+                        <a href={globalVariables.WordpressSiteURL}>
                             <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
                             <FALDAX src={this.state.faldax} />
-                        </Link>
+                        </a>
                     </Logo>
                     <Menu_main
                         mode="horizontal"
                         defaultSelectedKeys={['1']}
                         selectedKeys={this.state.selected}
                     >
-                        <Menu_item key="1"><NavLink className="Nav_selected" to="/">HOME</NavLink></Menu_item>
+                        <Menu_item key="1"><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/`}>HOME</NavLink></Menu_item>
                         {/* <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item> */}
-                        <Menu_item key="2"><NavLink className="Nav_selected" to="/about-us">ABOUT</NavLink></Menu_item>
-                        <Menu_item key="3"><NavLink className="Nav_selected" to="/blogs">BLOG</NavLink></Menu_item>
-                        <Menu_item key="4" onClick={this.showComing}><NavLink className="Nav_selected" to="#">SECURITY</NavLink></Menu_item>
-                        <Menu_item key="5" ><NavLink className="Nav_selected" to="/news">NEWS</NavLink></Menu_item>
-                        <Menu_item key="6" ><NavLink className="Nav_selected" to="/contactus">CONTACT</NavLink></Menu_item>
-                        <Menu_item key="7" ><NavLink className="Nav_selected" to="/addcoin">LIST YOUR TOKEN</NavLink></Menu_item>
-                        <Menu_item key="8" onClick={this.showComing}><NavLink className="Nav_selected" to="#">EXCHANGE</NavLink></Menu_item>
+                        <Menu_item key="2"><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/about-us`}>ABOUT</NavLink></Menu_item>
+                        <Menu_item key="3"><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/blogs`}>BLOG</NavLink></Menu_item>
+                        <Menu_item key="4" onClick={this.showComing}><NavLink className="Nav_selected" href="#">SECURITY</NavLink></Menu_item>
+                        <Menu_item key="5" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/news`}>NEWS</NavLink></Menu_item>
+                        <Menu_item key="6" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/contact-us`}>CONTACT</NavLink></Menu_item>
+                        <Menu_item key="7" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/list-your-token`}>LIST YOUR TOKEN</NavLink></Menu_item>
+                        <Menu_item key="8" onClick={this.showComing}><NavLink className="Nav_selected" href="#">EXCHANGE</NavLink></Menu_item>
                     </Menu_main>
-                    {/* console.log(this.props) */}
                     <Right_div>
                         {this.props.isLoggedIn ? <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} /> :
                             <Beforelog {...this.props} dispModal={(pressed) => this.dispModal(pressed)} openNav={() => this.openNav()} />
@@ -499,29 +456,29 @@ class Navigation extends Component {
                             <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                             {!this.props.isLoggedIn &&
                                 <Fin_div>
-                                    <Fin_log onClick={() => this.props.history.push("/login")}><ButtonLog type="primary">Login</ButtonLog></Fin_log>
-                                    <Fin_sign onClick={() => this.props.history.push("/signup")}><ButtonLog type="primary">Signup</ButtonLog></Fin_sign>
+                                    <Fin_log onClick={() => this.props.history.push(`${globalVariables.WordpressSiteURL}/login`)}><ButtonLog type="primary">Login</ButtonLog></Fin_log>
+                                    <Fin_sign onClick={() => this.props.history.push(`${globalVariables.WordpressSiteURL}/signup`)}><ButtonLog type="primary">Signup</ButtonLog></Fin_sign>
                                 </Fin_div>
                             }
-                            <Link to="/">Home</Link>
+                            <Link to={globalVariables.WordpressSiteURL}>Home</Link>
                             {/* <a onClick={this.showComing} href="#">Features</a> */}
-                            <Link to="/about-us">About</Link>
-                            <Link to="/blogs">Blog</Link>
+                            <Link to={`${globalVariables.WordpressSiteURL}/about-us`}>About</Link>
+                            <Link to={`${globalVariables.WordpressSiteURL}/blogs`}>Blog</Link>
                             <a onClick={this.showComing} href="#">Security</a>
-                            <Link to="/news">News</Link>
-                            <Link to="/contactus">Contact</Link>
-                            <Link to="/addcoin">List Your Token</Link>
+                            <Link to={`${globalVariables.WordpressSiteURL}/news`}>News</Link>
+                            <Link to={`${globalVariables.WordpressSiteURL}/contact-us`}>Contact</Link>
+                            <Link to={`${globalVariables.WordpressSiteURL}/list-your-token`}>List Your Token</Link>
                             <a onClick={this.showComing} href="#">Exchange</a>
                             {this.props.isLoggedIn ? <CarLink to="/careers">Careers</CarLink> : ""}
                             {/* <Why> Language </Why> */}
                             <a className="DROP">
                                 <DropMenu mode="inline">
                                     <SubMenuNav key="sub1" title={'Information'}>
-                                        <Menu.Item key="9"><Link to="/about-us">About Us</Link></Menu.Item>
-                                        <Menu.Item key="10"><Link to="/contactus">Contact Us</Link></Menu.Item>
-                                        <Menu.Item key="11"><Link to="/mediacontact">Media Contact</Link></Menu.Item>
+                                        <Menu.Item key="9"><Link to={`${globalVariables.WordpressSiteURL}/about-us`}>About Us</Link></Menu.Item>
+                                        <Menu.Item key="10"><Link to={`${globalVariables.WordpressSiteURL}/contact-us`}>Contact Us</Link></Menu.Item>
+                                        <Menu.Item key="11"><Link to={`${globalVariables.WordpressSiteURL}/media-contact`}>Media Contact</Link></Menu.Item>
                                         {/* <Menu.Item key="12"><Link to="/blogs">Blog</Link></Menu.Item> */}
-                                        <Menu.Item key="13"><Link to="/fees">Fees</Link></Menu.Item>
+                                        <Menu.Item key="13"><Link to={`${globalVariables.WordpressSiteURL}/fee`}>Fees</Link></Menu.Item>
                                     </SubMenuNav>
                                 </DropMenu>
                             </a>
@@ -531,8 +488,8 @@ class Navigation extends Component {
                                         <Menu.Item key="9"><a onClick={this.showComing} href="#">Open a Ticket</a></Menu.Item>
                                         <Menu.Item key="10"><a onClick={this.showComing} href="#">FAQ</a></Menu.Item>
                                         <Menu.Item key="11"><a onClick={this.showComing} href="#">API Documentation</a></Menu.Item>
-                                        <Menu.Item key="12"><Link to="/addcoin">List Your Token</Link></Menu.Item>
-                                        <Menu.Item key="12"><Link to="/news">News</Link></Menu.Item>
+                                        <Menu.Item key="12"><Link to={`${globalVariables.WordpressSiteURL}/list-your-token`}>List Your Token</Link></Menu.Item>
+                                        <Menu.Item key="12"><Link to={`${globalVariables.WordpressSiteURL}/news`}>News</Link></Menu.Item>
                                     </SubMenuNav>
                                 </DropMenu>
                             </a>

@@ -173,10 +173,17 @@ export function resetAction(value) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                dispatch(resetData(true));
+                console.log(responseData)
+                if (responseData.status == 200) {
+                    console.log("200 RES")
+                    dispatch(resetData(responseData));
+                } else {
+                    console.log("500 RES")
+                    dispatch(resetData(responseData));
+                }
             })
             .catch(error => {
-                dispatch(forgotData(false));
+                console.log(error)
             })
     }
 }
@@ -184,6 +191,7 @@ export function resetAction(value) {
 export const resetData = (value) => dispatch => {
     dispatch({
         type: 'RESET',
+        payload: value
     })
 }
 export const errorAction = (error, status = "") => dispatch => {

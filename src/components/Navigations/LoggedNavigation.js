@@ -274,10 +274,10 @@ class LoggedNavigation extends Component {
         return (
             <Header_main id="main">
                 <Logo>
-                    <Link to="/">
+                    <a href={globalVariables.WordpressSiteURL}>
                         <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
                         <FALDAX src={this.state.faldax} />
-                    </Link>
+                    </a>
                 </Logo>
                 <Menu_main
                     mode="horizontal"

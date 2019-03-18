@@ -5,15 +5,15 @@ import styled from 'styled-components';
 import { Button, notification, Icon, Row, Col } from "antd";
 import { connect } from 'react-redux';
 import { Eye, ActiveEye } from '../../../Constants/images';
+import { globalVariables } from '../../../Globals';
 
 /* Components */
-import { resetAction } from '../../../Actions/Auth'
+import { resetAction, resetData } from '../../../Actions/Auth'
 import {
   Username, Email_label, Email_req, Pass_req, UserIconF, UserIconS
 } from "./Login_Form";
 
 /* Global Constants */
-
 /* Styled-Components */
 const Login_head = styled.div`
 font-size: 30px;
@@ -135,8 +135,7 @@ const HorImg = styled.img`
   }
 `
 const Form_wrap = styled.div`
-  padding-left:100px;
-  
+  padding-left:100px;  
   background-color:#f0f3f2;
   min-height: 100vh;
   display:flex;
@@ -193,7 +192,6 @@ class ResetPassword extends Component {
     if (field == "password") {
       password = value;
       this.setState({ password: value }, () => {
-        console.log(self.state.confPass)
         if (self.state.confPass !== null && self.state.password !== null) {
           self.onChangeField(self.state.confPass, "confirm_password")
         }
@@ -230,7 +228,6 @@ class ResetPassword extends Component {
     }
     if (field == "confirm_password") {
       var bool = this.state.password === value ? true : false
-      console.log(this.state.password, value)
       if (value !== "") {
         this.setState({ confPass: value })
         if (bool == true) {
@@ -253,6 +250,7 @@ class ResetPassword extends Component {
       }
     }
   }
+
   openNotificationWithProfile = (type, head, desc) => {
     notification[type]({
       message: head,
@@ -260,19 +258,42 @@ class ResetPassword extends Component {
       duration: 3,
     });
   };
+
+  _resetPassword = (value) => {
+    let url = this.props.location.search.split('=')
+
+    let form = {}
+    form['password'] = value.password;
+    form['reset_token'] = url[1];
+
+    fetch(`${globalVariables.API_URL}/users/resetPassword`, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form)
+    }).then(response => response.json())
+      .then((responseData) => {
+        if (responseData.status == 200) {
+          this.openNotificationWithProfile("success", "Success", "Password changed successfully..")
+          this.props.history.push("/login")
+        } else {
+          this.openNotificationWithProfile("error", "Error", responseData.err)
+        }
+      }).catch(error => {
+        this.openNotificationWithProfile("error", "Error", "are re error ai")
+      })
+  }
+
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      let url = this.props.location.search.split('=')
       if (error == null) {
         if (value.password == value.confirm_password) {
-          this.props.resetAction({ password: value.password, reset_token: url[1] });
+          this._resetPassword(value)
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
           document.querySelectorAll(".comp_pass")[0].style.display = "block";
           document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
-          this.setState({ pass_msg: null, confirmPass_msg: null }, () => {
-            this.props.history.push("/login")
-            this.openNotification();
-          });
+          this.setState({ pass_msg: null, confirmPass_msg: null });
         } else {
           document.querySelectorAll(".comp_pass")[0].style.display = "block";
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
@@ -318,11 +339,11 @@ class ResetPassword extends Component {
     }
   }
 
-  openNotification = () => {
-    notification.open({
-      message: 'Password Changed Successfully',
-      duration: 3,
-      icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
+  openNotificationWithIcon(type, head, desc) {
+    notification[type]({
+      message: head,
+      description: desc,
+      duration: 5
     });
   };
 
@@ -345,7 +366,7 @@ class ResetPassword extends Component {
             <Form_wrap  >
               <RightWrap className="wow fadeInDown" >
                 <Login_head>Reset Password</Login_head>
-                <Pass_label>Password</Pass_label>
+                <Pass_label>Password*</Pass_label>
                 <div>
                   <Full type={newEye} {...getFieldProps('password', {
                     onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
@@ -361,7 +382,7 @@ class ResetPassword extends Component {
                   <Full_req className="pass_msg">{this.state.pass_msg}</Full_req>
                 </div>
 
-                <Passconfirm_Label>Confirm Password</Passconfirm_Label>
+                <Passconfirm_Label>Confirm Password*</Passconfirm_Label>
                 <div>
                   <Password type={repeatEye} {...getFieldProps('confirm_password', {
                     onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
@@ -377,7 +398,6 @@ class ResetPassword extends Component {
                   <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                   <Password_req className="confirmchange_msg">{this.state.confirmPass_msg}</Password_req>
                 </div>
-
                 <Common_req className="comp_pass">{this.state.common_req}</Common_req>
                 {(errors = getFieldError('required')) ? errors.join(',') : null}
                 <ResetButton onClick={this.submit}>Reset</ResetButton>
@@ -390,14 +410,15 @@ class ResetPassword extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return ({
-    ...state
-  })
+const mapStateToProps = (state) => {
+  return {
+    ...state,
+    reset: state.simpleReducer.reset !== undefined ? state.simpleReducer.reset : false
+  }
 }
-
 const mapDispatchToProps = dispatch => ({
-  resetAction: (values) => dispatch(resetAction(values))
+  resetAction: (values) => dispatch(resetAction(values)),
+  resetData: (value) => dispatch(resetData(value))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(ResetPassword))
