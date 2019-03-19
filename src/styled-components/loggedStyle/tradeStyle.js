@@ -366,6 +366,9 @@ export const Balance_wrap = styled.div`
 export const Balance = styled.p`
     color:${props => props.theme.mode == "dark" ? "white" : ""}
 `
+export const Balance1 = styled(Balance)`
+    font-weight:600;
+`
 export const Total = styled.p`
     color:${props => props.theme.mode == "dark" ? "white" : ""}
 `

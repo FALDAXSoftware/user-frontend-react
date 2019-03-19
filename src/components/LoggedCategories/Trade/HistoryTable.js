@@ -59,7 +59,7 @@ class HistoryTable extends Component {
             self.updateData(data)
         });
     }
-    /* componentWillReceiveProps(props, newProps) {
+    componentWillReceiveProps(props, newProps) {
         var self = this;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -73,7 +73,7 @@ class HistoryTable extends Component {
                 })
             }
         }
-    } */
+    }
     historyData() {
         io = this.props.io
         this.props.hisFunc(true);
@@ -164,7 +164,7 @@ class HistoryTable extends Component {
                                     {this.state.data.length > 0 ? this.state.data.map((element, index) => (
                                         <tr>
                                             <SideType type={element.side} width="10%">{element.side}</SideType>
-                                            <td width="20%">{element.amount}</td>
+                                            <td width="20%">{element.amount.toFixed(4)}</td>
                                             {(index + 1) < me.state.data.length ? (element.fill_price > me.state.data[index + 1].fill_price)
                                                 ?
                                                 <td width="20%">{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td> :

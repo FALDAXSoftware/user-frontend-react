@@ -142,6 +142,11 @@ const Table_wrap = styled.div`
     margin-left: auto;
     margin-right: auto;
     border-radius: 5px;
+    & .ant-table-placeholder
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041421" : ""};
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
     @media(max-width:992px)
     {
         width:60%;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import {Row,Col} from 'antd';
+import { Row, Col } from 'antd';
 import { YearPicker, MonthPicker, DayPicker } from 'react-dropdown-date';
 import styled from "styled-components";
 
@@ -55,8 +55,8 @@ export default class Datepicker extends Component {
             let propFields
             if (this.props.profileDetails.dob !== null) {
                 propFields = this.props.profileDetails.dob.split("-");
-                if (fields["day"] == undefined && propFields[2] !== undefined) {fields["day"] = propFields[2] }
-                if (fields["month"] == undefined && propFields[1] !== undefined) {fields["month"] = propFields[1] }
+                if (fields["day"] == undefined && propFields[2] !== undefined) { fields["day"] = propFields[2] }
+                if (fields["month"] == undefined && propFields[1] !== undefined) { fields["month"] = propFields[1] }
                 if (fields["year"] == undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
 
             }
@@ -135,6 +135,7 @@ export default class Datepicker extends Component {
                     </Col>
                     <Col md={8} xl={8}>
                         <YearPicker
+                            placeholder={"Select Year"}
                             defaultValue={year ? year : ''}
                             // default is 1900
                             start={lowerDate}

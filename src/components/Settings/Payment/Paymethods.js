@@ -13,13 +13,18 @@ class Paymethods extends Component {
         super(props);
         this.state = {
             flag: false
-        };
+        }
+        this.addCard = this.addCard.bind(this);
+    }
+    addCard() {
+        this.setState({ flag: true })
     }
     render() {
+
         return (
             <Payment_wrap>
                 <PayHead>Bank Accounts</PayHead>
-                {this.state.flag == true
+                {this.state.flag == false
                     ?
                     <PayForm>
                         <Bank>
@@ -37,7 +42,7 @@ class Paymethods extends Component {
                         <Button_payment>
                             <Button_sub>
                                 <Button_cancel>cancel</Button_cancel>
-                                <Button_add>Add</Button_add>
+                                <Button_add onClick={this.addCard} >Add</Button_add>
                             </Button_sub>
                         </Button_payment>
                     </PayForm>

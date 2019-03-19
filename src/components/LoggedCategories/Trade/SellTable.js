@@ -187,7 +187,7 @@ class SellTable extends Component {
     render() {
         return (
             <div>
-                <BBC2>SELLING {this.props.cryptoPair.crypto}</BBC2>
+                <BBC2>SELLING {this.props.crypto}</BBC2>
                 <Total_BTC>Total:  {this.state.lastsum && this.state.lastsum.toFixed(4)} {this.props.cryptoPair.currency}</Total_BTC>
                 <Buy_table>
                     <History_wrap1>
