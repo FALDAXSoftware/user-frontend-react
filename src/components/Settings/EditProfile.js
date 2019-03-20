@@ -25,7 +25,7 @@ const ProfileWrapper = styled.div`
   background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
 `
 const ProfileDiv = styled.div`
-    background-color: ${props => props.theme.mode == "dark" ? "#041422" : "#ffffff"};
+background-color: ${props => props.theme.mode == "dark" ? "#041422" : "#ffffff"};
   margin:auto;
   width:95%;
   border-radius: 7px;
@@ -76,7 +76,7 @@ class Editprofile extends Component {
                             <TabPane tab="Account Settings" key="3"><Acc_settings {...this.props} /></TabPane>
                             <TabPane tab="Identity Verification" key="4"><KYC /></TabPane>
                             <TabPane tab="Referral" key="5"><Referral {...this.props} /></TabPane>
-                            {/* <TabPane tab="Payment Methods" key="6"><Paymethods/></TabPane> */}
+                            {/* <TabPane tab="Payment Methods" key="6"><Paymethods /></TabPane> */}
                         </TabsStyle>
                     </ProfileDiv>
                 </ProfileWrapper>

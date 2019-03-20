@@ -412,12 +412,12 @@ class PasswordChange extends Component {
             var bool = re.test(value);
             var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
             if (numb.test(value) || letters.test(value)) { this.setState({ stroke: "red", percent: 20 }) }
-            if (alphanum.test(value) && value.length < 60) { this.setState({ stroke: "orange", percent: 40 }) }
-            if (alphanum.test(value) && value.length == 6) { this.setState({ stroke: "yellow", percent: 60 }) }
-            if (re.test(value) && value.length == 6) { this.setState({ stroke: "#7CFC00", percent: 80 }) }
-            if (re.test(value) && value.length >= 10 && value.length < 60) { this.setState({ stroke: "#008000", percent: 100 }) }
-            if (re.test(value) && value.length > 60) { this.setState({ stroke: "red", percent: 0 }) }
-            if (value !== "") {
+            if (alphanum.test(value) && value.length < 6) { this.setState({ stroke: "orange", percent: 40 }) }
+            if (alphanum.test(value) && value.length == 8) { this.setState({ stroke: "yellow", percent: 60 }) }
+            if (re.test(value) && value.length > 8 && value.length < 60) { this.setState({ stroke: "#7CFC00", percent: 80 }) }
+            if (re.test(value) && value.length > 10 && value.length < 60) { this.setState({ stroke: "#008000", percent: 100 }) }
+            if (value.length > 60) { this.setState({ stroke: "red", percent: 0 }) }
+            if (value !== "" && value !== undefined) {
                 if (bool == true) {
                     this.setState({ newpassIcon: true, password: value })
                     document.querySelector("#newchange_icon_success").style.display = "inline-block"
@@ -428,7 +428,7 @@ class PasswordChange extends Component {
                     document.querySelector("#newchange_icon_success").style.display = "none"
                     document.querySelector("#newchange_icon_fail").style.display = "inline-block"
                     document.querySelectorAll(".newchange_msg")[0].style.display = "block";
-                    this.setState({ new_msg: "Your password contain at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
+                    this.setState({ new_msg: "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters." })
                 }
             } else {
                 this.setState({ newpassIcon: false, percent: 0 })

@@ -8,7 +8,7 @@ export const Payment_wrap = styled.div`
 export const PayHead = styled.p`
     font-size: 20px;
     font-family: "Open Sans";
-    color: rgb( 80, 80, 80 );
+    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
     font-weight:600;
 `
 export const PayForm = styled.div`
@@ -70,7 +70,7 @@ export const Gap = styled.div`
 `
 export const Top = styled.div`
     height:45px;
-    background-color:#f5f6fa;
+    background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
     border-radius:5px;
     padding-left:55px;
     padding-right:15px;
@@ -101,4 +101,9 @@ export const Body_card = styled.div`
     justify-content: center;
     align-items: center;
 `
-export const Body_center = styled.div``
+export const Body_center = styled.div`
+>span
+{
+    color:${props => props.theme.mode == "dark" ? "white" : ""}
+}
+`
