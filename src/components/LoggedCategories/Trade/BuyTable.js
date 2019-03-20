@@ -164,7 +164,7 @@ class BuyTable extends Component {
             }
         }
 
-        for (let index = row.length - 1; index >= 0; index--) {
+        for (let index = 0; index < row.length; index++) {
             const element = row[index];
             sum += element.amount * element.bid;
             row[index]["total"] = sum;

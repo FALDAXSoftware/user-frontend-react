@@ -99,3 +99,4 @@ export const BlogIcon = amazon_Bucket + 'assets/LandingCat/Blog/msg-icon.png';
 export const AppStore = amazon_Bucket + 'assets/Homepage/appstore_icon.png';
 export const PlayStore = amazon_Bucket + 'assets/Homepage/playstore_icon.png';
 export const DefaultBlog = amazon_Bucket + 'blog/default_blog.png';
+export const ConversionBackground = amazon_Bucket + 'assets/conversion-background.png';
