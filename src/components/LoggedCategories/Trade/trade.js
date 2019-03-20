@@ -143,7 +143,8 @@ class Trade extends Component {
             editState: false,
             saveState: true,
             isFullscreen: false,
-            layouts: JSON.parse(JSON.stringify(originalLayouts))
+            layouts: JSON.parse(JSON.stringify(originalLayouts)),
+            MLS: ""
         };
         io = this.props.io;
         // io.sails.url = API_URL;
@@ -156,6 +157,7 @@ class Trade extends Component {
         this.onLayoutChange = this.onLayoutChange.bind(this);
         this.goFullScreen = this.goFullScreen.bind(this);
         this.exitFullScreen = this.exitFullScreen.bind(this);
+        this.callback = this.callback.bind(this);
         // this.handleLayoutResize = this.handleLayoutResize.bind(this);
     }
     componentWillReceiveProps(props, newProps) {
@@ -268,6 +270,10 @@ class Trade extends Component {
     }
     class = "tbl-content"
     callback(key) {
+        console.log(key);
+        this.setState({
+            MLS: key
+        });
     }
     handleChange(value) {
         console.log(value); // { key: "lucy", label: "Lucy (101)" }
@@ -740,9 +746,9 @@ class Trade extends Component {
                                         }
                                         <Right_div1>
                                             <Tabs_right defaultActiveKey="1" onChange={this.callback} className="tardeActionCard">
-                                                <TabPane tab="Market" key="1"><Market userBal={this.state.userBal} /></TabPane>
-                                                <TabPane tab="Limit" key="2"><Limit userBal={this.state.userBal} /></TabPane>
-                                                <TabPane tab="Stop-Limit" key="3"><StopLimit userBal={this.state.userBal} /></TabPane>
+                                                <TabPane tab="Market" key="1"><Market MLS={this.state.MLS} userBal={this.state.userBal} /></TabPane>
+                                                <TabPane tab="Limit" key="2"><Limit MLS={this.state.MLS} userBal={this.state.userBal} /></TabPane>
+                                                <TabPane tab="Stop-Limit" key="3"><StopLimit MLS={this.state.MLS} userBal={this.state.userBal} /></TabPane>
                                             </Tabs_right>
                                         </Right_div1>
 
@@ -755,7 +761,7 @@ class Trade extends Component {
                                             <Loader color="#1990ff" width="50" height='50' />
                                             : ""
                                         }
-                                        <BuySell buySellLoader={(loader) => { this.buySellLoaderFunc(loader) }} io={io} height={this.state.buySellOrderHeight} />
+                                        <BuySell crypto={this.state.crypto} currency={this.state.currency} buySellLoader={(loader) => { this.buySellLoaderFunc(loader) }} io={io} height={this.state.buySellOrderHeight} />
                                     </div>
                                 </div>
                                 <div key="depthChart" >

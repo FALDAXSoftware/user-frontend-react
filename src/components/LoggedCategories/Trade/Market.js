@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import 'antd/dist/antd.css';
 import { Row, Col, Checkbox, Radio, notification, Spin } from 'antd';
-import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Total, Check_wrap, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "../../../styled-components/loggedStyle/tradeStyle";
+import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Balance1, Total, Check_wrap, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "../../../styled-components/loggedStyle/tradeStyle";
 import {
     Spin_single
 } from "../../../styled-components/loggedStyle/dashStyle"
@@ -31,7 +31,7 @@ class Market extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.validator = new SimpleReactValidator({
             gtzero: {  // name the rule
-                message: 'value must be greater than zero',
+                message: 'Value must be greater than zero',
                 rule: (val, params, validator) => {
                     if (val > 0) {
                         return true;
@@ -45,7 +45,11 @@ class Market extends Component {
     }
 
     componentWillReceiveProps(props, newProps) {
-        this.setState({ userBalFees: props.userBal.fees })
+        console.log("CWRP market", this.state)
+        this.setState({
+            userBalFees: props.userBal.fees, amount: 0,
+            total: 0,
+        })
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
                 this.setState({ crypto: props.cryptoPair.crypto })
@@ -54,6 +58,9 @@ class Market extends Component {
                 this.setState({ currency: props.cryptoPair.currency })
             }
         }
+    }
+    componentDidMount() {
+        console.log("Market");
     }
     onChange(e) {
         var self = this;
@@ -154,7 +161,7 @@ class Market extends Component {
                                 <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
-                                            <Balance>Balance</Balance>
+                                            <Balance1>Balance</Balance1>
                                         </Col>
                                         <Col span={12}>
                                             <Balance>{this.props.userBal.currency[0].placed_balance.toFixed(2)} B</Balance>
@@ -164,7 +171,7 @@ class Market extends Component {
                                 <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
-                                            <Total>Total</Total>
+                                            <Balance1>Total</Balance1>
                                         </Col>
                                         <Col span={12}>
                                             <Total>{this.props.userBal.currency[0].balance.toFixed(2)} B</Total>
@@ -174,7 +181,7 @@ class Market extends Component {
                                 <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
-                                            <Total>In orders</Total>
+                                            <Balance1>In orders</Balance1>
                                         </Col>
                                         <Col span={12}>
                                             <Total>{(this.props.userBal.currency[0].balance - this.props.userBal.currency[0].placed_balance).toFixed(2)} B</Total>
@@ -184,7 +191,7 @@ class Market extends Component {
                                 <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
-                                            <Total>Best ask</Total>
+                                            <Balance1>Best ask</Balance1>
                                         </Col>
                                         <Col span={12}>
                                             <Total>{this.props.userBal.buyPay.toFixed(2)} B</Total>
@@ -198,7 +205,7 @@ class Market extends Component {
                                 <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
-                                            <Balance>Balance</Balance>
+                                            <Balance1>Balance</Balance1>
                                         </Col>
                                         <Col span={12}>
                                             <Balance>{this.props.userBal.crypto[0].placed_balance.toFixed(2)} B</Balance>
@@ -208,7 +215,7 @@ class Market extends Component {
                                 <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
-                                            <Total>Total</Total>
+                                            <Balance1>Total</Balance1>
                                         </Col>
                                         <Col span={12}>
                                             <Total>{this.props.userBal.crypto[0].balance.toFixed(2)} B</Total>
@@ -218,7 +225,7 @@ class Market extends Component {
                                 <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
-                                            <Total>In orders</Total>
+                                            <Balance1>In orders</Balance1>
                                         </Col>
                                         <Col span={12}>
                                             <Total>{(this.props.userBal.crypto[0].balance - this.props.userBal.crypto[0].placed_balance).toFixed(2)} B</Total>
@@ -228,7 +235,7 @@ class Market extends Component {
                                 <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
-                                            <Total>Best ask</Total>
+                                            <Balance1>Best ask</Balance1>
                                         </Col>
                                         <Col span={12}>
                                             <Total>{this.props.userBal.sellPay.toFixed(2)} B</Total>
@@ -242,7 +249,7 @@ class Market extends Component {
                     <Label>Amount</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
                         <AMTinput type="number" addonAfter={this.state.crypto} value={this.state.amount} name="amount" onChange={this.onChange} />
-                        {this.validator.message('amount', this.state.amount, 'required|numeric|gtzero')}
+                        {this.validator.message('Amount', this.state.amount, 'required|numeric|gtzero')}
                     </Total_wrap>
                 </ETH_wrap>
                 <BTC_wrap>
@@ -257,7 +264,7 @@ class Market extends Component {
                             <Row>
                                 <Col xs={15} sm={12}>
                                     <div>
-                                        <Willpay>you will approximately pay</Willpay>
+                                        <Willpay>You will approximately pay</Willpay>
                                     </div>
                                 </Col>
                                 <Col xs={9} sm={12}>
@@ -288,7 +295,7 @@ class Market extends Component {
                             <Row>
                                 <Col xs={15} sm={12}>
                                     <div>
-                                        <Willpay>you will approximately receive</Willpay>
+                                        <Willpay>You will approximately receive</Willpay>
                                     </div>
                                 </Col>
                                 <Col xs={9} sm={12}>

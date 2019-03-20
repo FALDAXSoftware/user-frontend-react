@@ -122,6 +122,10 @@ const Button_login = styled(Button)`
     margin-top:30px;
     margin-bottom:0px;
   }
+  @media(max-width:400px)
+  {
+    width:285px;
+  }
 `
 const Link_wrap = styled.div`
   margin-top:50px;

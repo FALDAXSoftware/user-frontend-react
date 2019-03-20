@@ -199,7 +199,7 @@ class BuyTable extends Component {
     render() {
         return (
             <div>
-                <BBC>BUYING {this.props.cryptoPair.crypto}</BBC>
+                <BBC>BUYING {this.props.crypto}</BBC>
                 <Total_BTC>Total: {this.state.lastsum} {this.props.cryptoPair.crypto}</Total_BTC>
                 <Buy_table>
                     <History_wrap1>
