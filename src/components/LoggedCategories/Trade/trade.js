@@ -143,6 +143,7 @@ class Trade extends Component {
             editState: false,
             saveState: true,
             isFullscreen: false,
+            prevlayout: null,
             layouts: JSON.parse(JSON.stringify(originalLayouts)),
             MLS: ""
         };
@@ -503,7 +504,7 @@ class Trade extends Component {
         let self = this;
         let instrumentTableHeight, orderHistoryTableHeight, myOrderTableHeight, buySellOrderHeight, depthChartHeight;
         console.log(currentLayout);
-
+        this.setState({ prevlayout: this.state.layouts })
         for (let index = 0; index < currentLayout.length; index++) {
             const element = currentLayout[index];
             if (element.i == "instruments") {
@@ -597,7 +598,14 @@ class Trade extends Component {
             this.setState({ editState: false });
     }
     clearLayout() {
+        console.log(this.state.layouts, this.state.prevlayout)
+        if (this.state.saveState == false) {
+            this.setState({ saveState: true, editState: false, layouts: this.state.prevlayout });
 
+        }
+        else {
+            this.setState({ saveState: false });
+        }
     }
     saveLayout() {
         if (this.state.saveState == false) {
