@@ -34,7 +34,7 @@ class StopLimit extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.validator = new SimpleReactValidator({
             gtzero: {  // name the rule
-                message: 'Value must be greater than zero',
+                message: 'Amount must be greater than zero',
                 rule: (val, params, validator) => {
                     if (val > 0) {
                         return true;

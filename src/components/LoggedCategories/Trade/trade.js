@@ -596,6 +596,9 @@ class Trade extends Component {
         else
             this.setState({ editState: false });
     }
+    clearLayout() {
+
+    }
     saveLayout() {
         if (this.state.saveState == false) {
             this.setState({ saveState: true, editState: false });
@@ -642,12 +645,15 @@ class Trade extends Component {
         const menu = (
             <Menu className="SettingMenu">
                 <Menu.Item onClick={this.editLayout.bind(this)} disabled={this.state.editState} key="1">Edit Layout</Menu.Item>
+
                 {self.state.isFullscreen &&
                     <Menu.Item key="2" onClick={this.exitFullScreen}><Icon type="fullscreen-exit" />Exit Full Screen</Menu.Item>
                 }
                 {!self.state.isFullscreen &&
                     <Menu.Item key="2" onClick={this.goFullScreen}><Icon type="fullscreen" /> Full Screen</Menu.Item>
                 }
+                {console.log("----->", this.state.saveState)}
+                <Menu.Item onClick={this.clearLayout.bind(this)} disabled={this.state.saveState} key="3">Clear Layout</Menu.Item>
                 <Menu.Item onClick={this.saveLayout.bind(this)} disabled={this.state.saveState} key="2">Save</Menu.Item>
             </Menu>
         );
