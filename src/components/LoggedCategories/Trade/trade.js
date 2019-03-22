@@ -143,6 +143,7 @@ class Trade extends Component {
             editState: false,
             saveState: true,
             isFullscreen: false,
+            prevlayout: JSON.parse(JSON.stringify(originalLayouts)),
             layouts: JSON.parse(JSON.stringify(originalLayouts)),
             MLS: ""
         };
@@ -503,7 +504,6 @@ class Trade extends Component {
         let self = this;
         let instrumentTableHeight, orderHistoryTableHeight, myOrderTableHeight, buySellOrderHeight, depthChartHeight;
         console.log(currentLayout);
-
         for (let index = 0; index < currentLayout.length; index++) {
             const element = currentLayout[index];
             if (element.i == "instruments") {
@@ -596,9 +596,19 @@ class Trade extends Component {
         else
             this.setState({ editState: false });
     }
+    clearLayout() {
+        console.log(this.state.layouts, this.state.prevlayout)
+        if (this.state.saveState == false) {
+            this.setState({ saveState: true, editState: false, layouts: this.state.prevlayout });
+
+        }
+        else {
+            this.setState({ saveState: false });
+        }
+    }
     saveLayout() {
         if (this.state.saveState == false) {
-            this.setState({ saveState: true, editState: false });
+            this.setState({ saveState: true, editState: false, prevlayout: this.state.layouts });
             this.saveToLS("layouts", this.state.layouts);
         }
         else {
@@ -642,12 +652,15 @@ class Trade extends Component {
         const menu = (
             <Menu className="SettingMenu">
                 <Menu.Item onClick={this.editLayout.bind(this)} disabled={this.state.editState} key="1">Edit Layout</Menu.Item>
+
                 {self.state.isFullscreen &&
                     <Menu.Item key="2" onClick={this.exitFullScreen}><Icon type="fullscreen-exit" />Exit Full Screen</Menu.Item>
                 }
                 {!self.state.isFullscreen &&
                     <Menu.Item key="2" onClick={this.goFullScreen}><Icon type="fullscreen" /> Full Screen</Menu.Item>
                 }
+                {console.log("----->", this.state.saveState)}
+                <Menu.Item onClick={this.clearLayout.bind(this)} disabled={this.state.saveState} key="3">Clear Layout</Menu.Item>
                 <Menu.Item onClick={this.saveLayout.bind(this)} disabled={this.state.saveState} key="2">Save</Menu.Item>
             </Menu>
         );
