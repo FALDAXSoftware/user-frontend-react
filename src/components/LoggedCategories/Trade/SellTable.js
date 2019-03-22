@@ -154,7 +154,7 @@ class SellTable extends Component {
             }
         }
 
-        for (let index = 0; index < row.length; index++) {
+        for (let index = row.length - 1; index >= 0; index--) {
             const element = row[index];
             sum += element.amount * element.ask;
             row[index]["total"] = sum;
