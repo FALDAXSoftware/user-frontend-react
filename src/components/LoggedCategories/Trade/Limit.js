@@ -48,7 +48,11 @@ class Limit extends Component {
             amount: 0,
             total: 0,
             limit_price: 0,
-            userBalFees: this.props.userBal.fees
+            userBalFees: this.props.userBal.fees,
+            buyEstPrice: 0,
+            sellEstPrice: 0,
+            buyPayAmt: 0,
+            sellPayAmt: 0
         });
     }
     componentWillReceiveProps(props, newProps) {
@@ -170,7 +174,7 @@ class Limit extends Component {
                                             <Balance1>Balance</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Balance>{this.props.userBal.currency[0].placed_balance.toFixed(2)} B</Balance>
+                                            <Balance>{this.props.userBal.currency[0].placed_balance.toFixed(2)} {this.state.currency}</Balance>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -180,7 +184,7 @@ class Limit extends Component {
                                             <Balance1>Total</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.currency[0].balance.toFixed(2)} B</Total>
+                                            <Total>{this.props.userBal.currency[0].balance.toFixed(2)} {this.state.currency}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -190,7 +194,7 @@ class Limit extends Component {
                                             <Balance1>In orders</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{(this.props.userBal.currency[0].balance - this.props.userBal.currency[0].placed_balance).toFixed(2)} B</Total>
+                                            <Total>{(this.props.userBal.currency[0].balance - this.props.userBal.currency[0].placed_balance).toFixed(2)} {this.state.currency}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -200,7 +204,7 @@ class Limit extends Component {
                                             <Balance1>Best ask</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.buyPay.toFixed(2)} B</Total>
+                                            <Total>{this.props.userBal.buyPay.toFixed(2)} {this.state.currency}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -214,7 +218,7 @@ class Limit extends Component {
                                             <Balance1>Balance</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Balance>{this.props.userBal.crypto[0].placed_balance.toFixed(2)} B</Balance>
+                                            <Balance>{this.props.userBal.crypto[0].placed_balance.toFixed(2)} {this.state.crypto}</Balance>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -224,7 +228,7 @@ class Limit extends Component {
                                             <Balance1>Total</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.crypto[0].balance.toFixed(2)} B</Total>
+                                            <Total>{this.props.userBal.crypto[0].balance.toFixed(2)} {this.state.crypto}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -234,7 +238,7 @@ class Limit extends Component {
                                             <Balance1>In orders</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{(this.props.userBal.crypto[0].balance - this.props.userBal.crypto[0].placed_balance).toFixed(2)} B</Total>
+                                            <Total>{(this.props.userBal.crypto[0].balance - this.props.userBal.crypto[0].placed_balance).toFixed(2)} {this.state.crypto}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -244,7 +248,7 @@ class Limit extends Component {
                                             <Balance1>Best ask</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.sellPay.toFixed(2)} B</Total>
+                                            <Total>{this.props.userBal.sellPay.toFixed(2)} {this.state.crypto}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -268,7 +272,7 @@ class Limit extends Component {
                 <BTC_wrap>
                     <Label>Total</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput type="number" addonAfter={this.state.currency} value={this.state.total} name="total" readOnly="true" />
+                        <Totinput type="number" addonAfter={this.state.currency} value={this.state.toFixed(4)} name="total" readOnly="true" />
                     </Total_wrap>
                 </BTC_wrap>
                 {Object.keys(this.props.userBal).length > 0 ?
@@ -282,7 +286,7 @@ class Limit extends Component {
                                 </Col>
                                 <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{buyPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
+                                        <Willpay2>{buyPayAmt.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
@@ -292,14 +296,14 @@ class Limit extends Component {
                                         Estimated Best Price
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {buyPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {buyPayAmt.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                     {console.log(userBalFees)}
                                     <Col xs={15} sm={12}>
                                         Fee {userBalFees} %
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {buyEstPrice} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {buyEstPrice.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                 </Row>
                             </Esti>
@@ -314,7 +318,7 @@ class Limit extends Component {
                                 </Col>
                                 <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{sellPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
+                                        <Willpay2>{sellPayAmt.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
@@ -324,20 +328,20 @@ class Limit extends Component {
                                         Estimated Best Price
                             </Col>
                                     <Col xs={9} sm={12}>
-                                        {sellPayAmt} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {sellPayAmt.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                     {console.log(userBalFees)}
                                     <Col xs={15} sm={12}>
                                         Fee {userBalFees} %
                             </Col>
                                     <Col xs={9} sm={12}>
-                                        {sellEstPrice} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {sellEstPrice.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
                                     </Col>
                                 </Row>
                             </Esti>
                         </Pay> : ""}
                 <Button_wrap>
-                    <ButtonETH side={this.state.side} onClick={this.onSubmit}>{this.state.side.toUpperCase()} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</ButtonETH>
+                    <ButtonETH side={this.state.side} onClick={this.onSubmit}>{this.state.side.toUpperCase()} {this.state.crypto}</ButtonETH>
                 </Button_wrap>
             </Market_wrap>
         )

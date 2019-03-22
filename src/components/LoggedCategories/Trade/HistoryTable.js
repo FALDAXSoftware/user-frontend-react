@@ -55,7 +55,7 @@ class HistoryTable extends Component {
         var self = this;
         console.log("hay hay")
         self.historyData();
-        io.socket.on('instrumentUpdate', (data) => {
+        io.socket.on('tradehistoryUpdate', (data) => {
             self.updateData(data)
         });
     }
@@ -98,7 +98,7 @@ class HistoryTable extends Component {
 
             if (body.status == 200) {
                 let res = body.data;
-                console.log(res)
+                console.log("Order HIstory Response", res)
                 this.props.hisFunc(false);
                 this.updateData(res);
             }
@@ -109,6 +109,7 @@ class HistoryTable extends Component {
         });
     }
     updateData(data) {
+        console.log("HIstory Data", data)
         const rows = [];
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
@@ -164,10 +165,11 @@ class HistoryTable extends Component {
                                     {this.state.data.length > 0 ? this.state.data.map((element, index) => (
                                         <tr>
                                             <SideType type={element.side} width="10%">{element.side}</SideType>
-                                            <td width="20%">{element.amount.toFixed(4)}</td>
+                                            <td width="20%">{element.amount !== undefined ? element.amount.toFixed(4) : ""}</td>
                                             {(index + 1) < me.state.data.length ? (element.fill_price > me.state.data[index + 1].fill_price)
                                                 ?
-                                                <td width="20%">{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td> :
+                                                <td width="20%">{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td>
+                                                :
                                                 <td width="20%">{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/down-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/down_white.png" />}</td>
                                                 : <td>{element.fill_price} </td>
                                             }

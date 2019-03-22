@@ -33,7 +33,7 @@ import {
     Spin_single
 } from "../../../styled-components/loggedStyle/dashStyle"
 import { globalVariables } from '../../../Globals';
-import TraddingViewChart from "../../TraddingViewChart";
+import TradingViewChart from "../../TradingViewChart";
 
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -128,7 +128,7 @@ class Trade extends Component {
             orderTradeData: {},
             InsCurrency: "BTC",
             InsData: [],
-            searchedInstu: [],
+            searchedInstu: null,
             userBal: {},
             insLoader: false,
             userBalLoader: false,
@@ -425,7 +425,7 @@ class Trade extends Component {
             this.setState({ searchedInstu });
         }
         else {
-            this.setState({ searchedInstu: [] });
+            this.setState({ searchedInstu: null });
         }
     }
     /* componentWillUnmount() {
@@ -712,12 +712,12 @@ class Trade extends Component {
                                                     </Tooltip>
                                                 </div>
                                             </TVBar>
-                                            <TraddingViewChart theme={this.props.theme} />
+                                            <TradingViewChart crypto={this.state.crypto} currency={this.state.currency} theme={this.props.theme} />
                                         </MainTV>
                                     </div>
                                 </div>
                                 <div key="instruments">
-                                    <div onDoubleClick={this.popWindow.bind(this)} style={{ height: "100%", width: "100%", overflow: "auto" }}>
+                                    <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
                                         {
                                             this.state.insLoader == true ?
 
@@ -745,7 +745,7 @@ class Trade extends Component {
                                                             onClick: (event) => { self.currencyPair(record.name) },       // click row
                                                         };
                                                     }}
-                                                    pagination={false} columns={columns} dataSource={this.state.searchedInstu.length == 0 ? this.state.InsData : this.state.searchedInstu} onChange={this.onChange} scroll={{ y: self.state.instrumentTableHeight }} />
+                                                    pagination={false} columns={columns} dataSource={this.state.searchedInstu == null ? this.state.InsData : this.state.searchedInstu.length == 0 ? [] : this.state.searchedInstu} onChange={this.onChange} scroll={{ y: self.state.instrumentTableHeight }} />
                                             </InstruTable>
                                         </Left_div1>
 
@@ -785,7 +785,7 @@ class Trade extends Component {
                                                 : ""
                                         }
                                         <Right_div>
-                                            <DepthChart depthLoaderFunc={(loader) => this.depthLoaderFunc(loader)} io={io} height={this.state.depthChartHeight} />
+                                            <DepthChart crypto={this.state.crypto} currency={this.state.currency} depthLoaderFunc={(loader) => this.depthLoaderFunc(loader)} io={io} height={this.state.depthChartHeight} />
                                         </Right_div>
                                     </div>
                                 </div>
@@ -867,44 +867,46 @@ function getFromLS(key) {
                         { i: "tradeView", x: 0, y: 0, w: 12, h: 6, minW: 6, minH: 3 },
                         { i: 'instruments', x: 0, y: 1, w: 4, h: 3, minW: 4, minH: 2 },
                         { i: 'tradeAction', x: 4, y: 1, w: 4, h: 3, minW: 4, minH: 2, maxH: 5 },
-                        { i: 'buysellBook', x: 8, y: 1, w: 4, h: 3, minW: 3, minH: 3 },
+                        { i: 'buysellBook', x: 8, y: 1, w: 4, h: 3, minW: 4, minH: 3 },
                         { i: 'depthChart', x: 0, y: 2, w: 6, h: 3, minH: 3, maxH: 3, minW: 4 },
-                        { i: 'orderHistory', x: 7, y: 2, w: 6, h: 3, minW: 4 },
+                        { i: 'orderHistory', x: 7, y: 2, w: 6, h: 3, minH: 2, minW: 4 },
                         { i: 'myorder', x: 0, y: 4, w: 12, h: 2, minW: 6, minH: 2 }
                     ],
                     md: [
-                        { i: 'instruments', x: 0, y: 0, w: 5, h: 2, minW: 5 },
-                        { i: 'tradeAction', x: 5, y: 0, w: 5, h: 2, minW: 5 },
-                        { i: 'buysellBook', x: 0, y: 1, w: 5, h: 2, minW: 5 },
-                        { i: 'depthChart', x: 5, y: 1, w: 5, h: 2, minW: 5 },
-                        { i: 'orderHistory', x: 0, y: 2, w: 10, h: 2, minW: 5 },
-                        { i: 'myorder', x: 0, y: 3, w: 10, h: 2, minW: 5 }
+                        { i: "tradeView", x: 0, y: 0, w: 10, h: 3, minH: 3 },
+                        { i: 'instruments', x: 0, y: 1, w: 5, h: 2, minW: 5 },
+                        { i: 'tradeAction', x: 5, y: 1, w: 5, h: 2, minW: 5 },
+                        { i: 'buysellBook', x: 0, y: 2, w: 5, h: 2, minW: 5 },
+                        { i: 'depthChart', x: 5, y: 2, w: 5, h: 2, minW: 5 },
+                        { i: 'orderHistory', x: 0, y: 3, w: 10, h: 2, minH: 2, minW: 5 },
+                        { i: 'myorder', x: 0, y: 4, w: 10, h: 2, minW: 5 }
                     ],
                     sm: [
-                        { i: 'instruments', x: 0, y: 0, w: 6, h: 2, minW: 6 },
-                        { i: 'tradeAction', x: 0, y: 1, w: 6, h: 2, minW: 6 },
-                        { i: 'buysellBook', x: 0, y: 2, w: 6, h: 2, minW: 6 },
-                        { i: 'depthChart', x: 0, y: 3, w: 6, h: 2, minW: 6 },
-                        { i: 'orderHistory', x: 0, y: 4, w: 6, h: 2, minW: 6 },
-                        { i: 'myorder', x: 0, y: 5, w: 6, h: 2, minW: 6 }
+                        { i: "tradeView", x: 0, y: 0, w: 6, h: 3, minH: 3 },
+                        { i: 'instruments', x: 0, y: 1, w: 6, h: 2, minW: 6 },
+                        { i: 'tradeAction', x: 0, y: 2, w: 6, h: 2, minW: 6 },
+                        { i: 'buysellBook', x: 0, y: 3, w: 6, h: 2, minW: 6 },
+                        { i: 'depthChart', x: 0, y: 4, w: 6, h: 2, minW: 6 },
+                        { i: 'orderHistory', x: 0, y: 5, w: 6, h: 2, minH: 2, minW: 6 },
+                        { i: 'myorder', x: 0, y: 6, w: 6, h: 2, minW: 6 }
                     ],
-
                     xs: [
-                        { i: 'instruments', x: 0, y: 0, w: 4, h: 2, minW: 4 },
-                        { i: 'tradeAction', x: 0, y: 1, w: 4, h: 2, minW: 4 },
-                        { i: 'buysellBook', x: 0, y: 2, w: 4, h: 2, minW: 4 },
-                        { i: 'depthChart', x: 0, y: 3, w: 4, h: 2, minW: 4 },
-                        { i: 'orderHistory', x: 0, y: 4, w: 4, h: 2, minW: 4 },
-                        { i: 'myorder', x: 0, y: 5, w: 4, h: 2, minW: 4 }
+                        { i: "tradeView", x: 0, y: 0, w: 4, h: 3, minH: 3 },
+                        { i: 'instruments', x: 0, y: 1, w: 4, h: 2, minW: 4 },
+                        { i: 'tradeAction', x: 0, y: 2, w: 4, h: 2, minW: 4 },
+                        { i: 'buysellBook', x: 0, y: 3, w: 4, h: 2, minW: 4 },
+                        { i: 'depthChart', x: 0, y: 4, w: 4, h: 2, minW: 4 },
+                        { i: 'orderHistory', x: 0, y: 5, w: 4, h: 2, minH: 2, minW: 4 },
+                        { i: 'myorder', x: 0, y: 5, w: 5, h: 2, minW: 4 }
                     ],
                     xxs: [
-                        { i: 'instruments', x: 0, y: 0, w: 2, h: 2, minW: 2 },
-                        { i: 'tradeAction', x: 0, y: 1, w: 2, h: 2, minW: 2 },
-                        { i: 'buysellBook', x: 0, y: 2, w: 2, h: 2, minW: 2 },
-                        { i: 'depthChart', x: 0, y: 3, w: 2, h: 2, minW: 2 },
-                        { i: 'orderHistory', x: 0, y: 4, w: 2, h: 2, minW: 2 },
-                        { i: 'myorder', x: 0, y: 5, w: 2, h: 2, minW: 2 }
-
+                        { i: "tradeView", x: 0, y: 0, w: 2, h: 3, minH: 3 },
+                        { i: 'instruments', x: 0, y: 1, w: 2, h: 2, minW: 2 },
+                        { i: 'tradeAction', x: 0, y: 2, w: 2, h: 2, minW: 2 },
+                        { i: 'buysellBook', x: 0, y: 3, w: 2, h: 2, minW: 2 },
+                        { i: 'depthChart', x: 0, y: 4, w: 2, h: 2, minW: 2 },
+                        { i: 'orderHistory', x: 0, y: 5, w: 2, h: 2, minH: 2, minW: 2 },
+                        { i: 'myorder', x: 0, y: 6, w: 2, h: 2, minW: 2 }
                     ]
                 }
             };

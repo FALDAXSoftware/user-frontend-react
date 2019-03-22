@@ -16,7 +16,7 @@ import History2 from "../src/components/LoggedCategories/History/history"
 import Dashboard from "../src/components/LoggedCategories/Dashboard/dashboard"
 import OpenTicket from "./components/Landing_categories/OpenTicket";
 import { globalVariables } from './Globals';
-import Chart from "../src/components/TraddingViewChart"
+import Chart from "../src/components/TradingViewChart"
 let { API_URL } = globalVariables;
 const socketIOClient = require('socket.io-client');
 const sailsIOClient = require('sails.io.js');
@@ -69,8 +69,7 @@ const routes = [
 ];
 
 export default class AppRouter extends Component {
-  componentDidMount()
-  {
+  componentDidMount() {
     console.log("Hello Routes")
   }
   render() {
