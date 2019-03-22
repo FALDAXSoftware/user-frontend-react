@@ -16,6 +16,12 @@ export const ConversionContainer = styled(Container)`
     max-width:1170px;
     padding-bottom: 30px;
     padding-top:200px;
+
+    @media (max-width: 991px) {
+        &{
+            padding-top:100px;    
+        }
+    }
 `
 export const MainRow = styled(Row)`
     background-color:#e1e7ec;
@@ -36,6 +42,11 @@ export const LeftCol = styled(Col)`
         border-right: 0;
         margin-top: -15px;
         margin-right: -15px;
+    }
+    @media (max-width: 991px) {
+        &:after {
+            display:none;
+        }
     }
 `
 export const ConversionTab = styled(Tabs)`
@@ -152,6 +163,11 @@ export const BorderRow = styled(Row)`
       border-radius:5px;
       padding:20px;
       margin-bottom:35px;
+      @media (max-width: 360px) {
+        &{
+            padding:20px 10px;
+        }
+    }
 `
 export const RowTitle = styled.span`
     position: absolute;
@@ -204,6 +220,11 @@ export const ConversionDropDown = styled(Select)`
     &.ant-select-disabled .ant-select-arrow{
         display:none;
     }
+    @media (max-width: 360px) {
+        & .ant-select-selection{
+            font-size:14px;
+        }
+    }
 
 `
 export const DropIcon = styled.img`
@@ -235,6 +256,11 @@ export const RightCol = styled(Col)`
     min-height: 613px;
     display: flex;
     align-items: center;
+    @media (max-width: 480px) {
+        &{
+            padding:20px;
+        }
+    }
 `
 export const RightColContainer = styled.div`
     background-image: url(/images/top-zigzag-bg.png);
@@ -243,6 +269,11 @@ export const RightColContainer = styled.div`
     width:100%;
     min-height:470px;
     padding:40px;
+    @media (max-width: 480px) {
+        &{
+            padding:20px;
+        }
+    }
 `
 
 export const RightColTitle = styled.span`

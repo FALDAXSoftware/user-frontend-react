@@ -52,14 +52,14 @@ class Conversion extends React.Component {
                                         <RowTitle>
                                             You Get
                                         </RowTitle>
-                                        <Col xs={16}>
+                                        <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="text" />
                                         </Col>
-                                        <Col xs={8} style={{ height: "42px" }}>
+                                        <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             <ConversionDropDown defaultValue="XRP">
                                                 <DropDownOption value="BTC"> <DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  BTC</DropDownOption>
                                                 <DropDownOption value="XRP"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  XRP</DropDownOption>
-                                                <DropDownOption value="LTC"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  Disabled</DropDownOption>
+                                                <DropDownOption value="LTC"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  LTC</DropDownOption>
                                                 <DropDownOption value="ETH"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  ETH</DropDownOption>
                                             </ConversionDropDown>
                                         </Col>
@@ -68,10 +68,10 @@ class Conversion extends React.Component {
                                         <RowTitle>
                                             You Pay
                                         </RowTitle>
-                                        <Col xs={16}>
+                                        <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="text" />
                                         </Col>
-                                        <Col xs={8} style={{ height: "42px" }}>
+                                        <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             <ConversionDropDown defaultValue="USD" disabled>
                                                 <DropDownOption value="USD"> <DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  USD</DropDownOption>
                                                 <DropDownOption value="XRP"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  XRP</DropDownOption>
@@ -125,10 +125,10 @@ class Conversion extends React.Component {
                                         <RowTitle>
                                             You Pay
                                         </RowTitle>
-                                        <Col xs={16}>
+                                        <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="text" />
                                         </Col>
-                                        <Col xs={8} style={{ height: "42px" }}>
+                                        <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             <ConversionDropDown defaultValue="XRP">
                                                 <DropDownOption value="BTC"> <DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  BTC</DropDownOption>
                                                 <DropDownOption value="XRP"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  XRP</DropDownOption>
@@ -141,10 +141,10 @@ class Conversion extends React.Component {
                                         <RowTitle>
                                             You Get
                                         </RowTitle>
-                                        <Col xs={16}>
+                                        <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="text" />
                                         </Col>
-                                        <Col xs={8} style={{ height: "42px" }}>
+                                        <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             <ConversionDropDown defaultValue="USD" disabled>
                                                 <DropDownOption value="USD"> <DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  USD</DropDownOption>
                                             </ConversionDropDown>
