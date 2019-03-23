@@ -47,22 +47,22 @@ class Editprofile extends Component {
         super(props);
         this.state = {
             actKey: ActKey
-        },
-            this.handleChange = this.handleChange.bind(this);
+        }
+
     }
-    componentDidMount() {
-        if (this.props.theme !== "") {
+    /*     componentDidMount() {
+            if (this.props.theme !== "") {
+                this.setState({
+                    actKey: ActKey
+                });
+            }
+        }
+        handleChange(key) {
+            ActKey = key
             this.setState({
                 actKey: ActKey
-            });
-        }
-    }
-    handleChange(key) {
-        ActKey = key
-        this.setState({
-            actKey: ActKey
-        })
-    }
+            })
+        } */
     render() {
         return (
             <div>
@@ -70,7 +70,7 @@ class Editprofile extends Component {
                 <Navigation />
                 <ProfileWrapper>
                     <ProfileDiv>
-                        <TabsStyle activeKey={this.state.actKey} onChange={this.handleChange} className="profile-tabs" >
+                        <TabsStyle defaultActiveKey="1" onChange={this.handleChange} className="profile-tabs" >
                             <TabPane tab="Personal Details" key="1"><PersonalDetails {...this.props} /></TabPane>
                             <TabPane tab="Security" key="2" ><Passwordchange {...this.props} /></TabPane>
                             <TabPane tab="Account Settings" key="3"><Acc_settings {...this.props} /></TabPane>

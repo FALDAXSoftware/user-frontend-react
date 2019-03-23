@@ -75,6 +75,10 @@ export const Ref_input = styled(Search)`
         background-color: rgb(0, 170, 250);
         border-color: rgb(0, 170, 250);
     }
+    & .ant-table-tbody>tr:hover>td
+    {
+        background-color:#041422;
+    }
     @media(max-width:768px)
     {
         margin-left:auto;
@@ -145,6 +149,12 @@ const Ref_acc = styled.div`
     margin-bottom:65px;
 `
 
+const RefTable = styled(Table)`
+    & .ant-table-tbody>tr:hover>td
+    {
+        background-color:#041422;
+    }
+`
 class Referral extends Component {
     constructor(props) {
         super(props);
@@ -241,7 +251,7 @@ class Referral extends Component {
                 </Ref_div>
                 <Ref_acc>
                     <div>
-                        <Table columns={columns} dataSource={this.state.tableData}
+                        <RefTable columns={columns} dataSource={this.state.tableData}
                             size="middle"
                             className={this.state.referTable}
                             pagination={false}

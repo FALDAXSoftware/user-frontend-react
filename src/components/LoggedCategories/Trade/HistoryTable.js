@@ -47,8 +47,9 @@ class HistoryTable extends Component {
             data: [],
             crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
             currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
-            loader: false
+            loader: false,
         }
+        this.historyFunc = this.historyFunc.bind(this);
         this.updateData = this.updateData.bind(this);
     }
     componentDidMount() {
@@ -135,8 +136,28 @@ class HistoryTable extends Component {
         });
 
     }
+    historyFunc() {
+        var me = this
+        console.log("historyFunc", this.state.data)
+        return (this.state.data.map((element, index) => (
+            <tr>
+                <SideType type={element.side} width="10%">{element.side}</SideType>
+                <td width="20%">{element.amount !== undefined ? element.amount.toFixed(4) : ""}</td>
+                {(index + 1) < me.state.data.length ? (element.fill_price > me.state.data[index + 1].fill_price)
+                    ?
+                    <td width="20%">{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td>
+                    :
+                    <td width="20%">{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/down-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/down_white.png" />}</td>
+                    : <td>{element.fill_price} </td>
+                }
+                <td width="25%">{element.time}</td>
+                <td width="25%">{element.total.toFixed(4)}</td>
+            </tr>
+        )))
+    }
     render() {
         var me = this;
+        var prevImg
         return (
             <BorderedHistoryWrap>
                 <OTwrap>
@@ -162,21 +183,9 @@ class HistoryTable extends Component {
                             hideTracksWhenNotNeeded={true}>
                             <TableContent cellpadding="10px" cellspacing="0" border="0" width="100%">
                                 <tbody>
-                                    {this.state.data.length > 0 ? this.state.data.map((element, index) => (
-                                        <tr>
-                                            <SideType type={element.side} width="10%">{element.side}</SideType>
-                                            <td width="20%">{element.amount !== undefined ? element.amount.toFixed(4) : ""}</td>
-                                            {(index + 1) < me.state.data.length ? (element.fill_price > me.state.data[index + 1].fill_price)
-                                                ?
-                                                <td width="20%">{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td>
-                                                :
-                                                <td width="20%">{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/down-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/down_white.png" />}</td>
-                                                : <td>{element.fill_price} </td>
-                                            }
-                                            <td width="25%">{element.time}</td>
-                                            <td width="25%">{element.total.toFixed(4)}</td>
-                                        </tr>
-                                    ))
+                                    {this.state.data.length > 0
+                                        ?
+                                        this.historyFunc()
                                         : <p style={{
                                             textAlign: "center", fontWeight: "600", fontSize: "17px",
                                             color: "black", marginTop: "30px", fontFamily: "Open Sans"
