@@ -8,8 +8,7 @@ import styled from 'styled-components';
 /* Components */
 import PersonalDetails from './Personaldetails/PersonalDetails';
 import Referral from './Referral';
-import LoggedNavigation from '../Navigations/LoggedNavigation';
-import Navigation from '../Navigations/Navigation';
+import Navigation from '../Navigations/LoggedNavigation';
 import Footer_home from "../Landing/Footers/Footer_home";
 import Passwordchange from "./changePassword/Passwordchange";
 import Acc_settings from "./Account_settings/Acc_settings";

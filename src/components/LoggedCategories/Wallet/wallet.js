@@ -55,10 +55,7 @@ const Inputsearch = styled(Search)`
 const Table_wrap = styled.div`  
     margin-left:-30px;
     margin-right:-30px; 
-    @media(max-width:1160px)
-    {
-        overflow:scroll
-    }
+    
 `
 
 class Wallet extends Component {
@@ -155,7 +152,7 @@ class Wallet extends Component {
         this.props.walletBal(this.props.isLoggedIn, currency);
     }
     render() {
-        let {profileDetails} = this.props;
+        let { profileDetails } = this.props;
         return (
             <Contact_wrap>
                 <LoggedNavigation />
@@ -163,7 +160,7 @@ class Wallet extends Component {
                     <ContainerContact>
                         <Header_wrap>
                             <MY_wallet>
-                                <span>{profileDetails!==""?(profileDetails.first_name+"'s"):""} WALLET</span>
+                                <span>{profileDetails !== "" ? (profileDetails.first_name + "'s") : ""} WALLET</span>
                             </MY_wallet>
                             <SearchCoin>
                                 <Inputsearch

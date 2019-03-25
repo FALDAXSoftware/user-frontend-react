@@ -200,6 +200,7 @@ export const Address = styled.div`
     font-family: "Open Sans";
     color: ${props => props.theme.mode == "dark" ? "#68727a" : "rgba( 33, 33, 33, 0.502 )"};
     margin-left:15px;
+    word-break:break-all;
     >b
     {
         color: ${props => props.theme.mode == "dark" ? "white !important" : "rgba( 33, 33, 33, 0.502 )"};
@@ -326,6 +327,18 @@ export const TransTitle = styled.p`
 `
 export const WalletCoin = styled(SearchCoin)`
     margin-top:0px;
+    & .ant-select-selection--single
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041421" : "white"};
+    }
+    & .ant-select-selection-selected-value
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+    & .ant-select-arrow
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
 `
 export const Left_head = styled.div`
     height:70px;

@@ -12,6 +12,8 @@ import { LogoutUser } from '../../Actions/Auth';
 import ReactSwipeEvents from 'react-swipe-events'
 import { globalVariables } from "../../Globals";
 import ComingSoon from '../ComingSoon';
+import CompleteKYC from "../../shared-components/CompleteKYC"
+import CountryAccess from '../../shared-components/CountryAccess';
 import { FaldaxLogo, FaldaxWhite, WhiteLogo, Faldax, Wallpaper } from "../../Constants/images";
 const { Header } = Layout;
 
@@ -170,8 +172,11 @@ class LoggedNavigation extends Component {
             comingSoon: false,
             faldaxLogo: "",
             faldax: "",
-            selected: ''
-        }
+            selected: '',
+            countryAccess: false,
+            completeKYC: false
+        },
+            this.tradeAccess = this.tradeAccess.bind(this);
     }
     componentWillReceiveProps(props, newProps) {
         if (props.theme !== undefined) {
@@ -232,13 +237,12 @@ class LoggedNavigation extends Component {
     showComing = () => {
         this.setState({ comingSoon: true });
     }
-
     handleComing = (e) => {
         this.setState({ comingSoon: false });
     }
 
     comingCancel = (e) => {
-        this.setState({ comingSoon: false });
+        this.setState({ comingSoon: false, countryAccess: false, completeKYC: false });
     }
     send_email() {
         const values = { email: this.state.email_address };
@@ -269,6 +273,18 @@ class LoggedNavigation extends Component {
 
         }
     }
+    tradeAccess() {
+        console.log(this.props)
+        if (this.props.profileDetails.is_allowed == true && this.props.profileDetails.is_kyc_done == true) {
+            this.props.history.push('/trade');
+        }
+        else {
+            if (this.props.profileDetails.is_allowed == false && this.props.profileDetails.is_kyc_done == false)
+                this.setState({ completeKYC: true });
+            else
+                this.setState({ countryAccess: true });
+        }
+    }
     render() {
         let prof_name = this.props.profileDetails.first_name !== null && this.props.profileDetails.first_name !== undefined ? (this.props.profileDetails.first_name + " " + this.props.profileDetails.last_name) : "User";
         return (
@@ -285,7 +301,7 @@ class LoggedNavigation extends Component {
                     selectedKeys={this.state.selected}
                 >
                     <Menu_item key="1" onClick={this.showComing}><NavLink className="Nav_selected" to="/dashboard">DASHBOARD</NavLink></Menu_item>
-                    <Menu_item key="2" onClick={this.showComing}><NavLink className="Nav_selected" to="/trade">TRADE</NavLink></Menu_item>
+                    <Menu_item key="2" onClick={this.tradeAccess}>TRADE</Menu_item>
                     <Menu_item key="3" onClick={this.showComing}><NavLink className="Nav_selected" to="/wallet">Wallet</NavLink></Menu_item>
                     <Menu_item key="4" onClick={this.showComing}><NavLink className="Nav_selected" to="/history">HISTORY</NavLink></Menu_item>
                     {/* <Menu_item key="1" onClick={this.showComing}><LogNav>DASHBOARD</LogNav></Menu_item>
@@ -311,12 +327,15 @@ class LoggedNavigation extends Component {
                     </SideNav>
                 </ReactSwipeEvents>
                 <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
+                <CountryAccess comingCancel={(e) => this.comingCancel(e)} visible={this.state.countryAccess} />
+                <CompleteKYC comingCancel={(e) => this.comingCancel(e)} visible={this.state.completeKYC} />
             </Header_main>
         );
     }
 }
 
 function mapStateToProps(state) {
+    console.log(state)
     return ({
         profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
         theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
