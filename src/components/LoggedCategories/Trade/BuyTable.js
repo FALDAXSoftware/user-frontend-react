@@ -166,6 +166,7 @@ class BuyTable extends Component {
 
         for (let index = 0; index < row.length; index++) {
             const element = row[index];
+            console.log(element)
             sum += element.amount * element.bid;
             row[index]["total"] = sum;
         }
@@ -200,7 +201,7 @@ class BuyTable extends Component {
         return (
             <div>
                 <BBC>BUYING {this.props.crypto}</BBC>
-                <Total_BTC>Total: {this.state.lastsum} {this.props.cryptoPair.crypto}</Total_BTC>
+                <Total_BTC>Total: {this.state.lastsum && this.state.lastsum.toFixed(4)} {this.state.currency}</Total_BTC>
                 <Buy_table>
                     <History_wrap1>
                         <OTwrap2>

@@ -30,7 +30,7 @@ import ApplyJob from './components/Landing_categories/ApplyJob'
 import Policy from './components/Landing_categories/Policy'
 import News from './components/Landing_categories/News';
 import ThankYou from "./shared-components/thank_you";
-import Chart from "../src/components/TraddingViewChart"
+import Chart from "../src/components/TradingViewChart"
 import { Signup } from './Actions/Auth';
 import SignupSuccess from './components/Landing/User_forms/Signup_success';
 // import dotenv from 'dotenv';

@@ -414,14 +414,6 @@ class PersonalDetails extends Component {
             }
         });
     }
-
-    componentDidMount() {
-        if (this.props.profileDetails !== undefined) {
-            this.setState({
-
-            })
-        }
-    }
     onDateChange(value, field) {
         var tempDate = value.day + "/" + value.month + "/" + value.year;
 
@@ -439,7 +431,7 @@ class PersonalDetails extends Component {
         this.onChangeField(loc, 'country');
     }
     componentDidMount() {
-        /* console.log(this.props) */
+        console.log("456",this.props)
         this.props.getProfileDataAction(this.props.isLoggedIn)
     }
     componentWillReceiveProps(props, newProps) {

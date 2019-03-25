@@ -118,7 +118,7 @@ class OrderTrade extends Component {
                                             return (
                                                 <tr>
                                                     <SideType type={data.side}>{data.side}</SideType>
-                                                    <td>{data.quantity}</td>
+                                                    <td>{data.quantity.toFixed(4)}</td>
                                                     <td>{self.props.pending !== 2 ? (data.order_type == "Market" ? data.order_type : data.limit_price) : data.limit_price}</td>
                                                     <SideType type={data.side}>{self.props.pending !== 2 ? Filled.toFixed(4) : (data.stop_price !== undefined ? data.stop_price : 0)}</SideType>
                                                     <td>{data.fill_price}</td>

@@ -13,7 +13,7 @@ export default class BuySell extends React.Component {
     render() {
         return (
             <Left_div>
-                <Instru>ORDER BOOK {this.props.currency}/{this.props.crypto}</Instru>
+                <Instru>ORDER BOOK {this.props.crypto}/{this.props.currency}</Instru>
                 <BBC_wrap>
                     <BuyTable currency={this.props.currency} crypto={this.props.crypto} loaderfunc={(loader) => { this.loaderfunc(loader) }} io={this.props.io} height={this.props.height} />
                 </BBC_wrap>

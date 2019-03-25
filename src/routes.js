@@ -16,7 +16,7 @@ import History2 from "../src/components/LoggedCategories/History/history"
 import Dashboard from "../src/components/LoggedCategories/Dashboard/dashboard"
 import OpenTicket from "./components/Landing_categories/OpenTicket";
 import { globalVariables } from './Globals';
-import Chart from "../src/components/TraddingViewChart"
+import Chart from "../src/components/TradingViewChart"
 import Conversion from './components/LoggedCategories/conversion/Conversion';
 let { API_URL } = globalVariables;
 const socketIOClient = require('socket.io-client');

@@ -17,17 +17,41 @@ class DepthChart extends Component {
         super(props);
         io = this.props.io;
         this.state = {
-            crypto: "XRP",
-            currency: "BTC",
+            crypto: this.props.crypto,
+            currency: this.props.currency,
             loader: false,
             askData: [],
             bidData: [],
         };
         this.updateGraph = this.updateGraph.bind(this);
+        this.depthFunc = this.depthFunc.bind(this);
     }
 
     componentDidMount() {
         console.log("DEPTH DID MOUNT")
+        this.depthFunc();
+    }
+    componentWillReceiveProps(props, neProps) {
+        var self = this;
+        console.log("Depth will", props.crypto !== undefined && props.currency !== undefined)
+        if (props.crypto !== undefined && props.currency !== undefined) {
+            console.log("Depth will if", props.crypto !== this.state.crypto || props.currency !== this.state.currency)
+            if (props.crypto !== this.state.crypto || props.currency !== this.state.currency) {
+
+                this.setState({
+                    crypto: props.crypto,
+                    currency: props.currency
+                }, () => {
+                    self.depthFunc();
+                })
+            }
+        }
+
+
+
+    }
+    depthFunc() {
+        console.log("DEPTH CHART")
         this.props.depthLoaderFunc(true);
         let URL = "/socket/get-depth-chart-data?room=" + this.state.crypto + "-" + this.state.currency
         io.socket.request({
@@ -45,7 +69,6 @@ class DepthChart extends Component {
             }
         });
     }
-
     updateGraph(data) {
         var self = this;
         let askData = [];
@@ -121,7 +144,7 @@ class DepthChart extends Component {
 
         return (
             <WrapDepth>
-                <Instru2>Market Depth BBC/BTC</Instru2>
+                <Instru2>Market Depth {this.props.crypto}/{this.props.currency}</Instru2>
                 <Row>
                     <Col xl={24}>
                         <Chart1_wrap id="depth-chart1">

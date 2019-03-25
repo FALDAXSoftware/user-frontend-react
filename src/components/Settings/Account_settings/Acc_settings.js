@@ -278,7 +278,8 @@ class Acc_settings extends Component {
             notiCSS: '',
             historyCSS: '',
             historyCount: 0,
-            page: 1
+            page: 1,
+            loader: false
         }
     }
     onChange(e, abcd) {
@@ -307,6 +308,7 @@ class Acc_settings extends Component {
     _getAllLoginHistory = (curr) => {
         var self = this;
         var Data = {};
+        this.setState({ loader: true })
         fetch(API_URL + `/users/login-history?page=${curr}&limit=9`, {
             method: "get",
             headers: {
@@ -335,7 +337,8 @@ class Acc_settings extends Component {
                 });
                 /* console.log("->>>>>>>>>",antTableData); */
                 self.setState({
-                    loginHistory: antTableData
+                    loginHistory: antTableData,
+                    loader: false
                 })
             })
             .catch(error => {/* console.log(error) */ })
@@ -442,7 +445,7 @@ class Acc_settings extends Component {
                         <Button_del type="primary" onClick={this.showConfirm.bind(this)}>Delete Account</Button_del>
                     </Delete_btn>
                 </Delete_wrap>
-                {(this.props.loader == true) ? <Spin_Ex className="Ex_spin">
+                {(this.state.loader == true) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : ""}
             </Acc_wrap>
