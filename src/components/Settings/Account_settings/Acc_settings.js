@@ -182,7 +182,7 @@ const Delete_btn = styled.div`
   margin-top:35px;
 `
 const Button_del = styled(Button)`
-  background-color:${props => props.theme.mode == "dark" ? "#fd1010" : "#fce8e8"};
+  background-color:${props => props.theme.mode == "dark" ? "#a21d1d" : "#fce8e8"};
   color:${props => props.theme.mode == "dark" ? "white" : "#fe1f1f"};
   border:none;
   width:240px;
