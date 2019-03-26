@@ -39,6 +39,15 @@ const SideType = styled.td`
     color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
 `
 const FontAwesomeIconA = styled(FontAwesomeIcon)``
+const NDF = styled.p`
+    text-align: center; 
+    font-weight: 600; 
+    font-size: 17px;
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"}; 
+    margin-top: 30px; 
+    font-family: "Open Sans";
+}}
+`
 var io = null;
 class HistoryTable extends Component {
     constructor(props) {
@@ -186,10 +195,7 @@ class HistoryTable extends Component {
                                     {this.state.data.length > 0
                                         ?
                                         this.historyFunc()
-                                        : <p style={{
-                                            textAlign: "center", fontWeight: "600", fontSize: "17px",
-                                            color: "black", marginTop: "30px", fontFamily: "Open Sans"
-                                        }}>No Data Found</p>
+                                        : <NDF >No Data Found</NDF>
                                     }
                                 </tbody>
                             </TableContent>
