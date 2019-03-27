@@ -326,11 +326,16 @@ class Acc_settings extends Component {
                     if (responseData.data[index].device_type == 1) deviceType = <FontAwesomeIconS icon={faMobileAlt} />
                     else if (responseData.data[index].device_type == 0) deviceType = <FontAwesomeIconS icon={faDesktop} />
                     else deviceType = <FontAwesomeIconS icon={faDesktop} />
-
+                    let ip = "";
+                    if (responseData.data[index].ip.split(":").length > 1) {
+                        ip = responseData.data[index].ip.split(":")[3];
+                    } else if (responseData.data[index].ip.split(":").length == 1) {
+                        ip = responseData.data[index].ip
+                    }
                     let temp = {
                         key: key,
                         date: moment.utc(responseData.data[index].created_at).local().format("MMM DD YYYY, HH:mm:ss"),
-                        IP: responseData.data[index].ip.split(":")[3],
+                        IP: ip,
                         Device: deviceType
                     };
                     antTableData.push(temp);

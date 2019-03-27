@@ -191,9 +191,12 @@ class Trade extends Component {
         this.orderSocket(this.state.timePeriod, this.state.status);
         this.getInstrumentData();
         this.getUserBal();
+        io.socket.on("walletBalanceUpdate", (data) => {
+            self.setState({ userBal: data });
+        });
         io.socket.on('orderUpdated', (data) => {
             self.orderSocket(self.state.timePeriod, self.state.status);
-            self.getUserBal();
+            // self.getUserBal();
 
         });
         console.log(window);
@@ -378,11 +381,14 @@ class Trade extends Component {
     getUserBal() {
         var URL;
         this.setState({ userBalLoader: true });
+
+
         console.log("getUserBal")
+        console.log("profile-=-=-=-=-=-=-==-=", this.props.profileDetails.id);
         if (Object.keys(this.state.prevRoom).length > 0)
-            URL = `/socket/get-user-balance?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`
+            URL = `/socket/get-user-balance?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}&userId=${this.props.profileDetails.id}`
         else
-            URL = `/socket/get-user-balance?room=${this.state.crypto}-${this.state.currency}`
+            URL = `/socket/get-user-balance?room=${this.state.crypto}-${this.state.currency}&userId=${this.props.profileDetails.id}`
         console.log(this.state, this.state.prevRoom)
         io.socket.request({
             method: 'GET',
@@ -394,6 +400,7 @@ class Trade extends Component {
             }
         }, (body, JWR) => {
 
+            console.log("user-balance-data", body);
 
             if (body.status == 200) {
                 let res = body.data;
