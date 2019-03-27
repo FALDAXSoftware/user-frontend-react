@@ -8,7 +8,7 @@ export const globalVariables = {
     tvChartURL: "/chart",
     //API_URL: 'http://18.191.87.133:8084', //Live URL
 
-    API_URL: 'http://192.168.2.224:1337', //Kalpit Local URL
+    // API_URL: 'http://192.168.2.224:1337', //Kalpit Local URL
 
     // API_URL: 'http://192.168.1.211:1337', //Mansi's URL
 
@@ -16,7 +16,7 @@ export const globalVariables = {
 
     // API_URL: 'http://192.168.0.93:1337'
 
-    // API_URL: 'https://dev-backend.faldax.com'
+    API_URL: 'https://dev-backend.faldax.com'
 
     //API_URL: 'https://prod-backend.faldax.com',
 

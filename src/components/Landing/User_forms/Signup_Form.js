@@ -432,13 +432,14 @@ class SignupForm extends Component {
         if (self.state.confirm_password !== null && self.state.password !== null)
           self.onChangeField(self.state.confirm_password, "confirm_password")
       });
-      if (numb.test(value) || letters.test(value)) { console.log("1 test"); this.setState({ stroke: "red", percent: 20 }) }
-      if (alphanum.test(value) && value.length < 6) { console.log("2 test"); this.setState({ stroke: "orange", percent: 40 }) }
-      if (alphanum.test(value) && value.length == 8) { console.log("3 test"); this.setState({ stroke: "yellow", percent: 60 }) }
-      if (re.test(value) && value.length > 8 && value.length < 60) { console.log("4 test"); this.setState({ stroke: "#7CFC00", percent: 80 }) }
-      if (re.test(value) && value.length > 10 && value.length < 60) { console.log("5 test"); this.setState({ stroke: "#008000", percent: 100 }) }
-      if (value.length > 60) { console.log("6 test"); this.setState({ stroke: "red", percent: 0 }) }
+
       if (value !== "" && value !== undefined) {
+        if (numb.test(value) || letters.test(value)) { console.log("1 test"); this.setState({ stroke: "red", percent: 20 }) }
+        if (alphanum.test(value) && value.length < 6) { console.log("2 test"); this.setState({ stroke: "orange", percent: 40 }) }
+        if (alphanum.test(value) && value.length == 8) { console.log("3 test"); this.setState({ stroke: "yellow", percent: 60 }) }
+        if (re.test(value) && value.length > 8 && value.length < 60) { console.log("4 test"); this.setState({ stroke: "#7CFC00", percent: 80 }) }
+        if (re.test(value) && value.length > 10 && value.length < 60) { console.log("5 test"); this.setState({ stroke: "#008000", percent: 100 }) }
+        if (value.length > 60) { console.log("6 test"); this.setState({ stroke: "red", percent: 0 }) }
         if (bool == true) {
           this.setState({ passIcon: true })
           document.querySelector("#pass_icon_success").style.display = "inline-block"

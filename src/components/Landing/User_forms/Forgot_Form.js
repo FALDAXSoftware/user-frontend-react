@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Button, notification, Row, Col } from "antd";
 import { Username, Form_wrap, Welcome_text, Email_label, Email_req } from "./Login_Form";
 import { connect } from "react-redux"
+import SimpleReactValidator from "simple-react-validator";
 
 /* Components */
 import { forgotAction, clearForgot } from "../../../Actions/Auth";
@@ -174,38 +175,31 @@ class ForgotForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      forgot: false
+      forgot: false,
+      email: ""
+    },
+      this.validator = new SimpleReactValidator();
+    this.fieldChange = this.fieldChange.bind(this);
+  }
+
+  submit = () => {
+    if (this.validator.allValid()) {
+      var value = {};
+      value.email = this.state.email;
+      this.props.forgotAction(value);
+      this.setState({ email: "" })
+    } else {
+      this.validator.showMessages();
+      // rerender to show messages for the first time
+      this.forceUpdate();
     }
   }
-
-  static propTypes = {
-    form: formShape,
-  };
-  submit = () => {
-    this.props.form.validateFields((error, value) => {
-      if (error !== null && error !== undefined) {
-        if (error.Email !== undefined) {
-          if (error.Email.errors[0].message !== undefined && error.Email.errors[0].message !== null) {
-            document.querySelectorAll(".email_msg")[0].style.display = "block";
-            if (value.Email == "" || value.Email == undefined)
-              this.setState({ email_msg: `${error.Email.errors[0].message}` })
-            else
-              this.setState({ email_msg: "Email address is not valid" })
-          } else {
-            document.querySelectorAll(".email_msg")[0].style.display = "none";
-            this.setState({ email_msg: null })
-          }
-        }
-      } else {
-        document.querySelectorAll(".email_msg")[0].style.display = "none";
-        this.setState({ email_msg: null });
-        value.email = value.Email;
-        value.Email = "";
-        this.props.forgotAction(value);
-      }
+  fieldChange(e) {
+    var value = e.target.value;
+    this.setState({
+      email: value
     });
   }
-
   dispModal(pressed) {
     this.props.dispModal(pressed)
   }
@@ -238,8 +232,6 @@ class ForgotForm extends Component {
   };
 
   render() {
-    let errors;
-    const { getFieldProps, getFieldError } = this.props.form;
 
     return (
       <div>
@@ -258,12 +250,8 @@ class ForgotForm extends Component {
                   <Welcome_text>Forgot Password?</Welcome_text>
                   <Sub_text>Don't worry, It happen's to the best of us.</Sub_text>
                   <Email_label>Email Address</Email_label>
-                  <Username {...getFieldProps('Email', {
-                    onChange() { /* console.log("Hello How are You") */ }, // have to write original onChange here if you need
-                    rules: [{ type: "email", required: true }],
-                  })} />
-                  <Email_req className="email_msg">{this.state.email_msg}</Email_req>
-                  {(errors = getFieldError('required')) ? errors.join(',') : null}
+                  <Username value={this.state.email} onChange={this.fieldChange} />
+                  {this.validator.message('Email_Address', this.state.email, 'required|email')}
                   <Button_login onClick={this.submit}>SEND RESET PASSWORD LINK</Button_login>
                   <Link_wrap>
                     <Icon className="material-icons">keyboard_backspace</Icon>
@@ -290,4 +278,4 @@ const mapDispatchToProps = dispatch => ({
   clearForgot: () => dispatch(clearForgot())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(createForm()(ForgotForm));
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotForm);

@@ -431,7 +431,7 @@ class PersonalDetails extends Component {
         this.onChangeField(loc, 'country');
     }
     componentDidMount() {
-        console.log("456",this.props)
+        console.log("456", this.props)
         this.props.getProfileDataAction(this.props.isLoggedIn)
     }
     componentWillReceiveProps(props, newProps) {
@@ -455,16 +455,20 @@ class PersonalDetails extends Component {
             const fileType = e.target.files[0] && e.target.files[0].type ? e.target.files[0].type.substring(0, e.target.files[0].type.indexOf('/')) : '';
             const fileSize = e.target.files[0] && e.target.files[0].size ? e.target.files[0].size : 0;
             //check file size to max 5mb (5*1024*1024=5242880) and type image
-            if (fileType === 'image' && fileSize < 5242880) {
-                reader.onload = (upload) => {
-                    this.setState({
-                        profileImg: upload.target.result,
-                        imageName: file.name,
-                        imageType: file.type,
-                        profileImage: file,
-                        imagemsg: "", remove_pic: false
-                    });
-                };
+            if (fileType === 'image') {
+                if (fileSize <= 5242880) {
+                    reader.onload = (upload) => {
+                        this.setState({
+                            profileImg: upload.target.result,
+                            imageName: file.name,
+                            imageType: file.type,
+                            profileImage: file,
+                            imagemsg: "", remove_pic: false
+                        });
+                    };
+                } else {
+                    this.openNotificationWithProfile("error", "Error", "File size must not be more than 5 MB");
+                }
             } else {
                 if (file !== undefined)
                     this.openNotificationWithProfile("error", "Error", "Please upload only images");

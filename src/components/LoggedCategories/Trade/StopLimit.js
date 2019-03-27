@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import 'antd/dist/antd.css';
-import { Row, Col, Radio, notification } from 'antd';
+import { Row, Col, Radio, notification, Spin } from 'antd';
+import {
+    Spin_single
+} from "../../../styled-components/loggedStyle/dashStyle"
 import {
     Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Balance1, Total,
     ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay,
@@ -28,7 +31,8 @@ class StopLimit extends Component {
             buyPayAmt: 0,
             buyEstPrice: 0,
             sellEstPrice: 0,
-            sellPayAmt: 0
+            sellPayAmt: 0,
+            loader: false
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -123,6 +127,7 @@ class StopLimit extends Component {
                 limit_price: self.state.limit_price,
                 stop_price: self.state.stop_price
             }
+            this.setState({ loader: true });
             fetch(API_URL + "/stop/limit/" + self.state.side.toLowerCase(), {
                 method: "post",
                 headers: {
@@ -134,12 +139,17 @@ class StopLimit extends Component {
             }).then(response => response.json())
                 .then((responseData) => {
                     if (responseData.status == 200) {
-                        this.setState({ stop_price: 0, limit_price: 0, total: 0, amount: 0 });
+                        this.setState({
+                            stop_price: 0, limit_price: 0, total: 0, amount: 0, loader: false, buyPayAmt: 0, sellPayAmt: 0,
+                            buyEstPrice: 0, sellEstPrice: 0
+                        });
                         self.openNotificationWithIcon('success', 'Success', responseData.message);
                     } else {
+                        this.setState({ loader: false });
                         self.openNotificationWithIcon('error', 'Error', responseData.err);
                     }
                 }).catch(error => {
+                    this.setState({ loader: false });
                     self.openNotificationWithIcon('error', 'Error', "Something went wrong!");
                 });
         } else {
@@ -290,7 +300,7 @@ class StopLimit extends Component {
                                 </Col>
                                 <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{buyPayAmt.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
+                                        <Willpay2>{buyEstPrice.toFixed(4)} {this.state.currency}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
@@ -300,13 +310,13 @@ class StopLimit extends Component {
                                         Estimated Best Price
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {buyPayAmt.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {buyPayAmt.toFixed(4)} {this.state.currency}
                                     </Col>
                                     <Col xs={15} sm={12}>
                                         Fee {userBalFees} %
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {buyEstPrice.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {(buyPayAmt - buyEstPrice).toFixed(4)} {this.state.currency}
                                     </Col>
                                 </Row>
                             </Esti>
@@ -321,7 +331,7 @@ class StopLimit extends Component {
                                 </Col>
                                 <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{sellPayAmt.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
+                                        <Willpay2>{sellEstPrice.toFixed(4)} {this.state.currency}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
@@ -331,13 +341,13 @@ class StopLimit extends Component {
                                         Estimated Best Price
                             </Col>
                                     <Col xs={9} sm={12}>
-                                        {sellPayAmt.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {sellPayAmt.toFixed(4)} {this.state.currency}
                                     </Col>
                                     <Col xs={15} sm={12}>
                                         Fee {userBalFees} %
                             </Col>
                                     <Col xs={9} sm={12}>
-                                        {sellEstPrice.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {(sellPayAmt - sellEstPrice).toFixed(4)} {this.state.currency}
                                     </Col>
                                 </Row>
                             </Esti>
@@ -345,6 +355,12 @@ class StopLimit extends Component {
                 <Button_wrap>
                     <ButtonETH side={this.state.side} onClick={this.onSubmit}>{this.state.side.toUpperCase()} {this.state.crypto}</ButtonETH>
                 </Button_wrap>
+                {(this.state.loader == true) ?
+                    <Spin_single className="Single_spin">
+                        <Spin size="small" />
+                    </Spin_single>
+                    : ""
+                }
             </Market_wrap>
         )
     }
