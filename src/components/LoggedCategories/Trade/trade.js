@@ -165,14 +165,12 @@ class Trade extends Component {
         var self = this;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
-                console.log("CWRP CRYPTO");
                 this.setState({ crypto: props.cryptoPair.crypto, prevRoom: props.cryptoPair.prevRoom }, () => {
                     self.orderSocket(self.state.timePeriod, self.state.status);
                     self.getUserBal();
                 })
             }
             if (props.cryptoPair.currency !== this.state.currency) {
-                console.log("CWRP CURRENCY");
                 this.setState({ currency: props.cryptoPair.currency, prevRoom: props.cryptoPair.prevRoom }, () => {
                     self.orderSocket(self.state.timePeriod, self.state.status)
                     self.getUserBal();
@@ -182,7 +180,6 @@ class Trade extends Component {
     }
     componentDidMount() {
         var self = this;
-        console.log("DID TRADE")
         io.sails.headers = {
             Accept: 'application/json',
             'Content-Type': 'application/json',
@@ -199,11 +196,9 @@ class Trade extends Component {
             // self.getUserBal();
 
         });
-        console.log(window);
 
     }
     onInsChange(e) {
-        console.log(this.props)
         var self = this;
         // console.log(e.target.value);
         let cryptoPair = {
@@ -225,7 +220,6 @@ class Trade extends Component {
     }
     getInstrumentData() {
         var self = this;
-        console.log("get instrument data");
         self.setState({ insLoader: true });
         io.socket.request({
             method: 'GET',
@@ -236,7 +230,6 @@ class Trade extends Component {
                 Authorization: "Bearer " + this.props.isLoggedIn
             }
         }, (body, JWR) => {
-            console.log("get instrument data", body);
 
             if (body.status == 200) {
                 self.updateInstrumentsData(body.data)
@@ -248,7 +241,6 @@ class Trade extends Component {
 
     }
     updateInstrumentsData(data) {
-        console.log(data);
         let res = [];
         for (let index = 0; index < data.length; index++) {
             const element = data[index];
@@ -274,18 +266,15 @@ class Trade extends Component {
     }
     class = "tbl-content"
     callback(key) {
-        console.log(key);
         this.setState({
             MLS: key
         });
     }
     handleChange(value) {
-        console.log(value); // { key: "lucy", label: "Lucy (101)" }
         this.setState({ timePeriod: value.key });
         this.orderSocket(value.key, this.state.status);
     }
     statusChange(e) {
-        console.log(e);
         var status;
         if (e.target.value == "a") {
             status = 1;
@@ -307,7 +296,6 @@ class Trade extends Component {
             URL = `/socket/get-user-trade-data?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`
         else
             URL = `/socket/get-user-trade-data?room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`
-        console.log("orderSocket", URL, month, filter_type)
         io.socket.request({
             method: 'GET',
             url: URL,
@@ -321,19 +309,15 @@ class Trade extends Component {
 
             if (body.status == 200) {
                 let res = body.data;
-
-                console.log("Mansi", res)
                 this.updateMyOrder(res);
             }
             this.setState({ orderTradeLoader: false })
         });
     }
     updateMyOrder(response) {
-        console.log(response)
         this.setState({ orderTradeData: response })
     }
     cancelOrder(id, side, type) {
-        console.log(id, side, type)
         fetch(API_URL + `/cancel-pending-order`, {
             method: "post",
             headers: {
@@ -375,21 +359,15 @@ class Trade extends Component {
                 currency: this.state.InsCurrency
             }
         };
-        console.log(this.props)
         this.props.cryptoCurrency(cryptoPair)
     }
     getUserBal() {
         var URL;
         this.setState({ userBalLoader: true });
-
-
-        console.log("getUserBal")
-        console.log("profile-=-=-=-=-=-=-==-=", this.props.profileDetails.id);
         if (Object.keys(this.state.prevRoom).length > 0)
             URL = `/socket/get-user-balance?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}&userId=${this.props.profileDetails.id}`
         else
             URL = `/socket/get-user-balance?room=${this.state.crypto}-${this.state.currency}&userId=${this.props.profileDetails.id}`
-        console.log(this.state, this.state.prevRoom)
         io.socket.request({
             method: 'GET',
             url: URL,
@@ -399,12 +377,8 @@ class Trade extends Component {
                 Authorization: "Bearer " + this.props.isLoggedIn
             }
         }, (body, JWR) => {
-
-            console.log("user-balance-data", body);
-
             if (body.status == 200) {
                 let res = body.data;
-                console.log(res);
                 this.setState({ userBal: res, userBalLoader: false })
             }
         });
@@ -414,21 +388,16 @@ class Trade extends Component {
         });
     }
     searchInstu(e) {
-        console.log("megh", e.target.value.trim() !== "")
         var search = e.target.value;
         if (search.trim() !== "") {
-            console.log("finally i am in");
             var searchedInstu = this.state.InsData.filter(function (temp) {
-                console.log(temp, temp.name.includes(search))
                 if (temp.name.toLowerCase().includes(search.toLowerCase())) {
-                    console.log(temp, search)
                     return true;
                 }
                 else {
                     return false;
                 }
             })
-            console.log(searchedInstu)
             this.setState({ searchedInstu });
         }
         else {
@@ -510,7 +479,6 @@ class Trade extends Component {
     onLayoutChange(currentLayout, wholeLayout) {
         let self = this;
         let instrumentTableHeight, orderHistoryTableHeight, myOrderTableHeight, buySellOrderHeight, depthChartHeight;
-        console.log(currentLayout);
         for (let index = 0; index < currentLayout.length; index++) {
             const element = currentLayout[index];
             if (element.i == "instruments") {
@@ -584,14 +552,12 @@ class Trade extends Component {
     /* RGL ends here */
 
     popWindow() {
-        console.log("HEYY BUDDY DOUBLE")
         var newWindow = window.open("localhost:3000/trade", "", "width=300, height=200");
     }
     buySellLoaderFunc(loader) {
         this.setState({ buySellLoader: loader })
     }
     hisFunc(loader) {
-        console.log(loader)
         this.setState({ hisLoader: loader });
     }
     depthLoaderFunc(loader) {
@@ -604,7 +570,6 @@ class Trade extends Component {
             this.setState({ editState: false });
     }
     clearLayout() {
-        console.log(this.state.layouts, this.state.prevlayout)
         if (this.state.saveState == false) {
             this.setState({ saveState: true, editState: false, layouts: this.state.prevlayout });
 
@@ -666,7 +631,6 @@ class Trade extends Component {
                 {!self.state.isFullscreen &&
                     <Menu.Item key="2" onClick={this.goFullScreen}><Icon type="fullscreen" /> Full Screen</Menu.Item>
                 }
-                {console.log("----->", this.state.saveState)}
                 <Menu.Item onClick={this.clearLayout.bind(this)} disabled={this.state.saveState} key="3">Clear Layout</Menu.Item>
                 <Menu.Item onClick={this.saveLayout.bind(this)} disabled={this.state.saveState} key="2">Save</Menu.Item>
             </Menu>
@@ -848,7 +812,6 @@ class Trade extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
         theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
@@ -917,7 +880,6 @@ function getFromLS(key) {
                     ]
                 }
             };
-            console.log("Hello 1", ls)
         } catch (e) {
             /*Ignore*/
         }

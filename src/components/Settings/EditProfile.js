@@ -6,7 +6,7 @@ import { Tabs } from 'antd';
 import styled from 'styled-components';
 
 /* Components */
-import PersonalDetails from './Personaldetails/PD';
+import PersonalDetails from './Personaldetails/PersonalDetails';
 import Referral from './Referral';
 import Navigation from '../Navigations/Navigation';
 import Footer_home from "../Landing/Footers/Footer_home";

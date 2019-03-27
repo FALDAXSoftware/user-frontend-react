@@ -51,7 +51,6 @@ class StopLimit extends Component {
         });
     }
     componentDidMount() {
-        console.log("Stop Limit");
         this.setState({
             userBalFees: this.props.userBal.fees, amount: 0,
             total: 0,
@@ -59,8 +58,6 @@ class StopLimit extends Component {
         })
     }
     componentWillReceiveProps(props, newProps) {
-
-        console.log("CWRP stopLimit", this.state)
         this.setState({
             userBalFees: props.userBal.fees, amount: 0,
             total: 0,

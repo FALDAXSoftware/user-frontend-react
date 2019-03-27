@@ -130,7 +130,6 @@ class IDselect extends Component {
         return (
             <div>
                 <KYC_type_select_row>
-                    {console.log("SSN", this.props.countryFlag)}
                     {this.props.countryFlag == true ?
                         <Row>
                             <Select_text md={{ span: 24 }}>

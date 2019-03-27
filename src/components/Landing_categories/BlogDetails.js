@@ -49,7 +49,6 @@ class BlogDetails extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                console.log('>>>>responseData', JSON.parse(responseData.data.body))
                 this.setState({ loader: false, blogsData: JSON.parse(responseData.data.body), blogID: blogID })
             })
             .catch(error => {

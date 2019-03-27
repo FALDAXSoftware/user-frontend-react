@@ -114,13 +114,10 @@ class Wallet extends Component {
         }
     }
     searchChangeCoins(e) {
-        console.log("searc h change coin");
 
         var search = e.target.value;
-        console.log("search", search);
         if (search !== "") {
             if (search.trim() !== "") {
-                console.log("after trim");
 
                 var searchedCoins = this.props.nowalletBalance.filter(function (temp) {
                     if (temp.coin.toLowerCase().includes(search.toLowerCase()) || temp.coin_name.toLowerCase().includes(search.toLowerCase()) || temp.coin_code.toLowerCase().includes(search.toLowerCase())) {
@@ -178,7 +175,6 @@ class Wallet extends Component {
                         </Header_wrap>
                         <CoinTable>
                             <Table_wrap>
-                                {console.log(this.props, this.state)}
                                 {
                                     this.props.walletDetails !== null ?
                                         this.state.searchedWallet !== null ? <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedWallet} /> : <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.walletDetails} /> : ""
@@ -205,7 +201,6 @@ class Wallet extends Component {
                                 {/* {this.props.allCoins !== null ?
                                     (this.state.searchedCoins.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.state.searchedCoins} /> : (this.props.allCoins.data.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.props.allCoins.data} /> : ""))
                                     : ""} */}
-                                {console.log(this.props.nowalletBalance)}
                                 {
                                     this.props.nowalletBalance !== null ?
                                         this.state.searchedCoins !== null ? <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedCoins} />
@@ -227,7 +222,6 @@ class Wallet extends Component {
     }
 }
 function mapStateToProps(state) {
-    console.log(state);
 
     return ({
         walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData.balanceWallet : null,

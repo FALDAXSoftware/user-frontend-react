@@ -45,7 +45,6 @@ class Market extends Component {
     }
 
     componentWillReceiveProps(props, newProps) {
-        console.log("CWRP market", this.state)
         this.setState({
             userBalFees: props.userBal.fees, amount: 0,
             total: 0, buyPayAmt: 0, sellPayAmt: 0,
@@ -61,7 +60,6 @@ class Market extends Component {
         }
     }
     componentDidMount() {
-        console.log("Market");
     }
     onChange(e) {
         var self = this;
@@ -69,7 +67,6 @@ class Market extends Component {
         let name = e.target.name;
         let value = e.target.value;
         obj[name] = value;
-        console.log(name, value)
         if (name == "side") {
             obj["amount"] = 0;
             obj["total"] = 0;
@@ -131,7 +128,6 @@ class Market extends Component {
                         buyEstPrice: 0, sellEstPrice: 0
                     });
                     if (responseData.status == 200) {
-                        console.log(responseData)
                         self.openNotificationWithIcon('success', 'Success', responseData.message);
                     } else {
                         self.openNotificationWithIcon('error', 'Error', responseData.err);
@@ -163,7 +159,6 @@ class Market extends Component {
                     this.state.side == "Buy" ?
                         <Balance_wrap>
                             <Row>
-                                {console.log(this.props.userBal.currency[0].balance, this.props.userBal.currency[0].placed_balance)}
                                 <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>

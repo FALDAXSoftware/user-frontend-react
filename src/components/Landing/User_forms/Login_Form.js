@@ -310,7 +310,6 @@ class Login_Form extends React.Component {
         this.props.Login(obj);
       } else {
         if (error !== null) {
-          console.log(error['password'], value.password)
           if (error['password'] !== undefined && (value.password == "" || value.password == undefined)) {
             this.setState({ passIcon: false })
             document.querySelector("#passlog_icon_success").style.display = "none"

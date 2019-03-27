@@ -253,10 +253,12 @@ class PersonalDetails extends Component {
                 last_name: null,
                 dob: null,
                 country: null,
+                country_id: null,
                 street_address: null,
                 street_address_2: null,
                 city_town: null,
                 state: null,
+                state_id: null,
                 postal_code: null,
                 fiat: null,
                 date_format: null,
@@ -272,13 +274,11 @@ class PersonalDetails extends Component {
         this.props.getProfileDataAction(this.props.isLoggedIn)
     }
     componentWillReceiveProps(props, newProps) {
-        console.log("photo", props, this.state)
         if (props.profileDetails.profile_pic !== null && props.profileDetails.profile_pic !== undefined && props.profileDetails.profile_pic !== "") {
             if (this.state.profileImg !== undefined && this.state.profileImg !== null && this.state.profileImg !== "") {
                 this.setState({ profileImg: this.state.profileImg })
                 /*  this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic }) */
             } else {
-                console.log("photo", props)
                 this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic })
             }
         }
@@ -289,13 +289,16 @@ class PersonalDetails extends Component {
             fields.last_name = props.profileDetails.last_name;
             fields.dob = props.profileDetails.dob;
             fields.country = props.profileDetails.country;
+            fields.country_id = props.profileDetails.country_id;
             fields.street_address = props.profileDetails.street_address;
             fields.street_address_2 = props.profileDetails.street_address_2;
             fields.city_town = props.profileDetails.city_town;
             fields.state = props.profileDetails.state;
+            fields.state_id = props.profileDetails.state_id;
             fields.postal_code = props.profileDetails.postal_code;
             fields.fiat = props.profileDetails.fiat;
             fields.date_format = props.profileDetails.date_format;
+
         }
         if (props.apiStatus == 200 && props.apiMessage == "User details updated successfully") {
             this.openNotificationWithProfile("success", "Success", "Profile updated successfully");
@@ -321,14 +324,22 @@ class PersonalDetails extends Component {
         this.setState({ fields });
     }
     onCountryChange(country, state, city, stateID, countryID) {
-        this.setState({ countrySelected: country, stateSelected: state, citySelected: city, stateID: stateID, countryID: countryID })
+        /* this.setState({ countrySelected: country, stateSelected: state, citySelected: city, stateID: stateID, countryID: countryID })
         var loc = {
             country: country,
             state: state,
             city: city
         }
         console.log(city)
-        this.setState({ country, state, city_town: city })
+        this.setState({ country, state, city_town: city }) */
+        let fields = {};
+        fields = this.state.fields;
+        fields.state_id = stateID;
+        fields.country_id = countryID;
+        fields.country = country;
+        fields.state = state;
+        fields.city_town = city;
+        this.setState({ fields })
     }
     handleProfile(e) {
         try {
@@ -409,7 +420,10 @@ class PersonalDetails extends Component {
             }
 
             profileData.append('first_name', fields.first_name);
-            profileData.append('email', fields.email);
+            profileData.append('country', fields.country);
+            profileData.append('country_id', fields.country_id);
+            profileData.append('state', fields.state);
+            profileData.append('state_id', fields.state_id);
             profileData.append('last_name', fields.last_name);
             profileData.append('city_town', fields.city_town);
             profileData.append('street_address', fields.street_address)
@@ -442,7 +456,6 @@ class PersonalDetails extends Component {
                     <Col>
                         <Row>
                             <Left_Col md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }} xxl={{ span: 6 }}>
-                                {console.log(this.state.profileImg, this.props)}
                                 <div><ImageDiv src={this.state.profileImg} /></div>
                                 <div><Image_input type="file" onChange={this.handleProfile} name="file" id="file" /><Image_up><Image_upload htmlFor="file">Upload New Photo</Image_upload></Image_up></div>
 

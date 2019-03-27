@@ -44,7 +44,6 @@ export function Login(values) {
 }
 
 export function LogoutUser(isLoggedIn, value) {
-    console.log('>>>>>CALL', isLoggedIn, value)
     return (dispatch) => {
         dispatch(addLoader())
         fetch(API_URL + "/logout", {
@@ -58,7 +57,6 @@ export function LogoutUser(isLoggedIn, value) {
         }).then(response => response.json())
             .then((responseData) => {
                 if (responseData.status == 200) {
-                    console.log('>>>>>responseData', responseData)
                     dispatch({
                         type: 'LOGOUT',
                         payload: responseData
@@ -173,12 +171,9 @@ export function resetAction(value) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                console.log(responseData)
                 if (responseData.status == 200) {
-                    console.log("200 RES")
                     dispatch(resetData(responseData));
                 } else {
-                    console.log("500 RES")
                     dispatch(resetData(responseData));
                 }
             })

@@ -154,9 +154,7 @@ class KYCForm extends Component {
     }
     onCountryName(name) {
         var name2 = name.toLowerCase();
-        console.log("Hello KYC");
         var arr = [];
-        console.log()
         arr.push(name2);
         if (name2 == 'us' || name2 == 'ca')
             this.setState({ phoneCountry: arr, countrychange: true, showSSN: true });
@@ -193,7 +191,6 @@ class KYCForm extends Component {
             if (props.kycData.status == 200) {
                 //this.openNotificationWithIcon("success","KYC",props.kycData.message)
                 this.props.kycformData();
-                console.log("showSSN", this.state.showSSN)
                 this.props.next_step(1, null, this.state.showSSN);
             } else {
                 this.openNotificationWithIcon("error", "KYC", props.kycData.err)
@@ -213,7 +210,6 @@ class KYCForm extends Component {
         this.setState({ fields });
     }
     _changeNumber(a, mob, code) {
-        console.log(a, mob, code)
         if (mob.trim !== "") {
             var temp = `+${code.dialCode}`;
             var mobile = temp.concat(mob);;
@@ -225,7 +221,6 @@ class KYCForm extends Component {
     onSubmit() {
         if (this.validator.allValid()) {
             var profileData = this.state.fields;
-            console.log(this.state)
             profileData["steps"] = 1;
             this.props.kycFormAction(this.props.isLoggedIn, profileData);
         } else {
@@ -291,7 +286,6 @@ class KYCForm extends Component {
 
 
                                 <PhoneDiv>
-                                    {console.log("before", this.state.phoneCountry)}
                                     {
                                         this.state.displayCountry &&
                                         < IntlTelInputS allowDropdown={false} preferredCountries={[]} onlyCountries={this.state.phoneCountry} defaultCountry={this.state.phoneCountry[0]} separateDialCode={true}

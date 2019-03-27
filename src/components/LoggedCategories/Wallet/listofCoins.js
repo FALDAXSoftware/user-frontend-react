@@ -106,7 +106,6 @@ export default class TableofCoin extends Component {
                         style={{ height: 600 }}>
                         <TableContent cellpadding="10px" cellspacing="0" border="0">
                             <tbody>
-                                {console.log(tableData)}
                                 {tableData !== undefined && tableData !== null ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
                                     var img;
                                     if (tableData[index].coin_icon !== null)

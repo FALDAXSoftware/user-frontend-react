@@ -274,7 +274,6 @@ class LoggedNavigation extends Component {
         }
     }
     tradeAccess() {
-        console.log(this.props)
         if (this.props.profileDetails.is_allowed == true && this.props.profileDetails.is_kyc_done == true) {
             this.props.history.push('/trade');
         }
@@ -335,7 +334,6 @@ class LoggedNavigation extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return ({
         profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
         theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""

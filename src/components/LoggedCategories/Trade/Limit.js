@@ -46,7 +46,6 @@ class Limit extends Component {
         });
     }
     componentDidMount() {
-        console.log("Will Mount", this.state);
         this.setState({
             amount: 0,
             total: 0,
@@ -60,7 +59,6 @@ class Limit extends Component {
         });
     }
     componentWillReceiveProps(props, newProps) {
-        console.log("CWRP limit", this.state, props)
         this.setState({
             amount: 0,
             total: 0,
@@ -308,7 +306,6 @@ class Limit extends Component {
                                     <Col xs={9} sm={12}>
                                         {buyPayAmt.toFixed(4)} {this.state.currency}
                                     </Col>
-                                    {console.log(userBalFees)}
                                     <Col xs={15} sm={12}>
                                         Fee {userBalFees} %
                                     </Col>
@@ -340,7 +337,6 @@ class Limit extends Component {
                                     <Col xs={9} sm={12}>
                                         {sellPayAmt.toFixed(4)} {this.state.currency}
                                     </Col>
-                                    {console.log(userBalFees)}
                                     <Col xs={15} sm={12}>
                                         Fee {userBalFees} %
                             </Col>

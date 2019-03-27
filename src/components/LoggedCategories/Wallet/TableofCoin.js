@@ -59,7 +59,6 @@ class TableofCoin extends React.Component {
         let { tableData } = this.props;
         var me = this;
         const onClick1 = ({ key }) => {
-            console.log(key, this.props)
             var curr, sign;
             if (key == 1) { curr = "INR"; sign = "\u20B9"; }
             else if (key == 2) { curr = "USD"; sign = "$"; }
@@ -74,7 +73,6 @@ class TableofCoin extends React.Component {
             this.setState({ drop2: curr, curr2: sign }, () => { me.props.currChange(`${me.state.drop1},${curr},${me.state.drop3}`) });
         };
         const onClick3 = ({ key }) => {
-            console.log(key == 3, this.state)
             var curr, sign;
             if (key == 1) { curr = "INR"; sign = "\u20B9"; }
             else if (key == 2) { curr = "USD"; sign = "$"; }
@@ -120,7 +118,6 @@ class TableofCoin extends React.Component {
                                             <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
                                         </Dropdown>
                                     </Sub_head>
-                                    {console.log(this.state)}
                                     <Sub_head>{this.state.drop3}
                                         <Dropdown overlay={menu3} trigger={['click']}>
                                             <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
@@ -144,7 +141,6 @@ class TableofCoin extends React.Component {
                                             img = amazon_Bucket + tableData[index].coin_icon
                                         else
                                             img = amazon_Bucket + "coin/defualt_coin.png"
-                                        console.log(amazon_Bucket, img);
 
                                         return (
                                             <Col1>

@@ -84,7 +84,6 @@ export default (state = {}, action) => {
       }
 
     case "RESET":
-      console.log(action.payload)
       return {
         ...state,
         resetPass: action.payload

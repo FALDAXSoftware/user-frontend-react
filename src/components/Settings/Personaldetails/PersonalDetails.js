@@ -290,11 +290,9 @@ class PersonalDetails extends Component {
         this.setState({
             date_format: e.target.value,
         });
-        console.log("date_format", e.target.value);
         this.onChangeField(e.target.value, "date_format");
     }
     onChangeFiat = (e) => {
-        console.log('radio checked', e.target.value);
         this.setState({
             fiat: e.target.value,
         });
@@ -397,17 +395,13 @@ class PersonalDetails extends Component {
                 document.querySelectorAll(".postal_msg")[0].style.display = "block";
                 this.setState({ postalmsg: "Postal Code is required." })
             }
-            console.log(this.state.fiatIcon, this.props.profileDetails)
             if (this.state.fiatIcon == false && this.props.profileDetails.fiat == "") {
 
-                console.log(this.props.profileDetails)
                 this.setState({ fiatIcon: false })
                 document.querySelectorAll(".fiat_msg")[0].style.display = "block";
                 this.setState({ fiatmsg: "currency is required." })
             }
-            console.log(this.state.dateFIcon, this.props.profileDetails.date_format)
             if (this.state.dateFIcon !== true && this.props.profileDetails.date_format == "") {
-                console.log(this.props.profileDetails)
                 this.setState({ dateFIcon: false })
                 document.querySelectorAll(".df_msg")[0].style.display = "block";
                 this.setState({ dfmsg: "currency is required." })
@@ -431,7 +425,6 @@ class PersonalDetails extends Component {
         this.onChangeField(loc, 'country');
     }
     componentDidMount() {
-        console.log("456", this.props)
         this.props.getProfileDataAction(this.props.isLoggedIn)
     }
     componentWillReceiveProps(props, newProps) {
@@ -562,7 +555,6 @@ class PersonalDetails extends Component {
                 this.setState({ lastmsg: "Last Name field is required" })
             }
         } else if (field == "country") {
-            console.log(value)
             if ((value.country !== undefined && value.country !== null) && (value.state !== null && value.state !== undefined) && (value.city !== null && value.city !== undefined)) {
                 this.setState({ countryIcon: true })
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
@@ -621,7 +613,6 @@ class PersonalDetails extends Component {
             }
         }
         else if (field == "fiat") {
-            console.log(this.state, field, value)
             if (value !== "") {
                 this.setState({ fiatIcon: true })
                 document.querySelectorAll(".fiat_msg")[0].style.display = "none";
@@ -633,7 +624,6 @@ class PersonalDetails extends Component {
             }
         }
         else if (field == "date_format") {
-            console.log("date_format", this.state, field, value)
             if (value !== "") {
                 this.setState({ dateFIcon: true })
                 document.querySelectorAll(".df_msg")[0].style.display = "none";
@@ -749,7 +739,6 @@ class PersonalDetails extends Component {
                                     </Col>
                                 </Sixth_Row>
                                 <Sixth_Row>
-                                    {console.log(this.state, this.props)}
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                                         <FIAT>Default Date Format*</FIAT>
                                         <RadioGroup onChange={this.onChangeFormat} value={this.state.date_format !== "" ? this.state.date_format : profileDetails.date_format}>

@@ -13,7 +13,6 @@ import { loadState, saveState } from './localstorage';
 
 import Navigation from './components/Navigations/Navigation';
 let persisteState = loadState();
-console.log("persistewmnzbf", persisteState);
 if (persisteState) {
     if (persisteState.walletReducer) {
         delete persisteState.walletReducer.cryptoPair;

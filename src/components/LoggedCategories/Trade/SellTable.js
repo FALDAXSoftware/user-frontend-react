@@ -60,7 +60,6 @@ class SellTable extends Component {
         else {
             URL = `/socket/get-sell-book?room=${this.state.crypto}-${this.state.currency}`
         }
-        console.log(URL)
         io.socket.request({
             method: 'GET',
             url: URL,
@@ -166,7 +165,6 @@ class SellTable extends Component {
             lastsum: sum,
             result: row
         });
-        console.log("buyrow------------", row);
 
     }
     componentWillReceiveProps(props, newProps) {
