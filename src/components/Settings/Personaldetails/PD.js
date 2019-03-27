@@ -272,11 +272,13 @@ class PersonalDetails extends Component {
         this.props.getProfileDataAction(this.props.isLoggedIn)
     }
     componentWillReceiveProps(props, newProps) {
+        console.log("photo", props, this.state)
         if (props.profileDetails.profile_pic !== null && props.profileDetails.profile_pic !== undefined && props.profileDetails.profile_pic !== "") {
             if (this.state.profileImg !== undefined && this.state.profileImg !== null && this.state.profileImg !== "") {
                 this.setState({ profileImg: this.state.profileImg })
                 /*  this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic }) */
             } else {
+                console.log("photo", props)
                 this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic })
             }
         }
@@ -384,11 +386,12 @@ class PersonalDetails extends Component {
     submitForm() {
         if (this.validator.allValid()) {
             let { fields } = this.state;
+            const profileData = new FormData();
             this.setState({ profileImg: undefined, profileImage: undefined, remove_pic: false })
             if (this.state.profileImage !== null && this.state.profileImage !== undefined && !this.state.profileImg.includes("def_profile.jpg")) {
                 profileData.append('profile_pic', this.state.profileImage)
             }
-            const profileData = new FormData();
+
             profileData.append('first_name', fields.first_name);
             profileData.append('email', fields.email);
             profileData.append('last_name', fields.last_name);
@@ -398,7 +401,7 @@ class PersonalDetails extends Component {
             profileData.append('postal_code', fields.postal_code);
             profileData.append('fiat', fields.fiat)
             profileData.append('date_format', fields.date_format)
-
+            this.props.profileupdateAction(this.props.isLoggedIn, profileData);
         } else {
             this.validator.showMessages();
             // rerender to show messages for the first time
@@ -423,6 +426,7 @@ class PersonalDetails extends Component {
                     <Col>
                         <Row>
                             <Left_Col md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }} xxl={{ span: 6 }}>
+                                {console.log(this.state.profileImg, this.props)}
                                 <div><ImageDiv src={this.state.profileImg} /></div>
                                 <div><Image_input type="file" onChange={this.handleProfile} name="file" id="file" /><Image_up><Image_upload htmlFor="file">Upload New Photo</Image_upload></Image_up></div>
 

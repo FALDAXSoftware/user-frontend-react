@@ -442,7 +442,7 @@ class Navigation extends Component {
                         <Menu_item key="5" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/news`}>NEWS</NavLink></Menu_item>
                         <Menu_item key="6" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/contact-us`}>CONTACT</NavLink></Menu_item>
                         <Menu_item key="7" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/list-your-token`}>LIST YOUR TOKEN</NavLink></Menu_item>
-                        <Menu_item key="8" onClick={this.showComing}><NavLink className="Nav_selected" href="#">EXCHANGE</NavLink></Menu_item>
+                        <Menu_item key="8" onClick={this.showComing}><NavLink className="Nav_selected" onClick={() => this.props.history.push(`/conversion`)}>EXCHANGE</NavLink></Menu_item>
                     </Menu_main>
                     <Right_div>
                         {this.props.isLoggedIn ? <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} /> :

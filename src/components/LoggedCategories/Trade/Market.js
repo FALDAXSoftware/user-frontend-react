@@ -126,7 +126,10 @@ class Market extends Component {
                 body: JSON.stringify(params)
             }).then(response => response.json())
                 .then((responseData) => {
-                    this.setState({ Loader: false, total: 0, amount: 0 });
+                    this.setState({
+                        Loader: false, total: 0, amount: 0, buyPayAmt: 0, sellPayAmt: 0,
+                        buyEstPrice: 0, sellEstPrice: 0
+                    });
                     if (responseData.status == 200) {
 
                         self.openNotificationWithIcon('success', 'Success', responseData.message);
@@ -270,7 +273,7 @@ class Market extends Component {
                                 </Col>
                                 <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{buyPayAmt.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
+                                        <Willpay2>{buyEstPrice.toFixed(4)} {this.state.currency}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
@@ -280,13 +283,13 @@ class Market extends Component {
                                         Estimated Best Price
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {buyPayAmt.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {buyPayAmt.toFixed(4)} {this.state.currency}
                                     </Col>
                                     <Col xs={15} sm={12}>
                                         Fee {this.state.userBalFees} %
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {buyEstPrice.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {(buyPayAmt - buyEstPrice).toFixed(4)} {this.state.currency}
                                     </Col>
                                 </Row>
                             </Esti>
@@ -301,7 +304,7 @@ class Market extends Component {
                                 </Col>
                                 <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{sellPayAmt.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}</Willpay2>
+                                        <Willpay2>{sellEstPrice.toFixed(4)} {this.state.currency}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
@@ -311,13 +314,13 @@ class Market extends Component {
                                         Estimated Best Price
                             </Col>
                                     <Col xs={9} sm={12}>
-                                        {sellPayAmt.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {sellPayAmt.toFixed(4)} {this.state.currency}
                                     </Col>
                                     <Col xs={15} sm={12}>
                                         Fee {this.state.userBalFees} %
                             </Col>
                                     <Col xs={9} sm={12}>
-                                        {sellEstPrice.toFixed(4)} {this.props.cryptoPair !== "" ? this.props.cryptoPair.currency : ""}
+                                        {(sellPayAmt - sellEstPrice).toFixed(4)} {this.state.currency}
                                     </Col>
                                 </Row>
                             </Esti>

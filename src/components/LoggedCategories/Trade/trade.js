@@ -319,7 +319,7 @@ class Trade extends Component {
             if (body.status == 200) {
                 let res = body.data;
 
-
+                console.log("Mansi", res)
                 this.updateMyOrder(res);
             }
             this.setState({ orderTradeLoader: false })

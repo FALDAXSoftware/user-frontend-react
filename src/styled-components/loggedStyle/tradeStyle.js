@@ -649,22 +649,23 @@ export const ScrollTableContent = styled.div`
         overflow: auto !important;
     }
     & .scrollbar>div:nth-child(3){
-        width: 9px !important;
+        width: 8px !important;
         right: 0px !important;
         bottom: 0px !important;
         top: 0px !important;
         border-radius:0px !important;
-        border: 1px solid #d8d8d8;
+        
         border-right: none;
         border-bottom: none;
         padding: 2px;
-        background-color: white; 
+        background-color: transparent; 
     }
     & .scrollbar.news>div:nth-child(3){
         border: none !important;
     }
     & .scrollbar>div:nth-child(3)>div{
         border-radius: 2px !important;
+        background-color: rgb(136, 136, 136)!important; 
     }
 `
 export const SettingDropdown = styled(Dropdown)`
