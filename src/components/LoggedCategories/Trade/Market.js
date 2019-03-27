@@ -131,7 +131,7 @@ class Market extends Component {
                         buyEstPrice: 0, sellEstPrice: 0
                     });
                     if (responseData.status == 200) {
-
+                        console.log(responseData)
                         self.openNotificationWithIcon('success', 'Success', responseData.message);
                     } else {
                         self.openNotificationWithIcon('error', 'Error', responseData.err);
@@ -158,17 +158,19 @@ class Market extends Component {
                         </RadioGroup>
                     </Buy_sell>
                 </Buy_wrap>
+
                 {Object.keys(this.props.userBal).length > 0 ?
                     this.state.side == "Buy" ?
                         <Balance_wrap>
                             <Row>
+                                {console.log(this.props.userBal.currency[0].balance, this.props.userBal.currency[0].placed_balance)}
                                 <Col xs={24} sm={12}>
                                     <Row>
                                         <Col span={12}>
                                             <Balance1>Balance</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Balance>{this.props.userBal.currency[0].placed_balance.toFixed(2)} {this.state.currency}</Balance>
+                                            <Balance>{this.props.userBal.currency[0].balance.toFixed(2)} {this.state.currency}</Balance>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -178,7 +180,7 @@ class Market extends Component {
                                             <Balance1>Total</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.currency[0].balance.toFixed(2)} {this.state.currency}</Total>
+                                            <Total>{(this.props.userBal.currency[0].balance + (this.props.userBal.currency[0].balance - this.props.userBal.currency[0].placed_balance)).toFixed(2)} {this.state.currency}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -212,7 +214,7 @@ class Market extends Component {
                                             <Balance1>Balance</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Balance>{this.props.userBal.crypto[0].placed_balance.toFixed(2)} {this.state.crypto}</Balance>
+                                            <Balance>{this.props.userBal.crypto[0].balance.toFixed(2)} {this.state.crypto}</Balance>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -222,7 +224,7 @@ class Market extends Component {
                                             <Balance1>Total</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.crypto[0].balance.toFixed(2)} {this.state.crypto}</Total>
+                                            <Total>{(this.props.userBal.crypto[0].balance + (this.props.userBal.crypto[0].balance - this.props.userBal.crypto[0].placed_balance)).toFixed(2)} {this.state.crypto}</Total>
                                         </Col>
                                     </Row>
                                 </Col>

@@ -282,6 +282,21 @@ class PersonalDetails extends Component {
                 this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic })
             }
         }
+        if (props.profileDetails !== "" && props.profileDetails !== undefined) {
+            let fields = {};
+            fields = this.state.fields;
+            fields.first_name = props.profileDetails.first_name;
+            fields.last_name = props.profileDetails.last_name;
+            fields.dob = props.profileDetails.dob;
+            fields.country = props.profileDetails.country;
+            fields.street_address = props.profileDetails.street_address;
+            fields.street_address_2 = props.profileDetails.street_address_2;
+            fields.city_town = props.profileDetails.city_town;
+            fields.state = props.profileDetails.state;
+            fields.postal_code = props.profileDetails.postal_code;
+            fields.fiat = props.profileDetails.fiat;
+            fields.date_format = props.profileDetails.date_format;
+        }
         if (props.apiStatus == 200 && props.apiMessage == "User details updated successfully") {
             this.openNotificationWithProfile("success", "Success", "Profile updated successfully");
             this.props.clearEditData();
@@ -312,6 +327,7 @@ class PersonalDetails extends Component {
             state: state,
             city: city
         }
+        console.log(city)
         this.setState({ country, state, city_town: city })
     }
     handleProfile(e) {
@@ -395,7 +411,7 @@ class PersonalDetails extends Component {
             profileData.append('first_name', fields.first_name);
             profileData.append('email', fields.email);
             profileData.append('last_name', fields.last_name);
-            profileData.append('city_town', fields.citySelected);
+            profileData.append('city_town', fields.city_town);
             profileData.append('street_address', fields.street_address)
             profileData.append('street_address_2', fields.street_address_2);
             profileData.append('postal_code', fields.postal_code);

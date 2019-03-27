@@ -654,7 +654,6 @@ export const ScrollTableContent = styled.div`
         bottom: 0px !important;
         top: 0px !important;
         border-radius:0px !important;
-        
         border-right: none;
         border-bottom: none;
         padding: 2px;

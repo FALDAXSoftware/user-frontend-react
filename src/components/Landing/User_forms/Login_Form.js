@@ -306,6 +306,7 @@ class Login_Form extends React.Component {
         if (value.otp && value.otp !== null && value.otp.trim() !== "" && value.otp !== undefined) {
           obj['otp'] = value.otp;
         }
+        this.setState({ loader: true })
         this.props.Login(obj);
       } else {
         if (error !== null) {
@@ -475,12 +476,15 @@ class Login_Form extends React.Component {
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
         this.openNotificationWithIcon('success', 'Login Successful', props.errorStatus.message);
+        this.setState({ loader: false })
         /* this.props.dispModal("login"); */
       } else if (props.errorStatus.status == 201) {
+        this.setState({ loader: false })
         this.setState({ isOtpRequired: true });
         // document.querySelector("#otp-field").focus();
         /* this.openNotificationWithIcon('error', 'Error', props.errorStatus.err); */
       } else {
+        this.setState({ loader: false })
         this.openNotificationWithIcon('error', 'Error', props.errorStatus.err);
       }
       this.props.clearLogin();
@@ -580,7 +584,7 @@ class Login_Form extends React.Component {
                   </Check_wrap>
 
                   {(errors = getFieldError('required')) ? errors.join(',') : null}
-                  <Button_login onClick={this.submit}>LOGIN</Button_login>
+                  <Button_login disabled={this.state.loader} onClick={this.submit}>LOGIN</Button_login>
                   <Sign>
                     No account? <Sign_a onClick={() => this.dispModal("signup")}>Sign Up</Sign_a>
                   </Sign>

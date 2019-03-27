@@ -155,18 +155,20 @@ export default class CountryPick extends Component {
                         console.log(responseData) 
                        Countries = responseData.data;
                    }); */
+        console.log("DID")
         let allCountries = CountryData.getAllCountries();
         this.setState({ countries: allCountries, fetching: false, callOnce: true });
         if (this.props.profileDetails.country_id !== undefined) {
             console.log("123456 Country", allCountries, this.props)
-            var country = Number(this.props.profileDetails.country_id) + 1;
+            var country = Number(this.props.profileDetails.country_id);
             var states = CountryData.getStatesOfCountry(country);
             console.log("123456 States", states)
             this.setState({ states })
             if (this.props.profileDetails.state_id !== undefined) {
-                console.log("123456 cities", cities)
                 var cities = CountryData.getCitiesOfState(this.props.profileDetails.state_id);
                 this.setState({ cities })
+
+                console.log("123456 cities", cities)
             }
         }
         if (this.props.theme !== undefined && this.props.theme !== "") {
@@ -220,6 +222,7 @@ export default class CountryPick extends Component {
                     <Col sm={24} md={8} xl={8} xxl={8}>
                         <Select_wrap>
                             <Country>City*</Country>
+                            {console.log(this.props.profileDetails)}
                             <SelectS
                                 showSearch
                                 value={this.state.city_selected !== null ? this.state.city_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.city_town)}
