@@ -79,6 +79,11 @@ const ButtonToolbarOne = styled(ButtonToolbar)`
 const CoinImage = styled.img`
     width: 60px;
     height: 60px;
+    @media(max-width:475px)
+    {
+        width:30px;
+        height:30px;
+    }
 `
 const NDF = styled.p`
     text-align: center; 
@@ -106,7 +111,6 @@ class WalletDetails extends Component {
     }
     componentDidMount() {
         var self = this;
-        this.setState({ loader: true });
         var total = 0;
         if (this.props.walletDetails !== null) {
             var tableData = this.props.walletDetails.coins;
@@ -122,6 +126,7 @@ class WalletDetails extends Component {
         if (this.props.location !== undefined) {
             if (this.props.location.search.includes('coinID')) {
                 var coin_name = this.props.location.search.split('=');
+                this.setState({ loader: true });
                 fetch(API_URL + "/wallet-details", {
                     method: "post",
                     headers: {
@@ -220,11 +225,13 @@ class WalletDetails extends Component {
                                             <Money>${this.state.total !== null ? this.state.total : ""}</Money>
                                             <Currency>USD</Currency> */}
                                         </WallTotal>
-                                        {/* <Select defaultValue="USD" style={{ width: 200, marginLeft: "auto" }}>
-                                            <Option value="USD">USD</Option>
-                                            <Option value="EUR">EUR</Option>
-                                            <Option value="INR">INR</Option>
-                                        </Select> */}
+                                        {/* 
+                                            <Select defaultValue="USD" style={{ width: 200, marginLeft: "auto" }}>
+                                                <Option value="USD">USD</Option>
+                                                <Option value="EUR">EUR</Option>
+                                                <Option value="INR">INR</Option>
+                                            </Select> 
+                                        */}
                                     </Right_head>
                                 </Col>
                             </Row>
@@ -283,7 +290,7 @@ class WalletDetails extends Component {
                     </ContainerContact2>
                 </Grey_wrap>
                 <CommonFooter />
-                {(this.props.loader && this.state.lodaer) ? <Spin_Ex className="Ex_spin">
+                {(this.props.loader || this.state.lodaer) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : ""}
             </Contact_wrap>
