@@ -58,20 +58,24 @@ const Menu_main = styled(Menu)`
     }
 `
 const Menu_item = styled(Menu.Item)`
-padding:0px 18px;
-font-size: 13px;
-font-family: "Open sans";
-color: rgb( 40, 37, 40 );
-font-weight: bold;
-text-transform: uppercase;      
-vertical-align: unset;
-float: left;
-border-bottom:0px !important;
-
-@media(max-width:1365px)
-{
-    padding:0px 8px;
-}
+    padding:0px 18px;
+    font-size: 13px;
+    font-family: "Open sans";
+    color: rgb( 40, 37, 40 );
+    font-weight: bold;
+    text-transform: uppercase;      
+    vertical-align: unset;
+    float: left;
+    border-bottom:0px !important;
+    font-weight:600 !important;
+    &:hover
+    {
+        color:
+    }
+    @media(max-width:1365px)
+    {
+        padding:0px 8px;
+    }
 `
 const NAV = styled.span`
     color:${props => props.theme.mode = "dark" ? "white" : ""};
@@ -318,7 +322,7 @@ class LoggedNavigation extends Component {
                         <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                         <LogoutStyle to="/editProfile">PROFILE</LogoutStyle>
                         <span> <Link to="/dashboard">DASHBOARD</Link></span>
-                        <span> <Link to="/trade">TRADE</Link></span>
+                        <span onClick={this.tradeAccess}>TRADE</span>
                         <span> <Link to="/wallet">WALLET</Link></span>
                         <span> <Link to="/history">HISTORY</Link></span>
                         <span><CarLink to="/careers">Careers</CarLink></span>
