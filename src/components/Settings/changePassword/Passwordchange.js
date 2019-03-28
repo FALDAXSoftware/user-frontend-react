@@ -348,6 +348,7 @@ class PasswordChange extends Component {
                 document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
                 document.querySelectorAll(".newchange_msg")[0].style.display = "none";
                 document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
+
                 this.props.passwordChange(this.props.isLoggedIn, value);
             } else {
                 if (value.current_password == '' || value.current_password == null || value.current_password == undefined) {
@@ -521,6 +522,7 @@ class PasswordChange extends Component {
     componentWillReceiveProps(props, newProps) {
         if (props.passChange !== false) {
             if (props.passChange.status == 200) {
+                this.props.form.resetFields();
                 this.openNotificationWithIcon("success", "Change Password", props.passChange.message)
             } else {
                 this.openNotificationWithIcon("error", "Change Password", props.passChange.err)

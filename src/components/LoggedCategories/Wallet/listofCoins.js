@@ -97,7 +97,6 @@ export default class TableofCoin extends Component {
                                         <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
                                     </Dropdown>
                                 </Sub_head>
-                                <Sub_head></Sub_head>
                             </Head>
                         </thead>
                     </TableHeader>
