@@ -157,7 +157,6 @@ class Blog extends Component {
                                                 return (
                                                     <div key={key} className="my-masonry-grid_column blog-card-col">
                                                         <Link to={`/blogDetails?blogID=${result.id}`}>
-                                                            {console.log(result.featured_image, DefaultBlog)}
                                                             <Card
                                                                 style={{ width: "100%" }}
                                                                 cover={<CardCover alt="example" style={{ backgroundImage: `url(${result.featured_image ? result.featured_image : DefaultBlog})` }} />}

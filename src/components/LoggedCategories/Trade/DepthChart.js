@@ -28,14 +28,11 @@ class DepthChart extends Component {
     }
 
     componentDidMount() {
-        console.log("DEPTH DID MOUNT")
         this.depthFunc();
     }
     componentWillReceiveProps(props, neProps) {
         var self = this;
-        console.log("Depth will", props.crypto !== undefined && props.currency !== undefined)
         if (props.crypto !== undefined && props.currency !== undefined) {
-            console.log("Depth will if", props.crypto !== this.state.crypto || props.currency !== this.state.currency)
             if (props.crypto !== this.state.crypto || props.currency !== this.state.currency) {
 
                 this.setState({
@@ -51,7 +48,6 @@ class DepthChart extends Component {
 
     }
     depthFunc() {
-        console.log("DEPTH CHART")
         this.props.depthLoaderFunc(true);
         let URL = "/socket/get-depth-chart-data?room=" + this.state.crypto + "-" + this.state.currency
         io.socket.request({
@@ -119,7 +115,6 @@ class DepthChart extends Component {
     }
     render() {
         var self = this;
-        console.log("------------", this.props.height);
 
         let graphData = {
             type: 'line',
@@ -172,7 +167,6 @@ class DepthChart extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
     })

@@ -129,7 +129,6 @@ class Mini_graph extends React.Component {
         });
     }
     componentWillReceiveProps(props, newProps) {
-        console.log(props)
         /* var self = this;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -146,7 +145,6 @@ class Mini_graph extends React.Component {
     }
     updateGraph(data) {
         var self = this;
-        console.log("card data - ", data);
         let dataArray = [];
         let timeStampArray = [];
         data.tradeChartDetails.map(element => {
@@ -159,16 +157,13 @@ class Mini_graph extends React.Component {
         graphOptions.timeStamps = timeStampArray;
         graphOptions.price = Math.round(data.average_price * 100) / 100;
         graphOptions.percentage = data.percentchange;
-        console.log(graphOptions);
 
         this.setState({
             data: graphOptions
         }, () => {
-            console.log("dataArray", dataArray);
 
             // self.refs.chart.chartInstance.data.datasets[0].data = dataArray;
             // self.refs.chart.chartInstance.update();
-            console.log(self.refs.chart.chartInstance);
             self.forceUpdate();
             self.refs.chart.chartInstance.update();
         });
@@ -200,7 +195,6 @@ class Mini_graph extends React.Component {
                 }
             ]
         }
-        console.log("from render", graphData, this.state);
 
         const { coinName, image, price, percentage } = this.state.data;
         return (

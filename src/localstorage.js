@@ -23,7 +23,6 @@ export const saveState = (state) => {
   try {
     let stateCopy = { ...state }
     // delete stateCopy.walletReducer.cryptoPair;
-    console.log("---------------", state);
 
     const serializedState = JSON.stringify(stateCopy);
     /* console.log(serializedState); */

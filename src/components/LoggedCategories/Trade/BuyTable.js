@@ -43,7 +43,6 @@ class BuyTable extends Component {
     }
     componentDidMount() {
         var self = this;
-        console.log("buy did mount");
 
         self.buyTableData();
         // this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
@@ -63,7 +62,6 @@ class BuyTable extends Component {
         else {
             URL = `/socket/get-buy-book?room=${this.state.crypto}-${this.state.currency}`
         }
-        console.log(this.state, URL)
         io.socket.request({
             method: 'GET',
             url: URL,
@@ -73,10 +71,8 @@ class BuyTable extends Component {
                 Authorization: "Bearer " + this.props.isLoggedIn
             }
         }, (body, JWR) => {
-            console.log("buybook", body);
             if (body.status == 200) {
                 let res = body.data;
-                console.log(res)
                 this.updateData(res);
             }
         });
@@ -166,7 +162,6 @@ class BuyTable extends Component {
 
         for (let index = 0; index < row.length; index++) {
             const element = row[index];
-            console.log(element)
             sum += element.amount * element.bid;
             row[index]["total"] = sum;
         }
@@ -177,11 +172,9 @@ class BuyTable extends Component {
             lastsum: sum,
             result: row
         });
-        console.log("buyrow------------", row);
 
     }
     componentWillReceiveProps(props, newProps) {
-        console.log(props)
         var self = this;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -225,7 +218,6 @@ class BuyTable extends Component {
                                     className="scrollbar"
                                     hideTracksWhenNotNeeded={true}>
                                     <TableContent cellpadding="10px" cellspacing="0" border="0">
-                                        {console.log(this.state.result)}
                                         {this.state.result.length ?
                                             <tbody>
                                                 {this.state.result.map(element => (

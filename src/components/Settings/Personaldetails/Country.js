@@ -93,14 +93,9 @@ export default class CountryPick extends Component {
 
     handleChange(value, position) {
         var newPosition = Number(position.key) - 1;
-        console.log(value, position)
         var countrySelected = CountryData.getCountryById(newPosition);
-        console.log(countrySelected);
         var states = CountryData.getStatesOfCountry(newPosition + 1);
-
         this.setState({ city_selected: "", state_selected: "", country_selected: value, stateID: null, countryID: newPosition, states });
-
-        console.log(this.props)
         if (this.props.kyc == "kyc") {
             this.props.onCountryName(countrySelected.sortname);
         }
@@ -155,18 +150,19 @@ export default class CountryPick extends Component {
                         console.log(responseData) 
                        Countries = responseData.data;
                    }); */
+
         let allCountries = CountryData.getAllCountries();
         this.setState({ countries: allCountries, fetching: false, callOnce: true });
         if (this.props.profileDetails.country_id !== undefined) {
-            console.log("123456 Country", allCountries, this.props)
-            var country = Number(this.props.profileDetails.country_id) + 1;
+
+            var country = Number(this.props.profileDetails.country_id);
             var states = CountryData.getStatesOfCountry(country);
-            console.log("123456 States", states)
+
             this.setState({ states })
             if (this.props.profileDetails.state_id !== undefined) {
-                console.log("123456 cities", cities)
                 var cities = CountryData.getCitiesOfState(this.props.profileDetails.state_id);
                 this.setState({ cities })
+
             }
         }
         if (this.props.theme !== undefined && this.props.theme !== "") {

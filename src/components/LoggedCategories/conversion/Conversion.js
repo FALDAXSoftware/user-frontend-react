@@ -13,7 +13,6 @@ class Conversion extends React.Component {
         this.handleTabChange = this.handleTabChange.bind(this);
     }
     handleTabChange(e) {
-        console.log(e);
         this.setState({
             selectedTab: e
         })

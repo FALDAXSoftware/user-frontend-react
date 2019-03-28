@@ -51,7 +51,6 @@ class StopLimit extends Component {
         });
     }
     componentDidMount() {
-        console.log("Stop Limit");
         this.setState({
             userBalFees: this.props.userBal.fees, amount: 0,
             total: 0,
@@ -59,8 +58,6 @@ class StopLimit extends Component {
         })
     }
     componentWillReceiveProps(props, newProps) {
-
-        console.log("CWRP stopLimit", this.state)
         this.setState({
             userBalFees: props.userBal.fees, amount: 0,
             total: 0,
@@ -183,7 +180,7 @@ class StopLimit extends Component {
                                             <Balance1>Balance</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Balance>{this.props.userBal.currency[0].placed_balance.toFixed(2)} {this.state.currency}</Balance>
+                                            <Balance>{this.props.userBal.currency[0].balance.toFixed(2)} {this.state.currency}</Balance>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -193,7 +190,7 @@ class StopLimit extends Component {
                                             <Balance1>Total</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.currency[0].balance.toFixed(2)} {this.state.currency}</Total>
+                                            <Total>{(this.props.userBal.currency[0].balance + (this.props.userBal.currency[0].balance - this.props.userBal.currency[0].placed_balance)).toFixed(2)} {this.state.currency}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -227,7 +224,7 @@ class StopLimit extends Component {
                                             <Balance1>Balance</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Balance>{this.props.userBal.crypto[0].placed_balance.toFixed(2)} {this.state.crypto}</Balance>
+                                            <Balance>{this.props.userBal.crypto[0].balance.toFixed(2)} {this.state.crypto}</Balance>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -237,7 +234,7 @@ class StopLimit extends Component {
                                             <Balance1>Total</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.crypto[0].balance.toFixed(2)} {this.state.crypto}</Total>
+                                            <Total>{(this.props.userBal.crypto[0].balance + (this.props.userBal.crypto[0].balance - this.props.userBal.crypto[0].placed_balance)).toFixed(2)} {this.state.crypto}</Total>
                                         </Col>
                                     </Row>
                                 </Col>

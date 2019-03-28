@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Table } from 'react-bootstrap';
 import { Menu, Dropdown, Icon } from 'antd';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { NDF } from './TableofCoin'
 import { TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 
 import { Head, Sub_head, DropMenu, Col1, Bit_img, Bit_text, Bit, Bit_price, Price, Icon_wrap } from "../../../styled-components/loggedStyle/walletStyle";
@@ -106,7 +107,6 @@ export default class TableofCoin extends Component {
                         style={{ height: 600 }}>
                         <TableContent cellpadding="10px" cellspacing="0" border="0">
                             <tbody>
-                                {console.log(tableData)}
                                 {tableData !== undefined && tableData !== null ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
                                     var img;
                                     if (tableData[index].coin_icon !== null)
@@ -129,10 +129,7 @@ export default class TableofCoin extends Component {
                                             </td>
                                         </Col1>
                                     );
-                                }) : <p style={{
-                                    textAlign: "center", fontWeight: "600", fontSize: "17px",
-                                    color: "black", marginTop: "30px", fontFamily: "Open Sans"
-                                }}>No Data Found</p>
+                                }) : <NDF>No Data Found</NDF>
 
                                     : ""}
                             </tbody>

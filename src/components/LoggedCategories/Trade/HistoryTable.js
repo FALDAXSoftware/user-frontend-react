@@ -63,7 +63,6 @@ class HistoryTable extends Component {
     }
     componentDidMount() {
         var self = this;
-        console.log("hay hay")
         self.historyData();
         io.socket.on('tradehistoryUpdate', (data) => {
             self.updateData(data)
@@ -108,7 +107,6 @@ class HistoryTable extends Component {
 
             if (body.status == 200) {
                 let res = body.data;
-                console.log("Order HIstory Response", res)
                 this.props.hisFunc(false);
                 this.updateData(res);
             }
@@ -119,7 +117,6 @@ class HistoryTable extends Component {
         });
     }
     updateData(data) {
-        console.log("HIstory Data", data)
         const rows = [];
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
@@ -147,7 +144,6 @@ class HistoryTable extends Component {
     }
     historyFunc() {
         var me = this
-        console.log("historyFunc", this.state.data)
         return (this.state.data.map((element, index) => (
             <tr>
                 <SideType type={element.side} width="10%">{element.side}</SideType>

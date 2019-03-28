@@ -160,7 +160,6 @@ class WalletDetails extends Component {
                             loader: false, coin_code: coin_name[1],
 
                         }, () => {
-                            console.log("state update");
                         });
                     })
                     .catch(error => {
@@ -202,7 +201,6 @@ class WalletDetails extends Component {
                                 <Col xxl={12} xl={12} lg={12} sm={24}>
                                     <Left_head>
                                         <MY_wallet>
-                                            {console.log(this.state)}
                                             <span>{this.state.walletUserData.length > 0 ? this.state.walletUserData[0].coin_name : "COIN"}</span>
                                         </MY_wallet>
                                         <WalletCoin>

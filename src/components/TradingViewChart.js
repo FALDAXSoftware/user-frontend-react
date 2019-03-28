@@ -39,19 +39,16 @@ class TraddingViewChart extends React.Component {
     };
     tvWidget = null;
     componentWillReceiveProps(props, newProps) {
-        console.log("Will TV");
         var self = this;
         let flag = false;
         let crypto = this.state.crypto, currency = this.state.currency;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
             if (props.cryptoPair.crypto !== this.state.crypto) {
-                console.log("CWRP CRYPTO");
                 this.setState({ crypto: props.cryptoPair.crypto })
                 flag = true;
                 crypto = props.cryptoPair.crypto;
             }
             if (props.cryptoPair.currency !== this.state.currency) {
-                console.log("CWRP CURRENCY");
                 this.setState({ currency: props.cryptoPair.currency })
                 currency = props.cryptoPair.currency;
                 flag = true;
@@ -118,7 +115,6 @@ class TraddingViewChart extends React.Component {
     }
 
     componentDidMount() {
-        console.log("DID TV", this.props)
         let currency, crypto;
         if (this.props.cryptoPair.crypto == undefined) {
             currency = this.state.currency;
@@ -186,7 +182,6 @@ class TraddingViewChart extends React.Component {
     }
 }
 function mapStateToProps(state) {
-    console.log(state)
     return ({
         /* isLoggedIn: state.simpleReducer.isLoggedIn,
         theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "", */
