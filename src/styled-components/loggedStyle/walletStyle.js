@@ -127,12 +127,12 @@ export const Col1 = styled.tr`
     }
 `
 export const Bit_img = styled.img`
+    margin-right:15px;
     vertical-align:middle;
     width:20px;
 `
 export const Bit_text = styled.div`
     vertical-align:middle;
-    padding-left:15px;
     display:inline-block;
     >p
     {

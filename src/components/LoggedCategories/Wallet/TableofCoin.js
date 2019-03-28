@@ -12,10 +12,8 @@ import { Head, Sub_head, DropMenu, Col1, Bit_img, Bit_text, Bit, Bit_price, Pric
 import { globalVariables } from '../../../Globals';
 let { amazon_Bucket } = globalVariables;
 const BorderedHistoryWrap = styled(History_wrap)`
-    margin-left:30px;
-    margin-right:30px;
-    border:1px solid #d8d8d8;
     overflow-x:auto;
+    width:100%;
     &::-webkit-scrollbar {
         width: 0.5em;
         height: 0.5em;
@@ -31,13 +29,26 @@ const BorderedHistoryWrap = styled(History_wrap)`
      
 
 `
+const TableContent1 = styled(TableContent)`
+    >tbody>tr:nth-of-type(even)
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
+    }
+`
 const Table_coin = styled(Table)`
     @media(max-width:1160px)
     {
         min-width:1160px;
     }
 `
-
+export const NDF = styled.p`
+    text-align: center; 
+    font-weight: 600;
+    font-size: 17px;
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    margin-top: 30px;
+    font-family: "Open Sans";
+`
 let total = 0;
 class TableofCoin extends React.Component {
     constructor(props) {
@@ -132,8 +143,10 @@ class TableofCoin extends React.Component {
                 <OTwrap>
                     <ScrollTableContent>
                         <Scrollbars
+                            className="scrollbar"
+                            hideTracksWhenNotNeeded={true}
                             style={{ height: 600 }}>
-                            <TableContent cellpadding="10px" cellspacing="0" border="0">
+                            <TableContent1 cellpadding="10px" cellspacing="0" border="0">
                                 <tbody>
                                     {tableData !== undefined && tableData !== null ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
                                         var img;
@@ -175,12 +188,9 @@ class TableofCoin extends React.Component {
                                         );
                                     })
 
-                                        : <p style={{
-                                            textAlign: "center", fontWeight: "600", fontSize: "17px",
-                                            color: "black", marginTop: "30px", fontFamily: "Open Sans"
-                                        }}>No Data Found</p> : ""}
+                                        : <NDF>No Data Found</NDF> : ""}
                                 </tbody>
-                            </TableContent>
+                            </TableContent1>
                         </Scrollbars>
                     </ScrollTableContent>
                 </OTwrap>

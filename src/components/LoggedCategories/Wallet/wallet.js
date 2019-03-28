@@ -46,6 +46,8 @@ const Inputsearch = styled(Search)`
     >input
     {
         background-color:${props => props.theme.mode == "dark" ? "#020e18" : ""};
+        color:${props => props.theme.mode == "dark" ? "white" : ""}
+        caret-color:${props => props.theme.mode == "dark" ? "white" : ""}
     }
     >span>i
     {
