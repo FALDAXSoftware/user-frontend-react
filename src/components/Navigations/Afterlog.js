@@ -155,7 +155,6 @@ class Afterlog extends Component {
         }
         this.props.actions.allCoins.allCoinsData();
         this.props.actions.wallet.walletData();
-        this.props.actions.theme.darkTheme(false);
         this.props.actions.auth.LogoutUser(this.props.isLoggedIn, formData);
     }
     changetoDark() {

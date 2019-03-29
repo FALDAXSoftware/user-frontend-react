@@ -199,12 +199,12 @@ class ResetPassword extends Component {
       var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,60}$/;
       var bool = re.test(value);
       var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
-      if (numb.test(value) || letters.test(value)) {  this.setState({ stroke: "red", percent: 20 }) }
+      if (numb.test(value) || letters.test(value)) { this.setState({ stroke: "red", percent: 20 }) }
       if (alphanum.test(value) && value.length < 6) { this.setState({ stroke: "orange", percent: 40 }) }
       if (alphanum.test(value) && value.length == 8) { this.setState({ stroke: "yellow", percent: 60 }) }
-      if (re.test(value) && value.length > 8 && value.length < 60) {  this.setState({ stroke: "#7CFC00", percent: 80 }) }
-      if (re.test(value) && value.length > 10 && value.length < 60) {  this.setState({ stroke: "#008000", percent: 100 }) }
-      if (value.length > 60) {  this.setState({ stroke: "red", percent: 0 }) }
+      if (re.test(value) && value.length > 8 && value.length < 60) { this.setState({ stroke: "#7CFC00", percent: 80 }) }
+      if (re.test(value) && value.length > 10 && value.length < 60) { this.setState({ stroke: "#008000", percent: 100 }) }
+      if (value.length > 60) { this.setState({ stroke: "red", percent: 0 }) }
       if (value !== "" && value !== undefined) {
         if (bool == true) {
           this.setState({ newpassIcon: true, password: value })
@@ -357,8 +357,10 @@ class ResetPassword extends Component {
         <RowWrap >
           <ColLeft sm={24} lg={12}>
             <LeftWrap >
-              <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
-              <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+              <a href={globalVariables.WordpressSiteURL}>
+                <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
+                <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+              </a>
             </LeftWrap>
           </ColLeft>
           <ColRight sm={24} lg={12}>

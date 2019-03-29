@@ -51,13 +51,14 @@ export const TVBar = styled.div`
 `
 export const Left_div = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
-    padding-top:30px;
+    padding-top:25px;
     padding-bottom: 30px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
     @media(max-width:991px)
     {
         margin-right:0px;
+        padding-top:15px;
     }
 `
 export const EditDiv = styled(Left_div)`
@@ -202,10 +203,10 @@ export const Right_div = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
-    height:100%;
+    height:auto;
     @media(max-width:991px)
     {
-        margin-top:30px;
+        margin-top:0px;
     }
 `
 export const Right_div1 = styled(Right_div)`
@@ -216,7 +217,7 @@ export const Right_div1 = styled(Right_div)`
     }
     @media(max-width:991px)
     {
-        margin-top:30px;
+        margin-top:0px;
     }
 `
 export const InstruTable = styled.div`

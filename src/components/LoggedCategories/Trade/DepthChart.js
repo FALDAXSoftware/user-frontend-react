@@ -48,21 +48,27 @@ class DepthChart extends Component {
 
     }
     depthFunc() {
-        this.props.depthLoaderFunc(true);
-        let URL = "/socket/get-depth-chart-data?room=" + this.state.crypto + "-" + this.state.currency
+        let self = this;
+        self.props.depthLoaderFunc(true);
+        let URL = "/socket/get-depth-chart-data?room=" + self.state.crypto + "-" + self.state.currency
         io.socket.request({
             method: 'GET',
             url: URL,
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                Authorization: "Bearer " + this.props.isLoggedIn
+                Authorization: "Bearer " + self.props.isLoggedIn
             }
         }, (body, JWR) => {
             if (body.status == 200) {
                 let res = body.data;
-                this.updateGraph(res);
+                console.log("Depth Chart>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", res);
+                self.updateGraph(res);
             }
+        });
+        io.socket.on('depthChartUpdate', (data) => {
+
+            self.updateGraph(data)
         });
     }
     updateGraph(data) {

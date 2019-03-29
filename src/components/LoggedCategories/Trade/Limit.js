@@ -182,7 +182,7 @@ class Limit extends Component {
                                             <Balance1>Balance</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Balance>{this.props.userBal.currency[0].balance.toFixed(2)} {this.state.currency}</Balance>
+                                            <Balance>{this.props.userBal.currency[0].placed_balance.toFixed(2)} {this.state.currency}</Balance>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -192,7 +192,7 @@ class Limit extends Component {
                                             <Balance1>Total</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{(this.props.userBal.currency[0].balance + (this.props.userBal.currency[0].balance - this.props.userBal.currency[0].placed_balance)).toFixed(2)} {this.state.currency}</Total>
+                                            <Total>{(this.props.userBal.currency[0].balance).toFixed(2)} {this.state.currency}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -202,7 +202,7 @@ class Limit extends Component {
                                             <Balance1>In orders</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{(this.props.userBal.currency[0].balance - this.props.userBal.currency[0].placed_balance).toFixed(2)} {this.state.currency}</Total>
+                                            <Total>{(Math.abs(this.props.userBal.currency[0].balance - this.props.userBal.currency[0].placed_balance)).toFixed(2)} {this.state.currency}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -212,7 +212,7 @@ class Limit extends Component {
                                             <Balance1>Best ask</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.buyPay.toFixed(2)} {this.state.currency}</Total>
+                                            <Total>{this.props.userBal.buyPay.toFixed(2)} {this.state.crypto}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -226,7 +226,7 @@ class Limit extends Component {
                                             <Balance1>Balance</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Balance>{this.props.userBal.crypto[0].balance.toFixed(2)} {this.state.crypto}</Balance>
+                                            <Balance>{this.props.userBal.crypto[0].placed_balance.toFixed(2)} {this.state.crypto}</Balance>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -236,7 +236,7 @@ class Limit extends Component {
                                             <Balance1>Total</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{(this.props.userBal.crypto[0].balance + (this.props.userBal.crypto[0].balance - this.props.userBal.crypto[0].placed_balance)).toFixed(2)} {this.state.crypto}</Total>
+                                            <Total>{(this.props.userBal.crypto[0].balance).toFixed(2)} {this.state.crypto}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -246,7 +246,7 @@ class Limit extends Component {
                                             <Balance1>In orders</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{(this.props.userBal.crypto[0].balance - this.props.userBal.crypto[0].placed_balance).toFixed(2)} {this.state.crypto}</Total>
+                                            <Total>{(Math.abs(this.props.userBal.crypto[0].balance - this.props.userBal.crypto[0].placed_balance)).toFixed(2)} {this.state.crypto}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -256,7 +256,7 @@ class Limit extends Component {
                                             <Balance1>Best ask</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.sellPay.toFixed(2)} {this.state.crypto}</Total>
+                                            <Total>{this.props.userBal.sellPay.toFixed(2)} {this.state.currency}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -294,7 +294,7 @@ class Limit extends Component {
                                 </Col>
                                 <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{buyEstPrice.toFixed(4)} {this.state.currency}</Willpay2>
+                                        <Willpay2>{buyPayAmt.toFixed(4)} {this.state.currency}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>

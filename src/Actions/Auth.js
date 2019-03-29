@@ -1,5 +1,6 @@
 import { globalVariables } from '../Globals';
 import { removeLoader, addLoader } from "./Settings/settings";
+import { darkTheme } from './Theme/themeAction'
 let { API_URL } = globalVariables;
 
 export function deleteAccount(isLoggedIn, value) {
@@ -61,6 +62,7 @@ export function LogoutUser(isLoggedIn, value) {
                         type: 'LOGOUT',
                         payload: responseData
                     })
+                    dispatch(darkTheme(false))
                 }
                 dispatch(removeLoader())
             }).catch(error => {

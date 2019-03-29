@@ -9,7 +9,7 @@ import SimpleReactValidator from "simple-react-validator";
 
 /* Components */
 import { forgotAction, clearForgot } from "../../../Actions/Auth";
-
+import { globalVariables } from '../../../Globals';
 /* Global Constants */
 /* Styled-Components */
 const RowWrap = styled(Row)`
@@ -238,8 +238,10 @@ class ForgotForm extends Component {
         <RowWrap >
           <ColLeft sm={24} lg={12}>
             <LeftWrap >
-              <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
-              <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+              <a href={globalVariables.WordpressSiteURL}>
+                <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
+                <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+              </a>
             </LeftWrap>
           </ColLeft>
           <ColRight sm={24} lg={12}>

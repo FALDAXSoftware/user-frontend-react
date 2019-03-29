@@ -11,6 +11,7 @@ import { Username, Welcome_text, Email_label, Email_req, Pass_req } from "./Logi
 import { ActiveEye, Eye } from '../../../Constants/images';
 /* Global Constants */
 
+import { globalVariables } from '../../../Globals';
 /* Styled-Components */
 export const LoginWrap = styled.div`
 background-color:#f0f3f2;
@@ -310,20 +311,22 @@ class SignupForm extends Component {
         obj['device_type'] = 0;
         this.props.Signup(obj);
       } else {
-        if (error['first_name'] !== undefined) {
-          this.onChangeField(value.first_name, 'firstname')
-        }
-        if (error['last_name'] !== undefined) {
-          this.onChangeField(value.last_name, 'lastname')
-        }
-        if (error['email'] !== undefined) {
-          this.onChangeField(value.email, 'email')
-        }
-        if (error['password'] !== undefined) {
-          this.onChangeField(value.password, 'password')
-        }
-        if (error['confirm_password'] !== undefined) {
-          this.onChangeField(value.confirm_password, 'confirm_password')
+        if (error !== undefined && error !== null) {
+          if (error['first_name'] !== undefined) {
+            this.onChangeField(value.first_name, 'firstname')
+          }
+          if (error['last_name'] !== undefined) {
+            this.onChangeField(value.last_name, 'lastname')
+          }
+          if (error['email'] !== undefined) {
+            this.onChangeField(value.email, 'email')
+          }
+          if (error['password'] !== undefined) {
+            this.onChangeField(value.password, 'password')
+          }
+          if (error['confirm_password'] !== undefined) {
+            this.onChangeField(value.confirm_password, 'confirm_password')
+          }
         }
         //this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue")
       }
@@ -532,8 +535,10 @@ class SignupForm extends Component {
         <RowWrap >
           <ColLeft sm={24} lg={12}>
             <LeftWrap >
+              <a href={globalVariables.WordpressSiteURL}>
               <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
               <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+              </a>
             </LeftWrap>
           </ColLeft>
           <ColRight sm={24} lg={12}>

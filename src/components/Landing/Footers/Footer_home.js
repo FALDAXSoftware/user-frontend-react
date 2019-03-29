@@ -283,11 +283,6 @@ class FooterHome extends Component {
                                             : <Footer_Link href="/login#openTicket"> Open a Ticket</Footer_Link>}
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        {/* <Footer_Link to="/faq"> */}
-                                        FAQ
-                                        {/* </Footer_Link> */}
-                                    </li>
-                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         API Documentation
                                                     </li>
                                     {/* <li style={{cursor:"pointer"}} onClick={this.showComing}>Language</li> */}
@@ -308,9 +303,6 @@ class FooterHome extends Component {
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.scrollMap.bind(this)}>
                                         Service Availability
-                                    </li>
-                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        Security
                                     </li>
                                 </Footer_ul>
                             </FooterLinkCol>
