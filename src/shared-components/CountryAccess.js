@@ -122,7 +122,7 @@ class ComingSoon extends Component {
                 >
                     <Modal_wrap>
                         <h3 style={{ fontFamily: "Open Sans", fontSize: "40px", textAlign: "center", color: "rgb( 15, 71, 123 )", fontWeight: "600", marginTop: "40px" }}>You Can't Trade</h3>
-                        <p style={{ fontFamily: "Open Sans", fontSize: "28px", textAlign: "center", color: "black", fontWeight: "600", marginTop: "40px" }}>Trading is illegal in our country.</p>
+                        <p style={{ fontFamily: "Open Sans", fontSize: "28px", textAlign: "center", color: "black", fontWeight: "600", marginTop: "40px" }}>Trading is illegal in your country.</p>
                         {/* <Sub_wrap>
                             <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>
                             <Email_input placeholder="Email Address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />

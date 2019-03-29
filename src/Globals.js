@@ -3,7 +3,7 @@ export const globalVariables = {
 
     amazon_Bucket: "https://s3.us-east-2.amazonaws.com/production-static-asset/",
 
-    WordpressSiteURL: "http://18.220.230.76",
+    WordpressSiteURL: "http://3.16.234.205",
 
     tvChartURL: "/chart",
     //API_URL: 'http://18.191.87.133:8084', //Live URL

@@ -288,7 +288,7 @@ class WalletDetails extends Component {
                     </ContainerContact2>
                 </Grey_wrap>
                 <CommonFooter />
-                {(this.props.loader || this.state.lodaer) ? <Spin_Ex className="Ex_spin">
+                {(this.props.loader || this.state.loader) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : ""}
             </Contact_wrap>
