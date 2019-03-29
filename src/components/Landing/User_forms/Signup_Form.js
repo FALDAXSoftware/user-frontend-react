@@ -294,6 +294,7 @@ class SignupForm extends Component {
   }
   submit = () => {
     this.props.form.validateFields((error, value) => {
+      console.log(error, value)
       if (this.state.emailIcon == true && this.state.firstIcon == true && this.state.lastIcon == true && this.state.passIcon == true && this.state.confirmIcon == true) {
         this.setState({ isSignDisable: true });
         document.querySelectorAll("#email_icon_success")[0].style.display = "none";
@@ -536,8 +537,8 @@ class SignupForm extends Component {
           <ColLeft sm={24} lg={12}>
             <LeftWrap >
               <a href={globalVariables.WordpressSiteURL}>
-              <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
-              <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+                <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
+                <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
               </a>
             </LeftWrap>
           </ColLeft>
