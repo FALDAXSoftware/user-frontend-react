@@ -15,7 +15,7 @@ const OTwrap2 = styled(OTwrap)`
     min-width:auto;
     @media(max-width:991px)
     {
-        min-width:767px;
+        min-width:500px;
     }
 `
 const NDF = styled.p`

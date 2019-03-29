@@ -61,7 +61,7 @@ const Menu_item = styled(Menu.Item)`
     padding:0px 18px;
     font-size: 13px;
     font-family: "Open sans";
-    color: rgb( 40, 37, 40 );
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
     font-weight: bold;
     text-transform: uppercase;      
     vertical-align: unset;
@@ -70,7 +70,7 @@ const Menu_item = styled(Menu.Item)`
     font-weight:600 !important;
     &:hover
     {
-        color:
+        color:#1890ff;
     }
     @media(max-width:1365px)
     {

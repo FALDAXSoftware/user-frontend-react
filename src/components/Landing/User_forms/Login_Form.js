@@ -524,8 +524,10 @@ class Login_Form extends React.Component {
         <RowWrap >
           <ColLeft sm={24} lg={12}>
             <LeftWrap >
-              <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
-              <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+              <a href={globalVariables.WordpressSiteURL}>
+                <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
+                <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+              </a>
             </LeftWrap>
           </ColLeft>
           <ColRight sm={24} lg={12}>
