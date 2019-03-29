@@ -293,6 +293,7 @@ class SignupForm extends Component {
   }
   submit = () => {
     this.props.form.validateFields((error, value) => {
+      console.log(error, value)
       if (this.state.emailIcon == true && this.state.firstIcon == true && this.state.lastIcon == true && this.state.passIcon == true && this.state.confirmIcon == true) {
         this.setState({ isSignDisable: true });
         document.querySelectorAll("#email_icon_success")[0].style.display = "none";
@@ -310,20 +311,22 @@ class SignupForm extends Component {
         obj['device_type'] = 0;
         this.props.Signup(obj);
       } else {
-        if (error['first_name'] !== undefined) {
-          this.onChangeField(value.first_name, 'firstname')
-        }
-        if (error['last_name'] !== undefined) {
-          this.onChangeField(value.last_name, 'lastname')
-        }
-        if (error['email'] !== undefined) {
-          this.onChangeField(value.email, 'email')
-        }
-        if (error['password'] !== undefined) {
-          this.onChangeField(value.password, 'password')
-        }
-        if (error['confirm_password'] !== undefined) {
-          this.onChangeField(value.confirm_password, 'confirm_password')
+        if (error !== null) {
+          if (error['first_name'] !== undefined && error['first_name'] !== null) {
+            this.onChangeField(value.first_name, 'firstname')
+          }
+          if (error['last_name'] !== undefined) {
+            this.onChangeField(value.last_name, 'lastname')
+          }
+          if (error['email'] !== undefined) {
+            this.onChangeField(value.email, 'email')
+          }
+          if (error['password'] !== undefined) {
+            this.onChangeField(value.password, 'password')
+          }
+          if (error['confirm_password'] !== undefined) {
+            this.onChangeField(value.confirm_password, 'confirm_password')
+          }
         }
         //this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue")
       }
