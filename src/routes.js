@@ -5,6 +5,7 @@ import LoggedNavigation from './components/Navigations/LoggedNavigation';
 import About from './components/About';
 import Referral from "../src/components/Settings/Referral"
 import Editprofile from '../src/components/Settings/EditProfile';
+import HubspotTickets from '../src/components/Settings/Account_settings/HubspotTickets'
 import Footer from '../src/components/Landing/Footers/Footer';
 
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
@@ -72,6 +73,11 @@ const routes = [
     path: "/conversion",
     component: () => (<Conversion io={io} />),
     io: io
+  },
+  {
+    exact: false,
+    path: "/hs-tickets",
+    component: () => (<HubspotTickets io={io} />),
   }
 ];
 

@@ -131,6 +131,10 @@ class DepthChart extends Component {
                 borderJoinStyle: 'miter',
                 borderCapStyle: 'butt',
                 borderWidth: 1,
+                lineTension: 0,
+                pointHitRadius: 2,
+                steppedLine: true,
+                pointRadius: 0.2,
                 data: [...self.state.bidData]
             }, {
                 label: "Ask",
@@ -139,6 +143,10 @@ class DepthChart extends Component {
                 borderJoinStyle: 'miter',
                 borderCapStyle: 'butt',
                 borderWidth: 1,
+                lineTension: 0,
+                pointHitRadius: 2,
+                pointRadius: 0.2,
+                steppedLine: true,
                 data: [...this.state.askData]
             }]
         }
@@ -149,6 +157,7 @@ class DepthChart extends Component {
                 <Row>
                     <Col xl={24}>
                         <Chart1_wrap id="depth-chart1">
+                        {console.log("Depth Height",this.props.height)}
                             <Line height={this.props.height} data={graphData} options={{
                                 responsive: true,
                                 maintainAspectRatio: false,
