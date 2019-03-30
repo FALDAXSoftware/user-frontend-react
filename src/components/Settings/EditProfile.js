@@ -18,12 +18,12 @@ import Paymethods from './Payment/Paymethods';
 const TabPane = Tabs.TabPane;
 
 /* Styled-Components */
-const ProfileWrapper = styled.div`
+export const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom:30px;
   background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
 `
-const ProfileDiv = styled.div`
+export const ProfileDiv = styled.div`
 background-color: ${props => props.theme.mode == "dark" ? "#041422" : "#ffffff"};
   margin:auto;
   width:95%;
