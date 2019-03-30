@@ -72,6 +72,13 @@ const Grey_wrap_trade = styled(Grey_wrap)`
     padding-top:120px;
 `
 
+const RGL = styled(ResponsiveReactGridLayout)`
+    & .react-resizable-handle::after
+    {
+        border-right: 2px solid rgb(255, 255, 255) !important;
+        border-bottom: 2px solid rgb(255, 255, 255) !important;
+    }
+`
 const columns = [{
     title: 'Name',
     dataIndex: 'name',
@@ -137,7 +144,7 @@ class Trade extends Component {
             orderHistoryTableHeight: 330,
             myOrderTableHeight: 150,
             buySellOrderHeight: 91,
-            depthChartHeight: 380,
+            depthChartHeight: 398,
             buySellLoader: false,
             hisLoader: false,
             depthLoader: false,
@@ -524,9 +531,9 @@ class Trade extends Component {
             if (element.i == "depthChart") {
                 let newHeight = 0;
                 if (element.h == 3) {
-                    newHeight = 380;
+                    newHeight = 398;
                 } else {
-                    newHeight = 380 + (160 * (element.h - 3))
+                    newHeight = 398 + (160 * (element.h - 3))
                 }
                 depthChartHeight = newHeight;
 
@@ -660,7 +667,7 @@ class Trade extends Component {
                     </Row>
                     <Row>
                         <Col>
-                            <ResponsiveReactGridLayout
+                            <RGL
                                 className="layout"
                                 layouts={this.state.layouts}
                                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
@@ -804,7 +811,7 @@ class Trade extends Component {
                                         </Left_div2>
                                     </div>
                                 </div>
-                            </ResponsiveReactGridLayout>
+                            </RGL>
                         </Col >
                     </Row >
                 </Grey_wrap_trade >

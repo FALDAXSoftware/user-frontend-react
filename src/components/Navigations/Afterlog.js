@@ -174,7 +174,8 @@ class Afterlog extends Component {
                 <Menu.Item key="0">
                     <a onClick={() => this.props.history.push('/editProfile')}> Profile </a>
                 </Menu.Item>
-                <Menu.Item key="1" onClick={this.logout.bind(this)}>Logout</Menu.Item>
+                <Menu.Item key="1"><a onClick={() => this.props.history.push('/hs-tickets')}>Hubspot Tickets</a></Menu.Item>
+                <Menu.Item key="2" onClick={this.logout.bind(this)}>Logout</Menu.Item>
             </Menu>
         )
         let Avatar_img

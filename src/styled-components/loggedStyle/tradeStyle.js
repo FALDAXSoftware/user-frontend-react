@@ -52,7 +52,7 @@ export const TVBar = styled.div`
 export const Left_div = styled.div`
     background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "white"};
     padding-top:25px;
-    padding-bottom: 30px;
+    padding-bottom: 34px;
     box-shadow: ${props => props.theme.mode == "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
     border-radius:5px;
     @media(max-width:991px)
