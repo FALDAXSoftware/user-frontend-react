@@ -28,7 +28,7 @@ background-color: ${props => props.theme.mode == "dark" ? "#041422" : "#ffffff"}
   margin:auto;
   width:95%;
   border-radius: 7px;
-  min-height:1300px;
+  min-height:70vh;
 `
 const TabsStyle = styled(Tabs)`
     & .ant-tabs-tab-active
