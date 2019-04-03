@@ -14,6 +14,7 @@ import { Email_req } from "../../Landing/User_forms/Login_Form"
 import { globalVariables } from "../../../Globals"
 import { profileupdateAction, removepicAction, getProfileDataAction, clearEditData } from "../../../Actions/Settings/settings"
 import { DefaultProfile } from "../../../Constants/images";
+import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -278,7 +279,7 @@ class PersonalDetails extends Component {
             fiatIcon: null,
             dateFIcon: null,
             remove_pic: false,
-            fiat: "",
+            //fiat: "",
             date_format: ""
         }
         this.handleProfile = this.handleProfile.bind(this);
@@ -292,17 +293,17 @@ class PersonalDetails extends Component {
         });
         this.onChangeField(e.target.value, "date_format");
     }
-    onChangeFiat = (e) => {
+    /* onChangeFiat = (e) => {
         this.setState({
             fiat: e.target.value,
         });
         this.onChangeField(e.target.value, "fiat");
-    }
+    } */
     submit = () => {
         this.props.form.validateFields((error, value) => {
             let dataDate = "";
             const profileData = new FormData();
-            if (error == null && this.state.fiatIcon !== false && this.state.dateFIcon !== false && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '' && this.props.profileDetails.country !== null) || ((this.state.countrySelected !== null && this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
+            if (error == null /* this.state.fiatIcon !== false  */ && this.state.dateFIcon !== false && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '' && this.props.profileDetails.country !== null) || ((this.state.countrySelected !== null && this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
                 document.querySelectorAll(".first_msg")[0].style.display = "none";
                 document.querySelectorAll(".last_msg")[0].style.display = "none";
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
@@ -343,10 +344,10 @@ class PersonalDetails extends Component {
                     profileData.append('street_address_2', value.street_address_2)
                 profileData.append('postal_code', number);
 
-                var fiat = this.state.fiat !== "" ? this.state.fiat : this.props.profileDetails.fiat;
+                /* var fiat = this.state.fiat !== "" ? this.state.fiat : this.props.profileDetails.fiat; */
                 var date_format = this.state.date_format !== "" ? this.state.date_format : this.props.profileDetails.date_format;
 
-                profileData.append('fiat', fiat)
+                //profileData.append('fiat', fiat)
                 profileData.append('date_format', date_format)
 
                 if (this.state.Datedata !== undefined)
@@ -395,12 +396,12 @@ class PersonalDetails extends Component {
                 document.querySelectorAll(".postal_msg")[0].style.display = "block";
                 this.setState({ postalmsg: "Postal Code is required." })
             }
-            if (this.state.fiatIcon == false && this.props.profileDetails.fiat == "") {
+            /* if (this.state.fiatIcon == false && this.props.profileDetails.fiat == "") {
 
                 this.setState({ fiatIcon: false })
                 document.querySelectorAll(".fiat_msg")[0].style.display = "block";
                 this.setState({ fiatmsg: "currency is required." })
-            }
+            } */
             if (this.state.dateFIcon !== true && this.props.profileDetails.date_format == "") {
                 this.setState({ dateFIcon: false })
                 document.querySelectorAll(".df_msg")[0].style.display = "block";
@@ -612,7 +613,7 @@ class PersonalDetails extends Component {
                 this.setState({ postalmsg: "Postal Code is required" })
             }
         }
-        else if (field == "fiat") {
+        /* else if (field == "fiat") {
             if (value !== "") {
                 this.setState({ fiatIcon: true })
                 document.querySelectorAll(".fiat_msg")[0].style.display = "none";
@@ -622,7 +623,7 @@ class PersonalDetails extends Component {
                 document.querySelectorAll(".fiat_msg")[0].style.display = "block";
                 this.setState({ fiatmsg: "currency is required" })
             }
-        }
+        } */
         else if (field == "date_format") {
             if (value !== "") {
                 this.setState({ dateFIcon: true })
@@ -727,7 +728,7 @@ class PersonalDetails extends Component {
                                         <Postal_Msg className="postal_msg">{this.state.postalmsg}</Postal_Msg>
                                     </Col>
                                 </Fourth_Row>
-                                <Sixth_Row>
+                                {/* <Sixth_Row>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                                         <FIAT>Default Currency*</FIAT>
                                         <RadioGroup onChange={this.onChangeFiat} value={this.state.fiat !== "" ? this.state.fiat : profileDetails.fiat}>
@@ -737,7 +738,7 @@ class PersonalDetails extends Component {
                                         </RadioGroup>
                                         <FIAT_Msg className="fiat_msg">{this.state.fiatmsg}</FIAT_Msg>
                                     </Col>
-                                </Sixth_Row>
+                                </Sixth_Row> */}
                                 <Sixth_Row>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                                         <FIAT>Default Date Format*</FIAT>
@@ -757,9 +758,7 @@ class PersonalDetails extends Component {
 
                             </Right_Col>
                             {(this.props.loader == true) ?
-                                <Spin_Ex className="Ex_spin">
-                                    <Spin size="large" />
-                                </Spin_Ex>
+                                <FaldaxLoader />
                                 : ""
                             }
                         </Row>

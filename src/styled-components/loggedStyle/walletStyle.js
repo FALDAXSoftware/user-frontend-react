@@ -105,10 +105,31 @@ export const Head = styled.tr`
     text-transform: uppercase;
     padding-left:45px;
     height:40px;
-    >th{
+    >th
+    {
         vertical-align: middle !important;
         padding-left: ${props => props.wallet ? "" : "45px !important"};
         text-align:${props => props.wallet ? "center" : ""};
+    }
+    @media(max-width:1160px)
+    {
+        >th{
+            padding-left:8px !important;
+        }
+        >th:last-child
+        {
+            width:10%;
+        }
+    }
+    @media(max-width:767px)
+    {
+        >th{
+            width:200px;
+        }
+        >th:last-child
+        {
+            width:50px;
+        }
     }
 `
 export const Sub_head = styled.th`
@@ -124,6 +145,28 @@ export const Col1 = styled.tr`
         font-family: ${props => props.wallet ? "Open Sans" : ""};
         font-weight:  ${props => props.wallet ? "600" : ""};
         color: ${props => props.wallet ? props.theme.mode == "dark" ? "white" : "rgb( 33, 33, 33 )" : ""};
+    }
+    @media(max-width:1160px)
+    {
+        >td
+        {
+            padding-left:8px !important;
+        }
+        >td:last-child
+        {
+            width:10%;
+        }
+    }
+    @media(max-width:767px)
+    {
+        >td
+        {
+            width:200px;
+        }
+        >td:last-child
+        {
+            width:50px;
+        }    
     }
 `
 export const Bit_img = styled.img`
@@ -152,7 +195,7 @@ export const Bit_price = styled.p`
     color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"}; 
     font-weight:600;
     text-transform: uppercase;  
-    @media(max-width:767px)
+    @media(max-width:992px)
     {
         font-size:14px;
     }
@@ -164,6 +207,10 @@ export const Price = styled.p`
     font-weight:600;
     vertical-align: middle;
     margin-bottom: 0px;
+    @media(max-width:992px)
+    {
+        font-size:16px;
+    }
 `
 export const DropMenu = styled(Icon)`
     font-size: 15px !important;

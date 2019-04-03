@@ -282,9 +282,9 @@ class FooterHome extends Component {
                                         {this.props.isLoggedIn ? <Footer_Link href="/open-ticket"> Open a Ticket</Footer_Link>
                                             : <Footer_Link href="/login#openTicket"> Open a Ticket</Footer_Link>}
                                     </li>
-                                    <li style={{ cursor: "pointer" }} onClick={this.showComing}>
+                                    {/* <li style={{ cursor: "pointer" }} onClick={this.showComing}>
                                         API Documentation
-                                                    </li>
+                                                    </li> */}
                                     {/* <li style={{cursor:"pointer"}} onClick={this.showComing}>Language</li> */}
                                     <li style={{ cursor: "pointer" }}>
                                         <Footer_Link href={`${globalVariables.WordpressSiteURL}/list-your-token`}>List Your Token</Footer_Link>
@@ -317,11 +317,12 @@ class FooterHome extends Component {
                                             <a target="_blank" href={contactDetails.fb_profile}><FontAwesomeIcons icon={faFacebook} color={true} /></a>
                                         </LI>
                                         <LI>
-                                            <a target="_blank" href={contactDetails.twitter_profile}><FontAwesomeIcons icon={faTwitter} color={true} /></a>
-                                        </LI>
-                                        <LI>
                                             <a target="_blank" href={contactDetails.linkedin_profile}><FontAwesomeIcons icon={faLinkedinIn} color={true} /></a>
                                         </LI>
+                                        <LI>
+                                            <a target="_blank" href={contactDetails.twitter_profile}><FontAwesomeIcons icon={faTwitter} color={true} /></a>
+                                        </LI>
+
                                         {/* <LI>
                                             <a target="_blank" href={contactDetails.discord_profile}><FontAwesomeIcons icon={faDiscord} color={true} /></a>
                                         </LI> */}

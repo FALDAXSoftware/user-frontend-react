@@ -12,6 +12,7 @@ import {
     TF_Disable, disableAction
 } from "../../../Actions/Settings/passwordChange";
 import { Eye, ActiveEye } from "../../../Constants/images";
+import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 
 const Wrapper = styled.div`
 `
@@ -678,9 +679,7 @@ class PasswordChange extends Component {
                         </Right_Col>
                     </BarRow>
                     : ''}
-                {(this.props.loader == true) ? <Spin_Ex className="Ex_spin">
-                    <Spin size="large" />
-                </Spin_Ex> : ""}
+                {(this.props.loader == true) ? <FaldaxLoader /> : ""}
             </Wrapper>
         );
     }

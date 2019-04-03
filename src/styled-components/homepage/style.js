@@ -70,3 +70,28 @@ export const Spin_Ex = styled.div`
     height: 100%;
     z-index: 9999;
 `
+export const SpinImg = styled.img`
+    @media(max-width:5000px)
+    {
+        width:200px;   
+    }
+    @media(max-width:1600px)
+    {
+        width:150px;
+    }
+    @media(max-width:992px)
+    {
+        width:100px;
+    }
+    @media(max-width:568px)
+    {
+        width:70px;
+    }
+`
+export const SpinDiv = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+width:100%;
+height:100%;
+`

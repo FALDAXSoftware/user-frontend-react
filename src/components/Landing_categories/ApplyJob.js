@@ -4,6 +4,7 @@ import { Row, Col, Spin, notification } from 'antd';
 import styled from 'styled-components';
 import SimpleReactValidator from 'simple-react-validator';
 import Navigation from '../Navigations/Navigation';
+import FaldaxLoader from '../../shared-components/FaldaxLoader';
 import { Spin_Ex } from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
@@ -376,9 +377,7 @@ class ApplyJob extends Component {
                     </ContainerContact>
                 </Grey_wrap>
                 <CommonFooter />
-                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
-                    <Spin size="large" />
-                </Spin_Ex> : ""}
+                {(this.state.loader) ? <FaldaxLoader /> : ""}
             </Contact_wrap>
         );
     }

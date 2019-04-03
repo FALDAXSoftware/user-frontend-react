@@ -35,6 +35,7 @@ import {
 } from "../../../styled-components/loggedStyle/dashStyle"
 import { globalVariables } from '../../../Globals';
 import TradingViewChart from "../../TradingViewChart";
+import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -75,8 +76,8 @@ const Grey_wrap_trade = styled(Grey_wrap)`
 const RGL = styled(ResponsiveReactGridLayout)`
     & .react-resizable-handle::after
     {
-        border-right: 2px solid rgb(255, 255, 255) !important;
-        border-bottom: 2px solid rgb(255, 255, 255) !important;
+        border-right: ${props => props.theme.mode == "dark" ? "2px solid rgb(255, 255, 255) !important" : ""};
+        border-bottom: ${props => props.theme.mode == "dark" ? "2px solid rgb(255, 255, 255) !important" : ""};
     }
 `
 const columns = [{
@@ -816,9 +817,7 @@ class Trade extends Component {
                     </Row >
                 </Grey_wrap_trade >
                 <CommonFooter />
-                {(this.props.loader || this.state.loader) ? <Spin_Ex className="Ex_spin">
-                    <Spin size="large" />
-                </Spin_Ex> : ""}
+                {(this.props.loader || this.state.loader) ? <FaldaxLoader /> : ""}
             </Contact_wrap >
         );
     }
