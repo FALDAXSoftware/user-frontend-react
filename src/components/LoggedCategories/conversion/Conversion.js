@@ -7,7 +7,7 @@ import { globalVariables } from "../../../Globals";
 const API_URL = globalVariables.API_URL;
 const amazon_Bucket = globalVariables.amazon_Bucket;
 const Option = Select.Option
-
+let io = null;
 class Conversion extends React.Component {
     constructor(props) {
         super(props);
@@ -17,8 +17,10 @@ class Conversion extends React.Component {
             cryptoList: [],
             currency: 'BTC',
             crypto: 'XRP',
+            prevRoom: "",
             includeFees: true
         }
+        io = this.props.io
         this.getCurrencies = this.getCurrencies.bind(this);
         this.getCrypto = this.getCrypto.bind(this);
         this.radioChange = this.radioChange.bind(this);
@@ -28,6 +30,36 @@ class Conversion extends React.Component {
     componentDidMount() {
         this.getCrypto();
         this.getCurrencies();
+    }
+    getPairDetails() {
+        io.sails.url = API_URL;
+        var URL;
+        this.setState({ loader: true })
+        if (this.props.cryptoPair.prevRoom !== undefined && Object.keys(this.props.cryptoPair.prevRoom).length > 0) {
+            URL = `/socket/get-sell-book?prevRoom=${this.props.cryptoPair.prevRoom.crypto}-${this.props.cryptoPair.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`
+        }
+        else {
+            URL = `/socket/get-sell-book?room=${this.state.crypto}-${this.state.currency}`
+        }
+        io.socket.request({
+            method: 'GET',
+            url: URL,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }, (body, JWR) => {
+
+
+            if (body.status == 200) {
+                let res = body.data;
+                this.updateData(res);
+            }
+        });
+        io.socket.on('sellbookUpdate', (data) => {
+            this.updateData(data);
+        });
     }
     getCrypto() {
         fetch(API_URL + `/coin-list-converison`, {
