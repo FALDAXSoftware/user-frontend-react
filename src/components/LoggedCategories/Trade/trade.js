@@ -817,7 +817,7 @@ class Trade extends Component {
                     </Row >
                 </Grey_wrap_trade >
                 <CommonFooter />
-                {(this.props.loader || this.state.loader) ? <FaldaxLoader /> : ""}
+
             </Contact_wrap >
         );
     }

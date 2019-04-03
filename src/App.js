@@ -1,5 +1,5 @@
 /* In-Build components */
-import React, { Component } from 'react';
+import React, { Component, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import AppRouter from '../src/routes';
 import './App.css';
@@ -9,30 +9,32 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-/* Components */
-import HomePage from './components/Landing/HomePage';
-import Login from "./components/Landing/User_forms/Login_Form"
-import SignupForm from './components/Landing/User_forms/Signup_Form'
-
-import ForgotForm from "./components/Landing/User_forms/Forgot_Form";
-import ResetPassword from "./components/Landing/User_forms/Reset_Form";
-import FaqPage from './components/Landing_categories/FaqPage';
-import AboutUs from './components/Landing_categories/About_us';
-import Blog from './components/Landing_categories/Blog';
-import BlogDetails from './components/Landing_categories/BlogDetails';
-import ContactUs from './components/Landing_categories/ContactUs';
-import CareerDetails from './components/Landing_categories/Careerdetails'
-import Careers from './components/Landing_categories/Careers'
-import MediaContact from './components/Landing_categories/MediaContact';
-import Fees from './components/Landing_categories/Fees';
-import Addcoin from './components/Landing_categories/Addcoin'
-import ApplyJob from './components/Landing_categories/ApplyJob'
-import Policy from './components/Landing_categories/Policy'
-import News from './components/Landing_categories/News';
-import ThankYou from "./shared-components/thank_you";
-import Chart from "../src/components/TradingViewChart"
 import { Signup } from './Actions/Auth';
-import SignupSuccess from './components/Landing/User_forms/Signup_success';
+/* Components */
+// import HomePage from './components/Landing/HomePage';
+// import Login from "./components/Landing/User_forms/Login_Form"
+const SignupForm = lazy(() => import('./components/Landing/User_forms/Signup_Form'))
+
+const ForgotForm = lazy(() => import("./components/Landing/User_forms/Forgot_Form"))
+const ResetPassword = lazy(() => import("./components/Landing/User_forms/Reset_Form"))
+const FaqPage = lazy(() => import('./components/Landing_categories/FaqPage'))
+const AboutUs = lazy(() => import('./components/Landing_categories/About_us'))
+const Blog = lazy(() => import('./components/Landing_categories/Blog'))
+const BlogDetails = lazy(() => import('./components/Landing_categories/BlogDetails'))
+const ContactUs = lazy(() => import('./components/Landing_categories/ContactUs'))
+const CareerDetails = lazy(() => import('./components/Landing_categories/Careerdetails'))
+const Careers = lazy(() => import('./components/Landing_categories/Careers'))
+const MediaContact = lazy(() => import('./components/Landing_categories/MediaContact'))
+const Fees = lazy(() => import('./components/Landing_categories/Fees'))
+const Addcoin = lazy(() => import('./components/Landing_categories/Addcoin'))
+const ApplyJob = lazy(() => import('./components/Landing_categories/ApplyJob'))
+const Policy = lazy(() => import('./components/Landing_categories/Policy'))
+const News = lazy(() => import('./components/Landing_categories/News'))
+const ThankYou = lazy(() => import("./shared-components/thank_you"))
+const Chart = lazy(() => import("../src/components/TradingViewChart"))
+const SignupSuccess = lazy(() => import('./components/Landing/User_forms/Signup_success'))
+const HomePage = lazy(() => import('./components/Landing/HomePage'));
+const Login = lazy(() => import('./components/Landing/User_forms/Login_Form'));
 // import dotenv from 'dotenv';
 
 // dotenv.config();
@@ -136,34 +138,36 @@ class App extends Component {
         <ThemeProvider theme={theme}>
           <Route
             render={({ location }) => (
-              <Switch location={location}>
-                <Route path="/" exact title="Home" component={HomePage} />
-                <Route path='/reset-password' title="Reset Password" component={ResetPassword} />
-                <Route path="/login" exact title="Login" component={Login} />
-                <Route path="/signup" exact title="Signup" component={SignupForm} />
-                <Route path="/forgot-password" exact title="Forgot Password" component={ForgotForm} />
-                <Route {...this.props} path="/about-us" exact title="About Us" component={AboutUs} />
-                <Route path="/faq" exact title="Faq Page" component={FaqPage} />
-                <Route path="/blogs" exact title='Blog' component={Blog} />
-                <Route path="/blogDetails" exact title='Blog' component={BlogDetails} />
-                <Route path="/contactus" exact title='Contact' component={ContactUs} />
-                <Route path="/careers" exact title='Careers' component={Careers} />
-                <Route path="/careerdetails" exact title='Careerdetails' component={CareerDetails} />
-                <Route path="/mediacontact" exact title='MediaContact' component={MediaContact} />
-                <Route path="/fees" exact title='Fees' component={Fees} />
-                <Route path="/addcoin" exact title='AddCoin' component={Addcoin} />
-                <Route path="/applyjob" exact title='ApplyJob' component={ApplyJob} />
-                <Route path="/policy" exact title='policy' component={Policy} />
-                <Route path="/news" exact title='News' component={News} />
-                <Route path="/thank-you" exact title='Thank You' component={ThankYou} />
-                <Route path="/signup-success" exact title='Thank You' component={SignupSuccess} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Switch location={location}>
+                  <Route path="/" exact title="Home" component={HomePage} />
+                  <Route path="/login" exact title="Login" component={Login} />
+                  <Route path='/reset-password' title="Reset Password" component={ResetPassword} />
+                  <Route path="/signup" exact title="Signup" component={SignupForm} />
+                  <Route path="/forgot-password" exact title="Forgot Password" component={ForgotForm} />
+                  <Route {...this.props} path="/about-us" exact title="About Us" component={AboutUs} />
+                  <Route path="/faq" exact title="Faq Page" component={FaqPage} />
+                  <Route path="/blogs" exact title='Blog' component={Blog} />
+                  <Route path="/blogDetails" exact title='Blog' component={BlogDetails} />
+                  <Route path="/contactus" exact title='Contact' component={ContactUs} />
+                  <Route path="/careers" exact title='Careers' component={Careers} />
+                  <Route path="/careerdetails" exact title='Careerdetails' component={CareerDetails} />
+                  <Route path="/mediacontact" exact title='MediaContact' component={MediaContact} />
+                  <Route path="/fees" exact title='Fees' component={Fees} />
+                  <Route path="/addcoin" exact title='AddCoin' component={Addcoin} />
+                  <Route path="/applyjob" exact title='ApplyJob' component={ApplyJob} />
+                  <Route path="/policy" exact title='policy' component={Policy} />
+                  <Route path="/news" exact title='News' component={News} />
+                  <Route path="/thank-you" exact title='Thank You' component={ThankYou} />
+                  <Route path="/signup-success" exact title='Thank You' component={SignupSuccess} />
 
-                <Route path="/Chart" exact title='Trading View' component={Chart} />
-                <RestrictedRoute
-                  path="/"
-                  component={AppRouter}
-                  isLoggedIn={isLoggedIn} />
-              </Switch>
+                  <Route path="/Chart" exact title='Trading View' component={Chart} />
+                  <RestrictedRoute
+                    path="/"
+                    component={AppRouter}
+                    isLoggedIn={isLoggedIn} />
+                </Switch>
+              </Suspense>
             )} />
         </ThemeProvider>
       </div>
