@@ -1,21 +1,88 @@
 import React from "react";
+import { connect } from "react-redux"
 import { ConversionWarp, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, CustomRadioContainer, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, PayWith, BankAcountDropdown } from "../../../styled-components/conversion/style";
 import Navigation from "../../Navigations/Navigation";
 import { Row, Col, Tabs, Select, Button, Divider, Icon } from "antd";
+import { globalVariables } from "../../../Globals";
+const API_URL = globalVariables.API_URL;
+const amazon_Bucket = globalVariables.amazon_Bucket;
 const Option = Select.Option
 
 class Conversion extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedTab: 1
+            selectedTab: 1,
+            currencyList: [],
+            cryptoList: [],
+            currency: 'BTC',
+            crypto: 'XRP',
+            includeFees: true
         }
+        this.getCurrencies = this.getCurrencies.bind(this);
+        this.getCrypto = this.getCrypto.bind(this);
+        this.radioChange = this.radioChange.bind(this);
+        this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
         this.handleTabChange = this.handleTabChange.bind(this);
+    }
+    componentDidMount() {
+        this.getCrypto();
+        this.getCurrencies();
+    }
+    getCrypto() {
+        fetch(API_URL + `/coin-list-converison`, {
+            method: "get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                console.log(responseData);
+
+                this.setState({ cryptoList: responseData.data })
+            })
+            .catch(error => {
+            })
+    }
+    getCurrencies() {
+        fetch(`${API_URL}/coin-currency-list-conversion?crypto=${this.state.crypto}`, {
+            method: "get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                console.log(responseData);
+
+                this.setState({ currencyList: responseData.data })
+            })
+            .catch(error => {
+            })
+    }
+    handleCurrencyChange(value) {
+        this.setState({
+            crypto: value
+        }, () => {
+            this.getCurrencies();
+        });
     }
     handleTabChange(e) {
         this.setState({
             selectedTab: e
         })
+    }
+    radioChange(e) {
+        // console.log(e.target.value);
+        this.setState({
+            includeFees: JSON.parse(e.target.value)
+        })
+
     }
     render() {
         return (
@@ -34,14 +101,14 @@ class Conversion extends React.Component {
                                     <ConversionRadioRow>
                                         <Col md={12}>
                                             <CustomRadioContainer>
-                                                <input type="radio" name="fees" checked />
+                                                <input type="radio" name="fees" value={true} checked={this.state.includeFees} onChange={this.radioChange} />
                                                 <span className="radio-label">Including Fees</span>
                                                 <span className="checkmark"></span>
                                             </CustomRadioContainer>
                                         </Col>
                                         <Col md={12}>
                                             <CustomRadioContainer>
-                                                <input type="radio" name="fees" />
+                                                <input type="radio" name="fees" value={false} checked={!this.state.includeFees} onChange={this.radioChange} />
                                                 <span className="radio-label">Excluding Fees</span>
                                                 <span className="checkmark"></span>
                                             </CustomRadioContainer>
@@ -55,12 +122,17 @@ class Conversion extends React.Component {
                                             <ConversionInput type="text" />
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
-                                            <ConversionDropDown defaultValue="XRP">
-                                                <DropDownOption value="BTC"> <DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  BTC</DropDownOption>
-                                                <DropDownOption value="XRP"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  XRP</DropDownOption>
-                                                <DropDownOption value="LTC"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  LTC</DropDownOption>
-                                                <DropDownOption value="ETH"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  ETH</DropDownOption>
-                                            </ConversionDropDown>
+                                            {this.state.cryptoList && this.state.cryptoList.length > 0 &&
+                                                < ConversionDropDown defaultValue={this.state.crypto} onChange={this.handleCurrencyChange}>
+                                                    {
+                                                        this.state.cryptoList.map((element, index) => (
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                        ))
+                                                    }
+
+
+                                                </ConversionDropDown>
+                                            }
                                         </Col>
                                     </BorderRow>
                                     <BorderRow>
@@ -71,15 +143,20 @@ class Conversion extends React.Component {
                                             <ConversionInput type="text" />
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
-                                            <ConversionDropDown defaultValue="USD" disabled>
-                                                <DropDownOption value="USD"> <DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  USD</DropDownOption>
-                                                <DropDownOption value="XRP"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  XRP</DropDownOption>
-                                                <DropDownOption value="LTC"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  Disabled</DropDownOption>
-                                                <DropDownOption value="ETH"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  ETH</DropDownOption>
-                                            </ConversionDropDown>
+                                            {this.state.currencyList && this.state.currencyList.length > 0 &&
+                                                < ConversionDropDown defaultValue={this.state.currency}>
+                                                    {
+                                                        this.state.currencyList.map((element, index) => (
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                        ))
+                                                    }
+
+
+                                                </ConversionDropDown>
+                                            }
                                         </Col>
                                     </BorderRow>
-                                    <Row style={{ marginBottom: "25px" }}>
+                                    {/* <Row style={{ marginBottom: "25px" }}>
                                         <Col xs={12}>
                                             <PayWith>
                                                 Pay With
@@ -91,10 +168,10 @@ class Conversion extends React.Component {
                                                 <Option value="2">Silvergate ****123</Option>
                                             </BankAcountDropdown>
                                         </Col>
-                                    </Row>
+                                    </Row> */}
                                     <Row>
                                         <Col>
-                                            <ConversionSubmitBtn type="primary" size="large" block>Buy xrp</ConversionSubmitBtn>
+                                            <ConversionSubmitBtn type="primary" size="large" style={{ marginTop: "57px" }} block>Buy xrp</ConversionSubmitBtn>
                                         </Col>
                                     </Row>
                                 </ConversionTabPane>
@@ -128,12 +205,17 @@ class Conversion extends React.Component {
                                             <ConversionInput type="text" />
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
-                                            <ConversionDropDown defaultValue="XRP">
-                                                <DropDownOption value="BTC"> <DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  BTC</DropDownOption>
-                                                <DropDownOption value="XRP"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  XRP</DropDownOption>
-                                                <DropDownOption value="LTC"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  Disabled</DropDownOption>
-                                                <DropDownOption value="ETH"><DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  ETH</DropDownOption>
-                                            </ConversionDropDown>
+                                            {this.state.cryptoList && this.state.cryptoList.length > 0 &&
+                                                < ConversionDropDown defaultValue={this.state.currency} onChange={this.handleCurrencyChange}>
+                                                    {
+                                                        this.state.cryptoList.map((element, index) => (
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                        ))
+                                                    }
+
+
+                                                </ConversionDropDown>
+                                            }
                                         </Col>
                                     </BorderRow>
                                     <BorderRow>
@@ -144,9 +226,17 @@ class Conversion extends React.Component {
                                             <ConversionInput type="text" />
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
-                                            <ConversionDropDown defaultValue="USD" disabled>
-                                                <DropDownOption value="USD"> <DropIcon src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png" height="20px" />  USD</DropDownOption>
-                                            </ConversionDropDown>
+                                            {this.state.currencyList && this.state.currencyList.length > 0 &&
+                                                < ConversionDropDown defaultValue="">
+                                                    {
+                                                        this.state.currencyList.map((element, index) => (
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin_name}</DropDownOption>
+                                                        ))
+                                                    }
+
+
+                                                </ConversionDropDown>
+                                            }
                                         </Col>
                                     </BorderRow>
                                     {/* <Row style={{ marginBottom: "25px" }}>
@@ -225,8 +315,17 @@ class Conversion extends React.Component {
                         </RightCol>
                     </MainRow>
                 </ConversionContainer>
-            </ConversionWarp>
+            </ConversionWarp >
         )
     }
 }
-export default Conversion;
+// export default Conversion;
+function mapStateToProps(state) {
+    return ({
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+        /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
+    })
+}
+
+export default connect(mapStateToProps)(Conversion);
