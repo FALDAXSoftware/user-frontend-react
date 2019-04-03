@@ -286,6 +286,9 @@ class FooterHome extends Component {
                                         API Documentation
                                                     </li>
                                     {/* <li style={{cursor:"pointer"}} onClick={this.showComing}>Language</li> */}
+                                    <li style={{ cursor: "pointer" }} >
+                                        <Footer_Link href="https://knowledge.faldax.com/">FAQ</Footer_Link>
+                                    </li>
                                     <li style={{ cursor: "pointer" }}>
                                         <Footer_Link href={`${globalVariables.WordpressSiteURL}/list-your-token`}>List Your Token</Footer_Link>
                                     </li>
@@ -294,7 +297,6 @@ class FooterHome extends Component {
                                     </li>
                                 </Footer_ul>
                             </FooterLinkCol>
-
                             <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                                 <Footer_ul>
                                     <Footer_headers>Legal & Technical</Footer_headers>
