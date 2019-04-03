@@ -14,6 +14,7 @@ import { IntlTelInputS } from "../../../styled-components/landingCategories/cont
 import Datepicker from "../Personaldetails/Datepicker"
 import CountryPick from "../Personaldetails/Country"
 import { kycFormAction, kycformData } from "../../../Actions/Settings/passwordChange"
+import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 
 const KYC_form = styled.div`
     width:50%;
@@ -313,9 +314,7 @@ class KYCForm extends Component {
                     </Fifth_Row_kyc>
                 </Right_Col_kyc>
                 {(this.props.loader == true) ?
-                    <Spin_Ex className="Ex_spin">
-                        <Spin size="large" />
-                    </Spin_Ex>
+                    <FaldaxLoader />
                     : ""
                 }
             </KYC_form>

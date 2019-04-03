@@ -18,6 +18,7 @@ import {
     SendButton, DepButton, WithButton, Trans_table, TransTitle, Left_head, Right_head, WallTotal
 } from "../../../styled-components/loggedStyle/walletStyle";
 import { globalVariables } from '../../../Globals';
+import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 
 let { API_URL, amazon_Bucket } = globalVariables;
 const Option = Select.Option;
@@ -288,9 +289,7 @@ class WalletDetails extends Component {
                     </ContainerContact2>
                 </Grey_wrap>
                 <CommonFooter />
-                {(this.props.loader || this.state.loader) ? <Spin_Ex className="Ex_spin">
-                    <Spin size="large" />
-                </Spin_Ex> : ""}
+                {(this.props.loader || this.state.loader) ? <FaldaxLoader /> : ""}
             </Contact_wrap>
         );
     }

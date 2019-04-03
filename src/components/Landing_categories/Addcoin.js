@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import SimpleReactValidator from 'simple-react-validator';
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-intl-tel-input/dist/main.css';
-
+import FaldaxLoader from '../../shared-components/FaldaxLoader';
 import Navigation from '../Navigations/Navigation';
 import { Spin_Ex } from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
@@ -578,9 +578,7 @@ class AddCoin extends Component {
                     </ContainerContact>
                 </Grey_wrap>
                 <CommonFooter />
-                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
-                    <Spin size="large" />
-                </Spin_Ex> : ""}
+                {(this.state.loader) ? <FaldaxLoader /> : ""}
             </Contact_wrap>
         );
     }

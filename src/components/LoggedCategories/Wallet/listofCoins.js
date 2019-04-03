@@ -11,10 +11,31 @@ import { Head, Sub_head, DropMenu, Col1, Bit_img, Bit_text, Bit, Bit_price, Pric
 import { globalVariables } from '../../../Globals';
 let { amazon_Bucket } = globalVariables;
 
-const Table_coin = styled(Table)`
-    @media(max-width:1160px)
+const TableCoin = styled.table`
+    width:100%;
+    & th
     {
-        min-width:1160px;
+        text-align:center;
+    }
+    & td:not(first-child)
+    {
+        text-align:center;
+    }
+    & tbody 
+    {
+        max-height:600px;
+        overflow-y:auto;
+    }
+    @media(max-width:575px)
+    {
+        & tbody
+        {
+            display:block;
+        }
+        & thead
+        {
+            display:block;
+        }
     }
 `
 
@@ -76,67 +97,55 @@ export default class TableofCoin extends Component {
             </Menu>
         );
         return (
-            <Table_coin condensed>
-                <div class="tbl-header">
-                    <TableHeader cellpadding="10px" cellspacing="0" border="0">
-                        <thead>
-                            <Head>
-                                <Sub_head>Coins</Sub_head>
-                                <Sub_head>{this.state.drop1}
-                                    <Dropdown overlay={menu1} trigger={['click']}>
-                                        <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
-                                    </Dropdown>
-                                </Sub_head>
-                                <Sub_head>{this.state.drop2}
-                                    <Dropdown overlay={menu2} trigger={['click']}>
-                                        <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
-                                    </Dropdown>
-                                </Sub_head>
-                                <Sub_head>{this.state.drop3}
-                                    <Dropdown overlay={menu3} trigger={['click']}>
-                                        <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
-                                    </Dropdown>
-                                </Sub_head>
-                            </Head>
-                        </thead>
-                    </TableHeader>
-                </div >
-                <div class="tbl-content">
-                    <Scrollbars
-                        style={{ height: 600 }}>
-                        <TableContent cellpadding="10px" cellspacing="0" border="0">
-                            <tbody>
-                                {tableData !== undefined && tableData !== null ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
-                                    var img;
-                                    if (tableData[index].coin_icon !== null)
-                                        img = amazon_Bucket + tableData[index].coin_icon
-                                    else
-                                        img = amazon_Bucket + "coin/defualt_coin.png"
-                                    return (
-                                        <Col1>
-                                            <td style={{ textAlign: "left" }}>
-                                                <Bit_img src={img} />
-                                                <Bit_text><Bit_price>0.5433 {tableData[index].coin_code}</Bit_price></Bit_text>
-                                            </td>
-                                            <td>{tableData[index].USD !== undefined ? <Price>{me.state.curr1} {tableData[index].USD}</Price> : <Price>-</Price>}</td>
-                                            <td>{tableData[index].EUR !== undefined ? <Price>{me.state.curr2} {tableData[index].EUR} </Price> : <Price>-</Price>}</td>
-                                            <td>{tableData[index].INR !== undefined ? <Price><span>{me.state.curr3}</span> {tableData[index].INR} </Price> : <Price>-</Price>}</td>
-                                            <td>
-                                                <Icon_wrap>
-                                                    <Icon type="right" />
-                                                </Icon_wrap>
-                                            </td>
-                                        </Col1>
-                                    );
-                                }) : <NDF>No Data Found</NDF>
+            <TableCoin cellpadding="10px" cellspacing="0" border="0">
+                <thead>
+                    <Head>
+                        <Sub_head>Coins</Sub_head>
+                        <Sub_head>{this.state.drop1}
+                            <Dropdown overlay={menu1} trigger={['click']}>
+                                <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
+                            </Dropdown>
+                        </Sub_head>
+                        <Sub_head>{this.state.drop2}
+                            <Dropdown overlay={menu2} trigger={['click']}>
+                                <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
+                            </Dropdown>
+                        </Sub_head>
+                        <Sub_head>{this.state.drop3}
+                            <Dropdown overlay={menu3} trigger={['click']}>
+                                <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
+                            </Dropdown>
+                        </Sub_head>
+                    </Head>
+                </thead>
+                <tbody>
+                    {tableData !== undefined && tableData !== null ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
+                        var img;
+                        if (tableData[index].coin_icon !== null)
+                            img = amazon_Bucket + tableData[index].coin_icon
+                        else
+                            img = amazon_Bucket + "coin/defualt_coin.png"
+                        return (
+                            <Col1>
+                                <td style={{ textAlign: "left" }}>
+                                    <Bit_img src={img} />
+                                    <Bit_text><Bit_price>0.5433 {tableData[index].coin_code}</Bit_price></Bit_text>
+                                </td>
+                                <td>{tableData[index].USD !== undefined ? <Price>{me.state.curr1} {tableData[index].USD}</Price> : <Price>-</Price>}</td>
+                                <td>{tableData[index].EUR !== undefined ? <Price>{me.state.curr2} {tableData[index].EUR} </Price> : <Price>-</Price>}</td>
+                                <td>{tableData[index].INR !== undefined ? <Price><span>{me.state.curr3}</span> {tableData[index].INR} </Price> : <Price>-</Price>}</td>
+                                <td>
+                                    <Icon_wrap>
+                                        <Icon type="right" />
+                                    </Icon_wrap>
+                                </td>
+                            </Col1>
+                        );
+                    }) : <NDF>No Data Found</NDF>
 
-                                    : ""}
-                            </tbody>
-                        </TableContent>
-                    </Scrollbars>
-
-                </div>
-            </Table_coin >
+                        : ""}
+                </tbody>
+            </TableCoin>
         );
     }
 }

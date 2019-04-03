@@ -13,6 +13,7 @@ import CommonFooter from "../Landing/Footers/Footer_home";
 import { globalVariables } from "../../Globals";
 import { AboutPeople1, AboutPeople2, AboutPeople3, AboutUs2 } from '../../Constants/images';
 import ComingSoon from '../ComingSoon';
+import FaldaxLoader from '../../shared-components/FaldaxLoader';
 let { API_URL } = globalVariables;
 
 /* Styled-Components */
@@ -381,9 +382,7 @@ export default class AboutUs extends Component {
             </ProfileDiv>
           </ProfileWrapper>
           <CommonFooter />
-          {(loader) ? <Spin_Ex className="Ex_spin">
-            <Spin size="large" />
-          </Spin_Ex> : ""}
+          {(loader) ? <FaldaxLoader /> : ""}
         </OverlayLoader>
         <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={comingSoon} />
       </div>

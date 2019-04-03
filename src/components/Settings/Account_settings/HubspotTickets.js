@@ -1,16 +1,18 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
+import { Spin } from 'antd';
 import { connect } from "react-redux"
 import moment from 'moment'
 
 import Navigation from '../../Navigations/Navigation';
 import Footer_home from "../../Landing/Footers/Footer_home";
-
+import { Spin_Ex } from '../Personaldetails/PersonalDetails'
 
 import { ProfileWrapper, ProfileDiv } from '../EditProfile'
 import { globalVariables } from '../../../Globals';
 import { faHubspot } from '@fortawesome/free-brands-svg-icons';
+import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 import { Row, Col } from 'antd';
 
 
@@ -22,7 +24,7 @@ const Title = styled.p`
     color:${props => props.theme.mode == "dark" ? "white" : "black"};
     padding-top:45px;
     font-family:"Open Sans";
-    font-size:25px;
+    font-size:40px;
 `
 const Whole_wrap = styled.div`
 
@@ -64,22 +66,30 @@ padding-right: 8px;
 font-size: 14px;
 line-height: 2.3;
     
-color:${props => props.theme.mode == "dark" ? "white" : "#00000070"};
+color:${props => props.theme.mode == "dark" ? "#ccbebe69" : "#00000070"};
 `
 const Stat = styled.span`
-text-transform: uppercase;
+    text-transform: uppercase;
     padding-left: 8px;
     border-left: 1px solid #00000070;
-    color:${props => props.theme.mode == "dark" ? "white" : "#00000070"};
+    color:${props => props.theme.mode == "dark" ? "#ccbebe69" : "#00000070"};
+`
+const NDF = styled.p`
+    color:${props => props.theme.mode == "dark" ? "white" : "#00000069"};
+    text-align:center;
+    font-size:20px;
+    margin-top:100px;
 `
 class HubSpot extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            ticketData: null
+            ticketData: null,
+            loader: false
         };
     }
     componentDidMount() {
+        this.setState({ loader: true });
         fetch(API_URL + `/get-all-tickets`, {
             method: "get",
             headers: {
@@ -90,10 +100,11 @@ class HubSpot extends React.Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                console.log(responseData);
-                this.setState({ ticketData: responseData.tickets })
+
+                this.setState({ loader: false, ticketData: responseData.tickets })
             })
             .catch(error => {
+                this.setState({ loader: false });
             })
     }
     render() {
@@ -145,7 +156,11 @@ class HubSpot extends React.Component {
                     </Ticket_Div>
                 </ProfileWrapper >
                 <Footer_home />
-            </div>
+                {(this.state.loader == true) ?
+                    <FaldaxLoader />
+                    : ""
+                }
+            </div >
         );
     }
 }

@@ -12,6 +12,15 @@ export const ContainerContact = styled(Container)`
     max-width:1170px;
     padding-bottom: 30px;
     min-height:1000px;
+
+    @media(max-width:767px)
+    {
+        min-height:800px;
+    }
+    @media(max-width:575px)
+    {
+        min-height:600px;
+    }
 `
 export const His_title = styled.span`
     font-size: 20px;
@@ -29,28 +38,41 @@ export const His_wrap = styled.div`
 export const Tablediv = styled.div`
     border:1px solid #d8d8d8;
     margin-top:25px;
+    & .table-responsive
+    {
+        border:none !important;
+        margin-bottom:0px !important;
+    }
 `
 export const HisTable = styled(Table)`
     margin-bottom:0px;
+    width:100%;
     >thead
     {
         background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
         color:#174c7e;
         border:none;
-        
+        display: table;
+        width: 100%;
     }
     >thead>tr>th
     {
         border:0px;
         padding:8px !important;
         height:40px;
+        width:200px;
     }
     >tbody
     {
         color:${props => props.theme.mode == "dark" ? "white" : ""} ;
+        display: block;
+        max-height: 1000px;
+        overflow-y: scroll;
     }
     >tbody>tr>td
     {
+        width:200px;
+        word-break: break-all;
         height:50px;
         padding-top: 12px;
         padding-left: 8px;
@@ -71,6 +93,11 @@ export const HisTable = styled(Table)`
     >tbody>tr:nth-of-type(odd)
     {
         background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f9f9f9"};
+    }
+
+    @media(max-width:991px)
+    {
+        width:991px;
     }
 `
 export const HeadHis = styled.div`

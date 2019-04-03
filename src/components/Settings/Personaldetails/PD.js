@@ -14,6 +14,7 @@ import { Email_req } from "../../Landing/User_forms/Login_Form"
 import { globalVariables } from "../../../Globals"
 import { profileupdateAction, removepicAction, getProfileDataAction, clearEditData } from "../../../Actions/Settings/settings"
 import { DefaultProfile } from "../../../Constants/images";
+import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -537,9 +538,7 @@ class PersonalDetails extends Component {
                                 </Fifth_Row>
                             </Right_Col>
                             {(this.props.loader == true) ?
-                                <Spin_Ex className="Ex_spin">
-                                    <Spin size="large" />
-                                </Spin_Ex>
+                                <FaldaxLoader />
                                 : ""
                             }
                         </Row>

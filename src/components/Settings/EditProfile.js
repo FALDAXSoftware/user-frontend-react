@@ -72,7 +72,7 @@ class Editprofile extends Component {
                         <TabsStyle defaultActiveKey="1" onChange={this.handleChange} className="profile-tabs" >
                             <TabPane tab="Personal Details" key="1"><PersonalDetails {...this.props} /></TabPane>
                             <TabPane tab="Security" key="2" ><Passwordchange {...this.props} /></TabPane>
-                            <TabPane tab="Account Settings" key="3"><Acc_settings {...this.props} /></TabPane>
+                            <TabPane tab="Settings" key="3"><Acc_settings {...this.props} /></TabPane>
                             <TabPane tab="Identity Verification" key="4"><KYC /></TabPane>
                             <TabPane tab="Referral" key="5"><Referral {...this.props} /></TabPane>
                             {/* <TabPane tab="Payment Methods" key="6"><Paymethods /></TabPane> */}

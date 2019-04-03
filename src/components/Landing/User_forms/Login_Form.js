@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import { Eye, ActiveEye } from '../../../Constants/images';
 import { Spin_Ex } from '../../../styled-components/homepage/style'
 /* Components */
-
-import { Login, clearLogin } from '../../../Actions/Auth';
+import FaldaxLoader from "../../../shared-components/FaldaxLoader"
+import { loginAction, Login, clearLogin } from '../../../Actions/Auth';
 import { globalVariables } from '../../../Globals';
 
 let { API_URL } = globalVariables;
@@ -282,9 +282,12 @@ class Login_Form extends React.Component {
       otpIcon: null,
       typeEye: "password",
       isOtpRequired: false,
-      loader: false
+      loader: false,
+      verify: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.IpVerify = this.IpVerify.bind(this);
+    this.tokenVerify = this.tokenVerify.bind(this);
   }
 
   static propTypes = {
@@ -447,35 +450,23 @@ class Login_Form extends React.Component {
   }
 
   componentDidMount() {
+    console.log("DID MOUNT LOGIN")
     var query = this.props.location.search
     if (this.getUrlParameter("token")) {
-      var queryObj = {};
-      queryObj["email_verify_token"] = this.getUrlParameter("token");
-      this.setState({ loader: true })
-      fetch(API_URL + "/users/verify-user", {
-        method: "post",
-        headers: {
-          Authorization: "Bearer " + this.propsisLoggedIn
-        },
-        body: JSON.stringify(queryObj)
-      })
-        .then(response => response.json())
-        .then((responseData) => {
-          this.setState({ loader: false })
-          if (responseData.status == 200) {
-            this.openNotificationWithIcon('success', 'Verified', responseData.message);
-          } else
-            this.openNotificationWithIcon('error', 'Not Verified', responseData.err)
-        })
-        .catch(error => { /* console.log(error) */ })
+      this.tokenVerify();
+    }
+    if (this.getUrlParameter("IpVerifyToken")) {
+      this.IpVerify();
     }
   }
 
   componentWillReceiveProps(props, newProps) {
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
-        this.openNotificationWithIcon('success', 'Login Successful', props.errorStatus.message);
-        this.setState({ loader: false })
+        if (this.state.verify == true) {
+          this.openNotificationWithIcon('success', 'Login Successful', props.errorStatus.message);
+          this.setState({ loader: false, verify: true })
+        }
         /* this.props.dispModal("login"); */
       } else if (props.errorStatus.status == 201) {
         this.setState({ loader: false })
@@ -489,6 +480,55 @@ class Login_Form extends React.Component {
       this.props.clearLogin();
     }
   }
+
+  IpVerify() {
+    var queryObj = {};
+    queryObj["token"] = this.getUrlParameter("IpVerifyToken");
+    this.setState({ loader: true })
+    console.log(queryObj)
+    fetch(API_URL + "/users/verify-new-ip", {
+      method: "post",
+      headers: {
+        Authorization: "Bearer " + this.propsisLoggedIn
+      },
+      body: JSON.stringify(queryObj)
+    })
+      .then(response => response.json())
+      .then((responseData) => {
+        this.setState({ loader: false })
+        console.log(responseData)
+        if (responseData.status == 200) {
+          this.props.loginAction(responseData);
+          this.setState({ verify: true });
+          this.openNotificationWithIcon('success', 'Verified', responseData.message);
+        } else
+          this.openNotificationWithIcon('error', 'Not Verified', responseData.err)
+      })
+      .catch(error => { /* console.log(error) */ })
+  }
+
+  tokenVerify() {
+    var queryObj = {};
+    queryObj["email_verify_token"] = this.getUrlParameter("token");
+    this.setState({ loader: true })
+    fetch(API_URL + "/users/verify-user", {
+      method: "post",
+      headers: {
+        Authorization: "Bearer " + this.propsisLoggedIn
+      },
+      body: JSON.stringify(queryObj)
+    })
+      .then(response => response.json())
+      .then((responseData) => {
+        this.setState({ loader: false })
+        if (responseData.status == 200) {
+          this.openNotificationWithIcon('success', 'Verified', responseData.message);
+        } else
+          this.openNotificationWithIcon('error', 'Not Verified', responseData.err)
+      })
+      .catch(error => { /* console.log(error) */ })
+  }
+
   handleSubmit(event) {
     this.submit();
     event.preventDefault();
@@ -589,9 +629,7 @@ class Login_Form extends React.Component {
                   <Sign>
                     No account? <Sign_a onClick={() => this.dispModal("signup")}>Sign Up</Sign_a>
                   </Sign>
-                  {(this.state.loader == true) ? <Spin_Ex className="Ex_spin">
-                    <Spin size="large" />
-                  </Spin_Ex> : ""}
+                  {(this.state.loader == true) ? <FaldaxLoader /> : ""}
                 </div>
               </RightWrap>
             </Form_wrap>
@@ -613,7 +651,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => ({
   Login: (values) => dispatch(Login(values)),
-  clearLogin: () => dispatch(clearLogin())
+  clearLogin: () => dispatch(clearLogin()),
+  loginAction: (value) => dispatch(loginAction(value))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Login_Form));
