@@ -320,7 +320,7 @@ class LoggedNavigation extends Component {
                 >
                     <SideNav id="mySidenav2">
                         <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
-                        <LogoutStyle to="/editProfile">PROFILE</LogoutStyle>
+                        <LogoutStyle><Link to="/editProfile">PROFILE</Link></LogoutStyle>
                         <span> <Link to="/dashboard">DASHBOARD</Link></span>
                         <span onClick={this.tradeAccess}>TRADE</span>
                         <span> <Link to="/wallet">WALLET</Link></span>

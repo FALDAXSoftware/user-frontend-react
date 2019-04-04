@@ -12,6 +12,7 @@ import {
     TF_Disable, disableAction
 } from "../../../Actions/Settings/passwordChange";
 import { Eye, ActiveEye } from "../../../Constants/images";
+import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 
 const Wrapper = styled.div`
 `
@@ -409,7 +410,7 @@ class PasswordChange extends Component {
                     this.setState({ confirmPass_msg: "Password does not match." })
                 }
             }
-            var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
+            var re = /^(?=.*[0-9])(?=.*[!@#$%_])[a-zA-Z0-9!@#$%_]{8,60}$/;
             var bool = re.test(value);
             var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
             if (numb.test(value) || letters.test(value)) { this.setState({ stroke: "red", percent: 20 }) }
@@ -678,9 +679,7 @@ class PasswordChange extends Component {
                         </Right_Col>
                     </BarRow>
                     : ''}
-                {(this.props.loader == true) ? <Spin_Ex className="Ex_spin">
-                    <Spin size="large" />
-                </Spin_Ex> : ""}
+                {(this.props.loader == true) ? <FaldaxLoader /> : ""}
             </Wrapper>
         );
     }

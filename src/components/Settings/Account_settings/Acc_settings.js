@@ -9,7 +9,7 @@ import { faDesktop, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { Spin_Ex } from "../Personaldetails/PersonalDetails"
 import { globalVariables } from '../../../Globals';
 import { deleteAccount } from "../../../Actions/Auth"
-
+import FaldaxLoader from "../../../shared-components/FaldaxLoader"
 let { API_URL } = globalVariables;
 
 const columns = [{
@@ -190,6 +190,7 @@ const Button_del = styled(Button)`
   height:50px;
 `
 const PaginationS = styled(Pagination)`
+    margin-top:30px !important;
     & .ant-pagination-item-link
     {
         background-color: ${props => props.theme.mode == "dark" ? "#041421" : ""};
@@ -450,9 +451,7 @@ class Acc_settings extends Component {
                         <Button_del type="primary" onClick={this.showConfirm.bind(this)}>Delete Account</Button_del>
                     </Delete_btn>
                 </Delete_wrap>
-                {(this.state.loader == true) ? <Spin_Ex className="Ex_spin">
-                    <Spin size="large" />
-                </Spin_Ex> : ""}
+                {(this.state.loader == true) ? <FaldaxLoader /> : ""}
             </Acc_wrap>
         );
     }

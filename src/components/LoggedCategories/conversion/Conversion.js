@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux"
-import { ConversionWarp, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, CustomRadioContainer, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, PayWith, BankAcountDropdown } from "../../../styled-components/conversion/style";
+import { ConversionWarp, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, CustomRadioContainer, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, PayWith, BankAcountDropdown, FeesRadio } from "../../../styled-components/conversion/style";
 import Navigation from "../../Navigations/Navigation";
-import { Row, Col, Tabs, Select, Button, Divider, Icon } from "antd";
+import { Row, Col, Tabs, Select, Button, Divider, Icon, Radio } from "antd";
 import { globalVariables } from "../../../Globals";
+const RadioGroup = Radio.Group;
 const API_URL = globalVariables.API_URL;
 const amazon_Bucket = globalVariables.amazon_Bucket;
 const Option = Select.Option
@@ -31,6 +32,8 @@ class Conversion extends React.Component {
         this.getPairDetails = this.getPairDetails.bind(this);
         this.handleCryptoChange = this.handleCryptoChange.bind(this);
         this.handleTabChange = this.handleTabChange.bind(this);
+        this.onBuyCryptoChange = this.onBuyCryptoChange.bind(this);
+        this.onBuyCurrencyChange = this.onBuyCurrencyChange.bind(this);
     }
     componentDidMount() {
         this.getCrypto();
@@ -129,7 +132,9 @@ class Conversion extends React.Component {
     }
     handleTabChange(e) {
         this.setState({
-            selectedTab: e
+            selectedTab: e,
+            buyCryptoInput: 0,
+            buyCurrencyInput: 0
         })
     }
     radioChange(e) {
@@ -138,6 +143,21 @@ class Conversion extends React.Component {
             includeFees: JSON.parse(e.target.value)
         })
 
+    }
+    onBuyCryptoChange(e) {
+        var self = this;
+        this.setState({
+            buyCryptoInput: e.target.value,
+            buyCurrencyInput: (isNaN(e.target.value) ? 0 : (e.target.value) * self.state.askPrice)
+        })
+    }
+    onBuyCurrencyChange(e) {
+        var self = this;
+        this.setState({
+            buyCurrencyInput: e.target.value,
+            buyCryptoInput: (isNaN(e.target.value) ? 0 : (e.target.value) / self.state.askPrice)
+
+        });
     }
     render() {
         return (
@@ -154,19 +174,11 @@ class Conversion extends React.Component {
                                         </Col>
                                     </Row>
                                     <ConversionRadioRow>
-                                        <Col md={12}>
-                                            <CustomRadioContainer>
-                                                <input type="radio" name="fees" value={true} checked={this.state.includeFees} onChange={this.radioChange} />
-                                                <span className="radio-label">Including Fees</span>
-                                                <span className="checkmark"></span>
-                                            </CustomRadioContainer>
-                                        </Col>
-                                        <Col md={12}>
-                                            <CustomRadioContainer>
-                                                <input type="radio" name="fees" value={false} checked={!this.state.includeFees} onChange={this.radioChange} />
-                                                <span className="radio-label">Excluding Fees</span>
-                                                <span className="checkmark"></span>
-                                            </CustomRadioContainer>
+                                        <Col md={24}>
+                                            <RadioGroup onChange={this.radioChange} value={this.state.includeFees}>
+                                                <FeesRadio value={true}>Including Fees</FeesRadio>
+                                                <FeesRadio value={false}>Excluding Fees</FeesRadio>
+                                            </RadioGroup>
                                         </Col>
                                     </ConversionRadioRow>
                                     <BorderRow>
@@ -174,7 +186,7 @@ class Conversion extends React.Component {
                                             You Get
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
-                                            <ConversionInput type="text" value={this.state.buyCryptoInput} />
+                                            <ConversionInput type="text" value={this.state.buyCryptoInput} onChange={this.onBuyCryptoChange} />
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.cryptoList && this.state.cryptoList.length > 0 &&
@@ -195,7 +207,7 @@ class Conversion extends React.Component {
                                             You Pay
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
-                                            <ConversionInput type="text" value={this.state.buyCurrencyInput} />
+                                            <ConversionInput type="text" value={this.state.buyCurrencyInput} onChange={this.onBuyCurrencyChange} />
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.currencyList && this.state.currencyList.length > 0 &&
@@ -237,19 +249,11 @@ class Conversion extends React.Component {
                                         </Col>
                                     </Row>
                                     <ConversionRadioRow>
-                                        <Col md={12}>
-                                            <CustomRadioContainer>
-                                                <input type="radio" name="fees" checked />
-                                                <span className="radio-label">Including Fees</span>
-                                                <span className="checkmark"></span>
-                                            </CustomRadioContainer>
-                                        </Col>
-                                        <Col md={12}>
-                                            <CustomRadioContainer>
-                                                <input type="radio" name="fees" />
-                                                <span className="radio-label">Excluding Fees</span>
-                                                <span className="checkmark"></span>
-                                            </CustomRadioContainer>
+                                        <Col md={24}>
+                                            <RadioGroup onChange={this.radioChange} value={this.state.includeFees}>
+                                                <FeesRadio value={true}>Including Fees</FeesRadio>
+                                                <FeesRadio value={false}>Excluding Fees</FeesRadio>
+                                            </RadioGroup>
                                         </Col>
                                     </ConversionRadioRow>
                                     <BorderRow>
@@ -282,10 +286,10 @@ class Conversion extends React.Component {
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.currencyList && this.state.currencyList.length > 0 &&
-                                                < ConversionDropDown defaultValue="">
+                                                < ConversionDropDown defaultValue={this.state.currency}>
                                                     {
                                                         this.state.currencyList.map((element, index) => (
-                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin_name}</DropDownOption>
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                         ))
                                                     }
 
@@ -329,9 +333,8 @@ class Conversion extends React.Component {
                                 </Row>
                                 <Row>
                                     <Col>
-                                        {/* <RightColAmount>{this.state.crypto * this.state.} {this.state.crypto}</RightColAmount> */}
                                         {this.state.selectedTab == 1 &&
-                                            <RightColAmount>{this.state.buyCryptoInput * this.state.askPrice} {this.state.crypto}</RightColAmount>
+                                            <RightColAmount>{isNaN(parseFloat(this.state.buyCryptoInput)) ? 0 : parseFloat(this.state.buyCryptoInput).toFixed(4)} {this.state.crypto}</RightColAmount>
                                         }
                                         {this.state.selectedTab == 2 &&
                                             <RightColAmount>{this.state.buyCryptoInput * this.state.bidPrice} {this.state.crypto}</RightColAmount>
@@ -341,10 +344,10 @@ class Conversion extends React.Component {
                                 <Row>
                                     <Col>
                                         {this.state.selectedTab == 1 &&
-                                            <RightColPrice>@ {this.state.askPrice}  per {this.state.crypto}</RightColPrice>
+                                            <RightColPrice>@ {parseFloat(this.state.askPrice)} {this.state.currency} per {this.state.crypto}</RightColPrice>
                                         }
                                         {this.state.selectedTab == 2 &&
-                                            <RightColPrice>@ {this.state.bidPrice}  per {this.state.crypto}</RightColPrice>
+                                            <RightColPrice>@ {this.state.bidPrice} {this.state.currency} per {this.state.crypto}</RightColPrice>
                                         }
                                         {/* <RightColPrice>@ 3,914.06  per {this.state.crytpo}</RightColPrice> */}
                                     </Col>

@@ -21,6 +21,7 @@ import { globalVariables } from '../../../Globals';
 
 /* Actions */
 import { walletBal, getAllCoins } from '../../../Actions/LoggedCat/walletActions'
+import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 
 let { API_URL } = globalVariables;
 const Search = Input.Search;
@@ -31,6 +32,11 @@ const ContainerContact = styled(Container)`
     padding-right:30px;
     padding-left:30px;
     padding-bottom: 30px;
+    @media(max-width:1160px)
+    {
+        padding-right:0px;
+    padding-left:0px;
+    }
 `
 const ContainerContact2 = styled(ContainerContact)`
     background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
@@ -39,6 +45,11 @@ const ContainerContact2 = styled(ContainerContact)`
     padding-left:30px;
     padding-bottom: 30px;
     margin-top:50px;
+    @media(max-width:1160px)
+    {
+        padding-right:0px;
+    padding-left:0px;
+    }
 `
 const Inputsearch = styled(Search)`
     width: 100%;
@@ -57,6 +68,11 @@ const Inputsearch = styled(Search)`
 const Table_wrap = styled.div`  
     margin-left:-30px;
     margin-right:-30px; 
+    @media(max-width:1160px)
+    {
+        margin-right:10px;
+        margin-left:10px;
+    }
     
 `
 
@@ -214,9 +230,7 @@ class Wallet extends Component {
                 </Grey_wrap>
                 <CommonFooter />
                 {(this.props.loader == true) ?
-                    <Spin_Ex className="Ex_spin">
-                        <Spin size="large" />
-                    </Spin_Ex>
+                    <FaldaxLoader />
                     : ""
                 }
             </Contact_wrap>

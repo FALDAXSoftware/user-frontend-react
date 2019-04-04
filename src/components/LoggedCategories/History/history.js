@@ -73,13 +73,29 @@ const CheckboxGroupS = styled(CheckboxGroup)`
         color:${props => props.theme.mode == "dark" ? "white" : ""};
     }
 `
-const NDF = styled.td`
+const NDF = styled.div`
     text-align: center;
     font-weight: 600;
     font-size: 17px;
     color: ${props => props.theme.mode == "dark" ? "white" : "black"};
-    margin-top: 30px;
     font-family: "Open Sans";
+    height:500px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-top:1px solid #ddd;
+    @media(max-width:767px)
+    {
+        height:300px;
+    }
+    @media(max-width:575px)
+    {
+        height:250px;
+    }
+    @media(max-width:375px)
+    {
+        height:150px;
+    }
 `
 class History extends Component {
     constructor(props) {
@@ -144,7 +160,7 @@ class History extends Component {
         }).then(response => response.json())
             .then((responseData) => {
                 /*  this.setState({myCoins:responseData}); */
-                this.setState({ historyData: responseData.data });
+                this.setState({ historyData: [] });
             })
             .catch(error => {
             })
@@ -388,9 +404,9 @@ class History extends Component {
                                                 {/* <th>Repeat</th> */}
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            {this.state.historyData.length > 0 ?
-                                                this.state.historyData.map(function (temp) {
+                                        {this.state.historyData.length > 0 ?
+                                            <tbody>
+                                                {this.state.historyData.map(function (temp) {
                                                     var date = moment.utc(temp.created_at).local().format(`${self.props.profileData.date_format} HH:mm:ss`);
                                                     var side = Number(temp.user_id) == self.props.profileData.id ? temp.side : temp.side == "Buy" ? "Sell" : "Buy";
                                                     var fee = Number(temp.user_id) == self.props.profileData.id ? temp.user_fee.toFixed(2) : temp.requested_fee.toFixed(2);
@@ -404,10 +420,10 @@ class History extends Component {
                                                         <td>{(temp.fill_price * temp.quantity).toFixed(2)}</td>
                                                         {/* <td><Button onChange={() => self.repeatClick(temp)}>Repeat</Button></td> */}
                                                     </tr>);
-                                                })
-                                                : <tr><NDF colSpan="8" >No Data Found</NDF></tr>
-                                            }
-                                        </tbody>
+                                                })}
+                                            </tbody>
+                                            : <NDF colSpan="8" >No Data Found</NDF>
+                                        }
                                     </HisTable>
                                 </Tablediv>
                             </His_wrap>

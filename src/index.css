@@ -1232,6 +1232,9 @@ table .ant-table-tbody > tr > td {
   width: 3px;
 }
 
+::-webkit-scrollbar:horizontal {
+	height: 7px;
+}
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f100; 

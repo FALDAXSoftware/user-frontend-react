@@ -7,6 +7,7 @@ import { Button_wrap, Sub_wrap, Back_Button, Next_Button } from "./IDselect"
 
 import { kycDoc, kycFormAction } from "../../../Actions/Settings/passwordChange"
 import { Spin_Ex } from '../Personaldetails/PersonalDetails'
+import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 
 const SSN_wrap = styled.div`
     width:100%;
@@ -279,9 +280,7 @@ class DocUpload extends Component {
                     </Sub_wrap>
                 </Button_wrap>
                 {(this.props.loader == true) ?
-                    <Spin_Ex className="Ex_spin">
-                        <Spin size="large" />
-                    </Spin_Ex>
+                    <FaldaxLoader />
                     : ""
                 }
             </div>

@@ -29,24 +29,45 @@ const BorderedHistoryWrap = styled(History_wrap)`
      
 
 `
-const TableContent1 = styled(TableContent)`
-    >tbody>tr:nth-of-type(even)
+
+const TableCoin = styled.table`
+    width:100%;
+    & th
     {
-        background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
+        text-align:center;
+    }
+    & td:not(first-child)
+    {
+        text-align:center;
+    }
+    & tbody 
+    {
+        max-height:500px;
+        overflow-y:auto;
+    }
+    @media(max-width:767px)
+    {
+        min-width:700px;
+    }
+    @media(max-width:575px)
+    {
+        
+        & tbody
+        {
+            display:block;
+        }
+        & thead
+        {
+            display:block;
+        }
     }
 `
-const Table_coin = styled(Table)`
-    @media(max-width:1160px)
-    {
-        min-width:1160px;
-    }
-`
-export const NDF = styled.p`
+export const NDF = styled.td`
     text-align: center; 
     font-weight: 600;
     font-size: 17px;
     color: ${props => props.theme.mode == "dark" ? "white" : "black"};
-    margin-top: 30px;
+    padding-top: 30px;
     font-family: "Open Sans";
 `
 let total = 0;
@@ -114,85 +135,72 @@ class TableofCoin extends React.Component {
         return (
             <BorderedHistoryWrap>
                 <OTwrap>
-                    <div class="tbl-header">
-                        <TableHeader cellpadding="10px" cellspacing="0" border="0">
-                            <thead>
-                                <Head>
-                                    <Sub_head>Coins</Sub_head>
-                                    <Sub_head>{this.state.drop1}
-                                        <Dropdown overlay={menu1} trigger={['click']}>
-                                            <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
-                                        </Dropdown>
-                                    </Sub_head>
-                                    <Sub_head>{this.state.drop2}
-                                        <Dropdown overlay={menu2} trigger={['click']}>
-                                            <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
-                                        </Dropdown>
-                                    </Sub_head>
-                                    <Sub_head>{this.state.drop3}
-                                        <Dropdown overlay={menu3} trigger={['click']}>
-                                            <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
-                                        </Dropdown>
-                                    </Sub_head>
-                                    <Sub_head></Sub_head>
-                                </Head>
-                            </thead>
-                        </TableHeader>
-                    </div>
-                </OTwrap>
-                <OTwrap>
-                    <ScrollTableContent>
-                        <Scrollbars
-                            className="scrollbar"
-                            hideTracksWhenNotNeeded={true}
-                            style={{ height: 600 }}>
-                            <TableContent1 cellpadding="10px" cellspacing="0" border="0">
-                                <tbody>
-                                    {tableData !== undefined && tableData !== null ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
-                                        var img;
-                                        if (tableData[index].coin_icon == null)
-                                            img = amazon_Bucket + tableData[index].coin_icon
-                                        else
-                                            img = amazon_Bucket + "coin/defualt_coin.png"
+                    <TableCoin cellpadding="10px" cellspacing="0" border="0">
+                        <thead>
+                            <Head>
+                                <Sub_head>Coins</Sub_head>
+                                <Sub_head>{this.state.drop1}
+                                    <Dropdown overlay={menu1} trigger={['click']}>
+                                        <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
+                                    </Dropdown>
+                                </Sub_head>
+                                <Sub_head>{this.state.drop2}
+                                    <Dropdown overlay={menu2} trigger={['click']}>
+                                        <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
+                                    </Dropdown>
+                                </Sub_head>
+                                <Sub_head>{this.state.drop3}
+                                    <Dropdown overlay={menu3} trigger={['click']}>
+                                        <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
+                                    </Dropdown>
+                                </Sub_head>
+                                <Sub_head></Sub_head>
+                            </Head>
+                        </thead>
+                        <tbody>
+                            {tableData !== undefined && tableData !== null ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
+                                var img;
+                                if (tableData[index].coin_icon == null)
+                                    img = amazon_Bucket + tableData[index].coin_icon
+                                else
+                                    img = amazon_Bucket + "coin/defualt_coin.png"
 
-                                        return (
-                                            <Col1>
-                                                <td style={{ textAlign: "left" }}>
-                                                    <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
-                                                        <Bit_img src={img} />
-                                                        <Bit_text><Bit>{tableData[index].coin_name}</Bit><Bit_price>{parseFloat(tableData[index].balance).toFixed(4)} {tableData[index].coin_code}</Bit_price></Bit_text>
-                                                    </Link>
-                                                </td>
-                                                <td>
-                                                    <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
-                                                        {tableData[index].USD !== undefined ? <Price>{me.state.curr1} {parseFloat(parseFloat(tableData[index].USD) * parseFloat(tableData[index].balance)).toFixed(4)}</Price> : <Price>-</Price>}
-                                                    </Link>
-                                                </td>
-                                                <td>
-                                                    <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
-                                                        {tableData[index].EUR !== undefined ? <Price>{me.state.curr2} {parseFloat(parseFloat(tableData[index].EUR) * parseFloat(tableData[index].balance)).toFixed(4)} </Price> : <Price>-</Price>}
-                                                    </Link>
-                                                </td>
-                                                <td><Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
-                                                    {tableData[index].INR !== undefined ? <Price><span>{me.state.curr3}</span> {parseFloat(parseFloat(tableData[index].INR) * parseFloat(tableData[index].balance)).toFixed(4)} </Price> : <Price>-</Price>}
-                                                </Link>
-                                                </td>
-                                                <td>
-                                                    <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
-                                                        <Icon_wrap>
-                                                            <Icon type="right" />
-                                                        </Icon_wrap>
-                                                    </Link>
-                                                </td>
-                                            </Col1>
-                                        );
-                                    })
+                                return (
+                                    <Col1>
+                                        <td style={{ textAlign: "left" }}>
+                                            <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
+                                                <Bit_img src={img} />
+                                                <Bit_text><Bit>{tableData[index].coin_name}</Bit><Bit_price>{parseFloat(tableData[index].balance).toFixed(4)} {tableData[index].coin_code}</Bit_price></Bit_text>
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
+                                                {tableData[index].USD !== undefined ? <Price>{me.state.curr1} {parseFloat(parseFloat(tableData[index].USD) * parseFloat(tableData[index].balance)).toFixed(4)}</Price> : <Price>-</Price>}
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
+                                                {tableData[index].EUR !== undefined ? <Price>{me.state.curr2} {parseFloat(parseFloat(tableData[index].EUR) * parseFloat(tableData[index].balance)).toFixed(4)} </Price> : <Price>-</Price>}
+                                            </Link>
+                                        </td>
+                                        <td><Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
+                                            {tableData[index].INR !== undefined ? <Price><span>{me.state.curr3}</span> {parseFloat(parseFloat(tableData[index].INR) * parseFloat(tableData[index].balance)).toFixed(4)} </Price> : <Price>-</Price>}
+                                        </Link>
+                                        </td>
+                                        <td>
+                                            <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
+                                                <Icon_wrap>
+                                                    <Icon type="right" />
+                                                </Icon_wrap>
+                                            </Link>
+                                        </td>
+                                    </Col1>
+                                );
+                            })
 
-                                        : <NDF>No Data Found</NDF> : ""}
-                                </tbody>
-                            </TableContent1>
-                        </Scrollbars>
-                    </ScrollTableContent>
+                                : <NDF colSpan="5">No Data Found</NDF> : ""}
+                        </tbody>
+                    </TableCoin>
                 </OTwrap>
             </BorderedHistoryWrap>
         );

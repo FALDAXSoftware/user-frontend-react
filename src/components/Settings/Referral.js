@@ -152,7 +152,7 @@ const Ref_acc = styled.div`
 const RefTable = styled(Table)`
     & .ant-table-tbody>tr:hover>td
     {
-        background-color:#041422;
+        background-color:${props => props.theme.mode == "dark" ? "#041422" : ""};
     }
 `
 class Referral extends Component {
