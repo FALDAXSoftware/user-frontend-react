@@ -18,28 +18,35 @@ class Conversion extends React.Component {
             currency: 'BTC',
             crypto: 'XRP',
             prevRoom: "",
+            askPrice: 0,
+            bidPrice: 0,
+            buyCryptoInput: 0,
+            buyCurrencyInput: 0,
             includeFees: true
         }
         io = this.props.io
         this.getCurrencies = this.getCurrencies.bind(this);
         this.getCrypto = this.getCrypto.bind(this);
         this.radioChange = this.radioChange.bind(this);
-        this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
+        this.getPairDetails = this.getPairDetails.bind(this);
+        this.handleCryptoChange = this.handleCryptoChange.bind(this);
         this.handleTabChange = this.handleTabChange.bind(this);
     }
     componentDidMount() {
         this.getCrypto();
         this.getCurrencies();
+        this.getPairDetails();
     }
     getPairDetails() {
+        var self = this;
         io.sails.url = API_URL;
         var URL;
         this.setState({ loader: true })
-        if (this.props.cryptoPair.prevRoom !== undefined && Object.keys(this.props.cryptoPair.prevRoom).length > 0) {
-            URL = `/socket/get-sell-book?prevRoom=${this.props.cryptoPair.prevRoom.crypto}-${this.props.cryptoPair.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`
+        if (this.state.prevRoom.trim() != "") {
+            URL = `/socket/get-pair-details?prevRoom=${this.state.prevRoom}&room=${this.state.crypto}-${this.state.currency}`
         }
         else {
-            URL = `/socket/get-sell-book?room=${this.state.crypto}-${this.state.currency}`
+            URL = `/socket/get-pair-details?room=${this.state.crypto}-${this.state.currency}`
         }
         io.socket.request({
             method: 'GET',
@@ -54,12 +61,17 @@ class Conversion extends React.Component {
 
             if (body.status == 200) {
                 let res = body.data;
-                this.updateData(res);
+                console.log("----=---=---", res);
+                self.setState({
+                    askPrice: res.ask_price,
+                    bidPrice: res.bid_price
+                });
+
             }
         });
-        io.socket.on('sellbookUpdate', (data) => {
-            this.updateData(data);
-        });
+        // io.socket.on('sellbookUpdate', (data) => {
+        //     this.updateData(data);
+        // });
     }
     getCrypto() {
         fetch(API_URL + `/coin-list-converison`, {
@@ -97,11 +109,22 @@ class Conversion extends React.Component {
             .catch(error => {
             })
     }
-    handleCurrencyChange(value) {
+    handleCryptoChange(value) {
+        let prevRoom = this.state.crypto + "-" + this.state.currency
         this.setState({
-            crypto: value
+            crypto: value,
+            prevRoom: prevRoom
         }, () => {
             this.getCurrencies();
+        });
+    }
+    handleCurrencyChange(value) {
+        let prevRoom = this.state.crypto + "-" + this.state.currency
+        this.setState({
+            currency: value,
+            prevRoom: prevRoom
+        }, () => {
+
         });
     }
     handleTabChange(e) {
@@ -151,11 +174,11 @@ class Conversion extends React.Component {
                                             You Get
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
-                                            <ConversionInput type="text" />
+                                            <ConversionInput type="text" value={this.state.buyCryptoInput} />
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.cryptoList && this.state.cryptoList.length > 0 &&
-                                                < ConversionDropDown defaultValue={this.state.crypto} onChange={this.handleCurrencyChange}>
+                                                < ConversionDropDown defaultValue={this.state.crypto} onChange={this.handleCryptoChange}>
                                                     {
                                                         this.state.cryptoList.map((element, index) => (
                                                             <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
@@ -172,11 +195,11 @@ class Conversion extends React.Component {
                                             You Pay
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
-                                            <ConversionInput type="text" />
+                                            <ConversionInput type="text" value={this.state.buyCurrencyInput} />
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.currencyList && this.state.currencyList.length > 0 &&
-                                                < ConversionDropDown defaultValue={this.state.currency}>
+                                                < ConversionDropDown defaultValue={this.state.currency} onChange={this.handleCurrencyChange}>
                                                     {
                                                         this.state.currencyList.map((element, index) => (
                                                             <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
@@ -238,7 +261,7 @@ class Conversion extends React.Component {
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.cryptoList && this.state.cryptoList.length > 0 &&
-                                                < ConversionDropDown defaultValue={this.state.currency} onChange={this.handleCurrencyChange}>
+                                                < ConversionDropDown defaultValue={this.state.currency} onChange={this.handleCryptoChange}>
                                                     {
                                                         this.state.cryptoList.map((element, index) => (
                                                             <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
@@ -306,12 +329,24 @@ class Conversion extends React.Component {
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <RightColAmount>0.0123 BTC</RightColAmount>
+                                        {/* <RightColAmount>{this.state.crypto * this.state.} {this.state.crypto}</RightColAmount> */}
+                                        {this.state.selectedTab == 1 &&
+                                            <RightColAmount>{this.state.buyCryptoInput * this.state.askPrice} {this.state.crypto}</RightColAmount>
+                                        }
+                                        {this.state.selectedTab == 2 &&
+                                            <RightColAmount>{this.state.buyCryptoInput * this.state.bidPrice} {this.state.crypto}</RightColAmount>
+                                        }
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <RightColPrice>@ $3,914.06  per BTC</RightColPrice>
+                                        {this.state.selectedTab == 1 &&
+                                            <RightColPrice>@ {this.state.askPrice}  per {this.state.crypto}</RightColPrice>
+                                        }
+                                        {this.state.selectedTab == 2 &&
+                                            <RightColPrice>@ {this.state.bidPrice}  per {this.state.crypto}</RightColPrice>
+                                        }
+                                        {/* <RightColPrice>@ 3,914.06  per {this.state.crytpo}</RightColPrice> */}
                                     </Col>
                                 </Row>
                                 <Row>
