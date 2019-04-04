@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Container } from "../homepage/style";
 import { ConversionBackground } from "../../Constants/images";
-import { Row, Col, Tabs, Select, Button } from "antd";
+import { Row, Col, Tabs, Select, Button, Radio } from "antd";
 const TabPane = Tabs.TabPane;
 const Option = Select.Option
 export const ConversionWarp = styled.div`
@@ -99,6 +99,8 @@ export const ConversionTitle = styled.span`
 `
 export const ConversionRadioRow = styled(Row)`
     padding:20px;
+    margin-bottom: 10px;
+
 `
 export const CustomRadioContainer = styled.label`
     display: block;
@@ -357,5 +359,24 @@ export const BankAcountDropdown = styled(Select)`
     & .ant-select-selection:focus{
         box-shadow: none;
         ouline:none;
+    }
+`
+
+export const FeesRadio = styled(Radio)`
+    font-family: "Open Sans" !important;
+    font-weight:600;
+    font-size:13px;
+    margin-right: 30px;
+    align-items: center;
+    display: inline-flex;
+    & .ant-radio-inner{
+        width: 25px;
+        height: 25px;
+    }
+    & .ant-radio-inner:after{
+        width: 13px;
+        height: 13px;
+        left: 5px;
+        top: 5px;
     }
 `
