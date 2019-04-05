@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import { Welcome_text } from "./Login_Form";
 import { Col, Row } from "antd";
+import { globalVariables } from '../../../Globals';
 
 /* Components */
 /* Global Constants */
@@ -122,8 +123,10 @@ class SignupSuccess extends Component {
         <RowWrap >
           <ColLeft sm={24} lg={12}>
             <LeftWrap >
-              <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
-              <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+              <a href={globalVariables.WordpressSiteURL}>
+                <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
+                <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+              </a>
             </LeftWrap>
           </ColLeft>
           <ColRight sm={24} lg={12}>

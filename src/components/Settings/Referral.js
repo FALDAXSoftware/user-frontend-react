@@ -159,9 +159,9 @@ class Referral extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: null,
+            referralLink: null,
             copied: false,
-            tableData: [],
+            referredData: [],
             searchCSS: ""
         }
     }
@@ -194,11 +194,11 @@ class Referral extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                this.setState({ tableData: responseData.data })
+                this.setState({ referredData: responseData.data })
             })
             .catch(error => { /* console.log(error) */ })
         if (this.props.profileDetails.referral_code !== undefined) {
-            this.setState({ value: "https//dev.faldax.com/signup?refID=" + this.props.profileDetails.referral_code })
+            this.setState({ referralLink: "https//dev.faldax.com/signup?refID=" + this.props.profileDetails.referral_code })
         }
     }
 
@@ -222,6 +222,7 @@ class Referral extends Component {
     }
 
     render() {
+        const { referralLink, referTable, referredData } = this.state;
         return (
             <Parent_wrap>
                 <Header_text>Referral Program</Header_text>
@@ -229,11 +230,11 @@ class Referral extends Component {
                     <Row>
                         <Ref_leftcol sm={24} md={18}>
                             <Ref_text>YOUR REFERRAL LINK</Ref_text>
-                            <CopyToClipboard text={this.state.value}
+                            <CopyToClipboard text={referralLink}
                                 onCopy={() => this.setState({ copied: true })}>
                                 <div style={{ textAlign: 'left' }}>
                                     <Ref_input
-                                        value={this.state.value}
+                                        value={this.props.profileDetails.referral_code}
                                         className={this.state.searchCSS}
                                         placeholder="Referral"
                                         enterButton="Copy"
@@ -251,9 +252,9 @@ class Referral extends Component {
                 </Ref_div>
                 <Ref_acc>
                     <div>
-                        <RefTable columns={columns} dataSource={this.state.tableData}
+                        <RefTable columns={columns} dataSource={referredData}
                             size="middle"
-                            className={this.state.referTable}
+                            className={referTable}
                             pagination={false}
                         />
                     </div>
