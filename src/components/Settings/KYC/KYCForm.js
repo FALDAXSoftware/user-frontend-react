@@ -16,6 +16,7 @@ import CountryPick from "../Personaldetails/Country"
 import { kycFormAction, kycformData } from "../../../Actions/Settings/passwordChange"
 import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 import { globalVariables } from "../../../Globals"
+import 'react-intl-tel-input/dist/main.css';
 
 let { API_URL } = globalVariables;
 const KYC_form = styled.div`
