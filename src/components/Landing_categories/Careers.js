@@ -101,7 +101,7 @@ class Careers extends Component {
     }
     componentDidMount() {
         this.setState({ loader: true })
-        fetch(globalVariables.API_URL + `/all-jobs?page=1&limit=50`, {
+        fetch(globalVariables.API_URL + `/all-jobs`, {
             method: "get",
             headers: {
                 Accept: 'application/json',
@@ -137,10 +137,10 @@ class Careers extends Component {
                                         flag = true;
                                     }
                                     let jobs = jobCat.jobs ?
-                                        jobCat.jobs.map((job) => {
+                                        jobCat.jobs.map((job, index) => {
                                             let _this = this;
                                             return (
-                                                <Body_details_job>
+                                                <Body_details_job key={index}>
                                                     <Link to={decodeURI(`/careerdetails?jobID=${job.id}`)}>
                                                         <Position>{job.position}</Position>
                                                     </Link>
