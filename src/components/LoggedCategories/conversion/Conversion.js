@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux"
-import { ConversionWarp, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, CustomRadioContainer, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, PayWith, BankAcountDropdown } from "../../../styled-components/conversion/style";
+import { ConversionWarp, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, CustomRadioContainer, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, PayWith, BankAcountDropdown, FeesRadio } from "../../../styled-components/conversion/style";
 import Navigation from "../../Navigations/Navigation";
-import { Row, Col, Tabs, Select, Button, Divider, Icon } from "antd";
+import { Row, Col, Tabs, Select, Button, Divider, Icon, Radio } from "antd";
 import { globalVariables } from "../../../Globals";
+const RadioGroup = Radio.Group;
 const API_URL = globalVariables.API_URL;
 const amazon_Bucket = globalVariables.amazon_Bucket;
 const Option = Select.Option
@@ -18,28 +19,47 @@ class Conversion extends React.Component {
             currency: 'BTC',
             crypto: 'XRP',
             prevRoom: "",
-            includeFees: true
+            askPrice: 0,
+            bidPrice: 0,
+            buyCryptoInput: 0,
+            buyCurrencyInput: 0,
+            sellCryptoInput: 0,
+            sellCurrencyInput: 0,
+            includeFees: true,
+            krakenFees: 0.2,
+            faldaxFees: 0.3
         }
         io = this.props.io
         this.getCurrencies = this.getCurrencies.bind(this);
         this.getCrypto = this.getCrypto.bind(this);
         this.radioChange = this.radioChange.bind(this);
-        this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
+        this.getPairDetails = this.getPairDetails.bind(this);
+        this.handleCryptoChange = this.handleCryptoChange.bind(this);
         this.handleTabChange = this.handleTabChange.bind(this);
+        this.onBuyCryptoChange = this.onBuyCryptoChange.bind(this);
+        this.onBuyCurrencyChange = this.onBuyCurrencyChange.bind(this);
+        this.calculateBuyCurrency = this.calculateBuyCurrency.bind(this);
+        this.calculateBuyCrypto = this.calculateBuyCrypto.bind(this);
+        this.onSellCryptoChange = this.onSellCryptoChange.bind(this);
+        this.onSellCurrencyChange = this.onSellCurrencyChange.bind(this);
+        this.calculateSellCurrency = this.calculateSellCurrency.bind(this);
+        this.calculateSellCrypto = this.calculateSellCrypto.bind(this);
     }
     componentDidMount() {
         this.getCrypto();
         this.getCurrencies();
+        this.getPairDetails();
     }
     getPairDetails() {
+        var self = this;
         io.sails.url = API_URL;
         var URL;
         this.setState({ loader: true })
-        if (this.props.cryptoPair.prevRoom !== undefined && Object.keys(this.props.cryptoPair.prevRoom).length > 0) {
-            URL = `/socket/get-sell-book?prevRoom=${this.props.cryptoPair.prevRoom.crypto}-${this.props.cryptoPair.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`
+        if (this.state.prevRoom.trim() != "") {
+            URL = `/socket/get-pair-details?prevRoom=${this.state.prevRoom}&room=${this.state.crypto}-${this.state.currency}`
         }
         else {
-            URL = `/socket/get-sell-book?room=${this.state.crypto}-${this.state.currency}`
+            URL = `/socket/get-pair-details?room=${this.state.crypto}-${this.state.currency}`
         }
         io.socket.request({
             method: 'GET',
@@ -54,12 +74,17 @@ class Conversion extends React.Component {
 
             if (body.status == 200) {
                 let res = body.data;
-                this.updateData(res);
+                console.log("----=---=---", res);
+                self.setState({
+                    askPrice: res.ask_price,
+                    bidPrice: res.bid_price
+                });
+
             }
         });
-        io.socket.on('sellbookUpdate', (data) => {
-            this.updateData(data);
-        });
+        // io.socket.on('sellbookUpdate', (data) => {
+        //     this.updateData(data);
+        // });
     }
     getCrypto() {
         fetch(API_URL + `/coin-list-converison`, {
@@ -97,24 +122,199 @@ class Conversion extends React.Component {
             .catch(error => {
             })
     }
-    handleCurrencyChange(value) {
+    handleCryptoChange(value) {
+        let prevRoom = this.state.crypto + "-" + this.state.currency
         this.setState({
-            crypto: value
+            crypto: value,
+            prevRoom: prevRoom,
+            buyCryptoInput: 0,
+            buyCurrencyInput: 0
         }, () => {
             this.getCurrencies();
         });
     }
+    handleCurrencyChange(value) {
+        let prevRoom = this.state.crypto + "-" + this.state.currency
+        this.setState({
+            currency: value,
+            prevRoom: prevRoom,
+            buyCryptoInput: 0,
+            buyCurrencyInput: 0
+        }, () => {
+
+        });
+    }
     handleTabChange(e) {
         this.setState({
-            selectedTab: e
+            selectedTab: e,
+            buyCryptoInput: 0,
+            buyCurrencyInput: 0
         })
     }
     radioChange(e) {
+        var self = this;
         // console.log(e.target.value);
         this.setState({
             includeFees: JSON.parse(e.target.value)
+        }, () => {
+            if (self.state.selectedTab == 1) {
+                self.calculateBuyCurrency();
+            }
+            else if (self.state.selectedTab == 2) {
+                self.calculateSellCurrency();
+            }
         })
 
+    }
+    onBuyCryptoChange(e) {
+        var self = this;
+        this.setState({
+            buyCryptoInput: e.target.value,
+        }, () => {
+            self.calculateBuyCurrency();
+        })
+        // if (self.state.includeFees) {
+
+        // } else {
+        //     let buyCurrencyInput = 0;
+        //     if (!isNaN(e.target.value)) {
+        //         buyCurrencyInput = (e.target.value) * self.state.askPrice;
+        //         // Add Kraken Fees
+        //         buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.krakenFees) / 100);
+        //         // Add Faldax Fees
+        //         buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.faldaxFees) / 100);
+        //     }
+        //     self.setState({
+        //         buyCryptoInput: e.target.value,
+        //         buyCurrencyInput: buyCurrencyInput
+        //     })
+        // }
+    }
+    calculateBuyCurrency() {
+        var self = this;
+        if (self.state.includeFees) {
+            this.setState({
+                buyCurrencyInput: (isNaN(self.state.buyCryptoInput) ? 0 : (self.state.buyCryptoInput) * self.state.askPrice)
+            })
+        } else {
+            let buyCurrencyInput = 0;
+            if (!isNaN(self.state.buyCryptoInput)) {
+                buyCurrencyInput = (self.state.buyCryptoInput) * self.state.askPrice;
+                // Add Kraken Fees
+                console.log("before kraken fees", buyCurrencyInput);
+
+                buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.krakenFees) / 100);
+                console.log("before faldax fees", buyCurrencyInput);
+
+                // Add Faldax Fees
+                buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.faldaxFees) / 100);
+                console.log("after faldax fees", buyCurrencyInput);
+            }
+            self.setState({
+                buyCurrencyInput: buyCurrencyInput
+            })
+        }
+    }
+    onBuyCurrencyChange(e) {
+        var self = this;
+        this.setState({
+            buyCurrencyInput: e.target.value,
+            // buyCryptoInput: (isNaN(e.target.value) ? 0 : (e.target.value) / self.state.askPrice)
+
+        }, () => {
+            self.calculateBuyCrypto();
+        });
+    }
+    calculateBuyCrypto() {
+        var self = this;
+        var self = this;
+        if (self.state.includeFees) {
+            this.setState({
+                buyCryptoInput: (isNaN(self.state.buyCurrencyInput) ? 0 : (self.state.buyCurrencyInput) / self.state.askPrice)
+            })
+        } else {
+            let buyCryptoInput = self.state.buyCurrencyInput;
+            if (!isNaN(self.state.buyCurrencyInput)) {
+                console.log("with faldax fees", buyCryptoInput);
+                // Minus Faldax Fees
+                buyCryptoInput = (buyCryptoInput * 100) / (100 + self.state.faldaxFees);
+                console.log("without faldax fees", buyCryptoInput);
+                // Minus Kraken Fees
+                buyCryptoInput = (buyCryptoInput * 100) / (100 + self.state.krakenFees);
+                console.log("without kraken fees", buyCryptoInput);
+
+                buyCryptoInput = buyCryptoInput / self.state.askPrice;
+            }
+            self.setState({
+                buyCryptoInput: buyCryptoInput
+            })
+        }
+    }
+    onSellCryptoChange(e) {
+        var self = this;
+        self.setState({
+            sellCryptoInput: e.target.value
+        }, () => {
+            self.calculateSellCurrency();
+        });
+    }
+    calculateSellCurrency() {
+        var self = this;
+        if (self.state.includeFees == true) {
+            self.setState({
+                sellCurrencyInput: (isNaN(self.state.sellCryptoInput) ? 0 : (self.state.sellCryptoInput * self.state.bidPrice))
+            })
+        } else {
+            let sellCurrencyInput = 0;
+            if (!isNaN(self.state.sellCryptoInput)) {
+                sellCurrencyInput = (self.state.sellCryptoInput) * self.state.bidPrice;
+                // Add Kraken Fees
+                console.log("before kraken fees", sellCurrencyInput);
+
+                sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.krakenFees) / 100);
+                console.log("before faldax fees", sellCurrencyInput);
+
+                // Add Faldax Fees
+                sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.faldaxFees) / 100);
+                console.log("after faldax fees", sellCurrencyInput);
+            }
+            self.setState({
+                sellCurrencyInput: sellCurrencyInput
+            })
+        }
+    }
+    onSellCurrencyChange(e) {
+        var self = this;
+        self.setState({
+            sellCurrencyInput: e.target.value
+        }, () => {
+            self.calculateSellCrypto();
+        });
+    }
+    calculateSellCrypto() {
+        var self = this;
+        var self = this;
+        if (self.state.includeFees) {
+            this.setState({
+                sellCryptoInput: (isNaN(self.state.sellCurrencyInput) ? 0 : (self.state.sellCurrencyInput) / self.state.bidPrice)
+            })
+        } else {
+            let sellCryptoInput = self.state.sellCurrencyInput;
+            if (!isNaN(self.state.sellCurrencyInput)) {
+                console.log("with faldax fees", sellCryptoInput);
+                // Minus Faldax Fees
+                sellCryptoInput = (sellCryptoInput * 100) / (100 + self.state.faldaxFees);
+                console.log("without faldax fees", sellCryptoInput);
+                // Minus Kraken Fees
+                sellCryptoInput = (sellCryptoInput * 100) / (100 + self.state.krakenFees);
+                console.log("without kraken fees", sellCryptoInput);
+
+                sellCryptoInput = sellCryptoInput / self.state.bidPrice;
+            }
+            self.setState({
+                sellCryptoInput: sellCryptoInput
+            })
+        }
     }
     render() {
         return (
@@ -131,19 +331,11 @@ class Conversion extends React.Component {
                                         </Col>
                                     </Row>
                                     <ConversionRadioRow>
-                                        <Col md={12}>
-                                            <CustomRadioContainer>
-                                                <input type="radio" name="fees" value={true} checked={this.state.includeFees} onChange={this.radioChange} />
-                                                <span className="radio-label">Including Fees</span>
-                                                <span className="checkmark"></span>
-                                            </CustomRadioContainer>
-                                        </Col>
-                                        <Col md={12}>
-                                            <CustomRadioContainer>
-                                                <input type="radio" name="fees" value={false} checked={!this.state.includeFees} onChange={this.radioChange} />
-                                                <span className="radio-label">Excluding Fees</span>
-                                                <span className="checkmark"></span>
-                                            </CustomRadioContainer>
+                                        <Col md={24}>
+                                            <RadioGroup onChange={this.radioChange} value={this.state.includeFees}>
+                                                <FeesRadio value={true}>Including Fees</FeesRadio>
+                                                <FeesRadio value={false}>Excluding Fees</FeesRadio>
+                                            </RadioGroup>
                                         </Col>
                                     </ConversionRadioRow>
                                     <BorderRow>
@@ -151,11 +343,11 @@ class Conversion extends React.Component {
                                             You Get
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
-                                            <ConversionInput type="text" />
+                                            <ConversionInput type="number" value={this.state.buyCryptoInput} onChange={this.onBuyCryptoChange} />
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.cryptoList && this.state.cryptoList.length > 0 &&
-                                                < ConversionDropDown defaultValue={this.state.crypto} onChange={this.handleCurrencyChange}>
+                                                < ConversionDropDown defaultValue={this.state.crypto} onChange={this.handleCryptoChange}>
                                                     {
                                                         this.state.cryptoList.map((element, index) => (
                                                             <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
@@ -172,11 +364,11 @@ class Conversion extends React.Component {
                                             You Pay
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
-                                            <ConversionInput type="text" />
+                                            <ConversionInput type="number" value={this.state.buyCurrencyInput} onChange={this.onBuyCurrencyChange} />
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.currencyList && this.state.currencyList.length > 0 &&
-                                                < ConversionDropDown defaultValue={this.state.currency}>
+                                                < ConversionDropDown defaultValue={this.state.currency} onChange={this.handleCurrencyChange}>
                                                     {
                                                         this.state.currencyList.map((element, index) => (
                                                             <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
@@ -214,19 +406,11 @@ class Conversion extends React.Component {
                                         </Col>
                                     </Row>
                                     <ConversionRadioRow>
-                                        <Col md={12}>
-                                            <CustomRadioContainer>
-                                                <input type="radio" name="fees" checked />
-                                                <span className="radio-label">Including Fees</span>
-                                                <span className="checkmark"></span>
-                                            </CustomRadioContainer>
-                                        </Col>
-                                        <Col md={12}>
-                                            <CustomRadioContainer>
-                                                <input type="radio" name="fees" />
-                                                <span className="radio-label">Excluding Fees</span>
-                                                <span className="checkmark"></span>
-                                            </CustomRadioContainer>
+                                        <Col md={24}>
+                                            <RadioGroup onChange={this.radioChange} value={this.state.includeFees}>
+                                                <FeesRadio value={true}>Including Fees</FeesRadio>
+                                                <FeesRadio value={false}>Excluding Fees</FeesRadio>
+                                            </RadioGroup>
                                         </Col>
                                     </ConversionRadioRow>
                                     <BorderRow>
@@ -234,11 +418,11 @@ class Conversion extends React.Component {
                                             You Pay
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
-                                            <ConversionInput type="text" />
+                                            <ConversionInput type="number" value={this.state.sellCryptoInput} onChange={this.onSellCryptoChange} />
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.cryptoList && this.state.cryptoList.length > 0 &&
-                                                < ConversionDropDown defaultValue={this.state.currency} onChange={this.handleCurrencyChange}>
+                                                < ConversionDropDown defaultValue={this.state.crypto} onChange={this.handleCryptoChange}>
                                                     {
                                                         this.state.cryptoList.map((element, index) => (
                                                             <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
@@ -255,14 +439,14 @@ class Conversion extends React.Component {
                                             You Get
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
-                                            <ConversionInput type="text" />
+                                            <ConversionInput type="number" value={this.state.sellCurrencyInput} onChange={this.onSellCurrencyChange} />
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.currencyList && this.state.currencyList.length > 0 &&
-                                                < ConversionDropDown defaultValue="">
+                                                < ConversionDropDown defaultValue={this.state.currency}>
                                                     {
                                                         this.state.currencyList.map((element, index) => (
-                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin_name}</DropDownOption>
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                         ))
                                                     }
 
@@ -306,12 +490,22 @@ class Conversion extends React.Component {
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <RightColAmount>0.0123 BTC</RightColAmount>
+                                        {this.state.selectedTab == 1 &&
+                                            <RightColAmount>{isNaN(parseFloat(this.state.buyCryptoInput)) ? 0 : parseFloat(this.state.buyCryptoInput).toFixed(4)} {this.state.crypto}</RightColAmount>
+                                        }
+                                        {this.state.selectedTab == 2 &&
+                                            <RightColAmount>{isNaN(parseFloat(this.state.sellCryptoInput)) ? 0 : parseFloat(this.state.sellCryptoInput).toFixed(4)} {this.state.crypto}</RightColAmount>
+                                        }
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <RightColPrice>@ $3,914.06  per BTC</RightColPrice>
+                                        {this.state.selectedTab == 1 &&
+                                            <RightColPrice>@ {parseFloat(this.state.askPrice)} {this.state.currency} per {this.state.crypto}</RightColPrice>
+                                        }
+                                        {this.state.selectedTab == 2 &&
+                                            <RightColPrice>@ {this.state.bidPrice} {this.state.currency} per {this.state.crypto}</RightColPrice>
+                                        }
                                     </Col>
                                 </Row>
                                 <Row>
