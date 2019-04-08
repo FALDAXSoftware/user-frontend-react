@@ -524,6 +524,7 @@ class PasswordChange extends Component {
         if (props.passChange !== false) {
             if (props.passChange.status == 200) {
                 this.props.form.resetFields();
+                this.setState({ percent: 0 })
                 this.openNotificationWithIcon("success", "Change Password", props.passChange.message)
             } else {
                 this.openNotificationWithIcon("error", "Change Password", props.passChange.err)
@@ -532,7 +533,7 @@ class PasswordChange extends Component {
         }
         if (props.verifyOTP) {
             if (props.verifyOTP.status == 200) {
-                this.openNotificationWithIcon("success", "Two-Factor Auth..", props.verifyOTP.message)
+                this.openNotificationWithIcon("success", "Two-Factor Authentication", props.verifyOTP.message)
                 this.setState({ is_twofactor: "DISABLE", show_QR: false, isEnabled: "ENABLED" })
             } else {
                 this.openNotificationWithIcon("error", "Two-Factor Auth..", props.verifyOTP.err)

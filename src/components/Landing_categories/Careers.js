@@ -11,12 +11,21 @@ import {
     Contact_wrap, Grey_wrap, Headcontact, Head_span, Job_wrap, Body_details_job, Job_head, Location_p
 } from '../../styled-components/landingCategories/contactStyle';
 import { globalVariables } from "../../Globals"
+import FaldaxLoader from '../../shared-components/FaldaxLoader'
 
 export const ContainerContact = styled(Container)`
     background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
+`
+const NDF = styled.div`
+    height:300px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:600;
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
 const Cat_head = styled(Job_head)`
     font-size: 25px;
@@ -108,6 +117,7 @@ class Careers extends Component {
     }
     render() {
         var me = this;
+        let flag = false;
         return (
             <Contact_wrap>
                 <Navigation />
@@ -123,6 +133,9 @@ class Careers extends Component {
                         <Job_wrap>
                             {this.state.Jobs.length > 0 ?
                                 this.state.Jobs.map(function (jobCat, key) {
+                                    if (jobCat.jobs.length > 0) {
+                                        flag = true;
+                                    }
                                     let jobs = jobCat.jobs ?
                                         jobCat.jobs.map((job) => {
                                             let _this = this;
@@ -144,19 +157,22 @@ class Careers extends Component {
                                                 <div><Cat_head>{jobCat.category}</Cat_head>
                                                     <BorderDiv> </BorderDiv>
                                                 </div>
-                                                : ''}
+                                                : ""}
                                             {jobs}
                                         </Body_details_job>
                                     );
                                 })
-                                : ''}
+                                : ""}
+                            {
+                                flag == false ?
+                                    <NDF>NO DATA FOUND</NDF>
+                                    : ""
+                            }
                         </Job_wrap>
                     </ContainerContact>
                 </Grey_wrap>
                 <CommonFooter />
-                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
-                    <Spin size="large" />
-                </Spin_Ex> : ""}
+                {(this.state.loader) ? <FaldaxLoader /> : ""}
             </Contact_wrap>
         );
     }

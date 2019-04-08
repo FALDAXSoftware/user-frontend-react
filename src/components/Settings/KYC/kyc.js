@@ -10,6 +10,9 @@ import KYCForm from "./KYCForm"
 import IDselect from "./IDselect"
 import SSN from "./SSN"
 import DocUpload from './DocUpload';
+import { globalVariables } from "../../../Globals"
+
+let { API_URL } = globalVariables;
 
 const Step = Steps.Step;
 
@@ -38,6 +41,10 @@ const KYC_progress = styled.div`
     & .ant-steps-finish-icon
     {
         color:white;
+    }
+    & .ant-steps-item-wait .ant-steps-icon
+    {
+        color:black;
     }
     @media(max-width:480px)
     {
@@ -76,6 +83,7 @@ class KYC extends Component {
             nexts: 0,
             is_kyc_done: false,
             countryChange: null,
+            kycData: {}
         }
     }
 
@@ -92,8 +100,13 @@ class KYC extends Component {
         if (countryChange !== null) {
             this.setState({ countryChange })
         }
+        console.log(a, "-------step", this.state);
+
     }
     back_step(a) {
+        console.log("BACK")
+
+
         this.setState({ next: a })
         this.setState({ nexts: a })
     }
@@ -120,9 +133,9 @@ class KYC extends Component {
                 {(this.state.next == 0 && this.props.is_kyc_done !== true) ?
                     <KYCForm back_step={(a) => this.back_step(a)} next_step={(a, type, ssn) => this.next_step(a, type, ssn)} /> : ""
                 }
-                {(next == 1 && is_kyc_done !== true) ? <IDselect {...this.props} countryFlag={this.state.countryChange} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
-                {(next == 2 && is_kyc_done !== true) ? <SSN back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
-                {(next == 3 && is_kyc_done !== true) ? <DocUpload docText={this.state.docType} back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
+                {(next == 1 && is_kyc_done !== true) ? <IDselect kycData={this.state.kycData} {...this.props} countryFlag={this.state.countryChange} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
+                {(next == 2 && is_kyc_done !== true) ? <SSN kycData={this.state.kycData} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
+                {(next == 3 && is_kyc_done !== true) ? <DocUpload kycData={this.state.kycData} docText={this.state.docType} back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
             </KYC_wrap>
         );
     }
@@ -134,8 +147,8 @@ const mapStateToProps = (state) => {
         is_kyc_done: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].is_kyc_done : "",
         email: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].email : "",
         profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
-        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
-
+        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+        isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? state.simpleReducer.isLoggedIn : "",
     }
 }
 const mapDispatchToProps = dispatch => ({

@@ -31,7 +31,7 @@ const Whole_wrap = styled.div`
 `
 const Ticket_wrap = styled(Row)`
 border-radius: 10px;
-background-color: rgb( 255, 255, 255 );
+background-color: ${props => props.theme.mode == "dark" ? "#041422" : "rgb( 255, 255, 255 )"};
 box-shadow: 0px 2px 7px 0px rgba(51, 51, 51, 0.16);
 padding:40px;
 margin-bottom:20px;
@@ -139,7 +139,8 @@ class HubSpot extends React.Component {
                                 this.state.ticketData.map((temp, index) => (
                                     <Ticket_wrap>
                                         <Col md={4} lg={3}>
-                                            <Date>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format(this.props.profileDetails.date_format)} <span style={{ whiteSpace: "nowrap" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format("hh:mm A")}</span> </Date>
+                                            <Date style={{ display: "block" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format(this.props.profileDetails.date_format)} </Date>
+                                            <Date><span style={{ whiteSpace: "nowrap" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format("hh:mm A")}</span> </Date>
                                             {temp.properties.hs_pipeline_stage &&
                                                 <Status color={statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].color}>{statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].title}</Status>
                                             }

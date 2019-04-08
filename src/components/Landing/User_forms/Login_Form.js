@@ -296,7 +296,7 @@ class Login_Form extends React.Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      // console.log(error, value, this.state)
+      console.log(error, value, this.state)
       if (error == null && this.state.emailIcon == true && this.state.passIcon == true && (this.state.isOtpRequired == true ? this.state.otpIcon == true : true)) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
@@ -591,7 +591,7 @@ class Login_Form extends React.Component {
                     <div>
                       <Password disabled={this.state.isOtpRequired} id="logPass" type={this.state.typeEye} {...getFieldProps('password', {
                         onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
-                        rules: [{ type: "string", required: true, min: 5 }],
+                        rules: [{ type: "string", required: true }],
                       })}
                       />
                       {

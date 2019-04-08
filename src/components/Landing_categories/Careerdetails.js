@@ -13,6 +13,7 @@ import {
     Job_btn, Body_details, Body_p, Location_p, Details_p
 } from '../../styled-components/landingCategories/contactStyle';
 import { globalVariables } from "../../Globals"
+import FaldaxLoader from '../../shared-components/FaldaxLoader'
 
 export const ContainerContact = styled(Container)`
     background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
@@ -78,9 +79,7 @@ class CareerDetails extends Component {
                     </ContainerContact>
                 </Grey_wrap>
                 <CommonFooter />
-                {(loader) ? <Spin_Ex className="Ex_spin">
-                    <Spin size="large" />
-                </Spin_Ex> : ""}
+                {(loader) ? <FaldaxLoader /> : ""}
             </Contact_wrap>
         );
     }

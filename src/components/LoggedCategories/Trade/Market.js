@@ -259,6 +259,7 @@ class Market extends Component {
                         <Totinput readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(4)} name="total" />
                     </Total_wrap>
                 </BTC_wrap>
+                {console.log("Comment for MANSI ONLY", this.state)}
                 {Object.keys(this.props.userBal).length > 0 ?
                     this.state.side == "Buy" ?
                         <Pay>

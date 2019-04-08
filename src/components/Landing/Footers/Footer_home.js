@@ -304,7 +304,9 @@ class FooterHome extends Component {
                                         <Footer_Link href={`${globalVariables.WordpressSiteURL}/policies`}>Policies</Footer_Link>
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.scrollMap.bind(this)}>
-                                        Service Availability
+                                        <Footer_Link href={`${globalVariables.WordpressSiteURL}/service-availability/`}>Service Availability</Footer_Link>
+
+
                                     </li>
                                 </Footer_ul>
                             </FooterLinkCol>
@@ -348,8 +350,8 @@ class FooterHome extends Component {
                             <Store_Col xs={24} lg={2} xl={2}>
                                 <Download>Download</Download>
                                 <Store_Wrap>
-                                    <Appstore style={{ cursor: "pointer" }} onClick={this.showComing} src={AppStore} />
-                                    <Playstore style={{ cursor: "pointer" }} onClick={this.showComing} src={PlayStore} />
+                                    <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}><Appstore style={{ cursor: "pointer" }} src={AppStore} /></a>
+                                    <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}><Playstore style={{ cursor: "pointer" }} src={PlayStore} /></a>
                                 </Store_Wrap>
                             </Store_Col>
                         </Row>
@@ -361,7 +363,7 @@ class FooterHome extends Component {
                     </Bottom_Footer>
                 </Container>
                 <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
-            </Footer_main>
+            </Footer_main >
         );
     }
 }
