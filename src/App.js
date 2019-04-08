@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { Signup } from './Actions/Auth';
+import FaldaxLoader from "./shared-components/FaldaxLoader";
 /* Components */
 // import HomePage from './components/Landing/HomePage';
 // import Login from "./components/Landing/User_forms/Login_Form"
@@ -138,7 +139,7 @@ class App extends Component {
         <ThemeProvider theme={theme}>
           <Route
             render={({ location }) => (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<FaldaxLoader></FaldaxLoader>}>
                 <Switch location={location}>
                   <Route path="/" exact title="Home" component={HomePage} />
                   <Route path="/login" exact title="Login" component={Login} />
