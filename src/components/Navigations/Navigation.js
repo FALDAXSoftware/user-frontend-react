@@ -438,11 +438,11 @@ class Navigation extends Component {
                         {/* <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item> */}
                         <Menu_item key="2"><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/about-us`}>ABOUT</NavLink></Menu_item>
                         <Menu_item key="3"><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/blogs`}>BLOG</NavLink></Menu_item>
-                        <Menu_item key="4" onClick={this.showComing}><NavLink className="Nav_selected" href="#">SECURITY</NavLink></Menu_item>
+                        {/* <Menu_item key="4" onClick={this.showComing}><NavLink className="Nav_selected" href="#">SECURITY</NavLink></Menu_item> */}
                         <Menu_item key="5" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/news`}>NEWS</NavLink></Menu_item>
                         <Menu_item key="6" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/contact-us`}>CONTACT</NavLink></Menu_item>
                         <Menu_item key="7" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/list-your-token`}>LIST YOUR TOKEN</NavLink></Menu_item>
-                        <Menu_item key="8" onClick={this.showComing}><NavLink className="Nav_selected" onClick={() => this.props.history.push(`/conversion`)}>EXCHANGE</NavLink></Menu_item>
+                        <Menu_item key="8" onClick={this.showComing}><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/coming-soon`}>EXCHANGE</NavLink></Menu_item>
                     </Menu_main>
                     <Right_div>
                         {this.props.isLoggedIn ? <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} /> :
@@ -460,45 +460,46 @@ class Navigation extends Component {
                                     <Fin_sign onClick={() => this.props.history.push(`${globalVariables.WordpressSiteURL}/signup`)}><ButtonLog type="primary">Signup</ButtonLog></Fin_sign>
                                 </Fin_div>
                             }
-                            <Link to={globalVariables.WordpressSiteURL}>Home</Link>
+                            <a href={globalVariables.WordpressSiteURL}>Home</a>
                             {/* <a onClick={this.showComing} href="#">Features</a> */}
-                            <Link to={`${globalVariables.WordpressSiteURL}/about-us`}>About</Link>
-                            <Link to={`${globalVariables.WordpressSiteURL}/blogs`}>Blog</Link>
-                            <a onClick={this.showComing} href="#">Security</a>
-                            <Link to={`${globalVariables.WordpressSiteURL}/news`}>News</Link>
-                            <Link to={`${globalVariables.WordpressSiteURL}/contact-us`}>Contact</Link>
-                            <Link to={`${globalVariables.WordpressSiteURL}/list-your-token`}>List Your Token</Link>
-                            <a onClick={this.showComing} href="#">Exchange</a>
+                            <a href={`${globalVariables.WordpressSiteURL}/about-us`}>About</a>
+                            <a href={`${globalVariables.WordpressSiteURL}/blogs`}>Blog</a>
+                            {/* <a onClick={this.showComing} href="#">Security</a> */}
+                            <a href={`${globalVariables.WordpressSiteURL}/news`}>News</a>
+                            <a href={`${globalVariables.WordpressSiteURL}/contact-us`}>Contact</a>
+                            <a href={`${globalVariables.WordpressSiteURL}/list-your-token`}>List Your Token</a>
+                            <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}>Exchange</a>
+                            {/* <a onClick={this.showComing} href="#">Exchange</a> */}
                             {this.props.isLoggedIn ? <CarLink to="/careers">Careers</CarLink> : ""}
                             {/* <Why> Language </Why> */}
                             <a className="DROP">
                                 <DropMenu mode="inline">
                                     <SubMenuNav key="sub1" title={'Information'}>
-                                        <Menu.Item key="9"><Link to={`${globalVariables.WordpressSiteURL}/about-us`}>About Us</Link></Menu.Item>
-                                        <Menu.Item key="10"><Link to={`${globalVariables.WordpressSiteURL}/contact-us`}>Contact Us</Link></Menu.Item>
-                                        <Menu.Item key="11"><Link to={`${globalVariables.WordpressSiteURL}/media-contact`}>Media Contact</Link></Menu.Item>
-                                        {/* <Menu.Item key="12"><Link to="/blogs">Blog</Link></Menu.Item> */}
-                                        <Menu.Item key="13"><Link to={`${globalVariables.WordpressSiteURL}/fee`}>Fees</Link></Menu.Item>
+                                        <Menu.Item key="9"><a href={`${globalVariables.WordpressSiteURL}/about-us`}>About Us</a></Menu.Item>
+                                        <Menu.Item key="10"><a href={`${globalVariables.WordpressSiteURL}/contact-us`}>Contact Us</a></Menu.Item>
+                                        <Menu.Item key="11"><a href={`${globalVariables.WordpressSiteURL}/media-contact`}>Media Contact</a></Menu.Item>
+                                        {/* <Menu.Item key="12"><a href="/blogs">Blog</a></Menu.Item> */}
+                                        <Menu.Item key="13"><a href={`${globalVariables.WordpressSiteURL}/fee`}>Fees</a></Menu.Item>
                                     </SubMenuNav>
                                 </DropMenu>
                             </a>
                             <a className="DROP">
                                 <DropMenu mode="inline">
                                     <SubMenuNav key="sub2" title={'Support'}>
-                                        <Menu.Item key="9"><a onClick={this.showComing} href="#">Open a Ticket</a></Menu.Item>
-                                        <Menu.Item key="10"><a onClick={this.showComing} href="#">FAQ</a></Menu.Item>
-                                        <Menu.Item key="11"><a onClick={this.showComing} href="#">API Documentation</a></Menu.Item>
-                                        <Menu.Item key="12"><Link to={`${globalVariables.WordpressSiteURL}/list-your-token`}>List Your Token</Link></Menu.Item>
-                                        <Menu.Item key="12"><Link to={`${globalVariables.WordpressSiteURL}/news`}>News</Link></Menu.Item>
+                                        <Menu.Item key="9"><Link to="/open-ticket">Open a Ticket</Link></Menu.Item>
+                                        <Menu.Item key="10"><a href="https://knowledge.faldax.com/">FAQ</a></Menu.Item>
+                                        {/* <Menu.Item key="11"><a href="#">API Documentation</a></Menu.Item> */}
+                                        <Menu.Item key="12"><a href={`${globalVariables.WordpressSiteURL}/list-your-token`}>List Your Token</a></Menu.Item>
+                                        <Menu.Item key="12"><a href={`${globalVariables.WordpressSiteURL}/news`}>News</a></Menu.Item>
                                     </SubMenuNav>
                                 </DropMenu>
                             </a>
                             <a className="DROP">
                                 <DropMenu mode="inline">
                                     <SubMenuNav key="sub3" title={'Legal & Technical'}>
-                                        <Menu.Item key="9"><Link to="/policy">Policies</Link></Menu.Item>
-                                        <Menu.Item key="10"><a onClick={this.showComing} href="#">Service Availability</a></Menu.Item>
-                                        <Menu.Item key="11"><a onClick={this.showComing} href="#">Security</a></Menu.Item>
+                                        <Menu.Item key="9"><a href={`${globalVariables.WordpressSiteURL}/policies`}>Policies</a></Menu.Item>
+                                        <Menu.Item key="10"><a href={`${globalVariables.WordpressSiteURL}/service-availability`}>Service Availability</a></Menu.Item>
+                                        {/* <Menu.Item key="11"><a onClick={this.showComing} href="#">Security</a></Menu.Item> */}
                                     </SubMenuNav>
                                 </DropMenu>
                             </a>

@@ -139,7 +139,8 @@ class HubSpot extends React.Component {
                                 this.state.ticketData.map((temp, index) => (
                                     <Ticket_wrap>
                                         <Col md={4} lg={3}>
-                                            <Date>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format(this.props.profileDetails.date_format)} <span style={{ whiteSpace: "nowrap" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format("hh:mm A")}</span> </Date>
+                                            <Date style={{ display: "block" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format(this.props.profileDetails.date_format)} </Date>
+                                            <Date><span style={{ whiteSpace: "nowrap" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format("hh:mm A")}</span> </Date>
                                             {temp.properties.hs_pipeline_stage &&
                                                 <Status color={statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].color}>{statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].title}</Status>
                                             }
