@@ -187,7 +187,7 @@ class ForgotForm extends Component {
       var value = {};
       value.email = this.state.email;
       this.props.forgotAction(value);
-      this.setState({ email: "" })
+
     } else {
       this.validator.showMessages();
       // rerender to show messages for the first time
@@ -207,7 +207,8 @@ class ForgotForm extends Component {
   componentWillReceiveProps(props, newProps) {
     if (props.forgot) {
       if (props.forgot.status == 200) {
-        this.openNotificationWithIcon('success', 'Login Successful', props.forgot.message);
+        this.openNotificationWithIcon('success', 'Success', props.forgot.message);
+        this.setState({ email: "" })
       } else {
         this.openNotificationWithIcon('error', 'Error', props.forgot.err);
       }
@@ -251,7 +252,7 @@ class ForgotForm extends Component {
                   <Login_head>Forgot Password</Login_head>
                   <Welcome_text>Forgot Password?</Welcome_text>
                   <Sub_text>Don't worry, It happen's to the best of us.</Sub_text>
-                  <Email_label>Email Address</Email_label>
+                  <Email_label>Email Address*</Email_label>
                   <Username value={this.state.email} onChange={this.fieldChange} />
                   {this.validator.message('Email_Address', this.state.email, 'required|email')}
                   <Button_login onClick={this.submit}>SEND RESET PASSWORD LINK</Button_login>

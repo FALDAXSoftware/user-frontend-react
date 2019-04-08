@@ -602,7 +602,7 @@ class SignupForm extends Component {
                   </div>
                   <Progress_bar type="line" size="small" percent={this.state.percent} strokeColor={this.state.stroke} />
                   <Pass_req className="pass_sign">{this.state.pass_msg}</Pass_req>
-                  <Ph_Label>Confirm Password</Ph_Label>
+                  <Ph_Label>Confirm Password*</Ph_Label>
                   <div>
                     <Password type={this.state.repeatEye} {...getFieldProps('confirm_password', {
                       onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need

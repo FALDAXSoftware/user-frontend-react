@@ -4,6 +4,8 @@ import { darkTheme } from './Theme/themeAction'
 let { API_URL } = globalVariables;
 
 export function deleteAccount(isLoggedIn, value) {
+    let tempValue = {};
+    tempValue['email'] = value.email;
     return (dispatch) => {
         dispatch(addLoader())
         fetch(API_URL + "/users/deleteAccount", {
@@ -13,12 +15,17 @@ export function deleteAccount(isLoggedIn, value) {
                 'Content-Type': 'application/json',
                 Authorization: "Bearer " + isLoggedIn
             },
-            body: JSON.stringify(value)
+            body: JSON.stringify(tempValue)
         }).then(response => response.json())
             .then((responseData) => {
-                if (responseData.status == 200)
-                    // dispatch(Logout(responseData))
-                    dispatch(removeLoader())
+                if (responseData.status == 200) {
+                    let tempValue2 = {};
+                    tempValue2['user_id'] = tempValue.user_id;
+                    tempValue2['jwt_token'] = tempValue.jwt_token;
+
+                    dispatch(LogoutUser(isLoggedIn, tempValue2))
+                }
+                dispatch(removeLoader())
             }).catch(error => {
             })
     }

@@ -156,10 +156,10 @@ export default class CountryPick extends Component {
         if (this.props.profileDetails.country_id !== undefined) {
 
             var country = Number(this.props.profileDetails.country_id);
-            var states = CountryData.getStatesOfCountry(country);
-
+            var states = CountryData.getStatesOfCountry(country + 1);
             this.setState({ states })
             if (this.props.profileDetails.state_id !== undefined) {
+                console.log(cities)
                 var cities = CountryData.getCitiesOfState(this.props.profileDetails.state_id);
                 this.setState({ cities })
 
@@ -176,6 +176,18 @@ export default class CountryPick extends Component {
     }
 
     render() {
+        let country, state, city;
+        if (this.props.kyc !== undefined)
+            if (this.props.kyc == "kyc") {
+                if (this.props.kycData2 !== "" && this.props.kycData2 !== null && this.props.kycData2 !== undefined) {
+                    if (this.props.kycData2 !== undefined) {
+                        country = this.props.kycData2.country;
+                        state = this.props.kycData2.state;
+                        city = this.props.kycData2.city_town;
+                    }
+                }
+            }
+        console.log(country, state, city)
         return (
             <Country_wrap>
                 <Row>
@@ -183,7 +195,7 @@ export default class CountryPick extends Component {
                         <Country>Country*</Country>
                         <SelectS
                             showSearch
-                            value={this.state.country_selected !== null ? this.state.country_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.country)}
+                            value={this.state.country_selected !== null ? this.state.country_selected : (this.props.kyc == "kyc" ? country : this.props.profileDetails.country)}
                             placeholder="Select a Country"
                             className={this.state.CSS}
                             dropdownClassName="country_select_drop"
@@ -200,7 +212,7 @@ export default class CountryPick extends Component {
                             <Country>State*</Country>
                             <SelectS
                                 showSearch
-                                value={this.state.state_selected !== null ? this.state.state_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.state)}
+                                value={this.state.state_selected !== null ? this.state.state_selected : (this.props.kyc == "kyc" ? state : this.props.profileDetails.state)}
                                 placeholder="Select a State"
                                 className={this.state.CSS}
                                 dropdownClassName="country_select_drop"
@@ -218,7 +230,7 @@ export default class CountryPick extends Component {
                             <Country>City*</Country>
                             <SelectS
                                 showSearch
-                                value={this.state.city_selected !== null ? this.state.city_selected : (this.props.kyc == "kyc" ? "" : this.props.profileDetails.city_town)}
+                                value={this.state.city_selected !== null ? this.state.city_selected : (this.props.kyc == "kyc" ? city : this.props.profileDetails.city_town)}
                                 placeholder="Select a City"
                                 className={this.state.CSS}
                                 dropdownClassName="country_select_drop"

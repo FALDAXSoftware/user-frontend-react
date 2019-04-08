@@ -15,7 +15,9 @@ import Datepicker from "../Personaldetails/Datepicker"
 import CountryPick from "../Personaldetails/Country"
 import { kycFormAction, kycformData } from "../../../Actions/Settings/passwordChange"
 import FaldaxLoader from '../../../shared-components/FaldaxLoader';
+import { globalVariables } from "../../../Globals"
 
+let { API_URL } = globalVariables;
 const KYC_form = styled.div`
     width:50%;
     margin-left:auto;
@@ -127,6 +129,8 @@ class KYCForm extends Component {
             phoneCountry: [],
             countrychange: false,
             showSSN: false,
+            mobile: "",
+            kycData: null,
             fields: {
                 first_name: '',
                 last_name: '',
@@ -136,7 +140,8 @@ class KYCForm extends Component {
                 city_town: '',
                 zip: '',
                 state: '',
-                displayCountry: false
+                phone_number: '',
+                displayCountry: false,
             }
         };
         this.validator = new SimpleReactValidator();
@@ -144,8 +149,55 @@ class KYCForm extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onCountryName = this.onCountryName.bind(this);
     }
+    componentDidMount() {
+        var self = this;
+        console.log(" Did Props", this.props)
+        fetch(API_URL + "/users/get-kyc-detail", {
+            method: "get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                console.log(responseData, "KYC DATA");
+                if (responseData.status == 200) {
+                    let fields = {};
+                    fields['first_name'] = responseData.data.first_name;
+                    fields['last_name'] = responseData.data.last_name;
+                    fields['address'] = responseData.data.address;
+                    fields['address_2'] = responseData.data.address_2;
+                    fields['zip'] = responseData.data.zip;
+                    fields['city_town'] = responseData.data.city_town;
+                    fields['country'] = responseData.data.country;
+                    fields['state'] = responseData.data.state;
+                    fields['dob'] = responseData.data.dob;
+                    if (responseData.data.phone_number) {
+                        fields['phone_number'] = responseData.data.phone_number;
+                        this.setState({
+                            displayCountry: true,
+                            countrychange: true
+                        });
+                    }
+                    console.log(responseData.data)
+                    this.setState({
+                        fields: fields,
+                        kycData: responseData.data
+                    });
+                }
+            })
+            .catch(error => { })
+
+    }
+    componentWillReceiveProps(props, newProps) {
+        console.log("WIll", this.props);
+        console.log(props, newProps);
+    }
     onDateChange(value) {
         var tempDate = value.day + "/" + value.month + "/" + value.year;
+        console.log(value)
         if ((value.day !== "" && value.day !== undefined) && (value.year !== undefined && value.year !== "") && (value.month !== undefined && value.month !== "")) {
             var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
             let fields = this.state.fields;
@@ -216,7 +268,7 @@ class KYCForm extends Component {
             var mobile = temp.concat(mob);;
             let fields = this.state.fields;
             fields['phone_number'] = mobile;
-            this.setState({ fields });
+            this.setState({ fields, mobile: mob });
         }
     }
     onSubmit() {
@@ -231,6 +283,9 @@ class KYCForm extends Component {
         }
     }
     render() {
+        let countryBool = this.validator.message('country', this.state.fields.country, 'required', 'text-danger-validation') ? true : false,
+            stateBool = this.validator.message('state', this.state.fields.state, 'required', 'text-danger-validation') ? true : false,
+            cityBool = this.validator.message('city', this.state.fields.city_town, 'required', 'text-danger-validation') ? true : false;
         return (
             <KYC_form>
                 <Right_Col_kyc>
@@ -239,34 +294,35 @@ class KYCForm extends Component {
                         <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xxl={{ span: 12 }}>
                             <First_name_kyc>First Name*</First_name_kyc>
                             {/*      {console.log(this.props.profileDetails.first_name)} */}
-                            <First_input_kyc name="first_name" onChange={this._onChangeFields} placeholder="First Name" />
-                            {this.validator.message('first_name', this.state.fields.first_name, 'required|alpha_num', 'text-danger-validation')}
+                            <First_input_kyc value={this.state.fields.first_name} name="first_name" onChange={this._onChangeFields} placeholder="First Name" />
+                            {this.validator.message('first_name', this.state.fields.first_name, 'required|alpha_num|min:2|max:15', 'text-danger-validation')}
                         </Col>
                         <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xxl={{ span: 12 }}>
                             <Last_name_kyc>Last Name*</Last_name_kyc>
-                            <Last_input_kyc name="last_name" onChange={this._onChangeFields} placeholder="Last Name" />
-                            {this.validator.message('last_name', this.state.fields.last_name, 'required|alpha_num', 'text-danger-validation')}
+                            <Last_input_kyc value={this.state.fields.last_name} name="last_name" onChange={this._onChangeFields} placeholder="Last Name" />
+                            {this.validator.message('last_name', this.state.fields.last_name, 'required|alpha_num|min:2|max:15', 'text-danger-validation')}
                         </Col>
                     </First_Row_kyc>
 
                     <Second_Row_kyc>
+                        {console.log(this.state.kycData)}
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Date_birth_kyc>Date of Birth*</Date_birth_kyc>
-                            <Datepicker {...this.props} kyc="kyc" onDateChange={(Data) => this.onDateChange(Data)} />
-                            {this.validator.message('dob', this.state.fields.dob, 'required', 'text-danger-validation')}
+                            <Datepicker kycData2={this.state.kycData} {...this.props} kyc="kyc" onDateChange={(Data) => this.onDateChange(Data)} />
+                            {this.validator.message('Date of Birth', this.state.fields.dob, 'required', 'text-danger-validation')}
                         </Col>
                     </Second_Row_kyc>
 
                     <Third_Row_kyc>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Street_Address_kyc>Street Address Line 1*</Street_Address_kyc>
-                            <Street_input_kyc name="address" onChange={this._onChangeFields} placeholder="Street Address" />
-                            {this.validator.message('street_address', this.state.fields.address, 'required', 'text-danger-validation')}
+                            <Street_input_kyc value={this.state.fields.address} name="address" onChange={this._onChangeFields} placeholder="Street Address" />
+                            {this.validator.message('street_address', this.state.fields.address, 'required|max:100', 'text-danger-validation')}
                         </Col>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Street2_wrap>
                                 <Street_Address_kyc>Street Address Line 2</Street_Address_kyc>
-                                <Street_input_kyc name="address_2" onChange={this._onChangeFields} placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} />
+                                <Street_input_kyc value={this.state.fields.address_2} name="address_2" onChange={this._onChangeFields} placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} />
                             </Street2_wrap>
                         </Col>
                     </Third_Row_kyc>
@@ -274,10 +330,37 @@ class KYCForm extends Component {
                     <Fourth_Row_kyc>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             {/* console.log(this.props) */}
-                            <CountryPick {...this.props} onCountryName={(name) => { this.onCountryName(name) }} kyc="kyc" isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={(country, state, city, stateID, countryID) => this.onCountryChange(country, state, city, stateID, countryID)} />
-                            <span>{this.validator.message('country', this.state.fields.country, 'required', 'text-danger-validation')}
-                                {this.validator.message('state', this.state.fields.state, 'required', 'text-danger-validation')}
-                                {this.validator.message('city', this.state.fields.city_town, 'required', 'text-danger-validation')}</span>
+                            <CountryPick kycData2={this.state.kycData} {...this.props} onCountryName={(name) => { this.onCountryName(name) }} kyc="kyc" isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={(country, state, city, stateID, countryID) => this.onCountryChange(country, state, city, stateID, countryID)} />
+                            {console.log(countryBool, stateBool, cityBool)}
+                            {(countryBool == true || stateBool == true || cityBool == true) ?
+                                <span style={{ color: "red" }}>
+                                    The
+                                        {
+                                        countryBool == true
+                                            ?
+                                            " Country "
+                                            :
+                                            ""
+                                    }
+                                    {
+                                        stateBool == true
+                                            ?
+                                            " State "
+                                            :
+                                            ""
+                                    }
+                                    {
+                                        cityBool == true
+                                            ?
+                                            " City "
+                                            :
+                                            ""
+                                    }
+                                    Field is required.
+                                    </span>
+                                :
+                                <span></span>
+                            }
                         </Col>
                     </Fourth_Row_kyc>
                     {(this.state.countrychange == true) ?
@@ -289,7 +372,7 @@ class KYCForm extends Component {
                                 <PhoneDiv>
                                     {
                                         this.state.displayCountry &&
-                                        < IntlTelInputS allowDropdown={false} preferredCountries={[]} onlyCountries={this.state.phoneCountry} defaultCountry={this.state.phoneCountry[0]} separateDialCode={true}
+                                        < IntlTelInputS value={this.state.mobile} allowDropdown={false} preferredCountries={[]} onlyCountries={this.state.phoneCountry} defaultCountry={this.state.phoneCountry[0]} separateDialCode={true}
                                             onPhoneNumberChange={(a, b, c) => this._changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
                                     }
                                 </PhoneDiv>
@@ -303,7 +386,7 @@ class KYCForm extends Component {
                     <Sixth_Row_kyc>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
                             <Postal_kyc>Postal Code*</Postal_kyc>
-                            <Zip name="zip" onChange={this._onChangeFields} placeholder="Postal Code" />
+                            <Zip value={this.state.fields.zip} name="zip" onChange={this._onChangeFields} placeholder="Postal Code" />
                             {this.validator.message('postal_code', this.state.fields.zip, 'required', 'text-danger-validation')}
                         </Col>
                     </Sixth_Row_kyc>

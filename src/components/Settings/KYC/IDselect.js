@@ -96,22 +96,26 @@ class IDselect extends Component {
             abcd["steps"] = 2;
             this.props.kycFormAction(this.props.isLoggedIn, abcd);
             this.props.next_step(3, "Passport")
-        } else if (document.getElementById('license').checked) {
+        }
+        else if (document.getElementById('license').checked) {
             abcd["id_type"] = 2;
             abcd["steps"] = 2;
             this.props.kycFormAction(this.props.isLoggedIn, abcd);
             this.props.next_step(3, "Driver's license")
-        } else if (document.getElementById('identity').checked) {
+        }
+        else if (document.getElementById('identity').checked) {
             abcd["id_type"] = 3;
             abcd["steps"] = 2;
             this.props.kycFormAction(this.props.isLoggedIn, abcd);
             this.props.next_step(3, "Identity")
-        } else if (document.getElementById('ssn').checked) {
+        }
+        else if (document.getElementById('ssn') !== null ? document.getElementById('ssn').checked : false) {
             abcd["id_type"] = 4;
             abcd["steps"] = 2;
             this.props.kycFormAction(this.props.isLoggedIn, abcd);
             this.props.next_step(2, "ssn")
-        } else {
+        }
+        else {
             this.openNotificationWithIcon("error", "KYC", "Please select any one option.")
         }
     }

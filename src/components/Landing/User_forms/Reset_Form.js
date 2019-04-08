@@ -274,7 +274,7 @@ class ResetPassword extends Component {
     }).then(response => response.json())
       .then((responseData) => {
         if (responseData.status == 200) {
-          this.openNotificationWithProfile("success", "Success", "Password changed successfully..")
+          this.openNotificationWithProfile("success", "Success", "Password changed successfully.")
           this.props.history.push("/login")
         } else {
           this.openNotificationWithProfile("error", "Error", responseData.err)

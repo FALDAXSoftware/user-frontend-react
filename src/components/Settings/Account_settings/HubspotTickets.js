@@ -31,7 +31,7 @@ const Whole_wrap = styled.div`
 `
 const Ticket_wrap = styled(Row)`
 border-radius: 10px;
-background-color: rgb( 255, 255, 255 );
+background-color: ${props => props.theme.mode == "dark" ? "#041422" : "rgb( 255, 255, 255 )"};
 box-shadow: 0px 2px 7px 0px rgba(51, 51, 51, 0.16);
 padding:40px;
 margin-bottom:20px;

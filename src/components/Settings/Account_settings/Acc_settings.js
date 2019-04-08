@@ -367,13 +367,15 @@ class Acc_settings extends Component {
         this.openNotificationWithIcon('success')
         let value = {};
         value["email"] = this.props.email;
+        value["user_id"] = this.props.profileDetails.id;
+        value["jwt_token"] = this.props.isLoggedIn;
         this.props.deleteAccount(this.props.isLoggedIn, value)
     }
     showConfirm() {
         var me = this
         confirm({
             title: 'Do you want to delete the account?',
-            content: 'When clicked the OK button, your account will be deleted.',
+            content: 'Your account will be deleted, after clicking on the OK button.',
             onOk() {
                 me.deleteAccount()
                 return new Promise((resolve, reject) => {
@@ -451,7 +453,7 @@ class Acc_settings extends Component {
                         <Button_del type="primary" onClick={this.showConfirm.bind(this)}>Delete Account</Button_del>
                     </Delete_btn>
                 </Delete_wrap>
-                {(this.state.loader == true) ? <FaldaxLoader /> : ""}
+                {(this.state.loader == true || this.props.loader == true) ? <FaldaxLoader /> : ""}
             </Acc_wrap>
         );
     }
@@ -462,7 +464,8 @@ const mapStateToProps = (state) => {
     return {
         ...state,
         email: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0].email : "",
-        loader: state.simpleReducer.loader
+        loader: state.simpleReducer.loader,
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
     }
 }
 const mapDispatchToProps = dispatch => ({
