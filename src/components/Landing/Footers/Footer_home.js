@@ -176,6 +176,9 @@ const HR = styled.hr`
 const Footer_Link = styled.a`
     color:${props => props.theme.mode == "dark" ? "white" : "rgb(0, 0, 0, 0.65)"};
 `
+const CareerLink = styled(Link)`
+    color:${props => props.theme.mode == "dark" ? "white" : "rgb(0, 0, 0, 0.65)"};
+`
 const FooterContainer = styled.div`
 @media(max-width:991px)
 {
@@ -295,6 +298,9 @@ class FooterHome extends Component {
                                     <li style={{ cursor: "pointer" }} >
                                         <Footer_Link href={`${globalVariables.WordpressSiteURL}/news`}>News</Footer_Link>
                                     </li>
+                                    <li style={{ cursor: "pointer" }} >
+                                        <CareerLink to={'/careers'} >Careers</CareerLink>
+                                    </li>
                                 </Footer_ul>
                             </FooterLinkCol>
                             <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
@@ -305,8 +311,6 @@ class FooterHome extends Component {
                                     </li>
                                     <li style={{ cursor: "pointer" }} onClick={this.scrollMap.bind(this)}>
                                         <Footer_Link href={`${globalVariables.WordpressSiteURL}/service-availability/`}>Service Availability</Footer_Link>
-
-
                                     </li>
                                 </Footer_ul>
                             </FooterLinkCol>
@@ -318,13 +322,13 @@ class FooterHome extends Component {
                                 {this.state.contactDetails !== undefined ? this.state.contactDetails.length !== 0 ?
                                     <Icon_ul_1>
                                         <LI>
-                                            <a target="_blank" href={contactDetails.fb_profile}><FontAwesomeIcons icon={faFacebook} color={true} /></a>
+                                            <a target="_blank" href={contactDetails.fb_profile}><FontAwesomeIcons icon={faFacebook} color={'true'} /></a>
                                         </LI>
                                         <LI>
-                                            <a target="_blank" href={contactDetails.linkedin_profile}><FontAwesomeIcons icon={faLinkedinIn} color={true} /></a>
+                                            <a target="_blank" href={contactDetails.linkedin_profile}><FontAwesomeIcons icon={faLinkedinIn} color={'true'} /></a>
                                         </LI>
                                         <LI>
-                                            <a target="_blank" href={contactDetails.twitter_profile}><FontAwesomeIcons icon={faTwitter} color={true} /></a>
+                                            <a target="_blank" href={contactDetails.twitter_profile}><FontAwesomeIcons icon={faTwitter} color={'true'} /></a>
                                         </LI>
 
                                         {/* <LI>

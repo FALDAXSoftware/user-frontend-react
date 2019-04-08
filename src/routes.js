@@ -76,7 +76,7 @@ const routes = [
   },
   {
     exact: false,
-    path: "/hs-tickets",
+    path: "/tickets",
     component: () => (<HubspotTickets io={io} />),
   }
 ];
