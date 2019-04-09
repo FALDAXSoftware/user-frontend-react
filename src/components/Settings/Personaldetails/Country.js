@@ -96,7 +96,9 @@ export default class CountryPick extends Component {
         var countrySelected = CountryData.getCountryById(newPosition);
         var states = CountryData.getStatesOfCountry(newPosition + 1);
         this.setState({ city_selected: "", state_selected: "", country_selected: value, stateID: null, countryID: newPosition, states });
+        console.log(">>>", this.props.kyc, countrySelected)
         if (this.props.kyc == "kyc") {
+            console.log(">>>>", countrySelected.sortname)
             this.props.onCountryName(countrySelected.sortname);
         }
 

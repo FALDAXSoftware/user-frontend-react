@@ -73,7 +73,7 @@ class SSN extends Component {
             <div>
                 <SSN_wrap>
                     <SSN_sub>
-                        <SSN_label>SSN no.</SSN_label>
+                        <SSN_label>Social Security Number</SSN_label>
                         <SSN_input onChange={this.input_change.bind(this)} />
                     </SSN_sub>
                 </SSN_wrap>

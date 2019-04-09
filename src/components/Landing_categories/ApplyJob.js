@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Spin, notification } from 'antd';
+import { Row, Col, notification } from 'antd';
 import styled from 'styled-components';
 import SimpleReactValidator from 'simple-react-validator';
 import Navigation from '../Navigations/Navigation';
 import FaldaxLoader from '../../shared-components/FaldaxLoader';
-import { Spin_Ex } from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import {
@@ -24,6 +23,46 @@ export const ContainerContact = styled(Container)`
     padding-left:30px;
     padding-bottom: 30px;
 `
+const HeadContact = styled(Headcontact)`
+    padding-top:20px;
+`
+const CareerTitle = styled.span`
+  font-size: 40px;
+  font-family: "Open sans";
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  color:${props => props.theme.mode == "dark" ? "white" : ""};
+  &:before {
+    content: '';
+    width: calc(50% - 140px);
+    height: 1px;
+    display: inline-block;
+    background: #827777;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 1px);
+  }
+  &:after {
+    content: '';
+    width: calc(50% - 140px);
+    height: 1px;
+    display: inline-block;
+    background: #827777;
+    position: absolute;
+    right: 0;
+    top: calc(50% - 1px);
+  }
+  @media(max-width:767px)
+  {
+    &:before {
+      display:none;
+    }
+    &:after {
+      display:none;
+    }
+  }
+`;
 
 class ApplyJob extends Component {
     constructor(props) {
@@ -231,13 +270,15 @@ class ApplyJob extends Component {
                 <Navigation />
                 <Grey_wrap>
                     <ContainerContact>
-                        <Headcontact>
-                            <Head_apply>Careers</Head_apply>
+                        <HeadContact>
+                            <div style={{ display: 'inline-block', width: '100%', position: 'relative', marginBottom: '20px' }}>
+                                <CareerTitle>Careers </CareerTitle>
+                            </div>
                             <Apply_wrap>
                                 <Title_apply>
                                     {
                                         position_flag !== null ?
-                                            <Title_span>Apply For {position_flag} position</Title_span>
+                                            <Title_span>{position_flag}</Title_span>
                                             : ""
                                     }
                                 </Title_apply>
@@ -364,16 +405,15 @@ class ApplyJob extends Component {
                                     <Gap>
                                         <Row>
                                             <Col sm={24} md={24}>
-                                                <Labelone>Website*</Labelone>
+                                                <Labelone>Website</Labelone>
                                                 <InputThree name="website_url" onChange={this._onChangeFields} value={this.state.fields.website_url} />
-                                                {this.validator.message('website_url', this.state.fields.website_url, 'required|url', 'text-danger-validation')}
                                             </Col>
                                         </Row>
                                     </Gap>
                                     <Btn_apply onClick={this.onSubmit}>SUBMIT</Btn_apply>
                                 </Form_apply>
                             </Apply_wrap>
-                        </Headcontact>
+                        </HeadContact>
                     </ContainerContact>
                 </Grey_wrap>
                 <CommonFooter />
