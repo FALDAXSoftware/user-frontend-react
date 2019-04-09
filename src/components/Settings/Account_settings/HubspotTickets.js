@@ -1,33 +1,22 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Spin } from 'antd';
 import { connect } from "react-redux"
 import moment from 'moment'
-
 import Navigation from '../../Navigations/Navigation';
 import Footer_home from "../../Landing/Footers/Footer_home";
-import { Spin_Ex } from '../Personaldetails/PersonalDetails'
-
 import { ProfileWrapper, ProfileDiv } from '../EditProfile'
 import { globalVariables } from '../../../Globals';
-import { faHubspot } from '@fortawesome/free-brands-svg-icons';
 import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 import { Row, Col } from 'antd';
 
-
 let { API_URL } = globalVariables;
+
 const Ticket_Div = styled(ProfileDiv)`
     background-color:transparent;
 `
-const Title = styled.p`
-    color:${props => props.theme.mode == "dark" ? "white" : "black"};
-    padding-top:45px;
-    font-family:"Open Sans";
-    font-size:40px;
-`
 const Whole_wrap = styled.div`
-
+    padding-top: 50px;
 `
 const Ticket_wrap = styled(Row)`
 border-radius: 10px;
@@ -68,19 +57,45 @@ line-height: 2.3;
     
 color:${props => props.theme.mode == "dark" ? "#ccbebe69" : "#00000070"};
 `
-const Stat = styled.span`
-    text-transform: uppercase;
-    padding-left: 8px;
-    border-left: 1px solid #00000070;
-    color:${props => props.theme.mode == "dark" ? "#ccbebe69" : "#00000070"};
-`
-const NDF = styled.p`
-    color:${props => props.theme.mode == "dark" ? "white" : "#00000069"};
-    text-align:center;
-    font-size:20px;
-    margin-top:100px;
-`
-class HubSpot extends React.Component {
+const TicketTitle = styled.span`
+  font-size: 40px;
+  font-family: "Open sans";
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  color:${props => props.theme.mode == "dark" ? "white" : ""};
+  &:before {
+    content: '';
+    width: calc(50% - 140px);
+    height: 1px;
+    display: inline-block;
+    background: #827777;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 1px);
+  }
+  &:after {
+    content: '';
+    width: calc(50% - 140px);
+    height: 1px;
+    display: inline-block;
+    background: #827777;
+    position: absolute;
+    right: 0;
+    top: calc(50% - 1px);
+  }
+  @media(max-width:767px)
+  {
+    &:before {
+      display:none;
+    }
+    &:after {
+      display:none;
+    }
+  }
+`;
+
+class HubSpotTickets extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -108,6 +123,7 @@ class HubSpot extends React.Component {
             })
     }
     render() {
+        const { ticketData, loader } = this.state;
         const statusArray = [
             {
                 title: "New",
@@ -126,49 +142,49 @@ class HubSpot extends React.Component {
                 color: "#f5222d"
             }
         ]
+
         return (
             <div>
                 {/* <LoggedNavigation /> */}
                 <Navigation />
                 <ProfileWrapper>
                     <Ticket_Div>
-                        <Title>All Tickets</Title>
+                        <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+                            <TicketTitle>All Tickets </TicketTitle>
+                        </div>
                         <Whole_wrap>
-                            {this.state.ticketData &&
-
-                                this.state.ticketData.map((temp, index) => (
-                                    <Ticket_wrap>
-                                        <Col md={4} lg={3}>
-                                            <Date style={{ display: "block" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format(this.props.profileDetails.date_format)} </Date>
-                                            <Date><span style={{ whiteSpace: "nowrap" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format("hh:mm A")}</span> </Date>
-                                            {temp.properties.hs_pipeline_stage &&
-                                                <Status color={statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].color}>{statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].title}</Status>
-                                            }
-                                        </Col>
-                                        <Col md={20} lg={21}>
-                                            <Ticket_Title>{temp.properties.subject && temp.properties.subject.value}</Ticket_Title>
-                                            <Desc>{temp.properties.content && temp.properties.content.value}</Desc>
-                                        </Col>
-                                    </Ticket_wrap>
-                                ))
+                            {ticketData && ticketData.map((temp, index) => (
+                                <Ticket_wrap>
+                                    <Col md={4} lg={3}>
+                                        <Date style={{ display: "block" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format(this.props.profileDetails.date_format)} </Date>
+                                        <Date><span style={{ whiteSpace: "nowrap" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format("hh:mm A")}</span> </Date>
+                                        {temp.properties.hs_pipeline_stage &&
+                                            <Status color={statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].color}>{statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].title}</Status>
+                                        }
+                                    </Col>
+                                    <Col md={20} lg={21}>
+                                        <Ticket_Title>{temp.properties.subject && temp.properties.subject.value}</Ticket_Title>
+                                        <Desc>{temp.properties.content && temp.properties.content.value}</Desc>
+                                    </Col>
+                                </Ticket_wrap>
+                            ))
                             }
 
                         </Whole_wrap>
                     </Ticket_Div>
                 </ProfileWrapper >
                 <Footer_home />
-                {(this.state.loader == true) ?
-                    <FaldaxLoader />
-                    : ""
-                }
+                {(loader == true) ? <FaldaxLoader /> : ""}
             </div >
         );
     }
 }
+
 function mapStateToProps(state) {
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
         profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : ""
     })
 }
-export default connect(mapStateToProps, null)(HubSpot);
+
+export default connect(mapStateToProps, null)(HubSpotTickets);
