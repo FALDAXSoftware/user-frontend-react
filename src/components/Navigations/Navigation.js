@@ -442,7 +442,7 @@ class Navigation extends Component {
                         <Menu_item key="5" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/news`}>NEWS</NavLink></Menu_item>
                         <Menu_item key="6" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/contact-us`}>CONTACT</NavLink></Menu_item>
                         <Menu_item key="7" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/list-your-token`}>LIST YOUR TOKEN</NavLink></Menu_item>
-                        <Menu_item key="8" onClick={this.showComing}><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/coming-soon`}>EXCHANGE</NavLink></Menu_item>
+                        <Menu_item key="8" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/coming-soon`}>EXCHANGE</NavLink></Menu_item>
                     </Menu_main>
                     <Right_div>
                         {this.props.isLoggedIn ? <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} /> :
@@ -468,7 +468,7 @@ class Navigation extends Component {
                             <a href={`${globalVariables.WordpressSiteURL}/news`}>News</a>
                             <a href={`${globalVariables.WordpressSiteURL}/contact-us`}>Contact</a>
                             <a href={`${globalVariables.WordpressSiteURL}/list-your-token`}>List Your Token</a>
-                            <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}>Exchange</a>
+                            <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}>Exchancvbe</a>
                             {/* <a onClick={this.showComing} href="#">Exchange</a> */}
                             {this.props.isLoggedIn ? <CarLink to="/careers">Careers</CarLink> : ""}
                             {/* <Why> Language </Why> */}

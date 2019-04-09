@@ -14,6 +14,7 @@ import Passwordchange from "./changePassword/Passwordchange";
 import Acc_settings from "./Account_settings/Acc_settings";
 import KYC from "./KYC/kyc"
 import Paymethods from './Payment/Paymethods';
+import SupportHub from './SupportHub';
 
 const TabPane = Tabs.TabPane;
 
@@ -75,7 +76,8 @@ class Editprofile extends Component {
                             <TabPane tab="Settings" key="3"><Acc_settings {...this.props} /></TabPane>
                             <TabPane tab="Identity Verification" key="4"><KYC /></TabPane>
                             <TabPane tab="Referral" key="5"><Referral {...this.props} /></TabPane>
-                            {/* <TabPane tab="Payment Methods" key="6"><Paymethods /></TabPane> */}
+                            <TabPane tab="Support" key="6"><SupportHub {...this.props} /></TabPane>
+                            {/* <TabPane tab="Payment Methods" key="7"><Paymethods /></TabPane> */}
                         </TabsStyle>
                     </ProfileDiv>
                 </ProfileWrapper>
