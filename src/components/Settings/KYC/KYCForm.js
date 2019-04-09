@@ -16,6 +16,7 @@ import CountryPick from "../Personaldetails/Country"
 import { kycFormAction, kycformData } from "../../../Actions/Settings/passwordChange"
 import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 import { globalVariables } from "../../../Globals"
+import 'react-intl-tel-input/dist/main.css';
 
 let { API_URL } = globalVariables;
 const KYC_form = styled.div`
@@ -106,7 +107,10 @@ const PhoneDiv = styled.div`
     width:100%;
     padding-left:5px;
 }
-
+& .selected-dial-code
+{
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
+}
 `
 const Last_Msg_kyc = styled(First_Msg)``
 const Country_Msg_kyc = styled(First_Msg)``
@@ -129,8 +133,9 @@ class KYCForm extends Component {
             phoneCountry: [],
             countrychange: false,
             showSSN: false,
-            mobile: "",
             kycData: null,
+            mobile: '',
+            displayCountry: false,
             fields: {
                 first_name: '',
                 last_name: '',
@@ -141,7 +146,6 @@ class KYCForm extends Component {
                 zip: '',
                 state: '',
                 phone_number: '',
-                displayCountry: false,
             }
         };
         this.validator = new SimpleReactValidator();
@@ -174,11 +178,18 @@ class KYCForm extends Component {
                     fields['country'] = responseData.data.country;
                     fields['state'] = responseData.data.state;
                     fields['dob'] = responseData.data.dob;
+                    fields['country_code'] = responseData.data.country_code;
                     if (responseData.data.phone_number) {
                         fields['phone_number'] = responseData.data.phone_number;
+                        let phone = responseData.data.phone_number.split("-")[1];
+                        let arr = [];
+                        arr.push(responseData.data.country_code)
+                        console.log("Mobile", phone)
                         this.setState({
                             displayCountry: true,
-                            countrychange: true
+                            countrychange: true,
+                            mobile: phone,
+                            phoneCountry: arr
                         });
                     }
                     console.log(responseData.data)
@@ -204,15 +215,23 @@ class KYCForm extends Component {
             fields['dob'] = date;
             this.setState({ fields });
         }
+        else {
+            let fields = this.state.fields;
+            fields['dob'] = "";
+            this.setState({ fields });
+        }
     }
     onCountryName(name) {
         var name2 = name.toLowerCase();
         var arr = [];
         arr.push(name2);
+        let fields = this.state.fields;
+        console.log("COuntry >>>>", arr)
+        fields['country_code'] = name2;
         if (name2 == 'us' || name2 == 'ca')
-            this.setState({ phoneCountry: arr, countrychange: true, showSSN: true });
+            this.setState({ fields, phoneCountry: arr, countrychange: true, showSSN: true });
         else
-            this.setState({ phoneCountry: arr, countrychange: true });
+            this.setState({ fields, phoneCountry: arr, countrychange: true });
     }
     onCountryChange(country, state, city, stateID, countryID) {
         let self = this;
@@ -264,10 +283,11 @@ class KYCForm extends Component {
     }
     _changeNumber(a, mob, code) {
         if (mob.trim !== "") {
-            var temp = `+${code.dialCode}`;
+            var temp = `+${code.dialCode}-`;
             var mobile = temp.concat(mob);;
             let fields = this.state.fields;
             fields['phone_number'] = mobile;
+            console.log("Mobile", mob)
             this.setState({ fields, mobile: mob });
         }
     }
@@ -368,7 +388,7 @@ class KYCForm extends Component {
                             <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
                                 <Postal_kyc>Mobile No.*</Postal_kyc>
 
-
+                                {console.log("Mobile", this.state.mobile)}
                                 <PhoneDiv>
                                     {
                                         this.state.displayCountry &&
@@ -376,8 +396,7 @@ class KYCForm extends Component {
                                             onPhoneNumberChange={(a, b, c) => this._changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
                                     }
                                 </PhoneDiv>
-
-                                {this.validator.message('phone_number', this.state.fields.phone_number, 'required', 'text-danger-validation')}
+                                {this.validator.message('phone_number', this.state.mobile, 'required|min:5|max:15|numeric', 'text-danger-validation')}
                             </Col>
                         </Sixth_Row_kyc>
                         :

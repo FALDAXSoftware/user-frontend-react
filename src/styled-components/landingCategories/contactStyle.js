@@ -455,7 +455,10 @@ export const SecurityInput = styled(Select)`
 
 `
 export const IntlTelInputS = styled(IntlTelInput)`
-    
+    & .selected-dial-code
+    {
+        color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
 `
 export const URLInput = styled(First_input)`
     max-width:450px;
