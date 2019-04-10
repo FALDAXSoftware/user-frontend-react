@@ -104,6 +104,6 @@ export const Body_card = styled.div`
 export const Body_center = styled.div`
 >span
 {
-    color:${props => props.theme.mode == "dark" ? "white" : ""}
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
 }
 `

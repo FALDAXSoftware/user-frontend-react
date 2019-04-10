@@ -383,12 +383,13 @@ class KYCForm extends Component {
                             }
                         </Col>
                     </Fourth_Row_kyc>
+                    {console.log("Mobile", this.state.mobile, ">>>>>", this.state.phoneCountry)}
                     {(this.state.countrychange == true) ?
                         <Sixth_Row_kyc>
                             <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
                                 <Postal_kyc>Mobile No.*</Postal_kyc>
 
-                                {console.log("Mobile", this.state.mobile)}
+                                {console.log("Mobile", this.state.mobile, ">>>>>", this.state.phoneCountry)}
                                 <PhoneDiv>
                                     {
                                         this.state.displayCountry &&
@@ -406,7 +407,7 @@ class KYCForm extends Component {
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
                             <Postal_kyc>Postal Code*</Postal_kyc>
                             <Zip value={this.state.fields.zip} name="zip" onChange={this._onChangeFields} placeholder="Postal Code" />
-                            {this.validator.message('postal_code', this.state.fields.zip, 'required', 'text-danger-validation')}
+                            {this.validator.message('postal_code', this.state.fields.zip, 'required|alpha_num_dash|min:3|max:25', 'text-danger-validation')}
                         </Col>
                     </Sixth_Row_kyc>
                     <Fifth_Row_kyc>

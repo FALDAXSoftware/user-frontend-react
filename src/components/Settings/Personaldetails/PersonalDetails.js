@@ -599,13 +599,19 @@ class PersonalDetails extends Component {
             }
         } else if (field == "postal_code") {
             if (value !== "") {
-                if (value.length >= 2 && value.length <= 20) {
+                var reg = /^([a-zA-Z0-9_-]){3,25}$/
+                var bool = reg.test(value)
+                if (bool == true) {
                     this.setState({ postalIcon: true })
                     document.querySelectorAll(".postal_msg")[0].style.display = "none";
                 } else {
                     this.setState({ postalIcon: false })
                     document.querySelectorAll(".postal_msg")[0].style.display = "block";
-                    this.setState({ postalmsg: "Postal code should have min. 2 and max. 20 characters" })
+                    console.log("Bool", bool, value.length)
+                    if (value.length < 3 && value.length > 25)
+                        this.setState({ postalmsg: "Postal code should have min. 2 and max. 25 characters." })
+                    else
+                        this.setState({ postalmsg: "Postal code should contain letters , numbers and dashes." })
                 }
             } else {
                 this.setState({ postalIcon: false })
