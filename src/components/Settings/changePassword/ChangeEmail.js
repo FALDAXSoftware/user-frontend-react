@@ -130,7 +130,9 @@ class ChangeEmail extends Component {
         super(props)
         this.state = {
             fields: {},
-            loader: false
+            loader: false,
+            isShowOTP: false,
+            errType: '',
         }
         this.validator = new SimpleReactValidator();
     }
@@ -141,30 +143,39 @@ class ChangeEmail extends Component {
 
     componentDidMount = () => {
         let fields = this.state.fields;
-        fields['email'] = this.props.profileDetails.email;
+        fields['oldEmail'] = this.props.profileDetails.email;
         this.setState({ fields })
     }
 
     _changeEmail = () => {
+        const { fields } = this.state;
+
         if (this.validator.allValid()) {
+            let formData = {
+                newEmail: fields["newEmail"],
+            };
+
             this.setState({ loader: true });
-            // fetch(API_URL + `/`, {
-            //     method: "get",
-            //     headers: {
-            //         Accept: 'application/json',
-            //         'Content-Type': 'application/json',
-            //         Authorization: "Bearer " + this.props.isLoggedIn
-            //     }
-            // })
-            //     .then(response => response.json())
-            //     .then((responseData) => {
-            //         console.log('>>>>>>>>responseData', responseData)
-            //         this.setState({ loader: false })
-            //     })
-            //     .catch(error => {
-            //         console.log('>error', error)
-            //         this.setState({ loader: false, errMsg: true, errMessage: 'Something went wrong!!' });
-            //     })
+            fetch(API_URL + `/users/update-email`, {
+                method: "post",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer " + this.props.isLoggedIn
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => response.json())
+                .then((responseData) => {
+                    console.log('>>>>>>>>responseData', responseData)
+                    this.setState({
+                        loader: false, isShowOTP: true, errMsg: true, errType: 'success', errMessage: responseData.message
+                    })
+                })
+                .catch(error => {
+                    console.log('>error', error)
+                    this.setState({ loader: false, errMsg: true, errType: 'error', errMessage: 'Something went wrong!!' });
+                })
         } else {
             this.setState({ loader: false });
             this.validator.showMessages();
@@ -184,17 +195,17 @@ class ChangeEmail extends Component {
 
     openNotificationWithIcon(type) {
         notification[type]({
-            message: 'Error',
+            message: this.state.errType,
             description: this.state.errMessage
         });
         this.setState({ errMsg: false });
     };
 
     render() {
-        const { fields, errMsg, loader } = this.state;
+        const { fields, errMsg, loader, isShowOTP, errType } = this.state;
 
         if (errMsg) {
-            this.openNotificationWithIcon('error');
+            this.openNotificationWithIcon(errType.toLowerCase());
         }
 
         return (
@@ -208,16 +219,38 @@ class ChangeEmail extends Component {
                 <ChangeRow>
                     <ChangeCol>
                         <NewP>
-                            <InputLabel>Email*</InputLabel>
+                            <InputLabel>Email:</InputLabel>
+                            <p>{fields.oldEmail !== null ? fields.oldEmail : this.props.profileDetails.email}</p>
+
+                            <InputLabel>Enter New Email*</InputLabel>
                             <div>
-                                <NewInput value={fields.email !== null ? fields.email : this.props.profileDetails.email}
-                                    size="large" placeholder="Email" onChange={this._onChangeField.bind(this, "email")} />
-                                {this.validator.message('Email', this.state.fields['email'], 'required|email')}
+                                <NewInput value={fields.newEmail} disabled={isShowOTP}
+                                    size="large" placeholder="Email"
+                                    onChange={this._onChangeField.bind(this, "newEmail")} />
+                                {this.validator.message('Email', this.state.fields['newEmail'], 'required|email')}
                             </div>
                         </NewP>
-                        <Button_div>
-                            <NewButton onClick={this._changeEmail}>Update</NewButton>
-                        </Button_div>
+                        {
+                            !isShowOTP &&
+                            <Button_div>
+                                <NewButton onClick={this._changeEmail}>Update Email</NewButton>
+                            </Button_div>
+                        }
+                        {isShowOTP &&
+                            <div>
+                                <NewP>
+                                    <InputLabel>OTP*</InputLabel>
+                                    <div>
+                                        <NewInput value={fields.otp}
+                                            size="large" placeholder="OTP" onChange={this._onChangeField.bind(this, "otp")} />
+                                        {this.validator.message('otp', this.state.fields['otp'], 'required|numeric')}
+                                    </div>
+                                </NewP>
+                                <Button_div>
+                                    <NewButton onClick={this._changeEmail}>Verify</NewButton>
+                                </Button_div>
+                            </div>
+                        }
                     </ChangeCol>
                 </ChangeRow>
                 {(loader == true) ? <FaldaxLoader /> : ""}
