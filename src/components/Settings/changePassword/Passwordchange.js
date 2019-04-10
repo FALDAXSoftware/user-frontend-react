@@ -6,13 +6,14 @@ import { Row, Col, Input, notification, Progress, Spin } from 'antd';
 import styled from 'styled-components';
 import { createForm, formShape } from 'rc-form';
 import { UserIconF, UserIconS, Email_req } from "../../Landing/User_forms/Login_Form"
-import { HeaderCol, Save, Spin_Ex } from "../Personaldetails/PersonalDetails"
+import { HeaderCol, Save } from "../Personaldetails/PersonalDetails"
 import {
     passwordChange, passwordChangeData, TF_Enable, QRData, verifyTF, verifyQRData,
     TF_Disable, disableAction
 } from "../../../Actions/Settings/passwordChange";
 import { Eye, ActiveEye } from "../../../Constants/images";
 import FaldaxLoader from '../../../shared-components/FaldaxLoader';
+import ChangeEmail from './ChangeEmail';
 
 const Wrapper = styled.div`
 `
@@ -26,6 +27,17 @@ const ChangeRow = styled(Row)`
         bottom: 0px;
         border-bottom: 1px solid #d6d6d6;
     }
+`
+const EmailRow = styled(Row)`
+&:after 
+{
+    content:"";
+    left: 8%;
+    position: absolute;
+    width: 84%;
+    bottom: 0px;
+    border-bottom: 1px solid #d6d6d6;
+}
 `
 const Passreq = styled(Email_req)`
     margin-left:0px;
@@ -625,6 +637,9 @@ class PasswordChange extends Component {
                         </Button_div>
                     </ChangeCol>
                 </ChangeRow>
+                <EmailRow>
+                    <ChangeEmail />
+                </EmailRow>
                 <TwofactorRow>
                     <TFCol>
                         <Head_TF>Two-Factor Authentication</Head_TF>

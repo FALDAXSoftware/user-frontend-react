@@ -104,7 +104,7 @@ class SupportHub extends Component {
                                     <CustomCard>
                                         <PContainer>
                                             <CardText>
-                                                All Tickets
+                                                View All Tickets
                         </CardText>
                                         </PContainer>
                                     </CustomCard>

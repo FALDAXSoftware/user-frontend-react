@@ -136,11 +136,11 @@ class HubSpotTickets extends Component {
                 color: "#6fa82f"
             },
             {
-                title: "Waiting",
+                title: "Waiting On Contact",
                 color: "#ffc107"
             },
             {
-                title: "Waiting",
+                title: "Waiting On Us",
                 color: "#ffc107"
             },
             {
