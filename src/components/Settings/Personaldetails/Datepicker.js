@@ -102,20 +102,16 @@ export default class Datepicker extends Component {
 
     render() {
         let date, year, month, day
-        console.log(this.props)
         if (this.props.kyc !== undefined) {
-            console.log(this.props, "KYC")
             if (this.props.kycData2 !== "" && this.props.kycData2 !== null && this.props.kycData2 !== undefined) {
                 if (this.props.kycData2.dob !== undefined && this.props.kycData2.dob !== null) {
                     date = this.props.kycData2.dob.split("-")
                     year = Number(date[2])
                     month = date[1]
                     day = Number(date[0])
-                    console.log("YEAR", year, "MONTH", month, "DAY", day);
                 }
             }
         } else {
-            console.log("Profile Data", this.props.profileDetails)
             if (this.props.profileDetails.dob !== undefined && this.props.profileDetails.dob !== null) {
                 if (this.props.profileDetails.dob !== undefined) {
                     date = this.props.profileDetails.dob.split("-")
