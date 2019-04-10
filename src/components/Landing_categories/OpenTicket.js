@@ -9,6 +9,9 @@ import {
 } from '../../styled-components/landingCategories/contactStyle';
 import { globalVariables } from "../../Globals";
 
+
+import HubspotForm from 'react-hubspot-form'
+
 let API_URL = globalVariables.API_URL;
 
 export const ContainerContact = styled(Container)`
@@ -34,7 +37,7 @@ const TicketTitle = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode == "dark" ? "white" : ""};
+  color:${props => props.theme.mode == "dark" ? "white" : "black"};
   &:before {
     content: '';
     width: calc(50% - 170px);
