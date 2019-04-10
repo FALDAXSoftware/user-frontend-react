@@ -8,7 +8,7 @@ import SimpleReactValidator from "simple-react-validator";
 import { Ref_input } from '../../Settings/Referral'
 import { globalVariables } from '../../../Globals';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-
+import FaldaxLoader from "../../../shared-components/FaldaxLoader";
 let { API_URL } = globalVariables;
 const WalletModal = styled(Modal)`
     width:656px !important;
@@ -210,7 +210,8 @@ class WalletPopup extends Component {
             sendFields: {
                 amount: "",
                 destination_address: ""
-            }
+            },
+            loader: false
         }
         this.validator = new SimpleReactValidator({
             gtzero: {  // name the rule
@@ -230,7 +231,8 @@ class WalletPopup extends Component {
     }
 
     componentDidMount() {
-        if (this.props.title == "RECEIVE")
+        if (this.props.title == "RECEIVE") {
+            this.setState({ loader: true })
             fetch(`${API_URL}/wallet/get-qr-code/${this.props.coin_code}`, {
                 method: "get",
                 headers: {
@@ -240,10 +242,14 @@ class WalletPopup extends Component {
                 }
             }).then(response => response.json())
                 .then((responseData) => {
-                    this.setState({ receive: responseData.receiveCoin })
+
+                    this.setState({ receive: responseData.receiveCoin, loader: false })
+
                 })
                 .catch(error => {
+                    console.log(error)
                 })
+        }
     }
 
     SearchText() {
@@ -377,6 +383,7 @@ class WalletPopup extends Component {
                             </Send_wrap>
                         </Modal_wrap>}
                 </WalletModal>
+                {(this.state.loader == true) ? <FaldaxLoader /> : ""}
             </div>
         );
     }

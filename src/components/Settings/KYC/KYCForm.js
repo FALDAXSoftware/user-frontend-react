@@ -148,7 +148,45 @@ class KYCForm extends Component {
                 phone_number: '',
             }
         };
-        this.validator = new SimpleReactValidator();
+        this.validator = new SimpleReactValidator({
+            firstname: { // name the rule
+                message: 'First Name should have min. 2 and max. 15 characters and no special characters are allowed', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+                    // check that it is a valid IP address and is not blacklisted
+                    var re = /^[a-zA-Z0-9]{2,15}$/
+                    var bool = re.test(String(val).toLowerCase());
+                    return bool;
+                }
+            },
+            lastname: { // name the rule
+                message: 'Last Name should have min. 2 and max. 15 characters and no special characters are allowed', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+                    // check that it is a valid IP address and is not blacklisted
+                    var re = /^[a-zA-Z0-9]{2,15}$/
+                    var bool = re.test(String(val).toLowerCase());
+                    return bool;
+                }
+            },
+            onlyNumber: {// name the rule
+                message: 'Only numbers are not allowed.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+                    // check that it is a valid IP address and is not blacklisted
+                    var re = /^[0-9]*$/
+                    var bool = !re.test(String(val).toLowerCase());
+                    return bool;
+                },
+
+            },
+            mobileVal: {// name the rule
+                message: 'Only numbers are not allowed.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+                    // check that it is a valid IP address and is not blacklisted
+                    var re = /^[0-9]*$/
+                    var bool = re.test(String(val).toLowerCase());
+                    return bool;
+                }
+            }
+        });
         this._onChangeFields = this._onChangeFields.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onCountryName = this.onCountryName.bind(this);
@@ -315,12 +353,12 @@ class KYCForm extends Component {
                             <First_name_kyc>First Name*</First_name_kyc>
                             {/*      {console.log(this.props.profileDetails.first_name)} */}
                             <First_input_kyc value={this.state.fields.first_name} name="first_name" onChange={this._onChangeFields} placeholder="First Name" />
-                            {this.validator.message('first_name', this.state.fields.first_name, 'required|alpha_num|min:2|max:15', 'text-danger-validation')}
+                            {this.validator.message('first_name', this.state.fields.first_name, 'required|firstname|onlyNumber', 'text-danger-validation')}
                         </Col>
                         <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xxl={{ span: 12 }}>
                             <Last_name_kyc>Last Name*</Last_name_kyc>
                             <Last_input_kyc value={this.state.fields.last_name} name="last_name" onChange={this._onChangeFields} placeholder="Last Name" />
-                            {this.validator.message('last_name', this.state.fields.last_name, 'required|alpha_num|min:2|max:15', 'text-danger-validation')}
+                            {this.validator.message('last_name', this.state.fields.last_name, 'required|lastname|onlyNumber', 'text-danger-validation')}
                         </Col>
                     </First_Row_kyc>
 
@@ -386,6 +424,7 @@ class KYCForm extends Component {
                     {console.log("Mobile", this.state.mobile, ">>>>>", this.state.phoneCountry)}
                     {(this.state.countrychange == true) ?
                         <Sixth_Row_kyc>
+                            {console.log(this.state.mobile)}
                             <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
                                 <Postal_kyc>Mobile No.*</Postal_kyc>
 
@@ -397,7 +436,7 @@ class KYCForm extends Component {
                                             onPhoneNumberChange={(a, b, c) => this._changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
                                     }
                                 </PhoneDiv>
-                                {this.validator.message('phone_number', this.state.mobile, 'required|min:5|max:15|numeric', 'text-danger-validation')}
+                                {this.validator.message('phone_number', this.state.mobile, 'required|min:5|max:15|mobileVal', 'text-danger-validation')}
                             </Col>
                         </Sixth_Row_kyc>
                         :

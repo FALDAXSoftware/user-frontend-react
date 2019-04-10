@@ -426,7 +426,7 @@ class Navigation extends Component {
                     <Logo>
                         <a href={globalVariables.WordpressSiteURL}>
                             <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
-                            {/* <FALDAX src={this.state.faldax} /> */}
+                            <FALDAX src={this.state.faldax} />
                         </a>
                     </Logo>
                     <Menu_main

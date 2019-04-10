@@ -195,7 +195,7 @@ class Wallet extends Component {
                             <Table_wrap>
                                 {
                                     this.props.walletDetails !== null ?
-                                        this.state.searchedWallet !== null ? <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedWallet} /> : <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.walletDetails} /> : ""
+                                        this.state.searchedWallet !== null ? <Tableofcoin allCoinsFlag={false} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedWallet} /> : <Tableofcoin allCoinsFlag={false} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.walletDetails} /> : ""
                                 }
                             </Table_wrap>
                         </CoinTable>
@@ -221,8 +221,8 @@ class Wallet extends Component {
                                     : ""} */}
                                 {
                                     this.props.nowalletBalance !== null ?
-                                        this.state.searchedCoins !== null ? <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedCoins} />
-                                            : <Tableofcoin currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.nowalletBalance} /> : ""
+                                        this.state.searchedCoins !== null ? <Tableofcoin allCoinsFlag={true} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedCoins} />
+                                            : <Tableofcoin allCoinsFlag={true} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.nowalletBalance} /> : ""
                                 }
                             </Table_wrap>
                         </CoinTable>

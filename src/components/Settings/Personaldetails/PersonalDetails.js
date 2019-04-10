@@ -560,9 +560,19 @@ class PersonalDetails extends Component {
                 this.setState({ countryIcon: true })
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
             } else {
+                let country = false, state = false, city = false;
                 this.setState({ countryIcon: false })
                 document.querySelectorAll(".country_msg")[0].style.display = "block";
-                this.setState({ countrymsg: "Country , State and City Field is required" })
+                if ((value.country == undefined || value.country == null || value.country == ""))
+                    country = true;
+                if ((value.state == undefined || value.state == null || value.state == ""))
+                    state = true;
+                if ((value.city == undefined || value.city == null || value.city == ""))
+                    city = true;
+                console.log("CSC", value.country, value.state, value.city)
+                let countrymsg = `${country == true ? " Country " : ""}${state == true ? " state " : ""}${city == true ? " city " : ""}Field is required.`
+
+                this.setState({ countrymsg })
             }
         } else if (field == "dob") {
             if ((value["day"]) && (value["month"]) && (value["year"])) {
