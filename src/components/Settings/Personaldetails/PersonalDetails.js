@@ -570,8 +570,28 @@ class PersonalDetails extends Component {
                 if ((value.city == undefined || value.city == null || value.city == ""))
                     city = true;
                 console.log("CSC", value.country, value.state, value.city)
-                let countrymsg = `${country == true ? " Country " : ""}${state == true ? " state " : ""}${city == true ? " city " : ""}Field is required.`
-
+                let countrymsg;
+                if (country == true && state == false && city == false) {
+                    countrymsg = "Country Field is required."
+                }
+                else if (country == true && state == true && city == false) {
+                    countrymsg = "Country and State Field are required."
+                }
+                else if (country == true && state == true && city == true) {
+                    countrymsg = "Country , State and City Field are required."
+                }
+                else if (country == false && state == true && city == false) {
+                    countrymsg = "State Field is required."
+                }
+                else if (country == false && state == true && city == true) {
+                    countrymsg = "State and City Field are required."
+                }
+                else if (country == false && state == false && city == true) {
+                    countrymsg = "City Field is required."
+                }
+                else if (country == true && state == false && city == true) {
+                    countrymsg = "Country and City Field are required."
+                }
                 this.setState({ countrymsg })
             }
         } else if (field == "dob") {
@@ -624,7 +644,7 @@ class PersonalDetails extends Component {
                     if (value.length < 3 && value.length > 25)
                         this.setState({ postalmsg: "Postal code should have min. 3 and max. 25 characters." })
                     else
-                        this.setState({ postalmsg: "Postal code should only contain alphabets , numbers , hyphens and spaces ." })
+                        this.setState({ postalmsg: "Postal code should only contain alphabets , numbers , hyphen and space ." })
                 }
             } else {
                 this.setState({ postalIcon: false })

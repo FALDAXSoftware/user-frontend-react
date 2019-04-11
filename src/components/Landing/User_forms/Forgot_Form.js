@@ -258,7 +258,7 @@ class ForgotForm extends Component {
                   <Welcome_text>Forgot Password?</Welcome_text>
                   <Sub_text>Don't worry, It happen's to the best of us.</Sub_text>
                   <Email_label>Email Address*</Email_label>
-                  <Username value={this.state.email} onChange={this.fieldChange} />
+                  <Username type="email" value={this.state.email} onChange={this.fieldChange} />
                   {this.validator.message('Email_Address', this.state.email, 'required|email')}
                   <Button_login onClick={this.submit}>SEND RESET PASSWORD LINK</Button_login>
                   <Link_wrap>
