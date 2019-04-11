@@ -579,7 +579,7 @@ class Login_Form extends React.Component {
                   <Email_label>Email Address*</Email_label>
                   <form onSubmit={this.handleSubmit}>
                     <div>
-                      <Username disabled={this.state.isOtpRequired} {...getFieldProps('email', {
+                      <Username type="email" disabled={this.state.isOtpRequired} {...getFieldProps('email', {
                         onChange(e) { me.onChangeField(e.target.value, "username") }, // have to write original onChange here if you need
                         rules: [{ type: "email", required: true }],
                       })} />

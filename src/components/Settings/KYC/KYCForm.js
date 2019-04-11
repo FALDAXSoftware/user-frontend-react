@@ -178,7 +178,7 @@ class KYCForm extends Component {
 
             },
             mobileVal: {// name the rule
-                message: 'Only numbers are not allowed.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+                message: 'Mobile No. should have only numbers.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
                     var re = /^[0-9]*$/
@@ -187,7 +187,7 @@ class KYCForm extends Component {
                 }
             },
             zipValid: {
-                message: 'Postal code should only contain alphabets , numbers and spaces .', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+                message: 'Postal Code should only contain alphabets , numbers , hyphen and space .', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
                     var re = /^(?=.*[0-9a-zA-Z])[- 0-9a-zA-Z]+$/
@@ -353,6 +353,28 @@ class KYCForm extends Component {
         let countryBool = this.validator.message('country', this.state.fields.country, 'required', 'text-danger-validation') ? true : false,
             stateBool = this.validator.message('state', this.state.fields.state, 'required', 'text-danger-validation') ? true : false,
             cityBool = this.validator.message('city', this.state.fields.city_town, 'required', 'text-danger-validation') ? true : false;
+        let countrymsg;
+        if (countryBool == true && stateBool == false && cityBool == false) {
+            countrymsg = "Country Field is required."
+        }
+        else if (countryBool == true && stateBool == true && cityBool == false) {
+            countrymsg = "Country and State Fields are required."
+        }
+        else if (countryBool == true && stateBool == true && cityBool == true) {
+            countrymsg = "Country , State and City Fields are required."
+        }
+        else if (countryBool == false && stateBool == true && cityBool == false) {
+            countrymsg = "State Field is required."
+        }
+        else if (countryBool == false && stateBool == true && cityBool == true) {
+            countrymsg = "State and City Fields are required."
+        }
+        else if (countryBool == false && stateBool == false && cityBool == true) {
+            countrymsg = "City Field is required."
+        }
+        else if (countryBool == true && stateBool == false && cityBool == true) {
+            countrymsg = "Country and City Fields are required."
+        }
         return (
             <KYC_form>
                 <Right_Col_kyc>
@@ -362,12 +384,12 @@ class KYCForm extends Component {
                             <First_name_kyc>First Name*</First_name_kyc>
                             {/*      {console.log(this.props.profileDetails.first_name)} */}
                             <First_input_kyc value={this.state.fields.first_name} name="first_name" onChange={this._onChangeFields} placeholder="First Name" />
-                            {this.validator.message('first_name', this.state.fields.first_name, 'required|firstname|onlyNumber', 'text-danger-validation', { required: "First name field is required." })}
+                            {this.validator.message('first_name', this.state.fields.first_name, 'required|firstname|onlyNumber', 'text-danger-validation', { required: "First Name field is required." })}
                         </Col>
                         <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xxl={{ span: 12 }}>
                             <Last_name_kyc>Last Name*</Last_name_kyc>
                             <Last_input_kyc value={this.state.fields.last_name} name="last_name" onChange={this._onChangeFields} placeholder="Last Name" />
-                            {this.validator.message('last_name', this.state.fields.last_name, 'required|lastname|onlyNumber', 'text-danger-validation', { required: "Last name field is required." })}
+                            {this.validator.message('last_name', this.state.fields.last_name, 'required|lastname|onlyNumber', 'text-danger-validation', { required: "Last Name field is required." })}
                         </Col>
                     </First_Row_kyc>
 
@@ -376,7 +398,7 @@ class KYCForm extends Component {
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Date_birth_kyc>Date of Birth*</Date_birth_kyc>
                             <Datepicker kycData2={this.state.kycData} {...this.props} kyc="kyc" onDateChange={(Data) => this.onDateChange(Data)} />
-                            {this.validator.message('Date of Birth', this.state.fields.dob, 'required', 'text-danger-validation', { required: "Date of birth field is required." })}
+                            {this.validator.message('Date of Birth', this.state.fields.dob, 'required', 'text-danger-validation', { required: "Date of Birth field is required." })}
                         </Col>
                     </Second_Row_kyc>
 
@@ -384,13 +406,16 @@ class KYCForm extends Component {
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Street_Address_kyc>Street Address Line 1*</Street_Address_kyc>
                             <Street_input_kyc value={this.state.fields.address} name="address" onChange={this._onChangeFields} placeholder="Street Address" />
-                            {this.validator.message('street_address', this.state.fields.address, 'required|max:100', 'text-danger-validation', { required: "Street Address field is required." })}
+                            {this.validator.message('street_address', this.state.fields.address, 'required|max:100', 'text-danger-validation', {
+                                required: "Street Address Line 1 field is required.",
+                                max: "Street Address Line 1 field should have max. 100 characters "
+                            })}
                         </Col>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Street2_wrap>
                                 <Street_Address_kyc>Street Address Line 2</Street_Address_kyc>
                                 <Street_input_kyc value={this.state.fields.address_2} name="address_2" onChange={this._onChangeFields} placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} />
-                                {this.validator.message('street_address', this.state.fields.address_2, 'max:100', 'text-danger-validation', { required: "Street Address line 2 field is required." })}
+                                {this.validator.message('street_address', this.state.fields.address_2, 'max:100', 'text-danger-validation', { required: "Street Address line 2 field is required.", max: "Street Address Line 2 field should have max. 100 characters " })}
                             </Street2_wrap>
                         </Col>
                     </Third_Row_kyc>
@@ -401,31 +426,7 @@ class KYCForm extends Component {
                             <CountryPick kycData2={this.state.kycData} {...this.props} onCountryName={(name) => { this.onCountryName(name) }} kyc="kyc" isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={(country, state, city, stateID, countryID) => this.onCountryChange(country, state, city, stateID, countryID)} />
                             {console.log(countryBool, stateBool, cityBool)}
                             {(countryBool == true || stateBool == true || cityBool == true) ?
-                                <span style={{ color: "red" }}>
-                                    The
-                                        {
-                                        countryBool == true
-                                            ?
-                                            " Country "
-                                            :
-                                            ""
-                                    }
-                                    {
-                                        stateBool == true
-                                            ?
-                                            " State "
-                                            :
-                                            ""
-                                    }
-                                    {
-                                        cityBool == true
-                                            ?
-                                            " City "
-                                            :
-                                            ""
-                                    }
-                                    Field is required.
-                                    </span>
+                                <span style={{ color: "red" }}>{countrymsg}</span>
                                 :
                                 <span></span>
                             }
@@ -446,7 +447,11 @@ class KYCForm extends Component {
                                             onPhoneNumberChange={(a, b, c) => this._changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
                                     }
                                 </PhoneDiv>
-                                {this.validator.message('phone_number', this.state.mobile, 'required|min:5|max:15|mobileVal', 'text-danger-validation', { required: "Mobile No. field is required." })}
+                                {this.validator.message('phone_number', this.state.mobile, 'required|min:5|max:15|mobileVal', 'text-danger-validation', {
+                                    required: "Mobile No. field is required.",
+                                    min: "Mobile No. should have min. 5 characters.",
+                                    max: "Mobile No. should have max. 15 characters."
+                                })}
                             </Col>
                         </Sixth_Row_kyc>
                         :
