@@ -165,6 +165,7 @@ class DocUpload extends Component {
 
                 const fileType = file && file.type ? file.type.substring(0, file.type.indexOf('/')) : '';
                 const fileSize = file && file.size ? file.size : 0;
+                console.log(file.size);
                 if (fileType == 'image') {
                     var fr = new FileReader();
                     fr.readAsDataURL(file);
@@ -176,14 +177,16 @@ class DocUpload extends Component {
                             frontHeight = img.height;
 
                             if (frontWidth > 450 && frontHeight > 600) {
-                                if (_self.state.targetName == "front-doc") {
-                                    _self.setState({ icon1: "check" })
-                                } else {
-                                    _self.setState({ icon2: "check" })
-                                }
+
 
                                 //check file size to max 5mb (5*1024*1024=5242880) and type image
+                                console.log("size", fileSize, fileSize < 5242880)
                                 if (fileType === 'image' && fileSize < 5242880) {
+                                    if (_self.state.targetName == "front-doc") {
+                                        _self.setState({ icon1: "check" })
+                                    } else {
+                                        _self.setState({ icon2: "check" })
+                                    }
                                     reader.onload = (upload) => {
                                         _self.setState({
                                             profileImg: upload.target.result,
@@ -195,6 +198,7 @@ class DocUpload extends Component {
                                     };
                                 } else {
                                     _self.setState({ profileImg: "Default Photo", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' })
+                                    _self.openNotificationWithIcon("error", "File Size", "Please select image with less then 5 mb")
                                 }
 
                                 reader.readAsDataURL(file);
