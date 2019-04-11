@@ -221,6 +221,7 @@ class ChangeEmail extends Component {
                         this.setState({
                             loader: false, isShowOTP: false, errMsg: true, errType: 'Success', errMessage: responseData.message
                         })
+                        this.validator = new SimpleReactValidator();
                         this.props.getProfileDataAction(this.props.isLoggedIn)
                     } else {
                         this.setState({
@@ -260,7 +261,7 @@ class ChangeEmail extends Component {
         const { fields, errMsg, loader, isShowOTP, errType } = this.state;
 
         if (errMsg) {
-            this.openNotificationWithIcon(errType);
+            this.openNotificationWithIcon(errType.toLowerCase());
         }
 
         return (
