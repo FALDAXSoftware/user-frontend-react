@@ -185,6 +185,15 @@ class KYCForm extends Component {
                     var bool = re.test(String(val).toLowerCase());
                     return bool;
                 }
+            },
+            zipValid: {
+                message: 'Postal code should only contain alphabets , numbers and spaces .', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+                    // check that it is a valid IP address and is not blacklisted
+                    var re = /^(?=.*[0-9a-zA-Z])[- 0-9a-zA-Z]+$/
+                    var bool = re.test(String(val));
+                    return bool;
+                }
             }
         });
         this._onChangeFields = this._onChangeFields.bind(this);
@@ -353,12 +362,12 @@ class KYCForm extends Component {
                             <First_name_kyc>First Name*</First_name_kyc>
                             {/*      {console.log(this.props.profileDetails.first_name)} */}
                             <First_input_kyc value={this.state.fields.first_name} name="first_name" onChange={this._onChangeFields} placeholder="First Name" />
-                            {this.validator.message('first_name', this.state.fields.first_name, 'required|firstname|onlyNumber', 'text-danger-validation')}
+                            {this.validator.message('first_name', this.state.fields.first_name, 'required|firstname|onlyNumber', 'text-danger-validation', { required: "First name field is required." })}
                         </Col>
                         <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xxl={{ span: 12 }}>
                             <Last_name_kyc>Last Name*</Last_name_kyc>
                             <Last_input_kyc value={this.state.fields.last_name} name="last_name" onChange={this._onChangeFields} placeholder="Last Name" />
-                            {this.validator.message('last_name', this.state.fields.last_name, 'required|lastname|onlyNumber', 'text-danger-validation')}
+                            {this.validator.message('last_name', this.state.fields.last_name, 'required|lastname|onlyNumber', 'text-danger-validation', { required: "Last name field is required." })}
                         </Col>
                     </First_Row_kyc>
 
@@ -367,7 +376,7 @@ class KYCForm extends Component {
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Date_birth_kyc>Date of Birth*</Date_birth_kyc>
                             <Datepicker kycData2={this.state.kycData} {...this.props} kyc="kyc" onDateChange={(Data) => this.onDateChange(Data)} />
-                            {this.validator.message('Date of Birth', this.state.fields.dob, 'required', 'text-danger-validation')}
+                            {this.validator.message('Date of Birth', this.state.fields.dob, 'required', 'text-danger-validation', { required: "Date of birth field is required." })}
                         </Col>
                     </Second_Row_kyc>
 
@@ -375,12 +384,13 @@ class KYCForm extends Component {
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Street_Address_kyc>Street Address Line 1*</Street_Address_kyc>
                             <Street_input_kyc value={this.state.fields.address} name="address" onChange={this._onChangeFields} placeholder="Street Address" />
-                            {this.validator.message('street_address', this.state.fields.address, 'required|max:100', 'text-danger-validation')}
+                            {this.validator.message('street_address', this.state.fields.address, 'required|max:100', 'text-danger-validation', { required: "Street Address field is required." })}
                         </Col>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Street2_wrap>
                                 <Street_Address_kyc>Street Address Line 2</Street_Address_kyc>
                                 <Street_input_kyc value={this.state.fields.address_2} name="address_2" onChange={this._onChangeFields} placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} />
+                                {this.validator.message('street_address', this.state.fields.address_2, 'max:100', 'text-danger-validation', { required: "Street Address line 2 field is required." })}
                             </Street2_wrap>
                         </Col>
                     </Third_Row_kyc>
@@ -436,7 +446,7 @@ class KYCForm extends Component {
                                             onPhoneNumberChange={(a, b, c) => this._changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
                                     }
                                 </PhoneDiv>
-                                {this.validator.message('phone_number', this.state.mobile, 'required|min:5|max:15|mobileVal', 'text-danger-validation')}
+                                {this.validator.message('phone_number', this.state.mobile, 'required|min:5|max:15|mobileVal', 'text-danger-validation', { required: "Mobile No. field is required." })}
                             </Col>
                         </Sixth_Row_kyc>
                         :
@@ -446,7 +456,11 @@ class KYCForm extends Component {
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
                             <Postal_kyc>Postal Code*</Postal_kyc>
                             <Zip value={this.state.fields.zip} name="zip" onChange={this._onChangeFields} placeholder="Postal Code" />
-                            {this.validator.message('postal_code', this.state.fields.zip, 'required|alpha_num_dash|min:3|max:25', 'text-danger-validation')}
+                            {this.validator.message('postal_code', this.state.fields.zip, 'required|min:3|max:25|zipValid', 'text-danger-validation', {
+                                required: "Postal code field is required.",
+                                min: "Postal code should have min. 3 characters.",
+                                max: "Postal code should have max. 25 characters."
+                            })}
                         </Col>
                     </Sixth_Row_kyc>
                     <Fifth_Row_kyc>

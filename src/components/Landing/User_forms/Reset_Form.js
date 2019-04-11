@@ -286,7 +286,7 @@ class ResetPassword extends Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      if (error == null) {
+      if (error == null && this.state.confirmIcon && this.state.newpassIcon) {
         if (value.password == value.confirm_password) {
           this._resetPassword(value)
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
@@ -300,23 +300,27 @@ class ResetPassword extends Component {
           this.openNotificationWithProfile("error", "Error", "Password do not match.")
         }
       } else {
-        if (error.password !== undefined) {
-          if (error.password.errors[0].message !== undefined && error.password.errors[0].message !== null) {
-            document.querySelectorAll(".pass_msg")[0].style.display = "block";
-            this.setState({ pass_msg: "Password is required" })
-          } else {
-            document.querySelectorAll(".pass_msg")[0].style.display = "none";
-            this.setState({ pass_msg: null })
+        if (error !== null) {
+          if (error.password !== undefined) {
+            if (error.password.errors[0].message !== undefined && error.password.errors[0].message !== null) {
+              document.querySelectorAll(".pass_msg")[0].style.display = "block";
+              this.setState({ pass_msg: "Password is required" })
+            } else {
+              document.querySelectorAll(".pass_msg")[0].style.display = "none";
+              this.setState({ pass_msg: null })
+            }
+          }
+          if (error.confirm_password !== undefined) {
+            if (error.confirm_password.errors[0].message !== undefined && error.confirm_password.errors[0].message !== null) {
+              document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
+              this.setState({ confirmPass_msg: "Confirm password is required" })
+            } else {
+              document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
+              this.setState({ confrimPass_msg: null })
+            }
           }
         }
-        if (error.confirm_password !== undefined) {
-          if (error.confirm_password.errors[0].message !== undefined && error.confirm_password.errors[0].message !== null) {
-            document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
-            this.setState({ confirmPass_msg: "Confirm password is required" })
-          } else {
-            document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
-            this.setState({ confrimPass_msg: null })
-          }
+        else {
         }
       }
     });
