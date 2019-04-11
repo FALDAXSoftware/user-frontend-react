@@ -204,17 +204,33 @@ class WalletDetails extends Component {
                                         <MY_wallet>
                                             <span>{this.state.walletUserData.length > 0 ? this.state.walletUserData[0].coin_name : "COIN"}</span>
                                         </MY_wallet>
-                                        <WalletCoin>
-                                            {this.props.walletDetails !== null && this.props.walletDetails !== undefined ?
-                                                <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
-                                                    {this.props.walletDetails.map(function (temp) {
-                                                        return (
-                                                            <Option value={temp.coin}>{temp.coin}</Option>
-                                                        );
-                                                    })}
-                                                </Select> : ""
-                                            }
-                                        </WalletCoin>
+                                        {console.log(this.props)}
+                                        {this.props.allCoinsFlag == false ?
+                                            <WalletCoin>
+                                                {console.log(this.props.walletDetails)}
+                                                {this.props.walletDetails !== null && this.props.walletDetails !== undefined ?
+                                                    <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
+                                                        {this.props.walletDetails.map(function (temp) {
+                                                            return (
+                                                                <Option value={temp.coin}>{temp.coin}</Option>
+                                                            );
+                                                        })}
+                                                    </Select> : ""
+                                                }
+                                            </WalletCoin> : ""}
+                                        {this.props.allCoinsFlag == true ?
+                                            <WalletCoin>
+                                                {console.log(this.props.walletDetails)}
+                                                {this.props.allCoins !== null && this.props.allCoins !== undefined ?
+                                                    <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
+                                                        {this.props.allCoins.map(function (temp) {
+                                                            return (
+                                                                <Option value={temp.coin}>{temp.coin}</Option>
+                                                            );
+                                                        })}
+                                                    </Select> : ""
+                                                }
+                                            </WalletCoin> : ""}
                                     </Left_head>
                                 </Col>
                                 <Col xxl={12} xl={12} lg={12} sm={24}>

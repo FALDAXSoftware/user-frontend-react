@@ -68,11 +68,33 @@ export default class Datepicker extends Component {
                 this.setState({ year: date });
                 fields[type] = date;
             } else if (type == "month") {
+                let date1
                 this.setState({ month: date });
-                fields[type] = date;
+                if (date == 0) date1 = "January";
+                if (date == 1) date1 = "February";
+                if (date == 2) date1 = "March";
+                if (date == 3) date1 = "April";
+                if (date == 4) date1 = "May";
+                if (date == 5) date1 = "June";
+                if (date == 6) date1 = "July";
+                if (date == 7) date1 = "August";
+                if (date == 8) date1 = "September";
+                if (date == 9) date1 = "October";
+                if (date == 10) date1 = "November";
+                if (date == 11) date1 = "December";
+
+                fields[type] = date1;
             } else if (type == "day") {
                 this.setState({ day: date });
                 fields[type] = date;
+            }
+            let propFields
+            if (this.props.kycData2.dob !== null && this.props.kycData2.dob !== undefined) {
+                propFields = this.props.kycData2.dob.split("-");
+                if (fields["day"] == undefined && propFields[2] !== undefined) { fields["day"] = propFields[2] }
+                if (fields["month"] == undefined && propFields[1] !== undefined) { fields["month"] = propFields[1] }
+                if (fields["year"] == undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
+
             }
             this.props.onDateChange(fields, "dob")
         }
@@ -80,25 +102,31 @@ export default class Datepicker extends Component {
 
     render() {
         let date, year, month, day
-        console.log(this.props)
         if (this.props.kyc !== undefined) {
-            console.log(this.props, "KYC")
             if (this.props.kycData2 !== "" && this.props.kycData2 !== null && this.props.kycData2 !== undefined) {
-                if (this.props.kycData2.dob !== undefined) {
+                if (this.props.kycData2.dob !== undefined && this.props.kycData2.dob !== null) {
                     date = this.props.kycData2.dob.split("-")
                     year = Number(date[2])
                     month = date[1]
                     day = Number(date[0])
+                    if (month !== null) {
+                        console.log("month", month, year)
+                        month = Number(month) - 1;
+                    }
                 }
             }
         } else {
-            console.log("Profile Data", this.props.profileDetails)
             if (this.props.profileDetails.dob !== undefined && this.props.profileDetails.dob !== null) {
                 if (this.props.profileDetails.dob !== undefined) {
                     date = this.props.profileDetails.dob.split("-")
                     year = Number(date[2])
                     month = date[1]
                     day = Number(date[0])
+                    console.log("month", month, year)
+                    if (month !== null) {
+                        console.log("month", month)
+                        month = Number(month) - 1;
+                    }
                 }
             }
         }
@@ -111,7 +139,6 @@ export default class Datepicker extends Component {
                     {console.log(day, month, year)}
                     <Col md={8} xl={8}>
                         <DayPicker
-                            defaultValue={day ? day : ''}
                             // mandatory
                             year={this.state.year}
                             // mandatory
@@ -119,7 +146,7 @@ export default class Datepicker extends Component {
                             // mandatory if end={} is given in YearPicker
                             endYearGiven
                             // mandatory
-                            value={this.state.day}
+                            value={this.state.day !== null ? this.state.day : day ? day : ''}
                             // mandatory
                             onChange={(day) => {
                                 this.onChangeDate(day, "day")
@@ -130,15 +157,15 @@ export default class Datepicker extends Component {
                             optionClasses={'option-day'}
                         />
                     </Col>
+                    {console.log(this.state.month !== null ? this.state.month : (month !== "" && month !== null) ? month : '')}
                     <Col md={8} xl={8}>
                         <MonthPicker
-                            defaultValue={month ? month : ''}
                             // mandatory if end={} is given in YearPicker
                             endYearGiven
                             // mandatory
                             year={this.state.year}
                             // mandatory
-                            value={this.state.month}
+                            value={this.state.month !== null ? this.state.month : (month !== "" && month !== null) ? month : ''}
                             // mandatory
                             onChange={(month) => {
                                 this.onChangeDate(month, "month")
@@ -149,17 +176,17 @@ export default class Datepicker extends Component {
                             optionClasses={'option-month'}
                         />
                     </Col>
+                    {console.log((this.state.year !== null ? this.state.year : (year ? year : "")), year)}
                     <Col md={8} xl={8}>
                         <YearPicker
                             placeholder={"Select Year"}
-                            defaultValue={year ? year : ''}
                             // default is 1900
                             start={lowerDate}
                             // default is current year
                             end={higherDate}
                             // default is ASCENDING
                             // mandatory
-                            value={this.state.year}
+                            value={this.state.year !== null ? this.state.year : (year ? year : "")}
                             // mandatory
                             onChange={(year) => {
                                 this.onChangeDate(year, "year")

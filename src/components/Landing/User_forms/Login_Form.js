@@ -156,7 +156,7 @@ export const Username = styled.input`
 export const Email_req = styled.div`
   display:none;
   color:red;
-  font-size:11px;
+  font-size:14px;
   width:76%;
 `
 export const UserIconS = styled(Icon)`

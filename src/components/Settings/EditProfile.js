@@ -14,7 +14,7 @@ import Passwordchange from "./changePassword/Passwordchange";
 import Acc_settings from "./Account_settings/Acc_settings";
 import KYC from "./KYC/kyc"
 import Paymethods from './Payment/Paymethods';
-import SupportHub from './SupportHub';
+import SupportHub from './Account_settings/SupportHub';
 
 const TabPane = Tabs.TabPane;
 

@@ -560,9 +560,19 @@ class PersonalDetails extends Component {
                 this.setState({ countryIcon: true })
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
             } else {
+                let country = false, state = false, city = false;
                 this.setState({ countryIcon: false })
                 document.querySelectorAll(".country_msg")[0].style.display = "block";
-                this.setState({ countrymsg: "Country , State and City Field is required" })
+                if ((value.country == undefined || value.country == null || value.country == ""))
+                    country = true;
+                if ((value.state == undefined || value.state == null || value.state == ""))
+                    state = true;
+                if ((value.city == undefined || value.city == null || value.city == ""))
+                    city = true;
+                console.log("CSC", value.country, value.state, value.city)
+                let countrymsg = `${country == true ? " Country " : ""}${state == true ? " state " : ""}${city == true ? " city " : ""}Field is required.`
+
+                this.setState({ countrymsg })
             }
         } else if (field == "dob") {
             if ((value["day"]) && (value["month"]) && (value["year"])) {
@@ -571,7 +581,7 @@ class PersonalDetails extends Component {
             } else {
                 this.setState({ dobIcon: false })
                 document.querySelectorAll(".dob_msg")[0].style.display = "block";
-                this.setState({ dobmsg: "Date of Birth is required" })
+                this.setState({ dobmsg: "Date of Birth field is required" })
             }
         } else if (field == "street_address") {
             if (value !== "") {
@@ -586,31 +596,40 @@ class PersonalDetails extends Component {
             } else {
                 this.setState({ street1Icon: false })
                 document.querySelectorAll(".street1_msg")[0].style.display = "block";
-                this.setState({ street1msg: "Street Address is required" })
+                this.setState({ street1msg: "Street Address field is required" })
             }
         } else if (field == "street_address_2") {
-            if (value.length < 100) {
-                this.setState({ street2Icon: true })
-                document.querySelectorAll(".street2_msg")[0].style.display = "none";
-            } else {
-                this.setState({ street2Icon: false })
-                document.querySelectorAll(".street2_msg")[0].style.display = "block";
-                this.setState({ street2msg: "Street Address limit is 100 characters" })
+            if (value.trim !== "") {
+                if (value.length <= 100) {
+                    this.setState({ street2Icon: true })
+                    document.querySelectorAll(".street2_msg")[0].style.display = "none";
+                }
+                else {
+                    this.setState({ street2Icon: false })
+                    document.querySelectorAll(".street2_msg")[0].style.display = "block";
+                    this.setState({ street2msg: "Street Address limit is 100 characters" })
+                }
             }
         } else if (field == "postal_code") {
             if (value !== "") {
-                if (value.length >= 2 && value.length <= 20) {
+                var reg = /^(?=.*[0-9])[- ()0-9]{3,25}$/
+                var bool = reg.test(value)
+                if (bool == true) {
                     this.setState({ postalIcon: true })
                     document.querySelectorAll(".postal_msg")[0].style.display = "none";
                 } else {
                     this.setState({ postalIcon: false })
                     document.querySelectorAll(".postal_msg")[0].style.display = "block";
-                    this.setState({ postalmsg: "Postal code should have min. 2 and max. 20 characters" })
+                    console.log("Bool", bool, value.length)
+                    if (value.length < 3 && value.length > 25)
+                        this.setState({ postalmsg: "Postal code should have min. 3 and max. 25 characters." })
+                    else
+                        this.setState({ postalmsg: "Postal code should only contain alphabets , numbers , hyphens and spaces ." })
                 }
             } else {
                 this.setState({ postalIcon: false })
                 document.querySelectorAll(".postal_msg")[0].style.display = "block";
-                this.setState({ postalmsg: "Postal Code is required" })
+                this.setState({ postalmsg: "Postal Code field is required" })
             }
         }
         /* else if (field == "fiat") {

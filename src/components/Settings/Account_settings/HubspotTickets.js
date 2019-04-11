@@ -57,6 +57,12 @@ line-height: 2.3;
     
 color:${props => props.theme.mode == "dark" ? "#ccbebe69" : "#00000070"};
 `
+const NDF = styled.div`
+    display:flex;
+    justify-content:center;
+    color:${props => props.theme.mode == "dark" ? "white" : "black"};
+    font-weight:600;
+`
 const TicketTitle = styled.span`
   font-size: 40px;
   font-family: "Open sans";
@@ -130,11 +136,11 @@ class HubSpotTickets extends Component {
                 color: "#6fa82f"
             },
             {
-                title: "Waiting",
+                title: "Waiting On Contact",
                 color: "#ffc107"
             },
             {
-                title: "Waiting",
+                title: "Waiting On Us",
                 color: "#ffc107"
             },
             {
@@ -153,7 +159,7 @@ class HubSpotTickets extends Component {
                             <TicketTitle>All Tickets </TicketTitle>
                         </div>
                         <Whole_wrap>
-                            {ticketData && ticketData.map((temp, index) => (
+                            {ticketData.length > 0 ? ticketData && ticketData.map((temp, index) => (
                                 <Ticket_wrap>
                                     <Col md={4} lg={3}>
                                         <Date style={{ display: "block" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format(this.props.profileDetails.date_format)} </Date>
@@ -168,6 +174,7 @@ class HubSpotTickets extends Component {
                                     </Col>
                                 </Ticket_wrap>
                             ))
+                                : <NDF>No Data Found</NDF>
                             }
 
                         </Whole_wrap>
