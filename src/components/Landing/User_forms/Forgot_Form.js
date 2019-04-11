@@ -184,9 +184,11 @@ class ForgotForm extends Component {
 
   submit = () => {
     if (this.validator.allValid()) {
+      this.validator.hideMessages()
       var value = {};
       value.email = this.state.email;
       this.props.forgotAction(value);
+      this.setState({ email: "" })
 
     } else {
       this.validator.showMessages();
@@ -207,8 +209,11 @@ class ForgotForm extends Component {
   componentWillReceiveProps(props, newProps) {
     if (props.forgot) {
       if (props.forgot.status == 200) {
+
         this.openNotificationWithIcon('success', 'Success', props.forgot.message);
         this.setState({ email: "" })
+
+
       } else {
         this.openNotificationWithIcon('error', 'Error', props.forgot.err);
       }
