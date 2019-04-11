@@ -176,16 +176,16 @@ class ChangeEmail extends Component {
                 .then((responseData) => {
                     if (responseData.status == 200) {
                         this.setState({
-                            loader: false, isShowOTP: true, errMsg: true, errType: 'success', errMessage: responseData.message
+                            loader: false, isShowOTP: true, errMsg: true, errType: 'Success', errMessage: responseData.message
                         })
                     } else {
                         this.setState({
-                            loader: false, errMsg: true, errType: 'error', errMessage: responseData.err
+                            loader: false, errMsg: true, errType: 'Error', errMessage: responseData.err
                         })
                     }
                 })
                 .catch(error => {
-                    this.setState({ loader: false, errMsg: true, errType: 'error', errMessage: 'Something went wrong!!' });
+                    this.setState({ loader: false, errMsg: true, errType: 'Error', errMessage: 'Something went wrong!!' });
                 })
         } else {
             this.setState({ loader: false });
@@ -214,16 +214,23 @@ class ChangeEmail extends Component {
             })
                 .then(response => response.json())
                 .then((responseData) => {
-                    let fields = this.state.fields;
-                    fields['newEmail'] = '';
-                    fields['otp'] = '';
-                    this.setState({
-                        fields, loader: false, isShowOTP: false, errMsg: true, errType: 'success', errMessage: responseData.message
-                    })
-                    this.props.getProfileDataAction(this.props.isLoggedIn)
+                    if (responseData.status == 200) {
+                        let fields = this.state.fields;
+                        fields['newEmail'] = '';
+                        fields['otp'] = '';
+                        this.setState({
+                            loader: false, isShowOTP: false, errMsg: true, errType: 'Success', errMessage: responseData.message
+                        })
+                        this.validator = new SimpleReactValidator();
+                        this.props.getProfileDataAction(this.props.isLoggedIn)
+                    } else {
+                        this.setState({
+                            loader: false, errMsg: true, errType: 'Error', errMessage: responseData.err
+                        })
+                    }
                 })
                 .catch(error => {
-                    this.setState({ loader: false, errMsg: true, errType: 'error', errMessage: 'Something went wrong!!' });
+                    this.setState({ loader: false, errMsg: true, errType: 'Error', errMessage: 'Something went wrong!!' });
                 })
         } else {
             this.setState({ loader: false });

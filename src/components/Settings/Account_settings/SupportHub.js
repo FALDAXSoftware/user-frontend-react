@@ -5,7 +5,8 @@ import { connect } from "react-redux"
 import { Row, Col, Card } from 'antd';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faList } from '@fortawesome/free-solid-svg-icons'
 /* Styled Components */
 const Header_text = styled.div`
     font-size:20px;
@@ -54,8 +55,8 @@ const CardText = styled.h4`
 `
 const CustomCard = styled(Card)`
   width: 100%; 
-  border-color: #e2e6ea;
-  background-color: ${props => props.theme.mode == "dark" ? "#041421" : "#f8f8f8"};
+  border:0px;
+  background-color: transparent;
   border-radius: 5px;
   &:hover{
     border-color: #1890ff;
@@ -65,12 +66,15 @@ const CustomCard = styled(Card)`
 const PContainer = styled.p`
     text-align: center;
     justify-content: center;
-    height: 100px;
+    // height: 100px;
     display: flex; 
     align-items: center;
     margin-bottom: 0px;
 `
-
+const FaIcon = styled(FontAwesomeIcon)`
+font-size: 50px;
+margin-bottom: 20px;
+`
 class SupportHub extends Component {
     constructor(props) {
         super(props);
@@ -84,11 +88,12 @@ class SupportHub extends Component {
             <div>
                 <Header_text>Support Hub</Header_text>
                 <Ref_div>
-                    <OpenTicketRow >
-                        <Col sm={{ span: 24 }} xl={{ span: 12 }}>
+                    <OpenTicketRow justify="center" type="flex">
+                        <Col sm={{ span: 24 }} xl={{ span: 6 }}>
                             <DivWrap>
                                 <Link to='/open-ticket'>
                                     <CustomCard>
+                                        <FaIcon icon={faPlus} />
                                         <PContainer>
                                             <CardText>
                                                 Open a Ticket
@@ -98,10 +103,11 @@ class SupportHub extends Component {
                                 </Link>
                             </DivWrap>
                         </Col>
-                        <Col sm={{ span: 24 }} xl={{ span: 12 }}>
+                        <Col sm={{ span: 24 }} xl={{ span: 6 }}>
                             <DivWrap>
                                 <Link to='/tickets'>
                                     <CustomCard>
+                                        <FaIcon icon={faList} />
                                         <PContainer>
                                             <CardText>
                                                 View All Tickets
