@@ -405,7 +405,7 @@ class PersonalDetails extends Component {
             if (this.state.dateFIcon !== true && this.props.profileDetails.date_format == "") {
                 this.setState({ dateFIcon: false })
                 document.querySelectorAll(".df_msg")[0].style.display = "block";
-                this.setState({ dfmsg: "currency is required." })
+                this.setState({ dfmsg: "Date Format is required." })
             }
         });
     }
@@ -595,6 +595,7 @@ class PersonalDetails extends Component {
                 this.setState({ countrymsg })
             }
         } else if (field == "dob") {
+            console.log(value)
             if ((value["day"]) && (value["month"]) && (value["year"])) {
                 this.setState({ dobIcon: true })
                 document.querySelectorAll(".dob_msg")[0].style.display = "none";
@@ -632,8 +633,9 @@ class PersonalDetails extends Component {
             }
         } else if (field == "postal_code") {
             if (value !== "") {
-                var reg = /^(?=.*[0-9])[- ()0-9]{3,25}$/
+                var reg = /^(?=.*[0-9A-Za-z])[- ()0-9A-Za-z]{3,25}$/
                 var bool = reg.test(value)
+                console.log("BOOL", bool)
                 if (bool == true) {
                     this.setState({ postalIcon: true })
                     document.querySelectorAll(".postal_msg")[0].style.display = "none";
@@ -641,7 +643,7 @@ class PersonalDetails extends Component {
                     this.setState({ postalIcon: false })
                     document.querySelectorAll(".postal_msg")[0].style.display = "block";
                     console.log("Bool", bool, value.length)
-                    if (value.length < 3 && value.length > 25)
+                    if (value.length < 3 || value.length > 25)
                         this.setState({ postalmsg: "Postal code should have min. 3 and max. 25 characters." })
                     else
                         this.setState({ postalmsg: "Postal code should only contain alphabets , numbers , hyphen and space ." })

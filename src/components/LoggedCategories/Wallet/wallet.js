@@ -7,7 +7,7 @@ import { connect } from "react-redux"
 import styled from 'styled-components';
 
 /* components  */
-import Tableofcoin from './TableofCoin'
+import TableofCoinUpper from './TableofCoinUpper';
 import ListofCoins from './listofCoins'
 import WalletDetails from './WalletDetails'
 import LoggedNavigation from '../../Navigations/LoggedNavigation';
@@ -22,6 +22,8 @@ import { globalVariables } from '../../../Globals';
 /* Actions */
 import { walletBal, getAllCoins } from '../../../Actions/LoggedCat/walletActions'
 import FaldaxLoader from '../../../shared-components/FaldaxLoader';
+import TableofCoinLower from './TableofCoinLower';
+
 
 let { API_URL } = globalVariables;
 const Search = Input.Search;
@@ -195,7 +197,7 @@ class Wallet extends Component {
                             <Table_wrap>
                                 {
                                     this.props.walletDetails !== null ?
-                                        this.state.searchedWallet !== null ? <Tableofcoin allCoinsFlag={false} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedWallet} /> : <Tableofcoin allCoinsFlag={false} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.walletDetails} /> : ""
+                                        this.state.searchedWallet !== null ? <TableofCoinUpper allCoinsFlag={false} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedWallet} /> : <TableofCoinUpper allCoinsFlag={false} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.walletDetails} /> : ""
                                 }
                             </Table_wrap>
                         </CoinTable>
@@ -221,8 +223,8 @@ class Wallet extends Component {
                                     : ""} */}
                                 {
                                     this.props.nowalletBalance !== null ?
-                                        this.state.searchedCoins !== null ? <Tableofcoin allCoinsFlag={true} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedCoins} />
-                                            : <Tableofcoin allCoinsFlag={true} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.nowalletBalance} /> : ""
+                                        this.state.searchedCoins !== null ? <TableofCoinLower allCoinsFlag={true} currChange={(currency) => this.currChangeList(currency)} tableData={this.state.searchedCoins} />
+                                            : <TableofCoinLower allCoinsFlag={true} currChange={(currency) => this.currChangeList(currency)} tableData={this.props.nowalletBalance} /> : ""
                                 }
                             </Table_wrap>
                         </CoinTable>

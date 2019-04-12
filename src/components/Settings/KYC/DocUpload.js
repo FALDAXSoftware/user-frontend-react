@@ -167,26 +167,27 @@ class DocUpload extends Component {
                 const fileSize = file && file.size ? file.size : 0;
                 console.log(file.size);
                 if (fileType == 'image') {
-                    var fr = new FileReader();
-                    fr.readAsDataURL(file);
-                    fr.onload = function () {
-                        var img = new Image;
-                        img.onload = function () {
+                    if (fileType === 'image' && fileSize < 5242880) {
 
-                            frontWidth = img.width;
-                            frontHeight = img.height;
+                        var fr = new FileReader();
+                        fr.readAsDataURL(file);
+                        fr.onload = function () {
+                            var img = new Image;
+                            img.onload = function () {
 
-                            if (frontWidth > 450 && frontHeight > 600) {
+                                frontWidth = img.width;
+                                frontHeight = img.height;
 
+                                if (frontWidth > 450 && frontHeight > 600) {
 
-                                //check file size to max 5mb (5*1024*1024=5242880) and type image
-                                console.log("size", fileSize, fileSize < 5242880)
-                                if (fileType === 'image' && fileSize < 5242880) {
                                     if (_self.state.targetName == "front-doc") {
                                         _self.setState({ icon1: "check" })
                                     } else {
                                         _self.setState({ icon2: "check" })
                                     }
+                                    //check file size to max 5mb (5*1024*1024=5242880) and type image
+                                    console.log("size", fileSize, fileSize < 5242880)
+
                                     reader.onload = (upload) => {
                                         _self.setState({
                                             profileImg: upload.target.result,
@@ -196,27 +197,37 @@ class DocUpload extends Component {
                                             imagemsg: ""
                                         });
                                     };
+
+
+                                    reader.readAsDataURL(file);
+                                    var DataForm = new FormData()
+                                    DataForm.append("image", file)
+                                    _self.props.kycDoc(_self.props.isLoggedIn, DataForm, _self.state.targetName)
                                 } else {
-                                    _self.setState({ profileImg: "Default Photo", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' })
-                                    _self.openNotificationWithIcon("error", "File Size", "Please select image with less then 5 mb")
+                                    _self.openNotificationWithIcon("error", "File Size", "File should be greater than 450*600 in dimension")
                                 }
 
-                                reader.readAsDataURL(file);
-                                var DataForm = new FormData()
-                                DataForm.append("image", file)
-                                _self.props.kycDoc(_self.props.isLoggedIn, DataForm, _self.state.targetName)
-                            } else {
-                                _self.openNotificationWithIcon("error", "File Size", "File should be greater than 450*600 in dimension")
-                            }
+                            };
+                            img.src = fr.result;
 
                         };
-                        img.src = fr.result;
-
-                    };
+                    }
+                    else {
+                        _self.setState({ profileImg: "Default Photo", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' })
+                        _self.openNotificationWithIcon("error", "File Size", "Please select image with less then 5 mb")
+                        console.log(document.getElementById("front").value, document.getElementById("back").value)
+                        document.getElementById("front").value = "";
+                        document.getElementById("back").value = "";
+                    }
                 }
                 else {
                     _self.openNotificationWithIcon("error", "File Format", "File format is not supported. Please upload only images.")
+                    console.log(document.getElementById("front").value, document.getElementById("back").value)
+                    document.getElementById("front").value = "";
+                    document.getElementById("back").value = "";
                 }
+
+
             } catch (error) {
                 _self.setState({ imagemsg: 'Something went wrong please try again' });
             }

@@ -35,6 +35,7 @@ export default class Datepicker extends Component {
             } else if (type == "month") {
                 let date1
                 this.setState({ month: date });
+                console.log(date)
                 if (date == 0) date1 = "January";
                 if (date == 1) date1 = "February";
                 if (date == 2) date1 = "March";
@@ -54,13 +55,14 @@ export default class Datepicker extends Component {
                 fields[type] = date;
             }
             let propFields
-            if (this.props.profileDetails.dob !== null) {
+            /* if (this.props.profileDetails.dob !== null) {
                 propFields = this.props.profileDetails.dob.split("-");
                 if (fields["day"] == undefined && propFields[2] !== undefined) { fields["day"] = propFields[2] }
                 if (fields["month"] == undefined && propFields[1] !== undefined) { fields["month"] = propFields[1] }
                 if (fields["year"] == undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
 
-            }
+            } */
+            console.log(fields)
             this.props.onDateChange(fields, "dob")
         }
         else {
@@ -89,13 +91,13 @@ export default class Datepicker extends Component {
                 fields[type] = date;
             }
             let propFields
-            if (this.props.kycData2.dob !== null && this.props.kycData2.dob !== undefined) {
+            /* if (this.props.kycData2.dob !== null && this.props.kycData2.dob !== undefined) {
                 propFields = this.props.kycData2.dob.split("-");
                 if (fields["day"] == undefined && propFields[2] !== undefined) { fields["day"] = propFields[2] }
                 if (fields["month"] == undefined && propFields[1] !== undefined) { fields["month"] = propFields[1] }
                 if (fields["year"] == undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
 
-            }
+            } */
             this.props.onDateChange(fields, "dob")
         }
     }
