@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Table } from 'react-bootstrap';
 import { Menu, Dropdown, Icon } from 'antd';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { NDF } from './TableofCoin'
+import { NDF } from './TableofCoinUpper'
 import { TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 
 import { Head, Sub_head, DropMenu, Col1, Bit_img, Bit_text, Bit, Bit_price, Price, Icon_wrap } from "../../../styled-components/loggedStyle/walletStyle";

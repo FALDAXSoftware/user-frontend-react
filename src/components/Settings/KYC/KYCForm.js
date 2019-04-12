@@ -216,16 +216,16 @@ class KYCForm extends Component {
                 console.log(responseData, "KYC DATA");
                 if (responseData.status == 200) {
                     let fields = {};
-                    fields['first_name'] = responseData.data.first_name;
-                    fields['last_name'] = responseData.data.last_name;
-                    fields['address'] = responseData.data.address;
-                    fields['address_2'] = responseData.data.address_2;
-                    fields['zip'] = responseData.data.zip;
-                    fields['city_town'] = responseData.data.city_town;
-                    fields['country'] = responseData.data.country;
-                    fields['state'] = responseData.data.state;
-                    fields['dob'] = responseData.data.dob;
-                    fields['country_code'] = responseData.data.country_code;
+                    fields['first_name'] = responseData.data.first_name !== null ? responseData.data.first_name : "";
+                    fields['last_name'] = responseData.data.last_name !== null ? responseData.data.last_name : "";
+                    fields['address'] = responseData.data.address !== null ? responseData.data.address : "";
+                    fields['address_2'] = responseData.data.address_2 !== null ? responseData.data.address_2 : "";
+                    fields['zip'] = responseData.data.zip !== null ? responseData.data.zip : "";
+                    fields['city_town'] = responseData.data.city_town !== null ? responseData.data.city_town : "";
+                    fields['country'] = responseData.data.country !== null ? responseData.data.country : "";
+                    fields['state'] = responseData.data.state !== null ? responseData.data.state : "";
+                    fields['dob'] = responseData.data.dob !== null ? responseData.data.dob : "";
+                    fields['country_code'] = responseData.data.country_code !== null ? responseData.data.country_code : "";
                     if (responseData.data.phone_number) {
                         fields['phone_number'] = responseData.data.phone_number;
                         let phone = responseData.data.phone_number.split("-")[1];
@@ -341,6 +341,7 @@ class KYCForm extends Component {
     onSubmit() {
         if (this.validator.allValid()) {
             var profileData = this.state.fields;
+            console.log(profileData)
             profileData["steps"] = 1;
             this.props.kycFormAction(this.props.isLoggedIn, profileData);
         } else {
@@ -415,7 +416,7 @@ class KYCForm extends Component {
                             <Street2_wrap>
                                 <Street_Address_kyc>Street Address Line 2</Street_Address_kyc>
                                 <Street_input_kyc value={this.state.fields.address_2} name="address_2" onChange={this._onChangeFields} placeholder="Street Address" autosize={{ minRows: 3, maxRows: 6 }} />
-                                {this.validator.message('street_address', this.state.fields.address_2, 'max:100', 'text-danger-validation', { required: "Street Address line 2 field is required.", max: "Street Address Line 2 field should have max. 100 characters " })}
+                                {this.validator.message('street_address_2', this.state.fields.address_2, 'max:100', 'text-danger-validation', { required: "Street Address Line 2 field is required.", max: "Street Address Line 2 field should have max. 100 characters " })}
                             </Street2_wrap>
                         </Col>
                     </Third_Row_kyc>

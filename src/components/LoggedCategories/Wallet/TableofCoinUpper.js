@@ -164,31 +164,31 @@ class TableofCoin extends React.Component {
                                     img = amazon_Bucket + tableData[index].coin_icon
                                 else
                                     img = amazon_Bucket + "coin/defualt_coin.png"
-
+                                let tableIndex = tableData[index]
                                 return (
                                     <Col1>
                                         <td style={{ textAlign: "left" }}>
-                                            <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
+                                            <Link to={`/walletDetails?coinID=${tableIndex.coin}`}>
                                                 <Bit_img src={img} />
-                                                <Bit_text><Bit>{tableData[index].coin_name}</Bit><Bit_price>{parseFloat(tableData[index].balance).toFixed(4)} {tableData[index].coin_code}</Bit_price></Bit_text>
+                                                <Bit_text><Bit>{tableIndex.coin_name}</Bit><Bit_price>{parseFloat(tableIndex.balance).toFixed(4)} {tableIndex.coin_code}</Bit_price></Bit_text>
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
-                                                {tableData[index].USD !== undefined ? <Price>{me.state.curr1} {parseFloat(parseFloat(tableData[index].USD) * parseFloat(tableData[index].balance)).toFixed(4)}</Price> : <Price>-</Price>}
+                                            <Link to={`/walletDetails?coinID=${tableIndex.coin}`}>
+                                                {tableIndex[`${me.state.drop1}`] !== undefined ? <Price>{me.state.curr1} {parseFloat(parseFloat(tableIndex[`${me.state.drop1}`]) * parseFloat(tableIndex.balance)).toFixed(4)}</Price> : <Price>-</Price>}
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
-                                                {tableData[index].EUR !== undefined ? <Price>{me.state.curr2} {parseFloat(parseFloat(tableData[index].EUR) * parseFloat(tableData[index].balance)).toFixed(4)} </Price> : <Price>-</Price>}
+                                            <Link to={`/walletDetails?coinID=${tableIndex.coin}`}>
+                                                {tableIndex[`${me.state.drop2}`] !== undefined ? <Price>{me.state.curr2} {parseFloat(parseFloat(tableIndex[`${me.state.drop2}`]) * parseFloat(tableIndex.balance)).toFixed(4)} </Price> : <Price>-</Price>}
                                             </Link>
                                         </td>
-                                        <td><Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
-                                            {tableData[index].INR !== undefined ? <Price><span>{me.state.curr3}</span> {parseFloat(parseFloat(tableData[index].INR) * parseFloat(tableData[index].balance)).toFixed(4)} </Price> : <Price>-</Price>}
+                                        <td><Link to={`/walletDetails?coinID=${tableIndex.coin}`}>
+                                            {tableIndex[`${me.state.drop3}`] !== undefined ? <Price><span>{me.state.curr3}</span> {parseFloat(parseFloat(tableIndex[`${me.state.drop3}`]) * parseFloat(tableIndex.balance)).toFixed(4)} </Price> : <Price>-</Price>}
                                         </Link>
                                         </td>
                                         <td>
-                                            <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
+                                            <Link to={`/walletDetails?coinID=${tableIndex.coin}`}>
                                                 <Icon_wrap>
                                                     <Icon type="right" />
                                                 </Icon_wrap>
