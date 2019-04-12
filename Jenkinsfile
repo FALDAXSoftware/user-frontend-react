@@ -10,7 +10,7 @@ volumes: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
   ]
 ){
-  timeout(15){
+  timeout(25){
       def coinToDeploy;
       def triggerByUser;
       def namespace;
