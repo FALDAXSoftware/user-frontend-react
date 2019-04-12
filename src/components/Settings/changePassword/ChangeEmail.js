@@ -131,12 +131,14 @@ class ChangeEmail extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            fields: {},
+            fields: {
+            },
             loader: false,
             isShowOTP: false,
             errType: '',
         }
         this.validator = new SimpleReactValidator();
+        this.otpValidator = new SimpleReactValidator();
     }
 
     static propTypes = {
@@ -176,15 +178,17 @@ class ChangeEmail extends Component {
                 .then(response => response.json())
                 .then((responseData) => {
                     if (responseData.status == 200) {
-                        let fields = this.state.fields;
-                        fields['newEmail'] = '';
-                        this.setState({ loader: false, isShowOTP: true, fields })
+                        // let fields = this.state.fields;
+                        // fields['newEmail'] = '';
+                        this.setState({ loader: false, isShowOTP: true }, () => {
+                            // this.otpValidator = new SimpleReactValidator();
+                        })
                     } else {
                         this.setState({
                             loader: false, errMsg: true, errType: 'Error', errMessage: responseData.err
                         })
                     }
-                    this.validator = new SimpleReactValidator();
+                    // this.otpValidator = new SimpleReactValidator();
                 })
                 .catch(error => {
                     this.setState({ loader: false, errMsg: true, errType: 'Error', errMessage: 'Something went wrong!!' });
@@ -199,7 +203,7 @@ class ChangeEmail extends Component {
     _verifyEmail = () => {
         const { fields } = this.state;
 
-        if (this.validator.allValid()) {
+        if (this.otpValidator.allValid()) {
             let formData = {
                 new_email_token: fields["otp"],
             };
@@ -218,8 +222,8 @@ class ChangeEmail extends Component {
                 .then((responseData) => {
                     if (responseData.status == 200) {
                         let fields = this.state.fields;
-                        fields['newEmail'] = '';
-                        fields['otp'] = '';
+                        fields['newEmail'] = null;
+                        fields['otp'] = null;
                         this.setState({
                             loader: false, isShowOTP: false, errMsg: true, errType: 'Success', errMessage: responseData.message
                         })
@@ -236,7 +240,7 @@ class ChangeEmail extends Component {
                 })
         } else {
             this.setState({ loader: false });
-            this.validator.showMessages();
+            this.otpValidator.showMessages();
             this.forceUpdate();
         }
     }
@@ -297,23 +301,23 @@ class ChangeEmail extends Component {
                         </ButtonDiv>
                         {isShowOTP &&
                             <Modal
+                                closable={false}
                                 title="Verify Email Address"
                                 visible={isShowOTP}
                                 footer={null}
-                                onCancel={this._closeVerifyModal}
                             >
-                                <p> We sent one-time use verification code to {fields['oldEmail']}.
+                                <p> We sent one-time use verification code to {fields['newEmail']}.
                                     Please enter that code in the box below to complete the verification.</p>
                                 <NewP>
                                     <InputLabel>OTP*</InputLabel>
                                     <div>
                                         <OTPInput value={fields.otp}
-                                            size="medium" placeholder="OTP" onChange={this._onChangeField.bind(this, "otp")} />
-                                        {this.validator.message('otp', this.state.fields['otp'], 'required|numeric')}
+                                            size="medium" placeholder="OTP" onChange={this._onChangeField.bind(this, "otp")} name="OTP" />
+                                        {this.otpValidator.message('OTP', this.state.fields['otp'], 'required|numeric')}
                                     </div>
                                 </NewP>
                                 <ButtonDiv>
-                                    <NewButton onClick={this._verifyEmail}>Verify</NewButton>
+                                    <NewButton onClick={this._verifyEmail.bind(this)}>Verify</NewButton>
                                 </ButtonDiv>
                             </Modal>
                         }
