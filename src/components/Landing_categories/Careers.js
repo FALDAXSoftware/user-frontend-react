@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Link, withRouter } from 'react-router-dom';
-import { Spin, Button } from 'antd';
+import { Button } from 'antd';
 import styled from 'styled-components';
 import Navigation from '../Navigations/Navigation';
-import { Spin_Ex } from '../../styled-components/homepage/style'
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import {
-    Contact_wrap, Grey_wrap, Headcontact, Head_span, Job_wrap, Body_details_job, Job_head, Location_p
+    Contact_wrap, Grey_wrap, Job_wrap, Body_details_job, Job_head, Location_p
 } from '../../styled-components/landingCategories/contactStyle';
 import { globalVariables } from "../../Globals"
 import FaldaxLoader from '../../shared-components/FaldaxLoader'

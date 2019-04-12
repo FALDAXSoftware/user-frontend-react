@@ -9,23 +9,24 @@ import { ProfileWrapper, ProfileDiv } from '../EditProfile'
 import { globalVariables } from '../../../Globals';
 import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 import { Row, Col } from 'antd';
+import { Container } from '../../../styled-components/homepage/style';
 
 let { API_URL } = globalVariables;
 
-const Ticket_Div = styled(ProfileDiv)`
+const TicketDiv = styled(ProfileDiv)`
     background-color:transparent;
 `
-const Whole_wrap = styled.div`
+const WholeWrap = styled.div`
     padding-top: 50px;
 `
-const Ticket_wrap = styled(Row)`
+const TicketWrap = styled(Row)`
 border-radius: 10px;
 background-color: ${props => props.theme.mode == "dark" ? "#041422" : "rgb( 255, 255, 255 )"};
 box-shadow: 0px 2px 7px 0px rgba(51, 51, 51, 0.16);
 padding:40px;
 margin-bottom:20px;
 `
-const Ticket_Title = styled.div`
+const Title = styled.div`
     color:${props => props.theme.mode == "dark" ? "white" : "black"};
     font-family:"Open Sans";
     font-size: 20px;
@@ -58,10 +59,13 @@ line-height: 2.3;
 color:${props => props.theme.mode == "dark" ? "#ccbebe69" : "#00000070"};
 `
 const NDF = styled.div`
+    height:300px;
     display:flex;
     justify-content:center;
-    color:${props => props.theme.mode == "dark" ? "white" : "black"};
+    align-items:center;
     font-weight:600;
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    font-family:"Open Sans";
 `
 const TicketTitle = styled.span`
   font-size: 40px;
@@ -101,6 +105,13 @@ const TicketTitle = styled.span`
   }
 `;
 
+const TicketContainer = styled(Container)`
+    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
+    border-radius:5px;
+    padding-right:30px;
+    padding-left:30px;
+`
+
 class HubSpotTickets extends Component {
     constructor(props) {
         super(props);
@@ -121,7 +132,6 @@ class HubSpotTickets extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-
                 this.setState({ loader: false, ticketData: responseData.tickets })
             })
             .catch(error => {
@@ -154,31 +164,33 @@ class HubSpotTickets extends Component {
                 {/* <LoggedNavigation /> */}
                 <Navigation />
                 <ProfileWrapper>
-                    <Ticket_Div>
-                        <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
-                            <TicketTitle>All Tickets </TicketTitle>
-                        </div>
-                        <Whole_wrap>
-                            {ticketData.length > 0 ? ticketData && ticketData.map((temp, index) => (
-                                <Ticket_wrap>
-                                    <Col md={4} lg={3}>
-                                        <Date style={{ display: "block" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format(this.props.profileDetails.date_format)} </Date>
-                                        <Date><span style={{ whiteSpace: "nowrap" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format("hh:mm A")}</span> </Date>
-                                        {temp.properties.hs_pipeline_stage &&
-                                            <Status color={statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].color}>{statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].title}</Status>
-                                        }
-                                    </Col>
-                                    <Col md={20} lg={21}>
-                                        <Ticket_Title>{temp.properties.subject && temp.properties.subject.value}</Ticket_Title>
-                                        <Desc>{temp.properties.content && temp.properties.content.value}</Desc>
-                                    </Col>
-                                </Ticket_wrap>
-                            ))
-                                : <NDF>No Data Found</NDF>
-                            }
+                    <TicketContainer>
+                        <TicketDiv>
+                            <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+                                <TicketTitle>All Tickets </TicketTitle>
+                            </div>
+                            <WholeWrap>
+                                {ticketData && ticketData.length > 0 ? ticketData && ticketData.map((temp, index) => (
+                                    <TicketWrap>
+                                        <Col md={4} lg={3}>
+                                            <Date style={{ display: "block" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format(this.props.profileDetails.date_format)} </Date>
+                                            <Date><span style={{ whiteSpace: "nowrap" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format("hh:mm A")}</span> </Date>
+                                            {temp.properties.hs_pipeline_stage &&
+                                                <Status color={statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].color}>{statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].title}</Status>
+                                            }
+                                        </Col>
+                                        <Col md={20} lg={21}>
+                                            <Title>{temp.properties.subject && temp.properties.subject.value}</Title>
+                                            <Desc>{temp.properties.content && temp.properties.content.value}</Desc>
+                                        </Col>
+                                    </TicketWrap>
+                                ))
+                                    : <NDF>NO DATA FOUND</NDF>
+                                }
 
-                        </Whole_wrap>
-                    </Ticket_Div>
+                            </WholeWrap>
+                        </TicketDiv>
+                    </TicketContainer>
                 </ProfileWrapper >
                 <Footer_home />
                 {(loader == true) ? <FaldaxLoader /> : ""}
