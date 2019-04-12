@@ -575,7 +575,7 @@ class SignupForm extends Component {
 
                   <Ph_Label>Email Address*</Ph_Label>
                   <div>
-                    <Email {...getFieldProps('email', {
+                    <Email type="email" {...getFieldProps('email', {
                       onChange(e) { me.onChangeField(e.target.value, "email") }, // have to write original onChange here if you need
                       initialValue: me.props.init,
                       rules: [{ type: "email", required: true }],
