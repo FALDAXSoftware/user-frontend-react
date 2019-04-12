@@ -176,12 +176,15 @@ class ChangeEmail extends Component {
                 .then(response => response.json())
                 .then((responseData) => {
                     if (responseData.status == 200) {
-                        this.setState({ loader: false, isShowOTP: true })
+                        let fields = this.state.fields;
+                        fields['newEmail'] = '';
+                        this.setState({ loader: false, isShowOTP: true, fields })
                     } else {
                         this.setState({
                             loader: false, errMsg: true, errType: 'Error', errMessage: responseData.err
                         })
                     }
+                    this.validator = new SimpleReactValidator();
                 })
                 .catch(error => {
                     this.setState({ loader: false, errMsg: true, errType: 'Error', errMessage: 'Something went wrong!!' });
@@ -289,12 +292,9 @@ class ChangeEmail extends Component {
                                 {this.validator.message('Email', this.state.fields['newEmail'], 'required|email')}
                             </div>
                         </NewP>
-                        {
-                            !isShowOTP &&
-                            <ButtonDiv>
-                                <NewButton onClick={this._changeEmail}>Update Email</NewButton>
-                            </ButtonDiv>
-                        }
+                        <ButtonDiv>
+                            <NewButton onClick={this._changeEmail.bind(this)}>Update Email</NewButton>
+                        </ButtonDiv>
                         {isShowOTP &&
                             <Modal
                                 title="Verify Email Address"
