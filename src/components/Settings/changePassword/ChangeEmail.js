@@ -126,6 +126,10 @@ const NewButton = styled(Save)`
         border-color: #40a9ff;
     }
 `
+const EmailDN = styled.p`
+    font-weight:600;
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
+`
 
 class ChangeEmail extends Component {
     constructor(props) {
@@ -286,7 +290,7 @@ class ChangeEmail extends Component {
                     <ChangeCol>
                         <NewP>
                             <InputLabel>Email:</InputLabel>
-                            <p>{fields.oldEmail !== null ? fields.oldEmail : this.props.profileDetails.email}</p>
+                            <EmailDN>{fields.oldEmail !== null ? fields.oldEmail : this.props.profileDetails.email}</EmailDN>
 
                             <InputLabel>Enter New Email*</InputLabel>
                             <div>
