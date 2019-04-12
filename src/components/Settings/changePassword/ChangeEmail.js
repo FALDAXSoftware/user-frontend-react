@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
-import { Row, Col, Input, notification } from 'antd';
+import { Row, Col, Input, notification, Modal } from 'antd';
 import styled from 'styled-components';
 import { createForm, formShape } from 'rc-form';
 import { HeaderCol, Save } from "../Personaldetails/PersonalDetails"
@@ -13,8 +13,6 @@ import { getProfileDataAction } from "../../../Actions/Settings/settings"
 
 let { API_URL } = globalVariables;
 
-const Wrapper = styled.div`
-`
 const ChangeRow = styled(Row)`
     &:after 
     {
@@ -111,6 +109,9 @@ export const OldInput = styled(Input)`
 `
 const NewInput = styled(OldInput)`
 `
+const OTPInput = styled(NewInput)`
+    width: 60%;
+`
 const ButtonDiv = styled.div`
     margin-top:30px;
     margin-bottom:50px;
@@ -175,9 +176,7 @@ class ChangeEmail extends Component {
                 .then(response => response.json())
                 .then((responseData) => {
                     if (responseData.status == 200) {
-                        this.setState({
-                            loader: false, isShowOTP: true, errMsg: true, errType: 'Success', errMessage: responseData.message
-                        })
+                        this.setState({ loader: false, isShowOTP: true })
                     } else {
                         this.setState({
                             loader: false, errMsg: true, errType: 'Error', errMessage: responseData.err
@@ -257,6 +256,10 @@ class ChangeEmail extends Component {
         this.setState({ errMsg: false });
     };
 
+    _closeVerifyModal = () => {
+        this.setState({ isShowOTP: false });
+    }
+
     render() {
         const { fields, errMsg, loader, isShowOTP, errType } = this.state;
 
@@ -265,7 +268,7 @@ class ChangeEmail extends Component {
         }
 
         return (
-            <Wrapper>
+            <div>
                 <Row>
                     <Col span={6} />
                     <HeaderCol span={12}>
@@ -293,24 +296,31 @@ class ChangeEmail extends Component {
                             </ButtonDiv>
                         }
                         {isShowOTP &&
-                            <div>
+                            <Modal
+                                title="Verify Email Address"
+                                visible={isShowOTP}
+                                footer={null}
+                                onCancel={this._closeVerifyModal}
+                            >
+                                <p> We sent one-time use verification code to {fields['oldEmail']}.
+                                    Please enter that code in the box below to complete the verification.</p>
                                 <NewP>
                                     <InputLabel>OTP*</InputLabel>
                                     <div>
-                                        <NewInput value={fields.otp}
-                                            size="large" placeholder="OTP" onChange={this._onChangeField.bind(this, "otp")} />
+                                        <OTPInput value={fields.otp}
+                                            size="medium" placeholder="OTP" onChange={this._onChangeField.bind(this, "otp")} />
                                         {this.validator.message('otp', this.state.fields['otp'], 'required|numeric')}
                                     </div>
                                 </NewP>
                                 <ButtonDiv>
                                     <NewButton onClick={this._verifyEmail}>Verify</NewButton>
                                 </ButtonDiv>
-                            </div>
+                            </Modal>
                         }
                     </ChangeCol>
                 </ChangeRow>
                 {(loader == true) ? <FaldaxLoader /> : ""}
-            </Wrapper>
+            </div>
         );
     }
 }
