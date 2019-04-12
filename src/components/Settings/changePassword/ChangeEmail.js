@@ -9,7 +9,8 @@ import { HeaderCol, Save } from "../Personaldetails/PersonalDetails"
 import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 import { globalVariables } from '../../../Globals';
 import SimpleReactValidator from 'simple-react-validator';
-import { getProfileDataAction } from "../../../Actions/Settings/settings"
+import { getProfileDataAction } from "../../../Actions/Settings/settings";
+import { LogoutUser } from "../../../Actions/Auth";
 
 let { API_URL } = globalVariables;
 
@@ -225,6 +226,11 @@ class ChangeEmail extends Component {
                 .then(response => response.json())
                 .then((responseData) => {
                     if (responseData.status == 200) {
+                        let formData = {
+                            user_id: this.props.profileDetails.id,
+                            jwt_token: this.props.isLoggedIn
+                        }
+
                         let fields = this.state.fields;
                         fields['newEmail'] = null;
                         fields['otp'] = null;
@@ -232,7 +238,10 @@ class ChangeEmail extends Component {
                             loader: false, isShowOTP: false, errMsg: true, errType: 'Success', errMessage: responseData.message
                         })
                         this.validator = new SimpleReactValidator();
-                        this.props.getProfileDataAction(this.props.isLoggedIn)
+
+                        this.props.LogoutUser(this.props.isLoggedIn, formData)
+                        this.props.history.push('/verify-email');
+                        //this.props.getProfileDataAction(this.props.isLoggedIn)
                     } else {
                         this.setState({
                             loader: false, errMsg: true, errType: 'Error', errMessage: responseData.err
@@ -310,7 +319,7 @@ class ChangeEmail extends Component {
                                 visible={isShowOTP}
                                 footer={null}
                             >
-                                <p> We sent one-time use verification code to {fields['newEmail']}.
+                                <p> We sent one-time use verification code to {fields['oldEmail']}.
                                     Please enter that code in the box below to complete the verification.</p>
                                 <NewP>
                                     <InputLabel>OTP*</InputLabel>
@@ -342,6 +351,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => ({
     getProfileDataAction: (isLoggedIn) => dispatch(getProfileDataAction(isLoggedIn)),
+    LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(ChangeEmail));
