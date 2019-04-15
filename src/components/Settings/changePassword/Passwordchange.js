@@ -638,7 +638,7 @@ class PasswordChange extends Component {
                     </ChangeCol>
                 </ChangeRow>
                 <EmailRow>
-                    <ChangeEmail />
+                    <ChangeEmail props={this.props} />
                 </EmailRow>
                 <TwofactorRow>
                     <TFCol>
