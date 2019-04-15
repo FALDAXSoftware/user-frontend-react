@@ -111,7 +111,7 @@ export const OldInput = styled(Input)`
 const NewInput = styled(OldInput)`
 `
 const OTPInput = styled(NewInput)`
-    width: 60%;
+    width: 74%;
 `
 const ButtonDiv = styled.div`
     margin-top:30px;
@@ -212,9 +212,10 @@ class ChangeEmail extends Component {
             let formData = {
                 new_email_token: fields["otp"],
             };
+            let _this = this;
 
             this.setState({ loader: true });
-            fetch(API_URL + `/users/verify-new-email`, {
+            fetch(API_URL + `/users/confirm-new-email`, {
                 method: "post",
                 headers: {
                     Accept: 'application/json',
@@ -237,11 +238,9 @@ class ChangeEmail extends Component {
                         this.setState({
                             loader: false, isShowOTP: false, errMsg: true, errType: 'Success', errMessage: responseData.message
                         })
-                        this.validator = new SimpleReactValidator();
-
-                        this.props.LogoutUser(this.props.isLoggedIn, formData)
-                        this.props.history.push('/verify-email');
-                        //this.props.getProfileDataAction(this.props.isLoggedIn)
+                        this.props.props.history.push('/verify-email');
+                        _this.validator = new SimpleReactValidator();
+                        _this.props.LogoutUser(this.props.isLoggedIn, formData)
                     } else {
                         this.setState({
                             loader: false, errMsg: true, errType: 'Error', errMessage: responseData.err
@@ -249,6 +248,7 @@ class ChangeEmail extends Component {
                     }
                 })
                 .catch(error => {
+                    console.log('>>>>>>>>>', error);
                     this.setState({ loader: false, errMsg: true, errType: 'Error', errMessage: 'Something went wrong!!' });
                 })
         } else {
@@ -319,7 +319,7 @@ class ChangeEmail extends Component {
                                 visible={isShowOTP}
                                 footer={null}
                             >
-                                <p> We sent one-time use verification code to {fields['oldEmail']}.
+                                <p> We sent one-time use verification code to <b>{fields['oldEmail']}</b>,
                                     Please enter that code in the box below to complete the verification.</p>
                                 <NewP>
                                     <InputLabel>OTP*</InputLabel>

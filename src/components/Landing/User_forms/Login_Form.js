@@ -1,11 +1,10 @@
 /* In-built Packages*/
 import React, { Component } from 'react'
 import { createForm, formShape } from 'rc-form';
-import styled, { consolidateStreamedStyles } from 'styled-components';
-import { Row, Col, Button, notification, Icon, Spin } from "antd";
+import styled from 'styled-components';
+import { Row, Col, Button, notification, Icon } from "antd";
 import { connect } from 'react-redux';
 import { Eye, ActiveEye } from '../../../Constants/images';
-import { Spin_Ex } from '../../../styled-components/homepage/style'
 /* Components */
 import FaldaxLoader from "../../../shared-components/FaldaxLoader"
 import { loginAction, Login, clearLogin } from '../../../Actions/Auth';
@@ -21,7 +20,6 @@ background-color:#f0f3f2;
 `
 const RowWrap = styled(Row)`
   min-height:100%;
-  
   @media(max-width:991px)
   {
     min-height:100%;
@@ -31,7 +29,6 @@ const ColLeft = styled(Col)`
 min-height:100vh;
 @media(max-width:991px)
   {
-
     min-height:auto;
     height:auto;
   }
@@ -102,7 +99,6 @@ height: 100vh;
   height:auto;
 }
 `
-
 const Login_head = styled.div`
   font-size: 30px;
   font-family: "Open Sans";
@@ -113,8 +109,6 @@ const Login_head = styled.div`
   padding-bottom: 10px;
   border-bottom: 3px solid #ced9e0;
   display: inline-block;
-  
-  
 `
 export const Welcome_text = styled.div`
   font-size: 24px;
@@ -270,7 +264,7 @@ const FAI = styled.img`
 const Active_FAI = styled(FAI)`
 `
 
-class Login_Form extends React.Component {
+class Login_Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -296,7 +290,6 @@ class Login_Form extends React.Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      console.log(error, value, this.state)
       if (error == null && this.state.emailIcon == true && this.state.passIcon == true && (this.state.isOtpRequired == true ? this.state.otpIcon == true : true)) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
@@ -331,7 +324,6 @@ class Login_Form extends React.Component {
         else {
           this.onChangeField(value.otp, "otp")
         }
-
       }
     });
   }
@@ -439,6 +431,7 @@ class Login_Form extends React.Component {
       }
     }
   }
+
   handleEye(e) {
     if (document.getElementById("logPass").type !== undefined) {
       if (document.getElementById("logPass").type == "password") {
@@ -450,10 +443,11 @@ class Login_Form extends React.Component {
   }
 
   componentDidMount() {
-    console.log("DID MOUNT LOGIN")
-    var query = this.props.location.search
     if (this.getUrlParameter("token")) {
       this.tokenVerify();
+    }
+    if (this.getUrlParameter("emailCode")) {
+      this.newEmailVerify();
     }
     if (this.getUrlParameter("IpVerifyToken")) {
       this.IpVerify();
@@ -467,7 +461,6 @@ class Login_Form extends React.Component {
           this.openNotificationWithIcon('success', 'Login Successful', props.errorStatus.message);
           this.setState({ loader: false, verify: true })
         }
-        /* this.props.dispModal("login"); */
       } else if (props.errorStatus.status == 201) {
         this.setState({ loader: false })
         this.setState({ isOtpRequired: true });
@@ -485,7 +478,7 @@ class Login_Form extends React.Component {
     var queryObj = {};
     queryObj["token"] = this.getUrlParameter("IpVerifyToken");
     this.setState({ loader: true })
-    console.log(queryObj)
+
     fetch(API_URL + "/users/verify-new-ip", {
       method: "post",
       headers: {
@@ -496,8 +489,8 @@ class Login_Form extends React.Component {
       .then(response => response.json())
       .then((responseData) => {
         this.setState({ loader: false })
-        console.log(responseData)
         if (responseData.status == 200) {
+          responseData.message = '';
           this.props.loginAction(responseData);
           this.setState({ verify: true });
           this.openNotificationWithIcon('success', 'Verified', responseData.message);
@@ -522,6 +515,31 @@ class Login_Form extends React.Component {
       .then((responseData) => {
         this.setState({ loader: false })
         if (responseData.status == 200) {
+          this.openNotificationWithIcon('success', 'Verified', responseData.message);
+        } else
+          this.openNotificationWithIcon('error', 'Not Verified', responseData.err)
+      })
+      .catch(error => { /* console.log(error) */ })
+  }
+
+  newEmailVerify() {
+    var queryObj = {};
+    queryObj["new_email_verify_token"] = this.getUrlParameter("emailCode");
+    this.setState({ loader: true })
+    fetch(API_URL + "/users/verify-new-email", {
+      method: "post",
+      headers: {
+        Authorization: "Bearer " + this.propsisLoggedIn
+      },
+      body: JSON.stringify(queryObj)
+    })
+      .then(response => response.json())
+      .then((responseData) => {
+        this.setState({ loader: false })
+        if (responseData.status == 200) {
+          this.setState({ verify: true }, () => {
+            this.props.loginAction(responseData);
+          });
           this.openNotificationWithIcon('success', 'Verified', responseData.message);
         } else
           this.openNotificationWithIcon('error', 'Not Verified', responseData.err)
@@ -634,7 +652,6 @@ class Login_Form extends React.Component {
               </RightWrap>
             </Form_wrap>
           </ColRight>
-
         </RowWrap>
       </LoginWrap>
     );
