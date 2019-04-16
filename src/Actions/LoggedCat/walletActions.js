@@ -52,7 +52,6 @@ export function getAllCoins(isLoggedIn) {
             .then((responseData) => {
                 /*  this.setState({myCoins:responseData}); */
                 dispatch(allCoinsData(responseData));
-                dispatch(removeLoader())
             })
             .catch(error => {
             })

@@ -97,7 +97,10 @@ export const HisTable = styled(Table)`
 
     @media(max-width:991px)
     {
-        width:991px;
+        >thead
+        {
+            min-width: 1400px;
+        }
     }
 `
 export const HeadHis = styled.div`

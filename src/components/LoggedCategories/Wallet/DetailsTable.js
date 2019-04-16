@@ -30,7 +30,10 @@ const TableContentRide = styled(TableContent)`
 }
 `
 export const OTwrap = styled.div`
-    
+    @media(max-width:991px)
+    {
+       min-width:1100px;
+    }
 `
 export const Order_wrap = styled.div`
     margin-left:30px;
@@ -53,6 +56,10 @@ const Order_wrapRide = styled(Order_wrap)`
     margin-left:0px;
     margin-right:0px;
     border:none;
+    @media(max-width:991px)
+    {
+        min-width:1200px;
+    }
 `
 const menu = (
     <Menu>
@@ -68,7 +75,9 @@ class DetailsTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            walletDetails: {}
+            walletDetails: {
+
+            }
         };
 
     }

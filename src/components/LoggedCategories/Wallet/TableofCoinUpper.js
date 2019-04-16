@@ -83,13 +83,58 @@ class TableofCoin extends React.Component {
             curr3: "\u20B9"
         }
     }
+    componentWillReceiveProps(props, newProps) {
+        console.log(this.props.currencySeq)
+        var sign1, sign2, sign3;
+        if (this.props.currencySeq[0] == "USD") {
+            sign1 = "$"
+        }
+        else if (this.props.currencySeq[0] == "INR") {
+            sign1 = "\u20B9"
+        }
+        else if (this.props.currencySeq[0] == "EUR") {
+            sign1 = "\u20AC"
+        }
+        if (this.props.currencySeq[1] == "USD") {
+            sign2 = "$"
+        }
+        else if (this.props.currencySeq[1] == "INR") {
+            sign2 = "\u20B9"
+        }
+        else if (this.props.currencySeq[1] == "EUR") {
+            sign2 = "\u20AC"
+        }
+        if (this.props.currencySeq[2] == "USD") {
+            sign3 = "$"
+        }
+        else if (this.props.currencySeq[2] == "INR") {
+            sign3 = "\u20B9"
+        }
+        else if (this.props.currencySeq[2] == "EUR") {
+            sign3 = "\u20AC"
+        }
+        this.setState({
+            drop1: this.props.currencySeq[0],
+            drop2: this.props.currencySeq[1],
+            drop3: this.props.currencySeq[2],
+            curr1: sign1,
+            curr2: sign2,
+            curr3: sign3
+        });
+    }
     totalUSD(total) {
         this.props.totalUSD(total)
     }
 
     render() {
         let { tableData } = this.props;
-        var me = this;
+        var me = this; var bool;
+        if (this.props.noBalance == true) {
+            bool = 1;
+        }
+        else {
+            bool = 0;
+        }
         const onClick1 = ({ key }) => {
             var curr, sign;
             if (key == 1) { curr = "INR"; sign = "\u20B9"; }
@@ -137,6 +182,7 @@ class TableofCoin extends React.Component {
                 <OTwrap>
                     <TableCoin cellpadding="10px" cellspacing="0" border="0">
                         <thead>
+                            {console.log(this.props)}
                             <Head>
                                 <Sub_head>Coins</Sub_head>
                                 <Sub_head>{this.state.drop1}
@@ -168,27 +214,27 @@ class TableofCoin extends React.Component {
                                 return (
                                     <Col1>
                                         <td style={{ textAlign: "left" }}>
-                                            <Link to={`/walletDetails?coinID=${tableIndex.coin}`}>
+                                            <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
                                                 <Bit_img src={img} />
                                                 <Bit_text><Bit>{tableIndex.coin_name}</Bit><Bit_price>{parseFloat(tableIndex.balance).toFixed(4)} {tableIndex.coin_code}</Bit_price></Bit_text>
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link to={`/walletDetails?coinID=${tableIndex.coin}`}>
+                                            <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
                                                 {tableIndex[`${me.state.drop1}`] !== undefined ? <Price>{me.state.curr1} {parseFloat(parseFloat(tableIndex[`${me.state.drop1}`]) * parseFloat(tableIndex.balance)).toFixed(4)}</Price> : <Price>-</Price>}
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link to={`/walletDetails?coinID=${tableIndex.coin}`}>
+                                            <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
                                                 {tableIndex[`${me.state.drop2}`] !== undefined ? <Price>{me.state.curr2} {parseFloat(parseFloat(tableIndex[`${me.state.drop2}`]) * parseFloat(tableIndex.balance)).toFixed(4)} </Price> : <Price>-</Price>}
                                             </Link>
                                         </td>
-                                        <td><Link to={`/walletDetails?coinID=${tableIndex.coin}`}>
+                                        <td><Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
                                             {tableIndex[`${me.state.drop3}`] !== undefined ? <Price><span>{me.state.curr3}</span> {parseFloat(parseFloat(tableIndex[`${me.state.drop3}`]) * parseFloat(tableIndex.balance)).toFixed(4)} </Price> : <Price>-</Price>}
                                         </Link>
                                         </td>
                                         <td>
-                                            <Link to={`/walletDetails?coinID=${tableIndex.coin}`}>
+                                            <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
                                                 <Icon_wrap>
                                                     <Icon type="right" />
                                                 </Icon_wrap>

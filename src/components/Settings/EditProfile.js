@@ -40,6 +40,18 @@ const TabsStyle = styled(Tabs)`
     {
         background-color:rgb(0, 170, 250);   
     }
+    & .ant-tabs-tab-prev-icon>i
+    {
+        color : ${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+    & .ant-tabs-tab-prev-icon>i
+    {
+        color : ${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+    & .ant-tabs-tab-next-icon>i
+    {
+        color : ${props => props.theme.mode == "dark" ? "white" : ""};
+    }
 `
 var ActKey = "1";
 class Editprofile extends Component {

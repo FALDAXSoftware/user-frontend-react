@@ -74,6 +74,7 @@ const PContainer = styled.p`
 const FaIcon = styled(FontAwesomeIcon)`
 font-size: 50px;
 margin-bottom: 20px;
+color:${props => props.theme.mode == "dark" ? "white" : ""}
 `
 class SupportHub extends Component {
     constructor(props) {
