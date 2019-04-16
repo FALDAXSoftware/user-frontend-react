@@ -244,10 +244,10 @@ class Referral extends Component {
                                 </div>
                             </CopyToClipboard>
                         </Ref_leftcol>
-                        <Ref_rightcol sm={24} md={6}>
+                        {/* <Ref_rightcol sm={24} md={6}>
                             <Right_text>Total Earned</Right_text>
                             <Right_value>3.0850 BTC</Right_value>
-                        </Ref_rightcol>
+                        </Ref_rightcol> */}
                     </Row>
                 </Ref_div>
                 <Ref_acc>

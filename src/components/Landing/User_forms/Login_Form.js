@@ -540,7 +540,7 @@ class Login_Form extends Component {
           this.setState({ verify: true }, () => {
             this.props.loginAction(responseData);
           });
-          this.openNotificationWithIcon('success', 'Verified', responseData.message);
+          //this.openNotificationWithIcon('success', 'Verified', responseData.message);
         } else
           this.openNotificationWithIcon('error', 'Not Verified', responseData.err)
       })
