@@ -9,7 +9,8 @@ import { HeaderCol, Save } from "../Personaldetails/PersonalDetails"
 import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 import { globalVariables } from '../../../Globals';
 import SimpleReactValidator from 'simple-react-validator';
-import { getProfileDataAction } from "../../../Actions/Settings/settings"
+import { getProfileDataAction } from "../../../Actions/Settings/settings";
+import { LogoutUser } from "../../../Actions/Auth";
 
 let { API_URL } = globalVariables;
 
@@ -110,7 +111,7 @@ export const OldInput = styled(Input)`
 const NewInput = styled(OldInput)`
 `
 const OTPInput = styled(NewInput)`
-    width: 60%;
+    width: 74%;
 `
 const ButtonDiv = styled.div`
     margin-top:30px;
@@ -135,12 +136,14 @@ class ChangeEmail extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            fields: {},
+            fields: {
+            },
             loader: false,
             isShowOTP: false,
             errType: '',
         }
         this.validator = new SimpleReactValidator();
+        this.otpValidator = new SimpleReactValidator();
     }
 
     static propTypes = {
@@ -180,15 +183,12 @@ class ChangeEmail extends Component {
                 .then(response => response.json())
                 .then((responseData) => {
                     if (responseData.status == 200) {
-                        let fields = this.state.fields;
-                        fields['newEmail'] = '';
-                        this.setState({ loader: false, isShowOTP: true, fields })
+                        this.setState({ loader: false, isShowOTP: true })
                     } else {
                         this.setState({
                             loader: false, errMsg: true, errType: 'Error', errMessage: responseData.err
                         })
                     }
-                    this.validator = new SimpleReactValidator();
                 })
                 .catch(error => {
                     this.setState({ loader: false, errMsg: true, errType: 'Error', errMessage: 'Something went wrong!!' });
@@ -203,13 +203,14 @@ class ChangeEmail extends Component {
     _verifyEmail = () => {
         const { fields } = this.state;
 
-        if (this.validator.allValid()) {
+        if (this.otpValidator.allValid()) {
             let formData = {
                 new_email_token: fields["otp"],
             };
+            let _this = this;
 
             this.setState({ loader: true });
-            fetch(API_URL + `/users/verify-new-email`, {
+            fetch(API_URL + `/users/confirm-new-email`, {
                 method: "post",
                 headers: {
                     Accept: 'application/json',
@@ -221,14 +222,20 @@ class ChangeEmail extends Component {
                 .then(response => response.json())
                 .then((responseData) => {
                     if (responseData.status == 200) {
+                        let formData = {
+                            user_id: this.props.profileDetails.id,
+                            jwt_token: this.props.isLoggedIn
+                        }
+
                         let fields = this.state.fields;
-                        fields['newEmail'] = '';
-                        fields['otp'] = '';
+                        fields['newEmail'] = null;
+                        fields['otp'] = null;
                         this.setState({
                             loader: false, isShowOTP: false, errMsg: true, errType: 'Success', errMessage: responseData.message
                         })
-                        this.validator = new SimpleReactValidator();
-                        this.props.getProfileDataAction(this.props.isLoggedIn)
+                        this.props.props.history.push('/verify-email');
+                        _this.validator = new SimpleReactValidator();
+                        _this.props.LogoutUser(this.props.isLoggedIn, formData)
                     } else {
                         this.setState({
                             loader: false, errMsg: true, errType: 'Error', errMessage: responseData.err
@@ -240,7 +247,7 @@ class ChangeEmail extends Component {
                 })
         } else {
             this.setState({ loader: false });
-            this.validator.showMessages();
+            this.otpValidator.showMessages();
             this.forceUpdate();
         }
     }
@@ -301,23 +308,23 @@ class ChangeEmail extends Component {
                         </ButtonDiv>
                         {isShowOTP &&
                             <Modal
+                                closable={false}
                                 title="Verify Email Address"
                                 visible={isShowOTP}
                                 footer={null}
-                                onCancel={this._closeVerifyModal}
                             >
-                                <p> We sent one-time use verification code to {fields['oldEmail']}.
-                                    Please enter that code in the box below to complete the verification.</p>
+                                <p> We sent a one-time use verification code to <a href={`mailto:${fields['oldEmail']}`}></a>.
+                                     Please enter the code in the box below to complete the verification.</p>
                                 <NewP>
-                                    <InputLabel>OTP*</InputLabel>
+                                    <InputLabel>Verification Code</InputLabel>
                                     <div>
                                         <OTPInput value={fields.otp}
-                                            size="medium" placeholder="OTP" onChange={this._onChangeField.bind(this, "otp")} />
-                                        {this.validator.message('otp', this.state.fields['otp'], 'required|numeric')}
+                                            size="medium" onChange={this._onChangeField.bind(this, "otp")} name="Verification Code" />
+                                        {this.otpValidator.message('verification code', this.state.fields['otp'], 'required|numeric')}
                                     </div>
                                 </NewP>
                                 <ButtonDiv>
-                                    <NewButton onClick={this._verifyEmail}>Verify</NewButton>
+                                    <NewButton onClick={this._verifyEmail.bind(this)}>Verify</NewButton>
                                 </ButtonDiv>
                             </Modal>
                         }
@@ -338,6 +345,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => ({
     getProfileDataAction: (isLoggedIn) => dispatch(getProfileDataAction(isLoggedIn)),
+    LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(ChangeEmail));

@@ -36,6 +36,7 @@ const Chart = lazy(() => import("../src/components/TradingViewChart"))
 const SignupSuccess = lazy(() => import('./components/Landing/User_forms/Signup_success'))
 const HomePage = lazy(() => import('./components/Landing/HomePage'));
 const Login = lazy(() => import('./components/Landing/User_forms/Login_Form'));
+const EmailVerification = lazy(() => import('./components/Landing/User_forms/EmailVerification'));
 // import dotenv from 'dotenv';
 
 // dotenv.config();
@@ -160,6 +161,7 @@ class App extends Component {
                   <Route path="/policy" exact title='policy' component={Policy} />
                   <Route path="/news" exact title='News' component={News} />
                   <Route path="/thank-you" exact title='Thank You' component={ThankYou} />
+                  <Route path="/verify-email" exact title='Email Verification' component={EmailVerification} />
                   <Route path="/signup-success" exact title='Thank You' component={SignupSuccess} />
 
                   <Route path="/Chart" exact title='Trading View' component={Chart} />

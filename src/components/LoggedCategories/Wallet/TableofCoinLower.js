@@ -167,7 +167,7 @@ class TableofCoin extends React.Component {
                                 let tableIndex = tableData[index]
                                 return (
                                     <Col1>
-                                        <td style={{ textAlign: "left" }}>
+                                        {/* <td style={{ textAlign: "left" }}>
                                             <Link to={`/walletDetails?coinID=${tableData[index].coin}`}>
                                                 <Bit_img src={img} />
                                                 <Bit_text><Bit>{tableData[index].coin_name}</Bit><Bit_price>{parseFloat(tableData[index].balance).toFixed(4)} {tableData[index].coin_code}</Bit_price></Bit_text>
@@ -193,7 +193,7 @@ class TableofCoin extends React.Component {
                                                     <Icon type="right" />
                                                 </Icon_wrap>
                                             </Link>
-                                        </td>
+                                        </td> */}
                                     </Col1>
                                 );
                             })
