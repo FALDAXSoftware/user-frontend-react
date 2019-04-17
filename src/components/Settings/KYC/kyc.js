@@ -10,9 +10,6 @@ import KYCForm from "./KYCForm"
 import IDselect from "./IDselect"
 import SSN from "./SSN"
 import DocUpload from './DocUpload';
-import { globalVariables } from "../../../Globals"
-
-let { API_URL } = globalVariables;
 
 const Step = Steps.Step;
 
@@ -100,20 +97,14 @@ class KYC extends Component {
         if (countryChange !== null) {
             this.setState({ countryChange })
         }
-        console.log(a, "-------step", this.state);
-
     }
+
     back_step(a) {
-        console.log("BACK")
-
-
-        this.setState({ next: a })
-        this.setState({ nexts: a })
+        this.setState({ next: a, nexts: a })
     }
 
     render() {
-        const { next } = this.state;
-        const { is_kyc_done } = this.state;
+        const { next, is_kyc_done } = this.state;
         return (
             <KYC_wrap>
                 {(this.props.is_kyc_done !== true && next !== 5) ?
@@ -151,7 +142,7 @@ const mapStateToProps = (state) => {
         isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? state.simpleReducer.isLoggedIn : "",
     }
 }
-const mapDispatchToProps = dispatch => ({
-})
+
+const mapDispatchToProps = dispatch => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(KYC));

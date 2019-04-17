@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
-import { Col, notification, Spin } from 'antd';
+import { Col, notification } from 'antd';
 import styled from 'styled-components';
 import SimpleReactValidator from 'simple-react-validator';
 import moment from 'moment';
 import {
-    Spin_Ex, Save, Fifth_Row, Postal, City, Fourth_Row, Street_input, Street_Address,
+    Save, Fifth_Row, Postal, City, Fourth_Row, Street_input, Street_Address,
     Third_Row, Date_birth, Country_input, Country, Second_Row, Last_input, Last_name,
     First_Msg, First_input, First_name, First_Row, Right_Col
 } from '../Personaldetails/PersonalDetails'
@@ -41,8 +41,6 @@ const Postal_kyc = styled(Postal)`
         margin-top:0px;
     }
 `
-const City_kyc = styled(City)`
-`
 const Fourth_Row_kyc = styled(Fourth_Row)`
 `
 const Street_input_kyc = styled(Street_input)`
@@ -64,8 +62,6 @@ const Date_birth_kyc = styled(Date_birth)`
             margin-top:25px;
         }
 `
-const Country_input_kyc = styled(Country_input)``
-const Country_kyc = styled(Country)``
 const Second_Row_kyc = styled(Second_Row)``
 const Last_input_kyc = styled(Last_input)`
 `
@@ -81,8 +77,6 @@ const Zip = styled(Last_input)`
     }
 `
 const Last_name_kyc = styled(Last_name)``
-const First_Msg_kyc = styled(First_Msg)`
-`
 const PhoneDiv = styled.div`
 >.intl-tel-input 
 {
@@ -112,18 +106,12 @@ const PhoneDiv = styled.div`
     color:${props => props.theme.mode == "dark" ? "white" : ""};
 }
 `
-const Last_Msg_kyc = styled(First_Msg)``
-const Country_Msg_kyc = styled(First_Msg)``
-const Dob_Msg_kyc = styled(First_Msg)``
-const Street_Msg_kyc = styled(First_Msg)``
-const City_Msg_kyc = styled(First_Msg)``
-const Postal_Msg_kyc = styled(First_Msg)``
 const First_input_kyc = styled(First_input)``
 const First_name_kyc = styled(First_name)``
 const First_Row_kyc = styled(First_Row)``
-const Right_Col_kyc = styled(Right_Col)`
-`
+const Right_Col_kyc = styled(Right_Col)``
 const Sixth_Row_kyc = styled(Fourth_Row)``
+
 class KYCForm extends Component {
     constructor(props) {
         super(props);
@@ -200,9 +188,9 @@ class KYCForm extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onCountryName = this.onCountryName.bind(this);
     }
+
     componentDidMount() {
         var self = this;
-        console.log(" Did Props", this.props)
         fetch(API_URL + "/users/get-kyc-detail", {
             method: "get",
             headers: {
@@ -213,7 +201,6 @@ class KYCForm extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                console.log(responseData, "KYC DATA");
                 if (responseData.status == 200) {
                     let fields = {};
                     fields['first_name'] = responseData.data.first_name !== null ? responseData.data.first_name : "";
@@ -231,7 +218,6 @@ class KYCForm extends Component {
                         let phone = responseData.data.phone_number.split("-")[1];
                         let arr = [];
                         arr.push(responseData.data.country_code)
-                        console.log("Mobile", phone)
                         this.setState({
                             displayCountry: true,
                             countrychange: true,
@@ -239,47 +225,38 @@ class KYCForm extends Component {
                             phoneCountry: arr
                         });
                     }
-                    console.log(responseData.data)
-                    this.setState({
-                        fields: fields,
-                        kycData: responseData.data
-                    });
+                    this.setState({ fields: fields, kycData: responseData.data });
                 }
             })
             .catch(error => { })
+    }
 
-    }
-    componentWillReceiveProps(props, newProps) {
-        console.log("WIll", this.props);
-        console.log(props, newProps);
-    }
     onDateChange(value) {
         var tempDate = value.day + "/" + value.month + "/" + value.year;
-        console.log(value)
         if ((value.day !== "" && value.day !== undefined) && (value.year !== undefined && value.year !== "") && (value.month !== undefined && value.month !== "")) {
             var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
             let fields = this.state.fields;
             fields['dob'] = date;
             this.setState({ fields });
-        }
-        else {
+        } else {
             let fields = this.state.fields;
             fields['dob'] = "";
             this.setState({ fields });
         }
     }
+
     onCountryName(name) {
         var name2 = name.toLowerCase();
         var arr = [];
         arr.push(name2);
         let fields = this.state.fields;
-        console.log("COuntry >>>>", arr)
-        fields['country_code'] = name2;
+        fields['country_code'] = name2.toUpperCase();
         if (name2 == 'us' || name2 == 'ca')
             this.setState({ fields, phoneCountry: arr, countrychange: true, showSSN: true });
         else
             this.setState({ fields, phoneCountry: arr, countrychange: true });
     }
+
     onCountryChange(country, state, city, stateID, countryID) {
         let self = this;
         let fields = this.state.fields;
@@ -299,12 +276,14 @@ class KYCForm extends Component {
             });
         });
     }
+
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
             message: head,
             description: desc,
         });
     };
+
     componentWillReceiveProps(props, newProps) {
         if (props.kycData !== undefined && props.kycData !== "") {
             if (props.kycData.status == 200) {
@@ -328,20 +307,19 @@ class KYCForm extends Component {
         }
         this.setState({ fields });
     }
+
     _changeNumber(a, mob, code) {
         if (mob.trim !== "") {
             var temp = `+${code.dialCode}-`;
             var mobile = temp.concat(mob);;
             let fields = this.state.fields;
             fields['phone_number'] = mobile;
-            console.log("Mobile", mob)
             this.setState({ fields, mobile: mob });
         }
     }
     onSubmit() {
         if (this.validator.allValid()) {
             var profileData = this.state.fields;
-            console.log(profileData)
             profileData["steps"] = 1;
             this.props.kycFormAction(this.props.isLoggedIn, profileData);
         } else {
@@ -357,23 +335,17 @@ class KYCForm extends Component {
         let countrymsg;
         if (countryBool == true && stateBool == false && cityBool == false) {
             countrymsg = "Country Field is required."
-        }
-        else if (countryBool == true && stateBool == true && cityBool == false) {
+        } else if (countryBool == true && stateBool == true && cityBool == false) {
             countrymsg = "Country and State Fields are required."
-        }
-        else if (countryBool == true && stateBool == true && cityBool == true) {
+        } else if (countryBool == true && stateBool == true && cityBool == true) {
             countrymsg = "Country , State and City Fields are required."
-        }
-        else if (countryBool == false && stateBool == true && cityBool == false) {
+        } else if (countryBool == false && stateBool == true && cityBool == false) {
             countrymsg = "State Field is required."
-        }
-        else if (countryBool == false && stateBool == true && cityBool == true) {
+        } else if (countryBool == false && stateBool == true && cityBool == true) {
             countrymsg = "State and City Fields are required."
-        }
-        else if (countryBool == false && stateBool == false && cityBool == true) {
+        } else if (countryBool == false && stateBool == false && cityBool == true) {
             countrymsg = "City Field is required."
-        }
-        else if (countryBool == true && stateBool == false && cityBool == true) {
+        } else if (countryBool == true && stateBool == false && cityBool == true) {
             countrymsg = "Country and City Fields are required."
         }
         return (
@@ -425,22 +397,16 @@ class KYCForm extends Component {
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             {/* console.log(this.props) */}
                             <CountryPick kycData2={this.state.kycData} {...this.props} onCountryName={(name) => { this.onCountryName(name) }} kyc="kyc" isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={(country, state, city, stateID, countryID) => this.onCountryChange(country, state, city, stateID, countryID)} />
-                            {console.log(countryBool, stateBool, cityBool)}
                             {(countryBool == true || stateBool == true || cityBool == true) ?
                                 <span style={{ color: "red" }}>{countrymsg}</span>
-                                :
-                                <span></span>
+                                : <span></span>
                             }
                         </Col>
                     </Fourth_Row_kyc>
-                    {console.log("Mobile", this.state.mobile, ">>>>>", this.state.phoneCountry)}
                     {(this.state.countrychange == true) ?
                         <Sixth_Row_kyc>
-                            {console.log(this.state.mobile)}
                             <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
                                 <Postal_kyc>Mobile No.*</Postal_kyc>
-
-                                {console.log("Mobile", this.state.mobile, ">>>>>", this.state.phoneCountry)}
                                 <PhoneDiv>
                                     {
                                         this.state.displayCountry &&
@@ -455,8 +421,7 @@ class KYCForm extends Component {
                                 })}
                             </Col>
                         </Sixth_Row_kyc>
-                        :
-                        ""
+                        : ""
                     }
                     <Sixth_Row_kyc>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
