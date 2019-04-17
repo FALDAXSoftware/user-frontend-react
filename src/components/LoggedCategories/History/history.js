@@ -16,6 +16,7 @@ import {
 import { CSVLink, CSVDownload } from "react-csv";
 import { globalVariables } from '../../../Globals';
 import { Button } from 'antd/lib/radio';
+import FaldaxLoader from '../../../shared-components/FaldaxLoader'
 
 let { API_URL } = globalVariables;
 
@@ -160,7 +161,7 @@ class History extends Component {
         }).then(response => response.json())
             .then((responseData) => {
                 /*  this.setState({myCoins:responseData}); */
-                this.setState({ historyData: [] });
+                this.setState({ historyData: responseData.data });
             })
             .catch(error => {
             })
@@ -404,6 +405,7 @@ class History extends Component {
                                                 {/* <th>Repeat</th> */}
                                             </tr>
                                         </thead>
+                                        {console.log(this.state.historyData)}
                                         {this.state.historyData.length > 0 ?
                                             <tbody>
                                                 {this.state.historyData.map(function (temp) {
@@ -430,6 +432,10 @@ class History extends Component {
                         </ContainerContact>
                     </Grey_wrap>
                     <CommonFooter />
+                    {(this.props.loader == true) ?
+                        <FaldaxLoader />
+                        : ""
+                    }
                 </Contact_wrap>
             </div >
         );

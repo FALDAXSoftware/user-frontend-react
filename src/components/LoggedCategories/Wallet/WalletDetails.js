@@ -91,7 +91,8 @@ const NDF = styled.p`
     font-weight: 600;
     font-size: 17px;
     color: ${props => props.theme.mode == "dark" ? "white" : "black"}; 
-    margin-top: 30px;
+    margin-top: 60px;
+    margin-bottom: 60px;
     font-family: "Open Sans";
 `
 class WalletDetails extends Component {
@@ -106,7 +107,9 @@ class WalletDetails extends Component {
             coin_code: "",
             walletUserData: [],
             defaultCoin: '',
-            loader: false
+            loader: false,
+            balanceFlag: false,
+            coinFee: []
         };
         this.changeCoins = this.changeCoins.bind(this);
     }
@@ -123,7 +126,14 @@ class WalletDetails extends Component {
                 this.setState({ total });
             }
         }
-
+        if (this.props.location !== undefined) {
+            if (this.props.location.search.includes('coinID1')) {
+                this.setState({ balanceFlag: true })
+            }
+            else {
+                this.setState({ balanceFlag: false })
+            }
+        }
         if (this.props.location !== undefined) {
             if (this.props.location.search.includes('coinID')) {
                 var coin_name = this.props.location.search.split('=');
@@ -159,7 +169,7 @@ class WalletDetails extends Component {
                             defaultCoin: walletUserDetails[0].coin,
                             walletDetails: transDetails,
                             loader: false, coin_code: coin_name[1],
-
+                            coinFee: responseData.coinFee
                         }, () => {
                         });
                     })
@@ -185,7 +195,7 @@ class WalletDetails extends Component {
     }
     changeCoins(value) {
         this.setState({ defaultCoin: value }, () => {
-            this.props.history.push(`/walletDetails?coinID=${value}`)
+            this.props.history.push(`/walletDetails?coinID${this.state.balanceFlag ? 1 : 0}=${value}`)
         })
     }
     render() {
@@ -204,8 +214,8 @@ class WalletDetails extends Component {
                                         <MY_wallet>
                                             <span>{this.state.walletUserData.length > 0 ? this.state.walletUserData[0].coin_name : "COIN"}</span>
                                         </MY_wallet>
-                                        {console.log(this.props)}
-                                        {this.props.allCoinsFlag == false ?
+                                        {console.log(this.state)}
+                                        {this.state.balanceFlag == false ?
                                             <WalletCoin>
                                                 {console.log(this.props.walletDetails)}
                                                 {this.props.walletDetails !== null && this.props.walletDetails !== undefined ?
@@ -218,12 +228,12 @@ class WalletDetails extends Component {
                                                     </Select> : ""
                                                 }
                                             </WalletCoin> : ""}
-                                        {this.props.allCoinsFlag == true ?
+                                        {this.state.balanceFlag == true ?
                                             <WalletCoin>
-                                                {console.log(this.props.walletDetails)}
-                                                {this.props.allCoins !== null && this.props.allCoins !== undefined ?
+                                                {console.log(this.props)}
+                                                {this.props.nowalletBalance !== null && this.props.nowalletBalance !== undefined ?
                                                     <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
-                                                        {this.props.allCoins.map(function (temp) {
+                                                        {this.props.nowalletBalance.map(function (temp) {
                                                             return (
                                                                 <Option value={temp.coin}>{temp.coin}</Option>
                                                             );
@@ -292,13 +302,13 @@ class WalletDetails extends Component {
                         </Trans_table>
                         {this.state.withdraw == true ?
 
-                            <WalletPopup coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="RECEIVE" comingCancel={(e) => this.comingCancel(e)} visible={this.state.withdraw} />
+                            <WalletPopup coinFee={this.state.coinFee} coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="RECEIVE" comingCancel={(e) => this.comingCancel(e)} visible={this.state.withdraw} />
                             :
                             ""
                         }
                         {this.state.send == true
                             ?
-                            <WalletPopup coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="SEND" comingCancel={(e) => this.comingCancel(e)} visible={this.state.send} />
+                            <WalletPopup coinFee={this.state.coinFee} coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="SEND" comingCancel={(e) => this.comingCancel(e)} visible={this.state.send} />
                             :
                             ""
                         }
@@ -314,6 +324,7 @@ class WalletDetails extends Component {
 function mapStateToProps(state) {
     return ({
         walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData.balanceWallet : null,
+        nowalletBalance: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData.nonBalanceWallet : null,
         allCoins: state.walletReducer.allCoinsData !== undefined ? state.walletReducer.allCoinsData : null,
         isLoggedIn: state.simpleReducer.isLoggedIn,
         loader: state.simpleReducer.loader ? state.simpleReducer.loader : false
