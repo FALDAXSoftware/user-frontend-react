@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
-import { notification, Icon, Spin } from 'antd';
+import { notification, Icon } from 'antd';
 import styled from 'styled-components';
-import { Button_wrap, Sub_wrap, Back_Button, Next_Button } from "./IDselect"
-
+import { ButtonWrap, SubWrap, BackButton, NextButton } from "./IDselect"
 import { kycDoc, kycFormAction } from "../../../Actions/Settings/passwordChange"
-import { Spin_Ex } from '../Personaldetails/PersonalDetails'
 import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 
-const SSN_wrap = styled.div`
+const SSNWrap = styled.div`
     width:100%;
     margin-left:auto;
     margin-right:auto;
@@ -25,7 +23,7 @@ const SSN_wrap = styled.div`
         width:90%;
     }
 `
-const SSN_sub = styled.div`
+const SSNSub = styled.div`
     color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
 const SSN_label = styled.label`
@@ -34,20 +32,6 @@ const SSN_label = styled.label`
     font-family: open sans;
     text-align:center;
     margin-bottom:10px;
-`
-const SSN_input = styled.input`
-    display:block;
-    width:85%;
-    margin-bottom:50px;
-    height:45px;
-    padding:5px;
-    background-color:#f8f8f8;
-    border:none;
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgb( 212, 218, 223 );
-    border-radius: 5px;
-    background-color: rgb( 248, 248, 248 );      
 `
 const File_wrap = styled.div`
     text-align:center;
@@ -112,7 +96,6 @@ font-size: 18px;
 const ButtonUp2 = styled(ButtonUp)`
 `
 const Plus2 = styled(Plus)`
-    
 `
 const Plus_text2 = styled(Plus_text)`
 `
@@ -162,10 +145,9 @@ class DocUpload extends Component {
             try {
                 const reader = new FileReader();
                 const file = _self.state.fileTarget.files[0];
-
                 const fileType = file && file.type ? file.type.substring(0, file.type.indexOf('/')) : '';
                 const fileSize = file && file.size ? file.size : 0;
-                console.log(file.size);
+
                 if (fileType == 'image') {
                     if (fileType === 'image' && fileSize < 5242880) {
 
@@ -186,8 +168,6 @@ class DocUpload extends Component {
                                         _self.setState({ icon2: "check" })
                                     }
                                     //check file size to max 5mb (5*1024*1024=5242880) and type image
-                                    console.log("size", fileSize, fileSize < 5242880)
-
                                     reader.onload = (upload) => {
                                         _self.setState({
                                             profileImg: upload.target.result,
@@ -198,7 +178,6 @@ class DocUpload extends Component {
                                         });
                                     };
 
-
                                     reader.readAsDataURL(file);
                                     var DataForm = new FormData()
                                     DataForm.append("image", file)
@@ -206,28 +185,20 @@ class DocUpload extends Component {
                                 } else {
                                     _self.openNotificationWithIcon("error", "File Size", "File should be greater than 450*600 in dimension")
                                 }
-
                             };
                             img.src = fr.result;
-
                         };
-                    }
-                    else {
+                    } else {
                         _self.setState({ profileImg: "Default Photo", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' })
                         _self.openNotificationWithIcon("error", "File Size", "Please select image with less then 5 mb")
-                        console.log(document.getElementById("front").value, document.getElementById("back").value)
                         document.getElementById("front").value = "";
                         document.getElementById("back").value = "";
                     }
-                }
-                else {
+                } else {
                     _self.openNotificationWithIcon("error", "File Format", "File format is not supported. Please upload only images.")
-                    console.log(document.getElementById("front").value, document.getElementById("back").value)
                     document.getElementById("front").value = "";
                     document.getElementById("back").value = "";
                 }
-
-
             } catch (error) {
                 _self.setState({ imagemsg: 'Something went wrong please try again' });
             }
@@ -243,11 +214,11 @@ class DocUpload extends Component {
     next_step() {
         if (this.state.icon1 == "check" && this.state.icon2 == "check") {
             if (this.state.frontImg !== "" && this.state.backImg !== "") {
-                var temp = {};
-                temp["front_doc"] = this.state.frontImg;
-                temp["back_doc"] = this.state.backImg;
-                temp["steps"] = 3;
-                this.props.kycFormAction(this.props.isLoggedIn, temp)
+                var kycDoc = {};
+                kycDoc["front_doc"] = this.state.frontImg;
+                kycDoc["back_doc"] = this.state.backImg;
+                kycDoc["steps"] = 3;
+                this.props.kycFormAction(this.props.isLoggedIn, kycDoc)
             }
         } else {
             this.openNotificationWithIcon("error", "KYC", "Please upload front and back of your document")
@@ -270,10 +241,10 @@ class DocUpload extends Component {
     render() {
         return (
             <div>
-                <SSN_wrap>
-                    <SSN_sub>
+                <SSNWrap>
+                    <SSNSub>
                         <SSN_label>Upload Your {this.props.docText}</SSN_label>
-                    </SSN_sub>
+                    </SSNSub>
                     <File_wrap>
                         <File_select1 className="file-select-col">
                             <ButtonUp className="file-select-btn" onClick={() => { this.handleFileSelectClick('front') }}>
@@ -290,13 +261,13 @@ class DocUpload extends Component {
                             <File_input2 onChange={this.handleProfile} type="file" name="back-doc" id="back" />
                         </File_select2>
                     </File_wrap>
-                </SSN_wrap>
-                <Button_wrap>
-                    <Sub_wrap>
-                        <Back_Button onClick={this.back_step.bind(this)} type="primary">Back</Back_Button>
-                        <Next_Button onClick={this.next_step.bind(this)} type="primary">Next</Next_Button>
-                    </Sub_wrap>
-                </Button_wrap>
+                </SSNWrap>
+                <ButtonWrap>
+                    <SubWrap>
+                        <BackButton onClick={this.back_step.bind(this)} type="primary">Back</BackButton>
+                        <NextButton onClick={this.next_step.bind(this)} type="primary">Next</NextButton>
+                    </SubWrap>
+                </ButtonWrap>
                 {(this.props.loader == true) ?
                     <FaldaxLoader />
                     : ""

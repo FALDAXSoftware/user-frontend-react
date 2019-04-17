@@ -6,9 +6,8 @@ import styled from 'styled-components';
 import SimpleReactValidator from 'simple-react-validator';
 import moment from 'moment';
 import {
-    Save, Fifth_Row, Postal, City, Fourth_Row, Street_input, Street_Address,
-    Third_Row, Date_birth, Country_input, Country, Second_Row, Last_input, Last_name,
-    First_Msg, First_input, First_name, First_Row, Right_Col
+    Save, Fifth_Row, Postal, Fourth_Row, Street_input, Street_Address, Third_Row, Date_birth,
+    Second_Row, Last_input, Last_name, First_input, First_name, First_Row, Right_Col
 } from '../Personaldetails/PersonalDetails'
 import { IntlTelInputS } from "../../../styled-components/landingCategories/contactStyle"
 import Datepicker from "../Personaldetails/Datepicker"
@@ -190,7 +189,6 @@ class KYCForm extends Component {
     }
 
     componentDidMount() {
-        var self = this;
         fetch(API_URL + "/users/get-kyc-detail", {
             method: "get",
             headers: {
@@ -355,7 +353,6 @@ class KYCForm extends Component {
                     <First_Row_kyc>
                         <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xxl={{ span: 12 }}>
                             <First_name_kyc>First Name*</First_name_kyc>
-                            {/*      {console.log(this.props.profileDetails.first_name)} */}
                             <First_input_kyc value={this.state.fields.first_name} name="first_name" onChange={this._onChangeFields} placeholder="First Name" />
                             {this.validator.message('first_name', this.state.fields.first_name, 'required|firstname|onlyNumber', 'text-danger-validation', { required: "First Name field is required." })}
                         </Col>
@@ -367,7 +364,6 @@ class KYCForm extends Component {
                     </First_Row_kyc>
 
                     <Second_Row_kyc>
-                        {console.log(this.state.kycData)}
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Date_birth_kyc>Date of Birth*</Date_birth_kyc>
                             <Datepicker kycData2={this.state.kycData} {...this.props} kyc="kyc" onDateChange={(Data) => this.onDateChange(Data)} />
@@ -395,7 +391,6 @@ class KYCForm extends Component {
 
                     <Fourth_Row_kyc>
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
-                            {/* console.log(this.props) */}
                             <CountryPick kycData2={this.state.kycData} {...this.props} onCountryName={(name) => { this.onCountryName(name) }} kyc="kyc" isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={(country, state, city, stateID, countryID) => this.onCountryChange(country, state, city, stateID, countryID)} />
                             {(countryBool == true || stateBool == true || cityBool == true) ?
                                 <span style={{ color: "red" }}>{countrymsg}</span>
@@ -405,7 +400,7 @@ class KYCForm extends Component {
                     </Fourth_Row_kyc>
                     {(this.state.countrychange == true) ?
                         <Sixth_Row_kyc>
-                            <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
+                            <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                                 <Postal_kyc>Mobile No.*</Postal_kyc>
                                 <PhoneDiv>
                                     {
@@ -424,7 +419,7 @@ class KYCForm extends Component {
                         : ""
                     }
                     <Sixth_Row_kyc>
-                        <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
+                        <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Postal_kyc>Postal Code*</Postal_kyc>
                             <Zip value={this.state.fields.zip} name="zip" onChange={this._onChangeFields} placeholder="Postal Code" />
                             {this.validator.message('postal_code', this.state.fields.zip, 'required|min:3|max:25|zipValid', 'text-danger-validation', {

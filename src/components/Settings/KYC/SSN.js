@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
 import styled from 'styled-components';
-import { Button_wrap, Sub_wrap, Back_Button, Next_Button } from "./IDselect"
+import { ButtonWrap, SubWrap, BackButton, NextButton } from "./IDselect"
 import { kycFormAction } from "../../../Actions/Settings/passwordChange"
 
-const SSN_wrap = styled.div`
+const SSNWrap = styled.div`
     width:42%;
     margin-left:auto;
     margin-right:auto;
@@ -25,12 +25,12 @@ const SSN_sub = styled.div`
     margin-left:60px;
     margin-top:45px;
 `
-const SSN_label = styled.label`
+const SSNLabel = styled.label`
     display:block;
     margin-bottom:10px;
     color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
-const SSN_input = styled.input`
+const SSNInput = styled.input`
     display:block;
     width:85%;
     margin-bottom:50px;
@@ -54,11 +54,11 @@ class SSN extends Component {
         }
     }
     next_step() {
-        var abcd = {};
+        var kycSSN = {};
         if (this.state.value_input !== '') {
-            abcd["ssn"] = this.state.value_input;
-            abcd["steps"] = 3;
-            this.props.kycFormAction(this.props.isLoggedIn, abcd);
+            kycSSN["ssn"] = this.state.value_input;
+            kycSSN["steps"] = 3;
+            this.props.kycFormAction(this.props.isLoggedIn, kycSSN);
             this.props.next_step(5)
         }
     }
@@ -71,18 +71,18 @@ class SSN extends Component {
     render() {
         return (
             <div>
-                <SSN_wrap>
+                <SSNWrap>
                     <SSN_sub>
-                        <SSN_label>Social Security Number</SSN_label>
-                        <SSN_input onChange={this.input_change.bind(this)} />
+                        <SSNLabel>Social Security Number</SSNLabel>
+                        <SSNInput onChange={this.input_change.bind(this)} />
                     </SSN_sub>
-                </SSN_wrap>
-                <Button_wrap>
-                    <Sub_wrap>
-                        <Back_Button onClick={this.back_step.bind(this)} type="primary">Back</Back_Button>
-                        <Next_Button onClick={this.next_step.bind(this)} type="primary">Next</Next_Button>
-                    </Sub_wrap>
-                </Button_wrap>
+                </SSNWrap>
+                <ButtonWrap>
+                    <SubWrap>
+                        <BackButton onClick={this.back_step.bind(this)} type="primary">Back</BackButton>
+                        <NextButton onClick={this.next_step.bind(this)} type="primary">Next</NextButton>
+                    </SubWrap>
+                </ButtonWrap>
             </div>
         );
     }
