@@ -106,27 +106,84 @@ class KYC extends Component {
     render() {
         const { next, is_kyc_done } = this.state;
         return (
+            // <KYC_wrap>
+            //     {(this.props.is_kyc_done !== true && next !== 5) ?
+            //         <div>
+            //             <KYC_head>
+            //                 Identity Verification
+            //             </KYC_head>
+            //             <KYC_progress>
+            //                 <Steps direction="horizontal" size="small" current={this.state.nexts}>
+            //                     <Step />
+            //                     <Step />
+            //                     <Step />
+            //                 </Steps>
+            //             </KYC_progress>
+            //         </div>
+            //         : <Done_wrap><Icon style={{ fontSize: "50px" }} type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> <Kyc_succ><span><b>Thank you.</b> <br />All of your information has been received and will be reviewed by our Identity Verification team. You will receive a notification and an email within 24 hours informing you of our decision. If you don't hear anything after 24 hours, please visit the support page to let us know.</span></Kyc_succ></Done_wrap>}
+            //     {(this.state.next == 0 && this.props.is_kyc_done !== true) ?
+            //         <KYCForm back_step={(a) => this.back_step(a)} next_step={(a, type, ssn) => this.next_step(a, type, ssn)} /> : ""
+            //     }
+            //     {(next == 1 && is_kyc_done !== true) ? <IDselect kycData={this.state.kycData} {...this.props} countryFlag={this.state.countryChange} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
+            //     {(next == 2 && is_kyc_done !== true) ? <SSN kycData={this.state.kycData} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
+            //     {(next == 3 && is_kyc_done !== true) ? <DocUpload kycData={this.state.kycData} docText={this.state.docType} back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
+            // </KYC_wrap>
             <KYC_wrap>
-                {(this.props.is_kyc_done !== true && next !== 5) ?
+                {this.props.is_kyc_done == 0 &&
                     <div>
-                        <KYC_head>
-                            Identity Verification
-                        </KYC_head>
-                        <KYC_progress>
-                            <Steps direction="horizontal" size="small" current={this.state.nexts}>
-                                <Step />
-                                <Step />
-                                <Step />
-                            </Steps>
-                        </KYC_progress>
+                        {next != 5 &&
+                            <div>
+                                <KYC_head>
+                                    Identity Verification
+                                </KYC_head>
+                                <KYC_progress>
+                                    <Steps direction="horizontal" size="small" current={this.state.nexts}>
+                                        <Step />
+                                        <Step />
+                                        <Step />
+                                    </Steps>
+                                </KYC_progress>
+                            </div>
+                        }
+                        {next == 0 &&
+                            <KYCForm back_step={(a) => this.back_step(a)} next_step={(a, type, ssn) => this.next_step(a, type, ssn)} />
+                        }
+                        {next == 1 &&
+                            <IDselect kycData={this.state.kycData} {...this.props} countryFlag={this.state.countryChange} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} />
+                        }
+                        {next == 2 &&
+                            <SSN kycData={this.state.kycData} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} />
+                        }
+                        {next == 3 &&
+                            <DocUpload kycData={this.state.kycData} docText={this.state.docType} back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} />
+                        }
                     </div>
-                    : <Done_wrap><Icon style={{ fontSize: "50px" }} type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> <Kyc_succ><span><b>Thank you.</b> <br />All of your information has been received and will be reviewed by our Identity Verification team. You will receive a notification and an email within 24 hours informing you of our decision. If you don't hear anything after 24 hours, please visit the support page to let us know.</span></Kyc_succ></Done_wrap>}
-                {(this.state.next == 0 && this.props.is_kyc_done !== true) ?
-                    <KYCForm back_step={(a) => this.back_step(a)} next_step={(a, type, ssn) => this.next_step(a, type, ssn)} /> : ""
                 }
-                {(next == 1 && is_kyc_done !== true) ? <IDselect kycData={this.state.kycData} {...this.props} countryFlag={this.state.countryChange} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
-                {(next == 2 && is_kyc_done !== true) ? <SSN kycData={this.state.kycData} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
-                {(next == 3 && is_kyc_done !== true) ? <DocUpload kycData={this.state.kycData} docText={this.state.docType} back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
+                {this.props.is_kyc_done == 1 &&
+                    <Done_wrap>
+                        <Icon style={{ fontSize: "50px" }} type="info-circle" theme="twoTone" twoToneColor="#ffc107" />
+                        <Kyc_succ>
+                            <span>
+                                <b>Thank you.</b>
+                                <br />
+                                All of your information has been received and will be reviewed by our Identity Verification team. You will receive a notification and an email within 24 hours informing you of our decision. If you don't hear anything after 24 hours, please visit the support page to let us know.
+                            </span>
+                        </Kyc_succ>
+                    </Done_wrap>
+                }
+                {this.props.is_kyc_done == 2 &&
+                    <Done_wrap>
+                        <Icon style={{ fontSize: "50px" }} type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                        <Kyc_succ>
+                            <span>
+                                <b>Verification Completed.</b>
+                                <br />
+                                <br />
+                                Your Account is Verified successfully.
+                            </span>
+                        </Kyc_succ>
+                    </Done_wrap>
+                }
             </KYC_wrap>
         );
     }
