@@ -86,7 +86,8 @@ class Wallet extends Component {
             myCoins: {},
             total: null,
             searchedCoins: null,
-            searchedWallet: null
+            searchedWallet: null,
+            currencySeq: ['USD', 'EUR', 'INR']
         };
         this.currChangeWallet = this.currChangeWallet.bind(this);
         this.currChangeList = this.currChangeList.bind(this);
@@ -162,11 +163,18 @@ class Wallet extends Component {
         this.setState({ total: total })
     }
     currChangeList(currency) {
+        console.log(currency)
         this.props.getAllCoins(this.props.isLoggedIn, currency);
+        this.props.walletBal(this.props.isLoggedIn, currency);
+        var arr = currency.split(",");
+        this.setState({ currencySeq: arr })
     }
     currChangeWallet(currency) {
-
+        console.log(currency)
         this.props.walletBal(this.props.isLoggedIn, currency);
+        this.props.getAllCoins(this.props.isLoggedIn, currency);
+        var arr = currency.split(",");
+        this.setState({ currencySeq: arr })
     }
     render() {
         let { profileDetails } = this.props;
@@ -197,7 +205,7 @@ class Wallet extends Component {
                             <Table_wrap>
                                 {
                                     this.props.walletDetails !== null ?
-                                        this.state.searchedWallet !== null ? <TableofCoinUpper allCoinsFlag={false} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedWallet} /> : <TableofCoinUpper allCoinsFlag={false} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.walletDetails} /> : ""
+                                        this.state.searchedWallet !== null ? <TableofCoinUpper noBalance={false} currencySeq={this.state.currencySeq} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedWallet} /> : <TableofCoinUpper noBalance={false} currencySeq={this.state.currencySeq} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.walletDetails} /> : ""
                                 }
                             </Table_wrap>
                         </CoinTable>
@@ -223,8 +231,8 @@ class Wallet extends Component {
                                     : ""} */}
                                 {
                                     this.props.nowalletBalance !== null ?
-                                        this.state.searchedCoins !== null ? <TableofCoinLower allCoinsFlag={true} currChange={(currency) => this.currChangeList(currency)} tableData={this.state.searchedCoins} />
-                                            : <TableofCoinLower allCoinsFlag={true} currChange={(currency) => this.currChangeList(currency)} tableData={this.props.nowalletBalance} /> : ""
+                                        this.state.searchedCoins !== null ? <TableofCoinUpper currencySeq={this.state.currencySeq} noBalance={true} currChange={(currency) => this.currChangeList(currency)} tableData={this.state.searchedCoins} />
+                                            : <TableofCoinUpper currencySeq={this.state.currencySeq} noBalance={true} currChange={(currency) => this.currChangeList(currency)} tableData={this.props.nowalletBalance} /> : ""
                                 }
                             </Table_wrap>
                         </CoinTable>

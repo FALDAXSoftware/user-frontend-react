@@ -37,7 +37,7 @@ const WalletModal = styled(Modal)`
     }
 `
 const Label = styled.label`
-    font-size: 13px;
+    font-size: 16px;
     font-family: "Open Sans";
     color: ${props => props.theme.mode == "dark" ? "rgb( 255, 255, 255 )" : "black"};
 `
@@ -57,7 +57,7 @@ const Title_div = styled.div`
     align-items: center;
 `
 const Title = styled.span`
-    font-size: 19.846px;
+    font-size: 20px;
     font-family: "Open Sans";
     color: rgb(255, 255, 255);
     font-weight: bold;
@@ -148,9 +148,9 @@ const RightInput = styled(Input)`
 `
 const Fee = styled.span`
     float:left;
-    font-size: 12.012px;
+    font-size: 16px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 255, 255, 255 )"}; 
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"}; 
     @media(max-width:767px)
     {
         float:none;
@@ -159,9 +159,9 @@ const Fee = styled.span`
 `
 const TotPay = styled.span`
     float:right;
-    font-size: 12.012px;
+    font-size: 16px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 255, 255, 255 )"}; 
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"}; 
     @media(max-width:767px)
     {
         float:none;
@@ -169,7 +169,7 @@ const TotPay = styled.span`
     }
 `
 const SendButton = styled(Button)`
-    font-size: 13.217px;
+    font-size: 16px;
     font-family: "Open Sans";
     color: rgb( 255, 255, 255 );
     font-weight: bold;
@@ -195,7 +195,12 @@ const Send_wrap = styled.div`
         margin-top:20px;
     }
 `
-
+const Tot_div = styled.div`
+    height:25px;
+    margin-top:45px;
+    width:100%;
+    // width: 462px;
+`
 class WalletPopup extends Component {
     constructor(props) {
         super(props);
@@ -208,7 +213,7 @@ class WalletPopup extends Component {
             receive: {},
             receiveAdd: "receive_add",
             sendFields: {
-                amount: "",
+                amount: 0,
                 destination_address: ""
             },
             loader: false
@@ -314,6 +319,10 @@ class WalletPopup extends Component {
         this.setState({ sendFields: fields });
     }
     render() {
+        let amount = Number(this.state.sendFields.amount);
+        let subtotal = amount + amount * ((this.props.coinFee[0].value) / (100));
+
+        console.log(typeof subtotal, subtotal)
         return (
             <div>
                 <WalletModal
@@ -373,13 +382,14 @@ class WalletPopup extends Component {
                                         </DropdownButtonS>
                                     </ButtonToolbarS> */}
                                 {/* </Sec_wrap> */}
-                                <div style={{ height: "25px", marginTop: "45px", width: "462px" }}>
-                                    <Fee>Fee:</Fee>
-                                    <TotPay>Total Payout:</TotPay>
-                                </div>
+                                <Tot_div>
+                                    {console.log(this.props)}
+                                    <Fee><b>Fee:</b> {this.props.coinFee ? this.props.coinFee[0].value : 0}</Fee>
+                                    <TotPay><b>Total Payout:</b> {subtotal} {this.props.coin_code}</TotPay>
+                                </Tot_div>
                             </Rediv>
                             <Send_wrap>
-                                <SendButton onClick={this.sendSubmit}>SEND</SendButton>
+                                <SendButton onClick={this.sendSubmit}>SEND {this.props.coin_code}</SendButton>
                             </Send_wrap>
                         </Modal_wrap>}
                 </WalletModal>

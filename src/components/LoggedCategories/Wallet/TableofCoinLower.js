@@ -164,7 +164,7 @@ class TableofCoin extends React.Component {
                                     img = amazon_Bucket + tableData[index].coin_icon
                                 else
                                     img = amazon_Bucket + "coin/defualt_coin.png"
-
+                                let tableIndex = tableData[index]
                                 return (
                                     <Col1>
                                         {/* <td style={{ textAlign: "left" }}>
