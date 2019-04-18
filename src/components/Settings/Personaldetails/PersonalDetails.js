@@ -35,7 +35,7 @@ export const HeaderCol = styled(Col)`
 `
 const Main_row = styled(Row)`
     margin-top:40px;
-    margin-bottom:300px;
+    margin-bottom:40px;
 `
 const Left_Col = styled(Col)`
 `

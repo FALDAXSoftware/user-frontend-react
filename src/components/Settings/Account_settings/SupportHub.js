@@ -13,7 +13,7 @@ const Header_text = styled.div`
     font-family:"Open Sans";
     font-weight: 600;
     color:${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
-    margin-top:10px;
+    margin-top:20px;
     text-align:center;
 `
 const Ref_div = styled.div`
