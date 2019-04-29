@@ -8,45 +8,45 @@ import {
     ActiveIdentity, IdentityLogo, ActiveLicence, ActivePassport, ActiveSSN, SSN, LicenceLogo, PassportLogo
 } from "../../../Constants/images";
 
-const KYC_type_select_row = styled.div`
+const KYCTypeSelectRow = styled.div`
   width:50%;
   margin 55px auto;
 `
-const Select_text = styled(Col)`
+const SelectTitle = styled(Col)`
     margin-top:20px;
     margin-bottom:30px;
     color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
-const Select_Col1 = styled(Col)`
+const PassportCol = styled(Col)`
     @media(max-width:575px)
     {
         margin-top:30px;
     }
 `
-const Select_Col2 = styled(Col)`
+const LicenceCol = styled(Col)`
     @media(max-width:575px)
     {
         margin-top:30px;
     }
 `
-const Select_Col3 = styled(Col)`
+const IdentityCol = styled(Col)`
     @media(max-width:1200px)
     {
         margin-top:30px;
     }
 `
-const Select_Col4 = styled(Col)`
+const SSNCol = styled(Col)`
     @media(max-width:1200px)
     {
         margin-top:30px;
     }
 `
-export const Button_wrap = styled.div`
+export const ButtonWrap = styled.div`
     margin-top:230px;
 `
-export const Sub_wrap = styled.div`
+export const SubWrap = styled.div`
 `
-export const Back_Button = styled(Button)`
+export const BackButton = styled(Button)`
 font-size: 13.217px;
 font-family: "Open Sans";
 height:50px;
@@ -59,9 +59,8 @@ color:#2d69eb;
 background-color: rgb( 255, 255, 255 );
 box-shadow: 0px 3px 10px 0px rgb( 164, 164, 164 );  
 margin-right:10px;
-
 `
-export const Next_Button = styled(Button)`
+export const NextButton = styled(Button)`
 margin-left:10px;
 font-size: 13.217px;
 font-weight: bold;
@@ -71,7 +70,6 @@ border-radius: 24px;
 background-color:#4c84ff;
 height:50px;
 width:120px;
-
 `
 
 class IDselect extends Component {
@@ -90,32 +88,28 @@ class IDselect extends Component {
         }
     }
     next_step() {
-        var abcd = {};
+        var kycSteps = {};
         if (document.getElementById('passport').checked) {
-            abcd["id_type"] = 1;
-            abcd["steps"] = 2;
-            this.props.kycFormAction(this.props.isLoggedIn, abcd);
+            kycSteps["id_type"] = 1;
+            kycSteps["steps"] = 2;
+            this.props.kycFormAction(this.props.isLoggedIn, kycSteps);
             this.props.next_step(3, "Passport")
-        }
-        else if (document.getElementById('license').checked) {
-            abcd["id_type"] = 2;
-            abcd["steps"] = 2;
-            this.props.kycFormAction(this.props.isLoggedIn, abcd);
+        } else if (document.getElementById('license').checked) {
+            kycSteps["id_type"] = 2;
+            kycSteps["steps"] = 2;
+            this.props.kycFormAction(this.props.isLoggedIn, kycSteps);
             this.props.next_step(3, "Driver's license")
-        }
-        else if (document.getElementById('identity').checked) {
-            abcd["id_type"] = 3;
-            abcd["steps"] = 2;
-            this.props.kycFormAction(this.props.isLoggedIn, abcd);
+        } else if (document.getElementById('identity').checked) {
+            kycSteps["id_type"] = 3;
+            kycSteps["steps"] = 2;
+            this.props.kycFormAction(this.props.isLoggedIn, kycSteps);
             this.props.next_step(3, "Identity")
-        }
-        else if (document.getElementById('ssn') !== null ? document.getElementById('ssn').checked : false) {
-            abcd["id_type"] = 4;
-            abcd["steps"] = 2;
-            this.props.kycFormAction(this.props.isLoggedIn, abcd);
+        } else if (document.getElementById('ssn') !== null ? document.getElementById('ssn').checked : false) {
+            kycSteps["id_type"] = 4;
+            kycSteps["steps"] = 2;
+            this.props.kycFormAction(this.props.isLoggedIn, kycSteps);
             this.props.next_step(2, "ssn")
-        }
-        else {
+        } else {
             this.openNotificationWithIcon("error", "KYC", "Please select any one option.")
         }
     }
@@ -130,17 +124,17 @@ class IDselect extends Component {
             description: desc,
         });
     };
+
     render() {
         return (
             <div>
-                <KYC_type_select_row>
+                <KYCTypeSelectRow>
                     {this.props.countryFlag == true ?
                         <Row>
-                            <Select_text md={{ span: 24 }}>
+                            <SelectTitle md={{ span: 24 }}>
                                 Select ID type
-                        </Select_text>
-
-                            <Select_Col1 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
+                        </SelectTitle>
+                            <PassportCol sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
                                 <label className="kyc-radio-container">
                                     <input id="passport" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background}`}>
@@ -149,8 +143,8 @@ class IDselect extends Component {
                                         <span className="text">Passport</span>
                                     </span>
                                 </label>
-                            </Select_Col1>
-                            <Select_Col2 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
+                            </PassportCol>
+                            <LicenceCol sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
                                 <label className="kyc-radio-container">
                                     <input id="license" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background} license`}>
@@ -159,8 +153,8 @@ class IDselect extends Component {
                                         <span className="text">Driver's license</span>
                                     </span>
                                 </label>
-                            </Select_Col2>
-                            <Select_Col3 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
+                            </LicenceCol>
+                            <IdentityCol sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
                                 <label className="kyc-radio-container">
                                     <input id="identity" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background} identity`}>
@@ -169,9 +163,8 @@ class IDselect extends Component {
                                         <span className="text">Identity</span>
                                     </span>
                                 </label>
-                            </Select_Col3>
-
-                            <Select_Col4 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
+                            </IdentityCol>
+                            <SSNCol sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }}>
                                 <label className="kyc-radio-container">
                                     <input id="ssn" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background} ssn`}>
@@ -180,15 +173,13 @@ class IDselect extends Component {
                                         <span className="text">Social Security Number</span>
                                     </span>
                                 </label>
-                            </Select_Col4>
-
+                            </SSNCol>
                         </Row>
                         : <Row>
-                            <Select_text md={{ span: 24 }}>
+                            <SelectTitle md={{ span: 24 }}>
                                 Select ID type
-                    </Select_text>
-
-                            <Select_Col1 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 8 }}>
+                    </SelectTitle>
+                            <PassportCol sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 8 }}>
                                 <label className="kyc-radio-container">
                                     <input id="passport" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background}`}>
@@ -197,8 +188,8 @@ class IDselect extends Component {
                                         <span className="text">Passport</span>
                                     </span>
                                 </label>
-                            </Select_Col1>
-                            <Select_Col2 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 8 }}>
+                            </PassportCol>
+                            <LicenceCol sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 8 }}>
                                 <label className="kyc-radio-container">
                                     <input id="license" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background} license`}>
@@ -207,8 +198,8 @@ class IDselect extends Component {
                                         <span className="text">Driver's license</span>
                                     </span>
                                 </label>
-                            </Select_Col2>
-                            <Select_Col3 sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 8 }}>
+                            </LicenceCol>
+                            <IdentityCol sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 8 }}>
                                 <label className="kyc-radio-container">
                                     <input id="identity" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background} identity`}>
@@ -217,15 +208,15 @@ class IDselect extends Component {
                                         <span className="text">Identity</span>
                                     </span>
                                 </label>
-                            </Select_Col3>
+                            </IdentityCol>
                         </Row>}
-                </KYC_type_select_row>
-                <Button_wrap>
-                    <Sub_wrap>
-                        <Back_Button onClick={this.back_step.bind(this)} type="primary">Back</Back_Button>
-                        <Next_Button onClick={this.next_step.bind(this)} type="primary">Next</Next_Button>
-                    </Sub_wrap>
-                </Button_wrap>
+                </KYCTypeSelectRow>
+                <ButtonWrap>
+                    <SubWrap>
+                        <BackButton onClick={this.back_step.bind(this)} type="primary">Back</BackButton>
+                        <NextButton onClick={this.next_step.bind(this)} type="primary">Next</NextButton>
+                    </SubWrap>
+                </ButtonWrap>
             </div>
         );
     }

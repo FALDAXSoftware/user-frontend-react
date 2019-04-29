@@ -52,6 +52,8 @@ class App extends Component {
     }
   }
   componentDidUpdate(prevProps, prevState) {
+    console.log(this.props);
+
     if (this.props.location !== prevProps.location) {
       if (this.props.location !== undefined) {
         if (this.props.location.hash !== "" && this.props.location.hash !== undefined && this.props.location.hash == "#block-world-map") {

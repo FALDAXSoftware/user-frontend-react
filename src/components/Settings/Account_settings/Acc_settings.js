@@ -113,7 +113,7 @@ const Login_History = styled.div`
 
 `
 const History_head = styled.div`
-    margin-top:50px;
+    margin-top:10px;
 `
 const Heading = styled.div`
     font-size:20px;

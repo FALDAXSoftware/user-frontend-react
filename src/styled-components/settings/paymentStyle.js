@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Old_label, OldInput } from '../../components/Settings/changePassword/Passwordchange'
-import { Button_wrap, Sub_wrap, Back_Button, Next_Button } from '../../components/Settings/KYC/IDselect'
+import { ButtonWrap, SubWrap, BackButton, NextButton } from '../../components/Settings/KYC/IDselect'
 
 export const Payment_wrap = styled.div`
     margin-top: 30px;
@@ -27,17 +27,17 @@ export const Bank_label = styled(Old_label)`
 export const Bank_input = styled(OldInput)`
     width:100%;
 `
-export const Button_payment = styled(Button_wrap)`
+export const Button_payment = styled(ButtonWrap)`
     display: flex;
     margin-top:200px;
     justify-content: center;
 `
 
-export const Button_sub = styled(Sub_wrap)``
+export const Button_sub = styled(SubWrap)``
 
-export const Button_cancel = styled(Back_Button)``
+export const Button_cancel = styled(BackButton)``
 
-export const Button_add = styled(Next_Button)``
+export const Button_add = styled(NextButton)``
 
 export const PayForm2 = styled(PayForm)`
     max-width:710px;
