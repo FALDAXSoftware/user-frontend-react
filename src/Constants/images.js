@@ -3,7 +3,8 @@ import { globalVariables } from '../Globals';
 let amazon_Bucket = globalVariables.amazon_Bucket;
 
 export const Banner = amazon_Bucket + 'assets/Homepage/banner.png';
-export const ComingImg = amazon_Bucket + 'assets/LOGO+WEB.png';
+export const ComingImg = amazon_Bucket + 'assets/Homepage/new_Faldax_logo.png';
+export const ComingImg2 = amazon_Bucket + 'assets/Homepage/new_faldax.png';
 export const LargeLogo = amazon_Bucket + 'assets/logo-lg.png';
 export const ContactMap = amazon_Bucket + 'assets/LandingCat/contact_map.png';
 export const Wallpaper = amazon_Bucket + 'assets/Homepage/wallpaper.png';

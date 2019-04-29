@@ -82,6 +82,8 @@ class StopLimit extends Component {
         if (name == "side") {
             obj["amount"] = 0;
             obj["total"] = 0;
+            obj['limit_price'] = 0;
+            obj['stop_price'] = 0;
         }
         this.setState({
             ...obj
@@ -210,7 +212,7 @@ class StopLimit extends Component {
                                             <Balance1>Best ask</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{buyPayAmt} {this.state.crypto}</Total>
+                                            <Total>{this.props.userBal.buyPay.toFixed(4)} {this.state.crypto}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -265,26 +267,37 @@ class StopLimit extends Component {
                 <ETH_wrap>
                     <Label>Amount</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <AMTinput type="number" addonAfter={this.state.crypto} value={this.state.amount} name="amount" onChange={this.onChange} />
-                        {this.validator.message('Amount', this.state.amount, 'required|numeric|gtzero')}
+                        <AMTinput min="0" type="number" addonAfter={this.state.crypto} value={this.state.amount} name="amount" onChange={this.onChange} />
+                        {this.validator.message('Amount', this.state.amount, 'required|gtzero|numeric', 'text-danger-validation', {
+                            gtzero: "Amount should be greater than zero."
+                        })}
                     </Total_wrap>
                 </ETH_wrap>
                 <BTC_wrap>
                     <Label>Stop Price</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput type="number" addonAfter={this.state.currency} value={this.state.stop_price} name="stop_price" onChange={this.onChange} />
+                        <Totinput min="0" type="number" addonAfter={this.state.currency} value={this.state.stop_price} name="stop_price" onChange={this.onChange} />
+                        {this.validator.message('Stop_Price', this.state.stop_price, 'required|gtzero|numeric', 'text-danger-validation', {
+                            gtzero: "Stop Price should be greater than zero."
+                        })}
                     </Total_wrap>
                 </BTC_wrap>
                 <BTC_wrap>
                     <Label>Limit Price</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange} />
+                        <Totinput min="0" type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange} />
+                        {this.validator.message('Limit_Price', this.state.limit_price, 'required|gtzero|numeric', 'text-danger-validation', {
+                            gtzero: "Limit Price should be greater than zero."
+                        })}
                     </Total_wrap>
                 </BTC_wrap>
                 <BTC_wrap>
                     <Label>Total</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total_price} name="total_price" onChange={this.onChange} />
+                        <Totinput min="0" readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total} name="total" onChange={this.onChange} />
+                        {this.validator.message('Total', this.state.total, 'required|gtzero|numeric', 'text-danger-validation', {
+                            gtzero: "Total should be greater than zero."
+                        })}
                     </Total_wrap>
                 </BTC_wrap>
                 {Object.keys(this.props.userBal).length > 0 ?

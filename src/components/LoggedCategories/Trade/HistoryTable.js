@@ -166,7 +166,7 @@ class HistoryTable extends Component {
         return (
             <BorderedHistoryWrap>
                 <OTwrap>
-                    <div class="tbl-header">
+                    <div className="tbl-header">
                         <TableHeader cellpadding="10px" cellspacing="0" border="0" width="100%">
                             <thead>
                                 <tr>

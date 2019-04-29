@@ -6,6 +6,7 @@ export const globalVariables = {
     WordpressSiteURL: "http://3.16.234.205",
 
     tvChartURL: "/chart",
+
     //API_URL: 'http://18.191.87.133:8084', //Live URL
 
     //API_URL: 'http://192.168.2.224:1337', //Kalpit Local URL

@@ -189,6 +189,7 @@ class KYCForm extends Component {
     }
 
     componentDidMount() {
+        var self = this;
         fetch(API_URL + "/users/get-kyc-detail", {
             method: "get",
             headers: {

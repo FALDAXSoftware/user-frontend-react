@@ -43,18 +43,17 @@ export const MY_wallet = styled.div`
 export const Total = styled.div`
     display:inline-block;
     display: inline-flex;
-    margin-left:100px;
+    margin-left:auto;
     align-items: center;
-    @media(max-width:767px)
+    @media(max-width:1199px)
     {
-        display:block;
-
+        padding-right:15px;
     }
-    @media(max-width:945px)
+    @media(max-width:991px)
     {
         display:block;
-        margin-top:20px;
-        margin-left:15px;
+        padding-top:10px;
+        padding-left:15px;
     }
 `
 export const Tot = styled.span`
@@ -137,7 +136,7 @@ export const Sub_head = styled.th`
 `
 export const Col1 = styled.tr`
     height:${props => props.wallet ? "70px" : "90px"};
-    >td{
+    & td{
         vertical-align: middle !important;
         padding-left: ${props => props.wallet ? "" : "45px !important"};
         text-align:${props => props.wallet ? "center" : ""};
@@ -148,22 +147,22 @@ export const Col1 = styled.tr`
     }
     @media(max-width:1160px)
     {
-        >td
+        & td
         {
             padding-left:8px !important;
         }
-        >td:last-child
+        & td:last-child
         {
             width:10%;
         }
     }
     @media(max-width:767px)
     {
-        >td
+        & td
         {
             width:200px;
         }
-        >td:last-child
+        & td:last-child
         {
             width:50px;
         }    
@@ -232,6 +231,10 @@ export const Icon_wrap = styled.div`
 
 export const SearchCoin2 = styled(SearchCoin)`
     margin-left:auto;
+    @media(max-width:1199px)
+    {
+        padding-right:15px;
+    }
     @media(max-width:991px)
     {
         display:block;

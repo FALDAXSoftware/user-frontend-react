@@ -28,6 +28,8 @@ const data = [{
 }];
 
 const Parent_wrap = styled.div`
+    margin-top:20vh;
+    
 `
 const Header_text = styled.div`
     font-size:20px;
@@ -84,6 +86,15 @@ export const Ref_input = styled(Search)`
         margin-left:auto;
         margin-right:auto;
         text-align:center;
+    }
+`
+const Coming = styled.div`
+    margin-top:50px;
+    color:${props => props.theme.mode == "dark" ? "white" : "black"};
+    font-size:32px;
+    @media(max-width:767px)
+    {
+        font-size:20px;
     }
 `
 const Ref_text = styled.div`
@@ -225,8 +236,11 @@ class Referral extends Component {
         const { referralLink, referTable, referredData } = this.state;
         return (
             <Parent_wrap>
-                <Header_text>Referral Program</Header_text>
-                <Ref_div>
+                {/* <Header_text>Referral Program</Header_text> */}
+                <Coming>
+                    <span>Coming soon.</span>
+                </Coming>
+                {/* <Ref_div>
                     <Row>
                         <Ref_leftcol sm={24} md={18}>
                             <Ref_text>YOUR REFERRAL LINK</Ref_text>
@@ -244,10 +258,10 @@ class Referral extends Component {
                                 </div>
                             </CopyToClipboard>
                         </Ref_leftcol>
-                        {/* <Ref_rightcol sm={24} md={6}>
+                        <Ref_rightcol sm={24} md={6}>
                             <Right_text>Total Earned</Right_text>
                             <Right_value>3.0850 BTC</Right_value>
-                        </Ref_rightcol> */}
+                        </Ref_rightcol>
                     </Row>
                 </Ref_div>
                 <Ref_acc>
@@ -258,7 +272,7 @@ class Referral extends Component {
                             pagination={false}
                         />
                     </div>
-                </Ref_acc>
+                </Ref_acc> */}
             </Parent_wrap>
         );
     }

@@ -74,7 +74,6 @@ class Conversion extends React.Component {
 
             if (body.status == 200) {
                 let res = body.data;
-                console.log("----=---=---", res);
                 self.setState({
                     askPrice: res.ask_price,
                     bidPrice: res.bid_price
@@ -97,7 +96,6 @@ class Conversion extends React.Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                console.log(responseData);
 
                 this.setState({ cryptoList: responseData.data })
             })
@@ -115,7 +113,6 @@ class Conversion extends React.Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                console.log(responseData);
 
                 this.setState({ currencyList: responseData.data })
             })
@@ -201,14 +198,11 @@ class Conversion extends React.Component {
             if (!isNaN(self.state.buyCryptoInput)) {
                 buyCurrencyInput = (self.state.buyCryptoInput) * self.state.askPrice;
                 // Add Kraken Fees
-                console.log("before kraken fees", buyCurrencyInput);
 
                 buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.krakenFees) / 100);
-                console.log("before faldax fees", buyCurrencyInput);
 
                 // Add Faldax Fees
                 buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.faldaxFees) / 100);
-                console.log("after faldax fees", buyCurrencyInput);
             }
             self.setState({
                 buyCurrencyInput: buyCurrencyInput
@@ -235,13 +229,10 @@ class Conversion extends React.Component {
         } else {
             let buyCryptoInput = self.state.buyCurrencyInput;
             if (!isNaN(self.state.buyCurrencyInput)) {
-                console.log("with faldax fees", buyCryptoInput);
                 // Minus Faldax Fees
                 buyCryptoInput = (buyCryptoInput * 100) / (100 + self.state.faldaxFees);
-                console.log("without faldax fees", buyCryptoInput);
                 // Minus Kraken Fees
                 buyCryptoInput = (buyCryptoInput * 100) / (100 + self.state.krakenFees);
-                console.log("without kraken fees", buyCryptoInput);
 
                 buyCryptoInput = buyCryptoInput / self.state.askPrice;
             }
@@ -269,14 +260,11 @@ class Conversion extends React.Component {
             if (!isNaN(self.state.sellCryptoInput)) {
                 sellCurrencyInput = (self.state.sellCryptoInput) * self.state.bidPrice;
                 // Add Kraken Fees
-                console.log("before kraken fees", sellCurrencyInput);
 
                 sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.krakenFees) / 100);
-                console.log("before faldax fees", sellCurrencyInput);
 
                 // Add Faldax Fees
                 sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.faldaxFees) / 100);
-                console.log("after faldax fees", sellCurrencyInput);
             }
             self.setState({
                 sellCurrencyInput: sellCurrencyInput
@@ -301,13 +289,10 @@ class Conversion extends React.Component {
         } else {
             let sellCryptoInput = self.state.sellCurrencyInput;
             if (!isNaN(self.state.sellCurrencyInput)) {
-                console.log("with faldax fees", sellCryptoInput);
                 // Minus Faldax Fees
                 sellCryptoInput = (sellCryptoInput * 100) / (100 + self.state.faldaxFees);
-                console.log("without faldax fees", sellCryptoInput);
                 // Minus Kraken Fees
                 sellCryptoInput = (sellCryptoInput * 100) / (100 + self.state.krakenFees);
-                console.log("without kraken fees", sellCryptoInput);
 
                 sellCryptoInput = sellCryptoInput / self.state.bidPrice;
             }

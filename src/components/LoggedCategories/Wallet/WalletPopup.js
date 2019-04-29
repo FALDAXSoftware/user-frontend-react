@@ -12,7 +12,7 @@ import FaldaxLoader from "../../../shared-components/FaldaxLoader";
 let { API_URL } = globalVariables;
 const WalletModal = styled(Modal)`
     width:656px !important;
-    height:460px;
+    height:auto;
     margin-left:auto;
     margin-right:auto;
     >.ant-modal-content>.ant-modal-header
@@ -29,6 +29,7 @@ const WalletModal = styled(Modal)`
     }
     @media(max-width:767px)
     {
+        top:24px;
         width:500px !important;
     }
     @media(max-width:575px)
@@ -192,7 +193,7 @@ const Send_wrap = styled.div`
     display: block;
     @media(max-width:767px)
     {
-        margin-top:20px;
+        padding-top:20px;
     }
 `
 const Tot_div = styled.div`
@@ -212,6 +213,7 @@ class WalletPopup extends Component {
             email_msg: "",
             receive: {},
             receiveAdd: "receive_add",
+            show: false,
             sendFields: {
                 amount: 0,
                 destination_address: ""
@@ -248,7 +250,7 @@ class WalletPopup extends Component {
             }).then(response => response.json())
                 .then((responseData) => {
 
-                    this.setState({ receive: responseData.receiveCoin, loader: false })
+                    this.setState({ receive: responseData.receiveCoin, loader: false, show: true })
 
                 })
                 .catch(error => {
@@ -322,57 +324,59 @@ class WalletPopup extends Component {
         let amount = Number(this.state.sendFields.amount);
         let subtotal = amount + amount * ((this.props.coinFee[0].value) / (100));
 
-        console.log(typeof subtotal, subtotal)
         return (
             <div>
-                <WalletModal
-                    title={<Title_div><Title>{this.props.title}</Title></Title_div>}
-                    visible={this.props.visible}
-                    onOk={(e) => this.handleComing()}
-                    onCancel={(e) => this.comingCancel(e)}
-                    footer={null}
-                >
-                    {this.props.title == "RECEIVE" ?
-                        <Modal_wrap>
-                            {Object.keys(this.state.receive).length > 0
-                                ?
-                                <div style={{ textAlign: "center", marginTop: "40px" }}>
-                                    <div>
-                                        <img src={this.state.receive.url} alt="no photo" />
+                {(this.props.title == "RECEIVE" && this.props.visible && this.state.show == true) || (this.props.title == "SEND")
+                    ?
+                    <WalletModal
+                        title={<Title_div><Title>{this.props.title}</Title></Title_div>}
+                        visible={this.props.visible}
+                        onOk={(e) => this.handleComing()}
+                        onCancel={(e) => this.comingCancel(e)}
+                        footer={null}
+                        className="wallet-popup"
+                    >
+                        {this.props.title == "RECEIVE" ?
+                            <Modal_wrap>
+                                {Object.keys(this.state.receive).length > 0
+                                    ?
+                                    <div style={{ textAlign: "center", marginTop: "40px" }}>
+                                        <div>
+                                            <img src={this.state.receive.url} alt="no photo" />
+                                        </div>
+                                        <div style={{ marginTop: "20px" }}>
+                                            <CopyToClipboardCSS text={this.state.receive.receive_address}
+                                                onCopy={() => this.setState({ copied: true })}>
+                                                <div style={{ textAlign: 'left' }}>
+                                                    <Ref_input
+                                                        value={this.state.receive.receive_address}
+                                                        className={this.state.receiveAdd}
+                                                        placeholder="Referral"
+                                                        enterButton="Copy"
+                                                        size="large"
+                                                        onSearch={value => this.SearchText()}
+                                                    />
+                                                </div>
+                                            </CopyToClipboardCSS>
+                                        </div>
                                     </div>
-                                    <div style={{ marginTop: "20px" }}>
-                                        <CopyToClipboardCSS text={this.state.receive.receive_address}
-                                            onCopy={() => this.setState({ copied: true })}>
-                                            <div style={{ textAlign: 'left' }}>
-                                                <Ref_input
-                                                    value={this.state.receive.receive_address}
-                                                    className={this.state.receiveAdd}
-                                                    placeholder="Referral"
-                                                    enterButton="Copy"
-                                                    size="large"
-                                                    onSearch={value => this.SearchText()}
-                                                />
-                                            </div>
-                                        </CopyToClipboardCSS>
-                                    </div>
-                                </div>
-                                : ""
-                            }
-                        </Modal_wrap>
-                        :
-                        <Modal_wrap>
-                            <Rediv>
-                                <Label style={{ display: "block" }}>Destination Address</Label>
-                                <WallInput value={this.state.sendFields.destination_address} name="destination_address" onChange={this.sendChange} />
-                                {/* <Scan>Scan QR</Scan> */}
-                                {this.validator.message('destination_address', this.state.sendFields.destination_address, 'required|alpha_num|min:15|max:120', 'text-danger')}
-                            </Rediv>
-                            <Rediv>
-                                <Label style={{ display: "block" }}>Amount</Label>
-                                {/* <Sec_wrap> */}
-                                <WallInput type="number" value={this.state.sendFields.amount} name="amount" onChange={this.sendChange} />
-                                {this.validator.message('amount', this.state.sendFields.amount, 'required|numeric|gtzero', 'text-danger')}
-                                {/*  <RightInput />
+                                    : ""
+                                }
+                            </Modal_wrap>
+                            :
+                            <Modal_wrap>
+                                <Rediv>
+                                    <Label style={{ display: "block" }}>Destination Address</Label>
+                                    <WallInput value={this.state.sendFields.destination_address} name="destination_address" onChange={this.sendChange} />
+                                    {/* <Scan>Scan QR</Scan> */}
+                                    {this.validator.message('destination_address', this.state.sendFields.destination_address, 'required|alpha_num|min:15|max:120', 'text-danger-validation')}
+                                </Rediv>
+                                <Rediv>
+                                    <Label style={{ display: "block" }}>Amount</Label>
+                                    {/* <Sec_wrap> */}
+                                    <WallInput type="number" value={this.state.sendFields.amount} name="amount" onChange={this.sendChange} />
+                                    {this.validator.message('amount', this.state.sendFields.amount, 'required|numeric|gtzero', 'text-danger-validation')}
+                                    {/*  <RightInput />
                                     <ButtonToolbarS>
                                         <DropdownButtonS title="USD" id="dropdown-size-medium">
                                             <MenuItem eventKey="1">Action</MenuItem>
@@ -381,18 +385,18 @@ class WalletPopup extends Component {
                                             <MenuItem eventKey="4">Separated link</MenuItem>
                                         </DropdownButtonS>
                                     </ButtonToolbarS> */}
-                                {/* </Sec_wrap> */}
-                                <Tot_div>
-                                    {console.log(this.props)}
-                                    <Fee><b>Fee:</b> {this.props.coinFee ? this.props.coinFee[0].value : 0}</Fee>
-                                    <TotPay><b>Total Payout:</b> {subtotal} {this.props.coin_code}</TotPay>
-                                </Tot_div>
-                            </Rediv>
-                            <Send_wrap>
-                                <SendButton onClick={this.sendSubmit}>SEND {this.props.coin_code}</SendButton>
-                            </Send_wrap>
-                        </Modal_wrap>}
-                </WalletModal>
+                                    {/* </Sec_wrap> */}
+                                    <Tot_div>
+                                        <Fee><b>Fee:</b> {this.props.coinFee ? this.props.coinFee[0].value : 0}</Fee>
+                                        <TotPay><b>Total Payout:</b> {subtotal} {this.props.coin_code}</TotPay>
+                                    </Tot_div>
+                                </Rediv>
+                                <Send_wrap>
+                                    <SendButton onClick={this.sendSubmit}>SEND {this.props.coin_code}</SendButton>
+                                </Send_wrap>
+                            </Modal_wrap>}
+                    </WalletModal>
+                    : ""}
                 {(this.state.loader == true) ? <FaldaxLoader /> : ""}
             </div>
         );

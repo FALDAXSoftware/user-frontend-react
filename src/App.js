@@ -155,7 +155,7 @@ class App extends Component {
                   <Route path="/blogDetails" exact title='Blog' component={BlogDetails} />
                   <Route path="/contactus" exact title='Contact' component={ContactUs} />
                   <Route path="/careers" exact title='Careers' component={Careers} />
-                  <Route path="/careerdetails" exact title='Careerdetails' component={CareerDetails} />
+                  <Route path="/career-details" exact title='Careerdetails' component={CareerDetails} />
                   <Route path="/mediacontact" exact title='MediaContact' component={MediaContact} />
                   <Route path="/fees" exact title='Fees' component={Fees} />
                   <Route path="/addcoin" exact title='AddCoin' component={Addcoin} />

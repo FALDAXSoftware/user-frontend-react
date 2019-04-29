@@ -294,7 +294,6 @@ class SignupForm extends Component {
   }
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      console.log(error, value)
       if (this.state.emailIcon == true && this.state.firstIcon == true && this.state.lastIcon == true && this.state.passIcon == true && this.state.confirmIcon == true) {
         this.setState({ isSignDisable: true });
         document.querySelectorAll("#email_icon_success")[0].style.display = "none";

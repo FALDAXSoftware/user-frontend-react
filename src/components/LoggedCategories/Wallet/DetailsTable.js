@@ -61,6 +61,14 @@ const Order_wrapRide = styled(Order_wrap)`
         min-width:1200px;
     }
 `
+const NDF = styled.td`
+    text-align: center;
+    font-weight: 600;
+    font-size: 17px;
+    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    padding-top: 80px !important;
+    font-family: Open Sans;
+`
 const menu = (
     <Menu>
         <Menu.Item key="0">INR</Menu.Item>
@@ -75,17 +83,18 @@ class DetailsTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            walletDetails: {
-
-            }
+            walletDetails: []
         };
 
     }
     componentWillReceiveProps(props, newProps) {
-
+        if (props.wallet.length > 0)
+            this.setState({
+                walletDetails: props.wallet
+            });
     }
     componentDidMount() {
-        if (Object.keys(this.props.wallet).length > 0)
+        if (this.props.wallet.length > 0)
             this.setState({
                 walletDetails: this.props.wallet
             });
@@ -98,7 +107,7 @@ class DetailsTable extends React.Component {
         var me = this;
         return (<Order_wrapRide>
             <OTwrap>
-                <div class="tbl-header">
+                <div className="tbl-header">
                     <TableHeader cellpadding="10px" cellspacing="0" border="0">
                         {/* <Table_coin condensed> */}
                         <thead>
@@ -144,7 +153,7 @@ class DetailsTable extends React.Component {
                                                 <div>{date}</div>
                                             </td>
                                             <td>
-                                                {details[index].transaction_type == "buy" ? <span><Icon style={{ color: "green", fontSize: "20px" }} type="download" /> RECEIVED</span> : <span><Icon style={{ color: "red", fontSize: "20px" }} type="upload" /> SENT</span>}
+                                                {details[index].transaction_type == "receive" ? <span><Icon style={{ color: "green", fontSize: "20px" }} type="download" /> RECEIVED</span> : <span><Icon style={{ color: "red", fontSize: "20px" }} type="upload" /> SENT</span>}
                                             </td>
                                             <td>
                                                 {details[index].source_address}
@@ -161,10 +170,7 @@ class DetailsTable extends React.Component {
                                         </Col1>
                                     );
                                 })
-                                    : <tr><td colspan="5" style={{
-                                        textAlign: "center", fontWeight: "600", fontSize: "17px",
-                                        color: "black", paddingTop: "30px", fontFamily: "Open Sans"
-                                    }}>No Data Found</td></tr> : ""}
+                                    : <tr><NDF colspan="5" >No Data Found</NDF></tr> : ""}
                             </tbody>
                         </TableContentRide>
                     </Scrollbars>
