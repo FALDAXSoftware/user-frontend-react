@@ -668,7 +668,12 @@ table .ant-table-tbody > tr > td {
     }
   }
   
+  /*Wallet Screen Popup  */
 
+  .wallet-popup
+  {
+    
+  }
 
   /* Features section five Homepage */
   .features>.ant-card-cover>img

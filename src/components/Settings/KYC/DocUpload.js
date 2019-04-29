@@ -165,7 +165,6 @@ class DocUpload extends Component {
 
                 const fileType = file && file.type ? file.type.substring(0, file.type.indexOf('/')) : '';
                 const fileSize = file && file.size ? file.size : 0;
-                console.log(file.size);
                 if (fileType == 'image') {
                     if (fileType === 'image' && fileSize < 5242880) {
 
@@ -186,7 +185,6 @@ class DocUpload extends Component {
                                         _self.setState({ icon2: "check" })
                                     }
                                     //check file size to max 5mb (5*1024*1024=5242880) and type image
-                                    console.log("size", fileSize, fileSize < 5242880)
 
                                     reader.onload = (upload) => {
                                         _self.setState({
@@ -215,14 +213,12 @@ class DocUpload extends Component {
                     else {
                         _self.setState({ profileImg: "Default Photo", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' })
                         _self.openNotificationWithIcon("error", "File Size", "Please select image with less then 5 mb")
-                        console.log(document.getElementById("front").value, document.getElementById("back").value)
                         document.getElementById("front").value = "";
                         document.getElementById("back").value = "";
                     }
                 }
                 else {
                     _self.openNotificationWithIcon("error", "File Format", "File format is not supported. Please upload only images.")
-                    console.log(document.getElementById("front").value, document.getElementById("back").value)
                     document.getElementById("front").value = "";
                     document.getElementById("back").value = "";
                 }

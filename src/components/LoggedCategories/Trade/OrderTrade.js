@@ -78,7 +78,7 @@ class OrderTrade extends Component {
         return (
             <Order_wrap>
                 <OTwrap>
-                    <div class="tbl-header">
+                    <div className="tbl-header">
                         <TableHeader cellpadding="10px" cellspacing="0" border="0">
                             {/* <HTable striped responsive> */}
                             <thead>

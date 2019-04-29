@@ -83,7 +83,7 @@ export function clearLogin() {
     }
 }
 export const loginAction = (data) => dispatch => {
-    console.log('AUTH ', data)
+
     dispatch({
         type: 'LOGIN',
         payload: data

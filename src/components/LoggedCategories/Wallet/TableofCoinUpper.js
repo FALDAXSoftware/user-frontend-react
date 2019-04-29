@@ -6,6 +6,8 @@ import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Menu, Dropdown, Icon } from 'antd';
 import { Scrollbars } from 'react-custom-scrollbars';
+import NumberFormat from 'react-number-format';
+
 import { OTwrap } from "../Trade/OrderTrade"
 import { History_wrap, TableHeader, TableContent, ScrollTableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 import { Head, Sub_head, DropMenu, Col1, Bit_img, Bit_text, Bit, Bit_price, Price, Icon_wrap } from "../../../styled-components/loggedStyle/walletStyle";
@@ -69,6 +71,11 @@ export const NDF = styled.td`
     color: ${props => props.theme.mode == "dark" ? "white" : "black"};
     padding-top: 30px;
     font-family: "Open Sans";
+    padding-bottom:30px;
+    @media(max-width:575px)
+    {
+        display:block;
+    }
 `
 let total = 0;
 class TableofCoin extends React.Component {
@@ -84,7 +91,6 @@ class TableofCoin extends React.Component {
         }
     }
     componentWillReceiveProps(props, newProps) {
-        console.log(this.props.currencySeq)
         var sign1, sign2, sign3;
         if (this.props.currencySeq[0] == "USD") {
             sign1 = "$"
@@ -182,7 +188,6 @@ class TableofCoin extends React.Component {
                 <OTwrap>
                     <TableCoin cellpadding="10px" cellspacing="0" border="0">
                         <thead>
-                            {console.log(this.props)}
                             <Head>
                                 <Sub_head>Coins</Sub_head>
                                 <Sub_head>{this.state.drop1}
@@ -213,24 +218,34 @@ class TableofCoin extends React.Component {
                                 let tableIndex = tableData[index]
                                 return (
                                     <Col1>
+
                                         <td style={{ textAlign: "left" }}>
                                             <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
                                                 <Bit_img src={img} />
-                                                <Bit_text><Bit>{tableIndex.coin_name}</Bit><Bit_price>{parseFloat(tableIndex.balance).toFixed(4)} {tableIndex.coin_code}</Bit_price></Bit_text>
+                                                <Bit_text><Bit>{tableIndex.coin_name}</Bit><Bit_price>{<NumberFormat value={parseFloat(tableIndex.balance).toFixed(4)} displayType={'text'} thousandSeparator={true} />} {tableIndex.coin_code}</Bit_price></Bit_text>
                                             </Link>
                                         </td>
                                         <td>
                                             <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
-                                                {tableIndex[`${me.state.drop1}`] !== undefined ? <Price>{me.state.curr1} {parseFloat(parseFloat(tableIndex[`${me.state.drop1}`]) * parseFloat(tableIndex.balance)).toFixed(4)}</Price> : <Price>-</Price>}
+                                                {tableIndex[`${me.state.drop1}`] !== undefined ? <Price>{me.state.curr1}
+
+                                                    {<NumberFormat value={parseFloat(parseFloat(tableIndex[`${me.state.drop1}`]) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
+                                                </Price> : <Price>-</Price>}
                                             </Link>
                                         </td>
                                         <td>
                                             <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
-                                                {tableIndex[`${me.state.drop2}`] !== undefined ? <Price>{me.state.curr2} {parseFloat(parseFloat(tableIndex[`${me.state.drop2}`]) * parseFloat(tableIndex.balance)).toFixed(4)} </Price> : <Price>-</Price>}
+                                                {tableIndex[`${me.state.drop2}`] !== undefined ? <Price>{me.state.curr2}
+
+                                                    {<NumberFormat value={parseFloat(parseFloat(tableIndex[`${me.state.drop2}`]) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
+                                                </Price> : <Price>-</Price>}
                                             </Link>
                                         </td>
                                         <td><Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
-                                            {tableIndex[`${me.state.drop3}`] !== undefined ? <Price><span>{me.state.curr3}</span> {parseFloat(parseFloat(tableIndex[`${me.state.drop3}`]) * parseFloat(tableIndex.balance)).toFixed(4)} </Price> : <Price>-</Price>}
+                                            {tableIndex[`${me.state.drop3}`] !== undefined ? <Price><span>{me.state.curr3}</span>
+
+                                                {<NumberFormat value={parseFloat(parseFloat(tableIndex[`${me.state.drop3}`]) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
+                                            </Price> : <Price>-</Price>}
                                         </Link>
                                         </td>
                                         <td>

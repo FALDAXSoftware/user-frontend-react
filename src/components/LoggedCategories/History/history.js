@@ -3,25 +3,22 @@ import { connect } from "react-redux";
 import styled from 'styled-components'
 import 'antd/dist/antd.css';
 import moment from 'moment';
-import { DatePicker, Checkbox, Select } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Checkbox, Select, notification } from 'antd';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import LoggedNavigation from '../../Navigations/LoggedNavigation';
 import CommonFooter from "../../Landing/Footers/Footer_home";
 import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
 import {
     ContainerContact, His_title, His_wrap, Tablediv, HisTable, HeadHis, Filter,
-    EXPButton, Dropwrap, Dropwrap2, ButtonToolbarOne, DropdownButtonOne, Datediv, RangePickerS
+    EXPButton, FontAwesomeIconS, Datediv, RangePickerS
 } from "../../../styled-components/loggedStyle/historyStyle"
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 import { globalVariables } from '../../../Globals';
-import { Button } from 'antd/lib/radio';
 import FaldaxLoader from '../../../shared-components/FaldaxLoader'
 
 let { API_URL } = globalVariables;
 
 const Option = Select.Option;
-const { RangePicker } = DatePicker;
 const CheckboxGroup = Checkbox.Group;
 const options = [
     { label: 'BUY', value: 'BUY' },
@@ -98,6 +95,9 @@ const NDF = styled.div`
         height:150px;
     }
 `
+const SideBuySell = styled.td`
+    color:${props => props.side == true ? "#59b55d" : "#f13e46"} !important;
+`
 class History extends Component {
     constructor(props) {
         super(props);
@@ -144,6 +144,7 @@ class History extends Component {
                     drop2List: responseData.data
                 });
             }).catch(error => {
+
             });
     }
     historyResult() {
@@ -290,6 +291,7 @@ class History extends Component {
                     } else {
                     }
                 }).catch(error => {
+                    this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
 
                 });
         }
@@ -318,6 +320,7 @@ class History extends Component {
 
                     }
                 }).catch(error => {
+                    this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
 
                 });
         }
@@ -344,9 +347,18 @@ class History extends Component {
 
                     }
                 }).catch(error => {
+                    this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
                 });
         }
     }
+
+    openNotificationWithIcon(type, head, desc) {
+        notification[type]({
+            message: head,
+            description: desc,
+            duration: 5
+        });
+    };
     render() {
         var self = this;
         return (
@@ -365,7 +377,7 @@ class History extends Component {
                                                 ))
                                             }
                                         </Select1>
-                                        <FontAwesomeIcon icon={faExchangeAlt} color='#909090' style={{ margin: "0px 20px" }} />
+                                        <FontAwesomeIconS icon={faExchangeAlt} color='#909090' />
                                         <Select2 showSearch style={{ width: 120 }} onChange={this.selectChange2}>
                                             {
                                                 this.state.drop2List.map(element => (
@@ -383,7 +395,7 @@ class History extends Component {
                                             format="YYYY-MM-DD"
                                         />
                                     </Datediv>
-                                    <EXPButton><CSVLink data={this.state.historyData}>EXPORT</CSVLink></EXPButton>
+                                    {this.state.historyData.length > 0 ? <EXPButton><CSVLink data={this.state.historyData}>EXPORT</CSVLink></EXPButton> : ""}
                                 </Filter>
                                 <div style={{ paddingLeft: "15px", marginTop: "20px" }}>
                                     <CheckboxGroupS options={options} defaultValue={['SEND', 'RECEIVE', 'SELL', 'BUY']} onChange={this.onChangeCheck} />
@@ -405,7 +417,6 @@ class History extends Component {
                                                 {/* <th>Repeat</th> */}
                                             </tr>
                                         </thead>
-                                        {console.log(this.state.historyData)}
                                         {this.state.historyData.length > 0 ?
                                             <tbody>
                                                 {this.state.historyData.map(function (temp) {
@@ -415,7 +426,8 @@ class History extends Component {
                                                     return (<tr>
                                                         <td>{temp.symbol}</td>
                                                         <td>{date}</td>
-                                                        <td>{side}</td>
+                                                        {console.log(side)}
+                                                        <SideBuySell side={side == "Buy" ? true : false}>{side}</SideBuySell>
                                                         <td>{temp.fill_price.toFixed(2)}</td>
                                                         <td>{temp.quantity.toFixed(2)}</td>
                                                         <td>{fee}</td>

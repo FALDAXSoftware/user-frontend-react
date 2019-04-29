@@ -100,11 +100,9 @@ class KYC extends Component {
         if (countryChange !== null) {
             this.setState({ countryChange })
         }
-        console.log(a, "-------step", this.state);
 
     }
     back_step(a) {
-        console.log("BACK")
 
 
         this.setState({ next: a })

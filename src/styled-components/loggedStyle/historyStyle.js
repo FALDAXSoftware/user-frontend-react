@@ -3,7 +3,7 @@ import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
 import styled from 'styled-components';
 import { Table } from 'react-bootstrap';
 import { Container } from '../homepage/style';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const { RangePicker } = DatePicker;
 
 export const ContainerContact = styled(Container)`
@@ -11,7 +11,7 @@ export const ContainerContact = styled(Container)`
     border-radius:5px;
     max-width:1170px;
     padding-bottom: 30px;
-    min-height:1000px;
+    min-height:70vh;
 
     @media(max-width:767px)
     {
@@ -118,7 +118,7 @@ export const EXPButton = styled(Button)`
     font-family: "Open Sans";
     color: white;
     text-transform: uppercase;      
-    background-color:#64ba71;
+    background-color:#40a9ff;
     margin-left: auto;
     @media(max-width:991px)
     {
@@ -196,5 +196,12 @@ export const RangePickerS = styled(RangePicker)`
     >.ant-calendar-picker-input>.ant-calendar-picker-icon
     {
         color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+`
+export const FontAwesomeIconS = styled(FontAwesomeIcon)`
+    margin:0px 20px;
+    @media(max-width:375px)
+    {
+        margin:0px 10px;
     }
 `

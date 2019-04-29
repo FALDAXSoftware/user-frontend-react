@@ -202,7 +202,6 @@ class KYCForm extends Component {
     }
     componentDidMount() {
         var self = this;
-        console.log(" Did Props", this.props)
         fetch(API_URL + "/users/get-kyc-detail", {
             method: "get",
             headers: {
@@ -213,7 +212,6 @@ class KYCForm extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                console.log(responseData, "KYC DATA");
                 if (responseData.status == 200) {
                     let fields = {};
                     fields['first_name'] = responseData.data.first_name !== null ? responseData.data.first_name : "";
@@ -231,7 +229,6 @@ class KYCForm extends Component {
                         let phone = responseData.data.phone_number.split("-")[1];
                         let arr = [];
                         arr.push(responseData.data.country_code)
-                        console.log("Mobile", phone)
                         this.setState({
                             displayCountry: true,
                             countrychange: true,
@@ -239,7 +236,6 @@ class KYCForm extends Component {
                             phoneCountry: arr
                         });
                     }
-                    console.log(responseData.data)
                     this.setState({
                         fields: fields,
                         kycData: responseData.data
@@ -250,12 +246,9 @@ class KYCForm extends Component {
 
     }
     componentWillReceiveProps(props, newProps) {
-        console.log("WIll", this.props);
-        console.log(props, newProps);
     }
     onDateChange(value) {
         var tempDate = value.day + "/" + value.month + "/" + value.year;
-        console.log(value)
         if ((value.day !== "" && value.day !== undefined) && (value.year !== undefined && value.year !== "") && (value.month !== undefined && value.month !== "")) {
             var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
             let fields = this.state.fields;
@@ -273,7 +266,6 @@ class KYCForm extends Component {
         var arr = [];
         arr.push(name2);
         let fields = this.state.fields;
-        console.log("COuntry >>>>", arr)
         fields['country_code'] = name2;
         if (name2 == 'us' || name2 == 'ca')
             this.setState({ fields, phoneCountry: arr, countrychange: true, showSSN: true });
@@ -334,14 +326,12 @@ class KYCForm extends Component {
             var mobile = temp.concat(mob);;
             let fields = this.state.fields;
             fields['phone_number'] = mobile;
-            console.log("Mobile", mob)
             this.setState({ fields, mobile: mob });
         }
     }
     onSubmit() {
         if (this.validator.allValid()) {
             var profileData = this.state.fields;
-            console.log(profileData)
             profileData["steps"] = 1;
             this.props.kycFormAction(this.props.isLoggedIn, profileData);
         } else {
@@ -395,7 +385,6 @@ class KYCForm extends Component {
                     </First_Row_kyc>
 
                     <Second_Row_kyc>
-                        {console.log(this.state.kycData)}
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             <Date_birth_kyc>Date of Birth*</Date_birth_kyc>
                             <Datepicker kycData2={this.state.kycData} {...this.props} kyc="kyc" onDateChange={(Data) => this.onDateChange(Data)} />
@@ -425,7 +414,6 @@ class KYCForm extends Component {
                         <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                             {/* console.log(this.props) */}
                             <CountryPick kycData2={this.state.kycData} {...this.props} onCountryName={(name) => { this.onCountryName(name) }} kyc="kyc" isLoggedIn={this.props.simpleReducer.isLoggedIn} onCountryChange={(country, state, city, stateID, countryID) => this.onCountryChange(country, state, city, stateID, countryID)} />
-                            {console.log(countryBool, stateBool, cityBool)}
                             {(countryBool == true || stateBool == true || cityBool == true) ?
                                 <span style={{ color: "red" }}>{countrymsg}</span>
                                 :
@@ -433,14 +421,10 @@ class KYCForm extends Component {
                             }
                         </Col>
                     </Fourth_Row_kyc>
-                    {console.log("Mobile", this.state.mobile, ">>>>>", this.state.phoneCountry)}
                     {(this.state.countrychange == true) ?
                         <Sixth_Row_kyc>
-                            {console.log(this.state.mobile)}
                             <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xl={{ span: 24 }}>
                                 <Postal_kyc>Mobile No.*</Postal_kyc>
-
-                                {console.log("Mobile", this.state.mobile, ">>>>>", this.state.phoneCountry)}
                                 <PhoneDiv>
                                     {
                                         this.state.displayCountry &&

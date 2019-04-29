@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import { Input, Spin } from 'antd';
 import { connect } from "react-redux"
 import styled from 'styled-components';
+import NumberFormat from 'react-number-format';
 
 /* components  */
 import TableofCoinUpper from './TableofCoinUpper';
@@ -163,14 +164,12 @@ class Wallet extends Component {
         this.setState({ total: total })
     }
     currChangeList(currency) {
-        console.log(currency)
         this.props.getAllCoins(this.props.isLoggedIn, currency);
         this.props.walletBal(this.props.isLoggedIn, currency);
         var arr = currency.split(",");
         this.setState({ currencySeq: arr })
     }
     currChangeWallet(currency) {
-        console.log(currency)
         this.props.walletBal(this.props.isLoggedIn, currency);
         this.props.getAllCoins(this.props.isLoggedIn, currency);
         var arr = currency.split(",");
@@ -197,7 +196,7 @@ class Wallet extends Component {
                             </SearchCoin>
                             <Total>
                                 <Tot>Total:</Tot>
-                                <Money>${this.state.total !== null ? parseFloat(this.state.total).toFixed(4) : ""}</Money>
+                                <Money>${this.state.total !== null ? <NumberFormat value={parseFloat(this.state.total).toFixed(4)} displayType={'text'} thousandSeparator={true} /> : ""}</Money>
                                 <Currency>USD</Currency>
                             </Total>
                         </Header_wrap>

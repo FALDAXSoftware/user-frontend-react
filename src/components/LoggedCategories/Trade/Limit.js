@@ -266,21 +266,25 @@ class Limit extends Component {
                 <ETH_wrap>
                     <Label>Amount</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <AMTinput type="number" addonAfter={this.state.crypto} value={this.state.amount} name="amount" onChange={this.onChange} />
-                        {this.validator.message('Amount', this.state.amount, 'required|numeric|gtzero')}
+                        <AMTinput min="0" type="number" addonAfter={this.state.crypto} value={this.state.amount} name="amount" onChange={this.onChange} />
+                        {this.validator.message('Amount', this.state.amount, 'required|gtzero|numeric', 'text-danger-validation', {
+                            gtzero: "Amount should be greater than zero."
+                        })}
                     </Total_wrap>
                 </ETH_wrap>
                 <BTC_wrap>
                     <Label>Limit Price</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange} />
-                        {this.validator.message('Limit_price', this.state.limit_price, 'required|numeric|gtzero')}
+                        <Totinput min="0" type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange} />
+                        {this.validator.message('Limit_price', this.state.limit_price, 'required|gtzero|numeric', 'text-danger-validation', {
+                            gtzero: "Limit Price should be greater than zero."
+                        })}
                     </Total_wrap>
                 </BTC_wrap>
                 <BTC_wrap>
                     <Label>Total</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(4)} name="total" readOnly="true" />
+                        <Totinput min="0" type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(4)} name="total" readOnly="true" />
                     </Total_wrap>
                 </BTC_wrap>
                 {Object.keys(this.props.userBal).length > 0 ?

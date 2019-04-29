@@ -115,9 +115,20 @@ export const SearchInput = styled(Search)`
     width:270px;
     float:right;
     margin-right:25px;
+    &:focus
+    {
+        border:none;
+        outline:none;
+    }
     >.ant-input-suffix>i
     {
         color:${props => props.theme.mode == "dark" ? "white" : ""};
+    }
+    >.ant-input:focus
+    {
+        border:none;
+        border-bottom: 1px solid #d9d9d9;
+        box-shadow:none;
     }
     >input
     {

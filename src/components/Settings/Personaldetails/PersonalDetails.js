@@ -569,7 +569,6 @@ class PersonalDetails extends Component {
                     state = true;
                 if ((value.city == undefined || value.city == null || value.city == ""))
                     city = true;
-                console.log("CSC", value.country, value.state, value.city)
                 let countrymsg;
                 if (country == true && state == false && city == false) {
                     countrymsg = "Country Field is required."
@@ -595,7 +594,6 @@ class PersonalDetails extends Component {
                 this.setState({ countrymsg })
             }
         } else if (field == "dob") {
-            console.log(value)
             if ((value["day"]) && (value["month"]) && (value["year"])) {
                 this.setState({ dobIcon: true })
                 document.querySelectorAll(".dob_msg")[0].style.display = "none";
@@ -635,14 +633,12 @@ class PersonalDetails extends Component {
             if (value !== "") {
                 var reg = /^(?=.*[0-9A-Za-z])[- ()0-9A-Za-z]{3,25}$/
                 var bool = reg.test(value)
-                console.log("BOOL", bool)
                 if (bool == true) {
                     this.setState({ postalIcon: true })
                     document.querySelectorAll(".postal_msg")[0].style.display = "none";
                 } else {
                     this.setState({ postalIcon: false })
                     document.querySelectorAll(".postal_msg")[0].style.display = "block";
-                    console.log("Bool", bool, value.length)
                     if (value.length < 3 || value.length > 25)
                         this.setState({ postalmsg: "Postal code should have min. 3 and max. 25 characters." })
                     else

@@ -62,7 +62,6 @@ class DepthChart extends Component {
         }, (body, JWR) => {
             if (body.status == 200) {
                 let res = body.data;
-                console.log("Depth Chart>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", res);
                 self.updateGraph(res);
             }
         });
@@ -157,7 +156,6 @@ class DepthChart extends Component {
                 <Row>
                     <Col xl={24}>
                         <Chart1_wrap id="depth-chart1">
-                        {console.log("Depth Height",this.props.height)}
                             <Line height={this.props.height} data={graphData} options={{
                                 responsive: true,
                                 maintainAspectRatio: false,

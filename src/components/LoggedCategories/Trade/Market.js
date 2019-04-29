@@ -29,9 +29,10 @@ class Market extends Component {
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.clearValidation = this.clearValidation.bind(this);
         this.validator = new SimpleReactValidator({
             gtzero: {  // name the rule
-                message: 'Amount must be greater than zero',
+                message: 'Amount should be greater than zero',
                 rule: (val, params, validator) => {
                     if (val > 0) {
                         return true;
@@ -44,6 +45,11 @@ class Market extends Component {
         });
     }
 
+    clearValidation() {
+        this.validator.hideMessages();
+        this.forceUpdate();
+        // rerender to hide messages for the first time
+    }
     componentWillReceiveProps(props, newProps) {
         this.setState({
             userBalFees: props.userBal.fees, amount: 0,
@@ -249,17 +255,16 @@ class Market extends Component {
                 <ETH_wrap>
                     <Label>Amount</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <AMTinput type="number" addonAfter={this.state.crypto} value={this.state.amount} name="amount" onChange={this.onChange} />
-                        {this.validator.message('Amount', this.state.amount, 'required|numeric|gtzero')}
+                        <AMTinput min="0" type="number" addonAfter={this.state.crypto} value={this.state.amount} name="amount" onChange={this.onChange} />
+                        {this.validator.message('Amount', this.state.amount, 'required|gtzero|numeric')}
                     </Total_wrap>
                 </ETH_wrap>
                 <BTC_wrap>
                     <Label>Total</Label>
                     <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(4)} name="total" />
+                        <Totinput min="0" readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(4)} name="total" />
                     </Total_wrap>
                 </BTC_wrap>
-                {console.log("Comment for MANSI ONLY", this.state)}
                 {Object.keys(this.props.userBal).length > 0 ?
                     this.state.side == "Buy" ?
                         <Pay>
