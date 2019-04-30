@@ -1,12 +1,13 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import styled from 'styled-components';
 import { Table } from 'react-bootstrap';
 import { Icon } from 'antd';
-
 import { Scrollbars } from 'react-custom-scrollbars';
 
+/* styled-components */
 import { TableHeader, TableContent, ScrollTableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 
 export const Order_wrap = styled.div`

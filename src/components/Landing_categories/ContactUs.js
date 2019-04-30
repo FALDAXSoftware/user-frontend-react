@@ -11,7 +11,7 @@ import CommonFooter from "../Landing/Footers/Footer_home";
 import { Container } from '../../styled-components/homepage/style';
 import Contact_Map from "./Contact_Map";
 import {
-    MapIcon, BlueMarker, EmailIcon, CallIcon, CallBlue, BlueEmail, ContactMap
+    _MAPICON, _BLUEMARKER, _EMAILICON, _CALLICON, _CALLBLUE, _BLUEEMAIL, _CONTACTMAP
 } from "../../Constants/images";
 import {
     Headcontact, Head_span, Contact_wrap, Grey_wrap, Row_wrap, Left_col, Sub_head,
@@ -33,7 +33,7 @@ export const ContainerContact = styled(Container)`
 export const MapImage = styled.div`
     background-position: center;
     background-size: cover;
-    background-image: url(${ContactMap});
+    background-image: url(${_CONTACTMAP});
     height: 555px;
     width: 100%;
 `
@@ -74,9 +74,9 @@ class ContactUs extends Component {
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
                 if (props.theme == false)
-                    this.setState({ email: MapIcon, marker: EmailIcon, call: CallIcon })
+                    this.setState({ email: _MAPICON, marker: _EMAILICON, call: _CALLICON })
                 else
-                    this.setState({ email: BlueMarker, marker: BlueEmail, call: CallBlue })
+                    this.setState({ email: _BLUEMARKER, marker: _BLUEEMAIL, call: _CALLBLUE })
             }
         }
     }
@@ -84,9 +84,9 @@ class ContactUs extends Component {
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme == false)
-                    this.setState({ email: MapIcon, marker: EmailIcon, call: CallIcon })
+                    this.setState({ email: _MAPICON, marker: _EMAILICON, call: _CALLICON })
                 else
-                    this.setState({ email: BlueMarker, marker: BlueEmail, call: CallBlue })
+                    this.setState({ email: _BLUEMARKER, marker: _BLUEEMAIL, call: _CALLBLUE })
             }
         }
         this.setState({ loader: true })

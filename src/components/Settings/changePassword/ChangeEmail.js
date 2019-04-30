@@ -5,13 +5,16 @@ import { connect } from "react-redux"
 import { Row, Col, Input, notification, Modal } from 'antd';
 import styled from 'styled-components';
 import { createForm, formShape } from 'rc-form';
-import { HeaderCol, Save } from "../Personaldetails/PersonalDetails"
-import FaldaxLoader from '../../../shared-components/FaldaxLoader';
-import { globalVariables } from '../../../Globals';
 import SimpleReactValidator from 'simple-react-validator';
-import { getProfileDataAction } from "../../../Actions/Settings/settings";
-import { LogoutUser } from "../../../Actions/Auth";
 
+/* components */
+import FaldaxLoader from 'shared-components/FaldaxLoader';
+import { globalVariables } from 'Globals';
+import { getProfileDataAction } from "Actions/Settings/settings";
+import { LogoutUser } from "Actions/Auth";
+
+/* styled-components */
+import { HeaderCol, Save } from "../Personaldetails/PersonalDetails"
 let { API_URL } = globalVariables;
 
 const ChangeRow = styled(Row)`

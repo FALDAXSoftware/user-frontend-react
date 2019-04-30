@@ -1,14 +1,20 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Button, Modal, Input, notification } from 'antd';
-import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
+import { DropdownButton, ButtonToolbar } from 'react-bootstrap';
 import styled from 'styled-components'
 import SimpleReactValidator from "simple-react-validator";
-
-import { Ref_input } from '../../Settings/Referral'
-import { globalVariables } from '../../../Globals';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import FaldaxLoader from "../../../shared-components/FaldaxLoader";
+
+/* Styled-Components */
+
+
+/* Components */
+import { Ref_input } from 'components/Settings/Referral'
+import { globalVariables } from 'Globals';
+import FaldaxLoader from 'shared-components/FaldaxLoader';
+
 let { API_URL } = globalVariables;
 const WalletModal = styled(Modal)`
     width:656px !important;

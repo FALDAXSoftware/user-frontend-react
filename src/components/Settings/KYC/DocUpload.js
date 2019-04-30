@@ -1,11 +1,16 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
 import { notification, Icon } from 'antd';
 import styled from 'styled-components';
+
+/* components */
+import { kycDoc, kycFormAction } from "Actions/Settings/passwordChange"
+import FaldaxLoader from 'shared-components/FaldaxLoader';
+
+/* styled-components */
 import { ButtonWrap, SubWrap, BackButton, NextButton } from "./IDselect"
-import { kycDoc, kycFormAction } from "../../../Actions/Settings/passwordChange"
-import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 
 const SSNWrap = styled.div`
     width:100%;

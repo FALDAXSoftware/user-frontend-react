@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import { connect } from "react-redux"
 import { Input, Row, Col, Table, notification } from 'antd';
 import styled from 'styled-components';
-import { globalVariables } from '../../Globals';
+import { globalVariables } from 'Globals';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 let { API_URL } = globalVariables;

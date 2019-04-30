@@ -4,17 +4,22 @@ import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import { Button, notification, Icon, Row, Col } from "antd";
 import { connect } from 'react-redux';
-import { Eye, ActiveEye } from '../../../Constants/images';
-import { globalVariables } from '../../../Globals';
 
 /* Components */
-import { resetAction, resetData } from '../../../Actions/Auth'
+import { globalVariables } from 'Globals';
+import { _EYE, _ACTIVEEYE } from 'Constants/images';
+import { resetAction, resetData } from 'Actions/Auth'
+
+/* Global Constants */
+
+
+/* Styled-Components */
 import {
   Username, Email_label, Email_req, Pass_req, UserIconF, UserIconS
 } from "./Login_Form";
 
-/* Global Constants */
-/* Styled-Components */
+
+
 const Login_head = styled.div`
 font-size: 30px;
 font-family: "Open Sans";
@@ -379,8 +384,8 @@ class ResetPassword extends Component {
                   })} />
                   {
                     (newEye == "password") ?
-                      <FAI src={Eye} onClick={this.handleEye.bind(this, "new")} />
-                      : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "new")} />
+                      <FAI src={_EYE} onClick={this.handleEye.bind(this, "new")} />
+                      : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "new")} />
                   }
                   <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                   <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
@@ -396,8 +401,8 @@ class ResetPassword extends Component {
                   />
                   {
                     (repeatEye == "password") ?
-                      <FAI src={Eye} onClick={this.handleEye.bind(this, "confirm_password")} />
-                      : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "confirm_password")} />
+                      <FAI src={_EYE} onClick={this.handleEye.bind(this, "confirm_password")} />
+                      : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "confirm_password")} />
                   }
                   <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                   <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />

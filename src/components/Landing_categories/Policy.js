@@ -8,7 +8,7 @@ import { Spin_Ex } from '../../styled-components/homepage/style'
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
 import CommonFooter from "../Landing/Footers/Footer_home";
 import { globalVariables } from "../../Globals"
-let { API_URL, amazon_Bucket } = globalVariables;
+let { API_URL, _AMAZONBUCKET } = globalVariables;
 
 /* Styled-Components */
 const ProfileWrapper = styled.div`
@@ -149,7 +149,7 @@ export default class Policy extends Component {
                 <FirstRow >
                   <Col md={{ span: 6, offset: 5 }} xl={{ span: 6, offset: 5 }}>
                     <DivWrap>
-                      <a href={amazon_Bucket + "assets/pdf/FALDAX+Terms+of+Service.pdf"} target="_blank">
+                      <a href={_AMAZONBUCKET + "assets/pdf/FALDAX+Terms+of+Service.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
                             <CardText>
@@ -162,7 +162,7 @@ export default class Policy extends Component {
                   </Col>
                   <Col md={{ span: 6, offset: 2 }} xl={{ span: 6, offset: 2 }}>
                     <DivWrap>
-                      <a href={amazon_Bucket + "assets/pdf/FALDAX+Privacy+Policy.pdf"} target="_blank">
+                      <a href={_AMAZONBUCKET + "assets/pdf/FALDAX+Privacy+Policy.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
                             <CardText>
@@ -178,7 +178,7 @@ export default class Policy extends Component {
                 <SecondRow>
                   <Col md={{ span: 6, offset: 5 }} xl={{ span: 6, offset: 5 }}>
                     <DivWrap>
-                      <a href={amazon_Bucket + "assets/pdf/FALDAX+Anti-Money+Laundering+Policy+v2.pdf"} target="_blank">
+                      <a href={_AMAZONBUCKET + "assets/pdf/FALDAX+Anti-Money+Laundering+Policy+v2.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
                             <CardText>
@@ -191,7 +191,7 @@ export default class Policy extends Component {
                   </Col>
                   <Col md={{ span: 6, offset: 2 }} xl={{ span: 6, offset: 2 }}>
                     <DivWrap>
-                      <a href={amazon_Bucket + "assets/pdf/FALDAX+Cookie+Policy.pdf"} target="_blank">
+                      <a href={_AMAZONBUCKET + "assets/pdf/FALDAX+Cookie+Policy.pdf"} target="_blank">
                         <CustomCard>
                           <PContainer>
                             <CardText>

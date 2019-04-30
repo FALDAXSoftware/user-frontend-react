@@ -5,17 +5,17 @@ import { Layout } from 'antd';
 import styled from 'styled-components'
 
 /* Components */
-import Header_main from "../Navigations/Navigation";
-import Home_first from "../Landing/Body_sections/Home_first";
-import About from "../Landing/Body_sections/About";
-// import Home_second from '../Landing/Body_sections/Home_second';
-import Home_third from '../Landing/Body_sections/Home_third';
-import Services from '../Landing/Body_sections/Services';
-import Home_five from "../Landing/Body_sections/Home_five";
-import Home_six from "../Landing/Body_sections/Home_six";
-import Feature from "../Landing/Body_sections/Feature";
-import Home_seven from "../Landing/Body_sections/Home_seven";
-import Footer_main from "../Landing/Footers/Footer_home";
+import Header_main from "components/Navigations/Navigation";
+import Home_first from "components/Landing/Body_sections/Home_first";
+import About from "components/Landing/Body_sections/About";
+// import Home_second from 'components/Landing/Body_sections/Home_second';
+import Home_third from 'components/Landing/Body_sections/Home_third';
+import Services from 'components/Landing/Body_sections/Services';
+import Home_five from "components/Landing/Body_sections/Home_five";
+import Home_six from "components/Landing/Body_sections/Home_six";
+import Feature from "components/Landing/Body_sections/Feature";
+import Home_seven from "components/Landing/Body_sections/Home_seven";
+import Footer_main from "components/Landing/Footers/Footer_home";
 
 /* Styled Components */
 import Home_four from './Body_sections/Home_four';

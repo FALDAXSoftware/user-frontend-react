@@ -4,11 +4,12 @@ import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import { Row, Col, Button, notification, Icon } from "antd";
 import { connect } from 'react-redux';
-import { Eye, ActiveEye } from '../../../Constants/images';
+
 /* Components */
-import FaldaxLoader from "../../../shared-components/FaldaxLoader"
-import { loginAction, Login, clearLogin } from '../../../Actions/Auth';
-import { globalVariables } from '../../../Globals';
+import { _EYE, _ACTIVEEYE } from 'Constants/images';
+import FaldaxLoader from "shared-components/FaldaxLoader"
+import { loginAction, Login, clearLogin } from 'Actions/Auth';
+import { globalVariables } from 'Globals';
 
 let { API_URL } = globalVariables;
 /* Global Constants */
@@ -613,7 +614,7 @@ class Login_Form extends Component {
                       })}
                       />
                       {
-                        (this.state.typeEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this)} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this)} />
+                        (this.state.typeEye == "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this)} /> : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this)} />
                       }
                       <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                       <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />

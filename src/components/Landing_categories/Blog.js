@@ -15,7 +15,7 @@ import {
     Blog_p, Blogs_wrap, HR_tag, Meta_title, Meta_desc, Card_foot, Prev_next, Prev, Next,
     MsgIcon, CardCover, BlogDesc, ReadMore
 } from '../../styled-components/landingCategories/blogStyle';
-import { BlogIcon, DefaultBlog } from "../../Constants/images";
+import { _BLOGICON, _DEFAULTBLOG } from "../../Constants/images";
 import NoDataFound from "../../shared-components/No_data_found";
 import ReactHtmlParser from "react-html-parser";
 import Masonry from 'react-masonry-css'
@@ -159,8 +159,8 @@ class Blog extends Component {
                                                         <Link to={`/blogDetails?blogID=${result.id}`}>
                                                             <Card
                                                                 style={{ width: "100%" }}
-                                                                cover={<CardCover alt="example" style={{ backgroundImage: `url(${result.featured_image ? result.featured_image : DefaultBlog})` }} />}
-                                                                actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.blog_author.display_name}</Card_foot>, <Card_foot> <MsgIcon src={BlogIcon} />{result.comment_count} Comments</Card_foot>]}
+                                                                cover={<CardCover alt="example" style={{ backgroundImage: `url(${result.featured_image ? result.featured_image : _DEFAULTBLOG})` }} />}
+                                                                actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.blog_author.display_name}</Card_foot>, <Card_foot> <MsgIcon src={_BLOGICON} />{result.comment_count} Comments</Card_foot>]}
                                                                 bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
                                                                 className={_self.state.blogCSS}
                                                             >
@@ -199,7 +199,7 @@ class Blog extends Component {
                                         </Link>
                                     </Col>
                                     <Col sm={24} md={12} lg={15}>
-                                        <Righthead image={globalVariables.amazon_Bucket + blogsData.featuredBlog.featured_image}>
+                                        <Righthead image={globalVariables._AMAZONBUCKET + blogsData.featuredBlog.featured_image}>
                                         </Righthead>
                                     </Col>
                                 </Row>
@@ -231,7 +231,7 @@ class Blog extends Component {
                                                                 <Card
                                                                     style={{ width: "100%" }}
                                                                     cover={<CardCover alt="example" style={{ backgroundImage: `url(${result.featured_image ? result.featured_image : DefaultBlog})` }} />}
-                                                                    actions={[<Card_foot>{date}</Card_foot>, <Card_foot className="auth-foot">{result.blog_author.display_name}</Card_foot>, <Card_foot className="comment-foot"> <MsgIcon src={BlogIcon} />{result.comment_count} Comments</Card_foot>]}
+                                                                    actions={[<Card_foot>{date}</Card_foot>, <Card_foot className="auth-foot">{result.blog_author.display_name}</Card_foot>, <Card_foot className="comment-foot"> <MsgIcon src={_BLOGICON} />{result.comment_count} Comments</Card_foot>]}
                                                                     bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
                                                                     className={_self.state.blogCSS}
                                                                 >

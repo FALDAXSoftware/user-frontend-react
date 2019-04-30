@@ -5,19 +5,18 @@ import { Row, Col, Layout } from 'antd';
 import styled from 'styled-components'
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { globalVariables } from '../../../Globals'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faInternetExplorer, faInstagram, faFacebook, faTelegramPlane, faGoogle,
-    faYoutube, faTwitter, faLinkedinIn, faDiscord
+    faFacebook, faTwitter, faLinkedinIn,
 } from '@fortawesome/free-brands-svg-icons';
-import { FooterLogo, FooterWhiteLogo, AppStore, PlayStore } from '../../../Constants/images';
 
 /* Components */
-import ComingSoon from '../../ComingSoon';
+import { globalVariables } from 'Globals'
+import { _FOOTERLOGO, _FOOTERWHITELOGO, _APPSTORE, _PLAYSTORE } from 'Constants/images';
+import ComingSoon from 'components/ComingSoon';
 
 /* Styled Components */
-import { Container } from '../../../styled-components/homepage/style';
+import { Container } from 'styled-components/homepage/style';
 const { Footer } = Layout;
 
 /* Styled-Components */
@@ -210,18 +209,18 @@ class FooterHome extends Component {
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
                 if (props.theme == false)
-                    this.setState({ footerLogo: FooterLogo })
+                    this.setState({ footerLogo: _FOOTERLOGO })
                 else
-                    this.setState({ footerLogo: FooterWhiteLogo })
+                    this.setState({ footerLogo: _FOOTERWHITELOGO })
             }
         }
     }
     componentDidMount() {
         if (this.props.theme !== undefined) {
             if (this.props.theme == false)
-                this.setState({ footerLogo: FooterLogo })
+                this.setState({ footerLogo: _FOOTERLOGO })
             else
-                this.setState({ footerLogo: FooterWhiteLogo })
+                this.setState({ footerLogo: _FOOTERWHITELOGO })
         }
 
         fetch(globalVariables.API_URL + '/get-contact-details', {
@@ -354,8 +353,8 @@ class FooterHome extends Component {
                             <Store_Col xs={24} lg={2} xl={2}>
                                 <Download>Download</Download>
                                 <Store_Wrap>
-                                    <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}><Appstore style={{ cursor: "pointer" }} src={AppStore} /></a>
-                                    <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}><Playstore style={{ cursor: "pointer" }} src={PlayStore} /></a>
+                                    <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}><Appstore style={{ cursor: "pointer" }} src={_APPSTORE} /></a>
+                                    <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}><Playstore style={{ cursor: "pointer" }} src={_PLAYSTORE} /></a>
                                 </Store_Wrap>
                             </Store_Col>
                         </Row>

@@ -1,11 +1,13 @@
+/*Built-in Packages*/
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-
-import 'antd/dist/antd.css';
-import { Row, Col } from 'antd';
 import styled from 'styled-components';
-import { Instru2, WrapDepth } from '../../../styled-components/loggedStyle/tradeStyle';
+import { Row, Col } from 'antd';
+import 'antd/dist/antd.css';
 import { Line } from 'react-chartjs-2';
+
+/*styled-components*/
+import { Instru2, WrapDepth } from '../../../styled-components/loggedStyle/tradeStyle';
 
 const Chart1_wrap = styled.div`
     height:90%;

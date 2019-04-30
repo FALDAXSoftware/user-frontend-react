@@ -1,12 +1,17 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
+
+/* Constants */
+import { _BANKCARD } from "Constants/images";
+
+/* styled-components */
 import {
     Payment_wrap, PayHead, PayForm, Bank, Bank_label, Bank_input, Button_payment,
     Button_sub, Button_cancel, Button_add, PayForm2, Lefty, Righty, Gap, Top, CardName,
     RemoveCard, Body_card, Body_center
-} from '../../../styled-components/settings/paymentStyle';
-import { BankCard } from "../../../Constants/images";
+} from 'styled-components/settings/paymentStyle';
 
 class Paymethods extends Component {
     constructor(props) {
@@ -62,7 +67,7 @@ class Paymethods extends Component {
                                         </Top>
                                         <Body_card>
                                             <Body_center>
-                                                <img src={BankCard} />
+                                                <img src={_BANKCARD} />
                                                 <span>BG75FINV91501056322589</span>
                                             </Body_center>
                                         </Body_card>
@@ -80,7 +85,7 @@ class Paymethods extends Component {
                                         </Top>
                                         <Body_card>
                                             <Body_center>
-                                                <img src={BankCard} />
+                                                <img src={_BANKCARD} />
                                                 <span>BG75FINV91501056322589</span>
                                             </Body_center>
                                         </Body_card>
@@ -103,7 +108,7 @@ class Paymethods extends Component {
                                         </Top>
                                         <Body_card>
                                             <Body_center>
-                                                <img src={BankCard} />
+                                                <img src={_BANKCARD} />
                                                 <span>BG75FINV91501056322589</span>
                                             </Body_center>
                                         </Body_card>
@@ -122,7 +127,7 @@ class Paymethods extends Component {
                                         </Top>
                                         <Body_card>
                                             <Body_center>
-                                                <img src={BankCard} />
+                                                <img src={_BANKCARD} />
                                                 <span>BG75FINV91501056322589</span>
                                             </Body_center>
                                         </Body_card>

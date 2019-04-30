@@ -5,8 +5,8 @@ import { Card } from 'antd';
 import styled from 'styled-components';
 import Slider from "react-slick";
 import {
-    Group17, Group18, Group19, Group20, Group21, Group22, Group23, Group24, Group25,
-    Group26, Group27
+    _GROUP17, _GROUP18, _GROUP19, _GROUP20, _GROUP21, _GROUP22, _GROUP23, _GROUP24, _GROUP25,
+    _GROUP26, _GROUP27
 } from '../../../Constants/images';
 
 /* Components */
@@ -119,7 +119,7 @@ export default class HomeFive extends Component {
                                 hoverable={false}
                                 className="features"
                                 style={{ width: "100%", border: "none" }}
-                                cover={<Card_img src={Group17} alt="Card image cap" />}
+                                cover={<Card_img src={_GROUP17} alt="Card image cap" />}
                             >
                                 <Meta_main
                                     title="Security"
@@ -133,7 +133,7 @@ export default class HomeFive extends Component {
                                 hoverable={false}
                                 className="features"
                                 style={{ width: "100%", border: "none" }}
-                                cover={<Card_img src={Group18} alt="Card image cap" />}
+                                cover={<Card_img src={_GROUP18} alt="Card image cap" />}
                             >
                                 <Meta_main
                                     title="Coin & Token Selection"
@@ -147,7 +147,7 @@ export default class HomeFive extends Component {
                                 hoverable={false}
                                 className="features"
                                 style={{ width: "100%", border: "none" }}
-                                cover={<Card_img src={Group19} alt="Card image cap" />}
+                                cover={<Card_img src={_GROUP19} alt="Card image cap" />}
                             >
                                 <Meta_main
                                     title="Portfolio Management"
@@ -161,7 +161,7 @@ export default class HomeFive extends Component {
                                 hoverable={false}
                                 className="features"
                                 style={{ width: "100%", border: "none" }}
-                                cover={<Card_img src={Group20} alt="Card image cap" />}
+                                cover={<Card_img src={_GROUP20} alt="Card image cap" />}
                             >
                                 <Meta_main
                                     title="Affilliate System"
@@ -175,7 +175,7 @@ export default class HomeFive extends Component {
                                 hoverable={false}
                                 className="features"
                                 style={{ width: "100%", border: "none" }}
-                                cover={<Card_img src={Group21} alt="Card image cap" />}
+                                cover={<Card_img src={_GROUP21} alt="Card image cap" />}
                             >
                                 <Meta_main
                                     title="Basic And Advanced UI"
@@ -189,7 +189,7 @@ export default class HomeFive extends Component {
                                 hoverable={false}
                                 className="features"
                                 style={{ width: "100%", border: "none" }}
-                                cover={<Card_img src={Group22} alt="Card image cap" />}
+                                cover={<Card_img src={_GROUP22} alt="Card image cap" />}
                             >
                                 <Meta_main
                                     title="Advanced Charting Tools"
@@ -203,7 +203,7 @@ export default class HomeFive extends Component {
                                 hoverable={false}
                                 className="features"
                                 style={{ width: "100%", border: "none" }}
-                                cover={<Card_img src={Group23} alt="Card image cap" />}
+                                cover={<Card_img src={_GROUP23} alt="Card image cap" />}
                             >
                                 <Meta_main
                                     title="Collaboration "
@@ -217,7 +217,7 @@ export default class HomeFive extends Component {
                                 hoverable={false}
                                 className="features"
                                 style={{ width: "100%", border: "none" }}
-                                cover={<Card_img src={Group24} alt="Card image cap" />}
+                                cover={<Card_img src={_GROUP24} alt="Card image cap" />}
                             >
                                 <Meta_main
                                     title="Accounting "
@@ -231,7 +231,7 @@ export default class HomeFive extends Component {
                                 hoverable={false}
                                 className="features"
                                 style={{ width: "100%", border: "none" }}
-                                cover={<Card_img src={Group25} alt="Card image cap" />}
+                                cover={<Card_img src={_GROUP25} alt="Card image cap" />}
                             >
                                 <Meta_main
                                     title="Bank-Level Wallet Security"
@@ -245,7 +245,7 @@ export default class HomeFive extends Component {
                                 hoverable={false}
                                 className="features"
                                 style={{ width: "100%", border: "none" }}
-                                cover={<Card_img src={Group26} alt="Card image cap" />}
+                                cover={<Card_img src={_GROUP26} alt="Card image cap" />}
                             >
                                 <Meta_main
                                     title="Customizable Dashboard"
@@ -259,7 +259,7 @@ export default class HomeFive extends Component {
                                 hoverable={false}
                                 className="features"
                                 style={{ width: "100%", border: "none" }}
-                                cover={<Card_img src={Group27} alt="Card image cap" />}
+                                cover={<Card_img src={_GROUP27} alt="Card image cap" />}
                             >
                                 <Meta_main
                                     title="Proprietary Code "

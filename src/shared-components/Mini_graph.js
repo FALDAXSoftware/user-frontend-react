@@ -6,7 +6,7 @@ import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
 import { globalVariables } from '../Globals';
 const moment = require('moment');
-let { API_URL, amazon_Bucket } = globalVariables;
+let { API_URL, _AMAZONBUCKET } = globalVariables;
 
 /* Styled componets */
 const Graph_wrapper = styled.div`
@@ -208,7 +208,7 @@ class Mini_graph extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={5}>
-                        <Image_wrapper src={amazon_Bucket + image} />
+                        <Image_wrapper src={_AMAZONBUCKET + image} />
                     </Col>
                     <Col xs={11} md={12}>
                         <Span_coin_price> {price.toFixed(2)} {this.props.currency} </Span_coin_price>

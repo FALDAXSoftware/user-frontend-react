@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Testimony2, Testimony3, Quote } from '../../../Constants/images';
+import { _TESTIMONY2, _Testimony3, _QUOTE } from '../../../Constants/images';
 
 /* Components */
 /* Global Components */
@@ -94,28 +94,28 @@ export default class HomeFourth extends Component {
                             <Slider {...settings}>
                                 <div>
                                     <Slide>
-                                        <Slide_img src={Testimony2} /><br />
+                                        <Slide_img src={_TESTIMONY2} /><br />
                                         <Slide_span>Robert Leonard</Slide_span>
                                         <p>ceo</p>
                                     </Slide>
                                 </div>
                                 <div>
                                     <Slide>
-                                        <Slide_img src={Testimony2} /><br />
+                                        <Slide_img src={_TESTIMONY2} /><br />
                                         <Slide_span>Robert Leonard</Slide_span>
                                         <p>ceo</p>
                                     </Slide>
                                 </div>
                                 <div>
                                     <Slide>
-                                        <Slide_img src={Testimony3} /><br />
+                                        <Slide_img src={_Testimony3} /><br />
                                         <Slide_span>Robert Leonard</Slide_span>
                                         <p>ceo</p>
                                     </Slide>
                                 </div>
                                 <div>
                                     <Slide>
-                                        <Slide_img src={Testimony3} /><br />
+                                        <Slide_img src={_Testimony3} /><br />
                                         <Slide_span>Robert Leonard</Slide_span>
                                         <p>ceo</p>
                                     </Slide>
@@ -125,7 +125,7 @@ export default class HomeFourth extends Component {
                     </Col>
                     <Col xxl={{ span: 14 }} xl={{ span: 14 }} sm={{ span: 24 }}>
                         <Secondslider >
-                            <img src={Quote} />
+                            <img src={_QUOTE} />
                             <Sub_slider>
                                 <Slider {...settings2}>
                                     <div>

@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { Table } from 'react-bootstrap';
 import { Menu, Dropdown, Icon } from 'antd';
 
 import { Scrollbars } from 'react-custom-scrollbars';
-import { TableHeader, TableContent, ScrollTableContent } from "../../../styled-components/loggedStyle/tradeStyle";
-import { Head, Sub_head, DropMenu, Col1, Bit_img, Bit_text, Bit, Bit_price, Price, Icon_wrap } from "../../../styled-components/loggedStyle/walletStyle";
+import { TableHeader, TableContent, ScrollTableContent } from "styled-components/loggedStyle/tradeStyle";
+import { Head, Sub_head, Col1 } from "styled-components/loggedStyle/walletStyle";
 
 const Table_coin = styled(Table)`
     @media(max-width:1160px)
@@ -88,10 +87,12 @@ class DetailsTable extends React.Component {
 
     }
     componentWillReceiveProps(props, newProps) {
-        if (props.wallet.length > 0)
-            this.setState({
-                walletDetails: props.wallet
-            });
+        if (props.wallet !== undefined && props.wallet !== null) {
+            if (props.wallet.length > 0)
+                this.setState({
+                    walletDetails: props.wallet
+                });
+        }
     }
     componentDidMount() {
         if (this.props.wallet.length > 0)

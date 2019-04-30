@@ -1,19 +1,19 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import { Table } from 'react-bootstrap';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { globalVariables } from "../../../Globals";
 import moment from "moment";
-import { Spin } from 'antd';
-import { History_wrap, TableHeader, TableContent, ScrollTableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
-import {
-    Spin_single
-} from "../../../styled-components/loggedStyle/dashStyle"
-import { OTwrap } from "./OrderTrade"
+
+/*components*/
+import { globalVariables } from "Globals";
+
+/* styled-components */
+import { History_wrap, TableHeader, TableContent, ScrollTableContent } from "styled-components/loggedStyle/tradeStyle";
+import { OTwrap } from "./OrderTrade";
+
 const APP_URL = globalVariables.API_URL;
 const BorderedHistoryWrap = styled(History_wrap)`
     margin-left:30px;

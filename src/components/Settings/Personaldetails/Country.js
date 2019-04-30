@@ -1,9 +1,12 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import { Select, Row, Col } from 'antd';
-import { globalVariables } from '../../../Globals';
 import CountryData from 'country-state-city';
+import { Select, Row, Col } from 'antd';
+
+/* components */
+import { globalVariables } from 'Globals';
 
 let { API_URL } = globalVariables;
 const Option = Select.Option;

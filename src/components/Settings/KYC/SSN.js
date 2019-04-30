@@ -1,9 +1,14 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
 import styled from 'styled-components';
-import { ButtonWrap, SubWrap, BackButton, NextButton } from "./IDselect"
+
+/* components */
 import { kycFormAction } from "../../../Actions/Settings/passwordChange"
+
+/* styled-components */
+import { ButtonWrap, SubWrap, BackButton, NextButton } from "./IDselect"
 
 const SSNWrap = styled.div`
     width:42%;

@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ProPic1, ProPic2, ProPic3, Quote } from '../../../Constants/images';
+import { _PROPIC1, _PROPIC2, _PROPIC3, _QUOTE } from '../../../Constants/images';
 
 /* Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
@@ -108,28 +108,28 @@ export default class HomeSeven extends Component {
                                 <Slider {...settings}>
                                     <div>
                                         <Slide>
-                                            <Slide_img src={ProPic1} /><br />
+                                            <Slide_img src={_PROPIC1} /><br />
                                             <Slide_span>Robert Leonard</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src={ProPic2} /><br />
+                                            <Slide_img src={_PROPIC2} /><br />
                                             <Slide_span>Smit Jones</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src={ProPic3} /><br />
+                                            <Slide_img src={_PROPIC3} /><br />
                                             <Slide_span>William Johanas</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src={ProPic2} /><br />
+                                            <Slide_img src={_PROPIC2} /><br />
                                             <Slide_span>John Lopez</Slide_span>
                                             <p>ceo</p>
                                         </Slide>
@@ -139,7 +139,7 @@ export default class HomeSeven extends Component {
                         </Col>
                         <Col xxl={{ span: 14 }} xl={{ span: 14 }} sm={{ span: 24 }}>
                             <Secondslider >
-                                <img src={Quote} />
+                                <img src={_QUOTE} />
                                 <Sub_slider>
                                     <Slider {...settings2}>
                                         <div>

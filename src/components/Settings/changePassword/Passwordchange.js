@@ -5,16 +5,19 @@ import { connect } from "react-redux"
 import { Row, Col, Input, notification, Progress, Spin } from 'antd';
 import styled from 'styled-components';
 import { createForm, formShape } from 'rc-form';
-import { UserIconF, UserIconS, Email_req } from "../../Landing/User_forms/Login_Form"
+
+/* components */
+import FaldaxLoader from 'shared-components/FaldaxLoader';
+import { _EYE, _ACTIVEEYE } from "Constants/images";
+import ChangeEmail from './ChangeEmail';
+
+/* styled-components */
 import { HeaderCol, Save } from "../Personaldetails/PersonalDetails"
 import {
     passwordChange, passwordChangeData, TF_Enable, QRData, verifyTF, verifyQRData,
     TF_Disable, disableAction
-} from "../../../Actions/Settings/passwordChange";
-import { Eye, ActiveEye } from "../../../Constants/images";
-import FaldaxLoader from '../../../shared-components/FaldaxLoader';
-import ChangeEmail from './ChangeEmail';
-
+} from "Actions/Settings/passwordChange";
+import { UserIconF, UserIconS, Email_req } from "components/Landing/User_forms/Login_Form"
 const Wrapper = styled.div`
 `
 const ChangeRow = styled(Row)`
@@ -593,7 +596,7 @@ class PasswordChange extends Component {
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (typeEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this, "old")} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "old")} />
+                                    (typeEye == "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this, "old")} /> : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "old")} />
                                 }
                                 <UserIconS id="passchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="passchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
@@ -608,7 +611,7 @@ class PasswordChange extends Component {
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (newEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "new")} />
+                                    (newEye == "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "new")} />
                                 }
                                 <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
@@ -623,7 +626,7 @@ class PasswordChange extends Component {
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (repeatEye == "password") ? <FAI src={Eye} onClick={this.handleEye.bind(this, "repeat")} /> : <Active_FAI src={ActiveEye} onClick={this.handleEye.bind(this, "repeat")} />
+                                    (repeatEye == "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this, "repeat")} /> : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "repeat")} />
                                 }
                                 <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />

@@ -4,7 +4,7 @@ import { Row, Col } from 'antd';
 import styled from 'styled-components';
 
 /* Shared Components */
-import Mini_graph from '../../../shared-components/Mini_graph';
+import Mini_graph from 'shared-components/Mini_graph';
 
 /* Styled Components */
 

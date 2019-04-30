@@ -1,9 +1,13 @@
+
+/* Built-in Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Button, Modal, Icon, notification } from 'antd';
 import styled from 'styled-components'
-import { globalVariables } from '../Globals';
-import { ComingImg } from "../Constants/images";
+
+/* components */
+import { globalVariables } from 'Globals';
+import { _COMINGIMG } from "Constants/images";
 
 const API_URL = globalVariables.API_URL;
 
@@ -111,7 +115,7 @@ class ComingSoon extends Component {
         return (
             <div>
                 <Modal
-                    title={<img src={ComingImg} />}
+                    title={<img src={_COMINGIMG} />}
                     visible={this.props.visible}
                     onOk={(e) => this.handleComing()}
                     onCancel={(e) => this.comingCancel(e)}

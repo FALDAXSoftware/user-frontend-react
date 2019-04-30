@@ -1,18 +1,23 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import 'antd/dist/antd.css';
 import { Row, Col, Radio, notification, Spin } from 'antd';
+
+/* Components */
+import { globalVariables } from "Globals";
+
+/* Styled-components */
 import {
     Spin_single
-} from "../../../styled-components/loggedStyle/dashStyle"
+} from "styled-components/loggedStyle/dashStyle"
 import {
     Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Balance1, Total,
     ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay,
     Esti, Button_wrap, ButtonETH
-} from "../../../styled-components/loggedStyle/tradeStyle";
+} from "styled-components/loggedStyle/tradeStyle";
 
-import { globalVariables } from "../../../Globals";
 let { API_URL } = globalVariables;
 
 class StopLimit extends Component {

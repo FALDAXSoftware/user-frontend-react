@@ -1,26 +1,28 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
+import { connect } from "react-redux"
+import moment from 'moment';
+import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import { Row, Col, Progress, Spin } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareFull } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
-import LoggedNavigation from '../../Navigations/LoggedNavigation';
-import CommonFooter from "../../Landing/Footers/Footer_home";
-import DashGraph from "./dashGraph";
-import RiseTable from "./RiseTable";
-import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle";
-import { ContainerContact } from "../../../styled-components/loggedStyle/historyStyle"
-import { connect } from "react-redux"
-import InfiniteScroll from 'react-infinite-scroller';
+/* import InfiniteScroll from 'react-infinite-scroller'; */
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Spin_Ex } from "../../Settings/Personaldetails/PersonalDetails";
 
+/* Components */
+import LoggedNavigation from 'components/Navigations/LoggedNavigation';
+import CommonFooter from "components/Landing/Footers/Footer_home";
+import DashGraph from "./dashGraph";
+/* import RiseTable from "./RiseTable"; */
+import { globalVariables } from 'Globals';
+
+/*Styled-components*/
+import { Contact_wrap, Grey_wrap } from "styled-components/landingCategories/contactStyle";
+import { ContainerContact } from "styled-components/loggedStyle/historyStyle"
 import {
-    ActPortWrap, Lleft, Rright, Topic, Act_div, ActTable, PortTable, High_low, Left_hl, Right_hl,
-    Rise_fall, Newsdiv, News, Newslist, List, Listspan, Listp, Date, Spin_single
-} from "../../../styled-components/loggedStyle/dashStyle"
-import { globalVariables } from '../../../Globals';
-import moment from 'moment';
+    ActPortWrap, Lleft, Rright, Topic, Act_div, ActTable, PortTable, High_low, Left_hl, Right_hl, Newsdiv, News, Newslist, List, Listspan, Listp, Date, Spin_single
+} from "styled-components/loggedStyle/dashStyle"
 
 let { API_URL } = globalVariables;
 

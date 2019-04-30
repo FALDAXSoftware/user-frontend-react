@@ -1,16 +1,19 @@
+/* Built-in packages*/
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
 import styled from 'styled-components';
-import { Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { Menu, Dropdown, Icon } from 'antd';
-import { Scrollbars } from 'react-custom-scrollbars';
+import { Menu, Dropdown } from 'antd';
+
+/* styled components */
 import { OTwrap } from "../Trade/OrderTrade"
-import { History_wrap, TableHeader, TableContent, ScrollTableContent } from "../../../styled-components/loggedStyle/tradeStyle";
-import { Head, Sub_head, DropMenu, Col1, Bit_img, Bit_text, Bit, Bit_price, Price, Icon_wrap } from "../../../styled-components/loggedStyle/walletStyle";
-import { globalVariables } from '../../../Globals';
-let { amazon_Bucket } = globalVariables;
+import { History_wrap } from "styled-components/loggedStyle/tradeStyle";
+import { Head, Sub_head, DropMenu, Col1 } from "styled-components/loggedStyle/walletStyle";
+
+/* components */
+import { globalVariables } from 'Globals';
+let { _AMAZONBUCKET } = globalVariables;
+
 const BorderedHistoryWrap = styled(History_wrap)`
     overflow-x:auto;
     width:100%;
@@ -161,9 +164,9 @@ class TableofCoin extends React.Component {
                             {tableData !== undefined && tableData !== null ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
                                 var img;
                                 if (tableData[index].coin_icon == null)
-                                    img = amazon_Bucket + tableData[index].coin_icon
+                                    img = _AMAZONBUCKET + tableData[index].coin_icon
                                 else
-                                    img = amazon_Bucket + "coin/defualt_coin.png"
+                                    img = _AMAZONBUCKET + "coin/defualt_coin.png"
                                 let tableIndex = tableData[index]
                                 return (
                                     <Col1>

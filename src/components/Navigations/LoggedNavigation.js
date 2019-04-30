@@ -5,16 +5,18 @@ import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
+import ReactSwipeEvents from 'react-swipe-events'
 
 /* Components */
 import Afterlog from "./Afterlog"
-import { LogoutUser } from '../../Actions/Auth';
-import ReactSwipeEvents from 'react-swipe-events'
-import { globalVariables } from "../../Globals";
-import ComingSoon from '../ComingSoon';
-import CompleteKYC from "../../shared-components/CompleteKYC"
-import CountryAccess from '../../shared-components/CountryAccess';
-import { FaldaxLogo, FaldaxWhite, WhiteLogo, Faldax, Wallpaper } from "../../Constants/images";
+import { LogoutUser } from 'Actions/Auth';
+import { globalVariables } from "Globals";
+import ComingSoon from 'components/ComingSoon';
+import CompleteKYC from "shared-components/CompleteKYC"
+import CountryAccess from 'shared-components/CountryAccess';
+
+/* Constants */
+import { _FALDAXLOGO, _FALDAXWHITE, _WHITELOGO, _FALDAX, _WALLPAPER } from "Constants/images";
 const { Header } = Layout;
 
 /* Styled Components */
@@ -94,7 +96,7 @@ const SideNav = styled.div`
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 0px;
-    background-image: url(${Wallpaper});
+    background-image: url(${_WALLPAPER});
     width: 0px;
     color: white;
     background-position: center;
@@ -186,9 +188,9 @@ class LoggedNavigation extends Component {
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
                 if (props.theme == false)
-                    this.setState({ faldaxLogo: FaldaxLogo, faldax: Faldax })
+                    this.setState({ faldaxLogo: _FALDAXLOGO, faldax: _FALDAX })
                 else
-                    this.setState({ faldax: FaldaxWhite, faldaxLogo: WhiteLogo })
+                    this.setState({ faldax: _FALDAXWHITE, faldaxLogo: _WHITELOGO })
             }
         }
     }
@@ -207,9 +209,9 @@ class LoggedNavigation extends Component {
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme == false)
-                    this.setState({ faldaxLogo: FaldaxLogo, faldax: Faldax })
+                    this.setState({ faldaxLogo: _FALDAXLOGO, faldax: _FALDAX })
                 else
-                    this.setState({ faldax: FaldaxWhite, faldaxLogo: WhiteLogo })
+                    this.setState({ faldax: _FALDAXWHITE, faldaxLogo: _WHITELOGO })
             }
         }
     }
