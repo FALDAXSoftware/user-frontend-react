@@ -1,15 +1,18 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux";
-import { Row, Col, Checkbox, Table, Button, notification, Spin, Modal, Pagination } from 'antd';
+import { Row, Col, Checkbox, Table, Button, notification, Modal, Pagination } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDesktop, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
-import { Spin_Ex } from "../Personaldetails/PersonalDetails"
-import { globalVariables } from '../../../Globals';
-import { deleteAccount } from "../../../Actions/Auth"
-import FaldaxLoader from "../../../shared-components/FaldaxLoader"
+
+/* Components */
+import { globalVariables } from 'Globals';
+import { deleteAccount } from "Actions/Auth"
+import FaldaxLoader from "shared-components/FaldaxLoader"
+
 let { API_URL } = globalVariables;
 
 const columns = [{

@@ -1,3 +1,4 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import styled from 'styled-components'
@@ -5,16 +6,20 @@ import 'antd/dist/antd.css';
 import moment from 'moment';
 import { Checkbox, Select, notification } from 'antd';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import LoggedNavigation from '../../Navigations/LoggedNavigation';
-import CommonFooter from "../../Landing/Footers/Footer_home";
-import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
+import { CSVLink } from "react-csv";
+
+/* components */
+import LoggedNavigation from 'components/Navigations/LoggedNavigation';
+import CommonFooter from "components/Landing/Footers/Footer_home";
+import { globalVariables } from 'Globals';
+
+/* styled-components */
+import { Contact_wrap, Grey_wrap } from "styled-components/landingCategories/contactStyle"
 import {
     ContainerContact, His_title, His_wrap, Tablediv, HisTable, HeadHis, Filter,
     EXPButton, FontAwesomeIconS, Datediv, RangePickerS
-} from "../../../styled-components/loggedStyle/historyStyle"
-import { CSVLink } from "react-csv";
-import { globalVariables } from '../../../Globals';
-import FaldaxLoader from '../../../shared-components/FaldaxLoader'
+} from "styled-components/loggedStyle/historyStyle"
+import FaldaxLoader from 'shared-components/FaldaxLoader'
 
 let { API_URL } = globalVariables;
 

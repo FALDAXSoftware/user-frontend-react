@@ -12,7 +12,7 @@ import {
 } from '../../styled-components/landingCategories/contactStyle';
 import { globalVariables } from "../../Globals";
 import {
-    MediaContactICon, MediaWhite, MediaFB, MediaLinkedin, MediaTweeter, MediaDiscord
+    _MEDIACONTACTICON, _MEDIAWHITE, _MEDIAFB, _MEDIALINKEDIN, _MEDIATWEETER, _MEDIADISCORD
 } from "../../Constants/images";
 
 let { API_URL } = globalVariables;
@@ -70,10 +70,10 @@ class MediaContact extends Component {
                         <Career_wrap>
                             <Subhead>
                                 <Leftmedia>
-                                    <img src={MediaContactICon} />
+                                    <img src={_MEDIACONTACTICON} />
                                 </Leftmedia>
                                 <Rightmedia>
-                                    <img src={MediaWhite} />
+                                    <img src={_MEDIAWHITE} />
                                 </Rightmedia>
                             </Subhead>
                             <Textwrap>
@@ -100,10 +100,10 @@ class MediaContact extends Component {
                                             <Mediaspan>MEDIA CONTACT</Mediaspan>
                                             {contact !== null ?
                                                 <MediaUL>
-                                                    <a target="_blank" href={`${contact.fb_profile}`}><MediaLI><img src={MediaFB} /></MediaLI></a>
-                                                    <a target="_blank" href={`${contact.twitter_profile}`}><MediaLI><img src={MediaTweeter} /></MediaLI></a>
-                                                    <a target="_blank" href={`${contact.linkedin_profile}`}><MediaLI><img src={MediaLinkedin} /></MediaLI></a>
-                                                    {/* <a target="_blank" href={`${contact.discord_profile}`}><MediaLI><img src={MediaDiscord} /></MediaLI></a> */}
+                                                    <a target="_blank" href={`${contact.fb_profile}`}><MediaLI><img src={_MEDIAFB} /></MediaLI></a>
+                                                    <a target="_blank" href={`${contact.twitter_profile}`}><MediaLI><img src={_MEDIATWEETER} /></MediaLI></a>
+                                                    <a target="_blank" href={`${contact.linkedin_profile}`}><MediaLI><img src={_MEDIALINKEDIN} /></MediaLI></a>
+                                                    {/* <a target="_blank" href={`${contact.discord_profile}`}><MediaLI><img src={_MEDIADISCORD} /></MediaLI></a> */}
                                                 </MediaUL>
                                                 : ""}
                                         </Col_wrap_l>

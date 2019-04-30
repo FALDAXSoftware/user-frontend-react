@@ -1,7 +1,7 @@
 export const globalVariables = {
     HubSpotKey: "e2032f87-8de8-4e18-8f16-f4210e714245",
 
-    amazon_Bucket: "https://s3.us-east-2.amazonaws.com/production-static-asset/",
+    _AMAZONBUCKET: "https://s3.us-east-2.amazonaws.com/production-static-asset/",
 
     WordpressSiteURL: "http://3.16.234.205",
 

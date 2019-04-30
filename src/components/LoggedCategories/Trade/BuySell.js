@@ -1,10 +1,15 @@
+/* Built-in Packages */
 import React from 'react';
+
+/* Components */
 import BuyTable from './BuyTable';
 import SellTable from './SellTable';
+
+/* styled-components */
 import {
     Left_div, Instru,
     BBC_wrap, BBC_wrap2
-} from "../../../styled-components/loggedStyle/tradeStyle";
+} from "styled-components/loggedStyle/tradeStyle";
 
 export default class BuySell extends React.Component {
     loaderfunc(loader) {

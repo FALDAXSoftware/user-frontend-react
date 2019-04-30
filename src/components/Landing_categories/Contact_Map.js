@@ -28,7 +28,7 @@ const MyMapComponent = compose(
   </GoogleMap>
 )
 
-class ContactMap extends Component {
+class _CONTACTMAP extends Component {
   state = {
     isMarkerShown: false,
   }
@@ -58,4 +58,4 @@ class ContactMap extends Component {
   }
 }
 
-export default ContactMap;
+export default _CONTACTMAP;

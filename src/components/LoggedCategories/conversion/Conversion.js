@@ -1,13 +1,18 @@
+/* Built-in packages */
 import React from "react";
+import { Row, Col, Select, Radio } from "antd";
 import { connect } from "react-redux"
-import { ConversionWarp, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, CustomRadioContainer, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, PayWith, BankAcountDropdown, FeesRadio } from "../../../styled-components/conversion/style";
-import Navigation from "../../Navigations/Navigation";
-import { Row, Col, Tabs, Select, Button, Divider, Icon, Radio } from "antd";
-import { globalVariables } from "../../../Globals";
+
+/*Components  */
+import Navigation from "components/Navigations/Navigation";
+import { globalVariables } from "Globals";
+
+/* styled-components */
+import { ConversionWarp, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, FeesRadio } from "styled-components/conversion/style";
+
 const RadioGroup = Radio.Group;
 const API_URL = globalVariables.API_URL;
-const amazon_Bucket = globalVariables.amazon_Bucket;
-const Option = Select.Option
+const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
 let io = null;
 class Conversion extends React.Component {
     constructor(props) {
@@ -335,7 +340,7 @@ class Conversion extends React.Component {
                                                 < ConversionDropDown defaultValue={this.state.crypto} onChange={this.handleCryptoChange}>
                                                     {
                                                         this.state.cryptoList.map((element, index) => (
-                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                         ))
                                                     }
 
@@ -356,7 +361,7 @@ class Conversion extends React.Component {
                                                 < ConversionDropDown defaultValue={this.state.currency} onChange={this.handleCurrencyChange}>
                                                     {
                                                         this.state.currencyList.map((element, index) => (
-                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                         ))
                                                     }
 
@@ -410,7 +415,7 @@ class Conversion extends React.Component {
                                                 < ConversionDropDown defaultValue={this.state.crypto} onChange={this.handleCryptoChange}>
                                                     {
                                                         this.state.cryptoList.map((element, index) => (
-                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                         ))
                                                     }
 
@@ -431,7 +436,7 @@ class Conversion extends React.Component {
                                                 < ConversionDropDown defaultValue={this.state.currency}>
                                                     {
                                                         this.state.currencyList.map((element, index) => (
-                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                         ))
                                                     }
 

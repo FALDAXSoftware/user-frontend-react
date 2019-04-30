@@ -2,27 +2,24 @@
 
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Input, Spin } from 'antd';
+import { Input } from 'antd';
 import { connect } from "react-redux"
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
 /* components  */
 import TableofCoinUpper from './TableofCoinUpper';
-import ListofCoins from './listofCoins'
-import WalletDetails from './WalletDetails'
-import LoggedNavigation from '../../Navigations/LoggedNavigation';
-import CommonFooter from "../../Landing/Footers/Footer_home";
-import { Spin_Ex } from '../../../styled-components/homepage/style'
-import { Container } from '../../../styled-components/homepage/style';
-import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
-import { Header_wrap, SearchCoin, MY_wallet, Total, Tot, Money, Currency, CoinTable, SearchCoin2, Header_wrap2 } from "../../../styled-components/loggedStyle/walletStyle";
-import { globalVariables } from '../../../Globals';
+import LoggedNavigation from 'components/Navigations/LoggedNavigation';
+import CommonFooter from "components/Landing/Footers/Footer_home";
+import { Container } from 'styled-components/homepage/style';
+import { Contact_wrap, Grey_wrap } from "styled-components/landingCategories/contactStyle"
+import { Header_wrap, SearchCoin, MY_wallet, Total, Tot, Money, Currency, CoinTable, SearchCoin2, Header_wrap2 } from "styled-components/loggedStyle/walletStyle";
+import { globalVariables } from 'Globals';
 
 
 /* Actions */
-import { walletBal, getAllCoins } from '../../../Actions/LoggedCat/walletActions'
-import FaldaxLoader from '../../../shared-components/FaldaxLoader';
+import { walletBal, getAllCoins } from 'Actions/LoggedCat/walletActions'
+import FaldaxLoader from 'shared-components/FaldaxLoader';
 import TableofCoinLower from './TableofCoinLower';
 
 

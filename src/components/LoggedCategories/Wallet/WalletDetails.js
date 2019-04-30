@@ -1,27 +1,29 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Input, Spin, Select, notification } from 'antd';
+import { Row, Col, Input, Select, notification } from 'antd';
 import { connect } from "react-redux"
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
+import { DropdownButton, ButtonToolbar } from 'react-bootstrap';
 
-import LoggedNavigation from '../../Navigations/LoggedNavigation';
-import CommonFooter from "../../Landing/Footers/Footer_home";
-import WalletPopup from './WalletPopup'
-import { Container } from '../../../styled-components/homepage/style';
-import { DropdownButton, MenuItem, ButtonToolbar } from 'react-bootstrap';
-import DetailsTable from './DetailsTable'
-import { Spin_Ex } from '../../../styled-components/homepage/style'
-import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
+/* Styled-Components */
+import { Container } from 'styled-components/homepage/style';
+import { Contact_wrap, Grey_wrap } from "styled-components/landingCategories/contactStyle"
 import {
-    Header_wrap, MY_wallet, WalletCoin, Tot, Money, Currency, CoinTable, Detail_wrap,
-    Address, Row_wrap, Left_Bit, CryptImg, CryptAmt, Right_Bit, BTC, BTC_amt, FIAT_amt, AMT,
-    SendButton, DepButton, WithButton, Trans_table, TransTitle, Left_head, Right_head, WallTotal
-} from "../../../styled-components/loggedStyle/walletStyle";
-import { globalVariables } from '../../../Globals';
-import FaldaxLoader from '../../../shared-components/FaldaxLoader';
+    Header_wrap, MY_wallet, WalletCoin, CoinTable, Detail_wrap,
+    Address, Row_wrap, Left_Bit, CryptImg, CryptAmt, Right_Bit, BTC, BTC_amt, DepButton, WithButton, Trans_table, TransTitle, Left_head
+} from "styled-components/loggedStyle/walletStyle";
 
-let { API_URL, amazon_Bucket } = globalVariables;
+/* Components */
+import LoggedNavigation from 'components/Navigations/LoggedNavigation';
+import CommonFooter from "components/Landing/Footers/Footer_home";
+import WalletPopup from './WalletPopup'
+import DetailsTable from './DetailsTable'
+import { globalVariables } from 'Globals';
+import FaldaxLoader from 'shared-components/FaldaxLoader';
+
+let { API_URL, _AMAZONBUCKET } = globalVariables;
 const Option = Select.Option;
 
 const Search = Input.Search;
@@ -274,7 +276,7 @@ class WalletDetails extends Component {
                                 <Row>
                                     <Col xxl={12} xl={12} lg={24} md={24}>
                                         <Left_Bit>
-                                            <CryptImg><CoinImage src={((walletUserData.length > 0 && walletUserData[0].coin_icon !== null && walletUserData[0].coin_icon !== undefined) ? amazon_Bucket + walletUserData[0].coin_icon : amazon_Bucket + "coin/defualt_coin.png")} /></CryptImg>
+                                            <CryptImg><CoinImage src={((walletUserData.length > 0 && walletUserData[0].coin_icon !== null && walletUserData[0].coin_icon !== undefined) ? _AMAZONBUCKET + walletUserData[0].coin_icon : _AMAZONBUCKET + "coin/defualt_coin.png")} /></CryptImg>
                                             <CryptAmt>
                                                 <BTC_amt>
                                                     {walletUserData.length > 0 ? <NumberFormat value={walletUserData[0].balance.toFixed(4)} displayType={'text'} thousandSeparator={true} /> : ''}

@@ -1,3 +1,4 @@
+/* BUilt-in Packages */
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,16 +8,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FooterLogo, DefaultProfile } from "../../Constants/images";
+import { _FOOTERLOGO, _DEFAULTPROFILE } from "Constants/images";
 
 /* Components */
-import * as LogoutUser from '../../Actions/Auth';
+import * as LogoutUser from 'Actions/Auth';
 import { Day_night_mode, Exchange } from "./BeforeLog";
-import * as darkTheme from '../../Actions/Theme/themeAction';
-import * as walletData from '../../Actions/LoggedCat/walletActions'
-import * as allCoinsData from '../../Actions/LoggedCat/walletActions'
+import * as darkTheme from 'Actions/Theme/themeAction';
+import * as walletData from 'Actions/LoggedCat/walletActions'
+import * as allCoinsData from 'Actions/LoggedCat/walletActions'
+
 /* Constants */
-import { globalVariables } from '../../Globals';
+import { globalVariables } from 'Globals';
 
 /* Styled-Components */
 const Right_div = styled.div`
@@ -181,9 +183,9 @@ class Afterlog extends Component {
         let Avatar_img
         if (this.props.profileDetails !== undefined) {
             if (this.props.profileDetails.profile_pic !== null && this.props.profileDetails.profile_pic !== undefined && this.props.profileDetails.profile_pic !== "") {
-                Avatar_img = globalVariables.amazon_Bucket + this.props.profileDetails.profile_pic;
+                Avatar_img = globalVariables._AMAZONBUCKET + this.props.profileDetails.profile_pic;
             } else {
-                Avatar_img = DefaultProfile;
+                Avatar_img = _DEFAULTPROFILE;
             }
         }
         return (
@@ -211,7 +213,7 @@ class Afterlog extends Component {
                 <Open onClick={() => this.openNav()}>&#9776;</Open>
                 <div>
                     <Modal
-                        title={<img src={FooterLogo} />}
+                        title={<img src={_FOOTERLOGO} />}
                         visible={this.state.comingSoon}
                         onOk={(e) => this.handleComing()}
                         onCancel={(e) => this.comingCancel(e)}

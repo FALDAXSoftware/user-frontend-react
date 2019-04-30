@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { Container } from "../homepage/style";
-import { ConversionBackground } from "../../Constants/images";
+import { _CONVERSIONBACKGROUND } from "../../Constants/images";
 import { Row, Col, Tabs, Select, Button, Radio } from "antd";
 const TabPane = Tabs.TabPane;
 const Option = Select.Option
 export const ConversionWarp = styled.div`
     background-color:#f5f6fa;
-    background-image:url('${ConversionBackground}');
+    background-image:url('${_CONVERSIONBACKGROUND}');
     background-size:cover;
     min-height:100vh;
     width:100%;

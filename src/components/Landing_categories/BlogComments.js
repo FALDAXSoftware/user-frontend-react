@@ -127,7 +127,7 @@ class BlogComments extends Component {
                             return (
                                 <Comment_main>
                                     <Comment_wrap>
-                                        <CommentImage style={{ backgroundImage: `url(${globalVariables.amazon_Bucket + temp.userDetails.profile_pic})` }} />
+                                        <CommentImage style={{ backgroundImage: `url(${globalVariables._AMAZONBUCKET + temp.userDetails.profile_pic})` }} />
                                         <Comment_text>
                                             <Comment_span>{temp.userDetails.first_name + " " + temp.userDetails.last_name}</Comment_span>
                                             <Comment_p>{date}</Comment_p>

@@ -4,15 +4,18 @@
  * @description :: Trade main component.
  */
 
+
+/* Built-in Packages */
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
-import { Row, Col, Tabs, Input, Radio, Select, notification, Icon, Menu, Tooltip } from 'antd';
+import { Row, Col, Tabs, Radio, Select, notification, Icon, Menu, Tooltip } from 'antd';
 import styled from 'styled-components';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
+/* Components */
 /* import Tableofcoin from './TableofCoin'
 import WalletDetails from './WalletDetails' */
 import Loader from 'shared-components/Loader';
@@ -25,15 +28,19 @@ import BuySell from './BuySell';
 import OrderHIstory from './orderHistory'
 import DepthChart from './DepthChart';
 import OrderTrade from './OrderTrade';
+import { globalVariables } from 'Globals';
+import TradingViewChart from "components/TradingViewChart";
+import FaldaxLoader from 'shared-components/FaldaxLoader';
+
+/* Styled-Components */
 import { Contact_wrap, Grey_wrap } from "styled-components/landingCategories/contactStyle"
 import { cryptoCurrency } from 'Actions/LoggedCat/tradeActions'
 import {
     MainTV, TVBar, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div,
     FIAT_wrap, FIAT_wrap2, FIAT, InstruTable, TableIns, Tabs_right, RadioSelect, Orderwrap, InstruOrder, Selectmonth, SettingDropdown
 } from "styled-components/loggedStyle/tradeStyle";
-import { globalVariables } from 'Globals';
-import TradingViewChart from "../../TradingViewChart";
-import FaldaxLoader from 'shared-components/FaldaxLoader';
+
+
 
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);

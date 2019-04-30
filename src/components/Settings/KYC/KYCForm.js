@@ -1,3 +1,4 @@
+/* Built-in packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
@@ -5,19 +6,23 @@ import { Col, notification } from 'antd';
 import styled from 'styled-components';
 import SimpleReactValidator from 'simple-react-validator';
 import moment from 'moment';
+import 'react-intl-tel-input/dist/main.css';
+
+/* Components */
+import Datepicker from "../Personaldetails/Datepicker"
+import CountryPick from "../Personaldetails/Country"
+import { kycFormAction, kycformData } from "Actions/Settings/passwordChange"
+import FaldaxLoader from 'shared-components/FaldaxLoader';
+import { globalVariables } from "Globals"
+
+/* styled-components */
+import { IntlTelInputS } from "styled-components/landingCategories/contactStyle"
 import {
     Save, Fifth_Row, Postal, Fourth_Row, Street_input, Street_Address, Third_Row, Date_birth,
     Second_Row, Last_input, Last_name, First_input, First_name, First_Row, Right_Col
 } from '../Personaldetails/PersonalDetails'
-import { IntlTelInputS } from "../../../styled-components/landingCategories/contactStyle"
-import Datepicker from "../Personaldetails/Datepicker"
-import CountryPick from "../Personaldetails/Country"
-import { kycFormAction, kycformData } from "../../../Actions/Settings/passwordChange"
-import FaldaxLoader from '../../../shared-components/FaldaxLoader';
-import { globalVariables } from "../../../Globals"
-import 'react-intl-tel-input/dist/main.css';
-
 let { API_URL } = globalVariables;
+
 const KYC_form = styled.div`
     width:50%;
     margin-left:auto;

@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import { Steps, Icon } from 'antd';
 import styled from 'styled-components';
 import { createForm } from 'rc-form';
+
 /*Import Components*/
 import KYCForm from "./KYCForm"
 import IDselect from "./IDselect"

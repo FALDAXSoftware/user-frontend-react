@@ -1,13 +1,19 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import 'antd/dist/antd.css';
-import { Row, Col, Checkbox, Radio, notification, Spin } from 'antd';
-import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Balance1, Total, Check_wrap, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "../../../styled-components/loggedStyle/tradeStyle";
+import { Row, Col, Radio, notification, Spin } from 'antd';
+
+/* styled-components */
+import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Balance1, Total, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "styled-components/loggedStyle/tradeStyle";
+
+/* Components */
 import {
     Spin_single
-} from "../../../styled-components/loggedStyle/dashStyle"
-import { globalVariables } from "../../../Globals";
+} from "styled-components/loggedStyle/dashStyle"
+import { globalVariables } from "Globals";
+
 let { API_URL } = globalVariables;
 
 class Market extends Component {

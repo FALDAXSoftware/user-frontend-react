@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import tooltip from 'wsdm-tooltip';
 import { globalVariables } from '../../../Globals';
 import { Row, Col, Modal, Button, Input, Icon, notification } from 'antd';
-import { FooterLogo } from '../../../Constants/images';
+import { _FOOTERLOGO } from '../../../Constants/images';
 
 /* Components */
 import { Section_3, Container } from '../../../styled-components/homepage/style';
@@ -256,7 +256,7 @@ class HomeFour extends Component {
             <div id="block-world-map">
                 <div className="simple-maps">
                     <Modal
-                        title={<img src={FooterLogo} />}
+                        title={<img src={_FOOTERLOGO} />}
                         visible={this.state.visible}
                         onOk={(e) => this.handleOk()}
                         onCancel={(e) => this.handleCancel(e)}
@@ -335,7 +335,7 @@ class HomeFour extends Component {
                                                 }}
                                             >
                                                 <ZoomableGroup center={[0, 20]} disablePanning>
-                                                    <Geographies geography={globalVariables.amazon_Bucket + "assets/world-50m.json"}>
+                                                    <Geographies geography={globalVariables._AMAZONBUCKET + "assets/world-50m.json"}>
                                                         {(geographies, projection) => geographies.map((geography, i) => geography.id !== "ATA" && (
                                                             <Geography
                                                                 key={i}
@@ -391,7 +391,7 @@ class HomeFour extends Component {
                                                     <ZoomableGroup disablePanning>
                                                         <Geographies
                                                             disableOptimization
-                                                            geography={globalVariables.amazon_Bucket + "assets/Country/us-albers-7.json"}
+                                                            geography={globalVariables._AMAZONBUCKET + "assets/Country/us-albers-7.json"}
                                                         >
                                                             {(geos, proj) =>
                                                                 geos.map((geo, i) => (

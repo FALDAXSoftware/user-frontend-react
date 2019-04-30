@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { Button, Modal, Icon, notification } from 'antd';
 import styled from 'styled-components'
 import { globalVariables } from '../Globals';
-import { ComingImg, ComingImg2 } from "../Constants/images";
+import { _COMINGIMG, _COMINGIMG2 } from "../Constants/images";
 
 const API_URL = globalVariables.API_URL;
 
@@ -111,7 +111,7 @@ class ComingSoon extends Component {
         return (
             <div>
                 <Modal
-                    title={<div><img src={ComingImg} /> <img style={{ marginLeft: "10px" }} src={ComingImg2} /></div>}
+                    title={<div><img src={_COMINGIMG} /> <img style={{ marginLeft: "10px" }} src={_COMINGIMG2} /></div>}
                     visible={this.props.visible}
                     onOk={(e) => this.handleComing()}
                     onCancel={(e) => this.comingCancel(e)}

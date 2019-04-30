@@ -1,22 +1,23 @@
 /* IN-built */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Layout, Menu, Modal, Button } from 'antd';
+import { Layout, Menu, Button } from 'antd';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { globalVariables } from "../../Globals";
+import ReactSwipeEvents from 'react-swipe-events'
 
 /* Components */
 import Beforelog from "./BeforeLog"
 import Afterlog from "./Afterlog"
-import { LogoutUser } from '../../Actions/Auth';
-import ComingSoon from '../ComingSoon';
-import ReactSwipeEvents from 'react-swipe-events'
-import { Spin_Ex } from '../../styled-components/homepage/style'
+import { LogoutUser } from 'Actions/Auth';
+import ComingSoon from 'components/ComingSoon';
+import { globalVariables } from "Globals";
+
+/* styled-components */
 import {
-    FaldaxLogo, FaldaxWhite, WhiteLogo, Faldax, FaldaxLogin, FaldaxLoginText, Wallpaper
-} from "../../Constants/images";
+    _FALDAXLOGO, _FALDAXWHITE, _WHITELOGO, _FALDAX, _WALLPAPER
+} from "Constants/images";
 
 const { Header } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -158,7 +159,7 @@ const SideNav = styled.div`
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 0px;
-    background-image: url(${Wallpaper});
+    background-image: url(${_WALLPAPER});
     width: 0px;
     color: white;
     background-position: center;
@@ -352,9 +353,9 @@ class Navigation extends Component {
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
                 if (props.theme == false)
-                    this.setState({ faldaxLogo: FaldaxLogo, faldax: Faldax })
+                    this.setState({ faldaxLogo: _FALDAXLOGO, faldax: _FALDAX })
                 else
-                    this.setState({ faldax: FaldaxWhite, faldaxLogo: WhiteLogo })
+                    this.setState({ faldax: _FALDAXWHITE, faldaxLogo: _WHITELOGO })
             }
         }
         if (props.location.pathname !== undefined)
@@ -374,9 +375,9 @@ class Navigation extends Component {
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme == false)
-                    this.setState({ faldaxLogo: FaldaxLogo, faldax: Faldax })
+                    this.setState({ faldaxLogo: _FALDAXLOGO, faldax: _FALDAX })
                 else
-                    this.setState({ faldax: FaldaxWhite, faldaxLogo: WhiteLogo })
+                    this.setState({ faldax: _FALDAXWHITE, faldaxLogo: _WHITELOGO })
             }
         }
 
