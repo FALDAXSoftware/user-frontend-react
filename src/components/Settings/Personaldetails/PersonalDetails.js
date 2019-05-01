@@ -332,11 +332,9 @@ class PersonalDetails extends Component {
                     profileData.append('city_town', this.state.citySelected);
                 if (this.state.stateSelected !== null) {
                     profileData.append('state', this.state.stateSelected);
-                    profileData.append('state_id', this.state.stateID);
                 }
                 if (this.state.countrySelected !== null) {
                     profileData.append('country', this.state.countrySelected);
-                    profileData.append('country_id', this.state.countryID);
                 }
                 profileData.append('street_address', value.street_address)
 
@@ -416,8 +414,8 @@ class PersonalDetails extends Component {
         this.setState({ Datedata: date })
         this.onChangeField(value, field);
     }
-    onCountryChange(country, state, city, stateID, countryID) {
-        this.setState({ countrySelected: country, stateSelected: state, citySelected: city, stateID: stateID, countryID: countryID })
+    onCountryChange(country, state, city) {
+        this.setState({ countrySelected: country, stateSelected: state, citySelected: city })
         var loc = {
             country: country,
             state: state,
@@ -754,7 +752,7 @@ class PersonalDetails extends Component {
                                 </Third_Row>
                                 <Fourth_Row>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
-                                        <CountryPick {...this.props} onCountryChange={(country, state, city, stateID, countryID) => this.onCountryChange(country, state, city, stateID, countryID)} />
+                                        <CountryPick {...this.props} onCountryChange={(country, state, city) => this.onCountryChange(country, state, city)} />
                                         <Country_Msg className="country_msg">{this.state.countrymsg}</Country_Msg>
                                     </Col>
                                 </Fourth_Row>
