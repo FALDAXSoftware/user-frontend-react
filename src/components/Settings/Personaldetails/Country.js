@@ -1,9 +1,12 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import { Select, Row, Col } from 'antd';
-import { globalVariables } from '../../../Globals';
 import CountryData from 'country-state-city';
+import { Select, Row, Col } from 'antd';
+
+/* components */
+import { globalVariables } from 'Globals';
 
 let { API_URL } = globalVariables;
 const Option = Select.Option;
@@ -97,9 +100,7 @@ export default class CountryPick extends Component {
         var countrySelected = CountryData.getCountryById(newPosition);
         var states = CountryData.getStatesOfCountry(newPosition + 1);
         this.setState({ city_selected: "", state_selected: "", country_selected: value, stateID: null, countryID: newPosition, states });
-        console.log(">>>", this.props.kyc, countrySelected)
         if (this.props.kyc == "kyc") {
-            console.log(">>>>", countrySelected.sortname)
             this.props.onCountryName(countrySelected.sortname);
         }
 
@@ -211,7 +212,6 @@ export default class CountryPick extends Component {
                     }
                 }
             }
-        console.log(country, state, city)
         return (
             <Country_wrap>
                 <Row>

@@ -1,17 +1,18 @@
 /* In-built Packages*/
 import React, { Component } from 'react'
-import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import { Button, notification, Row, Col } from "antd";
-import { Username, Form_wrap, Welcome_text, Email_label, Email_req } from "./Login_Form";
 import { connect } from "react-redux"
 import SimpleReactValidator from "simple-react-validator";
 
 /* Components */
-import { forgotAction, clearForgot } from "../../../Actions/Auth";
-import { globalVariables } from '../../../Globals';
+import { forgotAction, clearForgot } from "Actions/Auth";
+import { globalVariables } from 'Globals';
+
 /* Global Constants */
+
 /* Styled-Components */
+import { Username, Form_wrap, Welcome_text, Email_label } from "./Login_Form";
 const RowWrap = styled(Row)`
   min-height:100%;
   

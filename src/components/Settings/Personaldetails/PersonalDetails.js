@@ -3,18 +3,18 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux";
 import { createForm, formShape } from 'rc-form';
-import { Row, Col, Input, Button, notification, Spin, Select, Radio } from 'antd';
+import { Row, Col, Input, Button, notification, Select, Radio } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 
 /* Components */
 import Datepicker from "./Datepicker"
 import CountryPick from "./Country"
-import { Email_req } from "../../Landing/User_forms/Login_Form"
-import { globalVariables } from "../../../Globals"
-import { profileupdateAction, removepicAction, getProfileDataAction, clearEditData } from "../../../Actions/Settings/settings"
-import { DefaultProfile } from "../../../Constants/images";
-import FaldaxLoader from '../../../shared-components/FaldaxLoader';
+import { Email_req } from "components/Landing/User_forms/Login_Form"
+import { globalVariables } from "Globals"
+import { profileupdateAction, removepicAction, getProfileDataAction, clearEditData } from "Actions/Settings/settings"
+import { _DEFAULTPROFILE } from "Constants/images";
+import FaldaxLoader from 'shared-components/FaldaxLoader';
 
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -430,9 +430,9 @@ class PersonalDetails extends Component {
         if (props.profileDetails.profile_pic !== null && props.profileDetails.profile_pic !== undefined && props.profileDetails.profile_pic !== "") {
             if (this.state.profileImg !== undefined && this.state.profileImg !== null && this.state.profileImg !== "") {
                 this.setState({ profileImg: this.state.profileImg })
-                /*  this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic }) */
+                /*  this.setState({ profileImg: globalVariables._AMAZONBUCKET + props.profileDetails.profile_pic }) */
             } else {
-                this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic })
+                this.setState({ profileImg: globalVariables._AMAZONBUCKET + props.profileDetails.profile_pic })
             }
         }
         if (props.apiStatus == 200 && props.apiMessage == "User details updated successfully") {
@@ -474,8 +474,8 @@ class PersonalDetails extends Component {
     removePic() {
         /* this.removeNotification("warning"); */
         document.getElementById("file").value = "";
-        if (this.state.profileImg !== DefaultProfile) {
-            this.setState({ remove_pic: true, profileImg: DefaultProfile, profileImage: undefined })
+        if (this.state.profileImg !== _DEFAULTPROFILE) {
+            this.setState({ remove_pic: true, profileImg: _DEFAULTPROFILE, profileImage: undefined })
         }
         /* 
         this.props.removepicAction(this.props.isLoggedIn, formData) */
@@ -567,7 +567,6 @@ class PersonalDetails extends Component {
                     state = true;
                 if ((value.city == undefined || value.city == null || value.city == ""))
                     city = true;
-                console.log("CSC", value.country, value.state, value.city)
                 let countrymsg;
                 if (country == true && state == false && city == false) {
                     countrymsg = "Country Field is required."
@@ -593,7 +592,6 @@ class PersonalDetails extends Component {
                 this.setState({ countrymsg })
             }
         } else if (field == "dob") {
-            console.log(value)
             if ((value["day"]) && (value["month"]) && (value["year"])) {
                 this.setState({ dobIcon: true })
                 document.querySelectorAll(".dob_msg")[0].style.display = "none";
@@ -633,14 +631,12 @@ class PersonalDetails extends Component {
             if (value !== "") {
                 var reg = /^(?=.*[0-9A-Za-z])[- ()0-9A-Za-z]{3,25}$/
                 var bool = reg.test(value)
-                console.log("BOOL", bool)
                 if (bool == true) {
                     this.setState({ postalIcon: true })
                     document.querySelectorAll(".postal_msg")[0].style.display = "none";
                 } else {
                     this.setState({ postalIcon: false })
                     document.querySelectorAll(".postal_msg")[0].style.display = "block";
-                    console.log("Bool", bool, value.length)
                     if (value.length < 3 || value.length > 25)
                         this.setState({ postalmsg: "Postal code should have min. 3 and max. 25 characters." })
                     else

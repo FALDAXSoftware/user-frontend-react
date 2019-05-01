@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
-import { Banner, LargeLogo } from '../../../Constants/images';
+import { _BANNER, _LARGELOGO } from '../../../Constants/images';
 
 /* Import Styled Components */
 import { Container } from '../../../styled-components/homepage/style';
@@ -11,7 +11,7 @@ import { Container } from '../../../styled-components/homepage/style';
 const Section = styled.section`
   width:100%;
   height:calc(100vh - 80px);
-  background-image:url(${Banner});
+  background-image:url(${_BANNER});
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -81,7 +81,7 @@ export default class HomeFirst extends Component {
                 </SubHeading>
             </Col>
             <ImageCol lg={10}>
-              <Img src={LargeLogo} width="80%" className="wow fadeInUp" data-wow-delay="1s" />
+              <Img src={_LARGELOGO} width="80%" className="wow fadeInUp" data-wow-delay="1s" />
             </ImageCol>
           </BannerRow>
         </Container>

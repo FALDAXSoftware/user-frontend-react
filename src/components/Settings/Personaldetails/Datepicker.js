@@ -1,3 +1,4 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
@@ -35,7 +36,6 @@ export default class Datepicker extends Component {
             } else if (type == "month") {
                 let date1
                 this.setState({ month: date });
-                console.log(date)
                 if (date == 0) date1 = "January";
                 if (date == 1) date1 = "February";
                 if (date == 2) date1 = "March";
@@ -62,7 +62,6 @@ export default class Datepicker extends Component {
                 if (fields["year"] == undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
 
             } */
-            console.log(fields)
             this.props.onDateChange(fields, "dob")
         }
         else {
@@ -112,7 +111,6 @@ export default class Datepicker extends Component {
                     month = date[1]
                     day = Number(date[0])
                     if (month !== null) {
-                        console.log("month", month, year)
                         month = Number(month) - 1;
                     }
                 }
@@ -124,9 +122,7 @@ export default class Datepicker extends Component {
                     year = Number(date[2])
                     month = date[1]
                     day = Number(date[0])
-                    console.log("month", month, year)
                     if (month !== null) {
-                        console.log("month", month)
                         month = Number(month) - 1;
                     }
                 }
@@ -138,7 +134,6 @@ export default class Datepicker extends Component {
         return (
             <Picker_wrap>
                 <Row>
-                    {console.log(day, month, year)}
                     <Col md={8} xl={8}>
                         <DayPicker
                             // mandatory
@@ -159,7 +154,6 @@ export default class Datepicker extends Component {
                             optionClasses={'option-day'}
                         />
                     </Col>
-                    {console.log(this.state.month !== null ? this.state.month : (month !== "" && month !== null) ? month : '')}
                     <Col md={8} xl={8}>
                         <MonthPicker
                             // mandatory if end={} is given in YearPicker
@@ -178,7 +172,6 @@ export default class Datepicker extends Component {
                             optionClasses={'option-month'}
                         />
                     </Col>
-                    {console.log((this.state.year !== null ? this.state.year : (year ? year : "")), year)}
                     <Col md={8} xl={8}>
                         <YearPicker
                             placeholder={"Select Year"}

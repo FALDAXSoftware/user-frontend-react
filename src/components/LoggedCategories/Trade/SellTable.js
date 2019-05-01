@@ -1,16 +1,22 @@
+
+/* Built-in PAckage */
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import { BBC2, Total_BTC, Buy_table, History_wrap1, TableHeader, TableContent, ScrollTableContent } from "../../../styled-components/loggedStyle/tradeStyle";
+import { Scrollbars } from 'react-custom-scrollbars';
+
+/* Components */
+import { globalVariables } from "../../../Globals";
 import { Spin } from 'antd';
+
+/* Styled-components */
 import {
     Spin_single
 } from "../../../styled-components/loggedStyle/dashStyle"
-import { Scrollbars } from 'react-custom-scrollbars';
-
 import { OTwrap } from './OrderTrade';
-import { globalVariables } from "../../../Globals";
+import { BBC2, Total_BTC, Buy_table, History_wrap1, TableHeader, TableContent, ScrollTableContent } from "../../../styled-components/loggedStyle/tradeStyle";
+
 const APP_URL = globalVariables.API_URL;
 
 const OTwrap2 = styled(OTwrap)`

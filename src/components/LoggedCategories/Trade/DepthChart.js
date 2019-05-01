@@ -1,11 +1,13 @@
+/*Built-in Packages*/
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-
-import 'antd/dist/antd.css';
-import { Row, Col } from 'antd';
 import styled from 'styled-components';
-import { Instru2, WrapDepth } from '../../../styled-components/loggedStyle/tradeStyle';
+import { Row, Col } from 'antd';
+import 'antd/dist/antd.css';
 import { Line } from 'react-chartjs-2';
+
+/*styled-components*/
+import { Instru2, WrapDepth } from '../../../styled-components/loggedStyle/tradeStyle';
 
 const Chart1_wrap = styled.div`
     height:90%;
@@ -62,7 +64,6 @@ class DepthChart extends Component {
         }, (body, JWR) => {
             if (body.status == 200) {
                 let res = body.data;
-                console.log("Depth Chart>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", res);
                 self.updateGraph(res);
             }
         });
@@ -157,7 +158,6 @@ class DepthChart extends Component {
                 <Row>
                     <Col xl={24}>
                         <Chart1_wrap id="depth-chart1">
-                        {console.log("Depth Height",this.props.height)}
                             <Line height={this.props.height} data={graphData} options={{
                                 responsive: true,
                                 maintainAspectRatio: false,

@@ -1,13 +1,18 @@
+/* Built-in packages */
 import React from "react";
+import { Row, Col, Select, Radio } from "antd";
 import { connect } from "react-redux"
-import { ConversionWarp, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, CustomRadioContainer, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, PayWith, BankAcountDropdown, FeesRadio } from "../../../styled-components/conversion/style";
-import Navigation from "../../Navigations/Navigation";
-import { Row, Col, Tabs, Select, Button, Divider, Icon, Radio } from "antd";
-import { globalVariables } from "../../../Globals";
+
+/*Components  */
+import Navigation from "components/Navigations/Navigation";
+import { globalVariables } from "Globals";
+
+/* styled-components */
+import { ConversionWarp, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, FeesRadio } from "styled-components/conversion/style";
+
 const RadioGroup = Radio.Group;
 const API_URL = globalVariables.API_URL;
-const amazon_Bucket = globalVariables.amazon_Bucket;
-const Option = Select.Option
+const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
 let io = null;
 class Conversion extends React.Component {
     constructor(props) {
@@ -74,7 +79,6 @@ class Conversion extends React.Component {
 
             if (body.status == 200) {
                 let res = body.data;
-                console.log("----=---=---", res);
                 self.setState({
                     askPrice: res.ask_price,
                     bidPrice: res.bid_price
@@ -97,7 +101,6 @@ class Conversion extends React.Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                console.log(responseData);
 
                 this.setState({ cryptoList: responseData.data })
             })
@@ -115,7 +118,6 @@ class Conversion extends React.Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                console.log(responseData);
 
                 this.setState({ currencyList: responseData.data })
             })
@@ -201,14 +203,11 @@ class Conversion extends React.Component {
             if (!isNaN(self.state.buyCryptoInput)) {
                 buyCurrencyInput = (self.state.buyCryptoInput) * self.state.askPrice;
                 // Add Kraken Fees
-                console.log("before kraken fees", buyCurrencyInput);
 
                 buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.krakenFees) / 100);
-                console.log("before faldax fees", buyCurrencyInput);
 
                 // Add Faldax Fees
                 buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.faldaxFees) / 100);
-                console.log("after faldax fees", buyCurrencyInput);
             }
             self.setState({
                 buyCurrencyInput: buyCurrencyInput
@@ -235,13 +234,10 @@ class Conversion extends React.Component {
         } else {
             let buyCryptoInput = self.state.buyCurrencyInput;
             if (!isNaN(self.state.buyCurrencyInput)) {
-                console.log("with faldax fees", buyCryptoInput);
                 // Minus Faldax Fees
                 buyCryptoInput = (buyCryptoInput * 100) / (100 + self.state.faldaxFees);
-                console.log("without faldax fees", buyCryptoInput);
                 // Minus Kraken Fees
                 buyCryptoInput = (buyCryptoInput * 100) / (100 + self.state.krakenFees);
-                console.log("without kraken fees", buyCryptoInput);
 
                 buyCryptoInput = buyCryptoInput / self.state.askPrice;
             }
@@ -269,14 +265,11 @@ class Conversion extends React.Component {
             if (!isNaN(self.state.sellCryptoInput)) {
                 sellCurrencyInput = (self.state.sellCryptoInput) * self.state.bidPrice;
                 // Add Kraken Fees
-                console.log("before kraken fees", sellCurrencyInput);
 
                 sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.krakenFees) / 100);
-                console.log("before faldax fees", sellCurrencyInput);
 
                 // Add Faldax Fees
                 sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.faldaxFees) / 100);
-                console.log("after faldax fees", sellCurrencyInput);
             }
             self.setState({
                 sellCurrencyInput: sellCurrencyInput
@@ -301,13 +294,10 @@ class Conversion extends React.Component {
         } else {
             let sellCryptoInput = self.state.sellCurrencyInput;
             if (!isNaN(self.state.sellCurrencyInput)) {
-                console.log("with faldax fees", sellCryptoInput);
                 // Minus Faldax Fees
                 sellCryptoInput = (sellCryptoInput * 100) / (100 + self.state.faldaxFees);
-                console.log("without faldax fees", sellCryptoInput);
                 // Minus Kraken Fees
                 sellCryptoInput = (sellCryptoInput * 100) / (100 + self.state.krakenFees);
-                console.log("without kraken fees", sellCryptoInput);
 
                 sellCryptoInput = sellCryptoInput / self.state.bidPrice;
             }
@@ -350,7 +340,7 @@ class Conversion extends React.Component {
                                                 < ConversionDropDown defaultValue={this.state.crypto} onChange={this.handleCryptoChange}>
                                                     {
                                                         this.state.cryptoList.map((element, index) => (
-                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                         ))
                                                     }
 
@@ -371,7 +361,7 @@ class Conversion extends React.Component {
                                                 < ConversionDropDown defaultValue={this.state.currency} onChange={this.handleCurrencyChange}>
                                                     {
                                                         this.state.currencyList.map((element, index) => (
-                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                         ))
                                                     }
 
@@ -425,7 +415,7 @@ class Conversion extends React.Component {
                                                 < ConversionDropDown defaultValue={this.state.crypto} onChange={this.handleCryptoChange}>
                                                     {
                                                         this.state.cryptoList.map((element, index) => (
-                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                         ))
                                                     }
 
@@ -446,7 +436,7 @@ class Conversion extends React.Component {
                                                 < ConversionDropDown defaultValue={this.state.currency}>
                                                     {
                                                         this.state.currencyList.map((element, index) => (
-                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${amazon_Bucket}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                         ))
                                                     }
 

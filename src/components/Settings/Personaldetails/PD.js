@@ -10,13 +10,12 @@ import moment from 'moment';
 /* Components */
 import Datepicker from "./Datepicker"
 import CountryPick from "./Country"
-import { Email_req } from "../../Landing/User_forms/Login_Form"
-import { globalVariables } from "../../../Globals"
-import { profileupdateAction, removepicAction, getProfileDataAction, clearEditData } from "../../../Actions/Settings/settings"
-import { DefaultProfile } from "../../../Constants/images";
-import FaldaxLoader from '../../../shared-components/FaldaxLoader';
+import { Email_req } from "components/Landing/User_forms/Login_Form"
+import { globalVariables } from "Globals"
+import { profileupdateAction, removepicAction, getProfileDataAction, clearEditData } from "Actions/Settings/settings"
+import { _DEFAULTPROFILE } from "Constants/images";
+import FaldaxLoader from 'shared-components/FaldaxLoader';
 
-const Option = Select.Option;
 const RadioGroup = Radio.Group;
 /* Styled-Components */
 const Profile_wrap = styled.div`
@@ -278,9 +277,9 @@ class PersonalDetails extends Component {
         if (props.profileDetails.profile_pic !== null && props.profileDetails.profile_pic !== undefined && props.profileDetails.profile_pic !== "") {
             if (this.state.profileImg !== undefined && this.state.profileImg !== null && this.state.profileImg !== "") {
                 this.setState({ profileImg: this.state.profileImg })
-                /*  this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic }) */
+                /*  this.setState({ profileImg: globalVariables._AMAZONBUCKET + props.profileDetails.profile_pic }) */
             } else {
-                this.setState({ profileImg: globalVariables.amazon_Bucket + props.profileDetails.profile_pic })
+                this.setState({ profileImg: globalVariables._AMAZONBUCKET + props.profileDetails.profile_pic })
             }
         }
         if (props.profileDetails !== "" && props.profileDetails !== undefined) {
@@ -372,8 +371,8 @@ class PersonalDetails extends Component {
     removePic() {
         /* this.removeNotification("warning"); */
         document.getElementById("file").value = "";
-        if (this.state.profileImg !== DefaultProfile) {
-            this.setState({ remove_pic: true, profileImg: DefaultProfile, profileImage: undefined })
+        if (this.state.profileImg !== _DEFAULTPROFILE) {
+            this.setState({ remove_pic: true, profileImg: _DEFAULTPROFILE, profileImage: undefined })
         }
         /* 
         this.props.removepicAction(this.props.isLoggedIn, formData) */

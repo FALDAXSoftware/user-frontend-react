@@ -140,7 +140,7 @@ class Careers extends Component {
                                             let _this = this;
                                             return (
                                                 <Body_details_job key={index}>
-                                                    <Link to={decodeURI(`/careerdetails?jobID=${job.id}`)}>
+                                                    <Link to={decodeURI(`/career-details?jobID=${job.id}`)}>
                                                         <Position>{job.position}</Position>
                                                     </Link>
                                                     <ApplyBtn type="primary" onClick={() => { me.props.history.push(`/applyjob?jobid=${job.id}&position=${job.position}`) }} >Apply</ApplyBtn>

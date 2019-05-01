@@ -1,11 +1,12 @@
 /* In-built Packages*/
 import React, { Component } from 'react'
 import styled from 'styled-components';
-import { Form_wrap, Welcome_text } from "./Login_Form";
 
 /* Components */
 /* Global Constants */
 /* Styled-Components */
+import { Form_wrap, Welcome_text } from "./Login_Form";
+
 const Login_head = styled.div`
   font-size: 30px;
   font-family: "Open Sans";

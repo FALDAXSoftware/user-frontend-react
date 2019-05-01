@@ -1,15 +1,17 @@
+/* In-built packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import { Table } from 'react-bootstrap';
 import { Menu, Dropdown, Icon } from 'antd';
-import { Scrollbars } from 'react-custom-scrollbars';
-import { NDF } from './TableofCoinUpper'
-import { TableHeader, TableContent } from "../../../styled-components/loggedStyle/tradeStyle";
 
-import { Head, Sub_head, DropMenu, Col1, Bit_img, Bit_text, Bit, Bit_price, Price, Icon_wrap } from "../../../styled-components/loggedStyle/walletStyle";
-import { globalVariables } from '../../../Globals';
-let { amazon_Bucket } = globalVariables;
+/* styled components */
+import { Head, Sub_head, DropMenu, Col1, Bit_img, Bit_text, Bit_price, Price, Icon_wrap } from "styled-components/loggedStyle/walletStyle";
+
+/* components */
+import { NDF } from './TableofCoinUpper';
+import { globalVariables } from 'Globals';
+
+let { _AMAZONBUCKET } = globalVariables;
 
 const TableCoin = styled.table`
     width:100%;
@@ -122,9 +124,9 @@ export default class TableofCoin extends Component {
                     {tableData !== undefined && tableData !== null ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
                         var img;
                         if (tableData[index].coin_icon !== null)
-                            img = amazon_Bucket + tableData[index].coin_icon
+                            img = _AMAZONBUCKET + tableData[index].coin_icon
                         else
-                            img = amazon_Bucket + "coin/defualt_coin.png"
+                            img = _AMAZONBUCKET + "coin/defualt_coin.png"
                         return (
                             <Col1>
                                 <td style={{ textAlign: "left" }}>

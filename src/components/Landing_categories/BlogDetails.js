@@ -16,7 +16,7 @@ import {
     Main_Wrap, Sub_wrap, Rel_post, Rel_img, Rel_p, Rel_name, Rel_span, TagSpan
 } from '../../styled-components/landingCategories/blogStyle';
 import {
-    FBIcon, YoutubeIcon, LinkedinIcon, TweeterIcon, GoogleIcon, BlogIcon
+    _FBICON, _YOUTUBEICON, _LINKEDINICON, _TWEETERICON, _GOOGLEICON, _BLOGICON
 } from '../../Constants/images';
 
 class BlogDetails extends Component {
@@ -117,7 +117,7 @@ class BlogDetails extends Component {
                                             </Name>
                                         </Status>
                                         <Status className="blog-comment">
-                                            <Comment><MsgIcon src={BlogIcon} />{this.state.blogsData.comment_count} Comments</Comment>
+                                            <Comment><MsgIcon src={_BLOGICON} />{this.state.blogsData.comment_count} Comments</Comment>
                                         </Status>
                                         <Head_image image={`${this.state.blogsData.featured_image}`} />
                                         <div>
@@ -146,7 +146,7 @@ class BlogDetails extends Component {
                                                                         <Col sm={24} md={8}>
                                                                             <Link to={`/blogDetails?blogID=${temp.id}`}>
                                                                                 <Rel_post>
-                                                                                    <Rel_img style={{ backgroundImage: `url(${globalVariables.amazon_Bucket + temp.cover_image})` }}>
+                                                                                    <Rel_img style={{ backgroundImage: `url(${globalVariables._AMAZONBUCKET + temp.cover_image})` }}>
                                                                                     </Rel_img>
                                                                                     <Rel_p>{temp.title}</Rel_p>
                                                                                     <Rel_span>{date}</Rel_span>
@@ -188,19 +188,19 @@ class BlogDetails extends Component {
                                     </SocialHead>
                                     {contactDetails !== null ? <Social_Li>
                                         <LI1>
-                                            <a target="_blank" href={contactDetails.fb_profile}><img width="40" height="40" src={FBIcon} /></a>
+                                            <a target="_blank" href={contactDetails.fb_profile}><img width="40" height="40" src={_FBICON} /></a>
                                         </LI1>
                                         <LI2>
-                                            <a target="_blank" href={contactDetails.twitter_profile}><img width="40" height="40" src={TweeterIcon} /></a>
+                                            <a target="_blank" href={contactDetails.twitter_profile}><img width="40" height="40" src={_TWEETERICON} /></a>
                                         </LI2>
                                         <LI2>
-                                            <a target="_blank" href={contactDetails.google_profile}><img width="40" height="40" src={GoogleIcon} /></a>
+                                            <a target="_blank" href={contactDetails.google_profile}><img width="40" height="40" src={_GOOGLEICON} /></a>
                                         </LI2>
                                         <LI2>
-                                            <a target="_blank" href={contactDetails.youtube_profile}><img width="40" height="40" src={YoutubeIcon} /></a>
+                                            <a target="_blank" href={contactDetails.youtube_profile}><img width="40" height="40" src={_YOUTUBEICON} /></a>
                                         </LI2>
                                         <LI2>
-                                            <a target="_blank" href={contactDetails.linkedin_profile}><img width="40" height="40" src={LinkedinIcon} /></a>
+                                            <a target="_blank" href={contactDetails.linkedin_profile}><img width="40" height="40" src={_LINKEDINICON} /></a>
                                         </LI2>
                                     </Social_Li> : ""} */}
                                 </Right_Col>

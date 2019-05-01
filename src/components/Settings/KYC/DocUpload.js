@@ -1,11 +1,16 @@
+/* Built-in Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
 import { notification, Icon } from 'antd';
 import styled from 'styled-components';
+
+/* components */
+import { kycDoc, kycFormAction } from "Actions/Settings/passwordChange"
+import FaldaxLoader from 'shared-components/FaldaxLoader';
+
+/* styled-components */
 import { ButtonWrap, SubWrap, BackButton, NextButton } from "./IDselect"
-import { kycDoc, kycFormAction } from "../../../Actions/Settings/passwordChange"
-import FaldaxLoader from '../../../shared-components/FaldaxLoader';
 
 const SSNWrap = styled.div`
     width:100%;
@@ -147,7 +152,6 @@ class DocUpload extends Component {
                 const file = _self.state.fileTarget.files[0];
                 const fileType = file && file.type ? file.type.substring(0, file.type.indexOf('/')) : '';
                 const fileSize = file && file.size ? file.size : 0;
-
                 if (fileType == 'image') {
                     if (fileType === 'image' && fileSize < 5242880) {
 

@@ -1,20 +1,26 @@
+/**
+ * Welcome to FALDAX TRADING COMPONENT
+ *
+ * @description :: Trade main component.
+ */
+
+
+/* Built-in Packages */
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
-import { Spin, Row, Col, Tabs, Input, Radio, Select, notification, Icon, Menu, Tooltip } from 'antd';
+import { Row, Col, Tabs, Radio, Select, notification, Icon, Menu, Tooltip } from 'antd';
 import styled from 'styled-components';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faYoutube, faTwitter, faLinkedinIn, faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { widget } from '../../../charting_library/charting_library.min';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
+
+/* Components */
 /* import Tableofcoin from './TableofCoin'
 import WalletDetails from './WalletDetails' */
-import Loader from '../../../shared-components/Loader'
-import Navigation from '../../Navigations/Navigation';
-import CommonFooter from "../../Landing/Footers/Footer_home";
+import Loader from 'shared-components/Loader';
+import Navigation from 'components/Navigations/Navigation';
+import CommonFooter from "components/Landing/Footers/Footer_home";
 import Market from "./Market";
 import Limit from "./Limit";
 import StopLimit from "./StopLimit";
@@ -22,20 +28,19 @@ import BuySell from './BuySell';
 import OrderHIstory from './orderHistory'
 import DepthChart from './DepthChart';
 import OrderTrade from './OrderTrade';
-import { Container } from '../../../styled-components/homepage/style';
-import { Contact_wrap, Grey_wrap } from "../../../styled-components/landingCategories/contactStyle"
-import { cryptoCurrency } from '../../../Actions/LoggedCat/tradeActions'
-import { Spin_Ex } from '../../../styled-components/homepage/style'
+import { globalVariables } from 'Globals';
+import TradingViewChart from "components/TradingViewChart";
+import FaldaxLoader from 'shared-components/FaldaxLoader';
+
+/* Styled-Components */
+import { Contact_wrap, Grey_wrap } from "styled-components/landingCategories/contactStyle"
+import { cryptoCurrency } from 'Actions/LoggedCat/tradeActions'
 import {
-    Row_wrap, Left_div, EditDiv, SwitchS, Layout, SaveButton, EditButton, MainTV, TVBar, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div, Buy_table,
-    FIAT_wrap, FIAT_wrap2, FIAT, Sect, InstruTable, TableIns, Tabs_right, Row_wrap2, BBC_wrap, BBC_wrap2, BBC2, RadioSelect, Orderwrap, InstruOrder, Selectmonth, SettingDropdown
-} from "../../../styled-components/loggedStyle/tradeStyle";
-import {
-    Spin_single
-} from "../../../styled-components/loggedStyle/dashStyle"
-import { globalVariables } from '../../../Globals';
-import TradingViewChart from "../../TradingViewChart";
-import FaldaxLoader from '../../../shared-components/FaldaxLoader';
+    MainTV, TVBar, Left_div1, Left_div2, Instru, SearchInput, Right_div1, Right_div,
+    FIAT_wrap, FIAT_wrap2, FIAT, InstruTable, TableIns, Tabs_right, RadioSelect, Orderwrap, InstruOrder, Selectmonth, SettingDropdown
+} from "styled-components/loggedStyle/tradeStyle";
+
+
 
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -46,16 +51,8 @@ let { API_URL, tvChartURL } = globalVariables;
 io.sails.url = API_URL;
 var sailsIOClient = require('sails.io.js');
 let io = sailsIOClient(socketIOClient); */
-const Search = Input.Search;
 const Option = Select.Option;
-const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
-const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
-    border-radius:5px;
-    max-width:1170px;
-    padding-bottom: 30px;
-`
 const OrderTradeWrap = styled.div`
     display:inline-flex;
     margin-left:auto;
@@ -69,7 +66,7 @@ const OrderTradeWrap = styled.div`
         flex-wrap:wrap;
     }
 `
-const Grey_wrap_trade = styled(Grey_wrap)`
+const GreyWrapTrade = styled(Grey_wrap)`
     padding-top:120px;
 `
 
@@ -155,11 +152,12 @@ class Trade extends Component {
             prevlayout: JSON.parse(JSON.stringify(originalLayouts)),
             layouts: JSON.parse(JSON.stringify(originalLayouts)),
             MLS: "",
-            loader: false
+            loader: false,
+
         };
         io = this.props.io;
         // io.sails.url = API_URL;
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeOT = this.handleChangeOT.bind(this);
         this.statusChange = this.statusChange.bind(this);
         this.getUserBal = this.getUserBal.bind(this);
         this.onInsChange = this.onInsChange.bind(this);
@@ -169,8 +167,10 @@ class Trade extends Component {
         this.goFullScreen = this.goFullScreen.bind(this);
         this.exitFullScreen = this.exitFullScreen.bind(this);
         this.callback = this.callback.bind(this);
+        this.resetLayout = this.resetLayout.bind(this);
         // this.handleLayoutResize = this.handleLayoutResize.bind(this);
     }
+
     componentWillReceiveProps(props, newProps) {
         var self = this;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
@@ -188,6 +188,7 @@ class Trade extends Component {
             }
         }
     }
+
     componentDidMount() {
         var self = this;
         io.sails.headers = {
@@ -208,6 +209,13 @@ class Trade extends Component {
         });
 
     }
+
+    // created by Meghal Patel at 2019-04-27 15:09.
+    // 
+    // Description: Crypto Pair changes from here.It will go in redux.
+    // 
+    // 
+
     onInsChange(e) {
         var self = this;
         // console.log(e.target.value);
@@ -228,6 +236,14 @@ class Trade extends Component {
             self.getInstrumentData();
         });
     }
+
+
+    // created by Meghal Patel at 2019-04-27 15:10.
+    // 
+    // Description: method with api of Instruments
+    // 
+    // 
+
     getInstrumentData() {
         var self = this;
         self.setState({ insLoader: true });
@@ -250,6 +266,13 @@ class Trade extends Component {
         });
 
     }
+
+    // created by Meghal Patel at 2019-04-27 15:11.
+    // 
+    // Description:this method is called when socket updates of getInstrumentData().
+    // 
+    // 
+
     updateInstrumentsData(data) {
         let res = [];
         for (let index = 0; index < data.length; index++) {
@@ -266,24 +289,36 @@ class Trade extends Component {
             insLoader: false
         });
     }
-    searchChange(value) {
 
-    }
-    submitSearch(e) {
+    // created by Meghal Patel at 2019-04-27 15:13.
+    // 
+    // Description: method is called when we change tabs of Market Limit and Stop-limit.
+    // 
+    // 
 
-    }
-    onChange(pagination, filters, sorter) {
-    }
-    class = "tbl-content"
     callback(key) {
         this.setState({
             MLS: key
         });
     }
-    handleChange(value) {
+
+    // created by Meghal Patel at 2019-04-27 15:13.
+    // 
+    // Description: Method is called when we change months in Orders and trades
+    // 
+    // 
+
+    handleChangeOT(value) {
         this.setState({ timePeriod: value.key });
         this.orderSocket(value.key, this.state.status);
     }
+
+    // created by Meghal Patel at 2019-04-27 15:14.
+    // 
+    // Description: Method is called when we change status in orders and trades.
+    // 
+    // 
+
     statusChange(e) {
         var status;
         if (e.target.value == "a") {
@@ -298,6 +333,14 @@ class Trade extends Component {
         this.setState({ status });
         this.orderSocket(this.state.timePeriod, status);
     }
+
+    // created by Meghal Patel at 2019-04-27 15:20.
+    // 
+    // Description:Method contains socket of trades and orders.
+    // 
+    // 
+    // 
+
     orderSocket(month, filter_type) {
 
         var URL;
@@ -324,9 +367,23 @@ class Trade extends Component {
             this.setState({ orderTradeLoader: false })
         });
     }
+
+    // created by Meghal Patel at 2019-04-27 15:22.
+    // 
+    // Description:Method is updated when socket is called again from orderSocket();
+    // 
+    // 
+
     updateMyOrder(response) {
         this.setState({ orderTradeData: response })
     }
+
+    // created by Meghal Patel at 2019-04-27 15:23.
+    // 
+    // Description:Method is called when user wants to cancel the order which are pending in orders and trades.
+    // 
+    // 
+
     cancelOrder(id, side, type) {
         fetch(API_URL + `/cancel-pending-order`, {
             method: "post",
@@ -354,12 +411,26 @@ class Trade extends Component {
             .catch(error => {
             })
     }
+
+    // created by Meghal Patel at 2019-04-27 15:24.
+    // 
+    // Description:this method is common notification for every message.
+    // 
+    // 
+
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
             message: head,
             description: desc,
         });
     };
+
+    // created by Meghal Patel at 2019-04-27 15:25.
+    // 
+    // Description:Method is called when we click on any row in instruments component to change pair.
+    // 
+    // 
+
     currencyPair(crypto) {
         let cryptoPair = {
             crypto: crypto,
@@ -371,6 +442,13 @@ class Trade extends Component {
         };
         this.props.cryptoCurrency(cryptoPair)
     }
+
+    // created by Meghal Patel at 2019-04-27 15:26.
+    // 
+    // Description:Method is called to fetch user balance for buy/sell coins component
+    // 
+    // 
+
     getUserBal() {
         var URL;
         this.setState({ userBalLoader: true });
@@ -397,6 +475,13 @@ class Trade extends Component {
             this.setState({ userBal: data, userBalLoader: false })
         });
     }
+
+    // created by Meghal Patel at 2019-04-27 15:27.
+    // 
+    // Description:Method is called when we search in INstruments.
+    //  
+    // 
+
     searchInstu(e) {
         var search = e.target.value;
         if (search.trim() !== "") {
@@ -414,78 +499,13 @@ class Trade extends Component {
             this.setState({ searchedInstu: null });
         }
     }
-    /* componentWillUnmount() {
-        if (this.tvWidget !== null) {
-            this.tvWidget.remove();
-            this.tvWidget = null;
-        }
-    } */
 
-    /* RGL starts here */
-    // handleLayoutResize(layout, oldItem, newItem) {
-    //     let self = this;
-    //     console.log(layout, oldItem, newItem)
-    //     if (oldItem.i == "instruments") {
-    //         if (oldItem.h != newItem.h) {
-    //             let newHeight = 0;
-    //             if (newItem.h == 2) {
-    //                 newHeight = 100;
-    //             } else {
-    //                 newHeight = 100 + (160 * (newItem.h - 2))
-    //             }
-    //             self.setState({
-    //                 instrumentTableHeight: newHeight
-    //             });
-    //         }
-    //     }
+    // created by Meghal Patel at 2019-04-27 15:27.
+    // 
+    // Description:Method is called when layout is changed of grid.
+    // 
+    // 
 
-    //     if (oldItem.i == "orderHistory") {
-
-    //         if (oldItem.h != newItem.h) {
-    //             let newHeight = 0;
-    //             if (newItem.h == 2) {
-    //                 newHeight = 170;
-    //             } else {
-    //                 newHeight = 170 + (160 * (newItem.h - 2))
-    //             }
-    //             self.setState({
-    //                 orderHistoryTableHeight: newHeight
-
-    //             });
-    //         }
-
-    //     }
-    //     if (oldItem.i == "myorder") {
-
-    //         if (oldItem.h != newItem.h) {
-    //             let newHeight = 0;
-    //             if (newItem.h == 2) {
-    //                 newHeight = 155;
-    //             } else {
-    //                 newHeight = 155 + (160 * (newItem.h - 2))
-    //             }
-    //             self.setState({
-    //                 myOrderTableHeight: newHeight
-
-    //             });
-    //         }
-
-    //     }
-    //     if (oldItem.i == "buysellBook") {
-    //         if (oldItem.h != newItem.h) {
-    //             let newHeight = 0;
-    //             if (newItem.h == 3) {
-    //                 newHeight = 91;
-    //             } else {
-    //                 newHeight = 91 + (80 * (newItem.h - 3))
-    //             }
-    //             self.setState({
-    //                 buySellOrderHeight: newHeight
-
-    //             });
-    //         }
-    //     }
-    // }
     onLayoutChange(currentLayout, wholeLayout) {
         let self = this;
         let instrumentTableHeight, orderHistoryTableHeight, myOrderTableHeight, buySellOrderHeight, depthChartHeight;
@@ -549,6 +569,14 @@ class Trade extends Component {
             depthChartHeight
         });
     }
+
+
+    // created by Meghal Patel at 2019-04-27 15:30.
+    // 
+    // Description:Method is called when user saves the layout.
+    // 
+    // 
+
     saveToLS(key, value) {
         if (global.localStorage) {
             global.localStorage.setItem(
@@ -559,26 +587,59 @@ class Trade extends Component {
             );
         }
     }
+
     /* RGL ends here */
 
-    popWindow() {
-        var newWindow = window.open("localhost:3000/trade", "", "width=300, height=200");
-    }
+
+    // created by Meghal Patel at 2019-04-27 15:31.
+    // 
+    // Description:Method for buy sell loader.
+    // 
+    // 
+
     buySellLoaderFunc(loader) {
         this.setState({ buySellLoader: loader })
     }
+
+    // created by Meghal Patel at 2019-04-27 15:31.
+    // 
+    // Description:Method for history loader.
+    // 
+    // 
+
     hisFunc(loader) {
         this.setState({ hisLoader: loader });
     }
+
+    // created by Meghal Patel at 2019-04-27 15:31.
+    // 
+    // Description:Method for depth chart loader.
+    // 
+    // 
+
     depthLoaderFunc(loader) {
         this.setState({ depthLoader: loader });
     }
+
+    // created by Meghal Patel at 2019-04-27 15:31.
+    // 
+    // Description:Method for state change when edit layout is clicked.
+    // 
+    // 
+
     editLayout() {
         if (this.state.editState == false)
             this.setState({ editState: true, saveState: false });
         else
             this.setState({ editState: false });
     }
+
+    // created by Meghal Patel at 2019-04-27 15:31.
+    // 
+    // Description:Method for state change when clear layout is clicked.
+    // 
+    // 
+
     clearLayout() {
         if (this.state.saveState == false) {
             this.setState({ saveState: true, editState: false, layouts: this.state.prevlayout });
@@ -588,6 +649,13 @@ class Trade extends Component {
             this.setState({ saveState: false });
         }
     }
+
+    // created by Meghal Patel at 2019-04-27 15:31.
+    // 
+    // Description:Method for state change when save layout is clicked and store it on local.
+    // 
+    // 
+
     saveLayout() {
         if (this.state.saveState == false) {
             this.setState({ saveState: true, editState: false, prevlayout: this.state.layouts });
@@ -598,6 +666,74 @@ class Trade extends Component {
         }
 
     }
+
+    // created by Meghal Patel at 2019-04-27 15:34.
+    // 
+    // Description:Method is called when reset layout is clicked.
+    // 
+    // 
+
+    resetLayout() {
+        this.setState({
+            saveState: false,
+            layouts:
+            {
+                lg: [
+                    { i: "tradeView", x: 0, y: 0, w: 12, h: 4, minW: 6, minH: 3 },
+                    { i: 'instruments', x: 0, y: 1, w: 4, h: 3, minW: 4, minH: 2 },
+                    { i: 'tradeAction', x: 4, y: 1, w: 4, h: 3, minW: 4, minH: 2, maxH: 5 },
+                    { i: 'buysellBook', x: 8, y: 1, w: 4, h: 3, minW: 4, minH: 3 },
+                    { i: 'depthChart', x: 0, y: 2, w: 6, h: 3, minH: 3, maxH: 3, minW: 4 },
+                    { i: 'orderHistory', x: 7, y: 2, w: 6, h: 3, minH: 2, minW: 4 },
+                    { i: 'myorder', x: 0, y: 4, w: 12, h: 2, minW: 6, minH: 2 }
+                ],
+                md: [
+                    { i: "tradeView", x: 0, y: 0, w: 10, h: 3, minH: 3 },
+                    { i: 'instruments', x: 0, y: 1, w: 5, h: 2, minW: 5 },
+                    { i: 'tradeAction', x: 5, y: 1, w: 5, h: 2, minW: 5 },
+                    { i: 'buysellBook', x: 0, y: 2, w: 5, h: 3, minH: 3, minW: 5 },
+                    { i: 'depthChart', x: 5, y: 2, w: 5, h: 2, minW: 5 },
+                    { i: 'orderHistory', x: 0, y: 3, w: 10, h: 2, minH: 2, minW: 5 },
+                    { i: 'myorder', x: 0, y: 4, w: 10, h: 4, minW: 5, minH: 4 }
+                ],
+                sm: [
+                    { i: "tradeView", x: 0, y: 0, w: 6, h: 3, minH: 3 },
+                    { i: 'instruments', x: 0, y: 1, w: 6, h: 2, minW: 6 },
+                    { i: 'tradeAction', x: 0, y: 2, w: 6, h: 2, minW: 6 },
+                    { i: 'buysellBook', x: 0, y: 3, w: 6, h: 3, minH: 3, minW: 6 },
+                    { i: 'depthChart', x: 0, y: 4, w: 6, h: 2, minW: 6 },
+                    { i: 'orderHistory', x: 0, y: 5, w: 6, h: 2, minH: 2, minW: 6 },
+                    { i: 'myorder', x: 0, y: 6, w: 6, h: 2, minW: 6 }
+                ],
+                xs: [
+                    { i: "tradeView", x: 0, y: 0, w: 4, h: 3, minH: 3 },
+                    { i: 'instruments', x: 0, y: 1, w: 4, h: 2, minW: 4 },
+                    { i: 'tradeAction', x: 0, y: 2, w: 4, h: 2, minW: 4 },
+                    { i: 'buysellBook', x: 0, y: 3, w: 4, h: 3, minH: 3, minW: 4 },
+                    { i: 'depthChart', x: 0, y: 4, w: 4, h: 2, minW: 4 },
+                    { i: 'orderHistory', x: 0, y: 5, w: 4, h: 2, minH: 2, minW: 4 },
+                    { i: 'myorder', x: 0, y: 5, w: 5, h: 2, minW: 4 }
+                ],
+                xxs: [
+                    { i: "tradeView", x: 0, y: 0, w: 2, h: 3, minH: 3 },
+                    { i: 'instruments', x: 0, y: 1, w: 2, h: 2, minW: 2 },
+                    { i: 'tradeAction', x: 0, y: 2, w: 2, h: 2, minW: 2 },
+                    { i: 'buysellBook', x: 0, y: 3, w: 2, h: 3, minH: 3, minW: 2 },
+                    { i: 'depthChart', x: 0, y: 4, w: 2, h: 2, minW: 2 },
+                    { i: 'orderHistory', x: 0, y: 5, w: 2, h: 2, minH: 2, minW: 2 },
+                    { i: 'myorder', x: 0, y: 6, w: 2, h: 2, minW: 2 }
+                ]
+            }
+        }
+        )
+    }
+
+    // created by Meghal Patel at 2019-04-27 15:34.
+    // 
+    // Description:Method is called for full-screen mode
+    // 
+    // 
+
     goFullScreen() {
         let body = document.getElementsByTagName("body");
         let element = body[0];
@@ -614,6 +750,13 @@ class Trade extends Component {
             isFullscreen: true
         });
     }
+
+    // created by Meghal Patel at 2019-04-27 15:35.
+    // 
+    // Description:Method is called when exit full-screen is clicked.
+    // 
+    // 
+
     exitFullScreen() {
         if (document.exitFullscreen)
             document.exitFullscreen();
@@ -628,6 +771,13 @@ class Trade extends Component {
             isFullscreen: false
         });
     }
+
+    // created by Meghal Patel at 2019-04-27 15:35.
+    // 
+    // Description: Render method starts.
+    // 
+    // 
+
     render() {
         var self = this;
 
@@ -643,6 +793,7 @@ class Trade extends Component {
                 }
                 <Menu.Item onClick={this.clearLayout.bind(this)} disabled={this.state.saveState} key="3">Clear Layout</Menu.Item>
                 <Menu.Item onClick={this.saveLayout.bind(this)} disabled={this.state.saveState} key="2">Save</Menu.Item>
+                <Menu.Item onClick={this.resetLayout.bind(this)} key="4">Reset Layout</Menu.Item>
             </Menu>
         );
         return (
@@ -651,7 +802,7 @@ class Trade extends Component {
                     <Icon type="setting" />
                 </SettingDropdown>
                 <Navigation />
-                <Grey_wrap_trade>
+                <GreyWrapTrade>
                     {/* <Row>
                         <Col>
                             <Layout>
@@ -663,7 +814,6 @@ class Trade extends Component {
                     <Row>
                         <Col>
                             {/* <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} /> */}
-
                         </Col>
                     </Row>
                     <Row>
@@ -675,7 +825,6 @@ class Trade extends Component {
                                 cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                                 isDraggable={this.state.editState}
                                 isResizable={this.state.editState}
-                                onBreakpointChange={(newBreakpoint: string, newCols: number) => console.log("BREAK", newBreakpoint, newCols)}
                                 onLayoutChange={(layout, layouts) =>
                                     this.onLayoutChange(layout, layouts)
                                 }
@@ -791,7 +940,7 @@ class Trade extends Component {
                                             <Orderwrap>
                                                 <InstruOrder>MY ORDERS AND TRADES</InstruOrder>
                                                 <OrderTradeWrap >
-                                                    <Selectmonth labelInValue defaultValue={{ key: '1' }} style={{ width: 120, marginRight: "30px" }} onChange={this.handleChange}>
+                                                    <Selectmonth labelInValue defaultValue={{ key: '1' }} style={{ width: 120, marginRight: "30px" }} onChange={this.handleChangeOT}>
                                                         <Option value="1">1 Month</Option>
                                                         <Option value="3">3 Months</Option>
                                                         <Option value="6">6 Months</Option>
@@ -815,7 +964,7 @@ class Trade extends Component {
                             </RGL>
                         </Col >
                     </Row >
-                </Grey_wrap_trade >
+                </GreyWrapTrade >
                 <CommonFooter />
 
             </Contact_wrap >
@@ -846,7 +995,7 @@ function getFromLS(key) {
             ls = JSON.parse(global.localStorage.getItem("rgl-8")) || {
                 layouts: {
                     lg: [
-                        { i: "tradeView", x: 0, y: 0, w: 12, h: 6, minW: 6, minH: 3 },
+                        { i: "tradeView", x: 0, y: 0, w: 12, h: 4, minW: 6, minH: 3 },
                         { i: 'instruments', x: 0, y: 1, w: 4, h: 3, minW: 4, minH: 2 },
                         { i: 'tradeAction', x: 4, y: 1, w: 4, h: 3, minW: 4, minH: 2, maxH: 5 },
                         { i: 'buysellBook', x: 8, y: 1, w: 4, h: 3, minW: 4, minH: 3 },

@@ -1,10 +1,14 @@
+/* Built-in Packages */
 import React from 'react';
 
+/* Components */
+import HistoryTable from './HistoryTable';
+
+/*styled-components  */
 import {
     Left_div2, Instru,
 } from "../../../styled-components/loggedStyle/tradeStyle";
 
-import HistoryTable from './HistoryTable';
 export default class BuySell extends React.Component {
     hisFunc(loader) {
         this.props.hisFunc(loader);

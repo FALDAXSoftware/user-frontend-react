@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import { Welcome_text } from "./Login_Form";
 import { Col, Row } from "antd";
-import { globalVariables } from '../../../Globals';
+import { globalVariables } from 'Globals';
 
 /* Components */
 /* Global Constants */
@@ -113,35 +113,35 @@ const Sub_text = styled.span`
 `
 
 class EmailVerification extends Component {
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    render() {
-        return (
-            <div>
-                <RowWrap >
-                    <ColLeft sm={24} lg={12}>
-                        <LeftWrap >
-                            <a href={globalVariables.WordpressSiteURL}>
-                                <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
-                                <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
-                            </a>
-                        </LeftWrap>
-                    </ColLeft>
-                    <ColRight sm={24} lg={12}>
-                        <Form_wrap  >
-                            <RightWrap className="wow fadeInDown" >
-                                <Login_head>Thank You</Login_head>
-                                <Welcome_text>To continue, please verify your new email address.</Welcome_text>
-                                <Sub_text>Please check your email.</Sub_text>
-                            </RightWrap>
-                        </Form_wrap>
-                    </ColRight>
-                </RowWrap>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <RowWrap >
+          <ColLeft sm={24} lg={12}>
+            <LeftWrap >
+              <a href={globalVariables.WordpressSiteURL}>
+                <VertImg className="wow fadeInUp" src="/images/LeftSideLogo.png" />
+                <HorImg className="wow fadeInUp" src="/images/logoWhite.png" />
+              </a>
+            </LeftWrap>
+          </ColLeft>
+          <ColRight sm={24} lg={12}>
+            <Form_wrap  >
+              <RightWrap className="wow fadeInDown" >
+                <Login_head>Thank You</Login_head>
+                <Welcome_text>To continue, please verify your new email address.</Welcome_text>
+                <Sub_text>Please check your email.</Sub_text>
+              </RightWrap>
+            </Form_wrap>
+          </ColRight>
+        </RowWrap>
+      </div>
+    );
+  }
 }
 
 export default EmailVerification;

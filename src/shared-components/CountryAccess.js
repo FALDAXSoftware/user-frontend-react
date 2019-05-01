@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { Button, Modal, Icon, notification } from 'antd';
 import styled from 'styled-components'
 import { globalVariables } from '../Globals';
-import { ComingImg } from "../Constants/images";
+import { _COMINGIMG, _COMINGIMG2 } from "../Constants/images";
 
 const API_URL = globalVariables.API_URL;
 
@@ -111,7 +111,7 @@ class ComingSoon extends Component {
         return (
             <div>
                 <Modal
-                    title={<img src={ComingImg} />}
+                    title={<div><img src={_COMINGIMG} /> <img style={{ marginLeft: "10px" }} src={_COMINGIMG2} /></div>}
                     visible={this.props.visible}
                     onOk={(e) => this.handleComing()}
                     onCancel={(e) => this.comingCancel(e)}
@@ -121,7 +121,7 @@ class ComingSoon extends Component {
                     className="simple-maps"
                 >
                     <Modal_wrap>
-                        <h3 style={{ fontFamily: "Open Sans", fontSize: "40px", textAlign: "center", color: "rgb( 15, 71, 123 )", fontWeight: "600", marginTop: "40px" }}>You Can't Trade</h3>
+                        <h3 style={{ fontFamily: "Open Sans", fontSize: "40px", textAlign: "center", color: "rgb(3, 170, 249)", fontWeight: "600", marginTop: "40px" }}>You Can't Trade</h3>
                         <p style={{ fontFamily: "Open Sans", fontSize: "28px", textAlign: "center", color: "black", fontWeight: "600", marginTop: "40px" }}>Trading is illegal in your country.</p>
                         {/* <Sub_wrap>
                             <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>

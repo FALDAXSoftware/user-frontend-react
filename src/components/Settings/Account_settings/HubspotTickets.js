@@ -1,15 +1,20 @@
+/* Built-in packages */
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
+import { Row, Col } from 'antd';
 import { connect } from "react-redux"
 import moment from 'moment'
-import Navigation from '../../Navigations/Navigation';
-import Footer_home from "../../Landing/Footers/Footer_home";
+
+/* components */
+import Navigation from 'components/Navigations/Navigation';
+import Footer_home from "components/Landing/Footers/Footer_home";
+import { globalVariables } from 'Globals';
+import FaldaxLoader from 'shared-components/FaldaxLoader';
+
+/* styled-components */
 import { ProfileWrapper, ProfileDiv } from '../EditProfile'
-import { globalVariables } from '../../../Globals';
-import FaldaxLoader from '../../../shared-components/FaldaxLoader';
-import { Row, Col } from 'antd';
-import { Container } from '../../../styled-components/homepage/style';
+import { Container } from 'styled-components/homepage/style';
 
 let { API_URL } = globalVariables;
 

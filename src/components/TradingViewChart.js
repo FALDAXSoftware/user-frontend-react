@@ -1,7 +1,8 @@
+/* Built-in Packages */
 import React from "react";
 import { connect } from "react-redux";
-import { widget } from "../charting_library/charting_library.min";
-import { globalVariables } from "../Globals";
+import { widget } from "charting_library/charting_library.min";
+import { globalVariables } from "Globals";
 
 import styled from 'styled-components';
 const API_URL = globalVariables.API_URL;
