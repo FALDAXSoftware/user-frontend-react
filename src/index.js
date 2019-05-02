@@ -12,7 +12,7 @@ import App from './App';
 import configureStore from "./store";
 import { loadState, saveState } from './localstorage';
 
-import Navigation from './components/Navigations/Navigation';
+import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 let persisteState = loadState();
 if (persisteState) {
     if (persisteState.walletReducer) {

@@ -1,42 +1,42 @@
 /* In-Build components */
 import React, { Component, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
-import AppRouter from '../src/routes';
-import './App.css';
+import AppRouter from 'routes';
+import 'App.css';
 import { ThemeProvider } from 'styled-components';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { Signup } from './Actions/Auth';
-import FaldaxLoader from "./shared-components/FaldaxLoader";
+import { Signup } from 'ACTIONS/authActions';
+import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 /* Components */
-// import HomePage from './components/Landing/HomePage';
-// import Login from "./components/Landing/User_forms/Login_Form"
-const SignupForm = lazy(() => import('./components/Landing/User_forms/Signup_Form'))
+// import HomePage from 'components/LANDING/HomePage';
+// import Login from "components/LANDING/USERFORMS/Login_Form"
+const SignupForm = lazy(() => import('COMPONENTS/LANDING/USERFORMS/signup_form'))
 
-const ForgotForm = lazy(() => import("./components/Landing/User_forms/Forgot_Form"))
-const ResetPassword = lazy(() => import("./components/Landing/User_forms/Reset_Form"))
-const FaqPage = lazy(() => import('./components/Landing_categories/FaqPage'))
-const AboutUs = lazy(() => import('./components/Landing_categories/About_us'))
-const Blog = lazy(() => import('./components/Landing_categories/Blog'))
-const BlogDetails = lazy(() => import('./components/Landing_categories/BlogDetails'))
-const ContactUs = lazy(() => import('./components/Landing_categories/ContactUs'))
-const CareerDetails = lazy(() => import('./components/Landing_categories/Careerdetails'))
-const Careers = lazy(() => import('./components/Landing_categories/Careers'))
-const MediaContact = lazy(() => import('./components/Landing_categories/MediaContact'))
-const Fees = lazy(() => import('./components/Landing_categories/Fees'))
-const Addcoin = lazy(() => import('./components/Landing_categories/Addcoin'))
-const ApplyJob = lazy(() => import('./components/Landing_categories/ApplyJob'))
-const Policy = lazy(() => import('./components/Landing_categories/Policy'))
-const News = lazy(() => import('./components/Landing_categories/News'))
-const ThankYou = lazy(() => import("./shared-components/thank_you"))
-const Chart = lazy(() => import("../src/components/TradingViewChart"))
-const SignupSuccess = lazy(() => import('./components/Landing/User_forms/Signup_success'))
-const HomePage = lazy(() => import('./components/Landing/HomePage'));
-const Login = lazy(() => import('./components/Landing/User_forms/Login_Form'));
-const EmailVerification = lazy(() => import('./components/Landing/User_forms/EmailVerification'));
+const ForgotForm = lazy(() => import("COMPONENTS/LANDING/USERFORMS/forgot_form"))
+const ResetPassword = lazy(() => import("COMPONENTS/LANDING/USERFORMS/reset_form"))
+const FaqPage = lazy(() => import('COMPONENTS/LANDINGCATEGORIES/faq_page'))
+const AboutUs = lazy(() => import('COMPONENTS/LANDINGCATEGORIES/about_us'))
+const Blog = lazy(() => import('COMPONENTS/LANDINGCATEGORIES/blog'))
+const BlogDetails = lazy(() => import('COMPONENTS/LANDINGCATEGORIES/blog_details'))
+const ContactUs = lazy(() => import('COMPONENTS/LANDINGCATEGORIES/contact_us'))
+const CareerDetails = lazy(() => import('COMPONENTS/LANDINGCATEGORIES/career_details'))
+const Careers = lazy(() => import('COMPONENTS/LANDINGCATEGORIES/careers'))
+const MediaContact = lazy(() => import('COMPONENTS/LANDINGCATEGORIES/media_contact'))
+const Fees = lazy(() => import('COMPONENTS/LANDINGCATEGORIES/fees'))
+const Addcoin = lazy(() => import('COMPONENTS/LANDINGCATEGORIES/add_coin'))
+const ApplyJob = lazy(() => import('COMPONENTS/LANDINGCATEGORIES/apply_job'))
+const Policy = lazy(() => import('COMPONENTS/LANDINGCATEGORIES/policy'))
+const News = lazy(() => import('COMPONENTS/LANDINGCATEGORIES/news'))
+const ThankYou = lazy(() => import("SHARED-COMPONENTS/thank_you"))
+const Chart = lazy(() => import("COMPONENTS/tradingviewchart"))
+const SignupSuccess = lazy(() => import('COMPONENTS/LANDING/USERFORMS/signup_success'))
+const HomePage = lazy(() => import('COMPONENTS/LANDING/homepage'));
+const Login = lazy(() => import('COMPONENTS/LANDING/USERFORMS/login_form'));
+const EmailVerification = lazy(() => import('COMPONENTS/LANDING/USERFORMS/emailverification'));
 // import dotenv from 'dotenv';
 
 // dotenv.config();
