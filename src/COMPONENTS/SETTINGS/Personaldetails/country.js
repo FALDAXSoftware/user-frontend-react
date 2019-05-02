@@ -92,6 +92,7 @@ export default class CountryPick extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeState = this.handleChangeState.bind(this);
         this.handleChangeCity = this.handleChangeCity.bind(this);
+        this.getCountryId = this.getCountryId.bind(this);
     }
 
     handleChange(value, position) {
@@ -103,7 +104,7 @@ export default class CountryPick extends Component {
             this.props.onCountryName(countrySelected.sortname);
         }
 
-        this.props.onCountryChange(value, null, null, null, null);
+        this.props.onCountryChange(value, null, null);
 
     }
     handleChangeState(value, position) {
@@ -119,7 +120,7 @@ export default class CountryPick extends Component {
 
         this.setState({ state_selected: value, city_selected: "", country_selected: country, stateID: newPosition, cities });
 
-        this.props.onCountryChange(country, value, null, stateID, countryID);
+        this.props.onCountryChange(country, value, null);
     }
     handleChangeCity(value, position) {
         var state = this.props.profileDetails.state !== undefined && this.state.state_selected == null ? this.props.profileDetails.state : this.state.state_selected;
@@ -132,7 +133,7 @@ export default class CountryPick extends Component {
             this.props.profileDetails.country_id : this.state.countryID;
 
         this.setState({ city_selected: value, stateID, countryID });
-        this.props.onCountryChange(country, state, value, stateID, countryID);
+        this.props.onCountryChange(country, state, value);
 
     }
     handleBlur() {
@@ -155,14 +156,17 @@ export default class CountryPick extends Component {
                    }); */
 
         let allCountries = CountryData.getAllCountries();
+        let countryId = this.getCountryId(this.props.profileDetails.country);
         this.setState({ countries: allCountries, fetching: false, callOnce: true });
-        if (this.props.profileDetails.country_id !== undefined) {
+        if (countryId !== undefined) {
 
-            var country = Number(this.props.profileDetails.country_id);
+            var country = Number(countryId);
             var states = CountryData.getStatesOfCountry(country + 1);
             this.setState({ states })
-            if (this.props.profileDetails.state_id !== undefined) {
-                var cities = CountryData.getCitiesOfState(this.props.profileDetails.state_id);
+            let stateId = this.getStateId(countryId, this.props.profileDetails.state)
+            if (stateId !== undefined) {
+                console.log(cities)
+                var cities = CountryData.getCitiesOfState(stateId);
                 this.setState({ cities })
 
             }
@@ -176,7 +180,26 @@ export default class CountryPick extends Component {
             }
         }
     }
-
+    getCountryId(countryName) {
+        let allCountries = CountryData.getAllCountries();
+        for (let index = 0; index < allCountries.length; index++) {
+            const element = allCountries[index];
+            if (countryName == element.name) {
+                return element.id;
+            }
+        }
+        return undefined;
+    }
+    getStateId(countryId, stateName) {
+        let allStates = CountryData.getStatesOfCountry(countryId);
+        for (let index = 0; index < allStates.length; index++) {
+            const element = allStates[index];
+            if (stateName == element.name) {
+                return element.id;
+            }
+        }
+        return undefined;
+    }
     render() {
         let country, state, city;
         if (this.props.kyc !== undefined)
