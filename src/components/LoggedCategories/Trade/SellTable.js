@@ -135,31 +135,40 @@ class SellTable extends Component {
     //     });
     // }
     updateData(data) {
+        let self = this;
         // console.log("buyrow------------", data);
         const row = [];
         let sum = 0;
         for (let index = 0; index < data.length; index++) {
             const element = data[index];
             let isAdded = false;
+            element["my_size"] = 0;
+            if (element.user_id == self.props.profileDetails.id) {
+                element["my_size"] = element.quantity;
+            }
             for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
                 const internalElement = row[internalIndex];
                 if (internalElement.ask == element.price) {
                     row[internalIndex].amount += element.quantity;
+                    if (internalElement.user_id == self.props.profileDetails.id) {
+                        row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
+                    }
                     isAdded = true;
                     break;
                 }
             }
             if (!isAdded) {
                 row.push({
-                    my_size: 0,
+                    my_size: element.my_size,
                     amount: element.quantity,
                     ask: element.price,
+                    user_id: element.user_id
                     // total: sum,
                 });
             }
         }
 
-        for (let index = row.length - 1; index >= 0; index--) {
+        for (let index = 0; index < row.length; index++) {
             const element = row[index];
             sum += element.amount * element.ask;
             row[index]["total"] = sum;
@@ -254,7 +263,8 @@ function mapStateToProps(state) {
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
         theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
-        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : ""
+        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : "",
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }

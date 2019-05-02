@@ -143,16 +143,27 @@ class BuyTable extends Component {
     //     });
     // }
     updateData(data) {
-        // console.log("buyrow------------", data);
+        let self = this;
+        console.log("buyrow------------", data);
         const row = [];
         let sum = 0;
         for (let index = 0; index < data.length; index++) {
             const element = data[index];
             let isAdded = false;
+            element["my_size"] = 0;
+            if (element.user_id == self.props.profileDetails.id) {
+                element["my_size"] = element.quantity;
+            }
+
             for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
                 const internalElement = row[internalIndex];
                 if (internalElement.bid == element.price) {
                     row[internalIndex].amount += element.quantity;
+                    console.log(element, internalElement);
+
+                    if (internalElement.user_id == self.props.profileDetails.id) {
+                        row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
+                    }
                     isAdded = true;
                     break;
                 }
@@ -162,6 +173,7 @@ class BuyTable extends Component {
                     my_size: 0,
                     amount: element.quantity,
                     bid: element.price,
+                    user_id: element.user_id
                     // total: sum,
                 });
             }
@@ -261,7 +273,8 @@ function mapStateToProps(state) {
     return ({
         isLoggedIn: state.simpleReducer.isLoggedIn,
         theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
-        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : ""
+        cryptoPair: state.walletReducer.cryptoPair !== undefined ? state.walletReducer.cryptoPair : "",
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
     })
 }
