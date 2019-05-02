@@ -380,7 +380,7 @@ class WalletPopup extends Component {
                                 <Rediv>
                                     <Label style={{ display: "block" }}>Amount</Label>
                                     {/* <Sec_wrap> */}
-                                    <WallInput type="number" value={this.state.sendFields.amount} name="amount" onChange={this.sendChange} />
+                                    <WallInput type="number" min="0" value={this.state.sendFields.amount} name="amount" onChange={this.sendChange} />
                                     {this.validator.message('amount', this.state.sendFields.amount, 'required|numeric|gtzero', 'text-danger-validation')}
                                     {/*  <RightInput />
                                     <ButtonToolbarS>
