@@ -56,8 +56,6 @@ volumes: [
 
 
 
-
-
 def getNamespace(branch){
     switch(branch){
         case 'master' : return "prod";
