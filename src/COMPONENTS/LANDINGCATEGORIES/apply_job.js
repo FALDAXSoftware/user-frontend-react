@@ -444,6 +444,7 @@ class ApplyJob extends Component {
                                         sitekey={GOOGLE_SITE_KEY}
                                         onloadCallback={this.onLoadRecaptcha}
                                         verifyCallback={this.verifyCallback}
+                                        badge="bottomleft"
                                     />
                                     <Btn_apply onClick={this.onSubmit}>SUBMIT</Btn_apply>
                                 </Form_apply>
