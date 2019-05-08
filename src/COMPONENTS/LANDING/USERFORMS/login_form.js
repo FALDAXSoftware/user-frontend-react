@@ -4,6 +4,7 @@ import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import { Row, Col, Button, notification, Icon } from "antd";
 import { connect } from 'react-redux';
+import { ReCaptcha } from 'react-recaptcha-google'
 
 /* Components */
 import { _EYE, _ACTIVEEYE } from 'CONSTANTS/images';
@@ -11,7 +12,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader"
 import { loginAction, Login, clearLogin } from 'ACTIONS/authActions';
 import { globalVariables } from 'Globals';
 
-let { API_URL } = globalVariables;
+let { API_URL, GOOGLE_SITE_KEY } = globalVariables;
 /* Global CONSTANTS */
 
 /* Styled-Components */
@@ -278,17 +279,32 @@ class Login_Form extends Component {
       typeEye: "password",
       isOtpRequired: false,
       loader: false,
-      verify: false
+      verify: false,
+      recaptchaToken: null
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.IpVerify = this.IpVerify.bind(this);
     this.tokenVerify = this.tokenVerify.bind(this);
+    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
+    this.verifyCallback = this.verifyCallback.bind(this);
   }
 
   static propTypes = {
     form: formShape,
   };
-
+  onLoadRecaptcha() {
+    if (this.captchaDemo) {
+      this.captchaDemo.reset();
+      this.captchaDemo.execute();
+    }
+  }
+  verifyCallback(recaptchaToken) {
+    // Here you will get the final recaptchaToken!!!  
+    // console.log(recaptchaToken, "<= your recaptcha token");
+    this.setState({
+      recaptchaToken
+    });
+  }
   submit = () => {
     this.props.form.validateFields((error, value) => {
       if (error == null && this.state.emailIcon == true && this.state.passIcon == true && (this.state.isOtpRequired == true ? this.state.otpIcon == true : true)) {
@@ -303,8 +319,13 @@ class Login_Form extends Component {
         if (value.otp && value.otp !== null && value.otp.trim() !== "" && value.otp !== undefined) {
           obj['otp'] = value.otp;
         }
-        this.setState({ loader: true })
-        this.props.Login(obj);
+        if (this.state.recaptchaToken != null) {
+          obj["g_recaptcha_response"] = this.state.recaptchaToken;
+          this.setState({ loader: true })
+          this.props.Login(obj);
+        } else {
+          this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reload the page.");
+        }
       } else {
         if (error !== null) {
           if (error['password'] !== undefined && (value.password == "" || value.password == undefined)) {
@@ -444,6 +465,7 @@ class Login_Form extends Component {
   }
 
   componentDidMount() {
+    this.onLoadRecaptcha();
     if (this.getUrlParameter("token")) {
       this.tokenVerify();
     }
@@ -463,12 +485,16 @@ class Login_Form extends Component {
           this.setState({ loader: false, verify: true })
         }
       } else if (props.errorStatus.status == 201) {
-        this.setState({ loader: false })
-        this.setState({ isOtpRequired: true });
+
+        this.setState({ loader: false, recaptchaToken: null, isOtpRequired: true }, () => {
+          this.onLoadRecaptcha();
+        });
         // document.querySelector("#otp-field").focus();
         /* this.openNotificationWithIcon('error', 'Error', props.errorStatus.err); */
       } else {
-        this.setState({ loader: false })
+        this.setState({ loader: false, recaptchaToken: null }, () => {
+          this.onLoadRecaptcha();
+        })
         this.openNotificationWithIcon('error', 'Error', props.errorStatus.err);
       }
       this.props.clearLogin();
@@ -654,6 +680,15 @@ class Login_Form extends Component {
             </Form_wrap>
           </ColRight>
         </RowWrap>
+        <ReCaptcha
+          ref={(el) => { this.captchaDemo = el; }}
+          size="invisible"
+          render="explicit"
+          sitekey={GOOGLE_SITE_KEY}
+          onloadCallback={this.onLoadRecaptcha}
+          verifyCallback={this.verifyCallback}
+        />
+
       </LoginWrap>
     );
   }
