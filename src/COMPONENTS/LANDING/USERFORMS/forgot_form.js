@@ -5,7 +5,7 @@ import { Button, notification, Row, Col } from "antd";
 import { connect } from "react-redux"
 import { ReCaptcha } from 'react-recaptcha-google'
 import SimpleReactValidator from "simple-react-validator";
-
+import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
 /* Components */
 import { forgotAction, clearForgot } from "ACTIONS/authActions";
 import { globalVariables } from 'Globals';
@@ -208,8 +208,9 @@ class ForgotForm extends Component {
 
       if (this.state.recaptchaToken != null) {
         value["g_recaptcha_response"] = this.state.recaptchaToken;
+        this.setState({ loader: true });
         this.props.forgotAction(value);
-        this.setState({ email: "" });
+        // this.setState({ email: "" });
       } else {
         this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reload the page.");
       }
@@ -236,12 +237,12 @@ class ForgotForm extends Component {
     if (props.forgot) {
       if (props.forgot.status == 200) {
 
+        this.setState({ email: "", recaptchaToken: null, loader: false })
         this.openNotificationWithIcon('success', 'Success', props.forgot.message);
-        this.setState({ email: "", recaptchaToken: null })
 
 
       } else {
-        this.setState({ recaptchaToken: null })
+        this.setState({ recaptchaToken: null, loader: false })
         this.openNotificationWithIcon('error', 'Error', props.forgot.err);
       }
       this.onLoadRecaptcha();
@@ -298,6 +299,7 @@ class ForgotForm extends Component {
             </Form_wrap>
           </ColRight>
         </RowWrap>
+        {(this.state.loader == true) ? <FaldaxLoader /> : ""}
         <ReCaptcha
           ref={(el) => { this.captchaDemo = el; }}
           size="invisible"
