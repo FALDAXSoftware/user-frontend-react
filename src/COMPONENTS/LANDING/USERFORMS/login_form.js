@@ -687,6 +687,7 @@ class Login_Form extends Component {
           sitekey={GOOGLE_SITE_KEY}
           onloadCallback={this.onLoadRecaptcha}
           verifyCallback={this.verifyCallback}
+          badge="bottomleft"
         />
 
       </LoginWrap>
