@@ -4,6 +4,7 @@ import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
 import { Row, Col, Button, notification, Icon, Progress } from "antd";
 import { connect } from 'react-redux';
+import { ReCaptcha } from 'react-recaptcha-google'
 import "react-password-strength/dist/style.css";
 
 /* Components */
@@ -12,9 +13,9 @@ import { _ACTIVEEYE, _EYE } from 'CONSTANTS/images';
 
 /* Global CONSTANTS */
 import { globalVariables } from 'Globals';
-
 /* Styled-Components */
 import { Username, WelcomeText, EmailLabel, EmailReq, PassReq } from "./login_form";
+let { GOOGLE_SITE_KEY } = globalVariables;
 
 export const LoginWrap = styled.div`
 background-color:#f0f3f2;
@@ -263,22 +264,31 @@ class SignupForm extends Component {
       PasswordtypeEye: "password",
       repeatEye: "password",
       qP: "",
-      isSignDisable: false
+      isSignDisable: false,
+      recaptchaToken: null
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.dispModal = this.dispModal.bind(this);
+    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
+    this.verifyCallback = this.verifyCallback.bind(this);
   }
 
   static propTypes = {
     form: formShape,
   };
   /* Life Cycle Methods */
+
   componentWillReceiveProps(props, newProps) {
     if (props.isSignUp) {
       if (props.isSignUp.status === 200) {
         //this.props.dispModal("thankyou");
         this.props.history.push('/signup-success');
       } else {
+        this.setState({
+          recaptchaToken: null
+        }, () => {
+          this.onLoadRecaptcha();
+        });
         this.openNotificationWithIcon('error', 'Sign In', props.isSignUp.err);
       }
       this.setState({ isSignDisable: false });
@@ -286,7 +296,9 @@ class SignupForm extends Component {
     this.props.clearSignUp();
   }
   componentDidMount() {
-    if (this.props.location.pathname === "/signup") {
+    this.onLoadRecaptcha();
+    let queryParams
+    if (this.props.location.pathname == "/signup") {
       if (this.props.location.search !== "") {
         let qP = this.props.location.search.split("=")
         if (qP[0].includes("refID")) {
@@ -295,7 +307,19 @@ class SignupForm extends Component {
       }
     }
   }
-
+  onLoadRecaptcha() {
+    if (this.captchaDemo) {
+      this.captchaDemo.reset();
+      this.captchaDemo.execute();
+    }
+  }
+  verifyCallback(recaptchaToken) {
+    // Here you will get the final recaptchaToken!!!
+    // console.log(recaptchaToken, "<= your recaptcha token");
+    this.setState({
+      recaptchaToken
+    });
+  }
   /* 
     Page:/reset-form
     This method is called when we submit Signup Form.
@@ -318,7 +342,13 @@ class SignupForm extends Component {
         obj['confirm_password'] = value.confirm_password;
         obj['referral_code'] = value.referral_code;
         obj['device_type'] = 0;
-        this.props.Signup(obj);
+        if (this.state.recaptchaToken != null) {
+          obj["g_recaptcha_response"] = this.state.recaptchaToken;
+          this.setState({ loader: true })
+          this.props.Signup(obj);
+        } else {
+          this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reload the page.");
+        }
       } else {
         if (error !== undefined && error !== null) {
           if (error['first_name'] !== undefined) {
@@ -675,6 +705,15 @@ class SignupForm extends Component {
             </FormWrap>
           </ColRight>
         </RowWrap>
+        <ReCaptcha
+          ref={(el) => { this.captchaDemo = el; }}
+          size="invisible"
+          render="explicit"
+          sitekey={GOOGLE_SITE_KEY}
+          onloadCallback={this.onLoadRecaptcha}
+          verifyCallback={this.verifyCallback}
+          badge="bottomleft"
+        />
       </LoginWrap>
     );
   }

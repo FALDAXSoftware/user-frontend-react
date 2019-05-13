@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Row, Col, notification } from 'antd';
+import { ReCaptcha } from 'react-recaptcha-google'
 import styled from 'styled-components';
 import SimpleReactValidator from 'simple-react-validator';
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
@@ -14,7 +15,7 @@ import {
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
 import { globalVariables } from "Globals"
 
-let { API_URL } = globalVariables;
+let { API_URL, GOOGLE_SITE_KEY } = globalVariables;
 
 export const ContainerContact = styled(Container)`
     background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"}; 
@@ -84,10 +85,13 @@ class ApplyJob extends Component {
                 loader: false,
                 position_flag: null,
                 coverLimit: null,
-                resumeLimit: null
+                resumeLimit: null,
+                recaptchaToken: null
             },
         };
         this._onChangeFields = this._onChangeFields.bind(this);
+        this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
+        this.verifyCallback = this.verifyCallback.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         let self = this;
         this.validator = new SimpleReactValidator({
@@ -153,6 +157,10 @@ class ApplyJob extends Component {
         });
     }
     componentDidMount() {
+        if (this.captchaDemo) {
+            this.captchaDemo.reset();
+            this.captchaDemo.execute();
+        }
         if (this.props.location.search) {
             var arr = decodeURI(this.props.location.search).split("&");
             var arr2 = arr[1].split("=");
@@ -211,58 +219,77 @@ class ApplyJob extends Component {
         });
     };
     onSubmit() {
+        var self = this;
         if (this.validator.allValid()) {
-            let jobID;
-            if (this.props.location.search) {
-                var arr = decodeURI(this.props.location.search).split("&");
-                var arr2 = arr[0].split("=");
-                jobID = arr2[1];
-            }
-            let formdata = new FormData();
-            formdata.append('first_name', this.state.fields['first_name']);
-            formdata.append('last_name', this.state.fields['last_name'])
-            formdata.append('email', this.state.fields['email'])
-            formdata.append('phone_number', this.state.fields['phone_number'])
-            formdata.append('position', this.state.position_flag)
-            formdata.append('website_url', this.state.fields['website_url'])
-            formdata.append('linkedin_profile', this.state.fields['linkedin_profile'])
-            formdata.append('job_id', jobID);
-            formdata.append('cover_letter', this.state.fields['cover_letter'])
-            formdata.append('resume', this.state.fields['resume'])
-
-            this.setState({ loader: true });
-            fetch(API_URL + "/apply-job",
-                {
-                    method: "post",
-                    body: formdata
-                })
-                .then(response => response.json())
-                .then((responseData) => {
-                    this.openNotificationWithIcon('success', 'Job Applied', responseData.message);
-                    let fields = {};
-                    fields["last_name"] = '';
-                    fields['first_name'] = "";
-                    fields['email'] = "";
-                    fields['phone_number'] = '';
-                    fields['resume'] = "";
-                    fields['website_url'] = "";
-                    fields['cover_letter'] = "";
-                    fields['linkedin_profile'] = ''
-
-                    this.setState({ fields: fields, flag_drop: null, cover_flag: null, loader: false }, () => {
-                        this.validator.hideMessages();
-                        this.forceUpdate();
+            if (this.state.recaptchaToken != null) {
+                let jobID;
+                if (this.props.location.search) {
+                    var arr = decodeURI(this.props.location.search).split("&");
+                    var arr2 = arr[0].split("=");
+                    jobID = arr2[1];
+                }
+                let formdata = new FormData();
+                formdata.append('first_name', this.state.fields['first_name']);
+                formdata.append('last_name', this.state.fields['last_name'])
+                formdata.append('email', this.state.fields['email'])
+                formdata.append('phone_number', this.state.fields['phone_number'])
+                formdata.append('position', this.state.position_flag)
+                formdata.append('website_url', this.state.fields['website_url'])
+                formdata.append('linkedin_profile', this.state.fields['linkedin_profile'])
+                formdata.append('job_id', jobID);
+                formdata.append('cover_letter', this.state.fields['cover_letter'])
+                formdata.append('resume', this.state.fields['resume'])
+                formdata.append('g_recaptcha_response', this.state.recaptchaToken);
+                this.setState({ loader: true });
+                fetch(API_URL + "/apply-job",
+                    {
+                        method: "post",
+                        body: formdata,
                     })
-                })
-                .catch(error => {
-                })
+                    .then(response => response.json())
+                    .then((responseData) => {
+                        this.openNotificationWithIcon('success', 'Job Applied', responseData.message);
+                        let fields = {};
+                        fields["last_name"] = '';
+                        fields['first_name'] = "";
+                        fields['email'] = "";
+                        fields['phone_number'] = '';
+                        fields['resume'] = "";
+                        fields['website_url'] = "";
+                        fields['cover_letter'] = "";
+                        fields['linkedin_profile'] = ''
+
+                        this.setState({ fields: fields, flag_drop: null, cover_flag: null, loader: false, recaptchaToken: null }, () => {
+                            this.validator.hideMessages();
+                            this.forceUpdate();
+                            self.captchaDemo.reset();
+                            self.captchaDemo.execute();
+                        })
+                    })
+                    .catch(error => {
+                    })
+            } else {
+                this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reload the page.");
+            }
         } else {
             this.validator.showMessages();
             // rerender to show messages for the first time
             this.forceUpdate();
         }
     }
-
+    onLoadRecaptcha() {
+        if (this.captchaDemo) {
+            this.captchaDemo.reset();
+            this.captchaDemo.execute();
+        }
+    }
+    verifyCallback(recaptchaToken) {
+        // Here you will get the final recaptchaToken!!!  
+        // console.log(recaptchaToken, "<= your recaptcha token");
+        this.setState({
+            recaptchaToken
+        });
+    }
     render() {
         const { position_flag, fields, flag_drop, cover_flag } = this.state;
         return (
@@ -410,6 +437,15 @@ class ApplyJob extends Component {
                                             </Col>
                                         </Row>
                                     </Gap>
+                                    <ReCaptcha
+                                        ref={(el) => { this.captchaDemo = el; }}
+                                        size="invisible"
+                                        render="explicit"
+                                        sitekey={GOOGLE_SITE_KEY}
+                                        onloadCallback={this.onLoadRecaptcha}
+                                        verifyCallback={this.verifyCallback}
+                                        badge="bottomleft"
+                                    />
                                     <BtnApply onClick={this.onSubmit}>SUBMIT</BtnApply>
                                 </FormApply>
                             </ApplyWrap>

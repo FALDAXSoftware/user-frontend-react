@@ -2,6 +2,7 @@
 import React, { Component, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import AppRouter from 'routes';
+import { loadReCaptcha } from 'react-recaptcha-google'
 import 'App.css';
 import { ThemeProvider } from 'styled-components';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
@@ -75,6 +76,7 @@ class App extends Component {
     }
   }
   componentDidMount() {
+    loadReCaptcha();
     window.scrollTo(0, 0);
     // if(this.props.theme!==undefined)
     //     {

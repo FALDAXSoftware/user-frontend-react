@@ -3,8 +3,9 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import { Button, notification, Row, Col } from "antd";
 import { connect } from "react-redux"
+import { ReCaptcha } from 'react-recaptcha-google'
 import SimpleReactValidator from "simple-react-validator";
-
+import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
 /* Components */
 import { forgotAction, clearForgot } from "ACTIONS/authActions";
 import { globalVariables } from 'Globals';
@@ -13,6 +14,7 @@ import { globalVariables } from 'Globals';
 
 /* Styled-Components */
 import { Username, FormWrap, WelcomeText, EmailLabel } from "./login_form";
+let { GOOGLE_SITE_KEY } = globalVariables;
 const RowWrap = styled(Row)`
   min-height:100%;
   
@@ -178,41 +180,41 @@ class ForgotForm extends Component {
     super(props);
     this.state = {
       forgot: false,
-      email: ""
-    };
-    this.validator = new SimpleReactValidator();
+      email: "",
+      recaptchaToken: null
+    },
+      this.validator = new SimpleReactValidator();
     this.fieldChange = this.fieldChange.bind(this);
+    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
+    this.verifyCallback = this.verifyCallback.bind(this);
   }
-
-  /* Life CyCle Methods */
-
-  componentWillReceiveProps(props, newProps) {
-    if (props.forgot) {
-      if (props.forgot.status === 200) {
-
-        this.openNotificationWithIcon('success', 'Success', props.forgot.message);
-        this.setState({ email: "" })
-
-
-      } else {
-        this.openNotificationWithIcon('error', 'Error', props.forgot.err);
-      }
-      this.props.clearForgot();
+  onLoadRecaptcha() {
+    if (this.captchaDemo) {
+      this.captchaDemo.reset();
+      this.captchaDemo.execute();
     }
   }
-
-  /* 
-    Page: /forgot-password
-    This method is called when you submit Forgot Password Form.
-  */
-
+  verifyCallback(recaptchaToken) {
+    // Here you will get the final recaptchaToken!!!  
+    // console.log(recaptchaToken, "<= your recaptcha token");
+    this.setState({
+      recaptchaToken
+    });
+  }
   submit = () => {
     if (this.validator.allValid()) {
       this.validator.hideMessages()
       var value = {};
       value.email = this.state.email;
-      this.props.forgotAction(value);
-      this.setState({ email: "" })
+
+      if (this.state.recaptchaToken != null) {
+        value["g_recaptcha_response"] = this.state.recaptchaToken;
+        this.setState({ loader: true });
+        this.props.forgotAction(value);
+        // this.setState({ email: "" });
+      } else {
+        this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reload the page.");
+      }
 
     } else {
       this.validator.showMessages();
@@ -241,11 +243,25 @@ class ForgotForm extends Component {
   dispModal(pressed) {
     this.props.dispModal(pressed)
   }
+  componentDidMount() {
+    this.onLoadRecaptcha();
+  }
+  componentWillReceiveProps(props, newProps) {
+    if (props.forgot) {
+      if (props.forgot.status == 200) {
 
-  /* 
-    Page: /forgot-password
-    This method is called for notifications.
-  */
+        this.setState({ email: "", recaptchaToken: null, loader: false })
+        this.openNotificationWithIcon('success', 'Success', props.forgot.message);
+
+
+      } else {
+        this.setState({ recaptchaToken: null, loader: false })
+        this.openNotificationWithIcon('error', 'Error', props.forgot.err);
+      }
+      this.onLoadRecaptcha();
+      this.props.clearForgot();
+    }
+  }
 
   openNotification = () => {
     notification.open({
@@ -301,6 +317,16 @@ class ForgotForm extends Component {
             </FormWrap>
           </ColRight>
         </RowWrap>
+        {(this.state.loader == true) ? <FaldaxLoader /> : ""}
+        <ReCaptcha
+          ref={(el) => { this.captchaDemo = el; }}
+          size="invisible"
+          render="explicit"
+          sitekey={GOOGLE_SITE_KEY}
+          onloadCallback={this.onLoadRecaptcha}
+          verifyCallback={this.verifyCallback}
+          badge="bottomleft"
+        />
       </div>
     );
   }
