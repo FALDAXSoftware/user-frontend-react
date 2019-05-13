@@ -5,17 +5,17 @@ import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import { Scrollbars } from 'react-custom-scrollbars';
 import moment from "moment";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+/* import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; */
 
 /*components*/
 import { globalVariables } from "Globals";
 
 /* STYLED-COMPONENTS */
-import { History_wrap, TableHeader, TableContent, ScrollTableContent } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import { HistoryWrap, TableHeader, TableContent, ScrollTableContent } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import { OTwrap } from "./ordertrade";
 
 const APP_URL = globalVariables.API_URL;
-const BorderedHistoryWrap = styled(History_wrap)`
+const BorderedHistoryWrap = styled(HistoryWrap)`
     margin-left:30px;
     margin-right:30px;
     border:1px solid #d8d8d8;
@@ -26,24 +26,24 @@ const BorderedHistoryWrap = styled(History_wrap)`
        }
      
        &::-webkit-scrollbar-thumb {
-        background-color: ${props => props.theme.mode == 'dark' ? '#041624' : ''};
+        background-color: ${props => props.theme.mode === 'dark' ? '#041624' : ''};
         border-radius: 3px;
        }
         &::-webkit-scrollbar-track{
-            background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
+            background: ${props => props.theme.mode === 'dark' ? '#072135' : ""};
         }
      
 
 `
 const SideType = styled.td`
-    color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
+    color:${props => props.type === "Sell" ? "#f13239" : "#4fb153"};
 `
-const FontAwesomeIconA = styled(FontAwesomeIcon)``
+/* const FontAwesomeIconA = styled(FontAwesomeIcon)`` */
 const NDF = styled.p`
     text-align: center; 
     font-weight: 600; 
     font-size: 17px;
-    color: ${props => props.theme.mode == "dark" ? "white" : "black"}; 
+    color: ${props => props.theme.mode === "dark" ? "white" : "black"}; 
     margin-top: 30px; 
     font-family: "Open Sans";
 }}
@@ -61,6 +61,9 @@ class HistoryTable extends Component {
         this.historyFunc = this.historyFunc.bind(this);
         this.updateData = this.updateData.bind(this);
     }
+
+    /* Life-Cycle Methods */
+
     componentDidMount() {
         var self = this;
         self.historyData();
@@ -83,6 +86,12 @@ class HistoryTable extends Component {
             }
         }
     }
+
+    /* 
+        Page: /trade --> history table
+        SOCKET is called for buybook table data according to room provided.
+    */
+
     historyData() {
         io = this.props.io
         this.props.hisFunc(true);
@@ -105,7 +114,7 @@ class HistoryTable extends Component {
             }
         }, (body, JWR) => {
 
-            if (body.status == 200) {
+            if (body.status === 200) {
                 let res = body.data;
                 this.props.hisFunc(false);
                 this.updateData(res);
@@ -116,14 +125,20 @@ class HistoryTable extends Component {
 
         });
     }
+
+    /* 
+        Page: /trade --> history table
+        SOCKET is called again and again to update data.
+    */
+
     updateData(data) {
         const rows = [];
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
             var date
-            if (this.props.profileDetails.date_format == "MM/DD/YYYY")
+            if (this.props.profileDetails.date_format === "MM/DD/YYYY")
                 date = moment.utc(element.created_at).local().format("MM/DD/YYYY, H:m:s")
-            else if (this.props.profileDetails.date_format == "DD/MM/YYYY")
+            else if (this.props.profileDetails.date_format === "DD/MM/YYYY")
                 date = moment.utc(element.created_at).local().format("DD/MM/YYYY, H:m:s")
             else
                 date = moment.utc(element.created_at).local().format("MMM D, YYYY, H:m:s")
@@ -142,6 +157,12 @@ class HistoryTable extends Component {
         });
 
     }
+
+    /* 
+        Page: /trade --> history table.
+        this method is called to print the whole table data by returning the html.
+    */
+
     historyFunc() {
         var me = this
         return (this.state.data.map((element, index) => (
@@ -150,9 +171,9 @@ class HistoryTable extends Component {
                 <td width="20%">{element.amount !== undefined ? element.amount.toFixed(4) : ""}</td>
                 {(index + 1) < me.state.data.length ? (element.fill_price > me.state.data[index + 1].fill_price)
                     ?
-                    <td width="20%">{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td>
+                    <td width="20%">{element.fill_price} {this.props.theme !== true ? <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td>
                     :
-                    <td width="20%">{element.fill_price} {this.props.theme !== true ? <img style={{ marginBottom: "3px" }} src="/images/down-right.png" /> : <img style={{ marginBottom: "3px" }} src="/images/down_white.png" />}</td>
+                    <td width="20%">{element.fill_price} {this.props.theme !== true ? <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/down-right.png" /> : <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/down_white.png" />}</td>
                     : <td>{element.fill_price} </td>
                 }
                 <td width="25%">{element.time}</td>
@@ -160,9 +181,9 @@ class HistoryTable extends Component {
             </tr>
         )))
     }
-    render() {
-        var me = this;
-        var prevImg
+    render() {/* 
+        var me = this; 
+        var prevImg*/
         return (
             <BorderedHistoryWrap>
                 <OTwrap>

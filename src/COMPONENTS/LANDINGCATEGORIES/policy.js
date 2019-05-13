@@ -13,10 +13,10 @@ let { API_URL, _AMAZONBUCKET } = globalVariables;
 const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom: 25px;
-  background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
+  background-color: ${props => props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
 `
 const ProfileDiv = styled.div`
-  background-color: ${props => props.theme.mode == "dark" ? "#041422" : "#ffffff"};
+  background-color: ${props => props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   margin:auto;
   width: 100%;
   max-width: 1170px;
@@ -27,13 +27,13 @@ const ProfileDiv = styled.div`
     padding: 15px;
   }
 `
-const About_Faldax_Title = styled.span`
+const AboutFaldaxTitle = styled.span`
   font-size: 40px;
   font-family: "Open sans";
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode == "dark" ? "white" : ""};
+  color:${props => props.theme.mode === "dark" ? "white" : ""};
   &:before {
     content: '';
     width: calc(50% - 140px);
@@ -110,7 +110,7 @@ const CardText = styled.h4`
   color:inherit;
 `
 const Content = styled.div`
-  color:${props => props.theme.mode == "dark" ? "white" : ""} !important;
+  color:${props => props.theme.mode === "dark" ? "white" : ""} !important;
 `
 const DivWrap = styled.div`
   margin-top:20px;
@@ -141,7 +141,7 @@ export default class Policy extends Component {
           <ProfileWrapper>
             <ProfileDiv>
               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
-                <About_Faldax_Title>Policies </About_Faldax_Title>
+                <AboutFaldaxTitle>Policies </AboutFaldaxTitle>
               </div>
               <Content style={{ marginTop: '20px' }}>
                 {/* Blocks start */}

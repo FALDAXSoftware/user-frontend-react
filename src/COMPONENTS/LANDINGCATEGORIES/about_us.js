@@ -1,17 +1,16 @@
 /* In-built Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Spin, Row, Col } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faYoutube, faTwitter, faLinkedinIn, faDiscord } from '@fortawesome/free-brands-svg-icons';
+import { Row, Col } from 'antd';
+/* import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; */
+/* import { faYoutube, faTwitter, faLinkedinIn, faDiscord } from '@fortawesome/free-brands-svg-icons'; */
 import styled from 'styled-components';
 import ReactHtmlParser from 'react-html-parser';
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
-import { Spin_Ex } from 'STYLED-COMPONENTS/HOMEPAGE/style'
-import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
+/* import { Spin_Ex } from 'STYLED-COMPONENTS/HOMEPAGE/style' */
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { globalVariables } from "Globals";
-import { _ABOUTPEOPLE1, _ABOUTPEOPLE2, _ABOUTPEOPLE3, _ABOUTUS2 } from 'CONSTANTS/images';
+import { _ABOUTPEOPLE1, _ABOUTPEOPLE2, _ABOUTPEOPLE3, /* _ABOUTUS2  */ } from 'CONSTANTS/images';
 import ComingSoon from 'COMPONENTS/comingsoon';
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 let { API_URL } = globalVariables;
@@ -20,10 +19,10 @@ let { API_URL } = globalVariables;
 const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom: 25px;
-  background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
+  background-color: ${props => props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
 `
 const ProfileDiv = styled.div`
-  background-color: ${props => props.theme.mode == "dark" ? "#041422" : "#ffffff"};
+  background-color: ${props => props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   margin:auto;
   width: 100%;
   max-width: 1170px;
@@ -34,13 +33,13 @@ const ProfileDiv = styled.div`
     padding: 15px;
   }
 `
-const About_Faldax_Title = styled.span`
+const AboutFaldaxTitle = styled.span`
   font-size: 40px;
   font-family: "Open sans";
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"};
+  color:${props => props.theme.mode === "dark" ? "#ffffff" : "#333333"};
   &:before {
     content: '';
     width: calc(50% - 235px);
@@ -63,16 +62,16 @@ const About_Faldax_Title = styled.span`
   }
 `;
 const AboutContent = styled.div`
-  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"};
+  color:${props => props.theme.mode === "dark" ? "#ffffff" : "#333333"};
   text-align:justify;
 `
-const Our_Mission = styled.span`
+/* const Our_Mission = styled.span`
   font-size: 40px;
   font-family: "Open sans";
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"};
+  color:${props => props.theme.mode === "dark" ? "#ffffff" : "#333333"};
   &:before {
     content: '';
     width: calc(50% - 170px);
@@ -94,16 +93,16 @@ const Our_Mission = styled.span`
     top: calc(50% - 1px);
   }
 `
-const MissionContent = styled.div`
-  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"};
-`
-const Our_Team = styled.span`
+const Mission_Content = styled.div`
+  color:${props => props.theme.mode === "dark" ? "#ffffff" : "#333333"};
+` */
+const OurTeam = styled.span`
   font-size: 40px;
   font-family: "Open sans";
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"};
+  color:${props => props.theme.mode === "dark" ? "#ffffff" : "#333333"};
   &:before {
     content: '';
     width: calc(50% - 125px);
@@ -126,20 +125,20 @@ const Our_Team = styled.span`
   }
 `;
 
-const About_Us_Image = styled.img`
+/* const About_Us_Image = styled.img`
   float: left;
   width: '40%';
   margin: 10px 30px 5px 0px;
 `
-const Missiondesc = styled.span`
-  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"}
-`
+const Mission_Desc = styled.span`
+  color:${props => props.theme.mode === "dark" ? "#ffffff" : "#333333"}
+` */
 /* Styled Components */
-const FontAwesomeIcons = styled(FontAwesomeIcon)`
+/* const Font_Awesome_Icons = styled(FontAwesomeIcon)`
   font-size: 16px;
   margin-top: 5px;
   color: ${props => props.color ? '#4c84ff' : '#878787'};
-`;
+`; */
 const Hexagon = styled.div`
   overflow: hidden;
   visibility: hidden;
@@ -155,7 +154,7 @@ const Hexagon = styled.div`
   margin-top: -92px;
   margin-left: 49px;
 `;
-const Hexagon_In1 = styled.div`
+const HexagonIn1 = styled.div`
   overflow: hidden;
   width: 100%;
   height: 100%;
@@ -164,7 +163,7 @@ const Hexagon_In1 = styled.div`
       -o-transform: rotate(-60deg);
           transform: rotate(-60deg);
 `;
-const Hexagon_In2 = styled.div`
+const HexagonIn2 = styled.div`
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
@@ -186,12 +185,12 @@ const Team = styled.div`
   margin-left: 0px;
   margin-bottom: 0px;
   margin-top: 115px;
-  box-shadow: ${props => props.theme.mode == "dark" ? "none" : "-1px 2px 10px 4px #f1f1f1"};
+  box-shadow: ${props => props.theme.mode === "dark" ? "none" : "-1px 2px 10px 4px #f1f1f1"};
   cursor: pointer;
-  background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#ffffff"};
+  background-color:${props => props.theme.mode === "dark" ? "#01090f" : "#ffffff"};
 `;
 const TeamIn1 = styled.div`
-  color:${props => props.theme.mode == "dark" ? "white" : "#333333"};
+  color:${props => props.theme.mode === "dark" ? "white" : "#333333"};
   margin-top: 10px;
   @media(max-width:1199px)
   {
@@ -200,7 +199,7 @@ const TeamIn1 = styled.div`
   }
 `;
 const TeamIn2 = styled.div`
-  color:${props => props.theme.mode == "dark" ? "white" : "#333333"};
+  color:${props => props.theme.mode === "dark" ? "white" : "#333333"};
   @media(max-width:1199px)
   {
     text-align :left;
@@ -208,7 +207,7 @@ const TeamIn2 = styled.div`
   }
 `;
 const TeamIn3 = styled.div`
-  color:${props => props.theme.mode == "dark" ? "white" : "#5c5c5c"};
+  color:${props => props.theme.mode === "dark" ? "white" : "#5c5c5c"};
   min-height:400px;
   padding: 13px 20px;
   @media(max-width:1199px)
@@ -220,7 +219,7 @@ const TeamIn3 = styled.div`
     min-height:auto;
   }
 `;
-const FontAwesomeDiv = styled.div`
+/* const Font_Awesome_Div = styled.div`
   display: inline-block;
   border-radius: 50%;
   width: 26px;
@@ -228,13 +227,13 @@ const FontAwesomeDiv = styled.div`
   background-color: white;
   margin: 12px 7.5px
 `;
-const TeamIn4 = styled.div`
+const Team_In4 = styled.div`
   width: 100%;
   height: 50px;
   background-color: ${props => props.color ? '#4c84ff' : '#878787'};
   color: 'white';
 `;
-
+ */
 /* Component Definition Starts Here*/
 
 export default class AboutUs extends Component {
@@ -276,26 +275,18 @@ export default class AboutUs extends Component {
     return (
       <div>
         <Navigation />
-        <OverlayLoader
-          color={'red'} // default is white
-          loader="ScaleLoader" // check below for more loaders
-          text="Loading... Please wait!"
-          active={false}
-          backgroundColor={'black'} // default is black
-          opacity=".4" // default is .9  
-        >
-          <ProfileWrapper>
-            <ProfileDiv>
-              <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
-                <About_Faldax_Title> ABOUT US </About_Faldax_Title>
-              </div>
-              <AboutContent style={{ marginTop: '20px' }}>
-                <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
-                  {ReactHtmlParser(aboutContent)}
-                  <p>We are incredibly excited to share the details of these exciting features so please consider<a href="#" onClick={this.showComing}> subscribing to our mailing list</a> to receive updates as they are made available.</p>
-                </span>
-              </AboutContent>
-              {/* <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+        <ProfileWrapper>
+          <ProfileDiv>
+            <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+              <AboutFaldaxTitle> ABOUT US </AboutFaldaxTitle>
+            </div>
+            <AboutContent style={{ marginTop: '20px' }}>
+              <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
+                {ReactHtmlParser(aboutContent)}
+                <p>We are incredibly excited to share the details of these exciting features so please consider<a href="#" onClick={this.showComing}> subscribing to our mailing list</a> to receive updates as they are made available.</p>
+              </span>
+            </AboutContent>
+            {/* <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                 <Our_Mission> OUR MISSION </Our_Mission>
               </div>
               <MissionContent style={{ marginTop: '25px' }}>
@@ -315,75 +306,74 @@ export default class AboutUs extends Component {
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                           </Missiondesc>
               </div> */}
-              <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
-                <Our_Team> OUR TEAM </Our_Team>
-              </div>
-              <div style={{ marginTop: '25px', textAlign: 'center' }}>
-                <Row type="flex" justify="center">
-                  <Col md={24} xl={6}>
-                    <Team onClick={() => this.teamClick('1')}>
-                      <Hexagon>
-                        <Hexagon_In1>
-                          <Hexagon_In2 src={`url(${_ABOUTPEOPLE1})`}>
-                          </Hexagon_In2>
-                        </Hexagon_In1>
-                      </Hexagon>
-                      <TeamIn1>
-                        <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> BLAKE FORD </span>
-                      </TeamIn1>
-                      <TeamIn2>
-                        <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> CEO/Founder </span>
-                      </TeamIn2>
-                      <TeamIn3>
-                        <p style={{ fontSize: '14px' }}> Blake has twelve years of IT, Sales, Project Management and Customer Service experience spread across multiple verticals and is proficient in various programming languages. He began trading crypto in early 2017 and was surprised by how cumbersome the experience was. Combining his love of new technology, entrepreneurial spirit, and technical skillset, he knew he could find a better way. On June 20th, 2017, Blake created FALDAX to re-shape the crypto exchange landscape by offering more to customers for less.</p>
-                      </TeamIn3>
-                    </Team>
-                  </Col>
-                  <Col md={24} xl={6}>
-                    <Team onClick={() => this.teamClick('1')}>
-                      <Hexagon>
-                        <Hexagon_In1>
-                          <Hexagon_In2 src={`url(${_ABOUTPEOPLE2})`}>
-                          </Hexagon_In2>
-                        </Hexagon_In1>
-                      </Hexagon>
-                      <TeamIn1>
-                        <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> JON LOWREY </span>
-                      </TeamIn1>
-                      <TeamIn2>
-                        <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> CTO/Co-Founder </span>
-                      </TeamIn2>
-                      <TeamIn3>
-                        <p style={{ fontSize: '14px' }}> Jon received his AS in Computer Engineering Technology and has 13 years of database administration and programming experience. Most of his IT experience was in the financial, non-profit, and political industries. One of Jon’s greatest strengths is his ability to recognize problems that can be solved programmatically and then creating the solution using his extensive programming skillset. </p>
-                      </TeamIn3>
-                    </Team>
-                  </Col>
-                  <Col md={24} xl={6}>
-                    <Team onClick={() => this.teamClick('1')}>
-                      <Hexagon>
-                        <Hexagon_In1>
-                          <Hexagon_In2 src={`url(${_ABOUTPEOPLE3})`}>
-                          </Hexagon_In2>
-                        </Hexagon_In1>
-                      </Hexagon>
-                      <TeamIn1>
-                        <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> JEFF ZYSEK </span>
-                      </TeamIn1>
-                      <TeamIn2>
-                        <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> COO/Co-Founder </span>
-                      </TeamIn2>
-                      <TeamIn3>
-                        <p style={{ fontSize: '14px' }}> Jeff received his BS in Management Information Systems from the University of South Florida and his MBA from the University of Florida. He has 25 years of IT, Customer Service, Sales, and Marketing experience. Some of his previous titles include I.T. Manager, Regional Director, Financial Consultant, and Account Executive.</p>
-                      </TeamIn3>
-                    </Team>
-                  </Col>
-                </Row>
-              </div>
-            </ProfileDiv>
-          </ProfileWrapper>
-          <CommonFooter />
-          {(loader) ? <FaldaxLoader /> : ""}
-        </OverlayLoader>
+            <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+              <OurTeam> OUR TEAM </OurTeam>
+            </div>
+            <div style={{ marginTop: '25px', textAlign: 'center' }}>
+              <Row type="flex" justify="center">
+                <Col md={24} xl={6}>
+                  <Team onClick={() => this.teamClick('1')}>
+                    <Hexagon>
+                      <HexagonIn1>
+                        <HexagonIn2 src={`url(${_ABOUTPEOPLE1})`}>
+                        </HexagonIn2>
+                      </HexagonIn1>
+                    </Hexagon>
+                    <TeamIn1>
+                      <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> BLAKE FORD </span>
+                    </TeamIn1>
+                    <TeamIn2>
+                      <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> CEO/Founder </span>
+                    </TeamIn2>
+                    <TeamIn3>
+                      <p style={{ fontSize: '14px' }}> Blake has twelve years of IT, Sales, Project Management and Customer Service experience spread across multiple verticals and is proficient in various programming languages. He began trading crypto in early 2017 and was surprised by how cumbersome the experience was. Combining his love of new technology, entrepreneurial spirit, and technical skillset, he knew he could find a better way. On June 20th, 2017, Blake created FALDAX to re-shape the crypto exchange landscape by offering more to customers for less.</p>
+                    </TeamIn3>
+                  </Team>
+                </Col>
+                <Col md={24} xl={6}>
+                  <Team onClick={() => this.teamClick('1')}>
+                    <Hexagon>
+                      <HexagonIn1>
+                        <HexagonIn2 src={`url(${_ABOUTPEOPLE2})`}>
+                        </HexagonIn2>
+                      </HexagonIn1>
+                    </Hexagon>
+                    <TeamIn1>
+                      <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> JON LOWREY </span>
+                    </TeamIn1>
+                    <TeamIn2>
+                      <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> CTO/Co-Founder </span>
+                    </TeamIn2>
+                    <TeamIn3>
+                      <p style={{ fontSize: '14px' }}> Jon received his AS in Computer Engineering Technology and has 13 years of database administration and programming experience. Most of his IT experience was in the financial, non-profit, and political industries. One of Jon’s greatest strengths is his ability to recognize problems that can be solved programmatically and then creating the solution using his extensive programming skillset. </p>
+                    </TeamIn3>
+                  </Team>
+                </Col>
+                <Col md={24} xl={6}>
+                  <Team onClick={() => this.teamClick('1')}>
+                    <Hexagon>
+                      <HexagonIn1>
+                        <HexagonIn2 src={`url(${_ABOUTPEOPLE3})`}>
+                        </HexagonIn2>
+                      </HexagonIn1>
+                    </Hexagon>
+                    <TeamIn1>
+                      <span style={{ fontSize: '16px', fontWeight: 'bold', fontFamily: "Open sans" }}> JEFF ZYSEK </span>
+                    </TeamIn1>
+                    <TeamIn2>
+                      <span style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: "Open sans" }}> COO/Co-Founder </span>
+                    </TeamIn2>
+                    <TeamIn3>
+                      <p style={{ fontSize: '14px' }}> Jeff received his BS in Management Information Systems from the University of South Florida and his MBA from the University of Florida. He has 25 years of IT, Customer Service, Sales, and Marketing experience. Some of his previous titles include I.T. Manager, Regional Director, Financial Consultant, and Account Executive.</p>
+                    </TeamIn3>
+                  </Team>
+                </Col>
+              </Row>
+            </div>
+          </ProfileDiv>
+        </ProfileWrapper>
+        <CommonFooter />
+        {(loader) ? <FaldaxLoader /> : ""}
         <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={comingSoon} />
       </div>
     );

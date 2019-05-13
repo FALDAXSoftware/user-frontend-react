@@ -7,11 +7,11 @@ import styled from 'styled-components'
 /* Components */
 /* Styled-Components */
 
-const Third_Row = styled(Row)`
+const ThirdRow = styled(Row)`
     padding-top: 68px;
     padding-bottom: 50px;
 `
-const Third_Wrap = styled.div`
+const ThirdWrap = styled.div`
     background-color:#0f477b;
     text-align: center;
 `
@@ -20,13 +20,13 @@ const BlueCol = styled(Col)`
         margin-bottom:50px;
     }
 `
-const Third_span = styled.span`
+const Thirdspan = styled.span`
     font-size: 48px;
     font-family: "Open sans";
     color: rgb( 255, 255, 255 );
     line-height: 0.625;  
 `
-const Third_p = styled.p`
+const Thirdp = styled.p`
     font-size: 24px;
     font-family: "Open sans";
     color: rgb( 175, 216, 255 );
@@ -36,26 +36,26 @@ const Third_p = styled.p`
 export default class About extends Component {
     render() {
         return (
-            <Third_Wrap>
-                <Third_Row>
+            <ThirdWrap>
+                <ThirdRow>
                     <Col span={18} offset={3}>
                         <Row>
                             <BlueCol xl={8}>
-                                <Third_span>ABOUT US$150B+</Third_span>
-                                <Third_p>Digital currency exchanged</Third_p>
+                                <Thirdspan>ABOUT US$150B+</Thirdspan>
+                                <Thirdp>Digital currency exchanged</Thirdp>
                             </BlueCol>
                             <BlueCol xl={8}>
-                                <Third_span>34</Third_span>
-                                <Third_p>Countries supported</Third_p>
+                                <Thirdspan>34</Thirdspan>
+                                <Thirdp>Countries supported</Thirdp>
                             </BlueCol>
                             <BlueCol xl={8}>
-                                <Third_span>80+</Third_span>
-                                <Third_p>Coins Supported</Third_p>
+                                <Thirdspan>80+</Thirdspan>
+                                <Thirdp>Coins Supported</Thirdp>
                             </BlueCol>
                         </Row>
                     </Col>
-                </Third_Row>
-            </Third_Wrap>
+                </ThirdRow>
+            </ThirdWrap>
         );
     }
 }

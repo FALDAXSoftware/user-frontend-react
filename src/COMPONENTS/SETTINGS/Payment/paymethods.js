@@ -8,9 +8,9 @@ import { _BANKCARD } from "CONSTANTS/images";
 
 /* styled-COMPONENTS */
 import {
-    Payment_wrap, PayHead, PayForm, Bank, Bank_label, Bank_input, Button_payment,
-    Button_sub, Button_cancel, Button_add, PayForm2, Lefty, Righty, Gap, Top, CardName,
-    RemoveCard, Body_card, Body_center
+    PaymentWrap, PayHead, PayForm, Bank, BankLabel, BankInput, ButtonPayment,
+    ButtonSub, ButtonCancel, ButtonAdd, PayForm2, Lefty, Righty, Gap, Top, CardName,
+    RemoveCard, BodyCard, BodyCenter
 } from 'STYLED-COMPONENTS/SETTINGS/paymentStyle';
 
 class Paymethods extends Component {
@@ -27,29 +27,29 @@ class Paymethods extends Component {
     render() {
 
         return (
-            <Payment_wrap>
+            <PaymentWrap>
                 <PayHead>Bank Accounts</PayHead>
-                {this.state.flag == false
+                {this.state.flag === false
                     ?
                     <PayForm>
                         <Bank>
-                            <Bank_label>Bank Name*</Bank_label>
-                            <Bank_input />
+                            <BankLabel>Bank Name*</BankLabel>
+                            <BankInput />
                         </Bank>
                         <Bank>
-                            <Bank_label>Account Number*</Bank_label>
-                            <Bank_input />
+                            <BankLabel>Account Number*</BankLabel>
+                            <BankInput />
                         </Bank>
                         <Bank>
-                            <Bank_label>RTN*</Bank_label>
-                            <Bank_input />
+                            <BankLabel>RTN*</BankLabel>
+                            <BankInput />
                         </Bank>
-                        <Button_payment>
-                            <Button_sub>
-                                <Button_cancel>cancel</Button_cancel>
-                                <Button_add onClick={this.addCard} >Add</Button_add>
-                            </Button_sub>
-                        </Button_payment>
+                        <ButtonPayment>
+                            <ButtonSub>
+                                <ButtonCancel>cancel</ButtonCancel>
+                                <ButtonAdd onClick={this.addCard} >Add</ButtonAdd>
+                            </ButtonSub>
+                        </ButtonPayment>
                     </PayForm>
                     :
                     <PayForm2>
@@ -65,12 +65,12 @@ class Paymethods extends Component {
                                             <CardName>JPMorgan Chase & co.</CardName>
                                             <RemoveCard>Remove Card</RemoveCard>
                                         </Top>
-                                        <Body_card>
-                                            <Body_center>
-                                                <img src={_BANKCARD} />
+                                        <BodyCard>
+                                            <BodyCenter>
+                                                <img alt="Bank Card" src={_BANKCARD} />
                                                 <span>BG75FINV91501056322589</span>
-                                            </Body_center>
-                                        </Body_card>
+                                            </BodyCenter>
+                                        </BodyCard>
                                     </Lefty>
                                 </Col>
                                 <Col span={12}>
@@ -83,12 +83,12 @@ class Paymethods extends Component {
                                             <CardName>Bank of America</CardName>
                                             <RemoveCard>Remove Card</RemoveCard>
                                         </Top>
-                                        <Body_card>
-                                            <Body_center>
-                                                <img src={_BANKCARD} />
+                                        <BodyCard>
+                                            <BodyCenter>
+                                                <img alt="Bank Card" src={_BANKCARD} />
                                                 <span>BG75FINV91501056322589</span>
-                                            </Body_center>
-                                        </Body_card>
+                                            </BodyCenter>
+                                        </BodyCard>
                                     </Righty>
                                 </Col>
                             </Row>
@@ -106,12 +106,12 @@ class Paymethods extends Component {
 
                                             <RemoveCard>Remove Card</RemoveCard>
                                         </Top>
-                                        <Body_card>
-                                            <Body_center>
-                                                <img src={_BANKCARD} />
+                                        <BodyCard>
+                                            <BodyCenter>
+                                                <img alt="Bank Card" src={_BANKCARD} />
                                                 <span>BG75FINV91501056322589</span>
-                                            </Body_center>
-                                        </Body_card>
+                                            </BodyCenter>
+                                        </BodyCard>
                                     </Lefty>
                                 </Col>
                                 <Col span={12}>
@@ -125,19 +125,19 @@ class Paymethods extends Component {
 
                                             <RemoveCard>Remove Card</RemoveCard>
                                         </Top>
-                                        <Body_card>
-                                            <Body_center>
-                                                <img src={_BANKCARD} />
+                                        <BodyCard>
+                                            <BodyCenter>
+                                                <img alt="Bank Card" src={_BANKCARD} />
                                                 <span>BG75FINV91501056322589</span>
-                                            </Body_center>
-                                        </Body_card>
+                                            </BodyCenter>
+                                        </BodyCard>
                                     </Righty>
                                 </Col>
                             </Row>
                         </Gap>
                     </PayForm2>
                 }
-            </Payment_wrap>
+            </PaymentWrap>
         );
     }
 }

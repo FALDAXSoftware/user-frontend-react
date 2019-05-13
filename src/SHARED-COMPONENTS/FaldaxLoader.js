@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { Spin_Ex, SpinImg, SpinDiv } from "../STYLED-COMPONENTS/HOMEPAGE/style"
-import styled from 'styled-components';
+import React from 'react';
+import { SpinEx, SpinImg, SpinDiv } from "../STYLED-COMPONENTS/HOMEPAGE/style"
 import { connect } from "react-redux";
 
 class FaldaxLoader extends React.Component {
@@ -12,15 +11,15 @@ class FaldaxLoader extends React.Component {
     }
     render() {
         return (
-            <Spin_Ex className="Ex_spin">
+            <SpinEx className="Ex_spin">
                 <SpinDiv >
                     {
-                        this.state.theme == true ?
+                        this.state.theme === true ?
                             <SpinImg src="/images/darkLoader.gif" /> :
                             <SpinImg src="/images/lightLoader.gif" />
                     }
                 </SpinDiv>
-            </Spin_Ex>
+            </SpinEx>
         );
     }
 }

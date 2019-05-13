@@ -14,7 +14,7 @@ import { _ACTIVEEYE, _EYE } from 'CONSTANTS/images';
 import { globalVariables } from 'Globals';
 
 /* Styled-Components */
-import { Username, Welcome_text, Email_label, Email_req, Pass_req } from "./login_form";
+import { Username, WelcomeText, EmailLabel, EmailReq, PassReq } from "./login_form";
 
 export const LoginWrap = styled.div`
 background-color:#f0f3f2;
@@ -78,7 +78,7 @@ const HorImg = styled.img`
     width:250px;    
   }
 `
-export const Form_wrap = styled.div`
+export const FormWrap = styled.div`
   padding-left:80px;
   background-color:#f0f3f2;
   min-height: 100vh;
@@ -101,7 +101,7 @@ const RightWrap = styled.div`
     height:auto;
   }
 `
-const Login_head = styled.div`
+const LoginHead = styled.div`
   font-size: 30px;
   font-family: "Open Sans";
   color: black;
@@ -117,7 +117,7 @@ const Login_head = styled.div`
     padding-bottom:0px;
   }
 `
-const Welcome = styled(Welcome_text)`
+const Welcome = styled(WelcomeText)`
   margin-top: 25px;
 `
 const SubHeading = styled.span`
@@ -167,11 +167,11 @@ const Full = styled(Username)`
 const Email = styled(Username)`
   display:inline-block;
 `
-const Full_req = styled(Email_req)`
+const FullReq = styled(EmailReq)`
 `
-const ConfirmPass_req = styled(Email_req)`
+const ConfirmPassReq = styled(EmailReq)`
 `
-const Ph_Label = styled(Email_label)`
+const PhLabel = styled(EmailLabel)`
   margin-top:20px;
 `
 const Password = styled(Username)`
@@ -179,7 +179,7 @@ const Password = styled(Username)`
   padding-right:40px;
 `
 const Referral = styled(Username)``
-const Button_login = styled(Button)`
+const ButtonLogin = styled(Button)`
   width: 110px;
   background-color: rgb(0, 170, 250);
   color: white;
@@ -220,7 +220,7 @@ const Sign = styled.div`
     margin-top: 13px;
   }
 `
-const Sign_a = styled.a`
+const Signa = styled.a`
 font-size: 16px;
 font-family: "Open Sans";
 color:rgb(0, 170, 250);
@@ -230,14 +230,14 @@ font-weight:bold;
   color:#0f477b;
 }
 `
-const Progress_bar = styled(Progress)`
+const ProgressBar = styled(Progress)`
   width:77%;
 `
 const FAI = styled.img`
   margin-left:-35px;
   cursor:pointer;
 `
-const Active_FAI = styled(FAI)`
+const ActiveFAI = styled(FAI)`
   width:24px;
 `
 class SignupForm extends Component {
@@ -272,9 +272,10 @@ class SignupForm extends Component {
   static propTypes = {
     form: formShape,
   };
+  /* Life Cycle Methods */
   componentWillReceiveProps(props, newProps) {
     if (props.isSignUp) {
-      if (props.isSignUp.status == 200) {
+      if (props.isSignUp.status === 200) {
         //this.props.dispModal("thankyou");
         this.props.history.push('/signup-success');
       } else {
@@ -285,8 +286,7 @@ class SignupForm extends Component {
     this.props.clearSignUp();
   }
   componentDidMount() {
-    let queryParams
-    if (this.props.location.pathname == "/signup") {
+    if (this.props.location.pathname === "/signup") {
       if (this.props.location.search !== "") {
         let qP = this.props.location.search.split("=")
         if (qP[0].includes("refID")) {
@@ -295,9 +295,15 @@ class SignupForm extends Component {
       }
     }
   }
+
+  /* 
+    Page:/reset-form
+    This method is called when we submit Signup Form.
+  */
+
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      if (this.state.emailIcon == true && this.state.firstIcon == true && this.state.lastIcon == true && this.state.passIcon == true && this.state.confirmIcon == true) {
+      if (this.state.emailIcon === true && this.state.firstIcon === true && this.state.lastIcon === true && this.state.passIcon === true && this.state.confirmIcon === true) {
         this.setState({ isSignDisable: true });
         document.querySelectorAll("#email_icon_success")[0].style.display = "none";
         document.querySelectorAll("#first_icon_success")[0].style.display = "none";
@@ -335,12 +341,18 @@ class SignupForm extends Component {
       }
     });
   }
+
+  /* 
+    Page:/signup
+    This method is called when any input field is changed.
+  */
+
   onChangeField(value, field) {
-    if (field == "email") {
+    if (field === "email") {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       var bool = re.test(String(value).toLowerCase());
       if (value !== "" && value !== undefined) {
-        if (bool == true) {
+        if (bool === true) {
           this.setState({ emailIcon: true })
           document.querySelector("#email_icon_success").style.display = "inline-block"
           document.querySelector("#email_icon_fail").style.display = "none"
@@ -357,15 +369,15 @@ class SignupForm extends Component {
         document.querySelector("#email_icon_success").style.display = "none"
         document.querySelector("#email_icon_fail").style.display = "inline-block"
         document.querySelectorAll(".email_sign")[0].style.display = "block";
-        if (value == "" || value == undefined) {
+        if (value === "" || value === undefined) {
           this.setState({ email_msg: "Email address is required" })
         }
       }
-    } else if (field == "firstname") {
+    } else if (field === "firstname") {
       var re = /^[a-zA-Z0-9]{2,15}$/;
       var bool = re.test(value);
       if (value !== "" && value !== undefined) {
-        if (bool == true) {
+        if (bool === true) {
           var regexnum = /^[0-9]*$/;
           if (regexnum.test(value)) {
             this.setState({ firstIcon: false })
@@ -391,15 +403,15 @@ class SignupForm extends Component {
         document.querySelector("#first_icon_success").style.display = "none"
         document.querySelector("#first_icon_fail").style.display = "inline-block"
         document.querySelectorAll(".first_sign")[0].style.display = "block";
-        if (value == "" || value == undefined) {
+        if (value === "" || value === undefined) {
           this.setState({ first_msg: "First name is required." })
         }
       }
-    } else if (field == "lastname") {
+    } else if (field === "lastname") {
       var re = /^[a-zA-Z0-9]{2,15}$/;
       var bool = re.test(value);
       if (value !== "" && value !== undefined) {
-        if (bool == true) {
+        if (bool === true) {
           var regexnum = /^[0-9]*$/;
           if (regexnum.test(value)) {
             this.setState({ lastIcon: false })
@@ -425,11 +437,11 @@ class SignupForm extends Component {
         document.querySelector("#last_icon_success").style.display = "none";
         document.querySelector("#last_icon_fail").style.display = "inline-block";
         document.querySelectorAll(".last_sign")[0].style.display = "block";
-        if (value == "" || value == undefined) {
+        if (value === "" || value === undefined) {
           this.setState({ last_msg: "Last Name is required" })
         }
       }
-    } else if (field == "password") {
+    } else if (field === "password") {
       var self = this;
       var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%_])[A-Za-z\d!@#$%_]{8,60}$/;
       var bool = re.test(value);
@@ -442,11 +454,11 @@ class SignupForm extends Component {
       if (value !== "" && value !== undefined) {
         if (numb.test(value) || letters.test(value)) { this.setState({ stroke: "red", percent: 20 }) }
         if (alphanum.test(value) && value.length < 6) { this.setState({ stroke: "orange", percent: 40 }) }
-        if (alphanum.test(value) && value.length == 8) { this.setState({ stroke: "yellow", percent: 60 }) }
+        if (alphanum.test(value) && value.length === 8) { this.setState({ stroke: "yellow", percent: 60 }) }
         if (re.test(value) && value.length > 8 && value.length < 60) { this.setState({ stroke: "#7CFC00", percent: 80 }) }
         if (re.test(value) && value.length > 10 && value.length < 60) { this.setState({ stroke: "#008000", percent: 100 }) }
         if (value.length > 60) { this.setState({ stroke: "red", percent: 0 }) }
-        if (bool == true) {
+        if (bool === true) {
           this.setState({ passIcon: true })
           document.querySelector("#pass_icon_success").style.display = "inline-block"
           document.querySelector("#pass_icon_fail").style.display = "none"
@@ -463,15 +475,15 @@ class SignupForm extends Component {
         document.querySelector("#pass_icon_success").style.display = "none"
         document.querySelector("#pass_icon_fail").style.display = "inline-block"
         document.querySelectorAll(".pass_sign")[0].style.display = "block";
-        if (value == "" || value == undefined) {
+        if (value === "" || value === undefined) {
           this.setState({ pass_msg: "Password is required" })
         }
       }
-    } else if (field == "confirm_password") {
-      var bool = this.state.password == value ? true : false
+    } else if (field === "confirm_password") {
+      var bool = this.state.password === value ? true : false
       this.setState({ confirm_password: value })
       if (value !== "" && value !== undefined) {
-        if (bool == true) {
+        if (bool === true) {
           this.setState({ confirmIcon: true })
           document.querySelector("#confirm_icon_success").style.display = "inline-block"
           document.querySelector("#confirm_icon_fail").style.display = "none"
@@ -486,7 +498,7 @@ class SignupForm extends Component {
       } else {
         this.setState({ confirmIcon: false })
         document.querySelector("#confirm_icon_success").style.display = "none"
-        if (bool == false) {
+        if (bool === false) {
           document.querySelector("#confirm_icon_fail").style.display = "none"
           document.querySelectorAll(".confirmPass_sign")[0].style.display = "block";
           this.setState({ confirmPass_msg: "*Password doesn't match" })
@@ -498,9 +510,19 @@ class SignupForm extends Component {
     }
   }
 
+  /* 
+    Page:/signup
+    This method is called to redirect to login page.
+  */
+
   dispModal() {
     this.props.history.push('/login');
   }
+
+  /* 
+    Page:/signup
+    This method is called for custom notifications.
+  */
 
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
@@ -509,21 +531,33 @@ class SignupForm extends Component {
       duration: 5
     });
   };
+
+  /* 
+    Page:/signup
+    This method is called for custom notifications.
+  */
+
   handleEye(type) {
-    if (type == "new") {
-      if (this.state.PasswordtypeEye == "password") {
+    if (type === "new") {
+      if (this.state.PasswordtypeEye === "password") {
         this.setState({ PasswordtypeEye: "text" })
       } else {
         this.setState({ PasswordtypeEye: "password" })
       }
     } else {
-      if (this.state.repeatEye == "password") {
+      if (this.state.repeatEye === "password") {
         this.setState({ repeatEye: "text" })
       } else {
         this.setState({ repeatEye: "password" })
       }
     }
   }
+
+  /* 
+    Page:/signup
+    This method is called when pressed enter while filling form.
+  */
+
   handleSubmit(event) {
     this.submit();
     event.preventDefault();
@@ -545,13 +579,13 @@ class SignupForm extends Component {
             </LeftWrap>
           </ColLeft>
           <ColRight sm={24} lg={12}>
-            <Form_wrap>
+            <FormWrap>
               <RightWrap className="wow fadeInDown" >
-                <Login_head>Sign Up</Login_head>
+                <LoginHead>Sign Up</LoginHead>
                 <Welcome>A Better Trading Experience is Moments Away</Welcome>
                 <SubHeading>Lets Get Started</SubHeading>
                 <form onSubmit={this.handleSubmit}>
-                  <Email_label>First Name*</Email_label>
+                  <EmailLabel>First Name*</EmailLabel>
                   <div>
                     <Full {...getFieldProps('first_name', {
                       onChange(e) { me.onChangeField(e.target.value, "firstname") }, // have to write original onChange here if you need
@@ -561,9 +595,9 @@ class SignupForm extends Component {
                     <FirstIconS id="first_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                     <FirstIconF id="first_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                   </div>
-                  <Full_req className="first_sign">{this.state.first_msg}</Full_req>
+                  <FullReq className="first_sign">{this.state.first_msg}</FullReq>
 
-                  <Ph_Label>Last Name*</Ph_Label>
+                  <PhLabel>Last Name*</PhLabel>
                   <div>
                     <Full {...getFieldProps('last_name', {
                       onChange(e) { me.onChangeField(e.target.value, "lastname") }, // have to write original onChange here if you need
@@ -573,9 +607,9 @@ class SignupForm extends Component {
                     <LastIconS id="last_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                     <LastIconF id="last_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                   </div>
-                  <Full_req className="last_sign">{this.state.last_msg}</Full_req>
+                  <FullReq className="last_sign">{this.state.last_msg}</FullReq>
 
-                  <Ph_Label>Email Address*</Ph_Label>
+                  <PhLabel>Email Address*</PhLabel>
                   <div>
                     <Email type="email" {...getFieldProps('email', {
                       onChange(e) { me.onChangeField(e.target.value, "email") }, // have to write original onChange here if you need
@@ -586,9 +620,9 @@ class SignupForm extends Component {
                     <EmailIconS id="email_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                     <EmailIconF id="email_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                   </div>
-                  <Email_req className="email_sign">{this.state.email_msg}</Email_req>
+                  <EmailReq className="email_sign">{this.state.email_msg}</EmailReq>
 
-                  <Ph_Label>Password*</Ph_Label>
+                  <PhLabel>Password*</PhLabel>
                   <div>
                     <Password type={this.state.PasswordtypeEye} {...getFieldProps('password', {
                       onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
@@ -597,14 +631,14 @@ class SignupForm extends Component {
                     })}
                     />
                     {
-                      (this.state.PasswordtypeEye == "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "new")} />
+                      (this.state.PasswordtypeEye === "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this, "new")} /> : <ActiveFAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "new")} />
                     }
                     <PassIconS id="pass_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                     <PassIconF id="pass_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                   </div>
-                  <Progress_bar type="line" size="small" percent={this.state.percent} strokeColor={this.state.stroke} />
-                  <Pass_req className="pass_sign">{this.state.pass_msg}</Pass_req>
-                  <Ph_Label>Confirm Password*</Ph_Label>
+                  <ProgressBar type="line" size="small" percent={this.state.percent} strokeColor={this.state.stroke} />
+                  <PassReq className="pass_sign">{this.state.pass_msg}</PassReq>
+                  <PhLabel>Confirm Password*</PhLabel>
                   <div>
                     <Password type={this.state.repeatEye} {...getFieldProps('confirm_password', {
                       onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
@@ -613,19 +647,19 @@ class SignupForm extends Component {
                     })}
                     />
                     {
-                      (this.state.repeatEye == "password") ?
+                      (this.state.repeatEye === "password") ?
                         <FAI src={_EYE} onClick={this.handleEye.bind(this, "repeatEye")} />
-                        : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "repeatEye")} />
+                        : <ActiveFAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "repeatEye")} />
                     }
                     <ConfirmIconS id="confirm_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                     <ConfirmIconF id="confirm_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                   </div>
-                  <ConfirmPass_req className="confirmPass_sign">{this.state.confirmPass_msg}</ConfirmPass_req>
-                  <Ph_Label>Referral Code</Ph_Label>
+                  <ConfirmPassReq className="confirmPass_sign">{this.state.confirmPass_msg}</ConfirmPassReq>
+                  <PhLabel>Referral Code</PhLabel>
                   <div>
                     <Referral {...getFieldProps('referral_code', {
                       onChange() {/* console.log("Hello How are You") */ }, // have to write original onChange here if you need
-                      initialValue: this.state.qP == "" ? me.props.init : this.state.qP,
+                      initialValue: this.state.qP === "" ? me.props.init : this.state.qP,
                       rules: [{ type: "string", required: false }],
                     })}
                     />
@@ -633,12 +667,12 @@ class SignupForm extends Component {
                   <input style={{ display: "none" }} type="submit" value="Submit" />
                 </form>
                 {(errors = getFieldError('required')) ? errors.join(',') : null}
-                <Button_login onClick={this.submit} disabled={this.state.isSignDisable}>Sign Up</Button_login>
+                <ButtonLogin onClick={this.submit} disabled={this.state.isSignDisable}>Sign Up</ButtonLogin>
                 <Sign>
-                  Already have an account? <Sign_a onClick={this.dispModal}>Login</Sign_a>
+                  Already have an account? <Signa onClick={this.dispModal}>Login</Signa>
                 </Sign>
               </RightWrap>
-            </Form_wrap>
+            </FormWrap>
           </ColRight>
         </RowWrap>
       </LoginWrap>

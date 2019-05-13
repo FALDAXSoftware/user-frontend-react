@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { createForm, formShape } from 'rc-form';
 import styled from 'styled-components';
-import { Button, notification, Icon, Row, Col } from "antd";
+import { Button, notification, Row, Col } from "antd";
 import { connect } from 'react-redux';
 
 /* Components */
@@ -15,12 +15,12 @@ import { resetAction, resetData } from 'ACTIONS/authActions'
 
 /* Styled-Components */
 import {
-  Username, Email_label, Email_req, Pass_req, UserIconF, UserIconS
+  Username, EmailLabel, EmailReq, PassReq, UserIconF, UserIconS
 } from "./login_form";
 
 
 
-const Login_head = styled.div`
+const LoginHead = styled.div`
 font-size: 30px;
 font-family: "Open Sans";
 color: rgb( 35, 38, 45 );
@@ -35,22 +35,22 @@ display: inline-block;
     border-bottom:none;
 }
 `
-const Pass_label = styled(Email_label)`
+const PassLabel = styled(EmailLabel)`
   margin-top:50px;
 `
-const Password_req = styled(Pass_req)`
+const PasswordReq = styled(PassReq)`
 display:block;
 `
-const Passconfirm_Label = styled(Email_label)`
+const PassconfirmLabel = styled(EmailLabel)`
   margin-top:30px;
 `
 const Full = styled(Username)`
   margin-top:15px;
   padding-right:40px;
 `
-const Full_req = styled(Email_req)`
+const FullReq = styled(EmailReq)`
 `
-const Common_req = styled(Email_req)`
+const CommonReq = styled(EmailReq)`
 `
 const Password = styled(Username)`
 margin-top:15px;
@@ -139,7 +139,7 @@ const HorImg = styled.img`
     width:250px;    
   }
 `
-const Form_wrap = styled.div`
+const FormWrap = styled.div`
   padding-left:100px;  
   background-color:#f0f3f2;
   min-height: 100vh;
@@ -170,7 +170,7 @@ const FAI = styled.img`
     margin-left: -35px;
     margin-top: 33px;
 `
-const Active_FAI = styled(FAI)`
+const ActiveFAI = styled(FAI)`
   margin-top: 28px;  
 `
 let password;
@@ -192,9 +192,14 @@ class ResetPassword extends Component {
     form: formShape,
   };
 
+  /* 
+    Page:/reset-form
+    This method is called when any input field is changed.
+  */
+
   onChangeField(value, field) {
     var self = this;
-    if (field == "password") {
+    if (field === "password") {
       password = value;
       this.setState({ password: value }, () => {
         if (self.state.confPass !== null && self.state.password !== null) {
@@ -206,12 +211,12 @@ class ResetPassword extends Component {
       var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
       if (numb.test(value) || letters.test(value)) { this.setState({ stroke: "red", percent: 20 }) }
       if (alphanum.test(value) && value.length < 6) { this.setState({ stroke: "orange", percent: 40 }) }
-      if (alphanum.test(value) && value.length == 8) { this.setState({ stroke: "yellow", percent: 60 }) }
+      if (alphanum.test(value) && value.length === 8) { this.setState({ stroke: "yellow", percent: 60 }) }
       if (re.test(value) && value.length > 8 && value.length < 60) { this.setState({ stroke: "#7CFC00", percent: 80 }) }
       if (re.test(value) && value.length > 10 && value.length < 60) { this.setState({ stroke: "#008000", percent: 100 }) }
       if (value.length > 60) { this.setState({ stroke: "red", percent: 0 }) }
       if (value !== "" && value !== undefined) {
-        if (bool == true) {
+        if (bool === true) {
           this.setState({ newpassIcon: true, password: value })
           document.querySelector("#newchange_icon_success").style.display = "inline-block"
           document.querySelector("#newchange_icon_fail").style.display = "none"
@@ -230,11 +235,11 @@ class ResetPassword extends Component {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
       }
     }
-    if (field == "confirm_password") {
-      var bool = this.state.password === value ? true : false
+    if (field === "confirm_password") {
+      var boool = this.state.password === value ? true : false
       if (value !== "") {
         this.setState({ confPass: value })
-        if (bool == true) {
+        if (boool === true) {
           this.setState({ confirmIcon: true })
           document.querySelector("#confirmchange_icon_success").style.display = "inline-block"
           document.querySelector("#confirmchange_icon_fail").style.display = "none"
@@ -255,6 +260,11 @@ class ResetPassword extends Component {
     }
   }
 
+  /* 
+    Page:/reset-form
+    This method is called for notifications with profile.
+  */
+
   openNotificationWithProfile = (type, head, desc) => {
     notification[type]({
       message: head,
@@ -262,6 +272,11 @@ class ResetPassword extends Component {
       duration: 3,
     });
   };
+
+  /* 
+    Page:/reset-form
+    This method is called when password reset is submitted.
+  */
 
   _resetPassword = (value) => {
     let url = this.props.location.search.split('=')
@@ -278,7 +293,7 @@ class ResetPassword extends Component {
       body: JSON.stringify(form)
     }).then(response => response.json())
       .then((responseData) => {
-        if (responseData.status == 200) {
+        if (responseData.status === 200) {
           this.openNotificationWithProfile("success", "Success", "Password changed successfully.")
           this.props.history.push("/login")
         } else {
@@ -289,10 +304,15 @@ class ResetPassword extends Component {
       })
   }
 
+  /* 
+    Page:/reset-form
+    This method is called when any input field is changed.
+  */
+
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      if (error == null && this.state.confirmIcon && this.state.newpassIcon) {
-        if (value.password == value.confirm_password) {
+      if (error === null && this.state.confirmIcon && this.state.newpassIcon) {
+        if (value.password === value.confirm_password) {
           this._resetPassword(value)
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
           document.querySelectorAll(".comp_pass")[0].style.display = "block";
@@ -331,21 +351,31 @@ class ResetPassword extends Component {
     });
   }
 
+  /* 
+    Page:/reset-form
+    This method is called when we click on eye Icon to show/hide password.
+  */
+
   handleEye(type) {
-    if (type == "new") {
-      if (this.state.newEye == "password") {
+    if (type === "new") {
+      if (this.state.newEye === "password") {
         this.setState({ newEye: "text" })
       } else {
         this.setState({ newEye: "password" })
       }
     } else {
-      if (this.state.repeatEye == "password") {
+      if (this.state.repeatEye === "password") {
         this.setState({ repeatEye: "text" })
       } else {
         this.setState({ repeatEye: "password" })
       }
     }
   }
+
+  /* 
+    Page:/reset-form
+    This method is called for custom notifications.
+  */
 
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
@@ -373,26 +403,26 @@ class ResetPassword extends Component {
             </LeftWrap>
           </ColLeft>
           <ColRight sm={24} lg={12}>
-            <Form_wrap  >
+            <FormWrap  >
               <RightWrap className="wow fadeInDown" >
-                <Login_head>Reset Password</Login_head>
-                <Pass_label>Password*</Pass_label>
+                <LoginHead>Reset Password</LoginHead>
+                <PassLabel>Password*</PassLabel>
                 <div>
                   <Full type={newEye} {...getFieldProps('password', {
                     onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
                     rules: [{ type: "string", required: true, max: 16 }],
                   })} />
                   {
-                    (newEye == "password") ?
+                    (newEye === "password") ?
                       <FAI src={_EYE} onClick={this.handleEye.bind(this, "new")} />
-                      : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "new")} />
+                      : <ActiveFAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "new")} />
                   }
                   <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                   <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-                  <Full_req className="pass_msg">{this.state.pass_msg}</Full_req>
+                  <FullReq className="pass_msg">{this.state.pass_msg}</FullReq>
                 </div>
 
-                <Passconfirm_Label>Confirm Password*</Passconfirm_Label>
+                <PassconfirmLabel>Confirm Password*</PassconfirmLabel>
                 <div>
                   <Password type={repeatEye} {...getFieldProps('confirm_password', {
                     onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
@@ -400,19 +430,19 @@ class ResetPassword extends Component {
                   })}
                   />
                   {
-                    (repeatEye == "password") ?
+                    (repeatEye === "password") ?
                       <FAI src={_EYE} onClick={this.handleEye.bind(this, "confirm_password")} />
-                      : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "confirm_password")} />
+                      : <ActiveFAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "confirm_password")} />
                   }
                   <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                   <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-                  <Password_req className="confirmchange_msg">{this.state.confirmPass_msg}</Password_req>
+                  <PasswordReq className="confirmchange_msg">{this.state.confirmPass_msg}</PasswordReq>
                 </div>
-                <Common_req className="comp_pass">{this.state.common_req}</Common_req>
+                <CommonReq className="comp_pass">{this.state.common_req}</CommonReq>
                 {(errors = getFieldError('required')) ? errors.join(',') : null}
                 <ResetButton onClick={this.submit}>Reset</ResetButton>
               </RightWrap>
-            </Form_wrap>
+            </FormWrap>
           </ColRight>
         </RowWrap>
       </div>

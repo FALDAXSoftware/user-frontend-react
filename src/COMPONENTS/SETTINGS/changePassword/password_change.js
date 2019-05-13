@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
-import { Row, Col, Input, notification, Progress, Spin } from 'antd';
+import { Row, Col, Input, notification, Progress } from 'antd';
 import styled from 'styled-components';
 import { createForm, formShape } from 'rc-form';
 
@@ -17,7 +17,7 @@ import {
     passwordChange, passwordChangeData, TF_Enable, QRData, verifyTF, verifyQRData,
     TF_Disable, disableAction
 } from "ACTIONS/SETTINGS/passwordActions.js";
-import { UserIconF, UserIconS, Email_req } from "COMPONENTS/LANDING/USERFORMS/login_form"
+import { UserIconF, UserIconS, EmailReq } from "COMPONENTS/LANDING/USERFORMS/login_form"
 const Wrapper = styled.div`
 `
 const ChangeRow = styled(Row)`
@@ -42,7 +42,7 @@ const EmailRow = styled(Row)`
     border-bottom: 1px solid #d6d6d6;
 }
 `
-const Passreq = styled(Email_req)`
+const Passreq = styled(EmailReq)`
     margin-left:0px;
     width:90%;
     @media(max-width:510px)
@@ -102,23 +102,23 @@ const NewP = styled(Old)`
 const Repeat = styled(Old)`
     margin-top:30px;
 `
-export const Old_label = styled.label`
+export const OldLabel = styled.label`
     font-size: 14.007px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? '#617090' : 'rgba( 80, 80, 80, 0.502 )'};
+    color: ${props => props.theme.mode === "dark" ? '#617090' : 'rgba( 80, 80, 80, 0.502 )'};
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
 `
-const New_label = styled(Old_label)`
+const Newlabel = styled(OldLabel)`
 `
-const Repeat_label = styled(Old_label)`
+const Repeatlabel = styled(OldLabel)`
 `
 export const OldInput = styled(Input)`
     margin-top:5px;
     width: 95%;
-    background-color:${props => props.theme.mode == "dark" ? '#041422' : '#f8f8f8'};
-    color:${props => props.theme.mode == "dark" ? 'white' : ''}
+    background-color:${props => props.theme.mode === "dark" ? '#041422' : '#f8f8f8'};
+    color:${props => props.theme.mode === "dark" ? 'white' : ''}
     display:inline-block;
     font-family: "Open Sans";
     font-size:16;
@@ -144,7 +144,7 @@ const NewInput = styled(OldInput)`
 `
 const RepeatInput = styled(OldInput)`
 `
-const Button_div = styled.div`
+const Buttondiv = styled.div`
     margin-top:30px;
     margin-bottom:50px;
 `
@@ -163,11 +163,11 @@ const TwofactorRow = styled(Row)`
 `
 const TFCol = styled(Col)`
 `
-const Head_TF = styled.p`
+const HeadTF = styled.p`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    color: ${props => props.theme.mode == "dark" ? "#ffffff" : "rgb( 80, 80, 80 )"};
+    color: ${props => props.theme.mode === "dark" ? "#ffffff" : "rgb( 80, 80, 80 )"};
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -176,26 +176,26 @@ const IsEnabled = styled.p`
     font-size: 15.008px;
     font-family: "Open Sans";
     margin-bottom:0px !important;
-    color: ${props => props.theme.mode == "dark" ? "#617090" : "rgb( 80, 80, 80 )"};
+    color: ${props => props.theme.mode === "dark" ? "#617090" : "rgb( 80, 80, 80 )"};
     margin-top:20px;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
 `
-const Head_text = styled.p`
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+const Headtext = styled.p`
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
 `
 const BarRow = styled(Row)`
     width:81%;
     margin:0 auto;
     height:auto
-    background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#f8f8f8"};
+    background-color:${props => props.theme.mode === "dark" ? "#01090f" : "#f8f8f8"};
     margin-top:45px;
     border:1px solid #d6d6d6;
     border-radius:10px;
     margin-bottom:55px;
 `
-const Left_Col = styled(Col)`
+const LeftCol = styled(Col)`
     &:after 
     {
         content:"";
@@ -220,21 +220,21 @@ const Left_Col = styled(Col)`
         }
     }
 `
-const Image_Wrap = styled.div`
+const ImageWrap = styled.div`
     margin-top:50px;
 `
-const Bar_code = styled.img`
+const Barcode = styled.img`
     width:190px;
     height:190px;
     border-width:10px solid #ffffff;
 `
-const Key_wrap = styled.div`
+const Keywrap = styled.div`
     margin-top:20px;
 `
-const Key_text = styled.span`
+const Keytext = styled.span`
     font-size: 13.007px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
     line-height: 1.846;
     text-align: center;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -244,32 +244,32 @@ const Key_text = styled.span`
 const Key = styled.p`
     font-size: 13.007px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "rgb(0,170,250)" : "rgb(0,170,250)"};
+    color: ${props => props.theme.mode === "dark" ? "rgb(0,170,250)" : "rgb(0,170,250)"};
     line-height: 1.846;
     text-align: center;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
 `
-const Right_Col = styled(Col)`
+const RightCol = styled(Col)`
 `
-const Order_list = styled.ol`
+const Orderlist = styled.ol`
     margin-top:50px;
     text-align:left;
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
 `
 const LI = styled.li`
     margin-top:10px;
 `
-const TF_code = styled.div`
+const TFcode = styled.div`
     text-align:left;
     margin-top:10px;
     margin-left:40px;
 `
-const TF_label = styled.label`
-    color:${props => props.theme.mode == "dark" ? "rgb(0,170,250)" : ""};
+const TFlabel = styled.label`
+    color:${props => props.theme.mode === "dark" ? "rgb(0,170,250)" : ""};
 `
-const TF_input = styled(Input)`
+const TFinput = styled(Input)`
     width:148px;
     margin-top:10px;
     dipslay:inline-block;
@@ -280,7 +280,7 @@ const Enable = styled.div`
     margin-left: 40px;
     margin-top: 30px;
 `
-const E_button = styled(Save)`
+const Ebutton = styled(Save)`
     border:none;
     width:auto;
     &:hover
@@ -299,15 +299,15 @@ const FAI = styled.img`
     color:#8a8a8a;
     font-size:18px;
 `
-const Active_FAI = styled(FAI)`
+const ActiveFAI = styled(FAI)`
     margin-top: 13px;
 `
-const Progress_bar = styled(Progress)`
+const Progressbar = styled(Progress)`
     margin-top:20px;
     width:100%;
     >div>.ant-progress-text
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
 `
 let password;
@@ -337,45 +337,105 @@ class PasswordChange extends Component {
         form: formShape,
     };
 
+    /* Life-Cycle Methods */
+    componentDidMount() {
+        if (this.props.profileDetails) {
+            if (this.props.profileDetails.is_twofactor === false) {
+                this.setState({ is_twofactor: "ENABLE", isEnabled: "DISABLED" })
+            } else {
+                this.setState({ is_twofactor: "DISABLE", isEnabled: "ENABLED" })
+            }
+        }
+    }
+    componentWillReceiveProps(props, newProps) {
+        if (props.passChange !== false) {
+            if (props.passChange.status === 200) {
+                this.props.form.resetFields();
+                this.setState({ percent: 0 })
+                this.openNotificationWithIcon("success", "Change Password", props.passChange.message)
+            } else {
+                this.openNotificationWithIcon("error", "Change Password", props.passChange.err)
+            }
+            this.props.passwordChangeData();
+        }
+        if (props.verifyOTP) {
+            if (props.verifyOTP.status === 200) {
+                this.openNotificationWithIcon("success", "Two-Factor Authentication", props.verifyOTP.message)
+                this.setState({ is_twofactor: "DISABLE", show_QR: false, isEnabled: "ENABLED" })
+            } else {
+                this.openNotificationWithIcon("error", "Two-Factor Auth..", props.verifyOTP.err)
+            }
+            this.props.verifyQRData();
+        }
+        if (props.DisableTF) {
+            if (props.DisableTF.status === 200) {
+                this.openNotificationWithIcon("success", "Two-Factor Authentication", props.DisableTF.message)
+                this.setState({ is_twofactor: "ENABLE", isEnabled: "DISABLED", show_QR: false })
+            } else {
+                this.openNotificationWithIcon("error", "Two-Factor Authentication", props.DisableTF.err)
+            }
+            this.props.disableAction();
+        }
+
+        if (props.QR_code) {
+            this.setState({ show_QR: true });
+            if (props.QR_code.dataURL !== undefined && props.QR_code.tempSecret !== undefined) {
+                this.setState({ QR_img: props.QR_code.dataURL, Key: props.QR_code.tempSecret })
+            }
+            this.props.QRData();
+        }
+    }
+
+    /* 
+        Page: /editProfile --> Security
+        It is called when eye is clicked in Password Input to show hide text.
+    */
+
     handleEye(type) {
-        if (type == "old") {
-            if (this.state.typeEye == "password") {
+        if (type === "old") {
+            if (this.state.typeEye === "password") {
                 this.setState({ typeEye: "text" })
             } else {
                 this.setState({ typeEye: "password" })
             }
-        } else if (type == "new") {
-            if (this.state.newEye == "password") {
+        } else if (type === "new") {
+            if (this.state.newEye === "password") {
                 this.setState({ newEye: "text" })
             } else {
                 this.setState({ newEye: "password" })
             }
         } else {
-            if (this.state.repeatEye == "password") {
+            if (this.state.repeatEye === "password") {
                 this.setState({ repeatEye: "text" })
             } else {
                 this.setState({ repeatEye: "password" })
             }
         }
     }
+
+    /* 
+        Page: /editProfile --> Security
+        It is called save new password button is clicked for password change.
+    */
+
     submit = () => {
         this.props.form.validateFields((error, value) => {
-            if (error == null && this.state.newpassIcon == true && this.state.confirmIcon == true) {
+            if (error === null && this.state.newpassIcon === true && this.state.confirmIcon === true) {
                 document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
                 document.querySelectorAll(".newchange_msg")[0].style.display = "none";
                 document.querySelectorAll(".confirmchange_msg")[0].style.display = "none";
 
                 this.props.passwordChange(this.props.isLoggedIn, value);
             } else {
-                if (value.current_password == '' || value.current_password == null || value.current_password == undefined) {
+                if (value.current_password === '' || value.current_password === null || value.current_password === undefined) {
                     document.querySelectorAll(".oldchange_msg")[0].style.display = "block";
                     this.setState({ current_msg: "Old password is required." })
                 }
-                if (value.new_password == '' || value.new_password == null || value.new_password == undefined) {
+                if (value.new_password === '' || value.new_password === null || value.new_password === undefined) {
                     document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
                     this.setState({ confirmPass_msg: "confirm password is required." })
                 }
-                if (value.confirm_password == '' || value.confirm_password == null || value.confirm_password == undefined) {
+                if (value.confirm_password === '' || value.confirm_password === null || value.confirm_password === undefined) {
                     document.querySelectorAll(".newchange_msg")[0].style.display = "block";
                     this.setState({ new_msg: "New password is required." })
                 }
@@ -383,14 +443,21 @@ class PasswordChange extends Component {
             }
         });
     }
+
+
+    /* 
+        Page: /editProfile --> Security
+        It is called when any input is changed and handle it and also validate it.
+    */
+
     onChangeField(value, field) {
         // old password should not have validation except required.
 
-        // if (field == "current_password") {
+        // if (field==="current_password") {
         //     var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
         //     var bool = re.test(value);
         //     if (value !== "") {
-        //         if (bool == true) {
+        //         if (bool===true) {
         //             this.setState({ currentpassIcon: true, password: value })
         //             document.querySelector("#passchange_icon_success").style.display = "inline-block"
         //             document.querySelector("#passchange_icon_fail").style.display = "none"
@@ -409,7 +476,7 @@ class PasswordChange extends Component {
         //         document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
         //     }
         // }
-        if (field == "new_password") {
+        if (field === "new_password") {
             password = value;
             if (this.state.confPass !== undefined) {
                 if (this.state.confPass === value) {
@@ -430,12 +497,12 @@ class PasswordChange extends Component {
             var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
             if (numb.test(value) || letters.test(value)) { this.setState({ stroke: "red", percent: 20 }) }
             if (alphanum.test(value) && value.length < 6) { this.setState({ stroke: "orange", percent: 40 }) }
-            if (alphanum.test(value) && value.length == 8) { this.setState({ stroke: "yellow", percent: 60 }) }
+            if (alphanum.test(value) && value.length === 8) { this.setState({ stroke: "yellow", percent: 60 }) }
             if (re.test(value) && value.length > 8 && value.length < 60) { this.setState({ stroke: "#7CFC00", percent: 80 }) }
             if (re.test(value) && value.length > 10 && value.length < 60) { this.setState({ stroke: "#008000", percent: 100 }) }
             if (value.length > 60) { this.setState({ stroke: "red", percent: 0 }) }
             if (value !== "" && value !== undefined) {
-                if (bool == true) {
+                if (bool === true) {
                     this.setState({ newpassIcon: true, password: value })
                     document.querySelector("#newchange_icon_success").style.display = "inline-block"
                     document.querySelector("#newchange_icon_fail").style.display = "none"
@@ -454,11 +521,11 @@ class PasswordChange extends Component {
                 document.querySelectorAll(".newchange_msg")[0].style.display = "none";
             }
         }
-        if (field == "confirm_password") {
-            var bool = (password === value) ? true : false
+        if (field === "confirm_password") {
+            var boool = (password === value) ? true : false
             if (value !== "") {
                 this.setState({ confPass: value })
-                if (bool == true) {
+                if (boool === true) {
                     this.setState({ confirmIcon: true })
                     document.querySelector("#confirmchange_icon_success").style.display = "inline-block"
                     document.querySelector("#confirmchange_icon_fail").style.display = "none"
@@ -479,19 +546,29 @@ class PasswordChange extends Component {
         }
     }
 
+    /* 
+        Page: /editProfile --> Security
+        It is called when Enable/Disable TFAUTH is clicked so to check if TF is enabled or not.
+    */
+
     TF_AUTH() {
-        if (this.props.profileDetails.is_twofactor == true) {
+        if (this.props.profileDetails.is_twofactor === true) {
             this.props.TF_Disable(this.props.isLoggedIn)
         } else
             this.props.TF_Enable(this.props.isLoggedIn);
     }
 
+    /* 
+        Page: /editProfile --> Security
+        It is called when input field is changed and we can validate it. 
+    */
+
     changeOTP(value, field) {
-        if (field == "otp") {
+        if (field === "otp") {
             var re = /^\b[a-zA-Z0-9]{6}\b|\b[a-zA-Z0-9]{6}\b/;
             var bool = re.test(value);
             if (value !== "") {
-                if (bool == true) {
+                if (bool === true) {
                     this.setState({ otpIcon: true })
                     document.querySelector("#otp_success").style.display = "inline-block"
                     document.querySelector("#otp_fail").style.display = "none"
@@ -511,14 +588,31 @@ class PasswordChange extends Component {
             }
         }
     }
+
+    /* 
+        Page: /editProfile --> Security
+        It is called when input field is changed and we can validate it. 
+    */
+
     OTPfield(e) {
         this.setState({ verify_otp: e.target.value })
     }
+
+    /* 
+        Page: /editProfile --> Security
+        It is called when after entering OTP,we click on ENABLE and API is called to Enable the Two-Factor. 
+    */
+
     finalEnable() {
         let value = {};
         value["otp"] = this.state.verify_otp;
         this.props.verifyTF(this.props.isLoggedIn, value)
     }
+
+    /* 
+        Page: /editProfile --> Security
+        It is called for cutom notifications.
+    */
 
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
@@ -526,53 +620,7 @@ class PasswordChange extends Component {
             description: desc,
         });
     };
-    componentDidMount() {
-        if (this.props.profileDetails) {
-            if (this.props.profileDetails.is_twofactor == false) {
-                this.setState({ is_twofactor: "ENABLE", isEnabled: "DISABLED" })
-            } else {
-                this.setState({ is_twofactor: "DISABLE", isEnabled: "ENABLED" })
-            }
-        }
-    }
-    componentWillReceiveProps(props, newProps) {
-        if (props.passChange !== false) {
-            if (props.passChange.status == 200) {
-                this.props.form.resetFields();
-                this.setState({ percent: 0 })
-                this.openNotificationWithIcon("success", "Change Password", props.passChange.message)
-            } else {
-                this.openNotificationWithIcon("error", "Change Password", props.passChange.err)
-            }
-            this.props.passwordChangeData();
-        }
-        if (props.verifyOTP) {
-            if (props.verifyOTP.status == 200) {
-                this.openNotificationWithIcon("success", "Two-Factor Authentication", props.verifyOTP.message)
-                this.setState({ is_twofactor: "DISABLE", show_QR: false, isEnabled: "ENABLED" })
-            } else {
-                this.openNotificationWithIcon("error", "Two-Factor Auth..", props.verifyOTP.err)
-            }
-            this.props.verifyQRData();
-        }
-        if (props.DisableTF) {
-            if (props.DisableTF.status == 200) {
-                this.openNotificationWithIcon("success", "Two-Factor Authentication", props.DisableTF.message)
-                this.setState({ is_twofactor: "ENABLE", isEnabled: "DISABLED", show_QR: false })
-            } else {
-                this.openNotificationWithIcon("error", "Two-Factor Authentication", props.DisableTF.err)
-            }
-            this.props.disableAction();
-        }
 
-        if (props.QR_code) {
-            this.setState({ show_QR: true });
-            if (props.QR_code.dataURL !== undefined && props.QR_code.tempSecret !== undefined) {
-                this.setState({ QR_img: props.QR_code.dataURL, Key: props.QR_code.tempSecret })
-            }
-            this.props.QRData();
-        }
-    }
     render() {
         var me = this;
         const { getFieldProps } = this.props.form;
@@ -589,14 +637,14 @@ class PasswordChange extends Component {
                 <ChangeRow>
                     <ChangeCol>
                         <Old>
-                            <Old_label>Old Password*</Old_label>
+                            <OldLabel>Old Password*</OldLabel>
                             <div>
                                 <OldInput type={typeEye}  {...getFieldProps('current_password', {
                                     onChange(e) { me.onChangeField(e.target.value, "current_password") }, // have to write original onChange here if you need
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (typeEye == "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this, "old")} /> : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "old")} />
+                                    (typeEye === "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this, "old")} /> : <ActiveFAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "old")} />
                                 }
                                 <UserIconS id="passchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="passchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
@@ -604,14 +652,14 @@ class PasswordChange extends Component {
                             <Passreq className="oldchange_msg">{current_msg}</Passreq>
                         </Old>
                         <NewP>
-                            <New_label>New Password*</New_label>
+                            <Newlabel>New Password*</Newlabel>
                             <div>
                                 <NewInput type={newEye} {...getFieldProps('new_password', {
                                     onChange(e) { me.onChangeField(e.target.value, "new_password") }, // have to write original onChange here if you need
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (newEye == "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this, "new")} /> : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "new")} />
+                                    (newEye === "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this, "new")} /> : <ActiveFAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "new")} />
                                 }
                                 <UserIconS id="newchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="newchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
@@ -619,25 +667,25 @@ class PasswordChange extends Component {
                             <Passreq className="newchange_msg">{this.state.new_msg}</Passreq>
                         </NewP>
                         <Repeat>
-                            <Repeat_label>Re-Enter New Password*</Repeat_label>
+                            <Repeatlabel>Re-Enter New Password*</Repeatlabel>
                             <div>
                                 <RepeatInput type={repeatEye} {...getFieldProps('confirm_password', {
                                     onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
                                     rules: [{ type: "string", required: true, whitespace: true }],
                                 })} />
                                 {
-                                    (repeatEye == "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this, "repeat")} /> : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "repeat")} />
+                                    (repeatEye === "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this, "repeat")} /> : <ActiveFAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this, "repeat")} />
                                 }
                                 <UserIconS id="confirmchange_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                 <UserIconF id="confirmchange_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                             </div>
                             <Passreq className="confirmchange_msg">{this.state.confirmPass_msg}</Passreq>
 
-                            <Progress_bar type="line" size="small" percent={percent} strokeColor={this.state.stroke} />
+                            <Progressbar type="line" size="small" percent={percent} strokeColor={this.state.stroke} />
                         </Repeat>
-                        <Button_div>
+                        <Buttondiv>
                             <NewButton onClick={this.submit}>Save New Password</NewButton>
-                        </Button_div>
+                        </Buttondiv>
                     </ChangeCol>
                 </ChangeRow>
                 <EmailRow>
@@ -645,60 +693,60 @@ class PasswordChange extends Component {
                 </EmailRow>
                 <TwofactorRow>
                     <TFCol>
-                        <Head_TF>Two-Factor Authentication</Head_TF>
+                        <HeadTF>Two-Factor Authentication</HeadTF>
                         <IsEnabled> Status:
-                            {isEnabled == 'DISABLED' ?
+                            {isEnabled === 'DISABLED' ?
                                 <span style={{ color: 'red' }}> {isEnabled}</span>
                                 : <span style={{ color: 'green' }}> {isEnabled}</span>
                             }
                         </IsEnabled>
-                        <Head_text>
-                            {isEnabled == 'DISABLED' ?
+                        <Headtext>
+                            {isEnabled === 'DISABLED' ?
                                 <span>Two-Factor Authentication significantly increases the security of your account. We highly recommend that you enable it. </span>
                                 : <span>Way to go! You care about your security as much as we do. Thanks for enabling Two-Factor Authentication!</span>
                             }
-                        </Head_text>
-                        <Button_div>
+                        </Headtext>
+                        <Buttondiv>
                             <NewButton onClick={this.TF_AUTH.bind(this)}> {this.state.is_twofactor} AUTHENTICATOR</NewButton>
-                        </Button_div>
+                        </Buttondiv>
                     </TFCol>
                 </TwofactorRow>
-                {(this.state.show_QR == true) ?
+                {(this.state.show_QR === true) ?
                     <BarRow >
-                        <Left_Col sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>
-                            <Image_Wrap>
-                                <Bar_code src={this.state.QR_img} />
-                            </Image_Wrap>
-                            <Key_wrap>
-                                <Key_text>16 Digit Key</Key_text>
+                        <LeftCol sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>
+                            <ImageWrap>
+                                <Barcode src={this.state.QR_img} />
+                            </ImageWrap>
+                            <Keywrap>
+                                <Keytext>16 Digit Key</Keytext>
                                 <Key>{this.state.Key}</Key>
-                            </Key_wrap>
-                        </Left_Col>
-                        <Right_Col sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>
-                            <Order_list>
+                            </Keywrap>
+                        </LeftCol>
+                        <RightCol sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>
+                            <Orderlist>
                                 <LI>Install an authenticator app on your mobile device. We suggest Google Authenticator or Authy. </LI>
                                 <LI>Scan the QR code when prompted by your Authenticator.</LI>
                                 <LI>In case your phone gets stolen or erased, you will need this code to link FALDAX with a new app.</LI>
                                 <LI>Do not share the code with anyone. FALDAX will never ask you for this code.</LI>
-                            </Order_list>
-                            <TF_code>
-                                <TF_label>Enter your two-factor code here:</TF_label>
+                            </Orderlist>
+                            <TFcode>
+                                <TFlabel>Enter your two-factor code here:</TFlabel>
                                 <div>
-                                    <TF_input onChange={this.OTPfield.bind(this)} />
+                                    <TFinput onChange={this.OTPfield.bind(this)} />
                                     <UserIconS id="otp_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                                     <UserIconF id="otp_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                                 </div>
                                 <Passreq className="MSG_OTP">{this.state.otp_msg}</Passreq>
-                            </TF_code>
+                            </TFcode>
                             <Enable>
-                                <E_button onClick={this.finalEnable.bind(this)}>
+                                <Ebutton onClick={this.finalEnable.bind(this)}>
                                     ENABLE
-                            </E_button>
+                            </Ebutton>
                             </Enable>
-                        </Right_Col>
+                        </RightCol>
                     </BarRow>
                     : ''}
-                {(this.props.loader == true) ? <FaldaxLoader /> : ""}
+                {(this.props.loader === true) ? <FaldaxLoader /> : ""}
             </Wrapper>
         );
     }

@@ -161,7 +161,7 @@ export function kycDoc(isLoggedIn, value, type) {
             .then(response => response.json())
             .then((responseData) => {
                 var Data = {};
-                if (type == "front-doc") { Data["front_doc"] = responseData.data }
+                if (type === "front-doc") { Data["front_doc"] = responseData.data }
                 else { Data["back_doc"] = responseData.data }
                 dispatch(kycDocData(responseData));
                 dispatch(removeLoader())

@@ -9,11 +9,11 @@ import styled from 'styled-components';
 import PersonalDetails from './Personaldetails/personal_details';
 import Referral from './referral';
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
-import Footer_home from "COMPONENTS/LANDING/FOOTERS/footer_home";
+import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import Passwordchange from "./changePassword/password_change";
-import Acc_settings from "./Account_settings/acc_settings";
+import AccSettings from "./Account_settings/acc_settings";
 import KYC from "./KYC/kyc"
-import Paymethods from './Payment/paymethods';
+/* import Paymethods from './Payment/paymethods'; */
 import SupportHub from './Account_settings/support_hub';
 
 const TabPane = Tabs.TabPane;
@@ -22,10 +22,10 @@ const TabPane = Tabs.TabPane;
 export const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom:30px;
-  background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
+  background-color: ${props => props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
 `
 export const ProfileDiv = styled.div`
-background-color: ${props => props.theme.mode == "dark" ? "#041422" : "#ffffff"};
+background-color: ${props => props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   margin:auto;
   width:95%;
   border-radius: 7px;
@@ -42,15 +42,15 @@ const TabsStyle = styled(Tabs)`
     }
     & .ant-tabs-tab-prev-icon>i
     {
-        color : ${props => props.theme.mode == "dark" ? "white" : ""};
+        color : ${props => props.theme.mode === "dark" ? "white" : ""};
     }
     & .ant-tabs-tab-prev-icon>i
     {
-        color : ${props => props.theme.mode == "dark" ? "white" : ""};
+        color : ${props => props.theme.mode === "dark" ? "white" : ""};
     }
     & .ant-tabs-tab-next-icon>i
     {
-        color : ${props => props.theme.mode == "dark" ? "white" : ""};
+        color : ${props => props.theme.mode === "dark" ? "white" : ""};
     }
 `
 var ActKey = "1";
@@ -85,7 +85,7 @@ class Editprofile extends Component {
                         <TabsStyle defaultActiveKey="1" onChange={this.handleChange} className="profile-tabs" >
                             <TabPane tab="Personal Details" key="1"><PersonalDetails {...this.props} /></TabPane>
                             <TabPane tab="Security" key="2" ><Passwordchange {...this.props} /></TabPane>
-                            <TabPane tab="Settings" key="3"><Acc_settings {...this.props} /></TabPane>
+                            <TabPane tab="Settings" key="3"><AccSettings {...this.props} /></TabPane>
                             <TabPane tab="Identity Verification" key="4"><KYC /></TabPane>
                             <TabPane tab="Referral" key="5"><Referral {...this.props} /></TabPane>
                             <TabPane tab="Support" key="6"><SupportHub {...this.props} /></TabPane>
@@ -93,7 +93,7 @@ class Editprofile extends Component {
                         </TabsStyle>
                     </ProfileDiv>
                 </ProfileWrapper>
-                <Footer_home />
+                <FooterHome />
             </div>
         );
     }

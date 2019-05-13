@@ -7,13 +7,13 @@ import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import {
-    Contact_wrap, Grey_wrap, Job_wrap, Body_details_job, Job_head, Location_p
+    ContactWrap, GreyWrap, JobWrap, BodyDetailsJob, JobHead, LocationP
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
 import { globalVariables } from "Globals"
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'
 
 export const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
+    background-color:${props => props.theme.mode==="dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -24,15 +24,15 @@ const NDF = styled.div`
     justify-content:center;
     align-items:center;
     font-weight:600;
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode==="dark" ? "white" : ""};
 `
-const Cat_head = styled(Job_head)`
+const CatHead = styled(JobHead)`
     font-size: 25px;
     font-weight: 650;
     color: #525050;
     text-transform: uppercase;
 `
-const Position = styled(Job_head)`
+const Position = styled(JobHead)`
     display: inline-block;
 `
 const BorderDiv = styled.div`
@@ -57,7 +57,7 @@ const CareerTitle = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode == "dark" ? "white" : ""};
+  color:${props => props.theme.mode==="dark" ? "white" : ""};
   &:before {
     content: '';
     width: calc(50% - 140px);
@@ -118,18 +118,18 @@ class Careers extends Component {
         var me = this;
         let flag = false;
         return (
-            <Contact_wrap>
+            <ContactWrap>
                 <Navigation />
-                <Grey_wrap>
+                <GreyWrap>
                     <ContainerContact>
                         <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                             <CareerTitle>Careers </CareerTitle>
                         </div>
-                        {/* <Career_desc>
-                            <Desc_head>careers</Desc_head>
-                            <Desc_body>{(this.state.careerDesc) ? ReactHtmlParser(this.state.careerDesc.content) : ''}</Desc_body>
-                        </Career_desc> */}
-                        <Job_wrap>
+                        {/* <Careerdesc>
+                            <Deschead>careers</Deschead>
+                            <Descbody>{(this.state.careerDesc) ? ReactHtmlParser(this.state.careerDesc.content) : ''}</Descbody>
+                        </Careerdesc> */}
+                        <JobWrap>
                             {this.state.Jobs.length > 0 ?
                                 this.state.Jobs.map(function (jobCat, key) {
                                     if (jobCat.jobs.length > 0) {
@@ -139,40 +139,40 @@ class Careers extends Component {
                                         jobCat.jobs.map((job, index) => {
                                             let _this = this;
                                             return (
-                                                <Body_details_job key={index}>
+                                                <BodyDetailsJob key={index}>
                                                     <Link to={decodeURI(`/career-details?jobID=${job.id}`)}>
                                                         <Position>{job.position}</Position>
                                                     </Link>
                                                     <ApplyBtn type="primary" onClick={() => { me.props.history.push(`/applyjob?jobid=${job.id}&position=${job.position}`) }} >Apply</ApplyBtn>
-                                                    <Location_p>{job.location}</Location_p>
+                                                    <LocationP>{job.location}</LocationP>
                                                     {/* {job.short_desc ? <Body_p>{job.short_desc}</Body_p> : ''} */}
-                                                </Body_details_job>
+                                                </BodyDetailsJob>
                                             )
                                         })
                                         : '';
                                     return (
-                                        <Body_details_job>
+                                        <BodyDetailsJob>
                                             {jobCat.jobs.length > 0 ?
-                                                <div><Cat_head>{jobCat.category}</Cat_head>
+                                                <div><CatHead>{jobCat.category}</CatHead>
                                                     <BorderDiv> </BorderDiv>
                                                 </div>
                                                 : ""}
                                             {jobs}
-                                        </Body_details_job>
+                                        </BodyDetailsJob>
                                     );
                                 })
                                 : ""}
                             {
-                                flag == false ?
+                                flag===false ?
                                     <NDF>NO DATA FOUND</NDF>
                                     : ""
                             }
-                        </Job_wrap>
+                        </JobWrap>
                     </ContainerContact>
-                </Grey_wrap>
+                </GreyWrap>
                 <CommonFooter />
                 {(this.state.loader) ? <FaldaxLoader /> : ""}
-            </Contact_wrap>
+            </ContactWrap>
         );
     }
 }

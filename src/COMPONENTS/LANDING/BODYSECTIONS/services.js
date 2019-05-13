@@ -62,7 +62,7 @@ const SlideRow = styled(Row)`
 `
 
 function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   const NextIcon = styled(Icon)`
   color: white;
   font-size: 36px;
@@ -85,7 +85,7 @@ function SampleNextArrow(props) {
 }
 
 function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   const PrevIcon = styled(Icon)`
   color: white;
   font-size: 36px;
@@ -131,7 +131,7 @@ export default class Services extends Component {
               </Col>
               <Col lg={{ span: 16 }}>
                 <Title>
-                  _RELIABILITY
+                  RELIABILITY
                 </Title>
                 <Description>
                   FALDAX is built upon proven enterprise technology solutions. All data from production systems is replicated, in real-time, across three locations thousands of miles apart. Our proprietary code is written and maintained by our experienced developers who have prior experience working for companies such as Google, Motorola, Unilever, Pedigree, Dove and many more. The order management system is capable of at least 1,000,000+ transactions per second and built with an N+1 scaling philosophy to ensure seamless operations regardless of growth.
@@ -144,7 +144,7 @@ export default class Services extends Component {
               </Col>
               <Col lg={{ span: 16 }}>
                 <Title>
-                  _ACCESSIBILITY
+                  ACCESSIBILITY
                 </Title>
                 <Description>
                   As traders ourselves, we know that there is room for improvement in this space.We believe that one platform can meet the needs of novice and professional traders without compromising anyone’s experience. Creating our exchange from the ground up allows us to construct each component according to specific needs and design philosophies. At FALDAX, novice traders get the information they need to avoid surprises and make informed decisions while professional traders have a streamlined, feature-rich, data-centric, and zero-compromise interface that doesn’t slow them down.
@@ -157,10 +157,10 @@ export default class Services extends Component {
               </Col>
               <Col lg={{ span: 16 }}>
                 <Title>
-                  _SECURITY
+                  SECURITY
                 </Title>
                 <Description>
-                  Production hardware is located in high-security AWS data centers. Documentation of the security and compliance standards followed by AWS are available <a href="https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/security-and-compliance.html" target="_blank" >at this link.</a> The prestigious <a href="https://www.herjavecgroup.com/" target="_blank"> Herjavec Group </a> is scheduled to conduct security and penetration tests in addition to our internal testing. The Herjavec Group and other third-party cyber security firms will monitor our systems in real-time for vulnerabilities. Internally, strict data security procedures are documented and disseminated to all employees. While security is never a guarantee, you can rest assured that we are doing our part to make FALDAX as safe as possible.
+                  Production hardware is located in high-security AWS data centers. Documentation of the security and compliance standards followed by AWS are available <a rel="noopener noreferrer" href="https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/security-and-compliance.html" target="_blank" >at this link.</a> The prestigious <a rel="noopener noreferrer" href="https://www.herjavecgroup.com/" target="_blank"> Herjavec Group </a> is scheduled to conduct security and penetration tests in addition to our internal testing. The Herjavec Group and other third-party cyber security firms will monitor our systems in real-time for vulnerabilities. Internally, strict data security procedures are documented and disseminated to all employees. While security is never a guarantee, you can rest assured that we are doing our part to make FALDAX as safe as possible.
                 </Description>
               </Col>
             </SlideRow>

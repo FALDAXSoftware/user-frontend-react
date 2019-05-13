@@ -7,15 +7,15 @@ import { actions, } from "redux-tooltip";
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components';
 import tooltip from 'wsdm-tooltip';
-import { globalVariables } from '../../../Globals';
+import { globalVariables } from 'Globals';
 import { Row, Col, Modal, Button, Input, Icon, notification } from 'antd';
 import { _FOOTERLOGO } from 'CONSTANTS/images';
 
 /* Components */
-import { Section_3, Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
+import { Section3, Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 const { show, hide } = actions;
 
-const Email_input = styled.input`
+const EmailInput = styled.input`
     border:1px solid #e2e6ea;
     background-color:#f8f8f8;
     border-radius:5px;
@@ -28,7 +28,7 @@ const Email_input = styled.input`
 
     }
 `
-const tip = tooltip({
+const Tip = tooltip({
     styles: {
         "color": "#282528",
         "text-transform": 'uppercase',
@@ -52,7 +52,7 @@ const ReactSimpleMapWrapper = styled.div`
   background-image: "-ms-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%)";
 `;
 
-const Back_link = styled.a`
+const BackLink = styled.a`
     vertical-align: middle;
     font-size: 14px;
     font-family: "Open Sans";
@@ -61,7 +61,7 @@ const Back_link = styled.a`
     left: 50%;
 `;
 
-const Link_wrap = styled.div`
+const LinkWrap = styled.div`
     margin-top:50px;
 `;
 const Icon1 = styled.i`
@@ -83,7 +83,7 @@ const SubHeading = styled.h3`
   font-family:"Open sans";
   margin-bottom:40px;
 `
-const Section = styled(Section_3)`
+const Section = styled(Section3)`
   padding-top:50px;
   padding-bottom:50px;
 `
@@ -132,21 +132,21 @@ class HomeFour extends Component {
         this.setState({ visible: false });
     }
     showModal(modal) {
-        if (modal.properties.name == 'United States') {
+        if (modal.properties.name === 'United States') {
             this.setState({ usaMap: true, email_address: '' });
-        } else if (modal.properties.name == "Vietnam") {
+        } else if (modal.properties.name === "Vietnam") {
             //skip for now
         } else {
             for (var i = 0; i < this.state.countries.length; i++) {
-                if (this.state.countries[i].region == "United States") {
-                    if (modal.properties.name == "Colorado") {
+                if (this.state.countries[i].region === "United States") {
+                    if (modal.properties.name === "Colorado") {
                         this.setState({ visible: true, modal: 1, email_address: '' });
                         return;
-                    } else if (this.state.countries[i].name == modal.properties.name) {
+                    } else if (this.state.countries[i].name === modal.properties.name) {
                         this.setState({ visible: true, modal: this.state.countries[i].legality, email_address: '' });
                         return;
                     }
-                } else if (this.state.countries[i].name == modal.properties.name) {
+                } else if (this.state.countries[i].name === modal.properties.name) {
                     this.setState({ visible: true, modal: this.state.countries[i].legality, email_address: '' });
                     return;
                 }
@@ -161,13 +161,13 @@ class HomeFour extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.tooltip && this.props.tooltip.show !== nextProps.tooltip.show) {
             if (this.props.tooltip.show === true) {
-                tip.hide(nextProps.tooltip.content);
+                Tip.hide(nextProps.tooltip.content);
             } else {
-                tip.show(nextProps.tooltip.content);
+                Tip.show(nextProps.tooltip.content);
             }
         }
         if (nextProps.tooltip && nextProps.tooltip.origin && nextProps.tooltip.origin.x && nextProps.tooltip.origin.y) {
-            tip.position({ pageX: nextProps.tooltip.origin.x, pageY: nextProps.tooltip.origin.y })
+            Tip.position({ pageX: nextProps.tooltip.origin.x, pageY: nextProps.tooltip.origin.y })
         }
     }
 
@@ -187,7 +187,7 @@ class HomeFour extends Component {
                 body: JSON.stringify(values)
             }).then(response => response.json())
                 .then((responseData) => {
-                    if (responseData.status == 500) {
+                    if (responseData.status === 500) {
                         this.openNotification1();
                     } else {
                         this.openNotification();
@@ -220,7 +220,7 @@ class HomeFour extends Component {
         let self = this;
         let countries = self.state.countries
         for (var i = 0; i < countries.length; i++) {
-            if (countries[i].name == text) {
+            if (countries[i].name === text) {
                 return countries[i].color;
             }
         }
@@ -233,12 +233,12 @@ class HomeFour extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                if (responseData.state == 200) {
+                if (responseData.state === 200) {
                     self.setState({
                         countries: responseData.countries
                     }, () => {
                         if (self.props.location !== undefined) {
-                            if (self.props.location.hash !== "" && self.props.location.hash !== undefined && self.props.location.hash == "#block-world-map") {
+                            if (self.props.location.hash !== "" && self.props.location.hash !== undefined && self.props.location.hash === "#block-world-map") {
                                 var elmnt = document.getElementById("map-scroll");
                                 if (elmnt !== null)
                                     elmnt.scrollIntoView(true);
@@ -256,7 +256,7 @@ class HomeFour extends Component {
             <div id="block-world-map">
                 <div className="simple-maps">
                     <Modal
-                        title={<img src={_FOOTERLOGO} />}
+                        title={<img alt="Footer Logo" src={_FOOTERLOGO} />}
                         visible={this.state.visible}
                         onOk={(e) => this.handleOk()}
                         onCancel={(e) => this.handleCancel(e)}
@@ -279,7 +279,7 @@ class HomeFour extends Component {
                                 <div>
                                     <p>All services are unavailable due to legal concerns out of our control. We are monitoring the situation and hope that legislators enact forward-thinking and sensible solutions. Please enter your email address below to receive updates. Please enter your email address below to receive updates.</p>
                                     <label style={{ color: 'black', fontWeight: "600" }}> Email Address: </label>
-                                    <Email_input placeholder="Please enter your email address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
+                                    <EmailInput placeholder="Please enter your email address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
                                     <div style={{ marginTop: '20px', minHeight: '20px' }}>
                                         <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff', backgroundColor: "#0f477b", height: "45px" }} onClick={() => this.send_email()}> CONFIRM </Button>
                                     </div>
@@ -372,12 +372,12 @@ class HomeFour extends Component {
                                             </ComposableMap>
                                             :
                                             <UsaMap>
-                                                <Link_wrap>
-                                                    <Back_link onClick={() => this.hideModal()}>
+                                                <LinkWrap>
+                                                    <BackLink onClick={() => this.hideModal()}>
                                                         <Icon1 className="material-icons"> keyboard_backspace </Icon1>
                                                         Back To World Map
-                                        </Back_link>
-                                                </Link_wrap>
+                                        </BackLink>
+                                                </LinkWrap>
                                                 <ComposableMap
                                                     width={900}
                                                     height={600}

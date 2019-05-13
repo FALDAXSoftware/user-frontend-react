@@ -6,10 +6,10 @@ import 'App.css';
 import { ThemeProvider } from 'styled-components';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+/* import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; */
 import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { Signup } from 'ACTIONS/authActions';
+/* import { Signup } from 'ACTIONS/authActions'; */
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 /* Components */
 // import HomePage from 'components/LANDING/HomePage';
@@ -48,7 +48,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      theme: this.props.theme == false ? "light" : "dark"
+      theme: this.props.theme === false ? "light" : "dark"
     }
   }
   componentDidUpdate(prevProps, prevState) {
@@ -56,7 +56,7 @@ class App extends Component {
 
     if (this.props.location !== prevProps.location) {
       if (this.props.location !== undefined) {
-        if (this.props.location.hash !== "" && this.props.location.hash !== undefined && this.props.location.hash == "#block-world-map") {
+        if (this.props.location.hash !== "" && this.props.location.hash !== undefined && this.props.location.hash === "#block-world-map") {
           window.scrollTo(0, 1050);
         }
         else
@@ -67,7 +67,7 @@ class App extends Component {
   componentWillReceiveProps(props, newProps) {
     if (props.theme !== undefined) {
       if (props.theme !== this.state.theme) {
-        if (props.theme == false)
+        if (props.theme === false)
           this.setState({ theme: "light" })
         else
           this.setState({ theme: "dark" })
@@ -102,7 +102,7 @@ class App extends Component {
           render={props => {
 
             if (isLoggedIn) {
-              if (props.location.pathname == '/') {
+              if (props.location.pathname === '/') {
                 return <Redirect
                   to={{
                     pathname: '/home',
@@ -113,7 +113,7 @@ class App extends Component {
                 return <Component {...props} />
               }
             } else {
-              if (props.location.pathname == '/') {
+              if (props.location.pathname === '/') {
                 return <Redirect
                   to={{
                     pathname: '/home',
@@ -140,6 +140,7 @@ class App extends Component {
     return (
       <div className="App">
         <ThemeProvider theme={theme}>
+
           <Route
             render={({ location }) => (
               <Suspense fallback={<FaldaxLoader></FaldaxLoader>}>

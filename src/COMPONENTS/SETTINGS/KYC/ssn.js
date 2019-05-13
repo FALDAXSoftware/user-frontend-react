@@ -26,14 +26,14 @@ const SSNWrap = styled.div`
         width:90%;
     }
 `
-const SSN_sub = styled.div`
+const SSNsub = styled.div`
     margin-left:60px;
     margin-top:45px;
 `
 const SSNLabel = styled.label`
     display:block;
     margin-bottom:10px;
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
 `
 const SSNInput = styled.input`
     display:block;
@@ -43,12 +43,12 @@ const SSNInput = styled.input`
     padding:5px;
     background-color:#f8f8f8;
     border:none;
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
     border-style: solid;
     border-width: 1px;
     border-color: rgb( 212, 218, 223 );
     border-radius: 5px;
-    background-color: ${props => props.theme.mode == "dark" ? "#020f18" : "rgb( 248, 248, 248 )"};      
+    background-color: ${props => props.theme.mode === "dark" ? "#020f18" : "rgb( 248, 248, 248 )"};      
 `
 
 class SSN extends Component {
@@ -58,6 +58,12 @@ class SSN extends Component {
             value_input: ""
         }
     }
+
+    /* 
+        Page: /editProfile --> KYC
+        It is called when next button is clicked and proceed to next step. 
+    */
+
     next_step() {
         var kycSSN = {};
         if (this.state.value_input !== '') {
@@ -67,9 +73,21 @@ class SSN extends Component {
             this.props.next_step(5)
         }
     }
+
+    /* 
+        Page: /editProfile --> KYC
+        It is called when back button is clicked and proceed to back step. 
+    */
+
     back_step() {
         this.props.back_step(1)
     }
+
+    /* 
+        Page: /editProfile --> KYC
+        It is called when ssn is change in input field. 
+    */
+
     input_change(e) {
         this.setState({ value_input: e.target.value })
     }
@@ -77,10 +95,10 @@ class SSN extends Component {
         return (
             <div>
                 <SSNWrap>
-                    <SSN_sub>
+                    <SSNsub>
                         <SSNLabel>Social Security Number</SSNLabel>
                         <SSNInput onChange={this.input_change.bind(this)} />
-                    </SSN_sub>
+                    </SSNsub>
                 </SSNWrap>
                 <ButtonWrap>
                     <SubWrap>

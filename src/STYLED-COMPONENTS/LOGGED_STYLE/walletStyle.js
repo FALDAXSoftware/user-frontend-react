@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Button, Table, Icon } from 'antd';
 
-export const Header_wrap = styled.div`
+export const HeaderWrap = styled.div`
     padding-top:30px;
     display: flex;
     align-items: center;
@@ -10,7 +10,7 @@ export const Header_wrap = styled.div`
         display:block;
     }
 `
-export const Header_wrap2 = styled(Header_wrap)`
+export const HeaderWrap2 = styled(HeaderWrap)`
     padding-top:30px;
     align-items: center;
 `
@@ -27,14 +27,14 @@ export const SearchCoin = styled.div`
     }
 `
 
-export const MY_wallet = styled.div`
+export const MYWallet = styled.div`
     display:inline-block;
     margin-left:15px;
     >span
     {
             font-size: 20px;
             font-family: "Open Sans";
-            color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
+            color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
             font-weight: bold;
             text-transform: uppercase; 
     }
@@ -59,14 +59,14 @@ export const Total = styled.div`
 export const Tot = styled.span`
     font-size: 18px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "#828a91" : "rgba( 80, 80, 80, 0.502 )"};  
+    color: ${props => props.theme.mode === "dark" ? "#828a91" : "rgba( 80, 80, 80, 0.502 )"};  
     font-weight:600;
 `
 export const Money = styled.span`
     font-size: 36px;
     padding-left:15px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};  
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};  
     font-weight:600;
     @media(max-width:767px)
     {
@@ -76,7 +76,7 @@ export const Money = styled.span`
 export const Currency = styled.span`
     font-size: 18px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};  
+    color:${props => props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};  
     font-weight:600;
     padding-left:10px;
     @media(max-width:767px)
@@ -97,7 +97,7 @@ export const Tableofcoin = styled(Table)`
     margin-top:25px;
 `
 export const Head = styled.tr`
-    background-color:${props => props.theme.mode == "dark" ? "#061a2b" : "#f5f6fa"};
+    background-color:${props => props.theme.mode === "dark" ? "#061a2b" : "#f5f6fa"};
     font-size: 13px;
     font-family: "Open Sans";
     color: rgb( 23, 76, 126 );
@@ -131,7 +131,7 @@ export const Head = styled.tr`
         }
     }
 `
-export const Sub_head = styled.th`
+export const SubHead = styled.th`
     border-bottom: 0px;
 `
 export const Col1 = styled.tr`
@@ -143,7 +143,7 @@ export const Col1 = styled.tr`
         font-size: ${props => props.wallet ? "14px" : ""};
         font-family: ${props => props.wallet ? "Open Sans" : ""};
         font-weight:  ${props => props.wallet ? "600" : ""};
-        color: ${props => props.wallet ? props.theme.mode == "dark" ? "white" : "rgb( 33, 33, 33 )" : ""};
+        color: ${props => props.wallet ? props.theme.mode === "dark" ? "white" : "rgb( 33, 33, 33 )" : ""};
     }
     @media(max-width:1160px)
     {
@@ -168,12 +168,12 @@ export const Col1 = styled.tr`
         }    
     }
 `
-export const Bit_img = styled.img`
+export const BitImg = styled.img`
     margin-right:15px;
     vertical-align:middle;
     width:20px;
 `
-export const Bit_text = styled.div`
+export const BitText = styled.div`
     vertical-align:middle;
     display:inline-block;
     >p
@@ -188,10 +188,10 @@ export const Bit = styled.p`
     font-weight: bold;
     text-transform: uppercase;  
 `
-export const Bit_price = styled.p`
+export const BitPrice = styled.p`
     font-size: 20px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"}; 
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"}; 
     font-weight:600;
     text-transform: uppercase;  
     @media(max-width:992px)
@@ -202,7 +202,7 @@ export const Bit_price = styled.p`
 export const Price = styled.p`
     font-size: 19.993px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgba( 51, 51, 51, 0.702 )"};  
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgba( 51, 51, 51, 0.702 )"};  
     font-weight:600;
     vertical-align: middle;
     margin-bottom: 0px;
@@ -214,7 +214,7 @@ export const Price = styled.p`
 export const DropMenu = styled(Icon)`
     font-size: 15px !important;
 `
-export const Icon_wrap = styled.div`
+export const IconWrap = styled.div`
     border-radius:50%;
     display: inline-flex;
     cursor:pointer;
@@ -242,24 +242,24 @@ export const SearchCoin2 = styled(SearchCoin)`
         margin-top:20px;
     }
 `
-export const Detail_wrap = styled.div`
+export const DetailWrap = styled.div`
     margin-top:35px;
 `
 export const Address = styled.div`
     font-size: 13.995px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "#68727a" : "rgba( 33, 33, 33, 0.502 )"};
+    color: ${props => props.theme.mode === "dark" ? "#68727a" : "rgba( 33, 33, 33, 0.502 )"};
     margin-left:15px;
     word-break:break-all;
     >b
     {
-        color: ${props => props.theme.mode == "dark" ? "white !important" : "rgba( 33, 33, 33, 0.502 )"};
+        color: ${props => props.theme.mode === "dark" ? "white !important" : "rgba( 33, 33, 33, 0.502 )"};
     }
 `
-export const Row_wrap = styled.div`
+export const RowWrap = styled.div`
     margin-top:55px;
 `
-export const Left_Bit = styled.div`
+export const LeftBit = styled.div`
     display:flex;
     align-items:center;
 `
@@ -270,7 +270,7 @@ export const CryptAmt = styled.div`
     display:inline-block;
     margin-left:10px;
 `
-export const Right_Bit = styled.div`
+export const RightBit = styled.div`
     display: inline-flex;
     float: right;
     height: 130px;
@@ -285,11 +285,11 @@ export const Right_Bit = styled.div`
         display:block;
     }
 `
-export const BTC_amt = styled.span`
+export const BTCAmt = styled.span`
     font-size: 71.775px;
     font-family: "Open Sans";
     line-height:1.2;
-    color:${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
+    color:${props => props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
     @media(max-width:767px)
     {
         font-size:40px;
@@ -298,7 +298,7 @@ export const BTC_amt = styled.span`
 export const BTC = styled.span`
     font-size: 34.89px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
+    color:${props => props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
     text-transform:uppercase;
     @media(max-width:767px)
     {
@@ -306,7 +306,7 @@ export const BTC = styled.span`
     }
 
 `
-export const FIAT_amt = styled.p`
+export const FIATAmt = styled.p`
     font-size: 29.906px;
     font-family: "Open Sans";
     color: rgba( 80, 80, 80, 0.6 );
@@ -361,7 +361,7 @@ export const WithButton = styled(SendButton)`
         margin-left:0px;
     }
 `
-export const Trans_table = styled.div`
+export const TransTable = styled.div`
     border:1px solid #d8d8d8;
     margin-top:50px;
     border-radius:10px;
@@ -369,7 +369,7 @@ export const Trans_table = styled.div`
 export const TransTitle = styled.p`
     font-size: 20px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
     padding-left:25px;
     margin-top:30px;
     font-weight: bold;
@@ -379,23 +379,23 @@ export const WalletCoin = styled(SearchCoin)`
     margin-top:0px;
     & .ant-select-selection--single
     {
-        background-color:${props => props.theme.mode == "dark" ? "#041421" : "white"};
+        background-color:${props => props.theme.mode === "dark" ? "#041421" : "white"};
     }
     & .ant-select-selection-selected-value
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
     & .ant-select-arrow
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
 `
-export const Left_head = styled.div`
+export const LeftHead = styled.div`
     height:70px;
     display:flex;
     align-items:center;
 `
-export const Right_head = styled.div`
+export const RightHead = styled.div`
     height:70px;
     display:flex;
     align-items:center;

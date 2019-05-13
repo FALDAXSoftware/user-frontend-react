@@ -1,121 +1,30 @@
 /* Built-in packages */
-import styled from 'styled-components';
+
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col } from 'antd';
+import { /* Row, */ Col } from 'antd';
 import { connect } from "react-redux"
 import moment from 'moment'
 
 /* components */
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
-import footer_home from "COMPONENTS/LANDING/FOOTERS/footer_home";
+import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { globalVariables } from 'Globals';
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 
 /* STYLED-COMPONENTS */
-import { ProfileWrapper, ProfileDiv } from '../edit_profile'
-import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
+import { ProfileWrapper } from '../edit_profile'
+import {
+    TicketContainer,
+    TicketDiv,
+    WholeWrap, TicketWrap,
+    Title, Desc, Status, Date, NDF, TicketTitle
+} from 'STYLED-COMPONENTS/SETTINGS/hubspotStyle'
 
 let { API_URL } = globalVariables;
 
-const TicketDiv = styled(ProfileDiv)`
-    background-color:transparent;
-`
-const WholeWrap = styled.div`
-    padding-top: 50px;
-`
-const TicketWrap = styled(Row)`
-border-radius: 10px;
-background-color: ${props => props.theme.mode == "dark" ? "#041422" : "rgb( 255, 255, 255 )"};
-box-shadow: 0px 2px 7px 0px rgba(51, 51, 51, 0.16);
-padding:40px;
-margin-bottom:20px;
-`
-const Title = styled.div`
-    color:${props => props.theme.mode == "dark" ? "white" : "black"};
-    font-family:"Open Sans";
-    font-size: 20px;
-    font-weight: bold;
-`
-const Desc = styled.div`
-color:${props => props.theme.mode == "dark" ? "white" : "#666666"};
-    margin-top:10px;
-    font-size: 16px;
-`
-const Status = styled.div`
-color:white;
-margin-top:13px;
-display: flex;
-align-items: center;
-padding: 3px 10px;
-font-size: 14px;
-color: white;
-width: 80px;
-text-align: center;
-display: block;
-border-radius: 5px;
-  background-color: ${props => props.color};
-`
-const Date = styled.span`
-padding-right: 8px;
-font-size: 14px;
-line-height: 2.3;
-    
-color:${props => props.theme.mode == "dark" ? "#ccbebe69" : "#00000070"};
-`
-const NDF = styled.div`
-    height:300px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-weight:600;
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
-    font-family:"Open Sans";
-`
-const TicketTitle = styled.span`
-  font-size: 40px;
-  font-family: "Open sans";
-  font-weight: bold;
-  display: block;
-  text-align: center;
-  color:${props => props.theme.mode == "dark" ? "white" : ""};
-  &:before {
-    content: '';
-    width: calc(50% - 140px);
-    height: 1px;
-    display: inline-block;
-    background: #827777;
-    position: absolute;
-    left: 0;
-    top: calc(50% - 1px);
-  }
-  &:after {
-    content: '';
-    width: calc(50% - 140px);
-    height: 1px;
-    display: inline-block;
-    background: #827777;
-    position: absolute;
-    right: 0;
-    top: calc(50% - 1px);
-  }
-  @media(max-width:767px)
-  {
-    &:before {
-      display:none;
-    }
-    &:after {
-      display:none;
-    }
-  }
-`;
 
-const TicketContainer = styled(Container)`
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
-    border-radius:5px;
-    padding-right:30px;
-    padding-left:30px;
-`
+
 
 class HubSpotTickets extends Component {
     constructor(props) {
@@ -125,6 +34,7 @@ class HubSpotTickets extends Component {
             loader: false
         };
     }
+    /* Life-Cycle Methods */
     componentDidMount() {
         this.setState({ loader: true });
         fetch(API_URL + `/get-all-tickets`, {
@@ -197,8 +107,8 @@ class HubSpotTickets extends Component {
                         </TicketDiv>
                     </TicketContainer>
                 </ProfileWrapper >
-                <footer_home />
-                {(loader == true) ? <FaldaxLoader /> : ""}
+                <FooterHome />
+                {(loader === true) ? <FaldaxLoader /> : ""}
             </div >
         );
     }

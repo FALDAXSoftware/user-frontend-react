@@ -8,22 +8,22 @@ import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import {
-    Contact_wrap, Grey_wrap, Headcontact, Head_apply, Apply_wrap, Title_apply,
-    Title_span, Form_apply, LeftWing, Labelone, InputOne, RightWing, InputTwo,
-    InputThree, Gap, Btn_apply, FileSelectText, DropzoneStyle, IconS
+    ContactWrap, GreyWrap, HeadContact, HeadApply, ApplyWrap, TitleApply,
+    TitleSpan, FormApply, LeftWing, LabelOne, InputOne, RightWing, InputTwo,
+    InputThree, Gap, BtnApply, FileSelectText, DropzoneStyle, IconS
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
 import { globalVariables } from "Globals"
 
 let { API_URL } = globalVariables;
 
 export const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
     padding-bottom: 30px;
 `
-const HeadContact = styled(Headcontact)`
+const HeadContact2 = styled(HeadContact)`
     padding-top:20px;
 `
 const CareerTitle = styled.span`
@@ -32,7 +32,7 @@ const CareerTitle = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode == "dark" ? "white" : ""};
+  color:${props => props.theme.mode === "dark" ? "white" : ""};
   &:before {
     content: '';
     width: calc(50% - 140px);
@@ -95,7 +95,7 @@ class ApplyJob extends Component {
                 message: 'The resume field is required.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
-                    if (self.state.flag_drop == null) {
+                    if (self.state.flag_drop === null) {
                         return false;
                     }
                     return true;
@@ -105,7 +105,7 @@ class ApplyJob extends Component {
                 message: 'The resume field has not valid file.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
-                    if (self.state.flag_drop == false) {
+                    if (self.state.flag_drop === false) {
                         return false;
                     }
                     return true;
@@ -115,7 +115,7 @@ class ApplyJob extends Component {
                 message: 'The cover field has not valid file.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
-                    if (self.state.cover_flag == false) {
+                    if (self.state.cover_flag === false) {
                         return false;
                     }
                     return true;
@@ -134,7 +134,7 @@ class ApplyJob extends Component {
                 message: 'Please upload the document of less than 2 mb.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
-                    if (self.state.coverLimit == false) {
+                    if (self.state.coverLimit === false) {
                         return false;
                     }
                     return true;
@@ -144,7 +144,7 @@ class ApplyJob extends Component {
                 message: 'Please upload the document of less than 2 mb.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
-                    if (self.state.resumeLimit == false) {
+                    if (self.state.resumeLimit === false) {
                         return false;
                     }
                     return true;
@@ -160,7 +160,7 @@ class ApplyJob extends Component {
         }
     }
     onDrop(type, files) {
-        if (type == 'res') {
+        if (type === 'res') {
             let flag = false, flagLimit = false;
             if (files.length > 0) {
                 flag = true
@@ -196,7 +196,7 @@ class ApplyJob extends Component {
         let fields = this.state.fields;
         let field = e.target.name;
 
-        if (e.target.value.trim() == "") {
+        if (e.target.value.trim() === "") {
             fields[field] = "";
         } else {
             fields[field] = e.target.value;
@@ -266,34 +266,34 @@ class ApplyJob extends Component {
     render() {
         const { position_flag, fields, flag_drop, cover_flag } = this.state;
         return (
-            <Contact_wrap>
+            <ContactWrap>
                 <Navigation />
-                <Grey_wrap>
+                <GreyWrap>
                     <ContainerContact>
-                        <HeadContact>
+                        <HeadContact2>
                             <div style={{ display: 'inline-block', width: '100%', position: 'relative', marginBottom: '20px' }}>
                                 <CareerTitle>Careers </CareerTitle>
                             </div>
-                            <Apply_wrap>
-                                <Title_apply>
+                            <ApplyWrap>
+                                <TitleApply>
                                     {
                                         position_flag !== null ?
-                                            <Title_span>{position_flag}</Title_span>
+                                            <TitleSpan>{position_flag}</TitleSpan>
                                             : ""
                                     }
-                                </Title_apply>
-                                <Form_apply>
+                                </TitleApply>
+                                <FormApply>
                                     <Row>
                                         <Col sm={24} md={12}>
                                             <LeftWing>
-                                                <Labelone>First Name*</Labelone>
+                                                <LabelOne>First Name*</LabelOne>
                                                 <InputOne name="first_name" onChange={this._onChangeFields} value={fields.first_name} />
                                                 {this.validator.message('first_name', fields.first_name, 'required|alpha_num', 'text-danger-validation')}
                                             </LeftWing>
                                         </Col>
                                         <Col sm={24} md={12}>
                                             <RightWing>
-                                                <Labelone>Last Name*</Labelone>
+                                                <LabelOne>Last Name*</LabelOne>
                                                 <InputTwo name="last_name" onChange={this._onChangeFields} value={fields.last_name} />
                                                 {this.validator.message('last_name', fields.last_name, 'required|alpha_num', 'text-danger-validation')}
                                             </RightWing>
@@ -303,13 +303,13 @@ class ApplyJob extends Component {
                                         <Row>
                                             <Col sm={24} md={12}>
                                                 <LeftWing>
-                                                    <Labelone>Position*</Labelone>
+                                                    <LabelOne>Position*</LabelOne>
                                                     <InputOne disabled name="position" value={position_flag} />
                                                 </LeftWing>
                                             </Col>
                                             <Col sm={24} md={12}>
                                                 <RightWing>
-                                                    <Labelone>Phone*</Labelone>
+                                                    <LabelOne>Phone*</LabelOne>
                                                     <InputTwo name="phone_number" onChange={this._onChangeFields} value={fields.phone_number} />
                                                     {this.validator.message('phone_number', fields.phone_number, 'required|integer', 'text-danger-validation')}
                                                 </RightWing>
@@ -319,7 +319,7 @@ class ApplyJob extends Component {
                                     <Gap>
                                         <Row>
                                             <Col sm={24} md={24}>
-                                                <Labelone>Email*</Labelone>
+                                                <LabelOne>Email*</LabelOne>
                                                 <InputThree name="email" onChange={this._onChangeFields} value={fields.email} />
                                                 {this.validator.message('email', fields.email, 'required|validEmail', 'text-danger-validation')}
                                             </Col>
@@ -328,26 +328,26 @@ class ApplyJob extends Component {
                                     <Gap>
                                         <Row>
                                             <Col sm={24} md={24}>
-                                                <Labelone>Resume/CV*</Labelone>
+                                                <LabelOne>Resume/CV*</LabelOne>
                                                 <DropzoneStyle
                                                     accept=".pdf,.doc,.docx"
                                                     className="Dropzone_apply"
                                                     onDrop={this.onDrop.bind(this, 'res')}
                                                     onFileDialogCancel={this.onCancel.bind(this)}
                                                 >
-                                                    {flag_drop == null &&
+                                                    {flag_drop === null &&
                                                         <div>
                                                             <IconS type="download" style={{ fontSize: '30px' }} />
                                                             <FileSelectText>Choose a file or drag it here</FileSelectText>
                                                         </div>
                                                     }
-                                                    {flag_drop == false &&
+                                                    {flag_drop === false &&
                                                         <div>
                                                             <IconS style={{ fontSize: '30px' }} type="close-square" />
                                                             <FileSelectText>Wrong File Selected</FileSelectText>
                                                         </div>
                                                     }
-                                                    {flag_drop == true &&
+                                                    {flag_drop === true &&
                                                         <div>
                                                             <IconS style={{ fontSize: '30px' }} type="check-square" />
                                                             <FileSelectText>{fields.resume.name}</FileSelectText>
@@ -362,26 +362,26 @@ class ApplyJob extends Component {
                                     <Gap>
                                         <Row>
                                             <Col sm={24} md={24}>
-                                                <Labelone>Cover Letter</Labelone>
+                                                <LabelOne>Cover Letter</LabelOne>
                                                 <DropzoneStyle
                                                     accept=".pdf,.doc,.docx"
                                                     className="Dropzone_apply"
                                                     onDrop={this.onDrop.bind(this, 'cover')}
                                                     onFileDialogCancel={this.onCancel.bind(this)}
                                                 >
-                                                    {cover_flag == null &&
+                                                    {cover_flag === null &&
                                                         <div>
                                                             <IconS type="download" style={{ fontSize: '30px' }} />
                                                             <FileSelectText>Choose a file or drag it here</FileSelectText>
                                                         </div>
                                                     }
-                                                    {cover_flag == false &&
+                                                    {cover_flag === false &&
                                                         <div>
                                                             <IconS style={{ fontSize: '30px' }} type="close-square" />
                                                             <FileSelectText>Wrong File Selected</FileSelectText>
                                                         </div>
                                                     }
-                                                    {cover_flag == true &&
+                                                    {cover_flag === true &&
                                                         <div>
                                                             <IconS style={{ fontSize: '30px' }} type="check-square" />
                                                             <FileSelectText>{fields.cover_letter.name}</FileSelectText>
@@ -396,7 +396,7 @@ class ApplyJob extends Component {
                                     <Gap>
                                         <Row>
                                             <Col sm={24} md={24}>
-                                                <Labelone>Linkedin Profile*</Labelone>
+                                                <LabelOne>Linkedin Profile*</LabelOne>
                                                 <InputThree name="linkedin_profile" onChange={this._onChangeFields} value={this.state.fields.linkedin_profile} />
                                                 {this.validator.message('linkedin_profile', this.state.fields.linkedin_profile, 'required|url', 'text-danger-validation')}
                                             </Col>
@@ -405,20 +405,20 @@ class ApplyJob extends Component {
                                     <Gap>
                                         <Row>
                                             <Col sm={24} md={24}>
-                                                <Labelone>Website</Labelone>
+                                                <LabelOne>Website</LabelOne>
                                                 <InputThree name="website_url" onChange={this._onChangeFields} value={this.state.fields.website_url} />
                                             </Col>
                                         </Row>
                                     </Gap>
-                                    <Btn_apply onClick={this.onSubmit}>SUBMIT</Btn_apply>
-                                </Form_apply>
-                            </Apply_wrap>
-                        </HeadContact>
+                                    <BtnApply onClick={this.onSubmit}>SUBMIT</BtnApply>
+                                </FormApply>
+                            </ApplyWrap>
+                        </HeadContact2>
                     </ContainerContact>
-                </Grey_wrap>
+                </GreyWrap>
                 <CommonFooter />
                 {(this.state.loader) ? <FaldaxLoader /> : ""}
-            </Contact_wrap>
+            </ContactWrap>
         );
     }
 }

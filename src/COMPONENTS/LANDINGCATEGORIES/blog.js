@@ -9,23 +9,23 @@ import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import { globalVariables } from "Globals"
-import { Spin_Ex } from 'STYLED-COMPONENTS/HOMEPAGE/style'
+import { SpinEx } from 'STYLED-COMPONENTS/HOMEPAGE/style'
 import {
-    SectionBlog, Whole_wrap,
-    Blog_p, HR_tag, Meta_title, Meta_desc, Card_foot, Prev_next, Prev, Next,
-    MsgIcon, CardCover, BlogDesc, ReadMore
+    SectionBlog, WholeWrap,
+    BlogP, HRTag, MetaTitle, MetaDesc, CardFoot, PrevNext, Prev, Next,
+    MsgIcon, CardCover, BlogDesc1, ReadMore
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/blogStyle';
 import { _BLOGICON, _DEFAULTBLOG } from "CONSTANTS/images";
 import NoDataFound from "SHARED-COMPONENTS/No_data_found";
 import ReactHtmlParser from "react-html-parser";
 import Masonry from 'react-masonry-css'
 
-const Container_Blog = styled(Container)`
+const ContainerBlog = styled(Container)`
     margin-bottom: 80px;
 `
 const { Meta } = Card;
-const Blog_main_wrap = styled.div`
-    background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "white"};
+const BlogMainWrap = styled.div`
+    background-color: ${props => props.theme.mode === "dark" ? "#01090f" : "white"};
 `
 const BlogTitle = styled.span`
   font-size: 40px;
@@ -33,7 +33,7 @@ const BlogTitle = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode == "dark" ? "#ffffff" : "#333333"};
+  color:${props => props.theme.mode === "dark" ? "#ffffff" : "#333333"};
   &:before {
     content: '';
     width: calc(50% - 130px);
@@ -78,7 +78,7 @@ class Blog extends Component {
         }
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
-                if (this.props.theme == false)
+                if (this.props.theme===false)
                     this.setState({ blogCSS: "Card-Blog" })
                 else
                     this.setState({ blogCSS: "Card-Blog-night" })
@@ -86,15 +86,15 @@ class Blog extends Component {
         }
     }
     componentWillReceiveProps(props, newProps) {
-        if (props.location.search.split('=')[1] == this.state.nxtPage) {
+        if (props.location.search.split('=')[1] === this.state.nxtPage) {
             this.BlogDetails(props.location.search.split('=')[1]);
         }
-        if (props.location.search.split('=')[1] == this.state.prevPage) {
+        if (props.location.search.split('=')[1] === this.state.prevPage) {
             this.BlogDetails(props.location.search.split('=')[1]);
         }
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
-                if (props.theme == false)
+                if (props.theme===false)
                     this.setState({ blogCSS: "Card-Blog" })
                 else
                     this.setState({ blogCSS: "Card-Blog-night" })
@@ -114,7 +114,7 @@ class Blog extends Component {
             .then(response => response.json())
             .then((responseData) => {
                 this.setState({ loader: false })
-                if (responseData.status == 200) {
+                if (responseData.status === 200) {
                     var numb = Number(curr)
                     this.setState({ nxtPage: numb + 1, blogsData: responseData.data.objects, currPage: curr, prevPage: numb - 1, totalPage: Math.ceil(responseData.data.total_count / 9) })
                 }
@@ -134,10 +134,10 @@ class Blog extends Component {
         var _self = this;
         const { blogsData } = this.state;
         return (
-            <Blog_main_wrap>
+            <BlogMainWrap>
                 <Navigation />
 
-                <Container_Blog style={{ minHeight: "100%" }}>
+                <ContainerBlog style={{ minHeight: "100%" }}>
                     <SectionBlog>
                         <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                             <BlogTitle> BLOG </BlogTitle>
@@ -153,26 +153,26 @@ class Blog extends Component {
                                         blogsData.map(function (result, key, index) {
                                             var date = moment(result.publish_date).format('MMM DD,YYYY');
                                             var tag = result.tags ? result.tags.split(',') : [];
-                                            if (result.is_published == true)
+                                            if (result.is_published === true)
                                                 return (
                                                     <div key={key} className="my-masonry-grid_column blog-card-col">
                                                         <Link to={`/blogDetails?blogID=${result.id}`}>
                                                             <Card
                                                                 style={{ width: "100%" }}
                                                                 cover={<CardCover alt="example" style={{ backgroundImage: `url(${result.featured_image ? result.featured_image : _DEFAULTBLOG})` }} />}
-                                                                actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.blog_author.display_name}</Card_foot>, <Card_foot> <MsgIcon src={_BLOGICON} />{result.comment_count} Comments</Card_foot>]}
+                                                                actions={[<CardFoot>{date}</CardFoot>, <CardFoot>{result.blog_author.display_name}</CardFoot>, <CardFoot> <MsgIcon src={_BLOGICON} />{result.comment_count} Comments</CardFoot>]}
                                                                 bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
                                                                 className={_self.state.blogCSS}
                                                             >
                                                                 <Meta
-                                                                    title={<Meta_title>{tag[0]}</Meta_title>}
-                                                                    description={<Meta_desc>
+                                                                    title={<MetaTitle>{tag[0]}</MetaTitle>}
+                                                                    description={<MetaDesc>
                                                                         {result.title}
-                                                                        <BlogDesc>
+                                                                        <BlogDesc1>
                                                                             {ReactHtmlParser(result.post_body.length > 280 ? result.post_body.substr(0, 280) + "..." : result.post_body)}
-                                                                        </BlogDesc>
+                                                                        </BlogDesc1>
                                                                         <ReadMore><a href={`/blogDetails?blogID=${result.id}`} class="button">Read more</a></ReadMore>
-                                                                    </Meta_desc>}
+                                                                    </MetaDesc>}
                                                                 />
                                                             </Card>
                                                         </Link>
@@ -205,14 +205,14 @@ class Blog extends Component {
                                 </Row>
                             </Mainimage>
                             : "" : ""} */}
-                        <Whole_wrap>
+                        <WholeWrap>
                             {blogsData.featuredBlog !== undefined ? Object.keys(blogsData.featuredBlog).length > 0 ?
                                 <Row>
                                     <Col span={3}>
-                                        <Blog_p>Latest Blogs</Blog_p>
+                                        <BlogP>Latest Blogs</BlogP>
                                     </Col>
                                     <Col span={21}>
-                                        <HR_tag />
+                                        <HRTag />
                                     </Col>
                                 </Row>
                                 : "" : ""}
@@ -240,10 +240,10 @@ class Blog extends Component {
                                                                         title={<Meta_title>{tag[0]}</Meta_title>}
                                                                         description={<Meta_desc>
                                                                             {result.title}
-                                                                            <BlogDesc>
+                                                                            <Blog_Desc1>
                                                                                 {result.short_desc}
                                                                                 <a href={`/blogDetails?blogID=${result.id}`} class="button">Read more</a>
-                                                                            </BlogDesc>
+                                                                            </Blog_Desc1>
                                                                         </Meta_desc>}
                                                                     />
                                                                 </Card>
@@ -256,20 +256,20 @@ class Blog extends Component {
                                     }
                                 </Row>
                             </Blogs_wrap> */}
-                        </Whole_wrap>
-                        <Prev_next>
+                        </WholeWrap>
+                        <PrevNext>
                             {(this.state.currPage > 1 && this.state.currPage <= this.state.totalPage) ? <Link to={`/blogs?blogPage=${this.state.nxtPage - 2}`}><Prev><i style={{ verticalAlign: "middle", textDecoration: "none" }} className="material-icons">keyboard_backspace</i><span style={{ verticalAlign: "middle" }}>Previous Articles</span></Prev></Link> : ""}
 
                             {(this.state.nxtPage <= this.state.totalPage) ? <Link to={`/blogs?blogPage=${this.state.nxtPage}`}><Next><span style={{ verticalAlign: "middle", textDecoration: "none" }}>Next Articles</span><i style={{ verticalAlign: "middle", transform: "rotate(180deg)" }} className="material-icons">keyboard_backspace</i></Next></Link> : ""}
-                        </Prev_next>
+                        </PrevNext>
                     </SectionBlog>
-                </Container_Blog>
+                </ContainerBlog>
 
                 <CommonFooter />
-                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+                {(this.state.loader) ? <SpinEx className="Ex_spin">
                     <Spin size="large" />
-                </Spin_Ex> : ""}
-            </Blog_main_wrap>
+                </SpinEx> : ""}
+            </BlogMainWrap>
         );
     }
 }

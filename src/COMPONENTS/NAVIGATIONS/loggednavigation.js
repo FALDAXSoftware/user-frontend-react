@@ -31,25 +31,25 @@ const Logo = styled.div`
     text-align:left;
     cursor:pointer;
 `
-const Header_main = styled(Header)`
-position:fixed;
-z-index: 1000;
-width : 100%;
-padding:0;
-text-align:left;
-background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
-box-shadow:${props => props.theme.mode == "dark" ? "" : "0px 3px #f7f7f7"};
-height :80px;
-display:flex;
-align-items:center;
+const Headermain = styled(Header)`
+    position:fixed;
+    z-index: 1000;
+    width : 100%;
+    padding:0;
+    text-align:left;
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"};
+    box-shadow:${props => props.theme.mode === "dark" ? "" : "0px 3px #f7f7f7"};
+    height :80px;
+    display:flex;
+    align-items:center;
 `
-const Menu_main = styled(Menu)`
+const Menumain = styled(Menu)`
     display:inline-block;
     margin-left:74px;
     text-align: right;
     border-bottom:0px;
     vertical-align: middle;
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"};
     @media(max-width:1200px)
     {
         display:none;
@@ -59,11 +59,11 @@ const Menu_main = styled(Menu)`
         margin-left: 15px;
     }
 `
-const Menu_item = styled(Menu.Item)`
+const Menuitem = styled(Menu.Item)`
     padding:0px 18px;
     font-size: 13px;
     font-family: "Open sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "black"};
     font-weight: bold;
     text-transform: uppercase;      
     vertical-align: unset;
@@ -79,10 +79,10 @@ const Menu_item = styled(Menu.Item)`
         padding:0px 8px;
     }
 `
-const NAV = styled.span`
-    color:${props => props.theme.mode = "dark" ? "white" : ""};
-`
-const FALDAX_LOGO = styled.img`
+/* const NAV = styled.span`
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
+` */
+const FALDAXLOGO = styled.img`
     padding-left:22px;
 `
 const SideNav = styled.div`
@@ -124,12 +124,12 @@ const SideNav = styled.div`
 const Close = styled.span`
     text-align:right;
 `
-const Profile = styled.a`
+/* const Profile = styled.a`
     @media(min-width: 361px)
     {
         display: none !important;
     }
-`
+` */
 const LogoutStyle = styled.span`
     @media(min-width: 361px)
     {
@@ -143,17 +143,17 @@ const RightCol = styled.div`
     margin-left:auto;
 `
 const NavLink = styled(Link)`
-    color: ${props => props.theme.mode == "dark" ? "white" : "black"} !important;
+    color: ${props => props.theme.mode === "dark" ? "white" : "black"} !important;
     &:hover{
         color:#1890ff !important;
     }
 `
-const LogNav = styled.span`
-    color: ${props => props.theme.mode == "dark" ? "white" : "black"} !important;
+/* const LogNav = styled.span`
+    color: ${props => props.theme.mode === "dark" ? "white" : "black"} !important;
     &:hover{
         color:#1890ff !important;
     }
-`
+` */
 const CarLink = styled(Link)`
     color:white !important;
     text-decoration: none;
@@ -181,13 +181,15 @@ class LoggedNavigation extends Component {
             selected: '',
             countryAccess: false,
             completeKYC: false
-        },
-            this.tradeAccess = this.tradeAccess.bind(this);
+        };
+        this.tradeAccess = this.tradeAccess.bind(this);
     }
+
+    /* Life-Cycle Methods */
     componentWillReceiveProps(props, newProps) {
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
-                if (props.theme == false)
+                if (props.theme === false)
                     this.setState({ faldaxLogo: _FALDAXLOGO, faldax: _FALDAX })
                 else
                     this.setState({ faldax: _FALDAXWHITE, faldaxLogo: _WHITELOGO })
@@ -208,13 +210,19 @@ class LoggedNavigation extends Component {
         }
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
-                if (this.props.theme == false)
+                if (this.props.theme === false)
                     this.setState({ faldaxLogo: _FALDAXLOGO, faldax: _FALDAX })
                 else
                     this.setState({ faldax: _FALDAXWHITE, faldaxLogo: _WHITELOGO })
             }
         }
     }
+
+    /* 
+        Page: on every page after login on top right
+        It is called to open side menu in responsiveness(Small Devices).
+    */
+
     openNav() {
         /* console.log('open nav'); */
         if (document.getElementById("mySidenav2") !== undefined && document.getElementById("mySidenav2") !== null) {
@@ -223,6 +231,12 @@ class LoggedNavigation extends Component {
             // document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
     }
+
+    /* 
+        Page: on every page after login on top right
+        It is called to close side menu in responsiveness(Small Devices).
+    */
+
     closeNav() {
         if (document.getElementById("mySidenav2") !== undefined && document.getElementById("mySidenav2") !== null) {
             document.getElementById("mySidenav2").style.width = "0";
@@ -230,6 +244,11 @@ class LoggedNavigation extends Component {
             document.body.style.backgroundColor = "white";
         }
     }
+
+    /* 
+        Page: on every page after login on top right
+        It is called when we click logout in user Drop-down.
+    */
 
     logout() {
         let formData = {
@@ -240,16 +259,38 @@ class LoggedNavigation extends Component {
         //this.props.Logout();
     }
 
+    /* 
+        Page: on every page after login on top right
+        It is called to open modal of Coming Soon.
+    */
+
     showComing = () => {
         this.setState({ comingSoon: true });
     }
+
+    /*
+        Page: on every page after login on top right
+        It is called to open modal of Coming Soon.
+    */
+
     handleComing = (e) => {
         this.setState({ comingSoon: false });
     }
 
+    /* 
+        Page: on every page after login on top right
+        It is called to open modal of Coming Soon.
+    */
+
     comingCancel = (e) => {
         this.setState({ comingSoon: false, countryAccess: false, completeKYC: false });
     }
+
+    /* 
+        Page: on every page after login on top right
+        It is called to send email from modal.
+    */
+
     send_email() {
         const values = { email: this.state.email_address };
         this.setState({ email_address: '' });
@@ -267,7 +308,7 @@ class LoggedNavigation extends Component {
             })
                 .then(response => response.json())
                 .then((responseData) => {
-                    if (responseData.status == 500) {
+                    if (responseData.status === 500) {
                         this.openNotification1();
                     } else {
                         this.openNotification();
@@ -279,41 +320,48 @@ class LoggedNavigation extends Component {
 
         }
     }
+
+    /* 
+        Page: on every page after login on top right
+        It is called to check if trade can be accessed for KYC and eligible user.
+    */
+
     tradeAccess() {
-        if (this.props.profileDetails.is_allowed == true && this.props.profileDetails.is_kyc_done == true) {
+        if (this.props.profileDetails.is_allowed === true && this.props.profileDetails.is_kyc_done === true) {
             this.props.history.push('/trade');
         }
         else {
-            if (this.props.profileDetails.is_allowed == false && this.props.profileDetails.is_kyc_done == false)
+            if (this.props.profileDetails.is_allowed === false && this.props.profileDetails.is_kyc_done === false)
                 this.setState({ completeKYC: true });
             else
                 this.setState({ countryAccess: true });
         }
     }
+
     render() {
         let prof_name = this.props.profileDetails.first_name !== null && this.props.profileDetails.first_name !== undefined ? (this.props.profileDetails.first_name + " " + this.props.profileDetails.last_name) : "User";
         return (
-            <Header_main id="main">
+            <Headermain id="main">
                 <Logo>
                     <a href={globalVariables.WordpressSiteURL}>
-                        <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
+                        <FALDAXLOGO className="" src={this.state.faldaxLogo} />
                         <FALDAX src={this.state.faldax} />
                     </a>
                 </Logo>
-                <Menu_main
+                <Menumain
                     mode="horizontal"
                     defaultSelectedKeys={['1']}
                     selectedKeys={this.state.selected}
                 >
-                    <Menu_item key="1" onClick={this.showComing}><NavLink className="Nav_selected" to="/dashboard">DASHBOARD</NavLink></Menu_item>
-                    <Menu_item key="2" onClick={this.tradeAccess}>TRADE</Menu_item>
-                    <Menu_item key="3" onClick={this.showComing}><NavLink className="Nav_selected" to="/wallet">Wallet</NavLink></Menu_item>
-                    <Menu_item key="4" onClick={this.showComing}><NavLink className="Nav_selected" to="/history">HISTORY</NavLink></Menu_item>
+                    <Menuitem key="1" onClick={this.showComing}><NavLink className="Nav_selected" to="/dashboard">DASHBOARD</NavLink></Menuitem>
+                    <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem>
+                    <Menuitem key="3" onClick={this.showComing}><NavLink className="Nav_selected" to="/wallet">Wallet</NavLink></Menuitem>
+                    <Menuitem key="4" onClick={this.showComing}><NavLink className="Nav_selected" to="/history">HISTORY</NavLink></Menuitem>
                     {/* <Menu_item key="1" onClick={this.showComing}><LogNav>DASHBOARD</LogNav></Menu_item>
                     <Menu_item key="2" onClick={this.showComing}><LogNav>TRADE</LogNav></Menu_item>
                     <Menu_item key="3" onClick={this.showComing}><LogNav>Wallet</LogNav></Menu_item>
                     <Menu_item key="4" onClick={this.showComing}><LogNav>HISTORY</LogNav></Menu_item> */}
-                </Menu_main>
+                </Menumain>
                 <RightCol>
                     <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} />
                 </RightCol>
@@ -334,7 +382,7 @@ class LoggedNavigation extends Component {
                 <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
                 <CountryAccess comingCancel={(e) => this.comingCancel(e)} visible={this.state.countryAccess} />
                 <CompleteKYC comingCancel={(e) => this.comingCancel(e)} visible={this.state.completeKYC} />
-            </Header_main>
+            </Headermain>
         );
     }
 }

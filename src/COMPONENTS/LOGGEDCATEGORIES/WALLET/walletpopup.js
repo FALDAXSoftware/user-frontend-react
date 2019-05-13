@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Button, Modal, Input, notification } from 'antd';
-import { DropdownButton, ButtonToolbar } from 'react-bootstrap';
+/* import { DropdownButton, ButtonToolbar } from 'react-bootstrap'; */
 import styled from 'styled-components';
 import SimpleReactValidator from "simple-react-validator";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -11,7 +11,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 
 /* Components */
-import { Ref_input } from 'COMPONENTS/SETTINGS/referral';
+import { RefInput } from 'COMPONENTS/SETTINGS/referral';
 import { globalVariables } from 'Globals';
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 
@@ -27,7 +27,7 @@ const WalletModal = styled(Modal)`
     }
     >.ant-modal-content>.ant-modal-body
     {
-        background-color:${props => props.theme.mode == "dark" ? "#061a2b" : ""};
+        background-color:${props => props.theme.mode === "dark" ? "#061a2b" : ""};
     }
     >.ant-modal-content>.ant-modal-close>.ant-modal-close-x
     {
@@ -46,16 +46,16 @@ const WalletModal = styled(Modal)`
 const Label = styled.label`
     font-size: 16px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "rgb( 255, 255, 255 )" : "black"};
+    color: ${props => props.theme.mode === "dark" ? "rgb( 255, 255, 255 )" : "black"};
 `
-const Modal_wrap = styled.div`
+const ModalWrap = styled.div`
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     padding-bottom:60px;
 
 `
-const Title_div = styled.div`
+const TitleDiv = styled.div`
     background-color:#4c84ff;
     color:white;
     height:85px;
@@ -77,17 +77,17 @@ const WallInput = styled(Input)`
     height:48px;
     margin-top:10px;
     width:100%;
-    background-color:${props => props.theme.mode == "dark" ? "#061a2b" : "#f8f8f8"};
+    background-color:${props => props.theme.mode === "dark" ? "#061a2b" : "#f8f8f8"};
     display:block;
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
-    caret-color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
+    caret-color:${props => props.theme.mode === "dark" ? "white" : ""};
 `
 
 const Fee = styled.span`
     float:left;
     font-size: 16px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "black"}; 
+    color: ${props => props.theme.mode === "dark" ? "white" : "black"}; 
     @media(max-width:767px)
     {
         float:none;
@@ -98,7 +98,7 @@ const TotPay = styled.span`
     float:right;
     font-size: 16px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "black"}; 
+    color: ${props => props.theme.mode === "dark" ? "white" : "black"}; 
     @media(max-width:767px)
     {
         float:none;
@@ -123,7 +123,7 @@ const SendButton = styled(Button)`
 const CopyToClipboardCSS = styled(CopyToClipboard)`
     display:inline;
 `
-const Send_wrap = styled.div`
+const SendWrap = styled.div`
     text-align: center; 
     margin-top: 60px;
     display: block;
@@ -132,7 +132,7 @@ const Send_wrap = styled.div`
         padding-top:20px;
     }
 `
-const Tot_div = styled.div`
+const TotDiv = styled.div`
     height:25px;
     margin-top:45px;
     width:100%;
@@ -173,8 +173,10 @@ class WalletPopup extends Component {
         this.sendSubmit = this.sendSubmit.bind(this);
     }
 
+    /* Life Cycle Methods */
+
     componentDidMount() {
-        if (this.props.title == "RECEIVE") {
+        if (this.props.title === "RECEIVE") {
             this.setState({ loader: true })
             fetch(`${API_URL}/wallet/get-qr-code/${this.props.coin_code}`, {
                 method: "get",
@@ -195,6 +197,11 @@ class WalletPopup extends Component {
         }
     }
 
+    /* 
+        Page: /wallet
+        This method is called when we have to copy address to clipboard.
+    */
+
     SearchText() {
         // Copy to clipboard example
         document.querySelectorAll(".ant-input-search-button")[0].onclick = function () {
@@ -206,11 +213,21 @@ class WalletPopup extends Component {
         this.openNotificationWithIcon('success', "Copied", "Address Copied to Clipboard");
     }
 
+    /* 
+        Page: /wallet
+        This method is called when we have to open the modal.
+    */
+
     handleComing = (e) => {
         this.setState({
             comingSoon: false,
         });
     }
+
+    /* 
+        Page: /wallet
+        This method is called when we have to close the modal.
+    */
 
     comingCancel = (e) => {
         this.setState({
@@ -218,12 +235,24 @@ class WalletPopup extends Component {
         });
         this.props.comingCancel(e);
     }
+
+    /* 
+        Page: /wallet
+        This method is called for custom notifications.
+    */
+
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
             message: head,
             description: desc,
         });
     };
+
+    /* 
+        Page: /wallet
+        This method is called when we want to send the entered coin with right validations.
+    */
+
     sendSubmit() {
         if (this.validator.allValid()) {
             var values = this.state.sendFields;
@@ -238,7 +267,7 @@ class WalletPopup extends Component {
                 body: JSON.stringify(values)
             }).then(response => response.json())
                 .then((responseData) => {
-                    if (responseData.status == 200) {
+                    if (responseData.status === 200) {
                         this.openNotificationWithIcon("success", "Successfully Sent", responseData.message)
                     } else {
                         this.openNotificationWithIcon("warning", "Balance low", responseData.message)
@@ -250,30 +279,37 @@ class WalletPopup extends Component {
             this.forceUpdate();
         }
     }
+
+    /* 
+        Page: /wallet
+        This method is called when fields are change in SEND Form.
+    */
+
     sendChange(e) {
         var fields = this.state.sendFields;
         var name = e.target.name;
         fields[name] = e.target.value;
         this.setState({ sendFields: fields });
     }
+
     render() {
         let amount = Number(this.state.sendFields.amount);
         let subtotal = amount + amount * ((this.props.coinFee[0].value) / (100));
 
         return (
             <div>
-                {(this.props.title == "RECEIVE" && this.props.visible && this.state.show == true) || (this.props.title == "SEND")
+                {(this.props.title === "RECEIVE" && this.props.visible && this.state.show === true) || (this.props.title === "SEND")
                     ?
                     <WalletModal
-                        title={<Title_div><Title>{this.props.title}</Title></Title_div>}
+                        title={<TitleDiv><Title>{this.props.title}</Title></TitleDiv>}
                         visible={this.props.visible}
                         onOk={(e) => this.handleComing()}
                         onCancel={(e) => this.comingCancel(e)}
                         footer={null}
                         className="wallet-popup"
                     >
-                        {this.props.title == "RECEIVE" ?
-                            <Modal_wrap>
+                        {this.props.title === "RECEIVE" ?
+                            <ModalWrap>
                                 {Object.keys(this.state.receive).length > 0
                                     ?
                                     <div style={{ textAlign: "center", marginTop: "40px" }}>
@@ -284,7 +320,7 @@ class WalletPopup extends Component {
                                             <CopyToClipboardCSS text={this.state.receive.receive_address}
                                                 onCopy={() => this.setState({ copied: true })}>
                                                 <div style={{ textAlign: 'left' }}>
-                                                    <Ref_input
+                                                    <RefInput
                                                         value={this.state.receive.receive_address}
                                                         className={this.state.receiveAdd}
                                                         placeholder="Referral"
@@ -298,9 +334,9 @@ class WalletPopup extends Component {
                                     </div>
                                     : ""
                                 }
-                            </Modal_wrap>
+                            </ModalWrap>
                             :
-                            <Modal_wrap>
+                            <ModalWrap>
                                 <Rediv>
                                     <Label style={{ display: "block" }}>Destination Address</Label>
                                     <WallInput value={this.state.sendFields.destination_address} name="destination_address" onChange={this.sendChange} />
@@ -310,7 +346,7 @@ class WalletPopup extends Component {
                                 <Rediv>
                                     <Label style={{ display: "block" }}>Amount</Label>
                                     {/* <Sec_wrap> */}
-                                    <WallInput type="number"  min="0" value={this.state.sendFields.amount} name="amount" onChange={this.sendChange} />
+                                    <WallInput type="number" min="0" value={this.state.sendFields.amount} name="amount" onChange={this.sendChange} />
                                     {this.validator.message('amount', this.state.sendFields.amount, 'required|gtzero|numeric', 'text-danger-validation')}
                                     {/*  <RightInput />
                                     <ButtonToolbarS>
@@ -322,18 +358,18 @@ class WalletPopup extends Component {
                                         </DropdownButtonS>
                                     </ButtonToolbarS> */}
                                     {/* </Sec_wrap> */}
-                                    <Tot_div>
+                                    <TotDiv>
                                         <Fee><b>Fee:</b> {this.props.coinFee ? this.props.coinFee[0].value : 0}</Fee>
                                         <TotPay><b>Total Payout:</b> {subtotal} {this.props.coin_code}</TotPay>
-                                    </Tot_div>
+                                    </TotDiv>
                                 </Rediv>
-                                <Send_wrap>
+                                <SendWrap>
                                     <SendButton onClick={this.sendSubmit}>SEND {this.props.coin_code}</SendButton>
-                                </Send_wrap>
-                            </Modal_wrap>}
+                                </SendWrap>
+                            </ModalWrap>}
                     </WalletModal>
                     : ""}
-                {(this.state.loader == true) ? <FaldaxLoader /> : ""}
+                {(this.state.loader === true) ? <FaldaxLoader /> : ""}
             </div>
         );
     }

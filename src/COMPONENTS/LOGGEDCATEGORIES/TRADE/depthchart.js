@@ -9,7 +9,7 @@ import { Line } from 'react-chartjs-2';
 /*STYLED-COMPONENTS*/
 import { Instru2, WrapDepth } from 'STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle';
 
-const Chart1_wrap = styled.div`
+const Chart1wrap = styled.div`
     height:90%;
   `
 let io = null;
@@ -29,9 +29,12 @@ class DepthChart extends Component {
         this.depthFunc = this.depthFunc.bind(this);
     }
 
+    /* Life-Cycle Methods */
+
     componentDidMount() {
         this.depthFunc();
     }
+
     componentWillReceiveProps(props, neProps) {
         var self = this;
         if (props.crypto !== undefined && props.currency !== undefined) {
@@ -45,10 +48,13 @@ class DepthChart extends Component {
                 })
             }
         }
-
-
-
     }
+
+    /* 
+        Page: /trade --> Depth Chart
+        SOCKET of depth chart is called in this method .
+    */
+
     depthFunc() {
         let self = this;
         self.props.depthLoaderFunc(true);
@@ -62,7 +68,7 @@ class DepthChart extends Component {
                 Authorization: "Bearer " + self.props.isLoggedIn
             }
         }, (body, JWR) => {
-            if (body.status == 200) {
+            if (body.status === 200) {
                 let res = body.data;
                 self.updateGraph(res);
             }
@@ -157,7 +163,7 @@ class DepthChart extends Component {
                 <Instru2>Market Depth {this.props.crypto}/{this.props.currency}</Instru2>
                 <Row>
                     <Col xl={24}>
-                        <Chart1_wrap id="depth-chart1">
+                        <Chart1wrap id="depth-chart1">
                             <Line height={this.props.height} data={graphData} options={{
                                 responsive: true,
                                 maintainAspectRatio: false,
@@ -173,7 +179,7 @@ class DepthChart extends Component {
                                     }]
                                 }
                             }} ref="chart" />
-                        </Chart1_wrap>
+                        </Chart1wrap>
                     </Col>
                 </Row>
             </WrapDepth>

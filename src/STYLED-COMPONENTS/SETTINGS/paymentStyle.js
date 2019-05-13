@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import { Old_label, OldInput } from 'COMPONENTS/SETTINGS/changePassword/password_change'
+import { OldLabel, OldInput } from 'COMPONENTS/SETTINGS/changePassword/password_change'
 import { ButtonWrap, SubWrap, BackButton, NextButton } from 'COMPONENTS/SETTINGS/KYC/id_select'
 
-export const Payment_wrap = styled.div`
+export const PaymentWrap = styled.div`
     margin-top: 30px;
 `
 export const PayHead = styled.p`
     font-size: 20px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 80, 80, 80 )"};
+    color: ${props => props.theme.mode==="dark" ? "white" : "rgb( 80, 80, 80 )"};
     font-weight:600;
 `
 export const PayForm = styled.div`
@@ -22,22 +22,22 @@ export const PayForm = styled.div`
 export const Bank = styled.div`
     margin-top:25px;
 `
-export const Bank_label = styled(Old_label)`
+export const BankLabel = styled(OldLabel)`
 `
-export const Bank_input = styled(OldInput)`
+export const BankInput = styled(OldInput)`
     width:100%;
 `
-export const Button_payment = styled(ButtonWrap)`
+export const ButtonPayment = styled(ButtonWrap)`
     display: flex;
     margin-top:200px;
     justify-content: center;
 `
 
-export const Button_sub = styled(SubWrap)``
+export const ButtonSub = styled(SubWrap)``
 
-export const Button_cancel = styled(BackButton)``
+export const ButtonCancel = styled(BackButton)``
 
-export const Button_add = styled(NextButton)``
+export const ButtonAdd = styled(NextButton)``
 
 export const PayForm2 = styled(PayForm)`
     max-width:710px;
@@ -70,7 +70,7 @@ export const Gap = styled.div`
 `
 export const Top = styled.div`
     height:45px;
-    background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
+    background-color:${props => props.theme.mode==="dark" ? "#01090f" : "#f5f6fa"};
     border-radius:5px;
     padding-left:55px;
     padding-right:15px;
@@ -95,15 +95,15 @@ export const RemoveCard = styled.span`
     padding-top: 12px;
     padding-right:5px;
 `
-export const Body_card = styled.div`
+export const BodyCard = styled.div`
     height: 64%;
     display: flex;
     justify-content: center;
     align-items: center;
 `
-export const Body_center = styled.div`
+export const BodyCenter = styled.div`
 >span
 {
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode==="dark" ? "white" : ""};
 }
 `

@@ -12,7 +12,7 @@ import { _FOOTERLOGO, _DEFAULTPROFILE } from "CONSTANTS/images";
 
 /* Components */
 import * as LogoutUser from 'ACTIONS/authActions';
-import { Day_night_mode, Exchange } from "./beforelog";
+import { DayNightMode, Exchange } from "./beforelog";
 import * as darkTheme from 'ACTIONS/THEME/themeActions';
 import * as walletData from 'ACTIONS/LOGGEDCAT/walletActions'
 import * as allCoinsData from 'ACTIONS/LOGGEDCAT/walletActions'
@@ -21,7 +21,7 @@ import * as allCoinsData from 'ACTIONS/LOGGEDCAT/walletActions'
 import { globalVariables } from 'Globals';
 
 /* Styled-Components */
-const Right_div = styled.div`
+const RightDiv = styled.div`
     float: right;
     display: flex;
     align-items: center;
@@ -31,7 +31,7 @@ const UserName = styled.div`
     display: inline-block;
     font-size: 13px;
     font-family: "Open sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "black"};
     font-weight: 600;
     @media(max-width: 576px)
     {
@@ -44,7 +44,7 @@ const Open = styled.span`
     font-size: 30px;
     cursor: pointer;
     margin-top:10px;
-    color:${props => props.theme.mode == "dark" ? "white" : "black"};
+    color:${props => props.theme.mode === "dark" ? "white" : "black"};
     @media(max-width:1200px)
     {
         display:inline-block;
@@ -102,12 +102,12 @@ const AnchorName = styled.a`
       margin-top:0px;
   }
 `
-const Bell = styled.div`
+/* const Bell = styled.div`
     display:inline;
     font-size: 13px;
     padding-right: 10px;
     cursor:pointer;
-`
+` */
 class Afterlog extends Component {
     constructor(props) {
         super(props);
@@ -117,10 +117,13 @@ class Afterlog extends Component {
             fontColor: "",
         };
     }
+
+    /* Life-Cycle Methods */
+
     componentWillReceiveProps(props, newProps) {
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
-                if (props.theme == false)
+                if (props.theme === false)
                     this.setState({ fontColor: "black", themeIcon: faMoon, iconTitle: "Change to Night Mode" })
                 else
                     this.setState({ fontColor: "white", themeIcon: faSun, iconTitle: "Change to Day Mode" })
@@ -130,26 +133,49 @@ class Afterlog extends Component {
     componentDidMount() {
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
-                if (this.props.theme == false)
+                if (this.props.theme === false)
                     this.setState({ fontColor: "black", themeIcon: faMoon, iconTitle: "Change to Night Mode" })
                 else
                     this.setState({ fontColor: "white", themeIcon: faSun, iconTitle: "Change to Day Mode" })
             }
         }
-        if (this.props.location.pathname == "/careers") {
+        if (this.props.location.pathname === "/careers") {
             this.setState({ selected: true })
         }
     }
+
+    /* 
+            Page: on every page after login on top right
+            It is modal of Coming Soon.
+    */
+
     handleComing = (e) => {
         this.setState({ comingSoon: false });
     }
 
+    /* 
+            Page: on every page after login on top right
+            It is called when we click close button on Modal.
+    */
+
     comingCancel = (e) => {
         this.setState({ comingSoon: false });
     }
+
+    /* 
+            Page: on every page after login on top right
+            It is called when we click to open Ham-Burger Menu in responsive(small Devices).
+    */
+
     openNav() {
         this.props.openNav();
     }
+
+    /* 
+            Page: on every page after login on top right
+            It is called when we click on Logout in user drop-down.
+    */
+
     logout() {
         let formData = {
             user_id: this.props.profileDetails.id,
@@ -159,9 +185,15 @@ class Afterlog extends Component {
         this.props.actions.wallet.walletData();
         this.props.actions.auth.LogoutUser(this.props.isLoggedIn, formData);
     }
+
+    /* 
+            Page: on every page after login on top right
+            It is called when we click Day/Night Icon on top after Login , so it will pass true/false through Redux.
+    */
+
     changetoDark() {
         let flag;
-        if (this.props.themeReducer.theme == true) {
+        if (this.props.themeReducer.theme === true) {
             flag = false;
             this.setState({ themeIcon: faSun, iconTitle: "Change to Night Mode" })
         } else {
@@ -170,6 +202,7 @@ class Afterlog extends Component {
         }
         this.props.actions.theme.darkTheme(flag);
     }
+
     render() {
         const DropdownItems = (
             <Menu className="fixed-drop">
@@ -189,13 +222,13 @@ class Afterlog extends Component {
             }
         }
         return (
-            <Right_div>
+            <RightDiv>
                 {/*  <Bell>
                     <Icon  style={{fontSize:"15px",color:"black"}} type="bell" theme="filled" />      
                 </Bell>*/}
-                <Day_night_mode onClick={this.changetoDark.bind(this)}>
+                <DayNightMode onClick={this.changetoDark.bind(this)}>
                     <span> <Tooltip placement="top" title={this.state.iconTitle}><FontAwesomeIcon icon={this.state.themeIcon} color={this.state.fontColor} style={{ transform: 'rotate(315deg)' }} /></Tooltip> </span>
-                </Day_night_mode>
+                </DayNightMode>
                 <Link to="/careers">
                     <Exchange color={this.state.selected}>
                         <span> CAREERS </span>
@@ -213,7 +246,7 @@ class Afterlog extends Component {
                 <Open onClick={() => this.openNav()}>&#9776;</Open>
                 <div>
                     <Modal
-                        title={<img src={_FOOTERLOGO} />}
+                        title={<img alt="modal logo" src={_FOOTERLOGO} />}
                         visible={this.state.comingSoon}
                         onOk={(e) => this.handleComing()}
                         onCancel={(e) => this.comingCancel(e)}
@@ -232,7 +265,7 @@ class Afterlog extends Component {
                         </div>
                     </Modal>
                 </div>
-            </Right_div>
+            </RightDiv>
         );
     }
 }

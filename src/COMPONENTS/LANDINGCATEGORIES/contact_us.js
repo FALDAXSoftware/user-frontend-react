@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import SimpleReactValidator from 'simple-react-validator';
 import "react-datepicker/dist/react-datepicker.css";
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
-import { Spin_Ex } from 'STYLED-COMPONENTS/HOMEPAGE/style'
+import { SpinEx } from 'STYLED-COMPONENTS/HOMEPAGE/style'
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import Contact_Map from "./contact_map";
@@ -14,18 +14,18 @@ import {
     _MAPICON, _BLUEMARKER, _EMAILICON, _CALLICON, _CALLBLUE, _BLUEEMAIL, _CONTACTMAP
 } from "CONSTANTS/images";
 import {
-    Headcontact, Head_span, Contact_wrap, Grey_wrap, Row_wrap, Left_col, Sub_head,
-    First_div, Second_div, Third_div, Fourth_div, First_label, First_input, Second_label,
-    Second_input, Third_label, Third_input, Fourth_label, Fourth_area, Fifth_div,
-    Fifth_button, Map_wrap, Subfoot_wrap, Main_wrap1, Main_wrap2, Main, Sub_span,
-    Sub_p, Img1, Img2
+    HeadContact, HeadSpan, ContactWrap, GreyWrap, RowWrap, LeftCol, SubHead,
+    FirstDiv, SecondDiv, ThirdDiv, FourthDiv, FirstLabel, FirstInput, SecondLabel,
+    SecondInput, ThirdLabel, ThirdInput, FourthLabel, FourthArea, FifthDiv,
+    FifthButton, MapWrap, SubfootWrap, MainWrap1, MainWrap2, Main, SubSpan,
+    SubP, Img1, Img2
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle'
 import { globalVariables } from "Globals"
 
 let { API_URL } = globalVariables;
 
 export const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -73,7 +73,7 @@ class ContactUs extends Component {
     componentWillReceiveProps(props, newProps) {
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
-                if (props.theme == false)
+                if (props.theme===false)
                     this.setState({ email: _MAPICON, marker: _EMAILICON, call: _CALLICON })
                 else
                     this.setState({ email: _BLUEMARKER, marker: _BLUEEMAIL, call: _CALLBLUE })
@@ -83,7 +83,7 @@ class ContactUs extends Component {
     componentDidMount() {
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
-                if (this.props.theme == false)
+                if (this.props.theme===false)
                     this.setState({ email: _MAPICON, marker: _EMAILICON, call: _CALLICON })
                 else
                     this.setState({ email: _BLUEMARKER, marker: _BLUEEMAIL, call: _CALLBLUE })
@@ -114,7 +114,7 @@ class ContactUs extends Component {
         let fields = this.state.fields;
         let field = e.target.name;
 
-        if (e.target.value.trim() == "") {
+        if (e.target.value.trim()==="") {
             fields[field] = "";
         } else {
             fields[field] = e.target.value;
@@ -157,73 +157,73 @@ class ContactUs extends Component {
         const { contact, fields } = this.state;
 
         return (
-            <Contact_wrap>
+            <ContactWrap>
                 <Navigation />
-                <Grey_wrap>
+                <GreyWrap>
                     <ContainerContact>
-                        <Headcontact>
-                            <Head_span>Contact Us</Head_span>
+                        <HeadContact>
+                            <HeadSpan>Contact Us</HeadSpan>
                             <hr />
-                        </Headcontact>
-                        <Row_wrap>
+                        </HeadContact>
+                        <RowWrap>
                             <Row>
                                 <Col sm={24} xl={12}>
-                                    <Left_col>
-                                        <Sub_head>Reach out to us for any inquiry.</Sub_head>
-                                        <First_div>
-                                            <First_label>First Name*</First_label>
-                                            <First_input name="first_name" onChange={this._onChangeFields} value={fields.first_name} />
+                                    <LeftCol>
+                                        <SubHead>Reach out to us for any inquiry.</SubHead>
+                                        <FirstDiv>
+                                            <FirstLabel>First Name*</FirstLabel>
+                                            <FirstInput name="first_name" onChange={this._onChangeFields} value={fields.first_name} />
                                             {this.validator.message('first_name', fields.first_name, 'required|alpha_num', 'text-danger-validation')}
-                                        </First_div>
-                                        <Second_div>
-                                            <Second_label>Last Name*</Second_label>
-                                            <Second_input name="last_name" onChange={this._onChangeFields} value={fields.last_name} />
+                                        </FirstDiv>
+                                        <SecondDiv>
+                                            <SecondLabel>Last Name*</SecondLabel>
+                                            <SecondInput name="last_name" onChange={this._onChangeFields} value={fields.last_name} />
                                             {this.validator.message('last_name', fields.last_name, 'required|alpha_num', 'text-danger-validation')}
-                                        </Second_div>
-                                        <Third_div>
-                                            <Third_label>Your Email*</Third_label>
-                                            <Third_input name="email" onChange={this._onChangeFields} value={fields.email} />
+                                        </SecondDiv>
+                                        <ThirdDiv>
+                                            <ThirdLabel>Your Email*</ThirdLabel>
+                                            <ThirdInput name="email" onChange={this._onChangeFields} value={fields.email} />
                                             {this.validator.message('email', fields.email, 'required|validEmail', 'text-danger-validation')}
-                                        </Third_div>
-                                        <Fourth_div>
-                                            <Fourth_label>Message*</Fourth_label>
-                                            <Fourth_area name="message" onChange={this._onChangeFields} value={fields.message} />
+                                        </ThirdDiv>
+                                        <FourthDiv>
+                                            <FourthLabel>Message*</FourthLabel>
+                                            <FourthArea name="message" onChange={this._onChangeFields} value={fields.message} />
                                             {this.validator.message('message',
                                                 fields.message, 'required', 'text-danger-validation')}
-                                        </Fourth_div>
-                                        <Fifth_div>
-                                            <Fifth_button onClick={this.onSubmit}>SUBMIT</Fifth_button>
-                                        </Fifth_div>
-                                    </Left_col>
+                                        </FourthDiv>
+                                        <FifthDiv>
+                                            <FifthButton onClick={this.onSubmit}>SUBMIT</FifthButton>
+                                        </FifthDiv>
+                                    </LeftCol>
                                 </Col>
                                 <Col sm={24} xl={12}>
-                                    <Map_wrap>
+                                    <MapWrap>
                                         <MapImage />
                                         {/* <Contact_Map /> */}
-                                    </Map_wrap>
+                                    </MapWrap>
                                 </Col>
                             </Row>
-                        </Row_wrap>
+                        </RowWrap>
                         <hr />
-                        <Subfoot_wrap>
+                        <SubfootWrap>
                             <Row>
                                 <Col lg={24} xl={12}>
-                                    <Main_wrap1>
+                                    <MainWrap1>
                                         <Img1 src={this.state.marker} />
                                         <Main>
-                                            <Sub_span>Location:</Sub_span>
-                                            <Sub_p>{contact.address}</Sub_p>
+                                            <SubSpan>Location:</SubSpan>
+                                            <SubP>{contact.address}</SubP>
                                         </Main>
-                                    </Main_wrap1>
+                                    </MainWrap1>
                                 </Col>
                                 <Col lg={24} xl={12}>
-                                    <Main_wrap2>
+                                    <MainWrap2>
                                         <Img2 src={this.state.email} />
                                         <Main>
-                                            <Sub_span>Email:</Sub_span>
-                                            <Sub_p><a href={`mailto:${contact.email}`}>{contact.email} </a></Sub_p>
+                                            <SubSpan>Email:</SubSpan>
+                                            <SubP><a href={`mailto:${contact.email}`}>{contact.email} </a></SubP>
                                         </Main>
-                                    </Main_wrap2>
+                                    </MainWrap2>
                                 </Col>
                                 {/* <Col lg={24} xl={8}>
                                     <Main_wrap3>
@@ -235,14 +235,14 @@ class ContactUs extends Component {
                                     </Main_wrap3>
                                 </Col> */}
                             </Row>
-                        </Subfoot_wrap>
+                        </SubfootWrap>
                     </ContainerContact>
-                </Grey_wrap>
+                </GreyWrap>
                 <CommonFooter />
-                {(this.state.loader) ? <Spin_Ex className="Ex_spin">
+                {(this.state.loader) ? <SpinEx className="Ex_spin">
                     <Spin size="large" />
-                </Spin_Ex> : ""}
-            </Contact_wrap>
+                </SpinEx> : ""}
+            </ContactWrap>
         );
     }
 }

@@ -9,13 +9,13 @@ import NumberFormat from 'react-number-format';
 
 /* Styled Components */
 import { OTwrap } from "../TRADE/ordertrade";
-import { History_wrap } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
-import { Head, Sub_head, DropMenu, Col1, Bit_img, Bit_text, Bit, Bit_price, Price, Icon_wrap } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
+import { HistoryWrap } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import { Head, SubHead, DropMenu, Col1, BitImg, BitText, Bit, BitPrice, Price, IconWrap } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
 
 /* Components */
 import { globalVariables } from 'Globals';
 let { _AMAZONBUCKET } = globalVariables;
-const BorderedHistoryWrap = styled(History_wrap)`
+const BorderedHistoryWrap = styled(HistoryWrap)`
     overflow-x:auto;
     width:100%;
     &::-webkit-scrollbar {
@@ -24,11 +24,11 @@ const BorderedHistoryWrap = styled(History_wrap)`
        }
      
        &::-webkit-scrollbar-thumb {
-        background-color: ${props => props.theme.mode == 'dark' ? '#041624' : ''};
+        background-color: ${props => props.theme.mode === 'dark' ? '#041624' : ''};
         border-radius: 3px;
        }
         &::-webkit-scrollbar-track{
-            background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
+            background: ${props => props.theme.mode === 'dark' ? '#072135' : ""};
         }
      
 
@@ -70,7 +70,7 @@ export const NDF = styled.td`
     text-align: center; 
     font-weight: 600;
     font-size: 17px;
-    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "black"};
     padding-top: 30px;
     font-family: "Open Sans";
     padding-bottom:30px;
@@ -79,7 +79,6 @@ export const NDF = styled.td`
         display:block;
     }
 `
-let total = 0;
 class TableofCoin extends React.Component {
     constructor(props) {
         super(props);
@@ -92,33 +91,35 @@ class TableofCoin extends React.Component {
             curr3: "\u20B9"
         }
     }
+
+    /* Life Cycle Methods */
     componentWillReceiveProps(props, newProps) {
         var sign1, sign2, sign3;
-        if (this.props.currencySeq[0] == "USD") {
+        if (this.props.currencySeq[0] === "USD") {
             sign1 = "$"
         }
-        else if (this.props.currencySeq[0] == "INR") {
+        else if (this.props.currencySeq[0] === "INR") {
             sign1 = "\u20B9"
         }
-        else if (this.props.currencySeq[0] == "EUR") {
+        else if (this.props.currencySeq[0] === "EUR") {
             sign1 = "\u20AC"
         }
-        if (this.props.currencySeq[1] == "USD") {
+        if (this.props.currencySeq[1] === "USD") {
             sign2 = "$"
         }
-        else if (this.props.currencySeq[1] == "INR") {
+        else if (this.props.currencySeq[1] === "INR") {
             sign2 = "\u20B9"
         }
-        else if (this.props.currencySeq[1] == "EUR") {
+        else if (this.props.currencySeq[1] === "EUR") {
             sign2 = "\u20AC"
         }
-        if (this.props.currencySeq[2] == "USD") {
+        if (this.props.currencySeq[2] === "USD") {
             sign3 = "$"
         }
-        else if (this.props.currencySeq[2] == "INR") {
+        else if (this.props.currencySeq[2] === "INR") {
             sign3 = "\u20B9"
         }
-        else if (this.props.currencySeq[2] == "EUR") {
+        else if (this.props.currencySeq[2] === "EUR") {
             sign3 = "\u20AC"
         }
         this.setState({
@@ -130,6 +131,12 @@ class TableofCoin extends React.Component {
             curr3: sign3
         });
     }
+
+    /* 
+        Page: /wallet
+        This method is called when total USD is to passed to parent through callback function.
+    */
+
     totalUSD(total) {
         this.props.totalUSD(total)
     }
@@ -137,7 +144,7 @@ class TableofCoin extends React.Component {
     render() {
         let { tableData } = this.props;
         var me = this; var bool;
-        if (this.props.noBalance == true) {
+        if (this.props.noBalance === true) {
             bool = 1;
         }
         else {
@@ -145,23 +152,23 @@ class TableofCoin extends React.Component {
         }
         const onClick1 = ({ key }) => {
             var curr, sign;
-            if (key == 1) { curr = "INR"; sign = "\u20B9"; }
-            else if (key == 2) { curr = "USD"; sign = "$"; }
-            else if (key == 3) { curr = "EUR"; sign = "\u20AC"; }
+            if (key === 1) { curr = "INR"; sign = "\u20B9"; }
+            else if (key === 2) { curr = "USD"; sign = "$"; }
+            else if (key === 3) { curr = "EUR"; sign = "\u20AC"; }
             this.setState({ drop1: curr, curr1: sign }, () => { me.props.currChange(`${curr},${me.state.drop2},${me.state.drop3}`) });
         };
         const onClick2 = ({ key }) => {
             var curr, sign;
-            if (key == 1) { curr = "INR"; sign = "\u20B9"; }
-            else if (key == 2) { curr = "USD"; sign = "$"; }
-            else if (key == 3) { curr = "EUR"; sign = "\u20AC"; }
+            if (key === 1) { curr = "INR"; sign = "\u20B9"; }
+            else if (key === 2) { curr = "USD"; sign = "$"; }
+            else if (key === 3) { curr = "EUR"; sign = "\u20AC"; }
             this.setState({ drop2: curr, curr2: sign }, () => { me.props.currChange(`${me.state.drop1},${curr},${me.state.drop3}`) });
         };
         const onClick3 = ({ key }) => {
             var curr, sign;
-            if (key == 1) { curr = "INR"; sign = "\u20B9"; }
-            else if (key == 2) { curr = "USD"; sign = "$"; }
-            else if (key == 3) { curr = "EUR"; sign = "\u20AC"; }
+            if (key === 1) { curr = "INR"; sign = "\u20B9"; }
+            else if (key === 2) { curr = "USD"; sign = "$"; }
+            else if (key === 3) { curr = "EUR"; sign = "\u20AC"; }
             this.setState({ drop3: curr, curr3: sign }, () => { me.props.currChange(`${me.state.drop1},${me.state.drop2},${curr}`) });
         };
         const menu1 = (
@@ -191,29 +198,29 @@ class TableofCoin extends React.Component {
                     <TableCoin cellpadding="10px" cellspacing="0" border="0">
                         <thead>
                             <Head>
-                                <Sub_head>Coins</Sub_head>
-                                <Sub_head>{this.state.drop1}
+                                <SubHead>Coins</SubHead>
+                                <SubHead>{this.state.drop1}
                                     <Dropdown overlay={menu1} trigger={['click']}>
                                         <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
                                     </Dropdown>
-                                </Sub_head>
-                                <Sub_head>{this.state.drop2}
+                                </SubHead>
+                                <SubHead>{this.state.drop2}
                                     <Dropdown overlay={menu2} trigger={['click']}>
                                         <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
                                     </Dropdown>
-                                </Sub_head>
-                                <Sub_head>{this.state.drop3}
+                                </SubHead>
+                                <SubHead>{this.state.drop3}
                                     <Dropdown overlay={menu3} trigger={['click']}>
                                         <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
                                     </Dropdown>
-                                </Sub_head>
-                                <Sub_head></Sub_head>
+                                </SubHead>
+                                <SubHead></SubHead>
                             </Head>
                         </thead>
                         <tbody>
                             {tableData !== undefined && tableData !== null ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
                                 var img;
-                                if (tableData[index].coin_icon == null)
+                                if (tableData[index].coin_icon === null)
                                     img = _AMAZONBUCKET + tableData[index].coin_icon
                                 else
                                     img = _AMAZONBUCKET + "coin/defualt_coin.png"
@@ -223,8 +230,8 @@ class TableofCoin extends React.Component {
 
                                         <td style={{ textAlign: "left" }}>
                                             <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
-                                                <Bit_img src={img} />
-                                                <Bit_text><Bit>{tableIndex.coin_name}</Bit><Bit_price>{<NumberFormat value={parseFloat(tableIndex.balance).toFixed(4)} displayType={'text'} thousandSeparator={true} />} {tableIndex.coin_code}</Bit_price></Bit_text>
+                                                <BitImg src={img} />
+                                                <BitText><Bit>{tableIndex.coin_name}</Bit><BitPrice>{<NumberFormat value={parseFloat(tableIndex.balance).toFixed(4)} displayType={'text'} thousandSeparator={true} />} {tableIndex.coin_code}</BitPrice></BitText>
                                             </Link>
                                         </td>
                                         <td>
@@ -252,9 +259,9 @@ class TableofCoin extends React.Component {
                                         </td>
                                         <td>
                                             <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
-                                                <Icon_wrap>
+                                                <IconWrap>
                                                     <Icon type="right" />
-                                                </Icon_wrap>
+                                                </IconWrap>
                                             </Link>
                                         </td>
                                     </Col1>

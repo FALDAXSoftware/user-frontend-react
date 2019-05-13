@@ -7,12 +7,12 @@ import { Menu, Icon } from 'antd';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 import { TableHeader, TableContent, ScrollTableContent } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
-import { Head, Sub_head, Col1 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
+import { Head, SubHead, Col1 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
 
 const TableContentRide = styled(TableContent)`
 >tbody>tr:nth-of-type(even)
 {
-    background-color:${props => props.theme.mode == "dark" ? "" : "white"};
+    background-color:${props => props.theme.mode === "dark" ? "" : "white"};
 }
 >tbody>tr>td
 {
@@ -26,7 +26,7 @@ export const OTwrap = styled.div`
        min-width:1100px;
     }
 `
-export const Order_wrap = styled.div`
+export const OrderWrap = styled.div`
     margin-left:30px;
     margin-right:30px;
     border:1px solid #d8d8d8;
@@ -36,14 +36,14 @@ export const Order_wrap = styled.div`
        }
      
        &::-webkit-scrollbar-thumb {
-        background-color: ${props => props.theme.mode == 'dark' ? '#041624' : ''};
+        background-color: ${props => props.theme.mode === 'dark' ? '#041624' : ''};
         border-radius: 3px;
        }
         &::-webkit-scrollbar-track{
-            background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
+            background: ${props => props.theme.mode === 'dark' ? '#072135' : ""};
         }
 `
-const Order_wrapRide = styled(Order_wrap)`
+const OrderWrapRide = styled(OrderWrap)`
     margin-left:0px;
     margin-right:0px;
     border:none;
@@ -56,7 +56,7 @@ const NDF = styled.td`
     text-align: center;
     font-weight: 600;
     font-size: 17px;
-    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "black"};
     padding-top: 80px !important;
     font-family: Open Sans;
 `
@@ -77,6 +77,8 @@ class DetailsTable extends React.Component {
         };
 
     }
+
+    /* Life Cycle Methods */
     componentWillReceiveProps(props, newProps) {
         if (props.wallet !== undefined && props.wallet !== null) {
             if (props.wallet.length > 0)
@@ -91,31 +93,38 @@ class DetailsTable extends React.Component {
                 walletDetails: this.props.wallet
             });
     }
+
+    /* 
+        Page: /wallet
+        This method is called when total USD is to passed to parent through callback function.
+    */
+
     totalUSD(total) {
         this.props.totalUSD(total)
     }
+
     render() {
         var me = this;
-        return (<Order_wrapRide>
+        return (<OrderWrapRide>
             <OTwrap>
                 <div className="tbl-header">
                     <TableHeader cellpadding="10px" cellspacing="0" border="0">
                         {/* <Table_coin condensed> */}
                         <thead>
                             <Head wallet>
-                                <Sub_head>Date</Sub_head>
-                                <Sub_head>
+                                <SubHead>Date</SubHead>
+                                <SubHead>
                                     SEND/RECEIVE
-                            </Sub_head>
-                                <Sub_head>
+                            </SubHead>
+                                <SubHead>
                                     SOURCE ADDRESS
-                            </Sub_head>
-                                <Sub_head>
+                            </SubHead>
+                                <SubHead>
                                     DESTINATION ADDRESS
-                            </Sub_head>
-                                <Sub_head>
+                            </SubHead>
+                                <SubHead>
                                     AMOUNT
-                            </Sub_head>
+                            </SubHead>
                                 {/* <Sub_head>USD
                                 <Dropdown overlay={menu} trigger={['click']}>
                                 <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
@@ -144,7 +153,7 @@ class DetailsTable extends React.Component {
                                                 <div>{date}</div>
                                             </td>
                                             <td>
-                                                {details[index].transaction_type == "receive" ? <span><Icon style={{ color: "green", fontSize: "20px" }} type="download" /> RECEIVED</span> : <span><Icon style={{ color: "red", fontSize: "20px" }} type="upload" /> SENT</span>}
+                                                {details[index].transaction_type === "receive" ? <span><Icon style={{ color: "green", fontSize: "20px" }} type="download" /> RECEIVED</span> : <span><Icon style={{ color: "red", fontSize: "20px" }} type="upload" /> SENT</span>}
                                             </td>
                                             <td>
                                                 {details[index].source_address}
@@ -167,7 +176,7 @@ class DetailsTable extends React.Component {
                     </Scrollbars>
                 </ScrollTableContent>
             </OTwrap>
-        </Order_wrapRide >
+        </OrderWrapRide >
         );
     }
 }

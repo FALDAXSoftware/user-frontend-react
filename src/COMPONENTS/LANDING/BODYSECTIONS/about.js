@@ -25,12 +25,12 @@ const HeadingBrand = styled.span`
   font-weight: bold;
   white-space: nowrap;
 `
-const SubHeading = styled.h3`
+/* const SubHeading = styled.h3`
   font-size:14px;
   color:#282528;
   font-family:"Open sans";
   margin-bottom:40px;
-`
+` */
 const Paragraph = styled.p`
   text-align:justify;
   font-size:16px;
@@ -45,11 +45,18 @@ export default class About extends Component {
       comingSoon: false,
     };
   }
-
+  /*
+    Page: /about-us
+    this method is called to close coming soon modal.
+  */
   comingCancel = (e) => {
     this.setState({ comingSoon: false });
   }
 
+  /*
+    Page: /about-us
+    this method is called to open coming soon modal.
+  */
   showComing = () => {
     this.setState({ comingSoon: true });
   }
@@ -63,9 +70,9 @@ export default class About extends Component {
               <Heading>
                 What is <HeadingBrand>FALDAX ?</HeadingBrand>
               </Heading>
-              {/* <SubHeading>
+              {/* <Sub_Heading>
                 Built For Traders, By Traders
-              </SubHeading> */}
+              </Sub_Heading> */}
             </Col>
           </Row>
           <Row className="wow fadeIn" data-wow-duration="2s" data-wow-delay="700ms">
