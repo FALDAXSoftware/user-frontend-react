@@ -246,6 +246,7 @@ export default class AboutUs extends Component {
       loader: false
     };
   }
+  /* Life Cycle Method */
   componentDidMount() {
     this.setState({ loader: true })
     fetch(API_URL + "/users/static-page-json/about", {
@@ -260,6 +261,10 @@ export default class AboutUs extends Component {
       .catch(error => { })
 
   }
+  /* 
+    Page:/about-us
+    This method will be called on click of founders.
+  */
   teamClick(value) {
     this.setState({ team: value });
   }

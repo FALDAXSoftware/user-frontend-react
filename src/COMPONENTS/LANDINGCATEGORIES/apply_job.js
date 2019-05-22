@@ -156,6 +156,8 @@ class ApplyJob extends Component {
             }
         });
     }
+
+    /* Life Cycle Method */
     componentDidMount() {
         if (this.captchaDemo) {
             this.captchaDemo.reset();
@@ -197,9 +199,20 @@ class ApplyJob extends Component {
         }
     }
 
+    /*  
+        Page:/applyjob
+        This method is called when we press cancel.
+    */
+
     onCancel() {
         this.setState({ files: [] });
     }
+
+    /*  
+        Page:/applyjob
+        This method is called when we change fields.
+    */
+
     _onChangeFields(e) {
         let fields = this.state.fields;
         let field = e.target.name;
@@ -211,6 +224,12 @@ class ApplyJob extends Component {
         }
         this.setState({ fields });
     }
+
+    /*  
+        Page:/applyjob
+        This method is called for custom notifications.
+    */
+
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
             message: head,
@@ -218,6 +237,12 @@ class ApplyJob extends Component {
             duration: 5
         });
     };
+
+    /*  
+        Page:/applyjob
+        This method is called when you submit the form.
+    */
+
     onSubmit() {
         var self = this;
         if (this.validator.allValid()) {
@@ -277,12 +302,24 @@ class ApplyJob extends Component {
             this.forceUpdate();
         }
     }
+
+    /*  
+        Page:/applyjob
+        This method is called to load recaptcha.
+    */
+
     onLoadRecaptcha() {
         if (this.captchaDemo) {
             this.captchaDemo.reset();
             this.captchaDemo.execute();
         }
     }
+
+    /*  
+        Page:/applyjob
+        This method is called to verify recaptcha.
+    */
+
     verifyCallback(recaptchaToken) {
         // Here you will get the final recaptchaToken!!!  
         // console.log(recaptchaToken, "<= your recaptcha token");

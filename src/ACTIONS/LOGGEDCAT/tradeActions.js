@@ -3,11 +3,20 @@ import { globalVariables } from 'Globals';
 
 let { API_URL } = globalVariables;
 
+/*  
+    Action : This action is called for crypto-currency pair.
+*/
+
 export function cryptoCurrency(cryptoPair) {
     return (dispatch) => {
         dispatch(cryptoData(cryptoPair))
     }
 }
+
+/*  
+    Action : This action is called for crypto-currency pair.
+*/
+
 export const cryptoData = (cryptoPair) => dispatch => {
 
     dispatch({

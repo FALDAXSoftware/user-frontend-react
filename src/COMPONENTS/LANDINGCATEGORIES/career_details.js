@@ -31,6 +31,9 @@ class CareerDetails extends Component {
             loader: false
         };
     }
+
+    /* Life Cycle Methods */
+
     componentDidMount() {
         if (this.props.location.search) {
             let arr = this.props.location.search.split('=');

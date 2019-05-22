@@ -69,6 +69,7 @@ class Blog extends Component {
             blogCSS: ''
         }
     }
+    /* Life Cycle Methods */
     componentDidMount() {
         if (this.props.location.search !== this.state.nxtPage && this.props.location.search !== '') {
             var bPage = this.props.location.search.split("=")
@@ -78,7 +79,7 @@ class Blog extends Component {
         }
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
-                if (this.props.theme===false)
+                if (this.props.theme === false)
                     this.setState({ blogCSS: "Card-Blog" })
                 else
                     this.setState({ blogCSS: "Card-Blog-night" })
@@ -94,13 +95,18 @@ class Blog extends Component {
         }
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
-                if (props.theme===false)
+                if (props.theme === false)
                     this.setState({ blogCSS: "Card-Blog" })
                 else
                     this.setState({ blogCSS: "Card-Blog-night" })
             }
         }
     }
+
+    /*  
+        Page:/blog
+        This method is called to get all blog details.
+    */
 
     BlogDetails(curr) {
         this.setState({ loader: true })

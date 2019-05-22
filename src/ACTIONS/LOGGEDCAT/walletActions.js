@@ -3,6 +3,10 @@ import { removeLoader, addLoader } from "../SETTINGS/settingActions";
 
 let { API_URL } = globalVariables;
 
+/*  
+    Action : This action is called for wallet balance.
+*/
+
 export function walletBal(isLoggedIn, currency = null) {
     return (dispatch) => {
         dispatch(addLoader())
@@ -28,6 +32,11 @@ export function walletBal(isLoggedIn, currency = null) {
             })
     }
 }
+
+/*  
+    Action : This action is called for crypto-currency pair.
+*/
+
 export const walletData = (data) => dispatch => {
 
     dispatch({
@@ -36,6 +45,11 @@ export const walletData = (data) => dispatch => {
     })
 
 }
+
+/*  
+    Action : This action is called to get all coins.
+*/
+
 export function getAllCoins(isLoggedIn) {
     return (dispatch) => {
         dispatch(addLoader())
@@ -57,6 +71,11 @@ export function getAllCoins(isLoggedIn) {
             })
     }
 }
+
+/*  
+    Action : This action is called to pass coins data to reducer.
+*/
+
 export const allCoinsData = (data) => dispatch => {
 
     dispatch({

@@ -117,11 +117,15 @@ class Fees extends Component {
             feesData: []
         };
     }
-
+    /* Life Cycle Methods */
     componentDidMount = () => {
         this._getAllFees();
     }
 
+    /*  
+        Page:/fees
+        This method is called to get all fees.
+    */
     _getAllFees = () => {
         fetch(`${API_URL}/get-all-fee`, {
             method: "get",
