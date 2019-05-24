@@ -112,6 +112,18 @@ class AddCoin extends Component {
         });
     }
 
+    /* Life Cycle Methods */
+
+    componentDidMount() {
+        this._getAllCountries();
+        //document.getElementsByClassName("date-input")[0].setAttribute("readOnly", "readOnly")
+    }
+
+    /*  
+        Page:/addcoin
+        This method is called when fields are changed
+    */
+
     _onChangeFields(e) {
         let fields = this.state.fields;
         let field = e.target.name;
@@ -123,6 +135,12 @@ class AddCoin extends Component {
         }
         this.setState({ fields });
     }
+
+    /*  
+        Page:/addcoin
+        This method is called when fields are changed.
+    */
+
     dateChange(date) {
         let fields = this.state.fields;
         if (date != null) {
@@ -132,6 +150,12 @@ class AddCoin extends Component {
         }
         this.setState({ fields, startDate: date });
     }
+
+    /*  
+        Page:/addcoin
+        This method is called for custom notifications.
+    */
+
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
             message: head,
@@ -140,10 +164,10 @@ class AddCoin extends Component {
         });
     };
 
-    componentDidMount() {
-        this._getAllCountries();
-        //document.getElementsByClassName("date-input")[0].setAttribute("readOnly", "readOnly")
-    }
+    /*  
+        Page:/addcoin
+        This method is called to get all countries data.
+    */
 
     _getAllCountries = () => {
         fetch(globalVariables.API_URL + "/users/countries", {
@@ -156,6 +180,11 @@ class AddCoin extends Component {
             })
             .catch(error => { })
     }
+
+    /*  
+        Page:/addcoin
+        This method is called when we submit all fields input.
+    */
 
     onSubmit() {
         if (this.validator.allValid()) {
@@ -210,6 +239,11 @@ class AddCoin extends Component {
         }
     }
 
+    /*  
+        Page:/addcoin
+        This method is called to check security.
+    */
+
     _changeSecurity = (isSecure) => {
         let fields = this.state.fields;
         if (isSecure.trim() === "") {
@@ -219,6 +253,11 @@ class AddCoin extends Component {
         }
         this.setState({ fields });
     }
+
+    /*  
+        Page:/addcoin
+        This method is called when we change country.
+    */
 
     _changeCountry = (val) => {
         let fields = this.state.fields;
@@ -230,6 +269,12 @@ class AddCoin extends Component {
         this.setState({ fields });
 
     }
+
+    /*  
+        Page:/addcoin
+        This method is called when ref. is changed.
+    */
+
     _changeReference = (val) => {
         var isTextBox;
         if (val === 'Other') {
@@ -245,6 +290,11 @@ class AddCoin extends Component {
         }
         this.setState({ fields, isTextBox });
     }
+
+    /*  
+        Page:/addcoin
+        This method is called when ref. is changed .
+    */
 
     _changeNumber(a, mob, code) {
         if (mob.trim !== "") {

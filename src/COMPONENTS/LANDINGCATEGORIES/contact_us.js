@@ -70,10 +70,11 @@ class ContactUs extends Component {
             }
         });
     }
+    /* Life Cycle Methods */
     componentWillReceiveProps(props, newProps) {
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
-                if (props.theme===false)
+                if (props.theme === false)
                     this.setState({ email: _MAPICON, marker: _EMAILICON, call: _CALLICON })
                 else
                     this.setState({ email: _BLUEMARKER, marker: _BLUEEMAIL, call: _CALLBLUE })
@@ -83,7 +84,7 @@ class ContactUs extends Component {
     componentDidMount() {
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
-                if (this.props.theme===false)
+                if (this.props.theme === false)
                     this.setState({ email: _MAPICON, marker: _EMAILICON, call: _CALLICON })
                 else
                     this.setState({ email: _BLUEMARKER, marker: _BLUEEMAIL, call: _CALLBLUE })
@@ -104,23 +105,39 @@ class ContactUs extends Component {
                 console.log(error)
             })
     }
+
+    /*  
+        Page:/contact-us
+        This method is called for custom notifications.
+    */
+
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
             message: head,
             description: desc,
         });
     };
+
+    /*  
+        Page:/contact-us
+        This method is called on change of any fields.
+    */
+
     _onChangeFields(e) {
         let fields = this.state.fields;
         let field = e.target.name;
 
-        if (e.target.value.trim()==="") {
+        if (e.target.value.trim() === "") {
             fields[field] = "";
         } else {
             fields[field] = e.target.value;
         }
         this.setState({ fields });
     }
+    /*  
+        Page:/contact-us
+        This method is called for custom notifications.
+    */
     onSubmit() {
         if (this.validator.allValid()) {
 

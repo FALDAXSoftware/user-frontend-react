@@ -78,6 +78,7 @@ class Blog extends Component {
             blogCSS: ''
         }
     }
+    /* Life Cycle Methods */
     componentDidMount() {
         if (this.props.location.search !== '') {
             var bPage = this.props.location.search.split("=")
@@ -111,6 +112,10 @@ class Blog extends Component {
             }
         }
     }
+    /*  
+        Page:/news
+        This method is called to get all news.
+    */
     BlogDetails(curr, flag = null) {
         this.setState({ loader: true })
         var searchV = this.state.searchV;
@@ -140,14 +145,32 @@ class Blog extends Component {
             .catch(error => { })
 
     }
+
+    /*  
+        Page:/news
+        This method is called for change in Search of news.
+    */
+
     searchChange(e) {
         this.setState({ searchV: e.target.value });
     }
+
+    /*  
+        Page:/news
+        This method is called when you submit search.
+    */
+
     submitSearch(e) {
         if (e.target.value.trim() !== "") {
             this.BlogDetails(1);
         }
     }
+
+    /*  
+        Page:/contact-us
+        This method is called to clear search.
+    */
+
     removeSearch() {
         this.setState({ searchV: "", removeflag: false });
         this.BlogDetails(1, true);

@@ -25,9 +25,19 @@ class BlogComments extends Component {
             loader: false
         };
     }
+    /* Life Cycle Methods */
     componentWillReceiveProps(props, newProps) {
         this.getComments(props.blogID);
     }
+    componentDidMount() {
+        this.getComments(this.props.blogID);
+    }
+
+    /*  
+        Page:/blogDetails
+        This method is called to get data of comments.
+    */
+
     getComments(blogID) {
         var Obj = {};
         Obj['blog_id'] = blogID;
@@ -48,12 +58,21 @@ class BlogComments extends Component {
                 .catch(error => { })
         }
     }
-    componentDidMount() {
-        this.getComments(this.props.blogID);
-    }
+
+    /*  
+        Page:/blogDetails
+        This method is called on comment change.
+    */
+
     onCommentChange(e) {
         this.setState({ commentTemp: e.target.value, showMsg: false });
     }
+
+    /*  
+        Page:/blogDetails
+        This method is called when you click on view more.
+    */
+
     viewMore() {
         var page = this.state.page + 1;
         var Obj = {};
@@ -73,6 +92,12 @@ class BlogComments extends Component {
             })
             .catch(error => { })
     }
+
+    /*  
+        Page:/blogDetails
+        This method is called when you click on view more.
+    */
+
     onSubmit() {
         if (this.state.commentTemp && this.state.commentTemp.trim() !== "") {
             var obj = {};
@@ -146,7 +171,7 @@ class BlogComments extends Component {
                     <CommentBox>
                         <CommentSpan1>Leave a Comment</CommentSpan1>
                         <CommentArea value={this.state.commentTemp} onChange={this.onCommentChange.bind(this)} placeholder="Comment" rows='5' cols='60'></CommentArea>
-                        {this.state.showMsg===true ? <CommentMsg>Please enter your comment in above field</CommentMsg> : ""}
+                        {this.state.showMsg === true ? <CommentMsg>Please enter your comment in above field</CommentMsg> : ""}
                         <CommentButton onClick={this.onSubmit.bind(this)}>SUBMIT COMMENT</CommentButton>
                     </CommentBox> : ""
                 }

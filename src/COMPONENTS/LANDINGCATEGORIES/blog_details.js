@@ -30,12 +30,42 @@ class BlogDetails extends Component {
             contactDetails: null
         }
     }
+    /* Life Cycle Methods */
     componentWillReceiveProps(props, newProps) {
         var ID = props.location.search.split('=');
         if (ID[1] !== this.state.blogID) {
             this.blogsMethod(ID[1]);
         }
     }
+    componentDidMount() {
+        var blogID = null;
+        if (this.props.location.search !== '') {
+            blogID = this.props.location.search.split('=');
+            this.blogsMethod(blogID[1]);
+        }
+        this.setState({ loader: true })
+        fetch(globalVariables.API_URL + '/get-contact-details', {
+            method: "get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+
+                this.setState({ contactDetails: responseData.data, loader: false });
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    /*  
+        Page:/blogDetails
+        This method is called to get a particular blog detail.
+    */
+
     blogsMethod(blogID) {
         var Obj = {}; Obj['id'] = blogID
         this.setState({ loader: true })
@@ -69,29 +99,6 @@ class BlogDetails extends Component {
         //     })
         //     .catch(error => {
         //     })
-    }
-    componentDidMount() {
-        var blogID = null;
-        if (this.props.location.search !== '') {
-            blogID = this.props.location.search.split('=');
-            this.blogsMethod(blogID[1]);
-        }
-        this.setState({ loader: true })
-        fetch(globalVariables.API_URL + '/get-contact-details', {
-            method: "get",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(response => response.json())
-            .then((responseData) => {
-
-                this.setState({ contactDetails: responseData.data, loader: false });
-            })
-            .catch(error => {
-                console.log(error)
-            })
     }
 
     render() {

@@ -32,16 +32,26 @@ class _CONTACTMAP extends Component {
   state = {
     isMarkerShown: false,
   }
-
+  /* Life Cycle Methods */
   componentDidMount() {
     this.delayedShowMarker()
   }
+
+  /*  
+    Page:/contact
+    This method is called to delay show marker.
+  */
 
   delayedShowMarker = () => {
     setTimeout(() => {
       this.setState({ isMarkerShown: true })
     }, 3000)
   }
+
+  /*  
+    Page:/contact
+    This method is called to click of marker.
+  */
 
   handleMarkerClick = () => {
     this.setState({ isMarkerShown: false })

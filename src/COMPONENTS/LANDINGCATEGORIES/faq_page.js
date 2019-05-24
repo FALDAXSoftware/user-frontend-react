@@ -77,6 +77,7 @@ export default class FaqPage extends Component {
       loader: false
     };
   }
+  /* LIfe Cycle Methods */
   componentDidMount() {
     this.setState({ loader: true })
     fetch(API_URL + "/users/static-page-json/faq", {
@@ -91,9 +92,6 @@ export default class FaqPage extends Component {
       })
       .catch(error => { })
 
-  }
-  teamClick(value) {
-    this.setState({ team: value });
   }
 
   render() {

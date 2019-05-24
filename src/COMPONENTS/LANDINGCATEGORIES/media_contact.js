@@ -41,6 +41,7 @@ class MediaContact extends Component {
             contact: null,
         };
     }
+    /* Life Cycle Methods */
     componentDidMount() {
         fetch(API_URL + "/get-contact-details", {
             method: "get",

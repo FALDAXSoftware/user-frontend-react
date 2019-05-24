@@ -13,7 +13,7 @@ import { globalVariables } from "Globals"
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'
 
 export const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode==="dark" ? "#041422" : "white"}; 
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -24,7 +24,7 @@ const NDF = styled.div`
     justify-content:center;
     align-items:center;
     font-weight:600;
-    color:${props => props.theme.mode==="dark" ? "white" : ""};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
 `
 const CatHead = styled(JobHead)`
     font-size: 25px;
@@ -57,7 +57,7 @@ const CareerTitle = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode==="dark" ? "white" : ""};
+  color:${props => props.theme.mode === "dark" ? "white" : ""};
   &:before {
     content: '';
     width: calc(50% - 140px);
@@ -98,6 +98,8 @@ class Careers extends Component {
             loader: false
         };
     }
+
+    /* Life Cycle Methods */
     componentDidMount() {
         this.setState({ loader: true })
         fetch(globalVariables.API_URL + `/all-jobs`, {
@@ -163,7 +165,7 @@ class Careers extends Component {
                                 })
                                 : ""}
                             {
-                                flag===false ?
+                                flag === false ?
                                     <NDF>NO DATA FOUND</NDF>
                                     : ""
                             }
