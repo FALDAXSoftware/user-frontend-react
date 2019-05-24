@@ -6,11 +6,11 @@ import 'antd/dist/antd.css';
 import { Row, Col, Radio, notification, Spin } from 'antd';
 
 /* STYLED-COMPONENTS */
-import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Balance1, Total, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import { Label, MarketWrap, BuyWrap, BuySell, BuySellRadio, BalanceWrap, Balance, Balance1, Total, ETHWrap, BTCWrap, Willpay, Willpay2, AMTInput, TotalWrap, TotInput, Pay, Esti, ButtonWrap, ButtonETH } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
 /* Components */
 import {
-    Spin_single
+    SpinSingle
 } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle"
 import { globalVariables } from "Globals";
 
@@ -50,12 +50,8 @@ class Market extends Component {
             }
         });
     }
+    /* Life-Cycle Methods */
 
-    clearValidation() {
-        this.validator.hideMessages();
-        this.forceUpdate();
-        // rerender to hide messages for the first time
-    }
     componentWillReceiveProps(props, newProps) {
         this.setState({
             userBalFees: props.userBal.fees, amount: 0,
@@ -71,15 +67,33 @@ class Market extends Component {
             }
         }
     }
+
     componentDidMount() {
     }
+
+    /* 
+        Page: /trade --> market
+        this method is called for clearing validation messages.
+    */
+
+    clearValidation() {
+        this.validator.hideMessages();
+        this.forceUpdate();
+        // rerender to hide messages for the first time
+    }
+
+    /* 
+        Page: /trade --> market
+        this method is called to change BUY/SELL side.
+    */
+
     onChange(e) {
         var self = this;
         let obj = {};
         let name = e.target.name;
         let value = e.target.value;
         obj[name] = value;
-        if (name == "side") {
+        if (name === "side") {
             obj["amount"] = 0;
             obj["total"] = 0;
         }
@@ -89,13 +103,13 @@ class Market extends Component {
             obj = {};
 
             if (this.state.amount >= 0) {
-                if (this.state.side == "Buy") {
+                if (this.state.side === "Buy") {
                     self.setState({
                         buyPayAmt: Number(this.state.amount) * this.props.userBal.buyPay,
                         buyEstPrice: Number(this.state.amount) * this.props.userBal.buyEstimatedPrice
                     })
                     obj["total"] = Number(this.state.amount) * this.props.userBal.buyPay
-                } else if (this.state.side == "Sell") {
+                } else if (this.state.side === "Sell") {
                     self.setState({
                         sellPayAmt: Number(this.state.amount) * this.props.userBal.sellPay,
                         sellEstPrice: Number(this.state.amount) * this.props.userBal.sellEstimatedPrice
@@ -108,12 +122,24 @@ class Market extends Component {
             self.setState({ ...obj });
         });
     }
+
+    /* 
+        Page: /trade --> market
+        this method is called for cutom notifications.
+    */
+
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
             message: head,
             description: desc,
         });
     };
+
+    /* 
+        Page: /trade --> market
+        this method is called when u submit form to BUY/SELL.
+    */
+
     onSubmit() {
         var self = this;
 
@@ -139,7 +165,7 @@ class Market extends Component {
                         Loader: false, total: 0, amount: 0, buyPayAmt: 0, sellPayAmt: 0,
                         buyEstPrice: 0, sellEstPrice: 0
                     });
-                    if (responseData.status == 200) {
+                    if (responseData.status === 200) {
                         self.openNotificationWithIcon('success', 'Success', responseData.message);
                     } else {
                         self.openNotificationWithIcon('error', 'Error', responseData.err);
@@ -152,24 +178,25 @@ class Market extends Component {
             this.forceUpdate();
         }
     }
+
     render() {
         const { buyPayAmt, buyEstPrice, sellEstPrice, sellPayAmt, amount } = this.state;
         const RadioGroup = Radio.Group;
 
         return (
-            <Market_wrap>
-                <Buy_wrap>
-                    <Buy_sell>
+            <MarketWrap>
+                <BuyWrap>
+                    <BuySell>
                         <RadioGroup value={this.state.side} size="large" buttonStyle="solid" onChange={this.onChange} name="side">
                             <BuySellRadio value="Buy">BUY</BuySellRadio>
                             <BuySellRadio value="Sell">SELL</BuySellRadio>
                         </RadioGroup>
-                    </Buy_sell>
-                </Buy_wrap>
+                    </BuySell>
+                </BuyWrap>
 
                 {Object.keys(this.props.userBal).length > 0 ?
-                    this.state.side == "Buy" ?
-                        <Balance_wrap>
+                    this.state.side === "Buy" ?
+                        <BalanceWrap>
                             <Row>
                                 <Col xs={24} sm={12}>
                                     <Row>
@@ -212,8 +239,8 @@ class Market extends Component {
                                     </Row>
                                 </Col>
                             </Row>
-                        </Balance_wrap> :
-                        <Balance_wrap>
+                        </BalanceWrap> :
+                        <BalanceWrap>
                             <Row>
                                 <Col xs={24} sm={12}>
                                     <Row>
@@ -256,23 +283,23 @@ class Market extends Component {
                                     </Row>
                                 </Col>
                             </Row>
-                        </Balance_wrap>
+                        </BalanceWrap>
                     : ""}
-                <ETH_wrap>
+                <ETHWrap>
                     <Label>Amount</Label>
-                    <Total_wrap style={{ marginBottom: 16 }}>
-                        <AMTinput min="0" type="number" addonAfter={this.state.crypto} value={this.state.amount} name="amount" onChange={this.onChange} />
+                    <TotalWrap style={{ marginBottom: 16 }}>
+                        <AMTInput min="0" type="number" addonAfter={this.state.crypto} value={this.state.amount} name="amount" onChange={this.onChange} />
                         {this.validator.message('Amount', this.state.amount, 'required|gtzero|numeric')}
-                    </Total_wrap>
-                </ETH_wrap>
-                <BTC_wrap>
+                    </TotalWrap>
+                </ETHWrap>
+                <BTCWrap>
                     <Label>Total</Label>
-                    <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput min="0" readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(4)} name="total" />
-                    </Total_wrap>
-                </BTC_wrap>
+                    <TotalWrap style={{ marginBottom: 16 }}>
+                        <TotInput min="0" readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(4)} name="total" />
+                    </TotalWrap>
+                </BTCWrap>
                 {Object.keys(this.props.userBal).length > 0 ?
-                    this.state.side == "Buy" ?
+                    this.state.side === "Buy" ?
                         <Pay>
                             <Row>
                                 <Col xs={15} sm={12}>
@@ -334,16 +361,16 @@ class Market extends Component {
                                 </Row>
                             </Esti>
                         </Pay> : ""}
-                <Button_wrap>
+                <ButtonWrap>
                     <ButtonETH side={this.state.side} onClick={this.onSubmit}>{this.state.side.toUpperCase()} {this.state.crypto}</ButtonETH>
-                </Button_wrap>
-                {(this.state.Loader == true) ?
-                    <Spin_single className="Single_spin">
+                </ButtonWrap>
+                {(this.state.Loader === true) ?
+                    <SpinSingle className="Single_spin">
                         <Spin size="small" />
-                    </Spin_single>
+                    </SpinSingle>
                     : ""
                 }
-            </Market_wrap>
+            </MarketWrap>
         )
     }
 }

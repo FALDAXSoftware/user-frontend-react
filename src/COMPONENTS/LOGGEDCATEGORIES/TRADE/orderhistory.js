@@ -6,20 +6,25 @@ import HistoryTable from './historytable';
 
 /*STYLED-COMPONENTS  */
 import {
-    Left_div2, Instru,
+    LeftDiv2, Instru,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
 export default class BuySell extends React.Component {
+
+    /* Page:
+        History table loader 
+    */
+
     hisFunc(loader) {
         this.props.hisFunc(loader);
     }
     render() {
 
         return (
-            <Left_div2>
+            <LeftDiv2>
                 <Instru>ORDER HISTORY</Instru>
                 <HistoryTable hisFunc={(loader) => { this.hisFunc(loader) }} io={this.props.io} height={this.props.height} />
-            </Left_div2>
+            </LeftDiv2>
         );
     }
 }

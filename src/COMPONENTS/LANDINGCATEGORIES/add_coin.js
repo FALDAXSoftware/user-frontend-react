@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Spin, notification, Select } from 'antd';
+import { notification } from 'antd';
 import styled from 'styled-components';
 import SimpleReactValidator from 'simple-react-validator';
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-intl-tel-input/dist/main.css';
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
-import { Spin_Ex } from 'STYLED-COMPONENTS/HOMEPAGE/style'
+/* import { Spin_Ex } from 'STYLED-COMPONENTS/HOMEPAGE/style' */
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import {
-    Contact_wrap, Grey_wrap, Head, Head_desc, MsgInput
+    ContactWrap, GreyWrap, Head, HeadDesc, MsgInput
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
 import { globalVariables } from "Globals";
 
 let { API_URL } = globalVariables;
-const Option = Select.Option;
+/* const Option = Select.Option; */
 
 export const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"};
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -39,7 +39,7 @@ const TokenTitle = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode == "dark" ? "white" : ""};
+  color:${props => props.theme.mode === "dark" ? "white" : ""};
   &:before {
     content: '';
     width: calc(50% - 190px);
@@ -86,7 +86,6 @@ class AddCoin extends Component {
                 skype: '',
                 phone: '',
                 other_site: '',
-                is_secure: '',
                 loader: false
             },
             startDate: null,
@@ -117,7 +116,7 @@ class AddCoin extends Component {
         let fields = this.state.fields;
         let field = e.target.name;
 
-        if (e.target.value.trim() == "") {
+        if (e.target.value.trim() === "") {
             fields[field] = "";
         } else {
             fields[field] = e.target.value;
@@ -151,7 +150,7 @@ class AddCoin extends Component {
             method: "GET",
         }).then(response => response.json())
             .then((responseData) => {
-                if (responseData.status == 200) {
+                if (responseData.status === 200) {
                     this.setState({ countries: responseData.data });
                 }
             })
@@ -191,6 +190,7 @@ class AddCoin extends Component {
                     let fields = this.state.fields;
                     Object.keys(fields).map(function (index) {
                         fields[index] = ""
+                        return 1;
                     })
 
                     this.setState({
@@ -212,7 +212,7 @@ class AddCoin extends Component {
 
     _changeSecurity = (isSecure) => {
         let fields = this.state.fields;
-        if (isSecure.trim() == "") {
+        if (isSecure.trim() === "") {
             fields['is_secure'] = "";
         } else {
             fields['is_secure'] = isSecure;
@@ -222,7 +222,7 @@ class AddCoin extends Component {
 
     _changeCountry = (val) => {
         let fields = this.state.fields;
-        if (val.trim() == "") {
+        if (val.trim() === "") {
             fields['country'] = "";
         } else {
             fields['country'] = val;
@@ -232,13 +232,13 @@ class AddCoin extends Component {
     }
     _changeReference = (val) => {
         var isTextBox;
-        if (val == 'Other') {
+        if (val === 'Other') {
             isTextBox = true;
         } else {
             isTextBox = false;
         }
         let fields = this.state.fields;
-        if (val.trim() == "") {
+        if (val.trim() === "") {
             fields['ref_site'] = "";
         } else {
             fields['ref_site'] = val;
@@ -256,8 +256,8 @@ class AddCoin extends Component {
         }
     }
     render() {
-        const { countries, isTextBox } = this.state;
-        let countryOptions = countries.map((country) => {
+        /*  const { countries, isTextBox } = this.state; */
+        /* let countryOptions = countries.map((country) => {
             return (
                 <Option value={country.name}>{country.name}</Option>
             )
@@ -267,12 +267,12 @@ class AddCoin extends Component {
             return (
                 <Option value={country.alpha3Code}>{country.alpha3Code}</Option>
             )
-        })
+        }) */
 
         return (
-            <Contact_wrap>
+            <ContactWrap>
                 <Navigation />
-                <Grey_wrap>
+                <GreyWrap>
                     <ContainerContact>
                         <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                             <TokenTitle>List Your Token </TokenTitle>
@@ -280,13 +280,13 @@ class AddCoin extends Component {
                         <Head>
                             {/* <Head_title>List Your Token</Head_title> */}
                             {/* <Subtitle>Here are the requirements to list your coin:</Subtitle> */}
-                            <Head_desc>We speak to coin creators about struggles from their side of the crypto industry, and a common complaint is exchange access. Crypto, as a financial asset, is what gets the most attention but the beauty of crypto is the utility offered by tokens based on innovative ideas. We aim to help intelligent and motivated people like you focus on those ideas rather than the politics and logistics of proliferating your token. So, we made it easy:
+                            <HeadDesc>We speak to coin creators about struggles from their side of the crypto industry, and a common complaint is exchange access. Crypto, as a financial asset, is what gets the most attention but the beauty of crypto is the utility offered by tokens based on innovative ideas. We aim to help intelligent and motivated people like you focus on those ideas rather than the politics and logistics of proliferating your token. So, we made it easy:
                                 <ul style={{ marginTop: "20px !important" }}>
                                     <li>Complete the form below.</li>
                                     <li> We will review your information and reply with relevant questions and next steps within 24 hours.</li>
                                 </ul>
-                            </Head_desc>
-                            <Head_desc>
+                            </HeadDesc>
+                            <HeadDesc>
                                 Why should you want to work with us?
 
                                 <ul style={{ marginTop: "20px !important" }}>
@@ -295,9 +295,9 @@ class AddCoin extends Component {
                                     <li>Our terms are simple, fair, and clear.</li>
                                     <li>We treat others with respect. Always.</li>
                                 </ul>
-                            </Head_desc>
+                            </HeadDesc>
                         </Head>
-                        <iframe style={{ border: 'none' }} height="1800px" width="100%" src={API_URL + "/get-list-token-form"}></iframe>
+                        <iframe title="title" style={{ border: 'none' }} height="1800px" width="100%" src={API_URL + "/get-list-token-form"}></iframe>
                         {/* <Body>
                             <Body_form>
                                 <Form_coin>
@@ -573,10 +573,10 @@ class AddCoin extends Component {
                             </Body_form>
                         </Body> */}
                     </ContainerContact>
-                </Grey_wrap>
+                </GreyWrap>
                 <CommonFooter />
                 {(this.state.loader) ? <FaldaxLoader /> : ""}
-            </Contact_wrap>
+            </ContactWrap>
         );
     }
 }

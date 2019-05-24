@@ -10,7 +10,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 /* STYLED-COMPONENTS */
 import { TableHeader, TableContent, ScrollTableContent } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
-export const Order_wrap = styled.div`
+export const OrderWrap = styled.div`
     margin-left:30px;
     margin-right:30px;
     border:1px solid #d8d8d8;
@@ -20,17 +20,17 @@ export const Order_wrap = styled.div`
        }
      
        &::-webkit-scrollbar-thumb {
-        background-color: ${props => props.theme.mode == 'dark' ? '#041624' : ''};
+        background-color: ${props => props.theme.mode === 'dark' ? '#041624' : ''};
         border-radius: 3px;
        }
         &::-webkit-scrollbar-track{
-            background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
+            background: ${props => props.theme.mode === 'dark' ? '#072135' : ""};
         }
 `
 export const HTable = styled(Table)`
 >thead
 {
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f5f6fa"};
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
     color:#174c7e;
     border:none;
 }
@@ -40,23 +40,23 @@ export const HTable = styled(Table)`
 }
 & tbody
 {
-    color:${props => props.theme.mode == "dark" ? "white" : "black"} ;
+    color:${props => props.theme.mode === "dark" ? "white" : "black"} ;
     font-size: 14px;
     font-family: "Open Sans";
     font-weight:600;
 }
 >tbody>tr:nth-of-type(odd)
 {
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "#f9f9f9"};
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "#f9f9f9"};
 }`
 const SideType = styled.td`
-    color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
+    color:${props => props.type === "Sell" ? "#f13239" : "#4fb153"};
 `
 const NDF = styled.p`
     text-align: center; 
     font-weight: 600;
     font-size: 17px;
-    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "black"};
     margin-top: 30px;
     font-family: Open Sans;
 `
@@ -70,6 +70,11 @@ class OrderTrade extends Component {
         this.cancelOrder = this.cancelOrder.bind(this);
     }
 
+    /* 
+        Page: /trade --> Orders and Trades
+        This method is called when u cancel an order and parent callback method is called.
+    */
+
     cancelOrder(id, side, type) {
         this.props.cancelOrder(id, side, type)
     }
@@ -77,7 +82,7 @@ class OrderTrade extends Component {
     render() {
         var self = this;
         return (
-            <Order_wrap>
+            <OrderWrap>
                 <OTwrap>
                     <div className="tbl-header">
                         <TableHeader cellpadding="10px" cellspacing="0" border="0">
@@ -92,7 +97,7 @@ class OrderTrade extends Component {
                                     <th>TYPE</th>
                                     <th>TIME</th>
                                     <th>Total</th>
-                                    {self.props.pending == 2 ? <th>ACTIONS</th> : ""}
+                                    {self.props.pending === 2 ? <th>ACTIONS</th> : ""}
                                 </tr>
                             </thead>
                         </TableHeader>
@@ -109,9 +114,9 @@ class OrderTrade extends Component {
                                         ?
                                         this.props.orderTradeData.map(function (data) {
                                             var date
-                                            if (self.props.profileDetails.date_format == "MM/DD/YYYY")
+                                            if (self.props.profileDetails.date_format === "MM/DD/YYYY")
                                                 date = moment.utc(data.created_at).local().format("MM/DD/YYYY, H:m:s")
-                                            else if (self.props.profileDetails.date_format == "DD/MM/YYYY")
+                                            else if (self.props.profileDetails.date_format === "DD/MM/YYYY")
                                                 date = moment.utc(data.created_at).local().format("DD/MM/YYYY, H:m:s")
                                             else
                                                 date = moment.utc(data.created_at).local().format("MMM D, YYYY, H:m:s")
@@ -120,13 +125,13 @@ class OrderTrade extends Component {
                                                 <tr>
                                                     <SideType type={data.side}>{data.side}</SideType>
                                                     <td>{data.quantity.toFixed(4)} {data.settle_currency}</td>
-                                                    <td>{self.props.pending !== 2 ? (data.order_type == "Market" ? data.order_type : data.limit_price) : data.limit_price}</td>
+                                                    <td>{self.props.pending !== 2 ? (data.order_type === "Market" ? data.order_type : data.limit_price) : data.limit_price}</td>
                                                     <SideType type={data.side}>{self.props.pending !== 2 ? Filled.toFixed(4) : (data.stop_price !== undefined ? data.stop_price : 0)}</SideType>
                                                     <td>{data.fill_price} {data.currency}</td>
                                                     <td>{data.order_type}</td>
                                                     <td>{date}</td>
-                                                    <td>{self.props.pending == 2 ? (data.quantity * data.limit_price).toFixed(4) : (data.quantity * data.fill_price).toFixed(4)}</td>
-                                                    {self.props.pending == 2 ? <th ><span onClick={() => self.cancelOrder(data.id, data.side, data.order_type)}><Icon style={{ color: "#279CED", fontSize: "18px" }
+                                                    <td>{self.props.pending === 2 ? (data.quantity * data.limit_price).toFixed(4) : (data.quantity * data.fill_price).toFixed(4)}</td>
+                                                    {self.props.pending === 2 ? <th ><span onClick={() => self.cancelOrder(data.id, data.side, data.order_type)}><Icon style={{ color: "#279CED", fontSize: "18px" }
                                                     } type="close-circle" /></span></th> : ''}
                                                 </tr>
                                             );
@@ -138,7 +143,7 @@ class OrderTrade extends Component {
                         </Scrollbars>
                     </ScrollTableContent>
                 </OTwrap>
-            </Order_wrap>
+            </OrderWrap>
         )
     }
 }

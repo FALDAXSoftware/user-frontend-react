@@ -5,13 +5,13 @@ import Dropzone from 'react-dropzone';
 import IntlTelInput from 'react-intl-tel-input';
 
 
-export const Headcontact = styled.div`
+export const HeadContact = styled.div`
   
 `
-export const Head_span = styled.p`
+export const HeadSpan = styled.p`
     font-size: 20px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode == "dark" ? "white" : "rgb(51, 51, 51)"};
+    color:${props => props.theme.mode === "dark" ? "white" : "rgb(51, 51, 51)"};
     font-weight: bold;
     text-transform: uppercase;
     line-height: 1.498;
@@ -22,85 +22,85 @@ export const Head_span = styled.p`
         text-align:center;
     }
 `
-export const Contact_wrap = styled.div`
+export const ContactWrap = styled.div`
     background-color:#f5f6fa;
 `
-export const Grey_wrap = styled.div`
+export const GreyWrap = styled.div`
     padding-top:110px;
     padding-bottom:30px;
-    background-color:${props => props.theme.mode == "dark" ? "#01090f" : ""};
+    background-color:${props => props.theme.mode === "dark" ? "#01090f" : ""};
 `
-export const Row_wrap = styled.div`
+export const RowWrap = styled.div`
     padding-bottom:80px;
 `
-export const Left_col = styled.div`
+export const LeftCol = styled.div`
     padding-right:90px;
     @media(max-width:576px)
     {
         padding-right:0px;
     }
 `
-export const Sub_head = styled.p`
+export const SubHead = styled.p`
     font-size: 19.975px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
+    color:${props => props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
     margin-top:30px;
     font-weight:600;
 `
-export const First_div = styled.div`
+export const FirstDiv = styled.div`
     margin-top:30px;
 `
-export const First_label = styled.label`
+export const FirstLabel = styled.label`
     display:block;
     font-size: 13px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgba( 0, 0, 0, 0.502 )"};
-    caret-color: ${props => props.theme.mode == "dark" ? "white" : ""};
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgba( 0, 0, 0, 0.502 )"};
+    caret-color: ${props => props.theme.mode === "dark" ? "white" : ""};
 `
-export const First_input = styled.input`
+export const FirstInput = styled.input`
     border:1px solid #e2e6ea;
-    background-color:${props => props.theme.mode == "dark" ? "#020e18" : "#f8f8f8"};
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    background-color:${props => props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
     border-radius:5px;
     min-height:45px;
     width:100%;
     padding-left:5px;
 `
-export const Second_div = styled.div`
+export const SecondDiv = styled.div`
     margin-top:25px;
 `
-export const Second_label = styled(First_label)`
+export const SecondLabel = styled(FirstLabel)`
 `
-export const Second_input = styled(First_input)`
+export const SecondInput = styled(FirstInput)`
 
 `
-export const Third_div = styled(Second_div)`
+export const ThirdDiv = styled(SecondDiv)`
 
 `
-export const Third_label = styled(First_label)`
+export const ThirdLabel = styled(FirstLabel)`
 `
-export const Third_input = styled(First_input)`
+export const ThirdInput = styled(FirstInput)`
 
 `
-export const Fourth_div = styled.div`
+export const FourthDiv = styled.div`
     
 `
-export const Fourth_label = styled(First_label)`
+export const FourthLabel = styled(FirstLabel)`
 margin-top:30px;
 `
-export const Fourth_area = styled.textarea`
+export const FourthArea = styled.textarea`
     border:1px solid #e2e6ea;
-    background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#f8f8f8"};
+    background-color:${props => props.theme.mode === "dark" ? "#01090f" : "#f8f8f8"};
     border-radius:5px;
     min-height:145px;
     width:100%;
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
-    caret-color: ${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
+    caret-color: ${props => props.theme.mode === "dark" ? "white" : ""};
 `
-export const Fifth_div = styled.div`
+export const FifthDiv = styled.div`
     margin-top:30px;
 `
-export const Fifth_button = styled.button`
+export const FifthButton = styled.button`
     min-width:230px;
     background-color:#4c84ff;
     border:none;
@@ -108,19 +108,19 @@ export const Fifth_button = styled.button`
     min-height:50px;
     color:white;
 `
-export const Map_wrap = styled.div`
+export const MapWrap = styled.div`
     margin-top:40px;
     @media(max-width:575px)
     {
         max-width:500px;
     }
 `
-export const Subfoot_wrap = styled.div`
+export const SubfootWrap = styled.div`
     margin-top:30px;
     padding-bottom: 30px;
 
 `
-export const Main_wrap1 = styled.div`
+export const MainWrap1 = styled.div`
     min-height:130px;
     border-right:1px solid #f3f3f6;
     display: inline-flex;
@@ -132,10 +132,10 @@ export const Main_wrap1 = styled.div`
         display:inline-block;
     }
 `
-export const Main_wrap2 = styled(Main_wrap1)`
+export const MainWrap2 = styled(MainWrap1)`
     border-right:none;
 `
-export const Main_wrap3 = styled(Main_wrap1)`
+export const MainWrap3 = styled(MainWrap1)`
     border-right:0px;
 `
 export const Main = styled.div`
@@ -183,14 +183,14 @@ export const Img3 = styled(Img2)`
         width:30px;
     }
 `
-export const Sub_span = styled.span`
+export const SubSpan = styled.span`
     font-size: 15.983px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
     font-weight:600;
     
 `
-export const Sub_p = styled.p`
+export const SubP = styled.p`
     font-size: 13.985px;
     font-family: "Open Sans";
     color: ${props => props.theme.mode ? "#7e868d" : "rgba( 51, 51, 51, 0.502 )"};
@@ -198,17 +198,17 @@ export const Sub_p = styled.p`
 `
 /* Media Contact File */
 
-export const Career_wrap = styled.div`
+export const CareerWrap = styled.div`
     padding-top: 45px;
     &.hbspt-form
     {
         display:flex;
     }
 `
-export const Subhead = styled.div`
+export const SubHeadDiv = styled.div`
     text-align:center;
 `
-export const Leftmedia = styled.div`
+export const LeftMedia = styled.div`
     min-height:205px;
     line-height:205px;
     width:370px;
@@ -227,7 +227,7 @@ export const Leftmedia = styled.div`
         width:285px;
     }
 `
-export const Rightmedia = styled.div`
+export const RightMedia = styled.div`
     min-height:205px;
     line-height:205px;
     width:370px;
@@ -247,7 +247,7 @@ export const Rightmedia = styled.div`
         width:285px;
     }
 `
-export const Textwrap = styled.div`
+export const TextWrap = styled.div`
     text-align:center;
     margin-top: 100px;
     margin-left:auto;
@@ -284,7 +284,7 @@ export const RightRow = styled(Row)`
         
     }
 `
-export const Col_wrap_r = styled.div`
+export const ColWrapR = styled.div`
     margin-left:15px;
     @media(max-width:767px)
     {
@@ -292,7 +292,7 @@ export const Col_wrap_r = styled.div`
         margin-left:0px;
     }
 `
-export const Col_wrap_l = styled.div`
+export const ColWrapL = styled.div`
     margin-right:15px;
     @media(max-width:767px)
     {
@@ -300,9 +300,9 @@ export const Col_wrap_l = styled.div`
         margin-left:0px;
     }
 `
-export const LT_div = styled(Col)`
+export const LTDiv = styled(Col)`
 `
-export const LL_div = styled(Col)`
+export const LLDiv = styled(Col)`
 `
 export const MediaUL = styled.ul`
     list-style-type:none;  
@@ -313,23 +313,23 @@ export const MediaLI = styled.li`
     display:inline-block;
     margin-right:10px;
 `
-export const Mediaspan = styled.span`
+export const MediaSpan = styled.span`
     font-size: 17.93px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode == "dark" ? "white" : "rgb(74, 74, 74)"};
+    color:${props => props.theme.mode === "dark" ? "white" : "rgb(74, 74, 74)"};
     font-weight: bold;
     text-transform: uppercase;
 `
 export const MediaP = styled.p`
     font-size: 13.94px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode == "dark" ? "white" : "rgb(51, 51, 51)"}
+    color:${props => props.theme.mode === "dark" ? "white" : "rgb(51, 51, 51)"}
     font-weight:600;
 `
-export const Blue_tag = styled.a`
+export const BlueTag = styled.a`
     color:#4c84ff;
 `
-export const Blue_tag_p = styled.a`
+export const BlueTagP = styled.a`
     color:#4c84ff;
 `
 
@@ -342,27 +342,27 @@ export const Blue_tag_p = styled.a`
 
 export const Head = styled.div`
     margin-bottom:60px;
-    color:${props => props.theme.mode == "dark" ? "white" : "rgb(51, 51, 51)"};
+    color:${props => props.theme.mode === "dark" ? "white" : "rgb(51, 51, 51)"};
     @media(max-width:480px)
     {
         padding-right:10px;
         padding-left:10px;
     }
 `
-export const Head_title = styled.span`
+export const HeadTitle = styled.span`
     font-size: 20px;
     font-family: "Open Sans";
     font-weight: bold;
     text-transform: uppercase;
 `
-export const Head_desc = styled.p`
+export const HeadDesc = styled.p`
     margin-top:10px;
     & ul
     {margin-top:10px;}a
     font-size: 13.985px;
     font-family: "Open Sans";
 `
-export const Subtitle = styled.p`
+export const SubTitle = styled.p`
     font-size: 15.983px;
     font-family: "Open Sans";
     margin-top:30px;
@@ -377,15 +377,15 @@ export const Body = styled.div`
 export const BodyText = styled.span`
     font-size: 20px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode == "dark" ? "white" : "rgb(51, 51, 51)"};
+    color:${props => props.theme.mode === "dark" ? "white" : "rgb(51, 51, 51)"};
 
 `
-export const Body_form = styled.div`
+export const BodyForm = styled.div`
     border : 1px solid #d4dadf;
     border-radius:5px;
     margin-top:20px;
 `
-export const Form_coin = styled.div`
+export const FormCoin = styled.div`
     margin-top:50px;
     margin-bottom: 50px;
 `
@@ -400,7 +400,7 @@ export const Left = styled.div`
         margin-bottom:0px;
         font-size: 13px;
         font-family: "Open Sans";
-        color:${props => props.theme.mode == "dark" ? "white" : "rgb(0, 0, 0)"};
+        color:${props => props.theme.mode === "dark" ? "white" : "rgb(0, 0, 0)"};
         font-weight:600;
     }
     @media(max-width:1199px)
@@ -409,7 +409,7 @@ export const Left = styled.div`
         justify-content: flex-start;
     }
 `
-export const Right_input = styled.div`
+export const RightInput = styled.div`
     padding-right:15px;
     padding-left:15px;
     >.intl-tel-input 
@@ -423,15 +423,15 @@ export const Right_input = styled.div`
     & .form-control     
     {
         border:1px solid #e2e6ea;
-        background-color:${props => props.theme.mode == "dark" ? "#020e18" : "#f8f8f8"};
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        background-color:${props => props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
         border-radius:5px;
         min-height:45px;
         width:100%;
         padding-left:5px;
     }
 `
-export const CoinInput = styled(First_input)`
+export const CoinInput = styled(FirstInput)`
     max-width:450px;
 `
 export const SecurityInput = styled(Select)`
@@ -444,8 +444,8 @@ export const SecurityInput = styled(Select)`
     & .ant-select-selection
     {
         border:1px solid #e2e6ea;
-        background-color:${props => props.theme.mode == "dark" ? "#020e18" : "#f8f8f8"};
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        background-color:${props => props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
         border-radius:5px;
         min-height:45px;
         width:100%;
@@ -457,16 +457,16 @@ export const SecurityInput = styled(Select)`
 export const IntlTelInputS = styled(IntlTelInput)`
     & .selected-dial-code
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
 `
-export const URLInput = styled(First_input)`
+export const URLInput = styled(FirstInput)`
     max-width:450px;
 `
 export const TargetInput = styled(DatePicker)`
     border:1px solid #e2e6ea;
-    background-color:${props => props.theme.mode == "dark" ? "#020e18" : "#f8f8f8"};
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    background-color:${props => props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
     border-radius:5px;
     min-height:45px;
     width:100%;
@@ -477,45 +477,45 @@ export const TargetInput = styled(DatePicker)`
 export const EmailInput = styled(URLInput)`
     
 `
-export const MsgInput = styled(Fourth_area)`
+export const MsgInput = styled(FourthArea)`
     max-width:450px;
-    background-color:${props => props.theme.mode == "dark" ? "#020e18" : "#f8f8f8"};
-    caret-color: ${props => props.theme.mode == "dark" ? "white" : ""};
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    background-color:${props => props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
+    caret-color: ${props => props.theme.mode === "dark" ? "white" : ""};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
 `
 export const OneDiv = styled.div`
 
 `
-export const FifthDiv = styled.div`
+export const FifthDiv2 = styled.div`
     margin-top:20px;
 `
-export const SixthDiv = styled(FifthDiv)`
+export const SixthDiv2 = styled(FifthDiv2)`
 
 `
-export const SeventhDiv = styled(FifthDiv)`
+export const SeventhDiv2 = styled(FifthDiv2)`
 
 `
-export const EigthDiv = styled(FifthDiv)`
+export const EigthDiv2 = styled(FifthDiv2)`
     
 `
-export const SecondDiv = styled(FifthDiv)`
+export const SecondDiv2 = styled(FifthDiv2)`
 `
-export const ThirdDiv = styled(FifthDiv)`
+export const ThirdDiv2 = styled(FifthDiv2)`
 `
-export const FourthDiv = styled(FifthDiv)`
+export const FourthDiv2 = styled(FifthDiv2)`
 `
-export const NineDiv = styled(FifthDiv)`
+export const NineDiv2 = styled(FifthDiv2)`
 `
-export const TenDiv = styled(FifthDiv)`
+export const TenDiv2 = styled(FifthDiv2)`
 `
-export const ElevenDiv = styled(FifthDiv)`
+export const ElevenDiv2 = styled(FifthDiv2)`
 `
-export const TwelveDiv = styled(FifthDiv)`
+export const TwelveDiv2 = styled(FifthDiv2)`
 `
-export const ThirteenDiv = styled(FifthDiv)`
+export const ThirteenDiv2 = styled(FifthDiv2)`
 `
 
-export const AddButton = styled(Fifth_button)`
+export const AddButton = styled(FifthButton)`
     margin-top:50px;
     display:block;
     @media(max-width:480px)
@@ -537,11 +537,11 @@ export const Msg = styled(Left)`
 /* Apply Job */
 
 
-export const Head_apply = styled(Head_span)`
+export const HeadApply = styled(HeadSpan)`
     padding-top:35px;
     margin-bottom:35px;
 `
-export const Apply_wrap = styled.div`
+export const ApplyWrap = styled.div`
     border: 1px solid #d4dadf;
     @media(max-width:467px)
     {
@@ -551,18 +551,18 @@ export const Apply_wrap = styled.div`
         border-left : 0px;
     }
 `
-export const Title_apply = styled.div`
+export const TitleApply = styled.div`
     margin-top:60px;
     text-align:center;    
 `
-export const Title_span = styled.span`
+export const TitleSpan = styled.span`
     font-size: 20px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
     font-weight: bold;
     text-transform: uppercase;  
 `
-export const Form_apply = styled.div`
+export const FormApply = styled.div`
     max-width:575px;
     margin-right:auto;
     margin-left:auto;
@@ -589,16 +589,16 @@ export const LeftWing = styled.div`
         margin-bottom:20px;
     }
 `
-export const Labelone = styled.label`
+export const LabelOne = styled.label`
     font-size: 13px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 0, 0, 0 )"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 0, 0, 0 )"};
     font-weight:600;
 `
 export const InputOne = styled.input`
     border:1px solid #e2e6ea;
-    background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f8f8f8"};
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    background-color: ${props => props.theme.mode === "dark" ? "#01090f" : "#f8f8f8"};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
     border-radius:5px;
     min-height:45px;
     width:100%;
@@ -618,7 +618,7 @@ export const InputTwo = styled(InputOne)`
 export const InputThree = styled(InputOne)``
 
 
-export const Btn_apply = styled(AddButton)`
+export const BtnApply = styled(AddButton)`
     margin-top:50px;
     display:block;
     @media(max-width:480px)
@@ -628,14 +628,14 @@ export const Btn_apply = styled(AddButton)`
     cursor:pointer;
 `
 export const DropzoneStyle = styled(Dropzone)`
-    background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f8f8f8"};
+    background-color: ${props => props.theme.mode === "dark" ? "#01090f" : "#f8f8f8"};
 `
 export const IconS = styled(Icon)`
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
 `
 export const FileSelectText = styled.p`
     margin-bottom:0px;
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
     display:block;
     max-width:300px;
     text-overflow:ellipsis;
@@ -647,69 +647,69 @@ export const FileSelectText = styled.p`
 
 /* Career Details style */
 
-export const Career_Head = styled(Head_span)`
+export const CareerHead = styled(HeadSpan)`
     margin-bottom:25px;
     padding-top: 40px;
 `
-export const CareerD_body = styled.div`
+export const CareerDBody = styled.div`
 
 `
-export const Btn_div = styled.div`
+export const BtnDiv = styled.div`
     display:flex;
     justify-content:center;
 `
-export const Job_btn = styled(AddButton)`
+export const JobBtn = styled(AddButton)`
     margin-top:40px;
 
 `
-export const Body_details = styled.div`
+export const BodyDetails = styled.div`
     margin-top:40px;
     padding-bottom:50px;
 `
-export const Body_p = styled.p`
+export const BodyP = styled.p`
     font-size: 16px;
     font-family: "Open Sans";
     color: rgb( 0, 107, 183 );  
     margin-bottom:5px;
     font-weight:600;
 `
-export const Location_p = styled.p`
+export const LocationP = styled.p`
     font-size: 12.984px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgba( 51, 51, 51, 0.6 )"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgba( 51, 51, 51, 0.6 )"};
 `
-export const Details_p = styled.p`
+export const DetailsP = styled.p`
     font-size: 13.983px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 25, 25, 25 )"} !important;
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 25, 25, 25 )"} !important;
 `
 
 /* Careers Style */
 
-export const Career_desc = styled.div`
+export const CareerDesc = styled.div`
     margin-top:20px;
 `
-export const Desc_head = styled.p`
+export const DescHead = styled.p`
     font-size: 17.978px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
 `
-export const Desc_body = styled.p`
+export const DescBody = styled.p`
     font-size: 13.983px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 25, 25, 25 )"} !important;
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 25, 25, 25 )"} !important;
 `
-export const Job_wrap = styled.div`
+export const JobWrap = styled.div`
     padding-bottom: 50px;
 `
-export const Job_head = styled.p`    
+export const JobHead = styled.p`    
     font-size: 17.978px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 51, 51, 51 )"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
     margin-bottom:15px;
     font-weight:600;
 `
-export const Body_details_job = styled(Body_details)`
+export const BodyDetailsJob = styled(BodyDetails)`
     padding-bottom:0px;
     cursor:pointer
 `

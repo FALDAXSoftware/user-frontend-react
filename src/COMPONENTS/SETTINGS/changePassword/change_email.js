@@ -80,7 +80,7 @@ const NewP = styled(Old)`
 export const InputLabel = styled.label`
     font-size: 14.007px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? '#617090' : 'rgba( 80, 80, 80, 0.502 )'};
+    color: ${props => props.theme.mode === "dark" ? '#617090' : 'rgba( 80, 80, 80, 0.502 )'};
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -88,8 +88,8 @@ export const InputLabel = styled.label`
 export const OldInput = styled(Input)`
     margin-top:5px;
     width: 95%;
-    background-color:${props => props.theme.mode == "dark" ? '#041422' : '#f8f8f8'};
-    color:${props => props.theme.mode == "dark" ? 'white' : ''}
+    background-color:${props => props.theme.mode === "dark" ? '#041422' : '#f8f8f8'};
+    color:${props => props.theme.mode === "dark" ? 'white' : ''}
     display:inline-block;
     font-family: "Open Sans";
     font-size:16;
@@ -132,7 +132,7 @@ const NewButton = styled(Save)`
 `
 const EmailDN = styled.p`
     font-weight:600;
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
 `
 
 class ChangeEmail extends Component {
@@ -153,6 +153,7 @@ class ChangeEmail extends Component {
         form: formShape,
     };
 
+    /* LifeCycle Methods */
     componentDidMount = () => {
         let fields = this.state.fields;
         fields['oldEmail'] = this.props.profileDetails.email;
@@ -165,7 +166,13 @@ class ChangeEmail extends Component {
         this.setState({ fields })
     }
 
-    _changeEmail = () => {
+    /* 
+        Page: /editProfile --> Security
+        It is called when we click confirm after Update Email click.
+        API is called to update Email.
+    */
+
+    changeEmail = () => {
         const { fields } = this.state;
 
         if (this.validator.allValid()) {
@@ -185,7 +192,7 @@ class ChangeEmail extends Component {
             })
                 .then(response => response.json())
                 .then((responseData) => {
-                    if (responseData.status == 200) {
+                    if (responseData.status === 200) {
                         this.setState({ loader: false, isShowOTP: true })
                     } else {
                         this.setState({
@@ -203,7 +210,13 @@ class ChangeEmail extends Component {
         }
     }
 
-    _verifyEmail = () => {
+    /* 
+        Page: /editProfile --> Security
+        It is called to confirm new email.
+        API is called to verify entered email.
+    */
+
+    verifyEmail = () => {
         const { fields } = this.state;
 
         if (this.otpValidator.allValid()) {
@@ -224,7 +237,7 @@ class ChangeEmail extends Component {
             })
                 .then(response => response.json())
                 .then((responseData) => {
-                    if (responseData.status == 200) {
+                    if (responseData.status === 200) {
                         let formData = {
                             user_id: this.props.profileDetails.id,
                             jwt_token: this.props.isLoggedIn
@@ -255,15 +268,25 @@ class ChangeEmail extends Component {
         }
     }
 
-    _onChangeField = (field, e) => {
+    /* 
+        Page: /editProfile --> Security
+        It is called to when Input field is changed with parameters with name and value.
+    */
+
+    onChangeField = (field, e) => {
         let fields = this.state.fields;
-        if (e.target.value.trim() == "") {
+        if (e.target.value.trim() === "") {
             fields[field] = "";
         } else {
             fields[field] = e.target.value;
         }
         this.setState({ fields });
     }
+
+    /* 
+        Page: /editProfile --> Security
+        It is called when for any notification to be shown.
+    */
 
     openNotificationWithIcon(type) {
         notification[type]({
@@ -273,7 +296,12 @@ class ChangeEmail extends Component {
         this.setState({ errMsg: false });
     };
 
-    _closeVerifyModal = () => {
+    /* 
+        Page: /editProfile --> Security
+        It is called when we want to close Modal for verify.
+    */
+
+    closeVerifyModal = () => {
         this.setState({ isShowOTP: false });
     }
 
@@ -302,12 +330,12 @@ class ChangeEmail extends Component {
                             <div>
                                 <NewInput value={fields.newEmail} disabled={isShowOTP}
                                     size="large" placeholder="Email"
-                                    onChange={this._onChangeField.bind(this, "newEmail")} />
+                                    onChange={this.onChangeField.bind(this, "newEmail")} />
                                 {this.validator.message('Email', this.state.fields['newEmail'], 'required|email')}
                             </div>
                         </NewP>
                         <ButtonDiv>
-                            <NewButton onClick={this._changeEmail.bind(this)}>Update Email</NewButton>
+                            <NewButton onClick={this.changeEmail.bind(this)}>Update Email</NewButton>
                         </ButtonDiv>
                         {isShowOTP &&
                             <Modal
@@ -322,18 +350,18 @@ class ChangeEmail extends Component {
                                     <InputLabel>Verification Code</InputLabel>
                                     <div>
                                         <OTPInput value={fields.otp}
-                                            size="medium" onChange={this._onChangeField.bind(this, "otp")} name="Verification Code" />
+                                            size="medium" onChange={this.onChangeField.bind(this, "otp")} name="Verification Code" />
                                         {this.otpValidator.message('verification code', this.state.fields['otp'], 'required|numeric')}
                                     </div>
                                 </NewP>
                                 <ButtonDiv>
-                                    <NewButton onClick={this._verifyEmail.bind(this)}>Verify</NewButton>
+                                    <NewButton onClick={this.verifyEmail.bind(this)}>Verify</NewButton>
                                 </ButtonDiv>
                             </Modal>
                         }
                     </ChangeCol>
                 </ChangeRow>
-                {(loader == true) ? <FaldaxLoader /> : ""}
+                {(loader === true) ? <FaldaxLoader /> : ""}
             </div>
         );
     }

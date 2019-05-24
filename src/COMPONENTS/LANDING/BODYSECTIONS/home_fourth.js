@@ -11,32 +11,32 @@ import { _TESTIMONY2, _Testimony3, _QUOTE } from 'CONSTANTS/images';
 /* Components */
 /* Global Components */
 /* Styled-Components */
-const FourthRow = styled(Row)`
+const Fourth_Row = styled(Row)`
     height:auto;
     background-color:#ffffff;
     padding-bottom: 45px;
     border-bottom: 3px solid #0f477b;
 `
-const FirstSlider = styled.div`
+const First_Slider = styled.div`
     margin-top:140px
 `
 const Slide = styled.div`
     text-align:center;
 `
-const Slide_img = styled.img`
+const Slide_Img = styled.img`
     display: -webkit-inline-box;
 `
-const Slide_span = styled.span`
+const Slide_Span = styled.span`
     color:#0f477b;
 `
-const Secondslider = styled.div`
+const Second_Slider = styled.div`
     text-align:left;
     margin-top:50px;
 `
-const Sub_slider = styled.div`
+const Sub_Slider = styled.div`
     margin-top:70px;
 `
-const P_tag = styled.p`
+const P_Tag = styled.p`
     display:block;
 `
 
@@ -87,78 +87,78 @@ export default class HomeFourth extends Component {
             focusOnSelect: true
         }
         return (
-            <FourthRow>
+            <Fourth_Row>
                 <Col span={18} offset={3}>
                     <Col xxl={{ span: 10 }} xl={{ span: 10 }} sm={{ span: 24 }}>
-                        <FirstSlider>
+                        <First_Slider>
                             <Slider {...settings}>
                                 <div>
                                     <Slide>
-                                        <Slide_img src={_TESTIMONY2} /><br />
-                                        <Slide_span>Robert Leonard</Slide_span>
+                                        <Slide_Img src={_TESTIMONY2} /><br />
+                                        <Slide_Span>Robert Leonard</Slide_Span>
                                         <p>ceo</p>
                                     </Slide>
                                 </div>
                                 <div>
                                     <Slide>
-                                        <Slide_img src={_TESTIMONY2} /><br />
-                                        <Slide_span>Robert Leonard</Slide_span>
+                                        <Slide_Img src={_TESTIMONY2} /><br />
+                                        <Slide_Span>Robert Leonard</Slide_Span>
                                         <p>ceo</p>
                                     </Slide>
                                 </div>
                                 <div>
                                     <Slide>
-                                        <Slide_img src={_Testimony3} /><br />
-                                        <Slide_span>Robert Leonard</Slide_span>
+                                        <Slide_Img src={_Testimony3} /><br />
+                                        <Slide_Span>Robert Leonard</Slide_Span>
                                         <p>ceo</p>
                                     </Slide>
                                 </div>
                                 <div>
                                     <Slide>
-                                        <Slide_img src={_Testimony3} /><br />
-                                        <Slide_span>Robert Leonard</Slide_span>
+                                        <Slide_Img src={_Testimony3} /><br />
+                                        <Slide_Span>Robert Leonard</Slide_Span>
                                         <p>ceo</p>
                                     </Slide>
                                 </div>
                             </Slider>
-                        </FirstSlider>
+                        </First_Slider>
                     </Col>
                     <Col xxl={{ span: 14 }} xl={{ span: 14 }} sm={{ span: 24 }}>
-                        <Secondslider >
-                            <img src={_QUOTE} />
-                            <Sub_slider>
+                        <Second_Slider >
+                            <img alt="fourth" src={_QUOTE} />
+                            <Sub_Slider>
                                 <Slider {...settings2}>
                                     <div>
-                                        <P_tag>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
+                                        <P_Tag>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
                                             inventore veritatis et quasi beatae vitae dicta sunt explicabo.
                                             Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                                        </P_tag>
+                                        </P_Tag>
                                     </div>
                                     <div>
-                                        <P_tag>
+                                        <P_Tag>
                                             Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
                                             inventore veritatis et quasi beatae vitae dicta sunt explicabo.
                                             Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                                        </P_tag>
+                                        </P_Tag>
                                     </div>
                                     <div>
-                                        <P_tag>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
+                                        <P_Tag>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
                                             inventore veritatis et quasi beatae vitae dicta sunt explicabo.
                                             Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                                        </P_tag>
+                                        </P_Tag>
                                     </div>
                                     <div>
-                                        <P_tag>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
+                                        <P_Tag>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
                                             inventore veritatis et quasi beatae vitae dicta sunt explicabo.
                                             Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                                        </P_tag>
+                                        </P_Tag>
                                     </div>
                                 </Slider>
-                            </Sub_slider>
-                        </Secondslider>
+                            </Sub_Slider>
+                        </Second_Slider>
                     </Col>
                 </Col>
-            </FourthRow>
+            </Fourth_Row>
         );
     }
 }

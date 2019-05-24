@@ -10,9 +10,9 @@ import { Spin } from 'antd';
 import { globalVariables } from "Globals";
 
 /* STYLED-COMPONENTS */
-import { Buy_table, BBC, Total_BTC, History_wrap1, TableHeader, TableContent, ScrollTableContent } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import { BuyTable, BBC, TotalBTC, HistoryWrap1, TableHeader, TableContent, ScrollTableContent } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import {
-    Spin_single
+    SpinSingle
 } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle"
 import { OTwrap } from './ordertrade';
 
@@ -32,10 +32,10 @@ const NDF = styled.p`
         text-align: center;
         font-size: 14px;
         font-weight: 600;
-        color: ${props => props.theme.mode == "dark" ? "white" : ""};
+        color: ${props => props.theme.mode === "dark" ? "white" : ""};
         font-family: "Open Sans";
 `
-class BuyTable extends Component {
+class BuyTABLE extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -48,6 +48,24 @@ class BuyTable extends Component {
         }
         this.updateData = this.updateData.bind(this);
     }
+
+    /* Life-Cycle Methods */
+
+    componentWillReceiveProps(props, newProps) {
+        var self = this;
+        if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
+            if (props.cryptoPair.crypto !== this.state.crypto) {
+                this.setState({ crypto: props.cryptoPair.crypto }, () => {
+                    self.buyTableData();
+                })
+            }
+            if (props.cryptoPair.currency !== this.state.currency) {
+                this.setState({ currency: props.cryptoPair.currency }, () => {
+                    self.buyTableData();
+                })
+            }
+        }
+    }
     componentDidMount() {
         var self = this;
 
@@ -55,6 +73,11 @@ class BuyTable extends Component {
         // this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
         // })
     }
+
+    /* 
+        Page: /trade --> Buy Book
+        SOCKET is called for buybook table data according to room provided.
+    */
 
     buyTableData() {
         let io = this.props.io
@@ -78,7 +101,7 @@ class BuyTable extends Component {
                 Authorization: "Bearer " + this.props.isLoggedIn
             }
         }, (body, JWR) => {
-            if (body.status == 200) {
+            if (body.status === 200) {
                 let res = body.data;
                 this.updateData(res);
             }
@@ -121,7 +144,7 @@ class BuyTable extends Component {
     //             for (let j = 0; j < rows.length; j++) {
     //                 console.log(i !== j)
     //                 if (i !== j) {
-    //                     if (rows[i].bid == rows[j].bid) {
+    //                     if (rows[i].bid===rows[j].bid) {
     //                         result.amount = result.amount + rows[j].amount;
     //                         result.total = result.total;
     //                     }
@@ -142,6 +165,12 @@ class BuyTable extends Component {
     //         result: final_result
     //     });
     // }
+
+    /* 
+        Page: /trade --> Buy Book
+        SOCKET is called to update buybook table data according to room provided.
+    */
+
     updateData(data) {
         let self = this;
         console.log("buyrow------------", data);
@@ -151,17 +180,17 @@ class BuyTable extends Component {
             const element = data[index];
             let isAdded = false;
             element["my_size"] = 0;
-            if (element.user_id == self.props.profileDetails.id) {
+            if (element.user_id === self.props.profileDetails.id) {
                 element["my_size"] = element.quantity;
             }
 
             for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
                 const internalElement = row[internalIndex];
-                if (internalElement.bid == element.price) {
+                if (internalElement.bid === element.price) {
                     row[internalIndex].amount += element.quantity;
                     console.log(element, internalElement);
 
-                    if (internalElement.user_id == self.props.profileDetails.id) {
+                    if (internalElement.user_id === self.props.profileDetails.id) {
                         row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
                     }
                     isAdded = true;
@@ -193,29 +222,15 @@ class BuyTable extends Component {
         });
 
     }
-    componentWillReceiveProps(props, newProps) {
-        var self = this;
-        if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
-            if (props.cryptoPair.crypto !== this.state.crypto) {
-                this.setState({ crypto: props.cryptoPair.crypto }, () => {
-                    self.buyTableData();
-                })
-            }
-            if (props.cryptoPair.currency !== this.state.currency) {
-                this.setState({ currency: props.cryptoPair.currency }, () => {
-                    self.buyTableData();
-                })
-            }
-        }
-    }
+
 
     render() {
         return (
             <div>
                 <BBC>BUYING {this.props.crypto}</BBC>
-                <Total_BTC>Total: {this.state.lastsum && this.state.lastsum.toFixed(4)} {this.state.currency}</Total_BTC>
-                <Buy_table>
-                    <History_wrap1>
+                <TotalBTC>Total: {this.state.lastsum && this.state.lastsum.toFixed(4)} {this.state.currency}</TotalBTC>
+                <BuyTable>
+                    <HistoryWrap1>
                         <OTwrap2>
                             <div className="tbl-header">
                                 <TableHeader cellpadding="10px" cellspacing="0" border="0">
@@ -256,12 +271,12 @@ class BuyTable extends Component {
                                 </Scrollbars>
                             </ScrollTableContent>
                         </OTwrap2>
-                    </History_wrap1>
-                </Buy_table>
-                {(this.state.Loader == true) ?
-                    <Spin_single className="Single_spin">
+                    </HistoryWrap1>
+                </BuyTable>
+                {(this.state.Loader === true) ?
+                    <SpinSingle className="Single_spin">
                         <Spin size="small" />
-                    </Spin_single>
+                    </SpinSingle>
                     : ""
                 }
             </div>

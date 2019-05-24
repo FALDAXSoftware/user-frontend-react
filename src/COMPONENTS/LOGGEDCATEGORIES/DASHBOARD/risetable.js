@@ -32,32 +32,32 @@ const Tablerise = styled.div`
     & table thead tr th
     {
         border-bottom:0px;
-        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "#f5f6fa"};
-        color:${props => props.theme.mode == "dark" ? "#174c7e" : ""};
+        background-color:${props => props.theme.mode === "dark" ? "#041b2c" : "#f5f6fa"};
+        color:${props => props.theme.mode==="dark" ? "#174c7e" : ""};
     }
     & table tbody tr td
     {
         border-top:0px;
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode==="dark" ? "white" : ""};
     }
     & table tbody tr:nth-of-type(odd)
     {
-        background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
+        background-color:${props => props.theme.mode==="dark" ? "#041422" : "white"};
     }
     & table tbody tr:nth-of-type(even)
     {
-        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : "#f5f6fa"};
+        background-color:${props => props.theme.mode==="dark" ? "#041b2c" : "#f5f6fa"};
     }
 `
 const InputSearch = styled(Search)`
     margin-left:auto;
     >input
     {
-        background-color:${props => props.theme.mode == "dark" ? "#041b2c" : ""};
+        background-color:${props => props.theme.mode==="dark" ? "#041b2c" : ""};
     }
     & .anticon 
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode==="dark" ? "white" : ""};
     }
 `
 

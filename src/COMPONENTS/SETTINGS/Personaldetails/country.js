@@ -8,14 +8,14 @@ import { Select, Row, Col } from 'antd';
 /* components */
 import { globalVariables } from 'Globals';
 
-let { API_URL } = globalVariables;
+/* let { API_URL } = globalVariables; */
 const Option = Select.Option;
-var Countries = [];
+/* var Countries = []; */
 
 const Country = styled.span`
     font-size: 14.007px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "rgba( 152, 171, 215, 0.502 )" : "rgba( 80, 80, 80, 0.502 )"};
+    color: ${props => props.theme.mode === "dark" ? "rgba( 152, 171, 215, 0.502 )" : "rgba( 80, 80, 80, 0.502 )"};
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -58,13 +58,13 @@ width:85%;
         width:100%;
     }
 `
-const Select_wrap = styled.div`
+const SelectWrap = styled.div`
     @media(max-width:767px)
     {
         margin-top:25px;
     }
 `
-const Country_wrap = styled.div`
+const CountryWrap = styled.div`
     @media(max-width:991px)
     {
         margin-right:20px;
@@ -95,50 +95,7 @@ export default class CountryPick extends Component {
         this.getCountryId = this.getCountryId.bind(this);
     }
 
-    handleChange(value, position) {
-        var newPosition = Number(position.key) - 1;
-        var countrySelected = CountryData.getCountryById(newPosition);
-        var states = CountryData.getStatesOfCountry(newPosition + 1);
-        this.setState({ city_selected: "", state_selected: "", country_selected: value, stateID: null, countryID: newPosition, states });
-        if (this.props.kyc == "kyc") {
-            this.props.onCountryName(countrySelected.sortname);
-        }
-
-        this.props.onCountryChange(value, null, null);
-
-    }
-    handleChangeState(value, position) {
-        var newPosition = Number(position.key);
-
-        var country = this.props.profileDetails.country !== undefined && this.state.country_selected == null ? this.props.profileDetails.country : this.state.country_selected;
-
-        var stateID = this.props.profileDetails.state_id !== undefined && this.state.stateID == null ? this.props.profileDetails.state_id : newPosition;
-
-        var countryID = this.props.profileDetails.country_id !== undefined && this.state.countryID == null ? this.props.profileDetails.country_id : this.state.countryID;
-
-        var cities = CountryData.getCitiesOfState(newPosition);
-
-        this.setState({ state_selected: value, city_selected: "", country_selected: country, stateID: newPosition, cities });
-
-        this.props.onCountryChange(country, value, null);
-    }
-    handleChangeCity(value, position) {
-        var state = this.props.profileDetails.state !== undefined && this.state.state_selected == null ? this.props.profileDetails.state : this.state.state_selected;
-
-        var country = this.props.profileDetails.country !== undefined && this.state.country_selected == null ? this.props.profileDetails.country : this.state.country_selected;
-
-        var stateID = this.props.profileDetails.state_id !== undefined && this.state.stateID == null ? this.props.profileDetails.state_id : this.state.stateID;
-
-        var countryID = this.props.profileDetails.country_id !== undefined && this.state.countryID == null ?
-            this.props.profileDetails.country_id : this.state.countryID;
-
-        this.setState({ city_selected: value, stateID, countryID });
-        this.props.onCountryChange(country, state, value);
-
-    }
-    handleBlur() {
-        /* console.log('blur'); */
-    }
+    /* Life-Cycle Methods */
     componentDidMount() {
         /*        fetch(API_URL + '/users/countries', {
                    method: "get",
@@ -165,36 +122,110 @@ export default class CountryPick extends Component {
             this.setState({ states })
             let stateId = this.getStateId(countryId, this.props.profileDetails.state)
             if (stateId !== undefined) {
-                console.log(cities)
+
                 var cities = CountryData.getCitiesOfState(stateId);
                 this.setState({ cities })
 
             }
         }
         if (this.props.theme !== undefined && this.props.theme !== "") {
-            if (this.props.theme == true) {
+            if (this.props.theme === true) {
                 this.setState({ CSS: "Country_Select_night" });
             }
-            if (this.props.theme == false) {
+            if (this.props.theme === false) {
                 this.setState({ CSS: "Country_Select" });
             }
         }
     }
+
+    /* 
+        Page: /editProfile --> profile/Personal Details
+        It is called when country is changed and according to that states are collected and selected country is passed to parent.
+    */
+
+    handleChange(value, position) {
+        var newPosition = Number(position.key) - 1;
+        var countrySelected = CountryData.getCountryById(newPosition);
+        var states = CountryData.getStatesOfCountry(newPosition + 1);
+        this.setState({ city_selected: "", state_selected: "", country_selected: value, stateID: null, countryID: newPosition, states });
+        if (this.props.kyc === "kyc") {
+            this.props.onCountryName(countrySelected.sortname);
+        }
+
+        this.props.onCountryChange(value, null, null);
+
+    }
+
+    /* 
+        Page: /editProfile --> profile/Personal Details
+        It is called when state is changed and according to that cities are collected and selected country is passed to parent.
+    */
+
+    handleChangeState(value, position) {
+        var newPosition = Number(position.key);
+
+        var country = this.props.profileDetails.country !== undefined && this.state.country_selected === null ? this.props.profileDetails.country : this.state.country_selected;
+
+        /*         var stateID = this.props.profileDetails.state_id !== undefined && this.state.stateID === null ? this.props.profileDetails.state_id : newPosition;
+        
+                var countryID = this.props.profileDetails.country_id !== undefined && this.state.countryID === null ? this.props.profileDetails.country_id : this.state.countryID; */
+
+        var cities = CountryData.getCitiesOfState(newPosition);
+
+        this.setState({ state_selected: value, city_selected: "", country_selected: country, stateID: newPosition, cities });
+
+        this.props.onCountryChange(country, value, null);
+    }
+
+    /* 
+        Page: /editProfile --> profile/Personal Details
+        It is called when state is changed and according to that cities are collected and selected country is passed to parent.
+    */
+
+    handleChangeCity(value, position) {
+        var state = this.props.profileDetails.state !== undefined && this.state.state_selected === null ? this.props.profileDetails.state : this.state.state_selected;
+
+        var country = this.props.profileDetails.country !== undefined && this.state.country_selected === null ? this.props.profileDetails.country : this.state.country_selected;
+
+        var stateID = this.props.profileDetails.state_id !== undefined && this.state.stateID === null ? this.props.profileDetails.state_id : this.state.stateID;
+
+        var countryID = this.props.profileDetails.country_id !== undefined && this.state.countryID === null ?
+            this.props.profileDetails.country_id : this.state.countryID;
+
+        this.setState({ city_selected: value, stateID, countryID });
+        this.props.onCountryChange(country, state, value);
+
+    }
+    handleBlur() {
+        /* console.log('blur'); */
+    }
+
+    /* 
+        Page: /editProfile --> profile/Personal Details
+        It is method to get country ID of selected country.
+    */
+
     getCountryId(countryName) {
         let allCountries = CountryData.getAllCountries();
         for (let index = 0; index < allCountries.length; index++) {
             const element = allCountries[index];
-            if (countryName == element.name) {
+            if (countryName === element.name) {
                 return element.id;
             }
         }
         return undefined;
     }
+
+    /* 
+        Page: /editProfile --> profile/Personal Details
+        It is method to get state ID of selected state.
+    */
+
     getStateId(countryId, stateName) {
         let allStates = CountryData.getStatesOfCountry(countryId);
         for (let index = 0; index < allStates.length; index++) {
             const element = allStates[index];
-            if (stateName == element.name) {
+            if (stateName === element.name) {
                 return element.id;
             }
         }
@@ -203,7 +234,7 @@ export default class CountryPick extends Component {
     render() {
         let country, state, city;
         if (this.props.kyc !== undefined)
-            if (this.props.kyc == "kyc") {
+            if (this.props.kyc === "kyc") {
                 if (this.props.kycData2 !== "" && this.props.kycData2 !== null && this.props.kycData2 !== undefined) {
                     if (this.props.kycData2 !== undefined) {
                         country = this.props.kycData2.country;
@@ -213,13 +244,13 @@ export default class CountryPick extends Component {
                 }
             }
         return (
-            <Country_wrap>
+            <CountryWrap>
                 <Row>
                     <Col sm={24} md={8} xl={8} xxl={8}>
                         <Country>Country*</Country>
                         <SelectS
                             showSearch
-                            value={this.state.country_selected !== null ? this.state.country_selected : (this.props.kyc == "kyc" ? country : this.props.profileDetails.country)}
+                            value={this.state.country_selected !== null ? this.state.country_selected : (this.props.kyc === "kyc" ? country : this.props.profileDetails.country)}
                             placeholder="Select a Country"
                             className={this.state.CSS}
                             dropdownClassName="country_select_drop"
@@ -232,11 +263,11 @@ export default class CountryPick extends Component {
                         </SelectS>
                     </Col>
                     <Col sm={24} md={8} xl={8} xxl={8}>
-                        <Select_wrap>
+                        <SelectWrap>
                             <Country>State*</Country>
                             <SelectS
                                 showSearch
-                                value={this.state.state_selected !== null ? this.state.state_selected : (this.props.kyc == "kyc" ? state : this.props.profileDetails.state)}
+                                value={this.state.state_selected !== null ? this.state.state_selected : (this.props.kyc === "kyc" ? state : this.props.profileDetails.state)}
                                 placeholder="Select a State"
                                 className={this.state.CSS}
                                 dropdownClassName="country_select_drop"
@@ -247,14 +278,14 @@ export default class CountryPick extends Component {
                             >
                                 {this.state.states.map((state, index) => <Option key={state.id} value={state.name}>{state.name}</Option>)}
                             </SelectS>
-                        </Select_wrap>
+                        </SelectWrap>
                     </Col>
                     <Col sm={24} md={8} xl={8} xxl={8}>
-                        <Select_wrap>
+                        <SelectWrap>
                             <Country>City*</Country>
                             <SelectS
                                 showSearch
-                                value={this.state.city_selected !== null ? this.state.city_selected : (this.props.kyc == "kyc" ? city : this.props.profileDetails.city_town)}
+                                value={this.state.city_selected !== null ? this.state.city_selected : (this.props.kyc === "kyc" ? city : this.props.profileDetails.city_town)}
                                 placeholder="Select a City"
                                 className={this.state.CSS}
                                 dropdownClassName="country_select_drop"
@@ -265,10 +296,10 @@ export default class CountryPick extends Component {
                             >
                                 {this.state.cities !== null ? this.state.cities.map((city, index) => <Option key={city.id} value={city.name}>{city.name}</Option>) : ''}
                             </SelectS>
-                        </Select_wrap>
+                        </SelectWrap>
                     </Col>
                 </Row>
-            </Country_wrap>
+            </CountryWrap>
         );
     }
 }

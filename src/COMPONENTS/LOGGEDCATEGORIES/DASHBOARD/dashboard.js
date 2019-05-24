@@ -18,19 +18,19 @@ import DashGraph from "./dashgraph";
 import { globalVariables } from 'Globals';
 
 /*Styled-components*/
-import { Contact_wrap, Grey_wrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
+import { ContactWrap, GreyWrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import { ContainerContact } from "STYLED-COMPONENTS/LOGGED_STYLE/historyStyle"
 import {
-    ActPortWrap, Lleft, Rright, Topic, Act_div, ActTable, PortTable, High_low, Left_hl, Right_hl, Newsdiv, News, Newslist, List, Listspan, Listp, Date, Spin_single
+    ActPortWrap, Lleft, Rright, Topic, ActDiv, ActTable, PortTable, HighLow, LeftHl, RightHl, Newsdiv, News, NewsList, List, ListSpan, Listp, Date, SpinSingle
 } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle"
 
 let { API_URL } = globalVariables;
 
 const ContainerNew = styled(ContainerContact)`
     padding:0px;
-    background-color:${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
+    background-color:${props => props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
 `
-const Body_wrap = styled.div`
+const BodyWrap = styled.div`
 `
 const data = [
     {
@@ -155,7 +155,7 @@ const data = [
     }
 ];
 const SideType = styled.td`
-    color:${props => props.type == "Sell" ? "#f13239" : "#4fb153"};
+    color:${props => props.type === "Sell" ? "#f13239" : "#4fb153"};
     font-weight: 600;
 `
 const activityColumns = [{
@@ -227,6 +227,8 @@ class Dashboard extends Component {
         this.loadPortfolio = this.loadPortfolio.bind(this);
     }
 
+    /* Life-Cycle Methods */
+
     componentDidMount() {
         var self = this;
         self.loadNews(1);
@@ -239,6 +241,12 @@ class Dashboard extends Component {
             Authorization: "Bearer " + this.props.isLoggedIn
         }
     }
+
+    /* 
+            Page: /dashboard
+            It is called in ComponentDidMount.
+            API is called to get Data of Activity table.
+    */
 
     loadActivity() {
         var self = this;
@@ -255,12 +263,12 @@ class Dashboard extends Component {
             .then((responseData) => {
                 // console.log(responseData);
                 let activityData = [];
-                if (responseData.status == 200) {
+                if (responseData.status === 200) {
                     responseData.data.map(element => {
                         var date;
-                        if (this.props.profileDetails.date_format == "MM/DD/YYYY")
+                        if (this.props.profileDetails.date_format === "MM/DD/YYYY")
                             date = moment.utc(element.created_at).local().format("MM/DD/YYYY, H:m:s")
-                        else if (this.props.profileDetails.date_format == "DD/MM/YYYY")
+                        else if (this.props.profileDetails.date_format === "DD/MM/YYYY")
                             date = moment.utc(element.created_at).local().format("DD/MM/YYYY, H:m:s")
                         else
                             date = moment.utc(element.created_at).local().format("MMM D, YYYY, H:m:s")
@@ -281,6 +289,12 @@ class Dashboard extends Component {
             })
     }
 
+    /* 
+            Page: /dashboard
+            It is called in ComponentDidMount.
+            API is called to get Data of Portfolio table.
+    */
+
     loadPortfolio() {
         var self = this;
         self.setState({ portfolioLoader: true });
@@ -295,7 +309,7 @@ class Dashboard extends Component {
             .then(response => response.json())
             .then((responseData) => {
                 let portfolioData = [];
-                if (responseData.status == 200) {
+                if (responseData.status === 200) {
                     let userFiat = responseData.data.fiat;
                     responseData.data.portfolioData.map(element => {
                         portfolioData.push({
@@ -317,6 +331,12 @@ class Dashboard extends Component {
             .catch(error => { /* console.log(error) */ })
     }
 
+    /* 
+           Page: /dashboard
+           It is called in ComponentDidMount.
+           API is called to get Data of News table.
+   */
+
     loadNews(page) {
         var self = this;
         self.setState({ newsLoader: true })
@@ -331,7 +351,7 @@ class Dashboard extends Component {
             .then(response => response.json())
             .then((responseData) => {
                 // console.log(responseData);
-                if (responseData.status == 200) {
+                if (responseData.status === 200) {
                     let news = self.state.news;
                     responseData.data.map(element => {
                         news.push(element);
@@ -354,20 +374,27 @@ class Dashboard extends Component {
             })
     }
 
+    /* 
+        Page: /dashboard
+        It is called to get Domain From URL.
+        URL is split into array and domain is returned.
+    */
+
     getDomainFromUrl(url) {
         var arr = url.split("/");
         var result = arr[2];
         return result;
     }
+
     render() {
-        const { newsLoader, news, activityLoader, activityData, userFiat } = this.state;
+        const {/*  newsLoader, */ news, /* activityLoader, */ activityData, userFiat } = this.state;
 
         return (
             <div>
-                <Contact_wrap>
+                <ContactWrap>
                     <LoggedNavigation />
-                    <Grey_wrap>
-                        <Body_wrap>
+                    <GreyWrap>
+                        <BodyWrap>
                             <ContainerNew>
                                 <div>
                                     <DashGraph data={data} io={io} />
@@ -379,13 +406,13 @@ class Dashboard extends Component {
                                                 <Topic>
                                                     <span>ACTIVITY</span>
                                                 </Topic>
-                                                <Act_div>
+                                                <ActDiv>
                                                     <ActTable scroll={{ y: 320 }} pagination={false} columns={activityColumns} dataSource={activityData} className="activity-table" />
-                                                </Act_div>
-                                                {(this.state.activityLoader == true) ?
-                                                    <Spin_single className="Single_spin">
+                                                </ActDiv>
+                                                {(this.state.activityLoader === true) ?
+                                                    <SpinSingle className="Single_spin">
                                                         <Spin size="small" />
-                                                    </Spin_single>
+                                                    </SpinSingle>
                                                     : ""
                                                 }
                                             </Lleft>
@@ -395,17 +422,17 @@ class Dashboard extends Component {
                                                 <Topic>
                                                     <span>PORTFOLIO</span>
                                                 </Topic>
-                                                <High_low>
-                                                    <Left_hl>{this.state.total} {userFiat}</Left_hl>
-                                                    <Right_hl>^{this.state.diffrence} {userFiat}</Right_hl>
-                                                </High_low>
-                                                <Act_div>
+                                                <HighLow>
+                                                    <LeftHl>{this.state.total} {userFiat}</LeftHl>
+                                                    <RightHl>^{this.state.diffrence} {userFiat}</RightHl>
+                                                </HighLow>
+                                                <ActDiv>
                                                     <PortTable scroll={{ y: 250 }} pagination={false} columns={portfolioColumn} dataSource={this.state.portfolioData} className="portfolio-table" />
-                                                </Act_div>
-                                                {(this.state.portfolioLoader == true) ?
-                                                    <Spin_single className="Single_spin">
+                                                </ActDiv>
+                                                {(this.state.portfolioLoader === true) ?
+                                                    <SpinSingle className="Single_spin">
                                                         <Spin size="small" />
-                                                    </Spin_single>
+                                                    </SpinSingle>
                                                     : ""
                                                 }
                                             </Rright>
@@ -417,7 +444,7 @@ class Dashboard extends Component {
                                 </Rise_fall> */}
                                 <Newsdiv>
                                     <News>NEWS</News>
-                                    <Newslist>
+                                    <NewsList>
                                         <Scrollbars
                                             style={{ height: 380 }}
                                             hideTracksWhenNotNeeded={true}
@@ -427,34 +454,34 @@ class Dashboard extends Component {
 
                                                     <List>
                                                         <Date>{moment.utc(element.posted_at).format(`${this.props.profileDetails.date_format} HH:mm`)}</Date>
-                                                        <Listspan>
-                                                            {element.owner == "bitcoinist" &&
-                                                                <img src="/images/bitcoinist.png" style={{ marginRight: "10px", height: "20px" }} />
+                                                        <ListSpan>
+                                                            {element.owner === "bitcoinist" &&
+                                                                <img alt="bit pic" src="/images/bitcoinist.png" style={{ marginRight: "10px", height: "20px" }} />
                                                             }
-                                                            {element.owner == "cointelegraph" &&
-                                                                <img src="/images/cointelegraph.ico" style={{ marginRight: "10px", height: "20px" }} />
+                                                            {element.owner === "cointelegraph" &&
+                                                                <img alt="bit pic" src="/images/cointelegraph.ico" style={{ marginRight: "10px", height: "20px" }} />
                                                             }
-                                                            {element.owner == "bitcoin" &&
-                                                                <img src="/images/bitcoin.png" style={{ marginRight: "10px", height: "20px" }} />
+                                                            {element.owner === "bitcoin" &&
+                                                                <img alt="bit pic" src="/images/bitcoin.png" style={{ marginRight: "10px", height: "20px" }} />
                                                             }
-                                                            {element.owner != "bitcoinist" && element.owner != "cointelegraph" && element.owner != "bitcoin" &&
+                                                            {element.owner !== "bitcoinist" && element.owner !== "cointelegraph" && element.owner !== "bitcoin" &&
                                                                 <FontAwesomeIcon icon={faSquareFull} color='#d4d4d4' style={{ marginRight: "10px" }} />
                                                             }
                                                             {this.getDomainFromUrl(element.link)}
-                                                        </Listspan>
+                                                        </ListSpan>
                                                         <Listp href={element.link} target="_blank">{element.title}</Listp>
                                                     </List>
                                                 ))
                                             }
                                         </Scrollbars>
 
-                                    </Newslist>
+                                    </NewsList>
                                 </Newsdiv>
                             </ContainerNew>
-                        </Body_wrap>
-                    </Grey_wrap>
+                        </BodyWrap>
+                    </GreyWrap>
                     <CommonFooter />
-                </Contact_wrap>
+                </ContactWrap>
             </div>
         );
     }

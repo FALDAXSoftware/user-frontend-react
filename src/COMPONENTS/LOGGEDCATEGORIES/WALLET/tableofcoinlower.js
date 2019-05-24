@@ -1,5 +1,5 @@
 /* Built-in packages*/
-import React, { Component } from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
 import styled from 'styled-components';
@@ -7,14 +7,14 @@ import { Menu, Dropdown } from 'antd';
 
 /* styled components */
 import { OTwrap } from "../TRADE/ordertrade"
-import { History_wrap } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
-import { Head, Sub_head, DropMenu, Col1 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
+import { HistoryWrap } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import { Head, SubHead, DropMenu, Col1 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
 
 /* components */
 import { globalVariables } from 'Globals';
 let { _AMAZONBUCKET } = globalVariables;
 
-const BorderedHistoryWrap = styled(History_wrap)`
+const BorderedHistoryWrap = styled(HistoryWrap)`
     overflow-x:auto;
     width:100%;
     &::-webkit-scrollbar {
@@ -23,11 +23,11 @@ const BorderedHistoryWrap = styled(History_wrap)`
        }
      
        &::-webkit-scrollbar-thumb {
-        background-color: ${props => props.theme.mode == 'dark' ? '#041624' : ''};
+        background-color: ${props => props.theme.mode === 'dark' ? '#041624' : ''};
         border-radius: 3px;
        }
         &::-webkit-scrollbar-track{
-            background: ${props => props.theme.mode == 'dark' ? '#072135' : ""};
+            background: ${props => props.theme.mode === 'dark' ? '#072135' : ""};
         }
      
 
@@ -69,11 +69,11 @@ export const NDF = styled.td`
     text-align: center; 
     font-weight: 600;
     font-size: 17px;
-    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "black"};
     padding-top: 30px;
     font-family: "Open Sans";
 `
-let total = 0;
+
 class TableofCoin extends React.Component {
     constructor(props) {
         super(props);
@@ -86,6 +86,12 @@ class TableofCoin extends React.Component {
             curr3: "\u20B9"
         }
     }
+
+    /* 
+        Page: /wallet
+        This method is called when total USD is to passed to parent through callback function.
+    */
+
     totalUSD(total) {
         this.props.totalUSD(total)
     }
@@ -95,23 +101,23 @@ class TableofCoin extends React.Component {
         var me = this;
         const onClick1 = ({ key }) => {
             var curr, sign;
-            if (key == 1) { curr = "INR"; sign = "\u20B9"; }
-            else if (key == 2) { curr = "USD"; sign = "$"; }
-            else if (key == 3) { curr = "EUR"; sign = "\u20AC"; }
+            if (key === 1) { curr = "INR"; sign = "\u20B9"; }
+            else if (key === 2) { curr = "USD"; sign = "$"; }
+            else if (key === 3) { curr = "EUR"; sign = "\u20AC"; }
             this.setState({ drop1: curr, curr1: sign }, () => { me.props.currChange(`${curr},${me.state.drop2},${me.state.drop3}`) });
         };
         const onClick2 = ({ key }) => {
             var curr, sign;
-            if (key == 1) { curr = "INR"; sign = "\u20B9"; }
-            else if (key == 2) { curr = "USD"; sign = "$"; }
-            else if (key == 3) { curr = "EUR"; sign = "\u20AC"; }
+            if (key === 1) { curr = "INR"; sign = "\u20B9"; }
+            else if (key === 2) { curr = "USD"; sign = "$"; }
+            else if (key === 3) { curr = "EUR"; sign = "\u20AC"; }
             this.setState({ drop2: curr, curr2: sign }, () => { me.props.currChange(`${me.state.drop1},${curr},${me.state.drop3}`) });
         };
         const onClick3 = ({ key }) => {
             var curr, sign;
-            if (key == 1) { curr = "INR"; sign = "\u20B9"; }
-            else if (key == 2) { curr = "USD"; sign = "$"; }
-            else if (key == 3) { curr = "EUR"; sign = "\u20AC"; }
+            if (key === 1) { curr = "INR"; sign = "\u20B9"; }
+            else if (key === 2) { curr = "USD"; sign = "$"; }
+            else if (key === 3) { curr = "EUR"; sign = "\u20AC"; }
             this.setState({ drop3: curr, curr3: sign }, () => { me.props.currChange(`${me.state.drop1},${me.state.drop2},${curr}`) });
         };
         const menu1 = (
@@ -141,33 +147,33 @@ class TableofCoin extends React.Component {
                     <TableCoin cellpadding="10px" cellspacing="0" border="0">
                         <thead>
                             <Head>
-                                <Sub_head>Coins</Sub_head>
-                                <Sub_head>{this.state.drop1}
+                                <SubHead>Coins</SubHead>
+                                <SubHead>{this.state.drop1}
                                     <Dropdown overlay={menu1} trigger={['click']}>
                                         <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
                                     </Dropdown>
-                                </Sub_head>
-                                <Sub_head>{this.state.drop2}
+                                </SubHead>
+                                <SubHead>{this.state.drop2}
                                     <Dropdown overlay={menu2} trigger={['click']}>
                                         <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
                                     </Dropdown>
-                                </Sub_head>
-                                <Sub_head>{this.state.drop3}
+                                </SubHead>
+                                <SubHead>{this.state.drop3}
                                     <Dropdown overlay={menu3} trigger={['click']}>
                                         <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
                                     </Dropdown>
-                                </Sub_head>
-                                <Sub_head></Sub_head>
+                                </SubHead>
+                                <SubHead></SubHead>
                             </Head>
                         </thead>
                         <tbody>
                             {tableData !== undefined && tableData !== null ? tableData.length > 0 ? Object.keys(tableData).map(function (index, key) {
-                                var img;
-                                if (tableData[index].coin_icon == null)
+                                var img
+                                if (tableData[index].coin_icon === null)
                                     img = _AMAZONBUCKET + tableData[index].coin_icon
                                 else
                                     img = _AMAZONBUCKET + "coin/defualt_coin.png"
-                                let tableIndex = tableData[index]
+
                                 return (
                                     <Col1>
                                         {/* <td style={{ textAlign: "left" }}>

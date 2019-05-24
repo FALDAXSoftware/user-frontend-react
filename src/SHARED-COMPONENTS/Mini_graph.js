@@ -6,49 +6,49 @@ import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
 import { globalVariables } from '../Globals';
 const moment = require('moment');
-let { API_URL, _AMAZONBUCKET } = globalVariables;
+let { _AMAZONBUCKET } = globalVariables;
 
 /* Styled componets */
-const Graph_wrapper = styled.div`
-  background-color: ${props => props.theme.mode == "dark" ? "#041b2c" : "#fff"};
+const GraphWrapper = styled.div`
+  background-color: ${props => props.theme.mode === "dark" ? "#041b2c" : "#fff"};
   padding: 12.5px;
   width: 100%;
 `;
 
-const Image_wrapper = styled.img`
+const ImageWrapper = styled.img`
     width: 25px;
     height: 25px;
-    background-color:${props => props.theme.mode == "dark" ? "#041b2c" : ""};
+    background-color:${props => props.theme.mode === "dark" ? "#041b2c" : ""};
 `;
 
-const Span_coin_name = styled.span`
+const SpanCoinName = styled.span`
     font-size: 16px;
     font-family: "Open sans";
-    color: ${props => props.theme.mode == "dark" ? "#617090" : "rgba( 0, 0, 0, 0.231 )"};
+    color: ${props => props.theme.mode === "dark" ? "#617090" : "rgba( 0, 0, 0, 0.231 )"};
     font-weight: bold;
     line-height: 1.125;
     text-align: left;
 `;
 
-const Span_coin_name_wrapper = styled.div`
+const SpanCoinNameWrapper = styled.div`
     margin-bottom: 10px;
     overflow: hidden;
 `;
 
-const Span_coin_price = styled.span`
+const SpanCoinPrice = styled.span`
     font-size: 20px;
     font-family: "Open sans";
-    color: ${props => props.theme.mode == "dark" ? "white" : "rgb( 0, 0, 0 )"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 0, 0, 0 )"};
     font-weight: bold;
     line-height: 1.1;
     text-align: left;
     line-height: 25px;
 `;
 
-const Span_coin_percentage = styled.span`
+const SpanCoinPercentage = styled.span`
     font-size: 14px;
     font-family: "Open sans";
-    color: ${props => props.value === 0 ? (props => props.theme.mode == "dark" ? 'white' : 'black') : props.value <= 0 ? 'red' : '#34a539'}
+    color: ${props => props.value === 0 ? (props => props.theme.mode === "dark" ? 'white' : 'black') : props.value <= 0 ? 'red' : '#34a539'}
     line-height: 1.286;
     text-align: left;
     line-height: 25px;
@@ -119,7 +119,7 @@ class Mini_graph extends React.Component {
 
             // console.log("card body", body);
 
-            if (body.status == 200) {
+            if (body.status === 200) {
                 let res = body.data;
                 this.updateGraph(res);
             }
@@ -152,7 +152,7 @@ class Mini_graph extends React.Component {
             timeStampArray.push(moment.utc(element.created_at).unix());
         });
         let graphOptions = this.state.data;
-        graphOptions.image = (!this.coin_icon || this.coin_icon == "" || this.coin_icon == null) ? "coin/defualt_coin.png" : data.icon;
+        graphOptions.image = (!this.coin_icon || this.coin_icon === "" || this.coin_icon === null) ? "coin/defualt_coin.png" : data.icon;
         graphOptions.datasets[0].data = dataArray;
         graphOptions.timeStamps = timeStampArray;
         graphOptions.price = Math.round(data.average_price * 100) / 100;
@@ -198,23 +198,23 @@ class Mini_graph extends React.Component {
 
         const { coinName, image, price, percentage } = this.state.data;
         return (
-            <Graph_wrapper className="9292">
+            <GraphWrapper className="9292">
                 <Row>
-                    <Span_coin_name_wrapper>
+                    <SpanCoinNameWrapper>
                         <Col xs={19} offset={5}>
-                            <Span_coin_name> {coinName} </Span_coin_name>
+                            <SpanCoinName> {coinName} </SpanCoinName>
                         </Col>
-                    </Span_coin_name_wrapper>
+                    </SpanCoinNameWrapper>
                 </Row>
                 <Row>
                     <Col xs={5}>
-                        <Image_wrapper src={_AMAZONBUCKET + image} />
+                        <ImageWrapper src={_AMAZONBUCKET + image} />
                     </Col>
                     <Col xs={11} md={12}>
-                        <Span_coin_price> {price.toFixed(2)} {this.props.currency} </Span_coin_price>
+                        <SpanCoinPrice> {price.toFixed(2)} {this.props.currency} </SpanCoinPrice>
                     </Col>
                     <Col xs={8} md={7}>
-                        <Span_coin_percentage value={percentage}> {percentage === 0 ? '' : percentage >= 0 ? '+' : ''}{Math.abs(percentage.toFixed(2))}% </Span_coin_percentage>
+                        <SpanCoinPercentage value={percentage}> {percentage === 0 ? '' : percentage >= 0 ? '+' : ''}{Math.abs(percentage.toFixed(2))}% </SpanCoinPercentage>
                     </Col>
                 </Row>
                 <Row style={{ paddingTop: "10px" }}>
@@ -243,7 +243,7 @@ class Mini_graph extends React.Component {
                         }} height={100} redraw={true} ref="chart" />
                     </Col>
                 </Row>
-            </Graph_wrapper>
+            </GraphWrapper>
         );
     }
 }

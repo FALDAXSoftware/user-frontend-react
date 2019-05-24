@@ -1,7 +1,7 @@
 /* In-built Packages*/
 import React, { Component } from 'react'
 import styled from 'styled-components';
-import { Welcome_text } from "./login_form";
+import { WelcomeText } from "./login_form";
 import { Col, Row } from "antd";
 import { globalVariables } from 'Globals';
 
@@ -66,7 +66,7 @@ const HorImg = styled.img`
     width:250px;    
   }
 `
-const Form_wrap = styled.div`
+const FormWrap = styled.div`
   padding-left:100px;
   
   background-color:#f0f3f2;
@@ -91,7 +91,7 @@ const RightWrap = styled.div`
     height:auto;
   }
 `
-const Login_head = styled.div`
+const LoginHead = styled.div`
   font-size: 30px;
   font-family: "Open Sans";
   color: rgb( 15, 71, 123 );
@@ -106,16 +106,14 @@ const Login_head = styled.div`
       border-bottom:none;
   }
 `
-const Sub_text = styled.span`
+const SubText = styled.span`
     font-size: 16px;
     font-family: "Open Sans";
     color: rgb( 163, 163, 163 );
 `
 
 class EmailVerification extends Component {
-  constructor(props) {
-    super(props);
-  }
+
 
   render() {
     return (
@@ -130,13 +128,13 @@ class EmailVerification extends Component {
             </LeftWrap>
           </ColLeft>
           <ColRight sm={24} lg={12}>
-            <Form_wrap  >
+            <FormWrap  >
               <RightWrap className="wow fadeInDown" >
-                <Login_head>Thank You</Login_head>
-                <Welcome_text>To continue, please verify your new email address.</Welcome_text>
-                <Sub_text>Please check your email.</Sub_text>
+                <LoginHead>Thank You</LoginHead>
+                <WelcomeText>To continue, please verify your new email address.</WelcomeText>
+                <SubText>Please check your email.</SubText>
               </RightWrap>
-            </Form_wrap>
+            </FormWrap>
           </ColRight>
         </RowWrap>
       </div>

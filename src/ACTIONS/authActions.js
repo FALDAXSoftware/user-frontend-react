@@ -18,7 +18,7 @@ export function deleteAccount(isLoggedIn, value) {
             body: JSON.stringify(tempValue)
         }).then(response => response.json())
             .then((responseData) => {
-                if (responseData.status == 200) {
+                if (responseData.status===200) {
                     let tempValue2 = {};
                     tempValue2['user_id'] = tempValue.user_id;
                     tempValue2['jwt_token'] = tempValue.jwt_token;
@@ -42,7 +42,7 @@ export function Login(values) {
             body: JSON.stringify(values)
         }).then(response => response.json())
             .then((responseData) => {
-                if (responseData.status == 200)
+                if (responseData.status===200)
                     dispatch(loginAction(responseData))
                 else
                     dispatch(errorAction(responseData, "login"))
@@ -64,7 +64,7 @@ export function LogoutUser(isLoggedIn, value) {
             body: JSON.stringify(value)
         }).then(response => response.json())
             .then((responseData) => {
-                if (responseData.status == 200) {
+                if (responseData.status===200) {
                     dispatch({
                         type: 'LOGOUT',
                         payload: responseData
@@ -116,7 +116,7 @@ export function Signup(values) {
             body: JSON.stringify(values)
         }).then(response => response.json())
             .then((responseData) => {
-                if (responseData.status == 200) {
+                if (responseData.status===200) {
                     dispatch(signupAction(responseData));
                 } else {
                     dispatch(errorAction(responseData))
@@ -181,7 +181,7 @@ export function resetAction(value) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                if (responseData.status == 200) {
+                if (responseData.status===200) {
                     dispatch(resetData(responseData));
                 } else {
                     dispatch(resetData(responseData));

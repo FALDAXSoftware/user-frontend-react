@@ -1,6 +1,6 @@
 /* Built-in packages */
 import React from "react";
-import { Row, Col, Select, Radio } from "antd";
+import { Row, Col/* , Select */, Radio } from "antd";
 import { connect } from "react-redux"
 
 /*Components  */
@@ -8,7 +8,7 @@ import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
 import { globalVariables } from "Globals";
 
 /* STYLED-COMPONENTS */
-import { ConversionWarp, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, FeesRadio } from "STYLED-COMPONENTS/CONVERSION/style";
+import { ConversionWrap, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, FeesRadio } from "STYLED-COMPONENTS/CONVERSION/style";
 
 const RadioGroup = Radio.Group;
 const API_URL = globalVariables.API_URL;
@@ -50,17 +50,21 @@ class Conversion extends React.Component {
         this.calculateSellCurrency = this.calculateSellCurrency.bind(this);
         this.calculateSellCrypto = this.calculateSellCrypto.bind(this);
     }
+
+    /* Life-Cycle Methods */
+
     componentDidMount() {
         this.getCrypto();
         this.getCurrencies();
         this.getPairDetails();
     }
+
     getPairDetails() {
         var self = this;
         io.sails.url = API_URL;
         var URL;
         this.setState({ loader: true })
-        if (this.state.prevRoom.trim() != "") {
+        if (this.state.prevRoom.trim() !== "") {
             URL = `/socket/get-pair-details?prevRoom=${this.state.prevRoom}&room=${this.state.crypto}-${this.state.currency}`
         }
         else {
@@ -77,7 +81,7 @@ class Conversion extends React.Component {
         }, (body, JWR) => {
 
 
-            if (body.status == 200) {
+            if (body.status === 200) {
                 let res = body.data;
                 self.setState({
                     askPrice: res.ask_price,
@@ -159,10 +163,10 @@ class Conversion extends React.Component {
         this.setState({
             includeFees: JSON.parse(e.target.value)
         }, () => {
-            if (self.state.selectedTab == 1) {
+            if (self.state.selectedTab === 1) {
                 self.calculateBuyCurrency();
             }
-            else if (self.state.selectedTab == 2) {
+            else if (self.state.selectedTab === 2) {
                 self.calculateSellCurrency();
             }
         })
@@ -226,7 +230,6 @@ class Conversion extends React.Component {
     }
     calculateBuyCrypto() {
         var self = this;
-        var self = this;
         if (self.state.includeFees) {
             this.setState({
                 buyCryptoInput: (isNaN(self.state.buyCurrencyInput) ? 0 : (self.state.buyCurrencyInput) / self.state.askPrice)
@@ -256,7 +259,7 @@ class Conversion extends React.Component {
     }
     calculateSellCurrency() {
         var self = this;
-        if (self.state.includeFees == true) {
+        if (self.state.includeFees === true) {
             self.setState({
                 sellCurrencyInput: (isNaN(self.state.sellCryptoInput) ? 0 : (self.state.sellCryptoInput * self.state.bidPrice))
             })
@@ -286,7 +289,6 @@ class Conversion extends React.Component {
     }
     calculateSellCrypto() {
         var self = this;
-        var self = this;
         if (self.state.includeFees) {
             this.setState({
                 sellCryptoInput: (isNaN(self.state.sellCurrencyInput) ? 0 : (self.state.sellCurrencyInput) / self.state.bidPrice)
@@ -308,7 +310,7 @@ class Conversion extends React.Component {
     }
     render() {
         return (
-            <ConversionWarp>
+            <ConversionWrap>
                 <Navigation></Navigation>
                 <ConversionContainer>
                     <MainRow>
@@ -470,30 +472,30 @@ class Conversion extends React.Component {
                             <RightColContainer>
                                 <Row>
                                     <Col>
-                                        {this.state.selectedTab == 1 &&
+                                        {this.state.selectedTab === 1 &&
                                             <RightColTitle>You Are Buying</RightColTitle>
                                         }
-                                        {this.state.selectedTab == 2 &&
+                                        {this.state.selectedTab === 2 &&
                                             <RightColTitle>You Are Selling</RightColTitle>
                                         }
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col>
-                                        {this.state.selectedTab == 1 &&
+                                        {this.state.selectedTab === 1 &&
                                             <RightColAmount>{isNaN(parseFloat(this.state.buyCryptoInput)) ? 0 : parseFloat(this.state.buyCryptoInput).toFixed(4)} {this.state.crypto}</RightColAmount>
                                         }
-                                        {this.state.selectedTab == 2 &&
+                                        {this.state.selectedTab === 2 &&
                                             <RightColAmount>{isNaN(parseFloat(this.state.sellCryptoInput)) ? 0 : parseFloat(this.state.sellCryptoInput).toFixed(4)} {this.state.crypto}</RightColAmount>
                                         }
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col>
-                                        {this.state.selectedTab == 1 &&
+                                        {this.state.selectedTab === 1 &&
                                             <RightColPrice>@ {parseFloat(this.state.askPrice)} {this.state.currency} per {this.state.crypto}</RightColPrice>
                                         }
-                                        {this.state.selectedTab == 2 &&
+                                        {this.state.selectedTab === 2 &&
                                             <RightColPrice>@ {this.state.bidPrice} {this.state.currency} per {this.state.crypto}</RightColPrice>
                                         }
                                     </Col>
@@ -531,7 +533,7 @@ class Conversion extends React.Component {
                         </RightCol>
                     </MainRow>
                 </ConversionContainer>
-            </ConversionWarp >
+            </ConversionWrap >
         )
     }
 }

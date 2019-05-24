@@ -40,7 +40,7 @@ class TraddingViewChart extends React.Component {
     };
     tvWidget = null;
     componentWillReceiveProps(props, newProps) {
-        var self = this;
+        /*         var self = this; */
         let flag = false;
         let crypto = this.state.crypto, currency = this.state.currency;
         if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
@@ -61,7 +61,7 @@ class TraddingViewChart extends React.Component {
 
 
 
-        if (flag == true) {
+        if (flag === true) {
             const widgetOptions = {
                 symbol: `${crypto}-${currency}`,
                 // BEWARE: no trailing slash is expected in feed URL
@@ -92,7 +92,7 @@ class TraddingViewChart extends React.Component {
                 fullscreen: props.fullscreen,
                 autosize: props.autosize,
                 studies_overrides: props.studiesOverrides,
-                theme: props.theme == true ? "Dark" : "Light"
+                theme: props.theme === true ? "Dark" : "Light"
             };
 
             const tvWidget = new widget(widgetOptions);
@@ -117,7 +117,7 @@ class TraddingViewChart extends React.Component {
 
     componentDidMount() {
         let currency, crypto;
-        if (this.props.cryptoPair.crypto == undefined) {
+        if (this.props.cryptoPair.crypto === undefined) {
             currency = this.state.currency;
             crypto = this.state.crypto;
         }
@@ -155,7 +155,7 @@ class TraddingViewChart extends React.Component {
             fullscreen: this.props.fullscreen,
             autosize: this.props.autosize,
             studies_overrides: this.props.studiesOverrides,
-            theme: this.props.theme == true ? "Dark" : "Light"
+            theme: this.props.theme === true ? "Dark" : "Light"
         };
 
         const tvWidget = new widget(widgetOptions);

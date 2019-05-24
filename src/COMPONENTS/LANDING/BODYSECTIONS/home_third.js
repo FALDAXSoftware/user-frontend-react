@@ -4,25 +4,25 @@ import { Row, Col, Table } from 'antd';
 import styled from 'styled-components';
 
 /* Components */
-import { Section_2, Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
+import { Section2, Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 
 /* Styled componets */
 const AntdTable = styled.div`
     overflow: auto;
 `;
-const Third_head = styled.div`
+const ThirdHead = styled.div`
     margin-top: 55px;
     margin-bottom: 50px;
     text-align: center;
 `;
-const Third_head_span = styled.span`
+const ThirdHeadSpan = styled.span`
     font-family: 'Open sans';
     font-size: 42px;
     color: rgb(40, 37, 40);
     line-height: 1.143;
     text-align: center;
 `;
-const Third_head_p = styled.p`
+const ThirdHeadP = styled.p`
     font-family: 'Open sans';
     font-size: 42px;
     color: rgb(40, 37, 40);
@@ -33,14 +33,14 @@ const Third_head_p = styled.p`
 /* Component definition start here */
 const HomeThird = ({ loading, columns, dataSource, pagination, handleTableChange }) => {
     return (
-        <Section_2>
+        <Section2>
             <Container>
                 <Row>
                     <Col>
-                        <Third_head>
-                            <Third_head_span><b>Faldax -</b> Most Advanced</Third_head_span>
-                            <Third_head_p>cryptocurrency trading platform</Third_head_p>
-                        </Third_head>
+                        <ThirdHead>
+                            <ThirdHeadSpan><b>Faldax -</b> Most Advanced</ThirdHeadSpan>
+                            <ThirdHeadP>cryptocurrency trading platform</ThirdHeadP>
+                        </ThirdHead>
                         <AntdTable>
                             <Table
                                 loading={loading || false}
@@ -57,7 +57,7 @@ const HomeThird = ({ loading, columns, dataSource, pagination, handleTableChange
                     </Col>
                 </Row>
             </Container>
-        </Section_2>
+        </Section2>
     );
 }
 

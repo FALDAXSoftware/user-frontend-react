@@ -13,7 +13,7 @@ import { globalVariables } from 'Globals';
 /* Global CONSTANTS */
 
 /* Styled-Components */
-import { Username, Form_wrap, Welcome_text, Email_label } from "./login_form";
+import { Username, FormWrap, WelcomeText, EmailLabel } from "./login_form";
 let { GOOGLE_SITE_KEY } = globalVariables;
 const RowWrap = styled(Row)`
   min-height:100%;
@@ -73,7 +73,7 @@ const HorImg = styled.img`
     width:250px;    
   }
 `
-const Login_head = styled.div`
+const LoginHead = styled.div`
   font-size: 30px;
   font-family: "Open Sans";
   color: rgb( 35, 38, 45 );
@@ -88,12 +88,12 @@ const Login_head = styled.div`
       border-bottom:none;
   }
 `
-const Sub_text = styled.span`
+const SubText = styled.span`
     font-size: 16px;
     font-family: "Open Sans";
     color: rgb( 163, 163, 163 );  
 `
-const Button_login = styled(Button)`
+const ButtonLogin = styled(Button)`
   width: auto;
   background-color: rgb(0, 170, 250);
   color: white;
@@ -131,7 +131,7 @@ const Button_login = styled(Button)`
     width:285px;
   }
 `
-const Link_wrap = styled.div`
+const LinkWrap = styled.div`
   margin-top:50px;
   margin-bottom:50px;
   >i
@@ -171,10 +171,11 @@ const RightWrap = styled.div`
 export const Icon = styled.i`
     
 `
-const Back_link = styled.a`
+const BackLink = styled.a`
     
 `
 class ForgotForm extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -221,12 +222,24 @@ class ForgotForm extends Component {
       this.forceUpdate();
     }
   }
+
+  /* 
+    Page: /forgot-password
+    This method is called when you change in fields of Forgot Password Form.
+  */
+
   fieldChange(e) {
     var value = e.target.value;
     this.setState({
       email: value
     });
   }
+
+  /* 
+    Page: /forgot-password
+    This method is called when you want to change to another page and it goes according to user.
+  */
+
   dispModal(pressed) {
     this.props.dispModal(pressed)
   }
@@ -259,6 +272,11 @@ class ForgotForm extends Component {
     });
   };
 
+  /* 
+    Page: /forgot-password
+    This method is called for custom notifications.
+  */
+
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
@@ -280,23 +298,23 @@ class ForgotForm extends Component {
             </LeftWrap>
           </ColLeft>
           <ColRight sm={24} lg={12}>
-            <Form_wrap>
+            <FormWrap>
               <RightWrap className="wow fadeInDown" >
                 <div style={{ width: "100%" }}>
-                  <Login_head>Forgot Password</Login_head>
-                  <Welcome_text>Forgot Password?</Welcome_text>
-                  <Sub_text>Don't worry, It happen's to the best of us.</Sub_text>
-                  <Email_label>Email Address*</Email_label>
+                  <LoginHead>Forgot Password</LoginHead>
+                  <WelcomeText>Forgot Password?</WelcomeText>
+                  <SubText>Don't worry, It happen's to the best of us.</SubText>
+                  <EmailLabel>Email Address*</EmailLabel>
                   <Username type="email" value={this.state.email} onChange={this.fieldChange} />
                   {this.validator.message('Email_Address', this.state.email, 'required|email')}
-                  <Button_login onClick={this.submit}>SEND RESET PASSWORD LINK</Button_login>
-                  <Link_wrap>
+                  <ButtonLogin onClick={this.submit}>SEND RESET PASSWORD LINK</ButtonLogin>
+                  <LinkWrap>
                     <Icon className="material-icons">keyboard_backspace</Icon>
-                    <Back_link onClick={() => this.props.history.push("/login")}> Back To Login </Back_link>
-                  </Link_wrap>
+                    <BackLink onClick={() => this.props.history.push("/login")}> Back To Login </BackLink>
+                  </LinkWrap>
                 </div>
               </RightWrap>
-            </Form_wrap>
+            </FormWrap>
           </ColRight>
         </RowWrap>
         {(this.state.loader == true) ? <FaldaxLoader /> : ""}

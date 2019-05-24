@@ -79,12 +79,12 @@ const SubMenuNav = styled(SubMenu)`
         background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255));
     }
 `
-const Faldaxlogo = styled.img`
+/* const Faldaxlogo = styled.img`
     display: block;
     margin-left: auto;
     margin-right: auto;
     cursor:pointer;
-`
+` */
 /* Styled Components */
 const FALDAX = styled.img`
     margin-left: 15px;
@@ -102,19 +102,19 @@ const Logo = styled.div`
     display: inline-flex;
     align-items: center;
 `
-const Header_main = styled(Header)`
+const Headermain = styled(Header)`
     position:fixed;
     z-index:1000;
     width : 100%;
     padding:0;
     text-align:left;
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
-    box-shadow:${props => props.theme.mode == "dark" ? "" : "0px 3px #f7f7f7"};
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"};
+    box-shadow:${props => props.theme.mode === "dark" ? "" : "0px 3px #f7f7f7"};
     height :80px;
     display:flex;
     align-items:center;
 `
-const Menu_main = styled(Menu)`
+const Menumain = styled(Menu)`
     display:inline-block;
     margin-left:40px;
     lineHeight: 1px;
@@ -123,13 +123,13 @@ const Menu_main = styled(Menu)`
     vertical-align: middle;
     display: inline-flex;
     align-items: center;
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"};
     @media(max-width:1200px)
     {
         display:none;
     }
 `
-const Menu_item = styled(Menu.Item)`
+const Menuitem = styled(Menu.Item)`
     padding:0px 15px;
     font-size: 13px;
     font-family: "Open sans";
@@ -145,7 +145,7 @@ const Menu_item = styled(Menu.Item)`
         padding:0px 8px;
     }
 `
-const FALDAX_LOGO = styled.img`
+const FALDAXLOGO = styled.img`
     padding-left:22px;
 `
 const SideNav = styled.div`
@@ -194,7 +194,7 @@ const SideNav = styled.div`
         }
     }
 `
-const LOG = styled.span`
+/* const LOG = styled.span`
     display:inline-block;
     width:50%;
     color: white;
@@ -202,7 +202,7 @@ const LOG = styled.span`
         color:#1890ff !important;
         text-decoration:underline;
     }
-`
+` */
 const ButtonLog = styled(Button)`
     background-color: white;
     border-color: #0f477b;
@@ -214,7 +214,7 @@ const ButtonLog = styled(Button)`
     padding: 7px 20px 8px;
     height: auto;
 `
-const Fin_sign = styled.a`
+const Finsign = styled.a`
     text-decoration: none;
     font-size: 18px;
     display: inline-flex;
@@ -223,14 +223,14 @@ const Fin_sign = styled.a`
     line-height: 1.5;
     color: white;
 `
-const Fin_log = styled.a`
+const Finlog = styled.a`
 text-decoration: none;
 font-size: 18px;
 transition: 0.5s;
 line-height: 1.5;
 color: white;
 `
-const Fin_div = styled.div`
+const Findiv = styled.div`
     padding: 0px 32px;
     display:none;
     @media(max-width:480px)
@@ -239,23 +239,23 @@ const Fin_div = styled.div`
         align-items:center;
     }
 `
-const Why = styled.a`
+/* const Why = styled.a`
     padding:0px !important;
     display:none !important;
     @media(max-width:670px)
     {
         display:block !important;
     }
-`
+` */
 const Close = styled.a`
     text-align:right;
 `
-const Right_div = styled.div`
+const Rightdiv = styled.div`
     margin-left:auto;
     height:100%;
 `
 const NavLink = styled.a`
-    color: ${props => props.theme.mode == "dark" ? "white" : "black"} !important;
+    color: ${props => props.theme.mode === "dark" ? "white" : "black"} !important;
     &:hover{
         color:#1890ff !important;
     }
@@ -301,87 +301,40 @@ class Navigation extends Component {
             qP: ""
         }
     }
-
-    openNav() {
-        if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
-            document.getElementById("mySidenav").style.width = "250px";
-            document.getElementById("main").style.marginRight = "250px";
-            // document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-        }
-    }
-    closeNav() {
-        if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
-            document.getElementById("mySidenav").style.width = "0";
-            document.getElementById("main").style.marginRight = "0";
-            document.body.style.backgroundColor = "white";
-        }
-    }
-    dispModal(pressed) {
-        if (pressed == "login")
-            this.props.history.push("/login")
-        else if (pressed == "signup")
-            this.props.history.push("/signup")
-        // else if (pressed == "thankyou")
-        //     this.setState({ modal: 4 });
-        else
-            this.setState({ modal: 2 })
-        //this.showModal();
-        this.setState({ forgotParam: undefined })
-    }
-
-    showModal = () => {
-        this.setState({ visible: true });
-    }
-
-    handleOk = (e) => {
-        this.setState({ visible: false });
-    }
-
-    handleCancel = (e) => {
-        this.setState({ visible: false, modal: 5 });
-    }
-    handleAfterClose = (e) => {
-        this.setState({ modal: 5 });
-    }
-    comingCancel = (e) => {
-        this.setState({ comingSoon: false });
-    }
-    showComing = () => {
-        this.setState({ comingSoon: true });
-    }
+    /* Life-Cycle Methods */
     componentWillReceiveProps(props, newProps) {
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
-                if (props.theme == false)
+                if (props.theme === false)
                     this.setState({ faldaxLogo: _FALDAXLOGO, faldax: _FALDAX })
                 else
                     this.setState({ faldax: _FALDAXWHITE, faldaxLogo: _WHITELOGO })
             }
         }
         if (props.location.pathname !== undefined)
-            if (props.location.pathname == "/login") {
-                if (props.location.hash == "#openTicket") {
+            if (props.location.pathname === "/login") {
+                if (props.location.hash === "#openTicket") {
                     this.setState({ modal: 0, visible: true });
                 }
             }
     }
     componentDidMount() {
         if (this.props.location.pathname !== undefined)
-            if (this.props.location.pathname == "/login") {
-                if (this.props.location.hash == "#openTicket") {
+            if (this.props.location.pathname === "/login") {
+                if (this.props.location.hash === "#openTicket") {
                     this.setState({ modal: 0, visible: true });
                 }
             }
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
-                if (this.props.theme == false)
+                if (this.props.theme === false)
                     this.setState({ faldaxLogo: _FALDAXLOGO, faldax: _FALDAX })
                 else
                     this.setState({ faldax: _FALDAXWHITE, faldaxLogo: _WHITELOGO })
             }
         }
 
-        let queryParams
+        /*         let queryParams */
 
         /* if (this.props.location.pathname == "/signup") {
             queryParams = decodeURIComponent(this.props.queryParams)
@@ -393,23 +346,111 @@ class Navigation extends Component {
                 this.setState({ forgotParam: queryParams.split("="), visible: true })
             }
         } */
-        if (this.props.location.pathname == "/about-us") {
+        if (this.props.location.pathname === "/about-us") {
             this.setState({ selected: ['2'] })
-        } else if (this.props.location.pathname == "/contact-us") {
+        } else if (this.props.location.pathname === "/contact-us") {
             this.setState({ selected: ['6'] })
-        } else if (this.props.location.pathname == "/blogs") {
+        } else if (this.props.location.pathname === "/blogs") {
             this.setState({ selected: ['3'] })
-        } else if (this.props.location.pathname == "/list-your-token") {
+        } else if (this.props.location.pathname === "/list-your-token") {
             this.setState({ selected: ['7'] })
         } else if (this.props.location.pathname.includes("news")) {
             this.setState({ selected: ['5'] })
         } else {
-            if (this.props.location.pathname == "/")
+            if (this.props.location.pathname === "/")
                 this.setState({ selected: ['1'] })
             else
                 this.setState({ selected: ['0'] })
         }
     }
+
+    /* 
+            Page: on every page after login on top right
+            It is called to open side menu in responsiveness(Small Devices).
+    */
+
+    openNav() {
+        if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginRight = "250px";
+            // document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+        }
+    }
+
+    /* 
+            Page: on every page after login on top right
+            It is called to close side menu in responsiveness(Small Devices).
+    */
+
+    closeNav() {
+        if (document.getElementById("mySidenav") !== undefined && document.getElementById("mySidenav") !== null) {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginRight = "0";
+            document.body.style.backgroundColor = "white";
+        }
+    }
+
+    /* 
+            Page: on every page after login on top right
+            It is called to check if user has requested signup/login page.
+    */
+
+    dispModal(pressed) {
+        if (pressed === "login")
+            this.props.history.push("/login")
+        else if (pressed === "signup")
+            this.props.history.push("/signup")
+        // else if (pressed == "thankyou")
+        //     this.setState({ modal: 4 });
+        else
+            this.setState({ modal: 2 })
+        //this.showModal();
+        this.setState({ forgotParam: undefined })
+    }
+
+    /* 
+            Page: on every page after login on top right
+            It is called to show modal.
+    */
+
+    /* showModal = () => {
+        this.setState({ visible: true });
+    } */
+
+    /* 
+            Page: on every page after login on top right
+            It is called to handle modal.
+    */
+
+    /* handleOk = (e) => {
+        this.setState({ visible: false });
+    } */
+
+    /* 
+            Page: on every page after login on top right
+            It is called to handle modal.
+    */
+
+    /* handleCancel = (e) => {
+        this.setState({ visible: false, modal: 5 });
+    }
+
+    handleAfterClose = (e) => {
+        this.setState({ modal: 5 });
+    } */
+    comingCancel = (e) => {
+        this.setState({ comingSoon: false });
+    }
+
+    showComing = () => {
+        this.setState({ comingSoon: true });
+    }
+
+    /* 
+        Page: on every page after login on top right
+        It is called to logout.
+    */
+
     logout() {
         let formData = {
             user_id: this.props.profileDetails.id,
@@ -420,46 +461,46 @@ class Navigation extends Component {
     }
     render() {
         let prof_name = this.props.profileDetails.first_name !== null && this.props.profileDetails.first_name !== undefined ? (this.props.profileDetails.first_name + " " + this.props.profileDetails.last_name) : "User";
-        const { modal } = this.state;
+        /*         const { modal } = this.state; */
         return (
             <div>
-                <Header_main id="main">
+                <Headermain id="main">
                     <Logo>
                         <a href={globalVariables.WordpressSiteURL}>
-                            <FALDAX_LOGO className="" src={this.state.faldaxLogo} />
+                            <FALDAXLOGO className="" src={this.state.faldaxLogo} />
                             <FALDAX src={this.state.faldax} />
                         </a>
                     </Logo>
-                    <Menu_main
+                    <Menumain
                         mode="horizontal"
                         defaultSelectedKeys={['1']}
                         selectedKeys={this.state.selected}
                     >
-                        <Menu_item key="1"><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/`}>HOME</NavLink></Menu_item>
+                        <Menuitem key="1"><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/`}>HOME</NavLink></Menuitem>
                         {/* <Menu_item key="2" onClick={this.showComing}>FEATURES</Menu_item> */}
-                        <Menu_item key="2"><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/about-us`}>ABOUT</NavLink></Menu_item>
-                        <Menu_item key="3"><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/blogs`}>BLOG</NavLink></Menu_item>
+                        <Menuitem key="2"><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/about-us`}>ABOUT</NavLink></Menuitem>
+                        <Menuitem key="3"><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/blogs`}>BLOG</NavLink></Menuitem>
                         {/* <Menu_item key="4" onClick={this.showComing}><NavLink className="Nav_selected" href="#">SECURITY</NavLink></Menu_item> */}
-                        <Menu_item key="5" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/news`}>NEWS</NavLink></Menu_item>
-                        <Menu_item key="6" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/contact-us`}>CONTACT</NavLink></Menu_item>
-                        <Menu_item key="7" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/list-your-token`}>LIST YOUR TOKEN</NavLink></Menu_item>
-                        <Menu_item key="8" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/coming-soon`}>EXCHANGE</NavLink></Menu_item>
-                    </Menu_main>
-                    <Right_div>
+                        <Menuitem key="5" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/news`}>NEWS</NavLink></Menuitem>
+                        <Menuitem key="6" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/contact-us`}>CONTACT</NavLink></Menuitem>
+                        <Menuitem key="7" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/list-your-token`}>LIST YOUR TOKEN</NavLink></Menuitem>
+                        <Menuitem key="8" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/coming-soon`}>EXCHANGE</NavLink></Menuitem>
+                    </Menumain>
+                    <Rightdiv>
                         {this.props.isLoggedIn ? <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} /> :
                             <Beforelog {...this.props} dispModal={(pressed) => this.dispModal(pressed)} openNav={() => this.openNav()} />
                         }
-                    </Right_div>
+                    </Rightdiv>
                     <ReactSwipeEvents
                         onSwipedRight={() => { this.closeNav() }}
                     >
                         <SideNav id="mySidenav">
                             <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                             {!this.props.isLoggedIn &&
-                                <Fin_div>
-                                    <Fin_log onClick={() => this.props.history.push(`${globalVariables.WordpressSiteURL}/login`)}><ButtonLog type="primary">Login</ButtonLog></Fin_log>
-                                    <Fin_sign onClick={() => this.props.history.push(`${globalVariables.WordpressSiteURL}/signup`)}><ButtonLog type="primary">Signup</ButtonLog></Fin_sign>
-                                </Fin_div>
+                                <Findiv>
+                                    <Finlog onClick={() => this.props.history.push(`${globalVariables.WordpressSiteURL}/login`)}><ButtonLog type="primary">Login</ButtonLog></Finlog>
+                                    <Finsign onClick={() => this.props.history.push(`${globalVariables.WordpressSiteURL}/signup`)}><ButtonLog type="primary">Signup</ButtonLog></Finsign>
+                                </Findiv>
                             }
                             <a href={globalVariables.WordpressSiteURL}>Home</a>
                             {/* <a onClick={this.showComing} href="#">Features</a> */}
@@ -513,7 +554,7 @@ class Navigation extends Component {
                         </SideNav>
                     </ReactSwipeEvents>
                     <ComingSoon comingCancel={(e) => this.comingCancel(e)} visible={this.state.comingSoon} />
-                </Header_main>
+                </Headermain>
                 {/* (this.props.loader == true) ? <Spin_Ex className="Ex_spin">
                     <Spin size="large" />
                 </Spin_Ex> : "" */}

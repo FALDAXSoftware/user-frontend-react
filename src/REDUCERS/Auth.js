@@ -26,7 +26,7 @@ export default (state = {}, action) => {
 
     case 'ERROR':
       /* console.log(action.payload) */
-      if (action.status == "login") {
+      if (action.status==="login") {
         return {
           ...state,
           errorStatus: action.payload

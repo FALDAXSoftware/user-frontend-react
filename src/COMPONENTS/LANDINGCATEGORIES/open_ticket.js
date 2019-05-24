@@ -5,7 +5,7 @@ import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import {
-    Contact_wrap, Grey_wrap, Career_wrap
+    ContactWrap, GreyWrap, CareerWrap
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
 import { globalVariables } from "Globals";
 
@@ -15,7 +15,7 @@ import HubspotForm from 'react-hubspot-form'
 let API_URL = globalVariables.API_URL;
 
 export const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"};
     border-radius:5px;
     padding-right:120px;
     padding-left:120px;
@@ -37,7 +37,7 @@ const TicketTitle = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode == "dark" ? "white" : "black"};
+  color:${props => props.theme.mode==="dark" ? "white" : "black"};
   &:before {
     content: '';
     width: calc(50% - 170px);
@@ -78,24 +78,24 @@ class OpenTicket extends Component {
 
     render() {
         return (
-            <Contact_wrap>
+            <ContactWrap>
                 <Navigation />
-                <Grey_wrap>
+                <GreyWrap>
                     <ContainerContact>
                         <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                             <TicketTitle>Open a Ticket </TicketTitle>
                         </div>
-                        <Career_wrap>
-                            {/* <iframe style={{ border: 'none' }} height="1100px" width="100%" src={API_URL + "/get-open-ticket-form"}></iframe> */}
+                        <CareerWrap>
+                            {/* <iframe style={{ border: 'none' }} height="1100px" width="100%" src={APIURL + "/get-open-ticket-form"}></iframe> */}
                             <HubspotForm
                                 portalId='4933498'
                                 formId='4dd2d22b-70ec-4709-babe-aa5aad1d2455'
                             />
-                        </Career_wrap>
+                        </CareerWrap>
                     </ContainerContact>
-                </Grey_wrap>
+                </GreyWrap>
                 <CommonFooter />
-            </Contact_wrap >
+            </ContactWrap >
         );
     }
 }
