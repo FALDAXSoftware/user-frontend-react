@@ -177,7 +177,7 @@ class ChangeEmail extends Component {
 
         if (this.validator.allValid()) {
             let formData = {
-                newEmail: fields["newEmail"],
+                new_email: fields["newEmail"],
             };
 
             this.setState({ loader: true });
