@@ -29,20 +29,20 @@ const SSNWrap = styled.div`
     }
 `
 const SSNSub = styled.div`
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
 `
-const SSN_label = styled.label`
+const SSNlabel = styled.label`
     display:block;
     font-size: 18px;
     font-family: open sans;
     text-align:center;
     margin-bottom:10px;
 `
-const File_wrap = styled.div`
+const Filewrap = styled.div`
     text-align:center;
     margin-top:20px;
 `
-const File_select1 = styled.div`
+const Fileselect1 = styled.div`
     display:inline-block;
     width: 146px;
     height: 146px;
@@ -55,7 +55,7 @@ const File_select1 = styled.div`
         margin-top:20px;
     }
 `
-const File_select2 = styled(File_select1)`
+const Fileselect2 = styled(Fileselect1)`
     display:inline-block;
     margin-left:15px;
     margin-right:0px;
@@ -71,8 +71,8 @@ const ButtonUp = styled.button`
     width: 100%;
     /* margin: 0 auto; */
     height: 145px;
-    background-color: ${props => props.theme.mode == "dark" ? "#01090f" : 'white'};
-    color: ${props => props.theme.mode == "dark" ? "white" : ""};
+    background-color: ${props => props.theme.mode === "dark" ? "#01090f" : 'white'};
+    color: ${props => props.theme.mode === "dark" ? "white" : ""};
     box-shadow: none;
     border: 1px solid rgb(0,170,250);
     border-radius: 20px;
@@ -93,7 +93,7 @@ const Plus = styled.span`
     font-size: 21px;
     padding-top: 6px;
 `
-const Plus_text = styled.span`
+const Plustext = styled.span`
 margin-top: 18px;
 display: block;
 font-size: 18px;
@@ -102,12 +102,12 @@ const ButtonUp2 = styled(ButtonUp)`
 `
 const Plus2 = styled(Plus)`
 `
-const Plus_text2 = styled(Plus_text)`
+const Plustext2 = styled(Plustext)`
 `
-const File_input = styled.input`
+const Fileinput = styled.input`
     visibility: hidden;
     position: absolute;`
-const File_input2 = styled.input`
+const Fileinput2 = styled.input`
     visibility: hidden;
     position: absolute;
 `
@@ -133,10 +133,34 @@ class DocUpload extends Component {
         }
         this.handleProfile = this.handleProfile.bind(this);
     }
+
+    /* Life-Cycle Methods */
+    componentWillReceiveProps(props, newProps) {
+        if (this.state.icon1 === "check" && this.state.click === 'front') {
+            this.setState({ frontImg: props.image_path })
+        } else if (this.state.icon2 === "check" && this.state.click === 'back') {
+            this.setState({ backImg: props.image_path })
+        }
+        if (this.props.is_kyc_done === true) {
+            this.props.next_step(5)
+        }
+    }
+
+    /* 
+        Page: /editProfile --> KYC
+        It is called when we click on upload button according to front or back.
+    */
+
     handleFileSelectClick(val) {
         document.querySelector("#" + val).click();
         this.setState({ click: val })
     }
+
+    /* 
+        Page: /editProfile --> KYC
+        It is called once file is selected and file is read and file selected is stored in state.
+    */
+
     handleProfile(e) {
         var _self = this;
         var e1 = e;
@@ -152,13 +176,13 @@ class DocUpload extends Component {
                 const file = _self.state.fileTarget.files[0];
                 const fileType = file && file.type ? file.type.substring(0, file.type.indexOf('/')) : '';
                 const fileSize = file && file.size ? file.size : 0;
-                if (fileType == 'image') {
+                if (fileType === 'image') {
                     if (fileType === 'image' && fileSize < 5242880) {
 
                         var fr = new FileReader();
                         fr.readAsDataURL(file);
                         fr.onload = function () {
-                            var img = new Image;
+                            var img = new Image();
                             img.onload = function () {
 
                                 frontWidth = img.width;
@@ -166,7 +190,7 @@ class DocUpload extends Component {
 
                                 if (frontWidth > 450 && frontHeight > 600) {
 
-                                    if (_self.state.targetName == "front-doc") {
+                                    if (_self.state.targetName === "front-doc") {
                                         _self.setState({ icon1: "check" })
                                     } else {
                                         _self.setState({ icon2: "check" })
@@ -208,6 +232,12 @@ class DocUpload extends Component {
             }
         })
     }
+
+    /* 
+        Page: /editProfile --> KYC
+        It is called for custom Notifications.
+    */
+
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
             message: head,
@@ -215,8 +245,13 @@ class DocUpload extends Component {
         });
     };
 
+    /* 
+        Page: /editProfile --> KYC
+        It is called when we click next button for next step.
+    */
+
     next_step() {
-        if (this.state.icon1 == "check" && this.state.icon2 == "check") {
+        if (this.state.icon1 === "check" && this.state.icon2 === "check") {
             if (this.state.frontImg !== "" && this.state.backImg !== "") {
                 var kycDoc = {};
                 kycDoc["front_doc"] = this.state.frontImg;
@@ -228,43 +263,40 @@ class DocUpload extends Component {
             this.openNotificationWithIcon("error", "KYC", "Please upload front and back of your document")
         }
     }
+
+    /* 
+        Page: /editProfile --> KYC
+        It is called when we click back button for back step.
+    */
+
     back_step() {
         this.props.back_step(1)
     }
-    componentWillReceiveProps(props, newProps) {
-        if (this.state.icon1 == "check" && this.state.click == 'front') {
-            this.setState({ frontImg: props.image_path })
-        } else if (this.state.icon2 == "check" && this.state.click == 'back') {
-            this.setState({ backImg: props.image_path })
-        }
-        if (this.props.is_kyc_done == true) {
-            this.props.next_step(5)
-        }
-    }
+
 
     render() {
         return (
             <div>
                 <SSNWrap>
                     <SSNSub>
-                        <SSN_label>Upload Your {this.props.docText}</SSN_label>
+                        <SSNlabel>Upload Your {this.props.docText}</SSNlabel>
                     </SSNSub>
-                    <File_wrap>
-                        <File_select1 className="file-select-col">
+                    <Filewrap>
+                        <Fileselect1 className="file-select-col">
                             <ButtonUp className="file-select-btn" onClick={() => { this.handleFileSelectClick('front') }}>
                                 <Plus className="plus"><Icon type={this.state.icon1} theme="outlined" /></Plus>
-                                <Plus_text className="text">Front</Plus_text>
+                                <Plustext className="text">Front</Plustext>
                             </ButtonUp>
-                            <File_input onChange={this.handleProfile} type="file" name="front-doc" id="front" />
-                        </File_select1>
-                        <File_select2 md={{ span: 6 }} className="file-select-col">
+                            <Fileinput onChange={this.handleProfile} type="file" name="front-doc" id="front" />
+                        </Fileselect1>
+                        <Fileselect2 md={{ span: 6 }} className="file-select-col">
                             <ButtonUp2 className="file-select-btn" onClick={() => { this.handleFileSelectClick('back') }}>
                                 <Plus2 className="plus"><Icon type={this.state.icon2} theme="outlined" /></Plus2>
-                                <Plus_text2 className="text">Back</Plus_text2>
+                                <Plustext2 className="text">Back</Plustext2>
                             </ButtonUp2>
-                            <File_input2 onChange={this.handleProfile} type="file" name="back-doc" id="back" />
-                        </File_select2>
-                    </File_wrap>
+                            <Fileinput2 onChange={this.handleProfile} type="file" name="back-doc" id="back" />
+                        </Fileselect2>
+                    </Filewrap>
                 </SSNWrap>
                 <ButtonWrap>
                     <SubWrap>
@@ -272,7 +304,7 @@ class DocUpload extends Component {
                         <NextButton onClick={this.next_step.bind(this)} type="primary">Next</NextButton>
                     </SubWrap>
                 </ButtonWrap>
-                {(this.props.loader == true) ?
+                {(this.props.loader === true) ?
                     <FaldaxLoader />
                     : ""
                 }

@@ -21,7 +21,7 @@ export const globalVariables = {
 
     //API_URL: 'https://prod-backend.faldax.com',
 
-    //API_URL: process.env.REACT_APP_ENV_URL == 'production' ?
+    //API_URL: process.env.REACT_APP_ENV_URL==='production' ?
     /* 'https://prod-backend.faldax.com':
         'https://dev-backend.faldax.com',
     */

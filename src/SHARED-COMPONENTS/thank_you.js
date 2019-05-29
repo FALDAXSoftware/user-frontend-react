@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
-import { Contact_wrap, Grey_wrap } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
+import { ContactWrap, GreyWrap } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 
 export const ContainerContact = styled(Container)`
     text-align: center;
     padding: 150px 10px;
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"};
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -35,9 +35,9 @@ const Paragraph = styled.p`
 
 const ThankYou = () => {
     return (
-        <Contact_wrap>
+        <ContactWrap>
             <Navigation />
-            <Grey_wrap>
+            <GreyWrap>
                 <ContainerContact>
                     <Span>
                         Thank you!
@@ -46,9 +46,9 @@ const ThankYou = () => {
                         Your information has been submitted and we will contact you within 24 hours.
             </Paragraph>
                 </ContainerContact>
-            </Grey_wrap>
+            </GreyWrap>
             <CommonFooter />
-        </Contact_wrap >
+        </ContactWrap >
     )
 }
 

@@ -1,18 +1,18 @@
 /* Built-in Packages */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Row, Col, Input, Select, notification } from 'antd';
+import { Row, Col, /* Input, */ Select, notification } from 'antd';
 import { connect } from "react-redux";
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
-import { DropdownButton, ButtonToolbar } from 'react-bootstrap';
+/* import { DropdownButton, ButtonToolbar } from 'react-bootstrap'; */
 
 /* Styled-Components */
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
-import { Contact_wrap, Grey_wrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
+import { ContactWrap, GreyWrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import {
-    Header_wrap, MY_wallet, WalletCoin, CoinTable, Detail_wrap,
-    Address, Row_wrap, Left_Bit, CryptImg, CryptAmt, Right_Bit, BTC, BTC_amt, DepButton, WithButton, Trans_table, TransTitle, Left_head
+    HeaderWrap, MYWallet, WalletCoin, CoinTable, DetailWrap,
+    Address, RowWrap, LeftBit, CryptImg, CryptAmt, RightBit, BTC, BTCAmt, DepButton, WithButton, TransTable, TransTitle, LeftHead
 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
 
 /* Components */
@@ -27,14 +27,14 @@ let { API_URL, _AMAZONBUCKET } = globalVariables;
 const Option = Select.Option;
 
 const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
     padding-bottom: 30px;
 `
 const ContainerContact2 = styled(ContainerContact)`
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -62,12 +62,13 @@ class WalletDetails extends Component {
             coin_code: "",
             walletUserData: [],
             defaultCoin: '',
-            loader: false,
             balanceFlag: false,
             coinFee: []
         };
         this.changeCoins = this.changeCoins.bind(this);
     }
+
+    /* Life Cycle Methods */
     componentDidMount() {
         var self = this;
         var total = 0;
@@ -77,6 +78,7 @@ class WalletDetails extends Component {
                 Object.keys(tableData).map(function (index, key) {
                     if (tableData[index].USD !== undefined)
                         total = total + parseFloat(tableData[index].USD) * (tableData[index].balance);
+                    return 0;
                 })
                 this.setState({ total });
             }
@@ -136,6 +138,12 @@ class WalletDetails extends Component {
             }
         }
     }
+
+    /* 
+        Page: /wallet
+        This method is called for custom notifications .
+    */
+
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
             message: head,
@@ -143,6 +151,12 @@ class WalletDetails extends Component {
             duration: 5
         });
     };
+
+    /* 
+        Page: /wallet
+        This method is called when we close the modal.
+    */
+
     comingCancel = (e) => {
         /* console.log(e); */
         this.setState({
@@ -150,34 +164,46 @@ class WalletDetails extends Component {
             send: false
         });
     }
+
+    /* 
+        Page: /wallet
+        This method is called when we open the modal.
+    */
+
     showModal = (e) => {
-        if (e.target.name == "SEND")
+        if (e.target.name === "SEND")
             this.setState({ send: true });
         else
             this.setState({ withdraw: true });
     }
+
+    /* 
+        Page: /wallet
+        This method is called when we choose other coins for details page.
+    */
+
     changeCoins(value) {
         this.setState({ defaultCoin: value }, () => {
             this.props.history.push(`/walletDetails?coinID${this.state.balanceFlag ? 1 : 0}=${value}`)
         })
     }
     render() {
-        var self = this;
-        const { walletUserData, defaultCoin, walletDetails } = this.state;
+        /* var self = this; */
+        const { walletUserData, defaultCoin/*,  walletDetails */ } = this.state;
 
         return (
-            <Contact_wrap>
+            <ContactWrap>
                 <LoggedNavigation />
-                <Grey_wrap>
+                <GreyWrap>
                     <ContainerContact2>
-                        <Header_wrap>
+                        <HeaderWrap>
                             <Row style={{ width: "100%" }}>
                                 <Col xxl={12} xl={12} lg={12} sm={24}>
-                                    <Left_head>
-                                        <MY_wallet>
+                                    <LeftHead>
+                                        <MYWallet>
                                             <span>{this.state.walletUserData.length > 0 ? this.state.walletUserData[0].coin_name : "COIN"}</span>
-                                        </MY_wallet>
-                                        {this.state.balanceFlag == false ?
+                                        </MYWallet>
+                                        {this.state.balanceFlag === false ?
                                             <WalletCoin>
                                                 {this.props.walletDetails !== null && this.props.walletDetails !== undefined ?
                                                     <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
@@ -189,7 +215,7 @@ class WalletDetails extends Component {
                                                     </Select> : ""
                                                 }
                                             </WalletCoin> : ""}
-                                        {this.state.balanceFlag == true ?
+                                        {this.state.balanceFlag === true ?
                                             <WalletCoin>
                                                 {this.props.nowalletBalance !== null && this.props.nowalletBalance !== undefined ?
                                                     <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
@@ -201,7 +227,7 @@ class WalletDetails extends Component {
                                                     </Select> : ""
                                                 }
                                             </WalletCoin> : ""}
-                                    </Left_head>
+                                    </LeftHead>
                                 </Col>
                                 {/* <Col xxl={12} xl={12} lg={12} sm={24}>
                                     <Right_head>
@@ -220,55 +246,55 @@ class WalletDetails extends Component {
                                     </Right_head>
                                 </Col> */}
                             </Row>
-                        </Header_wrap>
-                        <Detail_wrap>
+                        </HeaderWrap>
+                        <DetailWrap>
                             <Address>{this.state.walletUserData.length > 0 ? this.state.walletUserData[0].coin_name.toUpperCase() : "COIN"} Address : <b style={{ color: "black" }}>{walletUserData.length > 0 ? walletUserData[0].receive_address : ""}</b></Address>
                             <hr />
-                            <Row_wrap>
+                            <RowWrap>
                                 <Row>
                                     <Col xxl={12} xl={12} lg={24} md={24}>
-                                        <Left_Bit>
+                                        <LeftBit>
                                             <CryptImg><CoinImage src={((walletUserData.length > 0 && walletUserData[0].coin_icon !== null && walletUserData[0].coin_icon !== undefined) ? _AMAZONBUCKET + walletUserData[0].coin_icon : _AMAZONBUCKET + "coin/defualt_coin.png")} /></CryptImg>
                                             <CryptAmt>
-                                                <BTC_amt>
+                                                <BTCAmt>
                                                     {walletUserData.length > 0 ? <NumberFormat value={walletUserData[0].balance.toFixed(4)} displayType={'text'} thousandSeparator={true} /> : ''}
-                                                    <BTC>{walletUserData.length > 0 ? walletUserData[0].coin_code : ""}</BTC></BTC_amt>
+                                                    <BTC>{walletUserData.length > 0 ? walletUserData[0].coin_code : ""}</BTC></BTCAmt>
                                                 {/* <FIAT_amt>$874.23<AMT>USD</AMT></FIAT_amt> */}
                                             </CryptAmt>
-                                        </Left_Bit>
+                                        </LeftBit>
                                     </Col>
                                     <Col xxl={12} xl={12} lg={24} md={24}>
-                                        <Right_Bit>
+                                        <RightBit>
                                             <DepButton name="SEND" onClick={this.showModal}>SEND</DepButton>
                                             <WithButton name="RECEIVE" onClick={this.showModal}>RECEIVE</WithButton>
-                                        </Right_Bit>
+                                        </RightBit>
                                     </Col>
                                 </Row>
-                            </Row_wrap>
-                        </Detail_wrap>
-                        <Trans_table>
+                            </RowWrap>
+                        </DetailWrap>
+                        <TransTable>
                             <TransTitle>Transaction History</TransTitle>
                             <CoinTable>
                                 <DetailsTable wallet={this.state.walletDetails} />
                             </CoinTable>
-                        </Trans_table>
-                        {this.state.withdraw == true ?
+                        </TransTable>
+                        {this.state.withdraw === true ?
 
                             <WalletPopup coinFee={this.state.coinFee} coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="RECEIVE" comingCancel={(e) => this.comingCancel(e)} visible={this.state.withdraw} />
                             :
                             ""
                         }
-                        {this.state.send == true
+                        {this.state.send === true
                             ?
                             <WalletPopup coinFee={this.state.coinFee} coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="SEND" comingCancel={(e) => this.comingCancel(e)} visible={this.state.send} />
                             :
                             ""
                         }
                     </ContainerContact2>
-                </Grey_wrap>
+                </GreyWrap>
                 <CommonFooter />
                 {(this.props.loader || this.state.loader) ? <FaldaxLoader /> : ""}
-            </Contact_wrap>
+            </ContactWrap>
         );
     }
 }

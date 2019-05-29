@@ -4,7 +4,7 @@ import { _CONVERSIONBACKGROUND } from "CONSTANTS/images";
 import { Row, Col, Tabs, Select, Button, Radio } from "antd";
 const TabPane = Tabs.TabPane;
 const Option = Select.Option
-export const ConversionWarp = styled.div`
+export const ConversionWrap = styled.div`
     background-color:#f5f6fa;
     background-image:url('${_CONVERSIONBACKGROUND}');
     background-size:cover;

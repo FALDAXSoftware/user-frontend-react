@@ -7,12 +7,12 @@ import { Row, Col, Radio, notification, Spin } from 'antd';
 
 /* components */
 import {
-    Spin_single
+    SpinSingle
 } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle"
 import { globalVariables } from "Globals";
 
 /* STYLED-COMPONENTS */
-import { Label, Market_wrap, Buy_wrap, Buy_sell, BuySellRadio, Balance_wrap, Balance, Balance1, Total, ETH_wrap, BTC_wrap, Willpay, Willpay2, AMTinput, Total_wrap, Totinput, Pay, Esti, Button_wrap, ButtonETH } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import { Label, MarketWrap, BuyWrap, BuySell, BuySellRadio, BalanceWrap, Balance, Balance1, Total, ETHWrap, BTCWrap, Willpay, Willpay2, AMTInput, TotalWrap, TotInput, Pay, Esti, ButtonWrap, ButtonETH } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
 let { API_URL } = globalVariables;
 
@@ -51,6 +51,9 @@ class Limit extends Component {
             }
         });
     }
+
+    /* Life-Cycle Methods */
+
     componentDidMount() {
         this.setState({
             amount: 0,
@@ -80,13 +83,19 @@ class Limit extends Component {
             }
         }
     }
+
+    /* 
+        Page: /trade --> limit
+        this method is called depended on side BUY/SELL.
+    */
+
     onChange(e) {
         var self = this;
         let obj = {};
         let name = e.target.name;
         let value = e.target.value;
         obj[name] = value;
-        if (name == "side") {
+        if (name === "side") {
             obj["amount"] = 0;
             obj["total"] = 0;
             obj['limit_price'] = 0;
@@ -96,13 +105,13 @@ class Limit extends Component {
         }, () => {
             obj = {};
             if (this.state.amount > 0 && this.state.limit_price > 0) {
-                if (this.state.side == "Buy") {
+                if (this.state.side === "Buy") {
                     obj["total"] = Number(this.state.amount) * this.props.userBal.buyPay;
                     self.setState({
                         buyPayAmt: Number(this.state.amount) * this.props.userBal.buyPay,
                         buyEstPrice: Number(this.state.amount) * this.props.userBal.buyEstimatedPrice
                     })
-                } else if (this.state.side == "Sell") {
+                } else if (this.state.side === "Sell") {
                     self.setState({
                         sellPayAmt: Number(this.state.amount) * this.props.userBal.sellPay,
                         sellEstPrice: Number(this.state.amount) * this.props.userBal.sellEstimatedPrice
@@ -115,12 +124,24 @@ class Limit extends Component {
             self.setState({ ...obj });
         });
     }
+
+    /* 
+        Page: /trade --> limit
+        this method is called for cutom notifications.
+    */
+
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
             message: head,
             description: desc,
         });
     };
+
+    /* 
+        Page: /trade --> limit
+        this method is called when Submit is called for BUY/SELL.
+    */
+
     onSubmit() {
         var self = this;
         if (this.validator.allValid()) {
@@ -142,7 +163,7 @@ class Limit extends Component {
                 body: JSON.stringify(params)
             }).then(response => response.json())
                 .then((responseData) => {
-                    if (responseData.status == 200) {
+                    if (responseData.status === 200) {
                         this.setState({
                             limit_price: 0, total: 0, amount: 0, loader: false, buyPayAmt: 0, sellPayAmt: 0,
                             buyEstPrice: 0, sellEstPrice: 0
@@ -161,26 +182,28 @@ class Limit extends Component {
             this.forceUpdate();
         }
     }
+
     onChangeCheck(e) {
     }
+
     render() {
         const { userBalFees, buyEstPrice, buyPayAmt, sellEstPrice, sellPayAmt } = this.state;
         const RadioGroup = Radio.Group;
 
         return (
-            <Market_wrap>
-                <Buy_wrap>
-                    <Buy_sell>
+            <MarketWrap>
+                <BuyWrap>
+                    <BuySell>
                         <RadioGroup value={this.state.side} size="large" buttonStyle="solid" onChange={this.onChange} name="side">
                             <BuySellRadio value="Buy">BUY</BuySellRadio>
                             <BuySellRadio value="Sell">SELL</BuySellRadio>
                         </RadioGroup>
-                    </Buy_sell>
-                </Buy_wrap>
+                    </BuySell>
+                </BuyWrap>
 
                 {Object.keys(this.props.userBal).length > 0 ?
-                    this.state.side == "Buy" ?
-                        <Balance_wrap>
+                    this.state.side === "Buy" ?
+                        <BalanceWrap>
                             <Row>
                                 <Col xs={24} sm={12}>
                                     <Row>
@@ -223,8 +246,8 @@ class Limit extends Component {
                                     </Row>
                                 </Col>
                             </Row>
-                        </Balance_wrap> :
-                        <Balance_wrap>
+                        </BalanceWrap> :
+                        <BalanceWrap>
                             <Row>
                                 <Col xs={24} sm={12}>
                                     <Row>
@@ -267,34 +290,34 @@ class Limit extends Component {
                                     </Row>
                                 </Col>
                             </Row>
-                        </Balance_wrap>
+                        </BalanceWrap>
                     : ""}
-                <ETH_wrap>
+                <ETHWrap>
                     <Label>Amount</Label>
-                    <Total_wrap style={{ marginBottom: 16 }}>
-                        <AMTinput min="0" type="number" addonAfter={this.state.crypto} value={this.state.amount} name="amount" onChange={this.onChange} />
+                    <TotalWrap style={{ marginBottom: 16 }}>
+                        <AMTInput min="0" type="number" addonAfter={this.state.crypto} value={this.state.amount} name="amount" onChange={this.onChange} />
                         {this.validator.message('Amount', this.state.amount, 'required|gtzero|numeric', 'text-danger-validation', {
                             gtzero: "Amount should be greater than zero."
                         })}
-                    </Total_wrap>
-                </ETH_wrap>
-                <BTC_wrap>
+                    </TotalWrap>
+                </ETHWrap>
+                <BTCWrap>
                     <Label>Limit Price</Label>
-                    <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput min="0" type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange} />
+                    <TotalWrap style={{ marginBottom: 16 }}>
+                        <TotInput min="0" type="number" addonAfter={this.state.currency} value={this.state.limit_price} name="limit_price" onChange={this.onChange} />
                         {this.validator.message('Limit_price', this.state.limit_price, 'required|gtzero|numeric', 'text-danger-validation', {
                             gtzero: "Limit Price should be greater than zero."
                         })}
-                    </Total_wrap>
-                </BTC_wrap>
-                <BTC_wrap>
+                    </TotalWrap>
+                </BTCWrap>
+                <BTCWrap>
                     <Label>Total</Label>
-                    <Total_wrap style={{ marginBottom: 16 }}>
-                        <Totinput min="0" type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(4)} name="total" readOnly="true" />
-                    </Total_wrap>
-                </BTC_wrap>
+                    <TotalWrap style={{ marginBottom: 16 }}>
+                        <TotInput min="0" type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(4)} name="total" readOnly="true" />
+                    </TotalWrap>
+                </BTCWrap>
                 {Object.keys(this.props.userBal).length > 0 ?
-                    this.state.side == "Buy" ?
+                    this.state.side === "Buy" ?
                         <Pay>
                             <Row>
                                 <Col xs={15} sm={12}>
@@ -356,16 +379,16 @@ class Limit extends Component {
                                 </Row>
                             </Esti>
                         </Pay> : ""}
-                <Button_wrap>
+                <ButtonWrap>
                     <ButtonETH side={this.state.side} onClick={this.onSubmit}>{this.state.side.toUpperCase()} {this.state.crypto}</ButtonETH>
-                </Button_wrap>
-                {(this.state.loader == true) ?
-                    <Spin_single className="Single_spin">
+                </ButtonWrap>
+                {(this.state.loader === true) ?
+                    <SpinSingle className="Single_spin">
                         <Spin size="small" />
-                    </Spin_single>
+                    </SpinSingle>
                     : ""
                 }
-            </Market_wrap>
+            </MarketWrap>
         )
     }
 }

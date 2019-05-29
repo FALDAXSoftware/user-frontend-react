@@ -42,6 +42,7 @@ const TableCoin = styled.table`
 `
 
 export default class TableofCoin extends Component {
+
     constructor(props) {
         super(props)
         this.state = {
@@ -52,29 +53,30 @@ export default class TableofCoin extends Component {
             curr2: "\u20AC",
             curr3: "\u20B9"
         };
-    }
+    };
+
     render() {
         var me = this;
         let { tableData } = this.props;
         const onClick1 = ({ key }) => {
             var curr, sign;
-            if (key == 1) { curr = "INR"; sign = "\u20B9"; }
-            else if (key == 2) { curr = "USD"; sign = "$"; }
-            else if (key == 3) { curr = "EUR"; sign = "\u20AC"; }
+            if (key === 1) { curr = "INR"; sign = "\u20B9"; }
+            else if (key === 2) { curr = "USD"; sign = "$"; }
+            else if (key === 3) { curr = "EUR"; sign = "\u20AC"; }
             this.setState({ drop1: curr, curr1: sign }, () => { me.props.currChange(`${curr},${me.state.drop2},${me.state.drop3}`) });
         };
         const onClick2 = ({ key }) => {
             var curr, sign;
-            if (key == 1) { curr = "INR"; sign = "\u20B9"; }
-            else if (key == 2) { curr = "USD"; sign = "$"; }
-            else if (key == 3) { curr = "EUR"; sign = "\u20AC"; }
+            if (key === 1) { curr = "INR"; sign = "\u20B9"; }
+            else if (key === 2) { curr = "USD"; sign = "$"; }
+            else if (key === 3) { curr = "EUR"; sign = "\u20AC"; }
             this.setState({ drop2: curr, curr2: sign }, () => { me.props.currChange(`${me.state.drop1},${curr},${me.state.drop3}`) });
         };
         const onClick3 = ({ key }) => {
             var curr, sign;
-            if (key == 1) { curr = "INR"; sign = "\u20B9"; }
-            else if (key == 2) { curr = "USD"; sign = "$"; }
-            else if (key == 3) { curr = "EUR"; sign = "\u20AC"; }
+            if (key === 1) { curr = "INR"; sign = "\u20B9"; }
+            else if (key === 2) { curr = "USD"; sign = "$"; }
+            else if (key === 3) { curr = "EUR"; sign = "\u20AC"; }
             this.setState({ drop3: curr, curr3: sign }, () => { me.props.currChange(`${me.state.drop1},${me.state.drop2},${curr}`) });
         };
         const menu1 = (

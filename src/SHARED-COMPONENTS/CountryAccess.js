@@ -1,41 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
-import { Button, Modal, Icon, notification } from 'antd';
-import styled from 'styled-components';
+import { Modal, Icon, notification } from 'antd';
 import { globalVariables } from '../Globals';
-import { _COMINGIMG, _COMINGIMG2 } from "../CONSTANTS/images";
+import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
+import { ModalWrap } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle"
 
-const API_URL = globalVariables.API_URL;
+/* const API_URL = globalVariables.API_URL; */
 
-export const Modal_wrap = styled.div`
-width: 465px;
-margin-left: auto;
-margin-right: auto;
-@media(max-width:576px)
-    {
-        width:350px;   
-    }
-    @media(max-width:425px)
-    {
-        width:256px;
-    }
-`
-export const Sub_wrap = styled.div`
-    margin-top:40px;
-`
-export const Email_input = styled.input`
-    border:1px solid #e2e6ea;
-    background-color:#f8f8f8;
-    border-radius:5px;
-    min-height:45px;
-    width:100%;
-    padding-left:5px;
-    margin-top: 5px;
-    @media(max-width:576px)
-    {
-    }
-`
-class ComingSoon extends Component {
+
+class ComingSoon extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -94,7 +67,7 @@ class ComingSoon extends Component {
             })
                 .then(response => response.json())
                 .then((responseData) => {
-                    if (responseData.status == 500) {
+                    if (responseData.status === 500) {
                         this.openNotification1();
                     } else {
                         this.openNotification();
@@ -111,7 +84,7 @@ class ComingSoon extends Component {
         return (
             <div>
                 <Modal
-                    title={<div><img src={_COMINGIMG} /> <img style={{ marginLeft: "10px" }} src={_COMINGIMG2} /></div>}
+                    title={<div><img alt="coming" src={_COMINGIMG} /> <img alt="coming" style={{ marginLeft: "10px" }} src={_COMINGIMG2} /></div>}
                     visible={this.props.visible}
                     onOk={(e) => this.handleComing()}
                     onCancel={(e) => this.comingCancel(e)}
@@ -120,7 +93,7 @@ class ComingSoon extends Component {
                     height={490}
                     className="simple-maps"
                 >
-                    <Modal_wrap>
+                    <ModalWrap>
                         <h3 style={{ fontFamily: "Open Sans", fontSize: "40px", textAlign: "center", color: "rgb(3, 170, 249)", fontWeight: "600", marginTop: "40px" }}>You Can't Trade</h3>
                         <p style={{ fontFamily: "Open Sans", fontSize: "28px", textAlign: "center", color: "black", fontWeight: "600", marginTop: "40px" }}>Trading is illegal in your country.</p>
                         {/* <Sub_wrap>
@@ -131,7 +104,7 @@ class ComingSoon extends Component {
                             <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff', backgroundColor: "#0f477b", height: "45px" }} onClick={() => this.send_email()}>SUBMIT</Button>
                         </div> */}
 
-                    </Modal_wrap>
+                    </ModalWrap>
                 </Modal>
             </div >
         );

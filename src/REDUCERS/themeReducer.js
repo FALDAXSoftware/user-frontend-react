@@ -1,4 +1,6 @@
-export default (state = {}, action) => {
+export default (state = {
+  theme:false
+}, action) => {
     switch (action.type) {
 
         case "FALDAXTHEME":

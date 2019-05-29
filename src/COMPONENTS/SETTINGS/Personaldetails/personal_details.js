@@ -3,23 +3,23 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux";
 import { createForm, formShape } from 'rc-form';
-import { Row, Col, Input, Button, notification, Select, Radio } from 'antd';
+import { Row, Col, Input, Button, notification, Radio } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 
 /* Components */
 import Datepicker from "./datepicker"
 import CountryPick from "./country"
-import { Email_req } from "COMPONENTS/LANDING/USERFORMS/login_form"
+import { EmailReq } from "COMPONENTS/LANDING/USERFORMS/login_form"
 import { globalVariables } from "Globals"
 import { profileupdateAction, removepicAction, getProfileDataAction, clearEditData } from "ACTIONS/SETTINGS/settingActions"
 import { _DEFAULTPROFILE } from "CONSTANTS/images";
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 
-const Option = Select.Option;
+/* const Option = Select.Option; */
 const RadioGroup = Radio.Group;
 /* Styled-Components */
-const Profile_wrap = styled.div`
+const Profilewrap = styled.div`
     width: 71%;
     margin: auto;
 `
@@ -27,65 +27,65 @@ export const HeaderCol = styled(Col)`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    color: ${props => props.theme.mode == "dark" ? "white" : "#505050"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "#505050"};
     margin-top: 20px;
     padding-bottom: 12px;
     margin-left:0px;
     font-family: "Open Sans";
 `
-const Main_row = styled(Row)`
+const Mainrow = styled(Row)`
     margin-top:40px;
     margin-bottom:40px;
 `
-const Left_Col = styled(Col)`
+const LeftCol = styled(Col)`
 `
 const ImageDiv = styled.img`
     height: 160px;
     width: 160px;
 `
-const Image_input = styled(Input)`
+const Imageinput = styled(Input)`
     display:none !important;
 `
-const Image_up = styled.div`
+const Imageup = styled.div`
     margin-top:30px;
 `
-const Image_upload = styled.label`
-    color:${props => props.theme.mode == "dark" ? "#828a91" : "#0f477b"};
+const Imageupload = styled.label`
+    color:${props => props.theme.mode === "dark" ? "#828a91" : "#0f477b"};
     cursor:pointer;
     font-family:"Open Sans";
     font-weight:600;
 `
 const Remove = styled.div`
     margin-top:20px;
-    color:${props => props.theme.mode == "dark" ? "#828a91" : "#0f477b"};
+    color:${props => props.theme.mode === "dark" ? "#828a91" : "#0f477b"};
     cursor:pointer;
     font-family:"Open Sans";
     font-weight:600;
 `
-export const Right_Col = styled(Col)`
+export const RightCol = styled(Col)`
     @media(max-width:992px)
     {
         margin-top: 60px;
     }
 `
-export const First_Row = styled(Row)`
+export const FirstRow = styled(Row)`
     text-align:left;
 `
-export const First_name = styled.div`
+export const Firstname = styled.div`
     font-size: 14.007px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "rgba( 152, 171, 215, 0.502 )" : "rgba( 80, 80, 80, 0.502 )"};
+    color: ${props => props.theme.mode === "dark" ? "rgba( 152, 171, 215, 0.502 )" : "rgba( 80, 80, 80, 0.502 )"};
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -ms-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     margin-bottom:10px;
 `
-export const First_input = styled(Input)`
+export const Firstinput = styled(Input)`
     font-family: "Open Sans";
     font-size:16;
     font-weight:600;
-    background-color:${props => props.theme.mode == "dark" ? "#020f18" : "#f8f8f8"};
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    background-color:${props => props.theme.mode === "dark" ? "#020f18" : "#f8f8f8"};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
     width:89%;
     border:1px solid #dadfe3;
     padding:10px;
@@ -100,22 +100,22 @@ export const First_input = styled(Input)`
         box-shadow:none;
     }
 `
-export const First_Msg = styled(Email_req)`
+export const FirstMsg = styled(EmailReq)`
     display:block;
 `
-export const Last_Msg = styled(First_Msg)``
-export const Country_Msg = styled(First_Msg)``
-export const Dob_Msg = styled(First_Msg)``
-export const Street_Msg = styled(First_Msg)``
-export const City_Msg = styled(First_Msg)``
-export const Postal_Msg = styled(First_Msg)``
-export const Last_name = styled(First_name)`
+export const LastMsg = styled(FirstMsg)``
+export const CountryMsg = styled(FirstMsg)``
+export const DobMsg = styled(FirstMsg)``
+export const StreetMsg = styled(FirstMsg)``
+export const CityMsg = styled(FirstMsg)``
+export const PostalMsg = styled(FirstMsg)``
+export const Lastname = styled(Firstname)`
     @media(max-width:767px)
     {
         margin-top:25px;
     }
 `
-export const Last_input = styled(First_input)`
+export const Lastinput = styled(Firstinput)`
     width:90%;
     border:1px solid #dadfe3;
     @media(max-width:767px)
@@ -123,14 +123,14 @@ export const Last_input = styled(First_input)`
         width:100%;
     }
 `
-export const Postal_input = styled(Last_input)`
+export const Postalinput = styled(Lastinput)`
     width:95%;
     @media(max-width:767px)
     {
         width:100%;
     }
 `
-export const Second_Row = styled(Row)`
+export const SecondRow = styled(Row)`
     text-align:left;
     margin-top:25px;
     @media(max-width:767px)
@@ -138,9 +138,9 @@ export const Second_Row = styled(Row)`
         margin-top:0px;
     }
 `
-export const Country = styled(First_name)`
+export const Country = styled(Firstname)`
 `
-export const Country_input = styled(First_input)`
+export const Countryinput = styled(Firstinput)`
     @media(max-width:992px)
     {
         width:95%;
@@ -150,19 +150,19 @@ export const Country_input = styled(First_input)`
         width:100%;
     }
 `
-export const Date_birth = styled(First_name)`
+export const Datebirth = styled(Firstname)`
     @media(max-width:992px)
     {
         margin-top:25px;
     }
 `
-export const Third_Row = styled(Second_Row)`
+export const ThirdRow = styled(SecondRow)`
     margin-top:25px;
     text-align:left;
 `
-export const Street_Address = styled(First_name)`
+export const StreetAddress = styled(Firstname)`
 `
-export const Street_input = styled(First_input)`
+export const Streetinput = styled(Firstinput)`
     width:95%;
     border:1px solid #dadfe3;
 
@@ -175,34 +175,34 @@ export const Street_input = styled(First_input)`
         width:100%;
     }
 `
-export const Fourth_Row = styled(Second_Row)`
+export const FourthRow = styled(SecondRow)`
     text-align:left;
     margin-top:25px;
 `
-export const City = styled(First_name)`
+export const City = styled(Firstname)`
 `
-export const Postal = styled(First_name)`
+export const Postal = styled(Firstname)`
     @media(max-width:767px)
     {
         margin-top:25px;
     }
 `
-export const Fifth_Row = styled(Row)`
+export const FifthRow = styled(Row)`
     text-align:left;
     margin-top:50px;
 `
-export const Sixth_Row = styled(Row)`
+export const SixthRow = styled(Row)`
 text-align:left;
 margin-top:25px;
 & .ant-radio-wrapper
 {
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
 }
 `
-export const FIAT = styled(First_name)`
+export const FIAT = styled(Firstname)`
 
 `
-export const FIAT_Msg = styled(Postal_Msg)``
+export const FIATMsg = styled(PostalMsg)``
 export const Save = styled(Button)`
 font-size: 13.217px;
 font-family: "Open Sans";
@@ -225,7 +225,7 @@ height:40px;
 }
 
 `
-export const Spin_Ex = styled.div`
+export const SpinEx = styled.div`
     text-align: center;
     background: white;
     border-radius: 4px;
@@ -238,12 +238,12 @@ export const Spin_Ex = styled.div`
     height: 100%;
     z-index: 9999;
 `
-const Street_2_Col = styled(Col)`
+/* const Street2Col = styled(Col)`
     margin-top:15px; 
 `
 const Asterisk = styled.span`
     color:red;
-`
+` */
 class PersonalDetails extends Component {
     constructor(props) {
         super(props);
@@ -287,23 +287,358 @@ class PersonalDetails extends Component {
     static propTypes = {
         form: formShape,
     };
+
+    /* Life-Cycle Methods */
+
+    componentDidMount() {
+        this.props.getProfileDataAction(this.props.isLoggedIn)
+    }
+
+    componentWillReceiveProps(props, newProps) {
+        if (props.profileDetails.profile_pic !== null && props.profileDetails.profile_pic !== undefined && props.profileDetails.profile_pic !== "") {
+            if (this.state.profileImg !== undefined && this.state.profileImg !== null && this.state.profileImg !== "") {
+                this.setState({ profileImg: this.state.profileImg })
+                /*  this.setState({ profileImg: globalVariables._AMAZONBUCKET + props.profileDetails.profile_pic }) */
+            } else {
+                this.setState({ profileImg: globalVariables._AMAZONBUCKET + props.profileDetails.profile_pic })
+            }
+        }
+        if (props.apiStatus === 200 && props.apiMessage === "User details updated successfully") {
+            this.openNotificationWithProfile("success", "Success", "Profile updated successfully");
+            this.props.clearEditData();
+        }
+    }
+
+    /* 
+        Page: /editProfile --> Personal Details
+        It is called when we change date format in Personal Details form.
+    */
+
     onChangeFormat = (e) => {
         this.setState({
             date_format: e.target.value,
         });
         this.onChangeField(e.target.value, "date_format");
     }
+
+    /* 
+        Page: /editProfile --> Personal Details
+        It is called when we change currency/FIAT in Personal Details form.
+    */
+
     /* onChangeFiat = (e) => {
         this.setState({
             fiat: e.target.value,
         });
         this.onChangeField(e.target.value, "fiat");
     } */
+
+
+    /* 
+        Page: /editProfile --> Personal Details
+        It is passed as props(callback function) to Datepicker component.
+    */
+
+    onDateChange(value, field) {
+        var tempDate = value.day + "/" + value.month + "/" + value.year;
+
+        var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
+        this.setState({ Datedata: date })
+        this.onChangeField(value, field);
+    }
+
+    /* 
+        Page: /editProfile --> Personal Details
+        It is passed as props(callback function) to Country component.
+    */
+
+    onCountryChange(country, state, city) {
+        this.setState({ countrySelected: country, stateSelected: state, citySelected: city })
+        var loc = {
+            country: country,
+            state: state,
+            city: city
+        }
+        this.onChangeField(loc, 'country');
+    }
+
+    /* 
+            Page: /editProfile --> Personal Details
+            It is called when a file is selected on profile pic in personal details form.
+    */
+
+    handleProfile(e) {
+        try {
+            const reader = new FileReader();
+            const file = e.target.files[0];
+            const fileType = e.target.files[0] && e.target.files[0].type ? e.target.files[0].type.substring(0, e.target.files[0].type.indexOf('/')) : '';
+            const fileSize = e.target.files[0] && e.target.files[0].size ? e.target.files[0].size : 0;
+            //check file size to max 5mb (5*1024*1024=5242880) and type image
+            if (fileType === 'image') {
+                if (fileSize <= 5242880) {
+                    reader.onload = (upload) => {
+                        this.setState({
+                            profileImg: upload.target.result,
+                            imageName: file.name,
+                            imageType: file.type,
+                            profileImage: file,
+                            imagemsg: "", remove_pic: false
+                        });
+                    };
+                } else {
+                    this.openNotificationWithProfile("error", "Error", "File size must not be more than 5 MB");
+                }
+            } else {
+                if (file !== undefined)
+                    this.openNotificationWithProfile("error", "Error", "Please upload only images");
+            }
+
+            reader.readAsDataURL(file);
+        } catch (error) {
+            this.setState({ imagemsg: 'Something went wrong please try again' });
+        }
+    }
+
+    /* 
+        Page: /editProfile --> Personal Details
+        It is called when we click remove pic below profile pic.
+    */
+
+    removePic() {
+        /* this.removeNotification("warning"); */
+        document.getElementById("file").value = "";
+        if (this.state.profileImg !== _DEFAULTPROFILE) {
+            this.setState({ remove_pic: true, profileImg: _DEFAULTPROFILE, profileImage: undefined })
+        }
+        /* 
+        this.props.removepicAction(this.props.isLoggedIn, formData) */
+    }
+
+    /* 
+        Page: /editProfile --> Personal Details
+        It is for custom notifications.
+    */
+
+    openNotificationWithIcon = (type) => {
+        notification[type]({
+            message: 'Updating Profile',
+            description: 'Please wait...',
+            duration: 3,
+        });
+    };
+
+    /* 
+        Page: /editProfile --> Personal Details
+        It is for notifications with profile icon.
+    */
+
+    openNotificationWithProfile = (type, head, desc) => {
+        notification[type]({
+            message: head,
+            description: desc,
+            duration: 3,
+        });
+    };
+
+    /* 
+        Page: /editProfile --> Personal Details
+        It is for notifications for removing profile picture.
+    */
+
+    removeNotification = (type) => {
+        notification[type]({
+            message: 'Removing profile picture',
+            description: 'Please wait...',
+            duration: 3,
+        });
+    }
+
+    /* 
+            Page: /editProfile --> Personal Details
+            It is called when we change input fields in form.
+    */
+
+    onChangeField(value, field) {
+        if (field !== "dob" && field !== "country")
+            value = value.trim();
+        if (field === "first_name") {
+            value = value.trim();
+            var re = /^[a-zA-Z0-9]{2,15}$/;
+            var bool = re.test(value);
+            if (value !== "") {
+                if (bool === true) {
+                    var regexnum = /^[0-9]*$/;
+                    if (regexnum.test(value)) {
+                        this.setState({ firstIcon: false })
+                        document.querySelectorAll(".first_msg")[0].style.display = "block";
+                        this.setState({ firstmsg: "Only numbers are not allowed" })
+                    } else {
+                        this.setState({ firstIcon: true })
+                        document.querySelectorAll(".first_msg")[0].style.display = "none";
+                    }
+                } else {
+                    this.setState({ firstIcon: false })
+                    document.querySelectorAll(".first_msg")[0].style.display = "block";
+                    this.setState({ firstmsg: "First Name should have min. 2 and max. 15 characters and no special characters are allowed" })
+                }
+            } else {
+                this.setState({ firstIcon: false })
+                document.querySelectorAll(".first_msg")[0].style.display = "block";
+                this.setState({ firstmsg: "First Name field is required" })
+            }
+        } else if (field === "last_name") {
+            var re = /^[a-zA-Z0-9]{2,15}$/;
+            var bool = re.test(value);
+            if (value !== "") {
+                if (bool === true) {
+                    var regexnum = /^[0-9]*$/;
+                    if (regexnum.test(value)) {
+                        this.setState({ lastIcon: false })
+                        document.querySelectorAll(".last_msg")[0].style.display = "block";
+                        this.setState({ lastmsg: "Only numbers are not allowed" })
+                    } else {
+                        this.setState({ lastIcon: true })
+                        document.querySelectorAll(".last_msg")[0].style.display = "none";
+                    }
+                } else {
+                    this.setState({ lastIcon: false })
+                    document.querySelectorAll(".last_msg")[0].style.display = "block";
+                    this.setState({ lastmsg: "Last Name should have min. 2 and max. 15 characters and no special characters are allowed" })
+                }
+            } else {
+                this.setState({ lastIcon: false })
+                document.querySelectorAll(".last_msg")[0].style.display = "block";
+                this.setState({ lastmsg: "Last Name field is required" })
+            }
+        } else if (field === "country") {
+            if ((value.country !== undefined && value.country !== null) && (value.state !== null && value.state !== undefined) && (value.city !== null && value.city !== undefined)) {
+                this.setState({ countryIcon: true })
+                document.querySelectorAll(".country_msg")[0].style.display = "none";
+            } else {
+                let country = false, state = false, city = false;
+                this.setState({ countryIcon: false })
+                document.querySelectorAll(".country_msg")[0].style.display = "block";
+                if ((value.country === undefined || value.country === null || value.country === ""))
+                    country = true;
+                if ((value.state === undefined || value.state === null || value.state === ""))
+                    state = true;
+                if ((value.city === undefined || value.city === null || value.city === ""))
+                    city = true;
+                let countrymsg;
+                if (country === true && state === false && city === false) {
+                    countrymsg = "Country Field is required."
+                }
+                else if (country === true && state === true && city === false) {
+                    countrymsg = "Country and State Field are required."
+                }
+                else if (country === true && state === true && city === true) {
+                    countrymsg = "Country , State and City Field are required."
+                }
+                else if (country === false && state === true && city === false) {
+                    countrymsg = "State Field is required."
+                }
+                else if (country === false && state === true && city === true) {
+                    countrymsg = "State and City Field are required."
+                }
+                else if (country === false && state === false && city === true) {
+                    countrymsg = "City Field is required."
+                }
+                else if (country === true && state === false && city === true) {
+                    countrymsg = "Country and City Field are required."
+                }
+                this.setState({ countrymsg })
+            }
+        } else if (field === "dob") {
+            if ((value["day"]) && (value["month"]) && (value["year"])) {
+                this.setState({ dobIcon: true })
+                document.querySelectorAll(".dob_msg")[0].style.display = "none";
+            } else {
+                this.setState({ dobIcon: false })
+                document.querySelectorAll(".dob_msg")[0].style.display = "block";
+                this.setState({ dobmsg: "Date of Birth field is required" })
+            }
+        } else if (field === "street_address") {
+            if (value !== "") {
+                if (value.length < 100) {
+                    this.setState({ street1Icon: true })
+                    document.querySelectorAll(".street1_msg")[0].style.display = "none";
+                } else {
+                    this.setState({ street1Icon: false })
+                    document.querySelectorAll(".street1_msg")[0].style.display = "block";
+                    this.setState({ street1msg: "Street Address limit is 100 characters" })
+                }
+            } else {
+                this.setState({ street1Icon: false })
+                document.querySelectorAll(".street1_msg")[0].style.display = "block";
+                this.setState({ street1msg: "Street Address field is required" })
+            }
+        } else if (field === "street_address_2") {
+            if (value.trim !== "") {
+                if (value.length <= 100) {
+                    this.setState({ street2Icon: true })
+                    document.querySelectorAll(".street2_msg")[0].style.display = "none";
+                }
+                else {
+                    this.setState({ street2Icon: false })
+                    document.querySelectorAll(".street2_msg")[0].style.display = "block";
+                    this.setState({ street2msg: "Street Address limit is 100 characters" })
+                }
+            }
+        } else if (field === "postal_code") {
+            if (value !== "") {
+                var reg = /^(?=.*[0-9A-Za-z])[- ()0-9A-Za-z]{3,25}$/
+                var bool = reg.test(value)
+                if (bool === true) {
+                    this.setState({ postalIcon: true })
+                    document.querySelectorAll(".postal_msg")[0].style.display = "none";
+                } else {
+                    this.setState({ postalIcon: false })
+                    document.querySelectorAll(".postal_msg")[0].style.display = "block";
+                    if (value.length < 3 || value.length > 25)
+                        this.setState({ postalmsg: "Postal code should have min. 3 and max. 25 characters." })
+                    else
+                        this.setState({ postalmsg: "Postal code should only contain alphabets , numbers , hyphen and space ." })
+                }
+            } else {
+                this.setState({ postalIcon: false })
+                document.querySelectorAll(".postal_msg")[0].style.display = "block";
+                this.setState({ postalmsg: "Postal Code field is required" })
+            }
+        }
+        /* else if (field==="fiat") {
+            if (value !== "") {
+                this.setState({ fiatIcon: true })
+                document.querySelectorAll(".fiat_msg")[0].style.display = "none";
+            }
+            else {
+                this.setState({ fiatIcon: false })
+                document.querySelectorAll(".fiat_msg")[0].style.display = "block";
+                this.setState({ fiatmsg: "currency is required" })
+            }
+        } */
+        else if (field === "date_format") {
+            if (value !== "") {
+                this.setState({ dateFIcon: true })
+                document.querySelectorAll(".df_msg")[0].style.display = "none";
+            }
+            else {
+                this.setState({ dateFIcon: false })
+                document.querySelectorAll(".df_msg")[0].style.display = "block";
+                this.setState({ dfmsg: "currency is required" })
+            }
+        }
+    }
+
+    /* 
+            Page: /editProfile --> Personal Details
+            It is called when we submit Personal Details form.
+    */
+
     submit = () => {
         this.props.form.validateFields((error, value) => {
             let dataDate = "";
             const profileData = new FormData();
-            if (error == null /* this.state.fiatIcon !== false  */ && this.state.dateFIcon !== false && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '' && this.props.profileDetails.country !== null) || ((this.state.countrySelected !== null && this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
+            if (error === null /* this.state.fiatIcon !== false  */ && this.state.dateFIcon !== false && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '' && this.props.profileDetails.country !== null) || ((this.state.countrySelected !== null && this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
                 document.querySelectorAll(".first_msg")[0].style.display = "none";
                 document.querySelectorAll(".last_msg")[0].style.display = "none";
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
@@ -322,7 +657,7 @@ class PersonalDetails extends Component {
                 } else {
                     dataDate = this.props.profileDetails.dob
                 }
-                if (country == undefined && country == null) {
+                if (country === undefined && country === null) {
                     country = this.props.profileDetails.country ? this.props.profileDetails.country : ""
                 }
                 profileData.append('first_name', value.first_name);
@@ -359,410 +694,146 @@ class PersonalDetails extends Component {
             } else {
                 this.openNotificationWithProfile("error", "Error", "Please complete all required details to continue")
             }
-            if (this.state.firstIcon == null && this.props.profileDetails.first_name == null) {
+            if (this.state.firstIcon === null && this.props.profileDetails.first_name === null) {
                 this.setState({ firstIcon: false })
                 document.querySelectorAll(".first_msg")[0].style.display = "block";
                 this.setState({ firstmsg: "First Name field is required." })
             }
-            if (this.state.lastIcon == null && this.props.profileDetails.last_name == null) {
+            if (this.state.lastIcon === null && this.props.profileDetails.last_name === null) {
                 this.setState({ lastIcon: false })
                 document.querySelectorAll(".last_msg")[0].style.display = "block";
                 this.setState({ lastmsg: "Last Name field is required." })
             }
-            if ((this.state.countryIcon == null || this.state.countryIcon == false) && (this.props.profileDetails.country == '' || this.props.profileDetails.country == null)) {
+            if ((this.state.countryIcon === null || this.state.countryIcon === false) && (this.props.profileDetails.country === '' || this.props.profileDetails.country === null)) {
                 this.setState({ countryIcon: false })
                 document.querySelectorAll(".country_msg")[0].style.display = "block";
                 this.setState({ countrymsg: "Country field is required." })
             }
-            if (this.state.dobIcon == null && this.state.Datedata == undefined && this.props.profileDetails.dob == null) {
+            if (this.state.dobIcon === null && this.state.Datedata === undefined && this.props.profileDetails.dob === null) {
                 this.setState({ dobIcon: false })
                 document.querySelectorAll(".dob_msg")[0].style.display = "block";
                 this.setState({ dobmsg: "Date of Birth is required." })
             }
-            if (this.state.street1Icon == null && this.props.profileDetails.street_address == null) {
+            if (this.state.street1Icon === null && this.props.profileDetails.street_address === null) {
                 this.setState({ street1Icon: false })
                 document.querySelectorAll(".street1_msg")[0].style.display = "block";
                 this.setState({ street1msg: "Street Address is required." })
             }
-            /* if (this.state.street2Icon == null && this.props.profileDetails.street_address_2 == null) {
+            /* if (this.state.street2Icon===null && this.props.profileDetails.street_address_2===null) {
                 this.setState({ street2Icon: false })
                 document.querySelectorAll(".street2_msg")[0].style.display = "block";
                 this.setState({ street2msg: "Street Address is required" })
             } */
-            if (this.state.postalIcon == null && this.props.profileDetails.postal_code == null) {
+            if (this.state.postalIcon === null && this.props.profileDetails.postal_code === null) {
                 this.setState({ postalIcon: false })
                 document.querySelectorAll(".postal_msg")[0].style.display = "block";
                 this.setState({ postalmsg: "Postal Code is required." })
             }
-            /* if (this.state.fiatIcon == false && this.props.profileDetails.fiat == "") {
+            /* if (this.state.fiatIcon===false && this.props.profileDetails.fiat==="") {
 
                 this.setState({ fiatIcon: false })
                 document.querySelectorAll(".fiat_msg")[0].style.display = "block";
                 this.setState({ fiatmsg: "currency is required." })
             } */
-            if (this.state.dateFIcon !== true && this.props.profileDetails.date_format == "") {
+            if (this.state.dateFIcon !== true && this.props.profileDetails.date_format === "") {
                 this.setState({ dateFIcon: false })
                 document.querySelectorAll(".df_msg")[0].style.display = "block";
                 this.setState({ dfmsg: "Date Format is required." })
             }
         });
     }
-    onDateChange(value, field) {
-        var tempDate = value.day + "/" + value.month + "/" + value.year;
-
-        var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
-        this.setState({ Datedata: date })
-        this.onChangeField(value, field);
-    }
-    onCountryChange(country, state, city) {
-        this.setState({ countrySelected: country, stateSelected: state, citySelected: city })
-        var loc = {
-            country: country,
-            state: state,
-            city: city
-        }
-        this.onChangeField(loc, 'country');
-    }
-    componentDidMount() {
-        this.props.getProfileDataAction(this.props.isLoggedIn)
-    }
-    componentWillReceiveProps(props, newProps) {
-        if (props.profileDetails.profile_pic !== null && props.profileDetails.profile_pic !== undefined && props.profileDetails.profile_pic !== "") {
-            if (this.state.profileImg !== undefined && this.state.profileImg !== null && this.state.profileImg !== "") {
-                this.setState({ profileImg: this.state.profileImg })
-                /*  this.setState({ profileImg: globalVariables._AMAZONBUCKET + props.profileDetails.profile_pic }) */
-            } else {
-                this.setState({ profileImg: globalVariables._AMAZONBUCKET + props.profileDetails.profile_pic })
-            }
-        }
-        if (props.apiStatus == 200 && props.apiMessage == "User details updated successfully") {
-            this.openNotificationWithProfile("success", "Success", "Profile updated successfully");
-            this.props.clearEditData();
-        }
-    }
-    handleProfile(e) {
-        try {
-            const reader = new FileReader();
-            const file = e.target.files[0];
-            const fileType = e.target.files[0] && e.target.files[0].type ? e.target.files[0].type.substring(0, e.target.files[0].type.indexOf('/')) : '';
-            const fileSize = e.target.files[0] && e.target.files[0].size ? e.target.files[0].size : 0;
-            //check file size to max 5mb (5*1024*1024=5242880) and type image
-            if (fileType === 'image') {
-                if (fileSize <= 5242880) {
-                    reader.onload = (upload) => {
-                        this.setState({
-                            profileImg: upload.target.result,
-                            imageName: file.name,
-                            imageType: file.type,
-                            profileImage: file,
-                            imagemsg: "", remove_pic: false
-                        });
-                    };
-                } else {
-                    this.openNotificationWithProfile("error", "Error", "File size must not be more than 5 MB");
-                }
-            } else {
-                if (file !== undefined)
-                    this.openNotificationWithProfile("error", "Error", "Please upload only images");
-            }
-
-            reader.readAsDataURL(file);
-        } catch (error) {
-            this.setState({ imagemsg: 'Something went wrong please try again' });
-        }
-    }
-    removePic() {
-        /* this.removeNotification("warning"); */
-        document.getElementById("file").value = "";
-        if (this.state.profileImg !== _DEFAULTPROFILE) {
-            this.setState({ remove_pic: true, profileImg: _DEFAULTPROFILE, profileImage: undefined })
-        }
-        /* 
-        this.props.removepicAction(this.props.isLoggedIn, formData) */
-    }
-    openNotificationWithIcon = (type) => {
-        notification[type]({
-            message: 'Updating Profile',
-            description: 'Please wait...',
-            duration: 3,
-        });
-    };
-    openNotificationWithProfile = (type, head, desc) => {
-        notification[type]({
-            message: head,
-            description: desc,
-            duration: 3,
-        });
-    };
-    removeNotification = (type) => {
-        notification[type]({
-            message: 'Removing profile picture',
-            description: 'Please wait...',
-            duration: 3,
-        });
-    }
-    onChangeField(value, field) {
-        if (field !== "dob" && field !== "country")
-            value = value.trim();
-        if (field == "first_name") {
-            value = value.trim();
-            var re = /^[a-zA-Z0-9]{2,15}$/;
-            var bool = re.test(value);
-            if (value !== "") {
-                if (bool == true) {
-                    var regexnum = /^[0-9]*$/;
-                    if (regexnum.test(value)) {
-                        this.setState({ firstIcon: false })
-                        document.querySelectorAll(".first_msg")[0].style.display = "block";
-                        this.setState({ firstmsg: "Only numbers are not allowed" })
-                    } else {
-                        this.setState({ firstIcon: true })
-                        document.querySelectorAll(".first_msg")[0].style.display = "none";
-                    }
-                } else {
-                    this.setState({ firstIcon: false })
-                    document.querySelectorAll(".first_msg")[0].style.display = "block";
-                    this.setState({ firstmsg: "First Name should have min. 2 and max. 15 characters and no special characters are allowed" })
-                }
-            } else {
-                this.setState({ firstIcon: false })
-                document.querySelectorAll(".first_msg")[0].style.display = "block";
-                this.setState({ firstmsg: "First Name field is required" })
-            }
-        } else if (field == "last_name") {
-            var re = /^[a-zA-Z0-9]{2,15}$/;
-            var bool = re.test(value);
-            if (value !== "") {
-                if (bool == true) {
-                    var regexnum = /^[0-9]*$/;
-                    if (regexnum.test(value)) {
-                        this.setState({ lastIcon: false })
-                        document.querySelectorAll(".last_msg")[0].style.display = "block";
-                        this.setState({ lastmsg: "Only numbers are not allowed" })
-                    } else {
-                        this.setState({ lastIcon: true })
-                        document.querySelectorAll(".last_msg")[0].style.display = "none";
-                    }
-                } else {
-                    this.setState({ lastIcon: false })
-                    document.querySelectorAll(".last_msg")[0].style.display = "block";
-                    this.setState({ lastmsg: "Last Name should have min. 2 and max. 15 characters and no special characters are allowed" })
-                }
-            } else {
-                this.setState({ lastIcon: false })
-                document.querySelectorAll(".last_msg")[0].style.display = "block";
-                this.setState({ lastmsg: "Last Name field is required" })
-            }
-        } else if (field == "country") {
-            if ((value.country !== undefined && value.country !== null) && (value.state !== null && value.state !== undefined) && (value.city !== null && value.city !== undefined)) {
-                this.setState({ countryIcon: true })
-                document.querySelectorAll(".country_msg")[0].style.display = "none";
-            } else {
-                let country = false, state = false, city = false;
-                this.setState({ countryIcon: false })
-                document.querySelectorAll(".country_msg")[0].style.display = "block";
-                if ((value.country == undefined || value.country == null || value.country == ""))
-                    country = true;
-                if ((value.state == undefined || value.state == null || value.state == ""))
-                    state = true;
-                if ((value.city == undefined || value.city == null || value.city == ""))
-                    city = true;
-                let countrymsg;
-                if (country == true && state == false && city == false) {
-                    countrymsg = "Country Field is required."
-                }
-                else if (country == true && state == true && city == false) {
-                    countrymsg = "Country and State Field are required."
-                }
-                else if (country == true && state == true && city == true) {
-                    countrymsg = "Country , State and City Field are required."
-                }
-                else if (country == false && state == true && city == false) {
-                    countrymsg = "State Field is required."
-                }
-                else if (country == false && state == true && city == true) {
-                    countrymsg = "State and City Field are required."
-                }
-                else if (country == false && state == false && city == true) {
-                    countrymsg = "City Field is required."
-                }
-                else if (country == true && state == false && city == true) {
-                    countrymsg = "Country and City Field are required."
-                }
-                this.setState({ countrymsg })
-            }
-        } else if (field == "dob") {
-            if ((value["day"]) && (value["month"]) && (value["year"])) {
-                this.setState({ dobIcon: true })
-                document.querySelectorAll(".dob_msg")[0].style.display = "none";
-            } else {
-                this.setState({ dobIcon: false })
-                document.querySelectorAll(".dob_msg")[0].style.display = "block";
-                this.setState({ dobmsg: "Date of Birth field is required" })
-            }
-        } else if (field == "street_address") {
-            if (value !== "") {
-                if (value.length < 100) {
-                    this.setState({ street1Icon: true })
-                    document.querySelectorAll(".street1_msg")[0].style.display = "none";
-                } else {
-                    this.setState({ street1Icon: false })
-                    document.querySelectorAll(".street1_msg")[0].style.display = "block";
-                    this.setState({ street1msg: "Street Address limit is 100 characters" })
-                }
-            } else {
-                this.setState({ street1Icon: false })
-                document.querySelectorAll(".street1_msg")[0].style.display = "block";
-                this.setState({ street1msg: "Street Address field is required" })
-            }
-        } else if (field == "street_address_2") {
-            if (value.trim !== "") {
-                if (value.length <= 100) {
-                    this.setState({ street2Icon: true })
-                    document.querySelectorAll(".street2_msg")[0].style.display = "none";
-                }
-                else {
-                    this.setState({ street2Icon: false })
-                    document.querySelectorAll(".street2_msg")[0].style.display = "block";
-                    this.setState({ street2msg: "Street Address limit is 100 characters" })
-                }
-            }
-        } else if (field == "postal_code") {
-            if (value !== "") {
-                var reg = /^(?=.*[0-9A-Za-z])[- ()0-9A-Za-z]{3,25}$/
-                var bool = reg.test(value)
-                if (bool == true) {
-                    this.setState({ postalIcon: true })
-                    document.querySelectorAll(".postal_msg")[0].style.display = "none";
-                } else {
-                    this.setState({ postalIcon: false })
-                    document.querySelectorAll(".postal_msg")[0].style.display = "block";
-                    if (value.length < 3 || value.length > 25)
-                        this.setState({ postalmsg: "Postal code should have min. 3 and max. 25 characters." })
-                    else
-                        this.setState({ postalmsg: "Postal code should only contain alphabets , numbers , hyphen and space ." })
-                }
-            } else {
-                this.setState({ postalIcon: false })
-                document.querySelectorAll(".postal_msg")[0].style.display = "block";
-                this.setState({ postalmsg: "Postal Code field is required" })
-            }
-        }
-        /* else if (field == "fiat") {
-            if (value !== "") {
-                this.setState({ fiatIcon: true })
-                document.querySelectorAll(".fiat_msg")[0].style.display = "none";
-            }
-            else {
-                this.setState({ fiatIcon: false })
-                document.querySelectorAll(".fiat_msg")[0].style.display = "block";
-                this.setState({ fiatmsg: "currency is required" })
-            }
-        } */
-        else if (field == "date_format") {
-            if (value !== "") {
-                this.setState({ dateFIcon: true })
-                document.querySelectorAll(".df_msg")[0].style.display = "none";
-            }
-            else {
-                this.setState({ dateFIcon: false })
-                document.querySelectorAll(".df_msg")[0].style.display = "block";
-                this.setState({ dfmsg: "currency is required" })
-            }
-        }
-    }
 
     render() {
         let errors;
-        let firstname = `${this.props.profileDetails.first_name}`
+        /* let firstname = `${this.props.profileDetails.first_name}` */
         const { getFieldProps, getFieldError } = this.props.form;
         const { profileDetails } = this.props;
-        const { citymsg, postalmsg } = this.state;
+        /* const { citymsg, postalmsg } = this.state; */
         var me = this;
 
         return (
-            <Profile_wrap>
+            <Profilewrap>
                 <Row>
                     <Col span={6} />
                     <HeaderCol span={12}>
                         <span>Personal Details</span>
                     </HeaderCol>
                 </Row>
-                <Main_row>
+                <Mainrow>
                     <Col>
                         <Row>
-                            <Left_Col md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }} xxl={{ span: 6 }}>
+                            <LeftCol md={{ span: 24 }} lg={{ span: 6 }} xl={{ span: 6 }} xxl={{ span: 6 }}>
                                 <div><ImageDiv src={this.state.profileImg} /></div>
-                                <div><Image_input type="file" onChange={this.handleProfile} name="file" id="file" /><Image_up><Image_upload htmlFor="file">Upload New Photo</Image_upload></Image_up></div>
+                                <div><Imageinput type="file" onChange={this.handleProfile} name="file" id="file" /><Imageup><Imageupload htmlFor="file">Upload New Photo</Imageupload></Imageup></div>
 
                                 {(this.state.remove_pic !== true && ((this.props.profileDetails.profile_pic) ? (!this.props.profileDetails.profile_pic.includes("def_profile.jpg") ||
                                     ((this.state.profileImg !== undefined) ? !this.state.profileImg.includes("def_profile.jpg") : true)) ? <Remove onClick={this.removePic.bind(this)}>Remove</Remove> : "" : ""))}
-                            </Left_Col>
-                            <Right_Col md={{ span: 24 }} lg={{ span: 15, offset: 3 }} xl={{ span: 15, offset: 3 }} xxl={{ span: 15, offset: 3 }}>
-                                <First_Row>
+                            </LeftCol>
+                            <RightCol md={{ span: 24 }} lg={{ span: 15, offset: 3 }} xl={{ span: 15, offset: 3 }} xxl={{ span: 15, offset: 3 }}>
+                                <FirstRow>
                                     <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xxl={{ span: 12 }}>
-                                        <First_name>First Name*</First_name>
-                                        <First_input placeholder="First Name" {...getFieldProps('first_name', {
+                                        <Firstname>First Name*</Firstname>
+                                        <Firstinput placeholder="First Name" {...getFieldProps('first_name', {
                                             onChange(e) { me.onChangeField(e.target.value, "first_name") },
                                             initialValue: profileDetails.first_name, // have to write original onChange here if you need
                                             rules: [{ required: true }]
                                         })} />
-                                        <First_Msg className="first_msg">{this.state.firstmsg}</First_Msg>
+                                        <FirstMsg className="first_msg">{this.state.firstmsg}</FirstMsg>
                                     </Col>
                                     <Col md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }} xxl={{ span: 12 }}>
-                                        <Last_name>Last Name*</Last_name>
-                                        <Last_input placeholder="Last Name" {...getFieldProps('last_name', {
+                                        <Lastname>Last Name*</Lastname>
+                                        <Lastinput placeholder="Last Name" {...getFieldProps('last_name', {
                                             onChange(e) { me.onChangeField(e.target.value, "last_name") },
                                             initialValue: profileDetails.last_name,// have to write original onChange here if you need
                                             rules: [{ required: true }],
                                         })} />
-                                        <Last_Msg className="last_msg">{this.state.lastmsg}</Last_Msg>
+                                        <LastMsg className="last_msg">{this.state.lastmsg}</LastMsg>
                                     </Col>
-                                </First_Row>
-                                <Second_Row>
+                                </FirstRow>
+                                <SecondRow>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
-                                        <Date_birth>Date of Birth*</Date_birth>
+                                        <Datebirth>Date of Birth*</Datebirth>
                                         <Datepicker {...this.props} onDateChange={(value, field) => this.onDateChange(value, field)} />
-                                        <Dob_Msg className="dob_msg">{this.state.dobmsg}</Dob_Msg>
+                                        <DobMsg className="dob_msg">{this.state.dobmsg}</DobMsg>
                                     </Col>
-                                </Second_Row>
-                                <Third_Row>
+                                </SecondRow>
+                                <ThirdRow>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
-                                        <Street_Address>Street Address Line 1*</Street_Address>
-                                        <Street_input placeholder="Street Address" {...getFieldProps('street_address', {
+                                        <StreetAddress>Street Address Line 1*</StreetAddress>
+                                        <Streetinput placeholder="Street Address" {...getFieldProps('street_address', {
                                             onChange(e) { me.onChangeField(e.target.value, "street_address") },
                                             initialValue: profileDetails.street_address, // have to write original onChange here if you need
                                             rules: [{ type: "string", required: true }],
                                         })} />
-                                        <Street_Msg className="street1_msg">{this.state.street1msg}</Street_Msg>
+                                        <StreetMsg className="street1_msg">{this.state.street1msg}</StreetMsg>
                                     </Col>
-                                </Third_Row>
-                                <Third_Row>
-                                    <Street_Address>Street Address Line 2</Street_Address>
-                                    <Street_input placeholder="Street Address" {...getFieldProps('street_address_2', {
+                                </ThirdRow>
+                                <ThirdRow>
+                                    <StreetAddress>Street Address Line 2</StreetAddress>
+                                    <Streetinput placeholder="Street Address" {...getFieldProps('street_address_2', {
                                         onChange(e) { me.onChangeField(e.target.value, "street_address_2") },
                                         initialValue: profileDetails.street_address_2 !== null ? profileDetails.street_address_2 : "", // have to write original onChange here if you need
                                         rules: [{ type: "string" }],
                                     })} />
-                                    <Street_Msg className="street2_msg">{this.state.street2msg}</Street_Msg>
-                                </Third_Row>
-                                <Fourth_Row>
+                                    <StreetMsg className="street2_msg">{this.state.street2msg}</StreetMsg>
+                                </ThirdRow>
+                                <FourthRow>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                                         <CountryPick {...this.props} onCountryChange={(country, state, city) => this.onCountryChange(country, state, city)} />
-                                        <Country_Msg className="country_msg">{this.state.countrymsg}</Country_Msg>
+                                        <CountryMsg className="country_msg">{this.state.countrymsg}</CountryMsg>
                                     </Col>
-                                </Fourth_Row>
-                                <Fourth_Row>
+                                </FourthRow>
+                                <FourthRow>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} >
                                         <Postal>Postal Code*</Postal>
-                                        <Postal_input placeholder="Postal Code"{...getFieldProps('postal_code', {
+                                        <Postalinput placeholder="Postal Code"{...getFieldProps('postal_code', {
                                             onChange(e) { me.onChangeField(e.target.value, "postal_code") },
                                             initialValue: profileDetails.postal_code,// have to write original onChange here if you need
                                             rules: [{ type: "string", required: true }],
                                         })} />
-                                        <Postal_Msg className="postal_msg">{this.state.postalmsg}</Postal_Msg>
+                                        <PostalMsg className="postal_msg">{this.state.postalmsg}</PostalMsg>
                                     </Col>
-                                </Fourth_Row>
+                                </FourthRow>
                                 {/* <Sixth_Row>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                                         <FIAT>Default Currency*</FIAT>
@@ -774,7 +845,7 @@ class PersonalDetails extends Component {
                                         <FIAT_Msg className="fiat_msg">{this.state.fiatmsg}</FIAT_Msg>
                                     </Col>
                                 </Sixth_Row> */}
-                                <Sixth_Row>
+                                <SixthRow>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                                         <FIAT>Default Date Format*</FIAT>
                                         <RadioGroup onChange={this.onChangeFormat} value={this.state.date_format !== "" ? this.state.date_format : profileDetails.date_format}>
@@ -782,25 +853,25 @@ class PersonalDetails extends Component {
                                             <Radio value={"DD/MM/YYYY"}>DD/MM/YYYY</Radio>
                                             <Radio value={"MMM DD,YYYY"}>MMM DD,YYYY</Radio>
                                         </RadioGroup>
-                                        <FIAT_Msg className="df_msg">{this.state.dfmsg}</FIAT_Msg>
+                                        <FIATMsg className="df_msg">{this.state.dfmsg}</FIATMsg>
                                     </Col>
-                                </Sixth_Row>
-                                <Fifth_Row>
+                                </SixthRow>
+                                <FifthRow>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                                         <Save type="primary" onClick={this.submit}>Save</Save>
                                     </Col>
-                                </Fifth_Row>
+                                </FifthRow>
 
-                            </Right_Col>
-                            {(this.props.loader == true) ?
+                            </RightCol>
+                            {(this.props.loader === true) ?
                                 <FaldaxLoader />
                                 : ""
                             }
                         </Row>
                     </Col>
                     {(errors = getFieldError('required')) ? errors.join(',') : null}
-                </Main_row>
-            </Profile_wrap>
+                </Mainrow>
+            </Profilewrap>
         );
     }
 }

@@ -2,24 +2,24 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from "react-redux";
-import { Row, Col, Card, Icon, Spin, Input } from 'antd';
+import { Row, Col, Card, Icon, Spin } from 'antd';
 import moment from 'moment';
 import styled from 'styled-components';
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import { globalVariables } from "Globals";
-import { Spin_Ex } from 'STYLED-COMPONENTS/HOMEPAGE/style';
+import { SpinEx } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import {
-    SectionBlog, Whole_news, Blogs_wrap, Meta_title, Card_foot, Prev_next, Prev, Next,
-    CardCover, Inputsearch, Search_wrap, RemoveButton, NoData
+    SectionBlog, WholeNews, BlogsWrap, MetaTitle, CardFoot, PrevNext, Prev, Next,
+    CardCover, InputSearch, SearchWrap, RemoveButton, NoData
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/blogStyle';
 
-const Container_Blog = styled(Container)`
+const ContainerBlog = styled(Container)`
     margin-bottom: 80px;
 `
-const News_main = styled.div`
-    background-color:${props => props.theme.mode == "dark" ? "#01090f" : "white"};
+const NewsMain = styled.div`
+    background-color:${props => props.theme.mode === "dark" ? "#01090f" : "white"};
 `
 const NewsTitle = styled.span`
   font-size: 40px;
@@ -27,7 +27,7 @@ const NewsTitle = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode == "dark" ? "white" : ""};
+  color:${props => props.theme.mode === "dark" ? "white" : ""};
   &:before {
     content: '';
     width: calc(50% - 140px);
@@ -60,7 +60,7 @@ const NewsTitle = styled.span`
 `;
 
 const { Meta } = Card;
-const Search = Input.Search;
+/* const Search = Input.Search; */
 
 class Blog extends Component {
     constructor(props) {
@@ -78,6 +78,7 @@ class Blog extends Component {
             blogCSS: ''
         }
     }
+    /* Life Cycle Methods */
     componentDidMount() {
         if (this.props.location.search !== '') {
             var bPage = this.props.location.search.split("=")
@@ -87,7 +88,7 @@ class Blog extends Component {
         }
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
-                if (this.props.theme == false)
+                if (this.props.theme === false)
                     this.setState({ searchClass: "news-search", blogCSS: "Card-Blog" })
                 else
                     this.setState({ searchClass: "news-search-night", blogCSS: "Card-Blog-night" })
@@ -95,26 +96,30 @@ class Blog extends Component {
         }
     }
     componentWillReceiveProps(props, newProps) {
-        if (props.location.search.split('=')[1] == this.state.nxtPage) {
+        if (props.location.search.split('=')[1] === this.state.nxtPage) {
             this.BlogDetails(props.location.search.split('=')[1]);
         }
-        if (props.location.search.split('=')[1] == this.state.prevPage) {
+        if (props.location.search.split('=')[1] === this.state.prevPage) {
             this.BlogDetails(props.location.search.split('=')[1]);
         }
 
         if (props.theme !== undefined) {
             if (props.theme !== this.state.theme) {
-                if (props.theme == false)
+                if (props.theme === false)
                     this.setState({ searchClass: "news-search", blogCSS: "Card-Blog" })
                 else
                     this.setState({ searchClass: "news-search-night", blogCSS: "Card-Blog-night" })
             }
         }
     }
+    /*  
+        Page:/news
+        This method is called to get all news.
+    */
     BlogDetails(curr, flag = null) {
         this.setState({ loader: true })
         var searchV = this.state.searchV;
-        if (flag == true)
+        if (flag === true)
             searchV = ""
         var obj = {};
         obj['data'] = searchV
@@ -129,7 +134,7 @@ class Blog extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                if (responseData.status == 200) {
+                if (responseData.status === 200) {
                     var numb = Number(curr)
                     this.setState({ nxtPage: numb + 1, blogsData: responseData, currPage: curr, prevPage: numb - 1, totalPage: Math.ceil(responseData.NewsCount / 9), loader: false })
                     if (searchV !== "") {
@@ -140,14 +145,32 @@ class Blog extends Component {
             .catch(error => { })
 
     }
+
+    /*  
+        Page:/news
+        This method is called for change in Search of news.
+    */
+
     searchChange(e) {
         this.setState({ searchV: e.target.value });
     }
+
+    /*  
+        Page:/news
+        This method is called when you submit search.
+    */
+
     submitSearch(e) {
         if (e.target.value.trim() !== "") {
             this.BlogDetails(1);
         }
     }
+
+    /*  
+        Page:/contact-us
+        This method is called to clear search.
+    */
+
     removeSearch() {
         this.setState({ searchV: "", removeflag: false });
         this.BlogDetails(1, true);
@@ -158,16 +181,16 @@ class Blog extends Component {
             loader } = this.state;
         var _self = this;
         return (
-            <News_main>
+            <NewsMain>
                 <Navigation />
 
-                <Container_Blog style={{ minHeight: "100%" }}>
+                <ContainerBlog style={{ minHeight: "100%" }}>
                     <SectionBlog>
                         <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
                             <NewsTitle>News </NewsTitle>
                         </div>
-                        <Search_wrap>
-                            <Inputsearch
+                        <SearchWrap>
+                            <InputSearch
                                 placeholder="Search News"
                                 onChange={value => this.searchChange(value)}
                                 style={{ width: "100%" }}
@@ -175,10 +198,10 @@ class Blog extends Component {
                                 onPressEnter={e => this.submitSearch(e)}
                                 value={searchV}
                             />
-                            {removeflag == true ? <RemoveButton onClick={this.removeSearch.bind(this)}>Clear Search <Icon type="close" /></RemoveButton> : ""}
-                        </Search_wrap>
-                        <Whole_news>
-                            <Blogs_wrap>
+                            {removeflag === true ? <RemoveButton onClick={this.removeSearch.bind(this)}>Clear Search <Icon type="close" /></RemoveButton> : ""}
+                        </SearchWrap>
+                        <WholeNews>
+                            <BlogsWrap>
                                 <Row className="blog-card-row">
 
                                     {blogsData.data !== undefined ? blogsData.data.map(function (result, key, index) {
@@ -191,35 +214,35 @@ class Blog extends Component {
                                                     <Card
                                                         style={{ width: "100%" }}
                                                         cover={<CardCover alt="example" style={{ backgroundImage: `url(${img})` }} />}
-                                                        actions={[<Card_foot>{date}</Card_foot>, <Card_foot>{result.owner}</Card_foot>]}
+                                                        actions={[<CardFoot>{date}</CardFoot>, <CardFoot>{result.owner}</CardFoot>]}
                                                         bodyStyle={{ paddingTop: "15px", paddingLeft: "25px", backgroundColor: "#f7f7f7", paddingBottom: "0px", paddingRight: "30px" }}
                                                         className={_self.state.blogCSS}
                                                     >
                                                         <Meta
-                                                            title={<Meta_title className="news-title">{result.title}</Meta_title>}
+                                                            title={<MetaTitle className="news-title">{result.title}</MetaTitle>}
                                                         />
                                                     </Card>
                                                 </a>
                                             </Col>);
                                     }) : ""
                                     }
-                                    {blogsData !== undefined && blogsData !== '' ? (blogsData.data.length == 0 ? <NoData>No Data Found</NoData> : "") : ""}
+                                    {blogsData !== undefined && blogsData !== '' ? (blogsData.data.length === 0 ? <NoData>No Data Found</NoData> : "") : ""}
                                 </Row>
-                            </Blogs_wrap>
-                        </Whole_news>
-                        <Prev_next>
+                            </BlogsWrap>
+                        </WholeNews>
+                        <PrevNext>
                             {(currPage > 1 && currPage <= totalPage) ? <Link to={`/news?newsPage=${nxtPage - 2}`}><Prev><i style={{ verticalAlign: "middle", textDecoration: "none" }} className="material-icons">keyboard_backspace</i><span style={{ verticalAlign: "middle" }}>Previous Articles</span></Prev></Link> : ""}
 
                             {(nxtPage <= totalPage) ? <Link to={`/news?newsPage=${nxtPage}`}><Next><span style={{ verticalAlign: "middle", textDecoration: "none" }}>Next Articles</span><i style={{ verticalAlign: "middle", transform: "rotate(180deg)" }} className="material-icons">keyboard_backspace</i></Next></Link> : ""}
-                        </Prev_next>
+                        </PrevNext>
                     </SectionBlog>
-                </Container_Blog>
+                </ContainerBlog>
 
                 <CommonFooter />
-                {(loader) ? <Spin_Ex className="Ex_spin">
+                {(loader) ? <SpinEx className="Ex_spin">
                     <Spin size="large" />
-                </Spin_Ex> : ""}
-            </News_main>
+                </SpinEx> : ""}
+            </NewsMain>
         );
     }
 }

@@ -14,25 +14,25 @@ export const Container = styled.div`
     width:100%;
 `;
 
-export const Section_1 = styled.div`
+export const Section1 = styled.div`
     background-color: #f5f5f5;
     @media (max-width: 576px) {
         background-color: white !important;
     }
 `;
 
-export const Section_2 = styled.div`
+export const Section2 = styled.div`
     width: 100%;
     background-color: #f5f5f5;
     padding-bottom: 70px;
 `;
 
-export const Section_3 = styled.div`
+export const Section3 = styled.div`
     width: 100%;
     background-image: -webkit-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
 `;
 
-export const Container_row = styled(Row)`
+export const ContainerRow = styled(Row)`
     @media (min-width: 992px) {
         & > .ant-col-lg-6,
         & > .ant-col-md-6,
@@ -57,7 +57,7 @@ export const Container_row = styled(Row)`
         }
     }
 }`;
-export const Spin_Ex = styled.div`
+export const SpinEx = styled.div`
     text-align: center;
     background: white;
     border-radius: 4px;

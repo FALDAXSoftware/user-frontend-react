@@ -76,7 +76,7 @@ const HorImg = styled.img`
     width:250px;    
   }
 `
-export const Form_wrap = styled.div`
+export const FormWrap = styled.div`
   padding-left:100px;
   
   background-color:#f0f3f2;
@@ -101,7 +101,7 @@ height: 100vh;
   height:auto;
 }
 `
-const Login_head = styled.div`
+const LoginHead = styled.div`
   font-size: 30px;
   font-family: "Open Sans";
   color: rgb( 35, 38, 45 );
@@ -112,7 +112,7 @@ const Login_head = styled.div`
   border-bottom: 3px solid #ced9e0;
   display: inline-block;
 `
-export const Welcome_text = styled.div`
+export const WelcomeText = styled.div`
   font-size: 24px;
   font-family: "Open Sans";
   color: #829099;
@@ -120,7 +120,7 @@ export const Welcome_text = styled.div`
   margin-top:28px;
   
 `
-export const Email_label = styled.div`
+export const EmailLabel = styled.div`
   font-size: 14px;
   font-family: "Open Sans";
   color: black;
@@ -149,7 +149,7 @@ export const Username = styled.input`
     width: 85%;
   }
 `
-export const Email_req = styled.div`
+export const EmailReq = styled.div`
   display:none;
   color:red;
   font-size:14px;
@@ -162,10 +162,10 @@ export const UserIconS = styled(Icon)`
 `
 export const UserIconF = styled(UserIconS)`
 `
-const Ph_Label = styled(Email_label)`
+const PhLabel = styled(EmailLabel)`
   margin-top:15px;
 `
-export const Phone_req = styled.label`
+export const PhoneReq = styled.label`
   display:none;
   color:red;
   font-size:11px;
@@ -179,18 +179,18 @@ const PassIconF = styled(UserIconS)`
 `
 const PassIconS = styled(UserIconF)`
 `
-export const Pass_req = styled.label`
+export const PassReq = styled.label`
   display:none;
   color:red;
   font-size:11px;
   width:76%;
   font-weight:normal;
 `
-const OtpLabel = styled(Email_label)`
+const OtpLabel = styled(EmailLabel)`
     width: 76%;
     text-align: justify;
 `
-const Check_wrap = styled.div`
+const CheckWrap = styled.div`
   margin-top:20px;
   width:76%;
   @media(max-width:767px){
@@ -213,7 +213,7 @@ const Forgot = styled.a`
     float:none;
   }
 `
-const Button_login = styled(Button)`
+const ButtonLogin = styled(Button)`
   width: 110px;
   background-color: rgb(0, 170, 250);
   color: white;
@@ -249,7 +249,7 @@ const Sign = styled.div`
     margin-top: 30px;
   }
 `
-const Sign_a = styled.a`
+const Signa = styled.a`
   font-size: 16px;
   font-family: "Open Sans";
   color:rgb(0, 170, 250);
@@ -263,7 +263,7 @@ const FAI = styled.img`
   margin-left:-35px;
   cursor:pointer;
 `
-const Active_FAI = styled(FAI)`
+const ActiveFAI = styled(FAI)`
 `
 
 class Login_Form extends Component {
@@ -307,7 +307,7 @@ class Login_Form extends Component {
   }
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      if (error == null && this.state.emailIcon == true && this.state.passIcon == true && (this.state.isOtpRequired == true ? this.state.otpIcon == true : true)) {
+      if (error === null && this.state.emailIcon === true && this.state.passIcon === true && (this.state.isOtpRequired === true ? this.state.otpIcon === true : true)) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
@@ -328,7 +328,7 @@ class Login_Form extends Component {
         }
       } else {
         if (error !== null) {
-          if (error['password'] !== undefined && (value.password == "" || value.password == undefined)) {
+          if (error['password'] !== undefined && (value.password === "" || value.password === undefined)) {
             this.setState({ passIcon: false })
             document.querySelector("#passlog_icon_success").style.display = "none"
             document.querySelector("#passlog_icon_fail").style.display = "none"
@@ -340,7 +340,7 @@ class Login_Form extends Component {
             document.querySelector("#userlog_icon_success").style.display = "none"
             document.querySelector("#userlog_icon_fail").style.display = "inline-block"
             document.querySelectorAll(".user_msg")[0].style.display = "block";
-            if (this.state.email_msg == null) this.setState({ email_msg: "Email is required" })
+            if (this.state.email_msg === null) this.setState({ email_msg: "Email is required" })
           }
         }
         else {
@@ -350,9 +350,19 @@ class Login_Form extends Component {
     });
   }
 
+  /* 
+    Page: /login
+    This method is called for when we submit Login Form.
+  */
+
   dispModal(pressed) {
     this.props.history.push('/signup')
   }
+
+  /* 
+    Page: /login
+    This method is called for custom notifications.
+  */
 
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
@@ -362,12 +372,17 @@ class Login_Form extends Component {
     });
   };
 
+  /* 
+    Page: /login
+    This method is called for when we change any field in Login Form.
+  */
+
   onChangeField(value, field) {
-    if (field == "username") {
+    if (field === "username") {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       var bool = re.test(String(value).toLowerCase());
       if (value !== "") {
-        if (bool == true) {
+        if (bool === true) {
           this.setState({ emailIcon: true })
           document.querySelector("#userlog_icon_success").style.display = "inline-block"
           document.querySelector("#userlog_icon_fail").style.display = "none"
@@ -387,7 +402,7 @@ class Login_Form extends Component {
         document.querySelectorAll(".user_msg")[0].style.display = "block";
         this.setState({ email_msg: "Email address is required" })
       }
-    } else if (field == "password") {
+    } else if (field === "password") {
       let val = value.trim();
       if (val !== "") {
         this.setState({ passIcon: true, password: value })
@@ -428,11 +443,11 @@ class Login_Form extends Component {
     //     document.querySelectorAll(".pass_msg")[0].style.display = "none";
     //   }
     // }
-    else if (field == "otp") {
+    else if (field === "otp") {
       var re = /^\b[a-zA-Z0-9]{6}\b|\b[a-zA-Z0-9]{6}\b/;
       var bool = re.test(value);
       if (value !== "") {
-        if (bool == true) {
+        if (bool === true) {
           this.setState({ otpIcon: true })
           document.querySelector("#otp_icon_success").style.display = "inline-block"
           document.querySelector("#otp_icon_fail").style.display = "none"
@@ -454,9 +469,14 @@ class Login_Form extends Component {
     }
   }
 
+  /* 
+    Page: /login
+    This method is called when click eye to show hide password.
+  */
+
   handleEye(e) {
     if (document.getElementById("logPass").type !== undefined) {
-      if (document.getElementById("logPass").type == "password") {
+      if (document.getElementById("logPass").type === "password") {
         this.setState({ typeEye: "text" })
       } else {
         this.setState({ typeEye: "password" })
@@ -516,7 +536,7 @@ class Login_Form extends Component {
       .then(response => response.json())
       .then((responseData) => {
         this.setState({ loader: false })
-        if (responseData.status == 200) {
+        if (responseData.status === 200) {
           responseData.message = '';
           this.props.loginAction(responseData);
           this.setState({ verify: true });
@@ -526,6 +546,11 @@ class Login_Form extends Component {
       })
       .catch(error => { /* console.log(error) */ })
   }
+
+  /* 
+    Page: /login
+    This method is called when we want to email verify confirmation.
+  */
 
   tokenVerify() {
     var queryObj = {};
@@ -541,13 +566,18 @@ class Login_Form extends Component {
       .then(response => response.json())
       .then((responseData) => {
         this.setState({ loader: false })
-        if (responseData.status == 200) {
+        if (responseData.status === 200) {
           this.openNotificationWithIcon('success', 'Verified', responseData.message);
         } else
           this.openNotificationWithIcon('error', 'Not Verified', responseData.err)
       })
       .catch(error => { /* console.log(error) */ })
   }
+
+  /* 
+    Page: /login
+    This method is called when we want to new email verify confirmation.
+  */
 
   newEmailVerify() {
     var queryObj = {};
@@ -563,7 +593,7 @@ class Login_Form extends Component {
       .then(response => response.json())
       .then((responseData) => {
         this.setState({ loader: false })
-        if (responseData.status == 200) {
+        if (responseData.status === 200) {
           this.setState({ verify: true }, () => {
             this.props.loginAction(responseData);
           });
@@ -574,14 +604,30 @@ class Login_Form extends Component {
       .catch(error => { /* console.log(error) */ })
   }
 
+  /* 
+    Page: /login
+    This method is called when we submit the Form.
+  */
+
   handleSubmit(event) {
     this.submit();
     event.preventDefault();
   }
 
+  /* 
+    Page: /forgot-password
+    This method is called when forgot password.
+  */
+
   _goToForgotPwd = () => {
     this.props.history.push('/forgot-password')
   }
+
+  /* 
+    Page: /login
+    This method is called to get parameter from the URL.
+  */
+
   getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),
       sURLVariables = sPageURL.split('&'),
@@ -596,6 +642,7 @@ class Login_Form extends Component {
       }
     }
   }
+
   render() {
     if (this.props.isLoggedIn) {
       this.props.history.push("/editProfile");
@@ -616,12 +663,12 @@ class Login_Form extends Component {
             </LeftWrap>
           </ColLeft>
           <ColRight sm={24} lg={12}>
-            <Form_wrap>
+            <FormWrap>
               <RightWrap >
                 <div className="wow fadeInDown" style={{ width: "100%" }}>
-                  <Login_head>Login</Login_head>
-                  <Welcome_text>Welcome To FALDAX!</Welcome_text>
-                  <Email_label>Email Address*</Email_label>
+                  <LoginHead>Login</LoginHead>
+                  <WelcomeText>Welcome To FALDAX!</WelcomeText>
+                  <EmailLabel>Email Address*</EmailLabel>
                   <form onSubmit={this.handleSubmit}>
                     <div>
                       <Username type="email" disabled={this.state.isOtpRequired} {...getFieldProps('email', {
@@ -631,8 +678,8 @@ class Login_Form extends Component {
                       <UserIconS id="userlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                       <UserIconF id="userlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                     </div>
-                    <Email_req className="user_msg">{this.state.email_msg}</Email_req>
-                    <Ph_Label>Password*</Ph_Label>
+                    <EmailReq className="user_msg">{this.state.email_msg}</EmailReq>
+                    <PhLabel>Password*</PhLabel>
                     <div>
                       <Password disabled={this.state.isOtpRequired} id="logPass" type={this.state.typeEye} {...getFieldProps('password', {
                         onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
@@ -640,12 +687,12 @@ class Login_Form extends Component {
                       })}
                       />
                       {
-                        (this.state.typeEye == "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this)} /> : <Active_FAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this)} />
+                        (this.state.typeEye === "password") ? <FAI src={_EYE} onClick={this.handleEye.bind(this)} /> : <ActiveFAI src={_ACTIVEEYE} onClick={this.handleEye.bind(this)} />
                       }
                       <PassIconS id="passlog_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                       <PassIconF id="passlog_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                     </div>
-                    <Pass_req className="pass_msg">{this.state.pass_msg}</Pass_req>
+                    <PassReq className="pass_msg">{this.state.pass_msg}</PassReq>
 
                     {this.state.isOtpRequired &&
                       <div>
@@ -658,26 +705,26 @@ class Login_Form extends Component {
                           <UserIconS id="otp_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                           <UserIconF id="otp_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                         </div>
-                        <Pass_req className="otp_msg">{this.state.otp_msg}</Pass_req>
+                        <PassReq className="otp_msg">{this.state.otp_msg}</PassReq>
                       </div>
                     }
                     <input style={{ display: "none" }} type="submit" value="Submit" />
                   </form>
-                  <Check_wrap>
+                  <CheckWrap>
                     {/* <Remember>
                 <Check type="checkbox" /> Remember Me</Remember> */}
                     <Forgot onClick={this._goToForgotPwd}>Forgot Password?</Forgot>
-                  </Check_wrap>
+                  </CheckWrap>
 
                   {(errors = getFieldError('required')) ? errors.join(',') : null}
-                  <Button_login disabled={this.state.loader} onClick={this.submit}>LOGIN</Button_login>
+                  <ButtonLogin disabled={this.state.loader} onClick={this.submit}>LOGIN</ButtonLogin>
                   <Sign>
-                    No account? <Sign_a onClick={() => this.dispModal("signup")}>Sign Up</Sign_a>
+                    No account? <Signa onClick={() => this.dispModal("signup")}>Sign Up</Signa>
                   </Sign>
-                  {(this.state.loader == true) ? <FaldaxLoader /> : ""}
+                  {(this.state.loader === true) ? <FaldaxLoader /> : ""}
                 </div>
               </RightWrap>
-            </Form_wrap>
+            </FormWrap>
           </ColRight>
         </RowWrap>
         <ReCaptcha

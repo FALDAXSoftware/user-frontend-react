@@ -25,7 +25,7 @@ const FirstSlider = styled.div`
 const Slide = styled.div`
     text-align:center;
 `
-const Slide_img = styled.img`
+const SlideImg = styled.img`
     display: -webkit-inline-box;
     display: block;
     width: 70px;
@@ -40,17 +40,17 @@ const Slide_img = styled.img`
     border: 5px solid #ffffff;
     box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3); 
 `
-const Slide_span = styled.span`
+const SlideSpan = styled.span`
     color:#0f477b;
 `
-const Secondslider = styled.div`
+const SecondSlider = styled.div`
     text-align:left;
     margin-top:50px;
 `
-const Sub_slider = styled.div`
+const SubSlider = styled.div`
     margin-top:70px;
 `
-const P_tag = styled.p`
+const PTag = styled.p`
     display:block;
 `
 
@@ -108,29 +108,29 @@ export default class HomeSeven extends Component {
                                 <Slider {...settings}>
                                     <div>
                                         <Slide>
-                                            <Slide_img src={_PROPIC1} /><br />
-                                            <Slide_span>Robert Leonard</Slide_span>
+                                            <SlideImg src={_PROPIC1} /><br />
+                                            <SlideSpan>Robert Leonard</SlideSpan>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src={_PROPIC2} /><br />
-                                            <Slide_span>Smit Jones</Slide_span>
+                                            <SlideImg src={_PROPIC2} /><br />
+                                            <SlideSpan>Smit Jones</SlideSpan>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src={_PROPIC3} /><br />
-                                            <Slide_span>William Johanas</Slide_span>
+                                            <SlideImg src={_PROPIC3} /><br />
+                                            <SlideSpan>William Johanas</SlideSpan>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
                                     <div>
                                         <Slide>
-                                            <Slide_img src={_PROPIC2} /><br />
-                                            <Slide_span>John Lopez</Slide_span>
+                                            <SlideImg src={_PROPIC2} /><br />
+                                            <SlideSpan>John Lopez</SlideSpan>
                                             <p>ceo</p>
                                         </Slide>
                                     </div>
@@ -138,38 +138,38 @@ export default class HomeSeven extends Component {
                             </FirstSlider>
                         </Col>
                         <Col xxl={{ span: 14 }} xl={{ span: 14 }} sm={{ span: 24 }}>
-                            <Secondslider >
-                                <img src={_QUOTE} />
-                                <Sub_slider>
+                            <SecondSlider >
+                                <img alt="seven" alt="quote" src={_QUOTE} />
+                                <SubSlider>
                                     <Slider {...settings2}>
                                         <div>
-                                            <P_tag>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
+                                            <PTag>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
                                                 inventore veritatis et quasi beatae vitae dicta sunt explicabo.
                                                 Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                                            </P_tag>
+                                            </PTag>
                                         </div>
                                         <div>
-                                            <P_tag>
+                                            <PTag>
                                                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
                                                 inventore veritatis et quasi beatae vitae dicta sunt explicabo.
                                                 Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                                            </P_tag>
+                                            </PTag>
                                         </div>
                                         <div>
-                                            <P_tag>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
+                                            <PTag>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
                                                 inventore veritatis et quasi beatae vitae dicta sunt explicabo.
                                                 Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                                            </P_tag>
+                                            </PTag>
                                         </div>
                                         <div>
-                                            <P_tag>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
+                                            <PTag>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
                                                 inventore veritatis et quasi beatae vitae dicta sunt explicabo.
                                                 Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                                            </P_tag>
+                                            </PTag>
                                         </div>
                                     </Slider>
-                                </Sub_slider>
-                            </Secondslider>
+                                </SubSlider>
+                            </SecondSlider>
                         </Col>
                     </Col>
                 </Container>

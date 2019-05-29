@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Contact_wrap } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
+import { ContactWrap } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 
 export const ContainerContact = styled(Container)`
     text-align: center;
     padding: 0px 0px;
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"};
     border-radius:5px;
     padding-bottom:70px;
     @media(max-width:480px)
@@ -33,7 +33,7 @@ const DataDiv = styled.div`
 
 const NoDataFound = (props) => {
     return (
-        <Contact_wrap>
+        <ContactWrap>
             <ContainerContact>
                 <DataDiv>
                     <Span>
@@ -41,7 +41,7 @@ const NoDataFound = (props) => {
                 </Span>
                 </DataDiv>
             </ContainerContact>
-        </Contact_wrap >
+        </ContactWrap >
     )
 }
 

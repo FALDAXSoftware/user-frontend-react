@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home"
-import { Spin_Ex } from 'STYLED-COMPONENTS/HOMEPAGE/style'
+import { SpinEx } from 'STYLED-COMPONENTS/HOMEPAGE/style'
 import { globalVariables } from "Globals";
 import ReactHtmlParser from 'react-html-parser';
 let { API_URL } = globalVariables;
@@ -15,11 +15,11 @@ let { API_URL } = globalVariables;
 const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom: 25px;
-  background-color: ${props => props.theme.mode == "dark" ? "#01090f" : "#f5f6fa"};
+  background-color: ${props => props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
 `;
 
 const ProfileDiv = styled.div`
-  background-color: ${props => props.theme.mode == "dark" ? "#041422" : "#ffffff"};
+  background-color: ${props => props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   margin:auto;
   width: 100%;
   max-width: 1170px;
@@ -31,13 +31,13 @@ const ProfileDiv = styled.div`
   }
 `;
 
-const About_Faq_Title = styled.span`
+const AboutFaqTitle = styled.span`
   font-size: 40px;
   font-family: "Open sans";
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode == "dark" ? "white" : ""};
+  color:${props => props.theme.mode === "dark" ? "white" : ""};
   &:before {
     content: '';
     width: calc(50% - 85px);
@@ -60,10 +60,10 @@ const About_Faq_Title = styled.span`
   }
 `;
 export const FAQcontent = styled.div`
-  color:${props => props.theme.mode == "dark" ? "white" : ""} !important;
+  color:${props => props.theme.mode === "dark" ? "white" : ""} !important;
   &>h2
   {
-    color:${props => props.theme.mode == "dark" ? "white" : ""} !important;
+    color:${props => props.theme.mode === "dark" ? "white" : ""} !important;
   }
 `
 
@@ -77,6 +77,7 @@ export default class FaqPage extends Component {
       loader: false
     };
   }
+  /* LIfe Cycle Methods */
   componentDidMount() {
     this.setState({ loader: true })
     fetch(API_URL + "/users/static-page-json/faq", {
@@ -91,9 +92,6 @@ export default class FaqPage extends Component {
       })
       .catch(error => { })
 
-  }
-  teamClick(value) {
-    this.setState({ team: value });
   }
 
   render() {
@@ -112,7 +110,7 @@ export default class FaqPage extends Component {
           <ProfileWrapper>
             <ProfileDiv>
               <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
-                <About_Faq_Title> BASIC </About_Faq_Title>
+                <AboutFaqTitle> BASIC </AboutFaqTitle>
               </div>
               <FAQcontent style={{ marginTop: '20px' }}>
                 <span style={{ fontSize: '16px', fontFamily: 'Open sans' }}>
@@ -122,9 +120,9 @@ export default class FaqPage extends Component {
             </ProfileDiv>
           </ProfileWrapper>
           <CommonFooter />
-          {(loader) ? <Spin_Ex className="Ex_spin">
+          {(loader) ? <SpinEx className="Ex_spin">
             <Spin size="large" />
-          </Spin_Ex> : ""}
+          </SpinEx> : ""}
         </OverlayLoader>
       </div>
     );

@@ -2,7 +2,9 @@ import { globalVariables } from 'Globals';
 
 let { API_URL } = globalVariables;
 
-/* Action to Update Profile */
+/* 
+    Action : this action is called to Update Profile 
+*/
 export function profileupdateAction(isLoggedIn, form) {
     return (dispatch) => {
         dispatch(addLoader());
@@ -21,11 +23,10 @@ export function profileupdateAction(isLoggedIn, form) {
             .catch(error => { })
     }
 }
-export function clearEditData() {
-    return (dispatch) => {
-        dispatch(profileupdatedData())
-    }
-}
+
+/*  
+    Action :  This action is called to pass response of above action through Redux.
+*/
 
 export const profileupdatedData = (Data) => dispatch => {
 
@@ -36,8 +37,20 @@ export const profileupdatedData = (Data) => dispatch => {
 
 }
 
-/* Action to GET Profile Data */
+/*  
+    Action :  This action is called to clear edit profile data.
+*/
+export function clearEditData() {
+    return (dispatch) => {
+        dispatch(profileupdatedData())
+    }
+}
 
+
+
+/* 
+    Action : This action is called to GET Profile Data. 
+*/
 export const getProfileDataAction = (token) => dispatch => {
 
     dispatch(addLoader());
@@ -58,6 +71,9 @@ export const getProfileDataAction = (token) => dispatch => {
 
 }
 
+/*  
+    Action :  This action is called to pass response of above action through Redux.
+*/
 export const addprofileData = (Data) => dispatch => {
 
     dispatch({
@@ -68,7 +84,9 @@ export const addprofileData = (Data) => dispatch => {
 
 }
 
-/* Action to remove Profile Picture */
+/* 
+    Action : This action is to remove Profile Picture.
+*/
 
 export function removepicAction(isLoggedIn, form) {
     return (dispatch) => {
@@ -90,6 +108,7 @@ export function removepicAction(isLoggedIn, form) {
 }
 
 /* Actions for Removing and Adding Loaders */
+
 export const removeLoader = () => dispatch => {
     dispatch({
         type: 'REMOVELOADER',

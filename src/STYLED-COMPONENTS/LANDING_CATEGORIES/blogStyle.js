@@ -7,10 +7,10 @@ const Search = Input.Search;
 export const SectionBlog = styled.section`
     padding-top:110px;
 `
-export const Mainimage = styled.div`
+export const MainImage = styled.div`
     margin-top: 40px;   
 `
-export const Lefthead = styled.div`
+export const LeftHead = styled.div`
     background:#0f477b;
     min-height:420px;
     order-color:#0f477b;
@@ -21,7 +21,7 @@ export const Lefthead = styled.div`
         min-height:320px;
     }
 `
-export const Subleft = styled.div`
+export const SubLeft = styled.div`
     padding : 0px 50px;
 `
 export const Eco = styled.span`
@@ -61,7 +61,7 @@ export const CardCover = styled.div`
         max-height:240px;
     }
 `
-export const Righthead = styled.div`
+export const RightHead = styled.div`
     min-height:420px;
     background-image:url("${props => props.image}");
     background-position: center;
@@ -72,22 +72,22 @@ export const Righthead = styled.div`
         min-height:320px;
     }
 `
-export const Whole_wrap = styled.div`
+export const WholeWrap = styled.div`
     margin-top:55px;
 `
-export const Blog_p = styled.p`
+export const BlogP = styled.p`
     font-size: 18px;
     font-family: "Open Sans";
-    color:${props => props.theme.mode == "dark" ? "white" : "rgb( 0, 0, 0 )"};
+    color:${props => props.theme.mode === "dark" ? "white" : "rgb( 0, 0, 0 )"};
     font-weight: bold;
     margin-bottom: 0px;
     vertical-align: middle;
     display: inline-block;
 `
-export const Blogs_wrap = styled.div`
+export const BlogsWrap = styled.div`
     margin-top:30px;
 `
-export const HR_tag = styled.hr`
+export const HRTag = styled.hr`
     box-sizing: content-box;
     height: 0;
     overflow: visible;
@@ -99,7 +99,7 @@ export const HR_tag = styled.hr`
         display:none;
     }
 `
-export const Meta_title = styled.p`
+export const MetaTitle = styled.p`
     margin-bottom:0px;
     font-size: 16px;
     font-family: "Open Sans";
@@ -113,7 +113,7 @@ export const Meta_title = styled.p`
         text-decoration:none;
     }
 `
-export const BlogDesc = styled.p`
+export const BlogDesc1 = styled.p`
     margin-top: 2px;
     font-size: 12px;
     font-family: "Open Sans";
@@ -127,22 +127,22 @@ export const ReadMore = styled.p`
     display: flex;
     justify-content: flex-end;
 `
-export const Meta_desc = styled.p`
+export const MetaDesc = styled.p`
     font-size: 18px;
     font-family: "Open Sans";
-    color: ${props => props.theme.mode == "dark" ? "#4c84ff" : "rgb( 15, 71, 123 )"};
+    color: ${props => props.theme.mode === "dark" ? "#4c84ff" : "rgb( 15, 71, 123 )"};
     font-weight: bold;
     margin-bottom:8px;
 
 `
-export const Card_foot = styled.span`
+export const CardFoot = styled.span`
     font-size: 12px;
     font-family: "Open Sans";
     font-weight:600;
-    color: ${props => props.theme.mode == "dark" ? "#b4b9bd" : "#666666"};  
+    color: ${props => props.theme.mode === "dark" ? "#b4b9bd" : "#666666"};  
     line-height:1;
 `
-export const Prev_next = styled.div`
+export const PrevNext = styled.div`
     margin-top:45px;
     text-align:center;
     font-size: 14px;
@@ -162,8 +162,8 @@ export const Prev_next = styled.div`
 export const Prev = styled.div`
     margin-right:60px;
     border:none;
-    color:${props => props.theme.mode == "dark" ? "white" : "black"};
-    background:${props => props.theme.mode == "dark" ? "#4c84ff" : "#f7f7f7"};
+    color:${props => props.theme.mode === "dark" ? "white" : "black"};
+    background:${props => props.theme.mode === "dark" ? "#4c84ff" : "#f7f7f7"};
     min-width:215px;
     min-height:40px;
     display: inline-flex;
@@ -173,7 +173,7 @@ export const Prev = styled.div`
     cursor:pointer;
     &:hover
     {
-        color:${props => props.theme.mode == "dark" ? "black" : '#1890ff'};
+        color:${props => props.theme.mode === "dark" ? "black" : '#1890ff'};
         
     }
     @media(max-width:576px)
@@ -186,8 +186,8 @@ export const Prev = styled.div`
 export const Next = styled.div`
     margin-left:60px;
     border:none;
-    color:${props => props.theme.mode == "dark" ? "white" : "black"};
-    background:${props => props.theme.mode == "dark" ? "#4c84ff" : "#f7f7f7"};
+    color:${props => props.theme.mode === "dark" ? "white" : "black"};
+    background:${props => props.theme.mode === "dark" ? "#4c84ff" : "#f7f7f7"};
     min-width:215px;
     display: inline-flex;
     align-items: center;
@@ -197,7 +197,7 @@ export const Next = styled.div`
     cursor:pointer;
     &:hover
     {
-        color:${props => props.theme.mode == "dark" ? "black" : '#1890ff'};
+        color:${props => props.theme.mode === "dark" ? "black" : '#1890ff'};
         
     }
     @media(max-width:576px)
@@ -217,18 +217,18 @@ export const MsgIcon = styled.img`
 /* <<<<<<<<<<<<<<<<<<<<<<<<< BLOG DETAILS STYLED COMPONENTS >>>>>>>>>>>>>>>>>>>>>> */
 
 
-export const BD_mainWrap = styled.div`
+export const BDMainWrap = styled.div`
     padding-top:100px;
     margin-bottom:80px;
 `
-export const Left_col = styled.div`
+export const LeftCol = styled.div`
     padding-right:30px;
     @media(max-width:1199px)
     {
         padding-right:0px;
     }
 `
-export const Blog_desc = styled.p`
+export const BlogDesc2 = styled.p`
     font-size: 30px;
     font-family: "Open Sans";
     color: rgb( 15, 71, 123 );
@@ -260,7 +260,7 @@ export const Comment = styled.span`
     color: rgba( 102, 102, 102, 0.702 );
     font-weight:600;
 `
-export const Head_image = styled.div`
+export const HeadImage = styled.div`
     margin-top:20px;
     background-image:url('${props => props.image}');
     min-height:400px;
@@ -276,19 +276,19 @@ export const PostHead = styled.div`
     padding-left: 30px;
 `
 
-export const PostHead_span = styled.span`
+export const PostHeadSpan = styled.span`
     font-size: 20px;
     font-family: "Open Sans";
     color: rgb( 15, 71, 123 );
     font-weight: bold;
 `
-export const PostHead_below = styled(PostHead)`
+export const PostHeadBelow = styled(PostHead)`
     margin-top:30px;
 `
-export const Comment_box = styled.div`
+export const CommentBox = styled.div`
     margin-top:50px;
 `
-export const Commentspan = styled.span`
+export const CommentSpan1 = styled.span`
     display:block;
     font-size: 14px;
     font-family: "Open Sans";
@@ -305,7 +305,7 @@ export const CommentArea = styled.textarea`
     font-family: "Open Sans";
     color: rgba( 0, 0, 0, 0.502 );
 `
-export const Comment_button = styled.button`
+export const CommentButton = styled.button`
     margin-top:15px;
     float:right;
     border-radius: 5px;
@@ -319,7 +319,7 @@ export const Comment_button = styled.button`
     border:none;
     border-radius:5px;
 `
-export const Right_Col = styled(Col)`
+export const RightCol = styled(Col)`
     @media(max-width:1199px)
     {
         display:none;
@@ -329,7 +329,7 @@ export const SocialHead = styled(PostHead)`
     
 `
 
-export const Social_Li = styled.ul`
+export const SocialLi = styled.ul`
     list-style-type:none;
     padding-left: 0px;
     margin-top:20px;
@@ -360,7 +360,7 @@ export const TagSpan = styled.span`
 
 export const AllComments = styled.div`
 `
-export const Comment_wrap = styled.div`
+export const CommentWrap = styled.div`
     display: inline-flex;
     align-items: center;
 
@@ -373,10 +373,10 @@ export const CommentImage = styled.div`
     background-repeat: no-repeat;
     display:inline-block;
 `
-export const Comment_text = styled.div`
+export const CommentText = styled.div`
     padding-left:20px;
 `
-export const Comment_span = styled.p`
+export const CommentSpan2 = styled.p`
     display:inline-block;
     margin-bottom:0px;
     font-weight:600;
@@ -384,18 +384,18 @@ export const Comment_span = styled.p`
     font-family: "Open Sans";
     color: rgb( 15, 71, 123 );
 `
-export const Comment_p = styled.p`
+export const CommentP = styled.p`
     font-size: 12px;
     font-family: "Open Sans";
     color: rgb( 128, 124, 124 );  
     font-weight:600;
 `
-export const Comment_main = styled.div`
+export const CommentMain = styled.div`
     margin-top:30px;
     word-break: break-word;
     padding-right: 30px;
 `
-export const PostHead_below_comment = styled(PostHead_below)`
+export const PostHeadBelowComment = styled(PostHeadBelow)`
     line-height:2;
     display: flex;
     align-items: center;
@@ -406,11 +406,11 @@ export const PerComment = styled.span`
     color: rgb( 0, 0, 0 );
     padding: 15px 15px;
 `
-export const Comment_msg = styled.span`
+export const CommentMsg = styled.span`
     font-size:12px;
     color:red;
 `
-export const Viewmore = styled.div`
+export const ViewMore = styled.div`
     margin-left: auto;
     width: 165px;
     margin-right: auto;
@@ -435,15 +435,15 @@ export const Viewmore = styled.div`
 
 /* Related Post Styled */
 
-export const Main_Wrap = styled.div`
+export const MainWrap = styled.div`
     margin-top:30px;
     margin-bottom:40px;
 `
-export const Sub_wrap = styled.div`
+export const SubWrap = styled.div`
     margin-left:-15px;
     margin-right:-15px;
 `
-export const Rel_post = styled.div`
+export const RelPost = styled.div`
     margin-left:15px;
     margin-right:15px;
     @media(max-width:767px)
@@ -451,7 +451,7 @@ export const Rel_post = styled.div`
         margin-bottom: 60px;
     }
 `
-export const Rel_img = styled.div`
+export const RelImg = styled.div`
     width: 100%;
     height: 140px;
     background-position: center;
@@ -459,38 +459,38 @@ export const Rel_img = styled.div`
     background-size: cover;
     margin-bottom: 25px;
 `
-export const Rel_p = styled.p`
+export const RelP = styled.p`
     font-size: 18px;
     font-family: "Open Sans";
     color: rgb( 15, 71, 123 );
     font-weight:600;
     margin-bottom: 5px;
 `
-export const Rel_span = styled.span`
+export const RelSpan = styled.span`
     font-size: 12px;
     font-family: "Open Sans";
     color: rgb( 128, 124, 124 );
     border-right: 1px solid rgb( 128, 124, 124 );
     padding-right:15px;
 `
-export const Rel_name = styled.span`
+export const RelName = styled.span`
     font-size: 12px;
     font-family: "Open Sans";
     color: rgb( 128, 124, 124 );
     padding-left:15px;
 `
-export const Rel_img_right = styled(Rel_img)`
+export const RelImgRight = styled(RelImg)`
 
 `
-export const Rel_span_right = styled(Rel_span)`
+export const RelSpanRight = styled(RelSpan)`
     border-right:0px;
 `
-export const Rel_p_right = styled(Rel_p)`
+export const RelPRight = styled(RelP)`
     font-size: 16.01px;
     font-family: "Open Sans";
     color: rgb( 15, 71, 123 );
 `
-export const Sub_wrap_right = styled(Sub_wrap)`
+export const SubWrapRight = styled(SubWrap)`
     margin-left:0px;
     margin-right:0px;
 `
@@ -502,15 +502,15 @@ export const Sub_wrap_right = styled(Sub_wrap)`
 /* News Style */
 
 
-export const Inputsearch = styled(Search)`
+export const InputSearch = styled(Search)`
     width: 100%;
     height: 40px;
 `
-export const Search_wrap = styled.div`
+export const SearchWrap = styled.div`
     text-align:right;
     margin-top:35px;
 `
-export const Whole_news = styled(Whole_wrap)`
+export const WholeNews = styled(WholeWrap)`
     margin-top:30px;
 `
 export const RemoveButton = styled(Button)`

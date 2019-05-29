@@ -7,11 +7,11 @@ import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 
 /* Components */
 /* Styled-Components */
-const Third_Row = styled(Row)`
+const ThirdRow = styled(Row)`
     padding-top: 50px;
     padding-bottom: 20px;
 `
-const Third_Wrap = styled.div`
+const ThirdWrap = styled.div`
     background-color:#f7f5f5;
 `
 const BlueCol = styled(Col)`
@@ -23,7 +23,7 @@ const BlueCol = styled(Col)`
         width:100%;
     }
 `
-const Third_span = styled.span`
+const ThirdSpan = styled.span`
     font-size: 55px;
     font-family: "Open sans";
     color: #00a7ff;
@@ -32,7 +32,7 @@ const Third_span = styled.span`
         font-size: 30px;
     }
 `
-const Third_p = styled.p`
+const ThirdPTag = styled.p`
     font-size: 24px;
     font-family: "Open sans";
     color: rgb( 175, 216, 255 );
@@ -42,7 +42,7 @@ const Third_p = styled.p`
         font-size: 16px;
     }
 `
-const Third_title = styled(Third_p)`
+const ThirdTitle = styled(ThirdPTag)`
   color:#cbc9ca;
   font-size:20px;
   @media (max-width: 767px) {
@@ -52,29 +52,29 @@ const Third_title = styled(Third_p)`
 export default class HomeSix extends Component {
     render() {
         return (
-            <Third_Wrap>
+            <ThirdWrap>
                 <Container className="wow fadeIn" data-wow-duration="2s" data-wow-delay="500ms">
-                    <Third_Row>
+                    <ThirdRow>
                         <Row>
                             <BlueCol xs={8}>
-                                <Third_title>Accessible in</Third_title>
-                                <Third_span>211</Third_span>
-                                <Third_p>Countries</Third_p>
+                                <ThirdTitle>Accessible in</ThirdTitle>
+                                <ThirdSpan>211</ThirdSpan>
+                                <ThirdPTag>Countries</ThirdPTag>
                             </BlueCol>
                             <BlueCol xs={8}>
-                                <Third_title>Offering</Third_title>
-                                <Third_span>73+</Third_span>
-                                <Third_p>Coins & Tokens</Third_p>
+                                <ThirdTitle>Offering</ThirdTitle>
+                                <ThirdSpan>73+</ThirdSpan>
+                                <ThirdPTag>Coins & Tokens</ThirdPTag>
                             </BlueCol>
                             <BlueCol xs={8}>
-                                <Third_title>Always</Third_title>
-                                <Third_span>0%</Third_span>
-                                <Third_p>Maker Fees</Third_p>
+                                <ThirdTitle>Always</ThirdTitle>
+                                <ThirdSpan>0%</ThirdSpan>
+                                <ThirdPTag>Maker Fees</ThirdPTag>
                             </BlueCol>
                         </Row>
-                    </Third_Row>
+                    </ThirdRow>
                 </Container>
-            </Third_Wrap>
+            </ThirdWrap>
         );
     }
 }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import NavigationBar from 'COMPONENTS/LANDING/homepage';
+/* import NavigationBar from 'COMPONENTS/LANDING/homepage';
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 import LoggedNavigation from 'COMPONENTS/NAVIGATIONS/loggednavigation';
 import About from 'COMPONENTS/about';
-import Referral from "COMPONENTS/SETTINGS/referral"
+import Referral from "COMPONENTS/SETTINGS/referral" */
 import Editprofile from 'COMPONENTS/SETTINGS/edit_profile';
 import HubspotTickets from 'COMPONENTS/SETTINGS/Account_settings/hubspot_tickets'
 import Footer from 'COMPONENTS/LANDING/FOOTERS/footer';
@@ -17,7 +17,7 @@ import History2 from "COMPONENTS/LOGGEDCATEGORIES/HISTORY/history"
 import Dashboard from "COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard"
 import OpenTicket from "COMPONENTS/LANDINGCATEGORIES/open_ticket";
 import { globalVariables } from 'Globals';
-import Chart from "COMPONENTS/tradingviewchart";
+/* import Chart from "COMPONENTS/tradingviewchart"; */
 import Conversion from 'COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion';
 let { API_URL } = globalVariables;
 const socketIOClient = require('socket.io-client');
@@ -88,6 +88,7 @@ export default class AppRouter extends Component {
     const { url } = this.props.match;
     return (
       <div>
+        {console.log("App.js")}
         {routes.map(singleRoute => {
           const { path, exact, ...otherProps } = singleRoute;
           return (

@@ -3,6 +3,9 @@ import { getProfileDataAction } from "./settingActions";
 import { removeLoader, addLoader } from "./settingActions";
 let { API_URL } = globalVariables;
 
+/*  
+    Action : This action is called to change password.
+*/
 export function passwordChange(isLoggedIn, values) {
     return (dispatch) => {
         dispatch(addLoader())
@@ -21,11 +24,19 @@ export function passwordChange(isLoggedIn, values) {
             .catch(error => { })
     }
 }
+
+/*  
+    Action : This action is called to clear password.
+*/
 export function clearPassword() {
     return (dispatch) => {
         dispatch(passwordChangeData())
     }
 }
+
+/*  
+    Action : This action is called to pass data change password to redux.
+*/
 export const passwordChangeData = (data) => dispatch => {
 
     dispatch({
@@ -35,7 +46,9 @@ export const passwordChangeData = (data) => dispatch => {
 
 }
 
-
+/*  
+    Action : This action is called to setup two factor.
+*/
 export function TF_Enable(isLoggedIn) {
     return (dispatch) => {
         dispatch(addLoader())
@@ -54,6 +67,9 @@ export function TF_Enable(isLoggedIn) {
     }
 }
 
+/*  
+    Action : This action is called to pass QR data to redux.
+*/
 export const QRData = (data) => dispatch => {
 
     dispatch({
@@ -65,6 +81,9 @@ export const QRData = (data) => dispatch => {
 
 //finalTFEnable
 
+/*  
+    Action : This action is called to verify two factor with OTP.
+*/
 export function verifyTF(isLoggedIn, value) {
     return (dispatch) => {
         dispatch(addLoader())
@@ -85,6 +104,9 @@ export function verifyTF(isLoggedIn, value) {
     }
 }
 
+/*  
+    Action :  This action is called to pass response of above action through Redux.
+*/
 export const verifyQRData = (data) => dispatch => {
 
     dispatch({
@@ -93,6 +115,10 @@ export const verifyQRData = (data) => dispatch => {
     })
 
 }
+
+/*  
+    Action :  This action is called to disable two factor authentication.
+*/
 
 export function TF_Disable(isLoggedIn) {
     return (dispatch) => {
@@ -113,12 +139,20 @@ export function TF_Disable(isLoggedIn) {
     }
 }
 
+/*  
+    Action :  This action is called to pass response of above action through Redux.
+*/
+
 export const disableAction = (data) => dispatch => {
     dispatch({
         type: 'DISABLETF',
         payload: data
     })
 }
+
+/*  
+    Action :  This action is called to submit KYC form details to redux.
+*/
 
 export function kycFormAction(isLoggedIn, value) {
     return (dispatch) => {
@@ -141,12 +175,20 @@ export function kycFormAction(isLoggedIn, value) {
     }
 }
 
+/*  
+    Action :  This action is called to pass response of above action through Redux.
+*/
+
 export const kycformData = (data) => dispatch => {
     dispatch({
         type: 'KYCFORMDATA',
         payload: data
     })
 }
+
+/*  
+    Action : This action is called to upload documents.
+*/
 
 export function kycDoc(isLoggedIn, value, type) {
     return (dispatch) => {
@@ -161,7 +203,7 @@ export function kycDoc(isLoggedIn, value, type) {
             .then(response => response.json())
             .then((responseData) => {
                 var Data = {};
-                if (type == "front-doc") { Data["front_doc"] = responseData.data }
+                if (type === "front-doc") { Data["front_doc"] = responseData.data }
                 else { Data["back_doc"] = responseData.data }
                 dispatch(kycDocData(responseData));
                 dispatch(removeLoader())
@@ -169,6 +211,11 @@ export function kycDoc(isLoggedIn, value, type) {
             .catch(error => { })
     }
 }
+
+/*  
+    Action :  This action is called to pass response of above action through Redux.
+*/
+
 export const kycDocData = (data) => dispatch => {
     dispatch({
         type: 'KYCDOCDATA',

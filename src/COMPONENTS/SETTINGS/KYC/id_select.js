@@ -18,7 +18,7 @@ const KYCTypeSelectRow = styled.div`
 const SelectTitle = styled(Col)`
     margin-top:20px;
     margin-bottom:30px;
-    color:${props => props.theme.mode == "dark" ? "white" : ""};
+    color:${props => props.theme.mode === "dark" ? "white" : ""};
 `
 const PassportCol = styled(Col)`
     @media(max-width:575px)
@@ -82,14 +82,22 @@ class IDselect extends Component {
             background: ''
         };
     }
+
+    /* Life-Cycle Methods */
     componentDidMount() {
         if (this.props.theme !== undefined) {
-            if (this.props.theme == false)
+            if (this.props.theme === false)
                 this.setState({ background: "background" })
             else
                 this.setState({ background: "background-night" })
         }
     }
+
+    /* 
+        Page: /editProfile --> KYC
+        It is called when we click next button for next step and according to selection parent function is called with selected number.
+    */
+
     next_step() {
         var kycSteps = {};
         if (document.getElementById('passport').checked) {
@@ -117,9 +125,19 @@ class IDselect extends Component {
         }
     }
 
+    /* 
+        Page: /editProfile --> KYC
+        It is called when we click back button for back step.
+    */
+
     back_step() {
         this.props.next_step(0)
     }
+
+    /* 
+        Page: /editProfile --> KYC
+        It is called for custom Notifications.
+    */
 
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
@@ -132,7 +150,7 @@ class IDselect extends Component {
         return (
             <div>
                 <KYCTypeSelectRow>
-                    {this.props.countryFlag == true ?
+                    {this.props.countryFlag === true ?
                         <Row>
                             <SelectTitle md={{ span: 24 }}>
                                 Select ID type
@@ -141,8 +159,8 @@ class IDselect extends Component {
                                 <label className="kyc-radio-container">
                                     <input id="passport" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background}`}>
-                                        <img src={_ACTIVEPASSPORT} className="active" />
-                                        <img src={_PASSPORTLOGO} className="normal" />
+                                        <img alt="ID SELECTION" src={_ACTIVEPASSPORT} className="active" />
+                                        <img alt="ID SELECTION" src={_PASSPORTLOGO} className="normal" />
                                         <span className="text">Passport</span>
                                     </span>
                                 </label>
@@ -151,8 +169,8 @@ class IDselect extends Component {
                                 <label className="kyc-radio-container">
                                     <input id="license" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background} license`}>
-                                        <img src={_ACTIVELICENSE} className="active" />
-                                        <img src={_LICENSELOGO} className="normal" />
+                                        <img alt="ID SELECTION" src={_ACTIVELICENSE} className="active" />
+                                        <img alt="ID SELECTION" src={_LICENSELOGO} className="normal" />
                                         <span className="text">Driver's license</span>
                                     </span>
                                 </label>
@@ -161,8 +179,8 @@ class IDselect extends Component {
                                 <label className="kyc-radio-container">
                                     <input id="identity" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background} identity`}>
-                                        <img src={_ACTIVEIDENTITY} className="active" />
-                                        <img src={_IDENTITYLOGO} className="normal" />
+                                        <img alt="ID SELECTION" src={_ACTIVEIDENTITY} className="active" />
+                                        <img alt="ID SELECTION" src={_IDENTITYLOGO} className="normal" />
                                         <span className="text">Identity</span>
                                     </span>
                                 </label>
@@ -171,8 +189,8 @@ class IDselect extends Component {
                                 <label className="kyc-radio-container">
                                     <input id="ssn" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background} ssn`}>
-                                        <img src={_ACTIVESSN} className="active" />
-                                        <img src={_SSN} className="normal" />
+                                        <img alt="ID SELECTION" src={_ACTIVESSN} className="active" />
+                                        <img alt="ID SELECTION" src={_SSN} className="normal" />
                                         <span className="text">Social Security Number</span>
                                     </span>
                                 </label>
@@ -186,8 +204,8 @@ class IDselect extends Component {
                                 <label className="kyc-radio-container">
                                     <input id="passport" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background}`}>
-                                        <img src={_ACTIVEPASSPORT} className="active" />
-                                        <img src={_PASSPORTLOGO} className="normal" />
+                                        <img alt="ID SELeCTION" src={_ACTIVEPASSPORT} className="active" />
+                                        <img alt="ID SELeCTION" src={_PASSPORTLOGO} className="normal" />
                                         <span className="text">Passport</span>
                                     </span>
                                 </label>
@@ -196,8 +214,8 @@ class IDselect extends Component {
                                 <label className="kyc-radio-container">
                                     <input id="license" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background} license`}>
-                                        <img src={_ACTIVELICENSE} className="active" />
-                                        <img src={_LICENSELOGO} className="normal" />
+                                        <img alt="ID SELeCTION" src={_ACTIVELICENSE} className="active" />
+                                        <img alt="ID SELeCTION" src={_LICENSELOGO} className="normal" />
                                         <span className="text">Driver's license</span>
                                     </span>
                                 </label>
@@ -206,8 +224,8 @@ class IDselect extends Component {
                                 <label className="kyc-radio-container">
                                     <input id="identity" type="radio" name="kyc_type" />
                                     <span className={`${this.state.background} identity`}>
-                                        <img src={_ACTIVEIDENTITY} className="active" />
-                                        <img src={_IDENTITYLOGO} className="normal" />
+                                        <img alt="ID SELeCTION" src={_ACTIVEIDENTITY} className="active" />
+                                        <img alt="ID SELeCTION" src={_IDENTITYLOGO} className="normal" />
                                         <span className="text">Identity</span>
                                     </span>
                                 </label>

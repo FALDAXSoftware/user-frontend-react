@@ -14,9 +14,9 @@ import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { globalVariables } from 'Globals';
 
 /* STYLED-COMPONENTS */
-import { Contact_wrap, Grey_wrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle"
+import { ContactWrap, GreyWrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle"
 import {
-    ContainerContact, His_title, His_wrap, Tablediv, HisTable, HeadHis, Filter,
+    ContainerContact, HisTitle, HisWrap, Tablediv, HisTable, HeadHis, Filter,
     EXPButton, FontAwesomeIconS, Datediv, RangePickerS
 } from "STYLED-COMPONENTS/LOGGED_STYLE/historyStyle"
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'
@@ -32,54 +32,54 @@ const options = [
 const Select1 = styled(Select)`
     & .ant-select-selection
     {
-        background-color:${props => props.theme.mode == "dark" ? "#01090f" : ""};
+        background-color:${props => props.theme.mode === "dark" ? "#01090f" : ""};
     }
     & .ant-select-arrow>i
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
     & .ant-select-selection-selected-value
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
     & .ant-select-search__field
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
     & .ant-select-search__field
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
 `
 const Select2 = styled(Select)`
 & .ant-select-selection
     {
-        background-color:${props => props.theme.mode == "dark" ? "#01090f" : ""};
+        background-color:${props => props.theme.mode === "dark" ? "#01090f" : ""};
     }
     & .ant-select-arrow>i
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
     & .ant-select-selection-selected-value
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
     & .ant-select-search__field
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
 `
 const CheckboxGroupS = styled(CheckboxGroup)`
     & .ant-checkbox-group-item>span
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
 `
 const NDF = styled.div`
     text-align: center;
     font-weight: 600;
     font-size: 17px;
-    color: ${props => props.theme.mode == "dark" ? "white" : "black"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "black"};
     font-family: "Open Sans";
     height:500px;
     display:flex;
@@ -100,7 +100,7 @@ const NDF = styled.div`
     }
 `
 const SideBuySell = styled.td`
-    color:${props => props.side == true ? "#59b55d" : "#f13e46"} !important;
+    color:${props => props.side === true ? "#59b55d" : "#f13e46"} !important;
 `
 class History extends Component {
     constructor(props) {
@@ -119,7 +119,6 @@ class History extends Component {
             drop1Value: '',
             drop2Value: '',
             loader: false,
-            historyData: [],
         }
         this.historyResult = this.historyResult.bind(this);
         this.changeDate = this.changeDate.bind(this);
@@ -129,10 +128,20 @@ class History extends Component {
         this.selectChange1 = this.selectChange1.bind(this);
         this.selectChange2 = this.selectChange2.bind(this);
     }
+
+    /* Life-Cycle Methods */
+
     componentDidMount() {
         this.historyResult();
         this.loadCoinList();
     }
+
+    /* 
+        Page: /history
+        It is called from componentDidMount.
+        API is called to get coin-list for dropdowns.
+    */
+
     loadCoinList() {
         var self = this;
         fetch(API_URL + "/coin-list", {
@@ -153,14 +162,21 @@ class History extends Component {
 
             });
     }
+
+    /* 
+        Page: /history
+        It is called from componentDidMount.
+        API is called to get result of user's history.
+    */
+
     historyResult() {
         console.log(this.state)
         this.setState({ loader: true })
         let url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}`;
-        if (this.state.toDate == "" && this.state.toDate == "") {
+        if (this.state.toDate === "" && this.state.toDate === "") {
             url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}`
         }
-        if (this.state.drop1Value != '' && this.state.drop1Value != '') {
+        if (this.state.drop1Value !== '' && this.state.drop1Value !== '') {
             url = url + '&symbol=' + this.state.drop1Value + '-' + this.state.drop2Value
         }
         fetch(url, {
@@ -173,7 +189,7 @@ class History extends Component {
         }).then(response => response.json())
             .then((responseData) => {
                 /*this.setState({myCoins:responseData});*/
-                if (responseData.status == 200)
+                if (responseData.status === 200)
                     this.setState({ historyData: responseData.data });
                 else
                     this.openNotificationWithIcon('error', "Error", responseData.err);
@@ -183,6 +199,12 @@ class History extends Component {
             .catch(error => {
             })
     }
+
+    /* 
+        Page: /history
+        It is called to show start and end of date-picker.
+    */
+
     range(start, end) {
         const result = [];
         for (let i = start; i < end; i++) {
@@ -190,10 +212,22 @@ class History extends Component {
         }
         return result;
     }
+
+    /* 
+        Page: /history
+        It is called to disable the date of today and before today.
+    */
+
     disabledDate(current) {
         // Can not select days before today and today
         return current && current > moment().endOf('day');
     }
+
+    /* 
+        Page: /history
+        It is called to set range which is valid.
+    */
+
     isabledRangeTime(_, type) {
         if (type === 'start') {
             return {
@@ -209,6 +243,11 @@ class History extends Component {
         };
     }
 
+    /* 
+        Page: /history
+        It is called when a date is selected between a Range .
+    */
+
     changeDate(date, dateString) {
         var self = this;
         var fromDate = "";
@@ -220,6 +259,11 @@ class History extends Component {
             self.historyResult();
         });
     }
+
+    /* 
+        Page: /history
+        It is called when we check any of the checkboxes .
+    */
 
     onChangeCheck(checkedValues) {
         var self = this;
@@ -248,12 +292,18 @@ class History extends Component {
             self.historyResult();
         });
     }
+
+    /* 
+        Page: /history
+        It is called when a change happens in Select Tag for Coin first.
+    */
+
     selectChange1(value) {
         var self = this;
         let coinList = [...this.state.coinList];
         for (let index = 0; index < coinList.length; index++) {
             const element = coinList[index];
-            if (element.coin == value) {
+            if (element.coin === value) {
                 coinList.splice(index, 1);
                 break;
             }
@@ -265,12 +315,18 @@ class History extends Component {
             self.historyResult();
         });
     }
+
+    /* 
+        Page: /history
+        It is called when a change happens in Select Tag for Coin second.
+    */
+
     selectChange2(value) {
         var self = this;
         let coinList = [...this.state.coinList];
         for (let index = 0; index < coinList.length; index++) {
             const element = coinList[index];
-            if (element.coin == value) {
+            if (element.coin === value) {
                 coinList.splice(index, 1);
                 break;
             }
@@ -283,8 +339,14 @@ class History extends Component {
             self.historyResult();
         });
     }
+
+    /* 
+        Page: /history
+        It is called when u call repeat button in history table.
+    */
+
     repeatClick(data) {
-        if (data.order_type == "Limit") {
+        if (data.order_type === "Limit") {
             let params = {
                 symbol: data.symbol,
                 side: data.side,
@@ -302,7 +364,7 @@ class History extends Component {
                 body: JSON.stringify(params)
             }).then(response => response.json())
                 .then((responseData) => {
-                    if (responseData.status == 200) {
+                    if (responseData.status === 200) {
                         this.historyResult();
                     } else {
                     }
@@ -311,7 +373,7 @@ class History extends Component {
 
                 });
         }
-        else if (data.order_type == "StopLimit") {
+        else if (data.order_type === "StopLimit") {
             let params = {
                 symbol: data.symbol,
                 side: data.side,
@@ -330,7 +392,7 @@ class History extends Component {
                 body: JSON.stringify(params)
             }).then(response => response.json())
                 .then((responseData) => {
-                    if (responseData.status == 200) {
+                    if (responseData.status === 200) {
                         this.historyResult();
                     } else {
 
@@ -340,7 +402,7 @@ class History extends Component {
 
                 });
         }
-        else if (data.order_type == "Market") {
+        else if (data.order_type === "Market") {
             let params = {
                 symbol: data.symbol,
                 side: data.side,
@@ -357,7 +419,7 @@ class History extends Component {
                 body: JSON.stringify(params)
             }).then(response => response.json())
                 .then((responseData) => {
-                    if (responseData.status == 200) {
+                    if (responseData.status === 200) {
                         this.historyResult();
                     } else {
 
@@ -368,6 +430,11 @@ class History extends Component {
         }
     }
 
+    /* 
+        Page: /history
+        It is called for custom notifications.
+    */
+
     openNotificationWithIcon(type, head, desc) {
         notification[type]({
             message: head,
@@ -375,13 +442,14 @@ class History extends Component {
             duration: 5
         });
     };
+
     render() {
         var self = this;
         return (
             <div>
-                <Contact_wrap>
+                <ContactWrap>
                     <LoggedNavigation />
-                    <Grey_wrap>
+                    <GreyWrap>
                         <ContainerContact>
                             <HeadHis>
                                 <Filter>
@@ -417,8 +485,8 @@ class History extends Component {
                                     <CheckboxGroupS options={options} defaultValue={['SEND', 'RECEIVE', 'SELL', 'BUY']} onChange={this.onChangeCheck} />
                                 </div>
                             </HeadHis>
-                            <His_wrap>
-                                <His_title>HISTORY</His_title>
+                            <HisWrap>
+                                <HisTitle>HISTORY</HisTitle>
                                 <Tablediv>
                                     <HisTable responsive striped condensed>
                                         <thead>
@@ -438,13 +506,13 @@ class History extends Component {
                                                 <tbody>
                                                     {this.state.historyData.map(function (temp) {
                                                         var date = moment.utc(temp.created_at).local().format(`${self.props.profileData.date_format} HH:mm:ss`);
-                                                        var side = Number(temp.user_id) == self.props.profileData.id ? temp.side : temp.side == "Buy" ? "Sell" : "Buy";
-                                                        var fee = Number(temp.user_id) == self.props.profileData.id ? temp.user_fee.toFixed(2) : temp.requested_fee.toFixed(2);
+                                                        var side = Number(temp.user_id) === self.props.profileData.id ? temp.side : temp.side === "Buy" ? "Sell" : "Buy";
+                                                        var fee = Number(temp.user_id) === self.props.profileData.id ? temp.user_fee.toFixed(2) : temp.requested_fee.toFixed(2);
                                                         return (<tr>
                                                             <td>{temp.symbol}</td>
                                                             <td>{date}</td>
                                                             {console.log(side)}
-                                                            <SideBuySell side={side == "Buy" ? true : false}>{side}</SideBuySell>
+                                                            <SideBuySell side={side === "Buy" ? true : false}>{side}</SideBuySell>
                                                             <td>{temp.fill_price.toFixed(2)}</td>
                                                             <td>{temp.quantity.toFixed(2)}</td>
                                                             <td>{fee}</td>
@@ -457,15 +525,15 @@ class History extends Component {
                                         }
                                     </HisTable>
                                 </Tablediv>
-                            </His_wrap>
+                            </HisWrap>
                         </ContainerContact>
-                    </Grey_wrap>
+                    </GreyWrap>
                     <CommonFooter />
-                    {(this.state.loader == true) ?
+                    {(this.state.loader === true) ?
                         <FaldaxLoader />
                         : ""
                     }
-                </Contact_wrap>
+                </ContactWrap>
             </div >
         );
     }

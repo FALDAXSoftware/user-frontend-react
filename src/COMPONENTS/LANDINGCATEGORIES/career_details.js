@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { withRouter, Link } from 'react-router-dom';
-import { Spin } from 'antd';
+/* import { Spin } from 'antd'; */
 import styled from 'styled-components';
 import ReactHtmlParser from 'react-html-parser';
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
-import { Spin_Ex } from 'STYLED-COMPONENTS/HOMEPAGE/style'
+/* import { SpinEx } from 'STYLED-COMPONENTS/HOMEPAGE/style' */
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import {
-    Contact_wrap, Grey_wrap, Headcontact, Career_Head, CareerD_body, Btn_div,
-    Job_btn, Body_details, Body_p, Location_p, Details_p
+    ContactWrap, GreyWrap, HeadContact, CareerHead, CareerDBody, BtnDiv,
+    JobBtn, BodyDetails, BodyP, LocationP, DetailsP
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
 import { globalVariables } from "Globals"
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'
 
 export const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -31,6 +31,9 @@ class CareerDetails extends Component {
             loader: false
         };
     }
+
+    /* Life Cycle Methods */
+
     componentDidMount() {
         if (this.props.location.search) {
             let arr = this.props.location.search.split('=');
@@ -54,33 +57,33 @@ class CareerDetails extends Component {
     render() {
         const { jobDetails, jobID, loader } = this.state;
         return (
-            <Contact_wrap>
+            <ContactWrap>
                 <Navigation />
-                <Grey_wrap>
+                <GreyWrap>
                     <ContainerContact>
-                        <Headcontact>
-                            <Career_Head>Careers</Career_Head>
+                        <HeadContact>
+                            <CareerHead>Careers</CareerHead>
                             <hr />
-                        </Headcontact>
-                        <CareerD_body>
-                            <Btn_div>
+                        </HeadContact>
+                        <CareerDBody>
+                            <BtnDiv>
                                 {jobDetails !== null ?
-                                    <Link to={`/applyjob?jobid=${jobID}&position=${jobDetails.position}`}><Job_btn>Apply job</Job_btn></Link>
+                                    <Link to={`/applyjob?jobid=${jobID}&position=${jobDetails.position}`}><JobBtn>Apply job</JobBtn></Link>
                                     : ""}
-                            </Btn_div>
+                            </BtnDiv>
                             {jobDetails !== null ?
-                                <Body_details>
-                                    <Body_p>{jobDetails.position}</Body_p>
-                                    <Location_p>{jobDetails.location}</Location_p>
-                                    <Details_p>{ReactHtmlParser(jobDetails.job_desc)}</Details_p>
-                                </Body_details> : ''
+                                <BodyDetails>
+                                    <BodyP>{jobDetails.position}</BodyP>
+                                    <LocationP>{jobDetails.location}</LocationP>
+                                    <DetailsP>{ReactHtmlParser(jobDetails.job_desc)}</DetailsP>
+                                </BodyDetails> : ''
                             }
-                        </CareerD_body>
+                        </CareerDBody>
                     </ContainerContact>
-                </Grey_wrap>
+                </GreyWrap>
                 <CommonFooter />
                 {(loader) ? <FaldaxLoader /> : ""}
-            </Contact_wrap>
+            </ContactWrap>
         );
     }
 }

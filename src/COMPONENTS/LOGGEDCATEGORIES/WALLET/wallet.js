@@ -12,22 +12,22 @@ import TableofCoinUpper from './tableofcoinupper';
 import LoggedNavigation from 'COMPONENTS/NAVIGATIONS/loggednavigation';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
-import { Contact_wrap, Grey_wrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle"
-import { Header_wrap, SearchCoin, MY_wallet, Total, Tot, Money, Currency, CoinTable, SearchCoin2, Header_wrap2 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
-import { globalVariables } from 'Globals';
+import { ContactWrap, GreyWrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle"
+import { HeaderWrap, SearchCoin, MYWallet, Total, Tot, Money, Currency, CoinTable, SearchCoin2, HeaderWrap2 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
+/* import { globalVariables } from 'Globals'; */
 
 
 /* Actions */
 import { walletBal, getAllCoins } from 'ACTIONS/LOGGEDCAT/walletActions'
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
-import TableofCoinLower from './tableofcoinlower';
+/* import TableofCoinLower from './tableofcoinlower'; */
 
 
-let { API_URL } = globalVariables;
+/* let { API_URL } = globalVariables; */
 const Search = Input.Search;
 
 const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -39,7 +39,7 @@ const ContainerContact = styled(Container)`
     }
 `
 const ContainerContact2 = styled(ContainerContact)`
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"}; 
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"}; 
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -56,16 +56,16 @@ const Inputsearch = styled(Search)`
     height: 40px;
     >input
     {
-        background-color:${props => props.theme.mode == "dark" ? "#020e18" : ""};
-        color:${props => props.theme.mode == "dark" ? "white" : ""}
-        caret-color:${props => props.theme.mode == "dark" ? "white" : ""}
+        background-color:${props => props.theme.mode === "dark" ? "#020e18" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""}
+        caret-color:${props => props.theme.mode === "dark" ? "white" : ""}
     }
     >span>i
     {
-        color:${props => props.theme.mode == "dark" ? "white" : ""};
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
 `
-const Table_wrap = styled.div`  
+const TableWrap = styled.div`  
     margin-left:-30px;
     margin-right:-30px; 
     @media(max-width:1160px)
@@ -92,6 +92,8 @@ class Wallet extends Component {
         this.searchChangeCoins = this.searchChangeCoins.bind(this);
         this.searchChangeWallet = this.searchChangeWallet.bind(this);
     }
+
+    /* Life Cycle Methods */
     componentWillReceiveProps(props, newProps) {
         var total = 0;
         if (this.props.walletDetails !== null) {
@@ -109,6 +111,11 @@ class Wallet extends Component {
         this.props.walletBal(this.props.isLoggedIn, "USD,EUR,INR");
         this.props.getAllCoins(this.props.isLoggedIn, "USD,EUR,INR");
     }
+
+    /* 
+        Page: /wallet
+        This method is called when u want to search from my wallet table.
+    */
 
     searchChangeWallet(e) {
         var search = e.target.value;
@@ -132,6 +139,12 @@ class Wallet extends Component {
             this.setState({ searchedWallet: null });
         }
     }
+
+    /* 
+        Page: /wallet
+        This method is called when u want to search from all coins table.
+    */
+
     searchChangeCoins(e) {
 
         var search = e.target.value;
@@ -157,15 +170,29 @@ class Wallet extends Component {
         }
 
     }
-    totalCurr(total) {
+
+    /* 
+        Page: /wallet
+        not in use
+    */
+
+    /* totalCurr(total) {
         this.setState({ total: total })
-    }
+    } */
+
+    /* 
+        Page: /wallet
+        This method is called to change the data in wallet page .
+    */
+
     currChangeList(currency) {
         this.props.getAllCoins(this.props.isLoggedIn, currency);
         this.props.walletBal(this.props.isLoggedIn, currency);
         var arr = currency.split(",");
         this.setState({ currencySeq: arr })
     }
+
+
     currChangeWallet(currency) {
         this.props.walletBal(this.props.isLoggedIn, currency);
         this.props.getAllCoins(this.props.isLoggedIn, currency);
@@ -175,14 +202,14 @@ class Wallet extends Component {
     render() {
         let { profileDetails } = this.props;
         return (
-            <Contact_wrap>
+            <ContactWrap>
                 <LoggedNavigation />
-                <Grey_wrap>
+                <GreyWrap>
                     <ContainerContact>
-                        <Header_wrap>
-                            <MY_wallet>
+                        <HeaderWrap>
+                            <MYWallet>
                                 <span>{profileDetails !== "" ? (profileDetails.first_name + "'s") : ""} WALLET</span>
-                            </MY_wallet>
+                            </MYWallet>
                             <SearchCoin>
                                 <Inputsearch
                                     placeholder="Search Coin"
@@ -196,21 +223,21 @@ class Wallet extends Component {
                                 <Money>${this.state.total !== null ? <NumberFormat value={parseFloat(this.state.total).toFixed(4)} displayType={'text'} thousandSeparator={true} /> : ""}</Money>
                                 <Currency>USD</Currency>
                             </Total>
-                        </Header_wrap>
+                        </HeaderWrap>
                         <CoinTable>
-                            <Table_wrap>
+                            <TableWrap>
                                 {
                                     this.props.walletDetails !== null ?
                                         this.state.searchedWallet !== null ? <TableofCoinUpper noBalance={false} currencySeq={this.state.currencySeq} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedWallet} /> : <TableofCoinUpper noBalance={false} currencySeq={this.state.currencySeq} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.walletDetails} /> : ""
                                 }
-                            </Table_wrap>
+                            </TableWrap>
                         </CoinTable>
                     </ContainerContact>
                     <ContainerContact2>
-                        <Header_wrap2>
-                            <MY_wallet>
+                        <HeaderWrap2>
+                            <MYWallet>
                                 <span>COINS</span>
-                            </MY_wallet>
+                            </MYWallet>
                             <SearchCoin2>
                                 <Inputsearch
                                     placeholder="Search Coin"
@@ -219,9 +246,9 @@ class Wallet extends Component {
                                     className=""
                                 />
                             </SearchCoin2>
-                        </Header_wrap2>
+                        </HeaderWrap2>
                         <CoinTable>
-                            <Table_wrap>
+                            <TableWrap>
                                 {/* {this.props.allCoins !== null ?
                                     (this.state.searchedCoins.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.state.searchedCoins} /> : (this.props.allCoins.data.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.props.allCoins.data} /> : ""))
                                     : ""} */}
@@ -230,16 +257,16 @@ class Wallet extends Component {
                                         this.state.searchedCoins !== null ? <TableofCoinUpper currencySeq={this.state.currencySeq} noBalance={true} currChange={(currency) => this.currChangeList(currency)} tableData={this.state.searchedCoins} />
                                             : <TableofCoinUpper currencySeq={this.state.currencySeq} noBalance={true} currChange={(currency) => this.currChangeList(currency)} tableData={this.props.nowalletBalance} /> : ""
                                 }
-                            </Table_wrap>
+                            </TableWrap>
                         </CoinTable>
                     </ContainerContact2>
-                </Grey_wrap>
+                </GreyWrap>
                 <CommonFooter />
-                {(this.props.loader == true) ?
+                {(this.props.loader === true) ?
                     <FaldaxLoader />
                     : ""
                 }
-            </Contact_wrap>
+            </ContactWrap>
         );
     }
 }

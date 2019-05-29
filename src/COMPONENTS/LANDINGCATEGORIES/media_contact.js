@@ -6,9 +6,9 @@ import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import {
-    Contact_wrap, Grey_wrap, Head_span, Headcontact, Career_wrap, Subhead, Leftmedia,
-    Rightmedia, Textwrap, LeftRow, RightRow, LT_div, Col_wrap_r, Col_wrap_l, LL_div, MediaUL,
-    MediaLI, Mediaspan, MediaP, Blue_tag, Blue_tag_p
+    ContactWrap, GreyWrap, HeadSpan, HeadContact, CareerWrap, SubHead, LeftMedia,
+    RightMedia, TextWrap, LeftRow, RightRow, LTDiv, ColWrapR, ColWrapL, LLDiv, MediaUL,
+    MediaLI, MediaSpan, MediaP, BlueTag, BlueTagP
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
 import { globalVariables } from "Globals";
 import {
@@ -18,7 +18,7 @@ import {
 let { API_URL } = globalVariables;
 
 export const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode == "dark" ? "#041422" : "white"};
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"};
     border-radius:5px;
     padding-right:30px;
     padding-left:30px;
@@ -30,7 +30,7 @@ export const ContainerContact = styled(Container)`
     }
 `
 
-const MediaDiv = styled(Headcontact)`
+const MediaDiv = styled(HeadContact)`
   text-align:center;
 `
 
@@ -41,6 +41,7 @@ class MediaContact extends Component {
             contact: null,
         };
     }
+    /* Life Cycle Methods */
     componentDidMount() {
         fetch(API_URL + "/get-contact-details", {
             method: "get",
@@ -59,68 +60,68 @@ class MediaContact extends Component {
         const { contact } = this.state;
 
         return (
-            <Contact_wrap>
+            <ContactWrap>
                 <Navigation />
-                <Grey_wrap>
+                <GreyWrap>
                     <ContainerContact>
                         <MediaDiv>
-                            <Head_span>Media Contact</Head_span>
+                            <HeadSpan>Media Contact</HeadSpan>
                             <hr />
                         </MediaDiv>
-                        <Career_wrap>
-                            <Subhead>
-                                <Leftmedia>
-                                    <img src={_MEDIACONTACTICON} />
-                                </Leftmedia>
-                                <Rightmedia>
-                                    <img src={_MEDIAWHITE} />
-                                </Rightmedia>
-                            </Subhead>
-                            <Textwrap>
+                        <CareerWrap>
+                            <SubHead>
+                                <LeftMedia>
+                                    <img alt="media contact" src={_MEDIACONTACTICON} />
+                                </LeftMedia>
+                                <RightMedia>
+                                    <img alt="media contact" src={_MEDIAWHITE} />
+                                </RightMedia>
+                            </SubHead>
+                            <TextWrap>
                                 <LeftRow>
-                                    <LT_div sm={24} md={12}>
-                                        <Col_wrap_l>
-                                            <Mediaspan>PRESS</Mediaspan>
+                                    <LTDiv sm={24} md={12}>
+                                        <ColWrapL>
+                                            <MediaSpan>PRESS</MediaSpan>
                                             {this.state.contact !== null ?
-                                                <MediaP>Please refer to <Link to="/blogs"><Blue_tag>{contact.press}</Blue_tag></Link> for our latest announcements.</MediaP>
+                                                <MediaP>Please refer to <Link to="/blogs"><BlueTag>{contact.press}</BlueTag></Link> for our latest announcements.</MediaP>
                                                 : ""}
-                                        </Col_wrap_l>
-                                    </LT_div>
-                                    <LL_div sm={24} md={12}>
-                                        <Col_wrap_r>
-                                            <Mediaspan>MEDIA CONTACT</Mediaspan>
-                                            {contact !== null ? <MediaP>{contact.media_name} <Blue_tag_p>{contact.media_email}</Blue_tag_p> </MediaP> : ""}
-                                        </Col_wrap_r>
+                                        </ColWrapL>
+                                    </LTDiv>
+                                    <LLDiv sm={24} md={12}>
+                                        <ColWrapR>
+                                            <MediaSpan>MEDIA CONTACT</MediaSpan>
+                                            {contact !== null ? <MediaP>{contact.media_name} <BlueTagP>{contact.media_email}</BlueTagP> </MediaP> : ""}
+                                        </ColWrapR>
 
-                                    </LL_div>
+                                    </LLDiv>
                                 </LeftRow>
                                 <RightRow>
-                                    <LT_div sm={24} md={12}>
-                                        <Col_wrap_l>
-                                            <Mediaspan>MEDIA CONTACT</Mediaspan>
+                                    <LTDiv sm={24} md={12}>
+                                        <ColWrapL>
+                                            <MediaSpan>MEDIA CONTACT</MediaSpan>
                                             {contact !== null ?
                                                 <MediaUL>
-                                                    <a target="_blank" href={`${contact.fb_profile}`}><MediaLI><img src={_MEDIAFB} /></MediaLI></a>
-                                                    <a target="_blank" href={`${contact.twitter_profile}`}><MediaLI><img src={_MEDIATWEETER} /></MediaLI></a>
-                                                    <a target="_blank" href={`${contact.linkedin_profile}`}><MediaLI><img src={_MEDIALINKEDIN} /></MediaLI></a>
-                                                    {/* <a target="_blank" href={`${contact.discord_profile}`}><MediaLI><img src={_MEDIADISCORD} /></MediaLI></a> */}
+                                                    <a target="_blank" href={`${contact.fb_profile}`}><MediaLI><img alt="FB" src={_MEDIAFB} /></MediaLI></a>
+                                                    <a target="_blank" href={`${contact.twitter_profile}`}><MediaLI><img alt="Tweeter" src={_MEDIATWEETER} /></MediaLI></a>
+                                                    <a target="_blank" href={`${contact.linkedin_profile}`}><MediaLI><img alt="LinkedIn" src={_MEDIALINKEDIN} /></MediaLI></a>
+                                                    {/* <a target="_blank" href={`${contact.discord_profile}`}><Media_LI><img alt="DISCORD" src={_MEDIADISCORD} /></Media_LI></a> */}
                                                 </MediaUL>
                                                 : ""}
-                                        </Col_wrap_l>
-                                    </LT_div>
-                                    <LL_div sm={24} md={12}>
-                                        <Col_wrap_r>
-                                            <Mediaspan>Support CONTACT</Mediaspan>
-                                            <MediaP>Need customer support? For support requests and inquiries please visit <Link to="/contactus"><Blue_tag>www.faldax.com/support.</Blue_tag></Link></MediaP>
-                                        </Col_wrap_r>
-                                    </LL_div>
+                                        </ColWrapL>
+                                    </LTDiv>
+                                    <LLDiv sm={24} md={12}>
+                                        <ColWrapR>
+                                            <MediaSpan>Support CONTACT</MediaSpan>
+                                            <MediaP>Need customer support? For support requests and inquiries please visit <Link to="/contactus"><BlueTag>www.faldax.com/support.</BlueTag></Link></MediaP>
+                                        </ColWrapR>
+                                    </LLDiv>
                                 </RightRow>
-                            </Textwrap>
-                        </Career_wrap>
+                            </TextWrap>
+                        </CareerWrap>
                     </ContainerContact>
-                </Grey_wrap>
+                </GreyWrap>
                 <CommonFooter />
-            </Contact_wrap>
+            </ContactWrap>
         );
     }
 }
