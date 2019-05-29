@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
-import NavigationBar from './components/Landing/HomePage';
-import Navigation from './components/Navigations/Navigation';
-import LoggedNavigation from './components/Navigations/LoggedNavigation';
-import About from './components/About';
-import Referral from "../src/components/Settings/Referral"
-import Editprofile from '../src/components/Settings/EditProfile';
-import Footer from '../src/components/Landing/Footers/Footer';
+/* import NavigationBar from 'COMPONENTS/LANDING/homepage';
+import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
+import LoggedNavigation from 'COMPONENTS/NAVIGATIONS/loggednavigation';
+import About from 'COMPONENTS/about';
+import Referral from "COMPONENTS/SETTINGS/referral" */
+import Editprofile from 'COMPONENTS/SETTINGS/edit_profile';
+import HubspotTickets from 'COMPONENTS/SETTINGS/Account_settings/hubspot_tickets'
+import Footer from 'COMPONENTS/LANDING/FOOTERS/footer';
 
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import HomePage from "../src/components/Landing/HomePage";
-import Wallet from "../src/components/LoggedCategories/Wallet/wallet";
-import WalletDetails from "../src/components/LoggedCategories/Wallet/WalletDetails";
-import Trade from "../src/components/LoggedCategories/Trade/trade"
-import History2 from "../src/components/LoggedCategories/History/history"
-import Dashboard from "../src/components/LoggedCategories/Dashboard/dashboard"
-import OpenTicket from "./components/Landing_categories/OpenTicket";
-import { globalVariables } from './Globals';
+import HomePage from "COMPONENTS/LANDING/homepage";
+import Wallet from "COMPONENTS/LOGGEDCATEGORIES/WALLET/wallet";
+import WalletDetails from "COMPONENTS/LOGGEDCATEGORIES/WALLET/walletdetails";
+import Trade from "COMPONENTS/LOGGEDCATEGORIES/TRADE/trade";
+import History2 from "COMPONENTS/LOGGEDCATEGORIES/HISTORY/history"
+import Dashboard from "COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard"
+import OpenTicket from "COMPONENTS/LANDINGCATEGORIES/open_ticket";
+import { globalVariables } from 'Globals';
+/* import Chart from "COMPONENTS/tradingviewchart"; */
+import Conversion from 'COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion';
 let { API_URL } = globalVariables;
-var socketIOClient = require('socket.io-client');
-var sailsIOClient = require('sails.io.js');
+const socketIOClient = require('socket.io-client');
+const sailsIOClient = require('sails.io.js');
 let io = sailsIOClient(socketIOClient);
-// io.sails.url = API_URL;
+io.sails.url = API_URL;
 
 const routes = [
   {
@@ -64,15 +67,28 @@ const routes = [
     path: "/open-ticket",
     component: () => (<OpenTicket io={io} />),
     io: io
+  },
+  {
+    exact: false,
+    path: "/conversion",
+    component: () => (<Conversion io={io} />),
+    io: io
+  },
+  {
+    exact: false,
+    path: "/tickets",
+    component: () => (<HubspotTickets io={io} />),
   }
 ];
 
 export default class AppRouter extends Component {
+  componentDidMount() {
+  }
   render() {
     const { url } = this.props.match;
-    /* console.log("asdasdasdasdasdasdasdasdasdasd", this.props) */
     return (
       <div>
+        {console.log("App.js")}
         {routes.map(singleRoute => {
           const { path, exact, ...otherProps } = singleRoute;
           return (

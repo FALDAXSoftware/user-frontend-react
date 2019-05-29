@@ -2,8 +2,14 @@ body {
   margin: 0;
   padding: 0 !important;
   font-family: sans-serif;
+  overflow-x: auto;
 }
-
+#root{
+  height:inherit;
+}
+.App{
+  height:inherit;
+}
 .my-masonry-grid {
   display: -webkit-box; /* Not needed if autoprefixing */
   display: -ms-flexbox; /* Not needed if autoprefixing */
@@ -382,7 +388,7 @@ table .ant-table-tbody > tr > td {
   font-weight:600;
 }
 .Country_Select > .ant-select-selection:hover,.Country_Select > .ant-select-selection:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
 }
@@ -409,7 +415,7 @@ table .ant-table-tbody > tr > td {
   font-weight:600;
 }
 .Country_Select_night > .ant-select-selection:hover,.Country_Select > .ant-select-selection:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
 }
@@ -422,7 +428,7 @@ table .ant-table-tbody > tr > td {
 {
   margin-top: 10px !important;
 }
-.ant-dropdown-placement-bottomLeft
+.ant-dropdown-placement-bottomLeft,.ant-dropdown-placement-bottomRight
 {
   position:fixed !important;
 }
@@ -435,7 +441,7 @@ table .ant-table-tbody > tr > td {
   {
     background-color: #f8f8f8;
     font-family: "Open Sans";
-    font-size:16;
+    font-size:16px;
     font-weight:600;
     border-radius: 5px;
     width:85%;
@@ -443,7 +449,7 @@ table .ant-table-tbody > tr > td {
     padding:10px 5px;
   }
   #profile-year:hover,#profile-year:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
   }
@@ -451,7 +457,7 @@ table .ant-table-tbody > tr > td {
   {
     background-color: #f8f8f8;
     font-family: "Open Sans";
-    font-size:16;
+    font-size:16px;
     font-weight:600;
     border-radius: 5px;
     width:85%;
@@ -459,7 +465,7 @@ table .ant-table-tbody > tr > td {
     padding:10px 5px;
   }
   #profile-month:hover,#profile-month:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
   }
@@ -467,7 +473,7 @@ table .ant-table-tbody > tr > td {
   {
     background-color: #f8f8f8;
     font-family: "Open Sans";
-    font-size:16;
+    font-size:16px;
     font-weight:600;
     border-radius: 5px;
     width:85%;
@@ -475,7 +481,7 @@ table .ant-table-tbody > tr > td {
     padding:10px 5px;
   }
   #profile-day:hover,#profile-day:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
   }
@@ -550,7 +556,7 @@ table .ant-table-tbody > tr > td {
     background-color: #020f18;
     font-family: "Open Sans";
     color:white;
-    font-size:16;
+    font-size:16px;
     font-weight:600;
     border-radius: 5px;
     width:85%;
@@ -559,7 +565,7 @@ table .ant-table-tbody > tr > td {
 
   }
   #profile-year-night:hover,#profile-year-night:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
   }
@@ -569,7 +575,7 @@ table .ant-table-tbody > tr > td {
     background-color: #020f18;
     color:white;
     font-family: "Open Sans";
-    font-size:16;
+    font-size:16px;
     font-weight:600;
     border-radius: 5px;
     width:85%;
@@ -577,7 +583,7 @@ table .ant-table-tbody > tr > td {
     padding:10px 5px;
   }
   #profile-month-night:hover,#profile-month-night:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
   }
@@ -586,7 +592,7 @@ table .ant-table-tbody > tr > td {
     background-color: #020f18;
     font-family: "Open Sans";
     color:white;
-    font-size:16;
+    font-size:16px;
     font-weight:600;
     border-radius: 5px;
     width:85%;
@@ -594,7 +600,7 @@ table .ant-table-tbody > tr > td {
     padding:10px 5px;
   }
   #profile-day-night:hover,#profile-day-night:focus{
-    border-color:#4c84ff;
+    border-color:rgb(0, 170, 250);
     outline:0;
     box-shadow:none;
   }
@@ -662,7 +668,12 @@ table .ant-table-tbody > tr > td {
     }
   }
   
+  /*Wallet Screen Popup  */
 
+  .wallet-popup
+  {
+    
+  }
 
   /* Features section five Homepage */
   .features>.ant-card-cover>img
@@ -761,8 +772,8 @@ table .ant-table-tbody > tr > td {
                                 border-radius: 10px;
   }
   label.kyc-radio-container input:checked ~ .background{
-    background-color: #2d69eb;
-    box-shadow: 0px 3px 10px 0px rgb( 45, 105, 235 );
+    background-color: rgb(0,170,250);
+    box-shadow: 0px 3px 10px 0px rgb(0,170,250);
   }
   label.kyc-radio-container input:checked ~ .background .text{
     /* color: red; */
@@ -806,8 +817,8 @@ table .ant-table-tbody > tr > td {
                                 border-radius: 10px;
   }
   label.kyc-radio-container input:checked ~ .background-night{
-    background-color: #2d69eb;
-    box-shadow: 0px 3px 10px 0px rgb( 45, 105, 235 );
+    background-color: rgb(0,170,250);
+    box-shadow: 0px 3px 10px 0px rgb(0,170,250);
   }
   label.kyc-radio-container input:checked ~ .background-night .text{
     /* color: red; */
@@ -1223,12 +1234,15 @@ table .ant-table-tbody > tr > td {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 3px;
 }
 
+::-webkit-scrollbar:horizontal {
+	height: 7px;
+}
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f100; 
 }
  
 /* Handle */
@@ -1274,30 +1288,14 @@ table .ant-table-tbody > tr > td {
 #depth-chart1 canvas
 {
   /* width:285px !important; */
-  height:400px !important;
+  /* height:400px !important; */
 }
 #depth-chart2 canvas
 {
   /* width:285px !important; */
   height:400px !important;
 }
-.activity-table tr td.dash-date{
-  font-weight: 600;
-  color: black;
-}
-.activity-table .amount{
-  width: 120px;
-}
-.activity-table tr td.amount{
-  font-weight: 600;
-  color: black;
-}
-.activity-table .progress-bar-container{
-  width: 170px;
-}
-.activity-table .ant-table{
-  font-family: "Open sans" !important;
-}
+
 .portfolio-table{
   font-family: "Open sans" !important;
 }
@@ -1318,3 +1316,76 @@ table .ant-table-tbody > tr > td {
 .portfolio-table .change{
   text-align: center;
 }
+.TVChartContainer{
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+/* div.scrollbar>div:first-child{
+  overflow: auto !important;
+}
+div.scrollbar>div:nth-child(3){
+  width: 9px !important;
+  right: 0px !important;
+  bottom: 0px !important;
+  top: 0px !important;
+  border-radius:0px !important;
+  border: 1px solid #d8d8d8;
+  border-right: none;
+  border-bottom: none;
+  padding: 2px;
+  background-color: white; 
+}
+div.scrollbar.news>div:nth-child(3){
+  border: none !important;
+}
+div.scrollbar>div:nth-child(3)>div{
+  border-radius: 2px !important;
+} */
+.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){
+  background: #4c84ff !important;
+}
+/* React Grid Layout CSS */
+.react-grid-item.react-grid-placeholder
+{
+  background: #1890ff !important;
+}
+.ant-tabs.ant-tabs-top.tardeActionCard{
+  width: 100%;
+  padding-bottom: 15px;
+  height: 100%;
+}
+/* .tardeActionCard.ant-tabs-line{
+    height: 100%;
+} */
+.ant-tabs.ant-tabs-top.tardeActionCard .ant-tabs-content{
+  height: calc(100% - 75px);
+}
+.ant-tabs.ant-tabs-top.tardeActionCard .ant-tabs-content .ant-tabs-tabpane.ant-tabs-tabpane-active{
+  overflow-y: scroll;
+  height: 100%;
+}
+.tblInsName,.tblInsPrice,.tblInsVolumn,.tblInsChange{
+  width: 25%;
+  text-align: center !important;
+}
+.dropSettings{
+  right: 12px !important;
+  left: unset !important ;
+  
+}
+.dropSettings ul{
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.32) !important;
+}
+/* .dropSettings ul:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 29%;
+  width: 0;
+  height: 0;
+  border: 9px solid transparent;
+  border-bottom-color: #ffffff;
+  border-top: 0;
+  margin-left: -20px;
+  margin-top: 1px;
+} */

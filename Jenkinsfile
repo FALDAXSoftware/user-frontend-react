@@ -10,7 +10,7 @@ volumes: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
   ]
 ){
-  timeout(5){
+  timeout(25){
       def coinToDeploy;
       def triggerByUser;
       def namespace;
@@ -34,8 +34,8 @@ volumes: [
               sh "ls -la" 
               if (env.BRANCH_NAME == 'master') {
                     withAWS(credentials:'jenkins_s3_upload') {
-                    s3Delete(bucket:'www.faldax.com', path:'')
-                    s3Upload(file:'build', bucket:'www.faldax.com', path:'')
+                    s3Delete(bucket:'trade.faldax.com', path:'')
+                    s3Upload(file:'build', bucket:'trade.faldax.com', path:'')
                 }                       
                 } else if(env.BRANCH_NAME == 'development') {
                     withAWS(credentials:'jenkins_s3_upload') {
