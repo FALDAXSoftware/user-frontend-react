@@ -181,7 +181,7 @@ class LoggedNavigation extends Component {
             selected: '',
             countryAccess: false,
             completeKYC: false
-        };
+        }
         this.tradeAccess = this.tradeAccess.bind(this);
     }
 
