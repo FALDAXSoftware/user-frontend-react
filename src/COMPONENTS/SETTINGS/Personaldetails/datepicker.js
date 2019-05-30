@@ -34,26 +34,26 @@ export default class Datepicker extends Component {
     */
 
     onChangeDate(date, type) {
-
         if (this.props.kyc !== "kyc") {
             if (type === "year") {
                 this.setState({ year: date });
                 fields[type] = date;
             } else if (type === "month") {
                 let date1
+                console.log("Datepicker", date)
                 this.setState({ month: date });
-                if (date === 0) date1 = "January";
-                if (date === 1) date1 = "February";
-                if (date === 2) date1 = "March";
-                if (date === 3) date1 = "April";
-                if (date === 4) date1 = "May";
-                if (date === 5) date1 = "June";
-                if (date === 6) date1 = "July";
-                if (date === 7) date1 = "August";
-                if (date === 8) date1 = "September";
-                if (date === 9) date1 = "October";
-                if (date === 10) date1 = "November";
-                if (date === 11) date1 = "December";
+                if (date == 0) date1 = "January";
+                if (date == 1) date1 = "February";
+                if (date == 2) date1 = "March";
+                if (date == 3) date1 = "April";
+                if (date == 4) date1 = "May";
+                if (date == 5) date1 = "June";
+                if (date == 6) date1 = "July";
+                if (date == 7) date1 = "August";
+                if (date == 8) date1 = "September";
+                if (date == 9) date1 = "October";
+                if (date == 10) date1 = "November";
+                if (date == 11) date1 = "December";
 
                 fields[type] = date1;
             } else if (type === "day") {
@@ -68,6 +68,7 @@ export default class Datepicker extends Component {
                 if (fields["year"]===undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
 
             } */
+            console.log(fields)
             this.props.onDateChange(fields, "dob")
         }
         else {
