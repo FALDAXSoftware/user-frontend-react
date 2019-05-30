@@ -154,7 +154,9 @@ class WalletPopup extends Component {
                 amount: 0,
                 destination_address: ""
             },
-            loader: false
+            loader: false,
+            withdrawFlag: false,
+            withdrawMsg: ""
         }
         this.validator = new SimpleReactValidator({
             gtzero: {  // name the rule
@@ -267,9 +269,17 @@ class WalletPopup extends Component {
                 body: JSON.stringify(values)
             }).then(response => response.json())
                 .then((responseData) => {
+                    console.log(responseData)
                     if (responseData.status === 200) {
                         this.openNotificationWithIcon("success", "Successfully Sent", responseData.message)
-                    } else {
+                    }
+                    else if (responseData.status === 201) {
+                        this.setState({
+                            withdrawFlag: true,
+                            withdrawMsg: responseData.message
+                        });
+                    }
+                    else {
                         this.openNotificationWithIcon("warning", "Balance low", responseData.message)
                     }
                 }).catch(error => {
@@ -336,19 +346,24 @@ class WalletPopup extends Component {
                                 }
                             </ModalWrap>
                             :
-                            <ModalWrap>
-                                <Rediv>
-                                    <Label style={{ display: "block" }}>Destination Address</Label>
-                                    <WallInput value={this.state.sendFields.destination_address} name="destination_address" onChange={this.sendChange} />
-                                    {/* <Scan>Scan QR</Scan> */}
-                                    {this.validator.message('destination_address', this.state.sendFields.destination_address, 'required|alpha_num|min:15|max:120', 'text-danger-validation')}
-                                </Rediv>
-                                <Rediv>
-                                    <Label style={{ display: "block" }}>Amount</Label>
-                                    {/* <Sec_wrap> */}
-                                    <WallInput type="number" min="0" value={this.state.sendFields.amount} name="amount" onChange={this.sendChange} />
-                                    {this.validator.message('amount', this.state.sendFields.amount, 'required|gtzero|numeric', 'text-danger-validation')}
-                                    {/*  <RightInput />
+                            this.state.withdrawFlag == true ?
+                                <ModalWrap>
+                                    {this.state.withdrawMsg}
+                                </ModalWrap>
+                                :
+                                <ModalWrap>
+                                    <Rediv>
+                                        <Label style={{ display: "block" }}>Destination Address</Label>
+                                        <WallInput value={this.state.sendFields.destination_address} name="destination_address" onChange={this.sendChange} />
+                                        {/* <Scan>Scan QR</Scan> */}
+                                        {this.validator.message('destination_address', this.state.sendFields.destination_address, 'required|alpha_num|min:15|max:120', 'text-danger-validation')}
+                                    </Rediv>
+                                    <Rediv>
+                                        <Label style={{ display: "block" }}>Amount</Label>
+                                        {/* <Sec_wrap> */}
+                                        <WallInput type="number" min="0" value={this.state.sendFields.amount} name="amount" onChange={this.sendChange} />
+                                        {this.validator.message('amount', this.state.sendFields.amount, 'required|gtzero|numeric', 'text-danger-validation')}
+                                        {/*  <RightInput />
                                     <ButtonToolbarS>
                                         <DropdownButtonS title="USD" id="dropdown-size-medium">
                                             <MenuItem eventKey="1">Action</MenuItem>
@@ -357,16 +372,16 @@ class WalletPopup extends Component {
                                             <MenuItem eventKey="4">Separated link</MenuItem>
                                         </DropdownButtonS>
                                     </ButtonToolbarS> */}
-                                    {/* </Sec_wrap> */}
-                                    <TotDiv>
-                                        <Fee><b>Fee:</b> {this.props.coinFee ? this.props.coinFee[0].value : 0}</Fee>
-                                        <TotPay><b>Total Payout:</b> {subtotal} {this.props.coin_code}</TotPay>
-                                    </TotDiv>
-                                </Rediv>
-                                <SendWrap>
-                                    <SendButton onClick={this.sendSubmit}>SEND {this.props.coin_code}</SendButton>
-                                </SendWrap>
-                            </ModalWrap>}
+                                        {/* </Sec_wrap> */}
+                                        <TotDiv>
+                                            <Fee><b>Fee:</b> {this.props.coinFee ? this.props.coinFee[0].value : 0}</Fee>
+                                            <TotPay><b>Total Payout:</b> {subtotal} {this.props.coin_code}</TotPay>
+                                        </TotDiv>
+                                    </Rediv>
+                                    <SendWrap>
+                                        <SendButton onClick={this.sendSubmit}>SEND {this.props.coin_code}</SendButton>
+                                    </SendWrap>
+                                </ModalWrap>}
                     </WalletModal>
                     : ""}
                 {(this.state.loader === true) ? <FaldaxLoader /> : ""}
