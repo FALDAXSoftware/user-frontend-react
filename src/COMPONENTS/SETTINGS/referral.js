@@ -80,6 +80,14 @@ const Ref_div = styled.div`
         display:flex;
         justify-content:center;
         align-items:center;
+        .ant-select-selection--single
+        {
+            background:${props => props.theme.mode === "dark" ? "#041422" : ""};
+            .ant-select-selection-selected-value
+            {
+                color:${props => props.theme.mode === "dark" ? "white" : ""};
+            }
+        }
     }
     .earnTitle
     {
@@ -203,9 +211,11 @@ const Ref_acc = styled.div`
     border-radius: 10px;
     height:auto;
     margin-bottom:65px;
+    overflow:scroll;
 `
 
 const RefTable = styled(Table)`
+    min-width:600px;
     & .ant-table-tbody>tr:hover>td
     {
         background-color:${props => props.theme.mode === "dark" ? "#041422" : ""};
