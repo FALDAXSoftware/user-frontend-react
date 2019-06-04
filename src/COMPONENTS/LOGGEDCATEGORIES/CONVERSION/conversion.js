@@ -8,7 +8,7 @@ import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
 import { globalVariables } from "Globals";
 
 /* STYLED-COMPONENTS */
-import { ConversionWrap, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, FeesRadio } from "STYLED-COMPONENTS/CONVERSION/style";
+import { ConversionWrap, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, FeesRadio } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 
 const RadioGroup = Radio.Group;
 const API_URL = globalVariables.API_URL;
@@ -151,8 +151,10 @@ class Conversion extends React.Component {
         });
     }
     handleTabChange(e) {
+        // console.log("tab chnage ", e);
+
         this.setState({
-            selectedTab: e,
+            selectedTab: parseInt(e),
             buyCryptoInput: 0,
             buyCurrencyInput: 0
         })
