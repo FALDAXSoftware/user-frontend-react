@@ -216,7 +216,7 @@ class KYCForm extends Component {
         }
     }
     componentDidMount() {
-        /* var self = this; */
+        var self = this;
         fetch(API_URL + "/users/get-kyc-detail", {
             method: "get",
             headers: {
@@ -247,8 +247,14 @@ class KYCForm extends Component {
                         this.setState({
                             displayCountry: true,
                             countrychange: true,
-                            mobile: phone,
+                            mobile: responseData.data.phone_number,
                             phoneCountry: arr
+                        }, () => {
+                            if (responseData.data.country_code == "US" || responseData.data.country_code == "CA")
+                                self.setState({
+                                    showSSN: true
+                                })
+
                         });
                     }
                     this.setState({ fields: fields, kycData: responseData.data });
@@ -354,8 +360,8 @@ class KYCForm extends Component {
 
     changeNumber(a, mob, code) {
         if (mob.trim !== "") {
-            var temp = `+${code.dialCode}-`;
-            var mobile = temp.concat(mob);;
+            var temp = `+${code.dialCode}`;
+            var mobile = mob.includes(`+${code.dialCode}`) ? mob : temp.concat(mob);
             let fields = this.state.fields;
             fields['phone_number'] = mobile;
             this.setState({ fields, mobile: mob });
@@ -451,6 +457,7 @@ class KYCForm extends Component {
                             }
                         </Col>
                     </FourthRowkyc>
+                    {console.log(this.state.phoneCountry, this.state.phoneCountry[0])}
                     {(this.state.countrychange === true) ?
                         <SixthRowkyc>
                             <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
@@ -462,7 +469,7 @@ class KYCForm extends Component {
                                             onPhoneNumberChange={(a, b, c) => this.changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
                                     }
                                 </PhoneDiv>
-                                {this.validator.message('phone_number', this.state.mobile, 'required|min:5|max:15|mobileVal', 'text-danger-validation', {
+                                {this.validator.message('phone_number', this.state.mobile, 'required|min:5|max:15', 'text-danger-validation', {
                                     required: "Mobile No. field is required.",
                                     min: "Mobile No. should have min. 5 characters.",
                                     max: "Mobile No. should have max. 15 characters."
