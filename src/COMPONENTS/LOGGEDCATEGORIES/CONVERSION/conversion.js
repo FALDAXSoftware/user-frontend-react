@@ -1,12 +1,12 @@
 /* Built-in packages */
 import React from "react";
-import { Row, Col/* , Select */, Radio } from "antd";
+import { Row, Col/* , Select */, Radio, notification } from "antd";
 import { connect } from "react-redux"
 import SimpleReactValidator from 'simple-react-validator'
 /*Components  */
 import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
 import { globalVariables } from "Globals";
-
+import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 /* STYLED-COMPONENTS */
 import { ConversionWrap, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, FeesRadio } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 
@@ -32,7 +32,8 @@ class Conversion extends React.Component {
             sellCurrencyInput: 0,
             includeFees: true,
             krakenFees: 0.2,
-            faldaxFees: 0.3
+            faldaxFees: 0.3,
+            loader: false
         }
         io = this.props.io
         this.validator1 = new SimpleReactValidator({
@@ -112,7 +113,8 @@ class Conversion extends React.Component {
                 let res = body.data;
                 self.setState({
                     askPrice: res.ask_price,
-                    bidPrice: res.bid_price
+                    bidPrice: res.bid_price,
+                    loader: false
                 });
 
             }
@@ -178,13 +180,21 @@ class Conversion extends React.Component {
         });
     }
     handleTabChange(e) {
-        // console.log("tab chnage ", e);
-
+        console.log("tab chnage ", e);
+        var self = this;
         this.setState({
             selectedTab: parseInt(e),
             buyCryptoInput: 0,
-            buyCurrencyInput: 0
+            buyCurrencyInput: 0,
+            sellCryptoInput: 0,
+            sellCurrencyInput: 0,
+            includeFees: true
+        }, () => {
+            self.validator1.hideMessages();
+            self.validator2.hideMessages();
+            self.forceUpdate();
         })
+
     }
     radioChange(e) {
         var self = this;
@@ -338,6 +348,7 @@ class Conversion extends React.Component {
         }
     }
     btnClicked() {
+        var self = this;
         let { crypto, currency, selectedTab, includeFees, buyCryptoInput } = this.state
         console.log("I am Clcicked", selectedTab, selectedTab === 1);
         if (selectedTab == 1) {
@@ -348,7 +359,7 @@ class Conversion extends React.Component {
                 fields['type'] = selectedTab == 1 ? "buy" : "sell";
                 fields['volume'] = buyCryptoInput;
                 fields['includeFees'] = includeFees;
-
+                this.setState({ loader: true });
                 fetch(`${API_URL}/perform-conversion`, {
                     method: "post",
                     headers: {
@@ -360,11 +371,22 @@ class Conversion extends React.Component {
                 }).then(response => response.json())
                     .then((responseData) => {
                         console.log(responseData);
+                        if (responseData.status == 200) {
+
+                            this.handleTabChange("2");
+                            this.setState({ loader: false });
+                            this.openNotificationWithIcon('success', "Success", responseData.message);
+                        }
+                        else {
+
+                            this.setState({ loader: false });
+                            this.openNotificationWithIcon('error', "Error", responseData.message);
+                        }
                     })
                     .catch(error => {
                         console.log(error);
-                        /* this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
-                        this.setState({ loader: false }); */
+                        this.setState({ loader: false });
+                        this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
                     })
             }
             else {
@@ -383,7 +405,7 @@ class Conversion extends React.Component {
                 fields['type'] = selectedTab == 1 ? "buy" : "sell";
                 fields['volume'] = buyCryptoInput;
                 fields['includeFees'] = includeFees;
-
+                this.setState({ loader: true });
                 fetch(`${API_URL}/perform-conversion`, {
                     method: "post",
                     headers: {
@@ -395,11 +417,20 @@ class Conversion extends React.Component {
                 }).then(response => response.json())
                     .then((responseData) => {
                         console.log(responseData);
+                        if (responseData.status == 200) {
+                            this.handleTabChange("2");
+                            this.openNotificationWithIcon('success', "Success", responseData.message);
+                            this.setState({ loader: false });
+                        }
+                        else {
+                            this.setState({ loader: false });
+                            this.openNotificationWithIcon('error', "Error", responseData.message);
+                        }
                     })
                     .catch(error => {
                         console.log(error);
-                        /* this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
-                        this.setState({ loader: false }); */
+                        this.setState({ loader: false });
+                        this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
                     })
             }
             else {
@@ -411,6 +442,12 @@ class Conversion extends React.Component {
         }
 
     }
+    openNotificationWithIcon(type, head, desc) {
+        notification[type]({
+            message: head,
+            description: desc,
+        });
+    };
     render() {
         return (
             <ConversionWrap>
@@ -640,6 +677,10 @@ class Conversion extends React.Component {
                         </RightCol>
                     </MainRow>
                 </ConversionContainer>
+                {(this.state.loader == true) ?
+                    <FaldaxLoader />
+                    : ""
+                }
             </ConversionWrap >
         )
     }
