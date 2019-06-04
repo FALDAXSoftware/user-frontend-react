@@ -2,20 +2,36 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
-import { Input, Col, Table, Row, notification } from 'antd';
+import { Input, Col, Table, Row, notification, Select } from 'antd';
 import styled from 'styled-components';
 import { globalVariables } from 'Globals';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-let { API_URL } = globalVariables;
+let { API_URL, _AMAZONBUCKET } = globalVariables;
 /* CONSTANTS */
 const Search = Input.Search;
+const Option = Select.Option;
 
 /* Styled Components */
-const columns = [{
-    title: 'Accounts Referred',
-    dataIndex: 'email',
+const columns1 = [{
+    title: 'Coin Name',
+    dataIndex: 'coin_name',
+}, {
+    title: 'Amount Collected',
+    dataIndex: 'amount',
 }];
+const columns = [
+    {
+        title: '    ',
+        dataIndex: 'profile_pic',
+        render: text => <img width="40px" height="40px" src={`${_AMAZONBUCKET}${text}`} />
+    }, {
+        title: 'Name',
+        dataIndex: 'full_name',
+    }, {
+        title: 'Accounts Referred',
+        dataIndex: 'email',
+    }];
 const data = [{
     key: "1",
     referral: "test1@tesst.com"
@@ -27,11 +43,11 @@ const data = [{
     referral: "test3@test.com"
 }];
 const ParentWrap = styled.div`
-    margin-top:20vh;
+    margin-top:30px;
     
 `
 const Header_text = styled.div`
-    font-size:20px;
+    font-size:25px;
     font-family:"Open Sans";
     font-weight: 600;
     color:${props => props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
@@ -42,12 +58,50 @@ const Header_text = styled.div`
 const Ref_div = styled.div`
     margin:auto;
     width:80%;
-    height:140px;
     background-color:${props => props.theme.mode === "dark" ? "041422" : "#fcfcfc"};
     border:1px solid #d6d6d6;
     margin-top:40px;
     border-radius: 10px;
     height:auto;
+
+    .CoinsEarned
+    {
+        
+    }
+    .amtSpan
+    {
+        margin-left:10px;
+        font-weight:600;
+        font-family:"Open Sans";
+    }
+    .ColWrap
+    {
+        height:80px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        .ant-select-selection--single
+        {
+            background:${props => props.theme.mode === "dark" ? "#041422" : ""};
+            .ant-select-selection-selected-value
+            {
+                color:${props => props.theme.mode === "dark" ? "white" : ""};
+            }
+        }
+    }
+    .earnTitle
+    {
+        font-family : "Open Sans";
+        font-size : 16px;
+        font-weight:bold;
+    }
+    @media(max-width:767px)
+    {
+        .ColWrap
+        {
+            height:60px;
+        }
+    }
 `
 const Ref_leftcol = styled(Col)`
     text-align:left;
@@ -157,9 +211,11 @@ const Ref_acc = styled.div`
     border-radius: 10px;
     height:auto;
     margin-bottom:65px;
+    overflow:scroll;
 `
 
 const RefTable = styled(Table)`
+    min-width:600px;
     & .ant-table-tbody>tr:hover>td
     {
         background-color:${props => props.theme.mode === "dark" ? "#041422" : ""};
@@ -172,8 +228,12 @@ class Referral extends Component {
             referralLink: null,
             copied: false,
             referredData: [],
-            searchCSS: ""
-        }
+            referredCoin: [],
+            searchCSS: "",
+            coinSelected: "",
+            perCoinEarned: ""
+        },
+            this.coinsEarned = this.coinsEarned.bind(this);
     }
     /* Life-Cycle Methods */
 
@@ -206,7 +266,18 @@ class Referral extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                this.setState({ referredData: responseData.data })
+                if (responseData.status == 200) {
+                    let fields = [];
+                    responseData.referredData.map(function (temp) {
+                        console.log(temp);
+                        let obj = {
+                            coin_name: temp.coin_name,
+                            amount: temp.amount
+                        };
+                        fields.push(obj);
+                    })
+                    this.setState({ referredData: responseData.data, referredCoin: fields })
+                }
             })
             .catch(error => { /* console.log(error) */ })
         if (this.props.profileDetails.referral_code !== undefined) {
@@ -243,7 +314,19 @@ class Referral extends Component {
         };
         this.openNotificationWithIcon('success');
     }
-
+    coinsEarned(coin) {
+        console.log(coin);
+        var coinAmt = 0;
+        this.state.referredCoin.map(function (temp) {
+            if (temp.coin_name == coin) {
+                coinAmt = temp.amount;
+            }
+        })
+        this.setState({
+            coinSelected: coin,
+            perCoinEarned: coinAmt
+        })
+    }
     render() {
         const { referralLink, referTable, referredData } = this.state;
         return (
@@ -272,10 +355,36 @@ class Referral extends Component {
                         </Ref_leftcol>
                         <Ref_rightcol sm={24} md={6}>
                             <Right_text>Total Earned</Right_text>
-                            <Right_value>3.0850 BTC</Right_value>
+                            <Right_value></Right_value>
                         </Ref_rightcol>
                     </Row>
                 </Ref_div>
+                {this.state.referredCoin.length > 0 ?
+                    <Ref_div>
+                        <div className="CoinsEarned">
+                            <Row>
+                                <Col xs={24} sm={24} md={12}>
+                                    <div className="ColWrap">
+                                        <Select onChange={this.coinsEarned} value={this.state.coinSelected} style={{ width: "200px" }}>
+                                            {this.state.referredCoin.map(function (temp) {
+                                                return (
+                                                    <Option value={temp.coin_name}>{temp.coin_name}</Option>
+                                                );
+                                            })}
+                                        </Select>
+                                    </div>
+                                </Col>
+                                <Col xs={24} sm={24} md={12}>
+                                    <div className="ColWrap">
+                                        <span className="earnTitle">Earned:</span>
+                                        {this.state.perCoinEarned !== "" ?
+                                            <span className="amtSpan"> {this.state.perCoinEarned.toFixed(4)} {this.state.coinSelected}</span> : ""
+                                        }
+                                    </div>
+                                </Col>
+                            </Row>
+                        </div>
+                    </Ref_div> : ""}
                 <Ref_acc>
                     <div>
                         <RefTable columns={columns} dataSource={referredData}
