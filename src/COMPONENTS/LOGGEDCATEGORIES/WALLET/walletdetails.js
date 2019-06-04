@@ -129,7 +129,7 @@ class WalletDetails extends Component {
                             defaultCoin: walletUserDetails.coin_code,
                             walletDetails: transDetails,
                             loader: false, coin_code: coin_name[1],
-                            coinFee: responseData.coinFee
+                            coinFee: responseData.default_send_Coin_fee
                         }, () => {
                         });
                     })

@@ -64,7 +64,10 @@ export const getProfileDataAction = (token) => dispatch => {
     })
         .then(response => response.json())
         .then((responseData) => {
-            dispatch(addprofileData(responseData))
+            if (responseData.status == 200) {
+                dispatch(addprofileData(responseData))
+
+            }
             dispatch(removeLoader());
         })
         .catch(error => { })

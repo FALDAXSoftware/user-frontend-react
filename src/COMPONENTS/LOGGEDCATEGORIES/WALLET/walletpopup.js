@@ -358,7 +358,7 @@ class WalletPopup extends Component {
 
     render() {
         let amount = Number(this.state.sendFields.amount);
-        let subtotal = amount + amount * ((this.props.coinFee[0].value) / (100));
+        let subtotal = amount + amount * ((this.props.coinFee) / (100));
 
         return (
             <div>
@@ -431,8 +431,9 @@ class WalletPopup extends Component {
                                         </DropdownButtonS>
                                     </ButtonToolbarS> */}
                                         {/* </Sec_wrap> */}
+                                        {console.log(this.props.coinFee)}
                                         <TotDiv>
-                                            <Fee><b>Fee:</b> {this.props.coinFee ? this.props.coinFee[0].value : 0}</Fee>
+                                            <Fee><b>Fee:</b> {this.props.coinFee ? this.props.coinFee : 0}</Fee>
                                             <TotPay><b>Total Payout:</b> {subtotal} {this.props.coin_code}</TotPay>
                                         </TotDiv>
                                     </Rediv>
