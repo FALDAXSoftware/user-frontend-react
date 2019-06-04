@@ -35,8 +35,32 @@ class Conversion extends React.Component {
             faldaxFees: 0.3
         }
         io = this.props.io
-        this.validator1 = new SimpleReactValidator();
-        this.validator2 = new SimpleReactValidator();
+        this.validator1 = new SimpleReactValidator({
+            gtzero: {  // name the rule
+                message: 'Amount must be greater than zero',
+                rule: (val, params, validator) => {
+                    if (val > 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                required: true  // optional
+            }
+        });
+        this.validator2 = new SimpleReactValidator({
+            gtzero: {  // name the rule
+                message: 'Amount must be greater than zero',
+                rule: (val, params, validator) => {
+                    if (val > 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                required: true  // optional
+            }
+        });
         this.getCurrencies = this.getCurrencies.bind(this);
         this.getCrypto = this.getCrypto.bind(this);
         this.radioChange = this.radioChange.bind(this);
@@ -312,39 +336,76 @@ class Conversion extends React.Component {
         }
     }
     btnClicked() {
-        console.log("I am Clcicked");
+        let { crypto, currency, selectedTab, includeFees, buyCryptoInput } = this.state
+        console.log("I am Clcicked", selectedTab, selectedTab === 1);
+        if (selectedTab == 1) {
+            if (this.validator1.allValid()) {
+                console.log("I am in Buy Tab");
+                let fields = {};
+                fields['pair'] = `${crypto}-${currency}`;
+                fields['type'] = selectedTab == 1 ? "buy" : "sell";
+                fields['volume'] = buyCryptoInput;
+                fields['includeFees'] = includeFees;
 
-        if (this.validator1.allValid()) {
-
-            let { crypto, currency, selectedTab, includeFees, buyCryptoInput } = this.state
-            let fields = {};
-            fields['pair'] = `${crypto}-${currency}`;
-            fields['type'] = selectedTab == 1 ? "buy" : "sell";
-            fields['volume'] = buyCryptoInput;
-            fields['includeFees'] = includeFees;
-
-            fetch(`${API_URL}/perform-conversion`, {
-                method: "post",
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: "Bearer " + this.props.isLoggedIn
-                },
-                body: JSON.stringify(fields)
-            }).then(response => response.json())
-                .then((responseData) => {
-                    console.log(responseData);
-                })
-                .catch(error => {
-                    console.log(error);
-                    /* this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
-                    this.setState({ loader: false }); */
-                })
+                fetch(`${API_URL}/perform-conversion`, {
+                    method: "post",
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        Authorization: "Bearer " + this.props.isLoggedIn
+                    },
+                    body: JSON.stringify(fields)
+                }).then(response => response.json())
+                    .then((responseData) => {
+                        console.log(responseData);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        /* this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
+                        this.setState({ loader: false }); */
+                    })
+            }
+            else {
+                this.validator1.showMessages();
+                // rerender to show messages for the first time
+                this.forceUpdate();
+            }
         }
-        else {
-            this.validator.showMessages();
-            // rerender to show messages for the first time
-            this.forceUpdate();
+        console.log("out of 2", selectedTab)
+        if (selectedTab == 2) {
+            console.log("i m in 2")
+            if (this.validator2.allValid()) {
+                console.log("I am in Sell Tab");
+                let fields = {};
+                fields['pair'] = `${crypto}-${currency}`;
+                fields['type'] = selectedTab == 1 ? "buy" : "sell";
+                fields['volume'] = buyCryptoInput;
+                fields['includeFees'] = includeFees;
+
+                fetch(`${API_URL}/perform-conversion`, {
+                    method: "post",
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        Authorization: "Bearer " + this.props.isLoggedIn
+                    },
+                    body: JSON.stringify(fields)
+                }).then(response => response.json())
+                    .then((responseData) => {
+                        console.log(responseData);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        /* this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
+                        this.setState({ loader: false }); */
+                    })
+            }
+            else {
+                console.log("I am in else")
+                this.validator2.showMessages();
+                // rerender to show messages for the first time
+                this.forceUpdate();
+            }
         }
 
     }
@@ -376,7 +437,7 @@ class Conversion extends React.Component {
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="number" value={this.state.buyCryptoInput} onChange={this.onBuyCryptoChange} />
-                                            {this.validator1.message('crypto', this.state.buyCryptoInput, 'required|numeric', 'text-danger-validation')}
+                                            {this.validator1.message('crypto', this.state.buyCryptoInput, 'required|numeric|gtzero', 'text-danger-validation')}
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.cryptoList && this.state.cryptoList.length > 0 &&
@@ -398,7 +459,7 @@ class Conversion extends React.Component {
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="number" value={this.state.buyCurrencyInput} onChange={this.onBuyCurrencyChange} />
-                                            {this.validator1.message('currency', this.state.buyCurrencyInput, 'required|numeric', 'text-danger-validation')}
+                                            {this.validator1.message('currency', this.state.buyCurrencyInput, 'required|numeric|gtzero', 'text-danger-validation')}
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.currencyList && this.state.currencyList.length > 0 &&
@@ -453,7 +514,7 @@ class Conversion extends React.Component {
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="number" value={this.state.sellCryptoInput} onChange={this.onSellCryptoChange} />
-                                            {this.validator2.message('crypto', this.state.sellCryptoInput, 'required|numeric', 'text-danger-validation')}
+                                            {this.validator2.message('crypto', this.state.sellCryptoInput, 'required|numeric|gtzero', 'text-danger-validation')}
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.cryptoList && this.state.cryptoList.length > 0 &&
@@ -475,7 +536,7 @@ class Conversion extends React.Component {
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="number" value={this.state.sellCurrencyInput} onChange={this.onSellCurrencyChange} />
-                                            {this.validator2.message('currency', this.state.sellCurrencyInput, 'required|numeric', 'text-danger-validation')}
+                                            {this.validator2.message('currency', this.state.sellCurrencyInput, 'required|numeric|gtzero', 'text-danger-validation')}
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.currencyList && this.state.currencyList.length > 0 &&
