@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
-import { Input, Col, Table, Row, notification, Select } from 'antd';
+import { Input, Col, Table, Row, notification, Select, Button } from 'antd';
 import styled from 'styled-components';
 import { globalVariables } from 'Globals';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -73,6 +73,7 @@ const Ref_div = styled.div`
         margin-left:10px;
         font-weight:600;
         font-family:"Open Sans";
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
     .ColWrap
     {
@@ -88,12 +89,17 @@ const Ref_div = styled.div`
                 color:${props => props.theme.mode === "dark" ? "white" : ""};
             }
         }
+        .ant-select-arrow
+        {
+            color:${props => props.theme.mode === "dark" ? "white" : ""};
+        }
     }
     .earnTitle
     {
         font-family : "Open Sans";
         font-size : 16px;
         font-weight:bold;
+        color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
     @media(max-width:767px)
     {
@@ -168,6 +174,12 @@ const Ref_text = styled.div`
 `
 const Ref_rightcol = styled(Col)`
 `
+const CollectButton = styled(Button)`
+    margin-top:10px;
+    margin-bottom:30px;
+    background:${props => props.theme.mode == "dark" ? "#041422" : ""};
+    color:${props => props.theme.mode == "dark" ? "white" : ""};
+`
 const Right_value = styled.div`
     text-align:center;
     font-size: 20.01px;
@@ -212,6 +224,10 @@ const Ref_acc = styled.div`
     height:auto;
     margin-bottom:65px;
     overflow:scroll;
+    >div
+    {
+        border-radius: 10px;
+    }
 `
 
 const RefTable = styled(Table)`
@@ -219,6 +235,10 @@ const RefTable = styled(Table)`
     & .ant-table-tbody>tr:hover>td
     {
         background-color:${props => props.theme.mode === "dark" ? "#041422" : ""};
+    }
+    .ant-empty-description
+    {
+        color:${props => props.theme.mode === "dark" ? "white" : "black"};
     }
 `
 class Referral extends Component {
@@ -231,13 +251,16 @@ class Referral extends Component {
             referredCoin: [],
             searchCSS: "",
             coinSelected: "",
-            perCoinEarned: ""
+            perCoinEarned: "",
+            totalEarned: 0,
+            leftOutRef: 0
         },
             this.coinsEarned = this.coinsEarned.bind(this);
     }
     /* Life-Cycle Methods */
 
     componentWillReceiveProps(props, newProps) {
+        console.log(props, newProps)
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme === false)
@@ -248,6 +271,7 @@ class Referral extends Component {
         }
     }
     componentDidMount() {
+        let { profileDetails } = this.props
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme === false)
@@ -267,16 +291,48 @@ class Referral extends Component {
             .then(response => response.json())
             .then((responseData) => {
                 if (responseData.status == 200) {
+                    console.log(profileDetails.fiat);
+                    let fiat = profileDetails.fiat
                     let fields = [];
+                    let fields2 = [];
+                    let sum = 0;
+                    let sum2 = 0;
                     responseData.referredData.map(function (temp) {
                         console.log(temp);
+                        let fiatAmt = parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
+                        sum = sum + parseFloat(fiatAmt.toFixed(4));
                         let obj = {
                             coin_name: temp.coin_name,
                             amount: temp.amount
                         };
-                        fields.push(obj);
+                        console.log(fields, obj)
+                        if (fields.length == 0) {
+                            fields.push(obj);
+                        }
+                        else
+                        {
+                            let flag=false;
+                            fields.map(function (temp2) {
+                                console.log(temp2.coin_name, obj.coin_name,obj,fields)
+                                if (temp2.coin_name == obj.coin_name) {
+                                    flag=true;
+                                }
+                            })
+                            if(flag==false)
+                            {
+                                fields.push(obj);
+                            }
+                        }
                     })
-                    this.setState({ referredData: responseData.data, referredCoin: fields })
+                    responseData.leftReferredData.map(function (temp) {
+                        console.log(temp);
+                        let fiatAmt = parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
+                        console.log(fiatAmt);
+                        sum2 = sum2 + parseFloat(fiatAmt.toFixed(4));
+
+                    })
+                    console.log(sum2, fields)
+                    this.setState({ referredData: responseData.data, referredCoin: fields, totalEarned: sum.toFixed(4), leftOutRef: sum2.toFixed(4) })
                 }
             })
             .catch(error => { /* console.log(error) */ })
@@ -355,7 +411,8 @@ class Referral extends Component {
                         </Ref_leftcol>
                         <Ref_rightcol sm={24} md={6}>
                             <Right_text>Total Earned</Right_text>
-                            <Right_value></Right_value>
+                            <Right_value>{this.state.leftOutRef} {this.props.profileDetails.fiat}</Right_value>
+                            <CollectButton>Collect</CollectButton>
                         </Ref_rightcol>
                     </Row>
                 </Ref_div>
@@ -363,7 +420,7 @@ class Referral extends Component {
                     <Ref_div>
                         <div className="CoinsEarned">
                             <Row>
-                                <Col xs={24} sm={24} md={12}>
+                                <Col xs={24} sm={24} md={8}>
                                     <div className="ColWrap">
                                         <Select onChange={this.coinsEarned} value={this.state.coinSelected} style={{ width: "200px" }}>
                                             {this.state.referredCoin.map(function (temp) {
@@ -374,12 +431,18 @@ class Referral extends Component {
                                         </Select>
                                     </div>
                                 </Col>
-                                <Col xs={24} sm={24} md={12}>
+                                <Col xs={24} sm={24} md={8}>
                                     <div className="ColWrap">
                                         <span className="earnTitle">Earned:</span>
                                         {this.state.perCoinEarned !== "" ?
                                             <span className="amtSpan"> {this.state.perCoinEarned.toFixed(4)} {this.state.coinSelected}</span> : ""
                                         }
+                                    </div>
+                                </Col>
+                                <Col xs={24} sm={24} md={8}>
+                                    <div className="ColWrap">
+                                        <span className="earnTitle">Total Earned:</span>
+                                        <span className="amtSpan">{this.state.totalEarned} {this.props.profileDetails.fiat}</span>
                                     </div>
                                 </Col>
                             </Row>

@@ -22,10 +22,12 @@ export function walletBal(isLoggedIn) {
             .then(response => response.json())
             .then((responseData) => {
                 console.log(responseData);
-                dispatch(walletData(responseData));
-                /* dispatch(removeLoader()); */
+                if (responseData.status == 200)
+                    dispatch(walletData(responseData));
+                dispatch(removeLoader());
             })
             .catch(error => {
+                dispatch(removeLoader());
             })
     }
 }
@@ -61,10 +63,12 @@ export function getAllCoins(isLoggedIn) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                dispatch(allCoinsData(responseData));
+                if (responseData.status == 200)
+                    dispatch(allCoinsData(responseData));
                 dispatch(removeLoader())
             })
             .catch(error => {
+                dispatch(removeLoader())
             })
     }
 }

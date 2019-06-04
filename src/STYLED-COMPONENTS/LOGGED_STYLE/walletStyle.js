@@ -429,7 +429,7 @@ export const PendingWrap = styled.div`
 export const PendingPara = styled.div`
     margin-top:20px;
     font-size:20px;
-    color:#00000069;
+    color:${props => props.theme.mode=="dark"?"white":"#00000069"};
     & p
     {
         margin-top:20px;
