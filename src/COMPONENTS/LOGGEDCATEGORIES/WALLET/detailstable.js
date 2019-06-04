@@ -88,6 +88,7 @@ class DetailsTable extends React.Component {
         }
     }
     componentDidMount() {
+        if(this.props.wallet!==null)
         if (this.props.wallet.length > 0)
             this.setState({
                 walletDetails: this.props.wallet

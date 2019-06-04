@@ -5,12 +5,14 @@ import { Row, Col, /* Input, */ Select, notification } from 'antd';
 import { connect } from "react-redux";
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
+import { Link } from 'react-router-dom'
 /* import { DropdownButton, ButtonToolbar } from 'react-bootstrap'; */
 
 /* Styled-Components */
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import { ContactWrap, GreyWrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import {
+    RightHead, WallTotal, Tot, Money, Currency, FIATAmt, AMT, PendingWrap, PendingPara, WalletCreateButton,
     HeaderWrap, MYWallet, WalletCoin, CoinTable, DetailWrap,
     Address, RowWrap, LeftBit, CryptImg, CryptAmt, RightBit, BTC, BTCAmt, DepButton, WithButton, TransTable, TransTitle, LeftHead
 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
@@ -32,6 +34,7 @@ const ContainerContact = styled(Container)`
     padding-right:30px;
     padding-left:30px;
     padding-bottom: 30px;
+    min-height:70vh;
 `
 const ContainerContact2 = styled(ContainerContact)`
     background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"}; 
@@ -61,6 +64,7 @@ class WalletDetails extends Component {
             loader: false,
             coin_code: "",
             walletUserData: [],
+            currencyConv: {},
             defaultCoin: '',
             balanceFlag: false,
             coinFee: []
@@ -75,6 +79,7 @@ class WalletDetails extends Component {
         if (this.props.walletDetails !== null) {
             var tableData = this.props.walletDetails.coins;
             if (tableData !== undefined) {
+                console.log(tableData);
                 Object.keys(tableData).map(function (index, key) {
                     if (tableData[index].USD !== undefined)
                         total = total + parseFloat(tableData[index].USD) * (tableData[index].balance);
@@ -110,20 +115,18 @@ class WalletDetails extends Component {
                         let transDetails = null;
                         let walletUserDetails = null;
                         console.log(responseData)
-                        if (responseData.walletTransData) {
-                            if (Object.keys(responseData.walletTransData).length > 0) {
-                                transDetails = responseData.walletTransData;
-                            }
+                        if (Object.keys(responseData.walletTransData).length > 0) {
+                            transDetails = responseData.walletTransData;
                         }
 
-                        if (responseData.walletUserData) {
-                            if (Object.keys(responseData.walletUserData).length > 0) {
-                                walletUserDetails = responseData.walletUserData;
-                            }
+
+                        if (Object.keys(responseData.walletUserData).length > 0) {
+                            walletUserDetails = responseData.walletUserData;
                         }
                         self.setState({
                             walletUserData: walletUserDetails,
-                            defaultCoin: walletUserDetails[0].coin,
+                            currencyConv: responseData.currencyConversionData,
+                            defaultCoin: walletUserDetails.coin_code,
                             walletDetails: transDetails,
                             loader: false, coin_code: coin_name[1],
                             coinFee: responseData.coinFee
@@ -187,110 +190,166 @@ class WalletDetails extends Component {
             this.props.history.push(`/walletDetails?coinID${this.state.balanceFlag ? 1 : 0}=${value}`)
         })
     }
+    _walletCreate = (code) => {
+        fetch(API_URL + `/users/create-wallet/${code}`, {
+            method: "get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }).then(response => response.json())
+            .then((responseData) => {
+                console.log(responseData)
+                if (responseData.status == 200) {
+
+                }
+                else {
+                    this.openNotificationWithIcon('error', 'Error', responseData.message);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                this.openNotificationWithIcon('error', 'Error', 'Something went wrong!!');
+                this.setState({ loader: false });
+            })
+    }
     render() {
         /* var self = this; */
-        const { walletUserData, defaultCoin/*,  walletDetails */ } = this.state;
-
+        const { walletUserData, defaultCoin, currencyConv/*,  walletDetails */ } = this.state;
+        let FIAT = this.props.profileDetails.fiat;
         return (
             <ContactWrap>
                 <LoggedNavigation />
                 <GreyWrap>
-                    <ContainerContact2>
-                        <HeaderWrap>
-                            <Row style={{ width: "100%" }}>
-                                <Col xxl={12} xl={12} lg={12} sm={24}>
-                                    <LeftHead>
-                                        <MYWallet>
-                                            <span>{this.state.walletUserData.length > 0 ? this.state.walletUserData[0].coin_name : "COIN"}</span>
-                                        </MYWallet>
-                                        {this.state.balanceFlag === false ?
-                                            <WalletCoin>
-                                                {this.props.walletDetails !== null && this.props.walletDetails !== undefined ?
-                                                    <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
-                                                        {this.props.walletDetails.map(function (temp) {
-                                                            return (
-                                                                <Option value={temp.coin}>{temp.coin}</Option>
-                                                            );
-                                                        })}
-                                                    </Select> : ""
-                                                }
-                                            </WalletCoin> : ""}
-                                        {this.state.balanceFlag === true ?
-                                            <WalletCoin>
-                                                {this.props.nowalletBalance !== null && this.props.nowalletBalance !== undefined ?
-                                                    <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
-                                                        {this.props.nowalletBalance.map(function (temp) {
-                                                            return (
-                                                                <Option value={temp.coin}>{temp.coin}</Option>
-                                                            );
-                                                        })}
-                                                    </Select> : ""
-                                                }
-                                            </WalletCoin> : ""}
-                                    </LeftHead>
-                                </Col>
-                                {/* <Col xxl={12} xl={12} lg={12} sm={24}>
-                                    <Right_head>
+                    {console.log(walletUserData)}
+                    {Object.keys(walletUserData).length > 0 ? walletUserData.flag == 0 ?
+                        <ContainerContact2>
+                            <HeaderWrap>
+                                <Row style={{ width: "100%" }}>
+                                    <Col xxl={12} xl={12} lg={12} sm={24}>
+                                        <LeftHead>
+                                            <MYWallet>
+                                                <span>{Object.keys(walletUserData).length > 0 ? walletUserData.coin_name : "COIN"}</span>
+                                            </MYWallet>
+                                            {this.state.balanceFlag === false ?
+                                                <WalletCoin>
+                                                    {this.props.walletDetails !== null && this.props.walletDetails !== undefined ?
+                                                        <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
+                                                            {this.props.walletDetails.map(function (temp) {
+                                                                return (
+                                                                    <Option value={temp.coin_code}>{temp.coin}</Option>
+                                                                );
+                                                            })}
+                                                        </Select> : ""
+                                                    }
+                                                </WalletCoin> : ""}
+                                            {this.state.balanceFlag === true ?
+                                                <WalletCoin>
+                                                    {this.props.nowalletBalance !== null && this.props.nowalletBalance !== undefined ?
+                                                        <Select onChange={this.changeCoins} value={defaultCoin} style={{ width: "100%" }}>
+                                                            {this.props.nowalletBalance.map(function (temp) {
+                                                                return (
+                                                                    <Option value={temp.coin}>{temp.coin}</Option>
+                                                                );
+                                                            })}
+                                                        </Select> : ""
+                                                    }
+                                                </WalletCoin> : ""}
+                                        </LeftHead>
+                                    </Col>
+                                    {/* <Col xxl={12} xl={12} lg={12} sm={24}>
+                                    <RightHead>
                                         <WallTotal>
-                                            {/* <Tot>Total:</Tot>
+                                            <Tot>Total:</Tot>
                                             <Money>${this.state.total !== null ? this.state.total : ""}</Money>
-                                            <Currency>USD</Currency> 
+                                            <Currency>USD</Currency>
                                         </WallTotal>
-                                        
-                                            <Select defaultValue="USD" style={{ width: 200, marginLeft: "auto" }}>
-                                                <Option value="USD">USD</Option>
-                                                <Option value="EUR">EUR</Option>
-                                                <Option value="INR">INR</Option>
-                                            </Select> 
-                                       
-                                    </Right_head>
-                                </Col> */}
-                            </Row>
-                        </HeaderWrap>
-                        <DetailWrap>
-                            <Address>{this.state.walletUserData.length > 0 ? this.state.walletUserData[0].coin_name.toUpperCase() : "COIN"} Address : <b style={{ color: "black" }}>{walletUserData.length > 0 ? walletUserData[0].receive_address : ""}</b></Address>
-                            <hr />
-                            <RowWrap>
-                                <Row>
-                                    <Col xxl={12} xl={12} lg={24} md={24}>
-                                        <LeftBit>
-                                            <CryptImg><CoinImage src={((walletUserData.length > 0 && walletUserData[0].coin_icon !== null && walletUserData[0].coin_icon !== undefined) ? _AMAZONBUCKET + walletUserData[0].coin_icon : _AMAZONBUCKET + "coin/defualt_coin.png")} /></CryptImg>
-                                            <CryptAmt>
-                                                <BTCAmt>
-                                                    {walletUserData.length > 0 ? <NumberFormat value={walletUserData[0].balance.toFixed(4)} displayType={'text'} thousandSeparator={true} /> : ''}
-                                                    <BTC>{walletUserData.length > 0 ? walletUserData[0].coin_code : ""}</BTC></BTCAmt>
-                                                {/* <FIAT_amt>$874.23<AMT>USD</AMT></FIAT_amt> */}
-                                            </CryptAmt>
-                                        </LeftBit>
-                                    </Col>
-                                    <Col xxl={12} xl={12} lg={24} md={24}>
-                                        <RightBit>
-                                            <DepButton name="SEND" onClick={this.showModal}>SEND</DepButton>
-                                            <WithButton name="RECEIVE" onClick={this.showModal}>RECEIVE</WithButton>
-                                        </RightBit>
-                                    </Col>
-                                </Row>
-                            </RowWrap>
-                        </DetailWrap>
-                        <TransTable>
-                            <TransTitle>Transaction History</TransTitle>
-                            <CoinTable>
-                                <DetailsTable wallet={this.state.walletDetails} />
-                            </CoinTable>
-                        </TransTable>
-                        {this.state.withdraw === true ?
 
-                            <WalletPopup coinFee={this.state.coinFee} coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="RECEIVE" comingCancel={(e) => this.comingCancel(e)} visible={this.state.withdraw} />
-                            :
-                            ""
-                        }
-                        {this.state.send === true
+                                        <Select defaultValue="USD" style={{ width: 200, marginLeft: "auto" }}>
+                                            <Option value="USD">USD</Option>
+                                            <Option value="EUR">EUR</Option>
+                                            <Option value="INR">INR</Option>
+                                        </Select>
+
+                                    </RightHead>
+                                </Col> */}
+                                </Row>
+                            </HeaderWrap>
+                            <DetailWrap>
+                                <Address>{Object.keys(walletUserData).length > 0 ? walletUserData.coin_name.toUpperCase() : "COIN"} Address : <b style={{ color: "black" }}>{Object.keys(walletUserData).length > 0 ? walletUserData.receive_address : ""}</b></Address>
+                                <hr />
+                                <RowWrap>
+                                    <Row>
+                                        <Col xxl={12} xl={12} lg={24} md={24}>
+                                            <LeftBit>
+                                                <CryptImg><CoinImage src={((Object.keys(walletUserData).length > 0 && walletUserData.coin_icon !== null && walletUserData.coin_icon !== undefined) ? _AMAZONBUCKET + walletUserData.coin_icon : _AMAZONBUCKET + "coin/defualt_coin.png")} /></CryptImg>
+                                                <CryptAmt>
+                                                    <BTCAmt>
+                                                        {console.log(walletUserData)}
+                                                        {Object.keys(walletUserData).length > 0 ? <NumberFormat value={walletUserData.balance.toFixed(4)} displayType={'text'} thousandSeparator={true} /> : ''}
+                                                        <BTC>{Object.keys(walletUserData).length > 0 ? walletUserData.coin_code : ""}</BTC></BTCAmt>
+                                                    {walletUserData.length > 0 ? <FIATAmt>{FIAT !== "USD" ? FIAT !== "EUR" ? FIAT !== "INR" ? "" : "\u20B9" : "\u20AC" : "$"} {parseFloat(currencyConv.quote['USD'].price * walletUserData.balance).toFixed(4)}<AMT>{FIAT}</AMT></FIATAmt> : ""}
+                                                </CryptAmt>
+                                            </LeftBit>
+                                        </Col>
+                                        <Col xxl={12} xl={12} lg={24} md={24}>
+                                            <RightBit>
+                                                <DepButton name="SEND" onClick={this.showModal}>SEND</DepButton>
+                                                <WithButton name="RECEIVE" onClick={this.showModal}>RECEIVE</WithButton>
+                                            </RightBit>
+                                        </Col>
+                                    </Row>
+                                </RowWrap>
+                            </DetailWrap>
+                            <TransTable>
+                                <TransTitle>Transaction History</TransTitle>
+                                <CoinTable>
+                                    <DetailsTable wallet={this.state.walletDetails} />
+                                </CoinTable>
+                            </TransTable>
+                            {this.state.withdraw === true ?
+
+                                <WalletPopup coinFee={this.state.coinFee} coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="RECEIVE" comingCancel={(e) => this.comingCancel(e)} visible={this.state.withdraw} />
+                                :
+                                ""
+                            }
+                            {this.state.send === true
+                                ?
+                                <WalletPopup coinFee={this.state.coinFee} coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="SEND" comingCancel={(e) => this.comingCancel(e)} visible={this.state.send} />
+                                :
+                                ""
+                            }
+                        </ContainerContact2>
+                        :
+                        walletUserData.flag == 1
                             ?
-                            <WalletPopup coinFee={this.state.coinFee} coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="SEND" comingCancel={(e) => this.comingCancel(e)} visible={this.state.send} />
-                            :
-                            ""
-                        }
-                    </ContainerContact2>
+                            <ContainerContact2>
+                                <PendingWrap>
+                                    {console.log(walletUserData)}
+
+                                    {Object.keys(walletUserData).length > 0 ? <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}><img width="35" style={{ marginRight: "5px" }} src={`${_AMAZONBUCKET}${walletUserData.coin_icon}`} /><BTC>{walletUserData.coin_name} </BTC></div> : ""}
+
+                                    <PendingPara>
+                                        <p>Please wait for some time.As soon as your wallet is created , we'll let you know.</p>
+                                        <p>If you still have any issue , please feel free to contact us <a href="http://3.16.234.205/contact-us/">here</a>.</p>
+                                    </PendingPara>
+                                </PendingWrap>
+                            </ContainerContact2>
+                            : walletUserData.flag == 2
+                                ?
+                                <ContainerContact2>
+                                    <PendingWrap>
+                                        <BTC>{Object.keys(walletUserData).length > 0 ? walletUserData.coin_name : ""}</BTC>
+                                        <PendingPara>
+                                            <p>Your wallet is not created yet. Please click on the button below to create your wallet for {walletUserData.coin_name}.</p>
+                                            <WalletCreateButton onClick={this._walletCreate(walletUserData.coin)}>Create {walletUserData.coin_name} Wallet</WalletCreateButton>
+                                            <p>If you still have any issue , please feel free to contact us <a href="http://3.16.234.205/contact-us/">here</a>.</p>
+                                        </PendingPara>
+                                    </PendingWrap>
+                                </ContainerContact2>
+                                : "" : ""
+                    }
                 </GreyWrap>
                 <CommonFooter />
                 {(this.props.loader || this.state.loader) ? <FaldaxLoader /> : ""}
@@ -301,11 +360,12 @@ class WalletDetails extends Component {
 
 function mapStateToProps(state) {
     return ({
-        walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData.balanceWallet : null,
-        nowalletBalance: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData.nonBalanceWallet : null,
+        walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData : null,
+        nowalletBalance: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.nonBalanceData : null,
         allCoins: state.walletReducer.allCoinsData !== undefined ? state.walletReducer.allCoinsData : null,
         isLoggedIn: state.simpleReducer.isLoggedIn,
-        loader: state.simpleReducer.loader ? state.simpleReducer.loader : false
+        loader: state.simpleReducer.loader ? state.simpleReducer.loader : false,
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
     })
 }
 

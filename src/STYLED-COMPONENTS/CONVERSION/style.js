@@ -51,12 +51,15 @@ export const LeftCol = styled(Col)`
 `
 export const ConversionTab = styled(Tabs)`
     border-bottom:none;
-    &.ant-tabs-bar>.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav{
+    & .ant-tabs-bar{
+        border-bottom:none;
+    }
+    & .ant-tabs-bar>.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav{
         width:100%;
         padding-bottom:10px;
         border-bottom:none;
     }
-    &.ant-tabs-bar>.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav>div>.ant-tabs-tab{
+    & .ant-tabs-bar>.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav>div>.ant-tabs-tab{
         margin:0px !important;
         width:50%;
         text-align:center;
@@ -64,12 +67,12 @@ export const ConversionTab = styled(Tabs)`
         font-weight:700;
         border-bottom:1px solid #e3ebfc;
     }
-    &.ant-tabs-bar>.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav>div>.ant-tabs-tab.ant-tabs-tab-active{
+    & .ant-tabs-bar>.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav>div>.ant-tabs-tab.ant-tabs-tab-active{
         background-color:#e3ebfc;
         position: relative;
     }
     
-    &.ant-tabs-bar>.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav>div>.ant-tabs-tab.ant-tabs-tab-active::after {
+    & .ant-tabs-bar>.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav>div>.ant-tabs-tab.ant-tabs-tab-active::after {
         content: '';
         position: absolute;
         bottom: 0;
@@ -82,7 +85,7 @@ export const ConversionTab = styled(Tabs)`
         margin-left: -10px;
         margin-bottom: -10px;
     }
-    &.ant-tabs-bar>.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav>.ant-tabs-ink-bar{
+    & .ant-tabs-bar>.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav>.ant-tabs-ink-bar{
         display:none !important;
     }
 `

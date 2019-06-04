@@ -34,26 +34,27 @@ export default class Datepicker extends Component {
     */
 
     onChangeDate(date, type) {
-
         if (this.props.kyc !== "kyc") {
             if (type === "year") {
                 this.setState({ year: date });
                 fields[type] = date;
             } else if (type === "month") {
-                let date1
+                let date1 = null;
+                console.log("Month", date, date === "")
                 this.setState({ month: date });
-                if (date === 0) date1 = "January";
-                if (date === 1) date1 = "February";
-                if (date === 2) date1 = "March";
-                if (date === 3) date1 = "April";
-                if (date === 4) date1 = "May";
-                if (date === 5) date1 = "June";
-                if (date === 6) date1 = "July";
-                if (date === 7) date1 = "August";
-                if (date === 8) date1 = "September";
-                if (date === 9) date1 = "October";
-                if (date === 10) date1 = "November";
-                if (date === 11) date1 = "December";
+                if (date == 0) date1 = "January";
+                if (date == 1) date1 = "February";
+                if (date == 2) date1 = "March";
+                if (date == 3) date1 = "April";
+                if (date == 4) date1 = "May";
+                if (date == 5) date1 = "June";
+                if (date == 6) date1 = "July";
+                if (date == 7) date1 = "August";
+                if (date == 8) date1 = "September";
+                if (date == 9) date1 = "October";
+                if (date == 10) date1 = "November";
+                if (date == 11) date1 = "December";
+                if (date === "") { date1 = ""; console.log(" i am in IF") }
 
                 fields[type] = date1;
             } else if (type === "day") {
@@ -61,13 +62,15 @@ export default class Datepicker extends Component {
                 fields[type] = date;
             }
             let propFields
-            /* if (this.props.profileDetails.dob !== null) {
+            if (this.props.profileDetails.dob !== null) {
+                console.log(this.props.profileDetails.dob)
                 propFields = this.props.profileDetails.dob.split("-");
-                if (fields["day"]===undefined && propFields[2] !== undefined) { fields["day"] = propFields[2] }
-                if (fields["month"]===undefined && propFields[1] !== undefined) { fields["month"] = propFields[1] }
-                if (fields["year"]===undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
+                if (fields["day"] === undefined && propFields[2] !== undefined) { fields["day"] = propFields[2] }
+                if (fields["month"] === undefined && propFields[1] !== undefined) { fields["month"] = propFields[1] }
+                if (fields["year"] === undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
 
-            } */
+            }
+            console.log("Profile Date", fields)
             this.props.onDateChange(fields, "dob")
         }
         else {
@@ -77,32 +80,37 @@ export default class Datepicker extends Component {
             } else if (type === "month") {
                 let date1
                 this.setState({ month: date });
-                if (date === 0) date1 = "January";
-                if (date === 1) date1 = "February";
-                if (date === 2) date1 = "March";
-                if (date === 3) date1 = "April";
-                if (date === 4) date1 = "May";
-                if (date === 5) date1 = "June";
-                if (date === 6) date1 = "July";
-                if (date === 7) date1 = "August";
-                if (date === 8) date1 = "September";
-                if (date === 9) date1 = "October";
-                if (date === 10) date1 = "November";
-                if (date === 11) date1 = "December";
-
+                if (date == 0) date1 = "January";
+                if (date == 1) date1 = "February";
+                if (date == 2) date1 = "March";
+                if (date == 3) date1 = "April";
+                if (date == 4) date1 = "May";
+                if (date == 5) date1 = "June";
+                if (date == 6) date1 = "July";
+                if (date == 7) date1 = "August";
+                if (date == 8) date1 = "September";
+                if (date == 9) date1 = "October";
+                if (date == 10) date1 = "November";
+                if (date == 11) date1 = "December";
+                if (date === "") { date1 = ""; console.log(" i am in IF") }
                 fields[type] = date1;
+
             } else if (type === "day") {
                 this.setState({ day: date });
                 fields[type] = date;
             }
+            console.log("KYC date", fields);
             let propFields
-            /* if (this.props.kycData2.dob !== null && this.props.kycData2.dob !== undefined) {
-                propFields = this.props.kycData2.dob.split("-");
-                if (fields["day"]===undefined && propFields[2] !== undefined) { fields["day"] = propFields[2] }
-                if (fields["month"]===undefined && propFields[1] !== undefined) { fields["month"] = propFields[1] }
-                if (fields["year"]===undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
+            if (this.props.kycData2.dob !== null && this.props.kycData2.dob !== undefined) {
 
-            } */
+                propFields = this.props.kycData2.dob.split("-");
+                console.log(fields["day"], propFields[2]);
+                if (fields["day"] === undefined && propFields[2] !== undefined) { fields["day"] = propFields[2] }
+                if (fields["month"] === undefined && propFields[1] !== undefined) { fields["month"] = propFields[1] }
+                if (fields["year"] === undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
+
+            }
+            console.log("Final Result", fields);
             this.props.onDateChange(fields, "dob")
         }
     }
@@ -110,7 +118,9 @@ export default class Datepicker extends Component {
     render() {
         let date, year, month, day
         if (this.props.kyc !== undefined) {
+            console.log("KYC", this.props.kyc)
             if (this.props.kycData2 !== "" && this.props.kycData2 !== null && this.props.kycData2 !== undefined) {
+
                 if (this.props.kycData2.dob !== undefined && this.props.kycData2.dob !== null) {
                     date = this.props.kycData2.dob.split("-")
                     year = Number(date[2])
@@ -123,6 +133,7 @@ export default class Datepicker extends Component {
             }
         } else {
             if (this.props.profileDetails.dob !== undefined && this.props.profileDetails.dob !== null) {
+                console.log("profile ", this.props.kyc)
                 if (this.props.profileDetails.dob !== undefined) {
                     date = this.props.profileDetails.dob.split("-")
                     year = Number(date[2])
@@ -160,6 +171,8 @@ export default class Datepicker extends Component {
                             optionClasses={'option-day'}
                         />
                     </Col>
+                    {console.log(this.state.month !== null ? this.state.month : (month !== "" && month !== null) ? month : '')}
+                    {console.log(this.state.month, month)}
                     <Col md={8} xl={8}>
                         <MonthPicker
                             // mandatory if end={} is given in YearPicker
