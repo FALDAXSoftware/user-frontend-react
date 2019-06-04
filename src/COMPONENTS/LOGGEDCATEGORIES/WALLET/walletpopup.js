@@ -138,6 +138,34 @@ const TotDiv = styled.div`
     width:100%;
     // width: 462px;
 `
+const WithrawMsg = styled.div`
+    font-size:20px;
+    font-family:"Open Sans";
+    text-align:center;
+    padding-top:50px;
+    & button:first-child
+    {
+        margin-right:10px;
+    }
+    & button:last-child
+    {
+        margin-left:10px;
+    }
+`
+const ConfirmDiv = styled.div`
+    text-align:center;
+    padding-top:50px;
+    .confirm
+    {
+        width:100px;
+        margin-right:10px;
+    }
+    .cancel
+    {
+        width:100px;
+        margin-left:10px;
+    }
+`
 class WalletPopup extends Component {
     constructor(props) {
         super(props);
@@ -156,7 +184,7 @@ class WalletPopup extends Component {
             },
             loader: false,
             withdrawFlag: false,
-            withdrawMsg: ""
+            withdrawMsg: "Your Withdrawl request may take 24-28 hours to process due to its size. Do you wish to proceed?"
         }
         this.validator = new SimpleReactValidator({
             gtzero: {  // name the rule
@@ -173,6 +201,10 @@ class WalletPopup extends Component {
         });
         this.sendChange = this.sendChange.bind(this);
         this.sendSubmit = this.sendSubmit.bind(this);
+        this.comingCancel = this.comingCancel.bind(this);
+        this.confirmFunc = this.confirmFunc.bind(this);
+        this.cancelFunc = this.cancelFunc.bind(this);
+        this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
     }
 
     /* Life Cycle Methods */
@@ -180,6 +212,7 @@ class WalletPopup extends Component {
     componentDidMount() {
         if (this.props.title === "RECEIVE") {
             this.setState({ loader: true })
+            console.log(this.props.coin_code)
             fetch(`${API_URL}/wallet/get-qr-code/${this.props.coin_code}`, {
                 method: "get",
                 headers: {
@@ -255,10 +288,14 @@ class WalletPopup extends Component {
         This method is called when we want to send the entered coin with right validations.
     */
 
-    sendSubmit() {
+    sendSubmit(confirmFlag) {
         if (this.validator.allValid()) {
             var values = this.state.sendFields;
             values["coin_code"] = this.props.coin_code;
+            console.log(confirmFlag, confirmFlag)
+            if (confirmFlag == true)
+                values["confirm_for_wait"] = confirmFlag;
+            this.setState({ loader: true });
             fetch(API_URL + "/wallet/send", {
                 method: "post",
                 headers: {
@@ -269,9 +306,10 @@ class WalletPopup extends Component {
                 body: JSON.stringify(values)
             }).then(response => response.json())
                 .then((responseData) => {
-                    console.log(responseData)
+                    console.log("SEND API", responseData)
                     if (responseData.status === 200) {
-                        this.openNotificationWithIcon("success", "Successfully Sent", responseData.message)
+                        this.openNotificationWithIcon("success", "Successfully Sent", responseData.message);
+                        this.comingCancel();
                     }
                     else if (responseData.status === 201) {
                         this.setState({
@@ -280,11 +318,13 @@ class WalletPopup extends Component {
                         });
                     }
                     else {
-                        this.openNotificationWithIcon("warning", "Balance low", responseData.message)
+                        this.openNotificationWithIcon("warning", "Error", responseData.message)
                     }
+                    this.setState({ loader: false });
                 }).catch(error => {
                 })
         } else {
+            this.setState({ loader: false });
             this.validator.showMessages();
             this.forceUpdate();
         }
@@ -300,6 +340,20 @@ class WalletPopup extends Component {
         var name = e.target.name;
         fields[name] = e.target.value;
         this.setState({ sendFields: fields });
+    }
+
+    /* After confirming Button*/
+
+    confirmFunc() {
+        this.sendSubmit(true);
+        this.handleComing();
+    }
+    /* After Cancel Button*/
+    cancelFunc() {
+        console.log(this)
+        let _this = this;
+        _this.openNotificationWithIcon("success", "Success", "Your transaction has been cancelled.");
+        _this.comingCancel();
     }
 
     render() {
@@ -348,7 +402,11 @@ class WalletPopup extends Component {
                             :
                             this.state.withdrawFlag == true ?
                                 <ModalWrap>
-                                    {this.state.withdrawMsg}
+                                    <WithrawMsg>{this.state.withdrawMsg}</WithrawMsg>
+                                    <ConfirmDiv>
+                                        <Button onClick={this.confirmFunc} className="confirm" size="large" type="primary">Confirm</Button>
+                                        <Button onClick={this.cancelFunc} className="cancel" size="large" type="primary">Cancel</Button>
+                                    </ConfirmDiv>
                                 </ModalWrap>
                                 :
                                 <ModalWrap>

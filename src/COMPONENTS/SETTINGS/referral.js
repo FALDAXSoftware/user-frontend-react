@@ -2,17 +2,17 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux"
-import { Input, /* Col, Table, */ notification } from 'antd';
+import { Input, Col, Table, Row, notification } from 'antd';
 import styled from 'styled-components';
 import { globalVariables } from 'Globals';
-/* import { CopyToClipboard } from 'react-copy-to-clipboard'; */
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 let { API_URL } = globalVariables;
 /* CONSTANTS */
 const Search = Input.Search;
 
 /* Styled Components */
-/* const columns = [{
+const columns = [{
     title: 'Accounts Referred',
     dataIndex: 'email',
 }];
@@ -26,21 +26,20 @@ const data = [{
     key: "3",
     referral: "test3@test.com"
 }];
- */
 const ParentWrap = styled.div`
     margin-top:20vh;
     
 `
-/* const Header_text = styled.div`
+const Header_text = styled.div`
     font-size:20px;
     font-family:"Open Sans";
     font-weight: 600;
-    color:${props => props.theme.mode==="dark" ? "white" : "rgb( 80, 80, 80 )"};
+    color:${props => props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
     line-height: 2.4;
     margin-top:10px;
     text-align:center;
-` */
-/* const Ref_div = styled.div`
+`
+const Ref_div = styled.div`
     margin:auto;
     width:80%;
     height:140px;
@@ -49,8 +48,8 @@ const ParentWrap = styled.div`
     margin-top:40px;
     border-radius: 10px;
     height:auto;
-` */
-/* const Ref_leftcol = styled(Col)`
+`
+const Ref_leftcol = styled(Col)`
     text-align:left;
     padding-left: 35px;
     &:after 
@@ -65,7 +64,7 @@ const ParentWrap = styled.div`
     {
         // text-align:center;
     }
-` */
+`
 export const RefInput = styled(Search)`
     width:86%;
     // margin-left:35px;
@@ -97,7 +96,7 @@ const Coming = styled.div`
         font-size:20px;
     }
 `
-/* const Ref_text = styled.div`
+const Ref_text = styled.div`
     text-align:left;
     font-size: 14.007px;
     font-family: "Open sans";
@@ -112,14 +111,14 @@ const Coming = styled.div`
     @media(max-width:768px)
     {
     }
-` */
-/* const Ref_rightcol = styled(Col)`
-` */
-/* const Right_value = styled.div`
+`
+const Ref_rightcol = styled(Col)`
+`
+const Right_value = styled.div`
     text-align:center;
     font-size: 20.01px;
     font-family: "Open sans";
-    color: ${props => props.theme.mode==="dark" ? "white" : "rgb( 0, 0, 0 )"};
+    color: ${props => props.theme.mode === "dark" ? "white" : "rgb( 0, 0, 0 )"};
     font-weight:bold;
     -moz-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
     -webkit-transform: matrix( 0.99999985149599,0,0,0.99949238260564,0,0);
@@ -152,7 +151,7 @@ const Ref_acc = styled.div`
     margin:auto;
     width:80%;
     height:140px;
-    background-color:${props => props.theme.mode==="dark" ? "#041422" : "#ffffff"};
+    background-color:${props => props.theme.mode === "dark" ? "#041422" : "#ffffff"};
     border:1px solid #d6d6d6;
     margin-top:40px;
     border-radius: 10px;
@@ -163,9 +162,9 @@ const Ref_acc = styled.div`
 const RefTable = styled(Table)`
     & .ant-table-tbody>tr:hover>td
     {
-        background-color:${props => props.theme.mode==="dark" ? "#041422" : ""};
+        background-color:${props => props.theme.mode === "dark" ? "#041422" : ""};
     }
-` */
+`
 class Referral extends Component {
     constructor(props) {
         super(props);
@@ -246,21 +245,21 @@ class Referral extends Component {
     }
 
     render() {
-        /* const { referralLink, referTable, referredData } = this.state; */
+        const { referralLink, referTable, referredData } = this.state;
         return (
             <ParentWrap>
-                {/* <Header_text>Referral Program</Header_text> */}
-                <Coming>
+                <Header_text>Referral Program</Header_text>
+                {/*  <Coming>
                     <span>Coming soon.</span>
-                </Coming>
-                {/* <Ref_div>
+                </Coming> */}
+                <Ref_div>
                     <Row>
                         <Ref_leftcol sm={24} md={18}>
                             <Ref_text>YOUR REFERRAL LINK</Ref_text>
                             <CopyToClipboard text={referralLink}
                                 onCopy={() => this.setState({ copied: true })}>
                                 <div style={{ textAlign: 'left' }}>
-                                    <Ref_input
+                                    <RefInput
                                         value={this.props.profileDetails.referral_code}
                                         className={this.state.searchCSS}
                                         placeholder="Referral"
@@ -285,7 +284,7 @@ class Referral extends Component {
                             pagination={false}
                         />
                     </div>
-                </Ref_acc> */}
+                </Ref_acc>
             </ParentWrap>
         );
     }

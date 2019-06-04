@@ -407,7 +407,7 @@ class PersonalDetails extends Component {
 
     removePic() {
         /* this.removeNotification("warning"); */
-        document.getElementById("file").value = "";
+        /* document.getElementById("file").value = ""; */
         if (this.state.profileImg !== _DEFAULTPROFILE) {
             this.setState({ remove_pic: true, profileImg: _DEFAULTPROFILE, profileImage: undefined })
         }
