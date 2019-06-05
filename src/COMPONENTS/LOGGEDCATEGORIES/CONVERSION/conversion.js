@@ -33,7 +33,7 @@ class Conversion extends React.Component {
             includeFees: true,
             krakenFees: 0.2,
             faldaxFees: 0.3,
-            loader: false
+            loader: false,
         }
         io = this.props.io
         this.validator1 = new SimpleReactValidator({
@@ -77,6 +77,7 @@ class Conversion extends React.Component {
         this.calculateSellCurrency = this.calculateSellCurrency.bind(this);
         this.calculateSellCrypto = this.calculateSellCrypto.bind(this);
         this.btnClicked = this.btnClicked.bind(this);
+        this.getBuyCurrencyWithFees = this.getBuyCurrencyWithFees.bind(this);
     }
 
     /* Life-Cycle Methods */
@@ -257,6 +258,28 @@ class Conversion extends React.Component {
             })
         }
     }
+    getBuyCurrencyWithFees() {
+        var self = this;
+        let buyCurrencyInput = (self.state.buyCryptoInput) * self.state.askPrice;
+        // Add Kraken Fees
+
+        buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.krakenFees) / 100);
+
+        // Add Faldax Fees
+        buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.faldaxFees) / 100);
+        return (isNaN(buyCurrencyInput) ? 0 : buyCurrencyInput)
+    }
+    getSellCurrencyWithFees() {
+        var self = this;
+        let sellCurrencyInput = (self.state.sellCryptoInput) * self.state.bidPrice;
+        // Add Kraken Fees
+
+        sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.krakenFees) / 100);
+
+        // Add Faldax Fees
+        sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.faldaxFees) / 100);
+        return (isNaN(sellCurrencyInput) ? 0 : sellCurrencyInput)
+    }
     onBuyCurrencyChange(e) {
         var self = this;
         this.setState({
@@ -373,7 +396,7 @@ class Conversion extends React.Component {
                         console.log(responseData);
                         if (responseData.status == 200) {
 
-                            this.handleTabChange("2");
+                            this.handleTabChange("1");
                             this.setState({ loader: false });
                             this.openNotificationWithIcon('success', "Success", responseData.message);
                         }
@@ -649,30 +672,71 @@ class Conversion extends React.Component {
                                         <DashedSeprator></DashedSeprator>
                                     </Col>
                                 </Row>
-                                <Row>
-                                    <Col xs={12}>
-                                        <RightSpan>0.0123 BTC</RightSpan>
-                                    </Col>
-                                    <Col xs={12} style={{ textAlign: "right" }}>
-                                        <LeftSpan>$3,000</LeftSpan>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={12}>
-                                        <RightSpan>FALDAX Fee</RightSpan>
-                                    </Col>
-                                    <Col xs={12} style={{ textAlign: "right" }}>
-                                        <LeftSpan>$5.00</LeftSpan>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={12}>
-                                        <RightTotal>Total</RightTotal>
-                                    </Col>
-                                    <Col xs={12} style={{ textAlign: "right" }}>
-                                        <LeftTotal>$3005</LeftTotal>
-                                    </Col>
-                                </Row>
+                                {this.state.selectedTab === 1 &&
+                                    <div>
+                                        <Row>
+                                            <Col xs={12}>
+                                                <RightSpan>{isNaN(this.state.buyCryptoInput) ? 0 : this.state.buyCryptoInput} {this.state.crypto}</RightSpan>
+                                            </Col>
+                                            <Col xs={12} style={{ textAlign: "right" }}>
+                                                <LeftSpan>{(isNaN(this.state.buyCryptoInput * this.state.askPrice) ? 0 : (this.state.buyCryptoInput * this.state.askPrice))} {this.state.currency}</LeftSpan>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={12}>
+                                                <RightSpan>FALDAX Fee</RightSpan>
+                                            </Col>
+                                            <Col xs={12} style={{ textAlign: "right" }}>
+                                                <LeftSpan>{this.state.krakenFees}% +  {this.state.faldaxFees}%</LeftSpan>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={12}>
+                                                <RightTotal>Total</RightTotal>
+                                            </Col>
+                                            <Col xs={12} style={{ textAlign: "right" }}>
+                                                <LeftTotal>
+                                                    {
+                                                        this.getBuyCurrencyWithFees()
+                                                    } {this.state.currency}
+                                                </LeftTotal>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                }
+                                {this.state.selectedTab === 2 &&
+                                    <div>
+                                        <Row>
+                                            <Col xs={12}>
+                                                <RightSpan>{isNaN(this.state.sellCryptoInput) ? 0 : this.state.sellCryptoInput} {this.state.crypto}</RightSpan>
+                                            </Col>
+                                            <Col xs={12} style={{ textAlign: "right" }}>
+                                                <LeftSpan>{(isNaN(this.state.sellCryptoInput * this.state.bidPrice) ? 0 : (this.state.sellCryptoInput * this.state.bidPrice))} {this.state.currency}</LeftSpan>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={12}>
+                                                <RightSpan>FALDAX Fee</RightSpan>
+                                            </Col>
+                                            <Col xs={12} style={{ textAlign: "right" }}>
+                                                <LeftSpan>{this.state.krakenFees}% +  {this.state.faldaxFees}%</LeftSpan>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={12}>
+                                                <RightTotal>Total</RightTotal>
+                                            </Col>
+                                            <Col xs={12} style={{ textAlign: "right" }}>
+                                                <LeftTotal>
+                                                    {
+                                                        this.getSellCurrencyWithFees()
+                                                    } {this.state.currency}
+                                                </LeftTotal>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                }
+
                             </RightColContainer>
                         </RightCol>
                     </MainRow>

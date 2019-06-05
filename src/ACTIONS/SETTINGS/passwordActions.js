@@ -18,7 +18,8 @@ export function passwordChange(isLoggedIn, values) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                dispatch(passwordChangeData(responseData))
+                if (responseData.status == 200)
+                    dispatch(passwordChangeData(responseData))
                 dispatch(removeLoader())
             })
             .catch(error => { })
@@ -60,7 +61,8 @@ export function TF_Enable(isLoggedIn) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                dispatch(QRData(responseData))
+                if (responseData.status == 200)
+                    dispatch(QRData(responseData))
                 dispatch(removeLoader())
             })
             .catch(error => { })
@@ -96,11 +98,15 @@ export function verifyTF(isLoggedIn, value) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                dispatch(verifyQRData(responseData));
-                dispatch(getProfileDataAction(isLoggedIn));
+                if (responseData.status == 200) {
+                    dispatch(verifyQRData(responseData));
+                    dispatch(getProfileDataAction(isLoggedIn));
+                }
                 dispatch(removeLoader())
             })
-            .catch(error => { })
+            .catch(error => {
+                dispatch(removeLoader())
+            })
     }
 }
 
@@ -131,11 +137,15 @@ export function TF_Disable(isLoggedIn) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                dispatch(disableAction(responseData));
-                dispatch(getProfileDataAction(isLoggedIn));
+                if (responseData.status == 200) {
+                    dispatch(disableAction(responseData));
+                    dispatch(getProfileDataAction(isLoggedIn));
+                }
                 dispatch(removeLoader())
             })
-            .catch(error => { })
+            .catch(error => {
+                dispatch(removeLoader())
+            })
     }
 }
 
@@ -166,12 +176,16 @@ export function kycFormAction(isLoggedIn, value) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                if ((value.front_doc !== undefined && value.front_doc !== "") || (value.ssn !== "" && value.ssn !== undefined))
-                    dispatch(getProfileDataAction(isLoggedIn))
-                dispatch(kycformData(responseData));
+                if (responseData.status == 200) {
+                    if ((value.front_doc !== undefined && value.front_doc !== "") || (value.ssn !== "" && value.ssn !== undefined))
+                        dispatch(getProfileDataAction(isLoggedIn))
+                    dispatch(kycformData(responseData));
+                }
                 dispatch(removeLoader())
             })
-            .catch(error => { })
+            .catch(error => {
+                dispatch(removeLoader())
+            })
     }
 }
 
@@ -202,10 +216,12 @@ export function kycDoc(isLoggedIn, value, type) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                var Data = {};
-                if (type === "front-doc") { Data["front_doc"] = responseData.data }
-                else { Data["back_doc"] = responseData.data }
-                dispatch(kycDocData(responseData));
+                if (responseData.status == 200) {
+                    var Data = {};
+                    if (type === "front-doc") { Data["front_doc"] = responseData.data }
+                    else { Data["back_doc"] = responseData.data }
+                    dispatch(kycDocData(responseData));
+                }
                 dispatch(removeLoader())
             })
             .catch(error => { })

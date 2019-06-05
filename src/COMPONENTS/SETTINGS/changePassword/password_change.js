@@ -707,7 +707,7 @@ class PasswordChange extends Component {
                             }
                         </Headtext>
                         <Buttondiv>
-                            <NewButton onClick={this.TF_AUTH.bind(this)}> {this.state.is_twofactor} AUTHENTICATOR</NewButton>
+                            <NewButton onClick={this.TF_AUTH.bind(this)}> {`${this.state.is_twofactor} AUTHENTICATOR`}</NewButton>
                         </Buttondiv>
                     </TFCol>
                 </TwofactorRow>
