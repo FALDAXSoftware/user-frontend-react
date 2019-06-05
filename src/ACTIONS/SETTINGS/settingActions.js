@@ -17,10 +17,13 @@ export function profileupdateAction(isLoggedIn, form) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                dispatch(profileupdatedData(responseData))
-                dispatch(getProfileDataAction(isLoggedIn))
+                if (responseData.status == 200) {
+                    dispatch(profileupdatedData(responseData))
+                    dispatch(getProfileDataAction(isLoggedIn))
+                }
+                dispatch(removeLoader());
             })
-            .catch(error => { })
+            .catch(error => { dispatch(removeLoader()); })
     }
 }
 
@@ -64,10 +67,13 @@ export const getProfileDataAction = (token) => dispatch => {
     })
         .then(response => response.json())
         .then((responseData) => {
-            dispatch(addprofileData(responseData))
+            if (responseData.status == 200) {
+                dispatch(addprofileData(responseData))
+
+            }
             dispatch(removeLoader());
         })
-        .catch(error => { })
+        .catch(error => { dispatch(removeLoader()); })
 
 }
 
@@ -100,9 +106,11 @@ export function removepicAction(isLoggedIn, form) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                dispatch(getProfileDataAction(isLoggedIn))
+                if (responseData.status == 200)
+                    dispatch(getProfileDataAction(isLoggedIn))
+                dispatch(removeLoader());
             })
-            .catch(error => { })
+            .catch(error => { dispatch(removeLoader()); })
     }
 
 }

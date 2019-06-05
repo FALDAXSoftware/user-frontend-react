@@ -188,9 +188,10 @@ class Acc_settings extends Component {
                     } else if (responseData.data[index].ip.split(":").length === 1) {
                         ip = responseData.data[index].ip
                     }
+                    let date_format = self.props.profileDetails.date_format ? self.props.profileDetails.date_format : "DD/MM/YYYY";
                     let temp = {
                         key: key,
-                        date: moment.utc(responseData.data[index].created_at).local().format("MMM DD YYYY, HH:mm:ss"),
+                        date: moment.utc(responseData.data[index].created_at).local().format(`${date_format}, HH:mm:ss`),
                         IP: ip,
                         Device: deviceType
                     };

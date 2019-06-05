@@ -396,7 +396,7 @@ class Conversion extends React.Component {
                         console.log(responseData);
                         if (responseData.status == 200) {
 
-                            this.handleTabChange("2");
+                            this.handleTabChange("1");
                             this.setState({ loader: false });
                             this.openNotificationWithIcon('success', "Success", responseData.message);
                         }

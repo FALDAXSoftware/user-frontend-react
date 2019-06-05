@@ -70,6 +70,7 @@ class WalletDetails extends Component {
             coinFee: []
         };
         this.changeCoins = this.changeCoins.bind(this);
+        this._walletCreate = this._walletCreate.bind(this);
     }
 
     /* Life Cycle Methods */
@@ -112,26 +113,31 @@ class WalletDetails extends Component {
                     })
                 }).then(response => response.json())
                     .then((responseData) => {
-                        let transDetails = null;
-                        let walletUserDetails = null;
-                        console.log(responseData)
-                        if (Object.keys(responseData.walletTransData).length > 0) {
-                            transDetails = responseData.walletTransData;
-                        }
+                        if (responseData.status == 200) {
+                            let transDetails = null;
+                            let walletUserDetails = null;
+                            console.log(responseData)
+                            if (Object.keys(responseData.walletTransData).length > 0) {
+                                transDetails = responseData.walletTransData;
+                            }
 
 
-                        if (Object.keys(responseData.walletUserData).length > 0) {
-                            walletUserDetails = responseData.walletUserData;
+                            if (Object.keys(responseData.walletUserData).length > 0) {
+                                walletUserDetails = responseData.walletUserData;
+                            }
+                            self.setState({
+                                walletUserData: walletUserDetails,
+                                currencyConv: responseData.currencyConversionData,
+                                defaultCoin: walletUserDetails.coin_code,
+                                walletDetails: transDetails,
+                                loader: false, coin_code: coin_name[1],
+                                coinFee: responseData.default_send_Coin_fee
+                            }, () => {
+                            });
                         }
-                        self.setState({
-                            walletUserData: walletUserDetails,
-                            currencyConv: responseData.currencyConversionData,
-                            defaultCoin: walletUserDetails.coin_code,
-                            walletDetails: transDetails,
-                            loader: false, coin_code: coin_name[1],
-                            coinFee: responseData.coinFee
-                        }, () => {
-                        });
+                        else {
+                            this.openNotificationWithIcon('error', responseData.status, responseData.err);
+                        }
                     })
                     .catch(error => {
                         console.log(error);
@@ -190,7 +196,10 @@ class WalletDetails extends Component {
             this.props.history.push(`/walletDetails?coinID${this.state.balanceFlag ? 1 : 0}=${value}`)
         })
     }
-    _walletCreate = (code) => {
+    _walletCreate() {
+        let code = this.state.walletUserData.coin;
+        console.log(code)
+        this.setState({ loader: true })
         fetch(API_URL + `/users/create-wallet/${code}`, {
             method: "get",
             headers: {
@@ -202,11 +211,13 @@ class WalletDetails extends Component {
             .then((responseData) => {
                 console.log(responseData)
                 if (responseData.status == 200) {
-
+                    this.props.history.push('/wallet');
+                    this.openNotificationWithIcon('success', 'Success', responseData.message);
                 }
                 else {
                     this.openNotificationWithIcon('error', 'Error', responseData.message);
                 }
+                this.setState({ loader: false });
             })
             .catch(error => {
                 console.log(error);
@@ -222,7 +233,7 @@ class WalletDetails extends Component {
             <ContactWrap>
                 <LoggedNavigation />
                 <GreyWrap>
-                    {console.log(walletUserData)}
+                    {console.log(this.props, walletUserData)}
                     {Object.keys(walletUserData).length > 0 ? walletUserData.flag == 0 ?
                         <ContainerContact2>
                             <HeaderWrap>
@@ -340,10 +351,11 @@ class WalletDetails extends Component {
                                 ?
                                 <ContainerContact2>
                                     <PendingWrap>
+                                        {console.log(walletUserData)}
                                         <BTC>{Object.keys(walletUserData).length > 0 ? walletUserData.coin_name : ""}</BTC>
                                         <PendingPara>
                                             <p>Your wallet is not created yet. Please click on the button below to create your wallet for {walletUserData.coin_name}.</p>
-                                            <WalletCreateButton onClick={this._walletCreate(walletUserData.coin)}>Create {walletUserData.coin_name} Wallet</WalletCreateButton>
+                                            <WalletCreateButton onClick={this._walletCreate}>Create {walletUserData.coin_name} Wallet</WalletCreateButton>
                                             <p>If you still have any issue , please feel free to contact us <a href="http://3.16.234.205/contact-us/">here</a>.</p>
                                         </PendingPara>
                                     </PendingWrap>
