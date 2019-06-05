@@ -7,15 +7,23 @@ import styled from 'styled-components';
 import { globalVariables } from 'Globals';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-let { API_URL } = globalVariables;
+let { API_URL, _AMAZONBUCKET } = globalVariables;
 /* CONSTANTS */
 const Search = Input.Search;
 
 /* Styled Components */
-const columns = [{
-    title: 'Accounts Referred',
-    dataIndex: 'email',
-}];
+const columns = [
+    {
+        title: '    ',
+        dataIndex: 'profile_pic',
+        render: text => <img width="40px" height="40px" src={`${_AMAZONBUCKET}${text}`} />
+    }, {
+        title: 'Name',
+        dataIndex: 'full_name',
+    }, {
+        title: 'Accounts Referred',
+        dataIndex: 'email',
+    }];
 const data = [{
     key: "1",
     referral: "test1@tesst.com"
@@ -172,6 +180,7 @@ class Referral extends Component {
             referralLink: null,
             copied: false,
             referredData: [],
+            referredCoin: [],
             searchCSS: ""
         }
     }
@@ -206,7 +215,7 @@ class Referral extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                this.setState({ referredData: responseData.data })
+                this.setState({ referredData: responseData.data, referredCoin: responseData.referredData })
             })
             .catch(error => { /* console.log(error) */ })
         if (this.props.profileDetails.referral_code !== undefined) {
@@ -271,8 +280,8 @@ class Referral extends Component {
                             </CopyToClipboard>
                         </Ref_leftcol>
                         <Ref_rightcol sm={24} md={6}>
-                            <Right_text>Total Earned</Right_text>
-                            <Right_value>3.0850 BTC</Right_value>
+                            <Right_text>Earned</Right_text>
+                            <Right_value></Right_value>
                         </Ref_rightcol>
                     </Row>
                 </Ref_div>
