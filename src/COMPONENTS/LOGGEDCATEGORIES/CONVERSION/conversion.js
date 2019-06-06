@@ -4,7 +4,7 @@ import { Row, Col/* , Select */, Radio, notification } from "antd";
 import { connect } from "react-redux"
 import SimpleReactValidator from 'simple-react-validator'
 /*Components  */
-import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
+import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import { globalVariables } from "Globals";
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 /* STYLED-COMPONENTS */

@@ -25,7 +25,7 @@ import DetailsTable from './detailstable';
 import { globalVariables } from 'Globals';
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 
-let { API_URL, _AMAZONBUCKET } = globalVariables;
+let { API_URL, _AMAZONBUCKET, WordpressSiteURL } = globalVariables;
 const Option = Select.Option;
 
 const ContainerContact = styled(Container)`
@@ -320,13 +320,11 @@ class WalletDetails extends Component {
                                 </CoinTable>
                             </TransTable>
                             {this.state.withdraw === true ?
-
                                 <WalletPopup coinFee={this.state.coinFee} coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="RECEIVE" comingCancel={(e) => this.comingCancel(e)} visible={this.state.withdraw} />
                                 :
                                 ""
                             }
-                            {this.state.send === true
-                                ?
+                            {this.state.send === true ?
                                 <WalletPopup coinFee={this.state.coinFee} coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="SEND" comingCancel={(e) => this.comingCancel(e)} visible={this.state.send} />
                                 :
                                 ""
@@ -343,7 +341,7 @@ class WalletDetails extends Component {
 
                                     <PendingPara>
                                         <p>Please wait for some time.As soon as your wallet is created , we'll let you know.</p>
-                                        <p>If you still have any issue , please feel free to contact us <a href="http://3.16.234.205/contact-us/">here</a>.</p>
+                                        <p>If you still have any issue , please feel free to contact us <a href={`${WordpressSiteURL} + /contact-us/`}>here</a>.</p>
                                     </PendingPara>
                                 </PendingWrap>
                             </ContainerContact2>
@@ -356,7 +354,7 @@ class WalletDetails extends Component {
                                         <PendingPara>
                                             <p>Your wallet is not created yet. Please click on the button below to create your wallet for {walletUserData.coin_name}.</p>
                                             <WalletCreateButton onClick={this._walletCreate}>Create {walletUserData.coin_name} Wallet</WalletCreateButton>
-                                            <p>If you still have any issue , please feel free to contact us <a href="http://3.16.234.205/contact-us/">here</a>.</p>
+                                            <p>If you still have any issue , please feel free to contact us <a href={`${WordpressSiteURL} + /contact-us/`}>here</a>.</p>
                                         </PendingPara>
                                     </PendingWrap>
                                 </ContainerContact2>

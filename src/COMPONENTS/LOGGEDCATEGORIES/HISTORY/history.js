@@ -119,6 +119,7 @@ class History extends Component {
             drop1Value: '',
             drop2Value: '',
             loader: false,
+            csvFields: []
         }
         this.historyResult = this.historyResult.bind(this);
         this.changeDate = this.changeDate.bind(this);
@@ -190,8 +191,31 @@ class History extends Component {
             }).then(response => response.json())
                 .then((responseData) => {
                     /*this.setState({myCoins:responseData});*/
-                    if (responseData.status === 200)
-                        this.setState({ historyData: responseData.data });
+                    console.log(responseData)
+                    if (responseData.status === 200) {
+                        let csvFields = [], self = this;
+                        if (responseData.data.length > 0)
+                            responseData.data.map(function (temp) {
+                                let obj = {};
+                                var coin = temp.symbol;
+                                var date = moment.utc(temp.created_at).local().format(`${self.props.profileData.date_format} HH:mm:ss`);
+                                var side = Number(temp.user_id) === self.props.profileData.id ? temp.side : temp.side === "Buy" ? "Sell" : "Buy";
+                                var filledPrice = temp.fill_price.toFixed(4);
+                                var amount = temp.quantity.toFixed(4);
+                                var fee = Number(temp.user_id) === self.props.profileData.id ? temp.user_fee.toFixed(4) : temp.requested_fee.toFixed(4);
+                                var volume = (temp.fill_price * temp.quantity).toFixed(4);
+
+                                obj['date'] = date;
+                                obj['side'] = side;
+                                obj['filled_price'] = filledPrice;
+                                obj['amount'] = amount;
+                                obj['fee'] = fee;
+                                obj['volume'] = volume;
+
+                                csvFields.push(obj);
+                            })
+                        this.setState({ historyData: responseData.data, csvFields });
+                    }
                     else
                         this.openNotificationWithIcon('error', "Error", responseData.err);
 
@@ -498,7 +522,7 @@ class History extends Component {
                                             format="YYYY-MM-DD"
                                         />
                                     </Datediv>
-                                    {this.state.historyData !== undefined ? this.state.historyData.length > 0 ? <EXPButton><CSVLink data={this.state.historyData}>EXPORT</CSVLink></EXPButton> : "" : ""}
+                                    {this.state.csvFields !== undefined ? this.state.csvFields.length > 0 ? <EXPButton><CSVLink data={this.state.csvFields}>EXPORT</CSVLink></EXPButton> : "" : ""}
                                 </Filter>
                                 <div style={{ paddingLeft: "15px", marginTop: "20px" }}>
                                     <CheckboxGroupS options={options} defaultValue={['SEND', 'RECEIVE', 'SELL', 'BUY']} onChange={this.onChangeCheck} />
@@ -526,16 +550,16 @@ class History extends Component {
                                                     {this.state.historyData.map(function (temp) {
                                                         var date = moment.utc(temp.created_at).local().format(`${self.props.profileData.date_format} HH:mm:ss`);
                                                         var side = Number(temp.user_id) === self.props.profileData.id ? temp.side : temp.side === "Buy" ? "Sell" : "Buy";
-                                                        var fee = Number(temp.user_id) === self.props.profileData.id ? temp.user_fee.toFixed(2) : temp.requested_fee.toFixed(2);
+                                                        var fee = Number(temp.user_id) === self.props.profileData.id ? temp.user_fee.toFixed(4) : temp.requested_fee.toFixed(4);
                                                         return (<tr>
                                                             <td>{temp.symbol}</td>
                                                             <td>{date}</td>
                                                             {console.log(side)}
                                                             <SideBuySell side={side === "Buy" ? true : false}>{side}</SideBuySell>
-                                                            <td>{temp.fill_price.toFixed(2)}</td>
-                                                            <td>{temp.quantity.toFixed(2)}</td>
+                                                            <td>{temp.fill_price.toFixed(4)}</td>
+                                                            <td>{temp.quantity.toFixed(4)}</td>
                                                             <td>{fee}</td>
-                                                            <td>{(temp.fill_price * temp.quantity).toFixed(2)}</td>
+                                                            <td>{(temp.fill_price * temp.quantity).toFixed(4)}</td>
                                                             {/* <td><Button onChange={() => self.repeatClick(temp)}>Repeat</Button></td> */}
                                                         </tr>);
                                                     })}
