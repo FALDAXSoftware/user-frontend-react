@@ -201,11 +201,11 @@ class LoggedNavigation extends Component {
             if (this.props.location.pathname.includes("trade")) {
                 this.setState({ selected: "2" })
             } else if (this.props.location.pathname.includes("wallet")) {
-                this.setState({ selected: "3" })
-            } else if (this.props.location.pathname.includes("dashboard")) {
+                this.setState({ selected: "2" })
+            } else if (this.props.location.pathname.includes("conversion")) {
                 this.setState({ selected: "1" })
             } else if (this.props.location.pathname.includes("history")) {
-                this.setState({ selected: "4" })
+                this.setState({ selected: "3" })
             }
         }
         if (this.props.theme !== undefined) {
@@ -353,10 +353,11 @@ class LoggedNavigation extends Component {
                     defaultSelectedKeys={['1']}
                     selectedKeys={this.state.selected}
                 >
-                    <Menuitem key="1" onClick={this.showComing}><NavLink className="Nav_selected" to="/dashboard">DASHBOARD</NavLink></Menuitem>
-                    <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem>
-                    <Menuitem key="3" onClick={this.showComing}><NavLink className="Nav_selected" to="/wallet">Wallet</NavLink></Menuitem>
-                    <Menuitem key="4" onClick={this.showComing}><NavLink className="Nav_selected" to="/history">HISTORY</NavLink></Menuitem>
+                    {/* <Menuitem key="1" onClick={this.showComing}><NavLink className="Nav_selected" to="/dashboard">DASHBOARD</NavLink></Menuitem> */}
+                    <Menuitem key="1"><NavLink className="Nav_selected" to="/conversion">CONVERSION</NavLink></Menuitem>
+                    {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
+                    <Menuitem key="2"><NavLink className="Nav_selected" to="/wallet">Wallet</NavLink></Menuitem>
+                    <Menuitem key="3"><NavLink className="Nav_selected" to="/history">HISTORY</NavLink></Menuitem>
                     {/* <Menu_item key="1" onClick={this.showComing}><LogNav>DASHBOARD</LogNav></Menu_item>
                     <Menu_item key="2" onClick={this.showComing}><LogNav>TRADE</LogNav></Menu_item>
                     <Menu_item key="3" onClick={this.showComing}><LogNav>Wallet</LogNav></Menu_item>
@@ -371,8 +372,9 @@ class LoggedNavigation extends Component {
                     <SideNav id="mySidenav2">
                         <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                         <LogoutStyle><Link to="/editProfile">PROFILE</Link></LogoutStyle>
-                        <span> <Link to="/dashboard">DASHBOARD</Link></span>
-                        <span onClick={this.tradeAccess}>TRADE</span>
+                        {/* <span> <Link to="/dashboard">DASHBOARD</Link></span> */}
+                        <span> <Link to="/conversion">CONVERSION</Link></span>
+                        {/* <span onClick={this.tradeAccess}>TRADE</span> */}
                         <span> <Link to="/wallet">WALLET</Link></span>
                         <span> <Link to="/history">HISTORY</Link></span>
                         <span><CarLink to="/careers">Careers</CarLink></span>

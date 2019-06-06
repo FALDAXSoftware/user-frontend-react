@@ -208,6 +208,7 @@ class KYCForm extends Component {
             if (props.kycData.status === 200) {
                 //this.openNotificationWithIcon("success","KYC",props.kycData.message)
                 this.props.kycformData();
+                console.log("KYC CHECK", this.state.showSSN);
                 this.props.next_step(1, null, this.state.showSSN);
             } else {
                 this.openNotificationWithIcon("error", "KYC", props.kycData.err)
@@ -250,6 +251,7 @@ class KYCForm extends Component {
                             mobile: responseData.data.phone_number,
                             phoneCountry: arr
                         }, () => {
+                            console.log("KYC CHECK", responseData.data.country_code)
                             if (responseData.data.country_code == "US" || responseData.data.country_code == "CA")
                                 self.setState({
                                     showSSN: true
@@ -293,10 +295,11 @@ class KYCForm extends Component {
         arr.push(name2);
         let fields = this.state.fields;
         fields['country_code'] = name2.toUpperCase();
+        console.log("KYC CHECK", name2)
         if (name2 === 'us' || name2 === 'ca')
             this.setState({ fields, phoneCountry: arr, countrychange: true, showSSN: true });
         else
-            this.setState({ fields, phoneCountry: arr, countrychange: true });
+            this.setState({ fields, phoneCountry: arr, countrychange: true, showSSN: false });
     }
 
     /* 

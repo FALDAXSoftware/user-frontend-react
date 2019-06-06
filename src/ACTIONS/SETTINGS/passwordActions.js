@@ -18,8 +18,7 @@ export function passwordChange(isLoggedIn, values) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                if (responseData.status == 200)
-                    dispatch(passwordChangeData(responseData))
+                dispatch(passwordChangeData(responseData))
                 dispatch(removeLoader())
             })
             .catch(error => { })
@@ -98,8 +97,10 @@ export function verifyTF(isLoggedIn, value) {
         })
             .then(response => response.json())
             .then((responseData) => {
+                dispatch(verifyQRData(responseData));
+
                 if (responseData.status == 200) {
-                    dispatch(verifyQRData(responseData));
+
                     dispatch(getProfileDataAction(isLoggedIn));
                 }
                 dispatch(removeLoader())

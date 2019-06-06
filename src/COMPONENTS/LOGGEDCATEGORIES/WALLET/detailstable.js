@@ -10,15 +10,24 @@ import { TableHeader, TableContent, ScrollTableContent } from "STYLED-COMPONENTS
 import { Head, SubHead, Col1 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
 
 const TableContentRide = styled(TableContent)`
->tbody>tr:nth-of-type(even)
-{
-    background-color:${props => props.theme.mode === "dark" ? "" : "white"};
-}
->tbody>tr>td
-{
-    border-top: 1px solid #ddd;
-    word-break:break-all;
-}
+    height:100%;
+    table
+    {
+        height:100%;
+        tbody
+        {
+            height:100%;
+        }
+    }
+    >tbody>tr:nth-of-type(even)
+    {
+        background-color:${props => props.theme.mode === "dark" ? "" : "white"};
+    }
+    >tbody>tr>td
+    {
+        border-top: 1px solid #ddd;
+        word-break:break-all;
+    }
 `
 export const OTwrap = styled.div`
     @media(max-width:991px)
@@ -57,7 +66,7 @@ const NDF = styled.td`
     font-weight: 600;
     font-size: 17px;
     color: ${props => props.theme.mode === "dark" ? "white" : "black"};
-    padding-top: 80px !important;
+    
     font-family: Open Sans;
 `
 const menu = (
@@ -88,11 +97,11 @@ class DetailsTable extends React.Component {
         }
     }
     componentDidMount() {
-        if(this.props.wallet!==null)
-        if (this.props.wallet.length > 0)
-            this.setState({
-                walletDetails: this.props.wallet
-            });
+        if (this.props.wallet !== null)
+            if (this.props.wallet.length > 0)
+                this.setState({
+                    walletDetails: this.props.wallet
+                });
     }
 
     /* 

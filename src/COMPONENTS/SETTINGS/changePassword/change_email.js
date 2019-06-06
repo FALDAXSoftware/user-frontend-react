@@ -134,6 +134,24 @@ const EmailDN = styled.p`
     font-weight:600;
     color:${props => props.theme.mode === "dark" ? "white" : ""};
 `
+const Description = styled.p`
+color:${props => props.theme.mode == "dark" ? "white" : ""};
+`
+const VerifyModal = styled(Modal)`
+    
+    .ant-modal-content
+    {
+        background-color:${props => props.theme.mode == "dark" ? "#041222" : ""};
+        .ant-modal-header
+        {
+            background:${props => props.theme.mode == "dark" ? "#041222" : ""};
+            .ant-modal-title
+            {
+                color:${props => props.theme.mode == "dark" ? "white" : ""};
+            }
+        }
+    }
+`
 
 class ChangeEmail extends Component {
     constructor(props) {
@@ -338,14 +356,14 @@ class ChangeEmail extends Component {
                             <NewButton onClick={this.changeEmail.bind(this)}>Update Email</NewButton>
                         </ButtonDiv>
                         {isShowOTP &&
-                            <Modal
+                            <VerifyModal
                                 closable={false}
                                 title="Verify Email Address"
                                 visible={isShowOTP}
                                 footer={null}
                             >
-                                <p> We sent a one-time use verification code to <a href={`mailto:${fields['oldEmail']}`}></a>.
-                                     Please enter the code in the box below to complete the verification.</p>
+                                <Description> We sent a one-time use verification code to <a href={`mailto:${fields['oldEmail']}`}></a>.
+                                     Please enter the code in the box below to complete the verification.</Description>
                                 <NewP>
                                     <InputLabel>Verification Code</InputLabel>
                                     <div>
@@ -357,7 +375,7 @@ class ChangeEmail extends Component {
                                 <ButtonDiv>
                                     <NewButton onClick={this.verifyEmail.bind(this)}>Verify</NewButton>
                                 </ButtonDiv>
-                            </Modal>
+                            </VerifyModal>
                         }
                     </ChangeCol>
                 </ChangeRow>

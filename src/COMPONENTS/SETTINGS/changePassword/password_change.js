@@ -330,7 +330,8 @@ class PasswordChange extends Component {
             otp_msg: null,
             percent: "",
             stroke: '',
-            confPass: ""
+            confPass: "",
+            verify_otp: ""
         }
     }
     static propTypes = {
@@ -433,7 +434,7 @@ class PasswordChange extends Component {
                 }
                 if (value.new_password === '' || value.new_password === null || value.new_password === undefined) {
                     document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
-                    this.setState({ confirmPass_msg: "confirm password is required." })
+                    this.setState({ confirmPass_msg: "Confirm password is required." })
                 }
                 if (value.confirm_password === '' || value.confirm_password === null || value.confirm_password === undefined) {
                     document.querySelectorAll(".newchange_msg")[0].style.display = "block";
@@ -476,6 +477,17 @@ class PasswordChange extends Component {
         //         document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
         //     }
         // }
+        if (field === "current_password") {
+            if (value.trim() !== "") {
+                document.querySelector("#passchange_icon_success").style.display = "none"
+                document.querySelector("#passchange_icon_fail").style.display = "none"
+                document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
+            }
+            else {
+                document.querySelectorAll(".oldchange_msg")[0].style.display = "block";
+                this.setState({ current_msg: "Old password is required." })
+            }
+        }
         if (field === "new_password") {
             password = value;
             if (this.state.confPass !== undefined) {
@@ -567,7 +579,7 @@ class PasswordChange extends Component {
         if (field === "otp") {
             var re = /^\b[a-zA-Z0-9]{6}\b|\b[a-zA-Z0-9]{6}\b/;
             var bool = re.test(value);
-            if (value !== "") {
+            if (value.trim() !== "") {
                 if (bool === true) {
                     this.setState({ otpIcon: true })
                     document.querySelector("#otp_success").style.display = "inline-block"
@@ -578,13 +590,14 @@ class PasswordChange extends Component {
                     document.querySelector("#otp_success").style.display = "none"
                     document.querySelector("#otp_fail").style.display = "inline-block"
                     document.querySelectorAll(".MSG_OTP")[0].style.display = "block";
-                    this.setState({ otp_msg: "Otp should have 6 characters." })
+                    this.setState({ otp_msg: "*Otp should have 6 characters." })
                 }
             } else {
                 this.setState({ otpIcon: false })
                 document.querySelector("#otp_success").style.display = "none"
                 document.querySelector("#otp_fail").style.display = "none"
-                document.querySelectorAll(".MSG_OTP")[0].style.display = "none";
+                document.querySelectorAll(".MSG_OTP")[0].style.display = "block";
+                this.setState({ otp_msg: "*Otp is required." })
             }
         }
     }
@@ -596,6 +609,7 @@ class PasswordChange extends Component {
 
     OTPfield(e) {
         this.setState({ verify_otp: e.target.value })
+        this.changeOTP(e.target.value, "otp")
     }
 
     /* 
@@ -606,7 +620,10 @@ class PasswordChange extends Component {
     finalEnable() {
         let value = {};
         value["otp"] = this.state.verify_otp;
-        this.props.verifyTF(this.props.isLoggedIn, value)
+        if (this.state.otpIcon == true)
+            this.props.verifyTF(this.props.isLoggedIn, value)
+        else
+            this.changeOTP(this.state.verify_otp, "otp")
     }
 
     /* 

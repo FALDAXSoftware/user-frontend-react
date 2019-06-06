@@ -441,7 +441,7 @@ class WalletPopup extends Component {
                                         </TotDiv>
                                     </Rediv>
                                     <SendWrap>
-                                        <SendButton onClick={this.sendSubmit}>SEND {this.props.coin_code}</SendButton>
+                                        <SendButton onClick={this.sendSubmit}>{`SEND ${this.props.coin_code}`}</SendButton>
                                     </SendWrap>
                                 </ModalWrap>}
                     </WalletModal>
