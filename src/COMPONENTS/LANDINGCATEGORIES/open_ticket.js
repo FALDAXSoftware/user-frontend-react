@@ -15,8 +15,9 @@ import HubspotForm from 'react-hubspot-form'
 let API_URL = globalVariables.API_URL;
 
 export const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"};
+    background-color:white;
     border-radius:5px;
+    padding-top:30px;
     padding-right:120px;
     padding-left:120px;
     padding-bottom:70px;
@@ -37,7 +38,7 @@ const TicketTitle = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode==="dark" ? "white" : "black"};
+  color:black;
   &:before {
     content: '';
     width: calc(50% - 170px);

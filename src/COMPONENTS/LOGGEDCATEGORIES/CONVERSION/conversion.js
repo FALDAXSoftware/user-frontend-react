@@ -31,8 +31,8 @@ class Conversion extends React.Component {
             sellCryptoInput: 0,
             sellCurrencyInput: 0,
             includeFees: true,
-            krakenFees: 0.2,
-            faldaxFees: 0.3,
+            krakenFees: 0,
+            faldaxFees: 0,
             loader: false,
         }
         io = this.props.io
@@ -136,7 +136,7 @@ class Conversion extends React.Component {
             .then(response => response.json())
             .then((responseData) => {
 
-                this.setState({ cryptoList: responseData.data })
+                this.setState({ cryptoList: responseData.data, krakenFees: responseData.kraken_fees, faldaxFees: responseData.faldax_fees })
             })
             .catch(error => {
             })

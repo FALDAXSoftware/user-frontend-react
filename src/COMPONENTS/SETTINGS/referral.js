@@ -6,6 +6,7 @@ import { Input, Col, Table, Row, notification, Select, Button } from 'antd';
 import styled from 'styled-components';
 import { globalVariables } from 'Globals';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader"
 
 let { API_URL, _AMAZONBUCKET } = globalVariables;
 /* CONSTANTS */
@@ -234,7 +235,7 @@ const RefTable = styled(Table)`
     min-width:600px;
     & .ant-table-tbody>tr:hover>td
     {
-        background-color:${props => props.theme.mode === "dark" ? "#041422" : ""};
+        background-color:${props => props.theme.mode === "dark" ? "transparent" : "transparent"};
     }
     .ant-empty-description
     {
@@ -253,14 +254,20 @@ class Referral extends Component {
             coinSelected: "",
             perCoinEarned: "",
             totalEarned: 0,
-            leftOutRef: 0
+            leftOutRef: 0,
+            loader: false,
         },
             this.coinsEarned = this.coinsEarned.bind(this);
+        this.collectRefCoins = this.collectRefCoins.bind(this);
+        this.getReferralData = this.getReferralData.bind(this);
     }
     /* Life-Cycle Methods */
 
-    componentWillReceiveProps(props, newProps) {
-        console.log(props, newProps)
+    componentWillReceiveProps(props) {
+        console.log(this.props, props);
+        if (this.props !== props) {
+            this.getReferralData();
+        }
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme === false)
@@ -271,7 +278,7 @@ class Referral extends Component {
         }
     }
     componentDidMount() {
-        let { profileDetails } = this.props
+
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme === false)
@@ -280,6 +287,14 @@ class Referral extends Component {
                     this.setState({ searchCSS: "INPUT_search", referTable: "referral-table-night" })
             }
         }
+        this.getReferralData();
+        if (this.props.profileDetails.referral_code !== undefined) {
+            this.setState({ referralLink: "https//dev.faldax.com/signup?refID=" + this.props.profileDetails.referral_code })
+        }
+    }
+    getReferralData() {
+        let { profileDetails } = this.props
+        this.setState({ loader: true });
         fetch(`${API_URL}/users/referredUsers`, {
             method: "get",
             headers: {
@@ -294,32 +309,46 @@ class Referral extends Component {
                     console.log(profileDetails.fiat);
                     let fiat = profileDetails.fiat
                     let fields = [];
-                    let fields2 = [];
                     let sum = 0;
                     let sum2 = 0;
                     responseData.referredData.map(function (temp) {
                         console.log(temp);
+                        //Converting amount into currency.
                         let fiatAmt = parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
+                        //Sum of all fiatAmt.
                         sum = sum + parseFloat(fiatAmt.toFixed(4));
+
+                        //Object Taken for fields for dropdown
                         let obj = {
                             coin_name: temp.coin_name,
-                            amount: temp.amount
+                            amount: temp.amount,
                         };
-                        console.log(fields, obj)
+
+                        console.log(fields, obj);
+
+                        //first time obj is pushed in fields
                         if (fields.length == 0) {
                             fields.push(obj);
                         }
-                        else
-                        {
-                            let flag=false;
-                            fields.map(function (temp2) {
-                                console.log(temp2.coin_name, obj.coin_name,obj,fields)
+                        else {
+                            let flag = false;
+                            let sum3 = 0;
+                            let index = "";
+                            //map for fields to remove duplicates
+                            fields.map(function (temp2, index) {
+
+                                console.log(temp2, obj.coin_name, obj, fields);
+
                                 if (temp2.coin_name == obj.coin_name) {
-                                    flag=true;
+                                    flag = true;
+                                    console.log("DONE", fields[index].amount, obj.amount);
+                                    fields[index].amount = fields[index].amount + obj.amount;
+                                    console.log("DONE", fields[index].amount, obj.amount);
                                 }
+
                             })
-                            if(flag==false)
-                            {
+                            console.log(sum3)
+                            if (flag == false) {
                                 fields.push(obj);
                             }
                         }
@@ -332,23 +361,23 @@ class Referral extends Component {
 
                     })
                     console.log(sum2, fields)
-                    this.setState({ referredData: responseData.data, referredCoin: fields, totalEarned: sum.toFixed(4), leftOutRef: sum2.toFixed(4) })
+                    this.setState({ referredData: responseData.data, referredCoin: fields, totalEarned: sum.toFixed(4), leftOutRef: sum2.toFixed(4), loader: false })
                 }
             })
-            .catch(error => { /* console.log(error) */ })
-        if (this.props.profileDetails.referral_code !== undefined) {
-            this.setState({ referralLink: "https//dev.faldax.com/signup?refID=" + this.props.profileDetails.referral_code })
-        }
+            .catch(error => {
+                this.setState({ loader: false });
+                /* console.log(error) */
+            })
     }
-
     /* 
         Page: /editProfile --> Referral
         It is called for custom notifications.
     */
 
-    openNotificationWithIcon = (type) => {
+    openNotificationWithIcon = (type, msg, desc) => {
         notification[type]({
-            message: 'Referral Code Copied to Clipboard',
+            message: msg,
+            description: desc,
             duration: 2
         });
     };
@@ -368,7 +397,7 @@ class Referral extends Component {
             // Copy to the clipboard
             document.execCommand('copy');
         };
-        this.openNotificationWithIcon('success');
+        this.openNotificationWithIcon('success', 'Success', "Referral Code Copied to Clipboard");
     }
     coinsEarned(coin) {
         console.log(coin);
@@ -382,6 +411,32 @@ class Referral extends Component {
             coinSelected: coin,
             perCoinEarned: coinAmt
         })
+    }
+    collectRefCoins() {
+        this.setState({ loader: true });
+        fetch(`${API_URL}/collect-referral`, {
+            method: "get",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        }).then(response => response.json())
+            .then((responseData) => {
+                if (responseData.status == 200) {
+                    this.getReferralData();
+                    this.openNotificationWithIcon('success', 'Success', responseData.message);
+
+                }
+                else {
+                    this.openNotificationWithIcon('error', 'Error', responseData.message);
+
+                }
+                this.setState({ loader: false });
+            })
+            .catch(error => { /* console.log(error) */
+                this.setState({ loader: false });
+            })
     }
     render() {
         const { referralLink, referTable, referredData } = this.state;
@@ -410,9 +465,9 @@ class Referral extends Component {
                             </CopyToClipboard>
                         </Ref_leftcol>
                         <Ref_rightcol sm={24} md={6}>
-                            <Right_text>Total Earned</Right_text>
+                            <Right_text>Collect Earnings</Right_text>
                             <Right_value>{this.state.leftOutRef} {this.props.profileDetails.fiat}</Right_value>
-                            <CollectButton>Collect</CollectButton>
+                            <CollectButton onClick={this.collectRefCoins}>Collect</CollectButton>
                         </Ref_rightcol>
                     </Row>
                 </Ref_div>
@@ -457,7 +512,9 @@ class Referral extends Component {
                         />
                     </div>
                 </Ref_acc>
+                {(this.state.loader === true || this.props.loader === true) ? <FaldaxLoader /> : ""}
             </ParentWrap>
+
         );
     }
 }
