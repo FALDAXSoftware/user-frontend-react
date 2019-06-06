@@ -3,21 +3,21 @@ export const globalVariables = {
     GOOGLE_SITE_KEY: "6Lcy2qEUAAAAAKZb48HgTmF9sxI1v4CFq5OrMsXo",
     _AMAZONBUCKET: "https://s3.us-east-2.amazonaws.com/production-static-asset/",
 
-    WordpressSiteURL: "http://3.16.234.205",
+    WordpressSiteURL: "https://www.faldax.com",
 
     tvChartURL: "/chart",
 
     //API_URL: 'http://18.191.87.133:8084', //Live URL
 
-    API_URL: 'http://192.168.0.213:1337', //Mansi's URL
+    //API_URL: 'http://192.168.0.213:1337', //Mansi's URL
 
-    //API_URL: 'https://2de0fb93.ngrok.io', //Kalpit's Public URL
+    API_URL: 'http://192.168.2.224:1337', //Kalpit Local URL
 
     //API_URL: 'http://192.168.3.32:1337', //Krina Local URL
 
     //API_URL: 'http://192.168.0.93:1337'
 
-    //API_URL: 'https://dev-backend.faldax.com'
+    // API_URL: 'https://dev-backend.faldax.com'
 
     //API_URL: 'https://prod-backend.faldax.com',
 
