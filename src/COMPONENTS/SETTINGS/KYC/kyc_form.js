@@ -469,7 +469,7 @@ class KYCForm extends Component {
                                             onPhoneNumberChange={(a, b, c) => this.changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
                                     }
                                 </PhoneDiv>
-                                {this.validator.message('phone_number', this.state.mobile, 'required|min:5|max:15', 'text-danger-validation', {
+                                {this.validator.message('phone_number', this.state.mobile, 'required|mobileVal|min:5|max:15', 'text-danger-validation', {
                                     required: "Mobile No. field is required.",
                                     min: "Mobile No. should have min. 5 characters.",
                                     max: "Mobile No. should have max. 15 characters."

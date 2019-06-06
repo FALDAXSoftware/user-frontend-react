@@ -241,9 +241,11 @@ class WalletPopup extends Component {
         // Copy to clipboard example
         document.querySelectorAll(".ant-input-search-button")[0].onclick = function () {
             // Select the content
-            document.querySelectorAll(".receive_add > input")[0].select();
-            // Copy to the clipboard
-            document.execCommand('copy');
+            if (document.querySelectorAll(".receive_add > input")[0]) {
+                document.querySelectorAll(".receive_add > input")[0].select();
+                // Copy to the clipboard
+                document.execCommand('copy');
+            }
         };
         this.openNotificationWithIcon('success', "Copied", "Address Copied to Clipboard");
     }
@@ -280,6 +282,7 @@ class WalletPopup extends Component {
         notification[type]({
             message: head,
             description: desc,
+            duration: 6
         });
     };
 
@@ -433,7 +436,7 @@ class WalletPopup extends Component {
                                         {/* </Sec_wrap> */}
                                         {console.log(this.props.coinFee)}
                                         <TotDiv>
-                                            <Fee><b>Fee:</b> {this.props.coinFee ? this.props.coinFee : 0}</Fee>
+                                            <Fee><b>Fee: </b> {this.props.coinFee ? `${this.props.coinFee} %` : 0}</Fee>
                                             <TotPay><b>Total Payout:</b> {subtotal} {this.props.coin_code}</TotPay>
                                         </TotDiv>
                                     </Rediv>

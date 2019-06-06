@@ -235,7 +235,7 @@ const RefTable = styled(Table)`
     min-width:600px;
     & .ant-table-tbody>tr:hover>td
     {
-        background-color:${props => props.theme.mode === "dark" ? "#041422" : ""};
+        background-color:${props => props.theme.mode === "dark" ? "transparent" : "transparent"};
     }
     .ant-empty-description
     {
@@ -255,7 +255,7 @@ class Referral extends Component {
             perCoinEarned: "",
             totalEarned: 0,
             leftOutRef: 0,
-            loader:false,
+            loader: false,
         },
             this.coinsEarned = this.coinsEarned.bind(this);
         this.collectRefCoins = this.collectRefCoins.bind(this);
@@ -263,8 +263,11 @@ class Referral extends Component {
     }
     /* Life-Cycle Methods */
 
-    componentWillReceiveProps(props, newProps) {
-        console.log(props, newProps)
+    componentWillReceiveProps(props) {
+        console.log(this.props, props);
+        if (this.props !== props) {
+            this.getReferralData();
+        }
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme === false)
@@ -291,7 +294,7 @@ class Referral extends Component {
     }
     getReferralData() {
         let { profileDetails } = this.props
-        this.setState({loader:true});
+        this.setState({ loader: true });
         fetch(`${API_URL}/users/referredUsers`, {
             method: "get",
             headers: {
@@ -358,12 +361,12 @@ class Referral extends Component {
 
                     })
                     console.log(sum2, fields)
-                    this.setState({ referredData: responseData.data, referredCoin: fields, totalEarned: sum.toFixed(4), leftOutRef: sum2.toFixed(4),loader:false })
+                    this.setState({ referredData: responseData.data, referredCoin: fields, totalEarned: sum.toFixed(4), leftOutRef: sum2.toFixed(4), loader: false })
                 }
             })
-            .catch(error => { 
-                this.setState({loader:false});
-                /* console.log(error) */ 
+            .catch(error => {
+                this.setState({ loader: false });
+                /* console.log(error) */
             })
     }
     /* 
@@ -410,7 +413,7 @@ class Referral extends Component {
         })
     }
     collectRefCoins() {
-        this.setState({loader:true});
+        this.setState({ loader: true });
         fetch(`${API_URL}/collect-referral`, {
             method: "get",
             headers: {
@@ -423,11 +426,16 @@ class Referral extends Component {
                 if (responseData.status == 200) {
                     this.getReferralData();
                     this.openNotificationWithIcon('success', 'Success', responseData.message);
-                    this.setState({loader:false});
+
                 }
+                else {
+                    this.openNotificationWithIcon('error', 'Error', responseData.message);
+
+                }
+                this.setState({ loader: false });
             })
             .catch(error => { /* console.log(error) */
-                this.setState({loader:false}); 
+                this.setState({ loader: false });
             })
     }
     render() {
@@ -457,7 +465,7 @@ class Referral extends Component {
                             </CopyToClipboard>
                         </Ref_leftcol>
                         <Ref_rightcol sm={24} md={6}>
-                            <Right_text>Total Earned</Right_text>
+                            <Right_text>Collect Earnings</Right_text>
                             <Right_value>{this.state.leftOutRef} {this.props.profileDetails.fiat}</Right_value>
                             <CollectButton onClick={this.collectRefCoins}>Collect</CollectButton>
                         </Ref_rightcol>
@@ -506,7 +514,7 @@ class Referral extends Component {
                 </Ref_acc>
                 {(this.state.loader === true || this.props.loader === true) ? <FaldaxLoader /> : ""}
             </ParentWrap>
-            
+
         );
     }
 }
