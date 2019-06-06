@@ -11,7 +11,7 @@ export const globalVariables = {
 
     // API_URL: 'http://192.168.0.213:1337', //Mansi's URL
 
-    API_URL: 'https://2de0fb93.ngrok.io/', //Kalpit's Public URL
+    API_URL: 'https://2de0fb93.ngrok.io', //Kalpit's Public URL
 
     //API_URL: 'http://192.168.3.32:1337', //Krina Local URL
 
