@@ -504,7 +504,7 @@ class PasswordChange extends Component {
                     this.setState({ confirmPass_msg: "Password does not match." })
                 }
             }
-            var re = /^(?=.*[0-9])(?=.*[!@#$%_])[a-zA-Z0-9!@#$%_]{8,60}$/;
+            var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%_])[A-Za-z\d!@#$%_]{8,60}$/;
             var bool = re.test(value);
             var numb = /^\d+$/, letters = /^[A-Za-z]+$/, alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
             if (numb.test(value) || letters.test(value)) { this.setState({ stroke: "red", percent: 20 }) }
