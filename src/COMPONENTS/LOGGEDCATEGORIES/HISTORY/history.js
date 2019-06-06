@@ -170,34 +170,36 @@ class History extends Component {
     */
 
     historyResult() {
-        console.log(this.state)
-        this.setState({ loader: true })
-        let url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}`;
-        if (this.state.toDate === "" && this.state.toDate === "") {
-            url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}`
-        }
-        if (this.state.drop1Value !== '' && this.state.drop1Value !== '') {
-            url = url + '&symbol=' + this.state.drop1Value + '-' + this.state.drop2Value
-        }
-        fetch(url, {
-            method: "get",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: "Bearer " + this.props.isLoggedIn
+        let { drop1Value, drop2Value } = this.state;
+        if (drop1Value !== null && drop2Value !== null) {
+            this.setState({ loader: true })
+            let url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}`;
+            if (this.state.toDate === "" && this.state.toDate === "") {
+                url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}`
             }
-        }).then(response => response.json())
-            .then((responseData) => {
-                /*this.setState({myCoins:responseData});*/
-                if (responseData.status === 200)
-                    this.setState({ historyData: responseData.data });
-                else
-                    this.openNotificationWithIcon('error', "Error", responseData.err);
+            if (this.state.drop1Value !== '' && this.state.drop1Value !== '') {
+                url = url + '&symbol=' + this.state.drop1Value + '-' + this.state.drop2Value
+            }
+            fetch(url, {
+                method: "get",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer " + this.props.isLoggedIn
+                }
+            }).then(response => response.json())
+                .then((responseData) => {
+                    /*this.setState({myCoins:responseData});*/
+                    if (responseData.status === 200)
+                        this.setState({ historyData: responseData.data });
+                    else
+                        this.openNotificationWithIcon('error', "Error", responseData.err);
 
-                this.setState({ loader: false })
-            })
-            .catch(error => {
-            })
+                    this.setState({ loader: false })
+                })
+                .catch(error => {
+                })
+        }
     }
 
     /* 
@@ -308,12 +310,21 @@ class History extends Component {
                 break;
             }
         }
-        this.setState({
-            drop2List: coinList,
-            drop1Value: value
-        }, () => {
-            self.historyResult();
-        });
+        if (this.state.drop2Value !== "")
+            this.setState({
+                drop2List: coinList,
+                drop1Value: value
+            }, () => {
+                self.historyResult();
+            });
+        else
+            this.setState({
+                drop2List: coinList,
+                drop1Value: value,
+                drop2Value: null
+            }, () => {
+                self.historyResult();
+            });
     }
 
     /* 
@@ -331,13 +342,21 @@ class History extends Component {
                 break;
             }
         }
-        this.setState({
-            drop1List: coinList,
-            drop2Value: value
-
-        }, () => {
-            self.historyResult();
-        });
+        if (this.state.drop1Value !== "")
+            this.setState({
+                drop1List: coinList,
+                drop2Value: value
+            }, () => {
+                self.historyResult();
+            });
+        else
+            this.setState({
+                drop1List: coinList,
+                drop2Value: value,
+                drop1Value: null
+            }, () => {
+                self.historyResult();
+            });
     }
 
     /* 

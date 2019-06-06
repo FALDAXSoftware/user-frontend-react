@@ -11,12 +11,14 @@ export const TicketContainer = styled(Container)`
 `
 export const TicketDiv = styled(ProfileDiv)`
     background-color:transparent;
+    padding-top:30px;
 `
 export const WholeWrap = styled.div`
     padding-top: 50px;
 `
 export const TicketWrap = styled(Row)`
     border-radius: 10px;
+    border: ${props => props.theme.mode == "dark" ? "1px solid white" : ""};
     background-color: ${props => props.theme.mode === "dark" ? "#041422" : "rgb( 255, 255, 255 )"};
     box-shadow: 0px 2px 7px 0px rgba(51, 51, 51, 0.16);
     padding:40px;
