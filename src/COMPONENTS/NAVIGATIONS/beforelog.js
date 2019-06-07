@@ -31,7 +31,7 @@ export const Exchange = styled.div`
     }
 `
 const LoginText = styled.span`
-    border-left: 1px solid #f0f0f0;
+    //border-left: 1px solid #f0f0f0;
     font-size: 13px;
     font-family: "Open sans";
     color:${props => props.theme.mode === "dark" ? "white" : "rgb( 40, 37, 40 )"};

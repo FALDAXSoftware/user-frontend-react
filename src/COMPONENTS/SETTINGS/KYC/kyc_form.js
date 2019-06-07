@@ -133,6 +133,7 @@ class KYCForm extends Component {
             kycData: null,
             mobile: '',
             displayCountry: false,
+            loader: false,
             fields: {
                 first_name: '',
                 last_name: '',
@@ -181,7 +182,7 @@ class KYCForm extends Component {
                 message: 'Mobile No. should have only numbers.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
                 rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
                     // check that it is a valid IP address and is not blacklisted
-                    var re = /^[0-9]*$/
+                    var re = /^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$/
                     var bool = re.test(String(val).toLowerCase());
                     return bool;
                 }
@@ -218,6 +219,7 @@ class KYCForm extends Component {
     }
     componentDidMount() {
         var self = this;
+        this.setState({ loader: true })
         fetch(API_URL + "/users/get-kyc-detail", {
             method: "get",
             headers: {
@@ -259,10 +261,12 @@ class KYCForm extends Component {
 
                         });
                     }
-                    this.setState({ fields: fields, kycData: responseData.data });
+                    this.setState({ fields: fields, kycData: responseData.data, loader: false });
                 }
             })
-            .catch(error => { })
+            .catch(error => {
+                this.setState({ loader: false })
+            })
     }
 
     /* 
@@ -472,10 +476,10 @@ class KYCForm extends Component {
                                             onPhoneNumberChange={(a, b, c) => this.changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
                                     }
                                 </PhoneDiv>
-                                {this.validator.message('phone_number', this.state.mobile, 'required|mobileVal|min:5|max:15', 'text-danger-validation', {
+                                {this.validator.message('phone_number', this.state.mobile, 'required|mobileVal|min:5|max:30', 'text-danger-validation', {
                                     required: "Mobile No. field is required.",
                                     min: "Mobile No. should have min. 5 characters.",
-                                    max: "Mobile No. should have max. 15 characters."
+                                    max: "Mobile No. should have max. 30 characters."
                                 })}
                             </Col>
                         </SixthRowkyc>
@@ -498,7 +502,7 @@ class KYCForm extends Component {
                         </Col>
                     </FifthRowkyc>
                 </RightColkyc>
-                {(this.props.loader === true) ?
+                {(this.state.loader === true) ?
                     <FaldaxLoader />
                     : ""
                 }
