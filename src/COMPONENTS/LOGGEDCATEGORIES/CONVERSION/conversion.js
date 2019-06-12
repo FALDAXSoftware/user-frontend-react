@@ -240,7 +240,7 @@ class Conversion extends React.Component {
         var self = this;
         if (self.state.includeFees) {
             this.setState({
-                buyCurrencyInput: (isNaN(self.state.buyCryptoInput) ? 0 : (self.state.buyCryptoInput) * self.state.askPrice)
+                buyCurrencyInput: parseFloat((isNaN(self.state.buyCryptoInput) ? 0 : (self.state.buyCryptoInput) * self.state.askPrice)).toFixed(6)
             })
         } else {
             let buyCurrencyInput = 0;
@@ -254,7 +254,7 @@ class Conversion extends React.Component {
                 buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.faldaxFees) / 100);
             }
             self.setState({
-                buyCurrencyInput: buyCurrencyInput
+                buyCurrencyInput: parseFloat(buyCurrencyInput).toFixed(6)
             })
         }
     }
@@ -267,7 +267,7 @@ class Conversion extends React.Component {
 
         // Add Faldax Fees
         buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.faldaxFees) / 100);
-        return (isNaN(buyCurrencyInput) ? 0 : buyCurrencyInput)
+        return parseFloat((isNaN(buyCurrencyInput) ? 0 : buyCurrencyInput)).toFixed(6)
     }
     getSellCurrencyWithFees() {
         var self = this;
@@ -278,7 +278,7 @@ class Conversion extends React.Component {
 
         // Add Faldax Fees
         sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.faldaxFees) / 100);
-        return (isNaN(sellCurrencyInput) ? 0 : sellCurrencyInput)
+        return parseFloat((isNaN(sellCurrencyInput) ? 0 : sellCurrencyInput)).toFixed(6)
     }
     onBuyCurrencyChange(e) {
         var self = this;
@@ -323,7 +323,7 @@ class Conversion extends React.Component {
         var self = this;
         if (self.state.includeFees === true) {
             self.setState({
-                sellCurrencyInput: (isNaN(self.state.sellCryptoInput) ? 0 : (self.state.sellCryptoInput * self.state.bidPrice))
+                sellCurrencyInput: parseFloat((isNaN(self.state.sellCryptoInput) ? 0 : (self.state.sellCryptoInput * self.state.bidPrice))).toFixed(6)
             })
         } else {
             let sellCurrencyInput = 0;
@@ -337,7 +337,7 @@ class Conversion extends React.Component {
                 sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.faldaxFees) / 100);
             }
             self.setState({
-                sellCurrencyInput: sellCurrencyInput
+                sellCurrencyInput: parseFloat(sellCurrencyInput).toFixed(6)
             })
         }
     }
@@ -505,9 +505,13 @@ class Conversion extends React.Component {
                                             {this.state.cryptoList && this.state.cryptoList.length > 0 &&
                                                 < ConversionDropDown defaultValue={this.state.crypto} onChange={this.handleCryptoChange}>
                                                     {
-                                                        this.state.cryptoList.map((element, index) => (
-                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
-                                                        ))
+                                                        this.state.cryptoList.map((element, index) => {
+                                                            if (element.coin != this.state.currency) {
+                                                                return (
+                                                                    <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                                )
+                                                            }
+                                                        })
                                                     }
 
 
@@ -679,7 +683,7 @@ class Conversion extends React.Component {
                                                 <RightSpan>{isNaN(this.state.buyCryptoInput) ? 0 : this.state.buyCryptoInput} {this.state.crypto}</RightSpan>
                                             </Col>
                                             <Col xs={12} style={{ textAlign: "right" }}>
-                                                <LeftSpan>{(isNaN(this.state.buyCryptoInput * this.state.askPrice) ? 0 : (this.state.buyCryptoInput * this.state.askPrice))} {this.state.currency}</LeftSpan>
+                                                <LeftSpan>{parseFloat((isNaN(this.state.buyCryptoInput * this.state.askPrice) ? 0 : (this.state.buyCryptoInput * this.state.askPrice))).toFixed(6)} {this.state.currency}</LeftSpan>
                                             </Col>
                                         </Row>
                                         <Row>
@@ -711,7 +715,7 @@ class Conversion extends React.Component {
                                                 <RightSpan>{isNaN(this.state.sellCryptoInput) ? 0 : this.state.sellCryptoInput} {this.state.crypto}</RightSpan>
                                             </Col>
                                             <Col xs={12} style={{ textAlign: "right" }}>
-                                                <LeftSpan>{(isNaN(this.state.sellCryptoInput * this.state.bidPrice) ? 0 : (this.state.sellCryptoInput * this.state.bidPrice))} {this.state.currency}</LeftSpan>
+                                                <LeftSpan>{parseFloat((isNaN(this.state.sellCryptoInput * this.state.bidPrice) ? 0 : (this.state.sellCryptoInput * this.state.bidPrice))).toFixed(6)} {this.state.currency}</LeftSpan>
                                             </Col>
                                         </Row>
                                         <Row>
