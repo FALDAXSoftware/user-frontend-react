@@ -10,24 +10,16 @@ import { TableHeader, TableContent, ScrollTableContent } from "STYLED-COMPONENTS
 import { Head, SubHead, Col1 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
 
 const TableContentRide = styled(TableContent)`
-    height:100%;
-    table
-    {
-        height:100%;
-        tbody
-        {
-            height:100%;
-        }
-    }
     >tbody>tr:nth-of-type(even)
-    {
-        background-color:${props => props.theme.mode === "dark" ? "" : "white"};
-    }
-    >tbody>tr>td
-    {
-        border-top: 1px solid #ddd;
-        word-break:break-all;
-    }
+{
+    background-color:${props => props.theme.mode === "dark" ? "" : "white"};
+}
+>tbody>tr>td
+{
+    border-top: 1px solid #ddd;
+    word-break:break-all;
+}
+
 `
 export const OTwrap = styled.div`
     @media(max-width:991px)
@@ -180,7 +172,7 @@ class DetailsTable extends React.Component {
                                         </Col1>
                                     );
                                 })
-                                    : <tr><NDF colspan="5" >No Data Found</NDF></tr> : ""}
+                                    : <tr style={{ height: "200px" }}><NDF colspan="5" >No Data Found</NDF></tr> : ""}
                             </tbody>
                         </TableContentRide>
                     </Scrollbars>
