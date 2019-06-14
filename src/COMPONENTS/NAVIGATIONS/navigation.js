@@ -510,7 +510,7 @@ class Navigation extends Component {
                             <a href={`${globalVariables.WordpressSiteURL}/news`}>News</a>
                             <a href={`${globalVariables.WordpressSiteURL}/contact-us`}>Contact</a>
                             <a href={`${globalVariables.WordpressSiteURL}/list-your-token`}>List Your Token</a>
-                            <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}>Exchancvbe</a>
+                            <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}>Exchange</a>
                             {/* <a onClick={this.showComing} href="#">Exchange</a> */}
                             {this.props.isLoggedIn ? <CarLink to="/careers">Careers</CarLink> : ""}
                             {/* <Why> Language </Why> */}

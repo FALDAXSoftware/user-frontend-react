@@ -419,3 +419,30 @@ export const WallTotal = styled(Total)`
         display:block;
     }
 `
+
+/* Wallet pending coins */
+
+export const PendingWrap = styled.div`
+    text-align:center;
+    padding-top:50px;
+`
+export const PendingPara = styled.div`
+    margin-top:20px;
+    font-size:20px;
+    color:${props => props.theme.mode=="dark"?"white":"#00000069"};
+    & p
+    {
+        margin-top:20px;
+    }
+
+`
+export const WalletCreateButton = styled.button`
+    color:white;
+    background-color:#1890ff;
+    border:none;
+    font-size:18px;
+    width:230px;
+    height:40px;
+    border-radius:10px;
+    cursor:pointer;
+`

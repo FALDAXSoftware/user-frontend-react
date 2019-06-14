@@ -119,6 +119,7 @@ class History extends Component {
             drop1Value: '',
             drop2Value: '',
             loader: false,
+            csvFields: []
         }
         this.historyResult = this.historyResult.bind(this);
         this.changeDate = this.changeDate.bind(this);
@@ -170,34 +171,59 @@ class History extends Component {
     */
 
     historyResult() {
-        console.log(this.state)
-        this.setState({ loader: true })
-        let url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}`;
-        if (this.state.toDate === "" && this.state.toDate === "") {
-            url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}`
-        }
-        if (this.state.drop1Value !== '' && this.state.drop1Value !== '') {
-            url = url + '&symbol=' + this.state.drop1Value + '-' + this.state.drop2Value
-        }
-        fetch(url, {
-            method: "get",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: "Bearer " + this.props.isLoggedIn
+        let { drop1Value, drop2Value } = this.state;
+        if (drop1Value !== null && drop2Value !== null) {
+            this.setState({ loader: true })
+            let url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}`;
+            if (this.state.toDate === "" && this.state.toDate === "") {
+                url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}`
             }
-        }).then(response => response.json())
-            .then((responseData) => {
-                /*this.setState({myCoins:responseData});*/
-                if (responseData.status === 200)
-                    this.setState({ historyData: responseData.data });
-                else
-                    this.openNotificationWithIcon('error', "Error", responseData.err);
+            if (this.state.drop1Value !== '' && this.state.drop1Value !== '') {
+                url = url + '&symbol=' + this.state.drop1Value + '-' + this.state.drop2Value
+            }
+            fetch(url, {
+                method: "get",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer " + this.props.isLoggedIn
+                }
+            }).then(response => response.json())
+                .then((responseData) => {
+                    /*this.setState({myCoins:responseData});*/
+                    // console.log(responseData)
+                    if (responseData.status === 200) {
+                        let csvFields = [], self = this;
+                        if (responseData.data.length > 0)
+                            responseData.data.map(function (temp) {
+                                let obj = {};
+                                var coin = temp.symbol;
+                                var date = moment.utc(temp.created_at).local().format(`${self.props.profileData.date_format} HH:mm:ss`);
+                                var side = Number(temp.user_id) === self.props.profileData.id ? temp.side : temp.side === "Buy" ? "Sell" : "Buy";
+                                var filledPrice = temp.fill_price.toFixed(4);
+                                var amount = temp.quantity.toFixed(4);
+                                var fee = Number(temp.user_id) === self.props.profileData.id ? temp.user_fee.toFixed(4) : temp.requested_fee.toFixed(4);
+                                var volume = (temp.fill_price * temp.quantity).toFixed(4);
 
-                this.setState({ loader: false })
-            })
-            .catch(error => {
-            })
+                                obj['date'] = date;
+                                obj['side'] = side;
+                                obj['filled_price'] = filledPrice;
+                                obj['amount'] = amount;
+                                obj['fee'] = fee;
+                                obj['volume'] = volume;
+
+                                csvFields.push(obj);
+                            })
+                        this.setState({ historyData: responseData.data, csvFields });
+                    }
+                    else
+                        this.openNotificationWithIcon('error', "Error", responseData.err);
+
+                    this.setState({ loader: false })
+                })
+                .catch(error => {
+                })
+        }
     }
 
     /* 
@@ -308,12 +334,21 @@ class History extends Component {
                 break;
             }
         }
-        this.setState({
-            drop2List: coinList,
-            drop1Value: value
-        }, () => {
-            self.historyResult();
-        });
+        if (this.state.drop2Value !== "")
+            this.setState({
+                drop2List: coinList,
+                drop1Value: value
+            }, () => {
+                self.historyResult();
+            });
+        else
+            this.setState({
+                drop2List: coinList,
+                drop1Value: value,
+                drop2Value: null
+            }, () => {
+                self.historyResult();
+            });
     }
 
     /* 
@@ -331,13 +366,21 @@ class History extends Component {
                 break;
             }
         }
-        this.setState({
-            drop1List: coinList,
-            drop2Value: value
-
-        }, () => {
-            self.historyResult();
-        });
+        if (this.state.drop1Value !== "")
+            this.setState({
+                drop1List: coinList,
+                drop2Value: value
+            }, () => {
+                self.historyResult();
+            });
+        else
+            this.setState({
+                drop1List: coinList,
+                drop2Value: value,
+                drop1Value: null
+            }, () => {
+                self.historyResult();
+            });
     }
 
     /* 
@@ -479,7 +522,7 @@ class History extends Component {
                                             format="YYYY-MM-DD"
                                         />
                                     </Datediv>
-                                    {this.state.historyData !== undefined ? this.state.historyData.length > 0 ? <EXPButton><CSVLink data={this.state.historyData}>EXPORT</CSVLink></EXPButton> : "" : ""}
+                                    {this.state.csvFields !== undefined ? this.state.csvFields.length > 0 ? <EXPButton><CSVLink data={this.state.csvFields}>EXPORT</CSVLink></EXPButton> : "" : ""}
                                 </Filter>
                                 <div style={{ paddingLeft: "15px", marginTop: "20px" }}>
                                     <CheckboxGroupS options={options} defaultValue={['SEND', 'RECEIVE', 'SELL', 'BUY']} onChange={this.onChangeCheck} />
@@ -507,16 +550,16 @@ class History extends Component {
                                                     {this.state.historyData.map(function (temp) {
                                                         var date = moment.utc(temp.created_at).local().format(`${self.props.profileData.date_format} HH:mm:ss`);
                                                         var side = Number(temp.user_id) === self.props.profileData.id ? temp.side : temp.side === "Buy" ? "Sell" : "Buy";
-                                                        var fee = Number(temp.user_id) === self.props.profileData.id ? temp.user_fee.toFixed(2) : temp.requested_fee.toFixed(2);
+                                                        var fee = Number(temp.user_id) === self.props.profileData.id ? temp.user_fee.toFixed(4) : temp.requested_fee.toFixed(4);
                                                         return (<tr>
                                                             <td>{temp.symbol}</td>
                                                             <td>{date}</td>
-                                                            {console.log(side)}
+                                                            {/* {console.log(side)} */}
                                                             <SideBuySell side={side === "Buy" ? true : false}>{side}</SideBuySell>
-                                                            <td>{temp.fill_price.toFixed(2)}</td>
-                                                            <td>{temp.quantity.toFixed(2)}</td>
+                                                            <td>{temp.fill_price.toFixed(4)}</td>
+                                                            <td>{temp.quantity.toFixed(4)}</td>
                                                             <td>{fee}</td>
-                                                            <td>{(temp.fill_price * temp.quantity).toFixed(2)}</td>
+                                                            <td>{(temp.fill_price * temp.quantity).toFixed(4)}</td>
                                                             {/* <td><Button onChange={() => self.repeatClick(temp)}>Repeat</Button></td> */}
                                                         </tr>);
                                                     })}

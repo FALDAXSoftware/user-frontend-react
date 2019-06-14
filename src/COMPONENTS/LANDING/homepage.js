@@ -290,7 +290,7 @@ export default class HomePage extends Component {
         <Layout>
           <Header_main {...this.props} />
           <Content_style>
-            {console.log("HOMEPAGE")}
+            {/* {console.log("HOMEPAGE")} */}
             <Home_first />
             <About />
             {/* <Home_second data={data} /> */}

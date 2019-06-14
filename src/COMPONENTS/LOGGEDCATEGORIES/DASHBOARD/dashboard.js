@@ -14,14 +14,14 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import LoggedNavigation from 'COMPONENTS/NAVIGATIONS/loggednavigation';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import DashGraph from "./dashgraph";
-/* import RiseTable from "./RiseTable"; */
+import RiseTable from "./risetable";
 import { globalVariables } from 'Globals';
 
 /*Styled-components*/
 import { ContactWrap, GreyWrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import { ContainerContact } from "STYLED-COMPONENTS/LOGGED_STYLE/historyStyle"
 import {
-    ActPortWrap, Lleft, Rright, Topic, ActDiv, ActTable, PortTable, HighLow, LeftHl, RightHl, Newsdiv, News, NewsList, List, ListSpan, Listp, Date, SpinSingle
+    ActPortWrap, Lleft, Rright, Topic, ActDiv, ActTable, PortTable, HighLow, LeftHl, RightHl, Newsdiv, News, NewsList, List, ListSpan, Listp, Date, SpinSingle, RiseFall
 } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle"
 
 let { API_URL } = globalVariables;
@@ -439,9 +439,9 @@ class Dashboard extends Component {
                                         </Col>
                                     </Row>
                                 </ActPortWrap>
-                                {/* <Rise_fall>
-                                    <RiseTable />
-                                </Rise_fall> */}
+                                <RiseFall>
+                                    <RiseTable isLoggedIn={this.props.isLoggedIn} />
+                                </RiseFall>
                                 <Newsdiv>
                                     <News>NEWS</News>
                                     <NewsList>

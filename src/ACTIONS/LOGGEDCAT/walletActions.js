@@ -7,28 +7,27 @@ let { API_URL } = globalVariables;
     Action : This action is called for wallet balance.
 */
 
-export function walletBal(isLoggedIn, currency = null) {
+export function walletBal(isLoggedIn) {
     return (dispatch) => {
-        dispatch(addLoader())
+        /* dispatch(addLoader()) */
         fetch(API_URL + "/wallet/balance", {
-            method: "post",
+            method: "get",
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
                 Authorization: "Bearer " + isLoggedIn
-            },
-            body: JSON.stringify({
-                currency: currency,
-            })
+            }
 
         })
             .then(response => response.json())
             .then((responseData) => {
-                /* this.setState({mywallet:responseData}); */
-                dispatch(walletData(responseData));
-                dispatch(removeLoader())
+                // console.log(responseData);
+                if (responseData.status == 200)
+                    dispatch(walletData(responseData));
+                dispatch(removeLoader());
             })
             .catch(error => {
+                dispatch(removeLoader());
             })
     }
 }
@@ -64,10 +63,12 @@ export function getAllCoins(isLoggedIn) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                /*  this.setState({myCoins:responseData}); */
-                dispatch(allCoinsData(responseData));
+                if (responseData.status == 200)
+                    dispatch(allCoinsData(responseData));
+                dispatch(removeLoader())
             })
             .catch(error => {
+                dispatch(removeLoader())
             })
     }
 }

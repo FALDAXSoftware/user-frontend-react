@@ -279,7 +279,7 @@ class PersonalDetails extends Component {
             fiatIcon: null,
             dateFIcon: null,
             remove_pic: false,
-            //fiat: "",
+            fiat: "",
             date_format: ""
         }
         this.handleProfile = this.handleProfile.bind(this);
@@ -326,12 +326,12 @@ class PersonalDetails extends Component {
         It is called when we change currency/FIAT in Personal Details form.
     */
 
-    /* onChangeFiat = (e) => {
+    onChangeFiat = (e) => {
         this.setState({
             fiat: e.target.value,
         });
         this.onChangeField(e.target.value, "fiat");
-    } */
+    }
 
 
     /* 
@@ -344,6 +344,7 @@ class PersonalDetails extends Component {
 
         var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
         this.setState({ Datedata: date })
+        // console.log(value, field)
         this.onChangeField(value, field);
     }
 
@@ -406,7 +407,7 @@ class PersonalDetails extends Component {
 
     removePic() {
         /* this.removeNotification("warning"); */
-        document.getElementById("file").value = "";
+        /* document.getElementById("file").value = ""; */
         if (this.state.profileImg !== _DEFAULTPROFILE) {
             this.setState({ remove_pic: true, profileImg: _DEFAULTPROFILE, profileImage: undefined })
         }
@@ -638,7 +639,7 @@ class PersonalDetails extends Component {
         this.props.form.validateFields((error, value) => {
             let dataDate = "";
             const profileData = new FormData();
-            if (error === null /* this.state.fiatIcon !== false  */ && this.state.dateFIcon !== false && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '' && this.props.profileDetails.country !== null) || ((this.state.countrySelected !== null && this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
+            if (error === null && this.state.fiatIcon !== false && this.state.dateFIcon !== false && this.state.firstIcon !== false && this.state.lastIcon !== false && this.state.countryIcon !== false && this.state.dobIcon !== false && this.state.street1Icon !== false && this.state.street2Icon !== false && this.state.postalIcon !== false && ((this.props.profileDetails.country !== undefined && this.props.profileDetails.country !== '' && this.props.profileDetails.country !== null) || ((this.state.countrySelected !== null && this.state.countrySelected !== undefined && this.state.countrySelected !== '')))) {
                 document.querySelectorAll(".first_msg")[0].style.display = "none";
                 document.querySelectorAll(".last_msg")[0].style.display = "none";
                 document.querySelectorAll(".country_msg")[0].style.display = "none";
@@ -677,10 +678,10 @@ class PersonalDetails extends Component {
                     profileData.append('street_address_2', value.street_address_2)
                 profileData.append('postal_code', number);
 
-                /* var fiat = this.state.fiat !== "" ? this.state.fiat : this.props.profileDetails.fiat; */
+                var fiat = this.state.fiat !== "" ? this.state.fiat : this.props.profileDetails.fiat;
                 var date_format = this.state.date_format !== "" ? this.state.date_format : this.props.profileDetails.date_format;
 
-                //profileData.append('fiat', fiat)
+                profileData.append('fiat', fiat)
                 profileData.append('date_format', date_format)
 
                 if (this.state.Datedata !== undefined)
@@ -691,6 +692,7 @@ class PersonalDetails extends Component {
                     profileData.append('profile_pic', this.state.profileImage)
                 }
                 this.props.profileupdateAction(this.props.isLoggedIn, profileData);
+
             } else {
                 this.openNotificationWithProfile("error", "Error", "Please complete all required details to continue")
             }
@@ -729,12 +731,12 @@ class PersonalDetails extends Component {
                 document.querySelectorAll(".postal_msg")[0].style.display = "block";
                 this.setState({ postalmsg: "Postal Code is required." })
             }
-            /* if (this.state.fiatIcon===false && this.props.profileDetails.fiat==="") {
+            if (this.state.fiatIcon === false && this.props.profileDetails.fiat === "") {
 
                 this.setState({ fiatIcon: false })
                 document.querySelectorAll(".fiat_msg")[0].style.display = "block";
                 this.setState({ fiatmsg: "currency is required." })
-            } */
+            }
             if (this.state.dateFIcon !== true && this.props.profileDetails.date_format === "") {
                 this.setState({ dateFIcon: false })
                 document.querySelectorAll(".df_msg")[0].style.display = "block";
@@ -834,7 +836,7 @@ class PersonalDetails extends Component {
                                         <PostalMsg className="postal_msg">{this.state.postalmsg}</PostalMsg>
                                     </Col>
                                 </FourthRow>
-                                {/* <Sixth_Row>
+                                <SixthRow>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                                         <FIAT>Default Currency*</FIAT>
                                         <RadioGroup onChange={this.onChangeFiat} value={this.state.fiat !== "" ? this.state.fiat : profileDetails.fiat}>
@@ -842,9 +844,9 @@ class PersonalDetails extends Component {
                                             <Radio value={"INR"}>INR</Radio>
                                             <Radio value={"EUR"}>EUR</Radio>
                                         </RadioGroup>
-                                        <FIAT_Msg className="fiat_msg">{this.state.fiatmsg}</FIAT_Msg>
+                                        <FIATMsg className="fiat_msg">{this.state.fiatmsg}</FIATMsg>
                                     </Col>
-                                </Sixth_Row> */}
+                                </SixthRow>
                                 <SixthRow>
                                     <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                                         <FIAT>Default Date Format*</FIAT>

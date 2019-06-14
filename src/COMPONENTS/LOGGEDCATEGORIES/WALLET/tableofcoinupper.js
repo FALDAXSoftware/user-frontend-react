@@ -152,24 +152,25 @@ class TableofCoin extends React.Component {
         }
         const onClick1 = ({ key }) => {
             var curr, sign;
-            if (key === 1) { curr = "INR"; sign = "\u20B9"; }
-            else if (key === 2) { curr = "USD"; sign = "$"; }
-            else if (key === 3) { curr = "EUR"; sign = "\u20AC"; }
-            this.setState({ drop1: curr, curr1: sign }, () => { me.props.currChange(`${curr},${me.state.drop2},${me.state.drop3}`) });
+            if (key == 1) { curr = "INR"; sign = "\u20B9"; }
+            else if (key == 2) { curr = "USD"; sign = "$"; }
+            else if (key == 3) { curr = "EUR"; sign = "\u20AC"; }
+            // console.log(key, curr)
+            this.setState({ drop1: curr, curr1: sign }, () => { /* me.props.currChange(`${curr},${me.state.drop2},${me.state.drop3}`) */ });
         };
         const onClick2 = ({ key }) => {
             var curr, sign;
-            if (key === 1) { curr = "INR"; sign = "\u20B9"; }
-            else if (key === 2) { curr = "USD"; sign = "$"; }
-            else if (key === 3) { curr = "EUR"; sign = "\u20AC"; }
-            this.setState({ drop2: curr, curr2: sign }, () => { me.props.currChange(`${me.state.drop1},${curr},${me.state.drop3}`) });
+            if (key == 1) { curr = "INR"; sign = "\u20B9"; }
+            else if (key == 2) { curr = "USD"; sign = "$"; }
+            else if (key == 3) { curr = "EUR"; sign = "\u20AC"; }
+            this.setState({ drop2: curr, curr2: sign }, () => { /* me.props.currChange(`${me.state.drop1},${curr},${me.state.drop3}`) */ });
         };
         const onClick3 = ({ key }) => {
             var curr, sign;
-            if (key === 1) { curr = "INR"; sign = "\u20B9"; }
-            else if (key === 2) { curr = "USD"; sign = "$"; }
-            else if (key === 3) { curr = "EUR"; sign = "\u20AC"; }
-            this.setState({ drop3: curr, curr3: sign }, () => { me.props.currChange(`${me.state.drop1},${me.state.drop2},${curr}`) });
+            if (key == 1) { curr = "INR"; sign = "\u20B9"; }
+            else if (key == 2) { curr = "USD"; sign = "$"; }
+            else if (key == 3) { curr = "EUR"; sign = "\u20AC"; }
+            this.setState({ drop3: curr, curr3: sign }, () => { /* me.props.currChange(`${me.state.drop1},${me.state.drop2},${curr}`) */ });
         };
         const menu1 = (
             <Menu onClick={onClick1}>
@@ -224,41 +225,63 @@ class TableofCoin extends React.Component {
                                     img = _AMAZONBUCKET + tableData[index].coin_icon
                                 else
                                     img = _AMAZONBUCKET + "coin/defualt_coin.png"
+
                                 let tableIndex = tableData[index]
+
+                                // console.log(tableIndex, me.props.type, me.state.drop1);
                                 return (
                                     <Col1>
 
                                         <td style={{ textAlign: "left" }}>
-                                            <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
+                                            <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin_code}`}>
                                                 <BitImg src={img} />
                                                 <BitText><Bit>{tableIndex.coin_name}</Bit><BitPrice>{<NumberFormat value={parseFloat(tableIndex.balance).toFixed(4)} displayType={'text'} thousandSeparator={true} />} {tableIndex.coin_code}</BitPrice></BitText>
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
-                                                {tableIndex[`${me.state.drop1}`] !== undefined ? <Price>{me.state.curr1}
-
-                                                    {<NumberFormat value={parseFloat(parseFloat(tableIndex[`${me.state.drop1}`]) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
-                                                </Price> : <Price>-</Price>}
+                                            <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin_code}`}>
+                                                {tableIndex.quote !== null && tableIndex.balance !== undefined ? tableIndex.quote[`${me.state.drop1}`].price !== undefined ?
+                                                    <Price>
+                                                        {me.state.curr1}
+                                                        {/* {console.log("HBDE", tableIndex.quote[`${me.state.drop1}`].price)} */}
+                                                        {<NumberFormat value={parseFloat(parseFloat(tableIndex.quote[`${me.state.drop1}`].price) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
+                                                    </Price>
+                                                    :
+                                                    <Price>-</Price>
+                                                    :
+                                                    <Price>-</Price>}
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
-                                                {tableIndex[`${me.state.drop2}`] !== undefined ? <Price>{me.state.curr2}
-
-                                                    {<NumberFormat value={parseFloat(parseFloat(tableIndex[`${me.state.drop2}`]) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
-                                                </Price> : <Price>-</Price>}
+                                            <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin_code}`}>
+                                                {tableIndex.quote !== null && tableIndex.balance !== undefined ? tableIndex.quote[`${me.state.drop2}`].price !== undefined ?
+                                                    <Price>
+                                                        {me.state.curr2}
+                                                        {/* {console.log("HBDE", tableIndex.quote[`${me.state.drop2}`].price)} */}
+                                                        {<NumberFormat value={parseFloat(parseFloat(tableIndex.quote[`${me.state.drop2}`].price) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
+                                                    </Price>
+                                                    :
+                                                    <Price>-</Price>
+                                                    :
+                                                    <Price>-</Price>
+                                                }
                                             </Link>
                                         </td>
-                                        <td><Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
-                                            {tableIndex[`${me.state.drop3}`] !== undefined ? <Price><span>{me.state.curr3}</span>
-
-                                                {<NumberFormat value={parseFloat(parseFloat(tableIndex[`${me.state.drop3}`]) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
-                                            </Price> : <Price>-</Price>}
-                                        </Link>
+                                        <td>
+                                            <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin_code}`}>
+                                                {tableIndex.quote !== null && tableIndex.balance !== undefined ? tableIndex.quote[`${me.state.drop3}`].price !== undefined ?
+                                                    <Price>
+                                                        {/* {console.log("HBDE", tableIndex.quote[`${me.state.drop3}`].price)} */}
+                                                        <span>{me.state.curr3}</span>
+                                                        {<NumberFormat value={parseFloat(parseFloat(tableIndex.quote[`${me.state.drop3}`].price) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
+                                                    </Price>
+                                                    : <Price>-</Price>
+                                                    : <Price>-</Price>
+                                                }
+                                            </Link>
                                         </td>
                                         <td>
-                                            <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin}`}>
+                                            <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin_code}`}>
                                                 <IconWrap>
                                                     <Icon type="right" />
                                                 </IconWrap>

@@ -138,6 +138,34 @@ const TotDiv = styled.div`
     width:100%;
     // width: 462px;
 `
+const WithrawMsg = styled.div`
+    font-size:20px;
+    font-family:"Open Sans";
+    text-align:center;
+    padding-top:50px;
+    & button:first-child
+    {
+        margin-right:10px;
+    }
+    & button:last-child
+    {
+        margin-left:10px;
+    }
+`
+const ConfirmDiv = styled.div`
+    text-align:center;
+    padding-top:50px;
+    .confirm
+    {
+        width:100px;
+        margin-right:10px;
+    }
+    .cancel
+    {
+        width:100px;
+        margin-left:10px;
+    }
+`
 class WalletPopup extends Component {
     constructor(props) {
         super(props);
@@ -154,7 +182,9 @@ class WalletPopup extends Component {
                 amount: 0,
                 destination_address: ""
             },
-            loader: false
+            loader: false,
+            withdrawFlag: false,
+            withdrawMsg: "Your Withdrawl request may take 24-28 hours to process due to its size. Do you wish to proceed?"
         }
         this.validator = new SimpleReactValidator({
             gtzero: {  // name the rule
@@ -171,6 +201,10 @@ class WalletPopup extends Component {
         });
         this.sendChange = this.sendChange.bind(this);
         this.sendSubmit = this.sendSubmit.bind(this);
+        this.comingCancel = this.comingCancel.bind(this);
+        this.confirmFunc = this.confirmFunc.bind(this);
+        this.cancelFunc = this.cancelFunc.bind(this);
+        this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
     }
 
     /* Life Cycle Methods */
@@ -178,6 +212,7 @@ class WalletPopup extends Component {
     componentDidMount() {
         if (this.props.title === "RECEIVE") {
             this.setState({ loader: true })
+            // console.log(this.props.coin_code)
             fetch(`${API_URL}/wallet/get-qr-code/${this.props.coin_code}`, {
                 method: "get",
                 headers: {
@@ -192,7 +227,7 @@ class WalletPopup extends Component {
 
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 })
         }
     }
@@ -206,9 +241,11 @@ class WalletPopup extends Component {
         // Copy to clipboard example
         document.querySelectorAll(".ant-input-search-button")[0].onclick = function () {
             // Select the content
-            document.querySelectorAll(".receive_add > input")[0].select();
-            // Copy to the clipboard
-            document.execCommand('copy');
+            if (document.querySelectorAll(".receive_add > input")[0]) {
+                document.querySelectorAll(".receive_add > input")[0].select();
+                // Copy to the clipboard
+                document.execCommand('copy');
+            }
         };
         this.openNotificationWithIcon('success', "Copied", "Address Copied to Clipboard");
     }
@@ -245,6 +282,7 @@ class WalletPopup extends Component {
         notification[type]({
             message: head,
             description: desc,
+            duration: 6
         });
     };
 
@@ -253,10 +291,14 @@ class WalletPopup extends Component {
         This method is called when we want to send the entered coin with right validations.
     */
 
-    sendSubmit() {
+    sendSubmit(confirmFlag) {
         if (this.validator.allValid()) {
             var values = this.state.sendFields;
             values["coin_code"] = this.props.coin_code;
+            // console.log(confirmFlag, confirmFlag)
+            if (confirmFlag == true)
+                values["confirm_for_wait"] = confirmFlag;
+            this.setState({ loader: true });
             fetch(API_URL + "/wallet/send", {
                 method: "post",
                 headers: {
@@ -267,14 +309,25 @@ class WalletPopup extends Component {
                 body: JSON.stringify(values)
             }).then(response => response.json())
                 .then((responseData) => {
+                    // console.log("SEND API", responseData)
                     if (responseData.status === 200) {
-                        this.openNotificationWithIcon("success", "Successfully Sent", responseData.message)
-                    } else {
-                        this.openNotificationWithIcon("warning", "Balance low", responseData.message)
+                        this.openNotificationWithIcon("success", "Successfully Sent", responseData.message);
+                        this.comingCancel();
                     }
+                    else if (responseData.status === 201) {
+                        this.setState({
+                            withdrawFlag: true,
+                            withdrawMsg: responseData.message
+                        });
+                    }
+                    else {
+                        this.openNotificationWithIcon("warning", "Error", responseData.message)
+                    }
+                    this.setState({ loader: false });
                 }).catch(error => {
                 })
         } else {
+            this.setState({ loader: false });
             this.validator.showMessages();
             this.forceUpdate();
         }
@@ -292,9 +345,23 @@ class WalletPopup extends Component {
         this.setState({ sendFields: fields });
     }
 
+    /* After confirming Button*/
+
+    confirmFunc() {
+        this.sendSubmit(true);
+        this.handleComing();
+    }
+    /* After Cancel Button*/
+    cancelFunc() {
+        // console.log(this)
+        let _this = this;
+        _this.openNotificationWithIcon("success", "Success", "Your transaction has been cancelled.");
+        _this.comingCancel();
+    }
+
     render() {
         let amount = Number(this.state.sendFields.amount);
-        let subtotal = amount + amount * ((this.props.coinFee[0].value) / (100));
+        let subtotal = amount + amount * ((this.props.coinFee) / (100));
 
         return (
             <div>
@@ -336,19 +403,28 @@ class WalletPopup extends Component {
                                 }
                             </ModalWrap>
                             :
-                            <ModalWrap>
-                                <Rediv>
-                                    <Label style={{ display: "block" }}>Destination Address</Label>
-                                    <WallInput value={this.state.sendFields.destination_address} name="destination_address" onChange={this.sendChange} />
-                                    {/* <Scan>Scan QR</Scan> */}
-                                    {this.validator.message('destination_address', this.state.sendFields.destination_address, 'required|alpha_num|min:15|max:120', 'text-danger-validation')}
-                                </Rediv>
-                                <Rediv>
-                                    <Label style={{ display: "block" }}>Amount</Label>
-                                    {/* <Sec_wrap> */}
-                                    <WallInput type="number" min="0" value={this.state.sendFields.amount} name="amount" onChange={this.sendChange} />
-                                    {this.validator.message('amount', this.state.sendFields.amount, 'required|gtzero|numeric', 'text-danger-validation')}
-                                    {/*  <RightInput />
+                            this.state.withdrawFlag == true ?
+                                <ModalWrap>
+                                    <WithrawMsg>{this.state.withdrawMsg}</WithrawMsg>
+                                    <ConfirmDiv>
+                                        <Button onClick={this.confirmFunc} className="confirm" size="large" type="primary">Confirm</Button>
+                                        <Button onClick={this.cancelFunc} className="cancel" size="large" type="primary">Cancel</Button>
+                                    </ConfirmDiv>
+                                </ModalWrap>
+                                :
+                                <ModalWrap>
+                                    <Rediv>
+                                        <Label style={{ display: "block" }}>Destination Address</Label>
+                                        <WallInput value={this.state.sendFields.destination_address} name="destination_address" onChange={this.sendChange} />
+                                        {/* <Scan>Scan QR</Scan> */}
+                                        {this.validator.message('destination_address', this.state.sendFields.destination_address, 'required|alpha_num|min:15|max:120', 'text-danger-validation')}
+                                    </Rediv>
+                                    <Rediv>
+                                        <Label style={{ display: "block" }}>Amount</Label>
+                                        {/* <Sec_wrap> */}
+                                        <WallInput type="number" min="0" value={this.state.sendFields.amount} name="amount" onChange={this.sendChange} />
+                                        {this.validator.message('amount', this.state.sendFields.amount, 'required|gtzero|numeric', 'text-danger-validation')}
+                                        {/*  <RightInput />
                                     <ButtonToolbarS>
                                         <DropdownButtonS title="USD" id="dropdown-size-medium">
                                             <MenuItem eventKey="1">Action</MenuItem>
@@ -357,16 +433,17 @@ class WalletPopup extends Component {
                                             <MenuItem eventKey="4">Separated link</MenuItem>
                                         </DropdownButtonS>
                                     </ButtonToolbarS> */}
-                                    {/* </Sec_wrap> */}
-                                    <TotDiv>
-                                        <Fee><b>Fee:</b> {this.props.coinFee ? this.props.coinFee[0].value : 0}</Fee>
-                                        <TotPay><b>Total Payout:</b> {subtotal} {this.props.coin_code}</TotPay>
-                                    </TotDiv>
-                                </Rediv>
-                                <SendWrap>
-                                    <SendButton onClick={this.sendSubmit}>SEND {this.props.coin_code}</SendButton>
-                                </SendWrap>
-                            </ModalWrap>}
+                                        {/* </Sec_wrap> */}
+                                        {/* {console.log(this.props.coinFee)} */}
+                                        <TotDiv>
+                                            <Fee><b>Fee: </b> {this.props.coinFee ? `${this.props.coinFee} %` : 0}</Fee>
+                                            <TotPay><b>Total Payout:</b> {subtotal} {this.props.coin_code}</TotPay>
+                                        </TotDiv>
+                                    </Rediv>
+                                    <SendWrap>
+                                        <SendButton onClick={this.sendSubmit}>{`SEND ${this.props.coin_code}`}</SendButton>
+                                    </SendWrap>
+                                </ModalWrap>}
                     </WalletModal>
                     : ""}
                 {(this.state.loader === true) ? <FaldaxLoader /> : ""}

@@ -150,6 +150,7 @@ class IDselect extends Component {
         return (
             <div>
                 <KYCTypeSelectRow>
+                    {/* {console.log("KYC CHECK", this.props.countryFlag)} */}
                     {this.props.countryFlag === true ?
                         <Row>
                             <SelectTitle md={{ span: 24 }}>

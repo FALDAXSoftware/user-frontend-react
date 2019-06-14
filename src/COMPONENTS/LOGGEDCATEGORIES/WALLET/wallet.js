@@ -87,29 +87,36 @@ class Wallet extends Component {
             searchedWallet: null,
             currencySeq: ['USD', 'EUR', 'INR']
         };
-        this.currChangeWallet = this.currChangeWallet.bind(this);
-        this.currChangeList = this.currChangeList.bind(this);
+        /*  this.currChangeWallet = this.currChangeWallet.bind(this);
+         this.currChangeList = this.currChangeList.bind(this); */
         this.searchChangeCoins = this.searchChangeCoins.bind(this);
         this.searchChangeWallet = this.searchChangeWallet.bind(this);
     }
 
     /* Life Cycle Methods */
     componentWillReceiveProps(props, newProps) {
-        var total = 0;
+        var total = 0, me = this;
         if (this.props.walletDetails !== null) {
+            // console.log(this.props.walletDetails);
             var tableData = this.props.walletDetails;
+            var FIAT = this.props.profileDetails.fiat;
             if (tableData !== undefined) {
-                Object.keys(tableData).map(function (index, key) {
-                    if (tableData[index].USD !== undefined)
-                        total = total + (tableData[index].USD * tableData[index].balance);
+                tableData.map(function (index, key) {
+                    // console.log(index.quote)
+                    if (index.quote !== null)
+                        if (index.quote[`${FIAT}`].price !== undefined && index.quote[`${FIAT}`].price !== null) {
+                            var fiat = me.props.profileDetails.fiat;
+                            total = total + (index.quote[`${fiat}`].price * index.balance);
+                        }
                 })
-                this.setState({ total });
+                // console.log(total)
             }
         }
+        this.setState({ total });
     }
     componentDidMount() {
-        this.props.walletBal(this.props.isLoggedIn, "USD,EUR,INR");
-        this.props.getAllCoins(this.props.isLoggedIn, "USD,EUR,INR");
+        this.props.walletBal(this.props.isLoggedIn);
+        this.props.getAllCoins(this.props.isLoggedIn);
     }
 
     /* 
@@ -171,36 +178,9 @@ class Wallet extends Component {
 
     }
 
-    /* 
-        Page: /wallet
-        not in use
-    */
-
-    /* totalCurr(total) {
-        this.setState({ total: total })
-    } */
-
-    /* 
-        Page: /wallet
-        This method is called to change the data in wallet page .
-    */
-
-    currChangeList(currency) {
-        this.props.getAllCoins(this.props.isLoggedIn, currency);
-        this.props.walletBal(this.props.isLoggedIn, currency);
-        var arr = currency.split(",");
-        this.setState({ currencySeq: arr })
-    }
-
-
-    currChangeWallet(currency) {
-        this.props.walletBal(this.props.isLoggedIn, currency);
-        this.props.getAllCoins(this.props.isLoggedIn, currency);
-        var arr = currency.split(",");
-        this.setState({ currencySeq: arr })
-    }
     render() {
         let { profileDetails } = this.props;
+        let FIAT = this.props.profileDetails.fiat;
         return (
             <ContactWrap>
                 <LoggedNavigation />
@@ -220,15 +200,17 @@ class Wallet extends Component {
                             </SearchCoin>
                             <Total>
                                 <Tot>Total:</Tot>
-                                <Money>${this.state.total !== null ? <NumberFormat value={parseFloat(this.state.total).toFixed(4)} displayType={'text'} thousandSeparator={true} /> : ""}</Money>
-                                <Currency>USD</Currency>
+                                {/* {console.log(this.state.total)} */}
+                                <Money>{FIAT !== "USD" ? FIAT !== "EUR" ? FIAT !== "INR" ? "" : "\u20B9" : "\u20AC" : "$"}{this.state.total !== null ? <NumberFormat value={parseFloat(this.state.total).toFixed(4)} displayType={'text'} thousandSeparator={true} /> : ""}</Money>
+                                <Currency>{FIAT}</Currency>
                             </Total>
                         </HeaderWrap>
                         <CoinTable>
                             <TableWrap>
+
                                 {
                                     this.props.walletDetails !== null ?
-                                        this.state.searchedWallet !== null ? <TableofCoinUpper noBalance={false} currencySeq={this.state.currencySeq} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.state.searchedWallet} /> : <TableofCoinUpper noBalance={false} currencySeq={this.state.currencySeq} currChange={(currency) => this.currChangeWallet(currency)} tableData={this.props.walletDetails} /> : ""
+                                        this.state.searchedWallet !== null ? <TableofCoinUpper noBalance={false} currencySeq={this.state.currencySeq} /* currChange={(currency) => this.currChangeWallet(currency)} */ tableData={this.state.searchedWallet} /> : <TableofCoinUpper type="wallet data" noBalance={false} currencySeq={this.state.currencySeq} /* currChange={(currency) => this.currChangeWallet(currency)}  */ tableData={this.props.walletDetails} /> : ""
                                 }
                             </TableWrap>
                         </CoinTable>
@@ -252,10 +234,11 @@ class Wallet extends Component {
                                 {/* {this.props.allCoins !== null ?
                                     (this.state.searchedCoins.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.state.searchedCoins} /> : (this.props.allCoins.data.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.props.allCoins.data} /> : ""))
                                     : ""} */}
+                                {/* {console.log(this.props.nowalletBalance)} */}
                                 {
                                     this.props.nowalletBalance !== null ?
-                                        this.state.searchedCoins !== null ? <TableofCoinUpper currencySeq={this.state.currencySeq} noBalance={true} currChange={(currency) => this.currChangeList(currency)} tableData={this.state.searchedCoins} />
-                                            : <TableofCoinUpper currencySeq={this.state.currencySeq} noBalance={true} currChange={(currency) => this.currChangeList(currency)} tableData={this.props.nowalletBalance} /> : ""
+                                        this.state.searchedCoins !== null ? <TableofCoinUpper currencySeq={this.state.currencySeq} noBalance={true} /* currChange={(currency) => this.currChangeList(currency)} */ tableData={this.state.searchedCoins} />
+                                            : <TableofCoinUpper type="no wallet data" currencySeq={this.state.currencySeq} noBalance={true} /* currChange={(currency) => this.currChangeList(currency)} */ tableData={this.props.nowalletBalance} /> : ""
                                 }
                             </TableWrap>
                         </CoinTable>
@@ -271,10 +254,10 @@ class Wallet extends Component {
     }
 }
 function mapStateToProps(state) {
-
+    // console.log(state)
     return ({
-        walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData.balanceWallet : null,
-        nowalletBalance: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData.nonBalanceWallet : null,
+        walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData : null,
+        nowalletBalance: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.nonBalanceData : null,
         allCoins: state.walletReducer.allCoinsData !== undefined ? state.walletReducer.allCoinsData : null,
         isLoggedIn: state.simpleReducer.isLoggedIn,
         loader: state.simpleReducer.loader ? state.simpleReducer.loader : false,
