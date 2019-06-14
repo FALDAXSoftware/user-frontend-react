@@ -242,7 +242,7 @@ export function resetAction(value) {
                 }
             })
             .catch(error => {
-                console.log(error)
+                // console.log(error)
             })
     }
 }

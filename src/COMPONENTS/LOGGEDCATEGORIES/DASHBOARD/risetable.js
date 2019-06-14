@@ -72,7 +72,7 @@ export default class RiseTable extends Component {
         };
     }
     componentDidMount() {
-        console.log(API_URL, this.props.isLoggedIn)
+        // console.log(API_URL, this.props.isLoggedIn)
         fetch(`${API_URL}/get-rising-falling-data`, {
             method: "get",
             headers: {
@@ -82,7 +82,7 @@ export default class RiseTable extends Component {
             }
         }).then(response => response.json())
             .then((responseData) => {
-                console.log("Ka dabra", responseData);
+                // console.log("Ka dabra", responseData);
                 /* let activityData = [];
                 if (responseData.status === 200) {
                     responseData.data.map(element => {

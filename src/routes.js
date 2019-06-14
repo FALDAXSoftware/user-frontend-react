@@ -88,7 +88,7 @@ export default class AppRouter extends Component {
     const { url } = this.props.match;
     return (
       <div>
-        {console.log("App.js")}
+        {/* {console.log("App.js")} */}
         {routes.map(singleRoute => {
           const { path, exact, ...otherProps } = singleRoute;
           return (

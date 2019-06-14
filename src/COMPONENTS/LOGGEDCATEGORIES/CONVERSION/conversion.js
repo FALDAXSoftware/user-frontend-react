@@ -181,7 +181,7 @@ class Conversion extends React.Component {
         });
     }
     handleTabChange(e) {
-        console.log("tab chnage ", e);
+        // console.log("tab chnage ", e);
         var self = this;
         this.setState({
             selectedTab: parseInt(e),
@@ -373,10 +373,10 @@ class Conversion extends React.Component {
     btnClicked() {
         var self = this;
         let { crypto, currency, selectedTab, includeFees, buyCryptoInput } = this.state
-        console.log("I am Clcicked", selectedTab, selectedTab === 1);
+        // console.log("I am Clcicked", selectedTab, selectedTab === 1);
         if (selectedTab == 1) {
             if (this.validator1.allValid()) {
-                console.log("I am in Buy Tab");
+                // console.log("I am in Buy Tab");
                 let fields = {};
                 fields['pair'] = `${crypto}-${currency}`;
                 fields['type'] = selectedTab == 1 ? "buy" : "sell";
@@ -393,7 +393,7 @@ class Conversion extends React.Component {
                     body: JSON.stringify(fields)
                 }).then(response => response.json())
                     .then((responseData) => {
-                        console.log(responseData);
+                        // console.log(responseData);
                         if (responseData.status == 200) {
 
                             this.handleTabChange("1");
@@ -407,7 +407,7 @@ class Conversion extends React.Component {
                         }
                     })
                     .catch(error => {
-                        console.log(error);
+                        // console.log(error);
                         this.setState({ loader: false });
                         this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
                     })
@@ -418,11 +418,11 @@ class Conversion extends React.Component {
                 this.forceUpdate();
             }
         }
-        console.log("out of 2", selectedTab)
+        // console.log("out of 2", selectedTab)
         if (selectedTab == 2) {
-            console.log("i m in 2")
+            // console.log("i m in 2")
             if (this.validator2.allValid()) {
-                console.log("I am in Sell Tab");
+                // console.log("I am in Sell Tab");
                 let fields = {};
                 fields['pair'] = `${crypto}-${currency}`;
                 fields['type'] = selectedTab == 1 ? "buy" : "sell";
@@ -439,7 +439,7 @@ class Conversion extends React.Component {
                     body: JSON.stringify(fields)
                 }).then(response => response.json())
                     .then((responseData) => {
-                        console.log(responseData);
+                        // console.log(responseData);
                         if (responseData.status == 200) {
                             this.handleTabChange("2");
                             this.openNotificationWithIcon('success', "Success", responseData.message);
@@ -451,13 +451,13 @@ class Conversion extends React.Component {
                         }
                     })
                     .catch(error => {
-                        console.log(error);
+                        // console.log(error);
                         this.setState({ loader: false });
                         this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
                     })
             }
             else {
-                console.log("I am in else")
+                // console.log("I am in else")
                 this.validator2.showMessages();
                 // rerender to show messages for the first time
                 this.forceUpdate();

@@ -191,7 +191,7 @@ class History extends Component {
             }).then(response => response.json())
                 .then((responseData) => {
                     /*this.setState({myCoins:responseData});*/
-                    console.log(responseData)
+                    // console.log(responseData)
                     if (responseData.status === 200) {
                         let csvFields = [], self = this;
                         if (responseData.data.length > 0)
@@ -554,7 +554,7 @@ class History extends Component {
                                                         return (<tr>
                                                             <td>{temp.symbol}</td>
                                                             <td>{date}</td>
-                                                            {console.log(side)}
+                                                            {/* {console.log(side)} */}
                                                             <SideBuySell side={side === "Buy" ? true : false}>{side}</SideBuySell>
                                                             <td>{temp.fill_price.toFixed(4)}</td>
                                                             <td>{temp.quantity.toFixed(4)}</td>

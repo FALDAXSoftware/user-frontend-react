@@ -209,7 +209,7 @@ class KYCForm extends Component {
             if (props.kycData.status === 200) {
                 //this.openNotificationWithIcon("success","KYC",props.kycData.message)
                 this.props.kycformData();
-                console.log("KYC CHECK", this.state.showSSN);
+                // console.log("KYC CHECK", this.state.showSSN);
                 this.props.next_step(1, null, this.state.showSSN);
             } else {
                 this.openNotificationWithIcon("error", "KYC", props.kycData.err)
@@ -253,7 +253,7 @@ class KYCForm extends Component {
                             mobile: responseData.data.phone_number,
                             phoneCountry: arr
                         }, () => {
-                            console.log("KYC CHECK", responseData.data.country_code)
+                            // console.log("KYC CHECK", responseData.data.country_code)
                             if (responseData.data.country_code == "US" || responseData.data.country_code == "CA")
                                 self.setState({
                                     showSSN: true
@@ -299,7 +299,7 @@ class KYCForm extends Component {
         arr.push(name2);
         let fields = this.state.fields;
         fields['country_code'] = name2.toUpperCase();
-        console.log("KYC CHECK", name2)
+        // console.log("KYC CHECK", name2)
         if (name2 === 'us' || name2 === 'ca')
             this.setState({ fields, phoneCountry: arr, countrychange: true, showSSN: true });
         else
@@ -464,15 +464,16 @@ class KYCForm extends Component {
                             }
                         </Col>
                     </FourthRowkyc>
-                    {console.log(this.state.phoneCountry, this.state.phoneCountry[0])}
+                    {/* {console.log(this.state.phoneCountry, this.state.phoneCountry[0])} */}
                     {(this.state.countrychange === true) ?
                         <SixthRowkyc>
                             <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
                                 <Postalkyc>Mobile No.*</Postalkyc>
                                 <PhoneDiv>
+                                    {/* {console.log(this.state.mobile, this.state.phoneCountry, this.state.phoneCountry[0])} */}
                                     {
                                         this.state.displayCountry &&
-                                        < IntlTelInputS value={this.state.mobile} allowDropdown={false} preferredCountries={[]} onlyCountries={this.state.phoneCountry} defaultCountry={this.state.phoneCountry[0]} separateDialCode={true}
+                                        < IntlTelInputS value={this.state.mobile} allowDropdown={false} preferredCountries={[]} onlyCountries={this.state.phoneCountry[0]!==null?this.state.phoneCountry:""} defaultCountry={this.state.phoneCountry[0]!==null?this.state.phoneCountry[0]:""} separateDialCode={true}
                                             onPhoneNumberChange={(a, b, c) => this.changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
                                     }
                                 </PhoneDiv>
