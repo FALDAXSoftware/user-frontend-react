@@ -344,7 +344,7 @@ class PersonalDetails extends Component {
 
         var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
         this.setState({ Datedata: date })
-        console.log(value, field)
+        // console.log(value, field)
         this.onChangeField(value, field);
     }
 

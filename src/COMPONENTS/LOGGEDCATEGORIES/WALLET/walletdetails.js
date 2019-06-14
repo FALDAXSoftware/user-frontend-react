@@ -80,7 +80,7 @@ class WalletDetails extends Component {
         if (this.props.walletDetails !== null) {
             var tableData = this.props.walletDetails.coins;
             if (tableData !== undefined) {
-                console.log(tableData);
+                // console.log(tableData);
                 Object.keys(tableData).map(function (index, key) {
                     if (tableData[index].USD !== undefined)
                         total = total + parseFloat(tableData[index].USD) * (tableData[index].balance);
@@ -116,7 +116,7 @@ class WalletDetails extends Component {
                         if (responseData.status == 200) {
                             let transDetails = null;
                             let walletUserDetails = null;
-                            console.log(responseData)
+                            // console.log(responseData)
                             if (Object.keys(responseData.walletTransData).length > 0) {
                                 transDetails = responseData.walletTransData;
                             }
@@ -140,7 +140,7 @@ class WalletDetails extends Component {
                         }
                     })
                     .catch(error => {
-                        console.log(error);
+                        // console.log(error);
                         this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
                         this.setState({ loader: false });
                     })
@@ -198,7 +198,7 @@ class WalletDetails extends Component {
     }
     _walletCreate() {
         let code = this.state.walletUserData.coin;
-        console.log(code)
+        // console.log(code)
         this.setState({ loader: true })
         fetch(API_URL + `/users/create-wallet/${code}`, {
             method: "get",
@@ -209,7 +209,7 @@ class WalletDetails extends Component {
             }
         }).then(response => response.json())
             .then((responseData) => {
-                console.log(responseData)
+                // console.log(responseData)
                 if (responseData.status == 200) {
                     this.props.history.push('/wallet');
                     this.openNotificationWithIcon('success', 'Success', responseData.message);
@@ -220,7 +220,7 @@ class WalletDetails extends Component {
                 this.setState({ loader: false });
             })
             .catch(error => {
-                console.log(error);
+                // console.log(error);
                 this.openNotificationWithIcon('error', 'Error', 'Something went wrong!!');
                 this.setState({ loader: false });
             })
@@ -233,7 +233,7 @@ class WalletDetails extends Component {
             <ContactWrap>
                 <LoggedNavigation />
                 <GreyWrap>
-                    {console.log(this.props, walletUserData)}
+                    {/* {console.log(this.props, walletUserData)} */}
                     {Object.keys(walletUserData).length > 0 ? walletUserData.flag == 0 ?
                         <ContainerContact2>
                             <HeaderWrap>
@@ -297,7 +297,7 @@ class WalletDetails extends Component {
                                                 <CryptImg><CoinImage src={((Object.keys(walletUserData).length > 0 && walletUserData.coin_icon !== null && walletUserData.coin_icon !== undefined) ? _AMAZONBUCKET + walletUserData.coin_icon : _AMAZONBUCKET + "coin/defualt_coin.png")} /></CryptImg>
                                                 <CryptAmt>
                                                     <BTCAmt>
-                                                        {console.log(walletUserData)}
+                                                        {/* {console.log(walletUserData)} */}
                                                         {Object.keys(walletUserData).length > 0 ? <NumberFormat value={walletUserData.balance.toFixed(4)} displayType={'text'} thousandSeparator={true} /> : ''}
                                                         <BTC>{Object.keys(walletUserData).length > 0 ? walletUserData.coin_code : ""}</BTC></BTCAmt>
                                                     {walletUserData.length > 0 ? <FIATAmt>{FIAT !== "USD" ? FIAT !== "EUR" ? FIAT !== "INR" ? "" : "\u20B9" : "\u20AC" : "$"} {parseFloat(currencyConv.quote['USD'].price * walletUserData.balance).toFixed(4)}<AMT>{FIAT}</AMT></FIATAmt> : ""}
@@ -335,7 +335,7 @@ class WalletDetails extends Component {
                             ?
                             <ContainerContact2>
                                 <PendingWrap>
-                                    {console.log(walletUserData)}
+                                    {/* {console.log(walletUserData)} */}
 
                                     {Object.keys(walletUserData).length > 0 ? <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}><img width="35" style={{ marginRight: "5px" }} src={`${_AMAZONBUCKET}${walletUserData.coin_icon}`} /><BTC>{walletUserData.coin_name} </BTC></div> : ""}
 
@@ -349,7 +349,7 @@ class WalletDetails extends Component {
                                 ?
                                 <ContainerContact2>
                                     <PendingWrap>
-                                        {console.log(walletUserData)}
+                                        {/* {console.log(walletUserData)} */}
                                         <BTC>{Object.keys(walletUserData).length > 0 ? walletUserData.coin_name : ""}</BTC>
                                         <PendingPara>
                                             <p>Your wallet is not created yet. Please click on the button below to create your wallet for {walletUserData.coin_name}.</p>

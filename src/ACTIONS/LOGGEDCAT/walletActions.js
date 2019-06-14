@@ -21,7 +21,7 @@ export function walletBal(isLoggedIn) {
         })
             .then(response => response.json())
             .then((responseData) => {
-                console.log(responseData);
+                // console.log(responseData);
                 if (responseData.status == 200)
                     dispatch(walletData(responseData));
                 dispatch(removeLoader());

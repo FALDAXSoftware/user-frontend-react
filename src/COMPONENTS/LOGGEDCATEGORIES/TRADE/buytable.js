@@ -173,7 +173,7 @@ class BuyTABLE extends Component {
 
     updateData(data) {
         let self = this;
-        console.log("buyrow------------", data);
+        // console.log("buyrow------------", data);
         const row = [];
         let sum = 0;
         for (let index = 0; index < data.length; index++) {
@@ -188,7 +188,7 @@ class BuyTABLE extends Component {
                 const internalElement = row[internalIndex];
                 if (internalElement.bid === element.price) {
                     row[internalIndex].amount += element.quantity;
-                    console.log(element, internalElement);
+                    // console.log(element, internalElement);
 
                     if (internalElement.user_id === self.props.profileDetails.id) {
                         row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;

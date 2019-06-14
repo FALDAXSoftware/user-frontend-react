@@ -102,7 +102,7 @@ class ContactUs extends Component {
                 this.setState({ contact: responseData.data, loader: false });
             })
             .catch(error => {
-                console.log(error)
+                // console.log(error)
             })
     }
 
