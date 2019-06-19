@@ -264,7 +264,7 @@ class Referral extends Component {
     /* Life-Cycle Methods */
 
     componentWillReceiveProps(props) {
-        console.log(this.props, props);
+        // console.log(this.props, props);
         if (this.props !== props) {
             this.getReferralData();
         }
@@ -306,13 +306,13 @@ class Referral extends Component {
             .then(response => response.json())
             .then((responseData) => {
                 if (responseData.status == 200) {
-                    console.log(profileDetails.fiat);
+                    // console.log(profileDetails.fiat);
                     let fiat = profileDetails.fiat
                     let fields = [];
                     let sum = 0;
                     let sum2 = 0;
                     responseData.referredData.map(function (temp) {
-                        console.log(temp);
+                        // console.log(temp);
                         //Converting amount into currency.
                         let fiatAmt = parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
                         //Sum of all fiatAmt.
@@ -324,7 +324,7 @@ class Referral extends Component {
                             amount: temp.amount,
                         };
 
-                        console.log(fields, obj);
+                        // console.log(fields, obj);
 
                         //first time obj is pushed in fields
                         if (fields.length == 0) {
@@ -337,30 +337,30 @@ class Referral extends Component {
                             //map for fields to remove duplicates
                             fields.map(function (temp2, index) {
 
-                                console.log(temp2, obj.coin_name, obj, fields);
+                                // console.log(temp2, obj.coin_name, obj, fields);
 
                                 if (temp2.coin_name == obj.coin_name) {
                                     flag = true;
-                                    console.log("DONE", fields[index].amount, obj.amount);
+                                    // console.log("DONE", fields[index].amount, obj.amount);
                                     fields[index].amount = fields[index].amount + obj.amount;
-                                    console.log("DONE", fields[index].amount, obj.amount);
+                                    // console.log("DONE", fields[index].amount, obj.amount);
                                 }
 
                             })
-                            console.log(sum3)
+                            // console.log(sum3)
                             if (flag == false) {
                                 fields.push(obj);
                             }
                         }
                     })
                     responseData.leftReferredData.map(function (temp) {
-                        console.log(temp);
+                        // console.log(temp);
                         let fiatAmt = parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
-                        console.log(fiatAmt);
+                        // console.log(fiatAmt);
                         sum2 = sum2 + parseFloat(fiatAmt.toFixed(4));
 
                     })
-                    console.log(sum2, fields)
+                    // console.log(sum2, fields)
                     this.setState({ referredData: responseData.data, referredCoin: fields, totalEarned: sum.toFixed(4), leftOutRef: sum2.toFixed(4), loader: false })
                 }
             })
@@ -400,7 +400,7 @@ class Referral extends Component {
         this.openNotificationWithIcon('success', 'Success', "Referral Code Copied to Clipboard");
     }
     coinsEarned(coin) {
-        console.log(coin);
+        // console.log(coin);
         var coinAmt = 0;
         this.state.referredCoin.map(function (temp) {
             if (temp.coin_name == coin) {

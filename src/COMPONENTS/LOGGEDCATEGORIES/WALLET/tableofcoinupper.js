@@ -155,7 +155,7 @@ class TableofCoin extends React.Component {
             if (key == 1) { curr = "INR"; sign = "\u20B9"; }
             else if (key == 2) { curr = "USD"; sign = "$"; }
             else if (key == 3) { curr = "EUR"; sign = "\u20AC"; }
-            console.log(key, curr)
+            // console.log(key, curr)
             this.setState({ drop1: curr, curr1: sign }, () => { /* me.props.currChange(`${curr},${me.state.drop2},${me.state.drop3}`) */ });
         };
         const onClick2 = ({ key }) => {
@@ -228,7 +228,7 @@ class TableofCoin extends React.Component {
 
                                 let tableIndex = tableData[index]
 
-                                console.log(tableIndex, me.props.type, me.state.drop1);
+                                // console.log(tableIndex, me.props.type, me.state.drop1);
                                 return (
                                     <Col1>
 
@@ -243,7 +243,7 @@ class TableofCoin extends React.Component {
                                                 {tableIndex.quote !== null && tableIndex.balance !== undefined ? tableIndex.quote[`${me.state.drop1}`].price !== undefined ?
                                                     <Price>
                                                         {me.state.curr1}
-                                                        {console.log("HBDE", tableIndex.quote[`${me.state.drop1}`].price)}
+                                                        {/* {console.log("HBDE", tableIndex.quote[`${me.state.drop1}`].price)} */}
                                                         {<NumberFormat value={parseFloat(parseFloat(tableIndex.quote[`${me.state.drop1}`].price) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
                                                     </Price>
                                                     :
@@ -257,7 +257,7 @@ class TableofCoin extends React.Component {
                                                 {tableIndex.quote !== null && tableIndex.balance !== undefined ? tableIndex.quote[`${me.state.drop2}`].price !== undefined ?
                                                     <Price>
                                                         {me.state.curr2}
-                                                        {console.log("HBDE", tableIndex.quote[`${me.state.drop2}`].price)}
+                                                        {/* {console.log("HBDE", tableIndex.quote[`${me.state.drop2}`].price)} */}
                                                         {<NumberFormat value={parseFloat(parseFloat(tableIndex.quote[`${me.state.drop2}`].price) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
                                                     </Price>
                                                     :
@@ -271,7 +271,7 @@ class TableofCoin extends React.Component {
                                             <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin_code}`}>
                                                 {tableIndex.quote !== null && tableIndex.balance !== undefined ? tableIndex.quote[`${me.state.drop3}`].price !== undefined ?
                                                     <Price>
-                                                        {console.log("HBDE", tableIndex.quote[`${me.state.drop3}`].price)}
+                                                        {/* {console.log("HBDE", tableIndex.quote[`${me.state.drop3}`].price)} */}
                                                         <span>{me.state.curr3}</span>
                                                         {<NumberFormat value={parseFloat(parseFloat(tableIndex.quote[`${me.state.drop3}`].price) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
                                                     </Price>

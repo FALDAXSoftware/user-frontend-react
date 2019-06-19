@@ -212,7 +212,7 @@ class WalletPopup extends Component {
     componentDidMount() {
         if (this.props.title === "RECEIVE") {
             this.setState({ loader: true })
-            console.log(this.props.coin_code)
+            // console.log(this.props.coin_code)
             fetch(`${API_URL}/wallet/get-qr-code/${this.props.coin_code}`, {
                 method: "get",
                 headers: {
@@ -227,7 +227,7 @@ class WalletPopup extends Component {
 
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                 })
         }
     }
@@ -295,7 +295,7 @@ class WalletPopup extends Component {
         if (this.validator.allValid()) {
             var values = this.state.sendFields;
             values["coin_code"] = this.props.coin_code;
-            console.log(confirmFlag, confirmFlag)
+            // console.log(confirmFlag, confirmFlag)
             if (confirmFlag == true)
                 values["confirm_for_wait"] = confirmFlag;
             this.setState({ loader: true });
@@ -309,7 +309,7 @@ class WalletPopup extends Component {
                 body: JSON.stringify(values)
             }).then(response => response.json())
                 .then((responseData) => {
-                    console.log("SEND API", responseData)
+                    // console.log("SEND API", responseData)
                     if (responseData.status === 200) {
                         this.openNotificationWithIcon("success", "Successfully Sent", responseData.message);
                         this.comingCancel();
@@ -353,7 +353,7 @@ class WalletPopup extends Component {
     }
     /* After Cancel Button*/
     cancelFunc() {
-        console.log(this)
+        // console.log(this)
         let _this = this;
         _this.openNotificationWithIcon("success", "Success", "Your transaction has been cancelled.");
         _this.comingCancel();
@@ -434,7 +434,7 @@ class WalletPopup extends Component {
                                         </DropdownButtonS>
                                     </ButtonToolbarS> */}
                                         {/* </Sec_wrap> */}
-                                        {console.log(this.props.coinFee)}
+                                        {/* {console.log(this.props.coinFee)} */}
                                         <TotDiv>
                                             <Fee><b>Fee: </b> {this.props.coinFee ? `${this.props.coinFee} %` : 0}</Fee>
                                             <TotPay><b>Total Payout:</b> {subtotal} {this.props.coin_code}</TotPay>

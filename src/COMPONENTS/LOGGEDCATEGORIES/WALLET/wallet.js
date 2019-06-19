@@ -97,19 +97,19 @@ class Wallet extends Component {
     componentWillReceiveProps(props, newProps) {
         var total = 0, me = this;
         if (this.props.walletDetails !== null) {
-            console.log(this.props.walletDetails);
+            // console.log(this.props.walletDetails);
             var tableData = this.props.walletDetails;
             var FIAT = this.props.profileDetails.fiat;
             if (tableData !== undefined) {
                 tableData.map(function (index, key) {
-                    console.log(index.quote)
+                    // console.log(index.quote)
                     if (index.quote !== null)
                         if (index.quote[`${FIAT}`].price !== undefined && index.quote[`${FIAT}`].price !== null) {
                             var fiat = me.props.profileDetails.fiat;
                             total = total + (index.quote[`${fiat}`].price * index.balance);
                         }
                 })
-                console.log(total)
+                // console.log(total)
             }
         }
         this.setState({ total });
@@ -200,7 +200,7 @@ class Wallet extends Component {
                             </SearchCoin>
                             <Total>
                                 <Tot>Total:</Tot>
-                                {console.log(this.state.total)}
+                                {/* {console.log(this.state.total)} */}
                                 <Money>{FIAT !== "USD" ? FIAT !== "EUR" ? FIAT !== "INR" ? "" : "\u20B9" : "\u20AC" : "$"}{this.state.total !== null ? <NumberFormat value={parseFloat(this.state.total).toFixed(4)} displayType={'text'} thousandSeparator={true} /> : ""}</Money>
                                 <Currency>{FIAT}</Currency>
                             </Total>
@@ -234,7 +234,7 @@ class Wallet extends Component {
                                 {/* {this.props.allCoins !== null ?
                                     (this.state.searchedCoins.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.state.searchedCoins} /> : (this.props.allCoins.data.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.props.allCoins.data} /> : ""))
                                     : ""} */}
-                                {console.log(this.props.nowalletBalance)}
+                                {/* {console.log(this.props.nowalletBalance)} */}
                                 {
                                     this.props.nowalletBalance !== null ?
                                         this.state.searchedCoins !== null ? <TableofCoinUpper currencySeq={this.state.currencySeq} noBalance={true} /* currChange={(currency) => this.currChangeList(currency)} */ tableData={this.state.searchedCoins} />
@@ -254,7 +254,7 @@ class Wallet extends Component {
     }
 }
 function mapStateToProps(state) {
-    console.log(state)
+    // console.log(state)
     return ({
         walletDetails: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.balanceData : null,
         nowalletBalance: state.walletReducer.walletData !== undefined ? state.walletReducer.walletData.nonBalanceData : null,
