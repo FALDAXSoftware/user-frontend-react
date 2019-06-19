@@ -586,9 +586,13 @@ class Conversion extends React.Component {
                                             {this.state.cryptoList && this.state.cryptoList.length > 0 &&
                                                 < ConversionDropDown defaultValue={this.state.crypto} onChange={this.handleCryptoChange}>
                                                     {
-                                                        this.state.cryptoList.map((element, index) => (
-                                                            <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
-                                                        ))
+                                                        this.state.cryptoList.map((element, index) => {
+                                                            if (element.coin != this.state.currency) {
+                                                                return (
+                                                                    <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                                )
+                                                            }
+                                                        })
                                                     }
 
 
