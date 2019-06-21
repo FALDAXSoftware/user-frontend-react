@@ -516,7 +516,7 @@ class Login_Form extends Component {
         this.setState({ loader: false, recaptchaToken: null }, () => {
           this.onLoadRecaptcha();
         })
-        this.openNotificationWithIcon('success', 'Success', props.errorStatus.err);
+        this.openNotificationWithIcon('warning', 'Warning', props.errorStatus.err);
       }
       else {
         this.setState({ loader: false, recaptchaToken: null }, () => {
