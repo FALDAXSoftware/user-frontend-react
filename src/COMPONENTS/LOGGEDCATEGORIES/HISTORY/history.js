@@ -172,9 +172,10 @@ class History extends Component {
 
     historyResult() {
         let { drop1Value, drop2Value } = this.state;
+        let flag = false;
         if (drop1Value !== null && drop2Value !== null) {
-            
-            
+
+
             let url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}`;
             if (this.state.toDate === "" && this.state.toDate === "") {
                 url = API_URL + `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}`
@@ -182,8 +183,8 @@ class History extends Component {
             if (this.state.drop1Value !== '' && this.state.drop1Value !== '') {
                 url = url + '&symbol=' + this.state.drop1Value + '-' + this.state.drop2Value
             }
-            this.setState({ loader: true },()=>{
-                console.log("LOADER",this.state.loader)
+            this.setState({ loader: true }, () => {
+                console.log("LOADER", this.state.loader)
             })
             fetch(url, {
                 method: "get",
@@ -196,17 +197,17 @@ class History extends Component {
                 .then((responseData) => {
                     /*this.setState({myCoins:responseData});*/
                     // console.log(responseData)
-                    console.log("BHess",responseData.status === 200)
-                    this.setState({ loader: false },()=>{
-                        console.log("LOADER",this.state.loader)
+                    console.log("BHess", responseData.status === 200)
+                    this.setState({ loader: false }, () => {
+                        console.log("LOADER", this.state.loader)
                     })
                     if (responseData.status === 200) {
-                        console.log(responseData.data.length,responseData.data.length>0)
+                        console.log(responseData.data.length, responseData.data.length > 0)
                         let csvFields = [], self = this;
-                        if (responseData.data.length > 0)
-                        {
-                            console.log(this.state.loader,responseData.data)
-                            responseData.data.map(function (temp) {
+                        if (responseData.data.length > 0) {
+                            console.log(this.state.loader, responseData.data)
+                            for (var i = 0; i < responseData.data; i++) {
+                                let temp = responseData.data[i]
                                 let obj = {};
                                 var coin = temp.symbol;
                                 var date = moment.utc(temp.created_at).local().format(`${self.props.profileData.date_format} HH:mm:ss`);
@@ -223,21 +224,21 @@ class History extends Component {
                                 obj['fee'] = fee;
                                 obj['volume'] = volume;
 
-                                console.log("ABCD",csvFields);
-                                console.log("ABCD sg",obj);
+                                console.log("ABCD", csvFields);
+                                console.log("ABCD sg", obj);
                                 csvFields.push(obj);
-                            })
-                            console.log("200 Response",this.state.loader);
+                            }
+                            console.log("200 Response", this.state.loader);
                         }
-                        console.log("200 Response",this.state.loader)
+                        console.log("200 Response", this.state.loader)
                         this.setState({ historyData: responseData.data, csvFields });
                     }
                     else
                         this.openNotificationWithIcon('error', "Error", responseData.err);
 
 
-                        console.log("200 Response",this.state.loader)
-                        this.setState({ loader: false })
+                    console.log("200 Response", this.state.loader)
+                    this.setState({ loader: false })
                 })
                 .catch(error => {
                 })
@@ -506,7 +507,7 @@ class History extends Component {
 
     render() {
         var self = this;
-        console.log("Render",this.state)
+        console.log("Render", this.state)
         return (
             <div>
                 <ContactWrap>
@@ -570,7 +571,7 @@ class History extends Component {
                                                     {this.state.historyData.map(function (temp) {
                                                         var date = moment.utc(temp.created_at).local().format(`${self.props.profileData.date_format} HH:mm:ss`);
                                                         var side = Number(temp.user_id) === self.props.profileData.id ? temp.side : temp.side === "Buy" ? "Sell" : "Buy";
-                                                        var fee = Number(temp.user_id) === self.props.profileData.id ? temp.user_fee.toFixed(4) : temp.requested_fee.toFixed(4);
+                                                        var fee = Number(temp.user_id) === self.props.profileData.id ? temp.user_fee !== null ? temp.user_fee.toFixed(4) : "" : temp.requested_fee !== null ? temp.requested_fee.toFixed(4) : "";
                                                         return (<tr>
                                                             <td>{temp.symbol}</td>
                                                             <td>{date}</td>
@@ -592,7 +593,7 @@ class History extends Component {
                         </ContainerContact>
                     </GreyWrap>
                     <CommonFooter />
-                    {(this.state.loader===true) ?
+                    {(this.state.loader === true) ?
                         <FaldaxLoader />
                         : ""
                     }
