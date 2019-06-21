@@ -27,7 +27,9 @@ export default class BuySell extends React.Component {
             <LeftDiv>
                 <Instru>ORDER BOOK {this.props.crypto}/{this.props.currency}</Instru>
                 <BBCWrap>
-                    <BuyTable currency={this.props.currency} crypto={this.props.crypto} loaderfunc={(loader) => { this.loaderfunc(loader) }} io={this.props.io} height={this.props.height} />
+                    {console.log(this.props.height)}
+
+                    <BuyTable currency={this.props.currency} crypto={this.props.crypto} loaderfunc={(loader) => { this.loaderfunc(loader) }} io={this.props.io} elementHeight={this.props.height} />
                 </BBCWrap>
 
                 <BBCWrap2>

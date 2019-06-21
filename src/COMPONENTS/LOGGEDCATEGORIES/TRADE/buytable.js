@@ -248,7 +248,7 @@ class BuyTABLE extends Component {
                         <OTwrap2>
                             <ScrollTableContent>
                                 <Scrollbars
-                                    style={{ height: this.props.height }}
+                                    style={{ height: this.props.elementHeight }}
                                     className="scrollbar"
                                     hideTracksWhenNotNeeded={true}>
                                     <TableContent cellpadding="10px" cellspacing="0" border="0">
@@ -294,4 +294,4 @@ function mapStateToProps(state) {
     })
 }
 
-export default connect(mapStateToProps)(BuyTable);
+export default connect(mapStateToProps)(BuyTABLE);

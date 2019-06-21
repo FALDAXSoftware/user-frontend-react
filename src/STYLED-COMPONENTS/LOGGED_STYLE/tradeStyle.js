@@ -308,10 +308,13 @@ export const TableIns = styled(Table)`
 `
 export const TabsRight = styled(Tabs)`
 
-    >.ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav-animated
+    .ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll
     {
         display: flex !important;
         justify-content:center !important;
+    }
+    .ant-tabs-nav-container>.ant-tabs-nav-wrap>.ant-tabs-nav-scroll>.ant-tabs-nav-animated>div>.ant-tabs-tab{
+        margin: 0 20px !important;
     }
     @media(max-width:475px)
     {
@@ -395,6 +398,7 @@ export const ETHWrap = styled.div`
 `
 
 export const AMTInput = styled(Input)`
+   input{
     display:block;
     height:35px;
     width:100%;
@@ -403,6 +407,7 @@ export const AMTInput = styled(Input)`
     caret-color:${props => props.theme.mode === "dark" ? 'white' : ''};
     color:${props => props.theme.mode === "dark" ? 'white' : ''};
     background-color:${props => props.theme.mode === "dark" ? "#041b2c" : ""};
+   }
 `
 
 export const BTCWrap = styled.div`
@@ -439,14 +444,17 @@ export const TotalWrap = styled.div`
 
 `
 export const TotInput = styled(Input)`
-    display:block;
-    height:35px;
-    width:100%;
-    border-radius:5px;
-    border-radius:1px solid #cad0e6;
-    caret-color:${props => props.theme.mode === "dark" ? 'white' : ''};
-    color:${props => props.theme.mode === "dark" ? 'white' : ''};
-    background-color:${props => props.theme.mode === "dark" ? "#041b2c" : ""};
+    input{
+
+        display:block;
+        height:35px;
+        width:100%;
+        border-radius:5px;
+        border-radius:1px solid #cad0e6;
+        caret-color:${props => props.theme.mode === "dark" ? 'white' : ''};
+        color:${props => props.theme.mode === "dark" ? 'white' : ''};
+        background-color:${props => props.theme.mode === "dark" ? "#041b2c" : ""} !important;
+    }
 `
 export const Pay = styled.div`
     margin-top:30px;
