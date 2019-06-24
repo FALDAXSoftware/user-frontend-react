@@ -593,6 +593,9 @@ class SignupForm extends Component {
     event.preventDefault();
   }
   render() {
+    if (this.props.isLoggedIn) {
+      this.props.history.push("/editProfile");
+    }
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
     var me = this;
@@ -721,7 +724,8 @@ class SignupForm extends Component {
 
 function mapStateToProps(state) {
   return ({
-    isSignUp: state.simpleReducer.isSignUp !== undefined ? state.simpleReducer.isSignUp : undefined
+    isSignUp: state.simpleReducer.isSignUp !== undefined ? state.simpleReducer.isSignUp : undefined,
+    isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
   })
 }
 
