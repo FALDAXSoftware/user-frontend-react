@@ -289,7 +289,7 @@ class Referral extends Component {
         }
         this.getReferralData();
         if (this.props.profileDetails.referral_code !== undefined) {
-            this.setState({ referralLink: "https://dev.faldax.com/signup?refID=" + this.props.profileDetails.referral_code })
+            this.setState({ referralLink: "https://trade.faldax.com/signup?refID=" + this.props.profileDetails.referral_code })
         }
     }
     getReferralData() {

@@ -34,13 +34,14 @@ export default class Datepicker extends Component {
     */
 
     onChangeDate(date, type) {
+        console.log(date, type);
         if (this.props.kyc !== "kyc") {
             if (type === "year") {
                 this.setState({ year: date });
                 fields[type] = date;
             } else if (type === "month") {
                 let date1 = null;
-                // console.log("Month", date, date === "")
+                console.log("Month", date, date === "")
                 this.setState({ month: date });
                 if (date == 0) date1 = "January";
                 if (date == 1) date1 = "February";
@@ -56,8 +57,19 @@ export default class Datepicker extends Component {
                 if (date == 11) date1 = "December";
                 if (date === "") { date1 = ""; /* console.log(" i am in IF") */ }
 
-                fields[type] = date1;
+
+
+                console.log(date, "---", this.state.day, "---", date1)
+
+                if ((date == 0 || date == 2 || date == 4 || date == 6 || date == 7 || date == 9 || date == 11) && this.state.day !== null) {
+                    fields[type] = date1;
+                }
+                else
+                    fields['day'] = "";
+
+                console.log('Month', this.state)
             } else if (type === "day") {
+                console.log(date);
                 this.setState({ day: date });
                 fields[type] = date;
             }
@@ -70,7 +82,7 @@ export default class Datepicker extends Component {
                 if (fields["year"] === undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
 
             }
-            // console.log("Profile Date", fields)
+            console.log("Profile Date", fields)
             this.props.onDateChange(fields, "dob")
         }
         else {
@@ -93,6 +105,7 @@ export default class Datepicker extends Component {
                 if (date == 10) date1 = "November";
                 if (date == 11) date1 = "December";
                 if (date === "") { date1 = ""; /* console.log(" i am in IF") */ }
+
                 fields[type] = date1;
 
             } else if (type === "day") {

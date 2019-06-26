@@ -263,6 +263,10 @@ class KYCForm extends Component {
                     }
                     this.setState({ fields: fields, kycData: responseData.data, loader: false });
                 }
+                else {
+                    this.openNotificationWithIcon('error', `Error: ${responseData.status}`, responseData.err)
+                    this.setState({ loader: false })
+                }
             })
             .catch(error => {
                 this.setState({ loader: false })
@@ -473,7 +477,7 @@ class KYCForm extends Component {
                                     {/* {console.log(this.state.mobile, this.state.phoneCountry, this.state.phoneCountry[0])} */}
                                     {
                                         this.state.displayCountry &&
-                                        < IntlTelInputS value={this.state.mobile} allowDropdown={false} preferredCountries={[]} onlyCountries={this.state.phoneCountry[0]!==null?this.state.phoneCountry:""} defaultCountry={this.state.phoneCountry[0]!==null?this.state.phoneCountry[0]:""} separateDialCode={true}
+                                        < IntlTelInputS value={this.state.mobile} allowDropdown={false} preferredCountries={[]} onlyCountries={this.state.phoneCountry[0] !== null ? this.state.phoneCountry : ""} defaultCountry={this.state.phoneCountry[0] !== null ? this.state.phoneCountry[0] : ""} separateDialCode={true}
                                             onPhoneNumberChange={(a, b, c) => this.changeNumber(a, b, c)} css={['intl-tel-input', 'form-control']} />
                                     }
                                 </PhoneDiv>
