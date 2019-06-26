@@ -511,12 +511,12 @@ class Login_Form extends Component {
         });
         // document.querySelector("#otp-field").focus();
         /* this.openNotificationWithIcon('error', 'Error', props.errorStatus.err); */
-      }
+      } 
       else if (props.errorStatus.status == 202) {
         this.setState({ loader: false, recaptchaToken: null }, () => {
           this.onLoadRecaptcha();
         })
-        this.openNotificationWithIcon('success', 'Success', props.errorStatus.err);
+        this.openNotificationWithIcon('warning', 'Warning', props.errorStatus.err);
       }
       else {
         this.setState({ loader: false, recaptchaToken: null }, () => {
