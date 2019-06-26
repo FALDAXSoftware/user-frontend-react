@@ -311,6 +311,7 @@ class ResetPassword extends Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
+      console.log(error, value)
       if (error === null && this.state.confirmIcon && this.state.newpassIcon) {
         if (value.password === value.confirm_password) {
           this._resetPassword(value)
@@ -325,9 +326,10 @@ class ResetPassword extends Component {
           this.openNotificationWithProfile("error", "Error", "Password do not match.")
         }
       } else {
+        console.log("ABCD", error)
         if (error !== null) {
           if (error.password !== undefined) {
-            if (error.password.errors[0].message !== undefined && error.password.errors[0].message !== null) {
+            if (error.password.errors[0].message !== undefined && error.password.errors[0].message !== null && value.password == undefined) {
               document.querySelectorAll(".pass_msg")[0].style.display = "block";
               this.setState({ pass_msg: "Password is required" })
             } else {
@@ -336,7 +338,7 @@ class ResetPassword extends Component {
             }
           }
           if (error.confirm_password !== undefined) {
-            if (error.confirm_password.errors[0].message !== undefined && error.confirm_password.errors[0].message !== null) {
+            if (error.confirm_password.errors[0].message !== undefined && error.confirm_password.errors[0].message !== null && value.confirm_password == undefined) {
               document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
               this.setState({ confirmPass_msg: "Confirm password is required" })
             } else {
@@ -410,7 +412,7 @@ class ResetPassword extends Component {
                 <div>
                   <Full type={newEye} {...getFieldProps('password', {
                     onChange(e) { me.onChangeField(e.target.value, "password") }, // have to write original onChange here if you need
-                    rules: [{ type: "string", required: true, max: 16 }],
+                    rules: [{ type: "string", required: true }],
                   })} />
                   {
                     (newEye === "password") ?
@@ -426,7 +428,7 @@ class ResetPassword extends Component {
                 <div>
                   <Password type={repeatEye} {...getFieldProps('confirm_password', {
                     onChange(e) { me.onChangeField(e.target.value, "confirm_password") }, // have to write original onChange here if you need
-                    rules: [{ type: "string", required: true, max: 16 }],
+                    rules: [{ type: "string", required: true }],
                   })}
                   />
                   {
