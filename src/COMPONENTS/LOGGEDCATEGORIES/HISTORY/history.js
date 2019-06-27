@@ -206,7 +206,7 @@ class History extends Component {
                         let csvFields = [], self = this;
                         if (responseData.data.length > 0) {
                             console.log(this.state.loader, responseData.data)
-                            for (var i = 0; i < responseData.data; i++) {
+                            for (var i = 0; i < responseData.data.length; i++) {
                                 let temp = responseData.data[i]
                                 let obj = {};
                                 var coin = temp.symbol;
