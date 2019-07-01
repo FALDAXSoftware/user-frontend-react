@@ -76,7 +76,11 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    loadReCaptcha();
+
+    setTimeout(function () {
+      loadReCaptcha();
+    }, 1000)
+
     window.scrollTo(0, 0);
     // if(this.props.theme!==undefined)
     //     {

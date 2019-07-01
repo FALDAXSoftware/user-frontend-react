@@ -111,7 +111,7 @@ export const OldInput = styled(Input)`
         width:220px;
     }
 `
-const NewInput = styled(OldInput)`
+export const NewInput = styled(OldInput)`
 `
 const OTPInput = styled(NewInput)`
     width: 74%;
@@ -120,7 +120,7 @@ const ButtonDiv = styled.div`
     margin-top:30px;
     margin-bottom:50px;
 `
-const NewButton = styled(Save)`
+export const NewButton = styled(Save)`
     border: none;
     width:auto;
     &:hover

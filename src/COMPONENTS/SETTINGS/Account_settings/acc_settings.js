@@ -5,15 +5,28 @@ import { connect } from "react-redux";
 import { /* Checkbox,  */Table, notification, Modal } from 'antd';
 import moment from 'moment';
 import { faDesktop, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components'
+import SimpleReactValidator from 'simple-react-validator';
+
 
 /* Components */
 import { globalVariables } from 'Globals';
 import { deleteAccount } from "ACTIONS/authActions"
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader"
+import { NewButton, NewInput } from "COMPONENTS/SETTINGS/changePassword/change_email"
 
 /* styled Components */
 import { AccWrap,/*  NotiWrap, NotiHead, NotiDesc, CheckRow, CheckRow2, CheckCol, CheckCol2, CheckCol3, CheckCol4, HR, */ LoginHistory, HistoryHead, Heading, Desc, FontAwesomeIconS, TableWrap, HR2, DeleteWrap, DeleteHead, DeleteDesc, DeleteBtn, ButtonDel, PaginationS } from 'STYLED-COMPONENTS/SETTINGS/accsettingsStyle'
 
+
+const IpButton = styled(NewButton)`
+margin-top:20px;
+`
+const IpInput = styled(NewInput)`
+    width:300px;
+    margin-top:20px;
+    padding-right:7px;
+`
 let { API_URL } = globalVariables;
 
 const columns = [{
@@ -30,6 +43,7 @@ const columns = [{
     dataIndex: 'Device',
     key: 'Device'
 }];
+
 /* const dataSource = [{
     key: '1',
     date: 'Mike',
@@ -99,6 +113,7 @@ const data_noti = [{
 }]; */
 const confirm = Modal.confirm;
 
+
 class Acc_settings extends Component {
     constructor(props) {
         super(props);
@@ -108,8 +123,13 @@ class Acc_settings extends Component {
             historyCSS: '',
             historyCount: 0,
             page: 1,
-            loader: false
+            loader: false,
+            fields: {
+                ip: null
+            }
         };
+        this.validator = new SimpleReactValidator();
+        this.getIpWhitelist = this.getIpWhitelist.bind(this);
     }
 
     /* Life Cycle Methods */
@@ -128,7 +148,7 @@ class Acc_settings extends Component {
     }
     componentDidMount() {
         this.getAllLoginHistory(1);
-
+        this.getIpWhitelist();
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme === false)
@@ -139,6 +159,30 @@ class Acc_settings extends Component {
         }
     }
 
+    getIpWhitelist() {
+        fetch(API_URL + `/users/get-whitelist-ip`, {
+            method: "get",
+            headers: {
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                console.log("Did IP : ", responseData)
+                if (responseData.status == 200) {
+                    let fields = {};
+                    fields['ip'] = responseData.data.whitelist_ip;
+                    this.setState({ fields });
+                }
+                else {
+                    this.openNotificationWithIcon('error', responseData.status, responseData.err);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
     /*
         Page: /editProfile --> Settings Tab
         it is called when we click Delete button and press confirm.
@@ -147,7 +191,7 @@ class Acc_settings extends Component {
 
     deleteAccount() {
         /* console.log(this.props) */
-        this.openNotificationWithIcon('success')
+        this.openNotificationWithIcon('success', 'Deleted', 'Account has been successfully deleted.')
         let value = {};
         value["email"] = this.props.email;
         value["user_id"] = this.props.profileDetails.id;
@@ -174,36 +218,45 @@ class Acc_settings extends Component {
             .then(response => response.json())
             .then((responseData) => {
                 /*  console.log(responseData) */
-                let antTableData = [];
-                this.setState({ historyCount: responseData.historyCount })
-                Object.keys(responseData.data).map(function (key, index) {
+                if (responseData.status == 200) {
+                    let antTableData = [];
+                    this.setState({ historyCount: responseData.historyCount })
+                    Object.keys(responseData.data).map(function (key, index) {
 
-                    var deviceType;
-                    if (responseData.data[index].device_type === 1) deviceType = <FontAwesomeIconS icon={faMobileAlt} />
-                    else if (responseData.data[index].device_type === 0) deviceType = <FontAwesomeIconS icon={faDesktop} />
-                    else deviceType = <FontAwesomeIconS icon={faDesktop} />
-                    let ip = "";
-                    if (responseData.data[index].ip.split(":").length > 1) {
-                        ip = responseData.data[index].ip.split(":")[3];
-                    } else if (responseData.data[index].ip.split(":").length === 1) {
-                        ip = responseData.data[index].ip
-                    }
-                    let date_format = self.props.profileDetails.date_format ? self.props.profileDetails.date_format : "DD/MM/YYYY";
-                    let temp = {
-                        key: key,
-                        date: moment.utc(responseData.data[index].created_at).local().format(`${date_format}, HH:mm:ss`),
-                        IP: ip,
-                        Device: deviceType
-                    };
-                    antTableData.push(temp);
-                });
-                /* console.log("->>>>>>>>>",antTableData); */
-                self.setState({
-                    loginHistory: antTableData,
-                    loader: false
-                })
+                        var deviceType;
+                        if (responseData.data[index].device_type === 1) deviceType = <FontAwesomeIconS icon={faMobileAlt} />
+                        else if (responseData.data[index].device_type === 0) deviceType = <FontAwesomeIconS icon={faDesktop} />
+                        else deviceType = <FontAwesomeIconS icon={faDesktop} />
+                        let ip = "";
+                        if (responseData.data[index].ip.split(":").length > 1) {
+                            ip = responseData.data[index].ip.split(":")[3];
+                        } else if (responseData.data[index].ip.split(":").length === 1) {
+                            ip = responseData.data[index].ip
+                        }
+                        let date_format = self.props.profileDetails.date_format ? self.props.profileDetails.date_format : "DD/MM/YYYY";
+                        let temp = {
+                            key: key,
+                            date: moment.utc(responseData.data[index].created_at).local().format(`${date_format}, HH:mm:ss`),
+                            IP: ip,
+                            Device: deviceType
+                        };
+                        antTableData.push(temp);
+                    });
+                    /* console.log("->>>>>>>>>",antTableData); */
+                    self.setState({
+                        loginHistory: antTableData,
+                        loader: false
+                    })
+                }
+                else {
+                    self.setState({ loader: false });
+                    this.openNotificationWithIcon('error', responseData.status, responseData.err);
+                }
+
             })
-            .catch(error => {/* console.log(error) */ })
+            .catch(error => {
+                this.openNotificationWithIcon('error', 'Error', error);
+            })
     }
 
     /* 
@@ -224,14 +277,14 @@ class Acc_settings extends Component {
         Notification will be shown that acc. is deleted.
     */
 
-    openNotificationWithIcon = (type) => {
+    openNotificationWithIcon = (type, msg, desc) => {
         notification[type]({
-            message: 'Deleted',
-            description: 'Account has been successfully deleted.',
+            message: msg,
+            description: desc,
             duration: 3,
         });
     };
-
+    ope
     /* 
         Page: /editProfile --> Settings Tab
         It shows the confirm dialog box when we press delete button.
@@ -252,7 +305,53 @@ class Acc_settings extends Component {
             onCancel() { },
         });
     }
+    ipWhiteList() {
+        console.log("I am Clicked");
+        if (this.validator.allValid()) {
+            this.setState({ loader: true })
+            fetch(API_URL + `/users/add-whitelist-ip`, {
+                method: "post",
+                headers: {
+                    Authorization: "Bearer " + this.props.isLoggedIn
+                },
+                body: JSON.stringify(this.state.fields)
+            })
+                .then(response => {
+                    console.log(response)
+                    return response.json()
+                })
+                .then((responseData) => {
+                    console.log("Response ---> ", responseData)
+                    if (responseData.status == 200) {
+                        this.getIpWhitelist();
+                        this.openNotificationWithIcon('success', responseData.status, responseData.message);
+                        this.setState({ loader: false })
 
+                    }
+                    else {
+                        this.setState({ loader: false })
+                        this.openNotificationWithIcon('error', responseData.status, responseData.err);
+                    }
+                })
+                .catch(error => {/* console.log(error) */
+                    this.setState({ loader: false })
+
+                })
+        }
+        else {
+            this.validator.showMessages();
+            this.forceUpdate();
+        }
+
+    }
+    ipChange(e) {
+        console.log(e.target.value)
+        let fields = {}
+        fields['ip'] = e.target.value;
+        this.setState({
+            fields
+        })
+    }
     render() {
         return (
             <AccWrap>
@@ -301,6 +400,15 @@ class Acc_settings extends Component {
                         total={this.state.historyCount}
                     />
                 </LoginHistory>
+                <HR2 />
+                <DeleteHead>
+                    <span>Whitelist</span>
+                </DeleteHead>
+                <div>
+                    <IpInput value={this.state.fields['ip']} onChange={this.ipChange.bind(this)}></IpInput>
+                    {this.validator.message('ip', this.state.fields['ip'], 'required')}
+                </div>
+                <IpButton onClick={this.ipWhiteList.bind(this)}>Add</IpButton>
                 <HR2 />
                 <DeleteWrap>
                     <DeleteHead>
