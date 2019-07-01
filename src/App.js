@@ -79,7 +79,7 @@ class App extends Component {
 
     setTimeout(function () {
       loadReCaptcha();
-    }, 1000)
+    }, 2000)
 
     window.scrollTo(0, 0);
     // if(this.props.theme!==undefined)
