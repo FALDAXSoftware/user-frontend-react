@@ -333,7 +333,7 @@ class LoggedNavigation extends Component {
         if (this.props.profileDetails.is_allowed === true && this.props.profileDetails.is_kyc_done === 2) {
             console.log("I am here", this.props.location.pathname)
             // this.props.history.push('/trade');
-            if (this.props.location.pathname == "/conversion")
+            if (this.props.location.pathname !== "/conversion")
                 this.props.history.push('/conversion');
 
         }

@@ -38,6 +38,8 @@ class Conversion extends React.Component {
             krakenFees: 0,
             faldaxFees: 0,
             loader: false,
+            minCrypto: 0,
+            minCurrency: 0
         }
         io = this.props.io
         this.validator1 = new SimpleReactValidator({
@@ -51,6 +53,28 @@ class Conversion extends React.Component {
                     }
                 },
                 required: true  // optional
+            },
+            minCryptoValid: {
+                message: `Minimum amount should be greater than ${this.state.minCrypto}`,
+                rule: (val, params, validator) => {
+                    if (val > this.state.minCrypto) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                required: true  // optional
+            },
+            minCurrValid: {
+                message: `Minimum amount should be greater than ${this.state.minCurrency}`,
+                rule: (val, params, validator) => {
+                    if (val > this.state.minCurrency) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                required: true  // optional
             }
         });
         this.validator2 = new SimpleReactValidator({
@@ -58,6 +82,28 @@ class Conversion extends React.Component {
                 message: 'Amount must be greater than zero',
                 rule: (val, params, validator) => {
                     if (val > 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                required: true  // optional
+            },
+            minCryptoValid: {
+                message: `Minimum amount should be greater than ${this.state.minCrypto}`,
+                rule: (val, params, validator) => {
+                    if (val > this.state.minCrypto) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                required: true  // optional
+            },
+            minCurrValid: {
+                message: `Minimum amount should be greater than ${this.state.minCurrency}`,
+                rule: (val, params, validator) => {
+                    if (val > this.state.minCurrency) {
                         return true;
                     } else {
                         return false;
@@ -139,8 +185,18 @@ class Conversion extends React.Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-
-                this.setState({ cryptoList: responseData.data, krakenFees: responseData.kraken_fees, faldaxFees: responseData.faldax_fees })
+                if (responseData.status == 200) {
+                    var cryptoData = responseData.data, minLimit, minCurrLimit
+                    for (var i = 0; i < cryptoData.length; i++) {
+                        if (cryptoData[i].coin == this.state.crypto) {
+                            minLimit = cryptoData[i].min_limit
+                        }
+                        if (cryptoData[i].coin == this.state.currency) {
+                            minCurrLimit = cryptoData[i].min_limit
+                        }
+                    }
+                    this.setState({ cryptoList: responseData.data, krakenFees: responseData.kraken_fees, faldaxFees: responseData.faldax_fees, minCrypto: minLimit, minCurrency: minCurrLimit })
+                }
             })
             .catch(error => {
             })
@@ -162,13 +218,15 @@ class Conversion extends React.Component {
             .catch(error => {
             })
     }
-    handleCryptoChange(value) {
+    handleCryptoChange(value, option: Option) {
+        console.log(option.props.selectedData.min_limit)
         let prevRoom = this.state.crypto + "-" + this.state.currency
         this.setState({
             crypto: value,
             prevRoom: prevRoom,
             buyCryptoInput: 0,
-            buyCurrencyInput: 0
+            buyCurrencyInput: 0,
+            minCrypto: option.props.selectedData.min_limit
         }, () => {
             this.getCurrencies();
             this.getPairDetails();
@@ -504,7 +562,7 @@ class Conversion extends React.Component {
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="number" value={this.state.buyCryptoInput} onChange={this.onBuyCryptoChange} />
-                                            {this.validator1.message('crypto', this.state.buyCryptoInput, 'required|numeric|gtzero', 'text-danger-validation')}
+                                            {this.validator1.message('crypto', this.state.buyCryptoInput, `required|numeric|gtzero|minCryptoValid`, 'text-danger-validation', { minCryptoValid: `Minimum limit is ${this.state.minCrypto}` })}
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.cryptoList && this.state.cryptoList.length > 0 &&
@@ -513,7 +571,7 @@ class Conversion extends React.Component {
                                                         this.state.cryptoList.map((element, index) => {
                                                             if (element.coin != this.state.currency) {
                                                                 return (
-                                                                    <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                                    <DropDownOption key={index} value={element.coin} selectedData={element}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                                 )
                                                             }
                                                         })
@@ -530,7 +588,7 @@ class Conversion extends React.Component {
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="number" value={this.state.buyCurrencyInput} onChange={this.onBuyCurrencyChange} />
-                                            {this.validator1.message('currency', this.state.buyCurrencyInput, `required|numeric|gtzero|min:${this.state.minCurrency}`, 'text-danger-validation')}
+                                            {this.validator1.message('currency', this.state.buyCurrencyInput, `required|numeric|gtzero|minCurrValid`, 'text-danger-validation', { minCurrValid: `Minimum Currency limit is ${this.state.minCurrency}` })}
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.currencyList && this.state.currencyList.length > 0 &&
@@ -585,7 +643,7 @@ class Conversion extends React.Component {
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="number" value={this.state.sellCryptoInput} onChange={this.onSellCryptoChange} />
-                                            {this.validator2.message('crypto', this.state.sellCryptoInput, `required|numeric|gtzero|min:${this.state.minCrypto}`, 'text-danger-validation')}
+                                            {this.validator2.message('crypto', this.state.sellCryptoInput, `required|numeric|gtzero|minCryptoValid`, 'text-danger-validation', { minCryptoValid: `Minimum limit is ${this.state.minCrypto}` })}
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.cryptoList && this.state.cryptoList.length > 0 &&
@@ -594,7 +652,7 @@ class Conversion extends React.Component {
                                                         this.state.cryptoList.map((element, index) => {
                                                             if (element.coin != this.state.currency) {
                                                                 return (
-                                                                    <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                                    <DropDownOption key={index} value={element.coin} selectedData={element}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                                 )
                                                             }
                                                         })
