@@ -106,7 +106,6 @@ class App extends Component {
         <Route
           {...rest}
           render={props => {
-
             if (isLoggedIn) {
               if (props.location.pathname === '/') {
                 return <Redirect

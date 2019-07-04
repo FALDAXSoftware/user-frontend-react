@@ -216,6 +216,9 @@ class LoggedNavigation extends Component {
                     this.setState({ faldax: _FALDAXWHITE, faldaxLogo: _WHITELOGO })
             }
         }
+        if (this.props.conversion) {
+            this.tradeAccess();
+        }
     }
 
     /* 
@@ -327,11 +330,15 @@ class LoggedNavigation extends Component {
     */
 
     tradeAccess() {
-        if (this.props.profileDetails.is_allowed === true && this.props.profileDetails.is_kyc_done === true) {
-            this.props.history.push('/trade');
+        if (this.props.profileDetails.is_allowed === true && this.props.profileDetails.is_kyc_done === 2) {
+            console.log("I am here", this.props.location.pathname)
+            // this.props.history.push('/trade');
+            if (this.props.location.pathname == "/conversion")
+                this.props.history.push('/conversion');
+
         }
         else {
-            if (this.props.profileDetails.is_allowed === false && this.props.profileDetails.is_kyc_done === false)
+            if (this.props.profileDetails.is_allowed === false && this.props.profileDetails.is_kyc_done !== 2)
                 this.setState({ completeKYC: true });
             else
                 this.setState({ countryAccess: true });
@@ -354,7 +361,7 @@ class LoggedNavigation extends Component {
                     selectedKeys={this.state.selected}
                 >
                     {/* <Menuitem key="1" onClick={this.showComing}><NavLink className="Nav_selected" to="/dashboard">DASHBOARD</NavLink></Menuitem> */}
-                    <Menuitem key="1"><NavLink className="Nav_selected" to="/conversion">CONVERSION</NavLink></Menuitem>
+                    <Menuitem key="1" onClick={this.tradeAccess}>CONVERSION</Menuitem>
                     {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
                     <Menuitem key="2"><NavLink className="Nav_selected" to="/wallet">Wallet</NavLink></Menuitem>
                     <Menuitem key="3"><NavLink className="Nav_selected" to="/history">HISTORY</NavLink></Menuitem>
@@ -373,7 +380,8 @@ class LoggedNavigation extends Component {
                         <Close href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</Close>
                         <LogoutStyle><Link to="/editProfile">PROFILE</Link></LogoutStyle>
                         {/* <span> <Link to="/dashboard">DASHBOARD</Link></span> */}
-                        <span> <Link to="/conversion">CONVERSION</Link></span>
+                        {/* <span> <Link to="/conversion">CONVERSION</Link></span> */}
+                        <span onClick={this.tradeAccess}>CONVERSION</span>
                         {/* <span onClick={this.tradeAccess}>TRADE</span> */}
                         <span> <Link to="/wallet">WALLET</Link></span>
                         <span> <Link to="/history">HISTORY</Link></span>
@@ -391,7 +399,7 @@ class LoggedNavigation extends Component {
 
 function mapStateToProps(state) {
     return ({
-        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
+        profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data !== undefined ? state.simpleReducer.profileDetails.data[0] : "" : "",
         theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
     });
 }
