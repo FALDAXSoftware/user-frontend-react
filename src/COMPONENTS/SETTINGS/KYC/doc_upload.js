@@ -47,6 +47,8 @@ const Fileselect1 = styled.div`
     width: 146px;
     height: 146px;
     margin-right:15px;
+    text-align:right;
+    
     @media(max-width:478px)
     {
         display:block;
@@ -77,6 +79,9 @@ const ButtonUp = styled.button`
     border: 1px solid rgb(0,170,250);
     border-radius: 20px;
     cursor: pointer;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     &:focus{
         outline: none;
     }
@@ -111,7 +116,12 @@ const Fileinput2 = styled.input`
     visibility: hidden;
     position: absolute;
 `
-
+const RemoveIcon1 = styled(Icon)`
+    color:${props => props.theme.mode == "dark" ? "white" : "black"};
+`
+const RemoveIcon2 = styled(RemoveIcon1)`
+    color:${props => props.theme.mode == "dark" ? "white" : "black"};
+`
 class DocUpload extends Component {
     constructor(props) {
         super(props);
@@ -121,6 +131,11 @@ class DocUpload extends Component {
             imageType: "",
             profileImage: "",
             imagemsg: "",
+            profileImg2: "",
+            imageName2: "",
+            imageType2: "",
+            profileImage2: "",
+            imagemsg2: "",
             icon1: "plus",
             frontImg: "",
             backImg: "",
@@ -130,6 +145,8 @@ class DocUpload extends Component {
             frontHeight: "",
             targetName: '',
             fileTarget: null,
+            displayFirst: "none",
+            displaySecond: "none"
         }
         this.handleProfile = this.handleProfile.bind(this);
     }
@@ -166,6 +183,7 @@ class DocUpload extends Component {
         var e1 = e;
         let name = e1.target.name;
         let target = e1.target;
+        console.log(e1.target)
         _self.setState({
             targetName: name,
             fileTarget: target
@@ -176,6 +194,7 @@ class DocUpload extends Component {
                 const file = _self.state.fileTarget.files[0];
                 const fileType = file && file.type ? file.type.substring(0, file.type.indexOf('/')) : '';
                 const fileSize = file && file.size ? file.size : 0;
+                console.log(file)
                 if (fileType === 'image') {
                     if (fileType === 'image' && fileSize < 5242880) {
 
@@ -191,20 +210,31 @@ class DocUpload extends Component {
                                 if (frontWidth > 450 && frontHeight > 600) {
 
                                     if (_self.state.targetName === "front-doc") {
-                                        _self.setState({ icon1: "check" })
+                                        _self.setState({ icon1: "check", displayFirst: "" });
+                                        reader.onload = (upload) => {
+                                            _self.setState({
+                                                profileImg: upload.target.result,
+                                                imageName: file.name,
+                                                imageType: file.type,
+                                                profileImage: file,
+                                                imagemsg: ""
+                                            });
+                                        };
                                     } else {
-                                        _self.setState({ icon2: "check" })
+                                        _self.setState({ icon2: "check", displaySecond: "" })
+                                        reader.onload = (upload) => {
+                                            _self.setState({
+                                                profileImg2: upload.target.result,
+                                                imageName2: file.name,
+                                                imageType2: file.type,
+                                                profileImage2: file,
+                                                imagemsg2: ""
+                                            });
+                                        };
                                     }
                                     //check file size to max 5mb (5*1024*1024=5242880) and type image
-                                    reader.onload = (upload) => {
-                                        _self.setState({
-                                            profileImg: upload.target.result,
-                                            imageName: file.name,
-                                            imageType: file.type,
-                                            profileImage: file,
-                                            imagemsg: ""
-                                        });
-                                    };
+
+
 
                                     reader.readAsDataURL(file);
                                     var DataForm = new FormData()
@@ -217,7 +247,12 @@ class DocUpload extends Component {
                             img.src = fr.result;
                         };
                     } else {
-                        _self.setState({ profileImg: "Default Photo", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' })
+                        if (_self.state.targetName === "front-doc") {
+                            _self.setState({ profileImg: "Default Photo", imageName: '', imageType: fileType, imagemsg: 'Please select image with less then 5 mb' })
+                        }
+                        else {
+                            _self.setState({ profileImg2: "Default Photo", imageName2: '', imageType2: fileType, imagemsg2: 'Please select image with less then 5 mb' })
+                        }
                         _self.openNotificationWithIcon("error", "File Size", "Please select image with less then 5 mb")
                         document.getElementById("front").value = "";
                         document.getElementById("back").value = "";
@@ -232,7 +267,36 @@ class DocUpload extends Component {
             }
         })
     }
+    removeFile(type) {
+        var DataForm = new FormData()
+        DataForm.append("image", "")
+        this.props.kycDoc(this.props.isLoggedIn, DataForm, this.state.targetName)
+        if (type == "front-doc") {
+            this.setState({
+                profileImg: "",
+                imageName: "",
+                imageType: '',
+                profileImage: '',
+                imagemsg: "",
+                icon1: "plus",
+                displayFirst: "none"
+            });
+            document.getElementById("front").value = "";
 
+        }
+        else {
+            this.setState({
+                profileImg2: "",
+                imageName2: "",
+                imageType2: '',
+                profileImage2: '',
+                imagemsg2: "",
+                icon2: "plus",
+                displaySecond: "none"
+            });
+            document.getElementById("back").value = "";
+        }
+    }
     /* 
         Page: /editProfile --> KYC
         It is called for custom Notifications.
@@ -251,12 +315,14 @@ class DocUpload extends Component {
     */
 
     next_step() {
+        console.log(this.state.icon1, this.state.icon2, this.state.frontImg, this.state.backImg)
         if (this.state.icon1 === "check" && this.state.icon2 === "check") {
             if (this.state.frontImg !== "" && this.state.backImg !== "") {
                 var kycDoc = {};
                 kycDoc["front_doc"] = this.state.frontImg;
                 kycDoc["back_doc"] = this.state.backImg;
                 kycDoc["steps"] = 3;
+                console.log("FINALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
                 this.props.kycFormAction(this.props.isLoggedIn, kycDoc)
             }
         } else {
@@ -283,14 +349,18 @@ class DocUpload extends Component {
                     </SSNSub>
                     <Filewrap>
                         <Fileselect1 className="file-select-col">
-                            <ButtonUp className="file-select-btn" onClick={() => { this.handleFileSelectClick('front') }}>
+                            {console.log(this.state)}
+                            <RemoveIcon1 onClick={() => { this.removeFile('front-doc') }} style={{ display: `${this.state.displayFirst}` }} type={"close"} theme="outlined" />
+                            <ButtonUp style={{ backgroundImage: `url('${this.state.profileImg}')` }} className="file-select-btn" onClick={() => { this.handleFileSelectClick('front') }}>
+
                                 <Plus className="plus"><Icon type={this.state.icon1} theme="outlined" /></Plus>
                                 <Plustext className="text">Front</Plustext>
                             </ButtonUp>
                             <Fileinput onChange={this.handleProfile} type="file" name="front-doc" id="front" />
                         </Fileselect1>
                         <Fileselect2 md={{ span: 6 }} className="file-select-col">
-                            <ButtonUp2 className="file-select-btn" onClick={() => { this.handleFileSelectClick('back') }}>
+                            <RemoveIcon2 onClick={() => { this.removeFile('back-doc') }} style={{ display: `${this.state.displaySecond}` }} type={"close"} theme="outlined" />
+                            <ButtonUp2 style={{ backgroundImage: `url('${this.state.profileImg2}')` }} className="file-select-btn" onClick={() => { this.handleFileSelectClick('back') }}>
                                 <Plus2 className="plus"><Icon type={this.state.icon2} theme="outlined" /></Plus2>
                                 <Plustext2 className="text">Back</Plustext2>
                             </ButtonUp2>

@@ -165,7 +165,7 @@ const ConfirmIconF = styled(FirstIconF)`
 const Full = styled(Username)`
   display:inline-block;
 `
-const Email = styled(Username)`
+export const Email = styled(Username)`
   display:inline-block;
 `
 const FullReq = styled(EmailReq)`
@@ -180,7 +180,7 @@ const Password = styled(Username)`
   padding-right:40px;
 `
 const Referral = styled(Username)``
-const ButtonLogin = styled(Button)`
+export const ButtonLogin = styled(Button)`
   width: 110px;
   background-color: rgb(0, 170, 250);
   color: white;
@@ -211,9 +211,11 @@ const ButtonLogin = styled(Button)`
     background-color:white;
   }
 `
-const Sign = styled.div`
-  margin-top: 30px;
-  margin-bottom: 60px;
+const SignWrap = styled.div`
+margin-bottom: 60px;
+`
+export const Sign = styled.div`
+  margin-top: 20px;
   font-size: 16px;
   font-family: "Open Sans";
   @media (min-width:1024px) and (max-width:1440px)
@@ -221,7 +223,7 @@ const Sign = styled.div`
     margin-top: 13px;
   }
 `
-const Signa = styled.a`
+export const Signa = styled.a`
 font-size: 16px;
 font-family: "Open Sans";
 color:rgb(0, 170, 250);
@@ -271,11 +273,14 @@ class SignupForm extends Component {
     this.dispModal = this.dispModal.bind(this);
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
     this.verifyCallback = this.verifyCallback.bind(this);
+    this._resendVerLink = this._resendVerLink.bind(this);
   }
 
   static propTypes = {
     form: formShape,
   };
+
+
   /* Life Cycle Methods */
 
   componentWillReceiveProps(props, newProps) {
@@ -307,6 +312,11 @@ class SignupForm extends Component {
       }
     }
   }
+
+  _resendVerLink() {
+    this.props.history.push('/resend-verification');
+  }
+
   onLoadRecaptcha() {
     if (this.captchaDemo) {
       this.captchaDemo.reset();
@@ -698,9 +708,13 @@ class SignupForm extends Component {
                 </form>
                 {(errors = getFieldError('required')) ? errors.join(',') : null}
                 <ButtonLogin onClick={this.submit} disabled={this.state.isSignDisable}>Sign Up</ButtonLogin>
-                <Sign>
-                  Already have an account? <Signa onClick={this.dispModal}>Login</Signa>
-                </Sign>
+                <br />
+                <SignWrap>
+                  <Sign>Already Signed Up ?  <Signa onClick={this._resendVerLink}>Resend Verification Link</Signa></Sign>
+                  <Sign>
+                    Already have an account? <Signa onClick={this.dispModal}>Login</Signa>
+                  </Sign>
+                </SignWrap>
               </RightWrap>
             </FormWrap>
           </ColRight>
