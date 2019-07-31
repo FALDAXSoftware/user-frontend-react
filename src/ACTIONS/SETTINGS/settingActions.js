@@ -69,9 +69,11 @@ export const getProfileDataAction = (token) => dispatch => {
         .then((responseData) => {
             if (responseData.status == 200) {
                 dispatch(addprofileData(responseData))
-
             }
-            dispatch(removeLoader());
+            else
+                dispatch(profileError(responseData))
+            if (responseData.status !== 403)
+                dispatch(removeLoader());
         })
         .catch(error => { dispatch(removeLoader()); })
 
@@ -81,9 +83,18 @@ export const getProfileDataAction = (token) => dispatch => {
     Action :  This action is called to pass response of above action through Redux.
 */
 export const addprofileData = (Data) => dispatch => {
-
+    console.log(Data);
     dispatch({
         type: 'ADDPROFILE',
+        payload: Data
+
+    })
+
+}
+export const profileError = (Data) => dispatch => {
+    console.log(Data);
+    dispatch({
+        type: 'ERRORPROFILE',
         payload: Data
 
     })

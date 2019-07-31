@@ -486,7 +486,7 @@ class Navigation extends Component {
                         <Menuitem key="7" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/list-your-token`}>LIST YOUR TOKEN</NavLink></Menuitem>
                         <Menuitem key="8" ><NavLink className="Nav_selected" href={`${globalVariables.WordpressSiteURL}/coming-soon`}>EXCHANGE</NavLink></Menuitem>
                     </Menumain>
-                    <Rightdiv>
+                    <Rightdiv style={{ display: "flex", alignItems: "center" }}>
                         {this.props.isLoggedIn ? <Afterlog {...this.props} prof_name={prof_name} openNav={() => this.openNav()} /> :
                             <Beforelog {...this.props} dispModal={(pressed) => this.dispModal(pressed)} openNav={() => this.openNav()} />
                         }

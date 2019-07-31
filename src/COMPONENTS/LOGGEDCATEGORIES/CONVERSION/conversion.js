@@ -3,10 +3,14 @@ import React from "react";
 import { Row, Col/* , Select */, Radio, notification } from "antd";
 import { connect } from "react-redux"
 import SimpleReactValidator from 'simple-react-validator'
+import { withRouter } from 'react-router-dom';
 /*Components  */
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import { globalVariables } from "Globals";
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
+import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC"
+import CountryAccess from 'SHARED-COMPONENTS/CountryAccess';
+
 /* STYLED-COMPONENTS */
 import { ConversionWrap, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, FeesRadio } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 
@@ -34,6 +38,8 @@ class Conversion extends React.Component {
             krakenFees: 0,
             faldaxFees: 0,
             loader: false,
+            minCrypto: 0,
+            minCurrency: 0
         }
         io = this.props.io
         this.validator1 = new SimpleReactValidator({
@@ -47,6 +53,28 @@ class Conversion extends React.Component {
                     }
                 },
                 required: true  // optional
+            },
+            minCryptoValid: {
+                message: `Minimum amount should be greater than ${this.state.minCrypto}`,
+                rule: (val, params, validator) => {
+                    if (val > this.state.minCrypto) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                required: true  // optional
+            },
+            minCurrValid: {
+                message: `Minimum amount should be greater than ${this.state.minCurrency}`,
+                rule: (val, params, validator) => {
+                    if (val > this.state.minCurrency) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                required: true  // optional
             }
         });
         this.validator2 = new SimpleReactValidator({
@@ -54,6 +82,28 @@ class Conversion extends React.Component {
                 message: 'Amount must be greater than zero',
                 rule: (val, params, validator) => {
                     if (val > 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                required: true  // optional
+            },
+            minCryptoValid: {
+                message: `Minimum amount should be greater than ${this.state.minCrypto}`,
+                rule: (val, params, validator) => {
+                    if (val > this.state.minCrypto) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                required: true  // optional
+            },
+            minCurrValid: {
+                message: `Minimum amount should be greater than ${this.state.minCurrency}`,
+                rule: (val, params, validator) => {
+                    if (val > this.state.minCurrency) {
                         return true;
                     } else {
                         return false;
@@ -135,8 +185,18 @@ class Conversion extends React.Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-
-                this.setState({ cryptoList: responseData.data, krakenFees: responseData.kraken_fees, faldaxFees: responseData.faldax_fees })
+                if (responseData.status == 200) {
+                    var cryptoData = responseData.data, minLimit, minCurrLimit
+                    for (var i = 0; i < cryptoData.length; i++) {
+                        if (cryptoData[i].coin == this.state.crypto) {
+                            minLimit = cryptoData[i].min_limit
+                        }
+                        if (cryptoData[i].coin == this.state.currency) {
+                            minCurrLimit = cryptoData[i].min_limit
+                        }
+                    }
+                    this.setState({ cryptoList: responseData.data, krakenFees: responseData.kraken_fees, faldaxFees: responseData.faldax_fees, minCrypto: minLimit, minCurrency: minCurrLimit })
+                }
             })
             .catch(error => {
             })
@@ -158,15 +218,18 @@ class Conversion extends React.Component {
             .catch(error => {
             })
     }
-    handleCryptoChange(value) {
+    handleCryptoChange(value, option: Option) {
+        console.log(option.props.selectedData.min_limit)
         let prevRoom = this.state.crypto + "-" + this.state.currency
         this.setState({
             crypto: value,
             prevRoom: prevRoom,
             buyCryptoInput: 0,
-            buyCurrencyInput: 0
+            buyCurrencyInput: 0,
+            minCrypto: option.props.selectedData.min_limit
         }, () => {
             this.getCurrencies();
+            this.getPairDetails();
         });
     }
     handleCurrencyChange(value) {
@@ -403,7 +466,7 @@ class Conversion extends React.Component {
                         else {
 
                             this.setState({ loader: false });
-                            this.openNotificationWithIcon('error', "Error", responseData.message);
+                            this.openNotificationWithIcon('error', "Error", responseData.err);
                         }
                     })
                     .catch(error => {
@@ -447,7 +510,7 @@ class Conversion extends React.Component {
                         }
                         else {
                             this.setState({ loader: false });
-                            this.openNotificationWithIcon('error', "Error", responseData.message);
+                            this.openNotificationWithIcon('error', "Error", responseData.err);
                         }
                     })
                     .catch(error => {
@@ -474,7 +537,7 @@ class Conversion extends React.Component {
     render() {
         return (
             <ConversionWrap>
-                <Navigation></Navigation>
+                <Navigation conversion={true} />
                 <ConversionContainer>
                     <MainRow>
                         <LeftCol lg={12}>
@@ -499,7 +562,7 @@ class Conversion extends React.Component {
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="number" value={this.state.buyCryptoInput} onChange={this.onBuyCryptoChange} />
-                                            {this.validator1.message('crypto', this.state.buyCryptoInput, 'required|numeric|gtzero', 'text-danger-validation')}
+                                            {this.validator1.message('crypto', this.state.buyCryptoInput, `required|numeric|gtzero|minCryptoValid`, 'text-danger-validation', { minCryptoValid: `Minimum limit is ${this.state.minCrypto}` })}
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.cryptoList && this.state.cryptoList.length > 0 &&
@@ -508,7 +571,7 @@ class Conversion extends React.Component {
                                                         this.state.cryptoList.map((element, index) => {
                                                             if (element.coin != this.state.currency) {
                                                                 return (
-                                                                    <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                                    <DropDownOption key={index} value={element.coin} selectedData={element}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                                 )
                                                             }
                                                         })
@@ -525,7 +588,7 @@ class Conversion extends React.Component {
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="number" value={this.state.buyCurrencyInput} onChange={this.onBuyCurrencyChange} />
-                                            {this.validator1.message('currency', this.state.buyCurrencyInput, 'required|numeric|gtzero', 'text-danger-validation')}
+                                            {this.validator1.message('currency', this.state.buyCurrencyInput, `required|numeric|gtzero|minCurrValid`, 'text-danger-validation', { minCurrValid: `Minimum Currency limit is ${this.state.minCurrency}` })}
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.currencyList && this.state.currencyList.length > 0 &&
@@ -556,7 +619,7 @@ class Conversion extends React.Component {
                                     </Row> */}
                                     <Row>
                                         <Col>
-                                            <ConversionSubmitBtn onClick={this.btnClicked} type="primary" size="large" style={{ marginTop: "57px" }} block>Buy xrp</ConversionSubmitBtn>
+                                            <ConversionSubmitBtn onClick={this.btnClicked} type="primary" size="large" style={{ marginTop: "57px" }} block>{`Buy ${this.state.crypto}`}</ConversionSubmitBtn>
                                         </Col>
                                     </Row>
                                 </ConversionTabPane>
@@ -580,7 +643,7 @@ class Conversion extends React.Component {
                                         </RowTitle>
                                         <Col xs={12} sm={12} md={16}>
                                             <ConversionInput type="number" value={this.state.sellCryptoInput} onChange={this.onSellCryptoChange} />
-                                            {this.validator2.message('crypto', this.state.sellCryptoInput, 'required|numeric|gtzero', 'text-danger-validation')}
+                                            {this.validator2.message('crypto', this.state.sellCryptoInput, `required|numeric|gtzero|minCryptoValid`, 'text-danger-validation', { minCryptoValid: `Minimum limit is ${this.state.minCrypto}` })}
                                         </Col>
                                         <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
                                             {this.state.cryptoList && this.state.cryptoList.length > 0 &&
@@ -589,7 +652,7 @@ class Conversion extends React.Component {
                                                         this.state.cryptoList.map((element, index) => {
                                                             if (element.coin != this.state.currency) {
                                                                 return (
-                                                                    <DropDownOption key={index} value={element.coin}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
+                                                                    <DropDownOption key={index} value={element.coin} selectedData={element}> <DropIcon src={`${_AMAZONBUCKET}${element.coin_icon}`} height="20px" />  {element.coin}</DropDownOption>
                                                                 )
                                                             }
                                                         })
@@ -637,7 +700,7 @@ class Conversion extends React.Component {
                                     </Row> */}
                                     <Row>
                                         <Col>
-                                            <ConversionSubmitBtn onClick={this.btnClicked} type="primary" size="large" block style={{ marginTop: "57px" }}>SELL xrp</ConversionSubmitBtn>
+                                            <ConversionSubmitBtn onClick={this.btnClicked} type="primary" size="large" block style={{ marginTop: "57px" }}>{`SELL ${this.state.crypto}`}</ConversionSubmitBtn>
                                         </Col>
                                     </Row>
                                 </ConversionTabPane>
@@ -692,10 +755,18 @@ class Conversion extends React.Component {
                                         </Row>
                                         <Row>
                                             <Col xs={12}>
+                                                <RightSpan>Network Fee</RightSpan>
+                                            </Col>
+                                            <Col xs={12} style={{ textAlign: "right" }}>
+                                                <LeftSpan>{this.state.krakenFees}%</LeftSpan>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={12}>
                                                 <RightSpan>FALDAX Fee</RightSpan>
                                             </Col>
                                             <Col xs={12} style={{ textAlign: "right" }}>
-                                                <LeftSpan>{this.state.krakenFees}% +  {this.state.faldaxFees}%</LeftSpan>
+                                                <LeftSpan>{this.state.faldaxFees}%</LeftSpan>
                                             </Col>
                                         </Row>
                                         <Row>
@@ -749,6 +820,8 @@ class Conversion extends React.Component {
                         </RightCol>
                     </MainRow>
                 </ConversionContainer>
+                <CountryAccess comingCancel={(e) => this.comingCancel(e)} visible={this.state.countryAccess} />
+                <CompleteKYC comingCancel={(e) => this.comingCancel(e)} visible={this.state.completeKYC} />
                 {(this.state.loader == true) ?
                     <FaldaxLoader />
                     : ""
@@ -766,4 +839,4 @@ function mapStateToProps(state) {
     })
 }
 
-export default connect(mapStateToProps)(Conversion);
+export default connect(mapStateToProps)(withRouter(Conversion));

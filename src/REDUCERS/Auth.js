@@ -1,4 +1,7 @@
-export default (state = {}, action) => {
+export default (state = {
+  profileDetails: undefined,
+  profileError:undefined
+}, action) => {
 
   switch (action.type) {
 
@@ -26,7 +29,7 @@ export default (state = {}, action) => {
 
     case 'ERROR':
       /* console.log(action.payload) */
-      if (action.status==="login") {
+      if (action.status === "login") {
         return {
           ...state,
           errorStatus: action.payload
@@ -68,7 +71,11 @@ export default (state = {}, action) => {
         ...state,
         profileDetails: action.payload
       }
-
+    case "ERRORPROFILE":
+      return {
+        ...state,
+        profileError: action.payload
+      }
     case "REMOVELOADER":
       /* console.log("REMOVELOADER",action.payload) */
       return {

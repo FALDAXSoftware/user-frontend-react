@@ -12,7 +12,8 @@ import Datepicker from "./datepicker"
 import CountryPick from "./country"
 import { EmailReq } from "COMPONENTS/LANDING/USERFORMS/login_form"
 import { globalVariables } from "Globals"
-import { profileupdateAction, removepicAction, getProfileDataAction, clearEditData } from "ACTIONS/SETTINGS/settingActions"
+import { profileupdateAction, removepicAction, getProfileDataAction, clearEditData, profileError } from "ACTIONS/SETTINGS/settingActions"
+import { LogoutUser } from 'ACTIONS/authActions';
 import { _DEFAULTPROFILE } from "CONSTANTS/images";
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 
@@ -306,6 +307,16 @@ class PersonalDetails extends Component {
         if (props.apiStatus === 200 && props.apiMessage === "User details updated successfully") {
             this.openNotificationWithProfile("success", "Success", "Profile updated successfully");
             this.props.clearEditData();
+        }
+        if (props.profileError !== undefined) {
+            console.log("Called Twice", props.profileError)
+            this.openNotificationWithProfile("error", "Error", props.profileError.err);
+            this.props.profileErr();
+            let form = {
+                user_id: this.props.profileDetails.id,
+                jwt_token: this.props.isLoggedIn
+            };
+            this.props.LogoutUser(this.props.isLoggedIn, form);
         }
     }
 
@@ -884,14 +895,17 @@ const mapStateToProps = (state) => {
         profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
         loader: state.simpleReducer.loader,
         apiStatus: state.simpleReducer.update !== undefined ? state.simpleReducer.update.status : "",
-        apiMessage: state.simpleReducer.update !== undefined ? state.simpleReducer.update.message : ""
+        apiMessage: state.simpleReducer.update !== undefined ? state.simpleReducer.update.message : "",
+        profileError: state.simpleReducer.profileError !== undefined ? state.simpleReducer.profileError : undefined
     }
 }
 const mapDispatchToProps = dispatch => ({
     profileupdateAction: (isLoggedIn, form) => dispatch(profileupdateAction(isLoggedIn, form)),
     getProfileDataAction: (isLoggedIn) => dispatch(getProfileDataAction(isLoggedIn)),
     removepicAction: (isLoggedIn, form) => dispatch(removepicAction(isLoggedIn, form)),
-    clearEditData: () => dispatch(clearEditData())
+    clearEditData: () => dispatch(clearEditData()),
+    profileErr: () => dispatch(profileError()),
+    LogoutUser: () => dispatch(LogoutUser())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails));
