@@ -280,13 +280,15 @@ class Login_Form extends Component {
       isOtpRequired: false,
       loader: false,
       verify: false,
-      recaptchaToken: null
+      recaptchaToken: null,
+      showBackUpInput: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.IpVerify = this.IpVerify.bind(this);
     this.tokenVerify = this.tokenVerify.bind(this);
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
     this.verifyCallback = this.verifyCallback.bind(this);
+    this.onClickTFA = this.onClickTFA.bind(this);
   }
 
   static propTypes = {
@@ -650,6 +652,13 @@ class Login_Form extends Component {
     }
   }
 
+  onClickTFA() {
+    console.log("onClickTFA")
+    this.setState({
+      showBackUpInput: true
+    });
+  }
+
   render() {
     if (this.props.isLoggedIn) {
       this.props.history.push("/editProfile");
@@ -717,12 +726,34 @@ class Login_Form extends Component {
                     }
                     <input style={{ display: "none" }} type="submit" value="Submit" />
                   </form>
-                  <CheckWrap>
-                    {/* <Remember>
+                  {!this.state.isOtpRequired &&
+                    <CheckWrap>
+                      {/* <Remember>
                 <Check type="checkbox" /> Remember Me</Remember> */}
-                    <Forgot onClick={this._goToForgotPwd}>Forgot Password?</Forgot>
-                  </CheckWrap>
-
+                      <Forgot onClick={this._goToForgotPwd}>Forgot Password?</Forgot>
+                    </CheckWrap>
+                  }
+                  {this.state.isOtpRequired &&
+                    <CheckWrap>
+                      {/* <Remember>
+                      <Check type="checkbox" /> Remember Me</Remember> */}
+                      <Forgot onClick={this.onClickTFA}>Don't have Two-Factor Authentication?</Forgot>
+                    </CheckWrap>
+                  }
+                  {this.state.showBackUpInput &&
+                    <div>
+                      <OtpLabel>Please enter your Back-up code below to proceed.</OtpLabel>
+                      <div>
+                        <Username id="backUpCode" {...getFieldProps('twofactor_backup_code', {
+                          onChange(e) { me.onChangeField(e.target.value, "twofactor_backup_code") }, // have to write original onChange here if you need
+                          rules: [{ required: false }],
+                        })} />
+                        <UserIconS id="backup_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                        <UserIconF id="backup_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                      </div>
+                      <PassReq className="otp_msg">{this.state.otp_msg}</PassReq>
+                    </div>
+                  }
                   {(errors = getFieldError('required')) ? errors.join(',') : null}
                   <ButtonLogin disabled={this.state.loader} onClick={this.submit}>LOGIN</ButtonLogin>
                   <Sign>
@@ -730,6 +761,7 @@ class Login_Form extends Component {
                   </Sign>
                   {(this.state.loader === true) ? <FaldaxLoader /> : ""}
                 </div>
+
               </RightWrap>
             </FormWrap>
           </ColRight>

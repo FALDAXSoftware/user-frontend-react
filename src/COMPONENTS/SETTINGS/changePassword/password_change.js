@@ -10,6 +10,7 @@ import { createForm, formShape } from 'rc-form';
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 import { _EYE, _ACTIVEEYE } from "CONSTANTS/images";
 import ChangeEmail from './change_email';
+import TFAModal from './twofactor_modal'
 
 /* STYLED-COMPONENTS */
 import { HeaderCol, Save } from "../Personaldetails/personal_details"
@@ -331,7 +332,9 @@ class PasswordChange extends Component {
             percent: "",
             stroke: '',
             confPass: "",
-            verify_otp: ""
+            verify_otp: "",
+            showModalTFA: false,
+            backupCodeTFA: ""
         }
     }
     static propTypes = {
@@ -361,8 +364,9 @@ class PasswordChange extends Component {
         }
         if (props.verifyOTP) {
             if (props.verifyOTP.status === 200) {
+                console.log(props.verifyOTP)
                 this.openNotificationWithIcon("success", "Two-Factor Authentication", props.verifyOTP.message)
-                this.setState({ is_twofactor: "DISABLE", show_QR: false, isEnabled: "ENABLED" })
+                this.setState({ is_twofactor: "DISABLE", show_QR: false, isEnabled: "ENABLED", showModalTFA: true, backupCodeTFA: props.verifyOTP.twofactor_backup_code })
             } else {
                 this.openNotificationWithIcon("error", "Two-Factor Authentication", props.verifyOTP.err)
             }
@@ -644,6 +648,11 @@ class PasswordChange extends Component {
         });
     };
 
+    TFAModalCancel = () => {
+        this.setState({
+            showModalTFA: false
+        });
+    }
     render() {
         var me = this;
         const { getFieldProps } = this.props.form;
@@ -732,8 +741,11 @@ class PasswordChange extends Component {
                         <Buttondiv>
                             <NewButton onClick={this.TF_AUTH.bind(this)}> {`${this.state.is_twofactor} AUTHENTICATOR`}</NewButton>
                         </Buttondiv>
+                        {console.log("Password Change", this.state.backupCodeTFA)}
+                        <TFAModal visible={this.state.showModalTFA} TFAModalCancel={() => this.TFAModalCancel()} TFACode={this.state.backupCodeTFA} />
                     </TFCol>
                 </TwofactorRow>
+
                 {(this.state.show_QR === true) ?
                     <BarRow >
                         <LeftCol sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>

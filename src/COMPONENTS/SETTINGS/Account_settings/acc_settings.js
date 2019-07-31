@@ -13,11 +13,12 @@ import SimpleReactValidator from 'simple-react-validator';
 import { globalVariables } from 'Globals';
 import { deleteAccount } from "ACTIONS/authActions"
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader"
-import { NewButton, NewInput } from "COMPONENTS/SETTINGS/changePassword/change_email"
+import IpModal from "./ip_modal"
 
 /* styled Components */
 import { AccWrap,/*  NotiWrap, NotiHead, NotiDesc, CheckRow, CheckRow2, CheckCol, CheckCol2, CheckCol3, CheckCol4, HR, */ LoginHistory, HistoryHead, Heading, Desc, FontAwesomeIconS, TableWrap, HR2, DeleteWrap, DeleteHead, DeleteDesc, DeleteBtn, ButtonDel, PaginationS } from 'STYLED-COMPONENTS/SETTINGS/accsettingsStyle'
-
+import { NewButton, NewInput } from "COMPONENTS/SETTINGS/changePassword/change_email"
+import { VerifyModal, Description, NewP, InputLabel, OTPInput, ButtonDiv } from "./ip_modal"
 
 const IpButton = styled(NewButton)`
 margin-top:20px;
@@ -143,11 +144,15 @@ class Acc_settings extends Component {
         {
             title: 'Action',
             key: 'action',
-            render: (src) => (
-                <div onClick={this.deleteIP.bind(this, src)} style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}>
-                    Delete
-                </div>
-            ),
+            render: (src) => {
+                console.log(src.is_permanent)
+                return (
+                    <div>
+                        {src.is_permanent == true ? "-" : <div onClick={this.deleteIP.bind(this, src)} style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}>
+                            Delete
+                </div>}</div>
+                );
+            },
         },]
         this.state = {
             loginHistory: [],
@@ -160,10 +165,12 @@ class Acc_settings extends Component {
             loader: false,
             showAddModal: false,
             whitelistData: [],
+            visibleIpModal: false,
             fields: {
                 ip: null,
                 days: null
-            }
+            },
+            isWhitelistIp: false
         };
 
         this.validator = new SimpleReactValidator();
@@ -172,10 +179,13 @@ class Acc_settings extends Component {
         this.getIpWhitelist = this.getIpWhitelist.bind(this);
         this.addIpWhitelist = this.addIpWhitelist.bind(this);
         this.onChangeSwitch = this.onChangeSwitch.bind(this);
+        this.onChangeIP = this.onChangeIP.bind(this);
+        this.fianlIpWhitelist = this.fianlIpWhitelist.bind(this);
         this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
     }
 
     /* Life Cycle Methods */
+
     componentWillReceiveProps(props, newProps) {
         /*  console.log(this.props)
          if(this.props.theme!==undefined)
@@ -188,10 +198,24 @@ class Acc_settings extends Component {
                      this.setState({searchCSS:"INPUT_search"})
              }
          } */
+
     }
+
     componentDidMount() {
         this.getAllLoginHistory(1);
         this.getIpWhitelist(this.state.pageIp);
+        if (this.props.profileDetails !== "" && this.props.profileDetails !== undefined) {
+            this.setState({
+                checked: this.props.profileDetails.security_feature
+            });
+            console.log(this.props)
+            if (this.props.profileDetails.is_whitelist_ip !== undefined && this.props.profileDetails.is_whitelist_ip !== null) {
+                console.log("9898989898988898989")
+                this.setState({
+                    isWhitelistIp: this.props.profileDetails.is_whitelist_ip
+                });
+            }
+        }
         if (this.props.theme !== undefined) {
             if (this.props.theme !== this.state.theme) {
                 if (this.props.theme === false)
@@ -200,6 +224,7 @@ class Acc_settings extends Component {
                     this.setState({ notiCSS: "noti_table_night", historyCSS: "history_table_night" })
             }
         }
+
     }
 
     getIpWhitelist(pageIp) {
@@ -360,46 +385,56 @@ class Acc_settings extends Component {
             showAddModal: false
         });
     }
-    addIpWhitelist() {
-        console.log("I am Clicked");
-        if (this.validator.allValid()) {
-            this.setState({ loader: true })
-            fetch(API_URL + `/users/add-whitelist-ip`, {
-                method: "post",
-                headers: {
-                    Authorization: "Bearer " + this.props.isLoggedIn
-                },
-                body: JSON.stringify(this.state.fields)
+    fianlIpWhitelist(fields) {
+        this.setState({ loader: true })
+        fetch(API_URL + `/users/add-whitelist-ip`, {
+            method: "post",
+            headers: {
+                Authorization: "Bearer " + this.props.isLoggedIn
+            },
+            body: JSON.stringify(fields)
+        })
+            .then(response => {
+                console.log(response)
+                return response.json()
             })
-                .then(response => {
-                    console.log(response)
-                    return response.json()
-                })
-                .then((responseData) => {
-                    console.log("Response ---> ", responseData)
-                    if (responseData.status == 200) {
-                        this.getIpWhitelist(this.state.pageIp);
-                        this.openNotificationWithIcon('success', responseData.status, responseData.message);
-                        let fields = {
-                            days: null,
-                            ip: null
-                        }
-                        this.setState({ loader: false, showAddModal: false, fields })
+            .then((responseData) => {
+                console.log("Response ---> ", responseData)
+                if (responseData.status == 200) {
+                    this.getIpWhitelist(this.state.pageIp);
+                    this.openNotificationWithIcon('success', "SUCCESS", responseData.message);
+                    let fields = {
+                        days: null,
+                        ip: null
+                    }
+                    this.setState({ loader: false, showAddModal: false, fields, visibleIpModal: false, isWhitelistIp: true })
 
-                    }
-                    else {
-                        this.setState({ loader: false })
-                        this.openNotificationWithIcon('error', responseData.status, responseData.err);
-                    }
-                })
-                .catch(error => {/* console.log(error) */
+                }
+                else {
                     this.setState({ loader: false })
+                    this.openNotificationWithIcon('error', responseData.status, responseData.err);
+                }
+            })
+            .catch(error => {
+                console.log(error)
+                this.setState({ loader: false })
 
-                })
+            })
+    }
+    addIpWhitelist(e, fields = null) {
+        console.log(fields, e)
+        if (fields == null) {
+
+            if (this.validator.allValid()) {
+                this.fianlIpWhitelist(this.state.fields);
+            }
+            else {
+                this.validator.showMessages();
+                this.forceUpdate();
+            }
         }
         else {
-            this.validator.showMessages();
-            this.forceUpdate();
+            this.fianlIpWhitelist(fields);
         }
 
     }
@@ -418,7 +453,7 @@ class Acc_settings extends Component {
             })
             .then((responseData) => {
                 this.getIpWhitelist(this.state.pageIp);
-                this.openNotificationWithIcon('success', responseData.status, responseData.message);
+                this.openNotificationWithIcon('success', "SUCCESS", responseData.message);
                 this.setState({ loader: false })
 
             })
@@ -440,22 +475,76 @@ class Acc_settings extends Component {
     }
     onChangeSwitch(checked) {
         console.log(checked);
-        // fetch(API_URL + `/users/add-whitelist-ip`, {
-        //     method: "post",
-        //     headers: {
-        //         Authorization: "Bearer " + this.props.isLoggedIn
-        //     },
-        //     body: JSON.stringify()
-        // })
-        //     .then(response => {
-        //         console.log(response)
-        //         return response.json()
-        //     })
-        //     .then((responseData) => { })
-        //     .catch(error => {/* console.log(error) */
-        //         this.setState({ loader: false })
-        //     })
+        this.setState({ loader: true });
+        fetch(API_URL + `/users/security-feature-status-change`, {
+            method: "post",
+            headers: {
+                Authorization: "Bearer " + this.props.isLoggedIn,
+            },
+            body: JSON.stringify({
+                security_feature: checked
+            })
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                if (responseData.status == 200) {
+                    this.setState({
+                        checked
+                    }, () => {
+                        this.openNotificationWithIcon("success", "Success", responseData.message);
+                    });
 
+                }
+                else {
+                    this.openNotificationWithIcon("success", responseData.status, responseData.err);
+                }
+                this.setState({ loader: false });
+            })
+            .catch(error => {/* console.log(error) */
+                this.openNotificationWithIcon("error", "Error", "Something went wrong!");
+                this.setState({ loader: false })
+            })
+
+    }
+    onChangeIP(checked) {
+
+        console.log(checked, API_URL, this.props);
+
+        this.setState({ loader: true });
+
+        fetch(API_URL + `/users/whitelist-ip-status-change`, {
+            method: "post",
+            headers: {
+                Authorization: "Bearer " + this.props.isLoggedIn,
+            },
+            body: JSON.stringify({
+                status: checked
+            })
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                console.log(responseData)
+                if (responseData.status == 200) {
+                    console.log("Inside IF")
+                    if (checked == true)
+                        this.setState({ visibleIpModal: true, checkedIP: checked });
+                }
+                else {
+                    console.log("Inside ELSE")
+                    this.openNotificationWithIcon("error", responseData.status, responseData.err);
+                }
+                this.setState({ loader: false });
+            })
+            .catch(error => {
+                console.log(error)
+                this.openNotificationWithIcon("error", "Error", "Something went wrong!");
+                this.setState({ loader: false })
+            })
+
+    }
+    ipModalCancel() {
+        console.log("IP Modal Cancel")
+        this.setState({ visibleIpModal: false, checkedIP: false });
     }
     render() {
         const { fields } = this.state
@@ -494,7 +583,8 @@ class Acc_settings extends Component {
                             pagination={false}
                             bordered
                             dataSource={this.state.loginHistory}
-                            columns={columns} />
+                            columns={columns}
+                        />
                     </TableWrap>
 
                     <PaginationS
@@ -519,9 +609,9 @@ class Acc_settings extends Component {
                     <DeleteDesc style={{ display: "flex", justifyContent: "center" }}>
                         <div style={{ width: "1000px" }}>Disable withdrawals for 24 hours, when any security method is changed, for added security purposes.Meanwhile a warning message should also be shown to the user before updating the security methods indicating the same.</div>
                     </DeleteDesc>
-
+                    {console.log(this.state.checked)}
                     <TableWrap>
-                        <Switch checkedChildren="ON" unCheckedChildren="OFF" defaultChecked onChange={this.onChangeSwitch} />
+                        <Switch checkedChildren="ON" unCheckedChildren="OFF" defaultChecked onChange={this.onChangeSwitch} checked={this.state.checked} />
                     </TableWrap>
 
                 </div>
@@ -538,25 +628,35 @@ class Acc_settings extends Component {
                             {/* <span>This feature provides information about the last activity on this mail account and any concurrent activity.</span> */}
                         </Desc>
                     </HistoryHead>
-                    <TableWrap>
-                        <Table
-                            className={this.state.historyCSS}
-                            pagination={false}
-                            bordered
-                            dataSource={this.state.whitelistData}
-                            columns={this.columnsIP} />
-                    </TableWrap>
+                    {!this.state.isWhitelistIp &&
+                        <TableWrap>
+                            <Switch checkedChildren="ON" unCheckedChildren="OFF" defaultChecked onChange={this.onChangeIP} checked={this.state.checkedIP} />
+                        </TableWrap>
+                    }
+                    <IpModal visible={this.state.visibleIpModal} ipModalCancel={() => this.ipModalCancel()} permanentIp={(fields) => this.addIpWhitelist(null, fields)} />
 
-                    <PaginationS
-                        style={{ marginTop: '15px' }}
-                        className="ant-users-pagination"
-                        onChange={this.handleIpPagination.bind(this)}
-                        pageSize={10}
-                        hideOnSinglePage={true}
-                        current={this.state.pageIp}
-                        total={this.state.ipCount}
-                    />
-                    <IpButton onClick={this.openAddModal.bind(this)}>Add</IpButton>
+                    {this.state.isWhitelistIp &&
+                        <div>
+                            <TableWrap>
+                                <Table
+                                    className={this.state.historyCSS}
+                                    pagination={false}
+                                    bordered
+                                    dataSource={this.state.whitelistData}
+                                    columns={this.columnsIP} />
+                            </TableWrap>
+                            <PaginationS
+                                style={{ marginTop: '15px' }}
+                                className="ant-users-pagination"
+                                onChange={this.handleIpPagination.bind(this)}
+                                pageSize={10}
+                                hideOnSinglePage={true}
+                                current={this.state.pageIp}
+                                total={this.state.ipCount}
+                            />
+                            <IpButton onClick={this.openAddModal.bind(this)}>Add</IpButton>
+                        </div>
+                    }
                 </LoginHistory>
                 <HR2 />
                 <DeleteWrap>
@@ -571,31 +671,30 @@ class Acc_settings extends Component {
                     </DeleteBtn>
                 </DeleteWrap>
                 {(this.state.loader === true || this.props.loader === true) ? <FaldaxLoader /> : ""}
-                <Modal
+                <VerifyModal
                     visible={this.state.showAddModal}
                     onCancel={this.closeModal}
-                    footer={[<Button onClick={this.closeModal}>Cancel</Button>,
-                    <Button style={{ backgroundColor: "rgb(0,170,250)" }} type="primary" /* disabled={isDisabled} */ onClick={this.addIpWhitelist}>
-                        Update
-                    </Button>]}
+                    title="Add IP to Whitelist"
+                    footer={null}
                 >
-                    <div style={{ textAlign: "center", marginTop: "10px" }}>
-                        <b style={{ fontSize: "18px" }}>Add IP to Whitelist</b>
-
-                        <div style={{ textAlign: "center", marginTop: "30px" }}>
-                            <div style={{ textAlign: "center", marginTop: "10px" }}>
-                                <label style={{ display: "block" }}>Enter IP</label>
-                                <ModalIpInput name="ip" onChange={this.ipChange.bind(this)} value={this.state.fields.ip} style={{ width: "200px", padding: "5px" }} />
-                                {this.validator.message("ip", this.state.fields.ip, "required", "text-danger-validation", { required: "IP field is required." })}
-                            </div>
-                            <div style={{ textAlign: "center", marginTop: "10px" }}>
-                                <label style={{ display: "block" }}>Enter Days</label>
-                                <DaysInput name="days" style={{ width: "200px", padding: "5px" }} onChange={this.ipChange.bind(this)} min="1" type='number' value={this.state.fields.days} />
-                            </div>
+                    <Description> Please enter IP which will be permanent for your FALDAX account.</Description>
+                    <NewP>
+                        <InputLabel>Enter IP*</InputLabel>
+                        <div>
+                            <OTPInput value={this.state.fields.ip}
+                                size="medium" onChange={this.ipChange.bind(this)} name="ip" style={{ marginBottom: "20px" }} />
+                            {this.validator.message("ip", this.state.fields.ip, "required", "text-danger-validation", { required: "IP field is required." })}
                         </div>
-                    </div>
-
-                </Modal>
+                        <InputLabel>Enter Days</InputLabel>
+                        <div>
+                            <OTPInput style={{ paddingRight: "10px" }} min="1" value={this.state.fields.days} type="number"
+                                size="medium" onChange={this.ipChange.bind(this)} name="days" />
+                        </div>
+                    </NewP>
+                    <ButtonDiv>
+                        <NewButton onClick={this.addIpWhitelist}>Submit</NewButton>
+                    </ButtonDiv>
+                </VerifyModal>
             </AccWrap>
         );
     }
