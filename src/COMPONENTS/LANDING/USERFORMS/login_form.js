@@ -726,13 +726,11 @@ class Login_Form extends Component {
                     }
                     <input style={{ display: "none" }} type="submit" value="Submit" />
                   </form>
-                  {!this.state.isOtpRequired &&
+                  {/* {!this.state.isOtpRequired &&
                     <CheckWrap>
-                      {/* <Remember>
-                <Check type="checkbox" /> Remember Me</Remember> */}
                       <Forgot onClick={this._goToForgotPwd}>Forgot Password?</Forgot>
                     </CheckWrap>
-                  }
+                  } */}
                   {this.state.isOtpRequired &&
                     <CheckWrap>
                       {/* <Remember>
