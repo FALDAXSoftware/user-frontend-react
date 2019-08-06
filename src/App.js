@@ -41,6 +41,7 @@ const HomePage = lazy(() => import('COMPONENTS/LANDING/homepage'));
 const Login = lazy(() => import('COMPONENTS/LANDING/USERFORMS/login_form'));
 const EmailVerification = lazy(() => import('COMPONENTS/LANDING/USERFORMS/emailverification'));
 const ResendEmailVerification = lazy(() => import('COMPONENTS/LANDING/USERFORMS/resendemailverification'));
+const ProfileBackup = lazy(() => import('COMPONENTS/LANDING/USERFORMS/profile_backup'));
 
 // import dotenv from 'dotenv';
 
@@ -182,7 +183,7 @@ class App extends Component {
                     <Route path="/verify-email" exact title='Email Verification' component={EmailVerification} />
                     <Route path="/signup-success" exact title='Thank You' component={SignupSuccess} />
                     <Route path="/resend-verification" exact title='Resend Email Verification' component={ResendEmailVerification} />
-
+                    <Route path="/profile-backup/:email" exact title='Login' component={ProfileBackup} />
                     <Route path="/Chart" exact title='Trading View' component={Chart} />
                     <RestrictedRoute
                       path="/"

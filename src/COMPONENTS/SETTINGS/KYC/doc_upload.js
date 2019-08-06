@@ -38,11 +38,11 @@ const SSNlabel = styled.label`
     text-align:center;
     margin-bottom:10px;
 `
-const Filewrap = styled.div`
+export const Filewrap = styled.div`
     text-align:center;
     margin-top:20px;
 `
-const Fileselect1 = styled.div`
+export const Fileselect1 = styled.div`
     display:inline-block;
     width: 146px;
     height: 146px;
@@ -68,7 +68,7 @@ const Fileselect2 = styled(Fileselect1)`
         margin-left:auto;
     }
 `
-const ButtonUp = styled.button`
+export const ButtonUp = styled.button`
     display: block;
     width: 100%;
     /* margin: 0 auto; */
@@ -86,7 +86,7 @@ const ButtonUp = styled.button`
         outline: none;
     }
 `
-const Plus = styled.span`
+export const Plus = styled.span`
     width: 40px;
     height: 40px;
     display: block;
@@ -98,7 +98,7 @@ const Plus = styled.span`
     font-size: 21px;
     padding-top: 6px;
 `
-const Plustext = styled.span`
+export const Plustext = styled.span`
 margin-top: 18px;
 display: block;
 font-size: 18px;
@@ -109,14 +109,14 @@ const Plus2 = styled(Plus)`
 `
 const Plustext2 = styled(Plustext)`
 `
-const Fileinput = styled.input`
+export const Fileinput = styled.input`
     visibility: hidden;
     position: absolute;`
 const Fileinput2 = styled.input`
     visibility: hidden;
     position: absolute;
 `
-const RemoveIcon1 = styled(Icon)`
+export const RemoveIcon1 = styled(Icon)`
     color:${props => props.theme.mode == "dark" ? "white" : "black"};
 `
 const RemoveIcon2 = styled(RemoveIcon1)`
