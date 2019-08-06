@@ -289,6 +289,7 @@ class Login_Form extends Component {
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
     this.verifyCallback = this.verifyCallback.bind(this);
     this.onClickTFA = this.onClickTFA.bind(this);
+    this.forgotBackup = this.forgotBackup.bind(this);
   }
 
   static propTypes = {
@@ -655,10 +656,15 @@ class Login_Form extends Component {
   onClickTFA() {
     console.log("onClickTFA")
     this.setState({
-      showBackUpInput: true
+      showBackUpInput: !this.state.showBackUpInput
     });
   }
 
+  forgotBackup() {
+    console.log(this.props.form.getFieldValue('email'))
+    var email = this.props.form.getFieldValue('email');
+    this.props.history.push(`/profile-backup/${encodeURIComponent(email)}`)
+  }
   render() {
     if (this.props.isLoggedIn) {
       this.props.history.push("/editProfile");
@@ -710,7 +716,7 @@ class Login_Form extends Component {
                     </div>
                     <PassReq className="pass_msg">{this.state.pass_msg}</PassReq>
 
-                    {this.state.isOtpRequired &&
+                    {this.state.isOtpRequired && !this.state.showBackUpInput ?
                       <div>
                         <OtpLabel>Two-Factor Authentication is enabled for this account. Please enter your 2FA code below to proceed.</OtpLabel>
                         <div>
@@ -722,24 +728,31 @@ class Login_Form extends Component {
                           <UserIconF id="otp_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                         </div>
                         <PassReq className="otp_msg">{this.state.otp_msg}</PassReq>
-                      </div>
+                      </div> : ""
                     }
                     <input style={{ display: "none" }} type="submit" value="Submit" />
                   </form>
-                  {/* {!this.state.isOtpRequired &&
+                  {!this.state.isOtpRequired &&
                     <CheckWrap>
                       <Forgot onClick={this._goToForgotPwd}>Forgot Password?</Forgot>
                     </CheckWrap>
-                  } */}
-                  {this.state.isOtpRequired &&
+                  }
+                  {this.state.isOtpRequired && !this.state.showBackUpInput ?
                     <CheckWrap>
                       {/* <Remember>
                       <Check type="checkbox" /> Remember Me</Remember> */}
                       <Forgot onClick={this.onClickTFA}>Don't have Two-Factor Authentication?</Forgot>
-                    </CheckWrap>
+                    </CheckWrap> : ""
+                  }
+                  {this.state.showBackUpInput ?
+                    <CheckWrap>
+                      {/* <Remember>
+                      <Check type="checkbox" /> Remember Me</Remember> */}
+                      <Forgot onClick={this.onClickTFA}>Have Two-Factor Authentication?</Forgot>
+                    </CheckWrap> : ""
                   }
                   {this.state.showBackUpInput &&
-                    <div>
+                    <div style={{ paddingTop: "10px" }}>
                       <OtpLabel>Please enter your Back-up code below to proceed.</OtpLabel>
                       <div>
                         <Username id="backUpCode" {...getFieldProps('twofactor_backup_code', {
@@ -751,6 +764,11 @@ class Login_Form extends Component {
                       </div>
                       <PassReq className="otp_msg">{this.state.otp_msg}</PassReq>
                     </div>
+                  }
+                  {this.state.showBackUpInput &&
+                    <CheckWrap>
+                      <Forgot onClick={this.forgotBackup}>Forgot Backup Code?</Forgot>
+                    </CheckWrap>
                   }
                   {(errors = getFieldError('required')) ? errors.join(',') : null}
                   <ButtonLogin disabled={this.state.loader} onClick={this.submit}>LOGIN</ButtonLogin>
