@@ -232,9 +232,8 @@ class DocUpload extends Component {
                                             });
                                         };
                                     }
+
                                     //check file size to max 5mb (5*1024*1024=5242880) and type image
-
-
 
                                     reader.readAsDataURL(file);
                                     var DataForm = new FormData()
