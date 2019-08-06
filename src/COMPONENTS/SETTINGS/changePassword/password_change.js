@@ -9,6 +9,7 @@ import { createForm, formShape } from 'rc-form';
 /* components */
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 import { _EYE, _ACTIVEEYE } from "CONSTANTS/images";
+import RegenerateBackupCode from './regenerate_backup'
 import ChangeEmail from './change_email';
 import TFAModal from './twofactor_modal'
 
@@ -723,64 +724,72 @@ class PasswordChange extends Component {
                 <EmailRow>
                     <ChangeEmail props={this.props} />
                 </EmailRow>
-                <TwofactorRow>
-                    <TFCol>
-                        <HeadTF>Two-Factor Authentication</HeadTF>
-                        <IsEnabled> Status:
-                            {isEnabled === 'DISABLED' ?
-                                <span style={{ color: 'red' }}> {isEnabled}</span>
-                                : <span style={{ color: 'green' }}> {isEnabled}</span>
-                            }
-                        </IsEnabled>
-                        <Headtext>
-                            {isEnabled === 'DISABLED' ?
-                                <span>Two-Factor Authentication significantly increases the security of your account. We highly recommend that you enable it. </span>
-                                : <span>Way to go! You care about your security as much as we do. Thanks for enabling Two-Factor Authentication!</span>
-                            }
-                        </Headtext>
-                        <Buttondiv>
-                            <NewButton onClick={this.TF_AUTH.bind(this)}> {`${this.state.is_twofactor} AUTHENTICATOR`}</NewButton>
-                        </Buttondiv>
-                        {console.log("Password Change", this.state.backupCodeTFA)}
-                        <TFAModal visible={this.state.showModalTFA} TFAModalCancel={() => this.TFAModalCancel()} TFACode={this.state.backupCodeTFA} />
-                    </TFCol>
-                </TwofactorRow>
 
-                {(this.state.show_QR === true) ?
-                    <BarRow >
-                        <LeftCol sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>
-                            <ImageWrap>
-                                <Barcode src={this.state.QR_img} />
-                            </ImageWrap>
-                            <Keywrap>
-                                <Keytext>16 Digit Key</Keytext>
-                                <Key>{this.state.Key}</Key>
-                            </Keywrap>
-                        </LeftCol>
-                        <RightCol sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>
-                            <Orderlist>
-                                <LI>Install an authenticator app on your mobile device. We suggest Google Authenticator or Authy. </LI>
-                                <LI>Scan the QR code when prompted by your Authenticator.</LI>
-                                <LI>In case your phone gets stolen or erased, you will need this code to link FALDAX with a new app.</LI>
-                                <LI>Do not share the code with anyone. FALDAX will never ask you for this code.</LI>
-                            </Orderlist>
-                            <TFcode>
-                                <TFlabel>Enter your two-factor code here:</TFlabel>
-                                <div>
-                                    <TFinput onChange={this.OTPfield.bind(this)} />
-                                    <UserIconS id="otp_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-                                    <UserIconF id="otp_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
-                                </div>
-                                <Passreq className="MSG_OTP">{this.state.otp_msg}</Passreq>
-                            </TFcode>
-                            <Enable>
-                                <Ebutton onClick={this.finalEnable.bind(this)}>
-                                    ENABLE
+                <ChangeRow>
+                    <TwofactorRow>
+                        <TFCol>
+                            <HeadTF>Two-Factor Authentication</HeadTF>
+                            <IsEnabled> Status:
+                            {isEnabled === 'DISABLED' ?
+                                    <span style={{ color: 'red' }}> {isEnabled}</span>
+                                    : <span style={{ color: 'green' }}> {isEnabled}</span>
+                                }
+                            </IsEnabled>
+                            <Headtext>
+                                {isEnabled === 'DISABLED' ?
+                                    <span>Two-Factor Authentication significantly increases the security of your account. We highly recommend that you enable it. </span>
+                                    : <span>Way to go! You care about your security as much as we do. Thanks for enabling Two-Factor Authentication!</span>
+                                }
+                            </Headtext>
+                            <Buttondiv>
+                                <NewButton onClick={this.TF_AUTH.bind(this)}> {`${this.state.is_twofactor} AUTHENTICATOR`}</NewButton>
+                            </Buttondiv>
+                            {console.log("Password Change", this.state.backupCodeTFA)}
+                            <TFAModal visible={this.state.showModalTFA} TFAModalCancel={() => this.TFAModalCancel()} TFACode={this.state.backupCodeTFA} />
+                        </TFCol>
+                    </TwofactorRow>
+
+                    {(this.state.show_QR === true) ?
+                        <BarRow >
+                            <LeftCol sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>
+                                <ImageWrap>
+                                    <Barcode src={this.state.QR_img} />
+                                </ImageWrap>
+                                <Keywrap>
+                                    <Keytext>16 Digit Key</Keytext>
+                                    <Key>{this.state.Key}</Key>
+                                </Keywrap>
+                            </LeftCol>
+                            <RightCol sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>
+                                <Orderlist>
+                                    <LI>Install an authenticator app on your mobile device. We suggest Google Authenticator or Authy. </LI>
+                                    <LI>Scan the QR code when prompted by your Authenticator.</LI>
+                                    <LI>In case your phone gets stolen or erased, you will need this code to link FALDAX with a new app.</LI>
+                                    <LI>Do not share the code with anyone. FALDAX will never ask you for this code.</LI>
+                                </Orderlist>
+                                <TFcode>
+                                    <TFlabel>Enter your two-factor code here:</TFlabel>
+                                    <div>
+                                        <TFinput onChange={this.OTPfield.bind(this)} />
+                                        <UserIconS id="otp_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                                        <UserIconF id="otp_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                                    </div>
+                                    <Passreq className="MSG_OTP">{this.state.otp_msg}</Passreq>
+                                </TFcode>
+                                <Enable>
+                                    <Ebutton onClick={this.finalEnable.bind(this)}>
+                                        ENABLE
                             </Ebutton>
-                            </Enable>
-                        </RightCol>
-                    </BarRow>
-                    : ''}
+                                </Enable>
+                            </RightCol>
+                        </BarRow>
+                        : ''}
+                </ChangeRow>
+                {console.log(isEnabled)}
+                {
+                    isEnabled === "ENABLED" &&
+                    <RegenerateBackupCode />
+                }
                 {(this.props.loader === true) ? <FaldaxLoader /> : ""}
             </Wrapper>
         );
