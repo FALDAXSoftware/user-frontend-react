@@ -323,8 +323,8 @@ class ProfileBackup extends Component {
     if (this.state.flagImage) {
       console.log(this.state, this.state.profileImage, this.state.email)
       let dataForm = new FormData();
-      dataForm.append('uploaded_file', this.state.profileImage);
       dataForm.append('email', this.state.email)
+      dataForm.append('uploaded_file', this.state.profileImage);
       this.setState({ loader: true })
       fetch(API_URL + "/users/forgot-twofactors", {
         method: "post",
@@ -334,7 +334,8 @@ class ProfileBackup extends Component {
         .then((responseData) => {
           if (responseData.status == 200) {
             this.setState({ loader: false })
-            /* this.props.history.push('/signup-success'); */
+            this.props.history.push('/login');
+            this.openNotificationWithIcon('success', 'Success', responseData.message)
           }
           else {
             this.setState({ loader: false })
