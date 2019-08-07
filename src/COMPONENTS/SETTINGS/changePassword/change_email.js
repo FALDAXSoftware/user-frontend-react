@@ -74,7 +74,7 @@ const Old = styled.div`
         width:260px;
     }
 `
-const NewP = styled(Old)`
+export const NewP = styled(Old)`
     margin-top:30px;
 `
 export const InputLabel = styled.label`
@@ -113,10 +113,10 @@ export const OldInput = styled(Input)`
 `
 export const NewInput = styled(OldInput)`
 `
-const OTPInput = styled(NewInput)`
+export const OTPInput = styled(NewInput)`
     width: 74%;
 `
-const ButtonDiv = styled.div`
+export const ButtonDiv = styled.div`
     margin-top:30px;
     margin-bottom:50px;
 `
@@ -134,10 +134,10 @@ const EmailDN = styled.p`
     font-weight:600;
     color:${props => props.theme.mode === "dark" ? "white" : ""};
 `
-const Description = styled.p`
+export const Description = styled.p`
 color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
-const VerifyModal = styled(Modal)`
+export const VerifyModal = styled(Modal)`
     
     .ant-modal-content
     {
