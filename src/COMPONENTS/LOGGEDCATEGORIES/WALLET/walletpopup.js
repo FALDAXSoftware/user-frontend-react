@@ -331,7 +331,7 @@ class WalletPopup extends Component {
                     }
                     else if (responseData.status === 202) {
                         this.setState({
-                            z: true
+                            showTFAModal: true
                         });
                     }
                     else {
