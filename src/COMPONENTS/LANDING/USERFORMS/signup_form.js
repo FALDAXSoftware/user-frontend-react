@@ -357,7 +357,7 @@ class SignupForm extends Component {
           this.setState({ loader: true })
           this.props.Signup(obj);
         } else {
-          this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reload the page.");
+          this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reloading the page.");
         }
       } else {
         if (error !== undefined && error !== null) {

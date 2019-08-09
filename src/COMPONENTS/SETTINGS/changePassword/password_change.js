@@ -450,7 +450,7 @@ class PasswordChange extends Component {
                         document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
                     })
                 }
-                this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue.")
+                //this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue.")
             }
         });
     }

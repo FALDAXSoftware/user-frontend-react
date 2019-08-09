@@ -294,7 +294,7 @@ class ApplyJob extends Component {
                     .catch(error => {
                     })
             } else {
-                this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reload the page.");
+                this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reloading the page.");
             }
         } else {
             this.validator.showMessages();
@@ -352,14 +352,14 @@ class ApplyJob extends Component {
                                             <LeftWing>
                                                 <LabelOne>First Name*</LabelOne>
                                                 <InputOne name="first_name" onChange={this._onChangeFields} value={fields.first_name} />
-                                                {this.validator.message('first_name', fields.first_name, 'required|alpha_num', 'text-danger-validation')}
+                                                {this.validator.message('first_name', fields.first_name, 'required|alpha_num|max:30', 'text-danger-validation')}
                                             </LeftWing>
                                         </Col>
                                         <Col sm={24} md={12}>
                                             <RightWing>
                                                 <LabelOne>Last Name*</LabelOne>
                                                 <InputTwo name="last_name" onChange={this._onChangeFields} value={fields.last_name} />
-                                                {this.validator.message('last_name', fields.last_name, 'required|alpha_num', 'text-danger-validation')}
+                                                {this.validator.message('last_name', fields.last_name, 'required|alpha_num|max:30', 'text-danger-validation')}
                                             </RightWing>
                                         </Col>
                                     </Row>
@@ -375,7 +375,7 @@ class ApplyJob extends Component {
                                                 <RightWing>
                                                     <LabelOne>Phone*</LabelOne>
                                                     <InputTwo name="phone_number" onChange={this._onChangeFields} value={fields.phone_number} />
-                                                    {this.validator.message('phone_number', fields.phone_number, 'required|integer', 'text-danger-validation')}
+                                                    {this.validator.message('phone_number', fields.phone_number, 'required|integer|min:10|max:15', 'text-danger-validation')}
                                                 </RightWing>
                                             </Col>
                                         </Row>
@@ -385,7 +385,7 @@ class ApplyJob extends Component {
                                             <Col sm={24} md={24}>
                                                 <LabelOne>Email*</LabelOne>
                                                 <InputThree name="email" onChange={this._onChangeFields} value={fields.email} />
-                                                {this.validator.message('email', fields.email, 'required|validEmail', 'text-danger-validation')}
+                                                {this.validator.message('email', fields.email, 'required|validEmail|max:50', 'text-danger-validation')}
                                             </Col>
                                         </Row>
                                     </Gap>
