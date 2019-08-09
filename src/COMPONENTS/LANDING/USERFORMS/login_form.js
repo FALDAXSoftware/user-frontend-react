@@ -461,7 +461,7 @@ class Login_Form extends Component {
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
-          this.setState({ otpIcon: true,backupIcon:false })
+          this.setState({ otpIcon: true, backupIcon: false });
           document.querySelector("#otp_icon_success").style.display = "inline-block"
           document.querySelector("#otp_icon_fail").style.display = "none"
           document.querySelectorAll(".otp_msg")[0].style.display = "none";
@@ -485,7 +485,7 @@ class Login_Form extends Component {
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
-          this.setState({ backupIcon: true,otpIcon:false })
+          this.setState({ backupIcon: true, otpIcon: false })
           document.querySelector("#backup_icon_success").style.display = "inline-block"
           document.querySelector("#backup_icon_fail").style.display = "none"
           document.querySelectorAll(".backup_msg")[0].style.display = "none";
