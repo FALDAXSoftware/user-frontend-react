@@ -23,9 +23,6 @@ import {
 
 let { API_URL } = globalVariables;
 
-
-
-
 class HubSpotTickets extends Component {
     constructor(props) {
         super(props);
@@ -54,7 +51,7 @@ class HubSpotTickets extends Component {
             })
     }
     render() {
-        const { ticketData, loader } = this.state;
+        const { ticketData, loader, ticketCount } = this.state;
         const statusArray = [
             {
                 title: "New",
@@ -100,9 +97,8 @@ class HubSpotTickets extends Component {
                                         </Col>
                                     </TicketWrap>
                                 ))
-                                    : <NDF>NO DATA FOUND</NDF>
+                                    : !loader && <NDF>NO DATA FOUND</NDF>
                                 }
-
                             </WholeWrap>
                         </TicketDiv>
                     </TicketContainer>
