@@ -197,6 +197,8 @@ class RegenerateBackupCode extends Component {
                             otp: ""
                         }
                         this.setState({ loader: false, visible: true, backupCode: responseData.twofactor_backup_code, fields })
+                        this.validator.hideMessages();
+                        this.forceUpdate();
                     } else {
                         this.setState({
                             loader: false, errMsg: true, errType: 'Error', errMessage: responseData.err
@@ -279,7 +281,7 @@ class RegenerateBackupCode extends Component {
                             <NewInput value={fields.otp} disabled={isShowOTP}
                                 size="large" placeholder="Code"
                                 onChange={this.onChangeField.bind(this, "otp")} />
-                            {this.validator.message('otp', this.state.fields['otp'], 'required|min:6|max:6')}
+                            {this.validator.message('two_factor_authentication_code', this.state.fields['otp'], 'required|min:6|max:6')}
                         </div>
                     </NewP>
                     <ButtonDiv>

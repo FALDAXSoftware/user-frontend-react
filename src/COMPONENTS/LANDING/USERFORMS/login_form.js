@@ -281,7 +281,8 @@ class Login_Form extends Component {
       loader: false,
       verify: false,
       recaptchaToken: null,
-      showBackUpInput: false
+      showBackUpInput: false,
+      backupIcon: null
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.IpVerify = this.IpVerify.bind(this);
@@ -310,7 +311,8 @@ class Login_Form extends Component {
   }
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      if (error === null && this.state.emailIcon === true && this.state.passIcon === true && (this.state.isOtpRequired === true ? this.state.otpIcon === true : true)) {
+      console.log(this.state.isOtpRequired, this.state.showBackUpInput, this.state.backupIcon, this.state.otpIcon)
+      if (error === null && this.state.emailIcon === true && this.state.passIcon === true && (this.state.isOtpRequired === true ? this.state.showBackUpInput === true ? this.state.backupIcon === true : this.state.otpIcon === true : true)) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
@@ -322,6 +324,9 @@ class Login_Form extends Component {
         if (value.otp && value.otp !== null && value.otp.trim() !== "" && value.otp !== undefined) {
           obj['otp'] = value.otp;
         }
+        if (this.state.showBackUpInput === true && value.twofactor_backup_code && value.twofactor_backup_code !== null && value.twofactor_backup_code.trim() !== "" && value.twofactor_backup_code !== undefined) {
+          obj['twofactor_backup_code'] = value.twofactor_backup_code;
+        }
         if (this.state.recaptchaToken != null) {
           obj["g_recaptcha_response"] = this.state.recaptchaToken;
           this.setState({ loader: true })
@@ -330,6 +335,7 @@ class Login_Form extends Component {
           this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reloading the page.");
         }
       } else {
+        console.log(error, value)
         if (error !== null) {
           if (error['password'] !== undefined && (value.password === "" || value.password === undefined)) {
             this.setState({ passIcon: false })
@@ -347,7 +353,11 @@ class Login_Form extends Component {
           }
         }
         else {
-          this.onChangeField(value.otp, "otp")
+          console.log(this.state.backupIcon)
+          if (this.state.backupIcon === true)
+            this.onChangeField(value.twofactor_backup_code, "twofactor_backup_code")
+          else if (this.state.otpIcon === true)
+            this.onChangeField(value.otp, "otp")
         }
       }
     });
@@ -451,7 +461,7 @@ class Login_Form extends Component {
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
-          this.setState({ otpIcon: true })
+          this.setState({ otpIcon: true, backupIcon: false });
           document.querySelector("#otp_icon_success").style.display = "inline-block"
           document.querySelector("#otp_icon_fail").style.display = "none"
           document.querySelectorAll(".otp_msg")[0].style.display = "none";
@@ -468,6 +478,30 @@ class Login_Form extends Component {
         document.querySelector("#otp_icon_fail").style.display = "inline-block";
         document.querySelectorAll(".otp_msg")[0].style.display = "block";
         this.setState({ otp_msg: "Otp is required." })
+      }
+    }
+    else if (field === "twofactor_backup_code") {
+      var re = /^\b[a-zA-Z0-9]{10}\b|\b[a-zA-Z0-9]{10}\b/;
+      var bool = re.test(value);
+      if (value !== "") {
+        if (bool === true) {
+          this.setState({ backupIcon: true, otpIcon: false })
+          document.querySelector("#backup_icon_success").style.display = "inline-block"
+          document.querySelector("#backup_icon_fail").style.display = "none"
+          document.querySelectorAll(".backup_msg")[0].style.display = "none";
+        } else {
+          this.setState({ backupIcon: false })
+          document.querySelector("#backup_icon_success").style.display = "none";
+          document.querySelector("#backup_icon_fail").style.display = "inline-block";
+          document.querySelectorAll(".backup_msg")[0].style.display = "block";
+          this.setState({ backup_msg: "Back-up code should have 10 characters." })
+        }
+      } else {
+        this.setState({ backupIcon: false })
+        document.querySelector("#backup_icon_success").style.display = "none";
+        document.querySelector("#backup_icon_fail").style.display = "inline-block";
+        document.querySelectorAll(".backup_msg")[0].style.display = "block";
+        this.setState({ backup_msg: "Back-up code is required." })
       }
     }
   }
@@ -654,7 +688,7 @@ class Login_Form extends Component {
   }
 
   onClickTFA() {
-    console.log("onClickTFA")
+    console.log("onClickTFA", !this.state.showBackUpInput)
     this.setState({
       showBackUpInput: !this.state.showBackUpInput
     });
@@ -762,7 +796,7 @@ class Login_Form extends Component {
                         <UserIconS id="backup_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                         <UserIconF id="backup_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                       </div>
-                      <PassReq className="otp_msg">{this.state.otp_msg}</PassReq>
+                      <PassReq className="backup_msg">{this.state.backup_msg}</PassReq>
                     </div>
                   }
                   {this.state.showBackUpInput &&

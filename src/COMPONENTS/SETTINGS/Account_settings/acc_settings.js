@@ -510,7 +510,8 @@ class Acc_settings extends Component {
 
         console.log(checked, API_URL, this.props);
 
-        this.setState({ loader: true });
+        this.setState({ visibleIpModal: true, checkedIP: checked });
+        /* this.setState({ loader: true });
 
         fetch(API_URL + `/users/whitelist-ip-status-change`, {
             method: "post",
@@ -539,7 +540,7 @@ class Acc_settings extends Component {
                 console.log(error)
                 this.openNotificationWithIcon("error", "Error", "Something went wrong!");
                 this.setState({ loader: false })
-            })
+            }) */
 
     }
     ipModalCancel() {
