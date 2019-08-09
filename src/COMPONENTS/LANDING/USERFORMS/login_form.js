@@ -332,7 +332,7 @@ class Login_Form extends Component {
           this.setState({ loader: true })
           this.props.Login(obj);
         } else {
-          this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reload the page.");
+          this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reloading the page.");
         }
       } else {
         console.log(error, value)

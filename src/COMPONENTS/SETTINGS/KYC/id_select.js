@@ -109,7 +109,7 @@ class IDselect extends Component {
             kycSteps["id_type"] = 2;
             kycSteps["steps"] = 2;
             this.props.kycFormAction(this.props.isLoggedIn, kycSteps);
-            this.props.next_step(3, "Driver's license")
+            this.props.next_step(3, "Driving license")
         } else if (document.getElementById('identity').checked) {
             kycSteps["id_type"] = 3;
             kycSteps["steps"] = 2;
@@ -172,7 +172,7 @@ class IDselect extends Component {
                                     <span className={`${this.state.background} license`}>
                                         <img alt="ID SELECTION" src={_ACTIVELICENSE} className="active" />
                                         <img alt="ID SELECTION" src={_LICENSELOGO} className="normal" />
-                                        <span className="text">Driver's license</span>
+                                        <span className="text">Driving license</span>
                                     </span>
                                 </label>
                             </LicenceCol>
@@ -217,7 +217,7 @@ class IDselect extends Component {
                                     <span className={`${this.state.background} license`}>
                                         <img alt="ID SELeCTION" src={_ACTIVELICENSE} className="active" />
                                         <img alt="ID SELeCTION" src={_LICENSELOGO} className="normal" />
-                                        <span className="text">Driver's license</span>
+                                        <span className="text">Driving license</span>
                                     </span>
                                 </label>
                             </LicenceCol>
