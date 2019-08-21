@@ -623,7 +623,7 @@ class SignupForm extends Component {
               <RightWrap className="wow fadeInDown" >
                 <LoginHead>Sign Up</LoginHead>
                 <Welcome>A Better Trading Experience is Moments Away</Welcome>
-                <SubHeading>Lets Get Started</SubHeading>
+                <SubHeading>Let's Get Started</SubHeading>
                 <form onSubmit={this.handleSubmit}>
                   <EmailLabel>First Name*</EmailLabel>
                   <div>
