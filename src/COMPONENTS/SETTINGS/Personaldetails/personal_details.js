@@ -355,7 +355,7 @@ class PersonalDetails extends Component {
 
         var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
         this.setState({ Datedata: date })
-        // console.log(value, field)
+        console.log("Step 3---------->", value, field)
         this.onChangeField(value, field);
     }
 
@@ -561,6 +561,7 @@ class PersonalDetails extends Component {
                 this.setState({ countrymsg })
             }
         } else if (field === "dob") {
+            console.log("Step 4 ------>", value);
             if ((value["day"]) && (value["month"]) && (value["year"])) {
                 this.setState({ dobIcon: true })
                 document.querySelectorAll(".dob_msg")[0].style.display = "none";
@@ -702,7 +703,8 @@ class PersonalDetails extends Component {
                 if (this.state.profileImage !== null && this.state.profileImage !== undefined && !this.state.profileImg.includes("def_profile.jpg")) {
                     profileData.append('profile_pic', this.state.profileImage)
                 }
-                this.props.profileupdateAction(this.props.isLoggedIn, profileData);
+                console.log("---------------->> USER API CALLED")
+                /* this.props.profileupdateAction(this.props.isLoggedIn, profileData); */
 
             } else {
                 this.openNotificationWithProfile("error", "Error", "Please complete all required details to continue")

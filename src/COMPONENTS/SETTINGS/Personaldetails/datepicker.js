@@ -34,6 +34,7 @@ export default class Datepicker extends Component {
     */
 
     onChangeDate(date, type) {
+        console.log("Step 1 -------> ", date, type)
         if (this.props.kyc !== "kyc") {
             if (type === "year") {
                 this.setState({ year: date });
@@ -58,20 +59,41 @@ export default class Datepicker extends Component {
                 if ((date == 0 || date == 2 || date == 4 || date == 6 || date == 7 || date == 9 || date == 11) && this.state.day !== null) {
                     fields[type] = date1;
                 }
-                else
-                    fields['day'] = "";
+                else {
+                    if (fields['day'] !== undefined && fields['day'] !== "") {
+                        if (date == 1) {
+                            if (fields['day'] > 29) {
+                                console.log("Step 2------->", fields, date, date1)
+                                this.setState({ day: "" })
+                                fields['day'] = "";
+                            }
+                        }
+                        else if (date !== 1) {
+                            if (fields['day'] > 30) {
+                                console.log("Step 2------->", fields, date, date1)
+                                this.setState({ day: "" })
+                                fields['day'] = "";
+                            }
+                        }
+
+                    }
+                    fields[type] = date1
+                }
             } else if (type === "day") {
                 this.setState({ day: date });
                 fields[type] = date;
             }
             let propFields
             if (this.props.profileDetails.dob !== null) {
+                console.log("Step 3------->", this.props.profileDetails.dob)
                 propFields = this.props.profileDetails.dob.split("-");
-                if (fields["day"] === undefined && propFields[2] !== undefined) { fields["day"] = propFields[2] }
+                console.log(fields, fields['day'], fields['month'])
+                if (fields["day"] === undefined && propFields[2] !== undefined) { fields["day"] = propFields[0] }
                 if (fields["month"] === undefined && propFields[1] !== undefined) { fields["month"] = propFields[1] }
-                if (fields["year"] === undefined && propFields[0] !== undefined) { fields["year"] = propFields[0] }
+                if (fields["year"] === undefined && propFields[0] !== undefined) { fields["year"] = propFields[2] }
 
             }
+            console.log("Step 4------->", fields)
             this.props.onDateChange(fields, "dob")
         }
         else {
