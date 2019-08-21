@@ -524,6 +524,7 @@ class PasswordChange extends Component {
             if (re.test(value) && value.length > 8 && value.length < 60) { this.setState({ stroke: "#7CFC00", percent: 80 }) }
             if (re.test(value) && value.length > 10 && value.length < 60) { this.setState({ stroke: "#008000", percent: 100 }) }
             if (value.length > 60) { this.setState({ stroke: "red", percent: 0 }) }
+            console.log(value.trim() !== "")
             if (value.trim() !== "" && value !== undefined) {
                 if (bool === true) {
                     this.setState({ newpassIcon: true, password: value })
@@ -540,8 +541,9 @@ class PasswordChange extends Component {
             } else {
                 this.setState({ newpassIcon: false, percent: 0 })
                 document.querySelector("#newchange_icon_success").style.display = "none"
-                document.querySelector("#newchange_icon_fail").style.display = "none"
-                document.querySelectorAll(".newchange_msg")[0].style.display = "none";
+                document.querySelector("#newchange_icon_fail").style.display = "inline-block"
+                document.querySelectorAll(".newchange_msg")[0].style.display = "block";
+                this.setState({ new_msg: "New password is required." })
             }
         }
         if (field === "confirm_password") {

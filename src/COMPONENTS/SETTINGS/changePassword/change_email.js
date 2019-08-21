@@ -357,12 +357,13 @@ class ChangeEmail extends Component {
                         </ButtonDiv>
                         {isShowOTP &&
                             <VerifyModal
-                                closable={false}
+                                closable={true}
                                 title="Verify Email Address"
+                                onCancel={this.closeVerifyModal}
                                 visible={isShowOTP}
                                 footer={null}
                             >
-                                <Description> We sent a one-time use verification code to <a href={`mailto:${fields['oldEmail']}`}></a>.
+                                <Description> We sent a one-time use verification code to old email address<a href={`mailto:${fields['oldEmail']}`}></a>.
                                      Please enter the code in the box below to complete the verification.</Description>
                                 <NewP>
                                     <InputLabel>Verification Code</InputLabel>

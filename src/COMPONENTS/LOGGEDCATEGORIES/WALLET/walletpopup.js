@@ -6,7 +6,7 @@ import { Button, Modal, Input, notification } from 'antd';
 import styled from 'styled-components';
 import SimpleReactValidator from "simple-react-validator";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-
+import moment from 'moment';
 /* Styled-Components */
 
 
@@ -320,6 +320,7 @@ class WalletPopup extends Component {
                     // console.log("SEND API", responseData)
                     if (responseData.status === 200) {
                         this.openNotificationWithIcon("success", "Successfully Sent", responseData.message);
+                        this.props.walletDetailsApi();
                         this.comingCancel();
                     }
                     else if (responseData.status === 201) {
@@ -339,7 +340,16 @@ class WalletPopup extends Component {
                             this.setState({
                                 showTFAModal: false
                             });
-                        this.openNotificationWithIcon("warning", "Warning", responseData.message ? responseData.message : responseData.err)
+                        console.log(responseData)
+                        if (responseData.status == 203) {
+                            console.log(responseData.datetime)
+                            var gmtDateTime = moment.utc(responseData.datetime, "YYYY-MM-DD HH:mm:ss")
+                            var local = gmtDateTime.local().format('YYYY-MMM-DD HH:mm:ss');
+                            console.log(local)
+                            this.openNotificationWithIcon("warning", "Warning", responseData.message ? `${responseData.message}${local}` : "")
+                        }
+                        else
+                            this.openNotificationWithIcon("warning", "Warning", responseData.message ? responseData.message : responseData.err)
                     }
                     this.setState({ loader: false });
                 }).catch(error => {

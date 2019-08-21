@@ -71,6 +71,7 @@ class WalletDetails extends Component {
         };
         this.changeCoins = this.changeCoins.bind(this);
         this._walletCreate = this._walletCreate.bind(this);
+        this.walletDetailsApi = this.walletDetailsApi.bind(this);
     }
 
     /* Life Cycle Methods */
@@ -99,54 +100,64 @@ class WalletDetails extends Component {
         }
         if (this.props.location !== undefined) {
             if (this.props.location.search.includes('coinID')) {
-                var coin_name = this.props.location.search.split('=');
-                this.setState({ loader: true });
-                fetch(API_URL + "/wallet-details", {
-                    method: "post",
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                        Authorization: "Bearer " + this.props.isLoggedIn
-                    },
-                    body: JSON.stringify({
-                        coinReceive: coin_name[1]
-                    })
-                }).then(response => response.json())
-                    .then((responseData) => {
-                        if (responseData.status == 200) {
-                            let transDetails = null;
-                            let walletUserDetails = null;
-                            // console.log(responseData)
-                            if (Object.keys(responseData.walletTransData).length > 0) {
-                                transDetails = responseData.walletTransData;
-                            }
-
-
-                            if (Object.keys(responseData.walletUserData).length > 0) {
-                                walletUserDetails = responseData.walletUserData;
-                            }
-                            self.setState({
-                                walletUserData: walletUserDetails,
-                                currencyConv: responseData.currencyConversionData,
-                                defaultCoin: walletUserDetails.coin_code,
-                                walletDetails: transDetails,
-                                loader: false, coin_code: coin_name[1],
-                                coinFee: responseData.default_send_Coin_fee
-                            }, () => {
-                            });
-                        }
-                        else {
-                            this.openNotificationWithIcon('error', responseData.status, responseData.err);
-                        }
-                    })
-                    .catch(error => {
-                        // console.log(error);
-                        this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
-                        this.setState({ loader: false });
-                    })
+                this.walletDetailsApi();
             }
         }
     }
+
+    /*
+        Page:/wallet-details
+        All wallet user details.
+    */
+    walletDetailsApi() {
+        var self = this;
+        var coin_name = this.props.location.search.split('=');
+        this.setState({ loader: true });
+        fetch(API_URL + "/wallet-details", {
+            method: "post",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            },
+            body: JSON.stringify({
+                coinReceive: coin_name[1]
+            })
+        }).then(response => response.json())
+            .then((responseData) => {
+                if (responseData.status == 200) {
+                    let transDetails = null;
+                    let walletUserDetails = null;
+                    // console.log(responseData)
+                    if (Object.keys(responseData.walletTransData).length > 0) {
+                        transDetails = responseData.walletTransData;
+                    }
+
+
+                    if (Object.keys(responseData.walletUserData).length > 0) {
+                        walletUserDetails = responseData.walletUserData;
+                    }
+                    self.setState({
+                        walletUserData: walletUserDetails,
+                        currencyConv: responseData.currencyConversionData,
+                        defaultCoin: walletUserDetails.coin_code,
+                        walletDetails: transDetails,
+                        loader: false, coin_code: coin_name[1],
+                        coinFee: responseData.default_send_Coin_fee
+                    }, () => {
+                    });
+                }
+                else {
+                    this.openNotificationWithIcon('error', responseData.status, responseData.err);
+                }
+            })
+            .catch(error => {
+                // console.log(error);
+                this.openNotificationWithIcon('error', 'Error', "Something went wrong!");
+                this.setState({ loader: false });
+            })
+    }
+
 
     /* 
         Page: /wallet
@@ -325,7 +336,7 @@ class WalletDetails extends Component {
                                 ""
                             }
                             {this.state.send === true ?
-                                <WalletPopup coinFee={this.state.coinFee} coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="SEND" comingCancel={(e) => this.comingCancel(e)} visible={this.state.send} />
+                                <WalletPopup walletDetailsApi={() => this.walletDetailsApi()} coinFee={this.state.coinFee} coin_code={this.state.coin_code} isLoggedIn={this.props.isLoggedIn} title="SEND" comingCancel={(e) => this.comingCancel(e)} visible={this.state.send} />
                                 :
                                 ""
                             }
