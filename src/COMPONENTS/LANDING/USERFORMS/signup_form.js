@@ -608,6 +608,9 @@ class SignupForm extends Component {
     event.preventDefault();
   }
   render() {
+    if (this.props.isLoggedIn) {
+      this.props.history.push("/editProfile");
+    }
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
     var me = this;
