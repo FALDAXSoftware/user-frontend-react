@@ -160,7 +160,8 @@ class EmailVerification extends Component {
         .then((responseData) => {
           if (responseData.status == 200) {
             this.setState({ loader: false })
-            this.props.history.push('/signup-success');
+            var email = this.state.fields.email;
+            this.props.history.push(`/signup-success/${encodeURIComponent(email)}`);
           }
           else {
             this.setState({ loader: false })

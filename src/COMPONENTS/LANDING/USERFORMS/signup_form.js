@@ -287,7 +287,9 @@ class SignupForm extends Component {
     if (props.isSignUp) {
       if (props.isSignUp.status === 200) {
         //this.props.dispModal("thankyou");
-        this.props.history.push('/signup-success');
+        console.log(this.props.form.getFieldValue('email'));
+        var email = this.props.form.getFieldValue('email');
+        this.props.history.push(`/signup-success/${encodeURIComponent(email)}`);
       } else {
         this.setState({
           recaptchaToken: null
@@ -303,6 +305,9 @@ class SignupForm extends Component {
   componentDidMount() {
     this.onLoadRecaptcha();
     let queryParams
+    if (this.props.isLoggedIn)
+      this.props.history.push('/editProfile')
+
     if (this.props.location.pathname == "/signup") {
       if (this.props.location.search !== "") {
         let qP = this.props.location.search.split("=")
@@ -738,8 +743,8 @@ class SignupForm extends Component {
 
 function mapStateToProps(state) {
   return ({
-    isSignUp: state.simpleReducer.isSignUp !== undefined ? state.simpleReducer.isSignUp : undefined,
     isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
+    isSignUp: state.simpleReducer.isSignUp !== undefined ? state.simpleReducer.isSignUp : undefined
   })
 }
 

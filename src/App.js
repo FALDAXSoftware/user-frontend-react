@@ -114,7 +114,7 @@ class App extends Component {
         <Route
           {...rest}
           render={props => {
-            console.log(props, rest)
+            console.log(props, rest, isLoggedIn)
             if (isLoggedIn) {
               if (props.location.pathname === '/') {
                 return <Redirect
@@ -181,7 +181,7 @@ class App extends Component {
                     <Route path="/news" exact title='News' component={News} />
                     <Route path="/thank-you" exact title='Thank You' component={ThankYou} />
                     <Route path="/verify-email" exact title='Email Verification' component={EmailVerification} />
-                    <Route path="/signup-success" exact title='Thank You' component={SignupSuccess} />
+                    <Route path="/signup-success/:email" exact title='Thank You' component={SignupSuccess} />
                     <Route path="/resend-verification" exact title='Resend Email Verification' component={ResendEmailVerification} />
                     <Route path="/profile-backup/:email" exact title='Login' component={ProfileBackup} />
                     <Route path="/Chart" exact title='Trading View' component={Chart} />

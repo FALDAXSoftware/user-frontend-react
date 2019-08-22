@@ -412,7 +412,7 @@ class Acc_settings extends Component {
                 }
                 else {
                     this.setState({ loader: false })
-                    this.openNotificationWithIcon('error', responseData.status, responseData.err);
+                    this.openNotificationWithIcon('error', responseData.status, responseData.err ? responseData.err : responseData.message);
                 }
             })
             .catch(error => {

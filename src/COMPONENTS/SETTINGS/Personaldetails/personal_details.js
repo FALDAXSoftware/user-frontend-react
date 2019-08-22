@@ -704,7 +704,7 @@ class PersonalDetails extends Component {
                     profileData.append('profile_pic', this.state.profileImage)
                 }
                 console.log("---------------->> USER API CALLED")
-                /* this.props.profileupdateAction(this.props.isLoggedIn, profileData); */
+                this.props.profileupdateAction(this.props.isLoggedIn, profileData);
 
             } else {
                 this.openNotificationWithProfile("error", "Error", "Please complete all required details to continue")
