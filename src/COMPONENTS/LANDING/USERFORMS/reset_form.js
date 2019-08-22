@@ -311,9 +311,10 @@ class ResetPassword extends Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      console.log(error, value)
+      console.log(error, value, this.state.confirmIcon, this.state.newpassIcon)
       if (error === null && this.state.confirmIcon && this.state.newpassIcon) {
         if (value.password === value.confirm_password) {
+          console.log(value)
           this._resetPassword(value)
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
           document.querySelectorAll(".comp_pass")[0].style.display = "block";
@@ -338,7 +339,7 @@ class ResetPassword extends Component {
             }
           }
           if (error.confirm_password !== undefined) {
-            if (error.confirm_password.errors[0].message !== undefined && error.confirm_password.errors[0].message !== null && value.confirm_password == undefined) {
+            if (error.confirm_password.errors[0].message !== undefined && error.confirm_password.errors[0].message !== null && (value.confirm_password == undefined || value.confirm_password == "")) {
               document.querySelectorAll(".confirmchange_msg")[0].style.display = "block";
               this.setState({ confirmPass_msg: "Confirm password is required" })
             } else {
