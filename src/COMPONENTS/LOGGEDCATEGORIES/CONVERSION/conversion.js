@@ -6,7 +6,7 @@ import SimpleReactValidator from 'simple-react-validator'
 import { withRouter } from 'react-router-dom';
 /*Components  */
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC"
 import CountryAccess from 'SHARED-COMPONENTS/CountryAccess';

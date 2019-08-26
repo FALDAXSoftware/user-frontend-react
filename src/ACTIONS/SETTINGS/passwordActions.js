@@ -1,4 +1,4 @@
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import { getProfileDataAction } from "./settingActions";
 import { removeLoader, addLoader } from "./settingActions";
 let { API_URL } = globalVariables;

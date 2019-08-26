@@ -7,7 +7,7 @@ import { actions, } from "redux-tooltip";
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components';
 import tooltip from 'wsdm-tooltip';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import { Row, Col, Modal, Button, Input, Icon, notification } from 'antd';
 import { _FOOTERLOGO } from 'CONSTANTS/images';
 

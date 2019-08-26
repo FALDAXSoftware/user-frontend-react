@@ -12,7 +12,7 @@ import moment from 'moment';
 
 /* Components */
 import { RefInput } from 'COMPONENTS/SETTINGS/referral';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 import TFAModal from 'SHARED-COMPONENTS/TFAModal';
 

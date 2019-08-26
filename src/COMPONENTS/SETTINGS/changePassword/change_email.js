@@ -9,7 +9,7 @@ import SimpleReactValidator from 'simple-react-validator';
 
 /* components */
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import { getProfileDataAction } from "ACTIONS/SETTINGS/settingActions";
 import { LogoutUser } from "ACTIONS/authActions";
 

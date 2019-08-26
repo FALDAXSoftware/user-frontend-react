@@ -2,7 +2,7 @@
 import React, { Component, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { loadReCaptcha } from 'react-recaptcha-google'
-import 'App.css';
+import './App.css';
 import { ThemeProvider } from 'styled-components';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 import { connect } from 'react-redux';
@@ -84,7 +84,7 @@ class App extends Component {
 
     setTimeout(function () {
       loadReCaptcha();
-    }, 1000)
+    }, 2000)
 
     window.scrollTo(0, 0);
     // if(this.props.theme!==undefined)
@@ -100,7 +100,7 @@ class App extends Component {
   }
 
   render() {
-
+    console.log(process.env)
     const { isLoggedIn } = this.props
 
     const RestrictedRoute = ({

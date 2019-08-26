@@ -28,7 +28,7 @@ import BuySell from './buysell';
 import OrderHIstory from './orderhistory'
 import DepthChart from './depthchart';
 import OrderTrade from './ordertrade';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import TradingViewChart from "COMPONENTS/tradingviewchart";
 /* import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'; */
 

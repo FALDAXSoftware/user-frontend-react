@@ -8,7 +8,7 @@ import SimpleReactValidator from "simple-react-validator";
 import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
 /* Components */
 import { forgotAction, clearForgot } from "ACTIONS/authActions";
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 
 /* Global CONSTANTS */
 

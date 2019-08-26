@@ -1,4 +1,4 @@
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import { removeLoader, addLoader } from "./SETTINGS/settingActions";
 import { darkTheme } from './THEME/themeActions'
 let { API_URL } = globalVariables;

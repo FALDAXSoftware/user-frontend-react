@@ -1,4 +1,4 @@
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 
 let { API_URL } = globalVariables;
 

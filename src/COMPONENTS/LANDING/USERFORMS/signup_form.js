@@ -12,7 +12,7 @@ import { Signup, clearSignUp } from 'ACTIONS/authActions';
 import { _ACTIVEEYE, _EYE } from 'CONSTANTS/images';
 
 /* Global CONSTANTS */
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 /* Styled-Components */
 import { Username, WelcomeText, EmailLabel, EmailReq, PassReq } from "./login_form";
 let { GOOGLE_SITE_KEY } = globalVariables;
@@ -608,6 +608,9 @@ class SignupForm extends Component {
     event.preventDefault();
   }
   render() {
+    if (this.props.isLoggedIn) {
+      this.props.history.push("/editProfile");
+    }
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
     var me = this;

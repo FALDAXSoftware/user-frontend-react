@@ -6,7 +6,7 @@ import { Button, notification, Row, Col } from "antd";
 import { connect } from 'react-redux';
 
 /* Components */
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import { _EYE, _ACTIVEEYE } from 'CONSTANTS/images';
 import { resetAction, resetData } from 'ACTIONS/authActions'
 

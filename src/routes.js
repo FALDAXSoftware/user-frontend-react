@@ -20,7 +20,7 @@ import Trade from "COMPONENTS/LOGGEDCATEGORIES/TRADE/trade";
 import History2 from "COMPONENTS/LOGGEDCATEGORIES/HISTORY/history"
 import Dashboard from "COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard"
 import OpenTicket from "COMPONENTS/LANDINGCATEGORIES/open_ticket";
-import { globalVariables } from 'Globals';
+import { globalVariables } from './Globals.js';
 import { LogoutUser } from 'ACTIONS/authActions';
 
 /* import Chart from "COMPONENTS/tradingviewchart"; */
@@ -129,19 +129,21 @@ class AppRouter extends Component {
           timeout={30 * 60 * 1000}
         />
         {/* {console.log("App.js")} */}
-        {routes.map(singleRoute => {
-          const { path, exact, ...otherProps } = singleRoute;
-          return (
-            <Route
-              exact={exact === false ? false : true}
-              key={singleRoute.path}
-              path={`${singleRoute.path}`}
-              {...otherProps}
-              {...this.props}
-            />
-          );
-        })}
-      </div>
+        {
+          routes.map(singleRoute => {
+            const { path, exact, ...otherProps } = singleRoute;
+            return (
+              <Route
+                exact={exact === false ? false : true}
+                key={singleRoute.path}
+                path={`${singleRoute.path}`}
+                {...otherProps}
+                {...this.props}
+              />
+            );
+          })
+        }
+      </div >
     );
   }
 }

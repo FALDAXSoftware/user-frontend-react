@@ -13,7 +13,7 @@ import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import {
     ContactWrap, GreyWrap, Head, HeadDesc, MsgInput
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 
 let { API_URL } = globalVariables;
 /* const Option = Select.Option; */

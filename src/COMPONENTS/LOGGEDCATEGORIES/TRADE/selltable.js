@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 /* Components */
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 import { Spin } from 'antd';
 
 /* Styled-components */

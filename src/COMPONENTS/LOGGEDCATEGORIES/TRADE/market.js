@@ -12,7 +12,7 @@ import { Label, MarketWrap, BuyWrap, BuySell, BuySellRadio, BalanceWrap, Balance
 import {
     SpinSingle
 } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle"
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 
 let { API_URL } = globalVariables;
 

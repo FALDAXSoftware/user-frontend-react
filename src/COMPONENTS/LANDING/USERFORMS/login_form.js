@@ -10,7 +10,7 @@ import { ReCaptcha } from 'react-recaptcha-google'
 import { _EYE, _ACTIVEEYE } from 'CONSTANTS/images';
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader"
 import { loginAction, Login, clearLogin } from 'ACTIONS/authActions';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 
 let { API_URL, GOOGLE_SITE_KEY } = globalVariables;
 /* Global CONSTANTS */
@@ -548,12 +548,12 @@ class Login_Form extends Component {
         });
         // document.querySelector("#otp-field").focus();
         /* this.openNotificationWithIcon('error', 'Error', props.errorStatus.err); */
-      }
+      } 
       else if (props.errorStatus.status == 202) {
         this.setState({ loader: false, recaptchaToken: null }, () => {
           this.onLoadRecaptcha();
         })
-        this.openNotificationWithIcon('success', 'Success', props.errorStatus.err);
+        this.openNotificationWithIcon('warning', 'Warning', props.errorStatus.err);
       }
       else {
         this.setState({ loader: false, recaptchaToken: null }, () => {

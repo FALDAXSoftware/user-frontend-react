@@ -11,7 +11,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 
 /* Components */
-import { globalVariables } from 'Globals'
+import { globalVariables } from 'Globals.js'
 import { _FOOTERLOGO, _FOOTERWHITELOGO, _APPSTORE, _PLAYSTORE } from 'CONSTANTS/images';
 import ComingSoon from 'COMPONENTS/comingsoon';
 

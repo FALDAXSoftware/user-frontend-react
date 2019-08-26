@@ -9,7 +9,7 @@ import { Head, Sub_head, DropMenu, Col1, Bit_img, Bit_text, Bit_price, Price, Ic
 
 /* components */
 import { NDF } from './tableofcoinupper';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 
 let { _AMAZONBUCKET } = globalVariables;
 
