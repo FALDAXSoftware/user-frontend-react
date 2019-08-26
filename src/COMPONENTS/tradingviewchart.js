@@ -2,7 +2,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { widget } from "CHARTING_LIB/charting_library.min";
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 
 import styled from 'styled-components';
 const API_URL = globalVariables.API_URL;

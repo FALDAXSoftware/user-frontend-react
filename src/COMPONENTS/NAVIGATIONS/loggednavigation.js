@@ -10,7 +10,7 @@ import ReactSwipeEvents from 'react-swipe-events'
 /* Components */
 import Afterlog from "./afterlog"
 import { LogoutUser } from 'ACTIONS/authActions';
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 import ComingSoon from 'COMPONENTS/comingsoon';
 import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC"
 import CountryAccess from 'SHARED-COMPONENTS/CountryAccess';

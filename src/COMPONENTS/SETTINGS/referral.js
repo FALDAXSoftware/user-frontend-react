@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import { connect } from "react-redux"
 import { Input, Col, Table, Row, notification, Select, Button } from 'antd';
 import styled from 'styled-components';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader"
 

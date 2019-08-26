@@ -16,7 +16,7 @@ import Trade from "COMPONENTS/LOGGEDCATEGORIES/TRADE/trade";
 import History2 from "COMPONENTS/LOGGEDCATEGORIES/HISTORY/history"
 import Dashboard from "COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard"
 import OpenTicket from "COMPONENTS/LANDINGCATEGORIES/open_ticket";
-import { globalVariables } from 'Globals';
+import { globalVariables } from './Globals.js';
 /* import Chart from "COMPONENTS/tradingviewchart"; */
 import Conversion from 'COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion';
 let { API_URL } = globalVariables;
@@ -88,7 +88,6 @@ export default class AppRouter extends Component {
     const { url } = this.props.match;
     return (
       <div>
-        {/* {console.log("App.js")} */}
         {routes.map(singleRoute => {
           const { path, exact, ...otherProps } = singleRoute;
           return (

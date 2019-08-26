@@ -22,7 +22,7 @@ import LoggedNavigation from 'COMPONENTS/NAVIGATIONS/loggednavigation';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import WalletPopup from './walletpopup';
 import DetailsTable from './detailstable';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 
 let { API_URL, _AMAZONBUCKET, WordpressSiteURL } = globalVariables;

@@ -5,7 +5,7 @@ import { connect } from "react-redux"
 import SimpleReactValidator from 'simple-react-validator'
 /*Components  */
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 /* STYLED-COMPONENTS */
 import { ConversionWrap, ConversionContainer, MainRow, ConversionTab, LeftCol, ConversionTitle, ConversionTabPane, ConversionRadioRow, BorderRow, RowTitle, ConversionInput, ConversionDropDown, DropDownOption, DropIcon, ConversionSubmitBtn, RightCol, RightColContainer, RightColTitle, RightColAmount, RightColPrice, DashedSeprator, LeftSpan, RightSpan, RightTotal, LeftTotal, FeesRadio } from "../../../STYLED-COMPONENTS/CONVERSION/style";

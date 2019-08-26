@@ -20,7 +20,7 @@ import {
     FifthButton, MapWrap, SubfootWrap, MainWrap1, MainWrap2, Main, SubSpan,
     SubP, Img1, Img2
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle'
-import { globalVariables } from "Globals"
+import { globalVariables } from "Globals.js"
 
 let { API_URL } = globalVariables;
 

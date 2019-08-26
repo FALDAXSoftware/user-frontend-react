@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import { WelcomeText } from "./login_form";
 import { Col, Row } from "antd";
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 
 /* Components */
 /* Global CONSTANTS */

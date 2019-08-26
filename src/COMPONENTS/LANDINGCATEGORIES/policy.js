@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
-import { globalVariables } from "Globals"
+import { globalVariables } from "Globals.js"
 let { API_URL, _AMAZONBUCKET } = globalVariables;
 
 /* Styled-Components */

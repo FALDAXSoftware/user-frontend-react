@@ -3,7 +3,7 @@ import React, { Component, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import AppRouter from 'routes';
 import { loadReCaptcha } from 'react-recaptcha-google'
-import 'App.css';
+import './App.css';
 import { ThemeProvider } from 'styled-components';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -15,6 +15,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 /* Components */
 // import HomePage from 'components/LANDING/HomePage';
 // import Login from "components/LANDING/USERFORMS/Login_Form"
+console.log(process.env)
 const SignupForm = lazy(() => import('COMPONENTS/LANDING/USERFORMS/signup_form'))
 
 const ForgotForm = lazy(() => import("COMPONENTS/LANDING/USERFORMS/forgot_form"))
@@ -94,7 +95,7 @@ class App extends Component {
     //     }
   }
   render() {
-
+    console.log(process.env)
     const { isLoggedIn } = this.props
 
     const RestrictedRoute = ({

@@ -12,7 +12,7 @@ import Beforelog from "./beforelog"
 import Afterlog from "./afterlog"
 import { LogoutUser } from 'ACTIONS/authActions';
 import ComingSoon from 'COMPONENTS/comingsoon';
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 
 /* STYLED-COMPONENTS */
 import {

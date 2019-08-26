@@ -6,7 +6,7 @@ import { Modal, Icon, notification } from 'antd';
 import styled from 'styled-components'
 
 /* components */
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import { _COMINGIMG } from "CONSTANTS/images";
 
 const API_URL = globalVariables.API_URL;

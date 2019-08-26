@@ -12,7 +12,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 /* Components */
 import { RefInput } from 'COMPONENTS/SETTINGS/referral';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 
 let { API_URL } = globalVariables;

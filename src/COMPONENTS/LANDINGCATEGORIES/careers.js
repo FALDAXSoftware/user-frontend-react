@@ -9,7 +9,7 @@ import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import {
     ContactWrap, GreyWrap, JobWrap, BodyDetailsJob, JobHead, LocationP
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
-import { globalVariables } from "Globals"
+import { globalVariables } from "Globals.js"
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'
 
 export const ContainerContact = styled(Container)`

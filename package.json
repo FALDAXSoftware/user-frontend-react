@@ -70,8 +70,8 @@
   },
   "secure": false,
   "devDependencies": {
-    "webpack": "^3.10.0",
     "dotenv": "^6.2.0",
-    "react-masonry-css": "^1.0.12"
+    "react-masonry-css": "^1.0.12",
+    "webpack": "^3.10.0"
   }
 }

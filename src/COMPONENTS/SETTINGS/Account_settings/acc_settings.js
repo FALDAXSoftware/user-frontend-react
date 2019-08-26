@@ -10,7 +10,7 @@ import SimpleReactValidator from 'simple-react-validator';
 
 
 /* Components */
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import { deleteAccount } from "ACTIONS/authActions"
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader"
 import { NewButton, NewInput } from "COMPONENTS/SETTINGS/changePassword/change_email"

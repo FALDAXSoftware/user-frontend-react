@@ -13,7 +13,7 @@ import {
     TitleSpan, FormApply, LeftWing, LabelOne, InputOne, RightWing, InputTwo,
     InputThree, Gap, BtnApply, FileSelectText, DropzoneStyle, IconS
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
-import { globalVariables } from "Globals"
+import { globalVariables } from "Globals.js"
 
 let { API_URL, GOOGLE_SITE_KEY } = globalVariables;
 

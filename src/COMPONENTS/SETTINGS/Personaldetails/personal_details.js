@@ -11,7 +11,7 @@ import moment from 'moment';
 import Datepicker from "./datepicker"
 import CountryPick from "./country"
 import { EmailReq } from "COMPONENTS/LANDING/USERFORMS/login_form"
-import { globalVariables } from "Globals"
+import { globalVariables } from "Globals.js"
 import { profileupdateAction, removepicAction, getProfileDataAction, clearEditData } from "ACTIONS/SETTINGS/settingActions"
 import { _DEFAULTPROFILE } from "CONSTANTS/images";
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
