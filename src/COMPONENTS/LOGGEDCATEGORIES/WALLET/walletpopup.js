@@ -6,7 +6,7 @@ import { Button, Modal, Input, notification } from 'antd';
 import styled from 'styled-components';
 import SimpleReactValidator from "simple-react-validator";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-
+import moment from 'moment';
 /* Styled-Components */
 
 
@@ -14,6 +14,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { RefInput } from 'COMPONENTS/SETTINGS/referral';
 import { globalVariables } from 'Globals.js';
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
+import TFAModal from 'SHARED-COMPONENTS/TFAModal';
 
 let { API_URL } = globalVariables;
 const WalletModal = styled(Modal)`
@@ -183,6 +184,7 @@ class WalletPopup extends Component {
                 destination_address: ""
             },
             loader: false,
+            showTFAModal: false,
             withdrawFlag: false,
             withdrawMsg: "Your Withdrawl request may take 24-28 hours to process due to its size. Do you wish to proceed?"
         }
@@ -291,13 +293,19 @@ class WalletPopup extends Component {
         This method is called when we want to send the entered coin with right validations.
     */
 
-    sendSubmit(confirmFlag) {
+    sendSubmit(confirmFlag, otp = null) {
+        console.log(confirmFlag, otp, this.state.sendFields)
         if (this.validator.allValid()) {
             var values = this.state.sendFields;
             values["coin_code"] = this.props.coin_code;
             // console.log(confirmFlag, confirmFlag)
             if (confirmFlag == true)
                 values["confirm_for_wait"] = confirmFlag;
+            if (otp !== null) {
+                values['otp'] = otp;
+            }
+            else
+                delete values.otp;
             this.setState({ loader: true });
             fetch(API_URL + "/wallet/send", {
                 method: "post",
@@ -312,16 +320,36 @@ class WalletPopup extends Component {
                     // console.log("SEND API", responseData)
                     if (responseData.status === 200) {
                         this.openNotificationWithIcon("success", "Successfully Sent", responseData.message);
+                        this.props.walletDetailsApi();
                         this.comingCancel();
                     }
                     else if (responseData.status === 201) {
                         this.setState({
+                            showTFAModal: false,
                             withdrawFlag: true,
                             withdrawMsg: responseData.message
                         });
                     }
+                    else if (responseData.status === 202) {
+                        this.setState({
+                            showTFAModal: true
+                        });
+                    }
                     else {
-                        this.openNotificationWithIcon("warning", "Error", responseData.message)
+                        if (responseData.status !== 402)
+                            this.setState({
+                                showTFAModal: false
+                            });
+                        console.log(responseData)
+                        if (responseData.status == 203) {
+                            console.log(responseData.datetime)
+                            var gmtDateTime = moment.utc(responseData.datetime, "YYYY-MM-DD HH:mm:ss")
+                            var local = gmtDateTime.local().format('YYYY-MMM-DD HH:mm:ss');
+                            console.log(local)
+                            this.openNotificationWithIcon("warning", "Warning", responseData.message ? `${responseData.message}${local}` : "")
+                        }
+                        else
+                            this.openNotificationWithIcon("warning", "Warning", responseData.message ? responseData.message : responseData.err)
                     }
                     this.setState({ loader: false });
                 }).catch(error => {
@@ -446,6 +474,8 @@ class WalletPopup extends Component {
                                 </ModalWrap>}
                     </WalletModal>
                     : ""}
+                {console.log(this.state.showTFAModal)}
+                <TFAModal visible={this.state.showTFAModal} isLoggedIn={this.props.isLoggedIn} submit={(otp) => this.sendSubmit(false, otp)} />
                 {(this.state.loader === true) ? <FaldaxLoader /> : ""}
             </div>
         );

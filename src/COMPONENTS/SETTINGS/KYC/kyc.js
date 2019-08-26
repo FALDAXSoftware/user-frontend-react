@@ -92,7 +92,7 @@ class KYC extends Component {
     next_step(a, type = null, countryChange = null) {
         // console.log("KYC CHECK", countryChange)
         this.setState({ next: a })
-        if (type === "Passport" || type === "Driver's license" || type === "Identity") {
+        if (type === "Passport" || type === "Driving license" || type === "Identity") {
             var b = a - 1
             this.setState({ nexts: b, docType: type })
         } else if (type === "ssn") {

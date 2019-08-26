@@ -4,12 +4,11 @@ import 'antd/dist/antd.css';
 import { connect } from "react-redux"
 import { Row, Col, Input, notification, Modal } from 'antd';
 import styled from 'styled-components';
-import { createForm, formShape } from 'rc-form';
 import SimpleReactValidator from 'simple-react-validator';
 
 /* components */
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
-import { globalVariables } from 'Globals.js';
+import { globalVariables } from 'Globals';
 import { getProfileDataAction } from "ACTIONS/SETTINGS/settingActions";
 import { LogoutUser } from "ACTIONS/authActions";
 
@@ -74,7 +73,7 @@ const Old = styled.div`
         width:260px;
     }
 `
-export const NewP = styled(Old)`
+const NewP = styled(Old)`
     margin-top:30px;
 `
 export const InputLabel = styled.label`
@@ -113,10 +112,10 @@ export const OldInput = styled(Input)`
 `
 export const NewInput = styled(OldInput)`
 `
-export const OTPInput = styled(NewInput)`
+const OTPInput = styled(NewInput)`
     width: 74%;
 `
-export const ButtonDiv = styled.div`
+const ButtonDiv = styled.div`
     margin-top:30px;
     margin-bottom:50px;
 `
@@ -134,10 +133,10 @@ const EmailDN = styled.p`
     font-weight:600;
     color:${props => props.theme.mode === "dark" ? "white" : ""};
 `
-export const Description = styled.p`
+const Description = styled.p`
 color:${props => props.theme.mode == "dark" ? "white" : ""};
 `
-export const VerifyModal = styled(Modal)`
+const VerifyModal = styled(Modal)`
     
     .ant-modal-content
     {
@@ -153,35 +152,18 @@ export const VerifyModal = styled(Modal)`
     }
 `
 
-class ChangeEmail extends Component {
+class RegenerateBackupCode extends Component {
     constructor(props) {
         super(props)
         this.state = {
             fields: {
             },
             loader: false,
-            isShowOTP: false,
+            visible: false,
             errType: '',
+            backupCode: ""
         }
         this.validator = new SimpleReactValidator();
-        this.otpValidator = new SimpleReactValidator();
-    }
-
-    static propTypes = {
-        form: formShape,
-    };
-
-    /* LifeCycle Methods */
-    componentDidMount = () => {
-        let fields = this.state.fields;
-        fields['oldEmail'] = this.props.profileDetails.email;
-        this.setState({ fields })
-    }
-
-    componentWillReceiveProps = (nextProps) => {
-        let fields = this.state.fields;
-        fields['oldEmail'] = nextProps.profileDetails.email;
-        this.setState({ fields })
     }
 
     /* 
@@ -190,16 +172,16 @@ class ChangeEmail extends Component {
         API is called to update Email.
     */
 
-    changeEmail = () => {
+    regenBackup = () => {
         const { fields } = this.state;
 
         if (this.validator.allValid()) {
             let formData = {
-                new_email: fields["newEmail"],
+                otp: fields["otp"],
             };
 
             this.setState({ loader: true });
-            fetch(API_URL + `/users/update-email`, {
+            fetch(API_URL + `/users/regenerate-backupcode`, {
                 method: "post",
                 headers: {
                     Accept: 'application/json',
@@ -211,7 +193,12 @@ class ChangeEmail extends Component {
                 .then(response => response.json())
                 .then((responseData) => {
                     if (responseData.status === 200) {
-                        this.setState({ loader: false, isShowOTP: true })
+                        let fields = {
+                            otp: ""
+                        }
+                        this.setState({ loader: false, visible: true, backupCode: responseData.twofactor_backup_code, fields })
+                        this.validator.hideMessages();
+                        this.forceUpdate();
                     } else {
                         this.setState({
                             loader: false, errMsg: true, errType: 'Error', errMessage: responseData.err
@@ -224,64 +211,6 @@ class ChangeEmail extends Component {
         } else {
             this.setState({ loader: false });
             this.validator.showMessages();
-            this.forceUpdate();
-        }
-    }
-
-    /* 
-        Page: /editProfile --> Security
-        It is called to confirm new email.
-        API is called to verify entered email.
-    */
-
-    verifyEmail = () => {
-        const { fields } = this.state;
-
-        if (this.otpValidator.allValid()) {
-            let formData = {
-                new_email_token: fields["otp"],
-            };
-            let _this = this;
-
-            this.setState({ loader: true });
-            fetch(API_URL + `/users/confirm-new-email`, {
-                method: "post",
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: "Bearer " + this.props.isLoggedIn
-                },
-                body: JSON.stringify(formData)
-            })
-                .then(response => response.json())
-                .then((responseData) => {
-                    if (responseData.status === 200) {
-                        let formData = {
-                            user_id: this.props.profileDetails.id,
-                            jwt_token: this.props.isLoggedIn
-                        }
-
-                        let fields = this.state.fields;
-                        fields['newEmail'] = null;
-                        fields['otp'] = null;
-                        this.setState({
-                            loader: false, isShowOTP: false, errMsg: true, errType: 'Success', errMessage: responseData.message
-                        })
-                        this.props.props.history.push('/verify-email');
-                        _this.validator = new SimpleReactValidator();
-                        _this.props.LogoutUser(this.props.isLoggedIn, formData)
-                    } else {
-                        this.setState({
-                            loader: false, errMsg: true, errType: 'Error', errMessage: responseData.err
-                        })
-                    }
-                })
-                .catch(error => {
-                    this.setState({ loader: false, errMsg: true, errType: 'Error', errMessage: 'Something went wrong!!' });
-                })
-        } else {
-            this.setState({ loader: false });
-            this.otpValidator.showMessages();
             this.forceUpdate();
         }
     }
@@ -323,6 +252,10 @@ class ChangeEmail extends Component {
         this.setState({ isShowOTP: false });
     }
 
+    TFAModalCancel = () => {
+        console.log(this.props);
+        this.setState({ visible: false })
+    }
     render() {
         const { fields, errMsg, loader, isShowOTP, errType } = this.state;
 
@@ -335,51 +268,38 @@ class ChangeEmail extends Component {
                 <Row>
                     <Col span={6} />
                     <HeaderCol span={12}>
-                        <span>Change Your Email Address</span>
+                        <span>Re-Generate Backup Code</span>
                     </HeaderCol>
                 </Row>
-                <ChangeRow>
-                    <ChangeCol>
-                        <NewP>
-                            <InputLabel>Email:</InputLabel>
-                            <EmailDN>{fields.oldEmail !== null ? fields.oldEmail : this.props.profileDetails.email}</EmailDN>
+                <ChangeCol>
+                    <NewP>
+                        {/* <InputLabel>Two-Factor Authentication Code:</InputLabel>
+                            <EmailDN>{fields.oldEmail !== null ? fields.oldEmail : this.props.profileDetails.email}</EmailDN> */}
 
-                            <InputLabel>Enter New Email*</InputLabel>
-                            <div>
-                                <NewInput value={fields.newEmail} disabled={isShowOTP}
-                                    size="large" placeholder="Email"
-                                    onChange={this.onChangeField.bind(this, "newEmail")} />
-                                {this.validator.message('Email', this.state.fields['newEmail'], 'required|email')}
-                            </div>
-                        </NewP>
-                        <ButtonDiv>
-                            <NewButton onClick={this.changeEmail.bind(this)}>Update Email</NewButton>
-                        </ButtonDiv>
-                        {isShowOTP &&
-                            <VerifyModal
-                                closable={true}
-                                title="Verify Email Address"
-                                onCancel={this.closeVerifyModal}
-                                visible={isShowOTP}
-                                footer={null}
-                            >
-                                <Description> We sent a one-time use verification code to old email address<a href={`mailto:${fields['oldEmail']}`}></a>.
-                                     Please enter the code in the box below to complete the verification.</Description>
-                                <NewP>
-                                    <InputLabel>Verification Code</InputLabel>
-                                    <div>
-                                        <OTPInput value={fields.otp}
-                                            size="medium" onChange={this.onChangeField.bind(this, "otp")} name="Verification Code" />
-                                        {this.otpValidator.message('verification code', this.state.fields['otp'], 'required|numeric')}
-                                    </div>
-                                </NewP>
-                                <ButtonDiv>
-                                    <NewButton onClick={this.verifyEmail.bind(this)}>Verify</NewButton>
-                                </ButtonDiv>
-                            </VerifyModal>
-                        }
-                    </ChangeCol>
-                </ChangeRow>
+                        <InputLabel>Enter Two-Factor Authentication Code:*</InputLabel>
+                        <div>
+                            <NewInput value={fields.otp} disabled={isShowOTP}
+                                size="large" placeholder="Code"
+                                onChange={this.onChangeField.bind(this, "otp")} />
+                            {this.validator.message('two_factor_authentication_code', this.state.fields['otp'], 'required|min:6|max:6')}
+                        </div>
+                    </NewP>
+                    <ButtonDiv>
+                        <NewButton onClick={this.regenBackup.bind(this)}>Re-Generate Code</NewButton>
+                    </ButtonDiv>
+                    <VerifyModal
+                        onCancel={(e) => this.TFAModalCancel(e)}
+                        onOk={(e) => this.TFAModalCancel(e)}
+                        title="Two Factor Authenticationn"
+                        visible={this.state.visible}
+                        footer={null}
+                    >
+                        {console.log(this.state.backupCode)}
+                        <Description> Please keep Below backup code with you, in case you are unable to enter Two-Factor Authentication.</Description>
+
+                        <div>Back-up Code : <b>{this.state.backupCode}</b></div>
+                    </VerifyModal>
+                </ChangeCol>
                 {(loader === true) ? <FaldaxLoader /> : ""}
             </div>
         );
@@ -398,4 +318,4 @@ const mapDispatchToProps = dispatch => ({
     LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(createForm()(ChangeEmail));
+export default connect(mapStateToProps, mapDispatchToProps)(RegenerateBackupCode);

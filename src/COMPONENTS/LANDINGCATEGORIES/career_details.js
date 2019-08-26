@@ -75,6 +75,7 @@ class CareerDetails extends Component {
                                 <BodyDetails>
                                     <BodyP>{jobDetails.position}</BodyP>
                                     <LocationP>{jobDetails.location}</LocationP>
+                                    <DetailsP>{ReactHtmlParser(jobDetails.short_desc)}</DetailsP>
                                     <DetailsP>{ReactHtmlParser(jobDetails.job_desc)}</DetailsP>
                                 </BodyDetails> : ''
                             }

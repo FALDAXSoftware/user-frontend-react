@@ -213,7 +213,7 @@ class ForgotForm extends Component {
         this.props.forgotAction(value);
         // this.setState({ email: "" });
       } else {
-        this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reload the page.");
+        this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reloading the page.");
       }
 
     } else {

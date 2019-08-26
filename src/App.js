@@ -1,21 +1,22 @@
 /* In-Build components */
 import React, { Component, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
-import AppRouter from 'routes';
 import { loadReCaptcha } from 'react-recaptcha-google'
 import './App.css';
 import { ThemeProvider } from 'styled-components';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
-import { library } from '@fortawesome/fontawesome-svg-core';
-/* import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; */
-import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-/* import { Signup } from 'ACTIONS/authActions'; */
-import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
+/* import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; */
+
 /* Components */
+
+/* import { Signup } from 'ACTIONS/authActions'; */
 // import HomePage from 'components/LANDING/HomePage';
 // import Login from "components/LANDING/USERFORMS/Login_Form"
-console.log(process.env)
+import AppRouter from 'routes';
+import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 const SignupForm = lazy(() => import('COMPONENTS/LANDING/USERFORMS/signup_form'))
 
 const ForgotForm = lazy(() => import("COMPONENTS/LANDING/USERFORMS/forgot_form"))
@@ -39,6 +40,9 @@ const SignupSuccess = lazy(() => import('COMPONENTS/LANDING/USERFORMS/signup_suc
 const HomePage = lazy(() => import('COMPONENTS/LANDING/homepage'));
 const Login = lazy(() => import('COMPONENTS/LANDING/USERFORMS/login_form'));
 const EmailVerification = lazy(() => import('COMPONENTS/LANDING/USERFORMS/emailverification'));
+const ResendEmailVerification = lazy(() => import('COMPONENTS/LANDING/USERFORMS/resendemailverification'));
+const ProfileBackup = lazy(() => import('COMPONENTS/LANDING/USERFORMS/profile_backup'));
+
 // import dotenv from 'dotenv';
 
 // dotenv.config();
@@ -51,7 +55,7 @@ class App extends Component {
     super(props);
     this.state = {
       theme: this.props.theme === false ? "light" : "dark"
-    }
+    };
   }
   componentDidUpdate(prevProps, prevState) {
     // console.log(this.props);
@@ -80,7 +84,7 @@ class App extends Component {
 
     setTimeout(function () {
       loadReCaptcha();
-    }, 1000)
+    }, 2000)
 
     window.scrollTo(0, 0);
     // if(this.props.theme!==undefined)
@@ -94,6 +98,7 @@ class App extends Component {
     //         }
     //     }
   }
+
   render() {
     console.log(process.env)
     const { isLoggedIn } = this.props
@@ -101,13 +106,15 @@ class App extends Component {
     const RestrictedRoute = ({
       component: Component,
       isLoggedIn,
+      LogoutUser,
+      props: props,
       ...rest
     }) => (
 
         <Route
           {...rest}
           render={props => {
-
+            console.log(props, rest, isLoggedIn)
             if (isLoggedIn) {
               if (props.location.pathname === '/') {
                 return <Redirect
@@ -117,7 +124,7 @@ class App extends Component {
                   }}
                 />
               } else {
-                return <Component {...props} />
+                return <Component {...props} LogoutUser={LogoutUser} />
               }
             } else {
               if (props.location.pathname === '/') {
@@ -146,52 +153,60 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <ThemeProvider theme={theme}>
+        <div>
 
-          <Route
-            render={({ location }) => (
-              <Suspense fallback={<FaldaxLoader></FaldaxLoader>}>
-                <Switch location={location}>
-                  <Route path="/" exact title="Home" component={HomePage} />
-                  <Route path="/login" exact title="Login" component={Login} />
-                  <Route path='/reset-password' title="Reset Password" component={ResetPassword} />
-                  <Route path="/signup" exact title="Signup" component={SignupForm} />
-                  <Route path="/forgot-password" exact title="Forgot Password" component={ForgotForm} />
-                  <Route {...this.props} path="/about-us" exact title="About Us" component={AboutUs} />
-                  <Route path="/faq" exact title="Faq Page" component={FaqPage} />
-                  <Route path="/blogs" exact title='Blog' component={Blog} />
-                  <Route path="/blogDetails" exact title='Blog' component={BlogDetails} />
-                  <Route path="/contactus" exact title='Contact' component={ContactUs} />
-                  <Route path="/careers" exact title='Careers' component={Careers} />
-                  <Route path="/career-details" exact title='Careerdetails' component={CareerDetails} />
-                  <Route path="/mediacontact" exact title='MediaContact' component={MediaContact} />
-                  <Route path="/fees" exact title='Fees' component={Fees} />
-                  <Route path="/addcoin" exact title='AddCoin' component={Addcoin} />
-                  <Route path="/applyjob" exact title='ApplyJob' component={ApplyJob} />
-                  <Route path="/policy" exact title='policy' component={Policy} />
-                  <Route path="/news" exact title='News' component={News} />
-                  <Route path="/thank-you" exact title='Thank You' component={ThankYou} />
-                  <Route path="/verify-email" exact title='Email Verification' component={EmailVerification} />
-                  <Route path="/signup-success" exact title='Thank You' component={SignupSuccess} />
+          <ThemeProvider theme={theme}>
 
-                  <Route path="/Chart" exact title='Trading View' component={Chart} />
-                  <RestrictedRoute
-                    path="/"
-                    component={AppRouter}
-                    isLoggedIn={isLoggedIn} />
-                </Switch>
-              </Suspense>
-            )} />
-        </ThemeProvider>
+            <Route
+              render={({ location }) => (
+                <Suspense fallback={<FaldaxLoader></FaldaxLoader>}>
+                  <Switch location={location}>
+                    <Route path="/" exact title="Home" component={HomePage} />
+                    <Route path="/login" exact title="Login" component={Login} />
+                    <Route path='/reset-password' title="Reset Password" component={ResetPassword} />
+                    <Route path="/signup" exact title="Signup" component={SignupForm} />
+                    <Route path="/forgot-password" exact title="Forgot Password" component={ForgotForm} />
+                    <Route {...this.props} path="/about-us" exact title="About Us" component={AboutUs} />
+                    <Route path="/faq" exact title="Faq Page" component={FaqPage} />
+                    <Route path="/blogs" exact title='Blog' component={Blog} />
+                    <Route path="/blogDetails" exact title='Blog' component={BlogDetails} />
+                    <Route path="/contactus" exact title='Contact' component={ContactUs} />
+                    <Route path="/careers" exact title='Careers' component={Careers} />
+                    <Route path="/career-details" exact title='Careerdetails' component={CareerDetails} />
+                    <Route path="/mediacontact" exact title='MediaContact' component={MediaContact} />
+                    <Route path="/fees" exact title='Fees' component={Fees} />
+                    <Route path="/addcoin" exact title='AddCoin' component={Addcoin} />
+                    <Route path="/applyjob" exact title='ApplyJob' component={ApplyJob} />
+                    <Route path="/policy" exact title='policy' component={Policy} />
+                    <Route path="/news" exact title='News' component={News} />
+                    <Route path="/thank-you" exact title='Thank You' component={ThankYou} />
+                    <Route path="/verify-email" exact title='Email Verification' component={EmailVerification} />
+                    <Route path="/signup-success/:email" exact title='Thank You' component={SignupSuccess} />
+                    <Route path="/resend-verification" exact title='Resend Email Verification' component={ResendEmailVerification} />
+                    <Route path="/profile-backup/:email" exact title='Login' component={ProfileBackup} />
+                    <Route path="/Chart" exact title='Trading View' component={Chart} />
+                    <RestrictedRoute
+                      path="/"
+                      component={AppRouter}
+                      isLoggedIn={isLoggedIn}
+                      LogoutUser={this.props.LogoutUser}
+
+                    />
+                  </Switch>
+                </Suspense>
+              )} />
+          </ThemeProvider>
+        </div>
       </div>
     );
   }
 }
 
+
 function mapStateToProps(state, ownProps) {
   return ({
     isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
-    theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+    theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
   })
 }
 

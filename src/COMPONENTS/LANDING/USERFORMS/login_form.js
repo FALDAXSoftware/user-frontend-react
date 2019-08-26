@@ -280,13 +280,17 @@ class Login_Form extends Component {
       isOtpRequired: false,
       loader: false,
       verify: false,
-      recaptchaToken: null
+      recaptchaToken: null,
+      showBackUpInput: false,
+      backupIcon: null
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.IpVerify = this.IpVerify.bind(this);
     this.tokenVerify = this.tokenVerify.bind(this);
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
     this.verifyCallback = this.verifyCallback.bind(this);
+    this.onClickTFA = this.onClickTFA.bind(this);
+    this.forgotBackup = this.forgotBackup.bind(this);
   }
 
   static propTypes = {
@@ -307,7 +311,8 @@ class Login_Form extends Component {
   }
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      if (error === null && this.state.emailIcon === true && this.state.passIcon === true && (this.state.isOtpRequired === true ? this.state.otpIcon === true : true)) {
+      console.log(this.state.isOtpRequired, this.state.showBackUpInput, this.state.backupIcon, this.state.otpIcon)
+      if (error === null && this.state.emailIcon === true && this.state.passIcon === true && (this.state.isOtpRequired === true ? this.state.showBackUpInput === true ? this.state.backupIcon === true : this.state.otpIcon === true : true)) {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
@@ -319,14 +324,18 @@ class Login_Form extends Component {
         if (value.otp && value.otp !== null && value.otp.trim() !== "" && value.otp !== undefined) {
           obj['otp'] = value.otp;
         }
+        if (this.state.showBackUpInput === true && value.twofactor_backup_code && value.twofactor_backup_code !== null && value.twofactor_backup_code.trim() !== "" && value.twofactor_backup_code !== undefined) {
+          obj['twofactor_backup_code'] = value.twofactor_backup_code;
+        }
         if (this.state.recaptchaToken != null) {
           obj["g_recaptcha_response"] = this.state.recaptchaToken;
           this.setState({ loader: true })
           this.props.Login(obj);
         } else {
-          this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reload the page.");
+          this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reloading the page.");
         }
       } else {
+        console.log(error, value)
         if (error !== null) {
           if (error['password'] !== undefined && (value.password === "" || value.password === undefined)) {
             this.setState({ passIcon: false })
@@ -344,7 +353,11 @@ class Login_Form extends Component {
           }
         }
         else {
-          this.onChangeField(value.otp, "otp")
+          console.log(this.state.backupIcon)
+          if (this.state.backupIcon === true)
+            this.onChangeField(value.twofactor_backup_code, "twofactor_backup_code")
+          else if (this.state.otpIcon === true)
+            this.onChangeField(value.otp, "otp")
         }
       }
     });
@@ -448,7 +461,7 @@ class Login_Form extends Component {
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
-          this.setState({ otpIcon: true })
+          this.setState({ otpIcon: true, backupIcon: false });
           document.querySelector("#otp_icon_success").style.display = "inline-block"
           document.querySelector("#otp_icon_fail").style.display = "none"
           document.querySelectorAll(".otp_msg")[0].style.display = "none";
@@ -465,6 +478,30 @@ class Login_Form extends Component {
         document.querySelector("#otp_icon_fail").style.display = "inline-block";
         document.querySelectorAll(".otp_msg")[0].style.display = "block";
         this.setState({ otp_msg: "Otp is required." })
+      }
+    }
+    else if (field === "twofactor_backup_code") {
+      var re = /^\b[a-zA-Z0-9]{10}\b|\b[a-zA-Z0-9]{10}\b/;
+      var bool = re.test(value);
+      if (value !== "") {
+        if (bool === true) {
+          this.setState({ backupIcon: true, otpIcon: false })
+          document.querySelector("#backup_icon_success").style.display = "inline-block"
+          document.querySelector("#backup_icon_fail").style.display = "none"
+          document.querySelectorAll(".backup_msg")[0].style.display = "none";
+        } else {
+          this.setState({ backupIcon: false })
+          document.querySelector("#backup_icon_success").style.display = "none";
+          document.querySelector("#backup_icon_fail").style.display = "inline-block";
+          document.querySelectorAll(".backup_msg")[0].style.display = "block";
+          this.setState({ backup_msg: "Back-up code should have 10 characters." })
+        }
+      } else {
+        this.setState({ backupIcon: false })
+        document.querySelector("#backup_icon_success").style.display = "none";
+        document.querySelector("#backup_icon_fail").style.display = "inline-block";
+        document.querySelectorAll(".backup_msg")[0].style.display = "block";
+        this.setState({ backup_msg: "Back-up code is required." })
       }
     }
   }
@@ -511,12 +548,12 @@ class Login_Form extends Component {
         });
         // document.querySelector("#otp-field").focus();
         /* this.openNotificationWithIcon('error', 'Error', props.errorStatus.err); */
-      }
+      } 
       else if (props.errorStatus.status == 202) {
         this.setState({ loader: false, recaptchaToken: null }, () => {
           this.onLoadRecaptcha();
         })
-        this.openNotificationWithIcon('success', 'Success', props.errorStatus.err);
+        this.openNotificationWithIcon('warning', 'Warning', props.errorStatus.err);
       }
       else {
         this.setState({ loader: false, recaptchaToken: null }, () => {
@@ -650,6 +687,18 @@ class Login_Form extends Component {
     }
   }
 
+  onClickTFA() {
+    console.log("onClickTFA", !this.state.showBackUpInput)
+    this.setState({
+      showBackUpInput: !this.state.showBackUpInput
+    });
+  }
+
+  forgotBackup() {
+    console.log(this.props.form.getFieldValue('email'))
+    var email = this.props.form.getFieldValue('email');
+    this.props.history.push(`/profile-backup/${encodeURIComponent(email)}`)
+  }
   render() {
     if (this.props.isLoggedIn) {
       this.props.history.push("/editProfile");
@@ -701,7 +750,7 @@ class Login_Form extends Component {
                     </div>
                     <PassReq className="pass_msg">{this.state.pass_msg}</PassReq>
 
-                    {this.state.isOtpRequired &&
+                    {this.state.isOtpRequired && !this.state.showBackUpInput ?
                       <div>
                         <OtpLabel>Two-Factor Authentication is enabled for this account. Please enter your 2FA code below to proceed.</OtpLabel>
                         <div>
@@ -713,16 +762,48 @@ class Login_Form extends Component {
                           <UserIconF id="otp_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
                         </div>
                         <PassReq className="otp_msg">{this.state.otp_msg}</PassReq>
-                      </div>
+                      </div> : ""
                     }
                     <input style={{ display: "none" }} type="submit" value="Submit" />
                   </form>
-                  <CheckWrap>
-                    {/* <Remember>
-                <Check type="checkbox" /> Remember Me</Remember> */}
-                    <Forgot onClick={this._goToForgotPwd}>Forgot Password?</Forgot>
-                  </CheckWrap>
-
+                  {!this.state.isOtpRequired &&
+                    <CheckWrap>
+                      <Forgot onClick={this._goToForgotPwd}>Forgot Password?</Forgot>
+                    </CheckWrap>
+                  }
+                  {this.state.isOtpRequired && !this.state.showBackUpInput ?
+                    <CheckWrap>
+                      {/* <Remember>
+                      <Check type="checkbox" /> Remember Me</Remember> */}
+                      <Forgot onClick={this.onClickTFA}>Don't have Two-Factor Authentication?</Forgot>
+                    </CheckWrap> : ""
+                  }
+                  {this.state.showBackUpInput ?
+                    <CheckWrap>
+                      {/* <Remember>
+                      <Check type="checkbox" /> Remember Me</Remember> */}
+                      <Forgot onClick={this.onClickTFA}>Have Two-Factor Authentication?</Forgot>
+                    </CheckWrap> : ""
+                  }
+                  {this.state.showBackUpInput &&
+                    <div style={{ paddingTop: "10px" }}>
+                      <OtpLabel>Please enter your Back-up code below to proceed.</OtpLabel>
+                      <div>
+                        <Username id="backUpCode" {...getFieldProps('twofactor_backup_code', {
+                          onChange(e) { me.onChangeField(e.target.value, "twofactor_backup_code") }, // have to write original onChange here if you need
+                          rules: [{ required: false }],
+                        })} />
+                        <UserIconS id="backup_icon_success" type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                        <UserIconF id="backup_icon_fail" type="close-circle" theme="twoTone" twoToneColor="red" />
+                      </div>
+                      <PassReq className="backup_msg">{this.state.backup_msg}</PassReq>
+                    </div>
+                  }
+                  {this.state.showBackUpInput &&
+                    <CheckWrap>
+                      <Forgot onClick={this.forgotBackup}>Forgot Backup Code?</Forgot>
+                    </CheckWrap>
+                  }
                   {(errors = getFieldError('required')) ? errors.join(',') : null}
                   <ButtonLogin disabled={this.state.loader} onClick={this.submit}>LOGIN</ButtonLogin>
                   <Sign>
@@ -730,6 +811,7 @@ class Login_Form extends Component {
                   </Sign>
                   {(this.state.loader === true) ? <FaldaxLoader /> : ""}
                 </div>
+
               </RightWrap>
             </FormWrap>
           </ColRight>

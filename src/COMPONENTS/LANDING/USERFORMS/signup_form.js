@@ -165,7 +165,7 @@ const ConfirmIconF = styled(FirstIconF)`
 const Full = styled(Username)`
   display:inline-block;
 `
-const Email = styled(Username)`
+export const Email = styled(Username)`
   display:inline-block;
 `
 const FullReq = styled(EmailReq)`
@@ -180,7 +180,7 @@ const Password = styled(Username)`
   padding-right:40px;
 `
 const Referral = styled(Username)``
-const ButtonLogin = styled(Button)`
+export const ButtonLogin = styled(Button)`
   width: 110px;
   background-color: rgb(0, 170, 250);
   color: white;
@@ -211,9 +211,11 @@ const ButtonLogin = styled(Button)`
     background-color:white;
   }
 `
-const Sign = styled.div`
-  margin-top: 30px;
-  margin-bottom: 60px;
+const SignWrap = styled.div`
+margin-bottom: 60px;
+`
+export const Sign = styled.div`
+  margin-top: 20px;
   font-size: 16px;
   font-family: "Open Sans";
   @media (min-width:1024px) and (max-width:1440px)
@@ -221,7 +223,7 @@ const Sign = styled.div`
     margin-top: 13px;
   }
 `
-const Signa = styled.a`
+export const Signa = styled.a`
 font-size: 16px;
 font-family: "Open Sans";
 color:rgb(0, 170, 250);
@@ -271,18 +273,23 @@ class SignupForm extends Component {
     this.dispModal = this.dispModal.bind(this);
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
     this.verifyCallback = this.verifyCallback.bind(this);
+    this._resendVerLink = this._resendVerLink.bind(this);
   }
 
   static propTypes = {
     form: formShape,
   };
+
+
   /* Life Cycle Methods */
 
   componentWillReceiveProps(props, newProps) {
     if (props.isSignUp) {
       if (props.isSignUp.status === 200) {
         //this.props.dispModal("thankyou");
-        this.props.history.push('/signup-success');
+        console.log(this.props.form.getFieldValue('email'));
+        var email = this.props.form.getFieldValue('email');
+        this.props.history.push(`/signup-success/${encodeURIComponent(email)}`);
       } else {
         this.setState({
           recaptchaToken: null
@@ -298,6 +305,9 @@ class SignupForm extends Component {
   componentDidMount() {
     this.onLoadRecaptcha();
     let queryParams
+    if (this.props.isLoggedIn)
+      this.props.history.push('/editProfile')
+
     if (this.props.location.pathname == "/signup") {
       if (this.props.location.search !== "") {
         let qP = this.props.location.search.split("=")
@@ -307,6 +317,11 @@ class SignupForm extends Component {
       }
     }
   }
+
+  _resendVerLink() {
+    this.props.history.push('/resend-verification');
+  }
+
   onLoadRecaptcha() {
     if (this.captchaDemo) {
       this.captchaDemo.reset();
@@ -347,7 +362,7 @@ class SignupForm extends Component {
           this.setState({ loader: true })
           this.props.Signup(obj);
         } else {
-          this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reload the page.");
+          this.openNotificationWithIcon('error', 'Seems like a robot', "Please try again after reloading the page.");
         }
       } else {
         if (error !== undefined && error !== null) {
@@ -593,6 +608,9 @@ class SignupForm extends Component {
     event.preventDefault();
   }
   render() {
+    if (this.props.isLoggedIn) {
+      this.props.history.push("/editProfile");
+    }
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
     var me = this;
@@ -613,7 +631,7 @@ class SignupForm extends Component {
               <RightWrap className="wow fadeInDown" >
                 <LoginHead>Sign Up</LoginHead>
                 <Welcome>A Better Trading Experience is Moments Away</Welcome>
-                <SubHeading>Lets Get Started</SubHeading>
+                <SubHeading>Let's Get Started</SubHeading>
                 <form onSubmit={this.handleSubmit}>
                   <EmailLabel>First Name*</EmailLabel>
                   <div>
@@ -698,9 +716,13 @@ class SignupForm extends Component {
                 </form>
                 {(errors = getFieldError('required')) ? errors.join(',') : null}
                 <ButtonLogin onClick={this.submit} disabled={this.state.isSignDisable}>Sign Up</ButtonLogin>
-                <Sign>
-                  Already have an account? <Signa onClick={this.dispModal}>Login</Signa>
-                </Sign>
+                <br />
+                <SignWrap>
+                  <Sign>Already Signed Up ?  <Signa onClick={this._resendVerLink}>Resend Verification Link</Signa></Sign>
+                  <Sign>
+                    Already have an account? <Signa onClick={this.dispModal}>Login</Signa>
+                  </Sign>
+                </SignWrap>
               </RightWrap>
             </FormWrap>
           </ColRight>
@@ -721,6 +743,7 @@ class SignupForm extends Component {
 
 function mapStateToProps(state) {
   return ({
+    isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
     isSignUp: state.simpleReducer.isSignUp !== undefined ? state.simpleReducer.isSignUp : undefined
   })
 }

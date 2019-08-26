@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Modal, Icon, notification } from 'antd';
+import { withRouter } from 'react-router-dom';
 import { globalVariables } from 'Globals.js';
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
 import { ModalWrap } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle"
@@ -87,6 +88,8 @@ class ComingSoon extends Component {
                     visible={this.props.visible}
                     onOk={(e) => this.handleComing()}
                     onCancel={(e) => this.comingCancel(e)}
+                    closable={this.props.location.pathname == "/conversion" ? false : true}
+                    maskClosable={this.props.location.pathname == "/conversion" ? false : true}
                     footer={null}
                     width={605}
                     height={490}
@@ -109,4 +112,4 @@ class ComingSoon extends Component {
     }
 }
 
-export default ComingSoon;
+export default withRouter(ComingSoon);

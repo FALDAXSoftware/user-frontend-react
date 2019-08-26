@@ -113,7 +113,18 @@ const SubText = styled.span`
 `
 
 class SignupSuccess extends Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: ""
+    };
+  }
+  componentDidMount() {
+    if (this.props.match)
+      if (this.props.match.params)
+        if (this.props.match.params.email)
+          this.setState({ email: decodeURIComponent(this.props.match.params.email) });
+  }
   render() {
     return (
       <div>
@@ -131,7 +142,7 @@ class SignupSuccess extends Component {
               <RightWrap className="wow fadeInDown" >
                 <LoginHead>Thank You</LoginHead>
                 <WelcomeText>We have sent a confirmation email.</WelcomeText>
-                <SubText>Please check your email.</SubText>
+                <SubText>Please check your email <span style={{ color: "black" }}>{this.state.email}</span>.</SubText>
               </RightWrap>
             </FormWrap>
           </ColRight>

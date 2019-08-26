@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Link, withRouter } from 'react-router-dom';
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
 import styled from 'styled-components';
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
@@ -111,11 +111,26 @@ class Careers extends Component {
         })
             .then(response => response.json())
             .then((responseData) => {
-                this.setState({ Jobs: responseData.data, careerDesc: responseData.careerDesc, loader: false })
+                if (responseData.status == 200) {
+                    this.setState({ Jobs: responseData.data, careerDesc: responseData.careerDesc, loader: false })
+
+                }
+                else {
+                    this.setState({ loader: false })
+                    this.openNotificationWithIcon('error', "Error", responseData.err);
+                }
             })
-            .catch(error => { })
+            .catch(error => {
+                this.setState({ loader: false })
+            })
 
     }
+    openNotificationWithIcon(type, head, desc) {
+        notification[type]({
+            message: head,
+            description: desc,
+        });
+    };
     render() {
         var me = this;
         let flag = false;

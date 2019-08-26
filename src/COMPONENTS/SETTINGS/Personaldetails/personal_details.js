@@ -12,7 +12,8 @@ import Datepicker from "./datepicker"
 import CountryPick from "./country"
 import { EmailReq } from "COMPONENTS/LANDING/USERFORMS/login_form"
 import { globalVariables } from "Globals.js"
-import { profileupdateAction, removepicAction, getProfileDataAction, clearEditData } from "ACTIONS/SETTINGS/settingActions"
+import { profileupdateAction, removepicAction, getProfileDataAction, clearEditData, profileError } from "ACTIONS/SETTINGS/settingActions"
+import { LogoutUser } from 'ACTIONS/authActions';
 import { _DEFAULTPROFILE } from "CONSTANTS/images";
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 
@@ -307,6 +308,16 @@ class PersonalDetails extends Component {
             this.openNotificationWithProfile("success", "Success", "Profile updated successfully");
             this.props.clearEditData();
         }
+        if (props.profileError !== undefined) {
+            console.log("Called Twice", props.profileError)
+            this.openNotificationWithProfile("error", "Error", props.profileError.err);
+            this.props.profileErr();
+            let form = {
+                user_id: this.props.profileDetails.id,
+                jwt_token: this.props.isLoggedIn
+            };
+            this.props.LogoutUser(this.props.isLoggedIn, form);
+        }
     }
 
     /* 
@@ -344,7 +355,7 @@ class PersonalDetails extends Component {
 
         var date = moment.utc(tempDate).local().format("DD-MM-YYYY");
         this.setState({ Datedata: date })
-        // console.log(value, field)
+        console.log("Step 3---------->", value, field)
         this.onChangeField(value, field);
     }
 
@@ -550,6 +561,7 @@ class PersonalDetails extends Component {
                 this.setState({ countrymsg })
             }
         } else if (field === "dob") {
+            console.log("Step 4 ------>", value);
             if ((value["day"]) && (value["month"]) && (value["year"])) {
                 this.setState({ dobIcon: true })
                 document.querySelectorAll(".dob_msg")[0].style.display = "none";
@@ -691,6 +703,7 @@ class PersonalDetails extends Component {
                 if (this.state.profileImage !== null && this.state.profileImage !== undefined && !this.state.profileImg.includes("def_profile.jpg")) {
                     profileData.append('profile_pic', this.state.profileImage)
                 }
+                console.log("---------------->> USER API CALLED")
                 this.props.profileupdateAction(this.props.isLoggedIn, profileData);
 
             } else {
@@ -884,14 +897,17 @@ const mapStateToProps = (state) => {
         profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
         loader: state.simpleReducer.loader,
         apiStatus: state.simpleReducer.update !== undefined ? state.simpleReducer.update.status : "",
-        apiMessage: state.simpleReducer.update !== undefined ? state.simpleReducer.update.message : ""
+        apiMessage: state.simpleReducer.update !== undefined ? state.simpleReducer.update.message : "",
+        profileError: state.simpleReducer.profileError !== undefined ? state.simpleReducer.profileError : undefined
     }
 }
 const mapDispatchToProps = dispatch => ({
     profileupdateAction: (isLoggedIn, form) => dispatch(profileupdateAction(isLoggedIn, form)),
     getProfileDataAction: (isLoggedIn) => dispatch(getProfileDataAction(isLoggedIn)),
     removepicAction: (isLoggedIn, form) => dispatch(removepicAction(isLoggedIn, form)),
-    clearEditData: () => dispatch(clearEditData())
+    clearEditData: () => dispatch(clearEditData()),
+    profileErr: () => dispatch(profileError()),
+    LogoutUser: () => dispatch(LogoutUser())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails));
