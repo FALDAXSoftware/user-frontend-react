@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Row, Col, Button, Pagination } from 'antd';
+import { Row, Col, Button, Pagination, Table } from 'antd';
 /* Styled- Components */
 
 export const AccWrap = styled.div`
@@ -177,4 +177,20 @@ export const PaginationS = styled(Pagination)`
     {
         color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
+`
+
+
+/* Threshold Notification */
+
+export const NotificationTable = styled(Table)`
+    width:800px;
+    margin-left:auto;
+    margin-right:auto;
+
+    th{
+        background-color: #e4ecff !important;
+    }
+`
+export const WrapTable = styled.div`
+    margin-top:40px;
 `

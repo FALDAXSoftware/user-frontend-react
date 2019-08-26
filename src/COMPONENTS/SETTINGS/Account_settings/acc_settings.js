@@ -19,7 +19,7 @@ import IpModal from "./ip_modal"
 import { AccWrap,/*  NotiWrap, NotiHead, NotiDesc, CheckRow, CheckRow2, CheckCol, CheckCol2, CheckCol3, CheckCol4, HR, */ LoginHistory, HistoryHead, Heading, Desc, FontAwesomeIconS, TableWrap, HR2, DeleteWrap, DeleteHead, DeleteDesc, DeleteBtn, ButtonDel, PaginationS } from 'STYLED-COMPONENTS/SETTINGS/accsettingsStyle'
 import { NewButton, NewInput } from "COMPONENTS/SETTINGS/changePassword/change_email"
 import { VerifyModal, Description, NewP, InputLabel, OTPInput, ButtonDiv } from "./ip_modal"
-
+import ThresholdNotification from './threshold_notification'
 const IpButton = styled(NewButton)`
 margin-top:20px;
 `
@@ -569,6 +569,8 @@ class Acc_settings extends Component {
                 </Check_Wrap>
                 <HR /> */}
                 {/* ----Notification code ends ---- */}
+                <ThresholdNotification isLoggedIn={this.props.isLoggedIn} />
+                <HR2 />
                 <LoginHistory>
                     <HistoryHead>
                         <Heading>
@@ -591,6 +593,7 @@ class Acc_settings extends Component {
                     <PaginationS
                         style={{ marginTop: '15px' }}
                         className="ant-users-pagination"
+                        size="small"
                         onChange={this.handleHistoryPagination.bind(this)}
                         pageSize={10}
                         hideOnSinglePage={true}
