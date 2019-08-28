@@ -12,7 +12,7 @@ import {
     ContactWrap, GreyWrap, HeadContact, CareerHead, CareerDBody, BtnDiv,
     JobBtn, BodyDetails, BodyP, LocationP, DetailsP
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
-import { globalVariables } from "Globals"
+import { globalVariables } from "Globals.js"
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'
 
 export const ContainerContact = styled(Container)`

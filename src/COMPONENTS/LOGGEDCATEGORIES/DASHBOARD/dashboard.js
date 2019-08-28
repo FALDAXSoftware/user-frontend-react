@@ -15,7 +15,7 @@ import LoggedNavigation from 'COMPONENTS/NAVIGATIONS/loggednavigation';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import DashGraph from "./dashgraph";
 import RiseTable from "./risetable";
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 
 /*Styled-components*/
 import { ContactWrap, GreyWrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";

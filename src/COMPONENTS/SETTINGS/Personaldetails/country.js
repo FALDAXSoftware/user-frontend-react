@@ -6,7 +6,7 @@ import CountryData from 'country-state-city';
 import { Select, Row, Col } from 'antd';
 
 /* components */
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 
 /* let { API_URL } = globalVariables; */
 const Option = Select.Option;

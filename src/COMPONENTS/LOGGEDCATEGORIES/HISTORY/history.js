@@ -11,7 +11,7 @@ import { CSVLink } from "react-csv";
 /* components */
 import LoggedNavigation from 'COMPONENTS/NAVIGATIONS/loggednavigation';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 
 /* STYLED-COMPONENTS */
 import { ContactWrap, GreyWrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle"

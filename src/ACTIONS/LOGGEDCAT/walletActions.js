@@ -1,7 +1,14 @@
-import { globalVariables } from 'Globals';
-import { removeLoader, addLoader } from "../SETTINGS/settingActions";
+import {
+    globalVariables
+} from 'Globals.js';
+import {
+    removeLoader,
+    addLoader
+} from "../SETTINGS/settingActions";
 
-let { API_URL } = globalVariables;
+let {
+    API_URL
+} = globalVariables;
 
 /*  
     Action : This action is called for wallet balance.

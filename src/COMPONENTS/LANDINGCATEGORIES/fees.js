@@ -6,7 +6,7 @@ import { Table } from 'react-bootstrap';
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import {
     ContactWrap, GreyWrap, CareerWrap
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';

@@ -10,7 +10,7 @@ import { ReCaptcha } from 'react-recaptcha-google'
 import { _EYE, _ACTIVEEYE } from 'CONSTANTS/images';
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader"
 import { loginAction, Login, clearLogin } from 'ACTIONS/authActions';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 
 let { API_URL, GOOGLE_SITE_KEY } = globalVariables;
 /* Global CONSTANTS */

@@ -14,7 +14,7 @@ import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
 import { ContactWrap, GreyWrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle"
 import { HeaderWrap, SearchCoin, MYWallet, Total, Tot, Money, Currency, CoinTable, SearchCoin2, HeaderWrap2 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
-/* import { globalVariables } from 'Globals'; */
+/* import { globalVariables } from 'Globals.js'; */
 
 
 /* Actions */

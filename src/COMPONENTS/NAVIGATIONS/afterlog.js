@@ -18,7 +18,7 @@ import * as walletData from 'ACTIONS/LOGGEDCAT/walletActions'
 import * as allCoinsData from 'ACTIONS/LOGGEDCAT/walletActions'
 
 /* CONSTANTS */
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 
 /* Styled-Components */
 const RightDiv = styled.div`

@@ -8,7 +8,7 @@ import moment from "moment";
 /* import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; */
 
 /*components*/
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 
 /* STYLED-COMPONENTS */
 import { HistoryWrap, TableHeader, TableContent, ScrollTableContent } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";

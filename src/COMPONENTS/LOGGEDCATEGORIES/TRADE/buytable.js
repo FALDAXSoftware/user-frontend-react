@@ -7,7 +7,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { Spin } from 'antd';
 
 /*Components  */
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 
 /* STYLED-COMPONENTS */
 import { BuyTable, BBC, TotalBTC, HistoryWrap1, TableHeader, TableContent, ScrollTableContent } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";

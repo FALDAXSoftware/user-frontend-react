@@ -9,7 +9,7 @@ import moment from 'moment'
 /* components */
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 
 /* STYLED-COMPONENTS */

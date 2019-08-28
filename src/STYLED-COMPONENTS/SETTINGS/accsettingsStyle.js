@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Row, Col, Button, Pagination } from 'antd';
+import { Row, Col, Button, Pagination, Table } from 'antd';
+import { Save } from "COMPONENTS/SETTINGS/Personaldetails/personal_details"
 /* Styled- Components */
 
 export const AccWrap = styled.div`
@@ -177,4 +178,59 @@ export const PaginationS = styled(Pagination)`
     {
         color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
+`
+
+
+/* Threshold Notification */
+
+export const NotificationTable = styled(Table)`
+    width:800px;
+    margin-left:auto;
+    margin-right:auto;
+    td{
+        color:${props => props.theme.mode !== "dark" ? "" : "white !important"};
+    }
+    th{
+        background-color: ${props => props.theme.mode !== "dark" ? "#e4ecff !important" : "#01090f !important"};
+        color:${props => props.theme.mode !== "dark" ? "" : "white !important"};
+    }
+    input{
+        background-color: ${props => props.theme.mode !== "dark" ? "" : "#041422 !important"};
+        color:${props => props.theme.mode !== "dark" ? "" : "white !important"};    
+    }
+    .ant-table-tbody>tr:hover:not(.ant-table-expanded-row)>td
+    {
+        background:transparent;
+    }
+    .anticon-left,.anticon-right
+    {
+        color:${props => props.theme.mode !== "dark" ? "" : "white !important"};    
+
+    }
+    .ant-pagination-item-active
+    {
+        background:${props => props.theme.mode == "dark" ? "#041422" : ""};
+    }
+    .ant-pagination-item>a
+    {
+        color:${props => props.theme.mode !== "dark" ? "" : "white !important"};    
+        
+    }
+    .ant-table-placeholder
+    {
+        background-color: ${props => props.theme.mode == "dark" ? "#041422" : ""};
+        .ant-empty-description
+        {
+            color:${props => props.theme.mode == "dark" ? "white" : ""};
+        }
+    }
+`
+export const WrapTable = styled.div`
+    margin-top:40px;
+    overflow:auto;
+    padding:10px;
+`
+export const AddButton = styled(Save)`
+width:110px;
+margin-top:30px;
 `

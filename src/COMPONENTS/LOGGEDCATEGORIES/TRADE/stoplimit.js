@@ -6,7 +6,7 @@ import 'antd/dist/antd.css';
 import { Row, Col, Radio, notification, Spin } from 'antd';
 
 /* Components */
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 
 /* Styled-components */
 import {

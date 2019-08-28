@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from "react-redux";
-import { /* Checkbox,  */Table, notification, Modal, Button, Input, Switch } from 'antd';
+import { Checkbox, Table, notification, Modal, Button, Input, Switch } from 'antd';
 import moment from 'moment';
 import { faDesktop, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components'
@@ -10,16 +10,16 @@ import SimpleReactValidator from 'simple-react-validator';
 
 
 /* Components */
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import { deleteAccount } from "ACTIONS/authActions"
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader"
 import IpModal from "./ip_modal"
 
 /* styled Components */
-import { AccWrap,/*  NotiWrap, NotiHead, NotiDesc, CheckRow, CheckRow2, CheckCol, CheckCol2, CheckCol3, CheckCol4, HR, */ LoginHistory, HistoryHead, Heading, Desc, FontAwesomeIconS, TableWrap, HR2, DeleteWrap, DeleteHead, DeleteDesc, DeleteBtn, ButtonDel, PaginationS } from 'STYLED-COMPONENTS/SETTINGS/accsettingsStyle'
+import { AccWrap, NotiWrap, NotiHead, NotiDesc, CheckRow, CheckRow2, CheckCol, CheckCol2, CheckCol3, CheckCol4, HR, LoginHistory, HistoryHead, Heading, Desc, FontAwesomeIconS, TableWrap, HR2, DeleteWrap, DeleteHead, DeleteDesc, DeleteBtn, ButtonDel, PaginationS, CheckWrap } from 'STYLED-COMPONENTS/SETTINGS/accsettingsStyle'
 import { NewButton, NewInput } from "COMPONENTS/SETTINGS/changePassword/change_email"
 import { VerifyModal, Description, NewP, InputLabel, OTPInput, ButtonDiv } from "./ip_modal"
-
+import ThresholdNotification from './threshold_notification'
 const IpButton = styled(NewButton)`
 margin-top:20px;
 `
@@ -46,7 +46,7 @@ const columns = [{
 }];
 
 
-/* const dataSource = [{
+const dataSource = [{
     key: '1',
     date: 'Mike',
     IP: 32
@@ -58,61 +58,27 @@ const columns = [{
 
 const columns_text = [, {
     title: 'Notifications',
-    dataIndex: 'Notifications',
+    dataIndex: 'title',
     className: "column-Noti",
-    key: 'Notifications',
+    key: 'title',
 }, {
         title: 'Text',
         className: "column-Text",
         dataIndex: 'Text',
         key: 'Text',
+        render: (value, record) => {
+            return <Checkbox defaultChecked={value}></Checkbox>
+        }
     }, {
         title: 'Email',
         className: "column-Email",
         dataIndex: 'Email',
         key: 'Email',
+        render: (value, record) => {
+            return <Checkbox defaultChecked={value}></Checkbox>
+        }
     }];
-const data_noti = [{
-    key: '1',
-    Notifications: "Deposits",
-    Text: <Checkbox></Checkbox>,
-    Email: <Checkbox></Checkbox>,
-}, {
-    key: '2',
-    Notifications: "Trade Execution",
-    Text: <Checkbox></Checkbox>,
-    Email: <Checkbox></Checkbox>,
-}, {
-    key: '3',
-    Notifications: "Withdrawals",
-    Text: <Checkbox></Checkbox>,
-    Email: <Checkbox></Checkbox>,
-}, {
-    key: '4',
-    Notifications: "Login",
-    Text: <Checkbox></Checkbox>,
-    Email: <Checkbox></Checkbox>,
-}, {
-    key: '5',
-    Notifications: "New Review",
-    Text: <Checkbox></Checkbox>,
-    Email: <Checkbox></Checkbox>,
-}, {
-    key: '6',
-    Notifications: "New Private Message",
-    Text: <Checkbox></Checkbox>,
-    Email: <Checkbox></Checkbox>,
-}, {
-    key: '7',
-    Notifications: "New Follower",
-    Text: <Checkbox></Checkbox>,
-    Email: <Checkbox></Checkbox>,
-}, {
-    key: '8',
-    Notifications: "Order Execution",
-    Text: <Checkbox></Checkbox>,
-    Email: <Checkbox></Checkbox>,
-}]; */
+
 const confirm = Modal.confirm;
 const ModalIpInput = styled(NewInput)`
 
@@ -123,6 +89,27 @@ const DaysInput = styled(NewInput)`
 class Acc_settings extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            loginHistory: [],
+            notiCSS: '',
+            historyCSS: '',
+            historyCount: 0,
+            ipCount: 0,
+            pageHistory: 1,
+            pageIp: 1,
+            loader: false,
+            showAddModal: false,
+            whitelistData: [],
+            visibleIpModal: false,
+            data_noti: [],
+            fields: {
+                ip: null,
+                days: null
+            },
+            isWhitelistIp: false
+        };
+
         this.columnsIP = [{
             title: 'IP Whitelist',
             dataIndex: 'ip',
@@ -154,33 +141,15 @@ class Acc_settings extends Component {
                 );
             },
         },]
-        this.state = {
-            loginHistory: [],
-            notiCSS: '',
-            historyCSS: '',
-            historyCount: 0,
-            ipCount: 0,
-            pageHistory: 1,
-            pageIp: 1,
-            loader: false,
-            showAddModal: false,
-            whitelistData: [],
-            visibleIpModal: false,
-            fields: {
-                ip: null,
-                days: null
-            },
-            isWhitelistIp: false
-        };
 
         this.validator = new SimpleReactValidator();
-        this.closeModal = this.closeModal.bind(this);
-        this.openAddModal = this.openAddModal.bind(this);
         this.getIpWhitelist = this.getIpWhitelist.bind(this);
         this.addIpWhitelist = this.addIpWhitelist.bind(this);
+        this.fianlIpWhitelist = this.fianlIpWhitelist.bind(this);
         this.onChangeSwitch = this.onChangeSwitch.bind(this);
         this.onChangeIP = this.onChangeIP.bind(this);
-        this.fianlIpWhitelist = this.fianlIpWhitelist.bind(this);
+        this.openAddModal = this.openAddModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
         this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
     }
 
@@ -204,6 +173,7 @@ class Acc_settings extends Component {
     componentDidMount() {
         this.getAllLoginHistory(1);
         this.getIpWhitelist(this.state.pageIp);
+        this.getNotificationList();
         if (this.props.profileDetails !== "" && this.props.profileDetails !== undefined) {
             this.setState({
                 checked: this.props.profileDetails.security_feature
@@ -227,6 +197,29 @@ class Acc_settings extends Component {
 
     }
 
+    getNotificationList() {
+        fetch(API_URL + `/get-notification-list`, {
+            method: "get",
+            headers: {
+                Authorization: "Bearer " + this.props.isLoggedIn
+            }
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                console.log("Did IP : ", responseData)
+                if (responseData.status == 200) {
+                    this.setState({
+                        data_noti: responseData.data
+                    });
+                }
+                else {
+                    this.openNotificationWithIcon('error', responseData.status, responseData.err);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
     getIpWhitelist(pageIp) {
         fetch(API_URL + `/users/get-whitelist-ip?page=${pageIp}&limit=${10}`, {
             method: "get",
@@ -548,27 +541,30 @@ class Acc_settings extends Component {
         this.setState({ visibleIpModal: false, checkedIP: false });
     }
     render() {
-        const { fields } = this.state
+        const { fields, data_noti } = this.state
         return (
             <AccWrap>
                 {/* ----Notification code start ---- */}
-                {/* <Noti_Wrap>
-                    <Noti_Head>
+                {/* <NotiWrap>
+                    <NotiHead>
                         <span>Notifications</span>
-                    </Noti_Head>
-                    <Noti_desc>
-                         <span>Automatic Email Notifications</span>
-                    </Noti_desc>
-                </Noti_Wrap>
-                <Check_Wrap>
+                    </NotiHead>
+                    <NotiDesc>
+                        <span>Automatic Email Notifications</span>
+                    </NotiDesc>
+                </NotiWrap>
+                <CheckWrap>
                     <Table
                         className={this.state.notiCSS}
                         pagination={false}
+                        bordered={true}
                         dataSource={data_noti}
                         columns={columns_text} />
-                </Check_Wrap>
+                </CheckWrap>
                 <HR /> */}
                 {/* ----Notification code ends ---- */}
+                <ThresholdNotification isLoggedIn={this.props.isLoggedIn} />
+                <HR2 />
                 <LoginHistory>
                     <HistoryHead>
                         <Heading>
@@ -591,6 +587,7 @@ class Acc_settings extends Component {
                     <PaginationS
                         style={{ marginTop: '15px' }}
                         className="ant-users-pagination"
+                        size="small"
                         onChange={this.handleHistoryPagination.bind(this)}
                         pageSize={10}
                         hideOnSinglePage={true}

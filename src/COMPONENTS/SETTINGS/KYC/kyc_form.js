@@ -13,7 +13,7 @@ import Datepicker from "../Personaldetails/datepicker"
 import CountryPick from "../Personaldetails/country"
 import { kycFormAction, kycformData } from "ACTIONS/SETTINGS/passwordActions"
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
-import { globalVariables } from "Globals"
+import { globalVariables } from "Globals.js"
 
 /* STYLED-COMPONENTS */
 import { IntlTelInputS } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle"

@@ -9,7 +9,7 @@ import { Row, Col, Radio, notification, Spin } from 'antd';
 import {
     SpinSingle
 } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle"
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 
 /* STYLED-COMPONENTS */
 import { Label, MarketWrap, BuyWrap, BuySell, BuySellRadio, BalanceWrap, Balance, Balance1, Total, ETHWrap, BTCWrap, Willpay, Willpay2, AMTInput, TotalWrap, TotInput, Pay, Esti, ButtonWrap, ButtonETH } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";

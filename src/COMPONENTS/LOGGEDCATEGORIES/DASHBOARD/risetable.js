@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import { Input } from 'antd';
 import { Table } from 'react-bootstrap';
 import styled from 'styled-components';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 
 let { API_URL } = globalVariables;
 

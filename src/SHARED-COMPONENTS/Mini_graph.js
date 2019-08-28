@@ -4,7 +4,7 @@ import { Row, Col } from 'antd';
 import { connect } from "react-redux";
 import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
-import { globalVariables } from '../Globals';
+import { globalVariables } from '../Globals.js';
 const moment = require('moment');
 let { _AMAZONBUCKET } = globalVariables;
 

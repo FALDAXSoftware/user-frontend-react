@@ -11,7 +11,7 @@ import { HistoryWrap } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import { Head, SubHead, DropMenu, Col1 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
 
 /* components */
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 let { _AMAZONBUCKET } = globalVariables;
 
 const BorderedHistoryWrap = styled(HistoryWrap)`

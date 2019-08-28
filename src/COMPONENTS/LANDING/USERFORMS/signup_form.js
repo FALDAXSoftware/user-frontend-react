@@ -12,7 +12,7 @@ import { Signup, clearSignUp } from 'ACTIONS/authActions';
 import { _ACTIVEEYE, _EYE } from 'CONSTANTS/images';
 
 /* Global CONSTANTS */
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 /* Styled-Components */
 import { Username, WelcomeText, EmailLabel, EmailReq, PassReq } from "./login_form";
 let { GOOGLE_SITE_KEY } = globalVariables;

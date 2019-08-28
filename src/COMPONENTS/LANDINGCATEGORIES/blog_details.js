@@ -8,7 +8,7 @@ import BlogComments from './blog_comments'
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 import { SpinEx } from 'STYLED-COMPONENTS/HOMEPAGE/style'
 import {
     BDMainWrap, MetaTitle, BlogDesc2, Status, Date, Name, Comment, HeadImage, LeftCol,
