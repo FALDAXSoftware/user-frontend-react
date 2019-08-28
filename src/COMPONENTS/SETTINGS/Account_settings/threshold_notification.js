@@ -7,7 +7,7 @@ import SimpleReactValidator from "simple-react-validator";
 import moment from 'moment';
 
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 
 /* Styled-Components */
 import { Heading, NotificationTable, WrapTable } from 'STYLED-COMPONENTS/SETTINGS/accsettingsStyle'
