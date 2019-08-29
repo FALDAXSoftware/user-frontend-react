@@ -330,19 +330,19 @@ class LoggedNavigation extends Component {
     */
 
     tradeAccess() {
-        if (this.props.profileDetails.is_allowed === true && this.props.profileDetails.is_kyc_done === 2) {
+        /* if (this.props.profileDetails.is_allowed === true && this.props.profileDetails.is_kyc_done === 2) {
             console.log("I am here", this.props.location.pathname)
-            // this.props.history.push('/trade');
+            // this.props.history.push('/trade'); */
             if (this.props.location.pathname !== "/conversion")
                 this.props.history.push('/conversion');
 
-        }
+       /*  }
         else {
             if (this.props.profileDetails.is_allowed === false && this.props.profileDetails.is_kyc_done !== 2)
                 this.setState({ completeKYC: true });
             else
                 this.setState({ countryAccess: true });
-        }
+        } */
     }
 
     render() {
