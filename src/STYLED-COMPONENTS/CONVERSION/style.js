@@ -425,7 +425,7 @@ export const ContainerConversion = styled(Container)`
 export const HeadStyle = styled.span`
   font-family: "Open Sans";
   font-weight: bold;
-  font-size: 40px;
+  font-size: 38px;
   color: ${props => (props.theme.mode === "dark" ? "white" : "#333333")};
   text-align: center;
   display: block;
@@ -438,8 +438,8 @@ export const SubHeadStyle = styled.span`
   font-family: "Open Sans";
   text-align: center;
   display: block;
-  font-size: 21px;
-  line-height: 37px;
+  font-size: 18px;
+  line-height: 28px;
   padding: 0 70px 50px;
   @media (max-width: 950px) {
     padding: 0 50px 20px;
@@ -478,8 +478,8 @@ export const ColConStyle = styled.div`
   }
 `;
 export const ColHeadConStyle = styled.span`
-  font-size: 32px;
-  line-height: 36px;
+  font-size: 24px;
+  line-height: 30px;
   font-weight: 600;
   color: #4c84ff;
   font-family: "Open Sans";
@@ -487,8 +487,8 @@ export const ColHeadConStyle = styled.span`
 `;
 export const ColSubHeadConStyle = styled.span`
   color: #000000;
-  font-size: 21px;
-  line-height: 37px;
+  font-size: 16px;
+  line-height: 26px;
   font-family: "Open Sans";
   padding: 35px 0;
 `;
@@ -498,8 +498,7 @@ export const ColBtnConStyle = styled.button`
   font-family: "Open Sans";
   border: 1px solid #c6dfff;
   height: 48px;
-  font-size: 26px;
-  line-height: 26px;
+  font-size: 22px;
   font-weight: bold;
   background: #ffffff;
   color: #434f66;

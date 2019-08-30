@@ -18,7 +18,7 @@ const RadioGroup = Radio.Group;
 const API_URL = globalVariables.API_URL;
 const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
 let io = null;
-class Conversion extends React.Component {
+class ConversionDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -839,4 +839,4 @@ function mapStateToProps(state) {
     })
 }
 
-export default connect(mapStateToProps)(withRouter(Conversion));
+export default connect(mapStateToProps)(withRouter(ConversionDetail));
