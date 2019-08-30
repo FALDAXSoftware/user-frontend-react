@@ -31,7 +31,8 @@ import { LogoutUser } from "ACTIONS/authActions";
 
 /* import Chart from "COMPONENTS/tradingviewchart"; */
 import Conversion from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion";
-import LoginToken from "COMPONENTS/LOGGEDCATEGORIES/TOKEN/loginToken";
+import LoginToken from "COMPONENTS/LOGGEDCATEGORIES/TOKEN/login_token";
+import SecurityCheck from "COMPONENTS/LOGGEDCATEGORIES/TOKEN/security_check";
 let { API_URL } = globalVariables;
 const socketIOClient = require("socket.io-client");
 const sailsIOClient = require("sails.io.js");
@@ -91,6 +92,12 @@ const routes = [
     exact: false,
     path: "/token",
     component: () => <LoginToken io={io} />,
+    io: io
+  },
+  {
+    exact: false,
+    path: "/token-security-check",
+    component: () => <SecurityCheck io={io} />,
     io: io
   },
   {

@@ -104,6 +104,9 @@ export const TokenLeftHead = styled.span`
   margin: 0 0 40px 0;
   line-height: 1;
 `;
+export const TokenLeftHeadBlue = styled(TokenLeftHead)`
+  color: #4c84ff;
+`;
 export const TokenLeftColWrap = styled.div`
   width: 80%;
   display: inherit;
@@ -127,6 +130,12 @@ export const TokenFormHead = styled.span`
   color: #4c84ff;
   font-size: 36px;
   padding: 0 0 40px 0;
+`;
+export const TokenFormSubHead = styled.span`
+  font-size: 18px;
+  margin: 0;
+  padding: 0 0 80px 0;
+  display: inherit;
 `;
 export const TokenFormGroup = styled.div`
   width: 90%;
@@ -178,6 +187,9 @@ export const TokenBlueBtn = styled(TokenLogForgotBtn)`
 `;
 export const TokenDivHalf = styled.div`
   width: 50%;
+`;
+export const TokenDivFull = styled.div`
+  width: 100%;
 `;
 export const TokenDivHalfLeft = styled.div`
   width: auto;
