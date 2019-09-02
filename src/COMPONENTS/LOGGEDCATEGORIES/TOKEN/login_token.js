@@ -3,6 +3,8 @@ import LoggedNavigation from "../../NAVIGATIONS/loggednavigation";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { ContactWrap } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
+import "antd/dist/antd.css";
+import { Icon } from "antd";
 import {
   TokenWrap,
   TokenMainRow,
@@ -24,7 +26,8 @@ import {
   TokenBlueBtn,
   TokenDivHalf,
   TokenCustomCheckbox,
-  TokenDivHalfLeft
+  TokenDivHalfLeft,
+  TokenIconWrap
 } from "../../../STYLED-COMPONENTS/TOKEN/tokenStyle";
 
 class LoginToken extends React.Component {
@@ -51,7 +54,12 @@ class LoginToken extends React.Component {
                   <TokenLeftHead>token</TokenLeftHead>
                   <TokenForm>
                     <TokenFormTop>
-                      <TokenFormHead>Sign in</TokenFormHead>
+                      <TokenFormHead>
+                        <TokenIconWrap>
+                          <Icon type="arrow-left" />
+                        </TokenIconWrap>
+                        Sign in
+                      </TokenFormHead>
                       <TokenFormGroup>
                         <TokenFormLabel>Username</TokenFormLabel>
                         <TokenFormInput type="text" />

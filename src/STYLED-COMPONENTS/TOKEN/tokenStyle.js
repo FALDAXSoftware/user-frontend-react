@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Row } from "antd";
+import { EmailReq } from "COMPONENTS/LANDING/USERFORMS/login_form";
 
 export const TokenWrap = styled.div`
   padding-top: 80px;
@@ -112,6 +114,7 @@ export const TokenLeftColWrap = styled.div`
   display: inherit;
   flex-wrap: wrap;
   justify-content: flex-start;
+  padding: 20px 0;
   @media (max-width: 1366px) {
     width: 100%;
   }
@@ -130,12 +133,18 @@ export const TokenFormHead = styled.span`
   color: #4c84ff;
   font-size: 36px;
   padding: 0 0 40px 0;
+  &.has-title-country {
+    padding: 0 0 30px 0;
+  }
 `;
 export const TokenFormSubHead = styled.span`
   font-size: 18px;
   margin: 0;
   padding: 0 0 80px 0;
   display: inherit;
+  &.has-title-country {
+    padding: 0 0 20px 0;
+  }
 `;
 export const TokenFormGroup = styled.div`
   width: 90%;
@@ -244,6 +253,10 @@ export const TokenCustomCheckbox = styled.label`
     }
   }
 `;
+export const TokenIconWrap = styled.span`
+  font-size: 30px;
+  margin: 0 15px 0 0;
+`;
 // export const TokenInput = styled.div`
 //   position: absolute;
 //   opacity: 0;
@@ -277,3 +290,107 @@ export const TokenCustomCheckbox = styled.label`
 //     display: block;
 //   }
 // `;
+export const SecondRow = styled(Row)`
+  text-align: left;
+  margin-top: 25px;
+  @media (max-width: 767px) {
+    margin-top: 0px;
+  }
+`;
+export const FourthRow = styled(SecondRow)`
+  text-align: left;
+  margin-top: 25px;
+`;
+export const FirstMsg = styled(EmailReq)`
+  display: block;
+`;
+export const CountryMsg = styled(FirstMsg)``;
+export const CustomFileInputWrap = styled.div`
+  > .noteforupload {
+    margin: 0;
+    text-align: center;
+    padding: 30px 0 0 0;
+    font-size: 20px;
+    color: #333333;
+  }
+  > .errorimg {
+    margin: 0;
+    color: red;
+    text-align: center;
+  }
+  > .imgPreview {
+    width: 100%;
+    min-height: 250px;
+    position: relative;
+    margin: 30px 0 0 0;
+    > img {
+      max-width: 100%;
+      max-height: 100%;
+      margin: auto;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+  }
+  > .custom-file-input {
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    height: 310px;
+    width: 100%;
+    > input {
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      filter: alpha(opacity=0);
+      zoom: 1; /* Fix for IE7 */
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 999;
+    }
+    > .drop-image {
+      width: 100%;
+      height: 80%;
+      display: flex;
+      position: absolute;
+      justify-content: center;
+      align-items: center;
+    }
+    > .choose-span {
+      display: flex;
+      position: absolute;
+      bottom: 0;
+      justify-content: center;
+      left: 0;
+      right: 0;
+      flex-wrap: wrap;
+      width: 100%;
+      > .drop-span {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        color: #333333;
+        font-size: 26px;
+        font-weight: bold;
+        padding-bottom: 5px;
+      }
+      > .orspan {
+        color: #989898;
+        font-weight: 600;
+        font-size: 20px;
+        margin-right: 5px;
+      }
+      > .file-span {
+        font-weight: 600;
+        font-size: 20px;
+        color: #4c84ff;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+`;
