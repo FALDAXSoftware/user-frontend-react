@@ -90,7 +90,7 @@ export const TokenLogForgotBtn = styled.button`
     props.theme.mode === "dark" ? "#4c84ff" : "#b3d5ff"};
   background: ${props =>
     props.theme.mode === "dark" ? "#4c84ff" : "transparent"};
-  border-radius: 4px;
+  border-radius: 45px;
   font-weight: bold;
   margin: 40px 0 0 0;
   height: 48px;

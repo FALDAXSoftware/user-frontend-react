@@ -33,6 +33,10 @@ import { LogoutUser } from "ACTIONS/authActions";
 import Conversion from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion";
 import LoginToken from "COMPONENTS/LOGGEDCATEGORIES/TOKEN/login_token";
 import SecurityCheck from "COMPONENTS/LOGGEDCATEGORIES/TOKEN/security_check";
+import TierOne from "../src/COMPONENTS/SETTINGS/TIERS/tier_one";
+import TierTwo from "../src/COMPONENTS/SETTINGS/TIERS/tier_two";
+import TierThree from "../src/COMPONENTS/SETTINGS/TIERS/tier_three";
+import TierFour from "../src/COMPONENTS/SETTINGS/TIERS/tier_four";
 let { API_URL } = globalVariables;
 const socketIOClient = require("socket.io-client");
 const sailsIOClient = require("sails.io.js");
@@ -98,6 +102,30 @@ const routes = [
     exact: false,
     path: "/token-security-check",
     component: () => <SecurityCheck io={io} />,
+    io: io
+  },
+  {
+    exact: false,
+    path: "/tier1",
+    component: () => <TierOne io={io} />,
+    io: io
+  },
+  {
+    exact: false,
+    path: "/tier2",
+    component: () => <TierTwo io={io} />,
+    io: io
+  },
+  {
+    exact: false,
+    path: "/tier3",
+    component: () => <TierThree io={io} />,
+    io: io
+  },
+  {
+    exact: false,
+    path: "/tier4",
+    component: () => <TierFour io={io} />,
     io: io
   },
   {

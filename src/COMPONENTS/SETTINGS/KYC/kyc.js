@@ -5,28 +5,13 @@ import { connect } from "react-redux";
 import { Steps, Icon } from "antd";
 import styled from "styled-components";
 import { createForm } from "rc-form";
-import {
-  TierMainWrap,
-  TierMainInnerWrap,
-  TierSubMain,
-  TierSubMainInner,
-  TierHead,
-  TierSubHead,
-  TierUl,
-  TierWithdrawalHead,
-  TierTable,
-  TierSubHeadRequire,
-  TierRequirements,
-  TierUpdate,
-  TierVerfied,
-  TierVerifiedWrap
-} from "../../../STYLED-COMPONENTS/TIER/tierStyle";
 
 /*Import Components*/
 import KYCForm from "./kyc_form";
 import IDselect from "./id_select";
 import SSN from "./ssn";
 import DocUpload from "./doc_upload";
+import Tier from "../tier";
 
 const Step = Steps.Step;
 
@@ -134,22 +119,8 @@ class KYC extends Component {
   back_step(a) {
     this.setState({ next: a, nexts: a });
   }
-  componentDidMount() {
-    if (!this.props.is_kyc_done === 0) {
-      this.setState({
-        is_tier1_active: true
-      });
-    }
-  }
   render() {
     const { next /* , is_kyc_done  */ } = this.state;
-    let {
-      is_tier1_active,
-      is_tier2_active,
-      is_tier3_active,
-      is_tier4_active
-    } = this.state;
-    console.log("is_kyc_done" + this.props.is_kyc_done);
     return (
       // <KYC_wrap>
       //     {(this.props.is_kyc_done !== true && next !== 5) ?
@@ -174,365 +145,60 @@ class KYC extends Component {
       //     {(next===3 && is_kyc_done !== true) ? <DocUpload kycData={this.state.kycData} docText={this.state.docType} back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
       // </KYC_wrap>
       <KYCWrap>
+        {/* tier start */}
+        {/* {this.props.is_kyc_done === 2 && <Tier {...this.props} />} */}
+        {/* tier end */}
         {this.props.is_kyc_done === 0 && (
-          <div>
-            <TierMainWrap>
-              <TierMainInnerWrap>
-                <TierSubMain
-                  className={
-                    this.props.is_kyc_done === 0
-                      ? "tier-enabled"
-                      : "tier-active"
-                  }
-                >
-                  <TierHead className="top-head">Tier 1</TierHead>
-                  <TierSubMainInner>
-                    <TierSubHead>
-                      Minimum Account Activity Thresholds
-                    </TierSubHead>
-                    <TierUl>
-                      <li>
-                        <span className="icon-wrap">
-                          <Icon type="check" />
-                        </span>
-                        <span className="text-wrap">Account Age: 30 Days</span>
-                      </li>
-                      <li>
-                        <span className="icon-wrap">
-                          <Icon type="check" />
-                        </span>
-                        <span className="text-wrap">
-                          Minimum Total Transactions: 100 Transactions
-                        </span>
-                      </li>
-                      <li>
-                        <span className="icon-wrap">
-                          <Icon type="check" />
-                        </span>
-                        <span className="text-wrap">
-                          Minimum Total Value of All Transactions: $5,000
-                        </span>
-                      </li>
-                    </TierUl>
-                    <TierWithdrawalHead className="withdrawal">
-                      Withdrawl Limits Orders
-                    </TierWithdrawalHead>
-                    <TierTable>
-                      <tr>
-                        <th>Daily</th>
-                        <th>Monthly</th>
-                      </tr>
-                      <tr>
-                        <td>10</td>
-                        <td>100</td>
-                      </tr>
-                    </TierTable>
-                  </TierSubMainInner>
-                  <TierRequirements>
-                    <TierSubHeadRequire>Requirements</TierSubHeadRequire>
-                    <ul className="requirements">
-                      <li>
-                        <span className="disc-icon" />
-                        <span>Login</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>Email</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>Full Name</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>Date of Birth</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>Phone Number</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>Physical Address</span>
-                      </li>
-                    </ul>
-                  </TierRequirements>
-                  {is_tier1_active && (
-                    <TierVerifiedWrap>
-                      <TierVerfied className="verified">
-                        <Icon type="check" />
-                        Verified
-                      </TierVerfied>
-                    </TierVerifiedWrap>
-                  )}
-                  {!is_tier1_active && (
-                    <TierUpdate className="upgrade-btn">Upgrade</TierUpdate>
-                  )}
-                </TierSubMain>
-                <TierSubMain>
-                  <TierHead className="top-head">Tier 2</TierHead>
-                  <TierSubMainInner>
-                    <TierSubHead>
-                      Minimum Account Activity Thresholds
-                    </TierSubHead>
-                    <TierUl>
-                      <li>
-                        <span className="icon-wrap">
-                          <Icon type="check" />
-                        </span>
-                        <span className="text-wrap">Account Age: 30 Days</span>
-                      </li>
-                      <li>
-                        <span className="icon-wrap"></span>
-                        <span className="text-wrap">
-                          Minimum Total Transactions: 100 Transactions
-                        </span>
-                      </li>
-                      <li>
-                        <span className="icon-wrap"></span>
-                        <span className="text-wrap">
-                          Minimum Total Value of All Transactions: $5,000
-                        </span>
-                      </li>
-                    </TierUl>
-                    <TierWithdrawalHead className="withdrawal">
-                      Withdrawl Limits Orders
-                    </TierWithdrawalHead>
-                    <TierTable>
-                      <tr>
-                        <th>Daily</th>
-                        <th>Monthly</th>
-                      </tr>
-                      <tr>
-                        <td>10</td>
-                        <td>100</td>
-                      </tr>
-                    </TierTable>
-                  </TierSubMainInner>
-                  <TierRequirements>
-                    <TierSubHeadRequire>Requirements</TierSubHeadRequire>
-                    <ul className="requirements">
-                      <li>
-                        <span className="disc-icon" />
-                        <span>2FA</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>Valid ID</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>Proof of Residence</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>
-                          Social Security # or Equivalent Govt. Issued ID Number
-                          (if applicable)
-                        </span>
-                      </li>
-                    </ul>
-                  </TierRequirements>
-                  {is_tier2_active && (
-                    <TierVerifiedWrap>
-                      <TierVerfied className="verified">
-                        <Icon type="check" />
-                        Verified
-                      </TierVerfied>
-                    </TierVerifiedWrap>
-                  )}
-                  {!is_tier2_active && (
-                    <TierUpdate className="upgrade-btn">Upgrade</TierUpdate>
-                  )}
-                </TierSubMain>
-                <TierSubMain>
-                  <TierHead className="top-head">Tier 3</TierHead>
-                  <TierSubMainInner>
-                    <TierSubHead>
-                      Minimum Account Activity Thresholds
-                    </TierSubHead>
-                    <TierUl>
-                      <li>
-                        <span className="icon-wrap">
-                          <Icon type="check" />
-                        </span>
-                        <span className="text-wrap">Account Age: 30 Days</span>
-                      </li>
-                      <li>
-                        <span className="icon-wrap">
-                          <Icon type="check" />
-                        </span>
-                        <span className="text-wrap">
-                          Minimum Total Transactions: 100 Transactions
-                        </span>
-                      </li>
-                      <li>
-                        <span className="icon-wrap">
-                          <Icon type="check" />
-                        </span>
-                        <span className="text-wrap">
-                          Minimum Total Value of All Transactions: $5,000
-                        </span>
-                      </li>
-                    </TierUl>
-                    <TierWithdrawalHead className="withdrawal">
-                      Withdrawl Limits Orders
-                    </TierWithdrawalHead>
-                    <TierTable>
-                      <tr>
-                        <th>Daily</th>
-                        <th>Monthly</th>
-                      </tr>
-                      <tr>
-                        <td>10</td>
-                        <td>100</td>
-                      </tr>
-                    </TierTable>
-                  </TierSubMainInner>
-                  <TierRequirements>
-                    <TierSubHeadRequire>Requirements</TierSubHeadRequire>
-                    <ul className="requirements">
-                      <li>
-                        <span className="disc-icon" />
-                        <span>IDCP (ID Confirmation Photo)</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>Proof of Assets Form</span>
-                      </li>
-                    </ul>
-                  </TierRequirements>
-                  {is_tier3_active && (
-                    <TierVerifiedWrap>
-                      <TierVerfied className="verified">
-                        <Icon type="check" />
-                        Verified
-                      </TierVerfied>
-                    </TierVerifiedWrap>
-                  )}
-                  {!is_tier3_active && (
-                    <TierUpdate className="upgrade-btn">Upgrade</TierUpdate>
-                  )}
-                </TierSubMain>
-                <TierSubMain>
-                  <TierHead className="top-head">Tier 4</TierHead>
-                  <TierSubMainInner>
-                    <TierSubHead>
-                      Minimum Account Activity Thresholds
-                    </TierSubHead>
-                    <TierUl>
-                      <li>
-                        <span className="icon-wrap">
-                          <Icon type="check" />
-                        </span>
-                        <span className="text-wrap">Account Age: 30 Days</span>
-                      </li>
-                      <li>
-                        <span className="icon-wrap">
-                          <Icon type="check" />
-                        </span>
-                        <span className="text-wrap">
-                          Minimum Total Transactions: 100 Transactions
-                        </span>
-                      </li>
-                      <li>
-                        <span className="icon-wrap">
-                          <Icon type="check" />
-                        </span>
-                        <span className="text-wrap">
-                          Minimum Total Value of All Transactions: $5,000
-                        </span>
-                      </li>
-                    </TierUl>
-                    <TierWithdrawalHead className="withdrawal">
-                      Withdrawl Limits Orders
-                    </TierWithdrawalHead>
-                    <TierTable>
-                      <tr>
-                        <th>Daily</th>
-                        <th>Monthly</th>
-                      </tr>
-                      <tr>
-                        <td>10</td>
-                        <td>100</td>
-                      </tr>
-                    </TierTable>
-                  </TierSubMainInner>
-                  <TierRequirements>
-                    <TierSubHeadRequire>Requirements</TierSubHeadRequire>
-                    <ul className="requirements">
-                      <li>
-                        <span className="disc-icon" />
-                        <span>AML Questionnaire</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>Comfort Letter</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>2 Months Bank Satements</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>Corporate Filing Information</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>Beneficial Ownership Form</span>
-                      </li>
-                      <li>
-                        <span className="disc-icon" />
-                        <span>Physical Address</span>
-                      </li>
-                    </ul>
-                  </TierRequirements>
-                  {is_tier4_active && (
-                    <TierVerifiedWrap>
-                      <TierVerfied className="verified">
-                        <Icon type="check" />
-                        Verified
-                      </TierVerfied>
-                    </TierVerifiedWrap>
-                  )}
-                  {!is_tier4_active && (
-                    <TierUpdate className="upgrade-btn">Upgrade</TierUpdate>
-                  )}
-                </TierSubMain>
-              </TierMainInnerWrap>
-            </TierMainWrap>
-          </div>
+          <Tier tier1_upgrade={true} history={this.props.history}  />
+          // <div>
+          //   {next !== 5 && (
+          //     <div>
+          //       <KYCHead>Identity Verification</KYCHead>
+          //       <KYCProgress>
+          //         <Steps
+          //           direction="horizontal"
+          //           size="small"
+          //           current={this.state.nexts}
+          //         >
+          //           <Step />
+          //           <Step />
+          //           <Step />
+          //         </Steps>
+          //       </KYCProgress>
+          //     </div>
+          //   )}
+          //   {next === 0 && (
+          //     <KYCForm
+          //       back_step={a => this.back_step(a)}
+          //       next_step={(a, type, ssn) => this.next_step(a, type, ssn)}
+          //     />
+          //   )}
+          //   {next === 1 && (
+          //     <IDselect
+          //       kycData={this.state.kycData}
+          //       {...this.props}
+          //       countryFlag={this.state.countryChange}
+          //       back_step={a => this.back_step(a)}
+          //       next_step={(a, type) => this.next_step(a, type)}
+          //     />
+          //   )}
+          //   {next === 2 && (
+          //     <SSN
+          //       kycData={this.state.kycData}
+          //       back_step={a => this.back_step(a)}
+          //       next_step={(a, type) => this.next_step(a, type)}
+          //     />
+          //   )}
+          //   {next === 3 && (
+          //     <DocUpload
+          //       kycData={this.state.kycData}
+          //       docText={this.state.docType}
+          //       back_step={a => this.back_step(a)}
+          //       next_step={a => this.next_step(a)}
+          //     />
+          //   )}
+          // </div>
         )}
-        {/* {this.props.is_kyc_done === 0 &&
-                    <div>
-                        {next !== 5 &&
-                            <div>
-                                <KYCHead>
-                                    Identity Verification
-                                </KYCHead>
-                                <KYCProgress>
-                                    <Steps direction="horizontal" size="small" current={this.state.nexts}>
-                                        <Step />
-                                        <Step />
-                                        <Step />
-                                    </Steps>
-                                </KYCProgress>
-                            </div>
-                        }
-                        {next === 0 &&
-                            <KYCForm back_step={(a) => this.back_step(a)} next_step={(a, type, ssn) => this.next_step(a, type, ssn)} />
-                        }
-                        {next === 1 &&
-                            <IDselect kycData={this.state.kycData} {...this.props} countryFlag={this.state.countryChange} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} />
-                        }
-                        {next === 2 &&
-                            <SSN kycData={this.state.kycData} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} />
-                        }
-                        {next === 3 &&
-                            <DocUpload kycData={this.state.kycData} docText={this.state.docType} back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} />
-                        }
-                    </div>
-                } */}
         {this.props.is_kyc_done === 1 && (
           <DoneWrap>
             <Icon
@@ -555,22 +221,23 @@ class KYC extends Component {
           </DoneWrap>
         )}
         {this.props.is_kyc_done === 2 && (
-          <DoneWrap>
-            <Icon
-              style={{ fontSize: "50px" }}
-              type="check-circle"
-              theme="twoTone"
-              twoToneColor="#52c41a"
-            />
-            <KycSucc>
-              <span>
-                <b>Verification Completed.</b>
-                <br />
-                <br />
-                Your Account is Verified successfully.
-              </span>
-            </KycSucc>
-          </DoneWrap>
+          <Tier tier2_upgrade={true} history={this.props.history} />
+          // <DoneWrap>
+          //   <Icon
+          //     style={{ fontSize: "50px" }}
+          //     type="check-circle"
+          //     theme="twoTone"
+          //     twoToneColor="#52c41a"
+          //   />
+          //   <KycSucc>
+          //     <span>
+          //       <b>Verification Completed.</b>
+          //       <br />
+          //       <br />
+          //       Your Account is Verified successfully.
+          //     </span>
+          //   </KycSucc>
+          // </DoneWrap>
         )}
       </KYCWrap>
     );
