@@ -455,14 +455,23 @@ export const RowConStyle = styled.div`
 export const ColConStyle = styled.div`
   display: flex;
   flex-wrap: wrap;
-  background: #fff;
+  background: ${props => (props.theme.mode === "dark" ? "#021b2b" : "#fff")};
   width: calc(33.33% - 30px);
   margin: 0 15px;
   padding: 40px 30px;
   align-items: flex-end;
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(236, 236, 236, 1);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(236, 236, 236, 1);
-  box-shadow: 0px 0px 5px 0px rgba(236, 236, 236, 1);
+  -webkit-box-shadow: ${props =>
+    props.theme.mode === "dark"
+      ? "0px 0px 5px 0px rgb(1, 9, 15)"
+      : "0px 0px 5px 0px rgba(236, 236, 236, 1)"};
+  -moz-box-shadow: ${props =>
+    props.theme.mode === "dark"
+      ? "0px 0px 5px 0px rgb(1, 9, 15)"
+      : "0px 0px 5px 0px rgba(236, 236, 236, 1)"};
+  box-shadow: ${props =>
+    props.theme.mode === "dark"
+      ? "0px 0px 5px 0px rgb(1, 9, 15)"
+      : "0px 0px 5px 0px rgba(236, 236, 236, 1)"};
   @media (max-width: 950px) {
     padding: 30px 20px;
   }
@@ -486,7 +495,7 @@ export const ColHeadConStyle = styled.span`
   word-break: break-word;
 `;
 export const ColSubHeadConStyle = styled.span`
-  color: #000000;
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000000")};
   font-size: 16px;
   line-height: 26px;
   font-family: "Open Sans";
@@ -496,12 +505,14 @@ export const ColBtnConStyle = styled.button`
   width: 100%;
   margin: 0 15px;
   font-family: "Open Sans";
-  border: 1px solid #c6dfff;
+  border: 1px solid;
+  border-color: ${props =>
+    props.theme.mode === "dark" ? "#ffffff" : "#c6dfff"};
   height: 48px;
   font-size: 22px;
   font-weight: bold;
   background: #ffffff;
-  color: #434f66;
+  color: ${props => (props.theme.mode === "dark" ? "#4c84ff" : "#434f66")};
   border-radius: 5px;
   &:hover {
     background: #4c84ff;

@@ -138,21 +138,6 @@ class SecurityCheck extends React.Component {
                       </TokenFormBottom>
                     </TokenForm>
                   )}
-                  {/* <TokenForm>
-                    <TokenFormTop>
-                      <TokenFormHead>One-time security check</TokenFormHead>
-                      <TokenFormSubHead>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua.
-                      </TokenFormSubHead>
-                    </TokenFormTop>
-                    <TokenFormBottom>
-                      <TokenDivFull>
-                        <TokenBlueBtn>Next</TokenBlueBtn>
-                      </TokenDivFull>
-                    </TokenFormBottom>
-                  </TokenForm> */}
                   {/* Security check form end */}
                   {/* Country form start */}
                   {tokenStageCountry && (
@@ -195,44 +180,6 @@ class SecurityCheck extends React.Component {
                       </TokenFormBottom>
                     </TokenForm>
                   )}
-                  {/* <TokenForm>
-                    <TokenFormTop>
-                      <TokenFormHead className="has-title-country">
-                        <TokenIconWrap>
-                          <Icon type="arrow-left" />
-                        </TokenIconWrap>
-                        Country
-                      </TokenFormHead>
-                      <TokenFormSubHead className="has-title-country">
-                        As in, the country you currently live in.
-                      </TokenFormSubHead>
-                      <TokenFormGroup>
-                        <FourthRow>
-                          <Col
-                            md={{ span: 24 }}
-                            lg={{ span: 24 }}
-                            xl={{ span: 24 }}
-                            xxl={{ span: 24 }}
-                          >
-                            <CountryPick
-                              {...this.props}
-                              onCountryChange={(country, state, city) =>
-                                this.onCountryChange(country, state, city)
-                              }
-                            />
-                            <CountryMsg className="country_msg">
-                              {this.state.countrymsg}
-                            </CountryMsg>
-                          </Col>
-                        </FourthRow>
-                      </TokenFormGroup>
-                    </TokenFormTop>
-                    <TokenFormBottom>
-                      <TokenDivFull>
-                        <TokenBlueBtn>Continue</TokenBlueBtn>
-                      </TokenDivFull>
-                    </TokenFormBottom>
-                  </TokenForm> */}
                   {/* country form end */}
                   {/* Photo of ID form start */}
                   {tokenStagePhotoOfId && (
@@ -280,49 +227,6 @@ class SecurityCheck extends React.Component {
                       </TokenFormBottom>
                     </TokenForm>
                   )}
-                  {/* <TokenForm>
-                    <TokenFormTop>
-                      <TokenFormHead className="has-title-country">
-                        <TokenIconWrap>
-                          <Icon type="arrow-left" />
-                        </TokenIconWrap>
-                        Photo of ID
-                      </TokenFormHead>
-                      <TokenFormSubHead className="has-title-country">
-                        We need a government-issued photo Id, Like a drivers
-                        license or passport.
-                      </TokenFormSubHead>
-                      <CustomFileInputWrap>
-                        <div className="custom-file-input">
-                          <input
-                            className="fileInput"
-                            type="file"
-                            onChange={e => this.handleImageChange(e)}
-                            accept="image/gif,image/jpeg"
-                          />
-                          <span className="drop-image">
-                            <img src={uploadIcon} alt="Upload" />
-                          </span>
-                          <span className="drag-span"></span>
-                          <span className="choose-span">
-                            <span className="drop-span">Drop photo here</span>
-                            <span className="orspan">Or</span>
-                            <span className="file-span">Choose a file</span>
-                          </span>
-                        </div>
-                        <p className="noteforupload">
-                          We accept any PNG or JPEG under 2MB
-                        </p>
-                        <p className="errorimg">{this.state.ErrorMsg}</p>
-                        {$imagePreview}
-                      </CustomFileInputWrap>
-                    </TokenFormTop>
-                    <TokenFormBottom>
-                      <TokenDivFull>
-                        <TokenBlueBtn>Continue</TokenBlueBtn>
-                      </TokenDivFull>
-                    </TokenFormBottom>
-                  </TokenForm> */}
                   {/* Photo of ID form end */}
                 </TokenLeftColWrap>
               </TokenLeftCol>

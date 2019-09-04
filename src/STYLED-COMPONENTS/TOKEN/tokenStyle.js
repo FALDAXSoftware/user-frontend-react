@@ -5,7 +5,7 @@ import { EmailReq } from "COMPONENTS/LANDING/USERFORMS/login_form";
 export const TokenWrap = styled.div`
   padding-top: 80px;
   padding-bottom: 0;
-  background: #f8f8f8;
+  background: ${props => (props.theme.mode === "dark" ? "#01090f" : "#f8f8f8")};
   width: 100%;
   font-family: "Open sans";
 `;
@@ -37,7 +37,7 @@ export const TokenRightCol = styled.div`
   width: 50%;
   justify-content: flex-start;
   padding: 0 80px;
-  background: #4c84ff;
+  background: ${props => (props.theme.mode === "dark" ? "#021b2b" : "#4c84ff")};
   color: #ffffff;
   min-height: 750px;
   align-items: center;
@@ -54,7 +54,7 @@ export const TokenRightCol = styled.div`
   }
 `;
 export const TokenEllipse = styled.span`
-  background: #709dff;
+  background: ${props => (props.theme.mode === "dark" ? "#354955" : "#709dff")};
   height: 80px;
   width: 80px;
   border-radius: 50%;
@@ -85,8 +85,11 @@ export const TokenLogSubHead = styled.span`
 `;
 export const TokenLogForgotBtn = styled.button`
   font-size: 20px;
-  border: 1px solid #b3d5ff;
-  background: transparent;
+  border: 1px solid;
+  border-color: ${props =>
+    props.theme.mode === "dark" ? "#4c84ff" : "#b3d5ff"};
+  background: ${props =>
+    props.theme.mode === "dark" ? "#4c84ff" : "transparent"};
   border-radius: 4px;
   font-weight: bold;
   margin: 40px 0 0 0;
@@ -102,7 +105,7 @@ export const TokenLeftHead = styled.span`
   width: 100%;
   font-size: 40px;
   font-weight: bold;
-  color: #333333;
+  color: ${props => (props.theme.mode === "dark" ? "#f8f8f8" : "#333333")};
   margin: 0 0 40px 0;
   line-height: 1;
 `;
@@ -120,12 +123,21 @@ export const TokenLeftColWrap = styled.div`
   }
 `;
 export const TokenForm = styled.div`
-  background: #fff;
-  color: #000;
+  background: ${props => (props.theme.mode === "dark" ? "#021b2b" : "#ffffff")};
+  color: ${props => (props.theme.mode === "dark" ? "#fff" : "#000")};
   width: 100%;
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(236, 236, 236, 1);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(236, 236, 236, 1);
-  box-shadow: 0px 0px 5px 0px rgba(236, 236, 236, 1);
+  -webkit-box-shadow: ${props =>
+    props.theme.mode === "dark"
+      ? "0px 0px 5px 0px rgb(1, 9, 15)"
+      : "0px 0px 5px 0px rgba(236, 236, 236, 1)"};
+  -moz-box-shadow: ${props =>
+    props.theme.mode === "dark"
+      ? "0px 0px 5px 0px rgb(1, 9, 15)"
+      : "0px 0px 5px 0px rgba(236, 236, 236, 1)"};
+  box-shadow: ${props =>
+    props.theme.mode === "dark"
+      ? "0px 0px 5px 0px rgb(1, 9, 15)"
+      : "0px 0px 5px 0px rgba(236, 236, 236, 1)"};
 `;
 export const TokenFormHead = styled.span`
   display: inherit;
@@ -162,16 +174,24 @@ export const TokenFormLabel = styled.label`
 `;
 export const TokenFormInput = styled.input`
   width: 100%;
-  border: 0;
-  background: #f8f8f8;
+  border: 1px solid;
+  border-color: ${props =>
+    props.theme.mode === "dark" ? "#20303e" : "#f8f8f8"};
+  background: ${props => (props.theme.mode === "dark" ? "#020f18" : "#f8f8f8")};
   border-radius: 6px;
   height: 48px;
   font-size: 16px;
   padding: 0 10px;
+  &:focus {
+    outline: 0;
+    border: 1px solid #4c84ff;
+  }
 `;
 export const TokenFormTop = styled.div`
   padding: 40px;
-  border-bottom: 1px solid #d4dadf;
+  border-bottom: 1px solid;
+  border-color: ${props =>
+    props.theme.mode === "dark" ? "#092c43" : "#d4dadf"};
   @media (max-width: 955px) {
     padding: 15px;
   }
@@ -215,7 +235,7 @@ export const TokenCustomCheckbox = styled.label`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: #000;
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000")};
   line-height: 20px;
   font-weight: normal;
   > input {
@@ -311,7 +331,7 @@ export const CustomFileInputWrap = styled.div`
     text-align: center;
     padding: 30px 0 0 0;
     font-size: 20px;
-    color: #333333;
+    color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
   }
   > .errorimg {
     margin: 0;
@@ -372,7 +392,8 @@ export const CustomFileInputWrap = styled.div`
         display: flex;
         width: 100%;
         justify-content: center;
-        color: #333333;
+        color: ${props =>
+          props.theme.mode === "dark" ? "#ffffff" : "#333333"};
         font-size: 26px;
         font-weight: bold;
         padding-bottom: 5px;
