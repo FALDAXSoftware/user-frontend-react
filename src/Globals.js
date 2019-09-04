@@ -9,7 +9,7 @@ export const globalVariables = {
 
     //API_URL: 'http://18.191.87.133:8084', //Live URL
 
-    API_URL: 'http://192.168.0.213:1337', //Mansi's 
+    //API_URL: 'http://192.168.0.213:1337', //Mansi's 
 
     //API_URL: 'http://192.168.0.85:1337'
 
@@ -21,7 +21,7 @@ export const globalVariables = {
 
     //API_URL: 'http://192.168.0.93:1337'
 
-    // API_URL: 'https://dev-backend.faldax.com'
+    API_URL: 'https://dev-backend.faldax.com'
 
     //API_URL: 'https://prod-backend.faldax.com',
 

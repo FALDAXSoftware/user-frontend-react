@@ -10,14 +10,12 @@ import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
 import { globalVariables } from 'Globals.js';
 
 /* Styled-Components */
-import { Heading, NotificationTable, WrapTable } from 'STYLED-COMPONENTS/SETTINGS/accsettingsStyle'
-import { Save } from "../Personaldetails/personal_details"
+import { Heading, NotificationTable, WrapTable, AddButton } from 'STYLED-COMPONENTS/SETTINGS/accsettingsStyle'
 
 let { API_URL } = globalVariables;
 
-const AddButton = styled(Save)`
-    width:110px;
-`
+
+
 class ThreshholdNotification extends React.Component {
 
     constructor(props) {
@@ -63,10 +61,11 @@ class ThreshholdNotification extends React.Component {
                         <Input
                             type="number"
                             min={0}
+                            key={record.coin_id}
                             defaultValue={value}
                             onChange={(e) => this.inputChange("lower_limit", e, record)}
                             style={{ width: "150px" }}
-                        />
+                        />{` USD`}
                         {console.log(value, record)}
                         {this.validator.message("lower_limit", value, "required|lowerpositiveDecimal", "text-danger-validation", { required: "Lower limit is required." })}
                     </div>
@@ -82,16 +81,16 @@ class ThreshholdNotification extends React.Component {
                         <Input
                             type="number"
                             min={0}
+                            key={record.coin_id}
                             defaultValue={value}
                             onChange={(e) => this.inputChange("upper_limit", e, record)}
                             style={{ width: "150px" }}
-                        />
+                        />{` USD`}
                         {console.log(value, record)}
                         {this.validator.message("upper_limit", value, "required|upperpositiveDecimal", "text-danger-validation", { required: "Upper limit is required." })}
                     </div>
                 ),
             },
-
             {
                 title: 'Email Notification',
                 key: 'is_email_notification',
@@ -99,7 +98,7 @@ class ThreshholdNotification extends React.Component {
                 align: "center",
                 render: (value, record) => {
                     console.log(value, record);
-                    return <Checkbox defaultChecked={value} onChange={(e) => this.checkChange("is_email_notification", e, record)}></Checkbox>
+                    return <Checkbox defaultChecked={value} key={record.coin_id} onChange={(e) => this.checkChange("is_email_notification", e, record)}></Checkbox>
                 },
             },
             {
@@ -109,7 +108,7 @@ class ThreshholdNotification extends React.Component {
                 align: "center",
                 render: (value, record) => {
                     console.log(value, record);
-                    return <Checkbox defaultChecked={value} onChange={(e) => this.checkChange("is_sms_notification", e, record)}></Checkbox>
+                    return <Checkbox defaultChecked={value} key={record.coin_id} onChange={(e) => this.checkChange("is_sms_notification", e, record)}></Checkbox>
                 },
             },
         ];
@@ -250,6 +249,8 @@ class ThreshholdNotification extends React.Component {
                 <Heading style={{ marginTop: "10px" }}>
                     <span>Threshold</span>
                 </Heading>
+                {console.log("------------->", thresholdData)}
+                <div style={{paddingLeft:"10px",paddingRight:"10px"}}>
                 <WrapTable>
                     <NotificationTable
                         columns={this.columns}
@@ -258,6 +259,7 @@ class ThreshholdNotification extends React.Component {
                         pagination={{ pageSize: 5, size: "small" }}
                     />
                 </WrapTable>
+                </div>
                 <AddButton disabled={disabled} onClick={this.addData}>Add</AddButton>
                 {(this.state.loader === true) ?
                     <FaldaxLoader />
