@@ -7,7 +7,6 @@ import "antd/dist/antd.css";
 import { Icon, Col } from "antd";
 import { connect } from "react-redux";
 import CountryPick from "../../SETTINGS/Personaldetails/country";
-import uploadIcon from "../../../../src/images/upload-image-icon.png";
 import {
   TokenWrap,
   TokenMainRow,
@@ -204,7 +203,10 @@ class SecurityCheck extends React.Component {
                               accept="image/gif,image/jpeg"
                             />
                             <span className="drop-image">
-                              <img src={uploadIcon} alt="Upload" />
+                              <img
+                                src="/images/upload-image-icon.png"
+                                alt="Upload"
+                              />
                             </span>
                             <span className="drag-span"></span>
                             <span className="choose-span">

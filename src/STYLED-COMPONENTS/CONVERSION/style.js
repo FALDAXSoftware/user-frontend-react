@@ -24,11 +24,16 @@ export const ConversionContainer = styled(Container)`
   }
 `;
 export const MainRow = styled(Row)`
-  background-color: #e1e7ec;
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#021b2b" : "#e1e7ec"};
 `;
 export const LeftCol = styled(Col)`
-  background-color: #fff;
-  box-shadow: 3px 0px 5px 0px rgba(109, 109, 109, 0.19);
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#01090f" : "#fff"};
+  box-shadow: ${props =>
+    props.theme.mode === "dark"
+      ? ""
+      : "3px 0px 5px 0px rgba(109, 109, 109, 0.19)"};
   position: relative;
   &:after {
     content: "";
@@ -38,7 +43,8 @@ export const LeftCol = styled(Col)`
     width: 0;
     height: 0;
     border: 15px solid transparent;
-    border-left-color: #ffffff;
+    border-left-color: ${props =>
+      props.theme.mode === "dark" ? "#01090f" : "#ffffff"};
     border-right: 0;
     margin-top: -15px;
     margin-right: -15px;
@@ -77,7 +83,8 @@ export const ConversionTab = styled(Tabs)`
     text-align: center;
     font-size: 18px;
     font-weight: 700;
-    border-bottom: 1px solid #e3ebfc;
+    border-bottom: ${props =>
+      props.theme.mode === "dark" ? "1px solid #092c43" : "1px solid #e3ebfc"};
   }
   &
     .ant-tabs-bar
@@ -87,8 +94,10 @@ export const ConversionTab = styled(Tabs)`
     > .ant-tabs-nav
     > div
     > .ant-tabs-tab.ant-tabs-tab-active {
-    background-color: #e3ebfc;
+    background-color: ${props =>
+      props.theme.mode === "dark" ? "#4b82fc" : "#e3ebfc"};
     position: relative;
+    color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
   }
 
   &
@@ -106,7 +115,8 @@ export const ConversionTab = styled(Tabs)`
     width: 0;
     height: 0;
     border: 10px solid transparent;
-    border-top-color: #e3ebfc;
+    border-top-color: ${props =>
+      props.theme.mode === "dark" ? "#4b82fc" : "#e3ebfc"};
     border-bottom: 0;
     margin-left: -10px;
     margin-bottom: -10px;
@@ -122,13 +132,13 @@ export const ConversionTab = styled(Tabs)`
   }
 `;
 export const ConversionTabPane = styled(TabPane)`
-  padding: 25px;
+  padding: 28px 25px;
 `;
 export const ConversionTitle = styled.span`
   font-size: 18px;
   font-family: "Open Sans";
   font-weight: bold;
-  color: black;
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "black")};
   padding: 0px 20px 20px;
   display: block;
 `;
@@ -194,7 +204,8 @@ export const CustomRadioContainer = styled.label`
   }
 `;
 export const BorderRow = styled(Row)`
-  border: 1px solid #dfe4f7;
+  border: ${props =>
+    props.theme.mode === "dark" ? "1px solid #20303e" : "1px solid #dfe4f7"};
   border-radius: 5px;
   padding: 20px;
   margin-bottom: 35px;
@@ -209,20 +220,24 @@ export const RowTitle = styled.span`
   top: -11px;
   left: 20px;
   padding: 0px 10px;
-  background-color: white;
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#01090f" : "#ffffff"};
   font-weight: 600;
   font-size: 13px;
+  color: ${props =>
+    props.theme.mode === "dark" ? "#617090" : "rgba(0, 0, 0, 0.65)"};
 `;
 export const ConversionInput = styled.input`
   padding: 6px 15px;
   height: auto;
   width: 100%;
   border: none;
-  background-color: #f6f8fe;
+  border-radius: 4px;
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#021b2b" : "#f6f8fe"};
   font-weight: 600;
   font-size: 20px;
-  color: black;
-
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "black")};
   &:focus {
     border: none;
     outline: none;
@@ -236,7 +251,8 @@ export const ConversionDropDown = styled(Select)`
     border: none;
     font-size: 20px;
     font-weight: 600;
-    background-color: white;
+    background-color: ${props =>
+      props.theme.mode === "dark" ? "transparent" : "white"};
   }
   &.ant-select-disabled .ant-select-selection {
     cursor: text;
@@ -244,13 +260,14 @@ export const ConversionDropDown = styled(Select)`
   & .ant-select-selection-selected-value {
     float: none;
     text-align: center;
+    color: ${props => (props.theme.mode === "dark" ? "#5d5d79" : "")};
   }
   & .ant-select-selection:focus {
     box-shadow: none;
     ouline: none;
   }
   & .ant-select-arrow {
-    color: black;
+    color: ${props => (props.theme.mode === "dark" ? "#5d5d79" : "black")};
   }
   &.ant-select-disabled .ant-select-arrow {
     display: none;
@@ -274,11 +291,10 @@ export const ConversionSubmitBtn = styled(Button)`
   font-family: "Open Sans";
   background-color: #4c84ff;
   border-color: #4c84ff;
-
+  border-radius: 55px;
   &:hover {
     background-color: white;
     border-color: #4c84ff;
-
     color: #4c84ff;
   }
 `;
@@ -295,7 +311,10 @@ export const RightCol = styled(Col)`
   }
 `;
 export const RightColContainer = styled.div`
-  background-image: url(/images/top-zigzag-bg.png);
+  background-image: ${props =>
+    props.theme.mode === "dark"
+      ? "url(/images/top-zigzag-bg-dark.png)"
+      : "url(/images/top-zigzag-bg.png)"};
   background-size: cover;
   height: 100%;
   width: 100%;
@@ -325,6 +344,7 @@ export const RightColAmount = styled.span`
   text-align: center;
   padding-top: 75px;
   font-family: "Open Sans";
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
 `;
 
 export const RightColPrice = styled.span`
@@ -348,14 +368,15 @@ export const RightSpan = styled.span`
   font-weight: 600;
   font-size: 14px;
   display: block;
-  color: rgba(57, 65, 77, 0.702);
+  color: ${props =>
+    props.theme.mode === "dark" ? "#ffffff" : "rgba(57, 65, 77, 0.702)"};
   padding: 10px;
 `;
 export const LeftSpan = styled.span`
   font-weight: 600;
   font-size: 14px;
   display: block;
-  color: #39414d;
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#39414d")};
   padding: 10px;
 `;
 
@@ -396,15 +417,20 @@ export const FeesRadio = styled(Radio)`
   margin-right: 30px;
   align-items: center;
   display: inline-flex;
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#5d5d79")};
   & .ant-radio-inner {
     width: 25px;
     height: 25px;
+    background-color: transparent;
   }
   & .ant-radio-inner:after {
     width: 13px;
     height: 13px;
     left: 5px;
     top: 5px;
+  }
+  &.ant-radio-wrapper-checked {
+    color: #4c84ff;
   }
 `;
 export const ContainerConversion = styled(Container)`
@@ -513,7 +539,7 @@ export const ColBtnConStyle = styled.button`
   font-weight: bold;
   background: #ffffff;
   color: ${props => (props.theme.mode === "dark" ? "#4c84ff" : "#434f66")};
-  border-radius: 5px;
+  border-radius: 30px;
   &:hover {
     background: #4c84ff;
     border-color: #4c84ff;
