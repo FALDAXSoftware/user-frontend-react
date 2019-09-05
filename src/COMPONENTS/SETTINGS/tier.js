@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
+import { connect } from "react-redux";
 import {
   TierMainWrap,
   TierMainInnerWrap,
@@ -22,7 +23,7 @@ class Tier extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tier1_upgrade: this.props.tier1_upgrade,
+      tier1_upgrade: false,
       tier2_upgrade: false,
       tier3_upgrade: false,
       tier4_upgrade: false,
@@ -34,11 +35,19 @@ class Tier extends Component {
     };
   }
   componentDidMount() {
-    // if (this.state.tier1_upgrade) {
-    //   this.setState({
-    //     is_tier1_active: false
-    //   });
-    // }
+    console.log(this.props.profileDetails.is_kyc_done);
+    if (this.props.profileDetails.is_kyc_done === 2) {
+      this.setState({
+        tier1_upgrade: true,
+        tier2_upgrade: true,
+        is_tier1_active: true
+      });
+    } else {
+      this.setState({
+        tier1_upgrade: false,
+        is_tier1_active: false
+      });
+    }
     if (this.state.tier2_upgrade) {
       this.setState({
         is_tier1_active: true
@@ -68,7 +77,7 @@ class Tier extends Component {
           <TierMainInnerWrap>
             <TierSubMain
               className={
-                this.state.tier1_upgrade ? "tier-enabled" : "tier-active"
+                this.state.tier1_upgrade ? "tier-active" : "tier-enabled"
               }
             >
               <TierHead className="top-head">Tier 1</TierHead>
@@ -419,4 +428,13 @@ class Tier extends Component {
   }
 }
 
-export default Tier;
+const mapStateToProps = state => {
+  return {
+    ...state,
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data[0]
+        : ""
+  };
+};
+export default connect(mapStateToProps)(Tier);

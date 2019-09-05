@@ -95,7 +95,7 @@ class Editprofile extends Component {
               </TabPane>
               <TabPane tab="Identity Verification" key="4">
                 {/* <KYC history={this.props.history} tier1_upgrade={true} /> */}
-                <Tier history={this.props.history} tier1_upgrade={true} />
+                <Tier history={this.props.history} />
               </TabPane>
               <TabPane tab="Referral" key="5">
                 <Referral {...this.props} />
