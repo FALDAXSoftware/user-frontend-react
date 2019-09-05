@@ -239,3 +239,12 @@ export const TierVerfied = styled.span`
     margin: 0 5px 0 0;
   }
 `;
+export const TierInnerWrap = styled.div`
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#041422" : "#ffffff"};
+  margin: auto;
+  width: 95%;
+  border-radius: 7px;
+  padding: 50px 0;
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
+`;
