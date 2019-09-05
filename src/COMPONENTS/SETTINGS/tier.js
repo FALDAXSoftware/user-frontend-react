@@ -388,6 +388,9 @@ class Tier extends Component {
                     <span className="disc-icon" />
                     <span>Physical Address</span>
                   </li>
+                  <li>
+                    <a>+10 more</a>
+                  </li>
                 </ul>
               </TierRequirements>
               {is_tier4_active && (

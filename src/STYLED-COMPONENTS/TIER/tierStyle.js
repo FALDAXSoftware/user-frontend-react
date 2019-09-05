@@ -149,6 +149,10 @@ export const TierRequirements = styled.div`
     min-height: 286px;
     height: 240px;
   }
+  @media (max-width: 750px) {
+    min-height: 320px;
+    height: 300px;
+  }
   @media (max-width: 650px) {
     min-height: 260px;
     height: 240px;
@@ -171,6 +175,10 @@ export const TierRequirements = styled.div`
       color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
       > span:last-child {
         width: calc(100% - 18px);
+      }
+      > a {
+        color: rgba(0, 0, 0, 0.65);
+        font-size: 14px;
       }
     }
     > li .disc-icon {
