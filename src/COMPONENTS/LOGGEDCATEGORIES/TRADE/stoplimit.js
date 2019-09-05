@@ -177,7 +177,14 @@ class StopLimit extends Component {
                             buyEstPrice: 0, sellEstPrice: 0
                         });
                         self.openNotificationWithIcon('success', 'Success', responseData.message);
-                    } else {
+                    } else if (responseData.status === 201) {
+                        this.setState({
+                            stop_price: 0, limit_price: 0, total: 0, amount: 0, loader: false, buyPayAmt: 0, sellPayAmt: 0,
+                            buyEstPrice: 0, sellEstPrice: 0
+                        });
+                        self.openNotificationWithIcon('warning', 'Warning', responseData.message);
+                    }
+                    else {
                         this.setState({ loader: false });
                         self.openNotificationWithIcon('error', 'Error', responseData.err);
                     }

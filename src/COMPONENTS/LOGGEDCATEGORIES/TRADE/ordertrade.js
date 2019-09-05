@@ -92,7 +92,7 @@ class OrderTrade extends Component {
                                     <th>SIDE</th>
                                     <th>AMOUNT</th>
                                     {self.props.pending !== 2 ? <th>PRICE</th> : <th>LIMIT PRICE</th>}
-                                    {self.props.pending !== 2 ? <th>FILLED</th> : <th>STOP PRICE</th>}
+                                    {self.props.pending !== 2 ? <th>UNFILLED</th> : <th>STOP PRICE</th>}
                                     <th>FILL PRICE</th>
                                     <th>TYPE</th>
                                     <th>TIME</th>

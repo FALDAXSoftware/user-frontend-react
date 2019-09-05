@@ -309,9 +309,9 @@ class WalletDetails extends Component {
                                                 <CryptAmt>
                                                     <BTCAmt>
                                                         {/* {console.log(walletUserData)} */}
-                                                        {Object.keys(walletUserData).length > 0 ? <NumberFormat value={walletUserData.balance.toFixed(4)} displayType={'text'} thousandSeparator={true} /> : ''}
+                                                        {Object.keys(walletUserData).length > 0 ? <NumberFormat value={walletUserData.balance.toFixed(8)} displayType={'text'} thousandSeparator={true} /> : ''}
                                                         <BTC>{Object.keys(walletUserData).length > 0 ? walletUserData.coin_code : ""}</BTC></BTCAmt>
-                                                    {walletUserData.length > 0 ? <FIATAmt>{FIAT !== "USD" ? FIAT !== "EUR" ? FIAT !== "INR" ? "" : "\u20B9" : "\u20AC" : "$"} {parseFloat(currencyConv.quote['USD'].price * walletUserData.balance).toFixed(4)}<AMT>{FIAT}</AMT></FIATAmt> : ""}
+                                                    {walletUserData.length > 0 ? <FIATAmt>{FIAT !== "USD" ? FIAT !== "EUR" ? FIAT !== "INR" ? "" : "\u20B9" : "\u20AC" : "$"} {parseFloat(currencyConv.quote['USD'].price * walletUserData.balance).toFixed(8)}<AMT>{FIAT}</AMT></FIATAmt> : ""}
                                                 </CryptAmt>
                                             </LeftBit>
                                         </Col>

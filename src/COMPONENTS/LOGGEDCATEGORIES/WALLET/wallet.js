@@ -201,7 +201,7 @@ class Wallet extends Component {
                             <Total>
                                 <Tot>Total:</Tot>
                                 {/* {console.log(this.state.total)} */}
-                                <Money>{FIAT !== "USD" ? FIAT !== "EUR" ? FIAT !== "INR" ? "" : "\u20B9" : "\u20AC" : "$"}{this.state.total !== null ? <NumberFormat value={parseFloat(this.state.total).toFixed(4)} displayType={'text'} thousandSeparator={true} /> : ""}</Money>
+                                <Money>{FIAT !== "USD" ? FIAT !== "EUR" ? FIAT !== "INR" ? "" : "\u20B9" : "\u20AC" : "$"}{this.state.total !== null ? <NumberFormat value={parseFloat(this.state.total).toFixed(8)} displayType={'text'} thousandSeparator={true} /> : ""}</Money>
                                 <Currency>{FIAT}</Currency>
                             </Total>
                         </HeaderWrap>

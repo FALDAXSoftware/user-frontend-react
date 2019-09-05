@@ -167,7 +167,11 @@ class Market extends Component {
                     });
                     if (responseData.status === 200) {
                         self.openNotificationWithIcon('success', 'Success', responseData.message);
-                    } else {
+                    }
+                    else if (responseData.status === 201) {
+                        self.openNotificationWithIcon('warning', 'Warning', responseData.message);
+                    }
+                    else {
                         self.openNotificationWithIcon('error', 'Error', responseData.err);
                     }
                 }).catch(error => {

@@ -102,11 +102,13 @@ class SellTable extends Component {
 
 
             if (body.status === 200) {
-                let res = body.data;
+                let res = JSON.parse(JSON.stringify(body.data));
+                console.log(body.data)
                 this.updateData(res);
             }
         });
         io.socket.on('sellbookUpdate', (data) => {
+            console.log(data);
             this.updateData(data);
         });
     }
@@ -170,23 +172,51 @@ class SellTable extends Component {
         const row = [];
         let sum = 0;
         for (let index = 0; index < data.length; index++) {
+            console.log("Start From Here ------>", data[index])
             const element = data[index];
             let isAdded = false;
+            let value = [];
             element["my_size"] = 0;
-            if (element.user_id === self.props.profileDetails.id) {
-                element["my_size"] = element.quantity;
-            }
+            // if (element.user_id === self.props.profileDetails.id) {
+            //     element["my_size"] = element.quantity;
+            // }
             for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
                 const internalElement = row[internalIndex];
+                console.log(index, internalIndex, "==========>", internalElement.ask === element.price, element.price, internalElement.ask)
                 if (internalElement.ask === element.price) {
                     row[internalIndex].amount += element.quantity;
-                    if (internalElement.user_id === self.props.profileDetails.id) {
-                        row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
-                    }
+                    console.log("I am inside", data[index], data[internalIndex], Number(internalElement.user_id), self.props.profileDetails.id, Number(internalElement.user_id) == self.props.profileDetails.id);
+
+                    // if (Number(internalElement.user_id) == self.props.profileDetails.id) {
+                    //     console.log("I am inside", data[internalIndex])
+                    //     row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
+                    // }
                     isAdded = true;
                     break;
                 }
             }
+            element.my_size = 0;
+            for (let tempIndex = 0; tempIndex < data.length; tempIndex++) {
+                if (value.includes(element.price)) {
+                    if (element.price == data[tempIndex].price) {
+                        if (data[tempIndex].user_id == self.props.profileDetails.id) {
+                            element.my_size = value.my_size + data[tempIndex].quantity;
+                        }
+                    }
+                    value.my_size = element.my_size
+                } else {
+                    value.push(element.price);
+                    if (element.price == data[tempIndex].price) {
+                        if (data[tempIndex].user_id == self.props.profileDetails.id) {
+                            element.my_size = element.my_size + data[tempIndex].quantity;
+                        }
+                    }
+                    value.my_size = element.my_size
+                }
+                // value.push(element.price)
+
+            }
+            console.log(element)
             if (!isAdded) {
                 row.push({
                     my_size: element.my_size,
