@@ -18,6 +18,7 @@ import {
   TierVerifiedWrap
 } from "../../STYLED-COMPONENTS/TIER/tierStyle";
 import { Icon } from "antd";
+import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 
 class Tier extends Component {
   constructor(props) {
@@ -31,11 +32,12 @@ class Tier extends Component {
       is_tier2_active: false,
       is_tier3_active: false,
       is_tier4_active: false,
-      go_to_kyc: false
+      go_to_kyc: false,
+      loader: true
     };
   }
   componentDidMount() {
-    console.log(this.props.profileDetails.is_kyc_done);
+    this.setState({ loader: false });
     if (this.props.profileDetails.is_kyc_done === 2) {
       this.setState({
         tier1_upgrade: true,
@@ -423,6 +425,7 @@ class Tier extends Component {
             </TierSubMain>
           </TierMainInnerWrap>
         </TierMainWrap>
+        {this.state.loader === true ? <FaldaxLoader /> : ""}
       </div>
     );
   }
