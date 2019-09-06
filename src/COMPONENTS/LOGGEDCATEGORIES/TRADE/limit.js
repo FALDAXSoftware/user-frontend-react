@@ -321,7 +321,7 @@ class Limit extends Component {
                 <BTCWrap>
                     <Label>Total</Label>
                     <TotalWrap style={{ marginBottom: 16 }}>
-                        <TotInput min="0" type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(4)} name="total" readOnly="true" />
+                        <TotInput min="0" type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(8)} name="total" readOnly="true" />
                     </TotalWrap>
                 </BTCWrap>
                 {Object.keys(this.props.userBal).length > 0 ?

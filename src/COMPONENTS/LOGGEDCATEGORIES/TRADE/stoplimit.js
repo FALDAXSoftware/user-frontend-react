@@ -336,7 +336,7 @@ class StopLimit extends Component {
                 <BTCWrap>
                     <Label>Total</Label>
                     <TotalWrap style={{ marginBottom: 16 }}>
-                        <TotInput min="0" readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total} name="total" onChange={this.onChange} />
+                        <TotInput min="0" readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(8)} name="total" onChange={this.onChange} />
                         {this.validator.message('Total', this.state.total, 'required|gtzero|numeric', 'text-danger-validation', {
                             gtzero: "Total should be greater than zero."
                         })}

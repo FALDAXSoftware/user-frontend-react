@@ -299,7 +299,7 @@ class Market extends Component {
                 <BTCWrap>
                     <Label>Total</Label>
                     <TotalWrap style={{ marginBottom: 16 }}>
-                        <TotInput min="0" readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(4)} name="total" />
+                        <TotInput min="0" readOnly="true" type="number" addonAfter={this.state.currency} value={this.state.total.toFixed(8)} name="total" />
                     </TotalWrap>
                 </BTCWrap>
                 {Object.keys(this.props.userBal).length > 0 ?
