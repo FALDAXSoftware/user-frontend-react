@@ -46,6 +46,7 @@ const SSNCol = styled(Col)`
 `
 export const ButtonWrap = styled.div`
     margin-top:230px;
+    text-align: center;
 `
 export const SubWrap = styled.div`
 `

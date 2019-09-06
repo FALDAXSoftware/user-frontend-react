@@ -508,6 +508,7 @@ class History extends Component {
     render() {
         var self = this;
         console.log("Render", this.state)
+        console.log('asdjfgjksdgfjksdgjh')
         return (
             <div>
                 <ContactWrap>
