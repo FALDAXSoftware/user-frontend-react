@@ -623,6 +623,9 @@ font-family: "Open Sans";
     {
         background-color:${props => props.theme.mode === "dark" ? "#041422" : ""};
         color:${props => props.theme.mode === "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
+        > .ant-select-selection__rendered {
+            line-height: 38px;
+        }
     }
     & .anticon
     {
