@@ -252,7 +252,7 @@ class BuyTABLE extends Component {
         return (
             <div>
                 <BBC>BUYING {this.props.crypto}</BBC>
-                <TotalBTC>Total: {this.state.lastsum && this.state.lastsum.toFixed(4)} {this.state.currency}</TotalBTC>
+                <TotalBTC>Total: {this.state.lastsum && this.state.lastsum.toFixed(8)} {this.state.currency}</TotalBTC>
                 <BuyTable>
                     <HistoryWrap1>
                         <OTwrap2>
@@ -281,9 +281,9 @@ class BuyTABLE extends Component {
                                                 {this.state.result.map(element => (
                                                     <tr>
                                                         <td>{element.my_size}</td>
-                                                        <td>{element.amount.toFixed(4)}</td>
-                                                        <td>{element.bid}</td>
-                                                        <td>{element.total.toFixed(4)}</td>
+                                                        <td>{element.amount.toFixed(3)}</td>
+                                                        <td>{element.bid.toFixed(5)}</td>
+                                                        <td>{element.total.toFixed(8)}</td>
                                                     </tr>
                                                 ))
                                                 }

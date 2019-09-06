@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Col, Row, notification } from "antd";
 import SimpleReactValidator from 'simple-react-validator';
 
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader"
 import { Email, ButtonLogin, Sign, Signa } from "./signup_form";
 import { EmailLabel } from "./login_form";

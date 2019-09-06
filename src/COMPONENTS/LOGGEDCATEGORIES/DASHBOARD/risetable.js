@@ -122,7 +122,7 @@ export default class RiseTable extends Component {
         return (
             <div>
                 <Headwrap>
-                    <RiseText>Rising/Falling</RiseText>
+                    <RiseText>RISING/FALLING</RiseText>
                     <InputSearch
                         placeholder="input search text"
                         onSearch={value => console.log(value)}
@@ -147,10 +147,10 @@ export default class RiseTable extends Component {
                                 console.log("Record >>>>>>>>>>>>>>>>>>>>>>.", record, index);
                                 return (
                                     <tr>
-                                        <td>{record.name}</td>
-                                        <td>{record.last_price}</td>
-                                        <Td change={Number(record.change)}>{record.change}</Td>
-                                        <td>{record.volume}</td>
+                                        <td>{record.name.toUpperCase()}</td>
+                                        <td>{record.last_price.toFixed(5)}</td>
+                                        <Td change={Number(record.change.toFixed(8))}>{record.change.toFixed(8)}</Td>
+                                        <td>{record.volume.toFixed(3)}</td>
                                     </tr>
                                 );
                             })}

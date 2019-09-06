@@ -168,16 +168,16 @@ class HistoryTable extends Component {
         return (this.state.data.map((element, index) => (
             <tr>
                 <SideType type={element.side} width="10%">{element.side}</SideType>
-                <td width="20%">{element.amount !== undefined ? element.amount.toFixed(4) : ""}</td>
-                {(index + 1) < me.state.data.length ? (element.fill_price > me.state.data[index + 1].fill_price)
+                <td width="20%">{element.amount !== undefined ? element.amount.toFixed(3) : ""}</td>
+                {(index + 1) < me.state.data.length ? (element.fill_price >= me.state.data[index + 1].fill_price)
                     ?
-                    <td width="20%">{element.fill_price} {this.props.theme !== true ? <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td>
+                    <td width="20%">{element.fill_price.toFixed(5)} {this.props.theme !== true ? <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td>
                     :
-                    <td width="20%">{element.fill_price} {this.props.theme !== true ? <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/down-right.png" /> : <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/down_white.png" />}</td>
+                    <td width="20%">{element.fill_price.toFixed(5)} {this.props.theme !== true ? <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/down-right.png" /> : <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/down_white.png" />}</td>
                     : <td>{element.fill_price} </td>
                 }
                 <td width="25%">{element.time}</td>
-                <td width="25%">{element.total.toFixed(4)}</td>
+                <td width="25%">{element.total.toFixed(8)}</td>
             </tr>
         )))
     }

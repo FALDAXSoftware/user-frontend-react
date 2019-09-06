@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Col, Row, notification, Icon } from "antd";
 import SimpleReactValidator from 'simple-react-validator';
 
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader"
 import { Email, ButtonLogin, Sign, Signa } from "./signup_form";
 import { RemoveIcon1, Filewrap, Fileselect1, ButtonUp, Plus, Plustext, Fileinput } from 'COMPONENTS/SETTINGS/KYC/doc_upload'

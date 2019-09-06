@@ -275,7 +275,7 @@ class Dashboard extends Component {
                         activityData.push({
                             date: date,
                             action: element.side,
-                            amount: element.price.toFixed(2) + " " + element.currency,
+                            amount: element.price.toFixed(3) + " " + element.currency,
                             completed: parseInt((parseFloat(element.quantity) * 100) / parseFloat(element.fix_quantity)),
                         });
                     });
@@ -314,9 +314,9 @@ class Dashboard extends Component {
                     responseData.data.portfolioData.map(element => {
                         portfolioData.push({
                             coin: element.name,
-                            amount: element.amount.toFixed(4) + " " + element.symbol,
-                            value: element.average_price + ' ' + userFiat,
-                            change: element.percentchange + "%"
+                            amount: element.amount.toFixed(3) + " " + element.symbol,
+                            value: element.average_price.toFixed(5) + ' ' + userFiat,
+                            change: element.percentchange.toFixed(5) + "%"
                         });
                     });
                     self.setState({
@@ -423,8 +423,8 @@ class Dashboard extends Component {
                                                     <span>PORTFOLIO</span>
                                                 </Topic>
                                                 <HighLow>
-                                                    <LeftHl>{this.state.total} {userFiat}</LeftHl>
-                                                    <RightHl>^{this.state.diffrence} {userFiat}</RightHl>
+                                                    <LeftHl>{this.state.total.toFixed(8)} {userFiat}</LeftHl>
+                                                    <RightHl>^{this.state.diffrence.toFixed(8)} {userFiat}</RightHl>
                                                 </HighLow>
                                                 <ActDiv>
                                                     <PortTable scroll={{ y: 250 }} pagination={false} columns={portfolioColumn} dataSource={this.state.portfolioData} className="portfolio-table" />

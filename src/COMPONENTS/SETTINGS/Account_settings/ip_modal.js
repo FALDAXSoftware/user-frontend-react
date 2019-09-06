@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import SimpleReactValidator from 'simple-react-validator';
 
 
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
 import { HeaderCol, Save } from "../Personaldetails/personal_details"
 import styled from 'styled-components'
