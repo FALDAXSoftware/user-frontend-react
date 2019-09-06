@@ -415,3 +415,45 @@ export const CustomFileInputWrap = styled.div`
     }
   }
 `;
+
+// Token Dashboard css start
+export const TokDashboardWrap = styled.div`
+  min-height: calc(100vh - 380px);
+  padding-top: 80px;
+  background-color: #f5f6fa;
+  display: flex;
+  font-family: open sans;
+`;
+export const TokSideBar = styled.div`
+  width: 300px;
+  background: #ffffff;
+  -webkit-box-shadow: 3px 0px 3px 0px rgba(247, 247, 247, 1);
+  -moz-box-shadow: 3px 0px 3px 0px rgba(247, 247, 247, 1);
+  box-shadow: 3px 0px 3px 0px rgba(247, 247, 247, 1);
+  > ul {
+    padding: 0 0;
+    margin: 0;
+    > li {
+      list-style-type: none;
+      padding: 15px 50px;
+      color: #707070;
+      font-weight: 600;
+      font-size: 18px;
+      border-bottom: 1px solid;
+      border-color: #f5f6fa;
+      > span i.fas {
+        margin: 0 15px 0 0;
+      }
+      > span.dash-item:hover {
+        cursor: pointer;
+        color: #333333;
+        > i.fas {
+          color: #3789ef;
+        }
+      }
+    }
+  }
+`;
+export const TokRightContentWrap = styled.div`
+  width: calc(100% - 300px);
+`;
