@@ -177,7 +177,14 @@ class StopLimit extends Component {
                             buyEstPrice: 0, sellEstPrice: 0
                         });
                         self.openNotificationWithIcon('success', 'Success', responseData.message);
-                    } else {
+                    } else if (responseData.status === 201) {
+                        this.setState({
+                            stop_price: 0, limit_price: 0, total: 0, amount: 0, loader: false, buyPayAmt: 0, sellPayAmt: 0,
+                            buyEstPrice: 0, sellEstPrice: 0
+                        });
+                        self.openNotificationWithIcon('warning', 'Warning', responseData.message);
+                    }
+                    else {
                         this.setState({ loader: false });
                         self.openNotificationWithIcon('error', 'Error', responseData.err);
                     }
@@ -218,7 +225,7 @@ class StopLimit extends Component {
                                             <Balance1>Balance</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Balance>{this.props.userBal.currency[0].placed_balance.toFixed(4)} {this.state.currency}</Balance>
+                                            <Balance>{this.props.userBal.currency[0].placed_balance.toFixed(8)} {this.state.currency}</Balance>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -228,7 +235,7 @@ class StopLimit extends Component {
                                             <Balance1>Total</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{(this.props.userBal.currency[0].balance).toFixed(4)} {this.state.currency}</Total>
+                                            <Total>{(this.props.userBal.currency[0].balance).toFixed(8)} {this.state.currency}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -238,7 +245,7 @@ class StopLimit extends Component {
                                             <Balance1>In orders</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{(Math.abs(this.props.userBal.currency[0].balance - this.props.userBal.currency[0].placed_balance)).toFixed(4)} {this.state.currency}</Total>
+                                            <Total>{(Math.abs(this.props.userBal.currency[0].balance - this.props.userBal.currency[0].placed_balance)).toFixed(8)} {this.state.currency}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -248,7 +255,7 @@ class StopLimit extends Component {
                                             <Balance1>Best ask</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.buyPay.toFixed(4)} {this.state.crypto}</Total>
+                                            <Total>{this.props.userBal.buyPay.toFixed(5)} {this.state.crypto}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -262,7 +269,7 @@ class StopLimit extends Component {
                                             <Balance1>Balance</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Balance>{this.props.userBal.crypto[0].placed_balance.toFixed(4)} {this.state.crypto}</Balance>
+                                            <Balance>{this.props.userBal.crypto[0].placed_balance.toFixed(8)} {this.state.crypto}</Balance>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -272,8 +279,7 @@ class StopLimit extends Component {
                                             <Balance1>Total</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{(this.props.userBal.crypto[0].balance)
-                                                .toFixed(4)} {this.state.crypto}</Total>
+                                            <Total>{(this.props.userBal.crypto[0].balance).toFixed(8)} {this.state.crypto}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -283,7 +289,7 @@ class StopLimit extends Component {
                                             <Balance1>In orders</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{(Math.abs(this.props.userBal.crypto[0].balance - this.props.userBal.crypto[0].placed_balance)).toFixed(4)} {this.state.crypto}</Total>
+                                            <Total>{(Math.abs(this.props.userBal.crypto[0].balance - this.props.userBal.crypto[0].placed_balance)).toFixed(8)} {this.state.crypto}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -293,7 +299,7 @@ class StopLimit extends Component {
                                             <Balance1>Best ask</Balance1>
                                         </Col>
                                         <Col span={12}>
-                                            <Total>{this.props.userBal.sellPay.toFixed(4)} {this.state.currency}</Total>
+                                            <Total>{this.props.userBal.sellPay.toFixed(5)} {this.state.currency}</Total>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -347,7 +353,7 @@ class StopLimit extends Component {
                                 </Col>
                                 <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{buyPayAmt.toFixed(4)} {this.state.currency}</Willpay2>
+                                        <Willpay2>{buyPayAmt.toFixed(8)} {this.state.currency}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
@@ -357,13 +363,13 @@ class StopLimit extends Component {
                                         Estimated Best Price
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {buyPayAmt.toFixed(4)} {this.state.currency}
+                                        {buyPayAmt.toFixed(8)} {this.state.currency}
                                     </Col>
                                     <Col xs={15} sm={12}>
                                         Fee {userBalFees} %
                                     </Col>
                                     <Col xs={9} sm={12}>
-                                        {(buyPayAmt - buyEstPrice).toFixed(4)} {this.state.currency}
+                                        {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.currency}
                                     </Col>
                                 </Row>
                             </Esti>
@@ -378,7 +384,7 @@ class StopLimit extends Component {
                                 </Col>
                                 <Col xs={9} sm={12}>
                                     <div>
-                                        <Willpay2>{sellEstPrice.toFixed(4)} {this.state.currency}</Willpay2>
+                                        <Willpay2>{sellEstPrice.toFixed(8)} {this.state.currency}</Willpay2>
                                     </div>
                                 </Col>
                             </Row>
@@ -388,13 +394,13 @@ class StopLimit extends Component {
                                         Estimated Best Price
                             </Col>
                                     <Col xs={9} sm={12}>
-                                        {sellPayAmt.toFixed(4)} {this.state.currency}
+                                        {sellPayAmt.toFixed(8)} {this.state.currency}
                                     </Col>
                                     <Col xs={15} sm={12}>
                                         Fee {userBalFees} %
                             </Col>
                                     <Col xs={9} sm={12}>
-                                        {(sellPayAmt - sellEstPrice).toFixed(4)} {this.state.currency}
+                                        {(sellPayAmt - sellEstPrice).toFixed(8)} {this.state.currency}
                                     </Col>
                                 </Row>
                             </Esti>

@@ -6,6 +6,7 @@ import { Input } from 'antd';
 import { Table } from 'react-bootstrap';
 import styled from 'styled-components';
 import { globalVariables } from 'Globals.js';
+import moment from 'moment';
 
 let { API_URL } = globalVariables;
 
@@ -64,15 +65,26 @@ const InputSearch = styled(Search)`
     }
 `
 
+const THead = styled.th`
+    color: #164B7E;
+`
+
+const Td = styled.td`
+    color: ${props => props.change < 0 ? "#EE3C00" : "#34A539"}
+`
+
 export default class RiseTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            activityData: [],
+            idList: [
+                1, 1027, 52, 1831, 2, 512, 131, 1437
+            ],
         };
     }
     componentDidMount() {
-        // console.log(API_URL, this.props.isLoggedIn)
+        let self = this;
         fetch(`${API_URL}/get-rising-falling-data`, {
             method: "get",
             headers: {
@@ -82,27 +94,23 @@ export default class RiseTable extends Component {
             }
         }).then(response => response.json())
             .then((responseData) => {
-                // console.log("Ka dabra", responseData);
-                /* let activityData = [];
+                let activityData = [];
                 if (responseData.status === 200) {
-                    responseData.data.map(element => {
-                        var date;
-                        if (this.props.profileDetails.date_format === "MM/DD/YYYY")
-                            date = moment.utc(element.created_at).local().format("MM/DD/YYYY, H:m:s")
-                        else if (this.props.profileDetails.date_format === "DD/MM/YYYY")
-                            date = moment.utc(element.created_at).local().format("DD/MM/YYYY, H:m:s")
-                        else
-                            date = moment.utc(element.created_at).local().format("MMM D, YYYY, H:m:s")
-                        activityData.push({
-                            date: date,
-                            action: element.side,
-                            amount: element.price.toFixed(2) + " " + element.currency,
-                            completed: parseInt((parseFloat(element.quantity) * 100) / parseFloat(element.fix_quantity)),
-                        });
-                    });
+                    var element = responseData.data.data;
+                    for (var i = 0; i < element.length; i++) {
+                        if (self.state.idList.includes(element[i].id)) {
+                            activityData.push({
+                                name: element[i].name,
+                                last_price: element[i].quote.USD.price,
+                                change: element[i].quote.USD.percent_change_24h,
+                                volume: element[i].quote.USD.volume_24h
+                            });
+                        }
+                    }
                     self.setState({
                         activityData: activityData, activityLoader: false
-                    }); */
+                    });
+                }
             }
             )
             .catch(error => {
@@ -110,10 +118,11 @@ export default class RiseTable extends Component {
             })
     }
     render() {
+        const { activityData } = this.state;
         return (
             <div>
                 <Headwrap>
-                    <RiseText>Rising/Falling</RiseText>
+                    <RiseText>RISING/FALLING</RiseText>
                     <InputSearch
                         placeholder="input search text"
                         onSearch={value => console.log(value)}
@@ -124,31 +133,27 @@ export default class RiseTable extends Component {
                     <Table striped responsive>
                         <thead>
                             <tr>
-                                <th>MY SIZE</th>
-                                <th>AMOUNT</th>
-                                <th>BID</th>
-                                <th>TOTAL</th>
+                                <THead>NAME</THead>
+                                <THead>LAST PRICE</THead>
+                                <THead>CHANGE</THead>
+                                <THead>24HR VOLUME</THead>
+                                {/* <TableHead>LOW</TableHead>
+                                <TableHead>HIGH</TableHead> */}
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>0.50021</td>
-                                <td>0.50021</td>
-                                <td>0.50021</td>
-                                <td>0.50021</td>
-                            </tr>
-                            <tr>
-                                <td>0.50021</td>
-                                <td>0.50021</td>
-                                <td>0.50021</td>
-                                <td>0.50021</td>
-                            </tr>
-                            <tr>
-                                <td>0.50021</td>
-                                <td>0.50021</td>
-                                <td>0.50021</td>
-                                <td>0.50021</td>
-                            </tr>
+                            {console.log(activityData)}
+                            {activityData.map(function (record, index) {
+                                console.log("Record >>>>>>>>>>>>>>>>>>>>>>.", record, index);
+                                return (
+                                    <tr>
+                                        <td>{record.name.toUpperCase()}</td>
+                                        <td>{record.last_price.toFixed(5)}</td>
+                                        <Td change={Number(record.change.toFixed(8))}>{record.change.toFixed(8)}</Td>
+                                        <td>{record.volume.toFixed(3)}</td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </Table>
                 </Tablerise>

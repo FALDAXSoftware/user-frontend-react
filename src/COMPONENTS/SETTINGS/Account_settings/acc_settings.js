@@ -16,7 +16,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader"
 import IpModal from "./ip_modal"
 
 /* styled Components */
-import { AccWrap, NotiWrap, NotiHead, NotiDesc, CheckRow, CheckRow2, CheckCol, CheckCol2, CheckCol3, CheckCol4, HR, LoginHistory, HistoryHead, Heading, Desc, FontAwesomeIconS, TableWrap, HR2, DeleteWrap, DeleteHead, DeleteDesc, DeleteBtn, ButtonDel, PaginationS, CheckWrap } from 'STYLED-COMPONENTS/SETTINGS/accsettingsStyle'
+import { AccWrap, NotiWrap, NotiHead, NotiDesc, WrapTable, AddButton, NotificationTable, CheckRow, CheckRow2, CheckCol, CheckCol2, CheckCol3, CheckCol4, HR, LoginHistory, HistoryHead, Heading, Desc, FontAwesomeIconS, TableWrap, HR2, DeleteWrap, DeleteHead, DeleteDesc, DeleteBtn, ButtonDel, PaginationS, CheckWrap } from 'STYLED-COMPONENTS/SETTINGS/accsettingsStyle'
 import { NewButton, NewInput } from "COMPONENTS/SETTINGS/changePassword/change_email"
 import { VerifyModal, Description, NewP, InputLabel, OTPInput, ButtonDiv } from "./ip_modal"
 import ThresholdNotification from './threshold_notification'
@@ -46,38 +46,7 @@ const columns = [{
 }];
 
 
-const dataSource = [{
-    key: '1',
-    date: 'Mike',
-    IP: 32
-}, {
-    key: '2',
-    date: 'John',
-    IP: 42
-}];
 
-const columns_text = [, {
-    title: 'Notifications',
-    dataIndex: 'title',
-    className: "column-Noti",
-    key: 'title',
-}, {
-        title: 'Text',
-        className: "column-Text",
-        dataIndex: 'Text',
-        key: 'Text',
-        render: (value, record) => {
-            return <Checkbox defaultChecked={value}></Checkbox>
-        }
-    }, {
-        title: 'Email',
-        className: "column-Email",
-        dataIndex: 'Email',
-        key: 'Email',
-        render: (value, record) => {
-            return <Checkbox defaultChecked={value}></Checkbox>
-        }
-    }];
 
 const confirm = Modal.confirm;
 const ModalIpInput = styled(NewInput)`
@@ -103,6 +72,7 @@ class Acc_settings extends Component {
             whitelistData: [],
             visibleIpModal: false,
             data_noti: [],
+            savedDataNoti: [],
             fields: {
                 ip: null,
                 days: null
@@ -110,6 +80,30 @@ class Acc_settings extends Component {
             isWhitelistIp: false
         };
 
+        this.columns_text = [, {
+            title: 'Notifications',
+            dataIndex: 'title',
+            className: "column-Noti",
+            key: 'title',
+        }, {
+                title: 'Text',
+                className: "column-Text",
+                dataIndex: 'text',
+                key: 'text',
+                render: (value, record) => {
+                    console.log(record, record.id)
+                    return <Checkbox defaultChecked={value} key={record.id} onChange={(e) => this.checkBoxChange("text", e, record)}></Checkbox>
+                }
+            }, {
+                title: 'Email',
+                className: "column-Email",
+                dataIndex: 'email',
+                key: 'email',
+                render: (value, record) => {
+                    console.log(record, record.id)
+                    return <Checkbox defaultChecked={value} key={record.id} onChange={(e) => this.checkBoxChange("email", e, record)}></Checkbox>
+                }
+            }];
         this.columnsIP = [{
             title: 'IP Whitelist',
             dataIndex: 'ip',
@@ -150,6 +144,8 @@ class Acc_settings extends Component {
         this.onChangeIP = this.onChangeIP.bind(this);
         this.openAddModal = this.openAddModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.getNotificationList = this.getNotificationList.bind(this);
+        this.addData = this.addData.bind(this);
         this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
     }
 
@@ -197,6 +193,24 @@ class Acc_settings extends Component {
 
     }
 
+    checkBoxChange(key, e, record) {
+        console.log(key, e, record)
+        const { data_noti } = this.state;
+        var tempData = data_noti;
+        (tempData).map(function (data, index) {
+            if (data.id == record.id) {
+                console.log(tempData[key])
+                if (key == "text")
+                    tempData[index].text = e.target.checked;
+                else
+                    tempData[index].email = e.target.checked;
+
+            }
+        })
+        console.log("------>>>>>", tempData)
+        this.setState({ data_noti: tempData })
+    }
+
     getNotificationList() {
         fetch(API_URL + `/get-notification-list`, {
             method: "get",
@@ -208,17 +222,51 @@ class Acc_settings extends Component {
             .then((responseData) => {
                 console.log("Did IP : ", responseData)
                 if (responseData.status == 200) {
-                    this.setState({
-                        data_noti: responseData.data
-                    });
+                    let b = JSON.parse(JSON.stringify(responseData.data));
+                    this.setState({ data_noti: responseData.data, savedDataNoti: b })
                 }
                 else {
                     this.openNotificationWithIcon('error', responseData.status, responseData.err);
                 }
+                this.setState({ loader: false });
             })
             .catch((error) => {
+                this.setState({ loader: false });
+                this.openNotificationWithIcon('error', "Error", error)
                 console.log(error);
             })
+    }
+    addData() {
+        const { data_noti } = this.state;
+        fetch(API_URL + `/update-notification-list`, {
+            method: "post",
+            headers: {
+                Authorization: "Bearer " + this.props.isLoggedIn,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data_noti)
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                console.log("Did IP : ", responseData)
+                if (responseData.status == 200) {
+                    let b = JSON.parse(JSON.stringify(responseData.data));
+                    this.setState({ data_noti: responseData.data, savedDataNoti: b })
+                }
+                else {
+                    this.openNotificationWithIcon('error', responseData.status, responseData.err);
+                }
+                this.setState({ loader: false });
+            })
+            .catch((error) => {
+                this.setState({ loader: false });
+                this.openNotificationWithIcon('error', "Error", error);
+
+                console.log(error);
+            })
+
+
+
     }
     getIpWhitelist(pageIp) {
         fetch(API_URL + `/users/get-whitelist-ip?page=${pageIp}&limit=${10}`, {
@@ -541,11 +589,20 @@ class Acc_settings extends Component {
         this.setState({ visibleIpModal: false, checkedIP: false });
     }
     render() {
-        const { fields, data_noti } = this.state
+
+        const { fields, data_noti, savedDataNoti } = this.state;
+        let disabled = true;
+        console.log(savedDataNoti, "-------------->", data_noti)
+        if (JSON.stringify(savedDataNoti) === JSON.stringify(data_noti)) {
+            disabled = true;
+        }
+        else {
+            disabled = false;
+        }
         return (
             <AccWrap>
                 {/* ----Notification code start ---- */}
-                {/* <NotiWrap>
+                <NotiWrap>
                     <NotiHead>
                         <span>Notifications</span>
                     </NotiHead>
@@ -553,16 +610,23 @@ class Acc_settings extends Component {
                         <span>Automatic Email Notifications</span>
                     </NotiDesc>
                 </NotiWrap>
-                <CheckWrap>
-                    <Table
-                        className={this.state.notiCSS}
-                        pagination={false}
-                        bordered={true}
-                        dataSource={data_noti}
-                        columns={columns_text} />
-                </CheckWrap>
-                <HR /> */}
-                {/* ----Notification code ends ---- */}
+
+                <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+                    <WrapTable>
+                        <NotificationTable
+                            className={this.state.notiCSS}
+                            pagination={false}
+                            bordered={true}
+                            dataSource={data_noti}
+                            columns={this.columns_text}
+                            pagination={{ pageSize: 5, size: "small" }}
+                        />
+                    </WrapTable>
+                </div>
+                <AddButton disabled={disabled} onClick={this.addData}>Save</AddButton>
+
+                <HR />
+                {/* ---- Notification code ends ---- */}
                 <ThresholdNotification isLoggedIn={this.props.isLoggedIn} />
                 <HR2 />
                 <LoginHistory>

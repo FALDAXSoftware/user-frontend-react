@@ -297,7 +297,10 @@ class WalletPopup extends Component {
         console.log(confirmFlag, otp, this.state.sendFields)
         if (this.validator.allValid()) {
             var values = this.state.sendFields;
+            values["amount"] = parseFloat(this.state.sendFields.amount).toFixed(8);
+            // values["amount"] = (values["amount"]).toFixed(8);
             values["coin_code"] = this.props.coin_code;
+
             // console.log(confirmFlag, confirmFlag)
             if (confirmFlag == true)
                 values["confirm_for_wait"] = confirmFlag;
@@ -465,7 +468,7 @@ class WalletPopup extends Component {
                                         {/* {console.log(this.props.coinFee)} */}
                                         <TotDiv>
                                             <Fee><b>Fee: </b> {this.props.coinFee ? `${this.props.coinFee} %` : 0}</Fee>
-                                            <TotPay><b>Total Payout:</b> {subtotal} {this.props.coin_code}</TotPay>
+                                            <TotPay><b>Total Payout:</b> {(subtotal).toFixed(8)} {this.props.coin_code}</TotPay>
                                         </TotDiv>
                                     </Rediv>
                                     <SendWrap>
