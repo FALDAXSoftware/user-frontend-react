@@ -277,39 +277,6 @@ export const TokenIconWrap = styled.span`
   font-size: 30px;
   margin: 0 15px 0 0;
 `;
-// export const TokenInput = styled.div`
-//   position: absolute;
-//   opacity: 0;
-//   cursor: pointer;
-//   height: 0;
-//   width: 0;
-//   &:checked ~ {
-//   }
-// `;
-// export const TokenSpan = styled.span`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   height: 20px;
-//   width: 20px;
-//   border: 2px solid #a6a9b5;
-//   border-radius: 2px;
-//   &:after {
-//     content: "";
-//     left: 4px;
-//     position: absolute;
-//     top: 0px;
-//     width: 7px;
-//     height: 12px;
-//     border: solid #5087c7;
-//     border-width: 0px 3px 3px 0;
-//     -webkit-transform: rotate(45deg);
-//     -webkit-transform: rotate(45deg);
-//     -ms-transform: rotate(45deg);
-//     transform: rotate(45deg);
-//     display: block;
-//   }
-// `;
 export const SecondRow = styled(Row)`
   text-align: left;
   margin-top: 25px;
@@ -415,3 +382,265 @@ export const CustomFileInputWrap = styled.div`
     }
   }
 `;
+
+// Token Dashboard css start
+export const TokDashboardWrap = styled.div`
+  min-height: calc(100vh - 380px);
+  padding-top: 80px;
+  background-color: #f5f6fa;
+  display: flex;
+  font-family: open sans;
+`;
+export const TokSideBar = styled.div`
+  width: 260px;
+  background: #ffffff;
+  -webkit-box-shadow: 3px 0px 3px 0px #e9eaee;
+  -moz-box-shadow: 3px 0px 3px 0px #e9eaee;
+  box-shadow: 3px 0px 3px 0px #e9eaee;
+  > ul {
+    padding: 0 0;
+    margin: 0;
+    > li {
+      list-style-type: none;
+      padding: 15px 50px;
+      color: #707070;
+      font-weight: 600;
+      font-size: 18px;
+      border-bottom: 1px solid;
+      border-color: #f5f6fa;
+      > span i.fas {
+        margin: 0 15px 0 0;
+      }
+      > span i.fas.request-icon {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+      }
+      > span.dash-item:hover {
+        cursor: pointer;
+        color: #333333;
+        > i.fas {
+          color: #3789ef;
+        }
+      }
+      &.active {
+        border-right: 5px solid;
+        border-right-color: #4c84ff;
+        > span.dash-item {
+          color: #333333;
+          > i.fas {
+            color: #3789ef;
+          }
+        }
+      }
+    }
+  }
+`;
+export const TokRightContentWrap = styled.div`
+  width: calc(100% - 260px);
+  display: flex;
+`;
+export const TokWallet = styled.div`
+  width: 60%;
+  border-right: 1px solid;
+  border-color: #d4dadf;
+  padding: 50px;
+`;
+export const TokTransactions = styled.div`
+  width: 40%;
+  padding: 50px;
+`;
+export const TokHeadWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 30px;
+`;
+export const TokHead = styled.div`
+  font-size: 24px;
+  font-weight: 600;
+  color: #333333;
+`;
+export const TokSubHead = styled.a`
+  font-size: 13px;
+  color: #000;
+  &:hover {
+    cursor: pointer;
+    color: #000;
+  }
+`;
+export const TokWalletSection = styled.div`
+  padding: 30px;
+  border-radius: 4px;
+  background: #fff;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(233, 234, 238, 1);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(233, 234, 238, 1);
+  box-shadow: 0px 0px 5px 0px rgba(233, 234, 238, 1);
+  margin: 0 0 30px 0;
+`;
+export const TokWalletName = styled.div`
+  align-items: center;
+  display: flex;
+  padding: 0 0 15px 0;
+  > span.icon {
+    display: inherit;
+    padding: 0 10px 0px 0;
+  }
+  > span.name {
+    font-size: 20px;
+    color: #000;
+    font-weight: 600;
+    display: inherit;
+  }
+`;
+export const TokWalletAmount = styled.div`
+  display: flex;
+  padding: 0 0 20px 0;
+  border-bottom: 1px solid;
+  border-color: #d4dadf;
+  > span {
+    font-weight: 600;
+    display: inherit;
+    font-size: 32px;
+  }
+  > span.amount {
+    color: #333;
+    margin: 0 5px 0 0;
+  }
+  > span.symbol {
+    color: #b5b5b5;
+  }
+`;
+export const TokLastTrans = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0 0;
+`;
+export const TokLastLeft = styled.div`
+  display: inherit;
+  flex-wrap: wrap;
+  width: 70%;
+  > span.head {
+    width: 100%;
+    font-size: 18px;
+    font-weight: 600;
+    color: #b5b5b5;
+    padding: 0 0 5px 0;
+  }
+  > span.activity {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+    position: relative;
+    padding: 0 0 0px 18px;
+    &:before {
+      content: "";
+      background: #4c84ff;
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      position: absolute;
+      top: 8px;
+      left: 0;
+    }
+  }
+`;
+export const TokLastRight = styled.span`
+  width: 30%;
+  justify-content: flex-end;
+  display: inherit;
+  font-size: 18px;
+  color: #b5b5b5;
+  font-weight: 600;
+`;
+export const TokTransactionSection = styled(TokWalletSection)`
+  padding: 0 30px;
+  margin: 0 0 50px 0;
+`;
+export const TokRow = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 25px 0;
+  border-bottom: 1px solid;
+  border-color: #d4dadf;
+  &:last-child {
+    border: 0;
+  }
+`;
+export const TokColImg = styled.div`
+  height: 46px;
+  width: 46px;
+  background: #b5b5b5;
+  border-radius: 50%;
+  margin: 0 15px 0 0;
+`;
+export const TokColInfo = styled.div`
+  width: calc(100% - 161px);
+  > span {
+    width: 100%;
+    display: inherit;
+    font-size: 18px;
+  }
+  > span.amount-type {
+    font-weight: bold;
+    color: #000;
+    position: relative;
+    padding: 0 0 0 20px;
+    &:before {
+      content: "";
+      background: #4c84ff;
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      position: absolute;
+      top: 8px;
+      left: 0;
+    }
+  }
+  > span.amount-from {
+    color: #b5b5b5;
+    font-weight: 600;
+  }
+`;
+export const TokColAmountInfo = styled.div`
+  width: 100px;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: flex-end;
+  > span {
+    width: 100%;
+    display: inherit;
+    justify-content: flex-end;
+    font-size: 18px;
+  }
+  > span.amount {
+    font-weight: bold;
+    color: #000;
+  }
+  > span.date {
+    color: #b5b5b5;
+    font-weight: 600;
+  }
+`;
+export const TokBtnDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+export const TokBtn = styled.button`
+  height: 48px;
+  width: 35%;
+  background: transparent;
+  border: 1px solid;
+  font-weight: bold;
+  color: #000;
+  font-size: 16px;
+  border-radius: 4px;
+  &.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+`;
+// Token Dashboard css end
