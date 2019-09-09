@@ -102,7 +102,7 @@ const columns = [{
     dataIndex: 'volume',
     defaultSortOrder: 'ascend',
     className: 'tblInsVolumn',
-    render: text => text.toFixed(4),
+    render: text => text,
     sorter: (a, b) => a.volume - b.volume,
     sortDirections: ['descend', 'ascend'],
 },
@@ -281,9 +281,9 @@ class Trade extends Component {
             const element = data[index];
             res.push({
                 name: element.name.split('-')[0],
-                price: element.last_price,
-                volume: element.volume,
-                change: parseFloat(element.percentChange).toFixed(2),
+                price: parseFloat(element.last_price).toFixed(5),
+                volume: parseFloat(element.volume).toFixed(3),
+                change: parseFloat(element.percentChange).toFixed(5),
             });
         }
         this.setState({

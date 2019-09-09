@@ -611,6 +611,9 @@ font-family: "Open Sans";
 & .ant-select-selection--single
 {
     height:40px !important;
+    display: flex;
+    align-items: center;
+
 }
 & .ant-select-selectionrendered
 {
@@ -620,6 +623,9 @@ font-family: "Open Sans";
     {
         background-color:${props => props.theme.mode === "dark" ? "#041422" : ""};
         color:${props => props.theme.mode === "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
+        > .ant-select-selection__rendered {
+            line-height: 38px;
+        }
     }
     & .anticon
     {
@@ -691,12 +697,12 @@ export const SettingDropdown = styled(Dropdown)`
     position: fixed;
     top: 90px;
     right: 0px;
-    background: white;
+    background: ${props => props.theme.mode == "dark" ? "#01090f" : "white"};
     color: #1890ff;
     cursor: pointer;
     padding: 7px 7px;
     font-size: 20px;
-    border: 1px solid lightgray;
+    border: ${props => props.theme.mode == "dark" ? "1px solid #198fff;" : "1px solid lightgray"};
     z-index: 9999;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;

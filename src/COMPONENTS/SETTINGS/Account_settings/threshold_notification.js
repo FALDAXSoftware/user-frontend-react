@@ -7,7 +7,7 @@ import SimpleReactValidator from "simple-react-validator";
 import moment from 'moment';
 
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 
 /* Styled-Components */
 import { Heading, NotificationTable, WrapTable, AddButton } from 'STYLED-COMPONENTS/SETTINGS/accsettingsStyle'
@@ -247,20 +247,20 @@ class ThreshholdNotification extends React.Component {
         return (
             <div>
                 <Heading style={{ marginTop: "10px" }}>
-                    <span>Threshold</span>
+                    <span>Threshold Notifications</span>
                 </Heading>
                 {console.log("------------->", thresholdData)}
-                <div style={{paddingLeft:"10px",paddingRight:"10px"}}>
-                <WrapTable>
-                    <NotificationTable
-                        columns={this.columns}
-                        bordered={true}
-                        dataSource={thresholdData}
-                        pagination={{ pageSize: 5, size: "small" }}
-                    />
-                </WrapTable>
+                <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+                    <WrapTable>
+                        <NotificationTable
+                            columns={this.columns}
+                            bordered={true}
+                            dataSource={thresholdData}
+                            pagination={{ pageSize: 5, size: "small" }}
+                        />
+                    </WrapTable>
                 </div>
-                <AddButton disabled={disabled} onClick={this.addData}>Add</AddButton>
+                <AddButton disabled={disabled} onClick={this.addData}>Save</AddButton>
                 {(this.state.loader === true) ?
                     <FaldaxLoader />
                     : ""

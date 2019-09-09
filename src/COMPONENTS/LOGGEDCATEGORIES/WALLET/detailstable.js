@@ -164,7 +164,7 @@ class DetailsTable extends React.Component {
                                                 {details[index].destination_address}
                                             </td>
                                             <td>
-                                                {details[index].amount}
+                                                {(details[index].amount).toFixed(8)}
                                             </td>
                                             {/* <td>
 

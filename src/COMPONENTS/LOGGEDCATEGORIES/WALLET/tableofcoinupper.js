@@ -235,7 +235,7 @@ class TableofCoin extends React.Component {
                                         <td style={{ textAlign: "left" }}>
                                             <Link to={`/walletDetails?coinID${bool}=${tableIndex.coin_code}`}>
                                                 <BitImg src={img} />
-                                                <BitText><Bit>{tableIndex.coin_name}</Bit><BitPrice>{<NumberFormat value={parseFloat(tableIndex.balance).toFixed(4)} displayType={'text'} thousandSeparator={true} />} {tableIndex.coin_code}</BitPrice></BitText>
+                                                <BitText><Bit>{tableIndex.coin_name}</Bit><BitPrice>{<NumberFormat value={parseFloat(tableIndex.balance).toFixed(8)} displayType={'text'} thousandSeparator={true} />} {tableIndex.coin_code}</BitPrice></BitText>
                                             </Link>
                                         </td>
                                         <td>
@@ -244,7 +244,7 @@ class TableofCoin extends React.Component {
                                                     <Price>
                                                         {me.state.curr1}
                                                         {/* {console.log("HBDE", tableIndex.quote[`${me.state.drop1}`].price)} */}
-                                                        {<NumberFormat value={parseFloat(parseFloat(tableIndex.quote[`${me.state.drop1}`].price) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
+                                                        {<NumberFormat value={parseFloat(parseFloat(tableIndex.quote[`${me.state.drop1}`].price) * parseFloat(tableIndex.balance)).toFixed(8)} displayType={'text'} thousandSeparator={true} />}
                                                     </Price>
                                                     :
                                                     <Price>-</Price>
@@ -258,7 +258,7 @@ class TableofCoin extends React.Component {
                                                     <Price>
                                                         {me.state.curr2}
                                                         {/* {console.log("HBDE", tableIndex.quote[`${me.state.drop2}`].price)} */}
-                                                        {<NumberFormat value={parseFloat(parseFloat(tableIndex.quote[`${me.state.drop2}`].price) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
+                                                        {<NumberFormat value={parseFloat(parseFloat(tableIndex.quote[`${me.state.drop2}`].price) * parseFloat(tableIndex.balance)).toFixed(8)} displayType={'text'} thousandSeparator={true} />}
                                                     </Price>
                                                     :
                                                     <Price>-</Price>
@@ -273,7 +273,7 @@ class TableofCoin extends React.Component {
                                                     <Price>
                                                         {/* {console.log("HBDE", tableIndex.quote[`${me.state.drop3}`].price)} */}
                                                         <span>{me.state.curr3}</span>
-                                                        {<NumberFormat value={parseFloat(parseFloat(tableIndex.quote[`${me.state.drop3}`].price) * parseFloat(tableIndex.balance)).toFixed(4)} displayType={'text'} thousandSeparator={true} />}
+                                                        {<NumberFormat value={parseFloat(parseFloat(tableIndex.quote[`${me.state.drop3}`].price) * parseFloat(tableIndex.balance)).toFixed(8)} displayType={'text'} thousandSeparator={true} />}
                                                     </Price>
                                                     : <Price>-</Price>
                                                     : <Price>-</Price>

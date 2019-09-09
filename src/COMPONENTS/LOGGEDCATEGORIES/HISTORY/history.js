@@ -508,6 +508,7 @@ class History extends Component {
     render() {
         var self = this;
         console.log("Render", this.state)
+        console.log('asdjfgjksdgfjksdgjh')
         return (
             <div>
                 <ContactWrap>
@@ -571,16 +572,16 @@ class History extends Component {
                                                     {this.state.historyData.map(function (temp) {
                                                         var date = moment.utc(temp.created_at).local().format(`${self.props.profileData.date_format} HH:mm:ss`);
                                                         var side = Number(temp.user_id) === self.props.profileData.id ? temp.side : temp.side === "Buy" ? "Sell" : "Buy";
-                                                        var fee = Number(temp.user_id) === self.props.profileData.id ? temp.user_fee !== null ? temp.user_fee.toFixed(4) : "" : temp.requested_fee !== null ? temp.requested_fee.toFixed(4) : "";
+                                                        var fee = Number(temp.user_id) === self.props.profileData.id ? temp.user_fee !== null ? temp.user_fee.toFixed(8) : "" : temp.requested_fee !== null ? temp.requested_fee.toFixed(8) : "";
                                                         return (<tr>
                                                             <td>{temp.symbol}</td>
                                                             <td>{date}</td>
                                                             {/* {console.log(side)} */}
                                                             <SideBuySell side={side === "Buy" ? true : false}>{side}</SideBuySell>
-                                                            <td>{temp.fill_price.toFixed(4)}</td>
-                                                            <td>{temp.quantity.toFixed(4)}</td>
+                                                            <td>{temp.fill_price.toFixed(5)}</td>
+                                                            <td>{temp.quantity.toFixed(3)}</td>
                                                             <td>{fee}</td>
-                                                            <td>{(temp.fill_price * temp.quantity).toFixed(4)}</td>
+                                                            <td>{(temp.fill_price * temp.quantity).toFixed(8)}</td>
                                                             {/* <td><Button onChange={() => self.repeatClick(temp)}>Repeat</Button></td> */}
                                                         </tr>);
                                                     })}
