@@ -277,39 +277,6 @@ export const TokenIconWrap = styled.span`
   font-size: 30px;
   margin: 0 15px 0 0;
 `;
-// export const TokenInput = styled.div`
-//   position: absolute;
-//   opacity: 0;
-//   cursor: pointer;
-//   height: 0;
-//   width: 0;
-//   &:checked ~ {
-//   }
-// `;
-// export const TokenSpan = styled.span`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   height: 20px;
-//   width: 20px;
-//   border: 2px solid #a6a9b5;
-//   border-radius: 2px;
-//   &:after {
-//     content: "";
-//     left: 4px;
-//     position: absolute;
-//     top: 0px;
-//     width: 7px;
-//     height: 12px;
-//     border: solid #5087c7;
-//     border-width: 0px 3px 3px 0;
-//     -webkit-transform: rotate(45deg);
-//     -webkit-transform: rotate(45deg);
-//     -ms-transform: rotate(45deg);
-//     transform: rotate(45deg);
-//     display: block;
-//   }
-// `;
 export const SecondRow = styled(Row)`
   text-align: left;
   margin-top: 25px;
@@ -591,6 +558,7 @@ export const TokLastRight = styled.span`
 `;
 export const TokTransactionSection = styled(TokWalletSection)`
   padding: 0 30px;
+  margin: 0 0 50px 0;
 `;
 export const TokRow = styled.div`
   display: flex;
@@ -657,3 +625,22 @@ export const TokColAmountInfo = styled.div`
     font-weight: 600;
   }
 `;
+export const TokBtnDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+export const TokBtn = styled.button`
+  height: 48px;
+  width: 35%;
+  background: transparent;
+  border: 1px solid;
+  font-weight: bold;
+  color: #000;
+  font-size: 16px;
+  border-radius: 4px;
+  &.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+`;
+// Token Dashboard css end

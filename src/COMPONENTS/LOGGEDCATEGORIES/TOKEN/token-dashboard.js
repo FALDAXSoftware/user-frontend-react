@@ -21,7 +21,9 @@ import {
   TokRow,
   TokColImg,
   TokColInfo,
-  TokColAmountInfo
+  TokColAmountInfo,
+  TokBtnDiv,
+  TokBtn
 } from "../../../STYLED-COMPONENTS/TOKEN/tokenStyle";
 
 class TokenDashboard extends React.Component {
@@ -213,7 +215,33 @@ class TokenDashboard extends React.Component {
                     <span className="date">31 May</span>
                   </TokColAmountInfo>
                 </TokRow>
+                <TokRow>
+                  <TokColImg></TokColImg>
+                  <TokColInfo>
+                    <span className="amount-type">Received USDx</span>
+                    <span className="amount-from">From Rosa</span>
+                  </TokColInfo>
+                  <TokColAmountInfo>
+                    <span className="amount">30.00</span>
+                    <span className="date">31 May</span>
+                  </TokColAmountInfo>
+                </TokRow>
+                <TokRow>
+                  <TokColImg></TokColImg>
+                  <TokColInfo>
+                    <span className="amount-type">Received USDx</span>
+                    <span className="amount-from">From Rosa</span>
+                  </TokColInfo>
+                  <TokColAmountInfo>
+                    <span className="amount">30.00</span>
+                    <span className="date">31 May</span>
+                  </TokColAmountInfo>
+                </TokRow>
               </TokTransactionSection>
+              <TokBtnDiv>
+                <TokBtn className="disabled">Previous</TokBtn>
+                <TokBtn>Next</TokBtn>
+              </TokBtnDiv>
             </TokTransactions>
           </TokRightContentWrap>
         </TokDashboardWrap>
