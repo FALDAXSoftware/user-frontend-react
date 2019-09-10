@@ -19,12 +19,15 @@ import {
 } from "../../STYLED-COMPONENTS/TIER/tierStyle";
 import { Icon } from "antd";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import { globalVariables } from "Globals.js";
+
+let { API_URL } = globalVariables;
 
 class Tier extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tier1_upgrade: false,
+      tier1_upgrade: true,
       tier2_upgrade: false,
       tier3_upgrade: false,
       tier4_upgrade: false,
@@ -33,50 +36,207 @@ class Tier extends Component {
       is_tier3_active: false,
       is_tier4_active: false,
       go_to_kyc: false,
-      loader: true
+      loader: true,
+      tierData: [],
+      is_verified: false
     };
+    // this.getClassName = this.getClassName.bind(this);
   }
   componentDidMount() {
-    this.setState({ loader: false });
-    if (this.props.profileDetails.is_kyc_done === 2) {
-      this.setState({
-        tier1_upgrade: true,
-        tier2_upgrade: true,
-        is_tier1_active: true
+    fetch(`${API_URL}/get-tier-details`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn
+      }
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        this.setState({
+          tierData: responseData.data,
+          loader: false
+        });
+        console.log("tierData", this.state.tierData);
+        // this.state.tierData.length > 0 &&
+        //   this.state.tierData.map(function(tier, index) {
+        //     if (tier.is_active) {
+        //       console.log(tier.id + 1);
+        //       var activeTierId = tier.id;
+        //       var enableTierId = tier.id + 1;
+        //       if (enableTierId === 2) {
+        //         this.setState({
+        //           tier2_upgrade: true
+        //         });
+        //       } else if (enableTierId === 3) {
+        //         this.setState({
+        //           tier3_upgrade: true
+        //         });
+        //       } else if (enableTierId === 4) {
+        //         this.setState({
+        //           tier4_upgrade: true
+        //         });
+        //       }
+        //     } else {
+        //       console.log(undefined);
+        //     }
+        //     // return console.log(tier.is_active);
+        //   });
+      })
+      .catch(error => {
+        console.log(error);
       });
-    } else {
-      this.setState({
-        tier1_upgrade: false,
-        is_tier1_active: false
-      });
-    }
-    if (this.state.tier2_upgrade) {
-      this.setState({
-        is_tier1_active: true
-      });
-    }
-    if (this.state.tier3_upgrade) {
-      this.setState({
-        is_tier2_active: true
-      });
-    }
-    if (this.state.tier4_upgrade) {
-      this.setState({
-        is_tier3_active: true
-      });
-    }
+
+    // if (this.props.profileDetails.is_kyc_done === 2) {
+    //   this.setState({
+    //     tier1_upgrade: true,
+    //     tier2_upgrade: true,
+    //     is_tier1_active: true
+    //   });
+    // } else {
+    //   this.setState({
+    //     tier1_upgrade: false,
+    //     is_tier1_active: false
+    //   });
+    // }
+    // if (this.state.tier2_upgrade) {
+    //   this.setState({
+    //     is_tier1_active: true
+    //   });
+    // }
+    // if (this.state.tier3_upgrade) {
+    //   this.setState({
+    //     is_tier2_active: true
+    //   });
+    // }
+    // if (this.state.tier4_upgrade) {
+    //   this.setState({
+    //     is_tier3_active: true
+    //   });
+    // }
   }
+  // getClassName() {
+  //   this.state.tierData.length > 0 &&
+  //     this.state.tierData.map(function(tier, index) {
+  //       return console.log(tier.is_active);
+  //     });
+  // }
   render() {
-    let {
-      is_tier1_active,
-      is_tier2_active,
-      is_tier3_active,
-      is_tier4_active
-    } = this.state;
+    let { tierData, is_verified } = this.state;
     return (
       <div>
         <TierMainWrap>
           <TierMainInnerWrap>
+            {tierData.length > 0
+              ? tierData.map(function(tier, index) {
+                  let path = `"/tier${tier.id}"`;
+                  // console.log("path", path);
+                  // console.log("history", this.props);
+                  return (
+                    <TierSubMain
+                      key={tier.id}
+                      className={tier.is_active ? "tier-enabled" : tier.id}
+                    >
+                      <TierHead className="top-head">
+                        Tier {tier.tier_step}
+                      </TierHead>
+                      <TierSubMainInner>
+                        <TierSubHead>
+                          Minimum Account Activity Thresholds
+                        </TierSubHead>
+                        <TierUl>
+                          <li>
+                            <span className="icon-wrap">
+                              <Icon type="check" />
+                            </span>
+                            <span className="text-wrap">
+                              {tier.minimum_activity_thresold.Account_Age}
+                            </span>
+                          </li>
+                          <li>
+                            <span className="icon-wrap">
+                              <Icon type="check" />
+                            </span>
+                            <span className="text-wrap">
+                              {
+                                tier.minimum_activity_thresold
+                                  .Minimum_Total_Transactions
+                              }
+                            </span>
+                          </li>
+                          <li>
+                            <span className="icon-wrap">
+                              <Icon type="check" />
+                            </span>
+                            <span className="text-wrap">
+                              {
+                                tier.minimum_activity_thresold
+                                  .Minimum_Total_Value_of_All_Transactions
+                              }
+                            </span>
+                          </li>
+                        </TierUl>
+                        <TierWithdrawalHead className="withdrawal">
+                          Withdrawl Limits Orders
+                        </TierWithdrawalHead>
+                        <TierTable>
+                          <thead>
+                            <tr>
+                              <th>Daily</th>
+                              <th>Monthly</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{tier.daily_withdraw_limit}</td>
+                              <td>{tier.monthly_withdraw_limit}</td>
+                            </tr>
+                          </tbody>
+                        </TierTable>
+                      </TierSubMainInner>
+                      <TierRequirements>
+                        <TierSubHeadRequire>Requirements</TierSubHeadRequire>
+                        <ul className="requirements">
+                          <li>
+                            <span className="disc-icon" />
+                            <span>Login</span>
+                          </li>
+                        </ul>
+                      </TierRequirements>
+                      {/* {tier.is_active ? "tier-active" : ""} */}
+                      {is_verified && (
+                        <TierVerifiedWrap>
+                          <TierVerfied className="verified">
+                            <Icon type="check" />
+                            Verified
+                          </TierVerfied>
+                        </TierVerifiedWrap>
+                      )}
+                      {tier.is_active && (
+                        <TierUpdate
+                          className="upgrade-btn"
+                          onClick={() => {
+                            this.props.history.push("/tier1");
+                          }}
+                        >
+                          Upgrade
+                        </TierUpdate>
+                      )}
+                      {!is_verified && !tier.is_active && (
+                        <TierUpdate
+                          className="upgrade-btn"
+                          onClick={() => {
+                            this.props.history.push(path);
+                          }}
+                        >
+                          Upgrade
+                        </TierUpdate>
+                      )}
+                    </TierSubMain>
+                  );
+                })
+              : ""}
+            {/* <TierMainInnerWrap>
             <TierSubMain
               className={
                 this.state.tier1_upgrade ? "tier-active" : "tier-enabled"
@@ -423,6 +583,7 @@ class Tier extends Component {
                 </TierUpdate>
               )}
             </TierSubMain>
+          </TierMainInnerWrap> */}
           </TierMainInnerWrap>
         </TierMainWrap>
         {this.state.loader === true ? <FaldaxLoader /> : ""}

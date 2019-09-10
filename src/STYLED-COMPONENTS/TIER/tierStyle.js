@@ -113,7 +113,7 @@ export const TierTable = styled.table`
   border-color: ${props =>
     props.theme.mode === "dark" ? "#eaeaea" : "#e1e1e1"};
   margin-bottom: 30px;
-  > tr th {
+  > thead tr th {
     text-align: inherit;
     width: 50%;
     background: #e1e1e1;
@@ -122,7 +122,7 @@ export const TierTable = styled.table`
     padding: 5px 0;
     color: #333333;
   }
-  > tr td {
+  > tbody tr td {
     width: 50%;
     font-size: 18px;
     padding: 5px 0;
