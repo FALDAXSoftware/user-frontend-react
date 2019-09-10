@@ -57,7 +57,8 @@ class Tier extends Component {
           tierData: responseData.data,
           loader: false
         });
-        console.log("tierData", this.state.tierData);
+        console.log("tierData", responseData.data[0].is_active);
+        // console.log("tierData", this.state.tierData);
         // this.state.tierData.length > 0 &&
         //   this.state.tierData.map(function(tier, index) {
         //     if (tier.is_active) {
