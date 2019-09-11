@@ -40,7 +40,7 @@ class Tier extends Component {
       tierData: [],
       is_verified: false
     };
-    // this.getClassName = this.getClassName.bind(this);
+    this.getTierActive = this.getTierActive.bind(this);
   }
   componentDidMount() {
     fetch(`${API_URL}/get-tier-details`, {
@@ -57,7 +57,8 @@ class Tier extends Component {
           tierData: responseData.data,
           loader: false
         });
-        console.log("tierData", responseData.data[0].is_active);
+        console.log("tierData", responseData.data);
+        this.getTierActive();
         // console.log("tierData", this.state.tierData);
         // this.state.tierData.length > 0 &&
         //   this.state.tierData.map(function(tier, index) {
@@ -116,14 +117,47 @@ class Tier extends Component {
     //   });
     // }
   }
-  // getClassName() {
-  //   this.state.tierData.length > 0 &&
-  //     this.state.tierData.map(function(tier, index) {
-  //       return console.log(tier.is_active);
-  //     });
-  // }
+  getTierActive() {
+    this.state.tierData.length > 0 &&
+      this.state.tierData.map(function(tier, index) {
+        if (tier.is_active) {
+          console.log("ActiveId", tier.id);
+          if (tier.id === 1) {
+            console.log("Upgrade 1");
+          } else if (tier.id === 2) {
+            console.log("Upgrade 2, Active 1");
+            this.setState({
+              is_tier1_active: true
+            });
+          } else if (tier.id === 3) {
+            console.log("Upgrade 3, Active 1 and 2");
+            this.setState({
+              is_tier1_active: true,
+              is_tier2_active: true
+            });
+          } else if (tier.id === 4) {
+            console.log("Upgrade 4, Active 1, 2 and 3");
+            this.setState({
+              is_tier1_active: true,
+              is_tier2_active: true,
+              is_tier3_active: true
+            });
+          } else {
+            console.log("Out of loop");
+          }
+        }
+        return console.log("getTierActive");
+      });
+  }
   render() {
-    let { tierData, is_verified } = this.state;
+    let {
+      tierData,
+      is_verified,
+      is_tier1_active,
+      is_tier2_active,
+      is_tier3_active,
+      is_tier4_active
+    } = this.state;
     return (
       <div>
         <TierMainWrap>
@@ -133,9 +167,23 @@ class Tier extends Component {
                   let path = `"/tier${tier.id}"`;
                   // console.log("path", path);
                   // console.log("history", this.props);
+                  // var liClasses = classNames({
+                  //   "tier-active": `is_tier${tier.id}_active` === true,
+                  //   "tier-enabled":
+                  //     (`is_tier${tier.id}_active` && tier.is_active) === true,
+                  //   "main-class":
+                  //     (`is_tier${tier.id}_active` && tier.is_active) === false
+                  // });
+
                   return (
                     <TierSubMain
                       key={tier.id}
+                      // className={liClasses}
+                      // className={
+                      //   `is_tier${tier.id}_active` && tier.is_active
+                      //     ? "tier-enabled"
+                      //     : "tier-active"
+                      // }
                       className={tier.is_active ? "tier-enabled" : tier.id}
                     >
                       <TierHead className="top-head">
@@ -198,14 +246,37 @@ class Tier extends Component {
                       <TierRequirements>
                         <TierSubHeadRequire>Requirements</TierSubHeadRequire>
                         <ul className="requirements">
-                          <li>
-                            <span className="disc-icon" />
-                            <span>Login</span>
-                          </li>
+                          {Object.values(tier.requirements) &&
+                            Object.values(tier.requirements).map(
+                              requirement => (
+                                <li>
+                                  <span className="disc-icon" />
+                                  <span>{requirement}</span>
+                                </li>
+                              )
+                            )}
                         </ul>
                       </TierRequirements>
+                      {is_tier1_active && (
+                        <TierVerifiedWrap>
+                          <TierVerfied className="verified">
+                            <Icon type="check" />
+                            Verified
+                          </TierVerfied>
+                        </TierVerifiedWrap>
+                      )}
+                      {!is_tier1_active && (
+                        <TierUpdate
+                          className="upgrade-btn"
+                          onClick={() => {
+                            this.props.history.push("/tier1");
+                          }}
+                        >
+                          Upgrade
+                        </TierUpdate>
+                      )}
                       {/* {tier.is_active ? "tier-active" : ""} */}
-                      {is_verified && (
+                      {/* {!is_tier1_active && (
                         <TierVerifiedWrap>
                           <TierVerfied className="verified">
                             <Icon type="check" />
@@ -223,7 +294,7 @@ class Tier extends Component {
                           Upgrade
                         </TierUpdate>
                       )}
-                      {!is_verified && !tier.is_active && (
+                      {is_tier1_active && !tier.is_active && (
                         <TierUpdate
                           className="upgrade-btn"
                           onClick={() => {
@@ -232,7 +303,7 @@ class Tier extends Component {
                         >
                           Upgrade
                         </TierUpdate>
-                      )}
+                      )} */}
                     </TierSubMain>
                   );
                 })
