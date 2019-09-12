@@ -168,11 +168,8 @@ class Tier extends Component {
                   // console.log("path", path);
                   // console.log("history", this.props);
                   // var liClasses = classNames({
-                  //   "tier-active": `is_tier${tier.id}_active` === true,
-                  //   "tier-enabled":
-                  //     (`is_tier${tier.id}_active` && tier.is_active) === true,
-                  //   "main-class":
-                  //     (`is_tier${tier.id}_active` && tier.is_active) === false
+                  //   "tier-active": is_verified === true,
+                  //   "tier-enabled": is_active === true
                   // });
 
                   return (
@@ -257,15 +254,15 @@ class Tier extends Component {
                             )}
                         </ul>
                       </TierRequirements>
-                      {is_tier1_active && (
+                      {/* {is_verified && (
                         <TierVerifiedWrap>
                           <TierVerfied className="verified">
                             <Icon type="check" />
                             Verified
                           </TierVerfied>
                         </TierVerifiedWrap>
-                      )}
-                      {!is_tier1_active && (
+                      )} */}
+                      {tier.is_active && (
                         <TierUpdate
                           className="upgrade-btn"
                           onClick={() => {

@@ -256,3 +256,62 @@ export const TierInnerWrap = styled.div`
   padding: 50px 0;
   color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
 `;
+
+// Tier Info css start
+export const TierInfoWrap = styled.div`
+  min-height: calc(100vh - 380px);
+  padding-top: 80px;
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
+  display: flex;
+  font-family: open sans;
+`;
+export const TierInfoInnerWrap = styled.div`
+  margin: 20px auto 30px;
+  width: 95%;
+  background: #fff;
+  border-radius: 7px;
+  min-height: 70vh;
+`;
+export const TierInfoContent = styled.div`
+  padding: 30px 0 50px;
+  width: 50%;
+  margin: 0 auto;
+`;
+export const TierInfoHead = styled.span`
+  font-size: 30px;
+  color: #000000;
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  line-height: 1;
+  padding: 0 0 30px 0;
+`;
+export const TierListingOutside = styled.ul`
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  font-size: 15px;
+  color: #333333;
+  > li {
+    > span {
+      font-size: 18px;
+      font-weight: 600;
+      padding: 0 0 10px 0;
+      display: block;
+    }
+    > .content {
+      padding: 0 30px;
+      > p {
+        margin: 0;
+        padding: 0 0 10px 0;
+      }
+    }
+  }
+`;
+export const TierListingInside = styled.ul`
+  > li {
+  }
+`;
+export const TierListingInfoHead = styled.span``;
+// Tier Info css end

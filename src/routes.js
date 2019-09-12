@@ -38,6 +38,7 @@ import TierTwo from "../src/COMPONENTS/SETTINGS/TIERS/tier_two";
 import TierThree from "../src/COMPONENTS/SETTINGS/TIERS/tier_three";
 import TierFour from "../src/COMPONENTS/SETTINGS/TIERS/tier_four";
 import TokenDashboard from "./COMPONENTS/LOGGEDCATEGORIES/TOKEN/token-dashboard.js";
+import TierUpgradeInfo from "./COMPONENTS/SETTINGS/tier_upgrade_information.js";
 let { API_URL } = globalVariables;
 const socketIOClient = require("socket.io-client");
 const sailsIOClient = require("sails.io.js");
@@ -133,6 +134,12 @@ const routes = [
     exact: false,
     path: "/tier4",
     component: () => <TierFour io={io} />,
+    io: io
+  },
+  {
+    exact: false,
+    path: "/tier-upgrade-information",
+    component: () => <TierUpgradeInfo io={io} />,
     io: io
   },
   {
