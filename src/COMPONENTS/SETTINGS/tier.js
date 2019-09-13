@@ -158,6 +158,7 @@ class Tier extends Component {
       is_tier3_active,
       is_tier4_active
     } = this.state;
+    console.log("Tier:", this.props.history);
     return (
       <div>
         <TierMainWrap>
@@ -266,7 +267,7 @@ class Tier extends Component {
                         <TierUpdate
                           className="upgrade-btn"
                           onClick={() => {
-                            this.props.history.push("/tier1");
+                            this.props.history.push(`"/tier${tier.id}"`);
                           }}
                         >
                           Upgrade

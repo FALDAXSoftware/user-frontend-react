@@ -272,6 +272,10 @@ export const TierInfoInnerWrap = styled.div`
   background: #fff;
   border-radius: 7px;
   min-height: 70vh;
+  color: #000000;
+  p {
+    font-size: 16px;
+  }
 `;
 export const TierInfoContent = styled.div`
   padding: 30px 0 50px;
@@ -283,22 +287,25 @@ export const TierInfoHead = styled.span`
   color: #000000;
   display: block;
   text-align: center;
-  font-weight: bold;
   line-height: 1;
-  padding: 0 0 30px 0;
+  padding: 0 0 40px 0;
+  > b {
+    color: #4c84ff;
+  }
 `;
 export const TierListingOutside = styled.ul`
   padding: 0;
   margin: 0;
   list-style-type: none;
-  font-size: 15px;
-  color: #333333;
+  font-size: 14px;
+  color: #000000;
   > li {
+    padding: 0 0 10px 0;
     > span {
-      font-size: 18px;
-      font-weight: 600;
+      font-size: 16px;
       padding: 0 0 10px 0;
       display: block;
+      color: #000;
     }
     > .content {
       padding: 0 30px;
@@ -310,8 +317,108 @@ export const TierListingOutside = styled.ul`
   }
 `;
 export const TierListingInside = styled.ul`
+  padding-bottom: 10px;
   > li {
+    list-style-type: disc;
   }
 `;
-export const TierListingInfoHead = styled.span``;
+export const TierListingInfoHead = styled.span`
+  &.instructions {
+    padding: 0 0 30px 0;
+    display: block;
+  }
+`;
+export const TierQuestion = styled.span`
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px 0 0 0;
+  display: block;
+  &.padding-btm {
+    padding: 0 0 20px 0;
+  }
+`;
+export const TierAnswerTable = styled.table`
+  margin: 10px 0 50px;
+  width: 100%;
+  > thead {
+    > tr {
+      > th {
+        width: 50%;
+        padding: 25px 0;
+        border-bottom: 1px solid #eee;
+        &:first-child {
+          color: green;
+        }
+        &:last-child {
+          color: red;
+        }
+      }
+    }
+  }
+  > tbody {
+    > tr {
+      > td {
+        width: 50%;
+        padding: 25px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 16px;
+        &:first-child {
+          color: green;
+          font-weight: bold;
+        }
+        &:last-child {
+          color: red;
+        }
+        > span {
+          display: block;
+        }
+      }
+    }
+  }
+`;
+export const TierExamplesHead = styled.span`
+  display: block;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 45px 0 30px;
+`;
+export const TierExamplesSubHead = styled.span`
+  display: block;
+  padding: 0 0 10px 0;
+  &.green {
+    color: green;
+  }
+  &.red {
+    color: red;
+  }
+`;
+export const TierImageWrap = styled.div`
+  margin: 0 0 30px 0;
+  > img {
+    max-width: 60%;
+  }
+  &.photo-block {
+    margin: 0 0 30px 0;
+    > img {
+      max-width: 100%;
+    }
+  }
+`;
+export const TierPhotoBlock = styled.div`
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  margin: 0 0 30px 0;
+`;
+export const TierPhotoBlockCol = styled.div`
+  display: flex;
+  width: 50%;
+  flex-wrap: wrap;
+  &.left-col {
+    padding: 0 15px 15px 0;
+  }
+  &.right-col {
+    padding: 0 0 15px 15px;
+  }
+`;
 // Tier Info css end

@@ -73,6 +73,7 @@ class Editprofile extends Component {
             })
         } */
   render() {
+    console.log("EditProfile:", this.props);
     return (
       <div>
         {/* <LoggedNavigation /> */}
