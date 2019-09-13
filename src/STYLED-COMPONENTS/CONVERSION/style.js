@@ -15,7 +15,7 @@ export const ConversionContainer = styled(Container)`
   border-radius: 5px;
   max-width: 1170px;
   padding-bottom: 30px;
-  padding-top: 200px;
+  padding-top: 190px;
 
   @media (max-width: 991px) {
     & {
@@ -132,7 +132,12 @@ export const ConversionTab = styled(Tabs)`
   }
 `;
 export const ConversionTabPane = styled(TabPane)`
-  padding: 28px 25px;
+  &.buy_tab {
+    padding: 69.5px 25px;
+  }
+  &.sell_tab {
+    padding: 49px 25px;
+  }
 `;
 export const ConversionTitle = styled.span`
   font-size: 18px;
@@ -300,7 +305,7 @@ export const ConversionSubmitBtn = styled(Button)`
 `;
 
 export const RightCol = styled(Col)`
-  padding: 40px;
+  padding: 60.5px 40px;
   min-height: 613px;
   display: flex;
   align-items: center;
