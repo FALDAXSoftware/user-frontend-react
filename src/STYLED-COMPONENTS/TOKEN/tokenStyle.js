@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { Row } from "antd";
+import { Row, Input } from "antd";
 import { EmailReq } from "COMPONENTS/LANDING/USERFORMS/login_form";
+const Search = Input.Search;
 
 export const TokenWrap = styled.div`
   padding-top: 80px;
@@ -387,27 +388,37 @@ export const CustomFileInputWrap = styled.div`
 export const TokDashboardWrap = styled.div`
   min-height: calc(100vh - 380px);
   padding-top: 80px;
-  background-color: #f5f6fa;
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
   display: flex;
   font-family: open sans;
 `;
 export const TokSideBar = styled.div`
   width: 260px;
-  background: #ffffff;
-  -webkit-box-shadow: 3px 0px 3px 0px #e9eaee;
-  -moz-box-shadow: 3px 0px 3px 0px #e9eaee;
-  box-shadow: 3px 0px 3px 0px #e9eaee;
+  background: ${props => (props.theme.mode === "dark" ? "#021b2b" : "#ffffff")};
+  -webkit-box-shadow: ${props =>
+    props.theme.mode === "dark" ? "none" : "3px 0px 3px 0px #e9eaee"};
+  -moz-box-shadow: ${props =>
+    props.theme.mode === "dark" ? "none" : "3px 0px 3px 0px #e9eaee"};
+  box-shadow: ${props =>
+    props.theme.mode === "dark" ? "none" : "3px 0px 3px 0px #e9eaee"};
   > ul {
     padding: 0 0;
     margin: 0;
     > li {
       list-style-type: none;
       padding: 15px 50px;
-      color: #707070;
+      color: ${props => (props.theme.mode === "dark" ? "#617090" : "#707070")};
       font-weight: 600;
-      font-size: 18px;
-      border-bottom: 1px solid;
-      border-color: #f5f6fa;
+      font-size: 16px;
+      border-left: ${props =>
+        props.theme.mode === "dark" ? "1px solid #092c43" : "0"};
+      border-bottom: ${props =>
+        props.theme.mode === "dark"
+          ? "1px solid #092c43"
+          : "1px solid #f5f6fa"};
+      border-right: ${props =>
+        props.theme.mode === "dark" ? "1px solid #092c43" : "0"};
       > span i.fas {
         margin: 0 15px 0 0;
       }
@@ -420,7 +431,8 @@ export const TokSideBar = styled.div`
       }
       > span.dash-item:hover {
         cursor: pointer;
-        color: #333333;
+        color: ${props =>
+          props.theme.mode === "dark" ? "#ffffff" : "#333333"};
         > i.fas {
           color: #3789ef;
         }
@@ -429,7 +441,8 @@ export const TokSideBar = styled.div`
         border-right: 5px solid;
         border-right-color: #4c84ff;
         > span.dash-item {
-          color: #333333;
+          color: ${props =>
+            props.theme.mode === "dark" ? "#ffffff" : "#333333"};
           > i.fas {
             color: #3789ef;
           }
@@ -445,7 +458,8 @@ export const TokRightContentWrap = styled.div`
 export const TokWallet = styled.div`
   width: 60%;
   border-right: 1px solid;
-  border-color: #d4dadf;
+  border-color: ${props =>
+    props.theme.mode === "dark" ? "#171e24" : "#d4dadf"};
   padding: 50px;
 `;
 export const TokTransactions = styled.div`
@@ -461,23 +475,32 @@ export const TokHeadWrap = styled.div`
 export const TokHead = styled.div`
   font-size: 24px;
   font-weight: 600;
-  color: #333333;
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
 `;
 export const TokSubHead = styled.a`
   font-size: 13px;
-  color: #000;
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000000")};
   &:hover {
     cursor: pointer;
-    color: #000;
+    color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000000")};
   }
 `;
 export const TokWalletSection = styled.div`
   padding: 30px;
   border-radius: 4px;
-  background: #fff;
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(233, 234, 238, 1);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(233, 234, 238, 1);
-  box-shadow: 0px 0px 5px 0px rgba(233, 234, 238, 1);
+  background: ${props => (props.theme.mode === "dark" ? "#021b2b" : "#ffffff")};
+  -webkit-box-shadow: ${props =>
+    props.theme.mode === "dark"
+      ? "none"
+      : "0px 0px 5px 0px rgba(233, 234, 238, 1)"};
+  -moz-box-shadow: ${props =>
+    props.theme.mode === "dark"
+      ? "none"
+      : "0px 0px 5px 0px rgba(233, 234, 238, 1)"};
+  box-shadow: ${props =>
+    props.theme.mode === "dark"
+      ? "none"
+      : "0px 0px 5px 0px rgba(233, 234, 238, 1)"};
   margin: 0 0 30px 0;
 `;
 export const TokWalletName = styled.div`
@@ -490,7 +513,7 @@ export const TokWalletName = styled.div`
   }
   > span.name {
     font-size: 20px;
-    color: #000;
+    color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000000")};
     font-weight: 600;
     display: inherit;
   }
@@ -499,14 +522,15 @@ export const TokWalletAmount = styled.div`
   display: flex;
   padding: 0 0 20px 0;
   border-bottom: 1px solid;
-  border-color: #d4dadf;
+  border-color: ${props =>
+    props.theme.mode === "dark" ? "#092c43" : "#d4dadf"};
   > span {
     font-weight: 600;
     display: inherit;
     font-size: 32px;
   }
   > span.amount {
-    color: #333;
+    color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
     margin: 0 5px 0 0;
   }
   > span.symbol {
@@ -525,15 +549,15 @@ export const TokLastLeft = styled.div`
   width: 70%;
   > span.head {
     width: 100%;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color: #b5b5b5;
     padding: 0 0 5px 0;
   }
   > span.activity {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    color: #333333;
+    color: ${props => (props.theme.mode === "dark" ? "#617090" : "#333333")};
     position: relative;
     padding: 0 0 0px 18px;
     &:before {
@@ -552,7 +576,7 @@ export const TokLastRight = styled.span`
   width: 30%;
   justify-content: flex-end;
   display: inherit;
-  font-size: 18px;
+  font-size: 16px;
   color: #b5b5b5;
   font-weight: 600;
 `;
@@ -565,7 +589,8 @@ export const TokRow = styled.div`
   align-items: center;
   padding: 25px 0;
   border-bottom: 1px solid;
-  border-color: #d4dadf;
+  border-color: ${props =>
+    props.theme.mode === "dark" ? "#092c43" : "#d4dadf"};
   &:last-child {
     border: 0;
   }
@@ -573,7 +598,7 @@ export const TokRow = styled.div`
 export const TokColImg = styled.div`
   height: 46px;
   width: 46px;
-  background: #b5b5b5;
+  background: ${props => (props.theme.mode === "dark" ? "#5f6b73" : "#b5b5b5")};
   border-radius: 50%;
   margin: 0 15px 0 0;
 `;
@@ -582,11 +607,11 @@ export const TokColInfo = styled.div`
   > span {
     width: 100%;
     display: inherit;
-    font-size: 18px;
+    font-size: 16px;
   }
   > span.amount-type {
     font-weight: bold;
-    color: #000;
+    color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000000")};
     position: relative;
     padding: 0 0 0 20px;
     &:before {
@@ -614,11 +639,11 @@ export const TokColAmountInfo = styled.div`
     width: 100%;
     display: inherit;
     justify-content: flex-end;
-    font-size: 18px;
+    font-size: 16px;
   }
   > span.amount {
     font-weight: bold;
-    color: #000;
+    color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000000")};
   }
   > span.date {
     color: #b5b5b5;
@@ -632,15 +657,32 @@ export const TokBtnDiv = styled.div`
 export const TokBtn = styled.button`
   height: 48px;
   width: 35%;
-  background: transparent;
-  border: 1px solid;
+  background: ${props =>
+    props.theme.mode === "dark" ? "#4c84ff" : "transparent"};
+  border: ${props =>
+    props.theme.mode === "dark" ? "1px solid #4c84ff" : "1px solid #000000"};
   font-weight: bold;
-  color: #000;
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000000")};
   font-size: 16px;
-  border-radius: 4px;
+  border-radius: 40px;
   &.disabled {
     opacity: 0.4;
     pointer-events: none;
   }
+`;
+export const Inputsearch = styled(Search)`
+    width: 100%;
+    height: 40px;
+    >input
+    {
+        background-color:${props =>
+          props.theme.mode === "dark" ? "#020e18" : ""};
+        color:${props => (props.theme.mode === "dark" ? "white" : "")}
+        caret-color:${props => (props.theme.mode === "dark" ? "white" : "")}
+    }
+    >span>i
+    {
+        color:${props => (props.theme.mode === "dark" ? "white" : "")};
+    }
 `;
 // Token Dashboard css end
