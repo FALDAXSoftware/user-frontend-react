@@ -118,7 +118,7 @@ class TierIDConfirmation extends React.Component {
                     <TierPhotoBlock>
                       <TierPhotoBlockCol className="left-col">
                         <TierImageWrap className="photo-block">
-                          <img src="/images/passport-good.png" />
+                          <img src="/images/01-DO.png" />
                         </TierImageWrap>
                         <p>
                           Use a high-quality photo and make sure the text and
@@ -126,11 +126,19 @@ class TierIDConfirmation extends React.Component {
                           arms should also be visible.
                         </p>
                       </TierPhotoBlockCol>
+                      <TierPhotoBlockCol className="right-col">
+                        <TierImageWrap className="photo-block">
+                          <img src="/images/02-DO.png" />
+                        </TierImageWrap>
+                        <p>
+                          Do not cover parts of the ID, message, or your face.
+                        </p>
+                      </TierPhotoBlockCol>
                     </TierPhotoBlock>
                     <TierPhotoBlock>
                       <TierPhotoBlockCol className="left-col">
                         <TierImageWrap className="photo-block">
-                          <img src="/images/passport-good.png" />
+                          <img src="/images/03-DON'T.png" />
                         </TierImageWrap>
                         <p>
                           You must be holding the ID in your hands; your hands
@@ -141,7 +149,7 @@ class TierIDConfirmation extends React.Component {
                       </TierPhotoBlockCol>
                       <TierPhotoBlockCol className="right-col">
                         <TierImageWrap className="photo-block">
-                          <img src="/images/passport-good.png" />
+                          <img src="/images/05-DON'T.png" />
                         </TierImageWrap>
                         <p>
                           Do not cover parts of the ID, message, or your face.
@@ -205,15 +213,14 @@ class TierIDConfirmation extends React.Component {
                   </TierListingInfoHead>
                   <div className="content">
                     <p>
-                      You can upload your IDCP in your Kraken account on the Get{" "}
+                      You can upload your IDCP in your FALDAX account on the{" "}
                       <b>
-                        <Link to="/tier1">Verified > Intermediate</Link>
+                        <Link to="/tier3">Identity Verification > Tier 3.</Link>
                       </b>{" "}
-                      tab.
                     </p>
                     <p>
                       If you do not see the section to upload the IDCP on that
-                      page, contact support.
+                      page, <Link to="/open-ticket">contact support.</Link>
                     </p>
                   </div>
                 </li>

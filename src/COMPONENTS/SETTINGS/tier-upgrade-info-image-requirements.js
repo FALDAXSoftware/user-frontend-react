@@ -117,44 +117,44 @@ class TierUpgradeInfoImageRequirements extends React.Component {
                 An ideal scan/photo of an ID card
               </TierExamplesSubHead>
               <TierImageWrap>
-                <img src="/images/ID-good-01.png" />
+                <img src="/images/01.png" />
               </TierImageWrap>
               <TierExamplesSubHead className="green">
                 An ideal scan/photo of a passport
               </TierExamplesSubHead>
               <TierImageWrap>
-                <img src="/images/passport-good.png" />
+                <img src="/images/07-passport.png" />
               </TierImageWrap>
               <TierExamplesHead>Unacceptable examples</TierExamplesHead>
               <TierExamplesSubHead className="red">
                 ID is too blurry
               </TierExamplesSubHead>
               <TierImageWrap>
-                <img src="/images/ID-good-01.png" />
+                <img src="/images/02 -blurry.png" />
               </TierImageWrap>
               <TierExamplesSubHead className="red">
                 ID edges are not visible
               </TierExamplesSubHead>
               <TierImageWrap>
-                <img src="/images/passport-good.png" />
+                <img src="/images/03-edges .png" />
               </TierImageWrap>
               <TierExamplesSubHead className="red">
                 Even a little bit of crop is <b>not OK...</b>
               </TierExamplesSubHead>
               <TierImageWrap>
-                <img src="/images/passport-good.png" />
+                <img src="/images/04-little bit of crop.png" />
               </TierImageWrap>
               <TierExamplesSubHead className="red">
                 ID is not in color
               </TierExamplesSubHead>
               <TierImageWrap>
-                <img src="/images/passport-good.png" />
+                <img src="/images/05-BLACK-WHITE.png" />
               </TierImageWrap>
               <TierExamplesSubHead className="red">
                 Background is not contrasting
               </TierExamplesSubHead>
               <TierImageWrap>
-                <img src="/images/passport-good.png" />
+                <img src="/images/06-Background is not contrasting.png" />
               </TierImageWrap>
             </TierInfoContent>
           </TierInfoInnerWrap>

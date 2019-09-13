@@ -94,7 +94,7 @@ class TierUpgradeInfo extends React.Component {
                 </li>
                 <li>
                   <TierListingInfoHead>
-                    3. Valid <b>SSN (Social Security Number)</b> or
+                    3. Valid <b>SSN (Social Security Number)</b> or{" "}
                     <b>ITIN (Individual Taxpayer Identification Number)</b> (US
                     clients only)
                   </TierListingInfoHead>

@@ -400,7 +400,7 @@ export const TierImageWrap = styled.div`
   &.photo-block {
     margin: 0 0 30px 0;
     > img {
-      max-width: 100%;
+      max-width: 80%;
     }
   }
 `;
