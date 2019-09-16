@@ -268,9 +268,11 @@ class KYCForm extends Component {
               : "";
           if (responseData.data.phone_number) {
             fields["phone_number"] = responseData.data.phone_number;
+            console.log("country_code", responseData.data.country_code);
             let phone = responseData.data.phone_number.split("-")[1];
             let arr = [];
             arr.push(responseData.data.country_code);
+            console.log("country_code", this.state.phoneCountry);
             this.setState(
               {
                 displayCountry: true,
@@ -429,6 +431,9 @@ class KYCForm extends Component {
   changeNumber(a, mob, code) {
     if (mob.trim !== "") {
       var temp = `+${code.dialCode}`;
+      console.log("a", a);
+      console.log("mob", mob);
+      console.log("code", code);
       var mobile = mob.includes(`+${code.dialCode}`) ? mob : temp.concat(mob);
       let fields = this.state.fields;
       fields["phone_number"] = mobile;

@@ -125,7 +125,7 @@ class SSN extends Component {
               "required|ssnValid",
               "text-danger-validation",
               {
-                required: "Social Security Number field is required."
+                required: "Please enter Social Security Number."
               }
             )}
           </SSNsub>
