@@ -23,7 +23,8 @@ import {
   TokColInfo,
   TokColAmountInfo,
   TokBtnDiv,
-  TokBtn
+  TokBtn,
+  Inputsearch
 } from "../../../STYLED-COMPONENTS/TOKEN/tokenStyle";
 
 class TokenDashboard extends React.Component {
@@ -158,6 +159,9 @@ class TokenDashboard extends React.Component {
             <TokTransactions>
               <TokHeadWrap>
                 <TokHead>Transactions</TokHead>
+                <TokSubHead>
+                  <Inputsearch placeholder="Search Coin" />
+                </TokSubHead>
               </TokHeadWrap>
               <TokTransactionSection>
                 <TokRow>

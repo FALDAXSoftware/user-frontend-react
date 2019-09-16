@@ -39,7 +39,10 @@ class ConversionDetail extends React.Component {
             faldaxFees: 0,
             loader: false,
             minCrypto: 0,
-            minCurrency: 0
+            minCurrency: 0,
+            fiatValue: 0,
+            networkFee: 0,
+            faldaxFee: 0
         }
         io = this.props.io
         this.validator1 = new SimpleReactValidator({
@@ -128,6 +131,7 @@ class ConversionDetail extends React.Component {
         this.calculateSellCrypto = this.calculateSellCrypto.bind(this);
         this.btnClicked = this.btnClicked.bind(this);
         this.getBuyCurrencyWithFees = this.getBuyCurrencyWithFees.bind(this);
+        this.getFiatValue = this.getFiatValue.bind(this);
     }
 
     /* Life-Cycle Methods */
@@ -136,8 +140,11 @@ class ConversionDetail extends React.Component {
         this.getCrypto();
         this.getCurrencies();
         this.getPairDetails();
+        this.getFiatValue();
     }
-
+    // componentWillReceiveProps() {
+    //     this.getFiatValue();
+    // }
     getPairDetails() {
         var self = this;
         io.sails.url = API_URL;
@@ -219,6 +226,57 @@ class ConversionDetail extends React.Component {
             .catch(error => {
             })
     }
+    getFiatValue() {
+        if(this.state.selectedTab === 1){
+            var values = { 
+                symbol: `${this.state.crypto}/USD`,
+                quantity: this.state.buyCryptoInput,
+                side: "Buy"
+            };
+        }
+        else {
+            var values = { 
+                symbol: `${this.state.crypto}/USD`,
+                quantity: this.state.sellCryptoInput,
+                side: "Sell"
+            };
+        }
+        this.setState({
+            loader: true
+        })
+        console.log("values",values);
+        fetch(`${API_URL}/get-jst-price`, {
+            method: "post",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + this.props.isLoggedIn
+            },
+            body: JSON.stringify(values)
+        })
+            .then(response => response.json())
+            .then((responseData) => {
+                this.setState({ 
+                    fiatValue: responseData.data.price,
+                    networkFee: responseData.data.network_fees,
+                    faldaxFee:  responseData.data.faldax_fees
+                })
+                console.log("Fiat", responseData.data.price);
+                console.log("Network", responseData.data.network_fees);
+                console.log("Faldax", responseData.data.faldax_fees);
+                if(this.state.selectedTab === 1){
+                    this.getBuyCurrencyWithFees();
+                }
+                else {
+                    this.getSellCurrencyWithFees();
+                }
+                this.setState({
+                    loader: false
+                })
+            })
+            .catch(error => {
+            })
+    }
     handleCryptoChange(value, option: Option) {
         console.log(option.props.selectedData.min_limit)
         let prevRoom = this.state.crypto + "-" + this.state.currency
@@ -231,7 +289,9 @@ class ConversionDetail extends React.Component {
         }, () => {
             this.getCurrencies();
             this.getPairDetails();
+            this.getFiatValue();
         });
+        
     }
     handleCurrencyChange(value) {
         let prevRoom = this.state.crypto + "-" + this.state.currency
@@ -241,8 +301,9 @@ class ConversionDetail extends React.Component {
             buyCryptoInput: 0,
             buyCurrencyInput: 0
         }, () => {
-
+            this.getFiatValue();
         });
+       
     }
     handleTabChange(e) {
         // console.log("tab chnage ", e);
@@ -258,8 +319,8 @@ class ConversionDetail extends React.Component {
             self.validator1.hideMessages();
             self.validator2.hideMessages();
             self.forceUpdate();
+            this.getFiatValue();
         })
-
     }
     radioChange(e) {
         var self = this;
@@ -282,7 +343,9 @@ class ConversionDetail extends React.Component {
             buyCryptoInput: parseFloat(e.target.value),
         }, () => {
             self.calculateBuyCurrency();
+            this.getFiatValue();
         })
+       
         // if (self.state.includeFees) {
 
         // } else {
@@ -324,24 +387,48 @@ class ConversionDetail extends React.Component {
     }
     getBuyCurrencyWithFees() {
         var self = this;
-        let buyCurrencyInput = (self.state.buyCryptoInput) * self.state.askPrice;
-        // Add Kraken Fees
+        // let buyCurrencyInput = (self.state.buyCryptoInput) * self.state.askPrice;
+        let buyCurrencyInput = 0;
+        // // Add Kraken Fees
+        // buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.krakenFees) / 100);
 
-        buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.krakenFees) / 100);
+        // // Add Faldax Fees
+        // buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.faldaxFees) / 100);
 
-        // Add Faldax Fees
-        buyCurrencyInput = buyCurrencyInput + ((buyCurrencyInput * self.state.faldaxFees) / 100);
+        // Add Fiat fees
+        buyCurrencyInput = parseFloat(buyCurrencyInput) + parseFloat(self.state.fiatValue);
+
+        // Add network fees 
+        buyCurrencyInput = parseFloat(buyCurrencyInput) + parseFloat(self.state.networkFee);
+
+        // Add faldax fees 
+        buyCurrencyInput = parseFloat(buyCurrencyInput) + parseFloat(self.state.faldaxFee);
+
+        // let buyCurrencyInput = self.state.fiatValue + self.state.faldaxFee + self.state.networkFee;
+        // console.log("Total Buy", buyCurrencyInput)
         return parseFloat((isNaN(buyCurrencyInput) ? 0 : buyCurrencyInput)).toFixed(8)
     }
     getSellCurrencyWithFees() {
         var self = this;
-        let sellCurrencyInput = (self.state.sellCryptoInput) * self.state.bidPrice;
-        // Add Kraken Fees
+        // let sellCurrencyInput = (self.state.sellCryptoInput) * self.state.bidPrice;
+        let sellCurrencyInput = 0;
+        // // Add Kraken Fees
+        // sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.krakenFees) / 100);
 
-        sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.krakenFees) / 100);
+        // // Add Faldax Fees
+        // sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.faldaxFees) / 100);
 
-        // Add Faldax Fees
-        sellCurrencyInput = sellCurrencyInput + ((sellCurrencyInput * self.state.faldaxFees) / 100);
+        // Add Fiat fees
+        sellCurrencyInput = parseFloat(sellCurrencyInput) + parseFloat(self.state.fiatValue);
+
+        // Add network fees 
+        sellCurrencyInput = parseFloat(sellCurrencyInput) + parseFloat(self.state.networkFee);
+
+        // Add faldax fees 
+        sellCurrencyInput = parseFloat(sellCurrencyInput) + parseFloat(self.state.faldaxFee);
+
+        // let sellCurrencyInput = self.state.fiatValue + self.state.faldaxFee + self.state.networkFee;
+        // console.log("Total Sell", sellCurrencyInput)
         return parseFloat((isNaN(sellCurrencyInput) ? 0 : sellCurrencyInput)).toFixed(8)
     }
     onBuyCurrencyChange(e) {
@@ -381,6 +468,7 @@ class ConversionDetail extends React.Component {
             sellCryptoInput: e.target.value
         }, () => {
             self.calculateSellCurrency();
+            this.getFiatValue();
         });
     }
     calculateSellCurrency() {
@@ -543,7 +631,7 @@ class ConversionDetail extends React.Component {
                     <MainRow>
                         <LeftCol lg={12}>
                             <ConversionTab defaultActiveKey="1" onChange={this.handleTabChange}>
-                                <ConversionTabPane tab="BUY" key="1">
+                                <ConversionTabPane className="buy_tab" tab="BUY" key="1">
                                     <Row>
                                         <Col>
                                             <ConversionTitle>Choose Which Assets to Trade</ConversionTitle>
@@ -624,7 +712,7 @@ class ConversionDetail extends React.Component {
                                         </Col>
                                     </Row>
                                 </ConversionTabPane>
-                                <ConversionTabPane tab="SELL" key="2">
+                                <ConversionTabPane className="sell_tab" tab="SELL" key="2">
                                     <Row>
                                         <Col>
                                             <ConversionTitle>Choose Which Assets to Trade</ConversionTitle>
@@ -756,29 +844,39 @@ class ConversionDetail extends React.Component {
                                         </Row>
                                         <Row>
                                             <Col xs={12}>
-                                                <RightSpan>Network Fee</RightSpan>
+                                                <RightSpan>Fiat Value (USD)</RightSpan>
                                             </Col>
                                             <Col xs={12} style={{ textAlign: "right" }}>
-                                                <LeftSpan>{this.state.krakenFees.toFixed(5)}%</LeftSpan>
+                                                <LeftSpan>{this.state.fiatValue}</LeftSpan>
                                             </Col>
                                         </Row>
                                         <Row>
                                             <Col xs={12}>
-                                                <RightSpan>FALDAX Fee</RightSpan>
+                                                <RightSpan>Network Fee (USD)</RightSpan>
                                             </Col>
                                             <Col xs={12} style={{ textAlign: "right" }}>
-                                                <LeftSpan>{this.state.faldaxFees.toFixed(5)}%</LeftSpan>
+                                                {/* <LeftSpan>{this.state.krakenFees.toFixed(5)}%</LeftSpan> */}
+                                                <LeftSpan>{this.state.networkFee}</LeftSpan>
                                             </Col>
                                         </Row>
                                         <Row>
                                             <Col xs={12}>
-                                                <RightTotal>Total</RightTotal>
+                                                <RightSpan>FALDAX Fee (USD)</RightSpan>
+                                            </Col>
+                                            <Col xs={12} style={{ textAlign: "right" }}>
+                                                {/* <LeftSpan>{this.state.faldaxFees.toFixed(5)}%</LeftSpan> */}
+                                                <LeftSpan>{this.state.faldaxFee}</LeftSpan>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={12}>
+                                                <RightTotal>Total (USD)</RightTotal>
                                             </Col>
                                             <Col xs={12} style={{ textAlign: "right" }}>
                                                 <LeftTotal>
                                                     {
                                                         this.getBuyCurrencyWithFees()
-                                                    } {this.state.currency}
+                                                    }
                                                 </LeftTotal>
                                             </Col>
                                         </Row>
@@ -788,7 +886,7 @@ class ConversionDetail extends React.Component {
                                     <div>
                                         <Row>
                                             <Col xs={12}>
-                                                <RightSpan>{isNaN(this.state.sellCryptoInput) ? 0 : this.state.sellCryptoInput.toFixed(3)} {this.state.crypto}</RightSpan>
+                                                <RightSpan>{isNaN(this.state.sellCryptoInput) ? 0 : this.state.sellCryptoInput} {this.state.crypto}</RightSpan>
                                             </Col>
                                             <Col xs={12} style={{ textAlign: "right" }}>
                                                 <LeftSpan>{parseFloat((isNaN(this.state.sellCryptoInput * this.state.bidPrice) ? 0 : (this.state.sellCryptoInput * this.state.bidPrice))).toFixed(8)} {this.state.currency}</LeftSpan>
@@ -796,21 +894,30 @@ class ConversionDetail extends React.Component {
                                         </Row>
                                         <Row>
                                             <Col xs={12}>
-                                                <RightSpan>FALDAX Fee</RightSpan>
+                                                <RightSpan>Fiat Value (USD)</RightSpan>
                                             </Col>
                                             <Col xs={12} style={{ textAlign: "right" }}>
-                                                <LeftSpan>{this.state.krakenFees.toFixed(5)}% +  {this.state.faldaxFees.toFixed(5)}%</LeftSpan>
+                                                <LeftSpan>{this.state.fiatValue}</LeftSpan>
                                             </Col>
                                         </Row>
                                         <Row>
                                             <Col xs={12}>
-                                                <RightTotal>Total</RightTotal>
+                                                <RightSpan>FALDAX Fee (USD)</RightSpan>
+                                            </Col>
+                                            <Col xs={12} style={{ textAlign: "right" }}>
+                                                {/* <LeftSpan>{this.state.krakenFees.toFixed(5)}% +  {this.state.faldaxFees.toFixed(5)}%</LeftSpan> */}
+                                                <LeftSpan>{this.state.faldaxFee}</LeftSpan>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={12}>
+                                                <RightTotal>Total (USD)</RightTotal>
                                             </Col>
                                             <Col xs={12} style={{ textAlign: "right" }}>
                                                 <LeftTotal>
                                                     {
                                                         this.getSellCurrencyWithFees()
-                                                    } {this.state.currency}
+                                                    }
                                                 </LeftTotal>
                                             </Col>
                                         </Row>
