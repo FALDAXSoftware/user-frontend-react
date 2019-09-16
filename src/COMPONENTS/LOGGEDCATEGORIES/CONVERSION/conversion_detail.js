@@ -162,6 +162,7 @@ class ConversionDetail extends React.Component {
 
             if (body.status === 200) {
                 let res = body.data;
+                console.log("Responsedata:", res);
                 self.setState({
                     askPrice: res.ask_price,
                     bidPrice: res.bid_price,
