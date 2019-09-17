@@ -113,6 +113,9 @@ const RightWrap = styled.div`
   @media (max-width: 991px) {
     height: auto;
   }
+  @media (max-width: 478px) {
+    text-align: center;
+  }
 `;
 const LoginHead = styled.div`
   font-size: 30px;
@@ -134,6 +137,9 @@ const SubText = styled.span`
   font-family: "Open Sans";
   color: rgb(163, 163, 163);
   display: block;
+  @media (max-width: 478px) {
+    text-align: left;
+  }
 `;
 const VerifyEmail = styled(Email)`
   margin-top: 10px;
