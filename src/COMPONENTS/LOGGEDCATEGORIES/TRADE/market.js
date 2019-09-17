@@ -414,7 +414,7 @@ class Market extends Component {
         </ETHWrap>
         <BTCWrap>
           <Label>Total</Label>
-          <TotalWrap style={{ marginBottom: 16 }}>
+          <TotalWrap style={{ marginBottom: 16 }} className="readonly-input">
             <TotInput
               min="0"
               readOnly="true"
