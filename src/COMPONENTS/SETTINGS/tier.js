@@ -21,7 +21,7 @@ import { Icon } from "antd";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { globalVariables } from "Globals.js";
 import classNames from "classnames";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter, Redirect, Link } from "react-router-dom";
 
 let { API_URL } = globalVariables;
 
@@ -32,9 +32,8 @@ class Tier extends Component {
       loader: true,
       tierData: []
     };
-    // this.renderRedirect = this.renderRedirect.bind(this);
-    this.setRedirect = this.setRedirect.bind(this);
   }
+
   componentDidMount() {
     fetch(`${API_URL}/get-tier-details`, {
       method: "get",
@@ -56,15 +55,6 @@ class Tier extends Component {
         console.log(error);
       });
   }
-  setRedirect = rowId => {
-    // if (id === 2) {
-    // console.log(`"/tier${id}"`);
-    console.log("sdfhkjh");
-    // return <Redirect to={`"/tier${id}"`} />;
-    // } else {
-    //   console.log("no active");
-    // }
-  };
 
   render() {
     let { tierData } = this.state;
@@ -83,7 +73,6 @@ class Tier extends Component {
                     "tier-enabled": tier.is_active === true,
                     "tier-main": !tier.is_verified && !tier.is_active
                   });
-                  const clickCallback = () => this.setRedirect(tier.id);
                   return (
                     <TierSubMain key={tier.id} className={liClasses}>
                       <TierHead className="top-head">
@@ -165,15 +154,17 @@ class Tier extends Component {
                           </TierVerfied>
                         </TierVerifiedWrap>
                       )}
-
                       {tier.is_active && (
-                        <TierUpdate
-                          data-id={tier.id}
-                          className="upgrade-btn"
-                          onClick={clickCallback}
-                        >
-                          Upgrade
-                        </TierUpdate>
+                        <Link to={`/tier${tier.id}`}>
+                          <TierUpdate
+                            key={tier.id}
+                            id={tier.id}
+                            data-id={tier.id}
+                            className="upgrade-btn"
+                          >
+                            Upgrade
+                          </TierUpdate>
+                        </Link>
                       )}
                       {!tier.is_active && !tier.is_verified && (
                         <TierUpdate className="upgrade-btn">Upgrade</TierUpdate>
