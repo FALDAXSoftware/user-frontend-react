@@ -190,6 +190,18 @@ class WalletPopup extends Component {
           }
         },
         required: true // optional
+      },
+      decimalrestrict: {
+        message:
+          "value must be less than or equal to 8 digits after decimal point.",
+        rule: val => {
+          var RE = /^\d*\.?\d{0,8}$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     });
     this.sendChange = this.sendChange.bind(this);
@@ -507,12 +519,13 @@ class WalletPopup extends Component {
                     min="0"
                     value={this.state.sendFields.amount}
                     name="amount"
+                    step="0.00000001"
                     onChange={this.sendChange}
                   />
                   {this.validator.message(
                     "amount",
                     this.state.sendFields.amount,
-                    "required|gtzero|numeric",
+                    "required|gtzero|numeric|decimalrestrict",
                     "text-danger-validation"
                   )}
                   {/*  <RightInput />

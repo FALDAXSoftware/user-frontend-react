@@ -574,7 +574,7 @@ class StopLimit extends Component {
         )}
         <ButtonWrap>
           <ButtonETH side={this.state.side} onClick={this.onSubmit}>
-            {this.state.side.toUpperCase()} {this.state.crypto}
+            {`${this.state.side.toUpperCase()} ${" "} ${this.state.crypto}`}
           </ButtonETH>
         </ButtonWrap>
         {this.state.loader === true ? (
