@@ -116,13 +116,13 @@ class IpModal extends Component {
     this.validator = new SimpleReactValidator();
   }
   componentWillReceiveProps(props) {
-    console.log(props);
+    // console.log(props);
     if (props.visible !== this.props.visible) {
       this.setState({ visible: props.visible });
     }
   }
   onChangeField = e => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     let fields = {
       ip: e.target.value,
       days: null,
@@ -152,7 +152,7 @@ class IpModal extends Component {
   render() {
     return (
       <div>
-        {console.log(this.state.visible)}
+        {/* {console.log(this.state.visible)} */}
         <VerifyModal
           onCancel={e => this.ipModalCancel(e)}
           title="Permanent IP Address"

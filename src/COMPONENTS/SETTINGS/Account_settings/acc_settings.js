@@ -137,7 +137,7 @@ class Acc_settings extends Component {
         dataIndex: "text",
         key: "text",
         render: (value, record) => {
-          console.log(record, record.id);
+          // console.log(record, record.id);
           return (
             <Checkbox
               defaultChecked={value}
@@ -153,7 +153,7 @@ class Acc_settings extends Component {
         dataIndex: "email",
         key: "email",
         render: (value, record) => {
-          console.log(record, record.id);
+          // console.log(record, record.id);
           return (
             <Checkbox
               defaultChecked={value}
@@ -178,7 +178,7 @@ class Acc_settings extends Component {
           let date_format = this.props.profileDetails.date_format
             ? this.props.profileDetails.date_format
             : "DD/MM/YYYY";
-          console.log(src);
+          // console.log(src);
           return (
             <span>
               {src !== ""
@@ -195,7 +195,7 @@ class Acc_settings extends Component {
         title: "Action",
         key: "action",
         render: src => {
-          console.log(src.is_permanent);
+          // console.log(src.is_permanent);
           return (
             <div>
               {src.is_permanent == true ? (
@@ -267,12 +267,12 @@ class Acc_settings extends Component {
       this.setState({
         checked: this.props.profileDetails.security_feature
       });
-      console.log(this.props);
+      // console.log(this.props);
       if (
         this.props.profileDetails.is_whitelist_ip !== undefined &&
         this.props.profileDetails.is_whitelist_ip !== null
       ) {
-        console.log("9898989898988898989");
+        // console.log("9898989898988898989");
         this.setState({
           isWhitelistIp: this.props.profileDetails.is_whitelist_ip
         });
@@ -296,17 +296,17 @@ class Acc_settings extends Component {
     // rerender to hide messages for the first time
   }
   checkBoxChange(key, e, record) {
-    console.log(key, e, record);
+    // console.log(key, e, record);
     const { data_noti } = this.state;
     var tempData = data_noti;
     tempData.map(function(data, index) {
       if (data.id == record.id) {
-        console.log(tempData[key]);
+        // console.log(tempData[key]);
         if (key == "text") tempData[index].text = e.target.checked;
         else tempData[index].email = e.target.checked;
       }
     });
-    console.log("------>>>>>", tempData);
+    // console.log("------>>>>>", tempData);
     this.setState({ data_noti: tempData });
   }
 
@@ -319,7 +319,7 @@ class Acc_settings extends Component {
     })
       .then(response => response.json())
       .then(responseData => {
-        console.log("Did IP : ", responseData);
+        // console.log("Did IP : ", responseData);
         if (responseData.status == 200) {
           let b = JSON.parse(JSON.stringify(responseData.data));
           this.setState({ data_noti: responseData.data, savedDataNoti: b });
@@ -335,7 +335,7 @@ class Acc_settings extends Component {
       .catch(error => {
         this.setState({ loader: false });
         this.openNotificationWithIcon("error", "Error", error);
-        console.log(error);
+        // console.log(error);
       });
   }
   addData() {
@@ -350,7 +350,7 @@ class Acc_settings extends Component {
     })
       .then(response => response.json())
       .then(responseData => {
-        console.log("Did IP : ", responseData);
+        // console.log("Did IP : ", responseData);
         if (responseData.status == 200) {
           let b = JSON.parse(JSON.stringify(responseData.data));
           this.setState({ data_noti: responseData.data, savedDataNoti: b });
@@ -367,7 +367,7 @@ class Acc_settings extends Component {
         this.setState({ loader: false });
         this.openNotificationWithIcon("error", "Error", error);
 
-        console.log(error);
+        // console.log(error);
       });
   }
   getIpWhitelist(pageIp) {
@@ -379,7 +379,7 @@ class Acc_settings extends Component {
     })
       .then(response => response.json())
       .then(responseData => {
-        console.log("Did IP : ", responseData);
+        // console.log("Did IP : ", responseData);
         if (responseData.status == 200) {
           this.setState({
             whitelistData: responseData.data,
@@ -394,7 +394,7 @@ class Acc_settings extends Component {
         }
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
       });
   }
 
@@ -537,6 +537,7 @@ class Acc_settings extends Component {
     });
   }
   openAddModal() {
+    this.clearValidation();
     this.setState({
       showAddModal: true
     });
@@ -561,11 +562,11 @@ class Acc_settings extends Component {
       body: JSON.stringify(fields)
     })
       .then(response => {
-        console.log(response);
+        // console.log(response);
         return response.json();
       })
       .then(responseData => {
-        console.log("Response ---> ", responseData);
+        // console.log("Response ---> ", responseData);
         if (responseData.status == 200) {
           this.getIpWhitelist(this.state.pageIp);
           this.openNotificationWithIcon(
@@ -584,6 +585,13 @@ class Acc_settings extends Component {
             visibleIpModal: false,
             isWhitelistIp: true
           });
+        } else if (responseData.status == 500) {
+          this.setState({ loader: false });
+          this.openNotificationWithIcon(
+            "error",
+            "Error",
+            responseData.err ? responseData.err : responseData.message
+          );
         } else {
           this.setState({ loader: false });
           this.openNotificationWithIcon(
@@ -594,12 +602,12 @@ class Acc_settings extends Component {
         }
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
         this.setState({ loader: false });
       });
   }
   addIpWhitelist(e, fields = null) {
-    console.log(fields, e);
+    // console.log(fields, e);
     if (fields == null) {
       if (this.validator.allValid()) {
         this.fianlIpWhitelist(this.state.fields);
@@ -612,7 +620,7 @@ class Acc_settings extends Component {
     }
   }
   deleteIP(src) {
-    console.log(src, this.props.isLoggedIn);
+    // console.log(src, this.props.isLoggedIn);
     this.setState({ loader: true });
     fetch(API_URL + `/users/delete-whitelist-ip`, {
       method: "delete",
@@ -639,7 +647,7 @@ class Acc_settings extends Component {
       });
   }
   ipChange(e) {
-    console.log(e.target.value, e);
+    // console.log(e.target.value, e);
     let fields = this.state.fields;
     if (e.target.value.trim() !== "") fields[e.target.name] = e.target.value;
     else fields[e.target.name] = "";
@@ -648,7 +656,7 @@ class Acc_settings extends Component {
     });
   }
   onChangeSwitch(checked) {
-    console.log(checked);
+    // console.log(checked);
     this.setState({ loader: true });
     fetch(API_URL + `/users/security-feature-status-change`, {
       method: "post",
@@ -694,7 +702,7 @@ class Acc_settings extends Component {
       });
   }
   onChangeIP(checked) {
-    console.log(checked, API_URL, this.props);
+    // console.log(checked, API_URL, this.props);
 
     this.setState({ visibleIpModal: true, checkedIP: checked });
     /* this.setState({ loader: true });
@@ -735,7 +743,7 @@ class Acc_settings extends Component {
   render() {
     const { fields, data_noti, savedDataNoti } = this.state;
     let disabled = true;
-    console.log(savedDataNoti, "-------------->", data_noti);
+    // console.log(savedDataNoti, "-------------->", data_noti);
     if (JSON.stringify(savedDataNoti) === JSON.stringify(data_noti)) {
       disabled = true;
     } else {
@@ -820,7 +828,7 @@ class Acc_settings extends Component {
               methods indicating the same.
             </div>
           </DeleteDesc>
-          {console.log(this.state.checked)}
+          {/* {console.log(this.state.checked)} */}
           <TableWrap>
             <Switch
               checkedChildren="ON"
@@ -946,6 +954,13 @@ class Acc_settings extends Component {
                 onChange={this.ipChange.bind(this)}
                 name="days"
               />
+              {this.validator.message(
+                "days",
+                this.state.fields.days,
+                "required",
+                "text-danger-validation",
+                { required: "Days field is required." }
+              )}
             </div>
           </NewP>
           <ButtonDiv>
