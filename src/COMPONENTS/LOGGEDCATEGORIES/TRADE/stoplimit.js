@@ -45,9 +45,9 @@ class StopLimit extends Component {
       currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
       sellprice: 0.001,
       buyPrice: 0.002,
-      amount: 0,
-      stop_price: 0,
-      limit_price: 0,
+      amount: "",
+      stop_price: "",
+      limit_price: "",
       total: 0,
       buyPayAmt: 0,
       buyEstPrice: 0,
@@ -57,9 +57,8 @@ class StopLimit extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
-
     this.onSubmit = this.onSubmit.bind(this);
-
+    this.clearValidation = this.clearValidation.bind(this);
     this.validator = new SimpleReactValidator({
       gtzero: {
         // name the rule
@@ -72,6 +71,30 @@ class StopLimit extends Component {
           }
         },
         required: true // optional
+      },
+      decimalrestrict3: {
+        message:
+          "Value must be less than or equal to 3 digits after decimal point.",
+        rule: val => {
+          var RE = /^\d*\.?\d{0,3}$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      },
+      decimalrestrict5: {
+        message:
+          "Value must be less than or equal to 5 digits after decimal point.",
+        rule: val => {
+          var RE = /^\d*\.?\d{0,5}$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     });
   }
@@ -81,10 +104,10 @@ class StopLimit extends Component {
   componentDidMount() {
     this.setState({
       userBalFees: this.props.userBal.fees,
-      amount: 0,
+      amount: "",
       total: 0,
-      limit_price: 0,
-      stop_price: 0,
+      limit_price: "",
+      stop_price: "",
       buyEstPrice: 0,
       sellEstPrice: 0,
       sellPayAmt: 0,
@@ -95,10 +118,10 @@ class StopLimit extends Component {
   componentWillReceiveProps(props, newProps) {
     this.setState({
       userBalFees: props.userBal.fees,
-      amount: 0,
+      amount: "",
       total: 0,
-      limit_price: 0,
-      stop_price: 0,
+      limit_price: "",
+      stop_price: "",
       buyEstPrice: 0,
       sellEstPrice: 0,
       sellPayAmt: 0,
@@ -118,6 +141,11 @@ class StopLimit extends Component {
         Page: /trade --> Stop Limit
         This method is called when u change side between BUY and SELL and form is reset here.
     */
+  clearValidation() {
+    this.validator.hideMessages();
+    this.forceUpdate();
+    // rerender to hide messages for the first time
+  }
 
   onChange(e) {
     var self = this;
@@ -127,10 +155,11 @@ class StopLimit extends Component {
     let value = e.target.value;
     obj[name] = value;
     if (name === "side") {
-      obj["amount"] = 0;
+      obj["amount"] = "";
       obj["total"] = 0;
-      obj["limit_price"] = 0;
-      obj["stop_price"] = 0;
+      obj["limit_price"] = "";
+      obj["stop_price"] = "";
+      this.clearValidation();
     }
     this.setState(
       {
@@ -140,6 +169,9 @@ class StopLimit extends Component {
         obj = {};
         if (this.state.amount >= 0 && this.state.stop_price > 0) {
           if (this.state.side === "Buy") {
+            if (this.validator.allValid()) {
+              this.validator.hideMessages();
+            }
             obj["total"] = this.state.amount * this.props.userBal.buyPay;
             self.setState({
               buyPayAmt: this.state.amount * this.props.userBal.buyPay,
@@ -147,6 +179,9 @@ class StopLimit extends Component {
                 this.state.amount * this.props.userBal.buyEstimatedPrice
             });
           } else if (this.state.side === "Sell") {
+            if (this.validator.allValid()) {
+              this.validator.hideMessages();
+            }
             obj["total"] = this.state.amount * this.props.userBal.sellPay;
             self.setState({
               sellPayAmt: this.state.amount * this.props.userBal.sellPay,
@@ -417,7 +452,9 @@ class StopLimit extends Component {
             <AMTInput
               min="0"
               type="number"
+              step="0.001"
               addonAfter={this.state.crypto}
+              placeholder="0"
               value={this.state.amount}
               name="amount"
               onChange={this.onChange}
@@ -425,10 +462,12 @@ class StopLimit extends Component {
             {this.validator.message(
               "Amount",
               this.state.amount,
-              "required|gtzero|numeric",
+              "required|gtzero|numeric|decimalrestrict3",
               "text-danger-validation",
               {
-                gtzero: "Amount should be greater than zero."
+                gtzero: "Amount should be greater than zero.",
+                decimalrestrict3:
+                  "Amount must be less than or equal to 3 digits after decimal point."
               }
             )}
           </TotalWrap>
@@ -439,6 +478,8 @@ class StopLimit extends Component {
             <TotInput
               min="0"
               type="number"
+              placeholder="0"
+              step="0.00001"
               addonAfter={this.state.currency}
               value={this.state.stop_price}
               name="stop_price"
@@ -447,10 +488,12 @@ class StopLimit extends Component {
             {this.validator.message(
               "Stop_Price",
               this.state.stop_price,
-              "required|gtzero|numeric",
+              "required|gtzero|numeric|decimalrestrict5",
               "text-danger-validation",
               {
-                gtzero: "Stop Price should be greater than zero."
+                gtzero: "Stop Price should be greater than zero.",
+                decimalrestrict5:
+                  "Stop Price must be less than or equal to 5 digits after decimal point."
               }
             )}
           </TotalWrap>
@@ -461,6 +504,8 @@ class StopLimit extends Component {
             <TotInput
               min="0"
               type="number"
+              placeholder="0"
+              step="0.00001"
               addonAfter={this.state.currency}
               value={this.state.limit_price}
               name="limit_price"
@@ -469,10 +514,12 @@ class StopLimit extends Component {
             {this.validator.message(
               "Limit_Price",
               this.state.limit_price,
-              "required|gtzero|numeric",
+              "required|gtzero|numeric|decimalrestrict5",
               "text-danger-validation",
               {
-                gtzero: "Limit Price should be greater than zero."
+                gtzero: "Limit Price should be greater than zero.",
+                decimalrestrict5:
+                  "Limit Price must be less than or equal to 5 digits after decimal point."
               }
             )}
           </TotalWrap>

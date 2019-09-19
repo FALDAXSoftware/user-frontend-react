@@ -25,6 +25,9 @@ const Old = styled.div`
 `;
 export const NewP = styled(Old)`
   margin-top: 30px;
+  > .otp-input-wrap {
+    margin-bottom: 20px;
+  }
 `;
 export const InputLabel = styled.label`
   font-size: 14.007px;
@@ -65,6 +68,9 @@ export const OldInput = styled(Input)`
 export const NewInput = styled(OldInput)``;
 export const OTPInput = styled(NewInput)`
   width: 74%;
+  &.otp-input {
+    margin-bottom: 0 !important;
+  }
 `;
 export const ButtonDiv = styled.div`
   margin-top: 30px;

@@ -365,6 +365,7 @@ class ProfileBackup extends Component {
             );
           } else {
             this.setState({ loader: false });
+            this.props.history.push("/login");
             this.openNotificationWithIcon(
               "warning",
               "Warning",
