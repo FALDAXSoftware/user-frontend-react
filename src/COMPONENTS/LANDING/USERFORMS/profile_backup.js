@@ -411,7 +411,7 @@ class ProfileBackup extends Component {
               <RightWrap className="wow fadeInDown">
                 <LoginHead>Upload Profile Picture</LoginHead>
                 <SubText>
-                  Please upload your photo of less than 10 mb and you will be
+                  Please upload your photo of less than 5 mb and you will be
                   notified by our team through email.
                 </SubText>
                 <FileWrapDup>
