@@ -846,7 +846,7 @@ class Acc_settings extends Component {
         <LoginHistory>
           <HistoryHead>
             <Heading>
-              <span>Whitelist IP</span>
+              <span>IP Whitelist</span>
             </Heading>
             <Desc>
               {/* <span>This feature provides information about the last activity on this mail account and any concurrent activity.</span> */}

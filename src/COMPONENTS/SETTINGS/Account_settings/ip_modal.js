@@ -172,7 +172,7 @@ class IpModal extends Component {
                 onChange={this.onChangeField.bind(this)}
                 name="ip"
               />
-              {this.validator.message("ip", this.state.fields.ip, "required")}
+              {this.validator.message("IP", this.state.fields.ip, "required")}
             </div>
           </NewP>
           <ButtonDiv>
