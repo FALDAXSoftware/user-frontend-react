@@ -259,6 +259,9 @@ class SimplexExchange extends React.Component {
         });
     } else {
       this.validator1.showMessages();
+      this.setState({
+        loader: false
+      });
       this.forceUpdate();
     }
   }
@@ -467,7 +470,7 @@ class SimplexExchange extends React.Component {
               name="digital_total_amount[currency]"
               value={this.state.response["digital_total_amount[currency]"]}
             />
-            <button id="frm_sumbit" type="submit" >
+            <button id="frm_sumbit" type="submit">
               Submit
             </button>
           </form>

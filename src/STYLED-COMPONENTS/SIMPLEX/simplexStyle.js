@@ -3,9 +3,12 @@ import { Row, Col } from "antd";
 
 export const SimMainRow = styled(Row)`
   background-color: ${props =>
-    props.theme.mode === "dark" ? "#021b2b" : "transparent"};
+    props.theme.mode === "dark" ? "transparent" : "transparent"};
   display: flex;
   font-family: "Open sans";
+  @media (max-width: 991px) {
+    flex-wrap: wrap;
+  }
 `;
 
 export const SimLeftCol = styled(Col)`
@@ -20,6 +23,9 @@ export const SimLeftCol = styled(Col)`
   &.simplex_left_col_exchange {
     margin: 0 auto;
   }
+  @media (max-width: 991px) {
+    width: 100%;
+  }
 `;
 
 export const SimRightCol = styled(Col)`
@@ -28,6 +34,12 @@ export const SimRightCol = styled(Col)`
   flex-wrap: wrap;
   padding: 20px 60px;
   color: #fff;
+  @media (max-width: 991px) {
+    width: 100%;
+  }
+  @media (max-width: 500px) {
+    padding: 20px 30px;
+  }
 `;
 
 export const SimHead = styled.span`
@@ -44,7 +56,8 @@ export const SimLastRow = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 30px 15px 0;
-  color: rgba(0, 0, 0, 0.65);
+  color: ${props =>
+    props.theme.mode === "dark" ? "#617090" : "rgba(0, 0, 0, 0.65)"};
   align-items: center;
   > .ant-col {
     > img {
@@ -56,5 +69,17 @@ export const SimLastRow = styled.div`
     border: 1px solid;
     border-color: #4c84ff;
     border-radius: 6px;
+  }
+  @media (max-width: 500px) {
+    flex-wrap: wrap;
+    justify-content: center;
+    > .ant-col {
+      width: 100%;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    > .ant-col.buy_crypto_btn {
+      margin-bottom: 0;
+    }
   }
 `;
