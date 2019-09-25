@@ -107,9 +107,7 @@ class Simplex extends React.Component {
           });
         }
       })
-      .catch(error => {
-        this.openNotificationWithIcon("error", error, "Something went wrong!");
-      });
+      .catch(error => {});
   }
   calculateDigitalCurrency() {
     this.setState({
@@ -145,12 +143,7 @@ class Simplex extends React.Component {
             loader: false
           });
         })
-        .catch(error => {
-          this.setState({
-            loader: false
-          });
-          this.openNotificationWithIcon("error", "Error", error);
-        });
+        .catch(error => {});
     }
   }
   handleCurrencyPayChange(e) {
