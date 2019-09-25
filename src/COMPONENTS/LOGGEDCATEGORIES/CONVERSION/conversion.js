@@ -4,6 +4,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import LoggedNavigation from "../../NAVIGATIONS/loggednavigation";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import ConversionDetail from "./conversion_detail";
+import { Link } from "react-router-dom";
 // Styled components
 import {
   ContactWrap,
@@ -85,7 +86,9 @@ class Conversion extends React.Component {
                       sed do eiusmod tempor incididunt ut labore et dolore magna
                       aliqua
                     </ColSubHeadConStyle>
-                    <ColBtnConStyle>Simplex</ColBtnConStyle>
+                    <Link style={{ width: "100%" }} to="/simplex">
+                      <ColBtnConStyle>Simplex</ColBtnConStyle>
+                    </Link>
                   </ColConStyle>
                 </RowConStyle>
               </ContainerConversion>

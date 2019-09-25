@@ -41,6 +41,8 @@ import TokenDashboard from "./COMPONENTS/LOGGEDCATEGORIES/TOKEN/token-dashboard.
 import TierUpgradeInfo from "./COMPONENTS/SETTINGS/tier_upgrade_information.js";
 import TierUpgradeInfoImageRequirements from "./COMPONENTS/SETTINGS/tier-upgrade-info-image-requirements.js";
 import TierIDConfirmation from "./COMPONENTS/SETTINGS/tier_id_confirmation.js";
+import Simplex from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex.js";
+import SimplexExchange from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex_exchange.js";
 let { API_URL } = globalVariables;
 const socketIOClient = require("socket.io-client");
 const sailsIOClient = require("sails.io.js");
@@ -94,6 +96,18 @@ const routes = [
     exact: false,
     path: "/conversion",
     component: () => <Conversion io={io} />,
+    io: io
+  },
+  {
+    exact: false,
+    path: "/simplex",
+    component: () => <Simplex io={io} />,
+    io: io
+  },
+  {
+    exact: false,
+    path: "/simplex-exchange",
+    component: () => <SimplexExchange io={io} />,
     io: io
   },
   {

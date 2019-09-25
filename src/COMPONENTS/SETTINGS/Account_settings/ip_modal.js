@@ -25,6 +25,9 @@ const Old = styled.div`
 `;
 export const NewP = styled(Old)`
   margin-top: 30px;
+  > .otp-input-wrap {
+    margin-bottom: 20px;
+  }
 `;
 export const InputLabel = styled.label`
   font-size: 14.007px;
@@ -65,6 +68,9 @@ export const OldInput = styled(Input)`
 export const NewInput = styled(OldInput)``;
 export const OTPInput = styled(NewInput)`
   width: 74%;
+  &.otp-input {
+    margin-bottom: 0 !important;
+  }
 `;
 export const ButtonDiv = styled.div`
   margin-top: 30px;
@@ -110,13 +116,13 @@ class IpModal extends Component {
     this.validator = new SimpleReactValidator();
   }
   componentWillReceiveProps(props) {
-    console.log(props);
+    // console.log(props);
     if (props.visible !== this.props.visible) {
       this.setState({ visible: props.visible });
     }
   }
   onChangeField = e => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     let fields = {
       ip: e.target.value,
       days: null,
@@ -146,7 +152,7 @@ class IpModal extends Component {
   render() {
     return (
       <div>
-        {console.log(this.state.visible)}
+        {/* {console.log(this.state.visible)} */}
         <VerifyModal
           onCancel={e => this.ipModalCancel(e)}
           title="Permanent IP Address"
@@ -166,7 +172,7 @@ class IpModal extends Component {
                 onChange={this.onChangeField.bind(this)}
                 name="ip"
               />
-              {this.validator.message("ip", this.state.fields.ip, "required")}
+              {this.validator.message("IP", this.state.fields.ip, "required")}
             </div>
           </NewP>
           <ButtonDiv>

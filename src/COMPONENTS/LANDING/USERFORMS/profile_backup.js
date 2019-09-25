@@ -113,6 +113,9 @@ const RightWrap = styled.div`
   @media (max-width: 991px) {
     height: auto;
   }
+  @media (max-width: 478px) {
+    text-align: center;
+  }
 `;
 const LoginHead = styled.div`
   font-size: 30px;
@@ -134,6 +137,9 @@ const SubText = styled.span`
   font-family: "Open Sans";
   color: rgb(163, 163, 163);
   display: block;
+  @media (max-width: 478px) {
+    text-align: left;
+  }
 `;
 const VerifyEmail = styled(Email)`
   margin-top: 10px;
@@ -359,6 +365,7 @@ class ProfileBackup extends Component {
             );
           } else {
             this.setState({ loader: false });
+            this.props.history.push("/login");
             this.openNotificationWithIcon(
               "warning",
               "Warning",
@@ -404,7 +411,7 @@ class ProfileBackup extends Component {
               <RightWrap className="wow fadeInDown">
                 <LoginHead>Upload Profile Picture</LoginHead>
                 <SubText>
-                  Please upload your photo of less than 10 mb and you will be
+                  Please upload your photo of less than 5 mb and you will be
                   notified by our team through email.
                 </SubText>
                 <FileWrapDup>
