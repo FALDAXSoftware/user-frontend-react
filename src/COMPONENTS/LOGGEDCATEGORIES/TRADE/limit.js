@@ -44,8 +44,8 @@ class Limit extends Component {
       currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
       sellprice: 0.001,
       buyPrice: 0.002,
-      amount: 0,
-      limit_price: 0,
+      amount: "",
+      limit_price: "",
       total: 0,
       buyPayAmt: 0,
       buyEstPrice: 0,
@@ -56,6 +56,7 @@ class Limit extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.clearValidation = this.clearValidation.bind(this);
     this.validator = new SimpleReactValidator({
       gtzero: {
         // name the rule
@@ -68,6 +69,30 @@ class Limit extends Component {
           }
         },
         required: true // optional
+      },
+      decimalrestrict3: {
+        message:
+          "Value must be less than or equal to 3 digits after decimal point.",
+        rule: val => {
+          var RE = /^\d*\.?\d{0,3}$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      },
+      decimalrestrict5: {
+        message:
+          "Value must be less than or equal to 5 digits after decimal point.",
+        rule: val => {
+          var RE = /^\d*\.?\d{0,5}$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     });
   }
@@ -76,9 +101,9 @@ class Limit extends Component {
 
   componentDidMount() {
     this.setState({
-      amount: 0,
+      amount: "",
       total: 0,
-      limit_price: 0,
+      limit_price: "",
       userBalFees: this.props.userBal.fees,
       buyEstPrice: 0,
       sellEstPrice: 0,
@@ -89,9 +114,9 @@ class Limit extends Component {
   }
   componentWillReceiveProps(props, newProps) {
     this.setState({
-      amount: 0,
+      amount: "",
       total: 0,
-      limit_price: 0,
+      limit_price: "",
       userBalFees: props.userBal.fees
     });
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
@@ -109,16 +134,24 @@ class Limit extends Component {
         this method is called depended on side BUY/SELL.
     */
 
+  clearValidation() {
+    this.validator.hideMessages();
+    this.forceUpdate();
+    // rerender to hide messages for the first time
+  }
+
   onChange(e) {
     var self = this;
     let obj = {};
     let name = e.target.name;
     let value = e.target.value;
     obj[name] = value;
+
     if (name === "side") {
-      obj["amount"] = 0;
+      obj["amount"] = "";
       obj["total"] = 0;
-      obj["limit_price"] = 0;
+      obj["limit_price"] = "";
+      this.clearValidation();
     }
     this.setState(
       {
@@ -128,16 +161,22 @@ class Limit extends Component {
         obj = {};
         if (this.state.amount > 0 && this.state.limit_price > 0) {
           if (this.state.side === "Buy") {
+            if (this.validator.allValid()) {
+              this.validator.hideMessages();
+            }
             obj["total"] =
               Number(this.state.amount) * this.props.userBal.buyPay;
-            obj["amount"] = Number(this.state.amount).toFixed(3);
-            obj["limit_price"] = Number(this.state.limit_price).toFixed(5);
+            // obj["amount"] = Number(this.state.amount).toFixed(3);
+            // obj["limit_price"] = Number(this.state.limit_price).toFixed(5);
             self.setState({
               buyPayAmt: Number(this.state.amount) * this.props.userBal.buyPay,
               buyEstPrice:
                 Number(this.state.amount) * this.props.userBal.buyEstimatedPrice
             });
           } else if (this.state.side === "Sell") {
+            if (this.validator.allValid()) {
+              this.validator.hideMessages();
+            }
             self.setState({
               sellPayAmt:
                 Number(this.state.amount) * this.props.userBal.sellPay,
@@ -147,13 +186,13 @@ class Limit extends Component {
             });
             obj["total"] =
               Number(this.state.amount) * this.props.userBal.sellPay;
-            obj["amount"] = Number(this.state.amount).toFixed(3);
-            obj["limit_price"] = Number(this.state.limit_price).toFixed(5);
+            // obj["amount"] = Number(this.state.amount).toFixed(3);
+            // obj["limit_price"] = Number(this.state.limit_price).toFixed(5);
           }
         } else {
           obj["total"] = 0;
-          obj["amount"] = Number(this.state.amount).toFixed(3);
-          obj["limit_price"] = Number(this.state.limit_price).toFixed(5);
+          // obj["amount"] = Number(this.state.amount).toFixed(3);
+          // obj["limit_price"] = Number(this.state.limit_price).toFixed(5);
         }
         self.setState({ ...obj });
       }
@@ -419,15 +458,18 @@ class Limit extends Component {
               addonAfter={this.state.crypto}
               value={this.state.amount}
               name="amount"
+              placeholder="0"
               onChange={this.onChange}
             />
             {this.validator.message(
               "Amount",
               this.state.amount,
-              "required|gtzero|numeric",
+              "required|gtzero|numeric|decimalrestrict3",
               "text-danger-validation",
               {
-                gtzero: "Amount should be greater than zero."
+                gtzero: "Amount should be greater than zero.",
+                decimalrestrict3:
+                  "Amount must be less than or equal to 3 digits after decimal point."
               }
             )}
           </TotalWrap>
@@ -439,6 +481,7 @@ class Limit extends Component {
               min="0"
               step="0.00001"
               type="number"
+              placeholder="0"
               addonAfter={this.state.currency}
               value={this.state.limit_price}
               name="limit_price"
@@ -447,10 +490,12 @@ class Limit extends Component {
             {this.validator.message(
               "Limit_price",
               this.state.limit_price,
-              "required|gtzero|numeric",
+              "required|gtzero|numeric|decimalrestrict5",
               "text-danger-validation",
               {
-                gtzero: "Limit Price should be greater than zero."
+                gtzero: "Limit Price should be greater than zero.",
+                decimalrestrict5:
+                  "Limit Price must be less than or equal to 5 digits after decimal point."
               }
             )}
           </TotalWrap>
@@ -542,7 +587,7 @@ class Limit extends Component {
         )}
         <ButtonWrap>
           <ButtonETH side={this.state.side} onClick={this.onSubmit}>
-            {this.state.side.toUpperCase()} {this.state.crypto}
+            {`${this.state.side.toUpperCase()} ${" "} ${this.state.crypto}`}
           </ButtonETH>
         </ButtonWrap>
         {this.state.loader === true ? (

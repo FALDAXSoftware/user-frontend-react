@@ -71,6 +71,11 @@ export const RightCol = styled(Col)`
 `
 export const FirstRow = styled(Row)`
     text-align:left;
+    > .ant-col {
+        > .text-danger-validation {
+            width: 89%;
+        }
+    }
 `
 export const Firstname = styled.div`
     font-size: 14.007px;

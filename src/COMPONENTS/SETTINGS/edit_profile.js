@@ -51,29 +51,24 @@ const TabsStyle = styled(Tabs)`
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
-var ActKey = "1";
+
 class Editprofile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      actKey: ActKey
+      activeKey: "1"
     };
+    this.callback = this.callback.bind(this);
   }
-  /*     componentDidMount() {
-            if (this.props.theme !== "") {
-                this.setState({
-                    actKey: ActKey
-                });
-            }
-        }
-        handleChange(key) {
-            ActKey = key
-            this.setState({
-                actKey: ActKey
-            })
-        } */
+  callback(key) {
+    // console.log("Key", key);
+    this.setState({
+      activeKey: key
+    });
+  }
+  componentDidMount() {}
   render() {
-    console.log("EditProfile:", this.props);
+    // console.log("defaultActiveKey:", this.props.activeKey);
     return (
       <div>
         {/* <LoggedNavigation /> */}
@@ -81,8 +76,9 @@ class Editprofile extends Component {
         <ProfileWrapper>
           <ProfileDiv>
             <TabsStyle
-              defaultActiveKey="1"
-              onChange={this.handleChange}
+              defaultActiveKey={this.state.activeKey}
+              // onChange={this.handleChange}
+              onChange={this.callback}
               className="profile-tabs"
             >
               <TabPane tab="Personal Details" key="1">

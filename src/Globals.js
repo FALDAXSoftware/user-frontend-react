@@ -19,7 +19,7 @@ export const globalVariables = {
 
   //API_URL: 'http://192.168.2.224:1337', //Kalpit Local URL
 
-  //API_URL: 'http://192.168.3.32:1337', //Krina Local URL
+  // API_URL: "http://192.168.3.32:1337" //Krina Local URL
 
   //API_URL: 'http://192.168.0.93:1337'
 

@@ -44,7 +44,7 @@ class Market extends Component {
       currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
       sellprice: 0.001,
       buyPrice: 0.002,
-      amount: 0,
+      amount: "",
       total: 0,
       Loader: false,
       buyPayAmt: 0,
@@ -67,6 +67,18 @@ class Market extends Component {
           }
         },
         required: true // optional
+      },
+      decimalrestrict3: {
+        message:
+          "Amount value must be less than or equal to 3 digits after decimal point.",
+        rule: val => {
+          var RE = /^\d*\.?\d{0,3}$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     });
   }
@@ -75,7 +87,7 @@ class Market extends Component {
   componentWillReceiveProps(props, newProps) {
     this.setState({
       userBalFees: props.userBal.fees,
-      amount: 0,
+      amount: "",
       total: 0,
       buyPayAmt: 0,
       sellPayAmt: 0,
@@ -91,8 +103,6 @@ class Market extends Component {
       }
     }
   }
-
-  componentDidMount() {}
 
   /* 
         Page: /trade --> market
@@ -118,9 +128,10 @@ class Market extends Component {
     // this.setState({
     //   amount: e.target.value.toFixed(3)
     // });
+    this.clearValidation();
     obj[name] = value;
     if (name === "side") {
-      obj["amount"] = 0;
+      obj["amount"] = "";
       obj["total"] = 0;
     }
     this.setState(
@@ -137,9 +148,9 @@ class Market extends Component {
               buyEstPrice:
                 Number(this.state.amount) * this.props.userBal.buyEstimatedPrice
             });
-            obj["total"] =
-              Number(this.state.amount) * this.props.userBal.buyPay;
-            obj["amount"] = Number(this.state.amount).toFixed(3);
+            // obj["total"] =
+            //   Number(this.state.amount) * this.props.userBal.buyPay;
+            // obj["amount"] = Number(this.state.amount).toFixed(3);
           } else if (this.state.side === "Sell") {
             self.setState({
               sellPayAmt:
@@ -148,9 +159,9 @@ class Market extends Component {
                 Number(this.state.amount) *
                 this.props.userBal.sellEstimatedPrice
             });
-            obj["total"] =
-              Number(this.state.amount) * this.props.userBal.sellPay;
-            obj["amount"] = Number(this.state.amount).toFixed(3);
+            // obj["total"] =
+            //   Number(this.state.amount) * this.props.userBal.sellPay;
+            // obj["amount"] = Number(this.state.amount).toFixed(3);
           }
         } else {
           obj["total"] = 0;
@@ -402,13 +413,14 @@ class Market extends Component {
               step="0.001"
               addonAfter={this.state.crypto}
               value={this.state.amount}
+              placeholder="0"
               name="amount"
               onChange={this.onChange}
             />
             {this.validator.message(
               "Amount",
               this.state.amount,
-              "required|gtzero|numeric"
+              "required|gtzero|numeric|decimalrestrict3"
             )}
           </TotalWrap>
         </ETHWrap>
@@ -499,7 +511,7 @@ class Market extends Component {
         )}
         <ButtonWrap>
           <ButtonETH side={this.state.side} onClick={this.onSubmit}>
-            {this.state.side.toUpperCase()} {this.state.crypto}
+            {`${this.state.side.toUpperCase()} ${" "} ${this.state.crypto}`}
           </ButtonETH>
         </ButtonWrap>
         {this.state.Loader === true ? (
