@@ -25,78 +25,82 @@ class Conversion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loader: false,
-      showConversion: false
+      loader: false
+      // showConversion: false
     };
-    this.onBrokerageButtonClick = this.onBrokerageButtonClick.bind(this);
+    // this.onBrokerageButtonClick = this.onBrokerageButtonClick.bind(this);
   }
-  onBrokerageButtonClick() {
-    this.setState({
-      showConversion: true
-    });
-  }
+  // onBrokerageButtonClick() {
+  //   this.setState({
+  //     showConversion: true
+  //   });
+  // }
   render() {
     return (
       <div>
-        {this.state.showConversion ? (
+        {/* {this.state.showConversion ? (
           <ConversionDetail {...this.props} />
-        ) : (
-          <ContactWrap>
-            <LoggedNavigation />
-            <GreyWrap>
-              <ContainerConversion>
-                <HeadStyle>Lorem ipsum dolor sit amet, consectetur</HeadStyle>
-                <SubHeadStyle>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Quis ipsum suspendisse ultrices gravida. Risus commodo viverra
-                  maecenas accumsan lacus vel facilisis.
-                </SubHeadStyle>
-                <RowConStyle>
-                  <ColConStyle>
-                    <ColHeadConStyle>
-                      ConStyleCrypto to Crypto conversion
-                    </ColHeadConStyle>
-                    <ColSubHeadConStyle>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </ColSubHeadConStyle>
-                    <ColBtnConStyle onClick={this.onBrokerageButtonClick}>
-                      Brokerage
-                    </ColBtnConStyle>
-                  </ColConStyle>
-                  <ColConStyle>
-                    <ColHeadConStyle>
-                      Buy crypto courrency from your bank account
-                    </ColHeadConStyle>
-                    <ColSubHeadConStyle>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </ColSubHeadConStyle>
-                    <ColBtnConStyle>Token</ColBtnConStyle>
-                  </ColConStyle>
-                  <ColConStyle>
-                    <ColHeadConStyle>
-                      Buy crypto courrnce using your credit card
-                    </ColHeadConStyle>
-                    <ColSubHeadConStyle>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua
-                    </ColSubHeadConStyle>
-                    <Link style={{ width: "100%" }} to="/simplex">
-                      <ColBtnConStyle>Simplex</ColBtnConStyle>
-                    </Link>
-                  </ColConStyle>
-                </RowConStyle>
-              </ContainerConversion>
-            </GreyWrap>
-            <CommonFooter />
-            {this.state.loader === true ? <FaldaxLoader /> : ""}
-          </ContactWrap>
-        )}
+        ) : ( */}
+        <ContactWrap>
+          <LoggedNavigation />
+          <GreyWrap>
+            <ContainerConversion>
+              <HeadStyle>Lorem ipsum dolor sit amet, consectetur</HeadStyle>
+              <SubHeadStyle>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
+                ipsum suspendisse ultrices gravida. Risus commodo viverra
+                maecenas accumsan lacus vel facilisis.
+              </SubHeadStyle>
+              <RowConStyle>
+                <ColConStyle>
+                  <ColHeadConStyle>
+                    ConStyleCrypto to Crypto conversion
+                  </ColHeadConStyle>
+                  <ColSubHeadConStyle>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </ColSubHeadConStyle>
+                  <Link
+                    {...this.props}
+                    style={{ width: "100%" }}
+                    to="/crypto-conversion"
+                  >
+                    <ColBtnConStyle>Brokerage</ColBtnConStyle>
+                  </Link>
+                </ColConStyle>
+                <ColConStyle>
+                  <ColHeadConStyle>
+                    Buy crypto courrency from your bank account
+                  </ColHeadConStyle>
+                  <ColSubHeadConStyle>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </ColSubHeadConStyle>
+                  <ColBtnConStyle>Token</ColBtnConStyle>
+                </ColConStyle>
+                <ColConStyle>
+                  <ColHeadConStyle>
+                    Buy crypto courrnce using your credit card
+                  </ColHeadConStyle>
+                  <ColSubHeadConStyle>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua
+                  </ColSubHeadConStyle>
+                  <Link style={{ width: "100%" }} to="/simplex">
+                    <ColBtnConStyle>Simplex</ColBtnConStyle>
+                  </Link>
+                </ColConStyle>
+              </RowConStyle>
+            </ContainerConversion>
+          </GreyWrap>
+          <CommonFooter />
+          {this.state.loader === true ? <FaldaxLoader /> : ""}
+        </ContactWrap>
+        {/* )} */}
       </div>
     );
   }

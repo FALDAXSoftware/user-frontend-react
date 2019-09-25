@@ -31,6 +31,7 @@ import { LogoutUser } from "ACTIONS/authActions";
 
 /* import Chart from "COMPONENTS/tradingviewchart"; */
 import Conversion from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion";
+import ConversionDetail from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion_detail";
 import LoginToken from "COMPONENTS/LOGGEDCATEGORIES/TOKEN/login_token";
 import SecurityCheck from "COMPONENTS/LOGGEDCATEGORIES/TOKEN/security_check";
 import TierOne from "../src/COMPONENTS/SETTINGS/TIERS/tier_one";
@@ -96,6 +97,12 @@ const routes = [
     exact: false,
     path: "/conversion",
     component: () => <Conversion io={io} />,
+    io: io
+  },
+  {
+    exact: false,
+    path: "/crypto-conversion",
+    component: () => <ConversionDetail io={io} />,
     io: io
   },
   {
