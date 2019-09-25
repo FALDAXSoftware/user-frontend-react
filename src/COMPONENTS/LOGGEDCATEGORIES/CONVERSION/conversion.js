@@ -4,7 +4,11 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import LoggedNavigation from "../../NAVIGATIONS/loggednavigation";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import ConversionDetail from "./conversion_detail";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import CompleteKYC from "../../../SHARED-COMPONENTS/CompleteKYC";
+import CountryAccess from "../../../SHARED-COMPONENTS/CountryAccess";
+import ComingSoon from "../../../COMPONENTS/comingsoon";
 // Styled components
 import {
   ContactWrap,
@@ -25,16 +29,55 @@ class Conversion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loader: false
+      loader: false,
+      completeKYC: false,
+      countryAccess: false,
+      comingSoon: false
       // showConversion: false
     };
-    // this.onBrokerageButtonClick = this.onBrokerageButtonClick.bind(this);
+    this.comingCancel = this.comingCancel.bind(this);
+    this.tradeAccess = this.tradeAccess.bind(this);
   }
   // onBrokerageButtonClick() {
   //   this.setState({
   //     showConversion: true
   //   });
   // }
+  componentDidMount() {
+    if (this.props.conversion) {
+      this.tradeAccess();
+    }
+  }
+  comingCancel = e => {
+    this.setState({
+      comingSoon: false,
+      countryAccess: false,
+      completeKYC: false
+    });
+  };
+  tradeAccess() {
+    if (
+      this.props.profileDetails.is_allowed === true &&
+      this.props.profileDetails.is_kyc_done === 2
+    ) {
+      // alert("IF");
+      console.log("I am here", this.props.location.pathname);
+      // this.props.history.push('/trade');
+      if (this.props.location.pathname !== "/crypto-conversion")
+        this.props.history.push("/crypto-conversion");
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === false &&
+        this.props.profileDetails.is_kyc_done !== 2
+      ) {
+        // alert("ELSE IF");
+        this.setState({ completeKYC: true });
+      } else {
+        // alert("ELSE ELSE");
+        this.setState({ countryAccess: true });
+      }
+    }
+  }
   render() {
     return (
       <div>
@@ -62,13 +105,9 @@ class Conversion extends React.Component {
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
                   </ColSubHeadConStyle>
-                  <Link
-                    {...this.props}
-                    style={{ width: "100%" }}
-                    to="/crypto-conversion"
-                  >
-                    <ColBtnConStyle>Brokerage</ColBtnConStyle>
-                  </Link>
+                  <ColBtnConStyle onClick={this.tradeAccess}>
+                    Brokerage
+                  </ColBtnConStyle>
                 </ColConStyle>
                 <ColConStyle>
                   <ColHeadConStyle>
@@ -98,6 +137,18 @@ class Conversion extends React.Component {
             </ContainerConversion>
           </GreyWrap>
           <CommonFooter />
+          <ComingSoon
+            comingCancel={e => this.comingCancel(e)}
+            visible={this.state.comingSoon}
+          />
+          <CountryAccess
+            comingCancel={e => this.comingCancel(e)}
+            visible={this.state.countryAccess}
+          />
+          <CompleteKYC
+            comingCancel={e => this.comingCancel(e)}
+            visible={this.state.completeKYC}
+          />
           {this.state.loader === true ? <FaldaxLoader /> : ""}
         </ContactWrap>
         {/* )} */}
@@ -106,4 +157,17 @@ class Conversion extends React.Component {
   }
 }
 
-export default Conversion;
+function mapStateToProps(state) {
+  return {
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data !== undefined
+          ? state.simpleReducer.profileDetails.data[0]
+          : ""
+        : "",
+    theme:
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+  };
+}
+
+export default connect(mapStateToProps)(withRouter(Conversion));
