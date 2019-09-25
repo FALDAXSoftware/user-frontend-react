@@ -185,7 +185,7 @@ class LoggedNavigation extends Component {
       countryAccess: false,
       completeKYC: false
     };
-    this.tradeAccess = this.tradeAccess.bind(this);
+    // this.tradeAccess = this.tradeAccess.bind(this);
   }
 
   /* Life-Cycle Methods */
@@ -217,9 +217,9 @@ class LoggedNavigation extends Component {
         else this.setState({ faldax: _FALDAXWHITE, faldaxLogo: _WHITELOGO });
       }
     }
-    if (this.props.conversion) {
-      this.tradeAccess();
-    }
+    // if (this.props.conversion) {
+    //   this.tradeAccess();
+    // }
   }
 
   /* 
@@ -340,24 +340,24 @@ class LoggedNavigation extends Component {
         It is called to check if trade can be accessed for KYC and eligible user.
     */
 
-  tradeAccess() {
-    if (
-      this.props.profileDetails.is_allowed === true &&
-      this.props.profileDetails.is_kyc_done === 2
-    ) {
-      console.log("I am here", this.props.location.pathname);
-      // this.props.history.push('/trade');
-      if (this.props.location.pathname !== "/conversion")
-        this.props.history.push("/conversion");
-    } else {
-      if (
-        this.props.profileDetails.is_allowed === false &&
-        this.props.profileDetails.is_kyc_done !== 2
-      )
-        this.setState({ completeKYC: true });
-      else this.setState({ countryAccess: true });
-    }
-  }
+  // tradeAccess() {
+  //   if (
+  //     this.props.profileDetails.is_allowed === true &&
+  //     this.props.profileDetails.is_kyc_done === 2
+  //   ) {
+  //     console.log("I am here", this.props.location.pathname);
+  //     // this.props.history.push('/trade');
+  //     if (this.props.location.pathname !== "/conversion")
+  //       this.props.history.push("/conversion");
+  //   } else {
+  //     if (
+  //       this.props.profileDetails.is_allowed === false &&
+  //       this.props.profileDetails.is_kyc_done !== 2
+  //     )
+  //       this.setState({ completeKYC: true });
+  //     else this.setState({ countryAccess: true });
+  //   }
+  // }
 
   render() {
     let prof_name =
@@ -381,8 +381,13 @@ class LoggedNavigation extends Component {
           selectedKeys={this.state.selected}
         >
           {/* <Menuitem key="1" onClick={this.showComing}><NavLink className="Nav_selected" to="/dashboard">DASHBOARD</NavLink></Menuitem> */}
-          <Menuitem key="1" onClick={this.tradeAccess}>
+          {/* <Menuitem key="1" onClick={this.tradeAccess}>
             CONVERSION
+          </Menuitem> */}
+          <Menuitem key="1">
+            <NavLink className="Nav_selected" to="/conversion">
+              Conversion
+            </NavLink>
           </Menuitem>
           {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
           <Menuitem key="2">
@@ -425,7 +430,11 @@ class LoggedNavigation extends Component {
             </LogoutStyle>
             {/* <span> <Link to="/dashboard">DASHBOARD</Link></span> */}
             {/* <span> <Link to="/conversion">CONVERSION</Link></span> */}
-            <span onClick={this.tradeAccess}>CONVERSION</span>
+            {/* <span onClick={this.tradeAccess}>CONVERSION</span> */}
+            <span>
+              {" "}
+              <Link to="/conversion">CONVERSION</Link>
+            </span>
             {/* <span onClick={this.tradeAccess}>TRADE</span> */}
             <span>
               {" "}
