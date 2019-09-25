@@ -104,9 +104,7 @@ class SimplexExchange extends React.Component {
           });
         }
       })
-      .catch(error => {
-        this.openNotificationWithIcon("error", error, "Something went wrong!");
-      });
+      .catch(error => {});
   }
   calculateDigitalCurrency() {
     this.setState({
@@ -145,13 +143,7 @@ class SimplexExchange extends React.Component {
             quote_id: responseData.data.quote_id
           });
         })
-        .catch(error => {
-          this.openNotificationWithIcon(
-            "error",
-            error,
-            "Something went wrong!"
-          );
-        });
+        .catch(error => {});
     }
   }
   handleCurrencyPayChange(e) {
@@ -250,15 +242,12 @@ class SimplexExchange extends React.Component {
             // window.location = this.state.response.action;
           }
         })
-        .catch(error => {
-          this.openNotificationWithIcon(
-            "error",
-            error,
-            "Something went wrong!"
-          );
-        });
+        .catch(error => {});
     } else {
       this.validator1.showMessages();
+      this.setState({
+        loader: false
+      });
       this.forceUpdate();
     }
   }
@@ -467,7 +456,7 @@ class SimplexExchange extends React.Component {
               name="digital_total_amount[currency]"
               value={this.state.response["digital_total_amount[currency]"]}
             />
-            <button id="frm_sumbit" type="submit" >
+            <button id="frm_sumbit" type="submit">
               Submit
             </button>
           </form>
