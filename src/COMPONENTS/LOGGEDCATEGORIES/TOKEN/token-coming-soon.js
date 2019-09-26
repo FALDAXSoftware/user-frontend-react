@@ -105,10 +105,17 @@ class TokenComingSoon extends Component {
             </TokComSubHead>
             <CareerWrap>
               {/* <iframe style={{ border: 'none' }} height="1100px" width="100%" src={APIURL + "/get-open-ticket-form"}></iframe> */}
-              <HubspotForm
+              {/* <HubspotForm
                 portalId="4933498"
                 formId="7d75a7de-29f9-4966-bda2-dd5bdc4e7c92"
-              />
+              /> */}
+              <iframe
+                title="title"
+                style={{ border: "none" }}
+                height="250px"
+                width="100%"
+                src={API_URL + "/get-token-coming-soon-form"}
+              ></iframe>
             </CareerWrap>
           </ContainerContact>
         </GreyWrap>
