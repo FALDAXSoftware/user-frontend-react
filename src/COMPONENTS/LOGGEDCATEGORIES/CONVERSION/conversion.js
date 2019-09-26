@@ -36,7 +36,9 @@ class Conversion extends React.Component {
       // showConversion: false
     };
     this.comingCancel = this.comingCancel.bind(this);
-    this.tradeAccess = this.tradeAccess.bind(this);
+    this.cryptoAccess = this.cryptoAccess.bind(this);
+    this.simplexAccess = this.simplexAccess.bind(this);
+    this.tokenAccess = this.tokenAccess.bind(this);
   }
   // onBrokerageButtonClick() {
   //   this.setState({
@@ -45,7 +47,13 @@ class Conversion extends React.Component {
   // }
   componentDidMount() {
     if (this.props.conversion) {
-      this.tradeAccess();
+      this.cryptoAccess();
+    }
+    if (this.props.simplex) {
+      this.simplexAccess();
+    }
+    if (this.props.token) {
+      this.tokenAccess();
     }
   }
   comingCancel = e => {
@@ -55,7 +63,7 @@ class Conversion extends React.Component {
       completeKYC: false
     });
   };
-  tradeAccess() {
+  cryptoAccess() {
     if (
       this.props.profileDetails.is_allowed === true &&
       this.props.profileDetails.is_kyc_done === 2
@@ -77,6 +85,53 @@ class Conversion extends React.Component {
         this.setState({ countryAccess: true });
       }
     }
+  }
+  simplexAccess() {
+    if (
+      this.props.profileDetails.is_allowed === true &&
+      this.props.profileDetails.is_kyc_done === 2
+    ) {
+      // alert("IF");
+      console.log("I am here", this.props.location.pathname);
+      // this.props.history.push('/trade');
+      if (this.props.location.pathname !== "/simplex")
+        this.props.history.push("/simplex");
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === false &&
+        this.props.profileDetails.is_kyc_done !== 2
+      ) {
+        // alert("ELSE IF");
+        this.setState({ completeKYC: true });
+      } else {
+        // alert("ELSE ELSE");
+        this.setState({ countryAccess: true });
+      }
+    }
+  }
+  tokenAccess() {
+    this.props.history.push("/token-coming-soon");
+    // if (
+    //   this.props.profileDetails.is_allowed === true &&
+    //   this.props.profileDetails.is_kyc_done === 2
+    // ) {
+    //   // alert("IF");
+    //   console.log("I am here", this.props.location.pathname);
+    //   // this.props.history.push('/trade');
+    //   if (this.props.location.pathname !== "/token")
+    //     this.props.history.push("/token");
+    // } else {
+    //   if (
+    //     this.props.profileDetails.is_allowed === false &&
+    //     this.props.profileDetails.is_kyc_done !== 2
+    //   ) {
+    //     // alert("ELSE IF");
+    //     this.setState({ completeKYC: true });
+    //   } else {
+    //     // alert("ELSE ELSE");
+    //     this.setState({ countryAccess: true });
+    //   }
+    // }
   }
   render() {
     return (
@@ -105,7 +160,7 @@ class Conversion extends React.Component {
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
                   </ColSubHeadConStyle>
-                  <ColBtnConStyle onClick={this.tradeAccess}>
+                  <ColBtnConStyle onClick={this.cryptoAccess}>
                     Brokerage
                   </ColBtnConStyle>
                 </ColConStyle>
@@ -118,7 +173,9 @@ class Conversion extends React.Component {
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
                   </ColSubHeadConStyle>
-                  <ColBtnConStyle>Token</ColBtnConStyle>
+                  <ColBtnConStyle onClick={this.tokenAccess}>
+                    Token
+                  </ColBtnConStyle>
                 </ColConStyle>
                 <ColConStyle>
                   <ColHeadConStyle>
@@ -129,9 +186,11 @@ class Conversion extends React.Component {
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua
                   </ColSubHeadConStyle>
-                  <Link style={{ width: "100%" }} to="/simplex">
-                    <ColBtnConStyle>Simplex</ColBtnConStyle>
-                  </Link>
+                  {/* <Link style={{ width: "100%" }} to="/simplex"> */}
+                  <ColBtnConStyle onClick={this.simplexAccess}>
+                    Simplex
+                  </ColBtnConStyle>
+                  {/* </Link> */}
                 </ColConStyle>
               </RowConStyle>
             </ContainerConversion>
