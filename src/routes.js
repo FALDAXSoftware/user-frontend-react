@@ -39,6 +39,7 @@ import TierTwo from "../src/COMPONENTS/SETTINGS/TIERS/tier_two";
 import TierThree from "../src/COMPONENTS/SETTINGS/TIERS/tier_three";
 import TierFour from "../src/COMPONENTS/SETTINGS/TIERS/tier_four";
 import TokenDashboard from "./COMPONENTS/LOGGEDCATEGORIES/TOKEN/token-dashboard.js";
+import TokenComingSoon from "./COMPONENTS/LOGGEDCATEGORIES/TOKEN/token-coming-soon.js";
 import TierUpgradeInfo from "./COMPONENTS/SETTINGS/tier_upgrade_information.js";
 import TierUpgradeInfoImageRequirements from "./COMPONENTS/SETTINGS/tier-upgrade-info-image-requirements.js";
 import TierIDConfirmation from "./COMPONENTS/SETTINGS/tier_id_confirmation.js";
@@ -181,6 +182,11 @@ const routes = [
     exact: false,
     path: "/tickets",
     component: () => <HubspotTickets io={io} />
+  },
+  {
+    exact: false,
+    path: "/token-coming-soon",
+    component: () => <TokenComingSoon io={io} />
   }
 ];
 
