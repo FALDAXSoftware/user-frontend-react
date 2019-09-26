@@ -8,8 +8,8 @@ import { withRouter } from "react-router-dom";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
-import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
-import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
+// import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
+// import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
 
 /* STYLED-COMPONENTS */
 import {
@@ -1161,14 +1161,14 @@ class ConversionDetail extends React.Component {
             </RightCol>
           </MainRow>
         </ConversionContainer>
-        <CountryAccess
+        {/* <CountryAccess
           comingCancel={e => this.comingCancel(e)}
           visible={this.state.countryAccess}
         />
         <CompleteKYC
           comingCancel={e => this.comingCancel(e)}
           visible={this.state.completeKYC}
-        />
+        /> */}
         {this.state.loader == true ? <FaldaxLoader /> : ""}
       </ConversionWrap>
     );
