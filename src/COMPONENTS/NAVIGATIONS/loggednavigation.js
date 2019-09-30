@@ -416,10 +416,22 @@ class LoggedNavigation extends Component {
     const DropdownHistoryItems = (
       <Menu className="fixed-drop">
         <Menu.Item key="0">
-          <a onClick={() => this.props.history.push("/")}>Trade History</a>
+          <a
+            onClick={() =>
+              this.props.history.push({ path: "/history", tradeType: "1" })
+            }
+          >
+            Trade History
+          </a>
         </Menu.Item>
         <Menu.Item key="1">
-          <a onClick={() => this.props.history.push("/")}>Simplex History</a>
+          <a
+            onClick={() =>
+              this.props.history.push({ path: "/history", tradeType: "2" })
+            }
+          >
+            Simplex History
+          </a>
         </Menu.Item>
       </Menu>
     );
@@ -466,7 +478,15 @@ class LoggedNavigation extends Component {
               // trigger={["click"]}
               overlayClassName="custom_dropdown_menu"
             >
-              <NavLink className="ant-dropdown-link" to="/history">
+              <NavLink
+                className="ant-dropdown-link"
+                to={{
+                  pathname: "/history",
+                  state: {
+                    tradeType: 1
+                  }
+                }}
+              >
                 History
               </NavLink>
             </DropDownDiv>
