@@ -1,6 +1,6 @@
 /* IN-built */
 import React, { Component } from "react";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Dropdown } from "antd";
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -171,6 +171,32 @@ const CarLink = styled(Link)`
     display: none !important;
   }
 `;
+const DropDownDiv = styled(Dropdown)`
+  @media (max-width: 480px) {
+    margin-top: 10px;
+  }
+  @media (max-width: 360px) {
+    display: none;
+  }
+  @media (max-width: 576px) {
+    margin-right: 10px;
+  }
+`;
+const Open = styled.span`
+  display: none;
+  margin-right: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  margin-top: 10px;
+  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  @media (max-width: 1200px) {
+    display: inline-block;
+    margin-right: 15px;
+  }
+  @media (max-width: 576px) {
+    margin-top: 12px;
+  }
+`;
 
 class LoggedNavigation extends Component {
   constructor(props) {
@@ -334,6 +360,9 @@ class LoggedNavigation extends Component {
     } else {
     }
   }
+  openNav() {
+    this.props.openNav();
+  }
 
   /* 
         Page: on every page after login on top right
@@ -367,6 +396,33 @@ class LoggedNavigation extends Component {
           " " +
           this.props.profileDetails.last_name
         : "User";
+    const DropdownItems = (
+      <Menu className="fixed-drop">
+        <Menu.Item key="0">
+          <a onClick={() => this.props.history.push("/crypto-conversion")}>
+            Brokerage
+          </a>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <a onClick={() => this.props.history.push("/simplex")}>Simplex</a>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <a onClick={() => this.props.history.push("/token-coming-soon")}>
+            Token
+          </a>
+        </Menu.Item>
+      </Menu>
+    );
+    const DropdownHistoryItems = (
+      <Menu className="fixed-drop">
+        <Menu.Item key="0">
+          <a onClick={() => this.props.history.push("/")}>Trade History</a>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <a onClick={() => this.props.history.push("/")}>Simplex History</a>
+        </Menu.Item>
+      </Menu>
+    );
     return (
       <Headermain id="main">
         <Logo>
@@ -385,9 +441,17 @@ class LoggedNavigation extends Component {
             CONVERSION
           </Menuitem> */}
           <Menuitem key="1">
-            <NavLink className="Nav_selected" to="/conversion">
-              Conversion
-            </NavLink>
+            <DropDownDiv
+              className="Drop-main"
+              overlay={DropdownItems}
+              // trigger={["click"]}
+              overlayClassName="custom_dropdown_menu"
+            >
+              <NavLink className="ant-dropdown-link" to="/conversion">
+                Conversion
+              </NavLink>
+            </DropDownDiv>
+            {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
           </Menuitem>
           {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
           <Menuitem key="2">
@@ -396,10 +460,23 @@ class LoggedNavigation extends Component {
             </NavLink>
           </Menuitem>
           <Menuitem key="3">
+            <DropDownDiv
+              className="Drop-main"
+              overlay={DropdownHistoryItems}
+              // trigger={["click"]}
+              overlayClassName="custom_dropdown_menu"
+            >
+              <NavLink className="ant-dropdown-link" to="/history">
+                History
+              </NavLink>
+            </DropDownDiv>
+            {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
+          </Menuitem>
+          {/* <Menuitem key="3">
             <NavLink className="Nav_selected" to="/history">
               HISTORY
             </NavLink>
-          </Menuitem>
+          </Menuitem> */}
           {/* <Menu_item key="1" onClick={this.showComing}><LogNav>DASHBOARD</LogNav></Menu_item>
                     <Menu_item key="2" onClick={this.showComing}><LogNav>TRADE</LogNav></Menu_item>
                     <Menu_item key="3" onClick={this.showComing}><LogNav>Wallet</LogNav></Menu_item>

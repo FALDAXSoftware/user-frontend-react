@@ -388,6 +388,10 @@ table .ant-table-tbody > tr > td {
 .ant-dropdown-menu {
   margin-top: 10px !important;
 }
+.custom_dropdown_menu {
+  top: 77px !important;
+  min-width: 163px !important;
+}
 .ant-dropdown-placement-bottomLeft,
 .ant-dropdown-placement-bottomRight {
   position: fixed !important;
