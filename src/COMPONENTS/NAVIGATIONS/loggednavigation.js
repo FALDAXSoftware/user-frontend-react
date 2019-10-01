@@ -212,6 +212,9 @@ class LoggedNavigation extends Component {
       completeKYC: false
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
+    this.cryptoAccess = this.cryptoAccess.bind(this);
+    this.simplexAccess = this.simplexAccess.bind(this);
+    this.tokenAccess = this.tokenAccess.bind(this);
   }
 
   /* Life-Cycle Methods */
@@ -387,6 +390,76 @@ class LoggedNavigation extends Component {
   //     else this.setState({ countryAccess: true });
   //   }
   // }
+  cryptoAccess() {
+    if (
+      this.props.profileDetails.is_allowed === true &&
+      this.props.profileDetails.is_kyc_done === 2
+    ) {
+      // alert("IF");
+      console.log("I am here", this.props.location.pathname);
+      // this.props.history.push('/trade');
+      if (this.props.location.pathname !== "/crypto-conversion")
+        this.props.history.push("/crypto-conversion");
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === false &&
+        this.props.profileDetails.is_kyc_done !== 2
+      ) {
+        // alert("ELSE IF");
+        this.setState({ completeKYC: true });
+      } else {
+        // alert("ELSE ELSE");
+        this.setState({ countryAccess: true });
+      }
+    }
+  }
+  simplexAccess() {
+    if (
+      this.props.profileDetails.is_allowed === true &&
+      this.props.profileDetails.is_kyc_done === 2
+    ) {
+      // alert("IF");
+      console.log("I am here", this.props.location.pathname);
+      // this.props.history.push('/trade');
+      if (this.props.location.pathname !== "/simplex")
+        this.props.history.push("/simplex");
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === false &&
+        this.props.profileDetails.is_kyc_done !== 2
+      ) {
+        // alert("ELSE IF");
+        this.setState({ completeKYC: true });
+      } else {
+        // alert("ELSE ELSE");
+        this.setState({ countryAccess: true });
+      }
+    }
+  }
+  tokenAccess() {
+    this.props.history.push("/token-coming-soon");
+    // if (
+    //   this.props.profileDetails.is_allowed === true &&
+    //   this.props.profileDetails.is_kyc_done === 2
+    // ) {
+    //   // alert("IF");
+    //   console.log("I am here", this.props.location.pathname);
+    //   // this.props.history.push('/trade');
+    //   if (this.props.location.pathname !== "/token")
+    //     this.props.history.push("/token");
+    // } else {
+    //   if (
+    //     this.props.profileDetails.is_allowed === false &&
+    //     this.props.profileDetails.is_kyc_done !== 2
+    //   ) {
+    //     // alert("ELSE IF");
+    //     this.setState({ completeKYC: true });
+    //   } else {
+    //     // alert("ELSE ELSE");
+    //     this.setState({ countryAccess: true });
+    //   }
+    // }
+  }
 
   render() {
     let prof_name =
@@ -399,17 +472,13 @@ class LoggedNavigation extends Component {
     const DropdownItems = (
       <Menu className="fixed-drop">
         <Menu.Item key="0">
-          <a onClick={() => this.props.history.push("/crypto-conversion")}>
-            Brokerage
-          </a>
+          <a onClick={this.cryptoAccess}>Brokerage</a>
         </Menu.Item>
         <Menu.Item key="1">
-          <a onClick={() => this.props.history.push("/simplex")}>Simplex</a>
+          <a onClick={this.simplexAccess}>Simplex</a>
         </Menu.Item>
         <Menu.Item key="2">
-          <a onClick={() => this.props.history.push("/token-coming-soon")}>
-            Token
-          </a>
+          <a onClick={this.tokenAccess}>Token</a>
         </Menu.Item>
       </Menu>
     );
