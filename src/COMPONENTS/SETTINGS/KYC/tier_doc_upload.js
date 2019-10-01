@@ -17,7 +17,6 @@ const SSNWrap = styled.div`
   margin-left: auto;
   margin-right: auto;
   // border:1px solid #e8ebee;
-  margin-top: 88px;
   text-align: left;
   @media (max-width: 1024px) {
     width: 70%;
@@ -35,6 +34,7 @@ const SSNlabel = styled.label`
   font-family: open sans;
   text-align: center;
   margin-bottom: 10px;
+  font-weight: 500;
 `;
 export const Filewrap = styled.div`
   text-align: center;
@@ -44,9 +44,7 @@ export const Fileselect1 = styled.div`
   display: inline-block;
   width: 146px;
   height: 146px;
-  margin-right: 15px;
   text-align: right;
-
   @media (max-width: 478px) {
     display: block;
     margin-right: auto;
@@ -117,6 +115,17 @@ export const RemoveIcon1 = styled(Icon)`
 const RemoveIcon2 = styled(RemoveIcon1)`
   color: ${props => (props.theme.mode == "dark" ? "white" : "black")};
 `;
+const TierButtonWrap = styled.div`
+  &.button_wrap_tier {
+    margin-top: 30px;
+    text-align: center;
+  }
+  > div {
+    > button {
+      margin: 0;
+    }
+  }
+`;
 class TierDocUpload extends Component {
   constructor(props) {
     super(props);
@@ -157,137 +166,9 @@ class TierDocUpload extends Component {
       this.props.next_step(5);
     }
   }
-
-  /* 
-        Page: /editProfile --> KYC
-        It is called when we click on upload button according to front or back.
-    */
-
   handleFileSelectClick(val) {
     document.querySelector("#" + val).click();
     this.setState({ click: val });
-  }
-
-  /* 
-        Page: /editProfile --> KYC
-        It is called once file is selected and file is read and file selected is stored in state.
-    */
-
-  handleProfile(e) {
-    var _self = this;
-    var e1 = e;
-    let name = e1.target.name;
-    let target = e1.target;
-    console.log(e1.target);
-    _self.setState(
-      {
-        targetName: name,
-        fileTarget: target
-      },
-      () => {
-        var frontWidth, frontHeight;
-        try {
-          const reader = new FileReader();
-          const file = _self.state.fileTarget.files[0];
-          const fileType =
-            file && file.type
-              ? file.type.substring(0, file.type.indexOf("/"))
-              : "";
-          const fileSize = file && file.size ? file.size : 0;
-          console.log(file);
-          if (fileType === "image") {
-            if (fileType === "image" && fileSize < 5242880) {
-              var fr = new FileReader();
-              fr.readAsDataURL(file);
-              fr.onload = function() {
-                var img = new Image();
-                img.onload = function() {
-                  frontWidth = img.width;
-                  frontHeight = img.height;
-
-                  if (frontWidth > 450 && frontHeight > 600) {
-                    if (_self.state.targetName === "front-doc") {
-                      _self.setState({ icon1: "check", displayFirst: "" });
-                      reader.onload = upload => {
-                        _self.setState({
-                          profileImg: upload.target.result,
-                          imageName: file.name,
-                          imageType: file.type,
-                          profileImage: file,
-                          imagemsg: ""
-                        });
-                      };
-                    } else {
-                      _self.setState({ icon2: "check", displaySecond: "" });
-                      reader.onload = upload => {
-                        _self.setState({
-                          profileImg2: upload.target.result,
-                          imageName2: file.name,
-                          imageType2: file.type,
-                          profileImage2: file,
-                          imagemsg2: ""
-                        });
-                      };
-                    }
-
-                    //check file size to max 5mb (5*1024*1024=5242880) and type image
-
-                    reader.readAsDataURL(file);
-                    var DataForm = new FormData();
-                    DataForm.append("image", file);
-                    _self.props.kycDoc(
-                      _self.props.isLoggedIn,
-                      DataForm,
-                      _self.state.targetName
-                    );
-                  } else {
-                    _self.openNotificationWithIcon(
-                      "error",
-                      "File Size",
-                      "File should be greater than 450*600 in dimension"
-                    );
-                  }
-                };
-                img.src = fr.result;
-              };
-            } else {
-              if (_self.state.targetName === "front-doc") {
-                _self.setState({
-                  profileImg: "Default Photo",
-                  imageName: "",
-                  imageType: fileType,
-                  imagemsg: "Please select image with less then 5 mb"
-                });
-              } else {
-                _self.setState({
-                  profileImg2: "Default Photo",
-                  imageName2: "",
-                  imageType2: fileType,
-                  imagemsg2: "Please select image with less then 5 mb"
-                });
-              }
-              _self.openNotificationWithIcon(
-                "error",
-                "File Size",
-                "Please select image with less then 5 mb"
-              );
-              document.getElementById("front").value = "";
-              document.getElementById("back").value = "";
-            }
-          } else {
-            _self.openNotificationWithIcon(
-              "error",
-              "File Format",
-              "File format is not supported. Please upload only images."
-            );
-            document.getElementById("front").value = "";
-            document.getElementById("back").value = "";
-          }
-        } catch (error) {
-          _self.setState({ imagemsg: "Something went wrong please try again" });
-        }
-      }
-    );
   }
   removeFile(type) {
     var DataForm = new FormData();
@@ -317,57 +198,11 @@ class TierDocUpload extends Component {
       document.getElementById("back").value = "";
     }
   }
-  /* 
-        Page: /editProfile --> KYC
-        It is called for custom Notifications.
-    */
-
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
       description: desc
     });
-  }
-
-  /* 
-        Page: /editProfile --> KYC
-        It is called when we click next button for next step.
-    */
-
-  next_step() {
-    console.log(
-      this.state.icon1,
-      this.state.icon2,
-      this.state.frontImg,
-      this.state.backImg
-    );
-    if (this.state.icon1 === "check" && this.state.icon2 === "check") {
-      if (this.state.frontImg !== "" && this.state.backImg !== "") {
-        var kycDoc = {};
-        kycDoc["front_doc"] = this.state.frontImg;
-        kycDoc["back_doc"] = this.state.backImg;
-        kycDoc["steps"] = 3;
-        console.log(
-          "FINALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
-        );
-        this.props.kycFormAction(this.props.isLoggedIn, kycDoc);
-      }
-    } else {
-      this.openNotificationWithIcon(
-        "error",
-        "KYC",
-        "Please upload front and back of your document"
-      );
-    }
-  }
-
-  /* 
-        Page: /editProfile --> KYC
-        It is called when we click back button for back step.
-    */
-
-  back_step() {
-    this.props.back_step(1);
   }
 
   render() {
@@ -379,7 +214,6 @@ class TierDocUpload extends Component {
           </SSNSub>
           <Filewrap>
             <Fileselect1 className="file-select-col">
-              {console.log(this.state)}
               <RemoveIcon1
                 onClick={() => {
                   this.removeFile("front-doc");
@@ -407,47 +241,8 @@ class TierDocUpload extends Component {
                 id="front"
               />
             </Fileselect1>
-            {/* <Fileselect2 md={{ span: 6 }} className="file-select-col">
-              <RemoveIcon2
-                onClick={() => {
-                  this.removeFile("back-doc");
-                }}
-                style={{ display: `${this.state.displaySecond}` }}
-                type={"close"}
-                theme="outlined"
-              />
-              <ButtonUp2
-                style={{ backgroundImage: `url('${this.state.profileImg2}')` }}
-                className="file-select-btn"
-                onClick={() => {
-                  this.handleFileSelectClick("back");
-                }}
-              >
-                <Plus2 className="plus">
-                  <Icon type={this.state.icon2} theme="outlined" />
-                </Plus2>
-                <Plustext2 className="text">Back</Plustext2>
-              </ButtonUp2>
-              <Fileinput2
-                onChange={this.handleProfile}
-                type="file"
-                name="back-doc"
-                id="back"
-              />
-            </Fileselect2> */}
           </Filewrap>
         </SSNWrap>
-        <ButtonWrap>
-          <SubWrap>
-            {/* <BackButton onClick={this.back_step.bind(this)} type="primary">
-              Back
-            </BackButton>
-            <NextButton onClick={this.next_step.bind(this)} type="primary">
-              Next
-            </NextButton> */}
-            <NextButton type="primary">Submit</NextButton>
-          </SubWrap>
-        </ButtonWrap>
         {this.props.loader === true ? <FaldaxLoader /> : ""}
       </div>
     );
