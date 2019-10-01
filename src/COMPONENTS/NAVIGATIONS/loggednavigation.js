@@ -418,7 +418,7 @@ class LoggedNavigation extends Component {
         <Menu.Item key="0">
           <a
             onClick={() =>
-              this.props.history.push({ path: "/history", tradeType: "1" })
+              this.props.history.push({ pathname: "/history", tradeType: "1" })
             }
           >
             Trade History
@@ -427,7 +427,7 @@ class LoggedNavigation extends Component {
         <Menu.Item key="1">
           <a
             onClick={() =>
-              this.props.history.push({ path: "/history", tradeType: "2" })
+              this.props.history.push({ pathname: "/history", tradeType: "2" })
             }
           >
             Simplex History
@@ -483,7 +483,7 @@ class LoggedNavigation extends Component {
                 to={{
                   pathname: "/history",
                   state: {
-                    tradeType: 1
+                    tradeType: "1"
                   }
                 }}
               >

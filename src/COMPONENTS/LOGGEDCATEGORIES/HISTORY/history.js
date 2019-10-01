@@ -146,30 +146,17 @@ class History extends Component {
   /* Life-Cycle Methods */
 
   componentDidMount() {
-    console.log(
-      "this.props=========================",
-      //   this.props.location.tradeType
-      this.props
-    );
     if (this.props.location.tradeType === "1") {
-      alert("1");
       this.setState({ activeKey: "1" }, () => {
         this.historyResult();
       });
-    }
-    if (this.props.location.tradeType === "2") {
-      alert("2");
+    } else if (this.props.location.tradeType === "2") {
       this.setState({ activeKey: "2" }, () => {
         this.historyResult();
       });
+    } else {
+      this.historyResult();
     }
-    if (this.props.location.tradeType === undefined) {
-      alert("1");
-      this.setState({ activeKey: "1" }, () => {
-        this.historyResult();
-      });
-    }
-    this.historyResult();
     this.loadCoinList();
   }
 
@@ -218,9 +205,9 @@ class History extends Component {
   }
 
   historyResult() {
-    console.log("Activekey", this.state.activeKey);
-    let { drop1Value, drop2Value, activeKey } = this.state;
-    let flag = false;
+    console.log("Activekey===============>", this.state.activeKey);
+    let { drop1Value, drop2Value } = this.state;
+    // let flag = false;
     if (drop1Value !== null && drop2Value !== null) {
       let url =
         API_URL +
@@ -249,16 +236,16 @@ class History extends Component {
       })
         .then(response => response.json())
         .then(responseData => {
-          //   console.log("200 Response", responseData.data);
-          //   this.setState({
-          //     historyData: responseData.data,
-          //     loader: false
-          //   });
           this.setState({ loader: false });
           if (responseData.status === 200) {
+            console.log(
+              "ActiveKey after getting response",
+              this.state.activeKey
+            );
             if (this.state.activeKey === "1") {
-              let csvFields = [],
-                self = this;
+              // alert("Trade History Loop");
+              let csvFields = [];
+              // self = this;
               if (responseData.data && responseData.data.length > 0) {
                 for (var i = 0; i < responseData.data.length; i++) {
                   let temp = responseData.data[i];
@@ -266,9 +253,9 @@ class History extends Component {
                   var date = moment
                     .utc(temp.created_at)
                     .local()
-                    .format(`${self.props.profileData.date_format} HH:mm:ss`);
+                    .format(`${this.props.profileData.date_format} HH:mm:ss`);
                   var side =
-                    Number(temp.user_id) === self.props.profileData.id
+                    Number(temp.user_id) === this.props.profileData.id
                       ? temp.side
                       : temp.side === "Buy"
                       ? "Sell"
@@ -276,7 +263,7 @@ class History extends Component {
                   var filledPrice = temp.fill_price.toFixed(4);
                   var amount = temp.quantity.toFixed(4);
                   var fee =
-                    Number(temp.user_id) === self.props.profileData.id
+                    Number(temp.user_id) === this.props.profileData.id
                       ? temp.user_fee !== null
                         ? temp.user_fee.toFixed(8)
                         : "-"
@@ -291,13 +278,15 @@ class History extends Component {
                   obj["amount"] = amount;
                   obj["fee"] = fee;
                   obj["volume"] = volume;
-                  //   console.log("obj>>>>>>>", obj);
                   csvFields.push(obj);
                 }
                 this.setState(
                   { historyData: responseData.data, csvFields },
                   () => {
-                    console.log("200 after", this.state.historyData);
+                    console.log(
+                      "historyData after loop",
+                      this.state.historyData
+                    );
                   }
                 );
               } else {
@@ -307,11 +296,14 @@ class History extends Component {
                   responseData.err
                 );
               }
-            }
-            if (this.state.activeKey === "2") {
-              let csvSimplexFields = [],
-                self = this;
+            } else if (this.state.activeKey === "2") {
+              console.log(
+                "ActiveKey after getting response",
+                this.state.activeKey
+              );
+              let csvSimplexFields = [];
               if (responseData.data && responseData.data.length > 0) {
+                // alert("Simplex History Loop");
                 for (var i = 0; i < responseData.data.length; i++) {
                   let temp = responseData.data[i];
                   let obj = {};
@@ -319,7 +311,7 @@ class History extends Component {
                   var date = moment
                     .utc(temp.created_at)
                     .local()
-                    .format(`${self.props.profileData.date_format} HH:mm:ss`);
+                    .format(`${this.props.profileData.date_format} HH:mm:ss`);
                   var side = temp.side;
                   var fill_price = temp.fill_price.toFixed(4);
                   var quantity = temp.quantity.toFixed(4);
@@ -327,13 +319,13 @@ class History extends Component {
                   var quote_id = temp.quote_id;
                   var address = temp.address;
 
-                  if (temp.simplex_payment_status == 1) {
+                  if (temp.simplex_payment_status === 1) {
                     var simplex_payment_status = "Under Approval";
                   }
-                  if (temp.simplex_payment_status == 2) {
+                  if (temp.simplex_payment_status === 2) {
                     var simplex_payment_status = "Approved";
                   }
-                  if (temp.simplex_payment_status == 3) {
+                  if (temp.simplex_payment_status === 3) {
                     var simplex_payment_status = "Cancelled";
                   }
 
@@ -346,16 +338,15 @@ class History extends Component {
                   obj["quote_id"] = quote_id;
                   obj["address"] = address;
                   obj["simplex_payment_status"] = simplex_payment_status;
-                  //   console.log("obj>>>>>>>", obj);
                   csvSimplexFields.push(obj);
                 }
                 this.setState(
                   { historySimplexData: responseData.data, csvSimplexFields },
                   () => {
-                    // console.log(
-                    //   "200 after historySimplexData",
-                    //   this.state.historySimplexData
-                    // );
+                    console.log(
+                      "historySimplexData",
+                      this.state.historySimplexData
+                    );
                   }
                 );
               } else {
@@ -748,7 +739,6 @@ class History extends Component {
                             <th>Volume</th>
                           </tr>
                         </thead>
-                        {console.log(this.state.historyData)}
                         {this.state.historyData !== undefined ? (
                           this.state.historyData.length > 0 ? (
                             <tbody>
@@ -824,49 +814,48 @@ class History extends Component {
                             <th>Simplex Payment Status</th>
                           </tr>
                         </thead>
-                        {/* {console.log(this.state.historyData)} */}
                         {this.state.historySimplexData !== undefined ? (
                           this.state.historySimplexData.length > 0 ? (
                             <tbody>
                               {this.state.historySimplexData.map(function(
-                                temp
+                                temps
                               ) {
                                 var date = moment
-                                  .utc(temp.created_at)
+                                  .utc(temps.created_at)
                                   .local()
                                   .format(
                                     `${self.props.profileData.date_format} HH:mm:ss`
                                   );
                                 var side =
-                                  Number(temp.user_id) ===
+                                  Number(temps.user_id) ===
                                   self.props.profileData.id
-                                    ? temp.side
-                                    : temp.side === "Buy"
+                                    ? temps.side
+                                    : temps.side === "Buy"
                                     ? "Sell"
                                     : "Buy";
-                                if (temp.simplex_payment_status == 1) {
+                                if (temps.simplex_payment_status === 1) {
                                   var simplex_payment_status = "Under Approval";
                                 }
-                                if (temp.simplex_payment_status == 2) {
+                                if (temps.simplex_payment_status === 2) {
                                   var simplex_payment_status = "Approved";
                                 }
-                                if (temp.simplex_payment_status == 3) {
+                                if (temps.simplex_payment_status === 3) {
                                   var simplex_payment_status = "Cancelled";
                                 }
 
                                 return (
                                   <tr>
-                                    <td>{temp.symbol}</td>
-                                    <td>{temp.fill_price}</td>
-                                    <td>{temp.quantity}</td>
+                                    <td>{temps.symbol}</td>
+                                    <td>{temps.fill_price}</td>
+                                    <td>{temps.quantity}</td>
                                     <SideBuySell
                                       side={side === "Buy" ? true : false}
                                     >
                                       {side}
                                     </SideBuySell>
                                     <td>{date}</td>
-                                    <td>{temp.payment_id}</td>
-                                    <td>{temp.quote_id}</td>
+                                    <td>{temps.payment_id}</td>
+                                    <td>{temps.quote_id}</td>
                                     <td>{simplex_payment_status}</td>
                                   </tr>
                                 );
