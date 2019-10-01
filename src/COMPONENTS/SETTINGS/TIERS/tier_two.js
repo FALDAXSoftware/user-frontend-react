@@ -163,8 +163,10 @@ class TierTwo extends React.Component {
       displaySecond: "none"
     };
     this.handleProfile = this.handleProfile.bind(this);
-    this.onChangeStep = this.onChangeStep.bind(this);
-    this.submit = this.submit.bind(this);
+    // this.onChangeStep = this.onChangeStep.bind(this);
+    this.callback = this.callback.bind(this);
+    this.residenceProofSubmit = this.residenceProofSubmit.bind(this);
+    this.ssnSubmit = this.ssnSubmit.bind(this);
   }
   /* Life-Cycle Methods */
   componentWillReceiveProps(props, newProps) {
@@ -333,16 +335,27 @@ class TierTwo extends React.Component {
     });
   }
 
-  onChangeStep(current) {
-    console.log("onChange:", current);
-    this.setState({ current });
+  // onChange = current => {
+  //   console.log("onChange:", current);
+  //   this.setState({ current: current });
+  // };
+  callback(key) {
+    console.log(key);
   }
+
   // onClickStep(e) {
   //   console.log("e.target", e.current);
   //   alert("step-click");
   // }
-  submit() {
-    alert("submit clicked");
+  residenceProofSubmit() {
+    this.setState({
+      current: this.state.current + 1
+    });
+  }
+  ssnSubmit() {
+    this.setState({
+      current: this.state.current + 1
+    });
   }
   render() {
     const { current } = this.state;
@@ -356,8 +369,8 @@ class TierTwo extends React.Component {
             <TierContainer>
               <TierStepBlock>
                 <Steps
-                  current={0}
-                  onChangeStep={this.onChangeStep}
+                  current={current}
+                  onClick={this.callback}
                   direction="vertical"
                   // onClick={this.onClickStep.bind(this)}
                 >
@@ -406,19 +419,39 @@ class TierTwo extends React.Component {
                       </Filewrap>
                     </SSNWrap>
                     <TierButtonWrap className="button_wrap_tier">
-                      <NextButton onClick={this.submit} type="primary">
+                      <NextButton
+                        onClick={this.residenceProofSubmit}
+                        type="primary"
+                      >
                         Submit
                       </NextButton>
                     </TierButtonWrap>
                   </div>
                 )}
                 {current === 1 && (
-                  <TierDocUpload
-                  // kycData={this.state.kycData}
-                  // docText={this.state.docType}
-                  // back_step={a => this.back_step(a)}
-                  // next_step={a => this.next_step(a)}
-                  />
+                  <div>
+                    <SSNWrap>
+                      <SSNSub>
+                        <SSNlabel>Social Security Number</SSNlabel>
+                      </SSNSub>
+                    </SSNWrap>
+                    <TierButtonWrap className="button_wrap_tier">
+                      <NextButton onClick={this.ssnSubmit} type="primary">
+                        Submit
+                      </NextButton>
+                    </TierButtonWrap>
+                  </div>
+                )}
+                {current === 2 && (
+                  <div>
+                    <SSNWrap>
+                      <SSNSub>
+                        <SSNlabel>
+                          All documents are submitted successfully
+                        </SSNlabel>
+                      </SSNSub>
+                    </SSNWrap>
+                  </div>
                 )}
               </TierStepContent>
             </TierContainer>

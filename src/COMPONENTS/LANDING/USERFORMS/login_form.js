@@ -616,6 +616,7 @@ class Login_Form extends Component {
       .then(responseData => {
         this.setState({ loader: false });
         if (responseData.status === 200) {
+          console.log("responseData 200", responseData);
           responseData.message = "";
           this.props.loginAction(responseData);
           this.setState({ verify: true });
@@ -624,12 +625,22 @@ class Login_Form extends Component {
             "Verified",
             responseData.message
           );
-        } else
+        } else if (responseData.status === 201) {
+          console.log("responseData 201", responseData);
+          this.setState({ verify: true });
+          this.openNotificationWithIcon(
+            "success",
+            "Verified",
+            responseData.message
+          );
+          this.props.history.push("/login");
+        } else {
           this.openNotificationWithIcon(
             "error",
             "Not Verified",
             responseData.err
           );
+        }
       })
       .catch(error => {
         /* console.log(error) */

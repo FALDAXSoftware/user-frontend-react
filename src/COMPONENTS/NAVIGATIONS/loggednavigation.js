@@ -14,6 +14,7 @@ import { globalVariables } from "Globals.js";
 import ComingSoon from "COMPONENTS/comingsoon";
 import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
 import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
+import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
 
 /* CONSTANTS */
 import {
@@ -209,7 +210,8 @@ class LoggedNavigation extends Component {
       faldax: "",
       selected: "",
       countryAccess: false,
-      completeKYC: false
+      completeKYC: false,
+      panicEnabled: false
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
     this.cryptoAccess = this.cryptoAccess.bind(this);
@@ -325,7 +327,8 @@ class LoggedNavigation extends Component {
     this.setState({
       comingSoon: false,
       countryAccess: false,
-      completeKYC: false
+      completeKYC: false,
+      panicEnabled: false
     });
   };
 
@@ -391,72 +394,87 @@ class LoggedNavigation extends Component {
   //   }
   // }
   cryptoAccess() {
-    if (
-      this.props.profileDetails.is_allowed === true &&
-      this.props.profileDetails.is_kyc_done === 2
-    ) {
-      // alert("IF");
-      console.log("I am here", this.props.location.pathname);
-      // this.props.history.push('/trade');
-      if (this.props.location.pathname !== "/crypto-conversion")
-        this.props.history.push("/crypto-conversion");
+    if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
+      // alert("Idf");
+      this.setState({ panicEnabled: true });
     } else {
       if (
-        this.props.profileDetails.is_allowed === false &&
-        this.props.profileDetails.is_kyc_done !== 2
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
       ) {
-        // alert("ELSE IF");
-        this.setState({ completeKYC: true });
+        // alert("IF");
+        console.log("I am here", this.props.location.pathname);
+        // this.props.history.push('/trade');
+        if (this.props.location.pathname !== "/crypto-conversion")
+          this.props.history.push("/crypto-conversion");
       } else {
-        // alert("ELSE ELSE");
-        this.setState({ countryAccess: true });
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          // alert("ELSE IF");
+          this.setState({ completeKYC: true });
+        } else {
+          // alert("ELSE ELSE");
+          this.setState({ countryAccess: true });
+        }
       }
     }
   }
   simplexAccess() {
-    if (
-      this.props.profileDetails.is_allowed === true &&
-      this.props.profileDetails.is_kyc_done === 2
-    ) {
-      // alert("IF");
-      console.log("I am here", this.props.location.pathname);
-      // this.props.history.push('/trade');
-      if (this.props.location.pathname !== "/simplex")
-        this.props.history.push("/simplex");
+    if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
+      // alert("Idf");
+      this.setState({ panicEnabled: true });
     } else {
       if (
-        this.props.profileDetails.is_allowed === false &&
-        this.props.profileDetails.is_kyc_done !== 2
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
       ) {
-        // alert("ELSE IF");
-        this.setState({ completeKYC: true });
+        // alert("IF");
+        console.log("I am here", this.props.location.pathname);
+        // this.props.history.push('/trade');
+        if (this.props.location.pathname !== "/simplex")
+          this.props.history.push("/simplex");
       } else {
-        // alert("ELSE ELSE");
-        this.setState({ countryAccess: true });
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          // alert("ELSE IF");
+          this.setState({ completeKYC: true });
+        } else {
+          // alert("ELSE ELSE");
+          this.setState({ countryAccess: true });
+        }
       }
     }
   }
   tokenAccess() {
     this.props.history.push("/token-coming-soon");
-    // if (
-    //   this.props.profileDetails.is_allowed === true &&
-    //   this.props.profileDetails.is_kyc_done === 2
-    // ) {
-    //   // alert("IF");
-    //   console.log("I am here", this.props.location.pathname);
-    //   // this.props.history.push('/trade');
-    //   if (this.props.location.pathname !== "/token")
-    //     this.props.history.push("/token");
+    // if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
+    //   alert("Idf");
+    //   this.setState({ panicEnabled: true });
     // } else {
     //   if (
-    //     this.props.profileDetails.is_allowed === false &&
-    //     this.props.profileDetails.is_kyc_done !== 2
+    //     this.props.profileDetails.is_allowed === true &&
+    //     this.props.profileDetails.is_kyc_done === 2
     //   ) {
-    //     // alert("ELSE IF");
-    //     this.setState({ completeKYC: true });
+    //     // alert("IF");
+    //     console.log("I am here", this.props.location.pathname);
+    //     // this.props.history.push('/trade');
+    //     if (this.props.location.pathname !== "/token")
+    //       this.props.history.push("/token");
     //   } else {
-    //     // alert("ELSE ELSE");
-    //     this.setState({ countryAccess: true });
+    //     if (
+    //       this.props.profileDetails.is_allowed === false &&
+    //       this.props.profileDetails.is_kyc_done !== 2
+    //     ) {
+    //       // alert("ELSE IF");
+    //       this.setState({ completeKYC: true });
+    //     } else {
+    //       // alert("ELSE ELSE");
+    //       this.setState({ countryAccess: true });
+    //     }
     //   }
     // }
   }
@@ -627,6 +645,10 @@ class LoggedNavigation extends Component {
         <CompleteKYC
           comingCancel={e => this.comingCancel(e)}
           visible={this.state.completeKYC}
+        />
+        <PanicEnabled
+          comingCancel={e => this.comingCancel(e)}
+          visible={this.state.panicEnabled}
         />
       </Headermain>
     );
