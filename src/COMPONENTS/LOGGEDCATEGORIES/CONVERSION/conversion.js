@@ -166,19 +166,6 @@ class Conversion extends React.Component {
                 </ColConStyle>
                 <ColConStyle>
                   <ColHeadConStyle>
-                    Buy crypto courrency from your bank account
-                  </ColHeadConStyle>
-                  <ColSubHeadConStyle>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </ColSubHeadConStyle>
-                  <ColBtnConStyle onClick={this.tokenAccess}>
-                    Token
-                  </ColBtnConStyle>
-                </ColConStyle>
-                <ColConStyle>
-                  <ColHeadConStyle>
                     Buy crypto courrnce using your credit card
                   </ColHeadConStyle>
                   <ColSubHeadConStyle>
@@ -191,6 +178,19 @@ class Conversion extends React.Component {
                     Simplex
                   </ColBtnConStyle>
                   {/* </Link> */}
+                </ColConStyle>
+                <ColConStyle>
+                  <ColHeadConStyle>
+                    Buy crypto courrency from your bank account
+                  </ColHeadConStyle>
+                  <ColSubHeadConStyle>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </ColSubHeadConStyle>
+                  <ColBtnConStyle onClick={this.tokenAccess}>
+                    Token
+                  </ColBtnConStyle>
                 </ColConStyle>
               </RowConStyle>
             </ContainerConversion>

@@ -310,7 +310,8 @@ class WalletPopup extends Component {
     if (this.validator.allValid()) {
       var values = this.state.sendFields;
       //   values["amount"] = parseFloat(this.state.sendFields.amount).toFixed(8);
-      values["amount"] = this.state.sendFields.subtotal;
+      values["amount"] = this.state.sendFields.amount;
+      values["total_fees"] = this.state.sendFields.subtotal;
       values["coin_code"] = this.props.coin_code;
       console.log("values", values);
       if (confirmFlag == true) values["confirm_for_wait"] = confirmFlag;
