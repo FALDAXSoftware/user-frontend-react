@@ -137,11 +137,26 @@ class Simplex extends React.Component {
       })
         .then(response => response.json())
         .then(responseData => {
-          this.setState({
-            currencyToGet: responseData.data.digital_money.amount,
-            quote_id: responseData.data.quote_id,
-            loader: false
-          });
+          if (responseData.status === 200) {
+            this.setState({
+              currencyToGet: responseData.data.digital_money.amount,
+              quote_id: responseData.data.quote_id,
+              loader: false
+            });
+          } else if (responseData.status === 500) {
+            this.setState({ loader: false });
+            this.openNotificationWithIcon(
+              "error",
+              "Error",
+              responseData.message
+            );
+          } else {
+            this.openNotificationWithIcon(
+              "error",
+              "Error",
+              responseData.message
+            );
+          }
         })
         .catch(error => {});
     }

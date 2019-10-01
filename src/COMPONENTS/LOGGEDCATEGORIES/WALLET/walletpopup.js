@@ -452,7 +452,11 @@ class WalletPopup extends Component {
                     <div style={{ marginTop: "20px" }}>
                       <CopyToClipboardCSS
                         text={this.state.receive.receive_address}
-                        onCopy={() => this.setState({ copied: true })}
+                        onCopy={() =>
+                          this.setState({ copied: true }, () =>
+                            this.comingCancel()
+                          )
+                        }
                       >
                         <div style={{ textAlign: "left" }}>
                           <RefInput
