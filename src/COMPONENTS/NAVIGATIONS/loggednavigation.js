@@ -1,6 +1,6 @@
 /* IN-built */
 import React, { Component } from "react";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Dropdown } from "antd";
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -14,6 +14,8 @@ import { globalVariables } from "Globals.js";
 import ComingSoon from "COMPONENTS/comingsoon";
 import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
 import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
+import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
+import { DropMenu, SubMenuNav } from "./navigation";
 
 /* CONSTANTS */
 import {
@@ -120,8 +122,78 @@ const SideNav = styled.div`
     color: white !important;
     cursor: pointer;
   }
+  a.DROP {
+    padding: 8px 32px;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    transition: 0.5s;
+    line-height: 1.5;
+    color: white !important;
+    cursor: pointer;
+    > ul {
+      border-right: 0;
+      > li {
+        > ul {
+          > li:first-child {
+            margin-top: 15px;
+          }
+          > li {
+            height: 24px !important;
+            line-height: 1 !important;
+            > a {
+              height: 24px;
+              line-height: 1;
+              display: flex;
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+  }
+  a.DROPSUB {
+    padding: 8px 32px;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    transition: 0.5s;
+    line-height: 1.5;
+    color: white !important;
+    cursor: pointer;
+    > ul {
+      border-right: 0;
+      > li {
+        > ul {
+          > li:first-child {
+            margin-top: 15px;
+          }
+          > li {
+            height: 24px !important;
+            line-height: 1 !important;
+            > a {
+              height: 24px;
+              line-height: 1;
+              display: flex;
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+  }
   @media (min-width: 1200px) {
     display: none;
+  }
+  @media (min-width: 576px) {
+    & .DROP {
+      display: none !important;
+    }
+  }
+  @media (min-width: 1200px) {
+    & .DROPSUB {
+      display: none !important;
+    }
   }
 `;
 const Close = styled.span`
@@ -166,9 +238,34 @@ const CarLink = styled(Link)`
   line-height: 1.5;
   color: white !important;
   cursor: pointer;
-  text-transform: uppercase;
   @media (min-width: 671px) {
     display: none !important;
+  }
+`;
+const DropDownDiv = styled(Dropdown)`
+  @media (max-width: 480px) {
+    margin-top: 10px;
+  }
+  @media (max-width: 360px) {
+    display: none;
+  }
+  @media (max-width: 576px) {
+    margin-right: 10px;
+  }
+`;
+const Open = styled.span`
+  display: none;
+  margin-right: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  margin-top: 10px;
+  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  @media (max-width: 1200px) {
+    display: inline-block;
+    margin-right: 15px;
+  }
+  @media (max-width: 576px) {
+    margin-top: 12px;
   }
 `;
 
@@ -183,9 +280,13 @@ class LoggedNavigation extends Component {
       faldax: "",
       selected: "",
       countryAccess: false,
-      completeKYC: false
+      completeKYC: false,
+      panicEnabled: false
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
+    this.cryptoAccess = this.cryptoAccess.bind(this);
+    this.simplexAccess = this.simplexAccess.bind(this);
+    this.tokenAccess = this.tokenAccess.bind(this);
   }
 
   /* Life-Cycle Methods */
@@ -228,7 +329,7 @@ class LoggedNavigation extends Component {
     */
 
   openNav() {
-    /* console.log('open nav'); */
+    // console.log("open nav Logged");
     if (
       document.getElementById("mySidenav2") !== undefined &&
       document.getElementById("mySidenav2") !== null
@@ -296,7 +397,8 @@ class LoggedNavigation extends Component {
     this.setState({
       comingSoon: false,
       countryAccess: false,
-      completeKYC: false
+      completeKYC: false,
+      panicEnabled: false
     });
   };
 
@@ -334,6 +436,9 @@ class LoggedNavigation extends Component {
     } else {
     }
   }
+  // openNav() {
+  //   this.props.openNav();
+  // }
 
   /* 
         Page: on every page after login on top right
@@ -358,6 +463,98 @@ class LoggedNavigation extends Component {
   //     else this.setState({ countryAccess: true });
   //   }
   // }
+  cryptoAccess() {
+    console.log(
+      "this.props.profileDetails.is_panic_enabled",
+      this.props.profileDetails.is_panic_enabled
+    );
+    let panic = JSON.parse(this.props.profileDetails.is_panic_enabled);
+    // console.log("Panic", panic);
+
+    if (panic === true) {
+      // alert("Idf");
+      this.setState({ panicEnabled: true });
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
+      ) {
+        // alert("IF");
+        console.log("I am here", this.props.location.pathname);
+        // this.props.history.push('/trade');
+        if (this.props.location.pathname !== "/crypto-conversion")
+          this.props.history.push("/crypto-conversion");
+      } else {
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          // alert("ELSE IF");
+          this.setState({ completeKYC: true });
+        } else {
+          // alert("ELSE ELSE");
+          this.setState({ countryAccess: true });
+        }
+      }
+    }
+  }
+  simplexAccess() {
+    if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
+      // alert("Idf");
+      this.setState({ panicEnabled: true });
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
+      ) {
+        // alert("IF");
+        console.log("I am here", this.props.location.pathname);
+        // this.props.history.push('/trade');
+        if (this.props.location.pathname !== "/simplex")
+          this.props.history.push("/simplex");
+      } else {
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          // alert("ELSE IF");
+          this.setState({ completeKYC: true });
+        } else {
+          // alert("ELSE ELSE");
+          this.setState({ countryAccess: true });
+        }
+      }
+    }
+  }
+  tokenAccess() {
+    this.props.history.push("/token-coming-soon");
+    // if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
+    //   alert("Idf");
+    //   this.setState({ panicEnabled: true });
+    // } else {
+    //   if (
+    //     this.props.profileDetails.is_allowed === true &&
+    //     this.props.profileDetails.is_kyc_done === 2
+    //   ) {
+    //     // alert("IF");
+    //     console.log("I am here", this.props.location.pathname);
+    //     // this.props.history.push('/trade');
+    //     if (this.props.location.pathname !== "/token")
+    //       this.props.history.push("/token");
+    //   } else {
+    //     if (
+    //       this.props.profileDetails.is_allowed === false &&
+    //       this.props.profileDetails.is_kyc_done !== 2
+    //     ) {
+    //       // alert("ELSE IF");
+    //       this.setState({ completeKYC: true });
+    //     } else {
+    //       // alert("ELSE ELSE");
+    //       this.setState({ countryAccess: true });
+    //     }
+    //   }
+    // }
+  }
 
   render() {
     let prof_name =
@@ -367,6 +564,46 @@ class LoggedNavigation extends Component {
           " " +
           this.props.profileDetails.last_name
         : "User";
+    const DropdownItems = (
+      <Menu className="fixed-drop">
+        <Menu.Item key="0">
+          <a onClick={this.cryptoAccess}>Brokerage</a>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <a onClick={this.simplexAccess}>Simplex</a>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <a
+            className="tokenlink"
+            href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+          >
+            Token
+          </a>
+        </Menu.Item>
+      </Menu>
+    );
+    const DropdownHistoryItems = (
+      <Menu className="fixed-drop">
+        <Menu.Item key="0">
+          <a
+            onClick={() =>
+              this.props.history.push({ pathname: "/history", tradeType: "1" })
+            }
+          >
+            Trade History
+          </a>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <a
+            onClick={() =>
+              this.props.history.push({ pathname: "/history", tradeType: "2" })
+            }
+          >
+            Simplex History
+          </a>
+        </Menu.Item>
+      </Menu>
+    );
     return (
       <Headermain id="main">
         <Logo>
@@ -385,9 +622,17 @@ class LoggedNavigation extends Component {
             CONVERSION
           </Menuitem> */}
           <Menuitem key="1">
-            <NavLink className="Nav_selected" to="/conversion">
-              Conversion
-            </NavLink>
+            <DropDownDiv
+              className="Drop-main"
+              overlay={DropdownItems}
+              // trigger={["click"]}
+              overlayClassName="custom_dropdown_menu"
+            >
+              <NavLink className="ant-dropdown-link" to="/conversion">
+                Conversion
+              </NavLink>
+            </DropDownDiv>
+            {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
           </Menuitem>
           {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
           <Menuitem key="2">
@@ -396,10 +641,31 @@ class LoggedNavigation extends Component {
             </NavLink>
           </Menuitem>
           <Menuitem key="3">
+            <DropDownDiv
+              className="Drop-main"
+              overlay={DropdownHistoryItems}
+              // trigger={["click"]}
+              overlayClassName="custom_dropdown_menu"
+            >
+              <NavLink
+                className="ant-dropdown-link"
+                to={{
+                  pathname: "/history",
+                  state: {
+                    tradeType: "1"
+                  }
+                }}
+              >
+                History
+              </NavLink>
+            </DropDownDiv>
+            {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
+          </Menuitem>
+          {/* <Menuitem key="3">
             <NavLink className="Nav_selected" to="/history">
               HISTORY
             </NavLink>
-          </Menuitem>
+          </Menuitem> */}
           {/* <Menu_item key="1" onClick={this.showComing}><LogNav>DASHBOARD</LogNav></Menu_item>
                     <Menu_item key="2" onClick={this.showComing}><LogNav>TRADE</LogNav></Menu_item>
                     <Menu_item key="3" onClick={this.showComing}><LogNav>Wallet</LogNav></Menu_item>
@@ -409,7 +675,7 @@ class LoggedNavigation extends Component {
           <Afterlog
             {...this.props}
             prof_name={prof_name}
-            openNav={() => this.openNav()}
+            openLogNav={() => this.openNav()}
           />
         </RightCol>
         <ReactSwipeEvents
@@ -426,28 +692,153 @@ class LoggedNavigation extends Component {
               &times;
             </Close>
             <LogoutStyle>
-              <Link to="/editProfile">PROFILE</Link>
+              <Link to="/editProfile">Profile</Link>
             </LogoutStyle>
             {/* <span> <Link to="/dashboard">DASHBOARD</Link></span> */}
             {/* <span> <Link to="/conversion">CONVERSION</Link></span> */}
             {/* <span onClick={this.tradeAccess}>CONVERSION</span> */}
-            <span>
+            {/* <span>
               {" "}
-              <Link to="/conversion">CONVERSION</Link>
-            </span>
+              <Link to="/conversion">Conversion</Link>
+            </span> */}
+            <a className="DROPSUB">
+              <DropMenu mode="inline">
+                <SubMenuNav key="mobsub1" title={"Conversion"}>
+                  <Menu.Item key="0">
+                    <a onClick={this.cryptoAccess}>Brokerage</a>
+                  </Menu.Item>
+                  <Menu.Item key="1">
+                    <a onClick={this.simplexAccess}>Simplex</a>
+                  </Menu.Item>
+                  <Menu.Item key="2">
+                    <a
+                      className="tokenlink"
+                      href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+                    >
+                      Token
+                    </a>
+                  </Menu.Item>
+                </SubMenuNav>
+              </DropMenu>
+            </a>
             {/* <span onClick={this.tradeAccess}>TRADE</span> */}
             <span>
               {" "}
-              <Link to="/wallet">WALLET</Link>
+              <Link to="/wallet">Wallet</Link>
             </span>
-            <span>
+            {/* <span>
               {" "}
-              <Link to="/history">HISTORY</Link>
-            </span>
+              <Link to="/history">History</Link>
+            </span> */}
+            <a className="DROPSUB">
+              <DropMenu mode="inline">
+                <SubMenuNav key="mobsub2" title={"History"}>
+                  <Menu.Item key="0">
+                    <a
+                      onClick={() =>
+                        this.props.history.push({
+                          pathname: "/history",
+                          tradeType: "1"
+                        })
+                      }
+                    >
+                      Trade History
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="1">
+                    <a
+                      onClick={() =>
+                        this.props.history.push({
+                          pathname: "/history",
+                          tradeType: "2"
+                        })
+                      }
+                    >
+                      Simplex History
+                    </a>
+                  </Menu.Item>
+                </SubMenuNav>
+              </DropMenu>
+            </a>
             <span>
               <CarLink to="/careers">Careers</CarLink>
             </span>
-            <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
+            <a className="DROP">
+              <DropMenu mode="inline">
+                <SubMenuNav key="sub1" title={"Information"}>
+                  <Menu.Item key="9">
+                    <a href={`${globalVariables.WordpressSiteURL}/about-us`}>
+                      About Us
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="10">
+                    <a href={`${globalVariables.WordpressSiteURL}/contact-us`}>
+                      Contact Us
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="11">
+                    <a
+                      href={`${globalVariables.WordpressSiteURL}/media-contact`}
+                    >
+                      Media Contact
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="12">
+                    <a href={`${globalVariables.WordpressSiteURL}/blogs`}>
+                      Blogs
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="13">
+                    <a href={`${globalVariables.WordpressSiteURL}/fee`}>Fees</a>
+                  </Menu.Item>
+                </SubMenuNav>
+              </DropMenu>
+            </a>
+            <a className="DROP">
+              <DropMenu mode="inline">
+                <SubMenuNav key="sub2" title={"Support"}>
+                  <Menu.Item key="9">
+                    <Link to="/open-ticket">Open a Ticket</Link>
+                  </Menu.Item>
+                  <Menu.Item key="10">
+                    <a href="https://knowledge.faldax.com/">FAQ</a>
+                  </Menu.Item>
+                  {/* <Menu.Item key="11"><a href="#">API Documentation</a></Menu.Item> */}
+                  <Menu.Item key="12">
+                    <a
+                      href={`${globalVariables.WordpressSiteURL}/list-your-token`}
+                    >
+                      List Your Token
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="12">
+                    <a href={`${globalVariables.WordpressSiteURL}/news`}>
+                      News
+                    </a>
+                  </Menu.Item>
+                </SubMenuNav>
+              </DropMenu>
+            </a>
+            <a className="DROP">
+              <DropMenu mode="inline">
+                <SubMenuNav key="sub3" title={"Legal & Technical"}>
+                  <Menu.Item key="9">
+                    <a href={`${globalVariables.WordpressSiteURL}/policies`}>
+                      Policies
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="10">
+                    <a
+                      href={`${globalVariables.WordpressSiteURL}/service-availability`}
+                    >
+                      Service Availability
+                    </a>
+                  </Menu.Item>
+                  {/* <Menu.Item key="11"><a onClick={this.showComing} href="#">Security</a></Menu.Item> */}
+                </SubMenuNav>
+              </DropMenu>
+            </a>
+            <LogoutStyle onClick={this.logout.bind(this)}> Logout </LogoutStyle>
           </SideNav>
         </ReactSwipeEvents>
         <ComingSoon
@@ -461,6 +852,10 @@ class LoggedNavigation extends Component {
         <CompleteKYC
           comingCancel={e => this.comingCancel(e)}
           visible={this.state.completeKYC}
+        />
+        <PanicEnabled
+          comingCancel={e => this.comingCancel(e)}
+          visible={this.state.panicEnabled}
         />
       </Headermain>
     );

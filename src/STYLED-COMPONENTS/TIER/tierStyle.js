@@ -422,3 +422,99 @@ export const TierPhotoBlockCol = styled.div`
   }
 `;
 // Tier Info css end
+
+export const TierCommonHead = styled.div`
+  font-size: 20px;
+  font-family: "Open Sans";
+  font-weight: 600;
+  color: ${props =>
+    props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
+  text-align: center;
+  padding: 0 0 30px 0;
+`;
+export const TierContainer = styled.div`
+  margin: auto;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  font-family: "Open sans";
+`;
+export const TierStepBlock = styled.div`
+  width: 30%;
+  > .ant-steps-vertical {
+    > .ant-steps-item {
+      position: relative;
+      > .ant-steps-item-tail {
+        display: none;
+      }
+      > .ant-steps-item-content {
+        > .ant-steps-item-title {
+          line-height: 24px;
+          padding: 0;
+        }
+      }
+      > .ant-steps-item-icon {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+        line-height: 24px;
+        text-align: center;
+        border-radius: 24px;
+        background-color: rgb(0, 170, 250);
+        border-color: rgb(0, 170, 250);
+        &:after {
+          background-color: #e8e8e8;
+          position: absolute;
+          top: 28px;
+          left: 12px;
+          display: block;
+          height: calc(100% - 31px);
+          width: 1px;
+          background: #e8e8e8;
+          content: "";
+        }
+      }
+    }
+    & .ant-steps-item:last-child {
+      > .ant-steps-item-icon:after {
+        display: none !important;
+      }
+    }
+    > .ant-steps-item.ant-steps-item-finish {
+      > .ant-steps-item-icon {
+        > .ant-steps-icon {
+          color: #fff;
+        }
+      }
+    }
+    > .ant-steps-item.ant-steps-item-process {
+      > .ant-steps-item-content {
+        > .ant-steps-item-title {
+          font-weight: 600;
+        }
+      }
+      > .ant-steps-item-icon {
+      }
+    }
+    > .ant-steps-item.ant-steps-item-wait {
+      > .ant-steps-item-content {
+        > .ant-steps-item-title {
+          color: #333;
+          font-weight: 100;
+        }
+      }
+      > .ant-steps-item-icon {
+        color: #000;
+        > .ant-steps-icon {
+          color: #000;
+        }
+      }
+    }
+  }
+`;
+export const TierStepContent = styled.div`
+  width: 70%;
+  padding: 0 0 0 30px;
+  display: inherit;
+  justify-content: center;
+`;
