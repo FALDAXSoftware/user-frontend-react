@@ -77,6 +77,9 @@ export const NextButton = styled(Button)`
   background-color: #4c84ff;
   height: 50px;
   width: 120px;
+  &.tier_btn {
+    margin: 0;
+  }
 `;
 
 class IDselect extends Component {
