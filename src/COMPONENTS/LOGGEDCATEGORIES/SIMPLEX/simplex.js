@@ -46,7 +46,9 @@ class Simplex extends React.Component {
       crypto: "BTC",
       currency: "USD",
       quote_id: "",
-      currencyList: []
+      currencyList: [],
+      typing: false,
+      typingTimeout: 0
     };
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
@@ -175,6 +177,20 @@ class Simplex extends React.Component {
     }
   }
   handleCurrencyPayChange(e) {
+    const self = this;
+
+    if (self.state.typingTimeout) {
+      clearTimeout(self.state.typingTimeout);
+    }
+
+    // self.setState({
+    //   name: event.target.value,
+    //   typing: false,
+    //   typingTimeout: setTimeout(function() {
+    //     self.sendToParent(self.state.name);
+    //   }, 5000)
+    // });
+
     if (
       e.target.value === 0 ||
       e.target.value === null ||
@@ -182,11 +198,15 @@ class Simplex extends React.Component {
     ) {
       this.setState({
         currencyToPay: e.target.value,
-        currencyToGet: 0
+        currencyToGet: 0,
+        typing: false,
+        typingTimeout: setTimeout(function() {}, 5000)
       });
     } else {
       this.setState(
         {
+          typing: false,
+          typingTimeout: setTimeout(function() {}, 5000),
           currencyToPay: parseFloat(e.target.value)
         },
         () => {
