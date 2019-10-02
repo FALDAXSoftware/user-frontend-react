@@ -149,15 +149,17 @@ class History extends Component {
     if (this.props.location.tradeType === "1") {
       this.setState({ activeKey: "1" }, () => {
         this.historyResult();
+        this.loadCoinList();
       });
     } else if (this.props.location.tradeType === "2") {
       this.setState({ activeKey: "2" }, () => {
         this.historyResult();
+        this.loadCoinList();
       });
     } else {
       this.historyResult();
+      this.loadCoinList();
     }
-    this.loadCoinList();
   }
 
   /* 
@@ -168,23 +170,52 @@ class History extends Component {
 
   loadCoinList() {
     var self = this;
-    fetch(API_URL + "/coin-list", {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        self.setState({
-          coinList: responseData.data,
-          drop1List: responseData.data,
-          drop2List: responseData.data
-        });
+    if (this.state.activeKey === "2") {
+      // alert("load simplex coin list");
+      fetch(API_URL + "/get-simplex-coin-list", {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn
+        }
       })
-      .catch(error => {});
+        .then(response => response.json())
+        .then(responseData => {
+          // console.log("If 200", responseData.object.coinList);
+          self.setState({
+            coinList: responseData.object.coinList,
+            drop1List: responseData.object.coinList,
+            drop2List: responseData.object.fiat
+          });
+          // console.log("If 200 coinList", this.state.coinList);
+          // console.log("If 200 drop1List", this.state.drop1List);
+          // console.log("If 200 drop2List", this.state.drop2List);
+        })
+        .catch(error => {});
+    } else {
+      fetch(API_URL + "/coin-list", {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn
+        }
+      })
+        .then(response => response.json())
+        .then(responseData => {
+          // console.log("Else 200", responseData.data);
+          self.setState({
+            coinList: responseData.data,
+            drop1List: responseData.data,
+            drop2List: responseData.data
+          });
+          // console.log("Else 200 coinList", this.state.coinList);
+          // console.log("Else 200 drop1List", this.state.drop1List);
+          // console.log("Else 200 drop2List", this.state.drop2List);
+        })
+        .catch(error => {});
+    }
   }
 
   /* 
@@ -194,18 +225,25 @@ class History extends Component {
     */
   callback(e) {
     // console.log("Key", key);
+    // console.log("DropValue before", this.state.drop1Value);
+    // console.log("DropValue before", this.state.drop2Value);
     this.setState(
       {
-        activeKey: e
+        activeKey: e,
+        drop1Value: null,
+        drop2Value: null
       },
       () => {
+        this.loadCoinList();
         this.historyResult();
+        // console.log("DropValue after", this.state.drop1Value);
+        // console.log("DropValue after", this.state.drop2Value);
       }
     );
   }
 
   historyResult() {
-    console.log("Activekey===============>", this.state.activeKey);
+    // console.log("Activekey===============>", this.state.activeKey);
     let { drop1Value, drop2Value } = this.state;
     // let flag = false;
     if (drop1Value !== null && drop2Value !== null) {
@@ -216,14 +254,15 @@ class History extends Component {
         url =
           API_URL +
           `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}&trade_type=${this.state.activeKey}`;
-      }
-      if (this.state.drop1Value !== "" && this.state.drop1Value !== "") {
+        console.log("URL", url);
+      } else if (this.state.drop1Value !== "" && this.state.drop2Value !== "") {
         url =
           url +
           "&symbol=" +
           this.state.drop1Value +
           "-" +
           this.state.drop2Value;
+        console.log("URL", url);
       }
       this.setState({ loader: true });
       fetch(url, {
@@ -238,10 +277,10 @@ class History extends Component {
         .then(responseData => {
           this.setState({ loader: false });
           if (responseData.status === 200) {
-            console.log(
-              "ActiveKey after getting response",
-              this.state.activeKey
-            );
+            // console.log(
+            //   "ActiveKey after getting response",
+            //   this.state.activeKey
+            // );
             if (this.state.activeKey === "1") {
               // alert("Trade History Loop");
               let csvFields = [];
@@ -297,10 +336,153 @@ class History extends Component {
                 );
               }
             } else if (this.state.activeKey === "2") {
-              console.log(
-                "ActiveKey after getting response",
-                this.state.activeKey
-              );
+              // console.log(
+              //   "ActiveKey after getting response",
+              //   this.state.activeKey
+              // );
+              let csvSimplexFields = [];
+              if (responseData.data && responseData.data.length > 0) {
+                // alert("Simplex History Loop");
+                for (var i = 0; i < responseData.data.length; i++) {
+                  let temp = responseData.data[i];
+                  let obj = {};
+                  var symbol = temp.symbol;
+                  var date = moment
+                    .utc(temp.created_at)
+                    .local()
+                    .format(`${this.props.profileData.date_format} HH:mm:ss`);
+                  var side = temp.side;
+                  var fill_price = temp.fill_price.toFixed(4);
+                  var quantity = temp.quantity.toFixed(4);
+                  var payment_id = temp.payment_id;
+                  var quote_id = temp.quote_id;
+                  var address = temp.address;
+
+                  if (temp.simplex_payment_status === 1) {
+                    var simplex_payment_status = "Under Approval";
+                  }
+                  if (temp.simplex_payment_status === 2) {
+                    var simplex_payment_status = "Approved";
+                  }
+                  if (temp.simplex_payment_status === 3) {
+                    var simplex_payment_status = "Cancelled";
+                  }
+
+                  obj["symbol"] = symbol;
+                  obj["date"] = date;
+                  obj["side"] = side;
+                  obj["filled_price"] = fill_price;
+                  obj["quantity"] = quantity;
+                  obj["payment_id"] = payment_id;
+                  obj["quote_id"] = quote_id;
+                  obj["address"] = address;
+                  obj["simplex_payment_status"] = simplex_payment_status;
+                  csvSimplexFields.push(obj);
+                }
+                this.setState(
+                  { historySimplexData: responseData.data, csvSimplexFields },
+                  () => {
+                    console.log(
+                      "historySimplexData",
+                      this.state.historySimplexData
+                    );
+                  }
+                );
+              } else {
+                this.openNotificationWithIcon(
+                  "error",
+                  "Error",
+                  responseData.err
+                );
+              }
+            }
+          } else {
+            this.openNotificationWithIcon("error", "Error", responseData.err);
+          }
+          this.setState({ loader: false });
+        })
+        .catch(error => {});
+    } else {
+      console.log("URL out of loop");
+      let url =
+        API_URL +
+        `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}&trade_type=${this.state.activeKey}`;
+      this.setState({ loader: true });
+      fetch(url, {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn
+        }
+      })
+        .then(response => response.json())
+        .then(responseData => {
+          this.setState({ loader: false });
+          if (responseData.status === 200) {
+            // console.log(
+            //   "ActiveKey after getting response",
+            //   this.state.activeKey
+            // );
+            if (this.state.activeKey === "1") {
+              // alert("Trade History Loop");
+              let csvFields = [];
+              // self = this;
+              if (responseData.data && responseData.data.length > 0) {
+                for (var i = 0; i < responseData.data.length; i++) {
+                  let temp = responseData.data[i];
+                  let obj = {};
+                  var date = moment
+                    .utc(temp.created_at)
+                    .local()
+                    .format(`${this.props.profileData.date_format} HH:mm:ss`);
+                  var side =
+                    Number(temp.user_id) === this.props.profileData.id
+                      ? temp.side
+                      : temp.side === "Buy"
+                      ? "Sell"
+                      : "Buy";
+                  var filledPrice = temp.fill_price.toFixed(4);
+                  var amount = temp.quantity.toFixed(4);
+                  var fee =
+                    Number(temp.user_id) === this.props.profileData.id
+                      ? temp.user_fee !== null
+                        ? temp.user_fee.toFixed(8)
+                        : "-"
+                      : temp.requested_fee !== null
+                      ? temp.requested_fee.toFixed(8)
+                      : "-";
+                  var volume = (temp.fill_price * temp.quantity).toFixed(4);
+
+                  obj["date"] = date;
+                  obj["side"] = side;
+                  obj["filled_price"] = filledPrice;
+                  obj["amount"] = amount;
+                  obj["fee"] = fee;
+                  obj["volume"] = volume;
+                  csvFields.push(obj);
+                }
+                this.setState(
+                  { historyData: responseData.data, csvFields },
+                  () => {
+                    console.log(
+                      "historyData after loop",
+                      this.state.historyData
+                    );
+                  }
+                );
+              } else {
+                this.openNotificationWithIcon(
+                  "error",
+                  "Error",
+                  responseData.err
+                );
+              }
+            } else if (this.state.activeKey === "2") {
+              // console.log(
+              //   "ActiveKey after getting response",
+              //   this.state.activeKey
+              // );
               let csvSimplexFields = [];
               if (responseData.data && responseData.data.length > 0) {
                 // alert("Simplex History Loop");
@@ -474,17 +656,25 @@ class History extends Component {
         break;
       }
     }
-    if (this.state.drop2Value !== "")
+    if (this.state.drop2Value !== "") {
+      console.log("If drop2Value not null in select1");
       this.setState(
         {
           drop2List: coinList,
           drop1Value: value
         },
         () => {
+          self.loadCoinList();
           self.historyResult();
         }
       );
-    else
+    } else if (
+      this.state.drop2Value === null &&
+      this.state.drop1Value === null
+    ) {
+      console.log("sdjfgjsfjk");
+    } else {
+      console.log("Else drop2Value null in select1");
       this.setState(
         {
           drop2List: coinList,
@@ -492,9 +682,11 @@ class History extends Component {
           drop2Value: null
         },
         () => {
+          self.loadCoinList();
           self.historyResult();
         }
       );
+    }
   }
 
   /* 
@@ -512,17 +704,20 @@ class History extends Component {
         break;
       }
     }
-    if (this.state.drop1Value !== "")
+    if (this.state.drop1Value !== "") {
+      console.log("If drop1Value not null in select2");
       this.setState(
         {
           drop1List: coinList,
           drop2Value: value
         },
         () => {
+          self.loadCoinList();
           self.historyResult();
         }
       );
-    else
+    } else {
+      console.log("Else drop1Value null in select2");
       this.setState(
         {
           drop1List: coinList,
@@ -530,9 +725,11 @@ class History extends Component {
           drop1Value: null
         },
         () => {
+          self.loadCoinList();
           self.historyResult();
         }
       );
+    }
   }
 
   /* 
@@ -671,6 +868,8 @@ class History extends Component {
                       showSearch
                       style={{ width: 120 }}
                       onChange={this.selectChange1}
+                      value={this.state.drop1Value}
+                      // defaultValue={"Select Currency"}
                     >
                       {this.state.drop1List.map(element => (
                         <Option value={element.coin}>{element.coin}</Option>
@@ -681,6 +880,9 @@ class History extends Component {
                       showSearch
                       style={{ width: 120 }}
                       onChange={this.selectChange2}
+                      value={this.state.drop2Value}
+
+                      // defaultValue={"Select Currency"}
                     >
                       {this.state.drop2List.map(element => (
                         <Option value={element.coin}>{element.coin}</Option>

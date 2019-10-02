@@ -10,6 +10,7 @@ import CompleteKYC from "../../../SHARED-COMPONENTS/CompleteKYC";
 import PanicEnabled from "../../../SHARED-COMPONENTS/PanicEnabled";
 import CountryAccess from "../../../SHARED-COMPONENTS/CountryAccess";
 import ComingSoon from "../../../COMPONENTS/comingsoon";
+import { globalVariables } from "Globals.js";
 // Styled components
 import {
   ContactWrap,
@@ -123,7 +124,7 @@ class Conversion extends React.Component {
     }
   }
   tokenAccess() {
-    this.props.history.push("/token-coming-soon");
+    this.props.history.push("token");
     // if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
     //   alert("Idf");
     //   this.setState({ panicEnabled: true });
@@ -206,9 +207,12 @@ class Conversion extends React.Component {
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
                   </ColSubHeadConStyle>
-                  <ColBtnConStyle onClick={this.tokenAccess}>
-                    Token
-                  </ColBtnConStyle>
+                  <a
+                    className="tokenlink"
+                    href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+                  >
+                    <ColBtnConStyle>Token</ColBtnConStyle>
+                  </a>
                 </ColConStyle>
               </RowConStyle>
             </ContainerConversion>

@@ -394,7 +394,14 @@ class LoggedNavigation extends Component {
   //   }
   // }
   cryptoAccess() {
-    if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
+    console.log(
+      "this.props.profileDetails.is_panic_enabled",
+      this.props.profileDetails.is_panic_enabled
+    );
+    let panic = JSON.parse(this.props.profileDetails.is_panic_enabled);
+    // console.log("Panic", panic);
+
+    if (panic === true) {
       // alert("Idf");
       this.setState({ panicEnabled: true });
     } else {
@@ -496,7 +503,12 @@ class LoggedNavigation extends Component {
           <a onClick={this.simplexAccess}>Simplex</a>
         </Menu.Item>
         <Menu.Item key="2">
-          <a onClick={this.tokenAccess}>Token</a>
+          <a
+            className="tokenlink"
+            href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+          >
+            Token
+          </a>
         </Menu.Item>
       </Menu>
     );
