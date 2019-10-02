@@ -7,8 +7,10 @@ import ConversionDetail from "./conversion_detail";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import CompleteKYC from "../../../SHARED-COMPONENTS/CompleteKYC";
+import PanicEnabled from "../../../SHARED-COMPONENTS/PanicEnabled";
 import CountryAccess from "../../../SHARED-COMPONENTS/CountryAccess";
 import ComingSoon from "../../../COMPONENTS/comingsoon";
+import { globalVariables } from "Globals.js";
 // Styled components
 import {
   ContactWrap,
@@ -32,7 +34,8 @@ class Conversion extends React.Component {
       loader: false,
       completeKYC: false,
       countryAccess: false,
-      comingSoon: false
+      comingSoon: false,
+      panicEnabled: false
       // showConversion: false
     };
     this.comingCancel = this.comingCancel.bind(this);
@@ -60,76 +63,92 @@ class Conversion extends React.Component {
     this.setState({
       comingSoon: false,
       countryAccess: false,
-      completeKYC: false
+      completeKYC: false,
+      panicEnabled: false
     });
   };
   cryptoAccess() {
-    if (
-      this.props.profileDetails.is_allowed === true &&
-      this.props.profileDetails.is_kyc_done === 2
-    ) {
-      // alert("IF");
-      console.log("I am here", this.props.location.pathname);
-      // this.props.history.push('/trade');
-      if (this.props.location.pathname !== "/crypto-conversion")
-        this.props.history.push("/crypto-conversion");
+    if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
+      // alert("Idf");
+      this.setState({ panicEnabled: true });
     } else {
       if (
-        this.props.profileDetails.is_allowed === false &&
-        this.props.profileDetails.is_kyc_done !== 2
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
       ) {
-        // alert("ELSE IF");
-        this.setState({ completeKYC: true });
+        // alert("IF");
+        console.log("I am here", this.props.location.pathname);
+        // this.props.history.push('/trade');
+        if (this.props.location.pathname !== "/crypto-conversion")
+          this.props.history.push("/crypto-conversion");
       } else {
-        // alert("ELSE ELSE");
-        this.setState({ countryAccess: true });
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          // alert("ELSE IF");
+          this.setState({ completeKYC: true });
+        } else {
+          // alert("ELSE ELSE");
+          this.setState({ countryAccess: true });
+        }
       }
     }
   }
   simplexAccess() {
-    if (
-      this.props.profileDetails.is_allowed === true &&
-      this.props.profileDetails.is_kyc_done === 2
-    ) {
-      // alert("IF");
-      console.log("I am here", this.props.location.pathname);
-      // this.props.history.push('/trade');
-      if (this.props.location.pathname !== "/simplex")
-        this.props.history.push("/simplex");
+    if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
+      // alert("Idf");
+      this.setState({ panicEnabled: true });
     } else {
       if (
-        this.props.profileDetails.is_allowed === false &&
-        this.props.profileDetails.is_kyc_done !== 2
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
       ) {
-        // alert("ELSE IF");
-        this.setState({ completeKYC: true });
+        // alert("IF");
+        console.log("I am here", this.props.location.pathname);
+        // this.props.history.push('/trade');
+        if (this.props.location.pathname !== "/simplex")
+          this.props.history.push("/simplex");
       } else {
-        // alert("ELSE ELSE");
-        this.setState({ countryAccess: true });
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          // alert("ELSE IF");
+          this.setState({ completeKYC: true });
+        } else {
+          // alert("ELSE ELSE");
+          this.setState({ countryAccess: true });
+        }
       }
     }
   }
   tokenAccess() {
-    this.props.history.push("/token-coming-soon");
-    // if (
-    //   this.props.profileDetails.is_allowed === true &&
-    //   this.props.profileDetails.is_kyc_done === 2
-    // ) {
-    //   // alert("IF");
-    //   console.log("I am here", this.props.location.pathname);
-    //   // this.props.history.push('/trade');
-    //   if (this.props.location.pathname !== "/token")
-    //     this.props.history.push("/token");
+    this.props.history.push("token");
+    // if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
+    //   alert("Idf");
+    //   this.setState({ panicEnabled: true });
     // } else {
     //   if (
-    //     this.props.profileDetails.is_allowed === false &&
-    //     this.props.profileDetails.is_kyc_done !== 2
+    //     this.props.profileDetails.is_allowed === true &&
+    //     this.props.profileDetails.is_kyc_done === 2
     //   ) {
-    //     // alert("ELSE IF");
-    //     this.setState({ completeKYC: true });
+    //     // alert("IF");
+    //     console.log("I am here", this.props.location.pathname);
+    //     // this.props.history.push('/trade');
+    //     if (this.props.location.pathname !== "/token")
+    //       this.props.history.push("/token");
     //   } else {
-    //     // alert("ELSE ELSE");
-    //     this.setState({ countryAccess: true });
+    //     if (
+    //       this.props.profileDetails.is_allowed === false &&
+    //       this.props.profileDetails.is_kyc_done !== 2
+    //     ) {
+    //       // alert("ELSE IF");
+    //       this.setState({ completeKYC: true });
+    //     } else {
+    //       // alert("ELSE ELSE");
+    //       this.setState({ countryAccess: true });
+    //     }
     //   }
     // }
   }
@@ -166,19 +185,6 @@ class Conversion extends React.Component {
                 </ColConStyle>
                 <ColConStyle>
                   <ColHeadConStyle>
-                    Buy crypto courrency from your bank account
-                  </ColHeadConStyle>
-                  <ColSubHeadConStyle>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </ColSubHeadConStyle>
-                  <ColBtnConStyle onClick={this.tokenAccess}>
-                    Token
-                  </ColBtnConStyle>
-                </ColConStyle>
-                <ColConStyle>
-                  <ColHeadConStyle>
                     Buy crypto courrnce using your credit card
                   </ColHeadConStyle>
                   <ColSubHeadConStyle>
@@ -191,6 +197,22 @@ class Conversion extends React.Component {
                     Simplex
                   </ColBtnConStyle>
                   {/* </Link> */}
+                </ColConStyle>
+                <ColConStyle>
+                  <ColHeadConStyle>
+                    Buy crypto courrency from your bank account
+                  </ColHeadConStyle>
+                  <ColSubHeadConStyle>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </ColSubHeadConStyle>
+                  <a
+                    className="tokenlink"
+                    href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+                  >
+                    <ColBtnConStyle>Token</ColBtnConStyle>
+                  </a>
                 </ColConStyle>
               </RowConStyle>
             </ContainerConversion>
@@ -207,6 +229,10 @@ class Conversion extends React.Component {
           <CompleteKYC
             comingCancel={e => this.comingCancel(e)}
             visible={this.state.completeKYC}
+          />
+          <PanicEnabled
+            comingCancel={e => this.comingCancel(e)}
+            visible={this.state.panicEnabled}
           />
           {this.state.loader === true ? <FaldaxLoader /> : ""}
         </ContactWrap>

@@ -182,11 +182,6 @@ const routes = [
     exact: false,
     path: "/tickets",
     component: () => <HubspotTickets io={io} />
-  },
-  {
-    exact: false,
-    path: "/token-coming-soon",
-    component: () => <TokenComingSoon io={io} />
   }
 ];
 

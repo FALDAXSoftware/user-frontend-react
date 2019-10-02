@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import styled from "styled-components";
-import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
+import LoggedNavigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from "STYLED-COMPONENTS/HOMEPAGE/style";
 import {
@@ -96,7 +96,7 @@ class TokenComingSoon extends Component {
   render() {
     return (
       <ContactWrap>
-        <Navigation />
+        <LoggedNavigation />
         <GreyWrap>
           <ContainerContact>
             <TokComHead>We’re coming soon…</TokComHead>
