@@ -15,6 +15,7 @@ import ComingSoon from "COMPONENTS/comingsoon";
 import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
 import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
 import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
+import { DropMenu, SubMenuNav } from "./navigation";
 
 /* CONSTANTS */
 import {
@@ -121,8 +122,78 @@ const SideNav = styled.div`
     color: white !important;
     cursor: pointer;
   }
+  a.DROP {
+    padding: 8px 32px;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    transition: 0.5s;
+    line-height: 1.5;
+    color: white !important;
+    cursor: pointer;
+    > ul {
+      border-right: 0;
+      > li {
+        > ul {
+          > li:first-child {
+            margin-top: 15px;
+          }
+          > li {
+            height: 24px !important;
+            line-height: 1 !important;
+            > a {
+              height: 24px;
+              line-height: 1;
+              display: flex;
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+  }
+  a.DROPSUB {
+    padding: 8px 32px;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    transition: 0.5s;
+    line-height: 1.5;
+    color: white !important;
+    cursor: pointer;
+    > ul {
+      border-right: 0;
+      > li {
+        > ul {
+          > li:first-child {
+            margin-top: 15px;
+          }
+          > li {
+            height: 24px !important;
+            line-height: 1 !important;
+            > a {
+              height: 24px;
+              line-height: 1;
+              display: flex;
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+  }
   @media (min-width: 1200px) {
     display: none;
+  }
+  @media (min-width: 576px) {
+    & .DROP {
+      display: none !important;
+    }
+  }
+  @media (min-width: 1200px) {
+    & .DROPSUB {
+      display: none !important;
+    }
   }
 `;
 const Close = styled.span`
@@ -167,7 +238,6 @@ const CarLink = styled(Link)`
   line-height: 1.5;
   color: white !important;
   cursor: pointer;
-  text-transform: uppercase;
   @media (min-width: 671px) {
     display: none !important;
   }
@@ -259,7 +329,7 @@ class LoggedNavigation extends Component {
     */
 
   openNav() {
-    /* console.log('open nav'); */
+    // console.log("open nav Logged");
     if (
       document.getElementById("mySidenav2") !== undefined &&
       document.getElementById("mySidenav2") !== null
@@ -366,9 +436,9 @@ class LoggedNavigation extends Component {
     } else {
     }
   }
-  openNav() {
-    this.props.openNav();
-  }
+  // openNav() {
+  //   this.props.openNav();
+  // }
 
   /* 
         Page: on every page after login on top right
@@ -605,7 +675,7 @@ class LoggedNavigation extends Component {
           <Afterlog
             {...this.props}
             prof_name={prof_name}
-            openNav={() => this.openNav()}
+            openLogNav={() => this.openNav()}
           />
         </RightCol>
         <ReactSwipeEvents
@@ -622,28 +692,153 @@ class LoggedNavigation extends Component {
               &times;
             </Close>
             <LogoutStyle>
-              <Link to="/editProfile">PROFILE</Link>
+              <Link to="/editProfile">Profile</Link>
             </LogoutStyle>
             {/* <span> <Link to="/dashboard">DASHBOARD</Link></span> */}
             {/* <span> <Link to="/conversion">CONVERSION</Link></span> */}
             {/* <span onClick={this.tradeAccess}>CONVERSION</span> */}
-            <span>
+            {/* <span>
               {" "}
-              <Link to="/conversion">CONVERSION</Link>
-            </span>
+              <Link to="/conversion">Conversion</Link>
+            </span> */}
+            <a className="DROPSUB">
+              <DropMenu mode="inline">
+                <SubMenuNav key="mobsub1" title={"Conversion"}>
+                  <Menu.Item key="0">
+                    <a onClick={this.cryptoAccess}>Brokerage</a>
+                  </Menu.Item>
+                  <Menu.Item key="1">
+                    <a onClick={this.simplexAccess}>Simplex</a>
+                  </Menu.Item>
+                  <Menu.Item key="2">
+                    <a
+                      className="tokenlink"
+                      href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+                    >
+                      Token
+                    </a>
+                  </Menu.Item>
+                </SubMenuNav>
+              </DropMenu>
+            </a>
             {/* <span onClick={this.tradeAccess}>TRADE</span> */}
             <span>
               {" "}
-              <Link to="/wallet">WALLET</Link>
+              <Link to="/wallet">Wallet</Link>
             </span>
-            <span>
+            {/* <span>
               {" "}
-              <Link to="/history">HISTORY</Link>
-            </span>
+              <Link to="/history">History</Link>
+            </span> */}
+            <a className="DROPSUB">
+              <DropMenu mode="inline">
+                <SubMenuNav key="mobsub2" title={"History"}>
+                  <Menu.Item key="0">
+                    <a
+                      onClick={() =>
+                        this.props.history.push({
+                          pathname: "/history",
+                          tradeType: "1"
+                        })
+                      }
+                    >
+                      Trade History
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="1">
+                    <a
+                      onClick={() =>
+                        this.props.history.push({
+                          pathname: "/history",
+                          tradeType: "2"
+                        })
+                      }
+                    >
+                      Simplex History
+                    </a>
+                  </Menu.Item>
+                </SubMenuNav>
+              </DropMenu>
+            </a>
             <span>
               <CarLink to="/careers">Careers</CarLink>
             </span>
-            <LogoutStyle onClick={this.logout.bind(this)}> LOGOUT </LogoutStyle>
+            <a className="DROP">
+              <DropMenu mode="inline">
+                <SubMenuNav key="sub1" title={"Information"}>
+                  <Menu.Item key="9">
+                    <a href={`${globalVariables.WordpressSiteURL}/about-us`}>
+                      About Us
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="10">
+                    <a href={`${globalVariables.WordpressSiteURL}/contact-us`}>
+                      Contact Us
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="11">
+                    <a
+                      href={`${globalVariables.WordpressSiteURL}/media-contact`}
+                    >
+                      Media Contact
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="12">
+                    <a href={`${globalVariables.WordpressSiteURL}/blogs`}>
+                      Blogs
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="13">
+                    <a href={`${globalVariables.WordpressSiteURL}/fee`}>Fees</a>
+                  </Menu.Item>
+                </SubMenuNav>
+              </DropMenu>
+            </a>
+            <a className="DROP">
+              <DropMenu mode="inline">
+                <SubMenuNav key="sub2" title={"Support"}>
+                  <Menu.Item key="9">
+                    <Link to="/open-ticket">Open a Ticket</Link>
+                  </Menu.Item>
+                  <Menu.Item key="10">
+                    <a href="https://knowledge.faldax.com/">FAQ</a>
+                  </Menu.Item>
+                  {/* <Menu.Item key="11"><a href="#">API Documentation</a></Menu.Item> */}
+                  <Menu.Item key="12">
+                    <a
+                      href={`${globalVariables.WordpressSiteURL}/list-your-token`}
+                    >
+                      List Your Token
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="12">
+                    <a href={`${globalVariables.WordpressSiteURL}/news`}>
+                      News
+                    </a>
+                  </Menu.Item>
+                </SubMenuNav>
+              </DropMenu>
+            </a>
+            <a className="DROP">
+              <DropMenu mode="inline">
+                <SubMenuNav key="sub3" title={"Legal & Technical"}>
+                  <Menu.Item key="9">
+                    <a href={`${globalVariables.WordpressSiteURL}/policies`}>
+                      Policies
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="10">
+                    <a
+                      href={`${globalVariables.WordpressSiteURL}/service-availability`}
+                    >
+                      Service Availability
+                    </a>
+                  </Menu.Item>
+                  {/* <Menu.Item key="11"><a onClick={this.showComing} href="#">Security</a></Menu.Item> */}
+                </SubMenuNav>
+              </DropMenu>
+            </a>
+            <LogoutStyle onClick={this.logout.bind(this)}> Logout </LogoutStyle>
           </SideNav>
         </ReactSwipeEvents>
         <ComingSoon

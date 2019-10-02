@@ -161,6 +161,9 @@ class Afterlog extends Component {
     this.setState({ comingSoon: false });
   };
 
+  openNav() {
+    this.props.openLogNav();
+  }
   /* 
             Page: on every page after login on top right
             It is called when we click close button on Modal.
