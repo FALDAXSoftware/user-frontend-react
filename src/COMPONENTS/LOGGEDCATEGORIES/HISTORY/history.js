@@ -328,7 +328,13 @@ class History extends Component {
                     );
                   }
                 );
-              } else {
+              }
+              // else if (responseData.length === 0) {
+              //   alert("no data");
+              //   let csvFields = [];
+              //   this.setState({ historyData: responseData.data, csvFields });
+              // }
+              else {
                 this.openNotificationWithIcon(
                   "error",
                   "Error",
@@ -388,7 +394,15 @@ class History extends Component {
                     );
                   }
                 );
-              } else {
+              }
+              // else if (responseData.length === 0) {
+              //   alert("no data");
+              //   this.setState({
+              //     historySimplexData: responseData.data,
+              //     csvSimplexFields
+              //   });
+              // }
+              else {
                 this.openNotificationWithIcon(
                   "error",
                   "Error",
@@ -420,10 +434,10 @@ class History extends Component {
         .then(responseData => {
           this.setState({ loader: false });
           if (responseData.status === 200) {
-            // console.log(
-            //   "ActiveKey after getting response",
-            //   this.state.activeKey
-            // );
+            console.log(
+              "ActiveKey after getting response",
+              this.state.activeKey
+            );
             if (this.state.activeKey === "1") {
               // alert("Trade History Loop");
               let csvFields = [];
@@ -484,7 +498,7 @@ class History extends Component {
               //   this.state.activeKey
               // );
               let csvSimplexFields = [];
-              if (responseData.data && responseData.data.length > 0) {
+              if (responseData.data.length > 0) {
                 // alert("Simplex History Loop");
                 for (var i = 0; i < responseData.data.length; i++) {
                   let temp = responseData.data[i];
@@ -531,7 +545,23 @@ class History extends Component {
                     );
                   }
                 );
-              } else {
+              }
+              // else if (responseData.length === 0) {
+              //   alert("no data");
+              //   this.setState(
+              //     {
+              //       historySimplexData: responseData.data,
+              //       csvSimplexFields
+              //     },
+              //     () => {
+              //       console.log(
+              //         "historySimplexData1",
+              //         this.state.historySimplexData
+              //       );
+              //     }
+              //   );
+              // }
+              else {
                 this.openNotificationWithIcon(
                   "error",
                   "Error",
@@ -913,13 +943,15 @@ class History extends Component {
                     ""
                   )}
                 </Filter>
-                <div style={{ paddingLeft: "15px", marginTop: "20px" }}>
-                  <CheckboxGroupS
-                    options={options}
-                    defaultValue={["SEND", "RECEIVE", "SELL", "BUY"]}
-                    onChange={this.onChangeCheck}
-                  />
-                </div>
+                {this.state.activeKey === "1" && (
+                  <div style={{ paddingLeft: "15px", marginTop: "20px" }}>
+                    <CheckboxGroupS
+                      options={options}
+                      defaultValue={["SEND", "RECEIVE", "SELL", "BUY"]}
+                      onChange={this.onChangeCheck}
+                    />
+                  </div>
+                )}
               </HeadHis>
               <HisWrap>
                 <Tabs
@@ -1016,6 +1048,10 @@ class History extends Component {
                             <th>Simplex Payment Status</th>
                           </tr>
                         </thead>
+                        {
+                          ("ashgdjsghdjahgsdjghajskdghajsdgjh===========",
+                          this.state.historySimplexData.length)
+                        }
                         {this.state.historySimplexData !== undefined ? (
                           this.state.historySimplexData.length > 0 ? (
                             <tbody>
