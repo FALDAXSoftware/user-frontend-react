@@ -516,6 +516,9 @@ export const ColConStyle = styled.div`
     margin: 0 20px 20px;
     padding: 40px 30px;
   }
+  > .tokenlink {
+    width: calc(100% - 30px);
+  }
 `;
 export const ColHeadConStyle = styled.span`
   font-size: 24px;

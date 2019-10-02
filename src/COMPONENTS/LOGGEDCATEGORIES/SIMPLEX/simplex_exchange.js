@@ -43,20 +43,7 @@ class SimplexExchange extends React.Component {
       address: "",
       response: "",
       destination_wallet: "",
-      currencyList: [
-        {
-          id: 1,
-          coin: "USD",
-          coin_icon:
-            "https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png"
-        },
-        {
-          id: 2,
-          coin: "EUR",
-          coin_icon:
-            "https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png"
-        }
-      ]
+      currencyList: []
     };
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
@@ -87,7 +74,7 @@ class SimplexExchange extends React.Component {
     this.setState({
       loader: true
     });
-    fetch(API_URL + `/coin-list-converison`, {
+    fetch(API_URL + `/get-simplex-coin-list`, {
       method: "get",
       headers: {
         Accept: "application/json",
@@ -98,8 +85,10 @@ class SimplexExchange extends React.Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 200) {
+          console.log("responsedata 200", responseData.object.coinList);
           this.setState({
-            cryptoList: responseData.data,
+            currencyList: responseData.object.fiat,
+            cryptoList: responseData.object.coinList,
             loader: false
           });
         }

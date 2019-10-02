@@ -388,6 +388,10 @@ table .ant-table-tbody > tr > td {
 .ant-dropdown-menu {
   margin-top: 10px !important;
 }
+.custom_dropdown_menu {
+  top: 77px !important;
+  min-width: 163px !important;
+}
 .ant-dropdown-placement-bottomLeft,
 .ant-dropdown-placement-bottomRight {
   position: fixed !important;
@@ -690,6 +694,7 @@ label.kyc-radio-container .background {
                                 supported by Chrome and Opera */
   box-shadow: 0px 2px 8px 0px rgb(0, 0, 0);
   border-radius: 10px;
+  text-align: center;
 }
 label.kyc-radio-container input:checked ~ .background {
   background-color: rgb(0, 170, 250);

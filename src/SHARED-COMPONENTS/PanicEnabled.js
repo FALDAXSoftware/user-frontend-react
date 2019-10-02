@@ -1,14 +1,14 @@
-import React from "react";
+import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { Modal, Icon, notification } from "antd";
 import { withRouter } from "react-router-dom";
-import { globalVariables } from "../Globals.js";
+import { globalVariables } from "Globals.js";
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
 import { ModalWrap } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
 
 /* const API_URL = globalVariables.API_URL; */
 
-class ComingSoon extends React.Component {
+class PanicEnabled extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -89,9 +89,9 @@ class ComingSoon extends React.Component {
         <Modal
           title={
             <div>
-              <img alt="coming" src={_COMINGIMG} />{" "}
+              <img alt="FALDAX" src={_COMINGIMG} />{" "}
               <img
-                alt="coming"
+                alt="FALDAX"
                 style={{ marginLeft: "10px" }}
                 src={_COMINGIMG2}
               />
@@ -100,8 +100,12 @@ class ComingSoon extends React.Component {
           visible={this.props.visible}
           onOk={e => this.handleComing()}
           onCancel={e => this.comingCancel(e)}
-          // closable={this.props.location.pathname == "/conversion" ? false : true}
-          // maskClosable={this.props.location.pathname == "/conversion" ? false : true}
+          //   closable={
+          //     this.props.location.pathname == "/conversion" ? false : true
+          //   }
+          //   maskClosable={
+          //     this.props.location.pathname == "/conversion" ? false : true
+          //   }
           footer={null}
           width={605}
           height={490}
@@ -118,7 +122,7 @@ class ComingSoon extends React.Component {
                 marginTop: "40px"
               }}
             >
-              You Can't Trade
+              Panic
             </h3>
             <p
               style={{
@@ -130,7 +134,8 @@ class ComingSoon extends React.Component {
                 marginTop: "40px"
               }}
             >
-              Trading is illegal in your country.
+              Panic Enabled
+              {/* {this.props.data} */}
             </p>
             {/* <Sub_wrap>
                             <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>
@@ -146,4 +151,4 @@ class ComingSoon extends React.Component {
   }
 }
 
-export default withRouter(ComingSoon);
+export default withRouter(PanicEnabled);
