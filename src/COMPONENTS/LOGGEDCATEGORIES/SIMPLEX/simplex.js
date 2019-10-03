@@ -46,20 +46,9 @@ class Simplex extends React.Component {
       crypto: "BTC",
       currency: "USD",
       quote_id: "",
-      currencyList: [
-        {
-          id: 1,
-          coin: "USD",
-          coin_icon:
-            "https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png"
-        },
-        {
-          id: 2,
-          coin: "EUR",
-          coin_icon:
-            "https://s3.us-east-2.amazonaws.com/production-static-asset/coin/defualt_coin.png"
-        }
-      ]
+      currencyList: [],
+      typing: false,
+      typingTimeout: 0
     };
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
@@ -86,11 +75,35 @@ class Simplex extends React.Component {
   componentDidMount(e) {
     this.getCrypto();
   }
+  // getCrypto() {
+  //   this.setState({
+  //     loader: true
+  //   });
+  //   fetch(API_URL + `/coin-list-converison`, {
+  //     method: "get",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + this.props.isLoggedIn
+  //     }
+  //   })
+  //     .then(response => response.json())
+  //     .then(responseData => {
+  //       if (responseData.status == 200) {
+  //         console.log("responseData.data", responseData);
+  //         this.setState({
+  //           cryptoList: responseData.data,
+  //           loader: false
+  //         });
+  //       }
+  //     })
+  //     .catch(error => {});
+  // }
   getCrypto() {
     this.setState({
       loader: true
     });
-    fetch(API_URL + `/coin-list-converison`, {
+    fetch(API_URL + `/get-simplex-coin-list`, {
       method: "get",
       headers: {
         Accept: "application/json",
@@ -101,8 +114,10 @@ class Simplex extends React.Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 200) {
+          console.log("responsedata 200", responseData.object.coinList);
           this.setState({
-            cryptoList: responseData.data,
+            currencyList: responseData.object.fiat,
+            cryptoList: responseData.object.coinList,
             loader: false
           });
         }
@@ -162,6 +177,20 @@ class Simplex extends React.Component {
     }
   }
   handleCurrencyPayChange(e) {
+    const self = this;
+
+    if (self.state.typingTimeout) {
+      clearTimeout(self.state.typingTimeout);
+    }
+
+    // self.setState({
+    //   name: event.target.value,
+    //   typing: false,
+    //   typingTimeout: setTimeout(function() {
+    //     self.sendToParent(self.state.name);
+    //   }, 5000)
+    // });
+
     if (
       e.target.value === 0 ||
       e.target.value === null ||
@@ -169,11 +198,15 @@ class Simplex extends React.Component {
     ) {
       this.setState({
         currencyToPay: e.target.value,
-        currencyToGet: 0
+        currencyToGet: 0,
+        typing: false,
+        typingTimeout: setTimeout(function() {}, 5000)
       });
     } else {
       this.setState(
         {
+          typing: false,
+          typingTimeout: setTimeout(function() {}, 5000),
           currencyToPay: parseFloat(e.target.value)
         },
         () => {

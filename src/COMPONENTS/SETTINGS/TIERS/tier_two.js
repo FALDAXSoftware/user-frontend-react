@@ -129,11 +129,6 @@ const TierButtonWrap = styled.div`
     margin-top: 50px;
     text-align: center;
   }
-  > div {
-    > button {
-      margin: 0;
-    }
-  }
 `;
 class TierTwo extends React.Component {
   constructor(props) {
@@ -422,6 +417,7 @@ class TierTwo extends React.Component {
                       <NextButton
                         onClick={this.residenceProofSubmit}
                         type="primary"
+                        className="tier_btn"
                       >
                         Submit
                       </NextButton>
@@ -433,10 +429,15 @@ class TierTwo extends React.Component {
                     <SSNWrap>
                       <SSNSub>
                         <SSNlabel>Social Security Number</SSNlabel>
+                        <input type="text" placeholder="SSN" />
                       </SSNSub>
                     </SSNWrap>
                     <TierButtonWrap className="button_wrap_tier">
-                      <NextButton onClick={this.ssnSubmit} type="primary">
+                      <NextButton
+                        className="tier_btn"
+                        onClick={this.ssnSubmit}
+                        type="primary"
+                      >
                         Submit
                       </NextButton>
                     </TierButtonWrap>
