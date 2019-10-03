@@ -1048,10 +1048,10 @@ class History extends Component {
                             <th>Simplex Payment Status</th>
                           </tr>
                         </thead>
-                        {
+                        {/* {
                           ("ashgdjsghdjahgsdjghajskdghajsdgjh===========",
                           this.state.historySimplexData.length)
-                        }
+                        } */}
                         {this.state.historySimplexData !== undefined ? (
                           this.state.historySimplexData.length > 0 ? (
                             <tbody>
