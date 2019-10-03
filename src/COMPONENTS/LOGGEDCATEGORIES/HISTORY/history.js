@@ -254,7 +254,7 @@ class History extends Component {
         url =
           API_URL +
           `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}&trade_type=${this.state.activeKey}`;
-        console.log("URL", url);
+        // console.log("URL", url);
       } else if (this.state.drop1Value !== "" && this.state.drop2Value !== "") {
         url =
           url +
@@ -262,8 +262,177 @@ class History extends Component {
           this.state.drop1Value +
           "-" +
           this.state.drop2Value;
-        console.log("URL", url);
+        // console.log("URL", url);
       }
+      this.setState({ loader: true });
+      fetch(url, {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn
+        }
+      })
+        .then(response => response.json())
+        .then(responseData => {
+          this.setState({ loader: false });
+          if (responseData.status === 200) {
+            // console.log(
+            //   "ActiveKey after getting response",
+            //   this.state.activeKey
+            // );
+            if (this.state.activeKey === "1") {
+              // alert("Trade History Loop");
+              let csvFields = [];
+              // self = this;
+              if (responseData.data && responseData.data.length > 0) {
+                for (var i = 0; i < responseData.data.length; i++) {
+                  let temp = responseData.data[i];
+                  let obj = {};
+                  var date = moment
+                    .utc(temp.created_at)
+                    .local()
+                    .format(`${this.props.profileData.date_format} HH:mm:ss`);
+                  var side =
+                    Number(temp.user_id) === this.props.profileData.id
+                      ? temp.side
+                      : temp.side === "Buy"
+                      ? "Sell"
+                      : "Buy";
+                  var filledPrice = temp.fill_price.toFixed(4);
+                  var amount = temp.quantity.toFixed(4);
+                  var fee =
+                    Number(temp.user_id) === this.props.profileData.id
+                      ? temp.user_fee !== null
+                        ? temp.user_fee.toFixed(8)
+                        : "-"
+                      : temp.requested_fee !== null
+                      ? temp.requested_fee.toFixed(8)
+                      : "-";
+                  var volume = (temp.fill_price * temp.quantity).toFixed(4);
+
+                  obj["date"] = date;
+                  obj["side"] = side;
+                  obj["filled_price"] = filledPrice;
+                  obj["amount"] = amount;
+                  obj["fee"] = fee;
+                  obj["volume"] = volume;
+                  csvFields.push(obj);
+                }
+                this.setState(
+                  { historyData: responseData.data, csvFields },
+                  () => {
+                    console.log(
+                      "historyData after loop If",
+                      this.state.historyData
+                    );
+                  }
+                );
+              } else if (responseData.data.length === 0) {
+                // alert("no data");
+                let csvFields = [];
+                this.setState(
+                  { historyData: responseData.data, csvFields },
+                  () => {
+                    console.log(
+                      "historyData after loop Else If ",
+                      this.state.historyData
+                    );
+                  }
+                );
+              } else {
+                this.openNotificationWithIcon(
+                  "error",
+                  "Error",
+                  responseData.err
+                );
+              }
+            } else if (this.state.activeKey === "2") {
+              // console.log(
+              //   "ActiveKey after getting response",
+              //   this.state.activeKey
+              // );
+              let csvSimplexFields = [];
+              if (responseData.data && responseData.data.length > 0) {
+                // alert("Simplex History Loop");
+                for (var i = 0; i < responseData.data.length; i++) {
+                  let temp = responseData.data[i];
+                  let obj = {};
+                  var symbol = temp.symbol;
+                  var date = moment
+                    .utc(temp.created_at)
+                    .local()
+                    .format(`${this.props.profileData.date_format} HH:mm:ss`);
+                  var side = temp.side;
+                  var fill_price = temp.fill_price.toFixed(4);
+                  var quantity = temp.quantity.toFixed(4);
+                  var payment_id = temp.payment_id;
+                  var quote_id = temp.quote_id;
+                  var address = temp.address;
+
+                  if (temp.simplex_payment_status === 1) {
+                    var simplex_payment_status = "Under Approval";
+                  }
+                  if (temp.simplex_payment_status === 2) {
+                    var simplex_payment_status = "Approved";
+                  }
+                  if (temp.simplex_payment_status === 3) {
+                    var simplex_payment_status = "Cancelled";
+                  }
+
+                  obj["symbol"] = symbol;
+                  obj["date"] = date;
+                  obj["side"] = side;
+                  obj["filled_price"] = fill_price;
+                  obj["quantity"] = quantity;
+                  obj["payment_id"] = payment_id;
+                  obj["quote_id"] = quote_id;
+                  obj["address"] = address;
+                  obj["simplex_payment_status"] = simplex_payment_status;
+                  csvSimplexFields.push(obj);
+                }
+                this.setState(
+                  { historySimplexData: responseData.data, csvSimplexFields },
+                  () => {
+                    console.log(
+                      "historySimplexData IF",
+                      this.state.historySimplexData
+                    );
+                  }
+                );
+              } else if (responseData.data.length === 0) {
+                // alert("no data");
+                this.setState(
+                  {
+                    historySimplexData: responseData.data,
+                    csvSimplexFields
+                  },
+                  () => {
+                    console.log(
+                      "historySimplexData Else If",
+                      this.state.historySimplexData
+                    );
+                  }
+                );
+              } else {
+                this.openNotificationWithIcon(
+                  "error",
+                  "Error",
+                  responseData.err
+                );
+              }
+            }
+          } else {
+            this.openNotificationWithIcon("error", "Error", responseData.err);
+          }
+          this.setState({ loader: false });
+        })
+        .catch(error => {});
+    } else {
+      console.log("URL out of loop");
+      let url =
+        API_URL +
+        `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}&trade_type=${this.state.activeKey}`;
       this.setState({ loader: true });
       fetch(url, {
         method: "get",
@@ -328,159 +497,13 @@ class History extends Component {
                     );
                   }
                 );
-              }
-              // else if (responseData.length === 0) {
-              //   alert("no data");
-              //   let csvFields = [];
-              //   this.setState({ historyData: responseData.data, csvFields });
-              // }
-              else {
-                this.openNotificationWithIcon(
-                  "error",
-                  "Error",
-                  responseData.err
-                );
-              }
-            } else if (this.state.activeKey === "2") {
-              // console.log(
-              //   "ActiveKey after getting response",
-              //   this.state.activeKey
-              // );
-              let csvSimplexFields = [];
-              if (responseData.data && responseData.data.length > 0) {
-                // alert("Simplex History Loop");
-                for (var i = 0; i < responseData.data.length; i++) {
-                  let temp = responseData.data[i];
-                  let obj = {};
-                  var symbol = temp.symbol;
-                  var date = moment
-                    .utc(temp.created_at)
-                    .local()
-                    .format(`${this.props.profileData.date_format} HH:mm:ss`);
-                  var side = temp.side;
-                  var fill_price = temp.fill_price.toFixed(4);
-                  var quantity = temp.quantity.toFixed(4);
-                  var payment_id = temp.payment_id;
-                  var quote_id = temp.quote_id;
-                  var address = temp.address;
-
-                  if (temp.simplex_payment_status === 1) {
-                    var simplex_payment_status = "Under Approval";
-                  }
-                  if (temp.simplex_payment_status === 2) {
-                    var simplex_payment_status = "Approved";
-                  }
-                  if (temp.simplex_payment_status === 3) {
-                    var simplex_payment_status = "Cancelled";
-                  }
-
-                  obj["symbol"] = symbol;
-                  obj["date"] = date;
-                  obj["side"] = side;
-                  obj["filled_price"] = fill_price;
-                  obj["quantity"] = quantity;
-                  obj["payment_id"] = payment_id;
-                  obj["quote_id"] = quote_id;
-                  obj["address"] = address;
-                  obj["simplex_payment_status"] = simplex_payment_status;
-                  csvSimplexFields.push(obj);
-                }
-                this.setState(
-                  { historySimplexData: responseData.data, csvSimplexFields },
-                  () => {
-                    console.log(
-                      "historySimplexData",
-                      this.state.historySimplexData
-                    );
-                  }
-                );
-              }
-              // else if (responseData.length === 0) {
-              //   alert("no data");
-              //   this.setState({
-              //     historySimplexData: responseData.data,
-              //     csvSimplexFields
-              //   });
-              // }
-              else {
-                this.openNotificationWithIcon(
-                  "error",
-                  "Error",
-                  responseData.err
-                );
-              }
-            }
-          } else {
-            this.openNotificationWithIcon("error", "Error", responseData.err);
-          }
-          this.setState({ loader: false });
-        })
-        .catch(error => {});
-    } else {
-      console.log("URL out of loop");
-      let url =
-        API_URL +
-        `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}&trade_type=${this.state.activeKey}`;
-      this.setState({ loader: true });
-      fetch(url, {
-        method: "get",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
-      })
-        .then(response => response.json())
-        .then(responseData => {
-          this.setState({ loader: false });
-          if (responseData.status === 200) {
-            console.log(
-              "ActiveKey after getting response",
-              this.state.activeKey
-            );
-            if (this.state.activeKey === "1") {
-              // alert("Trade History Loop");
-              let csvFields = [];
-              // self = this;
-              if (responseData.data && responseData.data.length > 0) {
-                for (var i = 0; i < responseData.data.length; i++) {
-                  let temp = responseData.data[i];
-                  let obj = {};
-                  var date = moment
-                    .utc(temp.created_at)
-                    .local()
-                    .format(`${this.props.profileData.date_format} HH:mm:ss`);
-                  var side =
-                    Number(temp.user_id) === this.props.profileData.id
-                      ? temp.side
-                      : temp.side === "Buy"
-                      ? "Sell"
-                      : "Buy";
-                  var filledPrice = temp.fill_price.toFixed(4);
-                  var amount = temp.quantity.toFixed(4);
-                  var fee =
-                    Number(temp.user_id) === this.props.profileData.id
-                      ? temp.user_fee !== null
-                        ? temp.user_fee.toFixed(8)
-                        : "-"
-                      : temp.requested_fee !== null
-                      ? temp.requested_fee.toFixed(8)
-                      : "-";
-                  var volume = (temp.fill_price * temp.quantity).toFixed(4);
-
-                  obj["date"] = date;
-                  obj["side"] = side;
-                  obj["filled_price"] = filledPrice;
-                  obj["amount"] = amount;
-                  obj["fee"] = fee;
-                  obj["volume"] = volume;
-                  csvFields.push(obj);
-                }
+              } else if (responseData.data.length === 0) {
+                // alert("no data");
                 this.setState(
                   { historyData: responseData.data, csvFields },
                   () => {
                     console.log(
-                      "historyData after loop",
+                      "historyData after loop tab Else If",
                       this.state.historyData
                     );
                   }
@@ -545,23 +568,21 @@ class History extends Component {
                     );
                   }
                 );
-              }
-              // else if (responseData.length === 0) {
-              //   alert("no data");
-              //   this.setState(
-              //     {
-              //       historySimplexData: responseData.data,
-              //       csvSimplexFields
-              //     },
-              //     () => {
-              //       console.log(
-              //         "historySimplexData1",
-              //         this.state.historySimplexData
-              //       );
-              //     }
-              //   );
-              // }
-              else {
+              } else if (responseData.data.length === 0) {
+                // alert("no data");
+                this.setState(
+                  {
+                    historySimplexData: responseData.data,
+                    csvSimplexFields
+                  },
+                  () => {
+                    console.log(
+                      "historySimplexData1 tab Else IF",
+                      this.state.historySimplexData
+                    );
+                  }
+                );
+              } else {
                 this.openNotificationWithIcon(
                   "error",
                   "Error",
@@ -931,16 +952,40 @@ class History extends Component {
                       format="YYYY-MM-DD"
                     />
                   </Datediv>
-                  {this.state.csvFields !== undefined ? (
-                    this.state.csvFields.length > 0 ? (
-                      <EXPButton>
-                        <CSVLink data={this.state.csvFields}>EXPORT</CSVLink>
-                      </EXPButton>
-                    ) : (
-                      ""
-                    )
-                  ) : (
-                    ""
+                  {this.state.activeKey === "1" && (
+                    <div>
+                      {this.state.csvFields !== undefined ? (
+                        this.state.csvFields.length > 0 ? (
+                          <EXPButton>
+                            <CSVLink data={this.state.csvFields}>
+                              EXPORT
+                            </CSVLink>
+                          </EXPButton>
+                        ) : (
+                          ""
+                        )
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  )}
+                  {this.state.activeKey === "2" && (
+                    <div>
+                      {this.state.csvSimplexFields !== undefined ? (
+                        this.state.csvSimplexFields.length > 0 &&
+                        this.state.csvSimplexFields !== null ? (
+                          <EXPButton>
+                            <CSVLink data={this.state.csvSimplexFields}>
+                              EXPORT
+                            </CSVLink>
+                          </EXPButton>
+                        ) : (
+                          ""
+                        )
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   )}
                 </Filter>
                 {this.state.activeKey === "1" && (
