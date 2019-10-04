@@ -104,6 +104,7 @@ export const Filter = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
 `;
 export const EXPButton = styled(Button)`
   float: right;
