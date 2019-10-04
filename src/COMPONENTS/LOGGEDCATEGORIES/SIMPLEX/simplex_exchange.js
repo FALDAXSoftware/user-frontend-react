@@ -45,6 +45,7 @@ class SimplexExchange extends React.Component {
       cryptoCode: this.props.location.state.crypto_code,
       response: "",
       destination_wallet: "",
+      wallet_details: this.props.location.state.wallet_address,
       currencyList: []
     };
     this.validator1 = new SimpleReactValidator({
@@ -141,14 +142,17 @@ class SimplexExchange extends React.Component {
                   loader: false,
                   currencyToGet: responseData.data.digital_money.amount,
                   quote_id: responseData.data.quote_id,
-                  cryptoCode: responseData.coinDetails.coin_code
+                  cryptoCode: responseData.coinDetails.coin_code,
+                  wallet_details: "",
+                  address: ""
                 });
               } else {
                 this.setState({
                   loader: false,
                   currencyToGet: responseData.data.digital_money.amount,
                   quote_id: responseData.data.quote_id,
-                  address: responseData.walletDetails.receive_address
+                  address: responseData.walletDetails.receive_address,
+                  wallet_details: responseData.walletDetails.receive_address
                 });
               }
             }
@@ -372,7 +376,24 @@ class SimplexExchange extends React.Component {
                   )}
                 </Col>
               </BorderRow>
-              {this.props.location.state.wallet_address === "" ? (
+              <BorderRow>
+                <Col>
+                  <ConversionInput
+                    className="address_field"
+                    type="text"
+                    placeholder="Address"
+                    value={this.state.address}
+                    onChange={this.handleAddressChange}
+                  />
+                  {this.validator1.message(
+                    "address",
+                    this.state.address,
+                    `required|alpha_num|min:15|max:120`,
+                    "text-danger-validation"
+                  )}
+                </Col>
+              </BorderRow>
+              {this.state.wallet_details === "" ? (
                 <CreateWalletRow className="create-wallet-link">
                   <Col>
                     <span>Don't have {this.state.crypto} wallet?</span>
@@ -384,23 +405,7 @@ class SimplexExchange extends React.Component {
                   </Col>
                 </CreateWalletRow>
               ) : (
-                <BorderRow>
-                  <Col>
-                    <ConversionInput
-                      className="address_field"
-                      type="text"
-                      placeholder="Address"
-                      value={this.state.address}
-                      onChange={this.handleAddressChange}
-                    />
-                    {this.validator1.message(
-                      "address",
-                      this.state.address,
-                      `required|alpha_num|min:15|max:120`,
-                      "text-danger-validation"
-                    )}
-                  </Col>
-                </BorderRow>
+                ""
               )}
               {/* {this.state.address === "" ? (
                 <CreateWalletRow className="create-wallet-link">
