@@ -4,7 +4,7 @@ import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import SimpleReactValidator from "simple-react-validator";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Col, Row, notification } from "antd";
 
@@ -22,7 +22,8 @@ import {
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 import {
   SimMainRow,
-  SimLeftCol
+  SimLeftCol,
+  CreateWalletRow
 } from "../../../STYLED-COMPONENTS/SIMPLEX/simplexStyle";
 
 const API_URL = globalVariables.API_URL;
@@ -40,7 +41,8 @@ class SimplexExchange extends React.Component {
       crypto: this.props.location.state.crypto,
       currency: this.props.location.state.currency,
       quote_id: this.props.location.state.id,
-      address: "",
+      address: this.props.location.state.wallet_address,
+      cryptoCode: this.props.location.state.crypto_code,
       response: "",
       destination_wallet: "",
       currencyList: []
@@ -134,12 +136,21 @@ class SimplexExchange extends React.Component {
                 loader: false
               });
             } else {
-              this.setState({
-                loader: false,
-                currencyToGet: responseData.data.digital_money.amount,
-                quote_id: responseData.data.quote_id
-                // loader: false
-              });
+              if (responseData.walletDetails === undefined) {
+                this.setState({
+                  loader: false,
+                  currencyToGet: responseData.data.digital_money.amount,
+                  quote_id: responseData.data.quote_id,
+                  cryptoCode: responseData.coinDetails.coin_code
+                });
+              } else {
+                this.setState({
+                  loader: false,
+                  currencyToGet: responseData.data.digital_money.amount,
+                  quote_id: responseData.data.quote_id,
+                  address: responseData.walletDetails.receive_address
+                });
+              }
             }
           } else if (responseData.status === 500) {
             this.setState({ loader: false });
@@ -175,7 +186,7 @@ class SimplexExchange extends React.Component {
         currencyToGet: 0
       });
     } else {
-      this.timeout = setTimeout(this.calculateDigitalCurrency, 2000);
+      this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
       this.setState({
         currencyToPay: parseFloat(e.target.value)
       });
@@ -361,23 +372,49 @@ class SimplexExchange extends React.Component {
                   )}
                 </Col>
               </BorderRow>
-              <BorderRow>
-                <Col>
-                  <ConversionInput
-                    className="address_field"
-                    type="text"
-                    placeholder="Address"
-                    value={this.state.address}
-                    onChange={this.handleAddressChange}
-                  />
-                  {this.validator1.message(
-                    "address",
-                    this.state.address,
-                    `required|alpha_num|min:15|max:120`,
-                    "text-danger-validation"
-                  )}
-                </Col>
-              </BorderRow>
+              {this.props.location.state.wallet_address === "" ? (
+                <CreateWalletRow className="create-wallet-link">
+                  <Col>
+                    <span>Don't have {this.state.crypto} wallet?</span>
+                    <Link
+                      to={`/walletDetails?coinID0=${this.state.cryptoCode}`}
+                    >
+                      Create {this.state.crypto} wallet
+                    </Link>
+                  </Col>
+                </CreateWalletRow>
+              ) : (
+                <BorderRow>
+                  <Col>
+                    <ConversionInput
+                      className="address_field"
+                      type="text"
+                      placeholder="Address"
+                      value={this.state.address}
+                      onChange={this.handleAddressChange}
+                    />
+                    {this.validator1.message(
+                      "address",
+                      this.state.address,
+                      `required|alpha_num|min:15|max:120`,
+                      "text-danger-validation"
+                    )}
+                  </Col>
+                </BorderRow>
+              )}
+              {/* {this.state.address === "" ? (
+                <CreateWalletRow className="create-wallet-link">
+                  <Col>
+                    <Link
+                      to={`/walletDetails?coinID0=${this.state.cryptoCode}`}
+                    >
+                      Create {this.state.crypto} wallet
+                    </Link>
+                  </Col>
+                </CreateWalletRow>
+              ) : (
+                ""
+              )} */}
               <Row>
                 <Col>
                   <ConversionSubmitBtn

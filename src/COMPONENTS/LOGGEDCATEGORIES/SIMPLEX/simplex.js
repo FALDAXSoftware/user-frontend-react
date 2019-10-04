@@ -46,7 +46,9 @@ class Simplex extends React.Component {
       crypto: "BTC",
       currency: "USD",
       quote_id: "",
-      currencyList: []
+      currencyList: [],
+      wallet_address: "",
+      crypto_code: ""
     };
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
@@ -162,12 +164,21 @@ class Simplex extends React.Component {
                 loader: false
               });
             } else {
-              this.setState({
-                loader: false,
-                currencyToGet: responseData.data.digital_money.amount,
-                quote_id: responseData.data.quote_id
-                // loader: false
-              });
+              if (responseData.walletDetails === undefined) {
+                this.setState({
+                  loader: false,
+                  currencyToGet: responseData.data.digital_money.amount,
+                  quote_id: responseData.data.quote_id,
+                  crypto_code: responseData.coinDetails.coin_code
+                });
+              } else {
+                this.setState({
+                  loader: false,
+                  currencyToGet: responseData.data.digital_money.amount,
+                  quote_id: responseData.data.quote_id,
+                  wallet_address: responseData.walletDetails.receive_address
+                });
+              }
             }
           } else if (responseData.status === 500) {
             this.setState({ loader: false });
@@ -198,7 +209,7 @@ class Simplex extends React.Component {
         currencyToGet: 0
       });
     } else {
-      this.timeout = setTimeout(this.calculateDigitalCurrency, 2000);
+      this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
       this.setState({
         currencyToPay: parseFloat(e.target.value)
       });
@@ -231,7 +242,7 @@ class Simplex extends React.Component {
   }
   btnClicked() {
     if (this.validator1.allValid()) {
-      console.log("response to be sent", this.state.quote_id);
+      console.log("response to be sent", this.state.coin_code);
       this.props.history.push({
         pathname: "/simplex-exchange",
         state: {
@@ -239,7 +250,9 @@ class Simplex extends React.Component {
           currencyToPay: this.state.currencyToPay,
           currencyToGet: this.state.currencyToGet,
           crypto: this.state.crypto,
-          currency: this.state.currency
+          currency: this.state.currency,
+          wallet_address: this.state.wallet_address,
+          crypto_code: this.state.crypto_code
         }
       });
     } else {
