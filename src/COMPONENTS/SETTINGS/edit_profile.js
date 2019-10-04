@@ -14,6 +14,7 @@ import Passwordchange from "./changePassword/password_change";
 import AccSettings from "./Account_settings/acc_settings";
 // import KYC from "./KYC/kyc";
 import Tier from "./tier";
+import TierOne from "./TIERS/tier_one";
 /* import Paymethods from './Payment/paymethods'; */
 import SupportHub from "./Account_settings/support_hub";
 
@@ -92,7 +93,8 @@ class Editprofile extends Component {
               </TabPane>
               <TabPane tab="Identity Verification" key="4">
                 {/* <KYC history={this.props.history} tier1_upgrade={true} /> */}
-                <Tier {...this.props} />
+                {/* <Tier {...this.props} /> */}
+                <TierOne />
               </TabPane>
               <TabPane tab="Referral" key="5">
                 <Referral {...this.props} />

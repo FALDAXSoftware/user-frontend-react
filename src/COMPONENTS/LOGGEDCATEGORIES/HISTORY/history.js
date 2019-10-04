@@ -131,7 +131,26 @@ class History extends Component {
       drop2Value: "",
       loader: false,
       csvFields: [],
-      activeKey: "1"
+      activeKey: "1",
+      csvHeadersTrade: [
+        { label: "Date", key: "date" },
+        { label: "Side", key: "side" },
+        { label: "Filled Price", key: "filled_price" },
+        { label: "Amount", key: "amount" },
+        { label: "Fee", key: "fee" },
+        { label: "Volume", key: "volume" }
+      ],
+      csvHeadersSimplex: [
+        { label: "Symbol", key: "symbol" },
+        { label: "Fill Price", key: "filled_price" },
+        { label: "Quantity", key: "quantity" },
+        { label: "Side", key: "side" },
+        { label: "Date", key: "date" },
+        { label: "Payment Id", key: "payment_id" },
+        { label: "Quote Id", key: "quote_id" },
+        { label: "Address", key: "address" },
+        { label: "Simplex Payment Status", key: "simplex_payment_status" }
+      ]
     };
     this.historyResult = this.historyResult.bind(this);
     this.changeDate = this.changeDate.bind(this);
@@ -957,7 +976,10 @@ class History extends Component {
                       {this.state.csvFields !== undefined ? (
                         this.state.csvFields.length > 0 ? (
                           <EXPButton>
-                            <CSVLink data={this.state.csvFields}>
+                            <CSVLink
+                              data={this.state.csvFields}
+                              headers={this.state.csvHeadersTrade}
+                            >
                               EXPORT
                             </CSVLink>
                           </EXPButton>
@@ -975,7 +997,10 @@ class History extends Component {
                         this.state.csvSimplexFields.length > 0 &&
                         this.state.csvSimplexFields !== null ? (
                           <EXPButton>
-                            <CSVLink data={this.state.csvSimplexFields}>
+                            <CSVLink
+                              data={this.state.csvSimplexFields}
+                              headers={this.state.csvHeadersSimplex}
+                            >
                               EXPORT
                             </CSVLink>
                           </EXPButton>
