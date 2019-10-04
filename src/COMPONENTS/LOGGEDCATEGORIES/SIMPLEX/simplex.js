@@ -169,7 +169,8 @@ class Simplex extends React.Component {
                   loader: false,
                   currencyToGet: responseData.data.digital_money.amount,
                   quote_id: responseData.data.quote_id,
-                  crypto_code: responseData.coinDetails.coin_code
+                  crypto_code: responseData.coinDetails.coin_code,
+                  wallet_address: ""
                 });
               } else {
                 this.setState({
