@@ -113,13 +113,31 @@ class IpModal extends Component {
       }
     };
     console.log(this.props.visible);
-    this.validator = new SimpleReactValidator();
+    this.validator = new SimpleReactValidator({
+      ipvalid: {
+        message: "Enter a valid IP address.",
+        rule: val => {
+          var RE = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+    });
+    this.clearValidation = this.clearValidation.bind(this);
   }
   componentWillReceiveProps(props) {
     // console.log(props);
     if (props.visible !== this.props.visible) {
       this.setState({ visible: props.visible });
     }
+  }
+  clearValidation() {
+    this.validator.hideMessages();
+    this.forceUpdate();
+    // rerender to hide messages for the first time
   }
   onChangeField = e => {
     // console.log(e.target.value);
@@ -138,6 +156,7 @@ class IpModal extends Component {
     });
   }
   ipModalCancel = () => {
+    this.clearValidation();
     console.log(this.props);
     this.props.ipModalCancel();
   };
@@ -172,7 +191,14 @@ class IpModal extends Component {
                 onChange={this.onChangeField.bind(this)}
                 name="ip"
               />
-              {this.validator.message("IP", this.state.fields.ip, "required")}
+              {/* {this.validator.message("IP", this.state.fields.ip, "required")} */}
+              {this.validator.message(
+                "ip",
+                this.state.fields.ip,
+                "required|ipvalid",
+                "text-danger-validation",
+                { required: "IP field is required." }
+              )}
             </div>
           </NewP>
           <ButtonDiv>
