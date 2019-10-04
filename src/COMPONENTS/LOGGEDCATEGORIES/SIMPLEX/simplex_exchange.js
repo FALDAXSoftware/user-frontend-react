@@ -58,6 +58,7 @@ class SimplexExchange extends React.Component {
         required: true // optional
       }
     });
+    this.timeout = null;
     this.handleCurrencyGetChange = this.handleCurrencyGetChange.bind(this);
     this.handleCurrencyPayChange = this.handleCurrencyPayChange.bind(this);
     this.btnClicked = this.btnClicked.bind(this);
@@ -136,24 +137,19 @@ class SimplexExchange extends React.Component {
     }
   }
   handleCurrencyPayChange(e) {
-    if (
-      e.target.value === 0 ||
-      e.target.value === null ||
-      e.target.value === ""
-    ) {
+    clearTimeout(this.timeout);
+
+    if (e.target.value === null || e.target.value === "") {
+      // this.timeout = setTimeout(this.calculateDigitalCurrency, 2000);
       this.setState({
         currencyToPay: e.target.value,
         currencyToGet: 0
       });
     } else {
-      this.setState(
-        {
-          currencyToPay: parseFloat(e.target.value)
-        },
-        () => {
-          this.calculateDigitalCurrency();
-        }
-      );
+      this.timeout = setTimeout(this.calculateDigitalCurrency, 2000);
+      this.setState({
+        currencyToPay: parseFloat(e.target.value)
+      });
     }
   }
   handleCurrencyGetChange(e) {
