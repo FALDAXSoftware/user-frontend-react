@@ -27,6 +27,8 @@ import {
   ColBtnConStyle
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 
+const API_URL = globalVariables.API_URL;
+
 class Conversion extends React.Component {
   constructor(props) {
     super(props);
@@ -35,13 +37,15 @@ class Conversion extends React.Component {
       completeKYC: false,
       countryAccess: false,
       comingSoon: false,
-      panicEnabled: false
+      panicEnabled: false,
+      panic_status: false
       // showConversion: false
     };
     this.comingCancel = this.comingCancel.bind(this);
     this.cryptoAccess = this.cryptoAccess.bind(this);
     this.simplexAccess = this.simplexAccess.bind(this);
     this.tokenAccess = this.tokenAccess.bind(this);
+    this.panicStatus = this.panicStatus.bind(this);
   }
   // onBrokerageButtonClick() {
   //   this.setState({
@@ -49,6 +53,7 @@ class Conversion extends React.Component {
   //   });
   // }
   componentDidMount() {
+    this.panicStatus();
     if (this.props.conversion) {
       this.cryptoAccess();
     }
@@ -67,8 +72,38 @@ class Conversion extends React.Component {
       panicEnabled: false
     });
   };
+  panicStatus() {
+    this.setState({
+      loader: true
+    });
+    fetch(API_URL + `/check-panic-status`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn
+      }
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status === 200) {
+          console.log("responsedata 200", responseData.data);
+          this.setState({
+            panic_status: JSON.parse(responseData.data),
+            // panic_status: true,
+            loader: false
+          });
+        } else {
+          this.setState({
+            panic_status: false,
+            loader: false
+          });
+        }
+      })
+      .catch(error => {});
+  }
   cryptoAccess() {
-    if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
+    if (this.state.panic_status === true) {
       // alert("Idf");
       this.setState({ panicEnabled: true });
     } else {
@@ -96,7 +131,7 @@ class Conversion extends React.Component {
     }
   }
   simplexAccess() {
-    if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
+    if (this.state.panic_status === true) {
       // alert("Idf");
       this.setState({ panicEnabled: true });
     } else {

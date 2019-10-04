@@ -922,7 +922,8 @@ class Acc_settings extends Component {
         >
           <Description>
             {" "}
-            Please enter IP which will be permanent for your FALDAX account.
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry.
           </Description>
           <NewP>
             <InputLabel>Enter IP*</InputLabel>

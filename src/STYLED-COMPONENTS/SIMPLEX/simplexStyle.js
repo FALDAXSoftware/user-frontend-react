@@ -83,3 +83,18 @@ export const SimLastRow = styled.div`
     }
   }
 `;
+export const CreateWalletRow = styled(Row)`
+  > .ant-col {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 25px 0;
+    align-items: center;
+    > a {
+      padding: 10px 20px;
+      border: 1px solid;
+      border-color: #4c84ff;
+      border-radius: 6px;
+      color: #333;
+    }
+  }
+`;
