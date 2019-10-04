@@ -156,7 +156,7 @@ class Simplex extends React.Component {
               this.openNotificationWithIcon(
                 "error",
                 "Error",
-                responseData.data.error
+                responseData.data.errors[0].message
               );
               this.setState({
                 loader: false

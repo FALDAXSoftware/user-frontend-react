@@ -100,11 +100,7 @@ class SimplexExchange extends React.Component {
     this.setState({
       loader: true
     });
-    if (
-      this.state.currencyToPay === 0 ||
-      this.state.currencyToPay === "" ||
-      this.state.currencyToPay === null
-    ) {
+    if (this.state.currencyToPay === "" || this.state.currencyToPay === null) {
       this.setState({
         currencyToGet: 0,
         loader: false
@@ -127,11 +123,44 @@ class SimplexExchange extends React.Component {
       })
         .then(response => response.json())
         .then(responseData => {
-          this.setState({
-            loader: false,
-            currencyToGet: responseData.data.digital_money.amount,
-            quote_id: responseData.data.quote_id
-          });
+          if (responseData.status === 200) {
+            if (responseData.data.error) {
+              this.openNotificationWithIcon(
+                "error",
+                "Error",
+                responseData.data.errors[0].message
+              );
+              this.setState({
+                loader: false
+              });
+            } else {
+              this.setState({
+                loader: false,
+                currencyToGet: responseData.data.digital_money.amount,
+                quote_id: responseData.data.quote_id
+                // loader: false
+              });
+            }
+          } else if (responseData.status === 500) {
+            this.setState({ loader: false });
+            this.openNotificationWithIcon(
+              "error",
+              "Error",
+              responseData.message
+            );
+          } else {
+            this.setState({ loader: false });
+            this.openNotificationWithIcon(
+              "error",
+              "Error",
+              responseData.message
+            );
+          }
+          // this.setState({
+          //   loader: false,
+          //   currencyToGet: responseData.data.digital_money.amount,
+          //   quote_id: responseData.data.quote_id
+          // });
         })
         .catch(error => {});
     }
