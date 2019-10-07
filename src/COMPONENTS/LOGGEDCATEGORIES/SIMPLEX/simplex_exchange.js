@@ -412,7 +412,7 @@ class SimplexExchange extends React.Component {
                       type="text"
                       placeholder="Address"
                       value={this.state.address}
-                      readOnly
+                      // readOnly
                       onChange={this.handleAddressChange}
                     />
                     {this.validator1.message(
