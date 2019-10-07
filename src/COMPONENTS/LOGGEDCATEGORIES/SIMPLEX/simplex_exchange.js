@@ -376,7 +376,7 @@ class SimplexExchange extends React.Component {
                   )}
                 </Col>
               </BorderRow>
-              <BorderRow>
+              {/* <BorderRow>
                 <Col>
                   <ConversionInput
                     className="address_field"
@@ -392,7 +392,7 @@ class SimplexExchange extends React.Component {
                     "text-danger-validation"
                   )}
                 </Col>
-              </BorderRow>
+              </BorderRow> */}
               {this.state.wallet_details === "" ? (
                 <CreateWalletRow className="create-wallet-link">
                   <Col>
@@ -405,7 +405,24 @@ class SimplexExchange extends React.Component {
                   </Col>
                 </CreateWalletRow>
               ) : (
-                ""
+                <BorderRow>
+                  <Col>
+                    <ConversionInput
+                      className="address_field"
+                      type="text"
+                      placeholder="Address"
+                      value={this.state.address}
+                      readOnly
+                      onChange={this.handleAddressChange}
+                    />
+                    {this.validator1.message(
+                      "address",
+                      this.state.address,
+                      `required|alpha_num|min:15|max:120`,
+                      "text-danger-validation"
+                    )}
+                  </Col>
+                </BorderRow>
               )}
               {/* {this.state.address === "" ? (
                 <CreateWalletRow className="create-wallet-link">
