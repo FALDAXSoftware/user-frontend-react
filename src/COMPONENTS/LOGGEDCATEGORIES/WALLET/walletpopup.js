@@ -210,6 +210,7 @@ class WalletPopup extends Component {
     this.confirmFunc = this.confirmFunc.bind(this);
     this.cancelFunc = this.cancelFunc.bind(this);
     this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
+    this.sendAddressChange = this.sendAddressChange.bind(this);
   }
 
   /* Life Cycle Methods */
@@ -389,6 +390,17 @@ class WalletPopup extends Component {
         Page: /wallet
         This method is called when fields are change in SEND Form.
     */
+  sendAddressChange(e) {
+    var fields = this.state.sendFields;
+    var name = e.target.name;
+    fields[name] = e.target.value;
+    // let subtotal = parseFloat(
+    //   parseFloat(fields[name]) +
+    //     parseFloat(fields[name]) * (this.props.coinFee / 100)
+    // ).toFixed(8);
+    // fields["subtotal"] = subtotal;
+    this.setState({ sendFields: fields });
+  }
 
   sendChange(e) {
     var fields = this.state.sendFields;
@@ -506,7 +518,7 @@ class WalletPopup extends Component {
                   <WallInput
                     value={this.state.sendFields.destination_address}
                     name="destination_address"
-                    onChange={this.sendChange}
+                    onChange={this.sendAddressChange}
                   />
                   {/* <Scan>Scan QR</Scan> */}
                   {this.validator.message(
