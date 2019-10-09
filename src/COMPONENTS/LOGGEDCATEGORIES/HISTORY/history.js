@@ -146,9 +146,9 @@ class History extends Component {
         { label: "Quantity", key: "quantity" },
         { label: "Side", key: "side" },
         { label: "Date", key: "date" },
+        { label: "Wallet Address", key: "address" },
         { label: "Payment Id", key: "payment_id" },
         { label: "Quote Id", key: "quote_id" },
-        { label: "Address", key: "address" },
         { label: "Simplex Payment Status", key: "simplex_payment_status" }
       ]
     };
@@ -1113,6 +1113,7 @@ class History extends Component {
                             <th>Quantity</th>
                             <th>Side</th>
                             <th>Date</th>
+                            <th>Wallet Address</th>
                             <th>Payment Id</th>
                             <th>Quote Id</th>
                             <th>Simplex Payment Status</th>
@@ -1162,6 +1163,7 @@ class History extends Component {
                                       {side}
                                     </SideBuySell>
                                     <td>{date}</td>
+                                    <td>{temps.address}</td>
                                     <td>{temps.payment_id}</td>
                                     <td>{temps.quote_id}</td>
                                     <td>{simplex_payment_status}</td>

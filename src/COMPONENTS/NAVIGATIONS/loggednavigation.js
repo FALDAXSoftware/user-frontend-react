@@ -26,6 +26,7 @@ import {
   _WALLPAPER
 } from "CONSTANTS/images";
 const { Header } = Layout;
+const API_URL = globalVariables.API_URL;
 
 /* Styled Components */
 const FALDAX = styled.img`
@@ -281,12 +282,14 @@ class LoggedNavigation extends Component {
       selected: "",
       countryAccess: false,
       completeKYC: false,
-      panicEnabled: false
+      panicEnabled: false,
+      panic_status: false
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
     this.cryptoAccess = this.cryptoAccess.bind(this);
     this.simplexAccess = this.simplexAccess.bind(this);
     this.tokenAccess = this.tokenAccess.bind(this);
+    this.panicStatus = this.panicStatus.bind(this);
   }
 
   /* Life-Cycle Methods */
@@ -321,6 +324,7 @@ class LoggedNavigation extends Component {
     // if (this.props.conversion) {
     //   this.tradeAccess();
     // }
+    this.panicStatus();
   }
 
   /* 
@@ -463,15 +467,45 @@ class LoggedNavigation extends Component {
   //     else this.setState({ countryAccess: true });
   //   }
   // }
+  panicStatus() {
+    this.setState({
+      loader: true
+    });
+    fetch(API_URL + `/check-panic-status`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn
+      }
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status === 200) {
+          console.log("responsedata 200", responseData.data);
+          this.setState({
+            panic_status: JSON.parse(responseData.data),
+            // panic_status: true,
+            loader: false
+          });
+        } else {
+          this.setState({
+            panic_status: false,
+            loader: false
+          });
+        }
+      })
+      .catch(error => {});
+  }
   cryptoAccess() {
-    console.log(
-      "this.props.profileDetails.is_panic_enabled",
-      this.props.profileDetails.is_panic_enabled
-    );
-    let panic = JSON.parse(this.props.profileDetails.is_panic_enabled);
+    // console.log(
+    //   "this.props.profileDetails.is_panic_enabled",
+    //   this.props.profileDetails.is_panic_enabled
+    // );
+    // let panic = JSON.parse(this.props.profileDetails.is_panic_enabled);
     // console.log("Panic", panic);
 
-    if (panic === true) {
+    if (this.state.panic_status === true) {
       // alert("Idf");
       this.setState({ panicEnabled: true });
     } else {
@@ -499,7 +533,7 @@ class LoggedNavigation extends Component {
     }
   }
   simplexAccess() {
-    if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
+    if (this.state.panic_status === true) {
       // alert("Idf");
       this.setState({ panicEnabled: true });
     } else {
