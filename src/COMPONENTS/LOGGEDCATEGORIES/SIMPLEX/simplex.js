@@ -52,7 +52,7 @@ class Simplex extends React.Component {
     };
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
-        message: `Minimum amount should be greater than or equal to ${this.state.minCurrency}`,
+        message: `Amount must be greater than or equal to ${this.state.minCurrency}`,
         rule: (val, params, validator) => {
           if (val >= this.state.minCurrency) {
             return true;

@@ -181,7 +181,7 @@ class WalletPopup extends Component {
     this.validator = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message: "value must be greater than zero",
+        message: "Amount must be greater than 0.",
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -193,7 +193,7 @@ class WalletPopup extends Component {
       },
       decimalrestrict: {
         message:
-          "value must be less than or equal to 8 digits after decimal point.",
+          "Amount must be less than or equal to 8 digits after decimal point.",
         rule: val => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
