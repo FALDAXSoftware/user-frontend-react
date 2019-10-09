@@ -257,16 +257,17 @@ class SimplexExchange extends React.Component {
               loader: false
             });
             this.openNotificationWithIcon(
-              "error",
-              "Error",
-              "Please Enter valid Address"
+              "warning",
+              "Transaction Error",
+              "There is some error in the transaction. Please retry."
             );
+            this.props.history.push("/simplex");
           } else if (responseData.status === 200) {
             this.setState({
               response: responseData.data,
               loader: false
             });
-            console.log(this.state.response);
+            // console.log(this.state.response);
             document.getElementById("frm_sumbit").click();
             // window.location = this.state.response.action;
           }
