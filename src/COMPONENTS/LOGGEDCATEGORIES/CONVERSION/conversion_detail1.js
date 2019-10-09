@@ -1,6 +1,6 @@
 /* Built-in packages */
 import React from "react";
-import { Row, Col /* , Select */, Radio, notification, Collapse } from "antd";
+import { Row, Col /* , Select */, Radio, notification } from "antd";
 import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import { withRouter } from "react-router-dom";
@@ -21,7 +21,7 @@ import {
   ConversionTitle,
   ConversionTabPane,
   ConversionRadioRow,
-  RadioBorderRow,
+  BorderRow,
   RowTitle,
   ConversionInput,
   ConversionDropDown,
@@ -34,21 +34,16 @@ import {
   RightColAmount,
   RightColPrice,
   DashedSeprator,
-  ConversionRightSpan,
-  ConversionLeftSpan,
+  LeftSpan,
+  RightSpan,
   RightTotal,
   LeftTotal,
-  FeesRadio,
-  RadioMainRow,
-  RadioGroupMainRow,
-  ConversionLeftCol
+  FeesRadio
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 
 const RadioGroup = Radio.Group;
 const API_URL = globalVariables.API_URL;
 const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
-
-const { Panel } = Collapse;
 let io = null;
 class ConversionDetail extends React.Component {
   constructor(props) {
@@ -62,11 +57,11 @@ class ConversionDetail extends React.Component {
       prevRoom: "",
       askPrice: 0,
       bidPrice: 0,
-      buyCryptoInput: null,
-      buyCurrencyInput: null,
-      sellCryptoInput: null,
-      sellCurrencyInput: null,
-      includeFees: 1,
+      buyCryptoInput: 0,
+      buyCurrencyInput: 0,
+      sellCryptoInput: 0,
+      sellCurrencyInput: 0,
+      includeFees: true,
       krakenFees: 0,
       faldaxFees: 0,
       loader: false,
@@ -74,9 +69,7 @@ class ConversionDetail extends React.Component {
       minCurrency: 0,
       fiatValue: 0,
       networkFee: 0,
-      faldaxFee: 0,
-      fiat: "USD",
-      fiatCurrencyList: ""
+      faldaxFee: 0
     };
     io = this.props.io;
     this.validator1 = new SimpleReactValidator({
@@ -168,8 +161,6 @@ class ConversionDetail extends React.Component {
     this.btnClicked = this.btnClicked.bind(this);
     this.getBuyCurrencyWithFees = this.getBuyCurrencyWithFees.bind(this);
     this.getFiatValue = this.getFiatValue.bind(this);
-    this.getFiatCurrencyList = this.getFiatCurrencyList.bind(this);
-    this.handleFiatChange = this.handleFiatChange.bind(this);
   }
 
   /* Life-Cycle Methods */
@@ -179,35 +170,10 @@ class ConversionDetail extends React.Component {
     this.getCurrencies();
     this.getPairDetails();
     this.getFiatValue();
-    this.getFiatCurrencyList();
   }
   // componentWillReceiveProps() {
   //     this.getFiatValue();
   // }
-  getFiatCurrencyList() {
-    this.setState({
-      loader: true
-    });
-    fetch(API_URL + `/get-simplex-coin-list`, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.status == 200) {
-          console.log("responsedata 200", responseData.object.coinList);
-          this.setState({
-            fiatCurrencyList: responseData.object.fiat,
-            loader: false
-          });
-        }
-      })
-      .catch(error => {});
-  }
   getPairDetails() {
     var self = this;
     io.sails.url = API_URL;
@@ -360,24 +326,6 @@ class ConversionDetail extends React.Component {
       }
     );
   }
-  handleFiatChange(value, option: Option) {
-    console.log(option.props.selectedData.min_limit);
-    let prevRoom = this.state.crypto + "-" + this.state.currency;
-    this.setState(
-      {
-        fiat: value,
-        prevRoom: prevRoom,
-        buyCryptoInput: 0,
-        buyCurrencyInput: 0,
-        minCrypto: option.props.selectedData.min_limit
-      },
-      () => {
-        this.getCurrencies();
-        this.getPairDetails();
-        this.getFiatValue();
-      }
-    );
-  }
   handleCurrencyChange(value) {
     let prevRoom = this.state.crypto + "-" + this.state.currency;
     this.setState(
@@ -414,18 +362,18 @@ class ConversionDetail extends React.Component {
   }
   radioChange(e) {
     var self = this;
-    console.log("radio===========", e.target.value);
+    // console.log(e.target.value);
     this.setState(
       {
-        includeFees: e.target.value
+        includeFees: JSON.parse(e.target.value)
+      },
+      () => {
+        if (self.state.selectedTab === 1) {
+          self.calculateBuyCurrency();
+        } else if (self.state.selectedTab === 2) {
+          self.calculateSellCurrency();
+        }
       }
-      // () => {
-      //   if (self.state.selectedTab === 1) {
-      //     self.calculateBuyCurrency();
-      //   } else if (self.state.selectedTab === 2) {
-      //     self.calculateSellCurrency();
-      //   }
-      // }
     );
   }
   onBuyCryptoChange(e) {
@@ -778,386 +726,439 @@ class ConversionDetail extends React.Component {
         <Navigation conversion={true} />
         <ConversionContainer>
           <MainRow>
-            <ConversionRadioRow className="radiogrousdbfkj">
-              <Radio.Group
-                onChange={this.radioChange}
-                value={this.state.includeFees}
+            <LeftCol lg={12}>
+              <ConversionTab
+                defaultActiveKey="1"
+                onChange={this.handleTabChange}
               >
-                <RadioGroupMainRow>
-                  <Radio value={1}></Radio>
-                  <RadioMainRow>
-                    {this.state.includeFees === 2 ? (
-                      <RadioBorderRow className="radio-row">
-                        <RowTitle>You Recieve</RowTitle>
-                        <Col xs={12} sm={12} md={14}>
-                          <ConversionInput
-                            type="number"
-                            value={this.state.buyCryptoInput}
-                            onChange={this.onBuyCryptoChange}
-                            disabled
-                            placeholder="0"
-                          />
-                          {this.validator1.message(
-                            "crypto",
-                            this.state.buyCryptoInput,
-                            `required|numeric|gtzero|minCryptoValid`,
-                            "text-danger-validation",
-                            {
-                              minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
-                            }
-                          )}
-                        </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
-                          {this.state.cryptoList &&
-                            this.state.cryptoList.length > 0 && (
-                              <ConversionDropDown
-                                defaultValue={this.state.crypto}
-                                onChange={this.handleCryptoChange}
-                                disabled
-                              >
-                                {this.state.cryptoList.map((element, index) => {
-                                  if (element.coin != this.state.currency) {
-                                    return (
-                                      <DropDownOption
-                                        key={index}
-                                        value={element.coin}
-                                        selectedData={element}
-                                      >
-                                        {" "}
-                                        <DropIcon
-                                          src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                          height="20px"
-                                        />{" "}
-                                        {element.coin}
-                                      </DropDownOption>
-                                    );
-                                  }
-                                })}
-                              </ConversionDropDown>
-                            )}
-                        </Col>
-                      </RadioBorderRow>
-                    ) : (
-                      <RadioBorderRow className="radio-row">
-                        <RowTitle>You Recieve</RowTitle>
-                        <Col xs={12} sm={12} md={14}>
-                          <ConversionInput
-                            type="number"
-                            value={this.state.buyCryptoInput}
-                            onChange={this.onBuyCryptoChange}
-                            placeholder="0"
-                          />
-                          {this.validator1.message(
-                            "crypto",
-                            this.state.buyCryptoInput,
-                            `required|numeric|gtzero|minCryptoValid`,
-                            "text-danger-validation",
-                            {
-                              minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
-                            }
-                          )}
-                        </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
-                          {this.state.cryptoList &&
-                            this.state.cryptoList.length > 0 && (
-                              <ConversionDropDown
-                                defaultValue={this.state.crypto}
-                                onChange={this.handleCryptoChange}
-                              >
-                                {this.state.cryptoList.map((element, index) => {
-                                  if (element.coin != this.state.currency) {
-                                    return (
-                                      <DropDownOption
-                                        key={index}
-                                        value={element.coin}
-                                        selectedData={element}
-                                      >
-                                        {" "}
-                                        <DropIcon
-                                          src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                          height="20px"
-                                        />{" "}
-                                        {element.coin}
-                                      </DropDownOption>
-                                    );
-                                  }
-                                })}
-                              </ConversionDropDown>
-                            )}
-                        </Col>
-                      </RadioBorderRow>
+                <ConversionTabPane className="buy_tab" tab="BUY" key="1">
+                  <Row>
+                    <Col>
+                      <ConversionTitle>
+                        Choose Which Assets to Trade
+                      </ConversionTitle>
+                    </Col>
+                  </Row>
+                  <ConversionRadioRow>
+                    <Col md={24}>
+                      <RadioGroup
+                        onChange={this.radioChange}
+                        value={this.state.includeFees}
+                      >
+                        <FeesRadio value={true}>Including Fees</FeesRadio>
+                        <FeesRadio value={false}>Excluding Fees</FeesRadio>
+                      </RadioGroup>
+                    </Col>
+                  </ConversionRadioRow>
+                  <BorderRow>
+                    <RowTitle>You Get</RowTitle>
+                    <Col xs={12} sm={12} md={16}>
+                      <ConversionInput
+                        type="number"
+                        value={this.state.buyCryptoInput}
+                        onChange={this.onBuyCryptoChange}
+                      />
+                      {this.validator1.message(
+                        "crypto",
+                        this.state.buyCryptoInput,
+                        `required|numeric|gtzero|minCryptoValid`,
+                        "text-danger-validation",
+                        {
+                          minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
+                        }
+                      )}
+                    </Col>
+                    <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
+                      {this.state.cryptoList &&
+                        this.state.cryptoList.length > 0 && (
+                          <ConversionDropDown
+                            defaultValue={this.state.crypto}
+                            onChange={this.handleCryptoChange}
+                          >
+                            {this.state.cryptoList.map((element, index) => {
+                              if (element.coin != this.state.currency) {
+                                return (
+                                  <DropDownOption
+                                    key={index}
+                                    value={element.coin}
+                                    selectedData={element}
+                                  >
+                                    {" "}
+                                    <DropIcon
+                                      src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                      height="20px"
+                                    />{" "}
+                                    {element.coin}
+                                  </DropDownOption>
+                                );
+                              }
+                            })}
+                          </ConversionDropDown>
+                        )}
+                    </Col>
+                  </BorderRow>
+                  <BorderRow>
+                    <RowTitle>You Pay</RowTitle>
+                    <Col xs={12} sm={12} md={16}>
+                      <ConversionInput
+                        type="number"
+                        value={this.state.buyCurrencyInput}
+                        onChange={this.onBuyCurrencyChange}
+                      />
+                      {this.validator1.message(
+                        "currency",
+                        this.state.buyCurrencyInput,
+                        `required|numeric|gtzero|minCurrValid`,
+                        "text-danger-validation",
+                        {
+                          minCurrValid: `Minimum Currency limit is ${this.state.minCurrency}`
+                        }
+                      )}
+                    </Col>
+                    <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
+                      {this.state.currencyList &&
+                        this.state.currencyList.length > 0 && (
+                          <ConversionDropDown
+                            defaultValue={this.state.currency}
+                            onChange={this.handleCurrencyChange}
+                          >
+                            {this.state.currencyList.map((element, index) => (
+                              <DropDownOption key={index} value={element.coin}>
+                                {" "}
+                                <DropIcon
+                                  src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                  height="20px"
+                                />{" "}
+                                {element.coin}
+                              </DropDownOption>
+                            ))}
+                          </ConversionDropDown>
+                        )}
+                    </Col>
+                  </BorderRow>
+                  {/* <Row style={{ marginBottom: "25px" }}>
+                                        <Col xs={12}>
+                                            <PayWith>
+                                                Pay With
+                                            </PayWith>
+                                        </Col>
+                                        <Col xs={12} style={{ textAlign: "right" }}>
+                                            <BankAcountDropdown defaultValue="1" >
+                                                <Option value="1">Suntest ****789</Option>
+                                                <Option value="2">Silvergate ****123</Option>
+                                            </BankAcountDropdown>
+                                        </Col>
+                                    </Row> */}
+                  <Row>
+                    <Col>
+                      <ConversionSubmitBtn
+                        onClick={this.btnClicked}
+                        type="primary"
+                        size="large"
+                        style={{ marginTop: "57px" }}
+                        block
+                      >{`Buy ${this.state.crypto}`}</ConversionSubmitBtn>
+                    </Col>
+                  </Row>
+                </ConversionTabPane>
+                <ConversionTabPane className="sell_tab" tab="SELL" key="2">
+                  <Row>
+                    <Col>
+                      <ConversionTitle>
+                        Choose Which Assets to Trade
+                      </ConversionTitle>
+                    </Col>
+                  </Row>
+                  <ConversionRadioRow>
+                    <Col md={24}>
+                      <RadioGroup
+                        onChange={this.radioChange}
+                        value={this.state.includeFees}
+                      >
+                        <FeesRadio value={true}>Including Fees</FeesRadio>
+                        <FeesRadio value={false}>Excluding Fees</FeesRadio>
+                      </RadioGroup>
+                    </Col>
+                  </ConversionRadioRow>
+                  <BorderRow>
+                    <RowTitle>You Pay</RowTitle>
+                    <Col xs={12} sm={12} md={16}>
+                      <ConversionInput
+                        type="number"
+                        value={this.state.sellCryptoInput}
+                        onChange={this.onSellCryptoChange}
+                      />
+                      {this.validator2.message(
+                        "crypto",
+                        this.state.sellCryptoInput,
+                        `required|numeric|gtzero|minCryptoValid`,
+                        "text-danger-validation",
+                        {
+                          minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
+                        }
+                      )}
+                    </Col>
+                    <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
+                      {this.state.cryptoList &&
+                        this.state.cryptoList.length > 0 && (
+                          <ConversionDropDown
+                            defaultValue={this.state.crypto}
+                            onChange={this.handleCryptoChange}
+                          >
+                            {this.state.cryptoList.map((element, index) => {
+                              if (element.coin != this.state.currency) {
+                                return (
+                                  <DropDownOption
+                                    key={index}
+                                    value={element.coin}
+                                    selectedData={element}
+                                  >
+                                    {" "}
+                                    <DropIcon
+                                      src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                      height="20px"
+                                    />{" "}
+                                    {element.coin}
+                                  </DropDownOption>
+                                );
+                              }
+                            })}
+                          </ConversionDropDown>
+                        )}
+                    </Col>
+                  </BorderRow>
+                  <BorderRow>
+                    <RowTitle>You Get</RowTitle>
+                    <Col xs={12} sm={12} md={16}>
+                      <ConversionInput
+                        type="number"
+                        value={this.state.sellCurrencyInput}
+                        onChange={this.onSellCurrencyChange}
+                      />
+                      {this.validator2.message(
+                        "currency",
+                        this.state.sellCurrencyInput,
+                        "required|numeric|gtzero",
+                        "text-danger-validation"
+                      )}
+                    </Col>
+                    <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
+                      {this.state.currencyList &&
+                        this.state.currencyList.length > 0 && (
+                          <ConversionDropDown
+                            defaultValue={this.state.currency}
+                          >
+                            {this.state.currencyList.map((element, index) => (
+                              <DropDownOption key={index} value={element.coin}>
+                                {" "}
+                                <DropIcon
+                                  src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                  height="20px"
+                                />{" "}
+                                {element.coin}
+                              </DropDownOption>
+                            ))}
+                          </ConversionDropDown>
+                        )}
+                    </Col>
+                  </BorderRow>
+                  {/* <Row style={{ marginBottom: "25px" }}>
+                                        <Col xs={12}>
+                                            <PayWith>
+                                                Pay With
+                                            </PayWith>
+                                        </Col>
+                                        <Col xs={12} style={{ textAlign: "right" }}>
+                                            <BankAcountDropdown defaultValue="1" >
+                                                <Option value="1">Suntest ****789</Option>
+                                                <Option value="2">Silvergate ****123</Option>
+                                            </BankAcountDropdown>
+                                        </Col>
+                                    </Row> */}
+                  <Row>
+                    <Col>
+                      <ConversionSubmitBtn
+                        onClick={this.btnClicked}
+                        type="primary"
+                        size="large"
+                        block
+                        style={{ marginTop: "57px" }}
+                      >{`SELL ${this.state.crypto}`}</ConversionSubmitBtn>
+                    </Col>
+                  </Row>
+                </ConversionTabPane>
+              </ConversionTab>
+            </LeftCol>
+            <RightCol lg={12}>
+              <RightColContainer>
+                <Row>
+                  <Col>
+                    {this.state.selectedTab === 1 && (
+                      <RightColTitle>You Are Buying</RightColTitle>
                     )}
-                    {this.state.includeFees === 1 ? (
-                      <RadioBorderRow className="radio-row">
-                        <RowTitle>Fiat Value</RowTitle>
-                        <Col xs={12} sm={12} md={14}>
-                          <ConversionInput
-                            type="number"
-                            value={this.state.buyCryptoInput}
-                            onChange={this.onBuyCryptoChange}
-                            placeholder="0"
-                          />
-                          {this.validator1.message(
-                            "crypto",
-                            this.state.buyCryptoInput,
-                            `required|numeric|gtzero|minCryptoValid`,
-                            "text-danger-validation",
-                            {
-                              minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
-                            }
-                          )}
-                        </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
-                          {this.state.fiatCurrencyList &&
-                            this.state.fiatCurrencyList.length > 0 && (
-                              <ConversionDropDown
-                                defaultValue={this.state.fiat}
-                                onChange={this.handleFiatChange}
-                              >
-                                {this.state.fiatCurrencyList.map(
-                                  (element, index) => {
-                                    if (element.coin != this.state.currency) {
-                                      return (
-                                        <DropDownOption
-                                          key={index}
-                                          value={element.coin}
-                                          selectedData={element}
-                                        >
-                                          {" "}
-                                          <DropIcon
-                                            src={element.coin_icon}
-                                            height="20px"
-                                          />{" "}
-                                          {element.coin}
-                                        </DropDownOption>
-                                      );
-                                    }
-                                  }
-                                )}
-                              </ConversionDropDown>
-                            )}
-                        </Col>
-                      </RadioBorderRow>
-                    ) : (
-                      ""
+                    {this.state.selectedTab === 2 && (
+                      <RightColTitle>You Are Selling</RightColTitle>
                     )}
-                  </RadioMainRow>
-                </RadioGroupMainRow>
-                <RadioGroupMainRow>
-                  <Radio value={2}></Radio>
-                  <RadioMainRow>
-                    {this.state.includeFees === 1 ? (
-                      <RadioBorderRow className="radio-row">
-                        <RowTitle>You Send</RowTitle>
-                        <Col xs={12} sm={12} md={14}>
-                          <ConversionInput
-                            type="number"
-                            value={this.state.buyCurrencyInput}
-                            onChange={this.onBuyCurrencyChange}
-                            disabled
-                            placeholder="0"
-                          />
-                          {this.validator1.message(
-                            "currency",
-                            this.state.buyCurrencyInput,
-                            `required|numeric|gtzero|minCurrValid`,
-                            "text-danger-validation",
-                            {
-                              minCurrValid: `Minimum Currency limit is ${this.state.minCurrency}`
-                            }
-                          )}
-                        </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
-                          {this.state.currencyList &&
-                            this.state.currencyList.length > 0 && (
-                              <ConversionDropDown
-                                defaultValue={this.state.currency}
-                                onChange={this.handleCurrencyChange}
-                                disabled
-                              >
-                                {this.state.currencyList.map(
-                                  (element, index) => (
-                                    <DropDownOption
-                                      key={index}
-                                      value={element.coin}
-                                    >
-                                      {" "}
-                                      <DropIcon
-                                        src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                        height="20px"
-                                      />{" "}
-                                      {element.coin}
-                                    </DropDownOption>
-                                  )
-                                )}
-                              </ConversionDropDown>
-                            )}
-                        </Col>
-                      </RadioBorderRow>
-                    ) : (
-                      <RadioBorderRow className="radio-row">
-                        <RowTitle>You Send</RowTitle>
-                        <Col xs={12} sm={12} md={14}>
-                          <ConversionInput
-                            type="number"
-                            value={this.state.buyCurrencyInput}
-                            onChange={this.onBuyCurrencyChange}
-                            placeholder="0"
-                          />
-                          {this.validator1.message(
-                            "currency",
-                            this.state.buyCurrencyInput,
-                            `required|numeric|gtzero|minCurrValid`,
-                            "text-danger-validation",
-                            {
-                              minCurrValid: `Minimum Currency limit is ${this.state.minCurrency}`
-                            }
-                          )}
-                        </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
-                          {this.state.currencyList &&
-                            this.state.currencyList.length > 0 && (
-                              <ConversionDropDown
-                                defaultValue={this.state.currency}
-                                onChange={this.handleCurrencyChange}
-                              >
-                                {this.state.currencyList.map(
-                                  (element, index) => (
-                                    <DropDownOption
-                                      key={index}
-                                      value={element.coin}
-                                    >
-                                      {" "}
-                                      <DropIcon
-                                        src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                        height="20px"
-                                      />{" "}
-                                      {element.coin}
-                                    </DropDownOption>
-                                  )
-                                )}
-                              </ConversionDropDown>
-                            )}
-                        </Col>
-                      </RadioBorderRow>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    {this.state.selectedTab === 1 && (
+                      <RightColAmount>
+                        {isNaN(parseFloat(this.state.buyCryptoInput))
+                          ? 0
+                          : parseFloat(this.state.buyCryptoInput).toFixed(
+                              3
+                            )}{" "}
+                        {this.state.crypto}
+                      </RightColAmount>
                     )}
-                    {this.state.includeFees === 2 ? (
-                      <RadioBorderRow className="radio-row">
-                        <RowTitle>Fiat Value</RowTitle>
-                        <Col xs={12} sm={12} md={14}>
-                          <ConversionInput
-                            type="number"
-                            value={this.state.buyCryptoInput}
-                            onChange={this.onBuyCryptoChange}
-                            placeholder="0"
-                          />
-                          {this.validator1.message(
-                            "crypto",
-                            this.state.buyCryptoInput,
-                            `required|numeric|gtzero|minCryptoValid`,
-                            "text-danger-validation",
-                            {
-                              minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
-                            }
-                          )}
-                        </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
-                          {this.state.fiatCurrencyList &&
-                            this.state.fiatCurrencyList.length > 0 && (
-                              <ConversionDropDown
-                                defaultValue={this.state.fiat}
-                                onChange={this.handleFiatChange}
-                              >
-                                {this.state.fiatCurrencyList.map(
-                                  (element, index) => {
-                                    if (element.coin != this.state.currency) {
-                                      return (
-                                        <DropDownOption
-                                          key={index}
-                                          value={element.coin}
-                                          selectedData={element}
-                                        >
-                                          {" "}
-                                          <DropIcon
-                                            src={element.coin_icon}
-                                            height="20px"
-                                          />{" "}
-                                          {element.coin}
-                                        </DropDownOption>
-                                      );
-                                    }
-                                  }
-                                )}
-                              </ConversionDropDown>
-                            )}
-                        </Col>
-                      </RadioBorderRow>
-                    ) : null}
-                  </RadioMainRow>
-                </RadioGroupMainRow>
-              </Radio.Group>
-            </ConversionRadioRow>
-            <ConversionLeftCol md={12} lg={12}>
-              <Collapse accordion>
-                <Panel header="Details" key="1">
+                    {this.state.selectedTab === 2 && (
+                      <RightColAmount>
+                        {isNaN(parseFloat(this.state.sellCryptoInput))
+                          ? 0
+                          : parseFloat(this.state.sellCryptoInput).toFixed(
+                              3
+                            )}{" "}
+                        {this.state.crypto}
+                      </RightColAmount>
+                    )}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    {this.state.selectedTab === 1 && (
+                      <RightColPrice>
+                        @ {parseFloat(this.state.askPrice).toFixed(8)}{" "}
+                        {this.state.currency} per {this.state.crypto}
+                      </RightColPrice>
+                    )}
+                    {this.state.selectedTab === 2 && (
+                      <RightColPrice>
+                        @ {parseFloat(this.state.bidPrice).toFixed(8)}{" "}
+                        {this.state.currency} per {this.state.crypto}
+                      </RightColPrice>
+                    )}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <DashedSeprator></DashedSeprator>
+                  </Col>
+                </Row>
+                {this.state.selectedTab === 1 && (
                   <div>
                     <Row>
-                      <Col xs={12} style={{ textAlign: "left" }}>
-                        <ConversionRightSpan>Subtotal</ConversionRightSpan>
+                      <Col xs={12}>
+                        <RightSpan>
+                          {isNaN(this.state.buyCryptoInput)
+                            ? 0
+                            : this.state.buyCryptoInput.toFixed(3)}{" "}
+                          {this.state.crypto}
+                        </RightSpan>
                       </Col>
                       <Col xs={12} style={{ textAlign: "right" }}>
-                        <ConversionLeftSpan>
-                          {this.getBuyCurrencyWithFees()}
-                        </ConversionLeftSpan>
+                        <LeftSpan>
+                          {parseFloat(
+                            isNaN(
+                              this.state.buyCryptoInput * this.state.askPrice
+                            )
+                              ? 0
+                              : this.state.buyCryptoInput * this.state.askPrice
+                          ).toFixed(8)}{" "}
+                          {this.state.currency}
+                        </LeftSpan>
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs={12} style={{ textAlign: "left" }}>
-                        <ConversionRightSpan>FALDAX Fee</ConversionRightSpan>
+                      <Col xs={12}>
+                        <RightSpan>Fiat Value (USD)</RightSpan>
                       </Col>
                       <Col xs={12} style={{ textAlign: "right" }}>
-                        {/* <ConversionRightSpan>{this.state.faldaxFees.toFixed(5)}%</ConversionRightSpan> */}
-                        <ConversionLeftSpan>
-                          {this.state.faldaxFee}
-                        </ConversionLeftSpan>
-                      </Col>
-                    </Row>
-                    <Row className="network_fee">
-                      <Col xs={12} style={{ textAlign: "left" }}>
-                        <ConversionRightSpan>Network Fee</ConversionRightSpan>
-                      </Col>
-                      <Col xs={12} style={{ textAlign: "right" }}>
-                        {/* <ConversionRightSpan>{this.state.krakenFees.toFixed(5)}%</ConversionRightSpan> */}
-                        <ConversionLeftSpan>
-                          {this.state.networkFee}
-                        </ConversionLeftSpan>
+                        <LeftSpan>{this.state.fiatValue}</LeftSpan>
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs={12} style={{ textAlign: "left" }}>
-                        <RightTotal>Total</RightTotal>
+                      <Col xs={12}>
+                        <RightSpan>Network Fee (USD)</RightSpan>
+                      </Col>
+                      <Col xs={12} style={{ textAlign: "right" }}>
+                        {/* <LeftSpan>{this.state.krakenFees.toFixed(5)}%</LeftSpan> */}
+                        <LeftSpan>{this.state.networkFee}</LeftSpan>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={12}>
+                        <RightSpan>FALDAX Fee (USD)</RightSpan>
+                      </Col>
+                      <Col xs={12} style={{ textAlign: "right" }}>
+                        {/* <LeftSpan>{this.state.faldaxFees.toFixed(5)}%</LeftSpan> */}
+                        <LeftSpan>{this.state.faldaxFee}</LeftSpan>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={12}>
+                        <RightTotal>Total (USD)</RightTotal>
                       </Col>
                       <Col xs={12} style={{ textAlign: "right" }}>
                         <LeftTotal>{this.getBuyCurrencyWithFees()}</LeftTotal>
                       </Col>
                     </Row>
                   </div>
-                </Panel>
-              </Collapse>
-              <Row>
-                <Col>
-                  <ConversionSubmitBtn
-                    className="conversion_btn"
-                    onClick={this.btnClicked}
-                    type="primary"
-                    size="large"
-                    block
-                  >
-                    Confirm
-                  </ConversionSubmitBtn>
-                </Col>
-              </Row>
-            </ConversionLeftCol>
+                )}
+                {this.state.selectedTab === 2 && (
+                  <div>
+                    <Row>
+                      <Col xs={12}>
+                        <RightSpan>
+                          {isNaN(this.state.sellCryptoInput)
+                            ? 0
+                            : this.state.sellCryptoInput}{" "}
+                          {this.state.crypto}
+                        </RightSpan>
+                      </Col>
+                      <Col xs={12} style={{ textAlign: "right" }}>
+                        <LeftSpan>
+                          {parseFloat(
+                            isNaN(
+                              this.state.sellCryptoInput * this.state.bidPrice
+                            )
+                              ? 0
+                              : this.state.sellCryptoInput * this.state.bidPrice
+                          ).toFixed(8)}{" "}
+                          {this.state.currency}
+                        </LeftSpan>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={12}>
+                        <RightSpan>Fiat Value (USD)</RightSpan>
+                      </Col>
+                      <Col xs={12} style={{ textAlign: "right" }}>
+                        <LeftSpan>{this.state.fiatValue}</LeftSpan>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={12}>
+                        <RightSpan>FALDAX Fee (USD)</RightSpan>
+                      </Col>
+                      <Col xs={12} style={{ textAlign: "right" }}>
+                        {/* <LeftSpan>{this.state.krakenFees.toFixed(5)}% +  {this.state.faldaxFees.toFixed(5)}%</LeftSpan> */}
+                        <LeftSpan>{this.state.faldaxFee}</LeftSpan>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={12}>
+                        <RightTotal>Total (USD)</RightTotal>
+                      </Col>
+                      <Col xs={12} style={{ textAlign: "right" }}>
+                        <LeftTotal>{this.getSellCurrencyWithFees()}</LeftTotal>
+                      </Col>
+                    </Row>
+                  </div>
+                )}
+              </RightColContainer>
+            </RightCol>
           </MainRow>
         </ConversionContainer>
         {/* <CountryAccess

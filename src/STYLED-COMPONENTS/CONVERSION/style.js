@@ -25,15 +25,12 @@ export const ConversionContainer = styled(Container)`
 `;
 export const MainRow = styled(Row)`
   background-color: ${props =>
-    props.theme.mode === "dark" ? "#021b2b" : "#e1e7ec"};
+    props.theme.mode === "dark" ? "#01090f" : "#ffffff"};
+  padding: 40px;
 `;
 export const LeftCol = styled(Col)`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#01090f" : "#fff"};
-  box-shadow: ${props =>
-    props.theme.mode === "dark"
-      ? ""
-      : "3px 0px 5px 0px rgba(109, 109, 109, 0.19)"};
   position: relative;
   &:after {
     content: "";
@@ -148,8 +145,10 @@ export const ConversionTitle = styled.span`
   display: block;
 `;
 export const ConversionRadioRow = styled(Row)`
-  padding: 20px;
-  margin-bottom: 10px;
+  > .ant-radio-group {
+    display: flex;
+    flex-wrap: wrap;
+  }
 `;
 export const CustomRadioContainer = styled.label`
   display: block;
@@ -214,6 +213,32 @@ export const BorderRow = styled(Row)`
   border-radius: 5px;
   padding: 20px;
   margin-bottom: 35px;
+  & .radio-row {
+    margin-bottom: 0 !important;
+  }
+  @media (max-width: 360px) {
+    & {
+      padding: 20px 10px;
+    }
+  }
+`;
+export const RadioBorderRow = styled(Row)`
+  border: ${props =>
+    props.theme.mode === "dark" ? "1px solid #20303e" : "1px solid #dfe4f7"};
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 0;
+  width: calc(50% - 30px);
+  margin: 0 15px;
+  > .ant-col {
+    > input[disabled] {
+      color: #a8acb3;
+    }
+  }
+  @media (max-width: 850px) {
+    width: calc(100% - 30px);
+    margin-bottom: 15px;
+  }
   @media (max-width: 360px) {
     & {
       padding: 20px 10px;
@@ -242,6 +267,7 @@ export const ConversionInput = styled.input`
     props.theme.mode === "dark" ? "#021b2b" : "#f6f8fe"};
   font-weight: 600;
   font-size: 20px;
+  text-align: right;
   color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "black")};
   &:focus {
     border: none;
@@ -275,7 +301,7 @@ export const ConversionDropDown = styled(Select)`
     color: ${props => (props.theme.mode === "dark" ? "#5d5d79" : "black")};
   }
   &.ant-select-disabled .ant-select-arrow {
-    display: none;
+    display: block;
   }
   @media (max-width: 360px) {
     & .ant-select-selection {
@@ -297,6 +323,11 @@ export const ConversionSubmitBtn = styled(Button)`
   background-color: #4c84ff;
   border-color: #4c84ff;
   border-radius: 55px;
+  &.conversion_btn {
+    margin-top: 30px;
+    margin-left: 40px;
+    width: calc(100% - 40px);
+  }
   &:hover {
     background-color: white;
     border-color: #4c84ff;
@@ -390,14 +421,15 @@ export const RightTotal = styled.span`
   font-size: 14px;
   display: block;
   color: #4c84ff;
-  padding: 10px;
+  padding: 10px 0;
+  text-transform: uppercase;
 `;
 export const LeftTotal = styled.span`
   font-weight: 600;
   font-size: 14px;
   display: block;
   color: #4c84ff;
-  padding: 10px;
+  padding: 10px 0;
 `;
 
 export const PayWith = styled.span`
@@ -553,4 +585,128 @@ export const ColBtnConStyle = styled.button`
     border-color: #4c84ff;
     color: #ffffff;
   }
+`;
+export const RadioMainRow = styled.div`
+  display: flex;
+  width: 100%;
+  @media (max-width: 850px) {
+    flex-wrap: wrap;
+  }
+`;
+export const RadioGroupMainRow = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 0 0 30px 0;
+  width: 100%;
+  > .ant-radio-wrapper {
+    margin-right: 0;
+    width: 25px;
+    > .ant-radio {
+      margin-right: 15px;
+      > .ant-radio-inner {
+        width: 20px !important;
+        height: 20px !important;
+      }
+      > .ant-radio-inner:after {
+        top: 4px !important;
+        left: 4px !important;
+        width: 10px !important;
+        height: 10px !important;
+      }
+    }
+  }
+`;
+export const ConversionLeftCol = styled(Col)`
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#01090f" : "#fff"};
+  position: relative;
+  > .ant-collapse {
+    border: 0;
+    background: transparent;
+    text-align: right;
+    margin: 0 0 0 40px;
+    > .ant-collapse-item {
+      border-bottom: 0;
+      > .ant-collapse-header {
+        color: #5d5d79;
+        font-size: 16px;
+        font-family: "Open Sans";
+        font-weight: 600;
+        border-bottom: ${props =>
+          props.theme.mode === "dark"
+            ? "1px dashed #021b2b !important"
+            : "1px dashed #d9d9d9 !important"};
+        padding: 15px 20px 15px 15px;
+        > .ant-collapse-arrow {
+          top: 0;
+          left: auto;
+          right: 0;
+          transform: rotate(90deg) translateY(0%);
+          color: #4c84ff;
+        }
+      }
+    }
+    > .ant-collapse-item-active {
+      > .ant-collapse-header {
+        > .ant-collapse-arrow {
+          svg {
+            transform: rotate(180deg) !important;
+          }
+        }
+      }
+      > .ant-collapse-content {
+        border-top: 0;
+        background: transparent;
+        > .ant-collapse-content-box {
+          padding: 5px 0;
+          > div {
+            > .ant-row.network_fee {
+              border-bottom: ${props =>
+                props.theme.mode === "dark"
+                  ? "1px dashed #021b2b"
+                  : "1px dashed black"};
+              padding: 0px 0 10px 0;
+              margin: 0 0 10px 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+    border-left-color: ${props =>
+      props.theme.mode === "dark" ? "#01090f" : "#ffffff"};
+    border-right: 0;
+    margin-top: -15px;
+    margin-right: -15px;
+  }
+  @media (max-width: 991px) {
+    &:after {
+      display: none;
+    }
+  }
+`;
+export const ConversionRightSpan = styled.span`
+  font-weight: 600;
+  font-size: 14px;
+  display: block;
+  color: ${props =>
+    props.theme.mode === "dark" ? "#ffffff" : "rgba(57, 65, 77, 0.702)"};
+  padding: 10px 0;
+  text-transform: uppercase;
+  font-weight: 600;
+`;
+export const ConversionLeftSpan = styled.span`
+  font-weight: 600;
+  font-size: 14px;
+  display: block;
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#39414d")};
+  padding: 10px 0;
 `;
