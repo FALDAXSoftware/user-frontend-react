@@ -165,7 +165,11 @@ class Simplex extends React.Component {
     this.setState({
       loader: true
     });
-    if (this.state.currencyToPay === "" || this.state.currencyToPay === null) {
+    if (
+      this.state.currencyToPay === "" ||
+      this.state.currencyToPay === null ||
+      this.state.currencyToPay <= 0
+    ) {
       this.setState({
         loader: false,
         currencyToGet: null
