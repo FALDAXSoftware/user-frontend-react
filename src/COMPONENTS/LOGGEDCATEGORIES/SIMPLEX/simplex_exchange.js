@@ -50,7 +50,7 @@ class SimplexExchange extends React.Component {
     };
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
-        message: `Minimum amount should be greater than or equal to ${this.state.minCurrency}`,
+        message: `Amount must be greater than or equal to ${this.state.minCurrency}`,
         rule: (val, params, validator) => {
           if (val >= this.state.minCurrency) {
             return true;
@@ -59,10 +59,34 @@ class SimplexExchange extends React.Component {
           }
         },
         required: true // optional
+      },
+      gtzero: {
+        // name the rule
+        message: "Amount must be greater than zero",
+        rule: (val, params, validator) => {
+          if (val > 0) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+        required: true // optional
+      },
+      decimalrestrict2: {
+        message:
+          "Value must be less than or equal to 2 digits after decimal point.",
+        rule: val => {
+          var RE = /^\d*\.?\d{0,2}$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     });
     this.timeout = null;
-    this.handleCurrencyGetChange = this.handleCurrencyGetChange.bind(this);
+    // this.handleCurrencyGetChange = this.handleCurrencyGetChange.bind(this);
     this.handleCurrencyPayChange = this.handleCurrencyPayChange.bind(this);
     this.btnClicked = this.btnClicked.bind(this);
     this.handleCryptoChange = this.handleCryptoChange.bind(this);
@@ -105,8 +129,8 @@ class SimplexExchange extends React.Component {
     });
     if (this.state.currencyToPay === "" || this.state.currencyToPay === null) {
       this.setState({
-        currencyToGet: 0,
-        loader: false
+        loader: false,
+        currencyToGet: null
       });
     } else {
       var values = {
@@ -187,7 +211,7 @@ class SimplexExchange extends React.Component {
       // this.timeout = setTimeout(this.calculateDigitalCurrency, 2000);
       this.setState({
         currencyToPay: e.target.value,
-        currencyToGet: 0
+        currencyToGet: null
       });
     } else {
       this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
@@ -196,11 +220,11 @@ class SimplexExchange extends React.Component {
       });
     }
   }
-  handleCurrencyGetChange(e) {
-    this.setState({
-      currencyToGet: parseFloat(e.target.value)
-    });
-  }
+  // handleCurrencyGetChange(e) {
+  //   this.setState({
+  //     currencyToGet: parseFloat(e.target.value)
+  //   });
+  // }
   handleAddressChange(e) {
     this.setState({
       address: e.target.value
@@ -256,12 +280,20 @@ class SimplexExchange extends React.Component {
             this.setState({
               loader: false
             });
-            this.openNotificationWithIcon(
-              "warning",
-              "Transaction Error",
-              "There is some error in the transaction. Please retry."
-            );
-            this.props.history.push("/simplex");
+            if (this.state.wallet_details === "") {
+              this.openNotificationWithIcon(
+                "error",
+                "Error",
+                "Please create wallet and then continue."
+              );
+            } else {
+              this.openNotificationWithIcon(
+                "warning",
+                "Transaction Error",
+                "There is some error in the transaction. Please retry."
+              );
+              this.props.history.push("/simplex");
+            }
           } else if (responseData.status === 200) {
             this.setState({
               response: responseData.data,
@@ -300,13 +332,14 @@ class SimplexExchange extends React.Component {
                   <ConversionInput
                     type="number"
                     placeholder="0"
+                    step="0.01"
                     value={this.state.currencyToPay}
                     onChange={this.handleCurrencyPayChange}
                   />
                   {this.validator1.message(
                     "amount pay",
                     this.state.currencyToPay,
-                    `required|minCurrencyValid`,
+                    `required|gtzero|minCurrencyValid|decimalrestrict2`,
                     "text-danger-validation"
                   )}
                 </Col>
@@ -346,7 +379,7 @@ class SimplexExchange extends React.Component {
                     placeholder="0"
                     readOnly
                     value={this.state.currencyToGet}
-                    onChange={this.handleCurrencyGetChange}
+                    // onChange={this.handleCurrencyGetChange}
                   />
                 </Col>
                 <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>

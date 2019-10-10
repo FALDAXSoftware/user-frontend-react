@@ -16,7 +16,6 @@ export const ConversionContainer = styled(Container)`
   max-width: 1170px;
   padding-bottom: 30px;
   padding-top: 190px;
-
   @media (max-width: 991px) {
     & {
       padding-top: 100px;
@@ -27,6 +26,9 @@ export const MainRow = styled(Row)`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#01090f" : "#ffffff"};
   padding: 40px;
+  @media (max-width: 991px) {
+    padding: 40px 10px;
+  }
 `;
 export const LeftCol = styled(Col)`
   background-color: ${props =>
@@ -239,6 +241,11 @@ export const RadioBorderRow = styled(Row)`
     width: calc(100% - 30px);
     margin-bottom: 15px;
   }
+  @media (max-width: 480px) {
+    padding: 15px 5px;
+    margin: 0 0 15px 0;
+    width: 100%;
+  }
   @media (max-width: 360px) {
     & {
       padding: 20px 10px;
@@ -267,11 +274,13 @@ export const ConversionInput = styled.input`
     props.theme.mode === "dark" ? "#021b2b" : "#f6f8fe"};
   font-weight: 600;
   font-size: 20px;
-  text-align: right;
   color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "black")};
   &:focus {
     border: none;
     outline: none;
+  }
+  @media (max-width: 360px) {
+    font-size: 16px;
   }
 `;
 export const ConversionDropDown = styled(Select)`
@@ -332,6 +341,13 @@ export const ConversionSubmitBtn = styled(Button)`
     background-color: white;
     border-color: #4c84ff;
     color: #4c84ff;
+  }
+  @media (max-width: 480px) {
+    &.conversion_btn {
+      margin-top: 30px;
+      margin-left: 0;
+      width: 100%;
+    }
   }
 `;
 
@@ -687,9 +703,20 @@ export const ConversionLeftCol = styled(Col)`
     margin-top: -15px;
     margin-right: -15px;
   }
+  @media (max-width: 850px) {
+    width: 100%;
+    > .ant-collapse {
+      margin: 0 15px 0 40px;
+    }
+  }
   @media (max-width: 991px) {
     &:after {
       display: none;
+    }
+  }
+  @media (max-width: 480px) {
+    > .ant-collapse {
+      margin: 0;
     }
   }
 `;
