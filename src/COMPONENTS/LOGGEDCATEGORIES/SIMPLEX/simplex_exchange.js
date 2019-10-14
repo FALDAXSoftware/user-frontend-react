@@ -97,6 +97,22 @@ class SimplexExchange extends React.Component {
   }
   componentDidMount(e) {
     this.getCrypto();
+    this.calculateDigitalCurrency();
+    // if (this.props.walletDetails !== null) {
+    //   console.log("wallet Details", this.props.walletDetails);
+    //   console.log("this.state.crypto", this.state.crypto);
+    //   this.props.walletDetails.map((element, i) => {
+    //     // if (cur.coin != this.state.currency) {
+    //     console.log(element.coin);
+    //     if (element.coin === this.state.crypto) {
+    //       console.log(element.receive_address);
+    //       this.setState({
+    //         address: element.receive_address
+    //       });
+    //     }
+    //   });
+    //   // console.log(this.props.walletDetails[index].coin_name);
+    // }
   }
   getCrypto() {
     this.setState({
@@ -431,6 +447,7 @@ class SimplexExchange extends React.Component {
                   )}
                 </Col>
               </BorderRow> */}
+
               {this.state.wallet_details === "" ? (
                 <CreateWalletRow className="create-wallet-link">
                   <Col>
@@ -496,7 +513,7 @@ class SimplexExchange extends React.Component {
             target="_self"
             style={{ display: "none" }}
           >
-            {console.log(this.state.version)}
+            {/* {console.log(this.state.version)} */}
             <input
               type="text"
               name="version"
@@ -581,6 +598,10 @@ class SimplexExchange extends React.Component {
 // export default Conversion;
 function mapStateToProps(state) {
   return {
+    walletDetails:
+      state.walletReducer.walletData !== undefined
+        ? state.walletReducer.walletData.balanceData
+        : null,
     isLoggedIn: state.simpleReducer.isLoggedIn,
     theme:
       state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
