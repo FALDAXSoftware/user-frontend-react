@@ -764,7 +764,7 @@ class PasswordChange extends Component {
                             </LeftCol>
                             <RightCol sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>
                                 <Orderlist>
-                                    <LI>Install an authenticator app on your mobile device. We suggest Google Authenticator or Authy. </LI>
+                                    <LI>Install an authenticator app on your mobile device. We suggest Google Authenticator. </LI>
                                     <LI>Scan the QR code when prompted by your Authenticator.</LI>
                                     <LI>In case your phone gets stolen or erased, you will need this code to link FALDAX with a new app.</LI>
                                     <LI>Do not share the code with anyone. FALDAX will never ask you for this code.</LI>

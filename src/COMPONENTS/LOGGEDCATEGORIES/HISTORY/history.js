@@ -141,11 +141,10 @@ class History extends Component {
         { label: "Volume", key: "volume" }
       ],
       csvHeadersSimplex: [
-        { label: "Symbol", key: "symbol" },
-        { label: "Fill Price", key: "filled_price" },
-        { label: "Quantity", key: "quantity" },
-        { label: "Side", key: "side" },
+        { label: "Coin", key: "symbol" },
         { label: "Date", key: "date" },
+        { label: "Filled Price", key: "filled_price" },
+        { label: "Amount", key: "quantity" },
         { label: "Wallet Address", key: "address" },
         { label: "Payment Id", key: "payment_id" },
         { label: "Quote Id", key: "quote_id" },
@@ -401,7 +400,6 @@ class History extends Component {
 
                   obj["symbol"] = symbol;
                   obj["date"] = date;
-                  obj["side"] = side;
                   obj["filled_price"] = fill_price;
                   obj["quantity"] = quantity;
                   obj["payment_id"] = payment_id;
@@ -569,7 +567,6 @@ class History extends Component {
 
                   obj["symbol"] = symbol;
                   obj["date"] = date;
-                  obj["side"] = side;
                   obj["filled_price"] = fill_price;
                   obj["quantity"] = quantity;
                   obj["payment_id"] = payment_id;
@@ -1108,11 +1105,10 @@ class History extends Component {
                       <HisTable responsive striped condensed>
                         <thead>
                           <tr>
-                            <th>Symbol</th>
-                            <th>Fill Price</th>
-                            <th>Quantity</th>
-                            <th>Side</th>
+                            <th>Coin</th>
                             <th>Date</th>
+                            <th>Filled Price</th>
+                            <th>Amount</th>
                             <th>Wallet Address</th>
                             <th>Payment Id</th>
                             <th>Quote Id</th>
@@ -1155,14 +1151,9 @@ class History extends Component {
                                 return (
                                   <tr>
                                     <td>{temps.symbol}</td>
+                                    <td>{date}</td>
                                     <td>{temps.fill_price}</td>
                                     <td>{temps.quantity}</td>
-                                    <SideBuySell
-                                      side={side === "Buy" ? true : false}
-                                    >
-                                      {side}
-                                    </SideBuySell>
-                                    <td>{date}</td>
                                     <td>{temps.address}</td>
                                     <td>{temps.payment_id}</td>
                                     <td>{temps.quote_id}</td>
