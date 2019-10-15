@@ -575,6 +575,11 @@ export const ColHeadConStyle = styled.span`
   color: #4c84ff;
   font-family: "Open Sans";
   word-break: break-word;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  display: flex;
+  align-self: flex-start;
 `;
 export const ColSubHeadConStyle = styled.span`
   color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000000")};

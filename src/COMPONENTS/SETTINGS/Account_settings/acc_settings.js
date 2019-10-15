@@ -112,10 +112,13 @@ class Acc_settings extends Component {
       pageIp: 1,
       loader: false,
       showAddModal: false,
+      showDeleteModal: false,
       whitelistData: [],
       visibleIpModal: false,
       data_noti: [],
       savedDataNoti: [],
+      deleteText: "",
+      code2fa: "",
       fields: {
         ip: null,
         days: null
@@ -225,6 +228,17 @@ class Acc_settings extends Component {
             return false;
           }
         }
+      },
+      matchDelete: {
+        message: "Please enter DELETE.",
+        rule: val => {
+          var RE = /DELETE/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     });
     this.getIpWhitelist = this.getIpWhitelist.bind(this);
@@ -233,11 +247,13 @@ class Acc_settings extends Component {
     this.onChangeSwitch = this.onChangeSwitch.bind(this);
     this.onChangeIP = this.onChangeIP.bind(this);
     this.openAddModal = this.openAddModal.bind(this);
+    this.openDeleteModal = this.openDeleteModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.getNotificationList = this.getNotificationList.bind(this);
     this.addData = this.addData.bind(this);
     this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
+    this.deleteUserAccount = this.deleteUserAccount.bind(this);
   }
 
   /* Life Cycle Methods */
@@ -536,6 +552,12 @@ class Acc_settings extends Component {
       onCancel() {}
     });
   }
+  openDeleteModal() {
+    this.clearValidation();
+    this.setState({
+      showDeleteModal: true
+    });
+  }
   openAddModal() {
     this.clearValidation();
     this.setState({
@@ -546,6 +568,9 @@ class Acc_settings extends Component {
     this.clearValidation();
     this.setState({
       showAddModal: false,
+      showDeleteModal: false,
+      code2fa: null,
+      deleteText: null,
       fields: {
         ip: null,
         days: null
@@ -619,6 +644,13 @@ class Acc_settings extends Component {
       this.fianlIpWhitelist(fields);
     }
   }
+  deleteUserAccount() {
+    if (this.validator.allValid()) {
+    } else {
+      this.validator.showMessages();
+      this.forceUpdate();
+    }
+  }
   deleteIP(src) {
     // console.log(src, this.props.isLoggedIn);
     this.setState({ loader: true });
@@ -653,6 +685,16 @@ class Acc_settings extends Component {
     else fields[e.target.name] = "";
     this.setState({
       fields
+    });
+  }
+  deleteText(e) {
+    this.setState({
+      deleteText: e.target.value
+    });
+  }
+  code2fa(e) {
+    this.setState({
+      code2fa: e.target.value
     });
   }
   onChangeSwitch(checked) {
@@ -904,7 +946,8 @@ class Acc_settings extends Component {
             </span>
           </DeleteDesc>
           <DeleteBtn>
-            <ButtonDel type="primary" onClick={this.showConfirm.bind(this)}>
+            {/* <ButtonDel type="primary" onClick={this.showConfirm.bind(this)}> */}
+            <ButtonDel type="primary" onClick={this.openDeleteModal.bind(this)}>
               Delete Account
             </ButtonDel>
           </DeleteBtn>
@@ -966,6 +1009,60 @@ class Acc_settings extends Component {
           </NewP>
           <ButtonDiv>
             <NewButton onClick={this.addIpWhitelist}>Submit</NewButton>
+          </ButtonDiv>
+        </VerifyModal>
+        <VerifyModal
+          visible={this.state.showDeleteModal}
+          onCancel={this.closeModal}
+          title="Delete Account"
+          footer={null}
+        >
+          <Description>
+            {" "}
+            Your account will be permanently deleted without any method of
+            retrieving it once complete.
+          </Description>
+          <NewP>
+            <InputLabel>Type 'DELETE' in the box below:</InputLabel>
+            <div className="otp-input-wrap">
+              <OTPInput
+                className="otp-input"
+                value={this.state.deleteText}
+                size="medium"
+                onChange={this.deleteText.bind(this)}
+                name="ip"
+                style={{ marginBottom: "20px" }}
+              />
+              {this.validator.message(
+                "text",
+                this.state.deleteText,
+                "required|matchDelete",
+                "text-danger-validation",
+                { required: "This field is required." }
+              )}
+            </div>
+            <InputLabel>Enter your 2FA code in the box below:</InputLabel>
+            <div>
+              <OTPInput
+                style={{ paddingRight: "10px" }}
+                min="1"
+                value={this.state.code2fa}
+                type="text"
+                size="medium"
+                onChange={this.code2fa.bind(this)}
+                name="2FA code"
+              />
+              {this.validator.message(
+                "2FA code",
+                this.state.code2fa,
+                "required|numeric|min:6|max:6",
+                "text-danger-validation",
+                { required: "2FA field is required." }
+              )}
+            </div>
+          </NewP>
+          <ButtonDiv>
+            <NewButton onClick={this.deleteUserAccount}>Confirm</NewButton>
           </ButtonDiv>
         </VerifyModal>
       </AccWrap>
