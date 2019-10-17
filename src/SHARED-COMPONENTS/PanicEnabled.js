@@ -122,7 +122,7 @@ class PanicEnabled extends Component {
                 marginTop: "40px"
               }}
             >
-              Panic
+              System Lockout In Effect
             </h3>
             <p
               style={{
