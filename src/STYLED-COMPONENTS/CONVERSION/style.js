@@ -308,6 +308,7 @@ export const ConversionDropDown = styled(Select)`
   }
   & .ant-select-arrow {
     color: ${props => (props.theme.mode === "dark" ? "#5d5d79" : "black")};
+    // display: none;
   }
   &.ant-select-disabled .ant-select-arrow {
     display: block;
@@ -537,20 +538,20 @@ export const ColConStyle = styled.div`
   background: ${props => (props.theme.mode === "dark" ? "#021b2b" : "#fff")};
   width: calc(33.33% - 30px);
   margin: 0 15px;
-  padding: 40px 30px;
-  align-items: flex-end;
+  padding: 40px 15px;
+  align-items: center;
   -webkit-box-shadow: ${props =>
     props.theme.mode === "dark"
-      ? "0px 0px 5px 0px rgb(1, 9, 15)"
-      : "0px 0px 5px 0px rgba(236, 236, 236, 1)"};
+      ? "0px 0px 2px 0px rgb(1, 9, 15)"
+      : "0px 0px 2px 0px rgba(236, 236, 236, 1)"};
   -moz-box-shadow: ${props =>
     props.theme.mode === "dark"
-      ? "0px 0px 5px 0px rgb(1, 9, 15)"
-      : "0px 0px 5px 0px rgba(236, 236, 236, 1)"};
+      ? "0px 0px 2px 0px rgb(1, 9, 15)"
+      : "0px 0px 2px 0px rgba(236, 236, 236, 1)"};
   box-shadow: ${props =>
     props.theme.mode === "dark"
-      ? "0px 0px 5px 0px rgb(1, 9, 15)"
-      : "0px 0px 5px 0px rgba(236, 236, 236, 1)"};
+      ? "0px 0px 2px 0px rgb(1, 9, 15)"
+      : "0px 0px 2px 0px rgba(236, 236, 236, 1)"};
   @media (max-width: 950px) {
     padding: 30px 20px;
   }
@@ -567,6 +568,108 @@ export const ColConStyle = styled.div`
   > .tokenlink {
     width: calc(100% - 30px);
   }
+  &:hover {
+    cursor: pointer;
+    -webkit-box-shadow: ${props =>
+      props.theme.mode === "dark"
+        ? "0px 0px 7px 0px rgb(1, 9, 15)"
+        : "0px 0px 7px 0px rgba(236, 236, 236, 1)"};
+    -moz-box-shadow: ${props =>
+      props.theme.mode === "dark"
+        ? "0px 0px 7px 0px rgb(1, 9, 15)"
+        : "0px 0px 7px 0px rgba(236, 236, 236, 1)"};
+    box-shadow: ${props =>
+      props.theme.mode === "dark"
+        ? "0px 0px 7px 0px rgb(1, 9, 15)"
+        : "0px 0px 7px 0px rgba(236, 236, 236, 1)"};
+  }
+`;
+export const ColConTokStyle = styled.a`
+  display: flex;
+  flex-wrap: wrap;
+  background: ${props => (props.theme.mode === "dark" ? "#021b2b" : "#fff")};
+  width: 100%;
+  padding: 40px 15px;
+  align-items: center;
+  text-decoration: none;
+  -webkit-box-shadow: ${props =>
+    props.theme.mode === "dark"
+      ? "0px 0px 2px 0px rgb(1, 9, 15)"
+      : "0px 0px 2px 0px rgba(236, 236, 236, 1)"};
+  -moz-box-shadow: ${props =>
+    props.theme.mode === "dark"
+      ? "0px 0px 2px 0px rgb(1, 9, 15)"
+      : "0px 0px 2px 0px rgba(236, 236, 236, 1)"};
+  box-shadow: ${props =>
+    props.theme.mode === "dark"
+      ? "0px 0px 2px 0px rgb(1, 9, 15)"
+      : "0px 0px 2px 0px rgba(236, 236, 236, 1)"};
+  @media (max-width: 950px) {
+    padding: 30px 20px;
+  }
+  @media (max-width: 767px) {
+    width: calc(33.33% - 10px);
+    margin: 0 5px;
+    padding: 20px 10px;
+  }
+  @media (max-width: 650px) {
+    width: calc(100% - 40px);
+    margin: 0 20px 20px;
+    padding: 40px 30px;
+  }
+  &:hover {
+    cursor: pointer;
+    -webkit-box-shadow: ${props =>
+      props.theme.mode === "dark"
+        ? "0px 0px 7px 0px rgb(1, 9, 15)"
+        : "0px 0px 7px 0px rgba(236, 236, 236, 1)"};
+    -moz-box-shadow: ${props =>
+      props.theme.mode === "dark"
+        ? "0px 0px 7px 0px rgb(1, 9, 15)"
+        : "0px 0px 7px 0px rgba(236, 236, 236, 1)"};
+    box-shadow: ${props =>
+      props.theme.mode === "dark"
+        ? "0px 0px 7px 0px rgb(1, 9, 15)"
+        : "0px 0px 7px 0px rgba(236, 236, 236, 1)"};
+  }
+  &:after {
+    content: "";
+    display: flex;
+    position: absolute;
+    background: ${props =>
+      props.theme.mode === "dark" ? "#4d5861" : "#ffffff"};
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.7;
+  }
+`;
+export const TokComingSoonWrap = styled.div`
+  position: relative;
+  display: flex;
+  width: calc(33.33% - 30px);
+  margin: 0 15px;
+`;
+export const TokComingSoon = styled.a`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
+  &:hover {
+    cursor: pointer;
+    text-decoration: none;
+    color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
+  }
 `;
 export const ColHeadConStyle = styled.span`
   font-size: 24px;
@@ -580,6 +683,27 @@ export const ColHeadConStyle = styled.span`
   align-items: flex-start;
   display: flex;
   align-self: flex-start;
+`;
+export const ColSubRow = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0 0 0;
+`;
+export const ConIconWrap = styled.span`
+  &.mastercard {
+    display: block;
+    margin-bottom: 15px;
+  }
+  > img {
+    max-width: 100%;
+  }
+`;
+export const ConArrowWrap = styled.span`
+  font-size: 20px;
+  color: #afbed4;
+  padding: 0 5px;
 `;
 export const ColSubHeadConStyle = styled.span`
   color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000000")};

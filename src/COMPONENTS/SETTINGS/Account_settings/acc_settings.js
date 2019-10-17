@@ -241,6 +241,19 @@ class Acc_settings extends Component {
         }
       }
     });
+    this.validator1 = new SimpleReactValidator({
+      matchDelete: {
+        message: "Please enter DELETE.",
+        rule: val => {
+          var RE = /DELETE/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+    });
     this.getIpWhitelist = this.getIpWhitelist.bind(this);
     this.addIpWhitelist = this.addIpWhitelist.bind(this);
     this.fianlIpWhitelist = this.fianlIpWhitelist.bind(this);
@@ -419,7 +432,21 @@ class Acc_settings extends Component {
         it is called when we click Delete button and press confirm.
         Api is called for deactivating Account in this function.
     */
-
+  deleteUserAccount() {
+    if (this.validator1.allValid()) {
+      alert("btn clicked");
+      let value = {};
+      value["email"] = this.props.email;
+      value["user_id"] = this.props.profileDetails.id;
+      value["jwt_token"] = this.props.isLoggedIn;
+      value["otp"] = this.state.code2fa;
+      console.log("vbalue======================", value);
+      this.props.deleteAccount(this.props.isLoggedIn, value);
+    } else {
+      this.validator1.showMessages();
+      this.forceUpdate();
+    }
+  }
   deleteAccount() {
     /* console.log(this.props) */
     this.openNotificationWithIcon(
@@ -431,6 +458,8 @@ class Acc_settings extends Component {
     value["email"] = this.props.email;
     value["user_id"] = this.props.profileDetails.id;
     value["jwt_token"] = this.props.isLoggedIn;
+    value["otp"] = this.state.code2fa;
+    console.log("vbalue======================", value);
     this.props.deleteAccount(this.props.isLoggedIn, value);
   }
 
@@ -644,13 +673,7 @@ class Acc_settings extends Component {
       this.fianlIpWhitelist(fields);
     }
   }
-  deleteUserAccount() {
-    if (this.validator.allValid()) {
-    } else {
-      this.validator.showMessages();
-      this.forceUpdate();
-    }
-  }
+
   deleteIP(src) {
     // console.log(src, this.props.isLoggedIn);
     this.setState({ loader: true });
@@ -864,10 +887,11 @@ class Acc_settings extends Component {
           </DeleteHead>
           <DeleteDesc style={{ display: "flex", justifyContent: "center" }}>
             <div style={{ width: "1000px" }}>
-              Disable withdrawals for 24 hours, when any security method is
-              changed, for added security purposes.Meanwhile a warning message
-              should also be shown to the user before updating the security
-              methods indicating the same.
+              When set 'ON', changes to any security settings on your account
+              will disable debits from your wallets for 24 hours. Additionally,
+              you will be notified prior to changing any security settings and
+              will have to confirm that you want to make those changes to ensure
+              you don't accidently lock your wallet.
             </div>
           </DeleteDesc>
           {/* {console.log(this.state.checked)} */}
@@ -1033,7 +1057,7 @@ class Acc_settings extends Component {
                 name="ip"
                 style={{ marginBottom: "20px" }}
               />
-              {this.validator.message(
+              {this.validator1.message(
                 "text",
                 this.state.deleteText,
                 "required|matchDelete",
@@ -1052,7 +1076,7 @@ class Acc_settings extends Component {
                 onChange={this.code2fa.bind(this)}
                 name="2FA code"
               />
-              {this.validator.message(
+              {this.validator1.message(
                 "2FA code",
                 this.state.code2fa,
                 "required|numeric|min:6|max:6",

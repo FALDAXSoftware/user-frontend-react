@@ -11,6 +11,7 @@ import PanicEnabled from "../../../SHARED-COMPONENTS/PanicEnabled";
 import CountryAccess from "../../../SHARED-COMPONENTS/CountryAccess";
 import ComingSoon from "../../../COMPONENTS/comingsoon";
 import { globalVariables } from "Globals.js";
+import { Icon } from "antd";
 // Styled components
 import {
   ContactWrap,
@@ -23,8 +24,12 @@ import {
   RowConStyle,
   ColConStyle,
   ColHeadConStyle,
-  ColSubHeadConStyle,
-  ColBtnConStyle
+  ColConTokStyle,
+  TokComingSoonWrap,
+  ColSubRow,
+  ConIconWrap,
+  ConArrowWrap,
+  TokComingSoon
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 
 const API_URL = globalVariables.API_URL;
@@ -188,6 +193,7 @@ class Conversion extends React.Component {
     // }
   }
   render() {
+    console.log(this.props.theme);
     return (
       <div>
         {/* {this.state.showConversion ? (
@@ -198,36 +204,106 @@ class Conversion extends React.Component {
           <GreyWrap>
             <ContainerConversion>
               <HeadStyle>Conversion Methods</HeadStyle>
-              {/* <SubHeadStyle>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-                ipsum suspendisse ultrices gravida. Risus commodo viverra
-                maecenas accumsan lacus vel facilisis.
-              </SubHeadStyle> */}
               <RowConStyle>
-                <ColConStyle>
+                <ColConStyle onClick={this.cryptoAccess}>
                   <ColHeadConStyle>Crypto Only</ColHeadConStyle>
-                  <ColBtnConStyle onClick={this.cryptoAccess}>
-                    Brokerage
-                  </ColBtnConStyle>
+                  <ColSubRow>
+                    <ConIconWrap>
+                      {this.props.theme === true ? (
+                        <img src="/images/bitcoin_icon_dark.png" />
+                      ) : (
+                        <img src="/images/bitcoin_icon.png" />
+                      )}
+                    </ConIconWrap>
+                    <ConArrowWrap>
+                      <Icon type="arrow-right" />
+                    </ConArrowWrap>
+                    <ConIconWrap>
+                      {this.props.theme === true ? (
+                        <img src="/images/eth_icon_dark.png" />
+                      ) : (
+                        <img src="/images/eth_icon.png" />
+                      )}
+                    </ConIconWrap>
+                  </ColSubRow>
                 </ColConStyle>
-                <ColConStyle>
+                <ColConStyle onClick={this.simplexAccess}>
                   <ColHeadConStyle>Credit Card</ColHeadConStyle>
-                  {/* <Link style={{ width: "100%" }} to="/simplex"> */}
-                  <ColBtnConStyle onClick={this.simplexAccess}>
-                    Simplex
-                  </ColBtnConStyle>
-                  {/* </Link> */}
+                  <ColSubRow>
+                    <div>
+                      <ConIconWrap className="mastercard">
+                        {this.props.theme === true ? (
+                          <img src="/images/mastercard_dark.png" />
+                        ) : (
+                          <img src="/images/mastercard.png" />
+                        )}
+                      </ConIconWrap>
+                      <ConIconWrap>
+                        {this.props.theme === true ? (
+                          <img src="/images/visa_dark.png" />
+                        ) : (
+                          <img src="/images/visa.png" />
+                        )}
+                      </ConIconWrap>
+                    </div>
+                    <ConArrowWrap>
+                      <Icon type="arrow-right" />
+                    </ConArrowWrap>
+                    <ConIconWrap>
+                      {this.props.theme === true ? (
+                        <img src="/images/bitcoin_icon_dark.png" />
+                      ) : (
+                        <img src="/images/bitcoin_icon.png" />
+                      )}
+                    </ConIconWrap>
+                  </ColSubRow>
                 </ColConStyle>
-                <ColConStyle>
-                  <ColHeadConStyle>Bank Transfer</ColHeadConStyle>
+                <TokComingSoonWrap>
+                  <ColConTokStyle
+                    href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+                  >
+                    <ColHeadConStyle>Bank Transfer</ColHeadConStyle>
+                    <ColSubRow>
+                      <ConIconWrap>
+                        {this.props.theme === true ? (
+                          <img src="/images/bitcoin_icon_dark.png" />
+                        ) : (
+                          <img src="/images/bitcoin_icon.png" />
+                        )}
+                      </ConIconWrap>
+                      <ConArrowWrap>
+                        <Icon type="swap" />
+                      </ConArrowWrap>
+                      <ConIconWrap>
+                        {this.props.theme === true ? (
+                          <img src="/images/bank_dark.png" />
+                        ) : (
+                          <img src="/images/bank.png" />
+                        )}
+                      </ConIconWrap>
+                      <ConArrowWrap>
+                        <Icon type="swap" />
+                      </ConArrowWrap>
+                      <ConIconWrap>
+                        {this.props.theme === true ? (
+                          <img src="/images/eth_icon_dark.png" />
+                        ) : (
+                          <img src="/images/eth_icon.png" />
+                        )}
+                      </ConIconWrap>
+                    </ColSubRow>
+                    {/* <ColHeadConStyle>Bank Transfer</ColHeadConStyle>
                   <a
                     className="tokenlink"
                     href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+                  ></a> */}
+                  </ColConTokStyle>
+                  <TokComingSoon
+                    href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
                   >
-                    <ColBtnConStyle>Token</ColBtnConStyle>
-                  </a>
-                </ColConStyle>
+                    Coming Soon
+                  </TokComingSoon>
+                </TokComingSoonWrap>
               </RowConStyle>
             </ContainerConversion>
           </GreyWrap>
