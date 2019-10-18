@@ -118,19 +118,35 @@ class ComingSoon extends React.Component {
                 marginTop: "40px"
               }}
             >
-              You Can't Trade
+              Access Denied
             </h3>
             <p
               style={{
                 fontFamily: "Open Sans",
-                fontSize: "28px",
+                fontSize: "14px",
                 textAlign: "center",
                 color: "black",
-                fontWeight: "600",
-                marginTop: "40px"
+                marginTop: "15px"
               }}
             >
-              Trading is illegal in your country.
+              Unfortunately, FALDAX does not offer trading services in your area
+              at this time, but we are actively working to increase
+              availability. Visit the world map on our home page to see where
+              trading is considered legal in your area, but you are unable to
+              trade, that simply means we are working through the licensing
+              process with the authoritiesin your area. Check back often, or
+              subscribe to our newsletter, to be notifiedwhen services become
+              available for you.
+            </p>
+            <p
+              style={{
+                fontFamily: "Open Sans",
+                fontSize: "15px",
+                textAlign: "center",
+                color: "black"
+              }}
+            >
+              Thank you for your support and your patience.
             </p>
             {/* <Sub_wrap>
                             <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>

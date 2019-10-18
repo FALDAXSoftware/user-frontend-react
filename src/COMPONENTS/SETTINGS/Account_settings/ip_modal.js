@@ -87,7 +87,13 @@ export const NewButton = styled(Save)`
 `;
 
 export const Description = styled.p`
-  color: ${props => (props.theme.mode == "dark" ? "white" : "")};
+  color: ${props => (props.theme.mode == "dark" ? "white" : "#000")};
+  font-weight: 600;
+`;
+export const BackupCode = styled.div`
+  color: ${props => (props.theme.mode == "dark" ? "white" : "#000")};
+  font-weight: 600;
+  text-align: center;
 `;
 export const VerifyModal = styled(Modal)`
   .ant-modal-content {
@@ -95,7 +101,13 @@ export const VerifyModal = styled(Modal)`
     .ant-modal-header {
       background: ${props => (props.theme.mode == "dark" ? "#041222" : "")};
       .ant-modal-title {
-        color: ${props => (props.theme.mode == "dark" ? "white" : "")};
+        color: ${props => (props.theme.mode == "dark" ? "#03aaf9" : "#03aaf9")};
+        font-weight: 600;
+      }
+    }
+    .ant-modal-close {
+      .ant-modal-close-x {
+        color: ${props => (props.theme.mode == "dark" ? "white" : "#000")};
       }
     }
   }

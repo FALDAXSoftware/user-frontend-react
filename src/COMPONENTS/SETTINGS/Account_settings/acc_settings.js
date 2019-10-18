@@ -112,10 +112,13 @@ class Acc_settings extends Component {
       pageIp: 1,
       loader: false,
       showAddModal: false,
+      showDeleteModal: false,
       whitelistData: [],
       visibleIpModal: false,
       data_noti: [],
       savedDataNoti: [],
+      deleteText: "",
+      code2fa: "",
       fields: {
         ip: null,
         days: null
@@ -225,6 +228,30 @@ class Acc_settings extends Component {
             return false;
           }
         }
+      },
+      matchDelete: {
+        message: "Please enter DELETE.",
+        rule: val => {
+          var RE = /DELETE/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+    });
+    this.validator1 = new SimpleReactValidator({
+      matchDelete: {
+        message: "Please enter DELETE.",
+        rule: val => {
+          var RE = /DELETE/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     });
     this.getIpWhitelist = this.getIpWhitelist.bind(this);
@@ -233,11 +260,13 @@ class Acc_settings extends Component {
     this.onChangeSwitch = this.onChangeSwitch.bind(this);
     this.onChangeIP = this.onChangeIP.bind(this);
     this.openAddModal = this.openAddModal.bind(this);
+    this.openDeleteModal = this.openDeleteModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.getNotificationList = this.getNotificationList.bind(this);
     this.addData = this.addData.bind(this);
     this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
+    this.deleteUserAccount = this.deleteUserAccount.bind(this);
   }
 
   /* Life Cycle Methods */
@@ -403,7 +432,21 @@ class Acc_settings extends Component {
         it is called when we click Delete button and press confirm.
         Api is called for deactivating Account in this function.
     */
-
+  deleteUserAccount() {
+    if (this.validator1.allValid()) {
+      alert("btn clicked");
+      let value = {};
+      value["email"] = this.props.email;
+      value["user_id"] = this.props.profileDetails.id;
+      value["jwt_token"] = this.props.isLoggedIn;
+      value["otp"] = this.state.code2fa;
+      console.log("vbalue======================", value);
+      this.props.deleteAccount(this.props.isLoggedIn, value);
+    } else {
+      this.validator1.showMessages();
+      this.forceUpdate();
+    }
+  }
   deleteAccount() {
     /* console.log(this.props) */
     this.openNotificationWithIcon(
@@ -415,6 +458,8 @@ class Acc_settings extends Component {
     value["email"] = this.props.email;
     value["user_id"] = this.props.profileDetails.id;
     value["jwt_token"] = this.props.isLoggedIn;
+    value["otp"] = this.state.code2fa;
+    console.log("vbalue======================", value);
     this.props.deleteAccount(this.props.isLoggedIn, value);
   }
 
@@ -536,6 +581,12 @@ class Acc_settings extends Component {
       onCancel() {}
     });
   }
+  openDeleteModal() {
+    this.clearValidation();
+    this.setState({
+      showDeleteModal: true
+    });
+  }
   openAddModal() {
     this.clearValidation();
     this.setState({
@@ -546,6 +597,9 @@ class Acc_settings extends Component {
     this.clearValidation();
     this.setState({
       showAddModal: false,
+      showDeleteModal: false,
+      code2fa: null,
+      deleteText: null,
       fields: {
         ip: null,
         days: null
@@ -619,6 +673,7 @@ class Acc_settings extends Component {
       this.fianlIpWhitelist(fields);
     }
   }
+
   deleteIP(src) {
     // console.log(src, this.props.isLoggedIn);
     this.setState({ loader: true });
@@ -653,6 +708,16 @@ class Acc_settings extends Component {
     else fields[e.target.name] = "";
     this.setState({
       fields
+    });
+  }
+  deleteText(e) {
+    this.setState({
+      deleteText: e.target.value
+    });
+  }
+  code2fa(e) {
+    this.setState({
+      code2fa: e.target.value
     });
   }
   onChangeSwitch(checked) {
@@ -822,10 +887,11 @@ class Acc_settings extends Component {
           </DeleteHead>
           <DeleteDesc style={{ display: "flex", justifyContent: "center" }}>
             <div style={{ width: "1000px" }}>
-              Disable withdrawals for 24 hours, when any security method is
-              changed, for added security purposes.Meanwhile a warning message
-              should also be shown to the user before updating the security
-              methods indicating the same.
+              When set 'ON', changes to any security settings on your account
+              will disable debits from your wallets for 24 hours. Additionally,
+              you will be notified prior to changing any security settings and
+              will have to confirm that you want to make those changes to ensure
+              you don't accidently lock your wallet.
             </div>
           </DeleteDesc>
           {/* {console.log(this.state.checked)} */}
@@ -904,7 +970,8 @@ class Acc_settings extends Component {
             </span>
           </DeleteDesc>
           <DeleteBtn>
-            <ButtonDel type="primary" onClick={this.showConfirm.bind(this)}>
+            {/* <ButtonDel type="primary" onClick={this.showConfirm.bind(this)}> */}
+            <ButtonDel type="primary" onClick={this.openDeleteModal.bind(this)}>
               Delete Account
             </ButtonDel>
           </DeleteBtn>
@@ -966,6 +1033,60 @@ class Acc_settings extends Component {
           </NewP>
           <ButtonDiv>
             <NewButton onClick={this.addIpWhitelist}>Submit</NewButton>
+          </ButtonDiv>
+        </VerifyModal>
+        <VerifyModal
+          visible={this.state.showDeleteModal}
+          onCancel={this.closeModal}
+          title="Delete Account"
+          footer={null}
+        >
+          <Description>
+            {" "}
+            Your account will be permanently deleted without any method of
+            retrieving it once complete.
+          </Description>
+          <NewP>
+            <InputLabel>Type 'DELETE' in the box below:</InputLabel>
+            <div className="otp-input-wrap">
+              <OTPInput
+                className="otp-input"
+                value={this.state.deleteText}
+                size="medium"
+                onChange={this.deleteText.bind(this)}
+                name="ip"
+                style={{ marginBottom: "20px" }}
+              />
+              {this.validator1.message(
+                "text",
+                this.state.deleteText,
+                "required|matchDelete",
+                "text-danger-validation",
+                { required: "This field is required." }
+              )}
+            </div>
+            <InputLabel>Enter your 2FA code in the box below:</InputLabel>
+            <div>
+              <OTPInput
+                style={{ paddingRight: "10px" }}
+                min="1"
+                value={this.state.code2fa}
+                type="text"
+                size="medium"
+                onChange={this.code2fa.bind(this)}
+                name="2FA code"
+              />
+              {this.validator1.message(
+                "2FA code",
+                this.state.code2fa,
+                "required|numeric|min:6|max:6",
+                "text-danger-validation",
+                { required: "2FA field is required." }
+              )}
+            </div>
+          </NewP>
+          <ButtonDiv>
+            <NewButton onClick={this.deleteUserAccount}>Confirm</NewButton>
           </ButtonDiv>
         </VerifyModal>
       </AccWrap>
