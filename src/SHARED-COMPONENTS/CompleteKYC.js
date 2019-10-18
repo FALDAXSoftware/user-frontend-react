@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { globalVariables } from "Globals.js";
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
 import { ModalWrap } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
+import { Link } from "react-router-dom";
 
 /* const API_URL = globalVariables.API_URL; */
 
@@ -111,7 +112,7 @@ class ComingSoon extends Component {
           height={490}
           className="simple-maps"
         >
-          <ModalWrap>
+          <ModalWrap className="kyc-wrap">
             <h3
               style={{
                 fontFamily: "Open Sans",
@@ -122,21 +123,29 @@ class ComingSoon extends Component {
                 marginTop: "40px"
               }}
             >
-              KYC not done.
+              ID Verification Incomplete
             </h3>
             <p
               style={{
                 fontFamily: "Open Sans",
-                fontSize: "28px",
+                fontSize: "16px",
                 textAlign: "center",
                 color: "black",
-                fontWeight: "600",
-                marginTop: "40px"
+                marginTop: "34px"
               }}
             >
-              Please complete KYC to continue.
+              Before you can trade, you must complete the ID Verification
+              Process. Please click the 'Get Verified' button below to begin.
               {/* {this.props.data} */}
             </p>
+            <Link
+              className="get_verified_link"
+              to={{ pathname: "/editProfile", state: { tabNum: "3" } }}
+              // state={{ testvalue: "hello" }}
+              // pathname="/editProfile"
+            >
+              Get Verified
+            </Link>
             {/* <Sub_wrap>
                             <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>
                             <Email_input placeholder="Email Address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />

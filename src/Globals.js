@@ -15,7 +15,7 @@ export const globalVariables = {
 
   //API_URL: 'http://192.168.0.85:1337'
 
-  //API_URL: 'http://192.168.1.96:7878', //Jagdish's URL
+  // API_URL: "http://192.168.1.96:1337" //Jagdish's URL
 
   //API_URL: 'http://192.168.2.224:1337', //Kalpit Local URL
 
