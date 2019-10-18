@@ -26,7 +26,6 @@ export function deleteAccount(isLoggedIn, value) {
           let tempValue2 = {};
           tempValue2["user_id"] = tempValue.user_id;
           tempValue2["jwt_token"] = tempValue.jwt_token;
-
           dispatch(LogoutUser(isLoggedIn, tempValue2));
         }
         dispatch(removeLoader());

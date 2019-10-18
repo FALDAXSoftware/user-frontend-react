@@ -488,7 +488,7 @@ class StopLimit extends Component {
             {this.validator.message(
               "Stop_Price",
               this.state.stop_price,
-              "required|gtzero|numeric|decimalrestrict5",
+              "required|gtzero||decimalrestrict5",
               "text-danger-validation",
               {
                 gtzero: "Stop Price should be greater than zero.",
