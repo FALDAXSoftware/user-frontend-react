@@ -17,7 +17,7 @@ export const ModalWrap = styled.div`
     display: flex;
     padding: 10px;
     width: 40%;
-    margin: 35px auto 0;
+    margin: 65px auto 0;
     font-family: "Open Sans";
     border: 1px solid;
     border-color: #c6dfff;

@@ -372,11 +372,11 @@ class ConversionDetail extends React.Component {
       .then(responseData => {
         if (responseData.status === 200) {
           // this.setState({ loader: false });
-          this.openNotificationWithIcon(
-            "success",
-            "Success",
-            responseData.message
-          );
+          // this.openNotificationWithIcon(
+          //   "success",
+          //   "Success",
+          //   responseData.message
+          // );
           console.log("Response Data 200", responseData.data);
           this.setState({
             subTotal: parseFloat(responseData.data.original_value).toFixed(8),
@@ -454,11 +454,11 @@ class ConversionDetail extends React.Component {
       .then(responseData => {
         if (responseData.status === 200) {
           // this.setState({ loader: false });
-          this.openNotificationWithIcon(
-            "success",
-            "Success",
-            responseData.message
-          );
+          // this.openNotificationWithIcon(
+          //   "success",
+          //   "Success",
+          //   responseData.message
+          // );
           console.log("Response Data 200", responseData.data);
           // let totalFees = (
           //   parseFloat(responseData.data.faldax_fee) +

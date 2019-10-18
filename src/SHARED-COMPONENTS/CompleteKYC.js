@@ -128,11 +128,10 @@ class ComingSoon extends Component {
             <p
               style={{
                 fontFamily: "Open Sans",
-                fontSize: "23px",
+                fontSize: "16px",
                 textAlign: "center",
                 color: "black",
-                fontWeight: "600",
-                marginTop: "24px"
+                marginTop: "34px"
               }}
             >
               Before you can trade, you must complete the ID Verification

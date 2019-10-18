@@ -111,7 +111,7 @@ class PanicEnabled extends Component {
           height={490}
           className="simple-maps"
         >
-          <ModalWrap>
+          <ModalWrap className="kyc-wrap">
             <h3
               style={{
                 fontFamily: "Open Sans",
@@ -119,7 +119,8 @@ class PanicEnabled extends Component {
                 textAlign: "center",
                 color: "rgb(3, 170, 249)",
                 fontWeight: "600",
-                marginTop: "40px"
+                marginTop: "10px",
+                marginBottom: "10px"
               }}
             >
               System Lockout In Effect
@@ -127,14 +128,26 @@ class PanicEnabled extends Component {
             <p
               style={{
                 fontFamily: "Open Sans",
-                fontSize: "28px",
+                fontSize: "14px",
                 textAlign: "center",
-                color: "black",
-                fontWeight: "600",
-                marginTop: "40px"
+                color: "black"
               }}
             >
-              Panic Enabled
+              Our systems have detected unwarranted and suspicious behavior
+              which triggered our automatic lockout protocols. In order to
+              ensure the safety and security of your assets and information, all
+              assets system-wide are frozen and you will not be able to trade or
+              move assets during this time. The balance you see in each of your
+              wallets is secure accurate, and those assets are secure. By
+              default, the lockout goes into effect for 24 hours, but this time
+              may vary depending upon what our security team finds, if anything,
+              and mitigates any known risks to you and our other customers.
+              Please follow our twitter page, or look for notifications we will
+              send via text and email, for updates as they become available. We
+              are deeply sorry for any inconvenience, but our primary concern is
+              to always be the best possible stewards of your information and
+              assets. Rest assured that we are working to ensure that goal, and
+              we thank you for your support and patience.
               {/* {this.props.data} */}
             </p>
             {/* <Sub_wrap>
