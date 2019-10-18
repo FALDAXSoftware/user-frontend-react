@@ -230,7 +230,7 @@ class Wallet extends Component {
                     : "$"}
                   {this.state.total !== null ? (
                     <NumberFormat
-                      value={parseFloat(this.state.total).toFixed(8)}
+                      value={parseFloat(this.state.total).toFixed(2)}
                       displayType={"text"}
                       thousandSeparator={true}
                     />

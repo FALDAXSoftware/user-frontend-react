@@ -30,7 +30,10 @@ import {
   LeftTotal,
   RadioMainRow,
   RadioGroupMainRow,
-  ConversionLeftCol
+  ConversionLeftCol,
+  CryptoFiatRow,
+  CryptoFiatCol,
+  CryptoFiatText
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 
 const API_URL = globalVariables.API_URL;
@@ -249,7 +252,6 @@ class ConversionDetail extends React.Component {
                 original_pair: element.original_pair,
                 order_pair: element.order_pair
               });
-              console.log("element.original_pair", element.original_pair);
             }
           });
         }
@@ -285,7 +287,6 @@ class ConversionDetail extends React.Component {
                 original_pair: element.original_pair,
                 order_pair: element.order_pair
               });
-              console.log("element.original_pair", element.original_pair);
             }
           });
         }
@@ -306,10 +307,10 @@ class ConversionDetail extends React.Component {
         () => {
           this.state.JSTPairList.map((element, i) => {
             if (
-              element.crypto === this.state.currency &&
-              element.currency === this.state.crypto
+              element.crypto === this.state.crypto &&
+              element.currency === this.state.currency
             ) {
-              if (element.crypto != element.currency) {
+              if (element.original_pair != element.order_pair) {
                 this.setState({
                   OrdType: "2"
                 });
@@ -322,7 +323,6 @@ class ConversionDetail extends React.Component {
                 original_pair: element.original_pair,
                 order_pair: element.order_pair
               });
-              console.log("element.original_pair", element.original_pair);
             }
           });
         }
@@ -331,10 +331,10 @@ class ConversionDetail extends React.Component {
   }
   showCalculatedValues() {
     this.setState({ loader: true });
-    console.log("Order values to display");
     if (this.state.includeFees === 1) {
       var values = {
         Symbol: this.state.original_pair,
+        // Symbol: `${this.state.crypto}/${this.state.currency}`,
         Side: this.state.OrdType,
         OrderQty: this.state.recieveCurrencyInput,
         Currency: this.state.crypto,
@@ -348,6 +348,7 @@ class ConversionDetail extends React.Component {
     } else {
       var values = {
         Symbol: this.state.original_pair,
+        // Symbol: `${this.state.crypto}/${this.state.currency}`,
         Side: this.state.OrdType,
         OrderQty: this.state.sendCurrencyInput,
         Currency: this.state.currency,
@@ -383,7 +384,7 @@ class ConversionDetail extends React.Component {
             faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
             networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
             totalAmount: responseData.data.total_value.toFixed(8),
-            fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(8),
+            fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
             displayCurrency: responseData.data.currency,
             orderQuantity: responseData.data.orderQuantity
           });
@@ -453,35 +454,24 @@ class ConversionDetail extends React.Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status === 200) {
-          // this.setState({ loader: false });
-          // this.openNotificationWithIcon(
-          //   "success",
-          //   "Success",
-          //   responseData.message
-          // );
           console.log("Response Data 200", responseData.data);
-          // let totalFees = (
-          //   parseFloat(responseData.data.faldax_fee) +
-          //   parseFloat(responseData.data.network_fee)
-          // ).toFixed(8);
-          // let subtotal = (
-          //   parseFloat(responseData.data.total_value) - totalFees
-          // ).toFixed(8);
           this.setState({
-            subTotal: parseFloat(responseData.data.original_value).toFixed(8),
+            // subTotal: parseFloat(responseData.data.original_value).toFixed(8),
             faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
             networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
-            totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
+            // totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
             displayCurrency: responseData.data.currency
           });
           if (this.state.includeFees === 1) {
             this.setState({
               sendCurrencyInput: parseFloat(
-                responseData.data.original_value
-              ).toFixed(8),
-              recieveCurrencyInput: parseFloat(
                 responseData.data.currency_value
               ).toFixed(8),
+              recieveCurrencyInput: parseFloat(
+                responseData.data.original_value
+              ).toFixed(8),
+              subTotal: parseFloat(responseData.data.original_value).toFixed(8),
+              totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
               loader: false
             });
           } else {
@@ -490,8 +480,10 @@ class ConversionDetail extends React.Component {
                 responseData.data.original_value
               ).toFixed(8),
               sendCurrencyInput: parseFloat(
-                responseData.data.total_value
+                responseData.data.currency_value
               ).toFixed(8),
+              subTotal: parseFloat(responseData.data.original_value).toFixed(8),
+              totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
               loader: false
             });
           }
@@ -542,12 +534,25 @@ class ConversionDetail extends React.Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status === 200) {
-          this.setState({ loader: false });
           this.openNotificationWithIcon(
             "success",
             "Success",
             responseData.message
           );
+          this.setState({
+            recieveCurrencyInput: 0,
+            includeFees: 1,
+            sendCurrencyInput: 0,
+            fiatJSTValue: 0,
+            crypto: "XRP",
+            displayCurrency: 0,
+            currency: "BTC",
+            subTotal: 0,
+            totalAmount: 0,
+            faldaxFee: 0,
+            networkFee: 0,
+            loader: false
+          });
         } else if (responseData.status === 500) {
           this.setState({ loader: false });
           this.openNotificationWithIcon("error", "Error", responseData.err);
@@ -709,19 +714,7 @@ class ConversionDetail extends React.Component {
   //     .catch(error => {});
   // }
   handleCryptoChange(value, option: Option) {
-    console.log(option.props.selectedData.min_limit);
-    // let prevRoom = this.state.crypto + "-" + this.state.currency;
-    // if (this.state.includeFees === 1) {
-    //   this.setState({
-    //     includeFees: 2,
-    //     sendCurrencyInput: 1
-    //   });
-    // } else {
-    //   this.setState({
-    //     includeFees: 1,
-    //     recieveCurrencyInput: 1
-    //   });
-    // }
+    clearTimeout(this.timeout);
     this.setState(
       {
         crypto: value
@@ -729,10 +722,10 @@ class ConversionDetail extends React.Component {
       () => {
         this.state.JSTPairList.map((element, i) => {
           if (
-            element.crypto === this.state.currency &&
-            element.currency === this.state.crypto
+            element.crypto === this.state.crypto &&
+            element.currency === this.state.currency
           ) {
-            if (element.crypto != element.currency) {
+            if (element.original_pair != element.order_pair) {
               this.setState({
                 OrdType: "2"
               });
@@ -741,20 +734,41 @@ class ConversionDetail extends React.Component {
                 OrdType: "1"
               });
             }
+            console.log(
+              "Matched crytpo and currency pair selected Crypto change",
+              this.state.currency + this.state.crypto
+            );
+            console.log(
+              "Matched crytpo and currency pair crypto change",
+              element.crypto + element.currency
+            );
             this.setState({
               original_pair: element.original_pair,
               order_pair: element.order_pair
             });
-            console.log("element.original_pair", element.original_pair);
           }
         });
         if (this.state.includeFees === 1) {
           if (this.state.recieveCurrencyInput > 0) {
-            this.showCalculatedValues();
+            console.log(
+              "If original_pair-----------",
+              this.state.original_pair
+            );
+            console.log("If order_pair-----------", this.state.order_pair);
+            console.log("If crypto-----------", this.state.crypto);
+            console.log("If currency-----------", this.state.currency);
+            this.timeout = setTimeout(this.showCalculatedValues, 1000);
           }
         } else {
           if (this.state.sendCurrencyInput > 0) {
-            this.showCalculatedValues();
+            console.log(
+              "Else original_pair-----------",
+              this.state.original_pair
+            );
+            console.log("Else order_pair-----------", this.state.order_pair);
+            console.log("Else crypto-----------", this.state.crypto);
+            console.log("Else currency-----------", this.state.currency);
+            this.timeout = setTimeout(this.showCalculatedValues, 1000);
           }
         }
         // this.showCalculatedValues();
@@ -775,18 +789,7 @@ class ConversionDetail extends React.Component {
     );
   }
   handleCurrencyChange(value, option: Option) {
-    console.log(option.props.selectedData.min_limit);
-    // if (this.state.includeFees === 1) {
-    //   this.setState({
-    //     includeFees: 2,
-    //     sendCurrencyInput: 1
-    //   });
-    // } else {
-    //   this.setState({
-    //     includeFees: 1,
-    //     recieveCurrencyInput: 1
-    //   });
-    // }
+    clearTimeout(this.timeout);
     this.setState(
       {
         currency: value
@@ -794,10 +797,10 @@ class ConversionDetail extends React.Component {
       () => {
         this.state.JSTPairList.map((element, i) => {
           if (
-            element.crypto === this.state.currency &&
-            element.currency === this.state.crypto
+            element.crypto === this.state.crypto &&
+            element.currency === this.state.currency
           ) {
-            if (element.crypto != element.currency) {
+            if (element.original_pair != element.order_pair) {
               this.setState({
                 OrdType: "2"
               });
@@ -806,20 +809,27 @@ class ConversionDetail extends React.Component {
                 OrdType: "1"
               });
             }
+            console.log(
+              "Matched crytpo and currency pair selected currency change",
+              this.state.crypto + this.state.currency
+            );
+            console.log(
+              "Matched crytpo and currency pair Currency change",
+              element.crypto + element.currency
+            );
             this.setState({
               original_pair: element.original_pair,
               order_pair: element.order_pair
             });
-            console.log("element.original_pair", element.original_pair);
           }
         });
         if (this.state.includeFees === 1) {
           if (this.state.recieveCurrencyInput > 0) {
-            this.showCalculatedValues();
+            this.timeout = setTimeout(this.showCalculatedValues, 1000);
           }
         } else {
           if (this.state.sendCurrencyInput > 0) {
-            this.showCalculatedValues();
+            this.timeout = setTimeout(this.showCalculatedValues, 1000);
           }
         }
         // this.showCalculatedValues();
@@ -831,21 +841,70 @@ class ConversionDetail extends React.Component {
     this.clearValidation();
     var self = this;
     console.log("radio===========", e.target.value);
+    // if (e.target.value === 1) {
+    //   this.setState({
+    //     recieveCurrencyInput: 0
+    //   });
+    // } else {
+    //   this.setState({
+    //     sendCurrencyInput: 0
+    //   });
+    // }
+    this.state.JSTPairList.map((element, i) => {
+      if (
+        element.crypto === this.state.crypto &&
+        element.currency === this.state.currency
+      ) {
+        if (element.original_pair != element.order_pair) {
+          this.setState({
+            OrdType: "2"
+          });
+        } else {
+          this.setState({
+            OrdType: "1"
+          });
+        }
+        console.log(
+          "Matched crytpo and currency pair selected Radio change",
+          this.state.crypto + this.state.currency
+        );
+        console.log(
+          "Matched crytpo and currency pair Radiochange",
+          element.crypto + element.currency
+        );
+        this.setState({
+          original_pair: element.original_pair,
+          order_pair: element.order_pair
+        });
+      }
+    });
     this.setState(
       {
         includeFees: e.target.value,
-        sendCurrencyInput: 0,
-        recieveCurrencyInput: 0,
+        // sendCurrencyInput: 0,
+        // recieveCurrencyInput: 0,
         subTotal: 0,
         faldaxFee: 0,
         networkFee: 0,
         totalFees: 0,
         fiatJSTValue: 0,
         totalAmount: 0,
+        displayCurrency: null,
         loader: false
       },
       () => {
-        // this.getPairWiseCrypto();
+        clearTimeout(this.timeout);
+        if (e.target.value === 1) {
+          this.timeout = setTimeout(this.showCalculatedValues, 1000);
+          this.setState({
+            recieveCurrencyInput: 1
+          });
+        } else {
+          this.timeout = setTimeout(this.showCalculatedValues, 1000);
+          this.setState({
+            sendCurrencyInput: 1
+          });
+        }
       }
       // () => {
       //   if (self.state.selectedTab === 1) {
@@ -857,33 +916,7 @@ class ConversionDetail extends React.Component {
     );
   }
   btnClicked() {
-    // if (this.state.includeFees === 1) {
-    //   if (this.validator1.allValid()) {
-    //     console.log("confirm button clicked");
-    //   } else {
-    //     this.validator1.showMessages();
-    //     this.forceUpdate();
-    //   }
-    // } else {
-    //   if (this.validator2.allValid()) {
-    //     console.log("confirm button clicked");
-    //   } else {
-    //     this.validator2.showMessages();
-    //     this.forceUpdate();
-    //   }
-    // }
     this.calculateOrderVaules();
-    // if (this.validator1.allValid()) {
-    // } else if (this.validator2.allValid()) {
-    //   console.log("confirm button clicked");
-    // } else {
-    //   this.validator2.showMessages();
-    //   this.forceUpdate();
-    // }
-    // else {
-    //   this.validator1.showMessages();
-    //   this.forceUpdate();
-    // }
   }
   clearValidation() {
     if (this.state.includeFees === 1) {
@@ -901,13 +934,12 @@ class ConversionDetail extends React.Component {
     });
   }
   render() {
-    // this.getPairWiseCrypto();
     return (
       <ConversionWrap>
         <Navigation conversion={true} />
         <ConversionContainer>
           <MainRow>
-            <ConversionRadioRow className="radiogrousdbfkj">
+            <ConversionRadioRow>
               <Radio.Group
                 onChange={this.radioChange}
                 value={this.state.includeFees}
@@ -1038,8 +1070,23 @@ class ConversionDetail extends React.Component {
                             // }
                           )}
                         </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
-                          {this.state.fiatCurrencyList &&
+                        <Col
+                          xs={12}
+                          sm={12}
+                          md={10}
+                          style={{
+                            height: "42px",
+                            alignItems: "center",
+                            display: "flex"
+                          }}
+                        >
+                          <CryptoFiatRow>
+                            <CryptoFiatCol>
+                              <img src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/usd.png" />
+                            </CryptoFiatCol>
+                            <CryptoFiatText>{this.state.fiat}</CryptoFiatText>
+                          </CryptoFiatRow>
+                          {/* {this.state.fiatCurrencyList &&
                             this.state.fiatCurrencyList.length > 0 && (
                               <ConversionDropDown
                                 defaultValue={this.state.fiat}
@@ -1070,7 +1117,7 @@ class ConversionDetail extends React.Component {
                                   }
                                 )}
                               </ConversionDropDown>
-                            )}
+                            )} */}
                         </Col>
                       </RadioBorderRow>
                     ) : (
@@ -1255,7 +1302,13 @@ class ConversionDetail extends React.Component {
                           )}
                         </Col>
                         <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
-                          {this.state.fiatCurrencyList &&
+                          <CryptoFiatRow>
+                            <CryptoFiatCol>
+                              <img src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/usd.png" />
+                            </CryptoFiatCol>
+                            <CryptoFiatText>{this.state.fiat}</CryptoFiatText>
+                          </CryptoFiatRow>
+                          {/* {this.state.fiatCurrencyList &&
                             this.state.fiatCurrencyList.length > 0 && (
                               <ConversionDropDown
                                 defaultValue={this.state.fiat}
@@ -1282,7 +1335,7 @@ class ConversionDetail extends React.Component {
                                   }
                                 )}
                               </ConversionDropDown>
-                            )}
+                            )} */}
                         </Col>
                       </RadioBorderRow>
                     ) : null}
@@ -1296,18 +1349,19 @@ class ConversionDetail extends React.Component {
                   <div>
                     <Row>
                       <Col xs={12} style={{ textAlign: "left" }}>
-                        <ConversionRightSpan>Total</ConversionRightSpan>
+                        <ConversionRightSpan>Subtotal</ConversionRightSpan>
                       </Col>
                       <Col xs={12} style={{ textAlign: "right" }}>
-                        <ConversionLeftSpan>
-                          {this.state.totalAmount}{" "}
-                          {/* {this.state.includeFees === 1 ? (
-                            <span>{this.state.currency}</span>
-                          ) : (
-                            <span>{this.state.crypto}</span>
-                          )} */}
-                          {this.state.displayCurrency}
-                        </ConversionLeftSpan>
+                        {this.state.includeFees === 1 ? (
+                          <ConversionLeftSpan>
+                            {this.state.totalAmount}{" "}
+                            {this.state.displayCurrency}
+                          </ConversionLeftSpan>
+                        ) : (
+                          <ConversionLeftSpan>
+                            {this.state.subTotal} {this.state.displayCurrency}
+                          </ConversionLeftSpan>
+                        )}
                       </Col>
                     </Row>
                     <Row>
@@ -1348,18 +1402,19 @@ class ConversionDetail extends React.Component {
                     </Row>
                     <Row>
                       <Col xs={12} style={{ textAlign: "left" }}>
-                        <RightTotal>Subtotal</RightTotal>
+                        <RightTotal>total</RightTotal>
                       </Col>
                       <Col xs={12} style={{ textAlign: "right" }}>
-                        <LeftTotal>
-                          {this.state.subTotal}{" "}
-                          {/* {this.state.includeFees === 1 ? (
-                            <span>{this.state.currency}</span>
-                          ) : (
-                            <span>{this.state.crypto}</span>
-                          )} */}
-                          {this.state.displayCurrency}
-                        </LeftTotal>
+                        {this.state.includeFees === 1 ? (
+                          <LeftTotal>
+                            {this.state.subTotal} {this.state.displayCurrency}
+                          </LeftTotal>
+                        ) : (
+                          <LeftTotal>
+                            {this.state.totalAmount}{" "}
+                            {this.state.displayCurrency}
+                          </LeftTotal>
+                        )}
                       </Col>
                     </Row>
                   </div>

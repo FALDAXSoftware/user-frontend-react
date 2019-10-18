@@ -866,3 +866,26 @@ export const ConversionLeftSpan = styled.span`
   color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#39414d")};
   padding: 10px 0;
 `;
+export const CryptoFiatRow = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  justify-content: center;
+  width: 100%;
+`;
+export const CryptoFiatCol = styled.span`
+  width: 20px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  margin: 0 10px 0 0;
+  > img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+`;
+export const CryptoFiatText = styled.span`
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+`;
