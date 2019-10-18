@@ -266,7 +266,10 @@ class TableofCoin extends React.Component {
                 tableData.length > 0 ? (
                   Object.keys(tableData).map(function(index, key) {
                     var img;
-                    if (tableData[index].coin_icon === null)
+                    if (
+                      tableData[index].coin_icon != undefined ||
+                      tableData[index].coin_icon != null
+                    )
                       img = _AMAZONBUCKET + tableData[index].coin_icon;
                     else img = _AMAZONBUCKET + "coin/defualt_coin.png";
 

@@ -441,7 +441,6 @@ class ConversionDetail extends React.Component {
         order_pair: this.state.order_pair
       };
     }
-    console.log("Values-----------", values);
     fetch(`${API_URL}/conversion/get-jst-price-value`, {
       method: "post",
       headers: {
@@ -482,8 +481,10 @@ class ConversionDetail extends React.Component {
               sendCurrencyInput: parseFloat(
                 responseData.data.currency_value
               ).toFixed(8),
-              subTotal: parseFloat(responseData.data.original_value).toFixed(8),
-              totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
+              subTotal: parseFloat(responseData.data.total_value).toFixed(8),
+              totalAmount: parseFloat(responseData.data.original_value).toFixed(
+                8
+              ),
               loader: false
             });
           }
@@ -545,7 +546,7 @@ class ConversionDetail extends React.Component {
             sendCurrencyInput: 0,
             fiatJSTValue: 0,
             crypto: "XRP",
-            displayCurrency: 0,
+            displayCurrency: null,
             currency: "BTC",
             subTotal: 0,
             totalAmount: 0,
@@ -1373,7 +1374,7 @@ class ConversionDetail extends React.Component {
                       <Col xs={12} style={{ textAlign: "right" }}>
                         {/* <ConversionRightSpan>{this.state.faldaxFees.toFixed(5)}%</ConversionRightSpan> */}
                         <ConversionLeftSpan>
-                          {this.state.faldaxFee}{" "}
+                          ({this.state.faldaxFee}){" "}
                           {/* {this.state.includeFees === 1 ? (
                             <span>{this.state.currency}</span>
                           ) : (
@@ -1390,7 +1391,7 @@ class ConversionDetail extends React.Component {
                       <Col xs={12} style={{ textAlign: "right" }}>
                         {/* <ConversionRightSpan>{this.state.krakenFees.toFixed(5)}%</ConversionRightSpan> */}
                         <ConversionLeftSpan>
-                          {this.state.networkFee}{" "}
+                          ({this.state.networkFee}){" "}
                           {/* {this.state.includeFees === 1 ? (
                             <span>{this.state.currency}</span>
                           ) : (
