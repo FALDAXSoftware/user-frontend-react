@@ -449,10 +449,14 @@ class WalletDetails extends Component {
                           In Orders:{" "}
                           {walletUserData.balance >
                           walletUserData.placed_balance
-                            ? walletUserData.balance -
-                              walletUserData.placed_balance
-                            : walletUserData.placed_balance -
-                              walletUserData.balance}
+                            ? (
+                                walletUserData.balance -
+                                walletUserData.placed_balance
+                              ).toFixed(8)
+                            : (
+                                walletUserData.placed_balance -
+                                walletUserData.balance
+                              ).toFixed(8)}
                         </PlacedDiv>
                       </Col>
                       <Col xxl={12} xl={12} lg={24} md={24}>

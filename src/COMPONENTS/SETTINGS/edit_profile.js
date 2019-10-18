@@ -67,7 +67,18 @@ class Editprofile extends Component {
       activeKey: key
     });
   }
-  componentDidMount() {}
+  componentDidMount() {
+    // console.log("adhssskfjsdfjgsgjh========", this.props.location.state.tabNum);
+    // if (this.props.location.state.tabNum === undefined) {
+    //   this.setState({
+    //     activeKey: "1"
+    //   });
+    // } else {
+    //   this.setState({
+    //     activeKey: this.props.location.state.tabNum
+    //   });
+    // }
+  }
   render() {
     // console.log("defaultActiveKey:", this.props.activeKey);
     return (
