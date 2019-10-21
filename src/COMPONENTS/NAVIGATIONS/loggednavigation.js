@@ -482,7 +482,7 @@ class LoggedNavigation extends Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status === 200) {
-          console.log("responsedata 200", responseData.data);
+          // console.log("responsedata 200", responseData.data);
           this.setState({
             panic_status: JSON.parse(responseData.data),
             // panic_status: true,
@@ -618,13 +618,22 @@ class LoggedNavigation extends Component {
     );
     const DropdownHistoryItems = (
       <Menu className="fixed-drop">
-        <Menu.Item key="0">
+        {/* <Menu.Item key="0">
           <a
             onClick={() =>
               this.props.history.push({ pathname: "/history", tradeType: "1" })
             }
           >
             Trade History
+          </a>
+        </Menu.Item> */}
+        <Menu.Item key="0">
+          <a
+            onClick={() =>
+              this.props.history.push({ pathname: "/history", tradeType: "1" })
+            }
+          >
+            Brokerage History
           </a>
         </Menu.Item>
         <Menu.Item key="1">
@@ -767,7 +776,7 @@ class LoggedNavigation extends Component {
             <a className="DROPSUB">
               <DropMenu mode="inline">
                 <SubMenuNav key="mobsub2" title={"History"}>
-                  <Menu.Item key="0">
+                  {/* <Menu.Item key="0">
                     <a
                       onClick={() =>
                         this.props.history.push({
@@ -777,6 +786,18 @@ class LoggedNavigation extends Component {
                       }
                     >
                       Trade History
+                    </a>
+                  </Menu.Item> */}
+                  <Menu.Item key="0">
+                    <a
+                      onClick={() =>
+                        this.props.history.push({
+                          pathname: "/history",
+                          tradeType: "1"
+                        })
+                      }
+                    >
+                      Brokerage History
                     </a>
                   </Menu.Item>
                   <Menu.Item key="1">
