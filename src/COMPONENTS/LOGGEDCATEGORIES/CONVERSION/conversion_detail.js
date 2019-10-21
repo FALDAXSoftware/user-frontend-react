@@ -30,7 +30,10 @@ import {
   LeftTotal,
   RadioMainRow,
   RadioGroupMainRow,
-  ConversionLeftCol
+  ConversionLeftCol,
+  CryptoFiatRow,
+  CryptoFiatCol,
+  CryptoFiatText
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 
 const API_URL = globalVariables.API_URL;
@@ -438,7 +441,6 @@ class ConversionDetail extends React.Component {
         order_pair: this.state.order_pair
       };
     }
-    console.log("Values-----------", values);
     fetch(`${API_URL}/conversion/get-jst-price-value`, {
       method: "post",
       headers: {
@@ -479,8 +481,10 @@ class ConversionDetail extends React.Component {
               sendCurrencyInput: parseFloat(
                 responseData.data.currency_value
               ).toFixed(8),
-              subTotal: parseFloat(responseData.data.original_value).toFixed(8),
-              totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
+              subTotal: parseFloat(responseData.data.total_value).toFixed(8),
+              totalAmount: parseFloat(responseData.data.original_value).toFixed(
+                8
+              ),
               loader: false
             });
           }
@@ -531,12 +535,25 @@ class ConversionDetail extends React.Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status === 200) {
-          this.setState({ loader: false });
           this.openNotificationWithIcon(
             "success",
             "Success",
             responseData.message
           );
+          this.setState({
+            recieveCurrencyInput: 0,
+            includeFees: 1,
+            sendCurrencyInput: 0,
+            fiatJSTValue: 0,
+            crypto: "XRP",
+            displayCurrency: null,
+            currency: "BTC",
+            subTotal: 0,
+            totalAmount: 0,
+            faldaxFee: 0,
+            networkFee: 0,
+            loader: false
+          });
         } else if (responseData.status === 500) {
           this.setState({ loader: false });
           this.openNotificationWithIcon("error", "Error", responseData.err);
@@ -698,6 +715,7 @@ class ConversionDetail extends React.Component {
   //     .catch(error => {});
   // }
   handleCryptoChange(value, option: Option) {
+    clearTimeout(this.timeout);
     this.setState(
       {
         crypto: value
@@ -733,11 +751,25 @@ class ConversionDetail extends React.Component {
         });
         if (this.state.includeFees === 1) {
           if (this.state.recieveCurrencyInput > 0) {
-            this.showCalculatedValues();
+            console.log(
+              "If original_pair-----------",
+              this.state.original_pair
+            );
+            console.log("If order_pair-----------", this.state.order_pair);
+            console.log("If crypto-----------", this.state.crypto);
+            console.log("If currency-----------", this.state.currency);
+            this.timeout = setTimeout(this.showCalculatedValues, 1000);
           }
         } else {
           if (this.state.sendCurrencyInput > 0) {
-            this.showCalculatedValues();
+            console.log(
+              "Else original_pair-----------",
+              this.state.original_pair
+            );
+            console.log("Else order_pair-----------", this.state.order_pair);
+            console.log("Else crypto-----------", this.state.crypto);
+            console.log("Else currency-----------", this.state.currency);
+            this.timeout = setTimeout(this.showCalculatedValues, 1000);
           }
         }
         // this.showCalculatedValues();
@@ -758,18 +790,7 @@ class ConversionDetail extends React.Component {
     );
   }
   handleCurrencyChange(value, option: Option) {
-    console.log(option.props.selectedData.min_limit);
-    // if (this.state.includeFees === 1) {
-    //   this.setState({
-    //     includeFees: 2,
-    //     sendCurrencyInput: 1
-    //   });
-    // } else {
-    //   this.setState({
-    //     includeFees: 1,
-    //     recieveCurrencyInput: 1
-    //   });
-    // }
+    clearTimeout(this.timeout);
     this.setState(
       {
         currency: value
@@ -777,8 +798,8 @@ class ConversionDetail extends React.Component {
       () => {
         this.state.JSTPairList.map((element, i) => {
           if (
-            element.crypto === this.state.currency &&
-            element.currency === this.state.crypto
+            element.crypto === this.state.crypto &&
+            element.currency === this.state.currency
           ) {
             if (element.original_pair != element.order_pair) {
               this.setState({
@@ -805,11 +826,11 @@ class ConversionDetail extends React.Component {
         });
         if (this.state.includeFees === 1) {
           if (this.state.recieveCurrencyInput > 0) {
-            this.showCalculatedValues();
+            this.timeout = setTimeout(this.showCalculatedValues, 1000);
           }
         } else {
           if (this.state.sendCurrencyInput > 0) {
-            this.showCalculatedValues();
+            this.timeout = setTimeout(this.showCalculatedValues, 1000);
           }
         }
         // this.showCalculatedValues();
@@ -1050,8 +1071,23 @@ class ConversionDetail extends React.Component {
                             // }
                           )}
                         </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
-                          {this.state.fiatCurrencyList &&
+                        <Col
+                          xs={12}
+                          sm={12}
+                          md={10}
+                          style={{
+                            height: "42px",
+                            alignItems: "center",
+                            display: "flex"
+                          }}
+                        >
+                          <CryptoFiatRow>
+                            <CryptoFiatCol>
+                              <img src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/usd.png" />
+                            </CryptoFiatCol>
+                            <CryptoFiatText>{this.state.fiat}</CryptoFiatText>
+                          </CryptoFiatRow>
+                          {/* {this.state.fiatCurrencyList &&
                             this.state.fiatCurrencyList.length > 0 && (
                               <ConversionDropDown
                                 defaultValue={this.state.fiat}
@@ -1082,7 +1118,7 @@ class ConversionDetail extends React.Component {
                                   }
                                 )}
                               </ConversionDropDown>
-                            )}
+                            )} */}
                         </Col>
                       </RadioBorderRow>
                     ) : (
@@ -1267,7 +1303,13 @@ class ConversionDetail extends React.Component {
                           )}
                         </Col>
                         <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
-                          {this.state.fiatCurrencyList &&
+                          <CryptoFiatRow>
+                            <CryptoFiatCol>
+                              <img src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/usd.png" />
+                            </CryptoFiatCol>
+                            <CryptoFiatText>{this.state.fiat}</CryptoFiatText>
+                          </CryptoFiatRow>
+                          {/* {this.state.fiatCurrencyList &&
                             this.state.fiatCurrencyList.length > 0 && (
                               <ConversionDropDown
                                 defaultValue={this.state.fiat}
@@ -1294,7 +1336,7 @@ class ConversionDetail extends React.Component {
                                   }
                                 )}
                               </ConversionDropDown>
-                            )}
+                            )} */}
                         </Col>
                       </RadioBorderRow>
                     ) : null}
@@ -1332,7 +1374,7 @@ class ConversionDetail extends React.Component {
                       <Col xs={12} style={{ textAlign: "right" }}>
                         {/* <ConversionRightSpan>{this.state.faldaxFees.toFixed(5)}%</ConversionRightSpan> */}
                         <ConversionLeftSpan>
-                          {this.state.faldaxFee}{" "}
+                          ({this.state.faldaxFee}){" "}
                           {/* {this.state.includeFees === 1 ? (
                             <span>{this.state.currency}</span>
                           ) : (
@@ -1349,7 +1391,7 @@ class ConversionDetail extends React.Component {
                       <Col xs={12} style={{ textAlign: "right" }}>
                         {/* <ConversionRightSpan>{this.state.krakenFees.toFixed(5)}%</ConversionRightSpan> */}
                         <ConversionLeftSpan>
-                          {this.state.networkFee}{" "}
+                          ({this.state.networkFee}){" "}
                           {/* {this.state.includeFees === 1 ? (
                             <span>{this.state.currency}</span>
                           ) : (
