@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
+import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
 /* import { DropdownButton, ButtonToolbar } from 'react-bootstrap'; */
 
 /* Styled-Components */
@@ -97,17 +98,21 @@ class WalletDetails extends Component {
       currencyConv: {},
       defaultCoin: "",
       balanceFlag: false,
-      coinFee: []
+      coinFee: [],
+      panic_status: false,
+      panicEnabled: false
     };
     this.changeCoins = this.changeCoins.bind(this);
     this._walletCreate = this._walletCreate.bind(this);
     this.walletDetailsApi = this.walletDetailsApi.bind(this);
+    this.panicStatus = this.panicStatus.bind(this);
   }
 
   /* Life Cycle Methods */
   componentDidMount() {
     var self = this;
     var total = 0;
+    this.panicStatus();
     if (this.props.walletDetails !== null) {
       var tableData = this.props.walletDetails.coins;
       if (tableData !== undefined) {
@@ -221,9 +226,41 @@ class WalletDetails extends Component {
     /* console.log(e); */
     this.setState({
       withdraw: false,
-      send: false
+      send: false,
+      panicEnabled: false
     });
   };
+
+  panicStatus() {
+    this.setState({
+      loader: true
+    });
+    fetch(API_URL + `/check-panic-status`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn
+      }
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status === 200) {
+          console.log("responsedata 200", responseData.data);
+          this.setState({
+            panic_status: JSON.parse(responseData.data),
+            // panic_status: true,
+            loader: false
+          });
+        } else {
+          this.setState({
+            panic_status: false,
+            loader: false
+          });
+        }
+      })
+      .catch(error => {});
+  }
 
   /* 
         Page: /wallet
@@ -231,8 +268,13 @@ class WalletDetails extends Component {
     */
 
   showModal = e => {
-    if (e.target.name === "SEND") this.setState({ send: true });
-    else this.setState({ withdraw: true });
+    if (this.state.panic_status === true) {
+      // alert("Idf");
+      this.setState({ panicEnabled: true });
+    } else {
+      if (e.target.name === "SEND") this.setState({ send: true });
+      else this.setState({ withdraw: true });
+    }
   };
 
   /* 
@@ -574,6 +616,10 @@ class WalletDetails extends Component {
             ""
           )}
         </GreyWrap>
+        <PanicEnabled
+          comingCancel={e => this.comingCancel(e)}
+          visible={this.state.panicEnabled}
+        />
         <CommonFooter />
         {this.props.loader || this.state.loader ? <FaldaxLoader /> : ""}
       </ContactWrap>
