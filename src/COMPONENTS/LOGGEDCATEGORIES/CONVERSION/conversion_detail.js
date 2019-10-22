@@ -1020,8 +1020,8 @@ class ConversionDetail extends React.Component {
   btnClicked() {
     if (this.state.includeFees === 1) {
       if (this.validator1.allValid()) {
-        // this.calculateOrderVaules();
-        alert("success");
+        this.calculateOrderVaules();
+        // alert("success");
       } else {
         this.validator1.showMessages();
         this.forceUpdate();
@@ -1029,8 +1029,8 @@ class ConversionDetail extends React.Component {
     }
     if (this.state.includeFees === 2) {
       if (this.validator2.allValid()) {
-        // this.calculateOrderVaules();
-        alert("success");
+        this.calculateOrderVaules();
+        // alert("success");
       } else {
         this.validator2.showMessages();
         this.forceUpdate();
