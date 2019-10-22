@@ -757,7 +757,7 @@ class ConversionDetail extends React.Component {
           });
         } else if (responseData.status === 500) {
           this.setState({ loader: false });
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon("error", "Error", responseData.message);
         } else {
           this.setState({ loader: false });
           this.openNotificationWithIcon("error", "Error", responseData.err);
