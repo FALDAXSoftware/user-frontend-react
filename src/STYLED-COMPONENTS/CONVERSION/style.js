@@ -887,5 +887,5 @@ export const CryptoFiatCol = styled.span`
 export const CryptoFiatText = styled.span`
   font-size: 20px;
   font-weight: 600;
-  color: #000;
+  color: ${props => (props.theme.mode === "dark" ? "#5d5d79" : "#000000")};
 `;

@@ -221,12 +221,11 @@ class ConversionDetail extends React.Component {
     this.getCrypto();
     // this.getCurrencies();
     this.getFiatCurrencyList();
-    // this.getPairWiseCrypto();
   }
   sendCurrencyChange(e) {
     console.log("Send Currency Change");
     clearTimeout(this.timeout);
-    if (e.target.value >= 0 && e.target.value !== null) {
+    if (e.target.value > 0 && e.target.value !== null) {
       this.clearValidation();
       this.timeout = setTimeout(this.showCalculatedValues, 1000);
       this.setState(
@@ -259,44 +258,52 @@ class ConversionDetail extends React.Component {
     }
   }
   recieveCurrencyChange(e) {
-    console.log("Recieve Currency Change");
     clearTimeout(this.timeout);
-    if (e.target.value >= 0 && e.target.value !== null) {
-      this.clearValidation();
-      this.timeout = setTimeout(this.showCalculatedValues, 1000);
+    console.log("Recieve Currency Change");
+    this.clearValidation();
+    this.state.JSTPairList.map((element, i) => {
+      if (
+        element.crypto === this.state.crypto &&
+        element.currency === this.state.currency
+      ) {
+        if (element.original_pair != element.order_pair) {
+          this.setState({
+            OrdType: "2"
+          });
+        } else {
+          this.setState({
+            OrdType: "1"
+          });
+        }
+        this.setState({
+          original_pair: element.original_pair,
+          order_pair: element.order_pair
+        });
+      }
+    });
+    this.timeout = setTimeout(this.showCalculatedValues, 1000);
+    if (this.validator1.allValid() && e.target.value != null) {
       this.setState(
         {
           recieveCurrencyInput: e.target.value
         },
-        () => {
-          this.state.JSTPairList.map((element, i) => {
-            if (
-              element.crypto === this.state.crypto &&
-              element.currency === this.state.currency
-            ) {
-              if (element.original_pair != element.order_pair) {
-                this.setState({
-                  OrdType: "2"
-                });
-              } else {
-                this.setState({
-                  OrdType: "1"
-                });
-              }
-              this.setState({
-                original_pair: element.original_pair,
-                order_pair: element.order_pair
-              });
-            }
-          });
-        }
+        () => {}
       );
+    } else {
+      this.setState(
+        {
+          recieveCurrencyInput: e.target.value
+        },
+        () => {}
+      );
+      this.validator1.showMessages();
+      this.forceUpdate();
     }
   }
   fiatJSTValueChange(e) {
     console.log("Fiat Value Change");
     clearTimeout(this.timeout);
-    if (e.target.value >= 0 && e.target.value !== null) {
+    if (e.target.value > 0 && e.target.value !== null) {
       this.clearValidation();
       this.timeout = setTimeout(this.showCalculatedValuesUSDTerms, 1000);
       this.clearValidation();
@@ -360,58 +367,78 @@ class ConversionDetail extends React.Component {
       };
     }
     console.log("Values-----------", values);
-    fetch(`${API_URL}/conversion/get-jst-price-value`, {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      },
-      body: JSON.stringify(values)
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.status === 200) {
-          // this.setState({ loader: false });
-          // this.openNotificationWithIcon(
-          //   "success",
-          //   "Success",
-          //   responseData.message
-          // );
-          console.log("Response Data 200", responseData.data);
-          this.setState({
-            subTotal: parseFloat(responseData.data.original_value).toFixed(8),
-            faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
-            networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
-            totalAmount: responseData.data.total_value.toFixed(8),
-            fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
-            displayCurrency: responseData.data.currency,
-            orderQuantity: responseData.data.orderQuantity
-          });
-          if (this.state.includeFees === 1) {
-            this.setState({
-              sendCurrencyInput: parseFloat(
-                responseData.data.currency_value
-              ).toFixed(8),
-              loader: false
-            });
-          } else {
-            this.setState({
-              recieveCurrencyInput: parseFloat(
-                responseData.data.total_value
-              ).toFixed(8),
-              loader: false
-            });
-          }
-        } else if (responseData.status === 500) {
-          this.setState({ loader: false });
-          this.openNotificationWithIcon("error", "Error", responseData.err);
-        } else {
-          this.setState({ loader: false });
-          this.openNotificationWithIcon("error", "Error", responseData.err);
-        }
+    if (values.OrderQty === null || values.OrderQty === "") {
+      // this.setState({ loader: false });
+      this.validator1.showMessages();
+      this.forceUpdate();
+      this.setState({
+        recieveCurrencyInput: 0,
+        includeFees: 1,
+        sendCurrencyInput: 0,
+        fiatJSTValue: 0,
+        crypto: "XRP",
+        displayCurrency: null,
+        currency: "BTC",
+        subTotal: 0,
+        totalAmount: 0,
+        faldaxFee: 0,
+        networkFee: 0,
+        loader: false
+      });
+    } else {
+      fetch(`${API_URL}/conversion/get-jst-price-value`, {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn
+        },
+        body: JSON.stringify(values)
       })
-      .catch(error => {});
+        .then(response => response.json())
+        .then(responseData => {
+          if (responseData.status === 200) {
+            // this.setState({ loader: false });
+            // this.openNotificationWithIcon(
+            //   "success",
+            //   "Success",
+            //   responseData.message
+            // );
+            console.log("Response Data 200", responseData.data);
+            this.setState({
+              subTotal: parseFloat(responseData.data.original_value).toFixed(8),
+              faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
+              networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
+              totalAmount: responseData.data.total_value.toFixed(8),
+              fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
+              displayCurrency: responseData.data.currency,
+              orderQuantity: responseData.data.orderQuantity
+            });
+            if (this.state.includeFees === 1) {
+              this.setState({
+                sendCurrencyInput: parseFloat(
+                  responseData.data.currency_value
+                ).toFixed(8),
+                loader: false
+              });
+            } else {
+              this.setState({
+                recieveCurrencyInput: parseFloat(
+                  responseData.data.total_value
+                ).toFixed(8),
+                loader: false
+              });
+            }
+          } else if (responseData.status === 500) {
+            this.setState({ loader: false });
+            this.openNotificationWithIcon("error", "Error", responseData.err);
+          } else {
+            this.setState({ loader: false });
+            this.openNotificationWithIcon("error", "Error", responseData.err);
+          }
+        })
+        .catch(error => {});
+    }
   }
   showCalculatedValuesUSDTerms() {
     this.setState({ loader: true });
@@ -441,7 +468,6 @@ class ConversionDetail extends React.Component {
         order_pair: this.state.order_pair
       };
     }
-    console.log("Values-----------", values);
     fetch(`${API_URL}/conversion/get-jst-price-value`, {
       method: "post",
       headers: {
@@ -482,8 +508,10 @@ class ConversionDetail extends React.Component {
               sendCurrencyInput: parseFloat(
                 responseData.data.currency_value
               ).toFixed(8),
-              subTotal: parseFloat(responseData.data.original_value).toFixed(8),
-              totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
+              subTotal: parseFloat(responseData.data.total_value).toFixed(8),
+              totalAmount: parseFloat(responseData.data.original_value).toFixed(
+                8
+              ),
               loader: false
             });
           }
@@ -545,7 +573,7 @@ class ConversionDetail extends React.Component {
             sendCurrencyInput: 0,
             fiatJSTValue: 0,
             crypto: "XRP",
-            displayCurrency: 0,
+            displayCurrency: null,
             currency: "BTC",
             subTotal: 0,
             totalAmount: 0,
@@ -601,123 +629,25 @@ class ConversionDetail extends React.Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 200) {
-          // var cryptoData = responseData.data,
-          //   minLimit,
-          //   minCurrLimit;
-          // for (var i = 0; i < cryptoData.length; i++) {
-          //   if (cryptoData[i].coin == this.state.crypto) {
-          //     minLimit = cryptoData[i].min_limit;
-          //   }
-          //   if (cryptoData[i].coin == this.state.currency) {
-          //     minCurrLimit = cryptoData[i].min_limit;
-          //   }
-          // }
-          this.setState(
-            {
-              cryptoList: responseData.coinList,
-              currencyList: responseData.coinList,
-              originalCoinList: responseData.coinList,
-              JSTPairList: responseData.getJSTPair
-            },
-            () => {
-              // this.getPairWiseCrypto();
-            }
-          );
-          // console.log("CryptoList", this.state.cryptoList);
-          // console.log("currencyList", this.state.currencyList);
+          this.setState({
+            cryptoList: responseData.coinList,
+            currencyList: responseData.coinList,
+            originalCoinList: responseData.coinList,
+            JSTPairList: responseData.getJSTPair
+          });
           this.setState({
             loader: false
           });
         }
       })
       .catch(error => {});
-    // fetch(API_URL + `/coin-list-converison`, {
-    //   method: "get",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //     Authorization: "Bearer " + this.props.isLoggedIn
-    //   }
-    // })
-    //   .then(response => response.json())
-    //   .then(responseData => {
-    //     if (responseData.status == 200) {
-    //       var cryptoData = responseData.data,
-    //         minLimit,
-    //         minCurrLimit;
-    //       for (var i = 0; i < cryptoData.length; i++) {
-    //         if (cryptoData[i].coin == this.state.crypto) {
-    //           minLimit = cryptoData[i].min_limit;
-    //         }
-    //         if (cryptoData[i].coin == this.state.currency) {
-    //           minCurrLimit = cryptoData[i].min_limit;
-    //         }
-    //       }
-    //       this.setState({
-    //         cryptoList: responseData.data,
-    //         krakenFees: responseData.kraken_fees,
-    //         faldaxFees: responseData.faldax_fees,
-    //         minCrypto: minLimit,
-    //         minCurrency: minCurrLimit
-    //       });
-    //     }
-    //   })
-    //   .catch(error => {});
   }
-  // getPairWiseCrypto() {
-  //   // console.log(
-  //   //   "currencyList---------------------------",
-  //   //   this.state.currencyList
-  //   // );
-  //   var self = this.state;
-  //   let temp = self.currencyList;
-  //   if (self.includeFees === 1) {
-  //     if (self.crypto === "XRP") {
-  //       self.currencyList.map((element, i) => {
-  //         if (element.coin === "LTC") {
-  //           self.currencyList.splice(i, i);
-  //           console.log("Updated Currency", self.currencyList);
-  //         }
-  //       });
-  //       this.setState({
-
-  //       })
-  //     } else if (self.crypto === "ETH") {
-  //       self.currencyList.map((element, i) => {
-  //         if (element.coin === "LTC") {
-  //           console.log("coin", i);
-  //           self.currencyList.splice(i, i);
-  //           console.log("Updated Currency", self.currencyList);
-  //         }
-  //       });
-  //     }
-  //   } else {
-  //     alert("send");
-  //   }
-  // }
-  // getCurrencies() {
-  //   fetch(
-  //     `${API_URL}/coin-currency-list-conversion?crypto=${this.state.crypto}`,
-  //     {
-  //       method: "get",
-  //       headers: {
-  //         Accept: "application/json",
-  //         "Content-Type": "application/json",
-  //         Authorization: "Bearer " + this.props.isLoggedIn
-  //       }
-  //     }
-  //   )
-  //     .then(response => response.json())
-  //     .then(responseData => {
-  //       this.setState({ currencyList: responseData.data });
-  //     })
-  //     .catch(error => {});
-  // }
   handleCryptoChange(value, option: Option) {
     clearTimeout(this.timeout);
     this.setState(
       {
-        crypto: value
+        crypto: value,
+        cryptoList: this.state.originalCoinList
       },
       () => {
         this.state.JSTPairList.map((element, i) => {
@@ -771,8 +701,6 @@ class ConversionDetail extends React.Component {
             this.timeout = setTimeout(this.showCalculatedValues, 1000);
           }
         }
-        // this.showCalculatedValues();
-        // this.getPairWiseCrypto();
       }
     );
   }
@@ -916,15 +844,22 @@ class ConversionDetail extends React.Component {
     );
   }
   btnClicked() {
-    this.calculateOrderVaules();
+    if (this.validator1.allValid()) {
+      // this.calculateOrderVaules();
+      alert("success");
+    } else {
+      this.validator1.showMessages();
+      this.forceUpdate();
+    }
   }
   clearValidation() {
     if (this.state.includeFees === 1) {
       this.validator1.hideMessages();
+      this.forceUpdate();
     } else {
       this.validator2.hideMessages();
+      this.forceUpdate();
     }
-    this.forceUpdate();
     // rerender to hide messages for the first time
   }
   openNotificationWithIcon(type, head, desc) {
@@ -954,19 +889,9 @@ class ConversionDetail extends React.Component {
                           <ConversionInput
                             type="number"
                             value={this.state.recieveCurrencyInput}
-                            onChange={this.recieveCurrencyChange}
                             disabled
                             placeholder="0"
                           />
-                          {/* {this.validator1.message(
-                            "crypto",
-                            this.state.recieveCurrencyInput,
-                            `required|numeric|gtzero`,
-                            "text-danger-validation"
-                            // {
-                            //   minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
-                            // }
-                          )} */}
                         </Col>
                         <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
                           {this.state.cryptoList &&
@@ -974,24 +899,46 @@ class ConversionDetail extends React.Component {
                               <ConversionDropDown
                                 defaultValue={this.state.crypto}
                                 onChange={this.handleCryptoChange}
-                                // disabled
                               >
                                 {this.state.cryptoList.map((element, index) => {
-                                  if (element.coin != this.state.currency) {
-                                    return (
-                                      <DropDownOption
-                                        key={index}
-                                        value={element.coin}
-                                        selectedData={element}
-                                      >
-                                        {" "}
-                                        <DropIcon
-                                          src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                          height="20px"
-                                        />{" "}
-                                        {element.coin}
-                                      </DropDownOption>
-                                    );
+                                  if (this.state.currency === "XRP") {
+                                    if (
+                                      element.coin != this.state.currency &&
+                                      element.coin != "LTC"
+                                    ) {
+                                      // console.log(this.state.cryptoList);
+                                      return (
+                                        <DropDownOption
+                                          key={index}
+                                          value={element.coin}
+                                          selectedData={element}
+                                        >
+                                          {" "}
+                                          <DropIcon
+                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                            height="20px"
+                                          />{" "}
+                                          {element.coin}
+                                        </DropDownOption>
+                                      );
+                                    }
+                                  } else {
+                                    if (element.coin != this.state.currency) {
+                                      return (
+                                        <DropDownOption
+                                          key={index}
+                                          value={element.coin}
+                                          selectedData={element}
+                                        >
+                                          {" "}
+                                          <DropIcon
+                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                            height="20px"
+                                          />{" "}
+                                          {element.coin}
+                                        </DropDownOption>
+                                      );
+                                    }
                                   }
                                 })}
                               </ConversionDropDown>
@@ -1012,7 +959,7 @@ class ConversionDetail extends React.Component {
                           {this.validator1.message(
                             "recieve currency",
                             this.state.recieveCurrencyInput,
-                            `required|numeric|gtzero`,
+                            `required|numeric|gtzero|decimalrestrict8`,
                             "text-danger-validation"
                             // {
                             //   minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
@@ -1027,21 +974,44 @@ class ConversionDetail extends React.Component {
                                 onChange={this.handleCryptoChange}
                               >
                                 {this.state.cryptoList.map((element, index) => {
-                                  if (element.coin != this.state.currency) {
-                                    return (
-                                      <DropDownOption
-                                        key={index}
-                                        value={element.coin}
-                                        selectedData={element}
-                                      >
-                                        {" "}
-                                        <DropIcon
-                                          src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                          height="20px"
-                                        />{" "}
-                                        {element.coin}
-                                      </DropDownOption>
-                                    );
+                                  if (this.state.currency === "XRP") {
+                                    if (
+                                      element.coin != this.state.currency &&
+                                      element.coin != "LTC"
+                                    ) {
+                                      console.log(this.state.cryptoList);
+                                      return (
+                                        <DropDownOption
+                                          key={index}
+                                          value={element.coin}
+                                          selectedData={element}
+                                        >
+                                          {" "}
+                                          <DropIcon
+                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                            height="20px"
+                                          />{" "}
+                                          {element.coin}
+                                        </DropDownOption>
+                                      );
+                                    }
+                                  } else {
+                                    if (element.coin != this.state.currency) {
+                                      return (
+                                        <DropDownOption
+                                          key={index}
+                                          value={element.coin}
+                                          selectedData={element}
+                                        >
+                                          {" "}
+                                          <DropIcon
+                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                            height="20px"
+                                          />{" "}
+                                          {element.coin}
+                                        </DropDownOption>
+                                      );
+                                    }
                                   }
                                 })}
                               </ConversionDropDown>
@@ -1063,7 +1033,7 @@ class ConversionDetail extends React.Component {
                           {this.validator1.message(
                             "fiat value",
                             this.state.fiatJSTValue,
-                            `required|numeric|gtzerofiat`,
+                            `required|numeric|gtzerofiat|decimalrestrict2`,
                             "text-danger-validation"
                             // {
                             //   minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
@@ -1086,38 +1056,6 @@ class ConversionDetail extends React.Component {
                             </CryptoFiatCol>
                             <CryptoFiatText>{this.state.fiat}</CryptoFiatText>
                           </CryptoFiatRow>
-                          {/* {this.state.fiatCurrencyList &&
-                            this.state.fiatCurrencyList.length > 0 && (
-                              <ConversionDropDown
-                                defaultValue={this.state.fiat}
-                                onChange={this.handleFiatChange}
-                              >
-                                {this.state.fiatCurrencyList.map(
-                                  (element, index) => {
-                                    // console.log("index", index);
-                                    if (
-                                      index == 0 &&
-                                      element.coin != this.state.currency
-                                    ) {
-                                      return (
-                                        <DropDownOption
-                                          key={index}
-                                          value={element.coin}
-                                          selectedData={element}
-                                        >
-                                          {" "}
-                                          <DropIcon
-                                            src={element.coin_icon}
-                                            height="20px"
-                                          />{" "}
-                                          {element.coin}
-                                        </DropDownOption>
-                                      );
-                                    }
-                                  }
-                                )}
-                              </ConversionDropDown>
-                            )} */}
                         </Col>
                       </RadioBorderRow>
                     ) : (
@@ -1135,45 +1073,11 @@ class ConversionDetail extends React.Component {
                           <ConversionInput
                             type="number"
                             value={this.state.sendCurrencyInput}
-                            onChange={this.sendCurrencyChnage}
                             disabled
                             placeholder="0"
                           />
-                          {/* {this.validator1.message(
-                            "currency",
-                            this.state.sendCurrencyInput,
-                            `required|numeric|gtzero|minCurrValid`,
-                            "text-danger-validation",
-                            {
-                              minCurrValid: `Minimum Currency limit is ${this.state.minCurrency}`
-                            }
-                          )} */}
                         </Col>
                         <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
-                          {/* {this.state.currencyList &&
-                            this.state.currencyList.length > 0 && (
-                              <ConversionDropDown
-                                defaultValue={this.state.currency}
-                                onChange={this.handleCurrencyChange}
-                                // disabled
-                              >
-                                {this.state.currencyList.map(
-                                  (element, index) => (
-                                    <DropDownOption
-                                      key={index}
-                                      value={element.coin}
-                                    >
-                                      {" "}
-                                      <DropIcon
-                                        src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                        height="20px"
-                                      />{" "}
-                                      {element.coin}
-                                    </DropDownOption>
-                                  )
-                                )}
-                              </ConversionDropDown>
-                            )} */}
                           {this.state.currencyList &&
                             this.state.currencyList.length > 0 && (
                               <ConversionDropDown
@@ -1182,21 +1086,43 @@ class ConversionDetail extends React.Component {
                               >
                                 {this.state.currencyList.map(
                                   (element, index) => {
-                                    if (element.coin != this.state.crypto) {
-                                      return (
-                                        <DropDownOption
-                                          key={index}
-                                          value={element.coin}
-                                          selectedData={element}
-                                        >
-                                          {" "}
-                                          <DropIcon
-                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                            height="20px"
-                                          />{" "}
-                                          {element.coin}
-                                        </DropDownOption>
-                                      );
+                                    if (this.state.crypto === "XRP") {
+                                      if (
+                                        element.coin != this.state.crypto &&
+                                        element.coin != "LTC"
+                                      ) {
+                                        return (
+                                          <DropDownOption
+                                            key={index}
+                                            value={element.coin}
+                                            selectedData={element}
+                                          >
+                                            {" "}
+                                            <DropIcon
+                                              src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                              height="20px"
+                                            />{" "}
+                                            {element.coin}
+                                          </DropDownOption>
+                                        );
+                                      }
+                                    } else {
+                                      if (element.coin != this.state.crypto) {
+                                        return (
+                                          <DropDownOption
+                                            key={index}
+                                            value={element.coin}
+                                            selectedData={element}
+                                          >
+                                            {" "}
+                                            <DropIcon
+                                              src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                              height="20px"
+                                            />{" "}
+                                            {element.coin}
+                                          </DropDownOption>
+                                        );
+                                      }
                                     }
                                   }
                                 )}
@@ -1218,7 +1144,7 @@ class ConversionDetail extends React.Component {
                           {this.validator2.message(
                             "send currency",
                             this.state.sendCurrencyInput,
-                            `required|numeric|gtzero`,
+                            `required|numeric|gtzero|decimalrestrict8`,
                             "text-danger-validation"
                             // {
                             //   minCurrValid: `Minimum Currency limit is ${this.state.minCurrency}`
@@ -1257,21 +1183,43 @@ class ConversionDetail extends React.Component {
                               >
                                 {this.state.currencyList.map(
                                   (element, index) => {
-                                    if (element.coin != this.state.crypto) {
-                                      return (
-                                        <DropDownOption
-                                          key={index}
-                                          value={element.coin}
-                                          selectedData={element}
-                                        >
-                                          {" "}
-                                          <DropIcon
-                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                            height="20px"
-                                          />{" "}
-                                          {element.coin}
-                                        </DropDownOption>
-                                      );
+                                    if (this.state.crypto === "XRP") {
+                                      if (
+                                        element.coin != this.state.crypto &&
+                                        element.coin != "LTC"
+                                      ) {
+                                        return (
+                                          <DropDownOption
+                                            key={index}
+                                            value={element.coin}
+                                            selectedData={element}
+                                          >
+                                            {" "}
+                                            <DropIcon
+                                              src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                              height="20px"
+                                            />{" "}
+                                            {element.coin}
+                                          </DropDownOption>
+                                        );
+                                      }
+                                    } else {
+                                      if (element.coin != this.state.crypto) {
+                                        return (
+                                          <DropDownOption
+                                            key={index}
+                                            value={element.coin}
+                                            selectedData={element}
+                                          >
+                                            {" "}
+                                            <DropIcon
+                                              src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                              height="20px"
+                                            />{" "}
+                                            {element.coin}
+                                          </DropDownOption>
+                                        );
+                                      }
                                     }
                                   }
                                 )}
@@ -1308,34 +1256,6 @@ class ConversionDetail extends React.Component {
                             </CryptoFiatCol>
                             <CryptoFiatText>{this.state.fiat}</CryptoFiatText>
                           </CryptoFiatRow>
-                          {/* {this.state.fiatCurrencyList &&
-                            this.state.fiatCurrencyList.length > 0 && (
-                              <ConversionDropDown
-                                defaultValue={this.state.fiat}
-                                onChange={this.handleFiatChange}
-                              >
-                                {this.state.fiatCurrencyList.map(
-                                  (element, index) => {
-                                    if (element.coin != this.state.currency) {
-                                      return (
-                                        <DropDownOption
-                                          key={index}
-                                          value={element.coin}
-                                          selectedData={element}
-                                        >
-                                          {" "}
-                                          <DropIcon
-                                            src={element.coin_icon}
-                                            height="20px"
-                                          />{" "}
-                                          {element.coin}
-                                        </DropDownOption>
-                                      );
-                                    }
-                                  }
-                                )}
-                              </ConversionDropDown>
-                            )} */}
                         </Col>
                       </RadioBorderRow>
                     ) : null}
@@ -1373,7 +1293,7 @@ class ConversionDetail extends React.Component {
                       <Col xs={12} style={{ textAlign: "right" }}>
                         {/* <ConversionRightSpan>{this.state.faldaxFees.toFixed(5)}%</ConversionRightSpan> */}
                         <ConversionLeftSpan>
-                          {this.state.faldaxFee}{" "}
+                          ({this.state.faldaxFee}){" "}
                           {/* {this.state.includeFees === 1 ? (
                             <span>{this.state.currency}</span>
                           ) : (
@@ -1390,7 +1310,7 @@ class ConversionDetail extends React.Component {
                       <Col xs={12} style={{ textAlign: "right" }}>
                         {/* <ConversionRightSpan>{this.state.krakenFees.toFixed(5)}%</ConversionRightSpan> */}
                         <ConversionLeftSpan>
-                          {this.state.networkFee}{" "}
+                          ({this.state.networkFee}){" "}
                           {/* {this.state.includeFees === 1 ? (
                             <span>{this.state.currency}</span>
                           ) : (
