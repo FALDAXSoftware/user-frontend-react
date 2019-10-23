@@ -14,6 +14,7 @@ import { RefInput } from "COMPONENTS/SETTINGS/referral";
 import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import TFAModal from "SHARED-COMPONENTS/TFAModal";
+import { parse } from "@fortawesome/fontawesome-svg-core";
 
 let { API_URL } = globalVariables;
 const WalletModal = styled(Modal)`
@@ -81,17 +82,22 @@ const WallInput = styled(Input)`
 `;
 
 const Fee = styled.span`
-  float: left;
+  display: flex;
+  flex-wrap: wrap;
   font-size: 16px;
   font-family: "Open Sans";
   color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  > span {
+    display: flex;
+    width: 100%;
+  }
   @media (max-width: 767px) {
     float: none;
     display: block;
   }
 `;
 const TotPay = styled.span`
-  float: right;
+  display: flex;
   font-size: 16px;
   font-family: "Open Sans";
   color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
@@ -126,10 +132,12 @@ const SendWrap = styled.div`
   }
 `;
 const TotDiv = styled.div`
-  height: 25px;
   margin-top: 45px;
   width: 100%;
   // width: 462px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 const WithrawMsg = styled.div`
   font-size: 20px;
@@ -167,6 +175,8 @@ class WalletPopup extends Component {
       receive: {},
       receiveAdd: "receive_add",
       show: false,
+      fiatValue: "",
+      singlefiatValue: "",
       sendFields: {
         amount: 0,
         destination_address: "",
@@ -238,6 +248,12 @@ class WalletPopup extends Component {
         .catch(error => {
           // console.log(error)
         });
+    }
+    if (this.props.fiatValue) {
+      this.setState({
+        fiatValue: this.props.fiatValue.toFixed(2),
+        singlefiatValue: this.props.fiatValue.toFixed(2)
+      });
     }
   }
 
@@ -410,8 +426,14 @@ class WalletPopup extends Component {
       parseFloat(fields[name]) +
         parseFloat(fields[name]) * (this.props.coinFee / 100)
     ).toFixed(8);
+    let fiatValueamount = parseFloat(
+      parseFloat(this.state.singlefiatValue) * parseFloat(e.target.value)
+    ).toFixed(2);
     fields["subtotal"] = subtotal;
-    this.setState({ sendFields: fields });
+    this.setState({
+      sendFields: fields,
+      fiatValue: fiatValueamount
+    });
   }
 
   /* After confirming Button*/
@@ -558,12 +580,21 @@ class WalletPopup extends Component {
                   {/* {console.log(this.props.coinFee)} */}
                   <TotDiv>
                     <Fee>
-                      <b>Fee: </b>{" "}
-                      {this.props.coinFee ? `${this.props.coinFee} %` : 0}
+                      <span>
+                        <b>Fee: </b>
+                        {this.props.coinFee ? `${this.props.coinFee} %` : 0}
+                      </span>
+                      <span>
+                        <b>Fiat Value: </b>
+                        {/* {this.props.fiatValue
+                          ? `${this.props.fiatValue.toFixed(2)} USD`
+                          : 0} */}
+                        {this.state.fiatValue} USD
+                      </span>
                     </Fee>
                     <TotPay>
                       {/* <b>Total Payout:</b> {subtotal.toFixed(8)}{" "} */}
-                      <b>Total Payout:</b> {this.state.sendFields.subtotal}{" "}
+                      <b>Total Payout: </b> {this.state.sendFields.subtotal}{" "}
                       {this.props.coin_code}
                     </TotPay>
                   </TotDiv>
