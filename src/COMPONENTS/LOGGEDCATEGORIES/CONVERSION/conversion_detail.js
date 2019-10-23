@@ -676,15 +676,17 @@ class ConversionDetail extends React.Component {
             } else {
               this.setState({
                 recieveCurrencyInput: parseFloat(
-                  responseData.data.original_value
+                  responseData.data.total_value
                 ).toFixed(8),
                 sendCurrencyInput: parseFloat(
                   responseData.data.currency_value
                 ).toFixed(8),
-                subTotal: parseFloat(responseData.data.total_value).toFixed(8),
-                totalAmount: parseFloat(
-                  responseData.data.original_value
-                ).toFixed(8),
+                subTotal: parseFloat(responseData.data.original_value).toFixed(
+                  8
+                ),
+                totalAmount: parseFloat(responseData.data.total_value).toFixed(
+                  8
+                ),
                 loader: false
               });
             }
