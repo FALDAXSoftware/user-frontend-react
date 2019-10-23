@@ -676,15 +676,17 @@ class ConversionDetail extends React.Component {
             } else {
               this.setState({
                 recieveCurrencyInput: parseFloat(
-                  responseData.data.original_value
+                  responseData.data.total_value
                 ).toFixed(8),
                 sendCurrencyInput: parseFloat(
                   responseData.data.currency_value
                 ).toFixed(8),
-                subTotal: parseFloat(responseData.data.total_value).toFixed(8),
-                totalAmount: parseFloat(
-                  responseData.data.original_value
-                ).toFixed(8),
+                subTotal: parseFloat(responseData.data.original_value).toFixed(
+                  8
+                ),
+                totalAmount: parseFloat(responseData.data.total_value).toFixed(
+                  8
+                ),
                 loader: false
               });
             }
@@ -706,7 +708,7 @@ class ConversionDetail extends React.Component {
       var values = {
         Symbol: this.state.original_pair,
         Side: this.state.OrdType,
-        OrderQty: this.state.orderQuantity,
+        OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
         Currency: this.state.crypto,
         OrdType: "1",
         original_pair: this.state.original_pair,
@@ -717,7 +719,7 @@ class ConversionDetail extends React.Component {
       var values = {
         Symbol: this.state.original_pair,
         Side: this.state.OrdType,
-        OrderQty: this.state.orderQuantity,
+        OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
         Currency: this.state.currency,
         OrdType: "1",
         original_pair: this.state.original_pair,

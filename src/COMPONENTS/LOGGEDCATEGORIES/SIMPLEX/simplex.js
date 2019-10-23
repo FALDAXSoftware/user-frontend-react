@@ -28,7 +28,8 @@ import {
   SimLeftCol,
   SimHead,
   SimSubHead,
-  SimLastRow
+  SimLastRow,
+  SimTopHead
 } from "../../../STYLED-COMPONENTS/SIMPLEX/simplexStyle";
 
 const API_URL = globalVariables.API_URL;
@@ -312,6 +313,7 @@ class Simplex extends React.Component {
         <Navigation />
         <ConversionContainer>
           <SimMainRow className="simplex_main_row">
+            <SimTopHead>Safe. Simple. Secure.</SimTopHead>
             <SimLeftCol lg={12}>
               <BorderRow>
                 <RowTitle>You Pay</RowTitle>
@@ -414,18 +416,24 @@ class Simplex extends React.Component {
                   <span>We accept </span>
                   <img src="images/visa-card.png" alt="visa icon" />
                 </Col>
-                <Col className="buy_crypto_btn">Buy crypto with bank card</Col>
+                <Col className="buy_crypto_btn">Pay With a Bank Card</Col>
               </SimLastRow>
             </SimLeftCol>
             <SimRightCol className="simplex_right_col" lg={12}>
-              <SimHead>Your simple access to Simplex</SimHead>
+              <SimHead>
+                FALDAX, in partnership with Simplex, brings the world's most
+                prevalent crypto assets directly to you. Thank you for choosing
+                FALDAX!
+              </SimHead>
               <SimSubHead>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                <p>Powered by</p>
+                <img src="/images/simplex-logo.png" />
+                {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
                 ipsum suspendisse ultrices gravida. Risus commodo viverra
                 maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit
                 amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore.
+                incididunt ut labore. */}
               </SimSubHead>
             </SimRightCol>
           </SimMainRow>
