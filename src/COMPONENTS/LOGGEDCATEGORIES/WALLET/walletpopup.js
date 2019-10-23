@@ -175,7 +175,7 @@ class WalletPopup extends Component {
       receive: {},
       receiveAdd: "receive_add",
       show: false,
-      fiatValue: "",
+      fiatValue: 0,
       singlefiatValue: "",
       sendFields: {
         amount: 0,
@@ -251,7 +251,7 @@ class WalletPopup extends Component {
     }
     if (this.props.fiatValue) {
       this.setState({
-        fiatValue: this.props.fiatValue.toFixed(2),
+        fiatValue: 0,
         singlefiatValue: this.props.fiatValue.toFixed(2)
       });
     }
@@ -422,18 +422,45 @@ class WalletPopup extends Component {
     var fields = this.state.sendFields;
     var name = e.target.name;
     fields[name] = e.target.value;
-    let subtotal = parseFloat(
-      parseFloat(fields[name]) +
-        parseFloat(fields[name]) * (this.props.coinFee / 100)
-    ).toFixed(8);
-    let fiatValueamount = parseFloat(
-      parseFloat(this.state.singlefiatValue) * parseFloat(e.target.value)
-    ).toFixed(2);
-    fields["subtotal"] = subtotal;
-    this.setState({
-      sendFields: fields,
-      fiatValue: fiatValueamount
-    });
+    if (e.target.value === "" || e.target.value === null) {
+      let subtotal = parseFloat(
+        parseFloat(fields[name]) +
+          parseFloat(fields[name]) * (this.props.coinFee / 100)
+      ).toFixed(8);
+      let fiatValueamount = parseFloat(
+        parseFloat(this.state.singlefiatValue) * parseFloat(e.target.value)
+      ).toFixed(2);
+      fields["subtotal"] = 0;
+      this.setState({
+        sendFields: fields,
+        fiatValue: 0
+      });
+    } else {
+      let subtotal = parseFloat(
+        parseFloat(fields[name]) +
+          parseFloat(fields[name]) * (this.props.coinFee / 100)
+      ).toFixed(8);
+      let fiatValueamount = parseFloat(
+        parseFloat(this.state.singlefiatValue) * parseFloat(e.target.value)
+      ).toFixed(2);
+      fields["subtotal"] = subtotal;
+      this.setState({
+        sendFields: fields,
+        fiatValue: fiatValueamount
+      });
+    }
+    // let subtotal = parseFloat(
+    //   parseFloat(fields[name]) +
+    //     parseFloat(fields[name]) * (this.props.coinFee / 100)
+    // ).toFixed(8);
+    // let fiatValueamount = parseFloat(
+    //   parseFloat(this.state.singlefiatValue) * parseFloat(e.target.value)
+    // ).toFixed(2);
+    // fields["subtotal"] = subtotal;
+    // this.setState({
+    //   sendFields: fields,
+    //   fiatValue: fiatValueamount
+    // });
   }
 
   /* After confirming Button*/
