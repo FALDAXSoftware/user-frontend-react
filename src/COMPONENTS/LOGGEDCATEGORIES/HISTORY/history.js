@@ -381,8 +381,8 @@ class History extends Component {
                     .local()
                     .format(`${this.props.profileData.date_format} HH:mm:ss`);
                   var side = temp.side;
-                  var fill_price = parseFloat(temp.fill_price).toFixed(4);
-                  var quantity = parseFloat(temp.quantity).toFixed(4);
+                  var fill_price = parseFloat(temp.fill_price).toFixed(8);
+                  var quantity = parseFloat(temp.quantity).toFixed(8);
                   var payment_id = temp.payment_id;
                   var quote_id = temp.quote_id;
                   var address = temp.address;
@@ -603,8 +603,8 @@ class History extends Component {
                     .local()
                     .format(`${this.props.profileData.date_format} HH:mm:ss`);
                   // var side = temp.side;
-                  var fill_price = parseFloat(temp.fill_price).toFixed(4);
-                  var quantity = parseFloat(temp.quantity).toFixed(4);
+                  var fill_price = parseFloat(temp.fill_price).toFixed(8);
+                  var quantity = parseFloat(temp.quantity).toFixed(8);
                   var payment_id = temp.payment_id;
                   var quote_id = temp.quote_id;
                   var address = temp.address;
