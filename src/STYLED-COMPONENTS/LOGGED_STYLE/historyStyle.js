@@ -65,6 +65,10 @@ export const HisTable = styled(Table)`
     display: block;
     max-height: 1000px;
     overflow-y: scroll;
+    > tr {
+      display: table;
+      width: 100%;
+    }
   }
   > tbody > tr > td {
     width: 200px;
