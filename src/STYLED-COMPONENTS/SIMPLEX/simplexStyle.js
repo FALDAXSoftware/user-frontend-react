@@ -89,7 +89,7 @@ export const SimLastRow = styled.div`
   align-items: center;
   > .ant-col {
     > img {
-      padding: 0 0 0 10px;
+      padding: 0 0 0 20px;
     }
   }
   > .buy_crypto_btn {
