@@ -593,7 +593,6 @@ class ConversionDetail extends React.Component {
         order_pair: this.state.order_pair
       };
     }
-
     if (
       (values.usd_value === null || values.usd_value === "") &&
       this.state.includeFees === 1
@@ -655,7 +654,8 @@ class ConversionDetail extends React.Component {
               faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
               networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
               // totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
-              displayCurrency: responseData.data.currency
+              displayCurrency: responseData.data.currency,
+              orderQuantity: responseData.data.orderQuantity
             });
             if (this.state.includeFees === 1) {
               this.setState({
