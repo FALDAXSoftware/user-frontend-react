@@ -1,10 +1,22 @@
 import styled from "styled-components";
 import { Row, Col } from "antd";
 
+export const SimTopHead = styled.h2`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: 0 0 40px 0;
+  color: #fff;
+  font-weight: bold;
+  font-family: "Open sans";
+  font-size: 40px;
+`;
+
 export const SimMainRow = styled(Row)`
   background-color: ${props =>
     props.theme.mode === "dark" ? "transparent" : "transparent"};
   display: flex;
+  flex-wrap: wrap;
   font-family: "Open sans";
   @media (max-width: 991px) {
     flex-wrap: wrap;
@@ -44,13 +56,29 @@ export const SimRightCol = styled(Col)`
 
 export const SimHead = styled.span`
   font-weight: bold;
-  font-size: 38px;
-  line-height: 45px;
+  font-size: 24px;
+  line-height: 28px;
   padding: 0 0 20px 0;
+  // text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+  text-align: center;
 `;
 export const SimSubHead = styled.span`
   font-size: 16px;
   line-height: 26px;
+  text-align: center;
+  margin: 50px 0 0 0;
+  > p {
+    margin: 0 0 15px 0;
+  }
+  > img {
+    width: 40%;
+  }
+  @media (max-width: 991px) {
+    width: 100%;
+    > img {
+      width: 150px;
+    }
+  }
 `;
 export const SimLastRow = styled.div`
   display: flex;
