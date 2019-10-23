@@ -72,22 +72,22 @@ const routes = [
     path: "/walletDetails",
     component: WalletDetails
   },
-  {
-    exact: false,
-    path: "/trade",
-    component: () => <Trade io={io} />
-  },
+  // {
+  //   exact: false,
+  //   path: "/trade",
+  //   component: () => <Trade io={io} />
+  // },
   {
     exact: false,
     path: "/history",
     component: History2
   },
-  {
-    exact: false,
-    path: "/dashboard",
-    component: () => <Dashboard io={io} />,
-    io: io
-  },
+  // {
+  //   exact: false,
+  //   path: "/dashboard",
+  //   component: () => <Dashboard io={io} />,
+  //   io: io
+  // },
   {
     exact: false,
     path: "/open-ticket",
@@ -118,48 +118,48 @@ const routes = [
     component: () => <SimplexExchange io={io} />,
     io: io
   },
-  {
-    exact: false,
-    path: "/token",
-    component: () => <LoginToken io={io} />,
-    io: io
-  },
-  {
-    exact: false,
-    path: "/token-security-check",
-    component: () => <SecurityCheck io={io} />,
-    io: io
-  },
-  {
-    exact: false,
-    path: "/token-dashboard",
-    component: () => <TokenDashboard io={io} />,
-    io: io
-  },
-  {
-    exact: false,
-    path: "/tier1",
-    component: () => <TierOne io={io} />,
-    io: io
-  },
-  {
-    exact: false,
-    path: "/tier2",
-    component: () => <TierTwo io={io} />,
-    io: io
-  },
-  {
-    exact: false,
-    path: "/tier3",
-    component: () => <TierThree io={io} />,
-    io: io
-  },
-  {
-    exact: false,
-    path: "/tier4",
-    component: () => <TierFour io={io} />,
-    io: io
-  },
+  // {
+  //   exact: false,
+  //   path: "/token",
+  //   component: () => <LoginToken io={io} />,
+  //   io: io
+  // },
+  // {
+  //   exact: false,
+  //   path: "/token-security-check",
+  //   component: () => <SecurityCheck io={io} />,
+  //   io: io
+  // },
+  // {
+  //   exact: false,
+  //   path: "/token-dashboard",
+  //   component: () => <TokenDashboard io={io} />,
+  //   io: io
+  // },
+  // {
+  //   exact: false,
+  //   path: "/tier1",
+  //   component: () => <TierOne io={io} />,
+  //   io: io
+  // },
+  // {
+  //   exact: false,
+  //   path: "/tier2",
+  //   component: () => <TierTwo io={io} />,
+  //   io: io
+  // },
+  // {
+  //   exact: false,
+  //   path: "/tier3",
+  //   component: () => <TierThree io={io} />,
+  //   io: io
+  // },
+  // {
+  //   exact: false,
+  //   path: "/tier4",
+  //   component: () => <TierFour io={io} />,
+  //   io: io
+  // },
   {
     exact: false,
     path: "/tier-upgrade-information",
@@ -183,6 +183,11 @@ const routes = [
     path: "/tickets",
     component: () => <HubspotTickets io={io} />
   }
+  // {
+  //   exact: false,
+  //   path: "/*",
+  //   component: () => <TierIDConfirmation io={io} />
+  // }
 ];
 
 class AppRouter extends Component {
