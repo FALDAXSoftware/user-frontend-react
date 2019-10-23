@@ -414,7 +414,8 @@ class Simplex extends React.Component {
               <SimLastRow className="bottom-row">
                 <Col>
                   <span>We accept </span>
-                  <img src="images/visa-card.png" alt="visa icon" />
+                  <img src="images/visa-card1.png" alt="visa icon" />
+                  <img src="images/mastercard1.png" alt="visa icon" />
                 </Col>
                 <Col className="buy_crypto_btn">Pay With a Bank Card</Col>
               </SimLastRow>
