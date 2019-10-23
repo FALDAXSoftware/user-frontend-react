@@ -23,11 +23,11 @@ export const globalVariables = {
 
   //API_URL: 'http://192.168.0.93:1337'
 
-//   API_URL: "https://dev-backend.faldax.com"
+  // API_URL: "https://dev-backend.faldax.com"
 
-     API_URL: "https://pre-prod-backend.faldax.com" //Pre-Production URL
+  API_URL: "https://pre-prod-backend.faldax.com" //Pre-Production URL
 
-//   API_URL: 'https://prod-backend.faldax.com',
+  // API_URL: "https://prod-backend.faldax.com"
 
   //API_URL: process.env.REACT_APP_ENV_URL==='production' ?
   /* 'https://prod-backend.faldax.com':
