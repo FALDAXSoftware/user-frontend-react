@@ -822,7 +822,7 @@ class Acc_settings extends Component {
             <span>Notifications</span>
           </NotiHead>
           <NotiDesc>
-            <span>Automatic Email Notifications</span>
+            <span>Automatic Email and/or Text Notifications</span>
           </NotiDesc>
         </NotiWrap>
 

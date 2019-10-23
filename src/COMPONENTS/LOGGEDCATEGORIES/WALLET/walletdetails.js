@@ -99,6 +99,7 @@ class WalletDetails extends Component {
       defaultCoin: "",
       balanceFlag: false,
       coinFee: [],
+      fiatValue: "",
       panic_status: false,
       panicEnabled: false
     };
@@ -181,9 +182,15 @@ class WalletDetails extends Component {
               walletDetails: transDetails,
               loader: false,
               coin_code: coin_name[1],
-              coinFee: responseData.default_send_Coin_fee
+              coinFee: responseData.default_send_Coin_fee,
+              fiatValue: responseData.currencyConversionData.quote.USD.price
             },
-            () => {}
+            () => {
+              console.log(
+                "responseData.currencyConversionData.quote.USD.price===========",
+                this.state.coinFee
+              );
+            }
           );
         } else {
           this.openNotificationWithIcon(
@@ -536,6 +543,7 @@ class WalletDetails extends Component {
                   <WalletPopup
                     walletDetailsApi={() => this.walletDetailsApi()}
                     coinFee={this.state.coinFee}
+                    fiatValue={this.state.fiatValue}
                     coin_code={this.state.coin_code}
                     isLoggedIn={this.props.isLoggedIn}
                     title="SEND"
