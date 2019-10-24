@@ -1057,13 +1057,48 @@ class History extends Component {
                       style={{ width: 120 }}
                       onChange={this.selectChange1}
                       value={this.state.drop1Value}
-                      // defaultValue={"Select Currency"}
                     >
                       {this.state.drop1List.map(element => {
-                        if (element.coin != this.state.drop2Value) {
-                          return (
-                            <Option value={element.coin}>{element.coin}</Option>
-                          );
+                        if (this.state.activeKey === "1") {
+                          if (this.state.drop2Value === "XRP") {
+                            if (
+                              element.coin != this.state.drop2Value &&
+                              element.coin != "LTC"
+                            ) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          } else if (this.state.drop2Value === "LTC") {
+                            if (
+                              element.coin != this.state.drop2Value &&
+                              element.coin != "XRP"
+                            ) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          } else {
+                            if (element.coin != this.state.drop2Value) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          }
+                        } else {
+                          if (element.coin != this.state.drop2Value) {
+                            return (
+                              <Option value={element.coin}>
+                                {element.coin}
+                              </Option>
+                            );
+                          }
                         }
                       })}
                     </Select1>
@@ -1077,10 +1112,51 @@ class History extends Component {
                       // defaultValue={"Select Currency"}
                     >
                       {this.state.drop2List.map(element => {
-                        if (element.coin != this.state.drop1Value) {
-                          return (
-                            <Option value={element.coin}>{element.coin}</Option>
-                          );
+                        // if (element.coin != this.state.drop1Value) {
+                        //   return (
+                        //     <Option value={element.coin}>{element.coin}</Option>
+                        //   );
+                        // }
+                        if (this.state.activeKey === "1") {
+                          if (this.state.drop1Value === "XRP") {
+                            if (
+                              element.coin != this.state.drop1Value &&
+                              element.coin != "LTC"
+                            ) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          } else if (this.state.drop1Value === "LTC") {
+                            if (
+                              element.coin != this.state.drop1Value &&
+                              element.coin != "XRP"
+                            ) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          } else {
+                            if (element.coin != this.state.drop1Value) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          }
+                        } else {
+                          if (element.coin != this.state.drop1Value) {
+                            return (
+                              <Option value={element.coin}>
+                                {element.coin}
+                              </Option>
+                            );
+                          }
                         }
                       })}
                     </Select2>
