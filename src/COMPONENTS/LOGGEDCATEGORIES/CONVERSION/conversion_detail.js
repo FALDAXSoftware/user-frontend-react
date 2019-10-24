@@ -1109,6 +1109,27 @@ class ConversionDetail extends React.Component {
                                         </DropDownOption>
                                       );
                                     }
+                                  } else if (this.state.currency === "LTC") {
+                                    if (
+                                      element.coin != this.state.currency &&
+                                      element.coin != "XRP"
+                                    ) {
+                                      // console.log(this.state.cryptoList);
+                                      return (
+                                        <DropDownOption
+                                          key={index}
+                                          value={element.coin}
+                                          selectedData={element}
+                                        >
+                                          {" "}
+                                          <DropIcon
+                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                            height="20px"
+                                          />{" "}
+                                          {element.coin}
+                                        </DropDownOption>
+                                      );
+                                    }
                                   } else {
                                     if (element.coin != this.state.currency) {
                                       return (
@@ -1165,6 +1186,27 @@ class ConversionDetail extends React.Component {
                                     if (
                                       element.coin != this.state.currency &&
                                       element.coin != "LTC"
+                                    ) {
+                                      console.log(this.state.cryptoList);
+                                      return (
+                                        <DropDownOption
+                                          key={index}
+                                          value={element.coin}
+                                          selectedData={element}
+                                        >
+                                          {" "}
+                                          <DropIcon
+                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                            height="20px"
+                                          />{" "}
+                                          {element.coin}
+                                        </DropDownOption>
+                                      );
+                                    }
+                                  } else if (this.state.currency === "LTC") {
+                                    if (
+                                      element.coin != this.state.currency &&
+                                      element.coin != "XRP"
                                     ) {
                                       console.log(this.state.cryptoList);
                                       return (
@@ -1293,6 +1335,26 @@ class ConversionDetail extends React.Component {
                                           </DropDownOption>
                                         );
                                       }
+                                    } else if (this.state.crypto === "LTC") {
+                                      if (
+                                        element.coin != this.state.crypto &&
+                                        element.coin != "XRP"
+                                      ) {
+                                        return (
+                                          <DropDownOption
+                                            key={index}
+                                            value={element.coin}
+                                            selectedData={element}
+                                          >
+                                            {" "}
+                                            <DropIcon
+                                              src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                              height="20px"
+                                            />{" "}
+                                            {element.coin}
+                                          </DropDownOption>
+                                        );
+                                      }
                                     } else {
                                       if (element.coin != this.state.crypto) {
                                         return (
@@ -1374,6 +1436,26 @@ class ConversionDetail extends React.Component {
                                       if (
                                         element.coin != this.state.crypto &&
                                         element.coin != "LTC"
+                                      ) {
+                                        return (
+                                          <DropDownOption
+                                            key={index}
+                                            value={element.coin}
+                                            selectedData={element}
+                                          >
+                                            {" "}
+                                            <DropIcon
+                                              src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                              height="20px"
+                                            />{" "}
+                                            {element.coin}
+                                          </DropDownOption>
+                                        );
+                                      }
+                                    } else if (this.state.crypto === "LTC") {
+                                      if (
+                                        element.coin != this.state.crypto &&
+                                        element.coin != "XRP"
                                       ) {
                                         return (
                                           <DropDownOption

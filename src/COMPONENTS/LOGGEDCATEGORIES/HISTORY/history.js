@@ -381,8 +381,8 @@ class History extends Component {
                     .local()
                     .format(`${this.props.profileData.date_format} HH:mm:ss`);
                   var side = temp.side;
-                  var fill_price = temp.fill_price.toFixed(4);
-                  var quantity = temp.quantity.toFixed(4);
+                  var fill_price = parseFloat(temp.fill_price).toFixed(8);
+                  var quantity = parseFloat(temp.quantity).toFixed(8);
                   var payment_id = temp.payment_id;
                   var quote_id = temp.quote_id;
                   var address = temp.address;
@@ -410,10 +410,10 @@ class History extends Component {
                 this.setState(
                   { historySimplexData: responseData.data, csvSimplexFields },
                   () => {
-                    // console.log(
-                    //   "historySimplexData IF",
-                    //   this.state.historySimplexData
-                    // );
+                    console.log(
+                      "historySimplexData IF",
+                      this.state.historySimplexData
+                    );
                   }
                 );
               } else if (responseData.data.length === 0) {
@@ -588,7 +588,8 @@ class History extends Component {
             } else if (this.state.activeKey === "2") {
               // console.log(
               //   "ActiveKey after getting response",
-              //   this.state.activeKey
+              //   this.state.activeKey,
+              //   responseData.data
               // );
               let csvSimplexFields = [];
               if (responseData.data.length > 0) {
@@ -601,9 +602,9 @@ class History extends Component {
                     .utc(temp.created_at)
                     .local()
                     .format(`${this.props.profileData.date_format} HH:mm:ss`);
-                  var side = temp.side;
-                  var fill_price = temp.fill_price.toFixed(4);
-                  var quantity = temp.quantity.toFixed(4);
+                  // var side = temp.side;
+                  var fill_price = parseFloat(temp.fill_price).toFixed(8);
+                  var quantity = parseFloat(temp.quantity).toFixed(8);
                   var payment_id = temp.payment_id;
                   var quote_id = temp.quote_id;
                   var address = temp.address;
@@ -627,6 +628,7 @@ class History extends Component {
                   obj["address"] = address;
                   obj["simplex_payment_status"] = simplex_payment_status;
                   csvSimplexFields.push(obj);
+                  // console.log(obj);
                 }
                 this.setState(
                   { historySimplexData: responseData.data, csvSimplexFields },
@@ -1055,13 +1057,48 @@ class History extends Component {
                       style={{ width: 120 }}
                       onChange={this.selectChange1}
                       value={this.state.drop1Value}
-                      // defaultValue={"Select Currency"}
                     >
                       {this.state.drop1List.map(element => {
-                        if (element.coin != this.state.drop2Value) {
-                          return (
-                            <Option value={element.coin}>{element.coin}</Option>
-                          );
+                        if (this.state.activeKey === "1") {
+                          if (this.state.drop2Value === "XRP") {
+                            if (
+                              element.coin != this.state.drop2Value &&
+                              element.coin != "LTC"
+                            ) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          } else if (this.state.drop2Value === "LTC") {
+                            if (
+                              element.coin != this.state.drop2Value &&
+                              element.coin != "XRP"
+                            ) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          } else {
+                            if (element.coin != this.state.drop2Value) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          }
+                        } else {
+                          if (element.coin != this.state.drop2Value) {
+                            return (
+                              <Option value={element.coin}>
+                                {element.coin}
+                              </Option>
+                            );
+                          }
                         }
                       })}
                     </Select1>
@@ -1075,10 +1112,51 @@ class History extends Component {
                       // defaultValue={"Select Currency"}
                     >
                       {this.state.drop2List.map(element => {
-                        if (element.coin != this.state.drop1Value) {
-                          return (
-                            <Option value={element.coin}>{element.coin}</Option>
-                          );
+                        // if (element.coin != this.state.drop1Value) {
+                        //   return (
+                        //     <Option value={element.coin}>{element.coin}</Option>
+                        //   );
+                        // }
+                        if (this.state.activeKey === "1") {
+                          if (this.state.drop1Value === "XRP") {
+                            if (
+                              element.coin != this.state.drop1Value &&
+                              element.coin != "LTC"
+                            ) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          } else if (this.state.drop1Value === "LTC") {
+                            if (
+                              element.coin != this.state.drop1Value &&
+                              element.coin != "XRP"
+                            ) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          } else {
+                            if (element.coin != this.state.drop1Value) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          }
+                        } else {
+                          if (element.coin != this.state.drop1Value) {
+                            return (
+                              <Option value={element.coin}>
+                                {element.coin}
+                              </Option>
+                            );
+                          }
                         }
                       })}
                     </Select2>
