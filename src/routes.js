@@ -36,44 +36,44 @@ const routes = [
     path: "/home",
     component: HomePage
   },
-  {
-    exact: false,
-    path: "/wallet",
-    component: Wallet
-  },
-  {
-    exact: false,
-    path: "/walletDetails",
-    component: WalletDetails
-  },
-  {
-    exact: false,
-    path: "/trade",
-    component: () => (<Trade io={io} />),
-  },
-  {
-    exact: false,
-    path: "/history",
-    component: History2
-  },
-  {
-    exact: false,
-    path: "/dashboard",
-    component: () => (<Dashboard io={io} />),
-    io: io
-  },
+//   {
+//     exact: false,
+//     path: "/wallet",
+//     component: Wallet
+//   },
+//   {
+//     exact: false,
+//     path: "/walletDetails",
+//     component: WalletDetails
+//   },
+//   {
+//     exact: false,
+//     path: "/trade",
+//     component: () => (<Trade io={io} />),
+//   },
+//   {
+//     exact: false,
+//     path: "/history",
+//     component: History2
+//   },
+//   {
+//     exact: false,
+//     path: "/dashboard",
+//     component: () => (<Dashboard io={io} />),
+//     io: io
+//   },
   {
     exact: false,
     path: "/open-ticket",
     component: () => (<OpenTicket io={io} />),
     io: io
   },
-  {
-    exact: false,
-    path: "/conversion",
-    component: () => (<Conversion io={io} />),
-    io: io
-  },
+//   {
+//     exact: false,
+//     path: "/conversion",
+//     component: () => (<Conversion io={io} />),
+//     io: io
+//   },
   {
     exact: false,
     path: "/tickets",
