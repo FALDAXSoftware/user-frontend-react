@@ -452,7 +452,7 @@ class Acc_settings extends Component {
       value["email"] = this.props.email;
       value["user_id"] = this.props.profileDetails.id;
       value["jwt_token"] = this.props.isLoggedIn;
-      value["otp"] = this.state.code2fa;
+      // value["otp"] = this.state.code2fa;
       console.log("vbalue======================", value);
       this.props.deleteAccount(this.props.isLoggedIn, value);
     } else {
@@ -460,6 +460,7 @@ class Acc_settings extends Component {
       this.forceUpdate();
     }
   }
+
   deleteAccount() {
     /* console.log(this.props) */
     this.openNotificationWithIcon(
