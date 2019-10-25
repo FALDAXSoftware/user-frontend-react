@@ -1172,17 +1172,15 @@ class Acc_settings extends Component {
             ""
           )}
           <DeactivateButtonWarp>
-            <DeButtonDiv>
-              <DeNewButton
-                onClick={() => {
-                  this.props.history.push("/wallet");
-                }}
-              >
-                Remove Existing Funds
-              </DeNewButton>
+            <DeButtonDiv
+              onClick={() => {
+                this.props.history.push("/wallet");
+              }}
+            >
+              <DeNewButton>Remove Existing Funds</DeNewButton>
             </DeButtonDiv>
-            <DeButtonDiv className="right_btn">
-              <DeNewButton className="right_text" onClick={this.forfeitFunds}>
+            <DeButtonDiv className="right_btn" onClick={this.forfeitFunds}>
+              <DeNewButton className="right_text">
                 Forfeit Funds & Deactivate
               </DeNewButton>
             </DeButtonDiv>
@@ -1233,16 +1231,17 @@ class Acc_settings extends Component {
               Are you sure you want to Deactivate?
             </Description>
             <DeactivateButtonWarp className="final_deactivate">
-              <DeButtonDiv className="final_deactivate">
-                <DeNewButton onClick={this.closeModal}>No</DeNewButton>
+              <DeButtonDiv
+                className="final_deactivate"
+                onClick={this.closeModal}
+              >
+                <DeNewButton>No</DeNewButton>
               </DeButtonDiv>
-              <DeButtonDiv className="right_btn final_deactivate">
-                <DeNewButton
-                  className="right_text"
-                  onClick={this.handleDeactivateYes}
-                >
-                  Yes
-                </DeNewButton>
+              <DeButtonDiv
+                className="right_btn final_deactivate"
+                onClick={this.handleDeactivateYes}
+              >
+                <DeNewButton className="right_text">Yes</DeNewButton>
               </DeButtonDiv>
             </DeactivateButtonWarp>
           </DeactiveWrap>
@@ -1292,16 +1291,17 @@ class Acc_settings extends Component {
                 </div>
               </NewP>
               <DeactivateButtonWarp className="final_deactivate">
-                <DeButtonDiv className="final_deactivate">
-                  <DeNewButton onClick={this.closeModal}>Cancel</DeNewButton>
+                <DeButtonDiv
+                  className="final_deactivate"
+                  onClick={this.closeModal}
+                >
+                  <DeNewButton>Cancel</DeNewButton>
                 </DeButtonDiv>
-                <DeButtonDiv className="right_btn final_deactivate">
-                  <DeNewButton
-                    className="right_text"
-                    onClick={this.deleteUserAccount}
-                  >
-                    Confirm
-                  </DeNewButton>
+                <DeButtonDiv
+                  className="right_btn final_deactivate"
+                  onClick={this.deleteUserAccount}
+                >
+                  <DeNewButton className="right_text">Confirm</DeNewButton>
                 </DeButtonDiv>
               </DeactivateButtonWarp>
             </div>
