@@ -579,15 +579,22 @@ class WalletDetails extends Component {
                   )}
 
                   <PendingPara>
-                    <p>
+                    {/* <p>
                       Please wait for some time.As soon as your wallet is
                       created , we'll let you know.
                     </p>
                     <p>
                       If you still have any issue , please feel free to contact
-                      us <a href={`${WordpressSiteURL} + /contact-us/`}>here</a>
-                      .
+                      us <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                    </p> */}
+                    <p>
+                      Your wallet is being generated and you will recieve a
+                      notification when it is ready for use. If you do not
+                      recieve a notification within 24 hours, or if you have any
+                      other concerns, please feel free to contact us{" "}
+                      <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
                     </p>
+                    <p>Thank you for choosing FALDAX!</p>
                   </PendingPara>
                 </PendingWrap>
               </ContainerContact2>
@@ -611,8 +618,7 @@ class WalletDetails extends Component {
                     </WalletCreateButton>
                     <p>
                       If you still have any issue , please feel free to contact
-                      us <a href={`${WordpressSiteURL} + /contact-us/`}>here</a>
-                      .
+                      us <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
                     </p>
                   </PendingPara>
                 </PendingWrap>

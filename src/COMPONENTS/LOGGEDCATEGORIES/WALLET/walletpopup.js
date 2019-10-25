@@ -608,21 +608,26 @@ class WalletPopup extends Component {
                   <TotDiv>
                     <Fee>
                       <span>
-                        <b>Fee: </b>
-                        {this.props.coinFee ? `${this.props.coinFee} %` : 0}
+                        <span>
+                          <b>Fee: </b>
+                          {this.props.coinFee ? `${this.props.coinFee} %` : 0}
+                        </span>
                       </span>
                       <span>
-                        <b>Fiat Value: </b>
                         {/* {this.props.fiatValue
                           ? `${this.props.fiatValue.toFixed(2)} USD`
                           : 0} */}
-                        {this.state.fiatValue} USD
+                        <span>
+                          <b>Fiat Value: </b> {this.state.fiatValue} USD
+                        </span>
                       </span>
                     </Fee>
                     <TotPay>
                       {/* <b>Total Payout:</b> {subtotal.toFixed(8)}{" "} */}
-                      <b>Total Payout: </b> {this.state.sendFields.subtotal}{" "}
-                      {this.props.coin_code}
+                      <span>
+                        <b>Total Payout: </b> {this.state.sendFields.subtotal}{" "}
+                        {this.props.coin_code}
+                      </span>
                     </TotPay>
                   </TotDiv>
                 </Rediv>
