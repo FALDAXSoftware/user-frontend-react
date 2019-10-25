@@ -289,12 +289,21 @@ class History extends Component {
           `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}&trade_type=${this.state.activeKey}`;
         // console.log("URL", url);
       } else if (this.state.drop1Value !== "" && this.state.drop2Value !== "") {
-        url =
-          url +
-          "&symbol=" +
-          this.state.drop1Value +
-          "-" +
-          this.state.drop2Value;
+        if (this.state.activeKey === "1") {
+          url =
+            url +
+            "&symbol=" +
+            this.state.drop1Value +
+            "/" +
+            this.state.drop2Value;
+        } else {
+          url =
+            url +
+            "&symbol=" +
+            this.state.drop1Value +
+            "-" +
+            this.state.drop2Value;
+        }
         // console.log("URL", url);
       }
       this.setState({ loader: true });
