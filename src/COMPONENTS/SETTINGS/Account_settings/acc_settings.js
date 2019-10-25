@@ -51,7 +51,13 @@ import {
   DeleteBtn,
   ButtonDel,
   PaginationS,
-  CheckWrap
+  CheckWrap,
+  DeactivateButtonWarp,
+  DeButtonDiv,
+  DeNewButton,
+  SummaryTable,
+  DeactivateWrapper,
+  DeactiveWrap
 } from "STYLED-COMPONENTS/SETTINGS/accsettingsStyle";
 import {
   NewButton,
@@ -119,6 +125,9 @@ class Acc_settings extends Component {
       savedDataNoti: [],
       deleteText: "",
       code2fa: "",
+      totalUSDOfWallet: "",
+      showDeactivateModal: false,
+      walletCoins: "",
       fields: {
         ip: null,
         days: null
@@ -230,9 +239,9 @@ class Acc_settings extends Component {
         }
       },
       matchDelete: {
-        message: "Please enter DELETE.",
+        message: "Please enter 'FORFEIT FUNDS'.",
         rule: val => {
-          var RE = /DELETE/;
+          var RE = /FORFEIT FUNDS/;
           if (RE.test(val)) {
             return true;
           } else {
@@ -243,9 +252,9 @@ class Acc_settings extends Component {
     });
     this.validator1 = new SimpleReactValidator({
       matchDelete: {
-        message: "Please enter DELETE.",
+        message: "Please enter FORFEIT FUNDS.",
         rule: val => {
-          var RE = /DELETE/;
+          var RE = /FORFEIT FUNDS/;
           if (RE.test(val)) {
             return true;
           } else {
@@ -267,6 +276,9 @@ class Acc_settings extends Component {
     this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
     this.deleteUserAccount = this.deleteUserAccount.bind(this);
+    this.getWalletSummary = this.getWalletSummary.bind(this);
+    this.forfeitFunds = this.forfeitFunds.bind(this);
+    this.handleDeactivateYes = this.handleDeactivateYes.bind(this);
   }
 
   /* Life Cycle Methods */
@@ -289,6 +301,7 @@ class Acc_settings extends Component {
     this.getAllLoginHistory(1);
     this.getIpWhitelist(this.state.pageIp);
     this.getNotificationList();
+    this.getWalletSummary();
     if (
       this.props.profileDetails !== "" &&
       this.props.profileDetails !== undefined
@@ -587,6 +600,12 @@ class Acc_settings extends Component {
       showDeleteModal: true
     });
   }
+  openDeactivateModal() {
+    this.clearValidation();
+    this.setState({
+      showDeactivateModal: true
+    });
+  }
   openAddModal() {
     this.clearValidation();
     this.setState({
@@ -598,6 +617,7 @@ class Acc_settings extends Component {
     this.setState({
       showAddModal: false,
       showDeleteModal: false,
+      showDeactivateModal: false,
       code2fa: null,
       deleteText: null,
       fields: {
@@ -805,6 +825,41 @@ class Acc_settings extends Component {
     console.log("IP Modal Cancel");
     this.setState({ visibleIpModal: false, checkedIP: false });
   }
+  getWalletSummary() {
+    this.setState({
+      loader: true
+    });
+    fetch(API_URL + `/user/deleteAccountCheck`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn
+      }
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status == 201) {
+          console.log("responsedata summary=-----------", responseData.data);
+          this.setState({
+            totalUSDOfWallet: responseData.usd_price.toFixed(2),
+            walletCoins: responseData.data,
+            loader: false
+          });
+        }
+      })
+      .catch(error => {});
+  }
+  forfeitFunds() {
+    this.closeModal();
+    this.openDeactivateModal();
+  }
+  handleDeactivateYes() {
+    const wrapper = document.getElementById("wrapper");
+    wrapper.classList.add("is-nav-open");
+    const deactivate = document.getElementById("deactivate");
+    deactivate.classList.add("hide");
+  }
   render() {
     const { fields, data_noti, savedDataNoti } = this.state;
     let disabled = true;
@@ -962,17 +1017,15 @@ class Acc_settings extends Component {
         <HR2 />
         <DeleteWrap>
           <DeleteHead>
-            <span>Delete Account</span>
+            <span>Deactivate Account</span>
           </DeleteHead>
           <DeleteDesc>
-            <span>
-              Click on the button below to permanently delete your account.
-            </span>
+            <span>Click on the button below to deactivate your account.</span>
           </DeleteDesc>
           <DeleteBtn>
             {/* <ButtonDel type="primary" onClick={this.showConfirm.bind(this)}> */}
             <ButtonDel type="primary" onClick={this.openDeleteModal.bind(this)}>
-              Delete Account
+              Deactivate Account
             </ButtonDel>
           </DeleteBtn>
         </DeleteWrap>
@@ -1038,15 +1091,12 @@ class Acc_settings extends Component {
         <VerifyModal
           visible={this.state.showDeleteModal}
           onCancel={this.closeModal}
-          title="Delete Account"
+          title="Deactivate Account"
           footer={null}
+          className="deactivate_modal"
         >
-          <Description>
-            {" "}
-            Your account will be permanently deleted without any method of
-            retrieving it once complete.
-          </Description>
-          <NewP>
+          <Description> Below is the summary of your wallet</Description>
+          {/* <NewP>
             <InputLabel>Type 'DELETE' in the box below:</InputLabel>
             <div className="otp-input-wrap">
               <OTPInput
@@ -1084,10 +1134,177 @@ class Acc_settings extends Component {
                 { required: "2FA field is required." }
               )}
             </div>
-          </NewP>
-          <ButtonDiv>
+          </NewP> */}
+          {/* <ButtonDiv>
             <NewButton onClick={this.deleteUserAccount}>Confirm</NewButton>
-          </ButtonDiv>
+          </ButtonDiv> */}
+          {this.state.walletCoins != undefined ? (
+            this.state.walletCoins.length > 0 ? (
+              <SummaryTable>
+                <thead>
+                  <tr>
+                    <th>Coins</th>
+                    <th>Quantity</th>
+                    <th>Fiat Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.walletCoins.map(function(temps) {
+                    return (
+                      <tr>
+                        <td>{temps.coin}</td>
+                        <td>{temps.balance}</td>
+                        <td>$ {temps.coin_id}</td>
+                      </tr>
+                    );
+                  })}
+                  <tr>
+                    <td colSpan="2">Total Value (USD)</td>
+                    <td>$ {this.state.totalUSDOfWallet}</td>
+                  </tr>
+                </tbody>
+              </SummaryTable>
+            ) : (
+              ""
+            )
+          ) : (
+            ""
+          )}
+          <DeactivateButtonWarp>
+            <DeButtonDiv>
+              <DeNewButton
+                onClick={() => {
+                  this.props.history.push("/wallet");
+                }}
+              >
+                Remove Existing Funds
+              </DeNewButton>
+            </DeButtonDiv>
+            <DeButtonDiv className="right_btn">
+              <DeNewButton className="right_text" onClick={this.forfeitFunds}>
+                Forfeit Funds & Deactivate
+              </DeNewButton>
+            </DeButtonDiv>
+          </DeactivateButtonWarp>
+        </VerifyModal>
+        <VerifyModal
+          visible={this.state.showDeactivateModal}
+          onCancel={this.closeModal}
+          title="Deactivate Account"
+          footer={null}
+          className="deactivate_modal"
+        >
+          <Description> Below is the summary of your wallet</Description>
+          {this.state.walletCoins != undefined ? (
+            this.state.walletCoins.length > 0 ? (
+              <SummaryTable>
+                <thead>
+                  <tr>
+                    <th>Coins</th>
+                    <th>Quantity</th>
+                    <th>Fiat Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.walletCoins.map(function(temps) {
+                    return (
+                      <tr>
+                        <td>{temps.coin}</td>
+                        <td>{temps.balance}</td>
+                        <td>$ {temps.coin_id}</td>
+                      </tr>
+                    );
+                  })}
+                  <tr>
+                    <td colSpan="2">Total Value (USD)</td>
+                    <td>$ {this.state.totalUSDOfWallet}</td>
+                  </tr>
+                </tbody>
+              </SummaryTable>
+            ) : (
+              ""
+            )
+          ) : (
+            ""
+          )}
+          <DeactiveWrap className="" id="deactivate">
+            <Description className="final_deactivate">
+              Are you sure you want to Deactivate?
+            </Description>
+            <DeactivateButtonWarp className="final_deactivate">
+              <DeButtonDiv className="final_deactivate">
+                <DeNewButton onClick={this.closeModal}>No</DeNewButton>
+              </DeButtonDiv>
+              <DeButtonDiv className="right_btn final_deactivate">
+                <DeNewButton
+                  className="right_text"
+                  onClick={this.handleDeactivateYes}
+                >
+                  Yes
+                </DeNewButton>
+              </DeButtonDiv>
+            </DeactivateButtonWarp>
+          </DeactiveWrap>
+          <DeactivateWrapper className="wrapper" id="wrapper">
+            <Description>
+              *Any funds in your wallet will no longer be accessible after
+              deactivation of account.
+            </Description>
+            <div className="nav__body">
+              <NewP className="deactivate">
+                <InputLabel>Type 'FORFEIT FUNDS' in the box below:</InputLabel>
+                <div className="otp-input-wrap">
+                  <OTPInput
+                    className="otp-input"
+                    value={this.state.deleteText}
+                    size="medium"
+                    onChange={this.deleteText.bind(this)}
+                    name="ip"
+                    style={{ marginBottom: "20px" }}
+                  />
+                  {this.validator1.message(
+                    "text",
+                    this.state.deleteText,
+                    "required|matchDelete",
+                    "text-danger-validation",
+                    { required: "This field is required." }
+                  )}
+                </div>
+                <InputLabel>Enter your 2FA code in the box below:</InputLabel>
+                <div>
+                  <OTPInput
+                    style={{ paddingRight: "10px" }}
+                    min="1"
+                    value={this.state.code2fa}
+                    type="text"
+                    size="medium"
+                    onChange={this.code2fa.bind(this)}
+                    name="2FA code"
+                  />
+                  {this.validator1.message(
+                    "2FA code",
+                    this.state.code2fa,
+                    "required|numeric|min:6|max:6",
+                    "text-danger-validation",
+                    { required: "2FA field is required." }
+                  )}
+                </div>
+              </NewP>
+              <DeactivateButtonWarp className="final_deactivate">
+                <DeButtonDiv className="final_deactivate">
+                  <DeNewButton onClick={this.closeModal}>Cancel</DeNewButton>
+                </DeButtonDiv>
+                <DeButtonDiv className="right_btn final_deactivate">
+                  <DeNewButton
+                    className="right_text"
+                    onClick={this.deleteUserAccount}
+                  >
+                    Confirm
+                  </DeNewButton>
+                </DeButtonDiv>
+              </DeactivateButtonWarp>
+            </div>
+          </DeactivateWrapper>
         </VerifyModal>
       </AccWrap>
     );
