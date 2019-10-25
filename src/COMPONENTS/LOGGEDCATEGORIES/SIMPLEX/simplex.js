@@ -110,6 +110,27 @@ class Simplex extends React.Component {
     this.calculateDigitalCurrency = this.calculateDigitalCurrency.bind(this);
     this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
   }
+
+  componentWillMount() {
+    if (
+      this.props.profileDetails.is_allowed === true &&
+      this.props.profileDetails.is_kyc_done === 2
+    ) {
+      if (this.props.location.pathname !== "/simplex")
+        this.props.history.push("/simplex");
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === false &&
+        this.props.profileDetails.is_kyc_done !== 2
+      ) {
+        this.props.history.push("/conversion");
+      } else {
+        this.setState({ countryAccess: true });
+        this.props.history.push("/conversion");
+      }
+    }
+  }
+
   componentDidMount(e) {
     this.getCrypto();
   }
@@ -449,6 +470,12 @@ class Simplex extends React.Component {
 function mapStateToProps(state) {
   return {
     isLoggedIn: state.simpleReducer.isLoggedIn,
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data !== undefined
+          ? state.simpleReducer.profileDetails.data[0]
+          : ""
+        : "",
     theme:
       state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */

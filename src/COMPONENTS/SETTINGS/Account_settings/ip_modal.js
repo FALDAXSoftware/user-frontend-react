@@ -28,6 +28,9 @@ export const NewP = styled(Old)`
   > .otp-input-wrap {
     margin-bottom: 20px;
   }
+  &.deactivate {
+    margin-bottom: 30px;
+  }
 `;
 export const InputLabel = styled.label`
   font-size: 14.007px;
@@ -89,6 +92,9 @@ export const NewButton = styled(Save)`
 export const Description = styled.p`
   color: ${props => (props.theme.mode == "dark" ? "white" : "#000")};
   font-weight: 600;
+  &.final_deactivate {
+    font-size: 16px;
+  }
 `;
 export const BackupCode = styled.div`
   color: ${props => (props.theme.mode == "dark" ? "white" : "#000")};
@@ -110,6 +116,9 @@ export const VerifyModal = styled(Modal)`
         color: ${props => (props.theme.mode == "dark" ? "white" : "#000")};
       }
     }
+  }
+  &.deactivate_modal {
+    width: 600px !important;
   }
 `;
 
