@@ -34,18 +34,26 @@ class SimplexExchange extends React.Component {
     super(props);
     this.state = {
       loader: false,
-      currencyToPay: this.props.location.state.currencyToPay,
-      currencyToGet: this.props.location.state.currencyToGet,
+      // currencyToPay: this.props.location.state.currencyToPay,
+      // currencyToGet: this.props.location.state.currencyToGet,
       minCurrency: parseInt(50),
       cryptoList: [],
-      crypto: this.props.location.state.crypto,
-      currency: this.props.location.state.currency,
-      quote_id: this.props.location.state.id,
-      address: this.props.location.state.wallet_address,
-      cryptoCode: this.props.location.state.crypto_code,
+      // crypto: this.props.location.state.crypto,
+      // currency: this.props.location.state.currency,
+      // quote_id: this.props.location.state.id,
+      // address: this.props.location.state.wallet_address,
+      // cryptoCode: this.props.location.state.crypto_code,
       response: "",
       destination_wallet: "",
-      wallet_details: this.props.location.state.wallet_address,
+      // wallet_details: this.props.location.state.wallet_address,
+      currencyToPay: null,
+      currencyToGet: null,
+      crypto: "XRP",
+      currency: "USD",
+      quote_id: null,
+      address: null,
+      cryptoCode: null,
+      wallet_details: null,
       currencyList: []
     };
     this.validator1 = new SimpleReactValidator({
@@ -95,24 +103,60 @@ class SimplexExchange extends React.Component {
     this.calculateDigitalCurrency = this.calculateDigitalCurrency.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
   }
+
+  componentWillMount() {
+    if (
+      this.props.profileDetails.is_allowed === true &&
+      this.props.profileDetails.is_kyc_done === 2
+    ) {
+      if (this.props.location.pathname !== "/simplex-exchange")
+        this.props.history.push("/simplex-exchange");
+      if (
+        this.props.location.state === undefined ||
+        this.props.location.state.currencyToPay === "" ||
+        this.props.location.state.currencyToPay === null
+      ) {
+        this.setState({
+          currencyToPay: null,
+          currencyToGet: null,
+          crypto: "XRP",
+          currency: "USD",
+          quote_id: null,
+          address: null,
+          cryptoCode: null,
+          wallet_details: null
+        });
+        this.props.history.push("/simplex");
+      } else {
+        this.setState({
+          currencyToPay: this.props.location.state.currencyToPay,
+          currencyToGet: this.props.location.state.currencyToGet,
+          crypto: this.props.location.state.crypto,
+          currency: this.props.location.state.currency,
+          quote_id: this.props.location.state.id,
+          address: this.props.location.state.wallet_address,
+          cryptoCode: this.props.location.state.crypto_code,
+          wallet_details: this.props.location.state.wallet_address
+        });
+      }
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === false &&
+        this.props.profileDetails.is_kyc_done !== 2
+      ) {
+        this.props.history.push("/conversion");
+        console.log("history", this.props.history);
+      } else {
+        this.setState({ countryAccess: true });
+        this.props.history.push("/conversion");
+        console.log("history", this.props.history);
+      }
+    }
+  }
+
   componentDidMount(e) {
     this.getCrypto();
     this.calculateDigitalCurrency();
-    // if (this.props.walletDetails !== null) {
-    //   console.log("wallet Details", this.props.walletDetails);
-    //   console.log("this.state.crypto", this.state.crypto);
-    //   this.props.walletDetails.map((element, i) => {
-    //     // if (cur.coin != this.state.currency) {
-    //     console.log(element.coin);
-    //     if (element.coin === this.state.crypto) {
-    //       console.log(element.receive_address);
-    //       this.setState({
-    //         address: element.receive_address
-    //       });
-    //     }
-    //   });
-    //   // console.log(this.props.walletDetails[index].coin_name);
-    // }
   }
   getCrypto() {
     this.setState({
@@ -603,6 +647,12 @@ function mapStateToProps(state) {
         ? state.walletReducer.walletData.balanceData
         : null,
     isLoggedIn: state.simpleReducer.isLoggedIn,
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data !== undefined
+          ? state.simpleReducer.profileDetails.data[0]
+          : ""
+        : "",
     theme:
       state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
