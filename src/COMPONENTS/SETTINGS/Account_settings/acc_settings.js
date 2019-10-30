@@ -1210,7 +1210,7 @@ class Acc_settings extends Component {
                       <tr>
                         <td>{temps.coin}</td>
                         <td>{temps.balance}</td>
-                        <td>$ {temps.coin_id}</td>
+                        <td>$ {temps.fiat}</td>
                       </tr>
                     );
                   })}
@@ -1267,7 +1267,7 @@ class Acc_settings extends Component {
                         <tr>
                           <td>{temps.coin}</td>
                           <td>{temps.balance}</td>
-                          <td>$ {temps.coin_id}</td>
+                          <td>$ {temps.fiat}</td>
                         </tr>
                       );
                     })}
