@@ -59,7 +59,7 @@ export function deleteAccount(isLoggedIn, value) {
           dispatch(LogoutUser(isLoggedIn, tempValue2));
         } else if (responseData.status == 201) {
           alert(responseData.err);
-          dispatch(errorAction(responseData, "login"));
+          // dispatch(errorAction(responseData, "login"));
         }
         dispatch(removeLoader());
       })

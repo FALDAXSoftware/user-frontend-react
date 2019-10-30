@@ -79,7 +79,8 @@ class ConversionDetail extends React.Component {
       order_pair: "",
       displayCurrency: "",
       OrdType: "",
-      orderQuantity: ""
+      orderQuantity: "",
+      Quantity: ""
     };
     io = this.props.io;
     this.timeout = null;
@@ -556,8 +557,9 @@ class ConversionDetail extends React.Component {
               networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
               totalAmount: responseData.data.total_value.toFixed(8),
               fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
-              displayCurrency: responseData.data.currency
+              displayCurrency: responseData.data.currency,
               // orderQuantity: responseData.data.orderQuantity
+              Quantity: parseFloat(responseData.data.total_value).toFixed(8)
             });
             if (this.state.includeFees === 1) {
               this.setState({
@@ -680,7 +682,8 @@ class ConversionDetail extends React.Component {
               faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
               networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
               // totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
-              displayCurrency: responseData.data.currency
+              displayCurrency: responseData.data.currency,
+              Quantity: parseFloat(responseData.data.total_value).toFixed(8)
               // orderQuantity: responseData.data.orderQuantity
             });
             if (this.state.includeFees === 1) {
@@ -741,6 +744,7 @@ class ConversionDetail extends React.Component {
         Symbol: this.state.original_pair,
         Side: this.state.OrdType,
         OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
+        Quantity: parseFloat(this.state.Quantity).toFixed(8),
         Currency: this.state.crypto,
         OrdType: "1",
         original_pair: this.state.original_pair,
@@ -752,6 +756,7 @@ class ConversionDetail extends React.Component {
         Symbol: this.state.original_pair,
         Side: this.state.OrdType,
         OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
+        Quantity: parseFloat(this.state.Quantity).toFixed(8),
         Currency: this.state.currency,
         OrdType: "1",
         original_pair: this.state.original_pair,
@@ -794,7 +799,7 @@ class ConversionDetail extends React.Component {
           this.openNotificationWithIcon("error", "Error", responseData.message);
         } else {
           this.setState({ loader: false });
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon("error", "Error", responseData.message);
         }
       })
       .catch(error => {});
