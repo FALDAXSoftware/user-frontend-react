@@ -448,8 +448,8 @@ class Acc_settings extends Component {
         Api is called for deactivating Account in this function.
     */
   deleteUserAccount() {
-    this.setState({ loader: true });
     if (this.validator1.allValid()) {
+      this.setState({ loader: true });
       // alert("btn clicked");
       let value = {};
       value["email"] = this.props.email;
@@ -471,6 +471,12 @@ class Acc_settings extends Component {
         .then(response => response.json())
         .then(responseData => {
           if (responseData.status == 200) {
+            this.setState({ loader: false });
+            this.openNotificationWithIcon(
+              "success",
+              "Deleted",
+              "Account has been successfully deleted."
+            );
             let tempValue2 = {};
             tempValue2["user_id"] = this.props.profileDetails.id;
             tempValue2["jwt_token"] = this.props.isLoggedIn;
@@ -479,11 +485,11 @@ class Acc_settings extends Component {
             this.openNotificationWithIcon("error", "Error", responseData.err);
           }
           // dispatch(removeLoader());
-          this.setState({ loader: true });
+          this.setState({ loader: false });
         })
         .catch(error => {
           // dispatch(removeLoader());
-          this.setState({ loader: true });
+          this.setState({ loader: false });
         });
     } else {
       this.validator1.showMessages();
