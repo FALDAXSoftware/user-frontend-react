@@ -448,8 +448,9 @@ class Acc_settings extends Component {
         Api is called for deactivating Account in this function.
     */
   deleteUserAccount() {
+    this.setState({ loader: true });
     if (this.validator1.allValid()) {
-      alert("btn clicked");
+      // alert("btn clicked");
       let value = {};
       value["email"] = this.props.email;
       value["user_id"] = this.props.profileDetails.id;
@@ -478,9 +479,11 @@ class Acc_settings extends Component {
             this.openNotificationWithIcon("error", "Error", responseData.err);
           }
           // dispatch(removeLoader());
+          this.setState({ loader: true });
         })
         .catch(error => {
           // dispatch(removeLoader());
+          this.setState({ loader: true });
         });
     } else {
       this.validator1.showMessages();
@@ -643,13 +646,12 @@ class Acc_settings extends Component {
   closeModal() {
     this.clearValidation();
     const wrapper = document.getElementById("wrapper");
-    console.log("wrapper.classList", wrapper);
+    // console.log("wrapper.classList", wrapper);
     if (wrapper != null) {
       wrapper.classList.remove("is-nav-open");
       const deactivate = document.getElementById("deactivate");
       deactivate.classList.remove("hide");
     }
-
     this.setState({
       showAddModal: false,
       showDeleteModal: false,
