@@ -762,6 +762,7 @@ class ConversionDetail extends React.Component {
         original_pair: this.state.original_pair,
         order_pair: this.state.order_pair
       };
+      console.log(values);
     }
     fetch(`${API_URL}/converion/jst-create-order`, {
       method: "post",
@@ -785,15 +786,16 @@ class ConversionDetail extends React.Component {
             includeFees: 1,
             sendCurrencyInput: 0,
             fiatJSTValue: 0,
-            crypto: "XRP",
+            crypto: this.state.crypto,
             displayCurrency: null,
-            currency: "BTC",
+            currency: this.state.currency,
             subTotal: 0,
             totalAmount: 0,
             faldaxFee: 0,
             networkFee: 0,
             loader: false
           });
+          this.clearValidation();
         } else if (responseData.status === 500) {
           this.setState({ loader: false });
           this.openNotificationWithIcon("error", "Error", responseData.message);
