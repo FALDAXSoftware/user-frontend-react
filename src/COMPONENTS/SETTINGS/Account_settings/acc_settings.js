@@ -452,8 +452,9 @@ class Acc_settings extends Component {
       value["email"] = this.props.email;
       value["user_id"] = this.props.profileDetails.id;
       value["jwt_token"] = this.props.isLoggedIn;
+      value["otp"] = this.state.code2fa;
       // value["otp"] = this.state.code2fa;
-      console.log("vbalue======================", value);
+      console.log("deleteUserAccount value======================", value);
       this.props.deleteAccount(this.props.isLoggedIn, value);
     } else {
       this.validator1.showMessages();
@@ -473,7 +474,7 @@ class Acc_settings extends Component {
     value["user_id"] = this.props.profileDetails.id;
     value["jwt_token"] = this.props.isLoggedIn;
     value["otp"] = this.state.code2fa;
-    console.log("vbalue======================", value);
+    console.log("deleteAccount value======================", value);
     this.props.deleteAccount(this.props.isLoggedIn, value);
   }
 
@@ -1328,8 +1329,8 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = dispatch => ({
-  deleteAccount: (isLoggedIn, email) =>
-    dispatch(deleteAccount(isLoggedIn, email))
+  deleteAccount: (isLoggedIn, value) =>
+    dispatch(deleteAccount(isLoggedIn, value))
 });
 
 export default connect(
