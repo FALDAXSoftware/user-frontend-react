@@ -144,7 +144,7 @@ class App extends Component {
               return (
                 <Redirect
                   to={{
-                    pathname: "/home",
+                    pathname: "/login",
                     state: { from: props.location }
                   }}
                 />
@@ -157,7 +157,7 @@ class App extends Component {
               return (
                 <Redirect
                   to={{
-                    pathname: "/home",
+                    pathname: "/login",
                     state: { from: props.location }
                   }}
                 />
@@ -188,7 +188,7 @@ class App extends Component {
               render={({ location }) => (
                 <Suspense fallback={<FaldaxLoader></FaldaxLoader>}>
                   <Switch location={location}>
-                    <Route path="/" exact title="Home" component={HomePage} />
+                    <Route path="/login" exact title="Home" component={Login} />
                     <Route
                       path="/login"
                       exact
