@@ -79,7 +79,8 @@ class ConversionDetail extends React.Component {
       order_pair: "",
       displayCurrency: "",
       OrdType: "",
-      orderQuantity: ""
+      orderQuantity: "",
+      Quantity: ""
     };
     io = this.props.io;
     this.timeout = null;
@@ -557,11 +558,15 @@ class ConversionDetail extends React.Component {
               totalAmount: responseData.data.total_value.toFixed(8),
               fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
               displayCurrency: responseData.data.currency,
-              orderQuantity: responseData.data.orderQuantity
+              // orderQuantity: responseData.data.orderQuantity
+              Quantity: parseFloat(responseData.data.total_value).toFixed(8)
             });
             if (this.state.includeFees === 1) {
               this.setState({
                 sendCurrencyInput: parseFloat(
+                  responseData.data.currency_value
+                ).toFixed(8),
+                orderQuantity: parseFloat(
                   responseData.data.currency_value
                 ).toFixed(8),
                 loader: false
@@ -569,6 +574,9 @@ class ConversionDetail extends React.Component {
             } else {
               this.setState({
                 recieveCurrencyInput: parseFloat(
+                  responseData.data.total_value
+                ).toFixed(8),
+                orderQuantity: parseFloat(
                   responseData.data.total_value
                 ).toFixed(8),
                 loader: false
@@ -675,7 +683,8 @@ class ConversionDetail extends React.Component {
               networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
               // totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
               displayCurrency: responseData.data.currency,
-              orderQuantity: responseData.data.orderQuantity
+              Quantity: parseFloat(responseData.data.total_value).toFixed(8)
+              // orderQuantity: responseData.data.orderQuantity
             });
             if (this.state.includeFees === 1) {
               this.setState({
@@ -684,6 +693,9 @@ class ConversionDetail extends React.Component {
                 ).toFixed(8),
                 recieveCurrencyInput: parseFloat(
                   responseData.data.original_value
+                ).toFixed(8),
+                orderQuantity: parseFloat(
+                  responseData.data.currency_value
                 ).toFixed(8),
                 subTotal: parseFloat(responseData.data.original_value).toFixed(
                   8
@@ -700,6 +712,9 @@ class ConversionDetail extends React.Component {
                 ).toFixed(8),
                 sendCurrencyInput: parseFloat(
                   responseData.data.currency_value
+                ).toFixed(8),
+                orderQuantity: parseFloat(
+                  responseData.data.total_value
                 ).toFixed(8),
                 subTotal: parseFloat(responseData.data.original_value).toFixed(
                   8
@@ -729,6 +744,7 @@ class ConversionDetail extends React.Component {
         Symbol: this.state.original_pair,
         Side: this.state.OrdType,
         OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
+        Quantity: parseFloat(this.state.Quantity).toFixed(8),
         Currency: this.state.crypto,
         OrdType: "1",
         original_pair: this.state.original_pair,
@@ -740,11 +756,13 @@ class ConversionDetail extends React.Component {
         Symbol: this.state.original_pair,
         Side: this.state.OrdType,
         OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
+        Quantity: parseFloat(this.state.Quantity).toFixed(8),
         Currency: this.state.currency,
         OrdType: "1",
         original_pair: this.state.original_pair,
         order_pair: this.state.order_pair
       };
+      console.log(values);
     }
     fetch(`${API_URL}/converion/jst-create-order`, {
       method: "post",
@@ -768,21 +786,22 @@ class ConversionDetail extends React.Component {
             includeFees: 1,
             sendCurrencyInput: 0,
             fiatJSTValue: 0,
-            crypto: "XRP",
+            crypto: this.state.crypto,
             displayCurrency: null,
-            currency: "BTC",
+            currency: this.state.currency,
             subTotal: 0,
             totalAmount: 0,
             faldaxFee: 0,
             networkFee: 0,
             loader: false
           });
+          this.clearValidation();
         } else if (responseData.status === 500) {
           this.setState({ loader: false });
           this.openNotificationWithIcon("error", "Error", responseData.message);
         } else {
           this.setState({ loader: false });
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon("error", "Error", responseData.message);
         }
       })
       .catch(error => {});
