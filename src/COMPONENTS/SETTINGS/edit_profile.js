@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import { connect } from "react-redux";
 import { Tabs } from "antd";
 import styled from "styled-components";
+import { globalVariables } from "Globals.js";
 
 /* Components */
 import PersonalDetails from "./Personaldetails/personal_details";
@@ -19,7 +20,7 @@ import TierOne from "./TIERS/tier_one";
 import SupportHub from "./Account_settings/support_hub";
 
 const TabPane = Tabs.TabPane;
-
+let { API_URL } = globalVariables;
 /* Styled-Components */
 export const ProfileWrapper = styled.div`
   padding-top: 100px;
@@ -57,9 +58,13 @@ class Editprofile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeKey: "1"
+      activeKey: "1",
+      user2fastatus: "",
+      totalUSDOfWallet: "",
+      walletCoins: ""
     };
     this.callback = this.callback.bind(this);
+    this.getWalletSummary = this.getWalletSummary.bind(this);
   }
   callback(key) {
     // console.log("Key", key);
@@ -78,6 +83,48 @@ class Editprofile extends Component {
     //     activeKey: this.props.location.state.tabNum
     //   });
     // }
+    this.getWalletSummary();
+  }
+  getWalletSummary() {
+    this.setState({
+      loader: true
+    });
+    fetch(API_URL + `/user/deleteAccountCheck`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn
+      }
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status == 201) {
+          console.log("responsedata summary=-----------", responseData.data);
+          this.setState({
+            totalUSDOfWallet: responseData.usd_price.toFixed(2),
+            walletCoins: responseData.data,
+            user2fastatus: responseData.user2fastatus,
+            loader: false
+          });
+          console.log(
+            "responsedata walletCoins=-----------",
+            this.state.walletCoins
+          );
+        } else if (responseData.status == 200) {
+          console.log("responsedata summary=-----------", responseData.data);
+          this.setState({
+            walletCoins: null,
+            user2fastatus: responseData.user2fastatus,
+            loader: false
+          });
+          console.log(
+            "responsedata walletCoins=-----------",
+            this.state.walletCoins
+          );
+        }
+      })
+      .catch(error => {});
   }
   render() {
     // console.log("defaultActiveKey:", this.props.activeKey);
@@ -100,7 +147,12 @@ class Editprofile extends Component {
                 <Passwordchange {...this.props} />
               </TabPane>
               <TabPane tab="Settings" key="3">
-                <AccSettings {...this.props} />
+                <AccSettings
+                  {...this.props}
+                  user2fastatus={this.state.user2fastatus}
+                  walletCoins={this.state.walletCoins}
+                  totalUSDOfWallet={this.state.totalUSDOfWallet}
+                />
               </TabPane>
               <TabPane tab="Identity Verification" key="4">
                 {/* <KYC history={this.props.history} tier1_upgrade={true} /> */}
