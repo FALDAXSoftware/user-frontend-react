@@ -449,7 +449,8 @@ class Acc_settings extends Component {
     */
   deleteUserAccount() {
     if (this.validator1.allValid()) {
-      alert("btn clicked");
+      this.setState({ loader: true });
+      // alert("btn clicked");
       let value = {};
       value["email"] = this.props.email;
       value["user_id"] = this.props.profileDetails.id;
@@ -470,6 +471,12 @@ class Acc_settings extends Component {
         .then(response => response.json())
         .then(responseData => {
           if (responseData.status == 200) {
+            this.setState({ loader: false });
+            this.openNotificationWithIcon(
+              "success",
+              "Deleted",
+              "Account has been successfully deleted."
+            );
             let tempValue2 = {};
             tempValue2["user_id"] = this.props.profileDetails.id;
             tempValue2["jwt_token"] = this.props.isLoggedIn;
@@ -478,9 +485,11 @@ class Acc_settings extends Component {
             this.openNotificationWithIcon("error", "Error", responseData.err);
           }
           // dispatch(removeLoader());
+          this.setState({ loader: false });
         })
         .catch(error => {
           // dispatch(removeLoader());
+          this.setState({ loader: false });
         });
     } else {
       this.validator1.showMessages();
@@ -643,13 +652,12 @@ class Acc_settings extends Component {
   closeModal() {
     this.clearValidation();
     const wrapper = document.getElementById("wrapper");
-    console.log("wrapper.classList", wrapper);
+    // console.log("wrapper.classList", wrapper);
     if (wrapper != null) {
       wrapper.classList.remove("is-nav-open");
       const deactivate = document.getElementById("deactivate");
       deactivate.classList.remove("hide");
     }
-
     this.setState({
       showAddModal: false,
       showDeleteModal: false,
@@ -1202,7 +1210,7 @@ class Acc_settings extends Component {
                       <tr>
                         <td>{temps.coin}</td>
                         <td>{temps.balance}</td>
-                        <td>$ {temps.coin_id}</td>
+                        <td>$ {temps.fiat}</td>
                       </tr>
                     );
                   })}
@@ -1259,7 +1267,7 @@ class Acc_settings extends Component {
                         <tr>
                           <td>{temps.coin}</td>
                           <td>{temps.balance}</td>
-                          <td>$ {temps.coin_id}</td>
+                          <td>$ {temps.fiat}</td>
                         </tr>
                       );
                     })}
