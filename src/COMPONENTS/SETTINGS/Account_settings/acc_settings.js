@@ -196,9 +196,9 @@ class Acc_settings extends Component {
             <span>
               {src !== ""
                 ? moment
-                    .utc(src)
-                    .local()
-                    .format(`${date_format}, HH:mm:ss`)
+                  .utc(src)
+                  .local()
+                  .format(`${date_format}, HH:mm:ss`)
                 : "-"}
             </span>
           );
@@ -214,13 +214,13 @@ class Acc_settings extends Component {
               {src.is_permanent == true ? (
                 "-"
               ) : (
-                <div
-                  onClick={this.deleteIP.bind(this, src)}
-                  style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
-                >
-                  Delete
+                  <div
+                    onClick={this.deleteIP.bind(this, src)}
+                    style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
+                  >
+                    Delete
                 </div>
-              )}
+                )}
             </div>
           );
         }
@@ -343,7 +343,7 @@ class Acc_settings extends Component {
     // console.log(key, e, record);
     const { data_noti } = this.state;
     var tempData = data_noti;
-    tempData.map(function(data, index) {
+    tempData.map(function (data, index) {
       if (data.id == record.id) {
         // console.log(tempData[key]);
         if (key == "text") tempData[index].text = e.target.checked;
@@ -535,7 +535,7 @@ class Acc_settings extends Component {
         if (responseData.status == 200) {
           let antTableData = [];
           this.setState({ historyCount: responseData.historyCount });
-          Object.keys(responseData.data).map(function(key, index) {
+          Object.keys(responseData.data).map(function (key, index) {
             var deviceType;
             if (responseData.data[index].device_type === 1)
               deviceType = <FontAwesomeIconS icon={faMobileAlt} />;
@@ -628,7 +628,7 @@ class Acc_settings extends Component {
           setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
         }).catch(() => console.log("Oops errors!"));
       },
-      onCancel() {}
+      onCancel() { }
     });
   }
   openDeleteModal() {
@@ -892,7 +892,7 @@ class Acc_settings extends Component {
           });
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   }
   forfeitFunds() {
     this.closeModal();
@@ -1071,14 +1071,14 @@ class Acc_settings extends Component {
             <ButtonDel
               type="primary"
               onClick={() => {
-                if (
-                  this.state.walletCoins != undefined &&
-                  this.state.walletCoins.length > 0
-                ) {
-                  this.openDeleteModal.bind(this);
-                } else {
-                  this.forfeitFunds();
-                }
+                // if (
+                //   this.state.walletCoins != undefined &&
+                //   this.state.walletCoins.length > 0
+                // ) {
+                //   this.openDeleteModal.bind(this);
+                // } else {
+                this.forfeitFunds();
+                // }
               }}
             >
               Deactivate Account
@@ -1088,8 +1088,8 @@ class Acc_settings extends Component {
         {this.state.loader === true || this.props.loader === true ? (
           <FaldaxLoader />
         ) : (
-          ""
-        )}
+            ""
+          )}
         <VerifyModal
           visible={this.state.showAddModal}
           onCancel={this.closeModal}
@@ -1205,7 +1205,7 @@ class Acc_settings extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.walletCoins.map(function(temps) {
+                  {this.state.walletCoins.map(function (temps) {
                     return (
                       <tr>
                         <td>{temps.coin}</td>
@@ -1221,11 +1221,11 @@ class Acc_settings extends Component {
                 </tbody>
               </SummaryTable>
             ) : (
-              ""
-            )
+                ""
+              )
           ) : (
-            ""
-          )}
+              ""
+            )}
           <DeactivateButtonWarp>
             <DeButtonDiv
               onClick={() => {
@@ -1262,7 +1262,7 @@ class Acc_settings extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.walletCoins.map(function(temps) {
+                    {this.state.walletCoins.map(function (temps) {
                       return (
                         <tr>
                           <td>{temps.coin}</td>
@@ -1279,11 +1279,11 @@ class Acc_settings extends Component {
                 </SummaryTable>
               </div>
             ) : (
-              ""
-            )
+                ""
+              )
           ) : (
-            ""
-          )}
+              ""
+            )}
           <DeactiveWrap className="" id="deactivate">
             <Description className="final_deactivate">
               Are you sure you want to Deactivate?
