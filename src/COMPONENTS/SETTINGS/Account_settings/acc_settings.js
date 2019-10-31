@@ -126,9 +126,10 @@ class Acc_settings extends Component {
       savedDataNoti: [],
       deleteText: "",
       code2fa: "",
-      totalUSDOfWallet: "",
+      totalUSDOfWallet: this.props.totalUSDOfWallet,
       showDeactivateModal: false,
-      walletCoins: "",
+      walletCoins: this.props.walletCoins,
+      user2fastatus: this.props.user2fastatus,
       fields: {
         ip: null,
         days: null
@@ -277,7 +278,7 @@ class Acc_settings extends Component {
     this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
     this.deleteUserAccount = this.deleteUserAccount.bind(this);
-    this.getWalletSummary = this.getWalletSummary.bind(this);
+    // this.getWalletSummary = this.getWalletSummary.bind(this);
     this.forfeitFunds = this.forfeitFunds.bind(this);
     this.handleDeactivateYes = this.handleDeactivateYes.bind(this);
   }
@@ -297,12 +298,15 @@ class Acc_settings extends Component {
              }
          } */
   }
-
+  componentWillMount() {
+    // this.getWalletSummary();
+    console.log("walletCoins-------------------", this.props.walletCoins);
+  }
   componentDidMount() {
     this.getAllLoginHistory(1);
     this.getIpWhitelist(this.state.pageIp);
     this.getNotificationList();
-    this.getWalletSummary();
+    // this.getWalletSummary();
     if (
       this.props.profileDetails !== "" &&
       this.props.profileDetails !== undefined
@@ -869,31 +873,47 @@ class Acc_settings extends Component {
     console.log("IP Modal Cancel");
     this.setState({ visibleIpModal: false, checkedIP: false });
   }
-  getWalletSummary() {
-    this.setState({
-      loader: true
-    });
-    fetch(API_URL + `/user/deleteAccountCheck`, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.status == 201) {
-          console.log("responsedata summary=-----------", responseData.data);
-          this.setState({
-            totalUSDOfWallet: responseData.usd_price.toFixed(2),
-            walletCoins: responseData.data,
-            loader: false
-          });
-        }
-      })
-      .catch(error => { });
-  }
+  // getWalletSummary() {
+  //   this.setState({
+  //     loader: true
+  //   });
+  //   fetch(API_URL + `/user/deleteAccountCheck`, {
+  //     method: "get",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + this.props.isLoggedIn
+  //     }
+  //   })
+  //     .then(response => response.json())
+  //     .then(responseData => {
+  //       if (responseData.status == 201) {
+  //         console.log("responsedata summary=-----------", responseData.data);
+  //         this.setState({
+  //           totalUSDOfWallet: responseData.usd_price.toFixed(2),
+  //           walletCoins: responseData.data,
+  //           user2fastatus: responseData.user2fastatus,
+  //           loader: false
+  //         });
+  //         console.log(
+  //           "responsedata walletCoins=-----------",
+  //           this.state.walletCoins
+  //         );
+  //       } else if (responseData.status == 200) {
+  //         console.log("responsedata summary=-----------", responseData.data);
+  //         this.setState({
+  //           walletCoins: null,
+  //           user2fastatus: responseData.user2fastatus,
+  //           loader: false
+  //         });
+  //         console.log(
+  //           "responsedata walletCoins=-----------",
+  //           this.state.walletCoins
+  //         );
+  //       }
+  //     })
+  //     .catch(error => {});
+  // }
   forfeitFunds() {
     this.closeModal();
     this.openDeactivateModal();
@@ -913,6 +933,7 @@ class Acc_settings extends Component {
     } else {
       disabled = false;
     }
+    console.log(this.state.walletCoins);
     return (
       <AccWrap>
         {/* ----Notification code start ---- */}
@@ -1071,14 +1092,15 @@ class Acc_settings extends Component {
             <ButtonDel
               type="primary"
               onClick={() => {
-                // if (
-                //   this.state.walletCoins != undefined &&
-                //   this.state.walletCoins.length > 0
-                // ) {
-                //   this.openDeleteModal.bind(this);
-                // } else {
-                this.forfeitFunds();
-                // }
+                if (this.state.walletCoins != null) {
+                  // alert("openDeleteModal", this.state.walletCoins);
+                  // console.log("openDeleteModal", this.state.walletCoins);
+                  this.openDeleteModal();
+                } else {
+                  // alert("forfeitFunds", this.state.walletCoins);
+                  // console.log("forfeitFunds", this.state.walletCoins);
+                  this.openDeactivateModal();
+                }
               }}
             >
               Deactivate Account
@@ -1151,66 +1173,26 @@ class Acc_settings extends Component {
           footer={null}
           className="deactivate_modal"
         >
-          <Description> Below is the summary of your wallet</Description>
-          {/* <NewP>
-            <InputLabel>Type 'DELETE' in the box below:</InputLabel>
-            <div className="otp-input-wrap">
-              <OTPInput
-                className="otp-input"
-                value={this.state.deleteText}
-                size="medium"
-                onChange={this.deleteText.bind(this)}
-                name="ip"
-                style={{ marginBottom: "20px" }}
-              />
-              {this.validator1.message(
-                "text",
-                this.state.deleteText,
-                "required|matchDelete",
-                "text-danger-validation",
-                { required: "This field is required." }
-              )}
-            </div>
-            <InputLabel>Enter your 2FA code in the box below:</InputLabel>
-            <div>
-              <OTPInput
-                style={{ paddingRight: "10px" }}
-                min="1"
-                value={this.state.code2fa}
-                type="text"
-                size="medium"
-                onChange={this.code2fa.bind(this)}
-                name="2FA code"
-              />
-              {this.validator1.message(
-                "2FA code",
-                this.state.code2fa,
-                "required|numeric|min:6|max:6",
-                "text-danger-validation",
-                { required: "2FA field is required." }
-              )}
-            </div>
-          </NewP> */}
-          {/* <ButtonDiv>
-            <NewButton onClick={this.deleteUserAccount}>Confirm</NewButton>
-          </ButtonDiv> */}
-          {this.state.walletCoins != undefined ? (
-            this.state.walletCoins.length > 0 ? (
-              <SummaryTable>
-                <thead>
-                  <tr>
-                    <th>Coins</th>
-                    <th>Quantity</th>
-                    <th>Fiat Value</th>
-                  </tr>
-                </thead>
+          <div>
+            <Description> Below is the summary of your wallet</Description>
+            <SummaryTable>
+              <thead>
+                <tr>
+                  <th>Coins</th>
+                  <th>Quantity</th>
+                  <th>Fiat Value</th>
+                </tr>
+              </thead>
+              {this.state.walletCoins ? (
                 <tbody>
                   {this.state.walletCoins.map(function (temps) {
+                    var balance = parseFloat(temps.balance).toFixed(8);
+                    var fiat = parseFloat(temps.fiat * temps.balance).toFixed(2)
                     return (
                       <tr>
                         <td>{temps.coin}</td>
-                        <td>{temps.balance}</td>
-                        <td>$ {temps.fiat}</td>
+                        <td>{balance}</td>
+                        <td>$ {fiat}</td>
                       </tr>
                     );
                   })}
@@ -1219,27 +1201,25 @@ class Acc_settings extends Component {
                     <td>$ {this.state.totalUSDOfWallet}</td>
                   </tr>
                 </tbody>
-              </SummaryTable>
-            ) : (
-                ""
-              )
-          ) : (
-              ""
-            )}
-          <DeactivateButtonWarp>
-            <DeButtonDiv
-              onClick={() => {
-                this.props.history.push("/wallet");
-              }}
-            >
-              <DeNewButton>Remove Existing Funds</DeNewButton>
-            </DeButtonDiv>
-            <DeButtonDiv className="right_btn" onClick={this.forfeitFunds}>
-              <DeNewButton className="right_text">
-                Forfeit Funds & Deactivate
-              </DeNewButton>
-            </DeButtonDiv>
-          </DeactivateButtonWarp>
+              ) : (
+                  ""
+                )}
+            </SummaryTable>
+            <DeactivateButtonWarp>
+              <DeButtonDiv
+                onClick={() => {
+                  this.props.history.push("/wallet");
+                }}
+              >
+                <DeNewButton>Remove Existing Funds</DeNewButton>
+              </DeButtonDiv>
+              <DeButtonDiv className="right_btn" onClick={this.forfeitFunds}>
+                <DeNewButton className="right_text">
+                  Forfeit Funds & Deactivate
+                </DeNewButton>
+              </DeButtonDiv>
+            </DeactivateButtonWarp>
+          </div>
         </VerifyModal>
         <VerifyModal
           visible={this.state.showDeactivateModal}
@@ -1248,42 +1228,41 @@ class Acc_settings extends Component {
           footer={null}
           className="deactivate_modal"
         >
-          {/* <Description> Below is the summary of your wallet</Description> */}
-          {this.state.walletCoins != undefined ? (
-            this.state.walletCoins.length > 0 ? (
-              <div>
-                <Description> Below is the summary of your wallet</Description>
-                <SummaryTable>
-                  <thead>
-                    <tr>
-                      <th>Coins</th>
-                      <th>Quantity</th>
-                      <th>Fiat Value</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.walletCoins.map(function (temps) {
-                      return (
-                        <tr>
-                          <td>{temps.coin}</td>
-                          <td>{temps.balance}</td>
-                          <td>$ {temps.fiat}</td>
-                        </tr>
-                      );
-                    })}
-                    <tr>
-                      <td colSpan="2">Total Value (USD)</td>
-                      <td>$ {this.state.totalUSDOfWallet}</td>
-                    </tr>
-                  </tbody>
-                </SummaryTable>
-              </div>
-            ) : (
-                ""
-              )
+          {this.state.walletCoins ? (
+            <div>
+              <Description> Below is the summary of your wallet</Description>
+              <SummaryTable>
+                <thead>
+                  <tr>
+                    <th>Coins</th>
+                    <th>Quantity</th>
+                    <th>Fiat Value</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {this.state.walletCoins.map(function (temps) {
+                   var balance = parseFloat(temps.balance).toFixed(8);
+                   var fiat = parseFloat(temps.fiat * temps.balance).toFixed(2)
+                   return (
+                     <tr>
+                       <td>{temps.coin}</td>
+                       <td>{balance}</td>
+                       <td>$ {fiat}</td>
+                     </tr>
+                   );
+                  })}
+                  <tr>
+                    <td colSpan="2">Total Value (USD)</td>
+                    <td>$ {this.state.totalUSDOfWallet}</td>
+                  </tr>
+                </tbody>
+              </SummaryTable>
+            </div>
           ) : (
               ""
             )}
+
           <DeactiveWrap className="" id="deactivate">
             <Description className="final_deactivate">
               Are you sure you want to Deactivate?
