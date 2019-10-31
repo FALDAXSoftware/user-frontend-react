@@ -197,9 +197,9 @@ class Acc_settings extends Component {
             <span>
               {src !== ""
                 ? moment
-                    .utc(src)
-                    .local()
-                    .format(`${date_format}, HH:mm:ss`)
+                  .utc(src)
+                  .local()
+                  .format(`${date_format}, HH:mm:ss`)
                 : "-"}
             </span>
           );
@@ -215,13 +215,13 @@ class Acc_settings extends Component {
               {src.is_permanent == true ? (
                 "-"
               ) : (
-                <div
-                  onClick={this.deleteIP.bind(this, src)}
-                  style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
-                >
-                  Delete
+                  <div
+                    onClick={this.deleteIP.bind(this, src)}
+                    style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
+                  >
+                    Delete
                 </div>
-              )}
+                )}
             </div>
           );
         }
@@ -347,7 +347,7 @@ class Acc_settings extends Component {
     // console.log(key, e, record);
     const { data_noti } = this.state;
     var tempData = data_noti;
-    tempData.map(function(data, index) {
+    tempData.map(function (data, index) {
       if (data.id == record.id) {
         // console.log(tempData[key]);
         if (key == "text") tempData[index].text = e.target.checked;
@@ -539,7 +539,7 @@ class Acc_settings extends Component {
         if (responseData.status == 200) {
           let antTableData = [];
           this.setState({ historyCount: responseData.historyCount });
-          Object.keys(responseData.data).map(function(key, index) {
+          Object.keys(responseData.data).map(function (key, index) {
             var deviceType;
             if (responseData.data[index].device_type === 1)
               deviceType = <FontAwesomeIconS icon={faMobileAlt} />;
@@ -632,7 +632,7 @@ class Acc_settings extends Component {
           setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
         }).catch(() => console.log("Oops errors!"));
       },
-      onCancel() {}
+      onCancel() { }
     });
   }
   openDeleteModal() {
@@ -1110,8 +1110,8 @@ class Acc_settings extends Component {
         {this.state.loader === true || this.props.loader === true ? (
           <FaldaxLoader />
         ) : (
-          ""
-        )}
+            ""
+          )}
         <VerifyModal
           visible={this.state.showAddModal}
           onCancel={this.closeModal}
@@ -1185,12 +1185,14 @@ class Acc_settings extends Component {
               </thead>
               {this.state.walletCoins ? (
                 <tbody>
-                  {this.state.walletCoins.map(function(temps) {
+                  {this.state.walletCoins.map(function (temps) {
+                    var balance = parseFloat(temps.balance).toFixed(8);
+                    var fiat = parseFloat(temps.fiat * temps.balance).toFixed(2)
                     return (
                       <tr>
                         <td>{temps.coin}</td>
-                        <td>{temps.balance}</td>
-                        <td>$ {temps.fiat}</td>
+                        <td>{balance}</td>
+                        <td>$ {fiat}</td>
                       </tr>
                     );
                   })}
@@ -1200,8 +1202,8 @@ class Acc_settings extends Component {
                   </tr>
                 </tbody>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </SummaryTable>
             <DeactivateButtonWarp>
               <DeButtonDiv
@@ -1239,14 +1241,16 @@ class Acc_settings extends Component {
                 </thead>
 
                 <tbody>
-                  {this.state.walletCoins.map(function(temps) {
-                    return (
-                      <tr>
-                        <td>{temps.coin}</td>
-                        <td>{temps.balance}</td>
-                        <td>$ {temps.fiat}</td>
-                      </tr>
-                    );
+                  {this.state.walletCoins.map(function (temps) {
+                   var balance = parseFloat(temps.balance).toFixed(8);
+                   var fiat = parseFloat(temps.fiat * temps.balance).toFixed(2)
+                   return (
+                     <tr>
+                       <td>{temps.coin}</td>
+                       <td>{balance}</td>
+                       <td>$ {fiat}</td>
+                     </tr>
+                   );
                   })}
                   <tr>
                     <td colSpan="2">Total Value (USD)</td>
@@ -1256,8 +1260,8 @@ class Acc_settings extends Component {
               </SummaryTable>
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
 
           <DeactiveWrap className="" id="deactivate">
             <Description className="final_deactivate">
