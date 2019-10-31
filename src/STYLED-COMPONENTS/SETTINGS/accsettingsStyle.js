@@ -255,6 +255,9 @@ export const DeButtonDiv = styled.button`
   &.final_deactivate.right_btn {
     margin: 0 0 0 20px;
   }
+  &.disabled {
+    opacity: 0.5;
+  }
 `;
 export const DeNewButton = styled.span`
   font-size: 16px;

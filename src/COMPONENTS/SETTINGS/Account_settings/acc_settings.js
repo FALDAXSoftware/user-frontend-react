@@ -11,6 +11,7 @@ import {
   Input,
   Switch
 } from "antd";
+import { Link } from "react-router-dom";
 import moment from "moment";
 import { faDesktop, faMobileAlt } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
@@ -126,10 +127,14 @@ class Acc_settings extends Component {
       savedDataNoti: [],
       deleteText: "",
       code2fa: "",
-      totalUSDOfWallet: this.props.totalUSDOfWallet,
-      showDeactivateModal: false,
-      walletCoins: this.props.walletCoins,
-      user2fastatus: this.props.user2fastatus,
+      totalUSDOfWallet: "",
+      showDeactivateModal: "",
+      walletCoins: "",
+      user2fastatus: this.props.profileDetails.is_twofactor,
+      // totalUSDOfWallet: this.props.totalUSDOfWallet,
+      // showDeactivateModal: false,
+      // walletCoins: this.props.walletCoins,
+      // user2fastatus: this.props.user2fastatus,
       fields: {
         ip: null,
         days: null
@@ -197,9 +202,9 @@ class Acc_settings extends Component {
             <span>
               {src !== ""
                 ? moment
-                  .utc(src)
-                  .local()
-                  .format(`${date_format}, HH:mm:ss`)
+                    .utc(src)
+                    .local()
+                    .format(`${date_format}, HH:mm:ss`)
                 : "-"}
             </span>
           );
@@ -215,13 +220,13 @@ class Acc_settings extends Component {
               {src.is_permanent == true ? (
                 "-"
               ) : (
-                  <div
-                    onClick={this.deleteIP.bind(this, src)}
-                    style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
-                  >
-                    Delete
+                <div
+                  onClick={this.deleteIP.bind(this, src)}
+                  style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
+                >
+                  Delete
                 </div>
-                )}
+              )}
             </div>
           );
         }
@@ -278,7 +283,7 @@ class Acc_settings extends Component {
     this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
     this.deleteUserAccount = this.deleteUserAccount.bind(this);
-    // this.getWalletSummary = this.getWalletSummary.bind(this);
+    this.getWalletSummary = this.getWalletSummary.bind(this);
     this.forfeitFunds = this.forfeitFunds.bind(this);
     this.handleDeactivateYes = this.handleDeactivateYes.bind(this);
   }
@@ -297,16 +302,17 @@ class Acc_settings extends Component {
                      this.setState({searchCSS:"INPUT_search"})
              }
          } */
+    this.setState({ user2fastatus: this.props.profileDetails.is_twofactor });
+    console.log("walletCoins-------------------", this.state.user2fastatus);
   }
   componentWillMount() {
-    // this.getWalletSummary();
-    console.log("walletCoins-------------------", this.props.walletCoins);
+    this.getWalletSummary();
   }
   componentDidMount() {
     this.getAllLoginHistory(1);
     this.getIpWhitelist(this.state.pageIp);
     this.getNotificationList();
-    // this.getWalletSummary();
+    this.getWalletSummary();
     if (
       this.props.profileDetails !== "" &&
       this.props.profileDetails !== undefined
@@ -347,7 +353,7 @@ class Acc_settings extends Component {
     // console.log(key, e, record);
     const { data_noti } = this.state;
     var tempData = data_noti;
-    tempData.map(function (data, index) {
+    tempData.map(function(data, index) {
       if (data.id == record.id) {
         // console.log(tempData[key]);
         if (key == "text") tempData[index].text = e.target.checked;
@@ -539,7 +545,7 @@ class Acc_settings extends Component {
         if (responseData.status == 200) {
           let antTableData = [];
           this.setState({ historyCount: responseData.historyCount });
-          Object.keys(responseData.data).map(function (key, index) {
+          Object.keys(responseData.data).map(function(key, index) {
             var deviceType;
             if (responseData.data[index].device_type === 1)
               deviceType = <FontAwesomeIconS icon={faMobileAlt} />;
@@ -632,7 +638,7 @@ class Acc_settings extends Component {
           setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
         }).catch(() => console.log("Oops errors!"));
       },
-      onCancel() { }
+      onCancel() {}
     });
   }
   openDeleteModal() {
@@ -873,47 +879,47 @@ class Acc_settings extends Component {
     console.log("IP Modal Cancel");
     this.setState({ visibleIpModal: false, checkedIP: false });
   }
-  // getWalletSummary() {
-  //   this.setState({
-  //     loader: true
-  //   });
-  //   fetch(API_URL + `/user/deleteAccountCheck`, {
-  //     method: "get",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + this.props.isLoggedIn
-  //     }
-  //   })
-  //     .then(response => response.json())
-  //     .then(responseData => {
-  //       if (responseData.status == 201) {
-  //         console.log("responsedata summary=-----------", responseData.data);
-  //         this.setState({
-  //           totalUSDOfWallet: responseData.usd_price.toFixed(2),
-  //           walletCoins: responseData.data,
-  //           user2fastatus: responseData.user2fastatus,
-  //           loader: false
-  //         });
-  //         console.log(
-  //           "responsedata walletCoins=-----------",
-  //           this.state.walletCoins
-  //         );
-  //       } else if (responseData.status == 200) {
-  //         console.log("responsedata summary=-----------", responseData.data);
-  //         this.setState({
-  //           walletCoins: null,
-  //           user2fastatus: responseData.user2fastatus,
-  //           loader: false
-  //         });
-  //         console.log(
-  //           "responsedata walletCoins=-----------",
-  //           this.state.walletCoins
-  //         );
-  //       }
-  //     })
-  //     .catch(error => {});
-  // }
+  getWalletSummary() {
+    this.setState({
+      loader: true
+    });
+    fetch(API_URL + `/user/deleteAccountCheck`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn
+      }
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status == 201) {
+          console.log("responsedata summary=-----------", responseData.data);
+          this.setState({
+            totalUSDOfWallet: responseData.usd_price.toFixed(2),
+            walletCoins: responseData.data,
+            user2fastatus: responseData.user2fastatus,
+            loader: false
+          });
+          console.log(
+            "responsedata walletCoins=-----------",
+            this.state.walletCoins
+          );
+        } else if (responseData.status == 200) {
+          console.log("responsedata summary=-----------", responseData.data);
+          this.setState({
+            walletCoins: null,
+            user2fastatus: responseData.user2fastatus,
+            loader: false
+          });
+          console.log(
+            "responsedata walletCoins=-----------",
+            this.state.walletCoins
+          );
+        }
+      })
+      .catch(error => {});
+  }
   forfeitFunds() {
     this.closeModal();
     this.openDeactivateModal();
@@ -1110,8 +1116,8 @@ class Acc_settings extends Component {
         {this.state.loader === true || this.props.loader === true ? (
           <FaldaxLoader />
         ) : (
-            ""
-          )}
+          ""
+        )}
         <VerifyModal
           visible={this.state.showAddModal}
           onCancel={this.closeModal}
@@ -1185,9 +1191,11 @@ class Acc_settings extends Component {
               </thead>
               {this.state.walletCoins ? (
                 <tbody>
-                  {this.state.walletCoins.map(function (temps) {
+                  {this.state.walletCoins.map(function(temps) {
                     var balance = parseFloat(temps.balance).toFixed(8);
-                    var fiat = parseFloat(temps.fiat * temps.balance).toFixed(2)
+                    var fiat = parseFloat(temps.fiat * temps.balance).toFixed(
+                      2
+                    );
                     return (
                       <tr>
                         <td>{temps.coin}</td>
@@ -1202,8 +1210,8 @@ class Acc_settings extends Component {
                   </tr>
                 </tbody>
               ) : (
-                  ""
-                )}
+                ""
+              )}
             </SummaryTable>
             <DeactivateButtonWarp>
               <DeButtonDiv
@@ -1241,16 +1249,18 @@ class Acc_settings extends Component {
                 </thead>
 
                 <tbody>
-                  {this.state.walletCoins.map(function (temps) {
-                   var balance = parseFloat(temps.balance).toFixed(8);
-                   var fiat = parseFloat(temps.fiat * temps.balance).toFixed(2)
-                   return (
-                     <tr>
-                       <td>{temps.coin}</td>
-                       <td>{balance}</td>
-                       <td>$ {fiat}</td>
-                     </tr>
-                   );
+                  {this.state.walletCoins.map(function(temps) {
+                    var balance = parseFloat(temps.balance).toFixed(8);
+                    var fiat = parseFloat(temps.fiat * temps.balance).toFixed(
+                      2
+                    );
+                    return (
+                      <tr>
+                        <td>{temps.coin}</td>
+                        <td>{balance}</td>
+                        <td>$ {fiat}</td>
+                      </tr>
+                    );
                   })}
                   <tr>
                     <td colSpan="2">Total Value (USD)</td>
@@ -1260,8 +1270,8 @@ class Acc_settings extends Component {
               </SummaryTable>
             </div>
           ) : (
-              ""
-            )}
+            ""
+          )}
 
           <DeactiveWrap className="" id="deactivate">
             <Description className="final_deactivate">
@@ -1307,25 +1317,33 @@ class Acc_settings extends Component {
                     { required: "This field is required." }
                   )}
                 </div>
-                <InputLabel>Enter your 2FA code in the box below:</InputLabel>
-                <div>
-                  <OTPInput
-                    style={{ paddingRight: "10px" }}
-                    min="1"
-                    value={this.state.code2fa}
-                    type="text"
-                    size="medium"
-                    onChange={this.code2fa.bind(this)}
-                    name="2FA code"
-                  />
-                  {this.validator1.message(
-                    "2FA code",
-                    this.state.code2fa,
-                    "required|numeric|min:6|max:6",
-                    "text-danger-validation",
-                    { required: "2FA field is required." }
-                  )}
-                </div>
+                {this.state.user2fastatus ? (
+                  <div>
+                    <InputLabel>
+                      Enter your 2FA code in the box below:
+                    </InputLabel>
+                    <div>
+                      <OTPInput
+                        style={{ paddingRight: "10px" }}
+                        min="1"
+                        value={this.state.code2fa}
+                        type="text"
+                        size="medium"
+                        onChange={this.code2fa.bind(this)}
+                        name="2FA code"
+                      />
+                      {this.validator1.message(
+                        "2FA code",
+                        this.state.code2fa,
+                        "required|numeric|min:6|max:6",
+                        "text-danger-validation",
+                        { required: "2FA field is required." }
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <Link to={"/editProfile"}>Enable 2FA</Link>
+                )}
               </NewP>
               <DeactivateButtonWarp className="final_deactivate">
                 <DeButtonDiv
@@ -1334,12 +1352,22 @@ class Acc_settings extends Component {
                 >
                   <DeNewButton>Cancel</DeNewButton>
                 </DeButtonDiv>
-                <DeButtonDiv
-                  className="right_btn final_deactivate"
-                  onClick={this.deleteUserAccount}
-                >
-                  <DeNewButton className="right_text">Confirm</DeNewButton>
-                </DeButtonDiv>
+                {this.state.user2fastatus ? (
+                  <DeButtonDiv
+                    className="right_btn final_deactivate"
+                    onClick={this.deleteUserAccount}
+                  >
+                    <DeNewButton className="right_text">Confirm</DeNewButton>
+                  </DeButtonDiv>
+                ) : (
+                  <DeButtonDiv
+                    disabled
+                    className="right_btn final_deactivate disabled"
+                    onClick={this.deleteUserAccount}
+                  >
+                    <DeNewButton className="right_text">Confirm</DeNewButton>
+                  </DeButtonDiv>
+                )}
               </DeactivateButtonWarp>
             </div>
           </DeactivateWrapper>
