@@ -25,6 +25,10 @@ export const NotiDesc = styled.div`
   -moz-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
   -webkit-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
   -ms-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
+  > span {
+    color: ${props =>
+      props.theme.mode === "dark" ? "#3c4b64" : "rgb( 80, 80, 80 )"};
+  }
 `;
 export const CheckWrap = styled(Row)`
   max-width: 730px;
