@@ -330,3 +330,9 @@ export const DeactiveWrap = styled.div`
     display: none;
   }
 `;
+export const Code2FADiv = styled.div`
+  > p {
+    color: #000;
+    margin: 0;
+  }
+`;

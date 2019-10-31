@@ -500,35 +500,64 @@ class SimplexExchange extends React.Component {
               </BorderRow> */}
 
               {this.state.wallet_details === "" ? (
-                <CreateWalletRow className="create-wallet-link">
-                  <Col>
-                    <span>Don't have {this.state.coin_name} wallet?</span>
-                    <Link
-                      to={`/walletDetails?coinID0=${this.state.cryptoCode}`}
-                    >
-                      Generate wallet
-                    </Link>
-                  </Col>
-                </CreateWalletRow>
+                <div>
+                  <CreateWalletRow className="create-wallet-link">
+                    <Col>
+                      <span>Don't have {this.state.coin_name} wallet?</span>
+                      <Link
+                        to={`/walletDetails?coinID0=${this.state.cryptoCode}`}
+                      >
+                        Generate wallet
+                      </Link>
+                    </Col>
+                  </CreateWalletRow>
+                  <Row>
+                    <Col>
+                      <ConversionSubmitBtn
+                        onClick={this.btnClicked}
+                        type="primary"
+                        size="large"
+                        block
+                        disabled
+                      >
+                        Continue
+                      </ConversionSubmitBtn>
+                    </Col>
+                  </Row>
+                </div>
               ) : (
-                <BorderRow>
-                  <Col>
-                    <ConversionInput
-                      className="address_field"
-                      type="text"
-                      placeholder="Address"
-                      value={this.state.address}
-                      // readOnly
-                      onChange={this.handleAddressChange}
-                    />
-                    {this.validator1.message(
-                      "address",
-                      this.state.address,
-                      `required|alpha_num|min:15|max:120`,
-                      "text-danger-validation"
-                    )}
-                  </Col>
-                </BorderRow>
+                <div>
+                  <BorderRow>
+                    <Col>
+                      <ConversionInput
+                        className="address_field"
+                        type="text"
+                        placeholder="Address"
+                        value={this.state.address}
+                        // readOnly
+                        onChange={this.handleAddressChange}
+                      />
+                      {this.validator1.message(
+                        "address",
+                        this.state.address,
+                        `required|alpha_num|min:15|max:120`,
+                        "text-danger-validation"
+                      )}
+                    </Col>
+                  </BorderRow>
+                  <Row>
+                    <Col>
+                      <ConversionSubmitBtn
+                        onClick={this.btnClicked}
+                        type="primary"
+                        size="large"
+                        block
+                      >
+                        Continue
+                      </ConversionSubmitBtn>
+                    </Col>
+                  </Row>
+                </div>
               )}
               {/* {this.state.address === "" ? (
                 <CreateWalletRow className="create-wallet-link">
@@ -543,7 +572,7 @@ class SimplexExchange extends React.Component {
               ) : (
                 ""
               )} */}
-              <Row>
+              {/* <Row>
                 <Col>
                   <ConversionSubmitBtn
                     onClick={this.btnClicked}
@@ -554,7 +583,7 @@ class SimplexExchange extends React.Component {
                     Continue
                   </ConversionSubmitBtn>
                 </Col>
-              </Row>
+              </Row> */}
             </SimLeftCol>
           </SimMainRow>
           <form

@@ -33,12 +33,7 @@ import {
   WrapTable,
   AddButton,
   NotificationTable,
-  CheckRow,
-  CheckRow2,
-  CheckCol,
-  CheckCol2,
-  CheckCol3,
-  CheckCol4,
+  Code2FADiv,
   HR,
   LoginHistory,
   HistoryHead,
@@ -1342,7 +1337,11 @@ class Acc_settings extends Component {
                     </div>
                   </div>
                 ) : (
-                  <Link to={"/editProfile"}>Enable 2FA</Link>
+                  <Code2FADiv>
+                    <p>2FA is mandatory to deactivate your account.</p>
+                    <p>Please click on below link to enable 2FA.</p>
+                    <Link to={"/editProfile"}>Click here</Link>
+                  </Code2FADiv>
                 )}
               </NewP>
               <DeactivateButtonWarp className="final_deactivate">
