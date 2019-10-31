@@ -19,6 +19,7 @@ import SimpleReactValidator from "simple-react-validator";
 /* Components */
 import { globalVariables } from "Globals.js";
 import { deleteAccount } from "ACTIONS/authActions";
+import { LogoutUser } from "ACTIONS/authActions";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import IpModal from "./ip_modal";
 
@@ -334,6 +335,7 @@ class Acc_settings extends Component {
   }
   clearValidation() {
     this.validator.hideMessages();
+    this.validator1.hideMessages();
     this.forceUpdate();
     // rerender to hide messages for the first time
   }
@@ -447,19 +449,54 @@ class Acc_settings extends Component {
     */
   deleteUserAccount() {
     if (this.validator1.allValid()) {
-      alert("btn clicked");
+      this.setState({ loader: true });
+      // alert("btn clicked");
       let value = {};
       value["email"] = this.props.email;
       value["user_id"] = this.props.profileDetails.id;
       value["jwt_token"] = this.props.isLoggedIn;
       value["otp"] = this.state.code2fa;
-      console.log("vbalue======================", value);
-      this.props.deleteAccount(this.props.isLoggedIn, value);
+      // value["otp"] = this.state.code2fa;
+      console.log("deleteUserAccount value======================", value);
+      // this.props.deleteAccount(this.props.isLoggedIn, value);
+      fetch(API_URL + "/users/deleteAccount", {
+        method: "delete",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn
+        },
+        body: JSON.stringify(value)
+      })
+        .then(response => response.json())
+        .then(responseData => {
+          if (responseData.status == 200) {
+            this.setState({ loader: false });
+            this.openNotificationWithIcon(
+              "success",
+              "Deleted",
+              "Account has been successfully deleted."
+            );
+            let tempValue2 = {};
+            tempValue2["user_id"] = this.props.profileDetails.id;
+            tempValue2["jwt_token"] = this.props.isLoggedIn;
+            this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
+          } else {
+            this.openNotificationWithIcon("error", "Error", responseData.err);
+          }
+          // dispatch(removeLoader());
+          this.setState({ loader: false });
+        })
+        .catch(error => {
+          // dispatch(removeLoader());
+          this.setState({ loader: false });
+        });
     } else {
       this.validator1.showMessages();
       this.forceUpdate();
     }
   }
+
   deleteAccount() {
     /* console.log(this.props) */
     this.openNotificationWithIcon(
@@ -472,7 +509,7 @@ class Acc_settings extends Component {
     value["user_id"] = this.props.profileDetails.id;
     value["jwt_token"] = this.props.isLoggedIn;
     value["otp"] = this.state.code2fa;
-    console.log("vbalue======================", value);
+    console.log("deleteAccount value======================", value);
     this.props.deleteAccount(this.props.isLoggedIn, value);
   }
 
@@ -614,6 +651,13 @@ class Acc_settings extends Component {
   }
   closeModal() {
     this.clearValidation();
+    const wrapper = document.getElementById("wrapper");
+    // console.log("wrapper.classList", wrapper);
+    if (wrapper != null) {
+      wrapper.classList.remove("is-nav-open");
+      const deactivate = document.getElementById("deactivate");
+      deactivate.classList.remove("hide");
+    }
     this.setState({
       showAddModal: false,
       showDeleteModal: false,
@@ -1024,7 +1068,19 @@ class Acc_settings extends Component {
           </DeleteDesc>
           <DeleteBtn>
             {/* <ButtonDel type="primary" onClick={this.showConfirm.bind(this)}> */}
-            <ButtonDel type="primary" onClick={this.openDeleteModal.bind(this)}>
+            <ButtonDel
+              type="primary"
+              onClick={() => {
+                if (
+                  this.state.walletCoins != undefined &&
+                  this.state.walletCoins.length > 0
+                ) {
+                  this.openDeleteModal.bind(this);
+                } else {
+                  this.forfeitFunds();
+                }
+              }}
+            >
               Deactivate Account
             </ButtonDel>
           </DeleteBtn>
@@ -1154,7 +1210,7 @@ class Acc_settings extends Component {
                       <tr>
                         <td>{temps.coin}</td>
                         <td>{temps.balance}</td>
-                        <td>$ {temps.coin_id}</td>
+                        <td>$ {temps.fiat}</td>
                       </tr>
                     );
                   })}
@@ -1171,17 +1227,15 @@ class Acc_settings extends Component {
             ""
           )}
           <DeactivateButtonWarp>
-            <DeButtonDiv>
-              <DeNewButton
-                onClick={() => {
-                  this.props.history.push("/wallet");
-                }}
-              >
-                Remove Existing Funds
-              </DeNewButton>
+            <DeButtonDiv
+              onClick={() => {
+                this.props.history.push("/wallet");
+              }}
+            >
+              <DeNewButton>Remove Existing Funds</DeNewButton>
             </DeButtonDiv>
-            <DeButtonDiv className="right_btn">
-              <DeNewButton className="right_text" onClick={this.forfeitFunds}>
+            <DeButtonDiv className="right_btn" onClick={this.forfeitFunds}>
+              <DeNewButton className="right_text">
                 Forfeit Funds & Deactivate
               </DeNewButton>
             </DeButtonDiv>
@@ -1194,33 +1248,36 @@ class Acc_settings extends Component {
           footer={null}
           className="deactivate_modal"
         >
-          <Description> Below is the summary of your wallet</Description>
+          {/* <Description> Below is the summary of your wallet</Description> */}
           {this.state.walletCoins != undefined ? (
             this.state.walletCoins.length > 0 ? (
-              <SummaryTable>
-                <thead>
-                  <tr>
-                    <th>Coins</th>
-                    <th>Quantity</th>
-                    <th>Fiat Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.walletCoins.map(function(temps) {
-                    return (
-                      <tr>
-                        <td>{temps.coin}</td>
-                        <td>{temps.balance}</td>
-                        <td>$ {temps.coin_id}</td>
-                      </tr>
-                    );
-                  })}
-                  <tr>
-                    <td colSpan="2">Total Value (USD)</td>
-                    <td>$ {this.state.totalUSDOfWallet}</td>
-                  </tr>
-                </tbody>
-              </SummaryTable>
+              <div>
+                <Description> Below is the summary of your wallet</Description>
+                <SummaryTable>
+                  <thead>
+                    <tr>
+                      <th>Coins</th>
+                      <th>Quantity</th>
+                      <th>Fiat Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.walletCoins.map(function(temps) {
+                      return (
+                        <tr>
+                          <td>{temps.coin}</td>
+                          <td>{temps.balance}</td>
+                          <td>$ {temps.fiat}</td>
+                        </tr>
+                      );
+                    })}
+                    <tr>
+                      <td colSpan="2">Total Value (USD)</td>
+                      <td>$ {this.state.totalUSDOfWallet}</td>
+                    </tr>
+                  </tbody>
+                </SummaryTable>
+              </div>
             ) : (
               ""
             )
@@ -1232,16 +1289,17 @@ class Acc_settings extends Component {
               Are you sure you want to Deactivate?
             </Description>
             <DeactivateButtonWarp className="final_deactivate">
-              <DeButtonDiv className="final_deactivate">
-                <DeNewButton onClick={this.closeModal}>No</DeNewButton>
+              <DeButtonDiv
+                className="final_deactivate"
+                onClick={this.closeModal}
+              >
+                <DeNewButton>No</DeNewButton>
               </DeButtonDiv>
-              <DeButtonDiv className="right_btn final_deactivate">
-                <DeNewButton
-                  className="right_text"
-                  onClick={this.handleDeactivateYes}
-                >
-                  Yes
-                </DeNewButton>
+              <DeButtonDiv
+                className="right_btn final_deactivate"
+                onClick={this.handleDeactivateYes}
+              >
+                <DeNewButton className="right_text">Yes</DeNewButton>
               </DeButtonDiv>
             </DeactivateButtonWarp>
           </DeactiveWrap>
@@ -1291,16 +1349,17 @@ class Acc_settings extends Component {
                 </div>
               </NewP>
               <DeactivateButtonWarp className="final_deactivate">
-                <DeButtonDiv className="final_deactivate">
-                  <DeNewButton onClick={this.closeModal}>Cancel</DeNewButton>
+                <DeButtonDiv
+                  className="final_deactivate"
+                  onClick={this.closeModal}
+                >
+                  <DeNewButton>Cancel</DeNewButton>
                 </DeButtonDiv>
-                <DeButtonDiv className="right_btn final_deactivate">
-                  <DeNewButton
-                    className="right_text"
-                    onClick={this.deleteUserAccount}
-                  >
-                    Confirm
-                  </DeNewButton>
+                <DeButtonDiv
+                  className="right_btn final_deactivate"
+                  onClick={this.deleteUserAccount}
+                >
+                  <DeNewButton className="right_text">Confirm</DeNewButton>
                 </DeButtonDiv>
               </DeactivateButtonWarp>
             </div>
@@ -1327,8 +1386,9 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = dispatch => ({
-  deleteAccount: (isLoggedIn, email) =>
-    dispatch(deleteAccount(isLoggedIn, email))
+  deleteAccount: (isLoggedIn, value) =>
+    dispatch(deleteAccount(isLoggedIn, value)),
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 
 export default connect(
