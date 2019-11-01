@@ -2,15 +2,7 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { connect } from "react-redux";
-import {
-  Checkbox,
-  Table,
-  notification,
-  Modal,
-  Button,
-  Input,
-  Switch
-} from "antd";
+import { Checkbox, Table, notification, Modal, Switch, DatePicker } from "antd";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { faDesktop, faMobileAlt } from "@fortawesome/free-solid-svg-icons";
@@ -69,6 +61,9 @@ import {
   ButtonDiv
 } from "./ip_modal";
 import ThresholdNotification from "./threshold_notification";
+
+// const { DatePicker } = DatePicker;
+
 const IpButton = styled(NewButton)`
   margin-top: 20px;
 `;
@@ -101,6 +96,7 @@ const columns = [
 const confirm = Modal.confirm;
 const ModalIpInput = styled(NewInput)``;
 const DaysInput = styled(NewInput)``;
+
 class Acc_settings extends Component {
   constructor(props) {
     super(props);
@@ -120,11 +116,18 @@ class Acc_settings extends Component {
       visibleIpModal: false,
       data_noti: [],
       savedDataNoti: [],
+      rangeDate: [],
       deleteText: "",
       code2fa: "",
       totalUSDOfWallet: "",
       showDeactivateModal: "",
       walletCoins: "",
+      startValue: null,
+      endValue: null,
+      endOpen: false,
+      daysErrMsg: "",
+      isDateValid: false,
+      validDays: "",
       user2fastatus: this.props.profileDetails.is_twofactor,
       // totalUSDOfWallet: this.props.totalUSDOfWallet,
       // showDeactivateModal: false,
@@ -250,6 +253,30 @@ class Acc_settings extends Component {
             return false;
           }
         }
+      },
+      gttoday: {
+        message: "Please enter today's date or upcoming date.",
+        rule: val => {
+          // var today = moment().format("DD-MM-YYYY");
+          // var val = moment(val).format("DD-MM-YYYY");
+          // if (val >= today) {
+          //   return true;
+          //   console.log("sdddddddddddddddddddddddddddj");
+          // } else {
+          //   return false;
+          //   console.log(
+          //     "sdfjkfjkfjkfjkfjkfjkfjkfjkfjkfjkfjkfjkfjkfjkfjkfjkfjkfjkfjk"
+          //   );
+          // }
+          var a = moment();
+          var b = moment(val);
+          var ans = b.diff(a, "days"); // "in a day"
+          if (ans < 0) {
+            return false;
+          } else {
+            return true;
+          }
+        }
       }
     });
     this.validator1 = new SimpleReactValidator({
@@ -281,6 +308,10 @@ class Acc_settings extends Component {
     this.getWalletSummary = this.getWalletSummary.bind(this);
     this.forfeitFunds = this.forfeitFunds.bind(this);
     this.handleDeactivateYes = this.handleDeactivateYes.bind(this);
+    // this.disabledStartDate = this.disabledStartDate.bind(this);
+    // this.handleStartOpenChange = this.handleStartOpenChange.bind(this);
+    // this.onStartChange = this.onStartChange.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   /* Life Cycle Methods */
@@ -338,6 +369,25 @@ class Acc_settings extends Component {
       }
     }
   }
+  onChange = value => {
+    var a = moment();
+    var b = moment(value);
+    var ans = b.diff(a, "days"); // "in a day"
+
+    if (a.format("DD-MM-YYYY") === b.format("DD-MM-YYYY")) {
+      this.setState({
+        validDays: 1
+      });
+    } else {
+      this.setState({
+        validDays: ans + 2
+      });
+    }
+
+    this.setState({
+      startValue: value
+    });
+  };
   clearValidation() {
     this.validator.hideMessages();
     this.validator1.hideMessages();
@@ -677,12 +727,16 @@ class Acc_settings extends Component {
   }
   fianlIpWhitelist(fields) {
     this.setState({ loader: true });
+    var values = {
+      ip: this.state.fields.ip,
+      days: this.state.validDays
+    };
     fetch(API_URL + `/users/add-whitelist-ip`, {
       method: "post",
       headers: {
         Authorization: "Bearer " + this.props.isLoggedIn
       },
-      body: JSON.stringify(fields)
+      body: JSON.stringify(values)
     })
       .then(response => {
         // console.log(response);
@@ -698,13 +752,15 @@ class Acc_settings extends Component {
             responseData.message
           );
           let fields = {
-            days: null,
             ip: null
           };
           this.setState({
             loader: false,
             showAddModal: false,
             fields,
+            daysErrMsg: "",
+            isDateValid: false,
+            startValue: null,
             visibleIpModal: false,
             isWhitelistIp: true
           });
@@ -731,15 +787,22 @@ class Acc_settings extends Component {
   }
   addIpWhitelist(e, fields = null) {
     // console.log(fields, e);
-    if (fields == null) {
-      if (this.validator.allValid()) {
-        this.fianlIpWhitelist(this.state.fields);
-      } else {
-        this.validator.showMessages();
-        this.forceUpdate();
-      }
+    // if (fields == null) {
+    //   if (this.validator.allValid() && this.state.daysErrMsg === null) {
+    //     this.fianlIpWhitelist(this.state.fields);
+    //   } else {
+    //     this.validator.showMessages();
+    //     this.forceUpdate();
+    //   }
+    // } else {
+    //   this.fianlIpWhitelist(fields);
+    // }
+    if (this.validator.allValid()) {
+      this.fianlIpWhitelist(this.state.fields);
     } else {
-      this.fianlIpWhitelist(fields);
+      // console.log("this.state.daysErrMsg", this.state.daysErrMsg);
+      this.validator.showMessages();
+      this.forceUpdate();
     }
   }
 
@@ -926,7 +989,7 @@ class Acc_settings extends Component {
     deactivate.classList.add("hide");
   }
   render() {
-    const { fields, data_noti, savedDataNoti } = this.state;
+    const { fields, data_noti, savedDataNoti, startValue } = this.state;
     let disabled = true;
     // console.log(savedDataNoti, "-------------->", data_noti);
     if (JSON.stringify(savedDataNoti) === JSON.stringify(data_noti)) {
@@ -1116,16 +1179,18 @@ class Acc_settings extends Component {
         <VerifyModal
           visible={this.state.showAddModal}
           onCancel={this.closeModal}
-          title="Add IP to Whitelist"
+          title="Whitelist an IP Address"
           footer={null}
         >
           <Description>
             {" "}
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
+            A Whitelist enhances the security of your account by limiting access
+            to your account from IP Addresses you specify. Speak to your
+            Internet Service Provider to ensure that your IP Address is 'Static'
+            and will not change prior to enabling this security feature.
           </Description>
-          <NewP>
-            <InputLabel>Enter IP*</InputLabel>
+          <NewP className="add_new_ip">
+            <InputLabel>IP Address*</InputLabel>
             <div className="otp-input-wrap">
               <OTPInput
                 className="otp-input"
@@ -1143,9 +1208,9 @@ class Acc_settings extends Component {
                 { required: "IP field is required." }
               )}
             </div>
-            <InputLabel>Enter Days</InputLabel>
-            <div>
-              <OTPInput
+            {/* <InputLabel>Enter Days</InputLabel> */}
+            <div className="range_picker_wrap">
+              {/* <OTPInput
                 style={{ paddingRight: "10px" }}
                 min="1"
                 value={this.state.fields.days}
@@ -1160,7 +1225,29 @@ class Acc_settings extends Component {
                 "required",
                 "text-danger-validation",
                 { required: "Days field is required." }
+              )} */}
+              <DatePicker
+                // disabledDate={this.disabledStartDate}
+                // minDate={moment()}
+                // disabledDate={this.disabledDate}
+                // defaultValue={moment()}
+                format="YYYY-MM-DD"
+                value={startValue}
+                placeholder="Select End Date"
+                onChange={this.onChange}
+              />
+              {this.validator.message(
+                "days",
+                this.state.startValue,
+                "required|gttoday",
+                "text-danger-validation",
+                { required: "End Date field is required." }
               )}
+              {/* {this.state.daysErrMsg && (
+                <div className="text-danger-validation">
+                  {this.state.daysErrMsg}
+                </div>
+              )} */}
             </div>
           </NewP>
           <ButtonDiv>

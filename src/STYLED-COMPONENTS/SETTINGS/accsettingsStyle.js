@@ -318,6 +318,9 @@ export const DeactivateWrapper = styled.div`
     > p {
       margin: 0;
     }
+    > .nav__body {
+      width: 100%;
+    }
   }
   &.wrapper.is-nav-open {
     margin: 0;
