@@ -25,6 +25,11 @@ import {
   SimLeftCol,
   CreateWalletRow
 } from "../../../STYLED-COMPONENTS/SIMPLEX/simplexStyle";
+import styled from "styled-components";
+
+export const FormValueDisplay = styled.form`
+    display:none;
+`
 
 const API_URL = globalVariables.API_URL;
 const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
@@ -184,7 +189,7 @@ class SimplexExchange extends React.Component {
           });
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   }
   calculateDigitalCurrency() {
     this.setState({
@@ -272,7 +277,7 @@ class SimplexExchange extends React.Component {
           //   quote_id: responseData.data.quote_id
           // });
         })
-        .catch(error => {});
+        .catch(error => { });
     }
   }
   handleCurrencyPayChange(e) {
@@ -375,7 +380,7 @@ class SimplexExchange extends React.Component {
             // window.location = this.state.response.action;
           }
         })
-        .catch(error => {});
+        .catch(error => { });
     } else {
       this.validator1.showMessages();
       this.setState({
@@ -414,7 +419,7 @@ class SimplexExchange extends React.Component {
                     "text-danger-validation"
                   )}
                 </Col>
-                <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
+                <Col xs={12} sm={12} md={8} className="cuurency-display">
                   {this.state.currencyList &&
                     this.state.currencyList.length > 0 && (
                       <ConversionDropDown
@@ -450,10 +455,10 @@ class SimplexExchange extends React.Component {
                     placeholder="0"
                     readOnly
                     value={this.state.currencyToGet}
-                    // onChange={this.handleCurrencyGetChange}
+                  // onChange={this.handleCurrencyGetChange}
                   />
                 </Col>
-                <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
+                <Col xs={12} sm={12} md={8} className="currency-display">
                   {this.state.cryptoList && this.state.cryptoList.length > 0 && (
                     <ConversionDropDown
                       defaultValue={this.state.crypto}
@@ -526,39 +531,39 @@ class SimplexExchange extends React.Component {
                   </Row>
                 </div>
               ) : (
-                <div>
-                  <BorderRow>
-                    <Col>
-                      <ConversionInput
-                        className="address_field"
-                        type="text"
-                        placeholder="Address"
-                        value={this.state.address}
-                        // readOnly
-                        onChange={this.handleAddressChange}
-                      />
-                      {this.validator1.message(
-                        "address",
-                        this.state.address,
-                        `required|alpha_num|min:15|max:120`,
-                        "text-danger-validation"
-                      )}
-                    </Col>
-                  </BorderRow>
-                  <Row>
-                    <Col>
-                      <ConversionSubmitBtn
-                        onClick={this.btnClicked}
-                        type="primary"
-                        size="large"
-                        block
-                      >
-                        Continue
+                  <div>
+                    <BorderRow>
+                      <Col>
+                        <ConversionInput
+                          className="address_field"
+                          type="text"
+                          placeholder="Address"
+                          value={this.state.address}
+                          // readOnly
+                          onChange={this.handleAddressChange}
+                        />
+                        {this.validator1.message(
+                          "address",
+                          this.state.address,
+                          `required|alpha_num|min:15|max:120`,
+                          "text-danger-validation"
+                        )}
+                      </Col>
+                    </BorderRow>
+                    <Row>
+                      <Col>
+                        <ConversionSubmitBtn
+                          onClick={this.btnClicked}
+                          type="primary"
+                          size="large"
+                          block
+                        >
+                          Continue
                       </ConversionSubmitBtn>
-                    </Col>
-                  </Row>
-                </div>
-              )}
+                      </Col>
+                    </Row>
+                  </div>
+                )}
               {/* {this.state.address === "" ? (
                 <CreateWalletRow className="create-wallet-link">
                   <Col>
@@ -586,12 +591,11 @@ class SimplexExchange extends React.Component {
               </Row> */}
             </SimLeftCol>
           </SimMainRow>
-          <form
+          <FormValueDisplay
             id="payment_form"
             action={this.state.response.action}
             method="POST"
             target="_self"
-            style={{ display: "none" }}
           >
             {/* {console.log(this.state.version)} */}
             <input
@@ -667,7 +671,7 @@ class SimplexExchange extends React.Component {
             <button id="frm_sumbit" type="submit">
               Submit
             </button>
-          </form>
+          </FormValueDisplay>
         </ConversionContainer>
         {this.state.loader == true ? <FaldaxLoader /> : ""}
       </ConversionWrap>

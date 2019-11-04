@@ -37,6 +37,9 @@ const BorderedHistoryWrap = styled(HistoryWrap)`
 `
 const SideType = styled.td`
     color:${props => props.type === "Sell" ? "#f13239" : "#4fb153"};
+    > &.img-display{
+        margin-bottom: 3px;
+    }
 `
 /* const FontAwesomeIconA = styled(FontAwesomeIcon)`` */
 const NDF = styled.p`
@@ -171,9 +174,9 @@ class HistoryTable extends Component {
                 <td width="20%">{element.amount !== undefined ? element.amount.toFixed(3) : ""}</td>
                 {(index + 1) < me.state.data.length ? (element.fill_price >= me.state.data[index + 1].fill_price)
                     ?
-                    <td width="20%">{element.fill_price.toFixed(5)} {this.props.theme !== true ? <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/up-right.png" /> : <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/up_white.png" />}</td>
+                    <td width="20%">{element.fill_price.toFixed(5)} {this.props.theme !== true ? <img alt="UP-Right" className="img-display" src="/images/up-right.png" /> : <img alt="UP-Right" className="img-display" src="/images/up_white.png" />}</td>
                     :
-                    <td width="20%">{element.fill_price.toFixed(5)} {this.props.theme !== true ? <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/down-right.png" /> : <img alt="UP-Right" style={{ marginBottom: "3px" }} src="/images/down_white.png" />}</td>
+                    <td width="20%">{element.fill_price.toFixed(5)} {this.props.theme !== true ? <img alt="UP-Right" className="img-display" src="/images/down-right.png" /> : <img alt="UP-Right" className="img-display" src="/images/down_white.png" />}</td>
                     : <td>{element.fill_price} </td>
                 }
                 <td width="25%">{element.time}</td>
