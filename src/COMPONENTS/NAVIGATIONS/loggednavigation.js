@@ -495,7 +495,7 @@ class LoggedNavigation extends Component {
           });
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   }
   cryptoAccess() {
     // console.log(
@@ -593,25 +593,25 @@ class LoggedNavigation extends Component {
   render() {
     let prof_name =
       this.props.profileDetails.first_name !== null &&
-      this.props.profileDetails.first_name !== undefined
+        this.props.profileDetails.first_name !== undefined
         ? this.props.profileDetails.first_name +
-          " " +
-          this.props.profileDetails.last_name
+        " " +
+        this.props.profileDetails.last_name
         : "User";
     const DropdownItems = (
       <Menu className="fixed-drop">
         <Menu.Item key="0">
-          <a onClick={this.cryptoAccess}>Brokerage</a>
+          <a onClick={this.cryptoAccess}>Crypto Only</a>
         </Menu.Item>
         <Menu.Item key="1">
-          <a onClick={this.simplexAccess}>Simplex</a>
+          <a onClick={this.simplexAccess}>Credit Card</a>
         </Menu.Item>
         <Menu.Item key="2">
           <a
             className="tokenlink"
             href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
           >
-            Token
+            Bank Transfer
           </a>
         </Menu.Item>
       </Menu>
@@ -633,7 +633,7 @@ class LoggedNavigation extends Component {
               this.props.history.push({ pathname: "/history", tradeType: "1" })
             }
           >
-            Brokerage History
+            Crypto Only
           </a>
         </Menu.Item>
         <Menu.Item key="1">
@@ -642,7 +642,7 @@ class LoggedNavigation extends Component {
               this.props.history.push({ pathname: "/history", tradeType: "2" })
             }
           >
-            Simplex History
+            Credit Card
           </a>
         </Menu.Item>
       </Menu>
@@ -748,17 +748,17 @@ class LoggedNavigation extends Component {
               <DropMenu mode="inline">
                 <SubMenuNav key="mobsub1" title={"Conversion"}>
                   <Menu.Item key="0">
-                    <a onClick={this.cryptoAccess}>Brokerage</a>
+                    <a onClick={this.cryptoAccess}>Crypto Only</a>
                   </Menu.Item>
                   <Menu.Item key="1">
-                    <a onClick={this.simplexAccess}>Simplex</a>
+                    <a onClick={this.simplexAccess}>Credit Card</a>
                   </Menu.Item>
                   <Menu.Item key="2">
                     <a
                       className="tokenlink"
                       href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
                     >
-                      Token
+                      Bank Transfer
                     </a>
                   </Menu.Item>
                 </SubMenuNav>
@@ -797,7 +797,7 @@ class LoggedNavigation extends Component {
                         })
                       }
                     >
-                      Brokerage History
+                      Crypto Only
                     </a>
                   </Menu.Item>
                   <Menu.Item key="1">
@@ -809,7 +809,7 @@ class LoggedNavigation extends Component {
                         })
                       }
                     >
-                      Simplex History
+                      Credit Card
                     </a>
                   </Menu.Item>
                 </SubMenuNav>

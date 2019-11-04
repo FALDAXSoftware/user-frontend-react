@@ -25,11 +25,26 @@ const Old = styled.div`
 `;
 export const NewP = styled(Old)`
   margin-top: 30px;
+  width: 100%;
   > .otp-input-wrap {
     margin-bottom: 20px;
+    width: 100%;
   }
   &.deactivate {
     margin-bottom: 30px;
+  }
+  &.add_new_ip {
+    width: 100%;
+  }
+  > .range_picker_wrap {
+    > .ant-calendar-picker {
+      width: 100%;
+      > div {
+        > .ant-calendar-picker-input.ant-input {
+          height: 43px;
+        }
+      }
+    }
   }
 `;
 export const InputLabel = styled.label`
@@ -70,9 +85,10 @@ export const OldInput = styled(Input)`
 `;
 export const NewInput = styled(OldInput)``;
 export const OTPInput = styled(NewInput)`
-  width: 74%;
+  width: 100%;
   &.otp-input {
     margin-bottom: 0 !important;
+    width: 100%;
   }
 `;
 export const ButtonDiv = styled.div`
