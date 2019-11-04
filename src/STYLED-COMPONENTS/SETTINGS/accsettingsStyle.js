@@ -255,6 +255,9 @@ export const DeButtonDiv = styled.button`
   &.final_deactivate.right_btn {
     margin: 0 0 0 20px;
   }
+  &.disabled {
+    opacity: 0.5;
+  }
 `;
 export const DeNewButton = styled.span`
   font-size: 16px;
@@ -315,6 +318,9 @@ export const DeactivateWrapper = styled.div`
     > p {
       margin: 0;
     }
+    > .nav__body {
+      width: 100%;
+    }
   }
   &.wrapper.is-nav-open {
     margin: 0;
@@ -325,5 +331,11 @@ export const DeactivateWrapper = styled.div`
 export const DeactiveWrap = styled.div`
   &.hide {
     display: none;
+  }
+`;
+export const Code2FADiv = styled.div`
+  > p {
+    color: #000;
+    margin: 0;
   }
 `;

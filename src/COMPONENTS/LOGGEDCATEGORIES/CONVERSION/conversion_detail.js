@@ -577,7 +577,7 @@ class ConversionDetail extends React.Component {
                   responseData.data.total_value
                 ).toFixed(8),
                 orderQuantity: parseFloat(
-                  responseData.data.total_value
+                  responseData.data.currency_value
                 ).toFixed(8),
                 loader: false
               });
@@ -714,7 +714,7 @@ class ConversionDetail extends React.Component {
                   responseData.data.currency_value
                 ).toFixed(8),
                 orderQuantity: parseFloat(
-                  responseData.data.total_value
+                  responseData.data.currency_value
                 ).toFixed(8),
                 subTotal: parseFloat(responseData.data.original_value).toFixed(
                   8
