@@ -20,6 +20,17 @@ import {
     WholeWrap, TicketWrap,
     Title, Desc, Status, Date, NDF, TicketTitle
 } from 'STYLED-COMPONENTS/SETTINGS/hubspotStyle'
+import styled from 'styled-components';
+
+export const TicketWholeWarp = styled.div`
+    display: inline-block; 
+    width: 100%; 
+    position: relative;
+`
+
+export const DateSpan = styled.span`
+    white-space: nowrap;
+`
 
 let { API_URL } = globalVariables;
 
@@ -78,15 +89,15 @@ class HubSpotTickets extends Component {
                 <ProfileWrapper>
                     <TicketContainer>
                         <TicketDiv>
-                            <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+                            <TicketWholeWarp>
                                 <TicketTitle>All Tickets </TicketTitle>
-                            </div>
+                            </TicketWholeWarp>
                             <WholeWrap>
                                 {ticketData && ticketData.length > 0 ? ticketData && ticketData.map((temp, index) => (
                                     <TicketWrap>
                                         <Col md={4} lg={3}>
-                                            <Date style={{ display: "block" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format(this.props.profileDetails.date_format)} </Date>
-                                            <Date><span style={{ whiteSpace: "nowrap" }}>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format("hh:mm A")}</span> </Date>
+                                            <Date >{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format(this.props.profileDetails.date_format)} </Date>
+                                            <Date><DateSpan>{temp.properties.subject && moment.utc(temp.properties.subject.timestamp).local().format("hh:mm A")}</DateSpan> </Date>
                                             {temp.properties.hs_pipeline_stage &&
                                                 <Status color={statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].color}>{statusArray[parseInt(temp.properties.hs_pipeline_stage.value) - 1].title}</Status>
                                             }

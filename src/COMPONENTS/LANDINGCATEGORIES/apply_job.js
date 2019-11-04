@@ -81,6 +81,20 @@ const CareerTitle = styled.span`
   }
 `;
 
+export const CarrerHead = styled.div`
+  display: inline-block;
+  width: 100% ;
+  position: relative;
+  margin-bottom: 20px;
+`
+
+export const SupportText = styled.span`
+  font-size: 12px;
+  font-family: Open Sans;
+  color: rgb(128,128,128);
+  font-style: italic;
+`
+
 class ApplyJob extends Component {
   constructor(props) {
     super(props);
@@ -114,7 +128,7 @@ class ApplyJob extends Component {
       resumeRequired: {
         // name the rule
         message: "The resume field is required.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           if (self.state.flag_drop === null) {
@@ -126,7 +140,7 @@ class ApplyJob extends Component {
       resumeValid: {
         // name the rule
         message: "The resume field has not valid file.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           if (self.state.flag_drop === false) {
@@ -138,7 +152,7 @@ class ApplyJob extends Component {
       coverValid: {
         // name the rule
         message: "The cover field has not valid file.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           if (self.state.cover_flag === false) {
@@ -150,7 +164,7 @@ class ApplyJob extends Component {
       validEmail: {
         // name the rule
         message: "Please enter valid email address.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -160,7 +174,7 @@ class ApplyJob extends Component {
       },
       coverLimit: {
         message: "Please upload the document of less than 2 mb.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           if (self.state.coverLimit === false) {
@@ -171,7 +185,7 @@ class ApplyJob extends Component {
       },
       resumeLimit: {
         message: "Please upload the document of less than 2 mb.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           if (self.state.resumeLimit === false) {
@@ -183,7 +197,7 @@ class ApplyJob extends Component {
       websiteurl: {
         // name the rule
         message: "Please enter valid webiste address.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           if (val != "") {
@@ -347,7 +361,7 @@ class ApplyJob extends Component {
               }
             );
           })
-          .catch(error => {});
+          .catch(error => { });
       } else {
         this.openNotificationWithIcon(
           "error",
@@ -394,23 +408,16 @@ class ApplyJob extends Component {
         <GreyWrap>
           <ContainerContact>
             <HeadContact2>
-              <div
-                style={{
-                  display: "inline-block",
-                  width: "100%",
-                  position: "relative",
-                  marginBottom: "20px"
-                }}
-              >
+              <CarrerHead>
                 <CareerTitle>Careers </CareerTitle>
-              </div>
+              </CarrerHead>
               <ApplyWrap>
                 <TitleApply>
                   {position_flag !== null ? (
                     <TitleSpan>{position_flag}</TitleSpan>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                 </TitleApply>
                 <FormApply>
                   <Row>
@@ -509,7 +516,6 @@ class ApplyJob extends Component {
                             <div>
                               <IconS
                                 type="download"
-                                style={{ fontSize: "30px" }}
                               />
                               <FileSelectText>
                                 Choose a file or drag it here
@@ -519,7 +525,6 @@ class ApplyJob extends Component {
                           {flag_drop === false && (
                             <div>
                               <IconS
-                                style={{ fontSize: "30px" }}
                                 type="close-square"
                               />
                               <FileSelectText>
@@ -530,7 +535,6 @@ class ApplyJob extends Component {
                           {flag_drop === true && (
                             <div>
                               <IconS
-                                style={{ fontSize: "30px" }}
                                 type="check-square"
                               />
                               <FileSelectText>
@@ -539,16 +543,9 @@ class ApplyJob extends Component {
                             </div>
                           )}
                         </DropzoneStyle>
-                        <span
-                          style={{
-                            fontSize: "12px",
-                            fontFamily: "Open Sans",
-                            color: "grey",
-                            fontStyle: "italic"
-                          }}
-                        >
+                        <SupportText>
                           Supported format : .doc , .docx , .pdf.
-                        </span>
+                        </SupportText>
                         {this.validator.message(
                           "resume",
                           flag_drop,
@@ -572,7 +569,6 @@ class ApplyJob extends Component {
                             <div>
                               <IconS
                                 type="download"
-                                style={{ fontSize: "30px" }}
                               />
                               <FileSelectText>
                                 Choose a file or drag it here
@@ -582,7 +578,6 @@ class ApplyJob extends Component {
                           {cover_flag === false && (
                             <div>
                               <IconS
-                                style={{ fontSize: "30px" }}
                                 type="close-square"
                               />
                               <FileSelectText>
@@ -593,7 +588,6 @@ class ApplyJob extends Component {
                           {cover_flag === true && (
                             <div>
                               <IconS
-                                style={{ fontSize: "30px" }}
                                 type="check-square"
                               />
                               <FileSelectText>
@@ -602,16 +596,9 @@ class ApplyJob extends Component {
                             </div>
                           )}
                         </DropzoneStyle>
-                        <span
-                          style={{
-                            fontSize: "12px",
-                            fontFamily: "Open Sans",
-                            color: "grey",
-                            fontStyle: "italic"
-                          }}
-                        >
+                        <SupportText>
                           Supported format : .doc , .docx , .pdf.
-                        </span>
+                        </SupportText>
                         {this.validator.message(
                           "cover",
                           cover_flag,
