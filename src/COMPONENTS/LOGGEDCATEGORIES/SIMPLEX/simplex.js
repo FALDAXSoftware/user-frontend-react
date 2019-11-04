@@ -49,7 +49,8 @@ class Simplex extends React.Component {
       quote_id: "",
       currencyList: [],
       wallet_address: "",
-      crypto_code: ""
+      crypto_code: "",
+      coin_name: ""
     };
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
@@ -232,14 +233,16 @@ class Simplex extends React.Component {
                   currencyToGet: responseData.data.digital_money.amount,
                   quote_id: responseData.data.quote_id,
                   crypto_code: responseData.coinDetails.coin_code,
-                  wallet_address: ""
+                  wallet_address: "",
+                  coin_name: ""
                 });
               } else {
                 this.setState({
                   loader: false,
                   currencyToGet: responseData.data.digital_money.amount,
                   quote_id: responseData.data.quote_id,
-                  wallet_address: responseData.walletDetails.receive_address
+                  wallet_address: responseData.walletDetails.receive_address,
+                  coin_name: responseData.coinDetails.coin_name
                 });
               }
             }
@@ -314,7 +317,8 @@ class Simplex extends React.Component {
           crypto: this.state.crypto,
           currency: this.state.currency,
           wallet_address: this.state.wallet_address,
-          crypto_code: this.state.crypto_code
+          crypto_code: this.state.crypto_code,
+          coin_name: this.state.coin_name
         }
       });
     } else {

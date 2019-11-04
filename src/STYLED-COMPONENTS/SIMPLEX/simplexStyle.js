@@ -117,7 +117,11 @@ export const CreateWalletRow = styled(Row)`
     justify-content: space-between;
     margin: 0 0 25px 0;
     align-items: center;
+    > span {
+      padding: 0 0 0 30px;
+    }
     > a {
+      margin: 0 20px 0 0;
       padding: 10px 20px;
       border: 1px solid;
       border-color: #4c84ff;
