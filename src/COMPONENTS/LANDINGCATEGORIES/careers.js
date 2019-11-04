@@ -89,6 +89,12 @@ const CareerTitle = styled.span`
   }
 `;
 
+export const ContactStyle = styled.div`
+    display: 'inline-block'; 
+    width: 100%;
+    position: relative;
+`
+
 class Careers extends Component {
     constructor(props) {
         super(props);
@@ -139,9 +145,9 @@ class Careers extends Component {
                 <Navigation />
                 <GreyWrap>
                     <ContainerContact>
-                        <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+                        <ContactStyle>
                             <CareerTitle>Careers </CareerTitle>
-                        </div>
+                        </ContactStyle>
                         {/* <Careerdesc>
                             <Deschead>careers</Deschead>
                             <Descbody>{(this.state.careerDesc) ? ReactHtmlParser(this.state.careerDesc.content) : ''}</Descbody>

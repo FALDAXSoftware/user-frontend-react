@@ -72,6 +72,21 @@ const IpInput = styled(NewInput)`
   margin-top: 20px;
   padding-right: 7px;
 `;
+
+export const AccountWarp = styled.div`
+    padding-left: 10px;
+    padding-right: 10px;
+`
+
+export const TextDisplay = styled.div`
+    width: 1000px;
+`
+
+export const DeleteCursor = styled.div`
+    cursor: pointer; 
+    color: rgb(0, 170, 250);
+`
+
 let { API_URL } = globalVariables;
 
 const columns = [
@@ -200,9 +215,9 @@ class Acc_settings extends Component {
             <span>
               {src !== ""
                 ? moment
-                    .utc(src)
-                    .local()
-                    .format(`${date_format}, HH:mm:ss`)
+                  .utc(src)
+                  .local()
+                  .format(`${date_format}, HH:mm:ss`)
                 : "-"}
             </span>
           );
@@ -218,13 +233,12 @@ class Acc_settings extends Component {
               {src.is_permanent == true ? (
                 "-"
               ) : (
-                <div
-                  onClick={this.deleteIP.bind(this, src)}
-                  style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
-                >
-                  Delete
-                </div>
-              )}
+                  <DeleteCursor
+                    onClick={this.deleteIP.bind(this, src)}
+                  >
+                    Delete
+                </DeleteCursor>
+                )}
             </div>
           );
         }
@@ -398,7 +412,7 @@ class Acc_settings extends Component {
     // console.log(key, e, record);
     const { data_noti } = this.state;
     var tempData = data_noti;
-    tempData.map(function(data, index) {
+    tempData.map(function (data, index) {
       if (data.id == record.id) {
         // console.log(tempData[key]);
         if (key == "text") tempData[index].text = e.target.checked;
@@ -590,7 +604,7 @@ class Acc_settings extends Component {
         if (responseData.status == 200) {
           let antTableData = [];
           this.setState({ historyCount: responseData.historyCount });
-          Object.keys(responseData.data).map(function(key, index) {
+          Object.keys(responseData.data).map(function (key, index) {
             var deviceType;
             if (responseData.data[index].device_type === 1)
               deviceType = <FontAwesomeIconS icon={faMobileAlt} />;
@@ -683,7 +697,7 @@ class Acc_settings extends Component {
           setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
         }).catch(() => console.log("Oops errors!"));
       },
-      onCancel() {}
+      onCancel() { }
     });
   }
   openDeleteModal() {
@@ -976,7 +990,7 @@ class Acc_settings extends Component {
           );
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   }
   forfeitFunds() {
     this.closeModal();
@@ -1010,7 +1024,7 @@ class Acc_settings extends Component {
           </NotiDesc>
         </NotiWrap>
 
-        <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+        <AccountWarp>
           <WrapTable>
             <NotificationTable
               className={this.state.notiCSS}
@@ -1021,7 +1035,7 @@ class Acc_settings extends Component {
               pagination={{ pageSize: 5, size: "small" }}
             />
           </WrapTable>
-        </div>
+        </AccountWarp>
         <AddButton disabled={disabled} onClick={this.addData}>
           Save
         </AddButton>
@@ -1050,7 +1064,6 @@ class Acc_settings extends Component {
           </TableWrap>
 
           <PaginationS
-            style={{ marginTop: "15px" }}
             className="ant-users-pagination"
             size="small"
             onChange={this.handleHistoryPagination.bind(this)}
@@ -1069,14 +1082,14 @@ class Acc_settings extends Component {
           <DeleteHead>
             <span>Security Settings</span>
           </DeleteHead>
-          <DeleteDesc style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ width: "1000px" }}>
+          <DeleteDesc >
+            <TextDisplay>
               When set 'ON', changes to any security settings on your account
               will disable debits from your wallets for 24 hours. Additionally,
               you will be notified prior to changing any security settings and
               will have to confirm that you want to make those changes to ensure
               you don't accidently lock your wallet.
-            </div>
+            </TextDisplay>
           </DeleteDesc>
           {/* {console.log(this.state.checked)} */}
           <TableWrap>
@@ -1131,7 +1144,6 @@ class Acc_settings extends Component {
                 />
               </TableWrap>
               <PaginationS
-                style={{ marginTop: "15px" }}
                 className="ant-users-pagination"
                 onChange={this.handleIpPagination.bind(this)}
                 pageSize={10}
@@ -1174,8 +1186,8 @@ class Acc_settings extends Component {
         {this.state.loader === true || this.props.loader === true ? (
           <FaldaxLoader />
         ) : (
-          ""
-        )}
+            ""
+          )}
         <VerifyModal
           visible={this.state.showAddModal}
           onCancel={this.closeModal}
@@ -1198,7 +1210,6 @@ class Acc_settings extends Component {
                 size="medium"
                 onChange={this.ipChange.bind(this)}
                 name="ip"
-                style={{ marginBottom: "20px" }}
               />
               {this.validator.message(
                 "ip",
@@ -1273,7 +1284,7 @@ class Acc_settings extends Component {
               </thead>
               {this.state.walletCoins ? (
                 <tbody>
-                  {this.state.walletCoins.map(function(temps) {
+                  {this.state.walletCoins.map(function (temps) {
                     var balance = parseFloat(temps.balance).toFixed(8);
                     var fiat = parseFloat(temps.fiat * temps.balance).toFixed(
                       2
@@ -1292,8 +1303,8 @@ class Acc_settings extends Component {
                   </tr>
                 </tbody>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </SummaryTable>
             <DeactivateButtonWarp>
               <DeButtonDiv
@@ -1331,7 +1342,7 @@ class Acc_settings extends Component {
                 </thead>
 
                 <tbody>
-                  {this.state.walletCoins.map(function(temps) {
+                  {this.state.walletCoins.map(function (temps) {
                     var balance = parseFloat(temps.balance).toFixed(8);
                     var fiat = parseFloat(temps.fiat * temps.balance).toFixed(
                       2
@@ -1352,8 +1363,8 @@ class Acc_settings extends Component {
               </SummaryTable>
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
 
           <DeactiveWrap className="" id="deactivate">
             <Description className="final_deactivate">
@@ -1389,7 +1400,6 @@ class Acc_settings extends Component {
                     size="medium"
                     onChange={this.deleteText.bind(this)}
                     name="ip"
-                    style={{ marginBottom: "20px" }}
                   />
                   {this.validator1.message(
                     "text",
@@ -1406,7 +1416,7 @@ class Acc_settings extends Component {
                     </InputLabel>
                     <div>
                       <OTPInput
-                        style={{ paddingRight: "10px" }}
+                        className="otpfor2fa"
                         min="1"
                         value={this.state.code2fa}
                         type="text"
@@ -1424,12 +1434,12 @@ class Acc_settings extends Component {
                     </div>
                   </div>
                 ) : (
-                  <Code2FADiv>
-                    <p>2FA is mandatory to deactivate your account.</p>
-                    <p>Please click on below link to enable 2FA.</p>
-                    <Link to={"/editProfile"}>Click here</Link>
-                  </Code2FADiv>
-                )}
+                    <Code2FADiv>
+                      <p>2FA is mandatory to deactivate your account.</p>
+                      <p>Please click on below link to enable 2FA.</p>
+                      <Link to={"/editProfile"}>Click here</Link>
+                    </Code2FADiv>
+                  )}
               </NewP>
               <DeactivateButtonWarp className="final_deactivate">
                 <DeButtonDiv
@@ -1446,14 +1456,14 @@ class Acc_settings extends Component {
                     <DeNewButton className="right_text">Confirm</DeNewButton>
                   </DeButtonDiv>
                 ) : (
-                  <DeButtonDiv
-                    disabled
-                    className="right_btn final_deactivate disabled"
-                    onClick={this.deleteUserAccount}
-                  >
-                    <DeNewButton className="right_text">Confirm</DeNewButton>
-                  </DeButtonDiv>
-                )}
+                    <DeButtonDiv
+                      disabled
+                      className="right_btn final_deactivate disabled"
+                      onClick={this.deleteUserAccount}
+                    >
+                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                    </DeButtonDiv>
+                  )}
               </DeactivateButtonWarp>
             </div>
           </DeactivateWrapper>

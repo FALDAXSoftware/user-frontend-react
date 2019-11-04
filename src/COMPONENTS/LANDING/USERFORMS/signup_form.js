@@ -217,6 +217,9 @@ export const Signa = styled.a`
     color: #0f477b;
   }
 `;
+export const ButtonLabel = styled.input`
+  display: none;
+`
 const ProgressBar = styled(Progress)`
   width: 77%;
 `;
@@ -785,11 +788,11 @@ class SignupForm extends Component {
                         onClick={this.handleEye.bind(this, "new")}
                       />
                     ) : (
-                      <ActiveFAI
-                        src={_ACTIVEEYE}
-                        onClick={this.handleEye.bind(this, "new")}
-                      />
-                    )}
+                        <ActiveFAI
+                          src={_ACTIVEEYE}
+                          onClick={this.handleEye.bind(this, "new")}
+                        />
+                      )}
                     <PassIconS
                       id="pass_icon_success"
                       type="check-circle"
@@ -828,11 +831,11 @@ class SignupForm extends Component {
                         onClick={this.handleEye.bind(this, "repeatEye")}
                       />
                     ) : (
-                      <ActiveFAI
-                        src={_ACTIVEEYE}
-                        onClick={this.handleEye.bind(this, "repeatEye")}
-                      />
-                    )}
+                        <ActiveFAI
+                          src={_ACTIVEEYE}
+                          onClick={this.handleEye.bind(this, "repeatEye")}
+                        />
+                      )}
                     <ConfirmIconS
                       id="confirm_icon_success"
                       type="check-circle"
@@ -862,8 +865,7 @@ class SignupForm extends Component {
                       })}
                     />
                   </div>
-                  <input
-                    style={{ display: "none" }}
+                  <ButtonLabel
                     type="submit"
                     value="Submit"
                   />

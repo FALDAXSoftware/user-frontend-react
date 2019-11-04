@@ -86,6 +86,9 @@ const RightWrap = styled.div`
   display: flex;
   align-items: center;
   height: 100vh;
+  > div.fadeInDown{
+    width:100%;
+  }
   @media (max-width: 991px) {
     height: auto;
   }
@@ -239,6 +242,12 @@ const Signa = styled.a`
     color: #0f477b;
   }
 `;
+export const BackUpOtp = styled.div`
+    padding-top: 10px !important;
+`
+export const ButtonValue = styled.input`
+  display:none;
+`
 const FAI = styled.img`
   margin-left: -35px;
   cursor: pointer;
@@ -798,7 +807,7 @@ class Login_Form extends Component {
           <ColRight sm={24} lg={12}>
             <FormWrap>
               <RightWrap>
-                <div className="wow fadeInDown" style={{ width: "100%" }}>
+                <div className="wow fadeInDown">
                   <LoginHead>Login</LoginHead>
                   <WelcomeText>Welcome To FALDAX!</WelcomeText>
                   <EmailLabel>Email Address*</EmailLabel>
@@ -846,11 +855,11 @@ class Login_Form extends Component {
                       {this.state.typeEye === "password" ? (
                         <FAI src={_EYE} onClick={this.handleEye.bind(this)} />
                       ) : (
-                        <ActiveFAI
-                          src={_ACTIVEEYE}
-                          onClick={this.handleEye.bind(this)}
-                        />
-                      )}
+                          <ActiveFAI
+                            src={_ACTIVEEYE}
+                            onClick={this.handleEye.bind(this)}
+                          />
+                        )}
                       <PassIconS
                         id="passlog_icon_success"
                         type="check-circle"
@@ -902,10 +911,9 @@ class Login_Form extends Component {
                         </PassReq>
                       </div>
                     ) : (
-                      ""
-                    )}
-                    <input
-                      style={{ display: "none" }}
+                        ""
+                      )}
+                    <ButtonValue
                       type="submit"
                       value="Submit"
                     />
@@ -926,8 +934,8 @@ class Login_Form extends Component {
                       </Forgot>
                     </CheckWrap>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                   {this.state.showBackUpInput ? (
                     <CheckWrap>
                       {/* <Remember>
@@ -937,10 +945,10 @@ class Login_Form extends Component {
                       </Forgot>
                     </CheckWrap>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                   {this.state.showBackUpInput && (
-                    <div style={{ paddingTop: "10px" }}>
+                    <BackUpOtp className="backuptext">
                       <OtpLabel>
                         Please enter your Back-up code below to proceed.
                       </OtpLabel>
@@ -973,7 +981,8 @@ class Login_Form extends Component {
                       <PassReq className="backup_msg">
                         {this.state.backup_msg}
                       </PassReq>
-                    </div>
+                    </BackUpOtp>
+                    /* </div> */
                   )}
                   {this.state.showBackUpInput && (
                     <CheckWrap>
