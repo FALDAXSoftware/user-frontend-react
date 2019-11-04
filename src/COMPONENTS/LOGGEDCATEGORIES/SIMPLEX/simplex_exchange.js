@@ -54,6 +54,7 @@ class SimplexExchange extends React.Component {
       address: null,
       cryptoCode: null,
       wallet_details: null,
+      coin_name: null,
       currencyList: []
     };
     this.validator1 = new SimpleReactValidator({
@@ -124,7 +125,8 @@ class SimplexExchange extends React.Component {
           quote_id: null,
           address: null,
           cryptoCode: null,
-          wallet_details: null
+          wallet_details: null,
+          coin_name: null
         });
         this.props.history.push("/simplex");
       } else {
@@ -136,7 +138,8 @@ class SimplexExchange extends React.Component {
           quote_id: this.props.location.state.id,
           address: this.props.location.state.wallet_address,
           cryptoCode: this.props.location.state.crypto_code,
-          wallet_details: this.props.location.state.wallet_address
+          wallet_details: this.props.location.state.wallet_address,
+          coin_name: this.props.location.state.coin_name
         });
       }
     } else {
@@ -226,21 +229,25 @@ class SimplexExchange extends React.Component {
               });
             } else {
               if (responseData.walletDetails === undefined) {
+                // alert("if");
                 this.setState({
                   loader: false,
                   currencyToGet: responseData.data.digital_money.amount,
                   quote_id: responseData.data.quote_id,
                   cryptoCode: responseData.coinDetails.coin_code,
                   wallet_details: "",
-                  address: ""
+                  address: "",
+                  coin_name: responseData.coinDetails.coin_name
                 });
               } else {
+                // alert("else", responseData.coinDetails.coin_name);
                 this.setState({
                   loader: false,
                   currencyToGet: responseData.data.digital_money.amount,
                   quote_id: responseData.data.quote_id,
                   address: responseData.walletDetails.receive_address,
-                  wallet_details: responseData.walletDetails.receive_address
+                  wallet_details: responseData.walletDetails.receive_address,
+                  coin_name: responseData.coinDetails.coin_name
                 });
               }
             }
@@ -493,35 +500,64 @@ class SimplexExchange extends React.Component {
               </BorderRow> */}
 
               {this.state.wallet_details === "" ? (
-                <CreateWalletRow className="create-wallet-link">
-                  <Col>
-                    <span>Don't have {this.state.crypto} wallet?</span>
-                    <Link
-                      to={`/walletDetails?coinID0=${this.state.cryptoCode}`}
-                    >
-                      Create {this.state.crypto} wallet
-                    </Link>
-                  </Col>
-                </CreateWalletRow>
+                <div>
+                  <CreateWalletRow className="create-wallet-link">
+                    <Col>
+                      <span>Don't have {this.state.coin_name} wallet?</span>
+                      <Link
+                        to={`/walletDetails?coinID0=${this.state.cryptoCode}`}
+                      >
+                        Generate wallet
+                      </Link>
+                    </Col>
+                  </CreateWalletRow>
+                  <Row>
+                    <Col>
+                      <ConversionSubmitBtn
+                        onClick={this.btnClicked}
+                        type="primary"
+                        size="large"
+                        block
+                        disabled
+                      >
+                        Continue
+                      </ConversionSubmitBtn>
+                    </Col>
+                  </Row>
+                </div>
               ) : (
-                <BorderRow>
-                  <Col>
-                    <ConversionInput
-                      className="address_field"
-                      type="text"
-                      placeholder="Address"
-                      value={this.state.address}
-                      // readOnly
-                      onChange={this.handleAddressChange}
-                    />
-                    {this.validator1.message(
-                      "address",
-                      this.state.address,
-                      `required|alpha_num|min:15|max:120`,
-                      "text-danger-validation"
-                    )}
-                  </Col>
-                </BorderRow>
+                <div>
+                  <BorderRow>
+                    <Col>
+                      <ConversionInput
+                        className="address_field"
+                        type="text"
+                        placeholder="Address"
+                        value={this.state.address}
+                        // readOnly
+                        onChange={this.handleAddressChange}
+                      />
+                      {this.validator1.message(
+                        "address",
+                        this.state.address,
+                        `required|alpha_num|min:15|max:120`,
+                        "text-danger-validation"
+                      )}
+                    </Col>
+                  </BorderRow>
+                  <Row>
+                    <Col>
+                      <ConversionSubmitBtn
+                        onClick={this.btnClicked}
+                        type="primary"
+                        size="large"
+                        block
+                      >
+                        Continue
+                      </ConversionSubmitBtn>
+                    </Col>
+                  </Row>
+                </div>
               )}
               {/* {this.state.address === "" ? (
                 <CreateWalletRow className="create-wallet-link">
@@ -536,7 +572,7 @@ class SimplexExchange extends React.Component {
               ) : (
                 ""
               )} */}
-              <Row>
+              {/* <Row>
                 <Col>
                   <ConversionSubmitBtn
                     onClick={this.btnClicked}
@@ -547,7 +583,7 @@ class SimplexExchange extends React.Component {
                     Continue
                   </ConversionSubmitBtn>
                 </Col>
-              </Row>
+              </Row> */}
             </SimLeftCol>
           </SimMainRow>
           <form
