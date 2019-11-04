@@ -45,6 +45,7 @@ import TierUpgradeInfoImageRequirements from "./COMPONENTS/SETTINGS/tier-upgrade
 import TierIDConfirmation from "./COMPONENTS/SETTINGS/tier_id_confirmation.js";
 import Simplex from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex.js";
 import SimplexExchange from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex_exchange.js";
+import NotFound from "./SHARED-COMPONENTS/NotFound.js";
 let { API_URL } = globalVariables;
 const socketIOClient = require("socket.io-client");
 const sailsIOClient = require("sails.io.js");
@@ -184,9 +185,9 @@ const routes = [
     component: () => <HubspotTickets io={io} />
   }
   // {
-  //   exact: false,
-  //   path: "/*",
-  //   component: () => <TierIDConfirmation io={io} />
+  //   exact: true,
+  //   path: "*",
+  //   component: () => <NotFound io={io} />
   // }
 ];
 
