@@ -84,6 +84,10 @@ const CoinImage = styled.img`
   }
 `;
 
+export const AddressDisplay = styled.b`
+  color: rgb(0,0,0) !important;
+`
+
 class WalletDetails extends Component {
   constructor(props) {
     super(props);
@@ -118,7 +122,7 @@ class WalletDetails extends Component {
       var tableData = this.props.walletDetails.coins;
       if (tableData !== undefined) {
         // console.log(tableData);
-        Object.keys(tableData).map(function(index, key) {
+        Object.keys(tableData).map(function (index, key) {
           if (tableData[index].USD !== undefined)
             total =
               total +
@@ -266,7 +270,7 @@ class WalletDetails extends Component {
           });
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   }
 
   /* 
@@ -350,7 +354,7 @@ class WalletDetails extends Component {
             walletUserData.flag == 0 ? (
               <ContainerContact2>
                 <HeaderWrap>
-                  <Row style={{ width: "100%" }}>
+                  <Row className="headerDisplay">
                     <Col xxl={12} xl={12} lg={12} sm={24}>
                       <LeftHead>
                         <MYWallet>
@@ -363,51 +367,53 @@ class WalletDetails extends Component {
                         {this.state.balanceFlag === false ? (
                           <WalletCoin>
                             {this.props.walletDetails !== null &&
-                            this.props.walletDetails !== undefined ? (
-                              <Select
-                                onChange={this.changeCoins}
-                                value={defaultCoin}
-                                style={{ width: "100%" }}
-                              >
-                                {this.props.walletDetails.map(function(temp) {
-                                  return (
-                                    <Option value={temp.coin_code}>
-                                      {temp.coin}
-                                    </Option>
-                                  );
-                                })}
-                              </Select>
-                            ) : (
-                              ""
-                            )}
+                              this.props.walletDetails !== undefined ? (
+                                <Select
+                                  onChange={this.changeCoins}
+                                  value={defaultCoin}
+                                  style={{ width: "100%" }}
+                                // className = "select-display"
+                                >
+                                  {this.props.walletDetails.map(function (temp) {
+                                    return (
+                                      <Option value={temp.coin_code}>
+                                        {temp.coin}
+                                      </Option>
+                                    );
+                                  })}
+                                </Select>
+                              ) : (
+                                ""
+                              )}
                           </WalletCoin>
                         ) : (
-                          ""
-                        )}
+                            ""
+                          )}
                         {this.state.balanceFlag === true ? (
                           <WalletCoin>
                             {this.props.nowalletBalance !== null &&
-                            this.props.nowalletBalance !== undefined ? (
-                              <Select
-                                onChange={this.changeCoins}
-                                value={defaultCoin}
-                                style={{ width: "100%" }}
-                              >
-                                {this.props.nowalletBalance.map(function(temp) {
-                                  return (
-                                    <Option value={temp.coin}>
-                                      {temp.coin}
-                                    </Option>
-                                  );
-                                })}
-                              </Select>
-                            ) : (
-                              ""
-                            )}
+                              this.props.nowalletBalance !== undefined ? (
+                                <Select
+                                  onChange={this.changeCoins}
+                                  value={defaultCoin}
+                                  style={{ width: "100%" }}
+                                // className="select-display"
+                                >
+                                  {this.props.nowalletBalance.map(function (temp) {
+                                    return (
+                                      <Option value={temp.coin}>
+                                        {temp.coin}
+                                      </Option>
+                                    );
+                                  })}
+                                </Select>
+                              ) : (
+                                ""
+                              )}
                           </WalletCoin>
                         ) : (
-                          ""
-                        )}
+                            ""
+                          )}
                       </LeftHead>
                     </Col>
                     {/* <Col xxl={12} xl={12} lg={12} sm={24}>
@@ -434,11 +440,11 @@ class WalletDetails extends Component {
                       ? walletUserData.coin_name.toUpperCase()
                       : "COIN"}{" "}
                     Address :{" "}
-                    <b style={{ color: "black" }}>
+                    <AddressDisplay>
                       {Object.keys(walletUserData).length > 0
                         ? walletUserData.receive_address
                         : ""}
-                    </b>
+                    </AddressDisplay>
                   </Address>
                   <hr />
                   <RowWrap>
@@ -449,8 +455,8 @@ class WalletDetails extends Component {
                             <CoinImage
                               src={
                                 Object.keys(walletUserData).length > 0 &&
-                                walletUserData.coin_icon !== null &&
-                                walletUserData.coin_icon !== undefined
+                                  walletUserData.coin_icon !== null &&
+                                  walletUserData.coin_icon !== undefined
                                   ? _AMAZONBUCKET + walletUserData.coin_icon
                                   : _AMAZONBUCKET + "coin/defualt_coin.png"
                               }
@@ -466,8 +472,8 @@ class WalletDetails extends Component {
                                   thousandSeparator={true}
                                 />
                               ) : (
-                                ""
-                              )}
+                                  ""
+                                )}
                               <BTC>
                                 {Object.keys(walletUserData).length > 0
                                   ? walletUserData.coin_code
@@ -485,27 +491,27 @@ class WalletDetails extends Component {
                                   : "$"}{" "}
                                 {parseFloat(
                                   currencyConv.quote["USD"].price *
-                                    walletUserData.balance
+                                  walletUserData.balance
                                 ).toFixed(8)}
                                 <AMT>{FIAT}</AMT>
                               </FIATAmt>
                             ) : (
-                              ""
-                            )}
+                                ""
+                              )}
                           </CryptAmt>
                         </LeftBit>
                         <PlacedDiv>
                           In Orders:{" "}
                           {walletUserData.balance >
-                          walletUserData.placed_balance
+                            walletUserData.placed_balance
                             ? (
-                                walletUserData.balance -
-                                walletUserData.placed_balance
-                              ).toFixed(8)
+                              walletUserData.balance -
+                              walletUserData.placed_balance
+                            ).toFixed(8)
                             : (
-                                walletUserData.placed_balance -
-                                walletUserData.balance
-                              ).toFixed(8)}
+                              walletUserData.placed_balance -
+                              walletUserData.balance
+                            ).toFixed(8)}
                         </PlacedDiv>
                       </Col>
                       <Col xxl={12} xl={12} lg={24} md={24}>
@@ -537,8 +543,8 @@ class WalletDetails extends Component {
                     visible={this.state.withdraw}
                   />
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
                 {this.state.send === true ? (
                   <WalletPopup
                     walletDetailsApi={() => this.walletDetailsApi()}
@@ -551,8 +557,8 @@ class WalletDetails extends Component {
                     visible={this.state.send}
                   />
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </ContainerContact2>
             ) : walletUserData.flag == 1 ? (
               <ContainerContact2>
@@ -575,8 +581,8 @@ class WalletDetails extends Component {
                       <BTC>{walletUserData.coin_name} </BTC>
                     </div>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
 
                   <PendingPara>
                     {/* <p>
@@ -624,11 +630,11 @@ class WalletDetails extends Component {
                 </PendingWrap>
               </ContainerContact2>
             ) : (
-              ""
-            )
+                    ""
+                  )
           ) : (
-            ""
-          )}
+              ""
+            )}
         </GreyWrap>
         <PanicEnabled
           comingCancel={e => this.comingCancel(e)}

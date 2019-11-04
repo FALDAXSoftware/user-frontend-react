@@ -865,25 +865,20 @@ class ConversionDetail extends React.Component {
       .catch(error => {});
   }
   handleCryptoChange(value, option: Option) {
-    // alert(value);
-    // console.log(this.state.currencyList);
-    // var tempcurrencyList = this.state.currencyList;
-    // console.log(tempcurrencyList);
-    // if (value === this.state.currency) {
-    //   this.state.currencyList.map((element, i) => {
-    //     if (element.coin === this.state.currency) {
-    //       var list = this.state.currencyList.splice(i, 1);
-    //       return list;
-    //     }
-    //   });
-    //   console.log("CurrencyList", this.state.currencyList);
-    // } else {
-    //   this.setState({
-    //     currencyList: this.state.originalCoinList
-    //   });
-    //   console.log("CurrencyList original", this.state.currencyList);
-    // }
-    // this.setState({ currencyList: newlist });
+    if (value === this.state.currency) {
+      this.state.currencyList.map((element, i) => {
+        if (element.coin === this.state.currency) {
+          var list = this.state.currencyList.splice(i, 1);
+          // console.log(list);
+          this.setState({
+            cryptoList: this.state.cryptoList.push(list[0])
+          });
+        }
+      });
+      this.setState({
+        currency: this.state.currencyList[0].coin
+      });
+    }
     clearTimeout(this.timeout);
     this.setState(
       {
@@ -958,10 +953,25 @@ class ConversionDetail extends React.Component {
     );
   }
   handleCurrencyChange(value, option: Option) {
+    if (value === this.state.crypto) {
+      this.state.cryptoList.map((element, i) => {
+        if (element.coin === this.state.crypto) {
+          var list1 = this.state.cryptoList.splice(i, 1);
+          // console.log(list1);
+          this.setState({
+            currencyList: this.state.currencyList.push(list1[0])
+          });
+        }
+      });
+      this.setState({
+        crypto: this.state.cryptoList[0].coin
+      });
+    }
     clearTimeout(this.timeout);
     this.setState(
       {
-        currency: value
+        currency: value,
+        currencyList: this.state.originalCoinList
       },
       () => {
         this.state.JSTPairList.map((element, i) => {
@@ -1149,7 +1159,7 @@ class ConversionDetail extends React.Component {
                           {this.state.cryptoList &&
                             this.state.cryptoList.length > 0 && (
                               <ConversionDropDown
-                                defaultValue={this.state.crypto}
+                                value={this.state.crypto}
                                 onChange={this.handleCryptoChange}
                               >
                                 {this.state.cryptoList.map((element, index) => {
@@ -1259,7 +1269,7 @@ class ConversionDetail extends React.Component {
                           {this.state.cryptoList &&
                             this.state.cryptoList.length > 0 && (
                               <ConversionDropDown
-                                defaultValue={this.state.crypto}
+                                value={this.state.crypto}
                                 onChange={this.handleCryptoChange}
                               >
                                 {this.state.cryptoList.map((element, index) => {
@@ -1289,7 +1299,7 @@ class ConversionDetail extends React.Component {
                                       // element.coin != this.state.currency &&
                                       element.coin != "XRP"
                                     ) {
-                                      console.log(this.state.cryptoList);
+                                      // console.log(this.state.cryptoList);
                                       return (
                                         <DropDownOption
                                           key={index}
@@ -1407,9 +1417,10 @@ class ConversionDetail extends React.Component {
                           {this.state.currencyList &&
                             this.state.currencyList.length > 0 && (
                               <ConversionDropDown
-                                defaultValue={this.state.currency}
+                                value={this.state.currency}
                                 onChange={this.handleCurrencyChange}
                               >
+                                {/* {console.log(this.state.currencyList)} */}
                                 {this.state.currencyList.map(
                                   (element, index) => {
                                     if (this.state.crypto === "XRP") {
@@ -1537,10 +1548,11 @@ class ConversionDetail extends React.Component {
                                 )}
                               </ConversionDropDown>
                             )} */}
+                          {console.log(this.state.currencyList)}
                           {this.state.currencyList &&
                             this.state.currencyList.length > 0 && (
                               <ConversionDropDown
-                                defaultValue={this.state.currency}
+                                value={this.state.currency}
                                 onChange={this.handleCurrencyChange}
                               >
                                 {this.state.currencyList.map(
@@ -1554,7 +1566,7 @@ class ConversionDetail extends React.Component {
                                           <DropDownOption
                                             key={index}
                                             value={element.coin}
-                                            selectedData={element}
+                                            selecteddata={element}
                                           >
                                             {" "}
                                             <DropIcon

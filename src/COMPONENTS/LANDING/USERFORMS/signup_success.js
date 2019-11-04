@@ -111,6 +111,9 @@ const SubText = styled.span`
     font-family: "Open Sans";
     color: rgb( 163, 163, 163 );
 `
+export const SpanText = styled.span`
+  color : rgb(0,0,0);
+`
 
 class SignupSuccess extends Component {
   constructor(props) {
@@ -142,7 +145,12 @@ class SignupSuccess extends Component {
               <RightWrap className="wow fadeInDown" >
                 <LoginHead>Thank You</LoginHead>
                 <WelcomeText>We have sent a confirmation email.</WelcomeText>
-                <SubText>Please check your email <span style={{ color: "black" }}>{this.state.email}</span>.</SubText>
+                <SubText>Please check your email
+                  <SpanText>
+                    {this.state.email}
+                  </SpanText>
+                  .
+                  </SubText>
               </RightWrap>
             </FormWrap>
           </ColRight>

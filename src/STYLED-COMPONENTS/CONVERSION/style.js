@@ -1,17 +1,29 @@
 import styled from "styled-components";
-import { Container } from "../HOMEPAGE/style";
-import { _CONVERSIONBACKGROUND } from "CONSTANTS/images";
-import { Row, Col, Tabs, Select, Button, Radio } from "antd";
+import {
+  Container
+} from "../HOMEPAGE/style";
+import {
+  _CONVERSIONBACKGROUND
+} from "CONSTANTS/images";
+import {
+  Row,
+  Col,
+  Tabs,
+  Select,
+  Button,
+  Radio
+} from "antd";
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;
-export const ConversionWrap = styled.div`
+export const ConversionWrap = styled.div `
     background-color:#f5f6fa;
     background-image:url('${_CONVERSIONBACKGROUND}');
     background-size:cover;
     min-height:100vh;
     width:100%;
 `;
-export const ConversionContainer = styled(Container)`
+export const ConversionContainer = styled(Container)
+`
   border-radius: 5px;
   max-width: 1170px;
   padding-bottom: 30px;
@@ -22,7 +34,8 @@ export const ConversionContainer = styled(Container)`
     }
   }
 `;
-export const MainRow = styled(Row)`
+export const MainRow = styled(Row)
+`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#01090f" : "#ffffff"};
   padding: 40px;
@@ -30,7 +43,8 @@ export const MainRow = styled(Row)`
     padding: 40px 10px;
   }
 `;
-export const LeftCol = styled(Col)`
+export const LeftCol = styled(Col)
+`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#01090f" : "#fff"};
   position: relative;
@@ -54,7 +68,8 @@ export const LeftCol = styled(Col)`
     }
   }
 `;
-export const ConversionTab = styled(Tabs)`
+export const ConversionTab = styled(Tabs)
+`
   border-bottom: none;
   & .ant-tabs-bar {
     border-bottom: none;
@@ -130,7 +145,8 @@ export const ConversionTab = styled(Tabs)`
     display: none !important;
   }
 `;
-export const ConversionTabPane = styled(TabPane)`
+export const ConversionTabPane = styled(TabPane)
+`
   &.buy_tab {
     padding: 69.5px 25px;
   }
@@ -138,7 +154,7 @@ export const ConversionTabPane = styled(TabPane)`
     padding: 49px 25px;
   }
 `;
-export const ConversionTitle = styled.span`
+export const ConversionTitle = styled.span `
   font-size: 18px;
   font-family: "Open Sans";
   font-weight: bold;
@@ -146,13 +162,14 @@ export const ConversionTitle = styled.span`
   padding: 0px 20px 20px;
   display: block;
 `;
-export const ConversionRadioRow = styled(Row)`
+export const ConversionRadioRow = styled(Row)
+`
   > .ant-radio-group {
     display: flex;
     flex-wrap: wrap;
   }
 `;
-export const CustomRadioContainer = styled.label`
+export const CustomRadioContainer = styled.label `
   display: block;
   position: relative;
   padding-left: 35px;
@@ -209,12 +226,16 @@ export const CustomRadioContainer = styled.label`
     background: #4c84ff;
   }
 `;
-export const BorderRow = styled(Row)`
+export const BorderRow = styled(Row)
+`
   border: ${props =>
     props.theme.mode === "dark" ? "1px solid #20303e" : "1px solid #dfe4f7"};
   border-radius: 5px;
   padding: 20px;
   margin-bottom: 35px;
+  > .currency-display{
+    height : 42px;
+  }
   & .radio-row {
     margin-bottom: 0 !important;
   }
@@ -224,7 +245,8 @@ export const BorderRow = styled(Row)`
     }
   }
 `;
-export const RadioBorderRow = styled(Row)`
+export const RadioBorderRow = styled(Row)
+`
   border: ${props =>
     props.theme.mode === "dark" ? "1px solid #20303e" : "1px solid #dfe4f7"};
   border-radius: 5px;
@@ -252,7 +274,7 @@ export const RadioBorderRow = styled(Row)`
     }
   }
 `;
-export const RowTitle = styled.span`
+export const RowTitle = styled.span `
   position: absolute;
   top: -11px;
   left: 20px;
@@ -264,7 +286,7 @@ export const RowTitle = styled.span`
   color: ${props =>
     props.theme.mode === "dark" ? "#617090" : "rgba(0, 0, 0, 0.65)"};
 `;
-export const ConversionInput = styled.input`
+export const ConversionInput = styled.input `
   padding: 6px 15px;
   height: auto;
   width: 100%;
@@ -283,7 +305,8 @@ export const ConversionInput = styled.input`
     font-size: 16px;
   }
 `;
-export const ConversionDropDown = styled(Select)`
+export const ConversionDropDown = styled(Select)
+`
   width: 100%;
   padding: 4px 0px;
   color: black;
@@ -319,11 +342,13 @@ export const ConversionDropDown = styled(Select)`
     }
   }
 `;
-export const DropIcon = styled.img`
+export const DropIcon = styled.img `
   margin-right: 10px;
 `;
-export const DropDownOption = styled(Option)``;
-export const ConversionSubmitBtn = styled(Button)`
+export const DropDownOption = styled(Option)
+``;
+export const ConversionSubmitBtn = styled(Button)
+`
   padding: 12px;
   font-size: 22px;
   font-weight: bold;
@@ -352,7 +377,8 @@ export const ConversionSubmitBtn = styled(Button)`
   }
 `;
 
-export const RightCol = styled(Col)`
+export const RightCol = styled(Col)
+`
   padding: 60.5px 40px;
   min-height: 613px;
   display: flex;
@@ -363,7 +389,7 @@ export const RightCol = styled(Col)`
     }
   }
 `;
-export const RightColContainer = styled.div`
+export const RightColContainer = styled.div `
   background-image: ${props =>
     props.theme.mode === "dark"
       ? "url(/images/top-zigzag-bg-dark.png)"
@@ -380,7 +406,7 @@ export const RightColContainer = styled.div`
   }
 `;
 
-export const RightColTitle = styled.span`
+export const RightColTitle = styled.span `
   text-transfrom: uppercase;
   font-weight: 600;
   font-size: 14px;
@@ -390,7 +416,7 @@ export const RightColTitle = styled.span`
   padding-top: 15px;
 `;
 
-export const RightColAmount = styled.span`
+export const RightColAmount = styled.span `
   font-weight: 600;
   font-size: 50px;
   display: block;
@@ -400,7 +426,7 @@ export const RightColAmount = styled.span`
   color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
 `;
 
-export const RightColPrice = styled.span`
+export const RightColPrice = styled.span `
   font-weight: 600;
   font-size: 12px;
   display: block;
@@ -408,7 +434,7 @@ export const RightColPrice = styled.span`
   color: #4c84ff;
   padding-top: 8px;
 `;
-export const DashedSeprator = styled.div`
+export const DashedSeprator = styled.div `
   height: 1px;
   background-image: url(/images/dahsed-line.png);
   background-repeat: no-repeat;
@@ -417,7 +443,7 @@ export const DashedSeprator = styled.div`
   margin-bottom: 23px;
 `;
 
-export const RightSpan = styled.span`
+export const RightSpan = styled.span `
   font-weight: 600;
   font-size: 14px;
   display: block;
@@ -425,7 +451,7 @@ export const RightSpan = styled.span`
     props.theme.mode === "dark" ? "#ffffff" : "rgba(57, 65, 77, 0.702)"};
   padding: 10px;
 `;
-export const LeftSpan = styled.span`
+export const LeftSpan = styled.span `
   font-weight: 600;
   font-size: 14px;
   display: block;
@@ -433,7 +459,7 @@ export const LeftSpan = styled.span`
   padding: 10px;
 `;
 
-export const RightTotal = styled.span`
+export const RightTotal = styled.span `
   font-weight: 600;
   font-size: 14px;
   display: block;
@@ -441,7 +467,7 @@ export const RightTotal = styled.span`
   padding: 10px 0;
   text-transform: uppercase;
 `;
-export const LeftTotal = styled.span`
+export const LeftTotal = styled.span `
   font-weight: 600;
   font-size: 14px;
   display: block;
@@ -449,12 +475,13 @@ export const LeftTotal = styled.span`
   padding: 10px 0;
 `;
 
-export const PayWith = styled.span`
+export const PayWith = styled.span `
   line-height: 2;
   font-weight: 600;
 `;
 
-export const BankAcountDropdown = styled(Select)`
+export const BankAcountDropdown = styled(Select)
+`
   & .ant-select-selection {
     border: none;
   }
@@ -464,7 +491,8 @@ export const BankAcountDropdown = styled(Select)`
   }
 `;
 
-export const FeesRadio = styled(Radio)`
+export const FeesRadio = styled(Radio)
+`
   font-family: "Open Sans" !important;
   font-weight: 600;
   font-size: 13px;
@@ -487,7 +515,8 @@ export const FeesRadio = styled(Radio)`
     color: #4c84ff;
   }
 `;
-export const ContainerConversion = styled(Container)`
+export const ContainerConversion = styled(Container)
+`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
@@ -502,7 +531,7 @@ export const ContainerConversion = styled(Container)`
     min-height: 600px;
   }
 `;
-export const HeadStyle = styled.span`
+export const HeadStyle = styled.span `
   font-family: "Open Sans";
   font-weight: bold;
   font-size: 38px;
@@ -514,7 +543,7 @@ export const HeadStyle = styled.span`
     padding: 30px 20px;
   }
 `;
-export const SubHeadStyle = styled.span`
+export const SubHeadStyle = styled.span `
   font-family: "Open Sans";
   text-align: center;
   display: block;
@@ -525,14 +554,14 @@ export const SubHeadStyle = styled.span`
     padding: 0 50px 20px;
   }
 `;
-export const RowConStyle = styled.div`
+export const RowConStyle = styled.div `
   display: flex;
   width: 100%;
   @media (max-width: 650px) {
     flex-wrap: wrap;
   }
 `;
-export const ColConStyle = styled.div`
+export const ColConStyle = styled.div `
   display: flex;
   flex-wrap: wrap;
   background: ${props => (props.theme.mode === "dark" ? "#021b2b" : "#fff")};
@@ -584,7 +613,7 @@ export const ColConStyle = styled.div`
         : "0px 0px 7px 0px rgba(236, 236, 236, 1)"};
   }
 `;
-export const ColConTokStyle = styled.a`
+export const ColConTokStyle = styled.a `
   display: flex;
   flex-wrap: wrap;
   background: ${props => (props.theme.mode === "dark" ? "#021b2b" : "#fff")};
@@ -645,13 +674,13 @@ export const ColConTokStyle = styled.a`
     opacity: 0.7;
   }
 `;
-export const TokComingSoonWrap = styled.div`
+export const TokComingSoonWrap = styled.div `
   position: relative;
   display: flex;
   width: calc(33.33% - 30px);
   margin: 0 15px;
 `;
-export const TokComingSoon = styled.a`
+export const TokComingSoon = styled.a `
   position: absolute;
   top: 0;
   right: 0;
@@ -671,7 +700,7 @@ export const TokComingSoon = styled.a`
     color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
   }
 `;
-export const ColHeadConStyle = styled.span`
+export const ColHeadConStyle = styled.span `
   font-size: 24px;
   line-height: 30px;
   font-weight: 600;
@@ -684,14 +713,14 @@ export const ColHeadConStyle = styled.span`
   display: flex;
   align-self: flex-start;
 `;
-export const ColSubRow = styled.div`
+export const ColSubRow = styled.div `
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 15px 0 0 0;
 `;
-export const ConIconWrap = styled.span`
+export const ConIconWrap = styled.span `
   &.mastercard {
     display: block;
     margin-bottom: 15px;
@@ -700,19 +729,19 @@ export const ConIconWrap = styled.span`
     max-width: 100%;
   }
 `;
-export const ConArrowWrap = styled.span`
+export const ConArrowWrap = styled.span `
   font-size: 20px;
   color: #afbed4;
   padding: 0 5px;
 `;
-export const ColSubHeadConStyle = styled.span`
+export const ColSubHeadConStyle = styled.span `
   color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000000")};
   font-size: 16px;
   line-height: 26px;
   font-family: "Open Sans";
   padding: 35px 0;
 `;
-export const ColBtnConStyle = styled.button`
+export const ColBtnConStyle = styled.button `
   width: 100%;
   margin: 0 15px;
   font-family: "Open Sans";
@@ -731,14 +760,14 @@ export const ColBtnConStyle = styled.button`
     color: #ffffff;
   }
 `;
-export const RadioMainRow = styled.div`
+export const RadioMainRow = styled.div `
   display: flex;
   width: 100%;
   @media (max-width: 850px) {
     flex-wrap: wrap;
   }
 `;
-export const RadioGroupMainRow = styled.div`
+export const RadioGroupMainRow = styled.div `
   display: flex;
   align-items: center;
   margin: 0 0 30px 0;
@@ -761,7 +790,8 @@ export const RadioGroupMainRow = styled.div`
     }
   }
 `;
-export const ConversionLeftCol = styled(Col)`
+export const ConversionLeftCol = styled(Col)
+`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#01090f" : "#fff"};
   position: relative;
@@ -849,7 +879,7 @@ export const ConversionLeftCol = styled(Col)`
     }
   }
 `;
-export const ConversionRightSpan = styled.span`
+export const ConversionRightSpan = styled.span `
   font-weight: 600;
   font-size: 14px;
   display: block;
@@ -859,21 +889,21 @@ export const ConversionRightSpan = styled.span`
   text-transform: uppercase;
   font-weight: 600;
 `;
-export const ConversionLeftSpan = styled.span`
+export const ConversionLeftSpan = styled.span `
   font-weight: 600;
   font-size: 14px;
   display: block;
   color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#39414d")};
   padding: 10px 0;
 `;
-export const CryptoFiatRow = styled.div`
+export const CryptoFiatRow = styled.div `
   display: flex;
   align-items: center;
   padding: 0 15px;
   justify-content: center;
   width: 100%;
 `;
-export const CryptoFiatCol = styled.span`
+export const CryptoFiatCol = styled.span `
   width: 20px;
   height: auto;
   display: flex;
@@ -884,7 +914,7 @@ export const CryptoFiatCol = styled.span`
     max-height: 100%;
   }
 `;
-export const CryptoFiatText = styled.span`
+export const CryptoFiatText = styled.span `
   font-size: 20px;
   font-weight: 600;
   color: ${props => (props.theme.mode === "dark" ? "#5d5d79" : "#000000")};

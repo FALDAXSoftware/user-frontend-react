@@ -17,6 +17,24 @@ import {
   AddButton
 } from "STYLED-COMPONENTS/SETTINGS/accsettingsStyle";
 
+export const LimitInput = styled.input`
+    width: 150px;
+    height: 32px;
+    padding: 4px 11px;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+`
+
+export const NotificationWrap = styled.div`
+    padding-left: 10px; 
+    padding-right: 10px;
+`
+
 let { API_URL } = globalVariables;
 
 class ThreshholdNotification extends React.Component {
@@ -31,7 +49,7 @@ class ThreshholdNotification extends React.Component {
       lowerpositiveDecimal: {
         // name the rule
         message: "Lower limit should be only positive decimals", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^(\d*\.)?\d+$/;
@@ -42,7 +60,7 @@ class ThreshholdNotification extends React.Component {
       upperpositiveDecimal: {
         // name the rule
         message: "Upper limit should be only positive decimals", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^(\d*\.)?\d+$/;
@@ -64,13 +82,12 @@ class ThreshholdNotification extends React.Component {
         align: "center",
         render: (value, record) => (
           <div>
-            <Input
+            <LimitInput
               type="number"
               min={0}
               key={record.coin_id}
               defaultValue={value}
               onChange={e => this.inputChange("lower_limit", e, record)}
-              style={{ width: "150px" }}
             />
             {` USD`}
             {/* {console.log(value, record)} */}
@@ -91,13 +108,12 @@ class ThreshholdNotification extends React.Component {
         align: "center",
         render: (value, record) => (
           <div>
-            <Input
+            <LimitInput
               type="number"
               min={0}
               key={record.coin_id}
               defaultValue={value}
               onChange={e => this.inputChange("upper_limit", e, record)}
-              style={{ width: "150px" }}
             />
             {` USD`}
             {/* {console.log(value, record)} */}
@@ -164,7 +180,7 @@ class ThreshholdNotification extends React.Component {
     console.log(key, e.target.checked, record);
     const { thresholdData } = this.state;
     var tempData = thresholdData;
-    tempData.map(function(data, index) {
+    tempData.map(function (data, index) {
       if (data.coin_id == record.coin_id) {
         // console.log(tempData[key])
         if (key == "is_email_notification")
@@ -179,7 +195,7 @@ class ThreshholdNotification extends React.Component {
     // console.log(key, e.target.value, record)
     const { thresholdData } = this.state;
     var tempData = thresholdData;
-    tempData.map(function(data, index) {
+    tempData.map(function (data, index) {
       if (data.coin_id == record.coin_id) {
         // console.log(tempData[key])
         if (key == "lower_limit")
@@ -288,11 +304,11 @@ class ThreshholdNotification extends React.Component {
     }
     return (
       <div>
-        <Heading style={{ marginTop: "10px" }}>
+        <Heading>
           <span>Threshold Notifications</span>
         </Heading>
         {/* {console.log("------------->", thresholdData)} */}
-        <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+        <NotificationWrap>
           <WrapTable>
             <NotificationTable
               columns={this.columns}
@@ -301,7 +317,7 @@ class ThreshholdNotification extends React.Component {
               pagination={{ pageSize: 5, size: "small" }}
             />
           </WrapTable>
-        </div>
+        </NotificationWrap>
         <AddButton disabled={disabled} onClick={this.addData}>
           Save
         </AddButton>

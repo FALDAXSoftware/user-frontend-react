@@ -42,9 +42,12 @@ const options = [
   { label: "SELL", value: "SELL" }
 ];
 const Select1 = styled(Select)`
+  &.display-value {
+    width: 120px;
+  }
   & .ant-select-selection {
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#01090f" : ""};
+      props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
@@ -60,9 +63,12 @@ const Select1 = styled(Select)`
   }
 `;
 const Select2 = styled(Select)`
+  &.display-value {
+    width: 120px;
+  }
   & .ant-select-selection {
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#01090f" : ""};
+      props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
@@ -94,7 +100,7 @@ const NDF = styled.tbody`
     > td {
       border-top: 0 !important;
       background: ${props =>
-    props.theme.mode === "dark" ? "#041422" : "white"};
+        props.theme.mode === "dark" ? "#041422" : "white"};
     }
   }
   @media (max-width: 767px) {
@@ -110,6 +116,18 @@ const NDF = styled.tbody`
 const SideBuySell = styled.td`
   color: ${props => (props.side === true ? "#59b55d" : "#f13e46")} !important;
 `;
+
+export const FilterDiv = styled.div`
+  display: inline-flex;
+  width: 390px;
+  align-items: center;
+`;
+
+export const FilterDivSelection = styled.div`
+  padding-left: 15px;
+  margin-top: 20px;
+`;
+
 class History extends Component {
   constructor(props) {
     super(props);
@@ -223,7 +241,7 @@ class History extends Component {
           // console.log("Else 200 drop1List", this.state.drop1List);
           // console.log("Else 200 drop2List", this.state.drop2List);
         })
-        .catch(error => { });
+        .catch(error => {});
     } else if (this.state.activeKey === "2") {
       // alert("load simplex coin list");
       fetch(API_URL + "/get-simplex-coin-list", {
@@ -246,7 +264,7 @@ class History extends Component {
           // console.log("If 200 drop1List", this.state.drop1List);
           // console.log("If 200 drop2List", this.state.drop2List);
         })
-        .catch(error => { });
+        .catch(error => {});
     }
   }
 
@@ -341,7 +359,7 @@ class History extends Component {
                   ).toFixed(8);
                   var amount = parseFloat(
                     parseFloat(temp.execution_report.CumQty) -
-                    parseFloat(fees_total)
+                      parseFloat(fees_total)
                   ).toFixed(8);
                   obj["symbol"] = symbol;
                   obj["date"] = date;
@@ -519,7 +537,7 @@ class History extends Component {
           }
           this.setState({ loader: false });
         })
-        .catch(error => { });
+        .catch(error => {});
     } else {
       console.log("URL out of loop");
       let url =
@@ -557,7 +575,7 @@ class History extends Component {
                   ).toFixed(8);
                   var amount = parseFloat(
                     parseFloat(temp.execution_report.CumQty) -
-                    parseFloat(fees_total)
+                      parseFloat(fees_total)
                   ).toFixed(8);
 
                   obj["symbol"] = symbol;
@@ -741,7 +759,7 @@ class History extends Component {
           }
           this.setState({ loader: false });
         })
-        .catch(error => { });
+        .catch(error => {});
     }
   }
 
@@ -854,7 +872,6 @@ class History extends Component {
       }
     }
     if (this.state.drop2Value !== "") {
-      console.log("If drop2Value not null in select1");
       this.setState(
         {
           drop2List: coinList,
@@ -865,13 +882,7 @@ class History extends Component {
           self.historyResult();
         }
       );
-    } else if (
-      this.state.drop2Value === null &&
-      this.state.drop1Value === null
-    ) {
-      console.log("sdjfgjsfjk");
     } else {
-      console.log("Else drop2Value null in select1");
       this.setState(
         {
           drop2List: coinList,
@@ -902,7 +913,6 @@ class History extends Component {
       }
     }
     if (this.state.drop1Value !== "") {
-      console.log("If drop1Value not null in select2");
       this.setState(
         {
           drop1List: coinList,
@@ -914,7 +924,6 @@ class History extends Component {
         }
       );
     } else {
-      console.log("Else drop1Value null in select2");
       this.setState(
         {
           drop1List: coinList,
@@ -1054,16 +1063,10 @@ class History extends Component {
             <ContainerContact>
               <HeadHis>
                 <Filter>
-                  <div
-                    style={{
-                      display: "inline-flex",
-                      width: "390px",
-                      alignItems: "center"
-                    }}
-                  >
+                  <FilterDiv>
                     <Select1
                       showSearch
-                      style={{ width: 120 }}
+                      className="display-value"
                       onChange={this.selectChange1}
                       value={this.state.drop1Value}
                     >
@@ -1114,11 +1117,11 @@ class History extends Component {
                     <FontAwesomeIconS icon={faExchangeAlt} color="#909090" />
                     <Select2
                       showSearch
-                      style={{ width: 120 }}
+                      className="display-value"
                       onChange={this.selectChange2}
                       value={this.state.drop2Value}
 
-                    // defaultValue={"Select Currency"}
+                      // defaultValue={"Select Currency"}
                     >
                       {this.state.drop2List.map(element => {
                         // if (element.coin != this.state.drop1Value) {
@@ -1169,7 +1172,7 @@ class History extends Component {
                         }
                       })}
                     </Select2>
-                  </div>
+                  </FilterDiv>
                   <Datediv>
                     <RangePickerS
                       disabledDate={this.disabledDate}
@@ -1195,43 +1198,43 @@ class History extends Component {
                             </CSVLink>
                           </EXPButton>
                         ) : (
-                            ""
-                          )
-                      ) : (
                           ""
-                        )}
+                        )
+                      ) : (
+                        ""
+                      )}
                     </div>
                   )}
                   {this.state.activeKey === "2" && (
                     <div>
                       {this.state.csvSimplexFields !== undefined ? (
                         this.state.csvSimplexFields.length > 0 &&
-                          this.state.csvSimplexFields !== null ? (
-                            <EXPButton>
-                              <CSVLink
-                                data={this.state.csvSimplexFields}
-                                headers={this.state.csvHeadersSimplex}
-                              >
-                                EXPORT
+                        this.state.csvSimplexFields !== null ? (
+                          <EXPButton>
+                            <CSVLink
+                              data={this.state.csvSimplexFields}
+                              headers={this.state.csvHeadersSimplex}
+                            >
+                              EXPORT
                             </CSVLink>
-                            </EXPButton>
-                          ) : (
-                            ""
-                          )
-                      ) : (
+                          </EXPButton>
+                        ) : (
                           ""
-                        )}
+                        )
+                      ) : (
+                        ""
+                      )}
                     </div>
                   )}
                 </Filter>
                 {this.state.activeKey === "1" && (
-                  <div style={{ paddingLeft: "15px", marginTop: "20px" }}>
+                  <FilterDivSelection>
                     <CheckboxGroupS
                       options={options}
                       defaultValue={["SEND", "RECEIVE", "SELL", "BUY"]}
                       onChange={this.onChangeCheck}
                     />
-                  </div>
+                  </FilterDivSelection>
                 )}
               </HeadHis>
               <HisWrap>
@@ -1329,7 +1332,7 @@ class History extends Component {
                         {this.state.historyJSTData !== undefined ? (
                           this.state.historyJSTData.length > 0 ? (
                             <tbody>
-                              {this.state.historyJSTData.map(function (temps) {
+                              {this.state.historyJSTData.map(function(temps) {
                                 var date = moment
                                   .utc(temps.created_at)
                                   .local()
@@ -1360,15 +1363,15 @@ class History extends Component {
                               })}
                             </tbody>
                           ) : (
-                              <NDF>
-                                <tr>
-                                  <td colSpan="5">No Data Found</td>
-                                </tr>
-                              </NDF>
-                            )
+                            <NDF>
+                              <tr>
+                                <td colSpan="5">No Data Found</td>
+                              </tr>
+                            </NDF>
+                          )
                         ) : (
-                            ""
-                          )}
+                          ""
+                        )}
                       </HisTable>
                     </Tablediv>
                   </TabPane>
@@ -1390,7 +1393,7 @@ class History extends Component {
                         {this.state.historySimplexData !== undefined ? (
                           this.state.historySimplexData.length > 0 ? (
                             <tbody>
-                              {this.state.historySimplexData.map(function (
+                              {this.state.historySimplexData.map(function(
                                 temps
                               ) {
                                 var date = moment
@@ -1401,11 +1404,11 @@ class History extends Component {
                                   );
                                 var side =
                                   Number(temps.user_id) ===
-                                    self.props.profileData.id
+                                  self.props.profileData.id
                                     ? temps.side
                                     : temps.side === "Buy"
-                                      ? "Sell"
-                                      : "Buy";
+                                    ? "Sell"
+                                    : "Buy";
                                 if (temps.simplex_payment_status === 1) {
                                   var simplex_payment_status = "Under Approval";
                                 }
@@ -1431,15 +1434,15 @@ class History extends Component {
                               })}
                             </tbody>
                           ) : (
-                              <NDF>
-                                <tr>
-                                  <td colSpan="8">No Data Found</td>
-                                </tr>
-                              </NDF>
-                            )
+                            <NDF>
+                              <tr>
+                                <td colSpan="8">No Data Found</td>
+                              </tr>
+                            </NDF>
+                          )
                         ) : (
-                            ""
-                          )}
+                          ""
+                        )}
                       </HisTable>
                     </Tablediv>
                   </TabPane>
