@@ -23,6 +23,7 @@ import { faStroopwafel } from "@fortawesome/free-solid-svg-icons";
 // import Login from "components/LANDING/USERFORMS/Login_Form"
 import AppRouter from "routes";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import NotFound from "./SHARED-COMPONENTS/NotFound";
 const SignupForm = lazy(() =>
   import("COMPONENTS/LANDING/USERFORMS/signup_form")
 );
@@ -306,18 +307,24 @@ class App extends Component {
                       title="Login"
                       component={ProfileBackup}
                     />
-                    <Route
+                    {/* <Route
                       path="/Chart"
                       exact
                       title="Trading View"
                       component={Chart}
-                    />
+                    /> */}
+
                     <RestrictedRoute
                       path="/"
                       component={AppRouter}
                       isLoggedIn={isLoggedIn}
                       LogoutUser={this.props.LogoutUser}
                     />
+                    {/* <Route
+                      // path="*"
+                      title="Page Not Found"
+                      component={NotFound}
+                    /> */}
                   </Switch>
                 </Suspense>
               )}

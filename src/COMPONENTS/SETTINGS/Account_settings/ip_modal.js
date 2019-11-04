@@ -33,6 +33,9 @@ export const NewP = styled(Old)`
   &.deactivate {
     margin-bottom: 30px;
   }
+  &.deactivate_no_funds {
+    margin-top: 0;
+  }
   &.add_new_ip {
     width: 100%;
   }

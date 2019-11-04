@@ -133,6 +133,7 @@ class Acc_settings extends Component {
       savedDataNoti: [],
       rangeDate: [],
       deleteText: "",
+      deactivateText: "",
       code2fa: "",
       totalUSDOfWallet: "",
       showDeactivateModal: "",
@@ -268,6 +269,7 @@ class Acc_settings extends Component {
           }
         }
       },
+
       gttoday: {
         message: "Please enter today's date or upcoming date.",
         rule: val => {
@@ -298,6 +300,17 @@ class Acc_settings extends Component {
         message: "Please enter FORFEIT FUNDS.",
         rule: val => {
           var RE = /FORFEIT FUNDS/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      },
+      matchDeactivate: {
+        message: "Please enter 'DEACTIVATE'.",
+        rule: val => {
+          var RE = /DEACTIVATE/;
           if (RE.test(val)) {
             return true;
           } else {
@@ -859,6 +872,11 @@ class Acc_settings extends Component {
   deleteText(e) {
     this.setState({
       deleteText: e.target.value
+    });
+  }
+  deactivateText(e) {
+    this.setState({
+      deactivateText: e.target.value
     });
   }
   code2fa(e) {
@@ -1450,10 +1468,10 @@ class Acc_settings extends Component {
                 </DeButtonDiv>
                 {this.state.user2fastatus ? (
                   <DeButtonDiv
-                    className="right_btn final_deactivate"
-                    onClick={this.deleteUserAccount}
+                    className="final_deactivate"
+                    onClick={this.closeModal}
                   >
-                    <DeNewButton className="right_text">Confirm</DeNewButton>
+                    <DeNewButton>Cancel</DeNewButton>
                   </DeButtonDiv>
                 ) : (
                     <DeButtonDiv
