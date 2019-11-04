@@ -118,6 +118,7 @@ class Acc_settings extends Component {
       savedDataNoti: [],
       rangeDate: [],
       deleteText: "",
+      deactivateText: "",
       code2fa: "",
       totalUSDOfWallet: "",
       showDeactivateModal: "",
@@ -254,6 +255,7 @@ class Acc_settings extends Component {
           }
         }
       },
+
       gttoday: {
         message: "Please enter today's date or upcoming date.",
         rule: val => {
@@ -284,6 +286,17 @@ class Acc_settings extends Component {
         message: "Please enter FORFEIT FUNDS.",
         rule: val => {
           var RE = /FORFEIT FUNDS/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      },
+      matchDeactivate: {
+        message: "Please enter 'DEACTIVATE'.",
+        rule: val => {
+          var RE = /DEACTIVATE/;
           if (RE.test(val)) {
             return true;
           } else {
@@ -847,6 +860,11 @@ class Acc_settings extends Component {
       deleteText: e.target.value
     });
   }
+  deactivateText(e) {
+    this.setState({
+      deactivateText: e.target.value
+    });
+  }
   code2fa(e) {
     this.setState({
       code2fa: e.target.value
@@ -1374,89 +1392,177 @@ class Acc_settings extends Component {
               </DeButtonDiv>
             </DeactivateButtonWarp>
           </DeactiveWrap>
-          <DeactivateWrapper className="wrapper" id="wrapper">
-            <Description>
-              *Any funds in your wallet will no longer be accessible after
-              deactivation of account.
-            </Description>
-            <div className="nav__body">
-              <NewP className="deactivate">
-                <InputLabel>Type 'FORFEIT FUNDS' in the box below:</InputLabel>
-                <div className="otp-input-wrap">
-                  <OTPInput
-                    className="otp-input"
-                    value={this.state.deleteText}
-                    size="medium"
-                    onChange={this.deleteText.bind(this)}
-                    name="ip"
-                    style={{ marginBottom: "20px" }}
-                  />
-                  {this.validator1.message(
-                    "text",
-                    this.state.deleteText,
-                    "required|matchDelete",
-                    "text-danger-validation",
-                    { required: "This field is required." }
-                  )}
-                </div>
-                {this.state.user2fastatus ? (
-                  <div>
-                    <InputLabel>
-                      Enter your 2FA code in the box below:
-                    </InputLabel>
-                    <div>
-                      <OTPInput
-                        style={{ paddingRight: "10px" }}
-                        min="1"
-                        value={this.state.code2fa}
-                        type="text"
-                        size="medium"
-                        onChange={this.code2fa.bind(this)}
-                        name="2FA code"
-                      />
-                      {this.validator1.message(
-                        "2FA code",
-                        this.state.code2fa,
-                        "required|numeric|min:6|max:6",
-                        "text-danger-validation",
-                        { required: "2FA field is required." }
-                      )}
-                    </div>
+          {this.state.walletCoins ? (
+            <DeactivateWrapper className="wrapper" id="wrapper">
+              <Description>
+                *Any funds in your wallet will no longer be accessible after
+                deactivation of account.
+              </Description>
+              <div className="nav__body">
+                <NewP className="deactivate">
+                  <InputLabel>
+                    Type 'FORFEIT FUNDS' in the box below:
+                  </InputLabel>
+                  <div className="otp-input-wrap">
+                    <OTPInput
+                      className="otp-input"
+                      value={this.state.deleteText}
+                      size="medium"
+                      onChange={this.deleteText.bind(this)}
+                      name="ip"
+                      style={{ marginBottom: "20px" }}
+                    />
+                    {this.validator1.message(
+                      "text",
+                      this.state.deleteText,
+                      "required|matchDelete",
+                      "text-danger-validation",
+                      { required: "This field is required." }
+                    )}
                   </div>
-                ) : (
-                  <Code2FADiv>
-                    <p>2FA is mandatory to deactivate your account.</p>
-                    <p>Please click on below link to enable 2FA.</p>
-                    <Link to={"/editProfile"}>Click here</Link>
-                  </Code2FADiv>
-                )}
-              </NewP>
-              <DeactivateButtonWarp className="final_deactivate">
-                <DeButtonDiv
-                  className="final_deactivate"
-                  onClick={this.closeModal}
-                >
-                  <DeNewButton>Cancel</DeNewButton>
-                </DeButtonDiv>
-                {this.state.user2fastatus ? (
+                  {this.state.user2fastatus ? (
+                    <div>
+                      <InputLabel>
+                        Enter your 2FA code in the box below:
+                      </InputLabel>
+                      <div>
+                        <OTPInput
+                          style={{ paddingRight: "10px" }}
+                          min="1"
+                          value={this.state.code2fa}
+                          type="text"
+                          size="medium"
+                          onChange={this.code2fa.bind(this)}
+                          name="2FA code"
+                        />
+                        {this.validator1.message(
+                          "2FA code",
+                          this.state.code2fa,
+                          "required|numeric|min:6|max:6",
+                          "text-danger-validation",
+                          { required: "2FA field is required." }
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <Code2FADiv>
+                      <p>2FA is mandatory to deactivate your account.</p>
+                      <p>Please click on below link to enable 2FA.</p>
+                      <Link to={"/editProfile"}>Click here</Link>
+                    </Code2FADiv>
+                  )}
+                </NewP>
+                <DeactivateButtonWarp className="final_deactivate">
                   <DeButtonDiv
-                    className="right_btn final_deactivate"
-                    onClick={this.deleteUserAccount}
+                    className="final_deactivate"
+                    onClick={this.closeModal}
                   >
-                    <DeNewButton className="right_text">Confirm</DeNewButton>
+                    <DeNewButton>Cancel</DeNewButton>
                   </DeButtonDiv>
-                ) : (
+                  {this.state.user2fastatus ? (
+                    <DeButtonDiv
+                      className="right_btn final_deactivate"
+                      onClick={this.deleteUserAccount}
+                    >
+                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                    </DeButtonDiv>
+                  ) : (
+                    <DeButtonDiv
+                      disabled
+                      className="right_btn final_deactivate disabled"
+                      onClick={this.deleteUserAccount}
+                    >
+                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                    </DeButtonDiv>
+                  )}
+                </DeactivateButtonWarp>
+              </div>
+            </DeactivateWrapper>
+          ) : (
+            <DeactivateWrapper className="wrapper" id="wrapper">
+              {/* <Description>
+                *Any funds in your wallet will no longer be accessible after
+                deactivation of account.
+              </Description> */}
+              <div className="nav__body">
+                <NewP className="deactivate deactivate_no_funds">
+                  <InputLabel>Type 'DEACTIVATE' in the box below:</InputLabel>
+                  <div className="otp-input-wrap">
+                    <OTPInput
+                      className="otp-input"
+                      value={this.state.deactivateText}
+                      size="medium"
+                      onChange={this.deactivateText.bind(this)}
+                      name="ip"
+                      style={{ marginBottom: "20px" }}
+                    />
+                    {this.validator1.message(
+                      "text",
+                      this.state.deactivateText,
+                      "required|matchDeactivate",
+                      "text-danger-validation",
+                      { required: "This field is required." }
+                    )}
+                  </div>
+                  {this.state.user2fastatus ? (
+                    <div>
+                      <InputLabel>
+                        Enter your 2FA code in the box below:
+                      </InputLabel>
+                      <div>
+                        <OTPInput
+                          style={{ paddingRight: "10px" }}
+                          min="1"
+                          value={this.state.code2fa}
+                          type="text"
+                          size="medium"
+                          onChange={this.code2fa.bind(this)}
+                          name="2FA code"
+                        />
+                        {this.validator1.message(
+                          "2FA code",
+                          this.state.code2fa,
+                          "required|numeric|min:6|max:6",
+                          "text-danger-validation",
+                          { required: "2FA field is required." }
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <Code2FADiv>
+                      <p>2FA is mandatory to deactivate your account.</p>
+                      <p>Please click on below link to enable 2FA.</p>
+                      <Link to={"/editProfile"}>Click here</Link>
+                    </Code2FADiv>
+                  )}
+                </NewP>
+                <DeactivateButtonWarp className="final_deactivate">
                   <DeButtonDiv
-                    disabled
-                    className="right_btn final_deactivate disabled"
-                    onClick={this.deleteUserAccount}
+                    className="final_deactivate"
+                    onClick={this.closeModal}
                   >
-                    <DeNewButton className="right_text">Confirm</DeNewButton>
+                    <DeNewButton>Cancel</DeNewButton>
                   </DeButtonDiv>
-                )}
-              </DeactivateButtonWarp>
-            </div>
-          </DeactivateWrapper>
+                  {this.state.user2fastatus ? (
+                    <DeButtonDiv
+                      className="right_btn final_deactivate"
+                      onClick={this.deleteUserAccount}
+                    >
+                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                    </DeButtonDiv>
+                  ) : (
+                    <DeButtonDiv
+                      disabled
+                      className="right_btn final_deactivate disabled"
+                      onClick={this.deleteUserAccount}
+                    >
+                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                    </DeButtonDiv>
+                  )}
+                </DeactivateButtonWarp>
+              </div>
+            </DeactivateWrapper>
+          )}
         </VerifyModal>
       </AccWrap>
     );
