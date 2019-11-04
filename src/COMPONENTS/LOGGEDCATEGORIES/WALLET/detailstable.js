@@ -21,6 +21,11 @@ const TableContentRide = styled(TableContent)`
 }
 
 `
+
+export const TRDisplay = styled.tr`
+    height: 200px;
+`
+
 export const OTwrap = styled.div`
     @media(max-width:991px)
     {
@@ -140,7 +145,6 @@ class DetailsTable extends React.Component {
             <OTwrap>
                 <ScrollTableContent >
                     <Scrollbars
-                        style={{ height: "500px" }}
                         className="scrollbar">
                         <TableContentRide cellpadding="10px" cellspacing="0" border="0">
                             <tbody>
@@ -155,7 +159,7 @@ class DetailsTable extends React.Component {
                                                 <div>{date}</div>
                                             </td>
                                             <td>
-                                                {details[index].transaction_type === "receive" ? <span><Icon style={{ color: "green", fontSize: "20px" }} type="download" /> RECEIVED</span> : <span><Icon style={{ color: "red", fontSize: "20px" }} type="upload" /> SENT</span>}
+                                                {details[index].transaction_type === "receive" ? <span><Icon className="icon-display" type="download" /> RECEIVED</span> : <span><Icon className="send-display" type="upload" /> SENT</span>}
                                             </td>
                                             <td>
                                                 {details[index].source_address}
@@ -172,7 +176,7 @@ class DetailsTable extends React.Component {
                                         </Col1>
                                     );
                                 })
-                                    : <tr style={{ height: "200px" }}><NDF colspan="5" >No Data Found</NDF></tr> : ""}
+                                    : <TRDisplay ><NDF colspan="5" >No Data Found</NDF></TRDisplay> : ""}
                             </tbody>
                         </TableContentRide>
                     </Scrollbars>

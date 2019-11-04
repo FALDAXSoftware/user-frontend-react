@@ -63,7 +63,7 @@ export const OldInput = styled(Input)`
     margin-top:5px;
     width: 95%;
     background-color:${props =>
-      props.theme.mode === "dark" ? "#041422" : "#f8f8f8"};
+    props.theme.mode === "dark" ? "#041422" : "#f8f8f8"};
     color:${props => (props.theme.mode === "dark" ? "white" : "")}
     display:inline-block;
     font-family: "Open Sans";
@@ -89,9 +89,13 @@ export const OldInput = styled(Input)`
 export const NewInput = styled(OldInput)``;
 export const OTPInput = styled(NewInput)`
   width: 100%;
+  margin-bottom: 20px;
   &.otp-input {
     margin-bottom: 0 !important;
     width: 100%;
+  }
+  &.otpfor2fa{
+    padding-right: 10px;
   }
 `;
 export const ButtonDiv = styled.div`

@@ -70,6 +70,12 @@ const TicketTitle = styled.span`
   }
 `;
 
+export const ContactCarrer = styled.div`
+    display: inline-block;
+    width: 100%; 
+    position: relative;
+`
+
 class OpenTicket extends Component {
     constructor(props) {
         super(props);
@@ -83,11 +89,10 @@ class OpenTicket extends Component {
                 <Navigation />
                 <GreyWrap>
                     <ContainerContact>
-                        <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
+                        <ContactCarrer>
                             <TicketTitle>Open a Ticket </TicketTitle>
-                        </div>
+                        </ContactCarrer>
                         <CareerWrap>
-                            {/* <iframe style={{ border: 'none' }} height="1100px" width="100%" src={APIURL + "/get-open-ticket-form"}></iframe> */}
                             <HubspotForm
                                 portalId='4933498'
                                 formId='4dd2d22b-70ec-4709-babe-aa5aad1d2455'
