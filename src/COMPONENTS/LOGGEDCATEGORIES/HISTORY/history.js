@@ -42,6 +42,9 @@ const options = [
   { label: "SELL", value: "SELL" }
 ];
 const Select1 = styled(Select)`
+  &.display-value{
+    width : 120px;
+  }
   & .ant-select-selection {
     background-color: ${props =>
     props.theme.mode === "dark" ? "#01090f" : ""};
@@ -60,6 +63,9 @@ const Select1 = styled(Select)`
   }
 `;
 const Select2 = styled(Select)`
+  &.display-value{
+    width:120px;
+  }
   & .ant-select-selection {
     background-color: ${props =>
     props.theme.mode === "dark" ? "#01090f" : ""};
@@ -110,6 +116,18 @@ const NDF = styled.tbody`
 const SideBuySell = styled.td`
   color: ${props => (props.side === true ? "#59b55d" : "#f13e46")} !important;
 `;
+
+export const FilterDiv = styled.div`
+    display: inline-flex;
+    width: 390px;
+    align-items: center;
+`
+
+export const FilterDivSelection = styled.div`
+    padding-left: 15px;
+    margin-top: 20px; 
+`
+
 class History extends Component {
   constructor(props) {
     super(props);
@@ -1054,16 +1072,10 @@ class History extends Component {
             <ContainerContact>
               <HeadHis>
                 <Filter>
-                  <div
-                    style={{
-                      display: "inline-flex",
-                      width: "390px",
-                      alignItems: "center"
-                    }}
-                  >
+                  <FilterDiv>
                     <Select1
                       showSearch
-                      style={{ width: 120 }}
+                      className="display-value"
                       onChange={this.selectChange1}
                       value={this.state.drop1Value}
                     >
@@ -1114,7 +1126,7 @@ class History extends Component {
                     <FontAwesomeIconS icon={faExchangeAlt} color="#909090" />
                     <Select2
                       showSearch
-                      style={{ width: 120 }}
+                      className="display-value"
                       onChange={this.selectChange2}
                       value={this.state.drop2Value}
 
@@ -1169,7 +1181,7 @@ class History extends Component {
                         }
                       })}
                     </Select2>
-                  </div>
+                  </FilterDiv>
                   <Datediv>
                     <RangePickerS
                       disabledDate={this.disabledDate}
@@ -1225,13 +1237,13 @@ class History extends Component {
                   )}
                 </Filter>
                 {this.state.activeKey === "1" && (
-                  <div style={{ paddingLeft: "15px", marginTop: "20px" }}>
+                  <FilterDivSelection>
                     <CheckboxGroupS
                       options={options}
                       defaultValue={["SEND", "RECEIVE", "SELL", "BUY"]}
                       onChange={this.onChangeCheck}
                     />
-                  </div>
+                  </FilterDivSelection>
                 )}
               </HeadHis>
               <HisWrap>

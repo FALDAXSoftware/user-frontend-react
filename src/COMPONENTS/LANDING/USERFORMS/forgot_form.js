@@ -174,6 +174,10 @@ export const Icon = styled.i`
 const BackLink = styled.a`
     
 `
+
+export const RightLogin = styled.div`
+    width: 100%;
+`
 class ForgotForm extends Component {
 
   constructor(props) {
@@ -300,7 +304,7 @@ class ForgotForm extends Component {
           <ColRight sm={24} lg={12}>
             <FormWrap>
               <RightWrap className="wow fadeInDown" >
-                <div style={{ width: "100%" }}>
+                <RightLogin>
                   <LoginHead>Forgot Password</LoginHead>
                   <WelcomeText>Forgot Password?</WelcomeText>
                   <SubText>Don't worry, It happen's to the best of us.</SubText>
@@ -312,7 +316,7 @@ class ForgotForm extends Component {
                     <Icon className="material-icons">keyboard_backspace</Icon>
                     <BackLink onClick={() => this.props.history.push("/login")}> Back To Login </BackLink>
                   </LinkWrap>
-                </div>
+                </RightLogin>
               </RightWrap>
             </FormWrap>
           </ColRight>

@@ -182,7 +182,7 @@ class Simplex extends React.Component {
           });
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   }
   calculateDigitalCurrency() {
     this.setState({
@@ -262,7 +262,7 @@ class Simplex extends React.Component {
             );
           }
         })
-        .catch(error => {});
+        .catch(error => { });
     }
   }
   handleCurrencyPayChange(e) {
@@ -357,7 +357,7 @@ class Simplex extends React.Component {
                     "text-danger-validation"
                   )}
                 </Col>
-                <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
+                <Col xs={12} sm={12} md={8} className="value-display">
                   {this.state.currencyList &&
                     this.state.currencyList.length > 0 && (
                       <ConversionDropDown
@@ -393,10 +393,10 @@ class Simplex extends React.Component {
                     placeholder="0"
                     readOnly
                     value={this.state.currencyToGet}
-                    // onChange={this.handleCurrencyGetChange}
+                  // onChange={this.handleCurrencyGetChange}
                   />
                 </Col>
-                <Col xs={12} sm={12} md={8} style={{ height: "42px" }}>
+                <Col xs={12} sm={12} md={8} className="value-display">
                   {this.state.cryptoList && this.state.cryptoList.length > 0 && (
                     <ConversionDropDown
                       defaultValue={this.state.crypto}

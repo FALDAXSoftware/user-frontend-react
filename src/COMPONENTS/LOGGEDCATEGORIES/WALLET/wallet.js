@@ -69,7 +69,7 @@ const Inputsearch = styled(Search)`
     >input
     {
         background-color:${props =>
-          props.theme.mode === "dark" ? "#020e18" : ""};
+    props.theme.mode === "dark" ? "#020e18" : ""};
         color:${props => (props.theme.mode === "dark" ? "white" : "")}
         caret-color:${props => (props.theme.mode === "dark" ? "white" : "")}
     }
@@ -113,7 +113,7 @@ class Wallet extends Component {
       var tableData = this.props.walletDetails;
       var FIAT = this.props.profileDetails.fiat;
       if (tableData !== undefined) {
-        tableData.map(function(index, key) {
+        tableData.map(function (index, key) {
           // console.log(index.quote)
           if (index.quote !== null)
             if (
@@ -143,7 +143,7 @@ class Wallet extends Component {
     var search = e.target.value;
     if (search !== "") {
       if (search.trim() !== "") {
-        var searchedWallet = this.props.walletDetails.filter(function(temp) {
+        var searchedWallet = this.props.walletDetails.filter(function (temp) {
           if (
             temp.coin.toLowerCase().includes(search.toLowerCase()) ||
             temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
@@ -172,7 +172,7 @@ class Wallet extends Component {
     var search = e.target.value;
     if (search !== "") {
       if (search.trim() !== "") {
-        var searchedCoins = this.props.nowalletBalance.filter(function(temp) {
+        var searchedCoins = this.props.nowalletBalance.filter(function (temp) {
           if (
             temp.coin.toLowerCase().includes(search.toLowerCase()) ||
             temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
@@ -213,7 +213,6 @@ class Wallet extends Component {
                 <Inputsearch
                   placeholder="Search Coin"
                   onChange={value => this.searchChangeWallet(value)}
-                  style={{}}
                   className=""
                 />
               </SearchCoin>
@@ -235,8 +234,8 @@ class Wallet extends Component {
                       thousandSeparator={true}
                     />
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                 </Money>
                 <Currency>{FIAT}</Currency>
               </Total>
@@ -253,18 +252,18 @@ class Wallet extends Component {
                       }
                     />
                   ) : (
-                    <TableofCoinUpper
-                      type="wallet data"
-                      noBalance={false}
-                      currencySeq={this.state.currencySeq}
+                      <TableofCoinUpper
+                        type="wallet data"
+                        noBalance={false}
+                        currencySeq={this.state.currencySeq}
                       /* currChange={(currency) => this.currChangeWallet(currency)}  */ tableData={
-                        this.props.walletDetails
-                      }
-                    />
-                  )
+                          this.props.walletDetails
+                        }
+                      />
+                    )
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </TableWrap>
             </CoinTable>
           </ContainerContact>
@@ -277,7 +276,6 @@ class Wallet extends Component {
                 <Inputsearch
                   placeholder="Search Coin"
                   onChange={value => this.searchChangeCoins(value)}
-                  style={{}}
                   className=""
                 />
               </SearchCoin2>
@@ -298,18 +296,18 @@ class Wallet extends Component {
                       }
                     />
                   ) : (
-                    <TableofCoinUpper
-                      type="no wallet data"
-                      currencySeq={this.state.currencySeq}
-                      noBalance={true}
+                      <TableofCoinUpper
+                        type="no wallet data"
+                        currencySeq={this.state.currencySeq}
+                        noBalance={true}
                       /* currChange={(currency) => this.currChangeList(currency)} */ tableData={
-                        this.props.nowalletBalance
-                      }
-                    />
-                  )
+                          this.props.nowalletBalance
+                        }
+                      />
+                    )
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </TableWrap>
             </CoinTable>
           </ContainerContact2>
