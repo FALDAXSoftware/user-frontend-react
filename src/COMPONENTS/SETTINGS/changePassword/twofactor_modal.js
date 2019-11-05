@@ -15,6 +15,11 @@ import {
   ButtonDiv,
   BackupCode
 } from "../Account_settings/ip_modal";
+import styled from "styled-components";
+
+export const FontModal = styled.b`
+    color: red;
+`
 
 class TFAModal extends Component {
   constructor(props) {
@@ -72,13 +77,9 @@ class TFAModal extends Component {
 
           <BackupCode>
             BACKUP CODE:{" "}
-            <b
-              style={{
-                color: "red"
-              }}
-            >
+            <FontModal>
               {this.state.backupCode}
-            </b>
+            </FontModal>
           </BackupCode>
         </VerifyModal>
       </div>

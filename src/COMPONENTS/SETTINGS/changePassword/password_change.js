@@ -312,6 +312,14 @@ const Progressbar = styled(Progress)`
         color:${props => props.theme.mode === "dark" ? "white" : ""};
     }
 `
+
+export const RedSpan = styled.span`
+    color: red;
+`
+
+export const GreenSpan = styled.span`
+    color: green;
+`
 let password;
 
 class PasswordChange extends Component {
@@ -733,8 +741,8 @@ class PasswordChange extends Component {
                             <HeadTF>Two-Factor Authentication</HeadTF>
                             <IsEnabled> Status:
                             {isEnabled === 'DISABLED' ?
-                                    <span style={{ color: 'red' }}> {isEnabled}</span>
-                                    : <span style={{ color: 'green' }}> {isEnabled}</span>
+                                    <RedSpan > {isEnabled}</RedSpan>
+                                    : <GreenSpan> {isEnabled}</GreenSpan>
                                 }
                             </IsEnabled>
                             <Headtext>

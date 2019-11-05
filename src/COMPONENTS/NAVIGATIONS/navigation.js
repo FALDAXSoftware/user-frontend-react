@@ -272,6 +272,9 @@ const Close = styled.a`
 const Rightdiv = styled.div`
   margin-left: auto;
   height: 100%;
+  display: flex; 
+  align-items: center;
+
 `;
 const NavLink = styled.a`
   color: ${props =>
@@ -479,10 +482,10 @@ class Navigation extends Component {
   render() {
     let prof_name =
       this.props.profileDetails.first_name !== null &&
-      this.props.profileDetails.first_name !== undefined
+        this.props.profileDetails.first_name !== undefined
         ? this.props.profileDetails.first_name +
-          " " +
-          this.props.profileDetails.last_name
+        " " +
+        this.props.profileDetails.last_name
         : "User";
     /*         const { modal } = this.state; */
     return (
@@ -558,7 +561,7 @@ class Navigation extends Component {
               </NavLink>
             </Menuitem>
           </Menumain>
-          <Rightdiv style={{ display: "flex", alignItems: "center" }}>
+          <Rightdiv>
             {this.props.isLoggedIn ? (
               <Afterlog
                 {...this.props}
@@ -566,12 +569,12 @@ class Navigation extends Component {
                 openLogNav={() => this.openNav()}
               />
             ) : (
-              <Beforelog
-                {...this.props}
-                dispModal={pressed => this.dispModal(pressed)}
-                openNav={() => this.openNav()}
-              />
-            )}
+                <Beforelog
+                  {...this.props}
+                  dispModal={pressed => this.dispModal(pressed)}
+                  openNav={() => this.openNav()}
+                />
+              )}
           </Rightdiv>
           <ReactSwipeEvents
             onSwipedRight={() => {
@@ -627,8 +630,8 @@ class Navigation extends Component {
               {this.props.isLoggedIn ? (
                 <CarLink to="/careers">Careers</CarLink>
               ) : (
-                ""
-              )}
+                  ""
+                )}
               {/* <Why> Language </Why> */}
               <a className="DROP">
                 <DropMenu mode="inline">
