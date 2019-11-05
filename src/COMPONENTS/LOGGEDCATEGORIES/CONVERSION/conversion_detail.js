@@ -42,6 +42,7 @@ import {
   CryptoFiatCol,
   CryptoFiatText
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
+import { parse } from "@fortawesome/fontawesome-svg-core";
 
 const API_URL = globalVariables.API_URL;
 const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
@@ -87,7 +88,8 @@ class ConversionDetail extends React.Component {
       displayCurrency: "",
       OrdType: "",
       orderQuantity: "",
-      Quantity: ""
+      Quantity: "",
+      OriginalQuantity: ""
     };
     io = this.props.io;
     this.timeout = null;
@@ -551,13 +553,6 @@ class ConversionDetail extends React.Component {
         .then(response => response.json())
         .then(responseData => {
           if (responseData.status === 200) {
-            // this.setState({ loader: false });
-            // this.openNotificationWithIcon(
-            //   "success",
-            //   "Success",
-            //   responseData.message
-            // );
-            console.log("Response Data 200", responseData.data);
             this.setState({
               subTotal: parseFloat(responseData.data.original_value).toFixed(8),
               faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
@@ -565,10 +560,24 @@ class ConversionDetail extends React.Component {
               totalAmount: responseData.data.total_value.toFixed(8),
               fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
               displayCurrency: responseData.data.currency,
-              // orderQuantity: responseData.data.orderQuantity
               Quantity: parseFloat(responseData.data.total_value).toFixed(8)
             });
             if (this.state.includeFees === 1) {
+              // if (this.state.OrdType === "1") {
+              //   console.log(this.state.includeFees, this.state.OrdType);
+              //   this.setState({
+              //     OriginalQuantity: parseFloat(
+              //       responseData.original_value
+              //     ).toFixed(8)
+              //   });
+              // } else {
+              //   console.log(this.state.includeFees, this.state.OrdType);
+              //   this.setState({
+              //     OriginalQuantity: parseFloat(
+              //       responseData.total_value
+              //     ).toFixed(8)
+              //   });
+              // }
               this.setState({
                 sendCurrencyInput: parseFloat(
                   responseData.data.currency_value
@@ -579,6 +588,21 @@ class ConversionDetail extends React.Component {
                 loader: false
               });
             } else {
+              // if (this.state.OrdType === "2") {
+              //   console.log("if", this.state.OrdType);
+              //   this.setState({
+              //     OriginalQuantity: parseFloat(
+              //       responseData.original_value
+              //     ).toFixed(8)
+              //   });
+              // } else {
+              //   console.log("else", this.state.OrdType);
+              //   this.setState({
+              //     OriginalQuantity: parseFloat(
+              //       responseData.original_value
+              //     ).toFixed(8)
+              //   });
+              // }
               this.setState({
                 recieveCurrencyInput: parseFloat(
                   responseData.data.total_value
@@ -588,6 +612,62 @@ class ConversionDetail extends React.Component {
                 ).toFixed(8),
                 loader: false
               });
+            }
+            if (this.state.includeFees === 1 && this.state.OrdType === "1") {
+              console.log(
+                this.state.includeFees,
+                this.state.OrdType,
+                responseData.data.original_value
+              );
+              this.setState({
+                OriginalQuantity: parseFloat(
+                  responseData.data.original_value
+                ).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 2 &&
+              this.state.OrdType === "1"
+            ) {
+              console.log(
+                this.state.includeFees,
+                this.state.OrdType,
+                responseData.data.total_value
+              );
+              this.setState({
+                OriginalQuantity: parseFloat(
+                  responseData.data.total_value
+                ).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 2 &&
+              this.state.OrdType === "2"
+            ) {
+              console.log(
+                this.state.includeFees,
+                this.state.OrdType,
+                responseData.data.currency_value
+              );
+              this.setState({
+                OriginalQuantity: parseFloat(
+                  responseData.data.currency_value
+                ).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 1 &&
+              this.state.OrdType === "2"
+            ) {
+              console.log(
+                this.state.includeFees,
+                this.state.OrdType,
+                responseData.data.currency_value
+              );
+              this.setState({
+                OriginalQuantity: parseFloat(
+                  responseData.data.currency_value
+                ).toFixed(8)
+              });
+            } else {
+              console.log("no scenario");
             }
           } else if (responseData.status === 500) {
             this.setState({ loader: false });
@@ -732,6 +812,62 @@ class ConversionDetail extends React.Component {
                 loader: false
               });
             }
+            if (this.state.includeFees === 1 && this.state.OrdType === "1") {
+              console.log(
+                this.state.includeFees,
+                this.state.OrdType,
+                responseData.data.original_value
+              );
+              this.setState({
+                OriginalQuantity: parseFloat(
+                  responseData.data.original_value
+                ).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 2 &&
+              this.state.OrdType === "1"
+            ) {
+              console.log(
+                this.state.includeFees,
+                this.state.OrdType,
+                responseData.data.total_value
+              );
+              this.setState({
+                OriginalQuantity: parseFloat(
+                  responseData.data.total_value
+                ).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 2 &&
+              this.state.OrdType === "2"
+            ) {
+              console.log(
+                this.state.includeFees,
+                this.state.OrdType,
+                responseData.data.currency_value
+              );
+              this.setState({
+                OriginalQuantity: parseFloat(
+                  responseData.data.currency_value
+                ).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 1 &&
+              this.state.OrdType === "2"
+            ) {
+              console.log(
+                this.state.includeFees,
+                this.state.OrdType,
+                responseData.data.currency_value
+              );
+              this.setState({
+                OriginalQuantity: parseFloat(
+                  responseData.data.currency_value
+                ).toFixed(8)
+              });
+            } else {
+              console.log("no scenario");
+            }
           } else if (responseData.status === 500) {
             this.setState({ loader: false });
             this.openNotificationWithIcon("error", "Error", responseData.err);
@@ -752,6 +888,7 @@ class ConversionDetail extends React.Component {
         Side: this.state.OrdType,
         OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
         Quantity: parseFloat(this.state.Quantity).toFixed(8),
+        OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
         Currency: this.state.crypto,
         OrdType: "1",
         original_pair: this.state.original_pair,
@@ -764,6 +901,7 @@ class ConversionDetail extends React.Component {
         Side: this.state.OrdType,
         OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
         Quantity: parseFloat(this.state.Quantity).toFixed(8),
+        OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
         Currency: this.state.currency,
         OrdType: "1",
         original_pair: this.state.original_pair,
