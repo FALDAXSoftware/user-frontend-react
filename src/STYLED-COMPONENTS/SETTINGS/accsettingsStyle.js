@@ -91,6 +91,7 @@ export const Heading = styled.div `
   font-size: 20px;
   font-family: "Open Sans";
   font-weight: 600;
+  margin-top: 10px !important;
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   line-height: 2.4;
