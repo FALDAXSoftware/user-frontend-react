@@ -72,21 +72,6 @@ const IpInput = styled(NewInput)`
   margin-top: 20px;
   padding-right: 7px;
 `;
-
-export const AccountWarp = styled.div`
-    padding-left: 10px;
-    padding-right: 10px;
-`
-
-export const TextDisplay = styled.div`
-    width: 1000px;
-`
-
-export const DeleteCursor = styled.div`
-    cursor: pointer; 
-    color: rgb(0, 170, 250);
-`
-
 let { API_URL } = globalVariables;
 
 const columns = [
@@ -216,9 +201,9 @@ class Acc_settings extends Component {
             <span>
               {src !== ""
                 ? moment
-                  .utc(src)
-                  .local()
-                  .format(`${date_format}, HH:mm:ss`)
+                    .utc(src)
+                    .local()
+                    .format(`${date_format}, HH:mm:ss`)
                 : "-"}
             </span>
           );
@@ -234,12 +219,13 @@ class Acc_settings extends Component {
               {src.is_permanent == true ? (
                 "-"
               ) : (
-                  <DeleteCursor
-                    onClick={this.deleteIP.bind(this, src)}
-                  >
-                    Delete
-                </DeleteCursor>
-                )}
+                <div
+                  onClick={this.deleteIP.bind(this, src)}
+                  style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
+                >
+                  Delete
+                </div>
+              )}
             </div>
           );
         }
@@ -425,7 +411,7 @@ class Acc_settings extends Component {
     // console.log(key, e, record);
     const { data_noti } = this.state;
     var tempData = data_noti;
-    tempData.map(function (data, index) {
+    tempData.map(function(data, index) {
       if (data.id == record.id) {
         // console.log(tempData[key]);
         if (key == "text") tempData[index].text = e.target.checked;
@@ -617,7 +603,7 @@ class Acc_settings extends Component {
         if (responseData.status == 200) {
           let antTableData = [];
           this.setState({ historyCount: responseData.historyCount });
-          Object.keys(responseData.data).map(function (key, index) {
+          Object.keys(responseData.data).map(function(key, index) {
             var deviceType;
             if (responseData.data[index].device_type === 1)
               deviceType = <FontAwesomeIconS icon={faMobileAlt} />;
@@ -710,7 +696,7 @@ class Acc_settings extends Component {
           setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
         }).catch(() => console.log("Oops errors!"));
       },
-      onCancel() { }
+      onCancel() {}
     });
   }
   openDeleteModal() {
@@ -1008,7 +994,7 @@ class Acc_settings extends Component {
           );
         }
       })
-      .catch(error => { });
+      .catch(error => {});
   }
   forfeitFunds() {
     this.closeModal();
@@ -1042,7 +1028,7 @@ class Acc_settings extends Component {
           </NotiDesc>
         </NotiWrap>
 
-        <AccountWarp>
+        <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
           <WrapTable>
             <NotificationTable
               className={this.state.notiCSS}
@@ -1053,7 +1039,7 @@ class Acc_settings extends Component {
               pagination={{ pageSize: 5, size: "small" }}
             />
           </WrapTable>
-        </AccountWarp>
+        </div>
         <AddButton disabled={disabled} onClick={this.addData}>
           Save
         </AddButton>
@@ -1082,6 +1068,7 @@ class Acc_settings extends Component {
           </TableWrap>
 
           <PaginationS
+            style={{ marginTop: "15px" }}
             className="ant-users-pagination"
             size="small"
             onChange={this.handleHistoryPagination.bind(this)}
@@ -1100,14 +1087,14 @@ class Acc_settings extends Component {
           <DeleteHead>
             <span>Security Settings</span>
           </DeleteHead>
-          <DeleteDesc >
-            <TextDisplay>
+          <DeleteDesc style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ width: "1000px" }}>
               When set 'ON', changes to any security settings on your account
               will disable debits from your wallets for 24 hours. Additionally,
               you will be notified prior to changing any security settings and
               will have to confirm that you want to make those changes to ensure
               you don't accidently lock your wallet.
-            </TextDisplay>
+            </div>
           </DeleteDesc>
           {/* {console.log(this.state.checked)} */}
           <TableWrap>
@@ -1162,6 +1149,7 @@ class Acc_settings extends Component {
                 />
               </TableWrap>
               <PaginationS
+                style={{ marginTop: "15px" }}
                 className="ant-users-pagination"
                 onChange={this.handleIpPagination.bind(this)}
                 pageSize={10}
@@ -1204,8 +1192,8 @@ class Acc_settings extends Component {
         {this.state.loader === true || this.props.loader === true ? (
           <FaldaxLoader />
         ) : (
-            ""
-          )}
+          ""
+        )}
         <VerifyModal
           visible={this.state.showAddModal}
           onCancel={this.closeModal}
@@ -1228,6 +1216,7 @@ class Acc_settings extends Component {
                 size="medium"
                 onChange={this.ipChange.bind(this)}
                 name="ip"
+                style={{ marginBottom: "20px" }}
               />
               {this.validator.message(
                 "ip",
@@ -1302,7 +1291,7 @@ class Acc_settings extends Component {
               </thead>
               {this.state.walletCoins ? (
                 <tbody>
-                  {this.state.walletCoins.map(function (temps) {
+                  {this.state.walletCoins.map(function(temps) {
                     var balance = parseFloat(temps.balance).toFixed(8);
                     var fiat = parseFloat(temps.fiat * temps.balance).toFixed(
                       2
@@ -1321,8 +1310,8 @@ class Acc_settings extends Component {
                   </tr>
                 </tbody>
               ) : (
-                  ""
-                )}
+                ""
+              )}
             </SummaryTable>
             <DeactivateButtonWarp>
               <DeButtonDiv
@@ -1360,7 +1349,7 @@ class Acc_settings extends Component {
                 </thead>
 
                 <tbody>
-                  {this.state.walletCoins.map(function (temps) {
+                  {this.state.walletCoins.map(function(temps) {
                     var balance = parseFloat(temps.balance).toFixed(8);
                     var fiat = parseFloat(temps.fiat * temps.balance).toFixed(
                       2
@@ -1381,8 +1370,8 @@ class Acc_settings extends Component {
               </SummaryTable>
             </div>
           ) : (
-              ""
-            )}
+            ""
+          )}
 
           <DeactiveWrap className="" id="deactivate">
             <Description className="final_deactivate">
@@ -1403,77 +1392,81 @@ class Acc_settings extends Component {
               </DeButtonDiv>
             </DeactivateButtonWarp>
           </DeactiveWrap>
-          <DeactivateWrapper className="wrapper" id="wrapper">
-            <Description>
-              *Any funds in your wallet will no longer be accessible after
-              deactivation of account.
-            </Description>
-            <div className="nav__body">
-              <NewP className="deactivate">
-                <InputLabel>Type 'FORFEIT FUNDS' in the box below:</InputLabel>
-                <div className="otp-input-wrap">
-                  <OTPInput
-                    className="otp-input"
-                    value={this.state.deleteText}
-                    size="medium"
-                    onChange={this.deleteText.bind(this)}
-                    name="ip"
-                  />
-                  {this.validator1.message(
-                    "text",
-                    this.state.deleteText,
-                    "required|matchDelete",
-                    "text-danger-validation",
-                    { required: "This field is required." }
-                  )}
-                </div>
-                {this.state.user2fastatus ? (
-                  <div>
-                    <InputLabel>
-                      Enter your 2FA code in the box below:
-                    </InputLabel>
-                    <div>
-                      <OTPInput
-                        className="otpfor2fa"
-                        min="1"
-                        value={this.state.code2fa}
-                        type="text"
-                        size="medium"
-                        onChange={this.code2fa.bind(this)}
-                        name="2FA code"
-                      />
-                      {this.validator1.message(
-                        "2FA code",
-                        this.state.code2fa,
-                        "required|numeric|min:6|max:6",
-                        "text-danger-validation",
-                        { required: "2FA field is required." }
-                      )}
-                    </div>
+          {this.state.walletCoins ? (
+            <DeactivateWrapper className="wrapper" id="wrapper">
+              <Description>
+                *Any funds in your wallet will no longer be accessible after
+                deactivation of account.
+              </Description>
+              <div className="nav__body">
+                <NewP className="deactivate">
+                  <InputLabel>
+                    Type 'FORFEIT FUNDS' in the box below:
+                  </InputLabel>
+                  <div className="otp-input-wrap">
+                    <OTPInput
+                      className="otp-input"
+                      value={this.state.deleteText}
+                      size="medium"
+                      onChange={this.deleteText.bind(this)}
+                      name="ip"
+                      style={{ marginBottom: "20px" }}
+                    />
+                    {this.validator1.message(
+                      "text",
+                      this.state.deleteText,
+                      "required|matchDelete",
+                      "text-danger-validation",
+                      { required: "This field is required." }
+                    )}
                   </div>
-                ) : (
+                  {this.state.user2fastatus ? (
+                    <div>
+                      <InputLabel>
+                        Enter your 2FA code in the box below:
+                      </InputLabel>
+                      <div>
+                        <OTPInput
+                          style={{ paddingRight: "10px" }}
+                          min="1"
+                          value={this.state.code2fa}
+                          type="text"
+                          size="medium"
+                          onChange={this.code2fa.bind(this)}
+                          name="2FA code"
+                        />
+                        {this.validator1.message(
+                          "2FA code",
+                          this.state.code2fa,
+                          "required|numeric|min:6|max:6",
+                          "text-danger-validation",
+                          { required: "2FA field is required." }
+                        )}
+                      </div>
+                    </div>
+                  ) : (
                     <Code2FADiv>
                       <p>2FA is mandatory to deactivate your account.</p>
                       <p>Please click on below link to enable 2FA.</p>
                       <Link to={"/editProfile"}>Click here</Link>
                     </Code2FADiv>
                   )}
-              </NewP>
-              <DeactivateButtonWarp className="final_deactivate">
-                <DeButtonDiv
-                  className="final_deactivate"
-                  onClick={this.closeModal}
-                >
-                  <DeNewButton>Cancel</DeNewButton>
-                </DeButtonDiv>
-                {this.state.user2fastatus ? (
+                </NewP>
+                <DeactivateButtonWarp className="final_deactivate">
                   <DeButtonDiv
                     className="final_deactivate"
                     onClick={this.closeModal}
                   >
                     <DeNewButton>Cancel</DeNewButton>
                   </DeButtonDiv>
-                ) : (
+                  {this.state.user2fastatus ? (
+                    <DeButtonDiv
+                      className="right_btn final_deactivate"
+                      onClick={this.deleteUserAccount}
+                    >
+                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                    </DeButtonDiv>
+                  ) : (
                     <DeButtonDiv
                       disabled
                       className="right_btn final_deactivate disabled"
@@ -1482,9 +1475,94 @@ class Acc_settings extends Component {
                       <DeNewButton className="right_text">Confirm</DeNewButton>
                     </DeButtonDiv>
                   )}
-              </DeactivateButtonWarp>
-            </div>
-          </DeactivateWrapper>
+                </DeactivateButtonWarp>
+              </div>
+            </DeactivateWrapper>
+          ) : (
+            <DeactivateWrapper className="wrapper" id="wrapper">
+              {/* <Description>
+                *Any funds in your wallet will no longer be accessible after
+                deactivation of account.
+              </Description> */}
+              <div className="nav__body">
+                <NewP className="deactivate deactivate_no_funds">
+                  <InputLabel>Type 'DEACTIVATE' in the box below:</InputLabel>
+                  <div className="otp-input-wrap">
+                    <OTPInput
+                      className="otp-input"
+                      value={this.state.deactivateText}
+                      size="medium"
+                      onChange={this.deactivateText.bind(this)}
+                      name="ip"
+                      style={{ marginBottom: "20px" }}
+                    />
+                    {this.validator1.message(
+                      "text",
+                      this.state.deactivateText,
+                      "required|matchDeactivate",
+                      "text-danger-validation",
+                      { required: "This field is required." }
+                    )}
+                  </div>
+                  {this.state.user2fastatus ? (
+                    <div>
+                      <InputLabel>
+                        Enter your 2FA code in the box below:
+                      </InputLabel>
+                      <div>
+                        <OTPInput
+                          style={{ paddingRight: "10px" }}
+                          min="1"
+                          value={this.state.code2fa}
+                          type="text"
+                          size="medium"
+                          onChange={this.code2fa.bind(this)}
+                          name="2FA code"
+                        />
+                        {this.validator1.message(
+                          "2FA code",
+                          this.state.code2fa,
+                          "required|numeric|min:6|max:6",
+                          "text-danger-validation",
+                          { required: "2FA field is required." }
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <Code2FADiv>
+                      <p>2FA is mandatory to deactivate your account.</p>
+                      <p>Please click on below link to enable 2FA.</p>
+                      <Link to={"/editProfile"}>Click here</Link>
+                    </Code2FADiv>
+                  )}
+                </NewP>
+                <DeactivateButtonWarp className="final_deactivate">
+                  <DeButtonDiv
+                    className="final_deactivate"
+                    onClick={this.closeModal}
+                  >
+                    <DeNewButton>Cancel</DeNewButton>
+                  </DeButtonDiv>
+                  {this.state.user2fastatus ? (
+                    <DeButtonDiv
+                      className="right_btn final_deactivate"
+                      onClick={this.deleteUserAccount}
+                    >
+                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                    </DeButtonDiv>
+                  ) : (
+                    <DeButtonDiv
+                      disabled
+                      className="right_btn final_deactivate disabled"
+                      onClick={this.deleteUserAccount}
+                    >
+                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                    </DeButtonDiv>
+                  )}
+                </DeactivateButtonWarp>
+              </div>
+            </DeactivateWrapper>
+          )}
         </VerifyModal>
       </AccWrap>
     );
