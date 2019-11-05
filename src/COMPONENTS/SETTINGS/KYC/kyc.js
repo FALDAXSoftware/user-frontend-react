@@ -49,6 +49,9 @@ const KYCProgress = styled.div`
 `;
 const DoneWrap = styled.div`
   margin-top: 80px;
+  & .icon-display{
+    fontSize: 50px;
+  }
 `;
 const KycSucc = styled.div`
   width: 80%;
@@ -149,7 +152,7 @@ class KYC extends Component {
         {/* {this.props.is_kyc_done === 2 && <Tier {...this.props} />} */}
         {/* tier end */}
         {this.props.is_kyc_done === 0 && (
-          <Tier tier1_upgrade={true} history={this.props.history}  />
+          <Tier tier1_upgrade={true} history={this.props.history} />
           // <div>
           //   {next !== 5 && (
           //     <div>
@@ -202,7 +205,7 @@ class KYC extends Component {
         {this.props.is_kyc_done === 1 && (
           <DoneWrap>
             <Icon
-              style={{ fontSize: "50px" }}
+              className="icon-display"
               type="info-circle"
               theme="twoTone"
               twoToneColor="#ffc107"

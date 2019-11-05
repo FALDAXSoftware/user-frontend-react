@@ -65,6 +65,10 @@ const Ref_div = styled.div`
     border-radius: 10px;
     height:auto;
 
+    & .coin-value{
+        width: 200px !important;
+    }
+
     .CoinsEarned
     {
         
@@ -242,6 +246,11 @@ const RefTable = styled(Table)`
         color:${props => props.theme.mode === "dark" ? "white" : "black"};
     }
 `
+
+export const CopiedText = styled.div`
+    text-align: left;
+`
+
 class Referral extends Component {
     constructor(props) {
         super(props);
@@ -452,7 +461,7 @@ class Referral extends Component {
                             <Ref_text>YOUR REFERRAL LINK</Ref_text>
                             <CopyToClipboard text={referralLink}
                                 onCopy={() => this.setState({ copied: true })}>
-                                <div style={{ textAlign: 'left' }}>
+                                <CopiedText>
                                     <RefInput
                                         value={this.props.profileDetails.referral_code}
                                         className={this.state.searchCSS}
@@ -461,7 +470,7 @@ class Referral extends Component {
                                         size="large"
                                         onSearch={value => this.SearchText()}
                                     />
-                                </div>
+                                </CopiedText>
                             </CopyToClipboard>
                         </Ref_leftcol>
                         <Ref_rightcol sm={24} md={6}>
@@ -477,7 +486,7 @@ class Referral extends Component {
                             <Row>
                                 <Col xs={24} sm={24} md={8}>
                                     <div className="ColWrap">
-                                        <Select onChange={this.coinsEarned} value={this.state.coinSelected} style={{ width: "200px" }}>
+                                        <Select onChange={this.coinsEarned} value={this.state.coinSelected} className="coin-value">
                                             {this.state.referredCoin.map(function (temp) {
                                                 return (
                                                     <Option value={temp.coin_name}>{temp.coin_name}</Option>
