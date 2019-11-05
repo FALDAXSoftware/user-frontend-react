@@ -1347,9 +1347,12 @@ class History extends Component {
                                 var fill_price = temps.execution_report.SettlCurrAmt.toFixed(
                                   8
                                 );
-                                var amount = (
-                                  temps.execution_report.CumQty - fees_total
-                                ).toFixed(8);
+                                // var amount = (
+                                //   temps.execution_report.CumQty - fees_total
+                                // ).toFixed(8);
+                                var amount = parseFloat(temps.quantity).toFixed(
+                                  8
+                                );
 
                                 return (
                                   <tr>
