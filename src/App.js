@@ -24,6 +24,7 @@ import { faStroopwafel } from "@fortawesome/free-solid-svg-icons";
 import AppRouter from "routes";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import NotFound from "./SHARED-COMPONENTS/NotFound";
+import TradeView from "./SHARED-COMPONENTS/TradeView";
 const SignupForm = lazy(() =>
   import("COMPONENTS/LANDING/USERFORMS/signup_form")
 );
@@ -313,7 +314,11 @@ class App extends Component {
                       title="Trading View"
                       component={Chart}
                     /> */}
-
+                    <Route
+                      path="/exchange-trade"
+                      title="Iframe"
+                      component={TradeView}
+                    />
                     <RestrictedRoute
                       path="/"
                       component={AppRouter}
