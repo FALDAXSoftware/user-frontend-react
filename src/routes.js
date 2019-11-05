@@ -237,18 +237,21 @@ class AppRouter extends Component {
           timeout={30 * 60 * 1000}
         />
         {/* {console.log("App.js")} */}
-        {routes.map(singleRoute => {
-          const { path, exact, ...otherProps } = singleRoute;
-          return (
-            <Route
-              exact={exact === false ? false : true}
-              key={singleRoute.path}
-              path={`${singleRoute.path}`}
-              {...otherProps}
-              {...this.props}
-            />
-          );
-        })}
+        <Switch>
+          {routes.map(singleRoute => {
+            const { path, exact, ...otherProps } = singleRoute;
+            return (
+              <Route
+                exact={exact === false ? false : true}
+                key={singleRoute.path}
+                path={`${singleRoute.path}`}
+                {...otherProps}
+                {...this.props}
+              />
+            );
+          })}
+          <Route component={NotFound} />
+        </Switch>
       </div>
     );
   }

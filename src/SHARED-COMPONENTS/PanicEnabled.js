@@ -5,6 +5,28 @@ import { withRouter } from "react-router-dom";
 import { globalVariables } from "Globals.js";
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
 import { ModalWrap } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
+import styled from "styled-components";
+
+export const ImageDisplay = styled.img`
+    margin-left: 10px;
+`
+
+export const PanicDisplay = styled.h3`
+    font-family: Open Sans;
+    font-size: 40px;
+    text-align: center;
+    color: rgb(3, 170, 249);
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+`
+
+export const PanicText = styled.p`
+    fontfamily: Open Sans;
+    font-size: 14px;
+    text-align: center;
+    color: black;
+`
 
 /* const API_URL = globalVariables.API_URL; */
 
@@ -73,7 +95,7 @@ class PanicEnabled extends Component {
             this.setState({ visible: false, email_msg: "" });
           }
         })
-        .catch(error => {});
+        .catch(error => { });
     } else {
       this.setState({ email_msg: "*email address not valid" });
       this.openNotificationWithIcon(
@@ -90,9 +112,8 @@ class PanicEnabled extends Component {
           title={
             <div>
               <img alt="FALDAX" src={_COMINGIMG} />{" "}
-              <img
+              <ImageDisplay
                 alt="FALDAX"
-                style={{ marginLeft: "10px" }}
                 src={_COMINGIMG2}
               />
             </div>
@@ -112,27 +133,10 @@ class PanicEnabled extends Component {
           className="simple-maps"
         >
           <ModalWrap className="kyc-wrap">
-            <h3
-              style={{
-                fontFamily: "Open Sans",
-                fontSize: "40px",
-                textAlign: "center",
-                color: "rgb(3, 170, 249)",
-                fontWeight: "600",
-                marginTop: "10px",
-                marginBottom: "10px"
-              }}
-            >
+            <PanicDisplay>
               System Lockout In Effect
-            </h3>
-            <p
-              style={{
-                fontFamily: "Open Sans",
-                fontSize: "14px",
-                textAlign: "center",
-                color: "black"
-              }}
-            >
+            </PanicDisplay>
+            <PanicText>
               Our systems have detected unwarranted and suspicious behavior
               which triggered our automatic lockout protocols. In order to
               ensure the safety and security of your assets and information, all
@@ -149,7 +153,7 @@ class PanicEnabled extends Component {
               assets. Rest assured that we are working to ensure that goal, and
               we thank you for your support and patience.
               {/* {this.props.data} */}
-            </p>
+            </PanicText>
             {/* <Sub_wrap>
                             <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>
                             <Email_input placeholder="Email Address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
