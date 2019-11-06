@@ -984,9 +984,9 @@ class TradeView extends React.Component {
   }
   render() {
     return (
-      <ConversionWrap>
+      <ConversionWrap className="tradeview">
         {/* <Navigation conversion={true} /> */}
-        <ConversionContainer>
+        <ConversionContainer className="trade-view">
           <MainRow>
             <ConversionRadioRow>
               <Radio.Group
