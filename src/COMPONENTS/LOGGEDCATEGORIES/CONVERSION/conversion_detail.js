@@ -89,7 +89,10 @@ class ConversionDetail extends React.Component {
       OrdType: "",
       orderQuantity: "",
       Quantity: "",
-      OriginalQuantity: ""
+      OriginalQuantity: "",
+      minCrypto: 0,
+      minCurrency: 0,
+      disabledClass: ""
     };
     io = this.props.io;
     this.timeout = null;
@@ -141,6 +144,20 @@ class ConversionDetail extends React.Component {
             return false;
           }
         }
+      },
+      minCryptoValid: {
+        message: `Minimum amount should be greater than ${this.state.minCrypto}`,
+        rule: (val, params, validator) => {
+          // console.log("this is val?????", val);
+          if (val >= this.state.minCrypto) {
+            // console.log("here call");
+            return true;
+          } else {
+            // console.log("else call");
+            return false;
+          }
+        },
+        required: true // optional
       }
     });
     this.validator2 = new SimpleReactValidator({
@@ -191,6 +208,17 @@ class ConversionDetail extends React.Component {
             return false;
           }
         }
+      },
+      minCurrValid: {
+        message: `Minimum amount should be greater than ${this.state.minCurrency}`,
+        rule: (val, params, validator) => {
+          if (val >= this.state.minCurrency) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+        required: true // optional
       }
     });
     // this.getCurrencies = this.getCurrencies.bind(this);
@@ -250,10 +278,10 @@ class ConversionDetail extends React.Component {
   componentDidMount() {
     this.getCrypto();
     // this.getCurrencies();
-    this.getFiatCurrencyList();
+    // this.getFiatCurrencyList();
   }
   sendCurrencyChange(e) {
-    console.log("Send Currency Change");
+    // console.log("Send Currency Change");
     clearTimeout(this.timeout);
     this.clearValidation();
     this.state.JSTPairList.map((element, i) => {
@@ -294,42 +322,12 @@ class ConversionDetail extends React.Component {
       this.validator2.showMessages();
       this.forceUpdate();
     }
-    // if (e.target.value > 0 && e.target.value !== null) {
-    //   this.clearValidation();
-    //   this.timeout = setTimeout(this.showCalculatedValues, 1000);
-    //   this.setState(
-    //     {
-    //       sendCurrencyInput: e.target.value
-    //     },
-    //     () => {
-    //       this.state.JSTPairList.map((element, i) => {
-    //         if (
-    //           element.crypto === this.state.crypto &&
-    //           element.currency === this.state.currency
-    //         ) {
-    //           if (element.original_pair != element.order_pair) {
-    //             this.setState({
-    //               OrdType: "2"
-    //             });
-    //           } else {
-    //             this.setState({
-    //               OrdType: "1"
-    //             });
-    //           }
-    //           this.setState({
-    //             original_pair: element.original_pair,
-    //             order_pair: element.order_pair
-    //           });
-    //         }
-    //       });
-    //     }
-    //   );
-    // }
   }
   recieveCurrencyChange(e) {
+    // console.log("this is???????", e);
     clearTimeout(this.timeout);
-    console.log("Recieve Currency Change");
     this.clearValidation();
+    // console.log("Recieve Currency Change");
     this.state.JSTPairList.map((element, i) => {
       if (
         element.crypto === this.state.crypto &&
@@ -482,7 +480,7 @@ class ConversionDetail extends React.Component {
         original_pair: this.state.original_pair,
         order_pair: this.state.order_pair
       };
-      console.log(values);
+      // console.log(values);
     } else {
       var values = {
         Symbol: this.state.original_pair,
@@ -497,7 +495,7 @@ class ConversionDetail extends React.Component {
         order_pair: this.state.order_pair
       };
     }
-    console.log("Values-----------", values);
+    // console.log("Values-----------", values);
     if (
       (values.OrderQty === null || values.OrderQty === "") &&
       this.state.includeFees === 1
@@ -614,11 +612,11 @@ class ConversionDetail extends React.Component {
               });
             }
             if (this.state.includeFees === 1 && this.state.OrdType === "1") {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.original_value
-              );
+              // console.log(
+              //   this.state.includeFees,
+              //   this.state.OrdType,
+              //   responseData.data.original_value
+              // );
               this.setState({
                 OriginalQuantity: parseFloat(
                   responseData.data.original_value
@@ -989,11 +987,24 @@ class ConversionDetail extends React.Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 200) {
+          var cryptoData = responseData.coinList,
+            minLimit,
+            minCurrLimit;
+          for (var i = 0; i < cryptoData.length; i++) {
+            if (cryptoData[i].coin == this.state.crypto) {
+              minLimit = cryptoData[i].jst_min_coin_limit;
+            }
+            if (cryptoData[i].coin == this.state.currency) {
+              minCurrLimit = cryptoData[i].jst_min_coin_limit;
+            }
+          }
           this.setState({
             cryptoList: responseData.coinList,
             currencyList: responseData.coinList,
             originalCoinList: responseData.coinList,
-            JSTPairList: responseData.getJSTPair
+            JSTPairList: responseData.getJSTPair,
+            minCrypto: minLimit,
+            minCurrency: minCurrLimit
           });
           this.setState({
             loader: false
@@ -1003,6 +1014,10 @@ class ConversionDetail extends React.Component {
       .catch(error => {});
   }
   handleCryptoChange(value, option: Option) {
+    console.log(
+      "option.props.selectedData.min_limit",
+      option.props.selectedData.jst_min_coin_limit
+    );
     if (value === this.state.currency) {
       this.state.currencyList.map((element, i) => {
         if (element.coin === this.state.currency) {
@@ -1014,14 +1029,16 @@ class ConversionDetail extends React.Component {
         }
       });
       this.setState({
-        currency: this.state.currencyList[0].coin
+        currency: this.state.currencyList[0].coin,
+        minCurrency: this.state.currencyList[0].jst_min_coin_limit
       });
     }
     clearTimeout(this.timeout);
     this.setState(
       {
         crypto: value,
-        cryptoList: this.state.originalCoinList
+        cryptoList: this.state.originalCoinList,
+        minCrypto: option.props.selectedData.jst_min_coin_limit
       },
       () => {
         this.state.JSTPairList.map((element, i) => {
@@ -1091,6 +1108,7 @@ class ConversionDetail extends React.Component {
     );
   }
   handleCurrencyChange(value, option: Option) {
+    console.log("option.props.selectedData.min_limit", option.props);
     if (value === this.state.crypto) {
       this.state.cryptoList.map((element, i) => {
         if (element.coin === this.state.crypto) {
@@ -1102,14 +1120,16 @@ class ConversionDetail extends React.Component {
         }
       });
       this.setState({
-        crypto: this.state.cryptoList[0].coin
+        crypto: this.state.cryptoList[0].coin,
+        minCrypto: this.state.cryptoList[0].jst_min_coin_limit
       });
     }
     clearTimeout(this.timeout);
     this.setState(
       {
         currency: value,
-        currencyList: this.state.originalCoinList
+        currencyList: this.state.originalCoinList,
+        minCurrency: option.props.selectedData.jst_min_coin_limit
       },
       () => {
         this.state.JSTPairList.map((element, i) => {
@@ -1214,12 +1234,12 @@ class ConversionDetail extends React.Component {
         if (e.target.value === 1) {
           this.timeout = setTimeout(this.showCalculatedValues, 1000);
           this.setState({
-            recieveCurrencyInput: 1
+            recieveCurrencyInput: this.state.minCrypto
           });
         } else {
           this.timeout = setTimeout(this.showCalculatedValues, 1000);
           this.setState({
-            sendCurrencyInput: 1
+            sendCurrencyInput: this.state.minCurrency
           });
         }
       }
@@ -1245,6 +1265,7 @@ class ConversionDetail extends React.Component {
     if (this.state.includeFees === 2) {
       if (this.validator2.allValid()) {
         this.calculateOrderVaules();
+
         // alert("success");
       } else {
         this.validator2.showMessages();
@@ -1396,11 +1417,11 @@ class ConversionDetail extends React.Component {
                           {this.validator1.message(
                             "recieve currency",
                             this.state.recieveCurrencyInput,
-                            `required|numeric|gtzero|decimalrestrict8`,
-                            "text-danger-validation"
-                            // {
-                            //   minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
-                            // }
+                            `required|numeric|gtzero|decimalrestrict8|minCryptoValid`,
+                            "text-danger-validation",
+                            {
+                              minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
+                            }
                           )}
                         </Col>
                         <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
@@ -1504,7 +1525,7 @@ class ConversionDetail extends React.Component {
                             placeholder="0"
                             step="0.01"
                           />
-                          {this.validator1.message(
+                          {/* {this.validator1.message(
                             "fiat value",
                             this.state.fiatJSTValue,
                             `required|numeric|gtzerofiat|decimalrestrict2`,
@@ -1512,7 +1533,7 @@ class ConversionDetail extends React.Component {
                             // {
                             //   minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
                             // }
-                          )}
+                          )} */}
                         </Col>
                         <Col
                           xs={12}
@@ -1655,11 +1676,11 @@ class ConversionDetail extends React.Component {
                           {this.validator2.message(
                             "send currency",
                             this.state.sendCurrencyInput,
-                            `required|numeric|gtzero|decimalrestrict8`,
-                            "text-danger-validation"
-                            // {
-                            //   minCurrValid: `Minimum Currency limit is ${this.state.minCurrency}`
-                            // }
+                            `required|numeric|gtzero|decimalrestrict8|minCurrValid`,
+                            "text-danger-validation",
+                            {
+                              minCurrValid: `Minimum limit is ${this.state.minCurrency}`
+                            }
                           )}
                         </Col>
                         <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
@@ -1704,7 +1725,7 @@ class ConversionDetail extends React.Component {
                                           <DropDownOption
                                             key={index}
                                             value={element.coin}
-                                            selecteddata={element}
+                                            selectedData={element}
                                           >
                                             {" "}
                                             <DropIcon
@@ -1787,7 +1808,7 @@ class ConversionDetail extends React.Component {
                             placeholder="0"
                             step="0.01"
                           />
-                          {this.validator2.message(
+                          {/* {this.validator2.message(
                             "fiat value",
                             this.state.fiatJSTValue,
                             `required|numeric|gtzerofiat|decimalrestrict2`,
@@ -1795,7 +1816,7 @@ class ConversionDetail extends React.Component {
                             // {
                             //   minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
                             // }
-                          )}
+                          )} */}
                         </Col>
                         <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
                           <CryptoFiatRow>
@@ -1891,7 +1912,7 @@ class ConversionDetail extends React.Component {
               <Row>
                 <Col>
                   <ConversionSubmitBtn
-                    className="conversion_btn"
+                    className={`conversion_btn ${this.state.disabledClass}`}
                     onClick={this.btnClicked}
                     type="primary"
                     size="large"
