@@ -25,6 +25,8 @@ import AppRouter from "routes";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import NotFound from "./SHARED-COMPONENTS/NotFound";
 import TradeView from "./SHARED-COMPONENTS/TradeView";
+import SimplexView from "./SHARED-COMPONENTS/SimplexView";
+
 const SignupForm = lazy(() =>
   import("COMPONENTS/LANDING/USERFORMS/signup_form")
 );
@@ -318,6 +320,11 @@ class App extends Component {
                       path="/exchange-trade"
                       title="Iframe"
                       component={TradeView}
+                    />
+                    <Route
+                      path="/exchange-trade1"
+                      title="Iframe"
+                      component={SimplexView}
                     />
                     <RestrictedRoute
                       path="/"
