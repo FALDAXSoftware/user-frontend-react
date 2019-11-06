@@ -980,7 +980,18 @@ class TradeView extends React.Component {
     this.setState({
       loader: false
     });
-    window.location = TRADE_URL + "/login/";
+    // window.location = TRADE_URL + "/login/";
+    // if (this.props.isLoggedIn) {
+    //   window.open(
+    //     TRADE_URL + "/crypto-conversion/",
+    //     "_blank" // <- This is what makes it open in a new window.
+    //   );
+    // } else {
+    window.open(
+      TRADE_URL + "/login/",
+      "_blank" // <- This is what makes it open in a new window.
+    );
+    // }
   }
   render() {
     return (
