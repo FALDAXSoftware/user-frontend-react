@@ -278,7 +278,7 @@ class ConversionDetail extends React.Component {
   componentDidMount() {
     this.getCrypto();
     // this.getCurrencies();
-    this.getFiatCurrencyList();
+    // this.getFiatCurrencyList();
   }
   sendCurrencyChange(e) {
     // console.log("Send Currency Change");
