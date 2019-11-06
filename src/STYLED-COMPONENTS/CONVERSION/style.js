@@ -19,6 +19,9 @@ export const ConversionContainer = styled(Container)`
   &.trade-view {
     padding-top: 10px;
   }
+  &.trade-view-conversion {
+    padding: 100px 15px;
+  }
   @media (max-width: 991px) {
     & {
       padding-top: 100px;
