@@ -273,7 +273,10 @@ class SimplexView extends React.Component {
     this.setState({
       loader: false
     });
-    window.location = TRADE_URL + "/login/";
+    window.open(
+      TRADE_URL + "/login/",
+      "_blank" // <- This is what makes it open in a new window.
+    );
   }
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
