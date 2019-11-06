@@ -250,7 +250,16 @@ class AppRouter extends Component {
               />
             );
           })}
-          <Route component={NotFound} />
+          <Route
+            component={NotFound}
+            // path="/privacy-policy"
+            // loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
+          />
+          {/* <Route
+  path="/privacy-policy"
+  component={ Redirect }
+  loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
+  /> */}
         </Switch>
       </div>
     );

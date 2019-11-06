@@ -1,31 +1,23 @@
 import React, { Component } from "react";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
-import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
-import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
-import { Link } from "react-router-dom";
 import { globalVariables } from "Globals.js";
 
-let API_URL = globalVariables.API_URL;
+let API_URL = globalVariables.WordpressSiteURL;
 
 class NotFound extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    // this.state = { ...props };
+    this.state = {
+      loader: true
+    };
   }
-  componentDidMount() {
-    document.getElementById("front").click();
+  componentWillMount() {
+    window.location = API_URL + "/page-not-found/";
+    this.setState({ loader: false });
   }
   render() {
-    return (
-      <div>
-        <a
-          id="front"
-          href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
-        >
-          test
-        </a>
-      </div>
-    );
+    return <div> {this.state.loader == true ? <FaldaxLoader /> : ""}</div>;
   }
 }
 
