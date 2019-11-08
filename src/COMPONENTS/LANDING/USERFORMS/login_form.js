@@ -86,8 +86,8 @@ const RightWrap = styled.div`
   display: flex;
   align-items: center;
   height: 100vh;
-  > div.fadeInDown{
-    width:100%;
+  > div.fadeInDown {
+    width: 100%;
   }
   @media (max-width: 991px) {
     height: auto;
@@ -243,11 +243,11 @@ const Signa = styled.a`
   }
 `;
 export const BackUpOtp = styled.div`
-    padding-top: 10px !important;
-`
+  padding-top: 10px !important;
+`;
 export const ButtonValue = styled.input`
-  display:none;
-`
+  display: none;
+`;
 const FAI = styled.img`
   margin-left: -35px;
   cursor: pointer;
@@ -299,12 +299,40 @@ class Login_Form extends Component {
   }
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      console.log(
-        this.state.isOtpRequired,
-        this.state.showBackUpInput,
-        this.state.backupIcon,
-        this.state.otpIcon
-      );
+      // console.log(
+      //   this.state.isOtpRequired,
+      //   this.state.showBackUpInput,
+      //   this.state.backupIcon,
+      //   this.state.otpIcon
+      // );
+      if (
+        this.state.isOtpRequired === true &&
+        this.state.showBackUpInput === false
+      ) {
+        if (value.otp === null || value.otp === undefined) {
+          this.setState({ otpIcon: false });
+          document.querySelector("#otp_icon_success").style.display = "none";
+          document.querySelector("#otp_icon_fail").style.display =
+            "inline-block";
+          document.querySelectorAll(".otp_msg")[0].style.display = "block";
+          this.setState({ otp_msg: "Otp is required." });
+        }
+      } else if (
+        this.state.showBackUpInput === true &&
+        this.state.isOtpRequired === true
+      ) {
+        if (
+          value.twofactor_backup_code === null ||
+          value.twofactor_backup_code === undefined
+        ) {
+          this.setState({ backupIcon: false });
+          document.querySelector("#backup_icon_success").style.display = "none";
+          document.querySelector("#backup_icon_fail").style.display =
+            "inline-block";
+          document.querySelectorAll(".backup_msg")[0].style.display = "block";
+          this.setState({ backup_msg: "Back-up code is required." });
+        }
+      }
       if (
         error === null &&
         this.state.emailIcon === true &&
@@ -318,7 +346,6 @@ class Login_Form extends Component {
         document.querySelectorAll(".pass_msg")[0].style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "none";
         this.setState({ pass_msg: null, email_msg: null });
-
         var obj = {};
         obj["email"] = value.email;
         obj["password"] = value.password;
@@ -352,7 +379,6 @@ class Login_Form extends Component {
           );
         }
       } else {
-        console.log(error, value);
         if (error !== null) {
           if (
             error["password"] !== undefined &&
@@ -376,14 +402,14 @@ class Login_Form extends Component {
               this.setState({ email_msg: "Email is required" });
           }
         } else {
-          console.log(this.state.backupIcon);
-          if (this.state.backupIcon === true)
+          if (this.state.backupIcon === true) {
             this.onChangeField(
               value.twofactor_backup_code,
               "twofactor_backup_code"
             );
-          else if (this.state.otpIcon === true)
+          } else if (this.state.otpIcon === true) {
             this.onChangeField(value.otp, "otp");
+          }
         }
       }
     });
@@ -625,7 +651,6 @@ class Login_Form extends Component {
       .then(responseData => {
         this.setState({ loader: false });
         if (responseData.status === 200) {
-          console.log("responseData 200", responseData);
           responseData.message = "";
           this.props.loginAction(responseData);
           this.setState({ verify: true });
@@ -635,7 +660,6 @@ class Login_Form extends Component {
             responseData.message
           );
         } else if (responseData.status === 201) {
-          console.log("responseData 201", responseData);
           this.setState({ verify: true });
           this.openNotificationWithIcon(
             "success",
@@ -771,14 +795,12 @@ class Login_Form extends Component {
   }
 
   onClickTFA() {
-    console.log("onClickTFA", !this.state.showBackUpInput);
     this.setState({
       showBackUpInput: !this.state.showBackUpInput
     });
   }
 
   forgotBackup() {
-    console.log(this.props.form.getFieldValue("email"));
     var email = this.props.form.getFieldValue("email");
     this.props.history.push(`/profile-backup/${encodeURIComponent(email)}`);
   }
@@ -855,11 +877,11 @@ class Login_Form extends Component {
                       {this.state.typeEye === "password" ? (
                         <FAI src={_EYE} onClick={this.handleEye.bind(this)} />
                       ) : (
-                          <ActiveFAI
-                            src={_ACTIVEEYE}
-                            onClick={this.handleEye.bind(this)}
-                          />
-                        )}
+                        <ActiveFAI
+                          src={_ACTIVEEYE}
+                          onClick={this.handleEye.bind(this)}
+                        />
+                      )}
                       <PassIconS
                         id="passlog_icon_success"
                         type="check-circle"
@@ -890,7 +912,7 @@ class Login_Form extends Component {
                               onChange(e) {
                                 me.onChangeField(e.target.value, "otp");
                               }, // have to write original onChange here if you need
-                              rules: [{ required: false }]
+                              rules: [{ required: true }]
                             })}
                           />
                           <UserIconS
@@ -911,12 +933,9 @@ class Login_Form extends Component {
                         </PassReq>
                       </div>
                     ) : (
-                        ""
-                      )}
-                    <ButtonValue
-                      type="submit"
-                      value="Submit"
-                    />
+                      ""
+                    )}
+                    <ButtonValue type="submit" value="Submit" />
                   </form>
                   {!this.state.isOtpRequired && (
                     <CheckWrap>
@@ -934,8 +953,8 @@ class Login_Form extends Component {
                       </Forgot>
                     </CheckWrap>
                   ) : (
-                      ""
-                    )}
+                    ""
+                  )}
                   {this.state.showBackUpInput ? (
                     <CheckWrap>
                       {/* <Remember>
@@ -945,8 +964,8 @@ class Login_Form extends Component {
                       </Forgot>
                     </CheckWrap>
                   ) : (
-                      ""
-                    )}
+                    ""
+                  )}
                   {this.state.showBackUpInput && (
                     <BackUpOtp className="backuptext">
                       <OtpLabel>
