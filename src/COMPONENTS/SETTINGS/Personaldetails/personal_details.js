@@ -277,7 +277,8 @@ class PersonalDetails extends Component {
       dateFIcon: null,
       remove_pic: false,
       fiat: "",
-      date_format: ""
+      date_format: "",
+      showFileInput: true
     };
     this.handleProfile = this.handleProfile.bind(this);
   }
@@ -462,11 +463,19 @@ class PersonalDetails extends Component {
     /* this.removeNotification("warning"); */
     /* document.getElementById("file").value = ""; */
     if (this.state.profileImg !== _DEFAULTPROFILE) {
-      this.setState({
-        remove_pic: true,
-        profileImg: _DEFAULTPROFILE,
-        profileImage: undefined
-      });
+      this.setState(
+        {
+          remove_pic: true,
+          profileImg: _DEFAULTPROFILE,
+          profileImage: undefined,
+          showFileInput: false
+        },
+        () => {
+          this.setState({
+            showFileInput: true
+          });
+        }
+      );
     }
     /* 
         this.props.removepicAction(this.props.isLoggedIn, formData) */
@@ -933,12 +942,14 @@ class PersonalDetails extends Component {
                   <ImageDiv src={this.state.profileImg} />
                 </div>
                 <div>
-                  <Imageinput
-                    type="file"
-                    onChange={this.handleProfile}
-                    name="file"
-                    id="file"
-                  />
+                  {this.state.showFileInput && (
+                    <Imageinput
+                      type="file"
+                      onChange={this.handleProfile}
+                      name="file"
+                      id="file"
+                    />
+                  )}
                   <Imageup>
                     <Imageupload htmlFor="file">Upload New Photo</Imageupload>
                   </Imageup>

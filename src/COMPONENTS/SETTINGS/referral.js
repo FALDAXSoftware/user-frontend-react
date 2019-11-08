@@ -370,8 +370,8 @@ class Referral extends Component {
           this.setState({
             referredData: responseData.data,
             referredCoin: fields,
-            totalEarned: sum.toFixed(4),
-            leftOutRef: sum2.toFixed(4),
+            totalEarned: sum.toFixed(5),
+            leftOutRef: sum2.toFixed(8),
             loader: false
           });
         }
@@ -443,12 +443,17 @@ class Referral extends Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 200) {
-          this.getReferralData();
+          // this.getReferralData();
           this.openNotificationWithIcon(
             "success",
             "Success",
             responseData.message
           );
+          this.setState({
+            coinSelected: "",
+            perCoinEarned: ""
+          });
+          this.getReferralData();
         } else {
           this.openNotificationWithIcon("error", "Error", responseData.message);
         }
@@ -458,6 +463,7 @@ class Referral extends Component {
         /* console.log(error) */
         this.setState({ loader: false });
       });
+    // this.getReferralData();
   }
   render() {
     const { referralLink, referTable, referredData } = this.state;
@@ -492,7 +498,11 @@ class Referral extends Component {
               <Right_value>
                 {this.state.leftOutRef} {this.props.profileDetails.fiat}
               </Right_value>
-              <CollectButton onClick={this.collectRefCoins}>
+              <CollectButton
+                onClick={() => {
+                  this.collectRefCoins();
+                }}
+              >
                 Collect
               </CollectButton>
             </Ref_rightcol>
@@ -525,7 +535,7 @@ class Referral extends Component {
                     {this.state.perCoinEarned !== "" ? (
                       <span className="amtSpan">
                         {" "}
-                        {this.state.perCoinEarned.toFixed(4)}{" "}
+                        {this.state.perCoinEarned.toFixed(8)}{" "}
                         {this.state.coinSelected}
                       </span>
                     ) : (
