@@ -249,6 +249,13 @@ export const RadioBorderRow = styled(Row)`
       color: #a8acb3;
     }
   }
+  > .height-col {
+    height: 42px;
+  }
+  > .align-flex {
+    align-items: center;
+    display: flex;
+  }
   @media (max-width: 850px) {
     width: calc(100% - 30px);
     margin-bottom: 15px;
@@ -824,6 +831,14 @@ export const ConversionLeftCol = styled(Col)`
                   : "1px dashed black"};
               padding: 0px 0 10px 0;
               margin: 0 0 10px 0;
+            }
+            > .ant-row {
+              > .ant-col.left-style {
+                text-align: left;
+              }
+              > .ant-col.right-style {
+                text-align: right;
+              }
             }
           }
         }
