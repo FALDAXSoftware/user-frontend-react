@@ -1,33 +1,23 @@
 import styled from "styled-components";
-import {
-  FontAwesomeIcon
-} from "@fortawesome/react-fontawesome";
-import {
-  Row,
-  Col,
-  Button,
-  Pagination,
-  Table
-} from "antd";
-import {
-  Save
-} from "COMPONENTS/SETTINGS/Personaldetails/personal_details";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Row, Col, Button, Pagination, Table } from "antd";
+import { Save } from "COMPONENTS/SETTINGS/Personaldetails/personal_details";
 /* Styled- Components */
 
-export const AccWrap = styled.div `
+export const AccWrap = styled.div`
   margin-bottom: 50px;
 `;
-export const NotiWrap = styled.div `
+export const NotiWrap = styled.div`
   margin-top: 50px;
 `;
-export const NotiHead = styled.div `
+export const NotiHead = styled.div`
   font-size: 20px;
   font-family: "Open Sans";
   font-weight: 600;
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
 `;
-export const NotiDesc = styled.div `
+export const NotiDesc = styled.div`
   font-size: 16.008px;
   margin-top: 30px;
   font-family: "Open Sans";
@@ -40,15 +30,13 @@ export const NotiDesc = styled.div `
       props.theme.mode === "dark" ? "#3c4b64" : "rgb( 80, 80, 80 )"};
   }
 `;
-export const CheckWrap = styled(Row)
-`
+export const CheckWrap = styled(Row)`
   max-width: 730px;
   width: 100%;
   margin: auto;
   margin-top: 35px;
 `;
-export const CheckRow = styled(Row)
-`
+export const CheckRow = styled(Row)`
   text-align: left;
   @media (max-width: 992px) {
     margin-left: 160px;
@@ -63,31 +51,26 @@ export const CheckRow = styled(Row)
     margin-left: 100px;
   }
 `;
-export const CheckRow2 = styled(CheckRow)
-`
+export const CheckRow2 = styled(CheckRow)`
   margin-top: 20px;
   @media (max-width: 992px) {
     margin-top: 0px;
   }
 `;
-export const CheckCol = styled(Col)
-``;
-export const CheckCol2 = styled(CheckCol)
-``;
-export const CheckCol3 = styled(CheckCol)
-``;
-export const CheckCol4 = styled(CheckCol)
-``;
-export const HR = styled.hr `
+export const CheckCol = styled(Col)``;
+export const CheckCol2 = styled(CheckCol)``;
+export const CheckCol3 = styled(CheckCol)``;
+export const CheckCol4 = styled(CheckCol)``;
+export const HR = styled.hr`
   margin-top: 50px;
   width: 95%;
   border-top: 1px solid #ededed;
 `;
-export const LoginHistory = styled.div ``;
-export const HistoryHead = styled.div `
+export const LoginHistory = styled.div``;
+export const HistoryHead = styled.div`
   margin-top: 10px;
 `;
-export const Heading = styled.div `
+export const Heading = styled.div`
   font-size: 20px;
   font-family: "Open Sans";
   font-weight: 600;
@@ -99,7 +82,7 @@ export const Heading = styled.div `
   -webkit-transform: matrix(1, 0, 0, 0.99859542519785, 0, 0);
   -ms-transform: matrix(1, 0, 0, 0.99859542519785, 0, 0);
 `;
-export const Desc = styled.div `
+export const Desc = styled.div`
   font-size: 14.007px;
   font-family: "Open Sans";
   color: rgb(102, 102, 102);
@@ -107,11 +90,10 @@ export const Desc = styled.div `
   -webkit-transform: matrix(0.99956308705261, 0, 0, 0.99832082554207, 0, 0);
   -ms-transform: matrix(0.99956308705261, 0, 0, 0.99832082554207, 0, 0);
 `;
-export const FontAwesomeIconS = styled(FontAwesomeIcon)
-`
+export const FontAwesomeIconS = styled(FontAwesomeIcon)`
   color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
 `;
-export const TableWrap = styled.div `
+export const TableWrap = styled.div`
   margin-top: 30px;
   width: 36%;
   margin-left: auto;
@@ -132,10 +114,9 @@ export const TableWrap = styled.div `
     width: 90%;
   }
 `;
-export const HR2 = styled(HR)
-``;
-export const DeleteWrap = styled.div ``;
-export const DeleteHead = styled.div `
+export const HR2 = styled(HR)``;
+export const DeleteWrap = styled.div``;
+export const DeleteHead = styled.div`
   font-size: 20px;
   font-family: "Open Sans";
   font-weight: 600;
@@ -146,17 +127,16 @@ export const DeleteHead = styled.div `
   -ms-transform: matrix(1, 0, 0, 0.99882784793165, 0, 0);
   margin-top: 55px;
 `;
-export const DeleteDesc = styled.div `
+export const DeleteDesc = styled.div`
   margin-top: 30px;
-  display: flex; 
+  display: flex;
   justify-content: center;
   color: ${props => (props.theme.mode === "dark" ? "#3c4b64" : "")};
 `;
-export const DeleteBtn = styled.div `
+export const DeleteBtn = styled.div`
   margin-top: 35px;
 `;
-export const ButtonDel = styled(Button)
-`
+export const ButtonDel = styled(Button)`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#a21d1d" : "#fce8e8"};
   color: ${props => (props.theme.mode === "dark" ? "white" : "#fe1f1f")};
@@ -165,8 +145,7 @@ export const ButtonDel = styled(Button)
   border-radius: 40px;
   height: 50px;
 `;
-export const PaginationS = styled(Pagination)
-`
+export const PaginationS = styled(Pagination)`
   margin-top: 30px !important;
   & .ant-pagination-item-link {
     background-color: ${props =>
@@ -189,8 +168,7 @@ export const PaginationS = styled(Pagination)
 
 /* Threshold Notification */
 
-export const NotificationTable = styled(Table)
-`
+export const NotificationTable = styled(Table)`
   width: 800px;
   margin-left: auto;
   margin-right: auto;
@@ -229,18 +207,17 @@ export const NotificationTable = styled(Table)
     }
   }
 `;
-export const WrapTable = styled.div `
+export const WrapTable = styled.div`
   margin-top: 40px;
   overflow: auto;
   padding: 10px;
 `;
-export const AddButton = styled(Save)
-`
+export const AddButton = styled(Save)`
   width: 110px;
   margin-top: 30px;
 `;
 
-export const DeactivateButtonWarp = styled.div `
+export const DeactivateButtonWarp = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -249,7 +226,7 @@ export const DeactivateButtonWarp = styled.div `
     justify-content: flex-start;
   }
 `;
-export const DeButtonDiv = styled.button `
+export const DeButtonDiv = styled.button`
   display: flex;
   width: 48%;
   justify-content: center;
@@ -285,7 +262,7 @@ export const DeButtonDiv = styled.button `
     opacity: 0.5;
   }
 `;
-export const DeNewButton = styled.span `
+export const DeNewButton = styled.span`
   font-size: 16px;
   text-transform: uppercase;
   font-weight: 700;
@@ -295,7 +272,7 @@ export const DeNewButton = styled.span `
     color: #4c84ff;
   }
 `;
-export const SummaryTable = styled.table `
+export const SummaryTable = styled.table`
   width: 100%;
   margin: 0 0 30px 0;
   font-family: "Open sans";
@@ -305,7 +282,7 @@ export const SummaryTable = styled.table `
       > th {
         font-size: 14px;
         font-weight: normal;
-        color: #a3a3a3;
+        color: ${props => (props.theme.mode == "dark" ? "#617090" : "#a3a3a3")};
         padding: 10px;
         border: 1px solid #c6dfff;
         border-left: 0;
@@ -318,7 +295,7 @@ export const SummaryTable = styled.table `
       > td {
         font-size: 14px;
         font-weight: 600;
-        color: #000000;
+        color: ${props => (props.theme.mode == "dark" ? "#ffffff" : "#000000")};
         padding: 10px;
         border: 1px solid #c6dfff;
         border-left: 0;
@@ -328,13 +305,14 @@ export const SummaryTable = styled.table `
     > tr:last-child {
       > td {
         padding: 15px 10px;
-        background: #c6dfff;
+        background: ${props =>
+          props.theme.mode == "dark" ? "#01090f" : "#c6dfff"};
         font-size: 16px;
       }
     }
   }
 `;
-export const DeactivateWrapper = styled.div `
+export const DeactivateWrapper = styled.div`
   &.wrapper {
     width: 100%;
     height: 100%;
@@ -354,12 +332,12 @@ export const DeactivateWrapper = styled.div `
     flex-wrap: wrap;
   }
 `;
-export const DeactiveWrap = styled.div `
+export const DeactiveWrap = styled.div`
   &.hide {
     display: none;
   }
 `;
-export const Code2FADiv = styled.div `
+export const Code2FADiv = styled.div`
   > p {
     color: #000;
     margin: 0;
