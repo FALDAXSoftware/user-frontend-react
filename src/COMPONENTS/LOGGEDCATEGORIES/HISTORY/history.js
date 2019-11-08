@@ -171,6 +171,7 @@ class History extends Component {
       ],
       csvHeadersJST: [
         { label: "Coin", key: "symbol" },
+        { label: "Side", key: "side" },
         { label: "Date", key: "date" },
         { label: "Filled Price", key: "filled_price" },
         { label: "Amount", key: "amount" },
@@ -362,6 +363,7 @@ class History extends Component {
                       parseFloat(fees_total)
                   ).toFixed(8);
                   obj["symbol"] = symbol;
+                  obj["side"] = temp.side;
                   obj["date"] = date;
                   obj["filled_price"] = fill_price;
                   obj["amount"] = amount;
@@ -579,6 +581,7 @@ class History extends Component {
                   ).toFixed(8);
 
                   obj["symbol"] = symbol;
+                  obj["side"] = temp.side;
                   obj["date"] = date;
                   obj["filled_price"] = fill_price;
                   obj["amount"] = amount;
@@ -1323,6 +1326,7 @@ class History extends Component {
                         <thead>
                           <tr>
                             <th>Coin</th>
+                            <th>Side</th>
                             <th>Date</th>
                             <th>Filled Price</th>
                             <th>Amount</th>
@@ -1357,6 +1361,7 @@ class History extends Component {
                                 return (
                                   <tr>
                                     <td>{temps.symbol}</td>
+                                    <td>{temps.side}</td>
                                     <td>{date}</td>
                                     <td>{fill_price}</td>
                                     <td>{amount}</td>

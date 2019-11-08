@@ -15,6 +15,7 @@ import { withRouter } from "react-router-dom";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import NumberFormat from "react-number-format";
 // import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
 // import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
 
@@ -324,7 +325,7 @@ class ConversionDetail extends React.Component {
     }
   }
   recieveCurrencyChange(e) {
-    // console.log("this is???????", e);
+    console.log("this is???????", e.target.value);
     clearTimeout(this.timeout);
     this.clearValidation();
     // console.log("Recieve Currency Change");
@@ -508,9 +509,9 @@ class ConversionDetail extends React.Component {
         includeFees: 1,
         sendCurrencyInput: 0,
         fiatJSTValue: 0,
-        crypto: "XRP",
+        crypto: this.state.crypto,
         displayCurrency: null,
-        currency: "BTC",
+        currency: this.state.currency,
         subTotal: 0,
         totalAmount: 0,
         faldaxFee: 0,
@@ -529,9 +530,9 @@ class ConversionDetail extends React.Component {
         includeFees: 2,
         sendCurrencyInput: 0,
         fiatJSTValue: 0,
-        crypto: "XRP",
+        crypto: this.state.crypto,
         displayCurrency: null,
-        currency: "BTC",
+        currency: this.state.currency,
         subTotal: 0,
         totalAmount: 0,
         faldaxFee: 0,
@@ -718,9 +719,9 @@ class ConversionDetail extends React.Component {
         includeFees: 1,
         sendCurrencyInput: 0,
         fiatJSTValue: 0,
-        crypto: "XRP",
+        crypto: this.state.crypto,
         displayCurrency: null,
-        currency: "BTC",
+        currency: this.state.currency,
         subTotal: 0,
         totalAmount: 0,
         faldaxFee: 0,
@@ -739,9 +740,9 @@ class ConversionDetail extends React.Component {
         includeFees: 2,
         sendCurrencyInput: 0,
         fiatJSTValue: 0,
-        crypto: "XRP",
+        crypto: this.state.crypto,
         displayCurrency: null,
-        currency: "BTC",
+        currency: this.state.currency,
         subTotal: 0,
         totalAmount: 0,
         faldaxFee: 0,
@@ -1176,17 +1177,6 @@ class ConversionDetail extends React.Component {
   radioChange(e) {
     this.setState({ loader: true });
     this.clearValidation();
-    var self = this;
-    console.log("radio===========", e.target.value);
-    // if (e.target.value === 1) {
-    //   this.setState({
-    //     recieveCurrencyInput: 0
-    //   });
-    // } else {
-    //   this.setState({
-    //     sendCurrencyInput: 0
-    //   });
-    // }
     this.state.JSTPairList.map((element, i) => {
       if (
         element.crypto === this.state.crypto &&
@@ -1201,14 +1191,6 @@ class ConversionDetail extends React.Component {
             OrdType: "1"
           });
         }
-        console.log(
-          "Matched crytpo and currency pair selected Radio change",
-          this.state.crypto + this.state.currency
-        );
-        console.log(
-          "Matched crytpo and currency pair Radiochange",
-          element.crypto + element.currency
-        );
         this.setState({
           original_pair: element.original_pair,
           order_pair: element.order_pair
@@ -1218,8 +1200,6 @@ class ConversionDetail extends React.Component {
     this.setState(
       {
         includeFees: e.target.value,
-        // sendCurrencyInput: 0,
-        // recieveCurrencyInput: 0,
         subTotal: 0,
         faldaxFee: 0,
         networkFee: 0,
@@ -1243,13 +1223,6 @@ class ConversionDetail extends React.Component {
           });
         }
       }
-      // () => {
-      //   if (self.state.selectedTab === 1) {
-      //     self.calculateBuyCurrency();
-      //   } else if (self.state.selectedTab === 2) {
-      //     self.calculateSellCurrency();
-      //   }
-      // }
     );
   }
   btnClicked() {
@@ -1314,7 +1287,7 @@ class ConversionDetail extends React.Component {
                             placeholder="0"
                           />
                         </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
+                        <Col className="height-col" xs={12} sm={12} md={10}>
                           {this.state.cryptoList &&
                             this.state.cryptoList.length > 0 && (
                               <ConversionDropDown
@@ -1424,7 +1397,7 @@ class ConversionDetail extends React.Component {
                             }
                           )}
                         </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
+                        <Col xs={12} sm={12} md={10} className="height-col">
                           {this.state.cryptoList &&
                             this.state.cryptoList.length > 0 && (
                               <ConversionDropDown
@@ -1539,11 +1512,7 @@ class ConversionDetail extends React.Component {
                           xs={12}
                           sm={12}
                           md={10}
-                          style={{
-                            height: "42px",
-                            alignItems: "center",
-                            display: "flex"
-                          }}
+                          className="height-col align-flex"
                         >
                           <CryptoFiatRow>
                             <CryptoFiatCol>
@@ -1572,7 +1541,7 @@ class ConversionDetail extends React.Component {
                             placeholder="0"
                           />
                         </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
+                        <Col xs={12} sm={12} md={10} className="height-col">
                           {this.state.currencyList &&
                             this.state.currencyList.length > 0 && (
                               <ConversionDropDown
@@ -1683,7 +1652,7 @@ class ConversionDetail extends React.Component {
                             }
                           )}
                         </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
+                        <Col xs={12} sm={12} md={10} className="height-col">
                           {/* {this.state.currencyList &&
                             this.state.currencyList.length > 0 && (
                               <ConversionDropDown
@@ -1802,7 +1771,7 @@ class ConversionDetail extends React.Component {
                         <RowTitle>Fiat Value</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
-                            type="number"
+                            type="text"
                             value={this.state.fiatJSTValue}
                             onChange={this.fiatJSTValueChange}
                             placeholder="0"
@@ -1818,7 +1787,7 @@ class ConversionDetail extends React.Component {
                             // }
                           )} */}
                         </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
+                        <Col xs={12} sm={12} md={10} className="height-col">
                           <CryptoFiatRow>
                             <CryptoFiatCol>
                               <img src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/usd.png" />
@@ -1837,32 +1806,50 @@ class ConversionDetail extends React.Component {
                 <Panel header="Details" key="1">
                   <div>
                     <Row>
-                      <Col xs={12} style={{ textAlign: "left" }}>
+                      <Col xs={12} className="left-style">
                         <ConversionRightSpan>Subtotal</ConversionRightSpan>
                       </Col>
-                      <Col xs={12} style={{ textAlign: "right" }}>
+                      <Col xs={12} className="right-style">
                         {this.state.includeFees === 1 ? (
                           <ConversionLeftSpan>
-                            {this.state.totalAmount}{" "}
+                            {/* {this.state.totalAmount}{" "} */}
+                            <NumberFormat
+                              value={parseFloat(this.state.totalAmount).toFixed(
+                                8
+                              )}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                            />{" "}
                             {this.state.displayCurrency}
                           </ConversionLeftSpan>
                         ) : (
                           <ConversionLeftSpan>
-                            {this.state.subTotal} {this.state.displayCurrency}
+                            <NumberFormat
+                              value={parseFloat(this.state.subTotal).toFixed(8)}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                            />{" "}
+                            {this.state.displayCurrency}
                           </ConversionLeftSpan>
                         )}
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs={12} style={{ textAlign: "left" }}>
+                      <Col xs={12} className="left-style">
                         <ConversionRightSpan>
                           FALDAX Fee (0.24%)
                         </ConversionRightSpan>
                       </Col>
-                      <Col xs={12} style={{ textAlign: "right" }}>
+                      <Col xs={12} className="right-style">
                         {/* <ConversionRightSpan>{this.state.faldaxFees.toFixed(5)}%</ConversionRightSpan> */}
                         <ConversionLeftSpan>
-                          ({this.state.faldaxFee}){" "}
+                          (
+                          <NumberFormat
+                            value={parseFloat(this.state.faldaxFee).toFixed(8)}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                          />
+                          ){" "}
                           {/* {this.state.includeFees === 1 ? (
                             <span>{this.state.currency}</span>
                           ) : (
@@ -1873,13 +1860,19 @@ class ConversionDetail extends React.Component {
                       </Col>
                     </Row>
                     <Row className="network_fee">
-                      <Col xs={12} style={{ textAlign: "left" }}>
+                      <Col xs={12} className="left-style">
                         <ConversionRightSpan>Network Fee</ConversionRightSpan>
                       </Col>
-                      <Col xs={12} style={{ textAlign: "right" }}>
+                      <Col xs={12} className="right-style">
                         {/* <ConversionRightSpan>{this.state.krakenFees.toFixed(5)}%</ConversionRightSpan> */}
                         <ConversionLeftSpan>
-                          ({this.state.networkFee}){" "}
+                          (
+                          <NumberFormat
+                            value={parseFloat(this.state.networkFee).toFixed(8)}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                          />
+                          ){" "}
                           {/* {this.state.includeFees === 1 ? (
                             <span>{this.state.currency}</span>
                           ) : (
@@ -1890,17 +1883,28 @@ class ConversionDetail extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs={12} style={{ textAlign: "left" }}>
+                      <Col xs={12} className="left-style">
                         <RightTotal>total</RightTotal>
                       </Col>
-                      <Col xs={12} style={{ textAlign: "right" }}>
+                      <Col xs={12} className="right-style">
                         {this.state.includeFees === 1 ? (
                           <LeftTotal>
-                            {this.state.subTotal} {this.state.displayCurrency}
+                            <NumberFormat
+                              value={parseFloat(this.state.subTotal).toFixed(8)}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                            />{" "}
+                            {this.state.displayCurrency}
                           </LeftTotal>
                         ) : (
                           <LeftTotal>
-                            {this.state.totalAmount}{" "}
+                            <NumberFormat
+                              value={parseFloat(this.state.totalAmount).toFixed(
+                                8
+                              )}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                            />{" "}
                             {this.state.displayCurrency}
                           </LeftTotal>
                         )}
