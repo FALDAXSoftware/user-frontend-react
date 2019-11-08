@@ -141,6 +141,16 @@ const SubText = styled.span`
     text-align: left;
   }
 `;
+const SubSmallText = styled.span`
+  padding-top: 5px;
+  font-size: 14px;
+  font-family: "Open Sans";
+  color: rgb(163, 163, 163);
+  display: block;
+  @media (max-width: 478px) {
+    text-align: left;
+  }
+`;
 const VerifyEmail = styled(Email)`
   margin-top: 10px;
   display: block;
@@ -409,11 +419,14 @@ class ProfileBackup extends Component {
           <ColRight sm={24} lg={12}>
             <FormWrap>
               <RightWrap className="wow fadeInDown">
-                <LoginHead>Upload Profile Picture</LoginHead>
+                <LoginHead>Upload Image</LoginHead>
                 <SubText>
-                  Please upload your photo of less than 5 mb and you will be
-                  notified by our team through email.
+                  Please upload your image and soon we will notify you about the
+                  2FA status through an email.
                 </SubText>
+                <SubSmallText>
+                  PS: Image size should not exceed 5MB.
+                </SubSmallText>
                 <FileWrapDup>
                   <Fileselect1 className="file-select-col">
                     <RemoveIcon1
