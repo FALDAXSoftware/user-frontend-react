@@ -15,6 +15,7 @@ import { withRouter } from "react-router-dom";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import NumberFormat from "react-number-format";
 // import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
 // import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
 
@@ -324,7 +325,7 @@ class ConversionDetail extends React.Component {
     }
   }
   recieveCurrencyChange(e) {
-    // console.log("this is???????", e);
+    console.log("this is???????", e.target.value);
     clearTimeout(this.timeout);
     this.clearValidation();
     // console.log("Recieve Currency Change");
@@ -508,9 +509,9 @@ class ConversionDetail extends React.Component {
         includeFees: 1,
         sendCurrencyInput: 0,
         fiatJSTValue: 0,
-        crypto: "XRP",
+        crypto: this.state.crypto,
         displayCurrency: null,
-        currency: "BTC",
+        currency: this.state.currency,
         subTotal: 0,
         totalAmount: 0,
         faldaxFee: 0,
@@ -529,9 +530,9 @@ class ConversionDetail extends React.Component {
         includeFees: 2,
         sendCurrencyInput: 0,
         fiatJSTValue: 0,
-        crypto: "XRP",
+        crypto: this.state.crypto,
         displayCurrency: null,
-        currency: "BTC",
+        currency: this.state.currency,
         subTotal: 0,
         totalAmount: 0,
         faldaxFee: 0,
@@ -718,9 +719,9 @@ class ConversionDetail extends React.Component {
         includeFees: 1,
         sendCurrencyInput: 0,
         fiatJSTValue: 0,
-        crypto: "XRP",
+        crypto: this.state.crypto,
         displayCurrency: null,
-        currency: "BTC",
+        currency: this.state.currency,
         subTotal: 0,
         totalAmount: 0,
         faldaxFee: 0,
@@ -739,9 +740,9 @@ class ConversionDetail extends React.Component {
         includeFees: 2,
         sendCurrencyInput: 0,
         fiatJSTValue: 0,
-        crypto: "XRP",
+        crypto: this.state.crypto,
         displayCurrency: null,
-        currency: "BTC",
+        currency: this.state.currency,
         subTotal: 0,
         totalAmount: 0,
         faldaxFee: 0,
@@ -1770,7 +1771,7 @@ class ConversionDetail extends React.Component {
                         <RowTitle>Fiat Value</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
-                            type="number"
+                            type="text"
                             value={this.state.fiatJSTValue}
                             onChange={this.fiatJSTValueChange}
                             placeholder="0"
@@ -1811,12 +1812,24 @@ class ConversionDetail extends React.Component {
                       <Col xs={12} className="right-style">
                         {this.state.includeFees === 1 ? (
                           <ConversionLeftSpan>
-                            {this.state.totalAmount}{" "}
+                            {/* {this.state.totalAmount}{" "} */}
+                            <NumberFormat
+                              value={parseFloat(this.state.totalAmount).toFixed(
+                                8
+                              )}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                            />{" "}
                             {this.state.displayCurrency}
                           </ConversionLeftSpan>
                         ) : (
                           <ConversionLeftSpan>
-                            {this.state.subTotal} {this.state.displayCurrency}
+                            <NumberFormat
+                              value={parseFloat(this.state.subTotal).toFixed(8)}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                            />{" "}
+                            {this.state.displayCurrency}
                           </ConversionLeftSpan>
                         )}
                       </Col>
@@ -1830,7 +1843,13 @@ class ConversionDetail extends React.Component {
                       <Col xs={12} className="right-style">
                         {/* <ConversionRightSpan>{this.state.faldaxFees.toFixed(5)}%</ConversionRightSpan> */}
                         <ConversionLeftSpan>
-                          ({this.state.faldaxFee}){" "}
+                          (
+                          <NumberFormat
+                            value={parseFloat(this.state.faldaxFee).toFixed(8)}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                          />
+                          ){" "}
                           {/* {this.state.includeFees === 1 ? (
                             <span>{this.state.currency}</span>
                           ) : (
@@ -1847,7 +1866,13 @@ class ConversionDetail extends React.Component {
                       <Col xs={12} className="right-style">
                         {/* <ConversionRightSpan>{this.state.krakenFees.toFixed(5)}%</ConversionRightSpan> */}
                         <ConversionLeftSpan>
-                          ({this.state.networkFee}){" "}
+                          (
+                          <NumberFormat
+                            value={parseFloat(this.state.networkFee).toFixed(8)}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                          />
+                          ){" "}
                           {/* {this.state.includeFees === 1 ? (
                             <span>{this.state.currency}</span>
                           ) : (
@@ -1864,11 +1889,22 @@ class ConversionDetail extends React.Component {
                       <Col xs={12} className="right-style">
                         {this.state.includeFees === 1 ? (
                           <LeftTotal>
-                            {this.state.subTotal} {this.state.displayCurrency}
+                            <NumberFormat
+                              value={parseFloat(this.state.subTotal).toFixed(8)}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                            />{" "}
+                            {this.state.displayCurrency}
                           </LeftTotal>
                         ) : (
                           <LeftTotal>
-                            {this.state.totalAmount}{" "}
+                            <NumberFormat
+                              value={parseFloat(this.state.totalAmount).toFixed(
+                                8
+                              )}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                            />{" "}
                             {this.state.displayCurrency}
                           </LeftTotal>
                         )}

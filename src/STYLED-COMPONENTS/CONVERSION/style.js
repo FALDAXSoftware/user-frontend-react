@@ -284,6 +284,25 @@ export const RowTitle = styled.span`
     props.theme.mode === "dark" ? "#617090" : "rgba(0, 0, 0, 0.65)"};
 `;
 export const ConversionInput = styled.input`
+  &.conversion_input {
+    padding: 6px 15px;
+    height: auto;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    background-color: ${props =>
+      props.theme.mode === "dark" ? "#021b2b" : "#f6f8fe"};
+    font-weight: 600;
+    font-size: 20px;
+    color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "black")};
+    &:focus {
+      border: none;
+      outline: none;
+    }
+    @media (max-width: 360px) {
+      font-size: 16px;
+    }
+  }
   padding: 6px 15px;
   height: auto;
   width: 100%;
@@ -770,12 +789,18 @@ export const RadioGroupMainRow = styled.div`
       > .ant-radio-inner {
         width: 20px !important;
         height: 20px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       > .ant-radio-inner:after {
-        top: 4px !important;
-        left: 4px !important;
+        top: auto !important;
+        left: auto !important;
         width: 10px !important;
         height: 10px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
   }

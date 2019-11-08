@@ -89,7 +89,7 @@ export const OldInput = styled(Input)`
 export const NewInput = styled(OldInput)``;
 export const OTPInput = styled(NewInput)`
   width: 100%;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   &.otp-input {
     margin-bottom: 0 !important;
     width: 100%;
@@ -205,8 +205,6 @@ class IpModal extends Component {
   permanentIp() {
     // alert("jhasdg");
     if (this.validator.allValid()) {
-      alert("jhasdg");
-      console.log("test props", this.props);
       this.props.permanentIp(this.state.fields);
     } else {
       this.validator.showMessages();
