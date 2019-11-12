@@ -186,6 +186,7 @@ class History extends Component {
     this.selectChange1 = this.selectChange1.bind(this);
     this.selectChange2 = this.selectChange2.bind(this);
     this.callback = this.callback.bind(this);
+    // this.resetFilters = this.resetFilters.bind(this);
   }
 
   /* Life-Cycle Methods */
@@ -1056,6 +1057,43 @@ class History extends Component {
     });
   }
 
+  // resetFilters() {
+  //   console.log(
+  //     "reset",
+  //     this.state.toDate,
+  //     this.state.fromDate,
+  //     this.state.sell,
+  //     this.state.buy,
+  //     this.state.drop1Value,
+  //     this.state.drop2
+  //   );
+  //   this.setState(
+  //     {
+  //       toDate: moment().format("YYYY-MM-DD"),
+  //       fromDate: moment(moment().subtract(1, "months"), "YYYY-MM-DD").format(
+  //         "YYYY-MM-DD"
+  //       ),
+  //       sell: true,
+  //       buy: true,
+  //       drop1Value: null,
+  //       drop2Value: null
+  //     },
+  //     () => {
+  //       this.loadCoinList();
+  //       this.historyResult();
+  //       console.log(
+  //         "reset after",
+  //         this.state.toDate,
+  //         this.state.fromDate,
+  //         this.state.sell,
+  //         this.state.buy,
+  //         this.state.drop1Value,
+  //         this.state.drop2
+  //       );
+  //     }
+  //   );
+  // }
+
   render() {
     var self = this;
     return (
@@ -1194,6 +1232,7 @@ class History extends Component {
                         this.state.csvJSTFields.length > 0 ? (
                           <EXPButton>
                             <CSVLink
+                              filename="jstreportfile.csv"
                               data={this.state.csvJSTFields}
                               headers={this.state.csvHeadersJST}
                             >
@@ -1215,6 +1254,7 @@ class History extends Component {
                         this.state.csvSimplexFields !== null ? (
                           <EXPButton>
                             <CSVLink
+                              filename="simplexreportfile.csv"
                               data={this.state.csvSimplexFields}
                               headers={this.state.csvHeadersSimplex}
                             >
@@ -1229,6 +1269,11 @@ class History extends Component {
                       )}
                     </div>
                   )}
+                  {/* {this.state.activeKey === "1" && (
+                    <div>
+                      <EXPButton onClick={this.resetFilters}>Reset</EXPButton>
+                    </div>
+                  )} */}
                 </Filter>
                 {this.state.activeKey === "1" && (
                   <FilterDivSelection>
