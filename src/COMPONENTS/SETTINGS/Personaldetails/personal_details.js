@@ -324,7 +324,7 @@ class PersonalDetails extends Component {
       this.props.clearEditData();
     }
     if (props.profileError !== undefined) {
-      console.log("Called Twice", props.profileError);
+      // console.log("Called Twice", props.profileError);
       this.openNotificationWithProfile(
         "error",
         "Error",
@@ -376,7 +376,7 @@ class PersonalDetails extends Component {
       .local()
       .format("DD-MM-YYYY");
     this.setState({ Datedata: date });
-    console.log("Step 3---------->", value, field);
+    // console.log("onDateChange", value, field);
     this.onChangeField(value, field);
   }
 
@@ -586,8 +586,10 @@ class PersonalDetails extends Component {
       if (
         value.country !== undefined &&
         value.country !== null &&
-        (value.state !== null && value.state !== undefined) &&
-        (value.city !== null && value.city !== undefined)
+        value.state !== null &&
+        value.state !== undefined &&
+        value.city !== null &&
+        value.city !== undefined
       ) {
         this.setState({ countryIcon: true });
         document.querySelectorAll(".country_msg")[0].style.display = "none";
@@ -634,15 +636,28 @@ class PersonalDetails extends Component {
         this.setState({ countrymsg });
       }
     } else if (field === "dob") {
-      console.log("Step 4 ------>", value);
+      // console.log("Step 4 ------>", value);
       if (value["day"] && value["month"] && value["year"]) {
         this.setState({ dobIcon: true });
         document.querySelectorAll(".dob_msg")[0].style.display = "none";
-      } else {
+      } else if (value["day"] === "" || value["day"] === "") {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";
-        this.setState({ dobmsg: "Date of Birth field is required" });
+        this.setState({ dobmsg: "Day field is required" });
+      } else if (value["month"] === "" || value["month"] === "") {
+        this.setState({ dobIcon: false });
+        document.querySelectorAll(".dob_msg")[0].style.display = "block";
+        this.setState({ dobmsg: "Month field is required" });
+      } else if (value["year"] === "" || value["year"] === "") {
+        this.setState({ dobIcon: false });
+        document.querySelectorAll(".dob_msg")[0].style.display = "block";
+        this.setState({ dobmsg: "Year field is required" });
       }
+      // else {
+      //   this.setState({ dobIcon: false });
+      //   document.querySelectorAll(".dob_msg")[0].style.display = "block";
+      //   this.setState({ dobmsg: "Date of Birth field is required" });
+      // }
     } else if (field === "street_address") {
       if (value !== "") {
         if (value.length < 100) {
@@ -830,7 +845,7 @@ class PersonalDetails extends Component {
         ) {
           profileData.append("profile_pic", this.state.profileImage);
         }
-        console.log("---------------->> USER API CALLED");
+        // console.log("---------------->> USER API CALLED");
         this.props.profileupdateAction(this.props.isLoggedIn, profileData);
       } else {
         this.openNotificationWithProfile(
