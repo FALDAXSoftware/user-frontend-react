@@ -339,7 +339,7 @@ export const DeactiveWrap = styled.div`
 `;
 export const Code2FADiv = styled.div`
   > p {
-    color: #000;
+    color: ${props => (props.theme.mode == "dark" ? "#ffffff" : "#000000")};
     margin: 0;
   }
 `;

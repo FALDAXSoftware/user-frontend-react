@@ -158,7 +158,7 @@ class Acc_settings extends Component {
           // console.log(record, record.id);
           return (
             <Checkbox
-              defaultChecked={value}
+              defaultChecked={JSON.parse(value)}
               key={record.id}
               onChange={e => this.checkBoxChange("text", e, record)}
             ></Checkbox>
@@ -174,7 +174,7 @@ class Acc_settings extends Component {
           // console.log(record, record.id);
           return (
             <Checkbox
-              defaultChecked={value}
+              defaultChecked={JSON.parse(value)}
               key={record.id}
               onChange={e => this.checkBoxChange("email", e, record)}
             ></Checkbox>
@@ -247,7 +247,7 @@ class Acc_settings extends Component {
       matchDelete: {
         message: "Please enter 'FORFEIT FUNDS'.",
         rule: val => {
-          var RE = /FORFEIT FUNDS/;
+          var RE = /^FORFEIT FUNDS$/;
           if (RE.test(val)) {
             return true;
           } else {
@@ -275,7 +275,7 @@ class Acc_settings extends Component {
       matchDelete: {
         message: "Please enter 'FORFEIT FUNDS'.",
         rule: val => {
-          var RE = /FORFEIT FUNDS/;
+          var RE = /^FORFEIT FUNDS$/;
           if (RE.test(val)) {
             return true;
           } else {
@@ -286,7 +286,7 @@ class Acc_settings extends Component {
       matchDeactivate: {
         message: "Please enter 'DEACTIVATE'.",
         rule: val => {
-          var RE = /DEACTIVATE/;
+          var RE = /^DEACTIVATE$/;
           if (RE.test(val)) {
             return true;
           } else {
@@ -443,6 +443,7 @@ class Acc_settings extends Component {
   }
   addData() {
     const { data_noti } = this.state;
+    this.setState({ loader: true });
     fetch(API_URL + `/update-notification-list`, {
       method: "post",
       headers: {
@@ -456,15 +457,19 @@ class Acc_settings extends Component {
         // console.log("Did IP : ", responseData);
         if (responseData.status == 200) {
           let b = JSON.parse(JSON.stringify(responseData.data));
-          this.setState({ data_noti: responseData.data, savedDataNoti: b });
+          this.setState({
+            data_noti: responseData.data,
+            savedDataNoti: b,
+            loader: false
+          });
         } else {
           this.openNotificationWithIcon(
             "error",
             responseData.status,
             responseData.err
           );
+          this.setState({ loader: false });
         }
-        this.setState({ loader: false });
       })
       .catch(error => {
         this.setState({ loader: false });
@@ -1353,13 +1358,13 @@ class Acc_settings extends Component {
               {this.state.walletCoins ? (
                 <tbody>
                   {this.state.walletCoins.map(function(temps) {
-                    var balance = parseFloat(temps.balance).toFixed(8);
-                    var fiat = parseFloat(temps.fiat * temps.balance).toFixed(
-                      2
-                    );
+                    var balance = parseFloat(temps.totalAmount).toFixed(8);
+                    var fiat = parseFloat(
+                      temps.fiat * temps.totalAmount
+                    ).toFixed(2);
                     return (
                       <tr>
-                        <td>{temps.coin}</td>
+                        <td>{temps.coin_name}</td>
                         <td>{balance}</td>
                         <td>$ {fiat}</td>
                       </tr>
@@ -1411,13 +1416,13 @@ class Acc_settings extends Component {
 
                 <tbody>
                   {this.state.walletCoins.map(function(temps) {
-                    var balance = parseFloat(temps.balance).toFixed(8);
-                    var fiat = parseFloat(temps.fiat * temps.balance).toFixed(
-                      2
-                    );
+                    var balance = parseFloat(temps.totalAmount).toFixed(8);
+                    var fiat = parseFloat(
+                      temps.fiat * temps.totalAmount
+                    ).toFixed(2);
                     return (
                       <tr>
-                        <td>{temps.coin}</td>
+                        <td>{temps.coin_name}</td>
                         <td>{balance}</td>
                         <td>$ {fiat}</td>
                       </tr>
@@ -1651,7 +1656,4 @@ const mapDispatchToProps = dispatch => ({
   LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Acc_settings);
+export default connect(mapStateToProps, mapDispatchToProps)(Acc_settings);
