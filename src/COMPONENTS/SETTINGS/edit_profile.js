@@ -13,9 +13,8 @@ import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import Passwordchange from "./changePassword/password_change";
 import AccSettings from "./Account_settings/acc_settings";
-// import KYC from "./KYC/kyc";
-import Tier from "./tier";
 import TierOne from "./TIERS/tier_one";
+// import KYC from "./KYC/kyc";
 /* import Paymethods from './Payment/paymethods'; */
 import SupportHub from "./Account_settings/support_hub";
 

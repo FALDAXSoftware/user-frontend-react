@@ -10,7 +10,6 @@ import About from 'COMPONENTS/about';
 import Referral from "COMPONENTS/SETTINGS/referral" */
 import Editprofile from "COMPONENTS/SETTINGS/edit_profile";
 import HubspotTickets from "COMPONENTS/SETTINGS/Account_settings/hubspot_tickets";
-import Footer from "COMPONENTS/LANDING/FOOTERS/footer";
 
 import {
   BrowserRouter as Router,
@@ -22,9 +21,7 @@ import {
 import HomePage from "COMPONENTS/LANDING/homepage";
 import Wallet from "COMPONENTS/LOGGEDCATEGORIES/WALLET/wallet";
 import WalletDetails from "COMPONENTS/LOGGEDCATEGORIES/WALLET/walletdetails";
-import Trade from "COMPONENTS/LOGGEDCATEGORIES/TRADE/trade";
 import History2 from "COMPONENTS/LOGGEDCATEGORIES/HISTORY/history";
-import Dashboard from "COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard";
 import OpenTicket from "COMPONENTS/LANDINGCATEGORIES/open_ticket";
 import { globalVariables } from "./Globals.js";
 import { LogoutUser } from "ACTIONS/authActions";
@@ -32,14 +29,6 @@ import { LogoutUser } from "ACTIONS/authActions";
 /* import Chart from "COMPONENTS/tradingviewchart"; */
 import Conversion from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion";
 import ConversionDetail from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion_detail";
-import LoginToken from "COMPONENTS/LOGGEDCATEGORIES/TOKEN/login_token";
-import SecurityCheck from "COMPONENTS/LOGGEDCATEGORIES/TOKEN/security_check";
-import TierOne from "../src/COMPONENTS/SETTINGS/TIERS/tier_one";
-import TierTwo from "../src/COMPONENTS/SETTINGS/TIERS/tier_two";
-import TierThree from "../src/COMPONENTS/SETTINGS/TIERS/tier_three";
-import TierFour from "../src/COMPONENTS/SETTINGS/TIERS/tier_four";
-import TokenDashboard from "./COMPONENTS/LOGGEDCATEGORIES/TOKEN/token-dashboard.js";
-import TokenComingSoon from "./COMPONENTS/LOGGEDCATEGORIES/TOKEN/token-coming-soon.js";
 import TierUpgradeInfo from "./COMPONENTS/SETTINGS/tier_upgrade_information.js";
 import TierUpgradeInfoImageRequirements from "./COMPONENTS/SETTINGS/tier-upgrade-info-image-requirements.js";
 import TierIDConfirmation from "./COMPONENTS/SETTINGS/tier_id_confirmation.js";
@@ -290,8 +279,5 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(AppRouter)
+  connect(mapStateToProps, mapDispatchToProps)(AppRouter)
 );
