@@ -371,7 +371,7 @@ class WalletDetails extends Component {
                               <Select
                                 onChange={this.changeCoins}
                                 value={defaultCoin}
-                                style={{ width: "100%" }}
+                                // style={{ width: "100%" }}
                                 // className = "select-display"
                               >
                                 {this.props.walletDetails.map(function(temp) {
@@ -396,7 +396,7 @@ class WalletDetails extends Component {
                               <Select
                                 onChange={this.changeCoins}
                                 value={defaultCoin}
-                                style={{ width: "100%" }}
+                                // style={{ width: "100%" }}
                                 // className="select-display"
                               >
                                 {this.props.nowalletBalance.map(function(temp) {
@@ -566,16 +566,8 @@ class WalletDetails extends Component {
                   {/* {console.log(walletUserData)} */}
 
                   {Object.keys(walletUserData).length > 0 ? (
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center"
-                      }}
-                    >
+                    <div className="wallet_under_process">
                       <img
-                        width="35"
-                        style={{ marginRight: "5px" }}
                         src={`${_AMAZONBUCKET}${walletUserData.coin_icon}`}
                       />
                       <BTC>{walletUserData.coin_name} </BTC>

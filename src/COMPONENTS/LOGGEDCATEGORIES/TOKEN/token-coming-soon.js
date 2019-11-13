@@ -111,7 +111,6 @@ class TokenComingSoon extends Component {
               /> */}
               <iframe
                 title="title"
-                style={{ border: "none" }}
                 height="250px"
                 width="100%"
                 src={API_URL + "/get-token-coming-soon-form"}

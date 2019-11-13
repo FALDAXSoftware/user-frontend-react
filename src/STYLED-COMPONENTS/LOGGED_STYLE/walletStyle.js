@@ -128,9 +128,17 @@ export const Head = styled.tr`
 `;
 export const SubHead = styled.th`
   border-bottom: 0px;
+  > a.ant-dropdown-link {
+    vertical-align: middle;
+  }
 `;
 export const Col1 = styled.tr`
   height: ${props => (props.wallet ? "70px" : "90px")};
+  &.tableofcoinupper {
+    td:first-child {
+      text-align: left;
+    }
+  }
   & td {
     > span {
       > .icon-display {
@@ -417,6 +425,15 @@ export const WallTotal = styled(Total)`
 export const PendingWrap = styled.div`
   text-align: center;
   padding-top: 50px;
+  > .wallet_under_process {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > img {
+      width: 35px;
+      margin-right: 5px;
+    }
+  }
 `;
 export const PendingPara = styled.div`
   margin-top: 20px;
