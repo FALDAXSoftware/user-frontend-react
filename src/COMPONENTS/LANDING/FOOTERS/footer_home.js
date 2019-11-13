@@ -56,7 +56,9 @@ const Footerul = styled.ul`
     props.theme.mode === "dark" ? "white" : "rgba( 40, 37, 40, 0.8 )"};
   font-size: 13px;
   font-family: "Open sans";
-
+  // > li {
+  //   cursor: pointer;
+  // }
   li:not(:first-child) {
     margin-top: 20px;
   }
@@ -140,9 +142,11 @@ const Appstore = styled.img`
   display: inline-block;
   margin-top: 10px;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 const Playstore = styled.img`
   display: inline-block;
+  cursor: pointer;
   @media (max-width: 991px) {
     margin-left: 10px;
   }
@@ -177,6 +181,7 @@ const HR = styled.hr`
   margin-bottom: 0px;
 `;
 const FooterLink = styled.a`
+  cursor: pointer;
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb(0, 0, 0, 0.65)"};
 `;
@@ -276,35 +281,35 @@ class FooterHome extends Component {
               <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                 <Footerul>
                   <Footerheaders>Information</Footerheaders>
-                  <li style={{ cursor: "pointer" }}>
+                  <li>
                     <FooterLink
                       href={`${globalVariables.WordpressSiteURL}/about-us`}
                     >
                       About Us
                     </FooterLink>
                   </li>
-                  <li style={{ cursor: "pointer" }}>
+                  <li>
                     <FooterLink
                       href={`${globalVariables.WordpressSiteURL}/contact-us`}
                     >
                       Contact Us
                     </FooterLink>
                   </li>
-                  <li style={{ cursor: "pointer" }}>
+                  <li>
                     <FooterLink
                       href={`${globalVariables.WordpressSiteURL}/media-contact`}
                     >
                       Media Contact
                     </FooterLink>
                   </li>
-                  <li style={{ cursor: "pointer" }}>
+                  <li>
                     <FooterLink
                       href={`${globalVariables.WordpressSiteURL}/blogs`}
                     >
                       Blog
                     </FooterLink>
                   </li>
-                  <li style={{ cursor: "pointer" }}>
+                  <li>
                     <FooterLink
                       href={`${globalVariables.WordpressSiteURL}/fee`}
                     >
@@ -316,7 +321,7 @@ class FooterHome extends Component {
               <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                 <Footerul>
                   <Footerheaders>Support</Footerheaders>
-                  <li style={{ cursor: "pointer" }}>
+                  <li>
                     {this.props.isLoggedIn ? (
                       <FooterLink href="/open-ticket">
                         {" "}
@@ -329,30 +334,26 @@ class FooterHome extends Component {
                       </FooterLink>
                     )}
                   </li>
-                  {/* <li style={{ cursor: "pointer" }} onClick={this.showComing}>
-                                        API Documentation
-                                                    </li> */}
-                  {/* <li style={{cursor:"pointer"}} onClick={this.showComing}>Language</li> */}
-                  <li style={{ cursor: "pointer" }}>
+                  <li>
                     <FooterLink href="https://knowledge.faldax.com/">
                       FAQ
                     </FooterLink>
                   </li>
-                  <li style={{ cursor: "pointer" }}>
+                  <li>
                     <FooterLink
                       href={`${globalVariables.WordpressSiteURL}/list-your-token`}
                     >
                       List Your Token
                     </FooterLink>
                   </li>
-                  <li style={{ cursor: "pointer" }}>
+                  <li>
                     <FooterLink
                       href={`${globalVariables.WordpressSiteURL}/news`}
                     >
                       News
                     </FooterLink>
                   </li>
-                  <li style={{ cursor: "pointer" }}>
+                  <li>
                     <CareerLink to={"/careers"}>Careers</CareerLink>
                   </li>
                 </Footerul>
@@ -360,17 +361,14 @@ class FooterHome extends Component {
               <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                 <Footerul>
                   <Footerheaders>Legal & Technical</Footerheaders>
-                  <li style={{ cursor: "pointer" }}>
+                  <li>
                     <FooterLink
                       href={`${globalVariables.WordpressSiteURL}/policies`}
                     >
                       Policies
                     </FooterLink>
                   </li>
-                  <li
-                    style={{ cursor: "pointer" }}
-                    onClick={this.scrollMap.bind(this)}
-                  >
+                  <li onClick={this.scrollMap.bind(this)}>
                     <FooterLink
                       href={`${globalVariables.WordpressSiteURL}/service-availability/`}
                     >
@@ -441,10 +439,10 @@ class FooterHome extends Component {
                 <Download>Download</Download>
                 <StoreWrap>
                   <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}>
-                    <Appstore style={{ cursor: "pointer" }} src={_APPSTORE} />
+                    <Appstore src={_APPSTORE} />
                   </a>
                   <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}>
-                    <Playstore style={{ cursor: "pointer" }} src={_PLAYSTORE} />
+                    <Playstore src={_PLAYSTORE} />
                   </a>
                 </StoreWrap>
               </StoreCol>

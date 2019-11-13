@@ -176,7 +176,7 @@ class TableofCoin extends React.Component {
                   <Dropdown overlay={menu1} trigger={["click"]}>
                     <a
                       className="ant-dropdown-link"
-                      style={{ verticalAlign: "middle" }}
+                      // style={{ verticalAlign: "middle" }}
                       href="#"
                     >
                       <DropMenu type="down" />
@@ -188,7 +188,7 @@ class TableofCoin extends React.Component {
                   <Dropdown overlay={menu2} trigger={["click"]}>
                     <a
                       className="ant-dropdown-link"
-                      style={{ verticalAlign: "middle" }}
+                      // style={{ verticalAlign: "middle" }}
                       href="#"
                     >
                       <DropMenu type="down" />
@@ -200,7 +200,7 @@ class TableofCoin extends React.Component {
                   <Dropdown overlay={menu3} trigger={["click"]}>
                     <a
                       className="ant-dropdown-link"
-                      style={{ verticalAlign: "middle" }}
+                      // style={{ verticalAlign: "middle" }}
                       href="#"
                     >
                       <DropMenu type="down" />

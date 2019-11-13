@@ -6,6 +6,44 @@ export const ModalWrap = styled.div`
   margin-right: auto;
   &.kyc-wrap {
     width: 90%;
+    > h3 {
+      font-family: "Open Sans";
+      font-size: 40px;
+      text-align: center;
+      color: rgb(3, 170, 249);
+      font-weight: 600;
+      margin-top: 40px;
+    }
+    > p {
+      font-family: "Open Sans";
+      font-size: 16px;
+      text-align: center;
+      color: black;
+      margin-top: 34px;
+    }
+  }
+  &.country-wrap {
+    > h3 {
+      font-family: "Open Sans";
+      font-size: 40px;
+      text-align: center;
+      color: rgb(3, 170, 249);
+      font-weight: 600;
+      margin-top: 40px;
+    }
+    > p.first-subhead {
+      font-family: Open Sans;
+      font-size: 14px;
+      text-align: center;
+      color: black;
+      margin-top: 15px;
+    }
+    > p.second-subhead {
+      font-family: Open Sans;
+      font-size: 15px;
+      text-align: center;
+      color: black;
+    }
   }
   @media (max-width: 576px) {
     width: 350px;

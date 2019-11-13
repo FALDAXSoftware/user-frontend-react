@@ -23,7 +23,7 @@ import { faStroopwafel } from "@fortawesome/free-solid-svg-icons";
 // import Login from "components/LANDING/USERFORMS/Login_Form"
 import AppRouter from "routes";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
-import NotFound from "./SHARED-COMPONENTS/NotFound";
+// import NotFound from "./SHARED-COMPONENTS/NotFound";
 import TradeView from "./SHARED-COMPONENTS/TradeView";
 import SimplexView from "./SHARED-COMPONENTS/SimplexView";
 
@@ -37,31 +37,31 @@ const ForgotForm = lazy(() =>
 const ResetPassword = lazy(() =>
   import("COMPONENTS/LANDING/USERFORMS/reset_form")
 );
-const FaqPage = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/faq_page"));
-const AboutUs = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/about_us"));
-const Blog = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/blog"));
-const BlogDetails = lazy(() =>
-  import("COMPONENTS/LANDINGCATEGORIES/blog_details")
-);
-const ContactUs = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/contact_us"));
+// const FaqPage = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/faq_page"));
+// const AboutUs = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/about_us"));
+// const Blog = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/blog"));
+// const BlogDetails = lazy(() =>
+//   import("COMPONENTS/LANDINGCATEGORIES/blog_details")
+// );
+// const ContactUs = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/contact_us"));
 const CareerDetails = lazy(() =>
   import("COMPONENTS/LANDINGCATEGORIES/career_details")
 );
 const Careers = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/careers"));
-const MediaContact = lazy(() =>
-  import("COMPONENTS/LANDINGCATEGORIES/media_contact")
-);
-const Fees = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/fees"));
-const Addcoin = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/add_coin"));
+// const MediaContact = lazy(() =>
+//   import("COMPONENTS/LANDINGCATEGORIES/media_contact")
+// );
+// const Fees = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/fees"));
+// const Addcoin = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/add_coin"));
 const ApplyJob = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/apply_job"));
-const Policy = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/policy"));
-const News = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/news"));
+// const Policy = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/policy"));
+// const News = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/news"));
 const ThankYou = lazy(() => import("SHARED-COMPONENTS/thank_you"));
-const Chart = lazy(() => import("COMPONENTS/tradingviewchart"));
+// const Chart = lazy(() => import("COMPONENTS/tradingviewchart"));
 const SignupSuccess = lazy(() =>
   import("COMPONENTS/LANDING/USERFORMS/signup_success")
 );
-const HomePage = lazy(() => import("COMPONENTS/LANDING/homepage"));
+// const HomePage = lazy(() => import("COMPONENTS/LANDING/homepage"));
 const Login = lazy(() => import("COMPONENTS/LANDING/USERFORMS/login_form"));
 const EmailVerification = lazy(() =>
   import("COMPONENTS/LANDING/USERFORMS/emailverification")
@@ -216,7 +216,7 @@ class App extends Component {
                       title="Forgot Password"
                       component={ForgotForm}
                     />
-                    <Route
+                    {/* <Route
                       {...this.props}
                       path="/about-us"
                       exact
@@ -235,13 +235,13 @@ class App extends Component {
                       exact
                       title="Blog"
                       component={BlogDetails}
-                    />
-                    <Route
+                    /> */}
+                    {/* <Route
                       path="/contactus"
                       exact
                       title="Contact"
                       component={ContactUs}
-                    />
+                    /> */}
                     <Route
                       path="/careers"
                       exact
@@ -254,7 +254,7 @@ class App extends Component {
                       title="Careerdetails"
                       component={CareerDetails}
                     />
-                    <Route
+                    {/* <Route
                       path="/mediacontact"
                       exact
                       title="MediaContact"
@@ -266,20 +266,20 @@ class App extends Component {
                       exact
                       title="AddCoin"
                       component={Addcoin}
-                    />
+                    /> */}
                     <Route
                       path="/applyjob"
                       exact
                       title="ApplyJob"
                       component={ApplyJob}
                     />
-                    <Route
+                    {/* <Route
                       path="/policy"
                       exact
                       title="policy"
                       component={Policy}
                     />
-                    <Route path="/news" exact title="News" component={News} />
+                    <Route path="/news" exact title="News" component={News} /> */}
                     <Route
                       path="/thank-you"
                       exact
@@ -356,9 +356,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    null
-  )(App)
-);
+export default withRouter(connect(mapStateToProps, null)(App));

@@ -15,7 +15,7 @@ import ComingSoon from "COMPONENTS/comingsoon";
 import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
 import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
 import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
-import { DropMenu, SubMenuNav } from "./navigation";
+// import { DropMenu, SubMenuNav } from "./navigation";
 
 /* CONSTANTS */
 import {
@@ -27,8 +27,64 @@ import {
 } from "CONSTANTS/images";
 const { Header } = Layout;
 const API_URL = globalVariables.API_URL;
+const SubMenu = Menu.SubMenu;
 
 /* Styled Components */
+const DropMenu = styled(Menu)`
+  background: none;
+  color: white;
+`;
+const SubMenuNav = styled(SubMenu)`
+  background: none;
+  color: white;
+  > .ant-menu-submenu-title {
+    padding-left: 0px !important;
+    font-size: 18px;
+    line-height: 25px !important;
+    height: 25px !important;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  & .ant-menu-item {
+    padding-left: 30px !important;
+  }
+  & .ant-menu-item:after {
+    border-right: none;
+  }
+  & .ant-menu-item > a {
+    color: white;
+  }
+  & .ant-menu-item > a:hover {
+    color: #1890ff !important;
+  }
+  & .ant-menu-item-selected {
+    background-color: transparent !important;
+    color: white;
+    border-right: none;
+  }
+  & .ant-menu-item-selected > a {
+    color: white !important;
+    font-weight: normal !important;
+  }
+  > .ant-menu {
+    background: none;
+  }
+  > .ant-menu-submenu-title > .ant-menu-submenu-arrow:before {
+    color: white;
+    background-image: linear-gradient(
+      to right,
+      rgb(255, 255, 255),
+      rgba(255, 255, 255)
+    );
+  }
+  > .ant-menu-submenu-title > .ant-menu-submenu-arrow:after {
+    background-image: linear-gradient(
+      to right,
+      rgb(255, 255, 255),
+      rgba(255, 255, 255)
+    );
+  }
+`;
 const FALDAX = styled.img`
   cursor: pointer;
   margin-left: 10px;
@@ -495,7 +551,7 @@ class LoggedNavigation extends Component {
           });
         }
       })
-      .catch(error => { });
+      .catch(error => {});
   }
   cryptoAccess() {
     // console.log(
@@ -593,10 +649,10 @@ class LoggedNavigation extends Component {
   render() {
     let prof_name =
       this.props.profileDetails.first_name !== null &&
-        this.props.profileDetails.first_name !== undefined
+      this.props.profileDetails.first_name !== undefined
         ? this.props.profileDetails.first_name +
-        " " +
-        this.props.profileDetails.last_name
+          " " +
+          this.props.profileDetails.last_name
         : "User";
     const DropdownItems = (
       <Menu className="fixed-drop">
