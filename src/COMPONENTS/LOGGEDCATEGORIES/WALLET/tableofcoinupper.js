@@ -8,7 +8,6 @@ import { Menu, Dropdown, Icon } from "antd";
 import NumberFormat from "react-number-format";
 
 /* Styled Components */
-import { OTwrap } from "../TRADE/ordertrade";
 import { HistoryWrap } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import {
   Head,
@@ -26,6 +25,7 @@ import {
 /* Components */
 import { globalVariables } from "Globals.js";
 let { _AMAZONBUCKET } = globalVariables;
+const OTwrap = styled.div``;
 const BorderedHistoryWrap = styled(HistoryWrap)`
   overflow-x: auto;
   width: 100%;
