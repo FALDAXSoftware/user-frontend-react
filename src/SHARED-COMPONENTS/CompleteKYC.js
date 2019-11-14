@@ -92,6 +92,7 @@ class ComingSoon extends Component {
             <div>
               <img alt="FALDAX" src={_COMINGIMG} />{" "}
               <img
+                className="faldax_logo"
                 alt="FALDAX"
                 style={{ marginLeft: "10px" }}
                 src={_COMINGIMG2}
@@ -113,27 +114,8 @@ class ComingSoon extends Component {
           className="simple-maps"
         >
           <ModalWrap className="kyc-wrap">
-            <h3
-              style={{
-                fontFamily: "Open Sans",
-                fontSize: "40px",
-                textAlign: "center",
-                color: "rgb(3, 170, 249)",
-                fontWeight: "600",
-                marginTop: "40px"
-              }}
-            >
-              ID Verification Incomplete
-            </h3>
-            <p
-              style={{
-                fontFamily: "Open Sans",
-                fontSize: "16px",
-                textAlign: "center",
-                color: "black",
-                marginTop: "34px"
-              }}
-            >
+            <h3>ID Verification Incomplete</h3>
+            <p>
               Before you can trade, you must complete the ID Verification
               Process. Please click the 'Get Verified' button below to begin.
               {/* {this.props.data} */}

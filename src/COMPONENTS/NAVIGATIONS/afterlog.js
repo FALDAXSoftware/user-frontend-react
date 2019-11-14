@@ -252,7 +252,7 @@ class Afterlog extends Component {
               <FontAwesomeIcon
                 icon={this.state.themeIcon}
                 color={this.state.fontColor}
-                style={{ transform: "rotate(315deg)" }}
+                // style={{ transform: "rotate(315deg)" }}
               />
             </Tooltip>{" "}
           </span>
@@ -290,28 +290,34 @@ class Afterlog extends Component {
             className="simple-maps"
           >
             <div>
-              <h3 style={{ fontSize: "32px", textAlign: "center" }}>
+              <h3
+              //  style={{ fontSize: "32px", textAlign: "center" }}
+              >
                 Coming Soon
               </h3>
-              <label style={{ color: "#00a7ff" }}>
+              <label
+              // style={{ color: "#00a7ff" }}
+              >
                 {" "}
                 Please enter your email to get updates of FALDAX:{" "}
               </label>
               <Input
                 placeholder="Please enter your email address"
-                style={{ color: "#00a7ff", borderColor: "#00a7ff" }}
+                // style={{ color: "#00a7ff", borderColor: "#00a7ff" }}
                 value={this.state.email_address}
                 onChange={e => {
                   this.setState({ email_address: e.target.value });
                 }}
               />
-              <div style={{ marginTop: "20px", minHeight: "20px" }}>
+              <div
+              // style={{ marginTop: "20px", minHeight: "20px" }}
+              >
                 <Button
-                  style={{
-                    float: "right",
-                    color: "#00a7ff",
-                    borderColor: "#00a7ff"
-                  }}
+                  // style={{
+                  //   float: "right",
+                  //   color: "#00a7ff",
+                  //   borderColor: "#00a7ff"
+                  // }}
                   onClick={() => this.send_email()}
                 >
                   {" "}
@@ -348,7 +354,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Afterlog);
+export default connect(mapStateToProps, mapDispatchToProps)(Afterlog);

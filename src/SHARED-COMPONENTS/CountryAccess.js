@@ -107,28 +107,9 @@ class ComingSoon extends React.Component {
           height={490}
           className="simple-maps"
         >
-          <ModalWrap>
-            <h3
-              style={{
-                fontFamily: "Open Sans",
-                fontSize: "40px",
-                textAlign: "center",
-                color: "rgb(3, 170, 249)",
-                fontWeight: "600",
-                marginTop: "40px"
-              }}
-            >
-              Access Denied
-            </h3>
-            <p
-              style={{
-                fontFamily: "Open Sans",
-                fontSize: "14px",
-                textAlign: "center",
-                color: "black",
-                marginTop: "15px"
-              }}
-            >
+          <ModalWrap className="country-wrap">
+            <h3>Access Denied</h3>
+            <p className="first-subhead">
               Unfortunately, FALDAX does not offer trading services in your area
               at this time, but we are actively working to increase
               availability. Visit the world map on our home page to see where
@@ -138,14 +119,7 @@ class ComingSoon extends React.Component {
               subscribe to our newsletter, to be notifiedwhen services become
               available for you.
             </p>
-            <p
-              style={{
-                fontFamily: "Open Sans",
-                fontSize: "15px",
-                textAlign: "center",
-                color: "black"
-              }}
-            >
+            <p className="second-subhead">
               Thank you for your support and your patience.
             </p>
             {/* <Sub_wrap>
