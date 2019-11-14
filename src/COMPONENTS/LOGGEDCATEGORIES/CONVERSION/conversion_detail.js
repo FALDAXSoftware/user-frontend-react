@@ -278,11 +278,8 @@ class ConversionDetail extends React.Component {
 
   componentDidMount() {
     this.getCrypto();
-    // this.getCurrencies();
-    // this.getFiatCurrencyList();
   }
   sendCurrencyChange(e) {
-    // console.log("Send Currency Change");
     clearTimeout(this.timeout);
     this.clearValidation();
     this.state.JSTPairList.map((element, i) => {
@@ -325,10 +322,8 @@ class ConversionDetail extends React.Component {
     }
   }
   recieveCurrencyChange(e) {
-    console.log("this is???????", e.target.value);
     clearTimeout(this.timeout);
     this.clearValidation();
-    // console.log("Recieve Currency Change");
     this.state.JSTPairList.map((element, i) => {
       if (
         element.crypto === this.state.crypto &&
@@ -1015,24 +1010,49 @@ class ConversionDetail extends React.Component {
       .catch(error => {});
   }
   handleCryptoChange(value, option: Option) {
-    console.log(
-      "option.props.selectedData.min_limit",
-      option.props.selectedData.jst_min_coin_limit
-    );
+    // console.log(
+    //   "option.props.selectedData.min_limit",
+    //   option.props.selectedData.jst_min_coin_limit
+    // );
     if (value === this.state.currency) {
       this.state.currencyList.map((element, i) => {
         if (element.coin === this.state.currency) {
           var list = this.state.currencyList.splice(i, 1);
-          // console.log(list);
           this.setState({
             cryptoList: this.state.cryptoList.push(list[0])
           });
         }
       });
-      this.setState({
-        currency: this.state.currencyList[0].coin,
-        minCurrency: this.state.currencyList[0].jst_min_coin_limit
-      });
+      if (value === "XRP") {
+        if (this.state.currencyList[0].coin === "LTC") {
+          this.setState({
+            currency: this.state.currencyList[1].coin,
+            minCurrency: this.state.currencyList[1].jst_min_coin_limit
+          });
+        } else {
+          this.setState({
+            currency: this.state.currencyList[0].coin,
+            minCurrency: this.state.currencyList[0].jst_min_coin_limit
+          });
+        }
+      } else if (value === "LTC") {
+        if (this.state.currencyList[0].coin === "XRP") {
+          this.setState({
+            currency: this.state.currencyList[1].coin,
+            minCurrency: this.state.currencyList[1].jst_min_coin_limit
+          });
+        } else {
+          this.setState({
+            currency: this.state.currencyList[0].coin,
+            minCurrency: this.state.currencyList[0].jst_min_coin_limit
+          });
+        }
+      } else {
+        this.setState({
+          currency: this.state.currencyList[0].coin,
+          minCurrency: this.state.currencyList[0].jst_min_coin_limit
+        });
+      }
     }
     clearTimeout(this.timeout);
     this.setState(
@@ -1071,16 +1091,23 @@ class ConversionDetail extends React.Component {
           }
         });
         if (this.state.includeFees === 1) {
-          if (this.state.recieveCurrencyInput > 0) {
-            console.log(
-              "If original_pair-----------",
-              this.state.original_pair
-            );
-            console.log("If order_pair-----------", this.state.order_pair);
-            console.log("If crypto-----------", this.state.crypto);
-            console.log("If currency-----------", this.state.currency);
-            this.timeout = setTimeout(this.showCalculatedValues, 1000);
-          }
+          this.setState(
+            {
+              recieveCurrencyInput: option.props.selectedData.jst_min_coin_limit
+            },
+            () => {
+              if (this.state.recieveCurrencyInput > 0) {
+                console.log(
+                  "If original_pair-----------",
+                  this.state.original_pair
+                );
+                console.log("If order_pair-----------", this.state.order_pair);
+                console.log("If crypto-----------", this.state.crypto);
+                console.log("If currency-----------", this.state.currency);
+                this.timeout = setTimeout(this.showCalculatedValues, 1000);
+              }
+            }
+          );
         } else {
           if (this.state.sendCurrencyInput > 0) {
             console.log(
@@ -1109,21 +1136,45 @@ class ConversionDetail extends React.Component {
     );
   }
   handleCurrencyChange(value, option: Option) {
-    console.log("option.props.selectedData.min_limit", option.props);
     if (value === this.state.crypto) {
       this.state.cryptoList.map((element, i) => {
         if (element.coin === this.state.crypto) {
           var list1 = this.state.cryptoList.splice(i, 1);
-          // console.log(list1);
           this.setState({
             currencyList: this.state.currencyList.push(list1[0])
           });
         }
       });
-      this.setState({
-        crypto: this.state.cryptoList[0].coin,
-        minCrypto: this.state.cryptoList[0].jst_min_coin_limit
-      });
+      if (value === "XRP") {
+        if (this.state.cryptoList[0].coin === "LTC") {
+          this.setState({
+            crypto: this.state.cryptoList[1].coin,
+            minCrypto: this.state.cryptoList[1].jst_min_coin_limit
+          });
+        } else {
+          this.setState({
+            crypto: this.state.cryptoList[0].coin,
+            minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+          });
+        }
+      } else if (value === "LTC") {
+        if (this.state.cryptoList[0].coin === "XRP") {
+          this.setState({
+            crypto: this.state.cryptoList[1].coin,
+            minCrypto: this.state.cryptoList[1].jst_min_coin_limit
+          });
+        } else {
+          this.setState({
+            crypto: this.state.cryptoList[0].coin,
+            minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+          });
+        }
+      } else {
+        this.setState({
+          crypto: this.state.cryptoList[0].coin,
+          minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+        });
+      }
     }
     clearTimeout(this.timeout);
     this.setState(
@@ -1166,11 +1217,17 @@ class ConversionDetail extends React.Component {
             this.timeout = setTimeout(this.showCalculatedValues, 1000);
           }
         } else {
-          if (this.state.sendCurrencyInput > 0) {
-            this.timeout = setTimeout(this.showCalculatedValues, 1000);
-          }
+          this.setState(
+            {
+              sendCurrencyInput: option.props.selectedData.jst_min_coin_limit
+            },
+            () => {
+              if (this.state.sendCurrencyInput > 0) {
+                this.timeout = setTimeout(this.showCalculatedValues, 1000);
+              }
+            }
+          );
         }
-        // this.showCalculatedValues();
       }
     );
   }

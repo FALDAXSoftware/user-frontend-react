@@ -29,6 +29,8 @@ export const globalVariables = {
 
   TRADE_URL: "https://preprod-trade.faldax.com"
 
+  // TRADE_URL: "http://localhost:3006/"
+
   // API_URL: "https://prod-backend.faldax.com"
 
   //API_URL: process.env.REACT_APP_ENV_URL==='production' ?
