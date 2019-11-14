@@ -185,6 +185,7 @@ export default class Datepicker extends Component {
           this.props.kycData2.dob !== null
         ) {
           date = this.props.kycData2.dob.split("-");
+
           year = Number(date[2]);
           month = date[1];
           day = Number(date[0]);
@@ -199,11 +200,13 @@ export default class Datepicker extends Component {
         this.props.profileDetails.dob !== null
       ) {
         // console.log("profile ", this.props.kyc)
+
         if (this.props.profileDetails.dob !== undefined) {
           date = this.props.profileDetails.dob.split("-");
           year = Number(date[2]);
           month = date[1];
           day = Number(date[0]);
+          // console.log("date---------", year);
           if (month !== null) {
             month = Number(month) - 1;
           }
