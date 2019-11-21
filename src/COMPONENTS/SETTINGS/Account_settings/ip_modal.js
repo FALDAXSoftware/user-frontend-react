@@ -30,6 +30,16 @@ export const NewP = styled(Old)`
     margin-bottom: 20px;
     width: 100%;
   }
+  > .promo_input_wrap {
+    position: relative;
+    > span.promo_cross_wrap {
+      position: absolute;
+      right: 10px;
+      top: 20px;
+      line-height: 1;
+      cursor: pointer;
+    }
+  }
   &.deactivate {
     margin-bottom: 30px;
   }
@@ -38,6 +48,9 @@ export const NewP = styled(Old)`
   }
   &.add_new_ip {
     width: 100%;
+  }
+  &.add_new_promo {
+    margin-top: 0;
   }
   > .range_picker_wrap {
     > .ant-calendar-picker {
@@ -101,6 +114,10 @@ export const OTPInput = styled(NewInput)`
 export const ButtonDiv = styled.div`
   margin-top: 30px;
   margin-bottom: 50px;
+  &.promo_check {
+    margin-bottom: 20px;
+    text-align: center;
+  }
 `;
 export const NewButton = styled(Save)`
   border: none;
