@@ -150,7 +150,7 @@ class History extends Component {
       drop2Value: "",
       loader: false,
       csvFields: [],
-      activeKey: "1",
+      activeKey: "2",
       csvHeadersTrade: [
         { label: "Date", key: "date" },
         { label: "Side", key: "side" },
