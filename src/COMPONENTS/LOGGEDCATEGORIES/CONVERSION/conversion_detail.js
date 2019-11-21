@@ -105,8 +105,12 @@ class ConversionDetail extends React.Component {
       minCurrency: 0,
       disabledClass: "",
       promoCode: "",
-      showPromoModal: true,
-      offerMsg: ""
+      showPromoModal: false,
+      offerMsg: "",
+      applyPromoCode: false,
+      appliedOfferCode: "",
+      showAppliedPromoModal: false,
+      validPromo: false
     };
     io = this.props.io;
     this.timeout = null;
@@ -243,6 +247,7 @@ class ConversionDetail extends React.Component {
     this.btnClicked = this.btnClicked.bind(this);
     this.promoCode = this.promoCode.bind(this);
     this.checkPromo = this.checkPromo.bind(this);
+    this.applyPromo = this.applyPromo.bind(this);
     this.closePromoModal = this.closePromoModal.bind(this);
     this.getFiatCurrencyList = this.getFiatCurrencyList.bind(this);
     this.handleFiatChange = this.handleFiatChange.bind(this);
@@ -476,7 +481,8 @@ class ConversionDetail extends React.Component {
         flag: "2",
         usd_value: "",
         original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair
+        order_pair: this.state.order_pair,
+        offer_code: this.state.appliedOfferCode
       };
       // console.log(values);
     } else {
@@ -490,7 +496,8 @@ class ConversionDetail extends React.Component {
         flag: "1",
         usd_value: "",
         original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair
+        order_pair: this.state.order_pair,
+        offer_code: this.state.appliedOfferCode
       };
     }
     // console.log("Values-----------", values);
@@ -689,7 +696,8 @@ class ConversionDetail extends React.Component {
         flag: "2",
         usd_value: this.state.fiatJSTValue,
         original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair
+        order_pair: this.state.order_pair,
+        offer_code: this.state.appliedOfferCode
       };
     } else {
       var values = {
@@ -701,7 +709,8 @@ class ConversionDetail extends React.Component {
         flag: "1",
         usd_value: this.state.fiatJSTValue,
         original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair
+        order_pair: this.state.order_pair,
+        offer_code: this.state.appliedOfferCode
       };
     }
     if (
@@ -890,7 +899,8 @@ class ConversionDetail extends React.Component {
         original_pair: this.state.original_pair,
         order_pair: this.state.order_pair,
         faldax_fees: this.state.faldaxFee,
-        network_fees: this.state.networkFee
+        network_fees: this.state.networkFee,
+        offer_code: this.state.appliedOfferCode
       };
       console.log(values);
     } else {
@@ -905,7 +915,8 @@ class ConversionDetail extends React.Component {
         original_pair: this.state.original_pair,
         order_pair: this.state.order_pair,
         faldax_fees: this.state.faldaxFee,
-        network_fees: this.state.networkFee
+        network_fees: this.state.networkFee,
+        offer_code: this.state.appliedOfferCode
       };
       console.log(values);
     }
@@ -1324,7 +1335,9 @@ class ConversionDetail extends React.Component {
   promoCode(e) {
     console.log(e.target.value);
     this.setState({
-      promoCode: e.target.value
+      promoCode: e.target.value,
+      validPromo: false,
+      offerMsg: ""
     });
   }
   checkPromo() {
@@ -1345,22 +1358,21 @@ class ConversionDetail extends React.Component {
         .then(response => response.json())
         .then(responseData => {
           if (responseData.status === 200) {
-            console.log(responseData);
-            this.openNotificationWithIcon(
-              "success",
-              "Success",
-              "Offer Applied!"
-            );
             this.setState({
-              offerMsg: responseData.message
+              offerMsg: responseData.message,
+              applyPromoCode: true,
+              validPromo: true
             });
           } else if (responseData.status === 500) {
-            this.openNotificationWithIcon("error", "Error", responseData.err);
             this.setState({
-              offerMsg: responseData.err
+              offerMsg: responseData.err,
+              validPromo: false
             });
           } else {
-            console.log(responseData);
+            // console.log(responseData);
+            this.setState({
+              validPromo: false
+            });
           }
           this.setState({ loader: false });
         })
@@ -1370,9 +1382,23 @@ class ConversionDetail extends React.Component {
       this.forceUpdate();
     }
   }
+  applyPromo() {
+    this.setState(
+      {
+        showPromoModal: false,
+        appliedOfferCode: this.state.promoCode,
+        showAppliedPromoModal: false
+      },
+      () => {
+        this.showCalculatedValues();
+      }
+    );
+  }
   closePromoModal() {
     this.setState({
-      showPromoModal: false
+      showPromoModal: false,
+      showAppliedPromoModal: false,
+      offerMsg: ""
     });
   }
   openNotificationWithIcon(type, head, desc) {
@@ -2004,21 +2030,57 @@ class ConversionDetail extends React.Component {
                     <Row className="network_fee">
                       <Col xs={12} className="left-style">
                         <LeftTotal className="promo-apply">
-                          <span
-                            onClick={() => {
-                              this.clearValidation();
-                              this.setState({
-                                showPromoModal: true,
-                                promoCode: ""
-                              });
-                            }}
-                          >
-                            Apply Promo Code
-                            <Icon type="right" />
-                          </span>
+                          {this.state.appliedOfferCode !== "" ? (
+                            <span
+                              onClick={() => {
+                                this.clearValidation();
+                                this.setState({
+                                  showAppliedPromoModal: true,
+                                  promoCode: this.state.appliedOfferCode
+                                });
+                              }}
+                            >
+                              {this.state.appliedOfferCode}
+                            </span>
+                          ) : (
+                            <span
+                              onClick={() => {
+                                this.clearValidation();
+                                this.setState({
+                                  showPromoModal: true,
+                                  promoCode: ""
+                                });
+                              }}
+                            >
+                              Apply Promo Code
+                              <Icon type="right" />
+                            </span>
+                          )}
                         </LeftTotal>
                       </Col>
-                      <Col xs={12} className="right-style"></Col>
+                      <Col xs={12} className="right-style">
+                        {this.state.appliedOfferCode && (
+                          <RightTotal
+                            onClick={() => {
+                              this.clearValidation();
+                              this.setState(
+                                {
+                                  appliedOfferCode: "",
+                                  promoCode: "",
+                                  offerMsg: "",
+                                  applyPromoCode: false,
+                                  validPromo: false
+                                },
+                                () => {
+                                  this.showCalculatedValues();
+                                }
+                              );
+                            }}
+                          >
+                            <Icon type="close-circle" />
+                          </RightTotal>
+                        )}
+                      </Col>
                     </Row>
                     <VerifyModal
                       visible={this.state.showPromoModal}
@@ -2043,12 +2105,13 @@ class ConversionDetail extends React.Component {
                             "required",
                             "text-danger-validation"
                           )}
-
                           {this.state.promoCode && (
                             <span
                               onClick={() => {
                                 this.setState({
-                                  promoCode: ""
+                                  promoCode: "",
+                                  offerMsg: "",
+                                  validPromo: false
                                 });
                               }}
                               className="promo_cross_wrap"
@@ -2058,12 +2121,75 @@ class ConversionDetail extends React.Component {
                           )}
                         </div>
                         {this.state.offerMsg && (
-                          <span>{this.state.offerMsg}</span>
+                          <span className="offer_msg">
+                            {this.state.offerMsg}
+                          </span>
                         )}
                       </NewP>
-                      <ButtonDiv className="promo_check">
-                        <NewButton onClick={this.checkPromo}>Check</NewButton>
-                      </ButtonDiv>
+                      {this.state.validPromo ? (
+                        <ButtonDiv className="promo_check">
+                          <NewButton onClick={this.applyPromo}>Apply</NewButton>
+                        </ButtonDiv>
+                      ) : (
+                        <ButtonDiv className="promo_check">
+                          <NewButton onClick={this.checkPromo}>Check</NewButton>
+                        </ButtonDiv>
+                      )}
+                    </VerifyModal>
+                    <VerifyModal
+                      visible={this.state.showAppliedPromoModal}
+                      onCancel={this.closePromoModal}
+                      title="Enter Promo Code"
+                      footer={null}
+                    >
+                      <NewP className="add_new_promo">
+                        <div className="otp-input-wrap promo_input_wrap">
+                          <OTPInput
+                            className="otp-input"
+                            value={this.state.promoCode}
+                            size="medium"
+                            placeholder="Promo Code"
+                            onChange={this.promoCode}
+                            name="promoCode"
+                            style={{ marginBottom: "20px" }}
+                          />
+                          {this.validator3.message(
+                            "Promo Code ",
+                            this.state.promoCode,
+                            "required",
+                            "text-danger-validation"
+                          )}
+                          {this.state.promoCode && (
+                            <span
+                              onClick={() => {
+                                this.setState({
+                                  promoCode: "",
+                                  appliedOfferCode: "",
+                                  offerMsg: "",
+                                  validPromo: false
+                                });
+                              }}
+                              className="promo_cross_wrap"
+                            >
+                              <Icon type="close-circle" />
+                            </span>
+                          )}
+                        </div>
+                        {this.state.offerMsg && (
+                          <span className="offer_msg">
+                            {this.state.offerMsg}
+                          </span>
+                        )}
+                      </NewP>
+                      {this.state.validPromo ? (
+                        <ButtonDiv className="promo_check">
+                          <NewButton onClick={this.applyPromo}>Apply</NewButton>
+                        </ButtonDiv>
+                      ) : (
+                        <ButtonDiv className="promo_check">
+                          <NewButton onClick={this.checkPromo}>Check</NewButton>
+                        </ButtonDiv>
+                      )}
                     </VerifyModal>
                     <Row>
                       <Col xs={12} className="left-style">
