@@ -850,16 +850,25 @@ export const ConversionLeftCol = styled(Col)`
           padding: 5px 0;
           > div {
             > .ant-row.network_fee {
-              border-bottom: ${props =>
-                props.theme.mode === "dark"
-                  ? "1px dashed #021b2b"
-                  : "1px dashed black"};
-              padding: 0px 0 10px 0;
-              margin: 0 0 10px 0;
+              border-bottom: 1px dashed black;
+              border-top: 1px dashed #d9d9d9;
+              padding: 5px 0;
+              margin: 10px 0 10px 0;
             }
             > .ant-row {
               > .ant-col.left-style {
                 text-align: left;
+                > .promo-apply {
+                  > span {
+                    font-weight: bold;
+                    > .anticon {
+                      margin: 0 0 0px 5px;
+                    }
+                  }
+                  > span:hover {
+                    cursor: pointer;
+                  }
+                }
               }
               > .ant-col.right-style {
                 text-align: right;
