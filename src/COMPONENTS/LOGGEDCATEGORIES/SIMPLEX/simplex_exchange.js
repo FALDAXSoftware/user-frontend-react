@@ -28,8 +28,8 @@ import {
 import styled from "styled-components";
 
 export const FormValueDisplay = styled.form`
-    display:none;
-`
+  display: none;
+`;
 
 const API_URL = globalVariables.API_URL;
 const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
@@ -41,7 +41,8 @@ class SimplexExchange extends React.Component {
       loader: false,
       // currencyToPay: this.props.location.state.currencyToPay,
       // currencyToGet: this.props.location.state.currencyToGet,
-      minCurrency: parseInt(50),
+      minCurrency: "50",
+      maxCurrency: "20000",
       cryptoList: [],
       // crypto: this.props.location.state.crypto,
       // currency: this.props.location.state.currency,
@@ -64,12 +65,23 @@ class SimplexExchange extends React.Component {
     };
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
-        message: `Amount must be greater than or equal to ${this.state.minCurrency}`,
+        message: `Amount must be greater than or equal to 50`,
         rule: (val, params, validator) => {
           if (val >= this.state.minCurrency) {
             return true;
           } else {
             return false;
+          }
+        },
+        required: true // optional
+      },
+      maxCurrencyValid: {
+        message: `Amount must be less than or equal to 20,000`,
+        rule: (val, params, validator) => {
+          if (val > parseInt(this.state.maxCurrency)) {
+            return false;
+          } else {
+            return true;
           }
         },
         required: true // optional
@@ -189,7 +201,7 @@ class SimplexExchange extends React.Component {
           });
         }
       })
-      .catch(error => { });
+      .catch(error => {});
   }
   calculateDigitalCurrency() {
     this.setState({
@@ -277,7 +289,7 @@ class SimplexExchange extends React.Component {
           //   quote_id: responseData.data.quote_id
           // });
         })
-        .catch(error => { });
+        .catch(error => {});
     }
   }
   handleCurrencyPayChange(e) {
@@ -380,7 +392,7 @@ class SimplexExchange extends React.Component {
             // window.location = this.state.response.action;
           }
         })
-        .catch(error => { });
+        .catch(error => {});
     } else {
       this.validator1.showMessages();
       this.setState({
@@ -415,7 +427,7 @@ class SimplexExchange extends React.Component {
                   {this.validator1.message(
                     "amount pay",
                     this.state.currencyToPay,
-                    `required|gtzero|minCurrencyValid|decimalrestrict2`,
+                    `required|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
                     "text-danger-validation"
                   )}
                 </Col>
@@ -455,7 +467,7 @@ class SimplexExchange extends React.Component {
                     placeholder="0"
                     readOnly
                     value={this.state.currencyToGet}
-                  // onChange={this.handleCurrencyGetChange}
+                    // onChange={this.handleCurrencyGetChange}
                   />
                 </Col>
                 <Col xs={12} sm={12} md={8} className="currency-display">
@@ -531,39 +543,39 @@ class SimplexExchange extends React.Component {
                   </Row>
                 </div>
               ) : (
-                  <div>
-                    <BorderRow>
-                      <Col>
-                        <ConversionInput
-                          className="address_field"
-                          type="text"
-                          placeholder="Address"
-                          value={this.state.address}
-                          // readOnly
-                          onChange={this.handleAddressChange}
-                        />
-                        {this.validator1.message(
-                          "address",
-                          this.state.address,
-                          `required|alpha_num|min:15|max:120`,
-                          "text-danger-validation"
-                        )}
-                      </Col>
-                    </BorderRow>
-                    <Row>
-                      <Col>
-                        <ConversionSubmitBtn
-                          onClick={this.btnClicked}
-                          type="primary"
-                          size="large"
-                          block
-                        >
-                          Continue
+                <div>
+                  <BorderRow>
+                    <Col>
+                      <ConversionInput
+                        className="address_field"
+                        type="text"
+                        placeholder="Address"
+                        value={this.state.address}
+                        // readOnly
+                        onChange={this.handleAddressChange}
+                      />
+                      {this.validator1.message(
+                        "address",
+                        this.state.address,
+                        `required|alpha_num|min:15|max:120`,
+                        "text-danger-validation"
+                      )}
+                    </Col>
+                  </BorderRow>
+                  <Row>
+                    <Col>
+                      <ConversionSubmitBtn
+                        onClick={this.btnClicked}
+                        type="primary"
+                        size="large"
+                        block
+                      >
+                        Continue
                       </ConversionSubmitBtn>
-                      </Col>
-                    </Row>
-                  </div>
-                )}
+                    </Col>
+                  </Row>
+                </div>
+              )}
               {/* {this.state.address === "" ? (
                 <CreateWalletRow className="create-wallet-link">
                   <Col>
