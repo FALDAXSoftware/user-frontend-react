@@ -51,6 +51,9 @@ export const NewP = styled(Old)`
   }
   &.add_new_promo {
     margin-top: 0;
+    > span.offer_msg {
+      font-weight: bold;
+    }
   }
   > .range_picker_wrap {
     > .ant-calendar-picker {
@@ -76,7 +79,7 @@ export const OldInput = styled(Input)`
     margin-top:5px;
     width: 95%;
     background-color:${props =>
-    props.theme.mode === "dark" ? "#041422" : "#f8f8f8"};
+      props.theme.mode === "dark" ? "#041422" : "#f8f8f8"};
     color:${props => (props.theme.mode === "dark" ? "white" : "")}
     display:inline-block;
     font-family: "Open Sans";
@@ -238,17 +241,18 @@ class IpModal extends Component {
           visible={this.state.visible}
           footer={null}
         >
-          {this.props.security == false ?
+          {this.props.security == false ? (
             <Description>
               {" "}
               Please enter IP which will be permanent for your FALDAX account.
-          </Description>
-            :
+            </Description>
+          ) : (
             <Description>
               {" "}
-              If your security feature is on, while you add a new IP address, you will be restricted to perform withdrawal for 24 hours.
+              If your security feature is on, while you add a new IP address,
+              you will be restricted to perform withdrawal for 24 hours.
             </Description>
-          }
+          )}
           <NewP>
             <InputLabel>Enter IP*</InputLabel>
             <div>
