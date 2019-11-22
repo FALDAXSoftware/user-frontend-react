@@ -18,22 +18,22 @@ import {
 } from "STYLED-COMPONENTS/SETTINGS/accsettingsStyle";
 
 export const LimitInput = styled.input`
-    width: 150px;
-    height: 32px;
-    padding: 4px 11px;
-    color: rgba(0, 0, 0, 0.65);
-    font-size: 14px;
-    line-height: 1.5;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #d9d9d9;
-    border-radius: 4px;
-`
+  width: 150px;
+  height: 32px;
+  padding: 4px 11px;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+`;
 
 export const NotificationWrap = styled.div`
-    padding-left: 10px; 
-    padding-right: 10px;
-`
+  padding-left: 10px;
+  padding-right: 10px;
+`;
 
 let { API_URL } = globalVariables;
 
@@ -49,7 +49,7 @@ class ThreshholdNotification extends React.Component {
       lowerpositiveDecimal: {
         // name the rule
         message: "Lower limit should be only positive decimals", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function (val, options) {
+        rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^(\d*\.)?\d+$/;
@@ -60,7 +60,7 @@ class ThreshholdNotification extends React.Component {
       upperpositiveDecimal: {
         // name the rule
         message: "Upper limit should be only positive decimals", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function (val, options) {
+        rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^(\d*\.)?\d+$/;
@@ -180,7 +180,7 @@ class ThreshholdNotification extends React.Component {
     console.log(key, e.target.checked, record);
     const { thresholdData } = this.state;
     var tempData = thresholdData;
-    tempData.map(function (data, index) {
+    tempData.map(function(data, index) {
       if (data.coin_id == record.coin_id) {
         // console.log(tempData[key])
         if (key == "is_email_notification")
@@ -195,7 +195,7 @@ class ThreshholdNotification extends React.Component {
     // console.log(key, e.target.value, record)
     const { thresholdData } = this.state;
     var tempData = thresholdData;
-    tempData.map(function (data, index) {
+    tempData.map(function(data, index) {
       if (data.coin_id == record.coin_id) {
         // console.log(tempData[key])
         if (key == "lower_limit")
@@ -270,6 +270,11 @@ class ThreshholdNotification extends React.Component {
               thresholdData: responseData.data,
               savedData: b
             });
+            this.openNotificationWithIcon(
+              "success",
+              "Success",
+              "Threshold Notifications setting saved successfully."
+            );
           } else {
             this.openNotificationWithIcon(
               "error",

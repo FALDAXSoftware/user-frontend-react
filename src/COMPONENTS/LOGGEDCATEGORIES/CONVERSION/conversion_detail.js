@@ -949,6 +949,7 @@ class ConversionDetail extends React.Component {
             totalAmount: 0,
             faldaxFee: 0,
             networkFee: 0,
+            appliedOfferCode: "",
             loader: false
           });
           this.clearValidation();
