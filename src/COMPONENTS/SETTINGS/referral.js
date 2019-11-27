@@ -232,7 +232,7 @@ const RefTable = styled(Table)`
   min-width: 600px;
   & .ant-table-tbody > tr:hover > td {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "transparent" : "transparent"};
+    props.theme.mode === "dark" ? "transparent" : "transparent"};
   }
   .ant-empty-description {
     color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
@@ -319,7 +319,7 @@ class Referral extends Component {
           let fields = [];
           let sum = 0;
           let sum2 = 0;
-          responseData.referredData.map(function(temp) {
+          responseData.referredData.map(function (temp) {
             // console.log(temp);
             //Converting amount into currency.
             let fiatAmt =
@@ -343,7 +343,7 @@ class Referral extends Component {
               let sum3 = 0;
               let index = "";
               //map for fields to remove duplicates
-              fields.map(function(temp2, index) {
+              fields.map(function (temp2, index) {
                 // console.log(temp2, obj.coin_name, obj, fields);
 
                 if (temp2.coin_name == obj.coin_name) {
@@ -359,14 +359,22 @@ class Referral extends Component {
               }
             }
           });
-          responseData.leftReferredData.map(function(temp) {
-            // console.log(temp);
+          console.log(responseData.leftReferredData);
+          responseData.leftReferredData.map(function (temp) {
+            console.log(temp);
+            console.log(parseFloat(temp.amount));
+            console.log(parseFloat(temp.quote[`${fiat}`].price))
             let fiatAmt =
               parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
-            // console.log(fiatAmt);
-            sum2 = sum2 + parseFloat(fiatAmt.toFixed(4));
+            console.log(fiatAmt);
+            fiatAmt = parseFloat(fiatAmt).toFixed(8);
+            console.log(fiatAmt);
+            console.log(sum2);
+            sum2 = parseFloat(sum2) + parseFloat(fiatAmt);
+            sum2 = parseFloat(sum2.toFixed(8))
+            console.log("After Sum ??????", sum2);
           });
-          // console.log(sum2, fields)
+          console.log(sum2, fields)
           this.setState({
             referredData: responseData.data,
             referredCoin: fields,
@@ -404,7 +412,7 @@ class Referral extends Component {
     // Copy to clipboard example
     document.querySelectorAll(
       ".ant-input-search-button"
-    )[0].onclick = function() {
+    )[0].onclick = function () {
       // Select the content
       if (document.querySelectorAll(".INPUT_search > input")[0] !== undefined)
         document.querySelectorAll(".INPUT_search > input")[0].select();
@@ -420,7 +428,7 @@ class Referral extends Component {
   coinsEarned(coin) {
     // console.log(coin);
     var coinAmt = 0;
-    this.state.referredCoin.map(function(temp) {
+    this.state.referredCoin.map(function (temp) {
       if (temp.coin_name == coin) {
         coinAmt = temp.amount;
       }
@@ -519,7 +527,7 @@ class Referral extends Component {
                       value={this.state.coinSelected}
                       className="coin-value"
                     >
-                      {this.state.referredCoin.map(function(temp) {
+                      {this.state.referredCoin.map(function (temp) {
                         return (
                           <Option value={temp.coin_name}>
                             {temp.coin_name}
@@ -539,8 +547,8 @@ class Referral extends Component {
                         {this.state.coinSelected}
                       </span>
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                   </div>
                 </Col>
                 <Col xs={24} sm={24} md={8}>
@@ -555,8 +563,8 @@ class Referral extends Component {
             </div>
           </Ref_div>
         ) : (
-          ""
-        )}
+            ""
+          )}
         <Ref_acc>
           <div>
             <RefTable
@@ -571,8 +579,8 @@ class Referral extends Component {
         {this.state.loader === true || this.props.loader === true ? (
           <FaldaxLoader />
         ) : (
-          ""
-        )}
+            ""
+          )}
       </ParentWrap>
     );
   }
