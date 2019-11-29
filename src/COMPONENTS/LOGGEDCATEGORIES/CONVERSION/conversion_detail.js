@@ -558,14 +558,16 @@ class ConversionDetail extends React.Component {
         .then(response => response.json())
         .then(responseData => {
           if (responseData.status === 200) {
+            // this.setState({ loader: false })
             this.setState({
+              loader: false,
               subTotal: parseFloat(responseData.data.original_value).toFixed(8),
               faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
               networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
-              totalAmount: responseData.data.total_value.toFixed(8),
+              totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
               fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
               displayCurrency: responseData.data.currency,
-              Quantity: parseFloat(responseData.data.total_value).toFixed(8)
+              Quantity: parseFloat(responseData.data.total_value).toFixed(8),
             });
             if (this.state.includeFees === 1) {
               // if (this.state.OrdType === "1") {
@@ -590,7 +592,7 @@ class ConversionDetail extends React.Component {
                 orderQuantity: parseFloat(
                   responseData.data.currency_value
                 ).toFixed(8),
-                loader: false
+                // loader: false
               });
             } else {
               // if (this.state.OrdType === "2") {
@@ -615,7 +617,7 @@ class ConversionDetail extends React.Component {
                 orderQuantity: parseFloat(
                   responseData.data.currency_value
                 ).toFixed(8),
-                loader: false
+                // loader: false
               });
             }
             if (this.state.includeFees === 1 && this.state.OrdType === "1") {
@@ -682,6 +684,7 @@ class ConversionDetail extends React.Component {
             } else {
               console.log("no scenario");
             }
+            this.setState({ loader: false });
           } else if (responseData.status === 500) {
             this.setState({ loader: false });
             this.openNotificationWithIcon("error", "Error", responseData.err);
@@ -785,7 +788,8 @@ class ConversionDetail extends React.Component {
               networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
               // totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
               displayCurrency: responseData.data.currency,
-              Quantity: parseFloat(responseData.data.total_value).toFixed(8)
+              Quantity: parseFloat(responseData.data.total_value).toFixed(8),
+              loader: false
               // orderQuantity: responseData.data.orderQuantity
             });
             if (this.state.includeFees === 1) {
