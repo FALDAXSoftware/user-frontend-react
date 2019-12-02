@@ -303,6 +303,7 @@ class Referral extends Component {
   getReferralData() {
     let { profileDetails } = this.props;
     this.setState({ loader: true });
+    console.log(this.state)
     fetch(`${API_URL}/users/referredUsers`, {
       method: "get",
       headers: {
@@ -449,7 +450,7 @@ class Referral extends Component {
       }
     })
       .then(response => response.json())
-      .then(responseData => {
+      .then(async responseData => {
         if (responseData.status == 200) {
           // this.getReferralData();
           this.openNotificationWithIcon(
@@ -459,16 +460,18 @@ class Referral extends Component {
           );
           this.setState({
             coinSelected: "",
-            perCoinEarned: ""
-          });
-          this.getReferralData();
+            perCoinEarned: "",
+            // loader: false
+          }, () => {
+            this.getReferralData();
+          })
         } else {
           this.openNotificationWithIcon("error", "Error", responseData.message);
+          this.setState({ loader: false });
         }
-        this.setState({ loader: false });
       })
       .catch(error => {
-        /* console.log(error) */
+        console.log(error)
         this.setState({ loader: false });
       });
     // this.getReferralData();
