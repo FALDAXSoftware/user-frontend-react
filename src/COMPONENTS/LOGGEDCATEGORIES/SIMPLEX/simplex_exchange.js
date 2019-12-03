@@ -180,10 +180,10 @@ class SimplexExchange extends React.Component {
   componentDidMount(e) {
     this.getCrypto();
     this.calculateDigitalCurrency();
-    console.log(
-      "this.props.profileDetails.is_kyc_done",
-      this.props.profileDetails.is_twofactor
-    );
+    // console.log(
+    //   "this.props.profileDetails.is_kyc_done",
+    //   this.props.profileDetails.is_twofactor
+    // );
     if (this.props.profileDetails.is_twofactor) {
       this.setState({
         checkOTP: true
@@ -640,7 +640,7 @@ class SimplexExchange extends React.Component {
                   <Row>
                     <Col>
                       <ConversionSubmitBtn
-                        onClick={this.btnClicked}
+                        onClick={() => this.btnClicked()}
                         type="primary"
                         size="large"
                         block

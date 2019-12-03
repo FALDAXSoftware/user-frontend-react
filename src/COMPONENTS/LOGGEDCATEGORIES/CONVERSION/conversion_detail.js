@@ -15,6 +15,7 @@ import { withRouter } from "react-router-dom";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import TFAModal from "SHARED-COMPONENTS/TFAModal";
 import NumberFormat from "react-number-format";
 // import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
 // import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
@@ -113,7 +114,9 @@ class ConversionDetail extends React.Component {
       showAppliedPromoModal: false,
       validPromo: false,
       buy_currency_amount: 0,
-      sell_currency_amount: 0
+      sell_currency_amount: 0,
+      showTFAModal: false,
+      checkOTP: false
     };
     io = this.props.io;
     this.timeout = null;
@@ -288,6 +291,15 @@ class ConversionDetail extends React.Component {
   }
   componentDidMount() {
     this.getCrypto();
+    if (this.props.profileDetails.is_twofactor) {
+      this.setState({
+        checkOTP: true
+      });
+    } else {
+      this.setState({
+        checkOTP: false
+      });
+    }
   }
   sendCurrencyChange(e) {
     clearTimeout(this.timeout);
@@ -945,92 +957,195 @@ class ConversionDetail extends React.Component {
         .catch(error => {});
     }
   }
-  calculateOrderVaules() {
+  calculateOrderVaules(otp = "") {
     console.log("Order");
     this.setState({ loader: true });
     console.log(this.state);
-    if (this.state.includeFees === 1) {
-      var values = {
-        Symbol: this.state.original_pair,
-        Side: this.state.OrdType,
-        OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
-        Quantity: parseFloat(this.state.Quantity).toFixed(8),
-        OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
-        Currency: this.state.crypto,
-        OrdType: "1",
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair,
-        faldax_fees: this.state.faldaxFee,
-        faldax_fees_actual: this.state.faldaxFeeActual,
-        network_fees: this.state.networkFee,
-        offer_code: this.state.appliedOfferCode,
-        buy_currency_amount: this.state.buy_currency_amount,
-        sell_currency_amount: this.state.sell_currency_amount
-      };
-      console.log(values);
-    } else {
-      var values = {
-        Symbol: this.state.original_pair,
-        Side: this.state.OrdType,
-        OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
-        Quantity: parseFloat(this.state.Quantity).toFixed(8),
-        OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
-        Currency: this.state.currency,
-        OrdType: "1",
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair,
-        faldax_fees: this.state.faldaxFee,
-        faldax_fees_actual: this.state.faldaxFeeActual,
-        network_fees: this.state.networkFee,
-        offer_code: this.state.appliedOfferCode,
-        buy_currency_amount: this.state.buy_currency_amount,
-        sell_currency_amount: this.state.sell_currency_amount
-      };
-      console.log(values);
-    }
-    fetch(`${API_URL}/converion/jst-create-order`, {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      },
-      body: JSON.stringify(values)
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.status === 200) {
-          this.openNotificationWithIcon(
-            "success",
-            "Success",
-            responseData.message
-          );
-          this.setState({
-            recieveCurrencyInput: 0,
-            includeFees: 1,
-            sendCurrencyInput: 0,
-            fiatJSTValue: 0,
-            crypto: this.state.crypto,
-            displayCurrency: null,
-            currency: this.state.currency,
-            subTotal: 0,
-            totalAmount: 0,
-            faldaxFee: 0,
-            faldaxFeeActual: 0,
-            networkFee: 0,
-            appliedOfferCode: "",
-            loader: false
-          });
-          this.clearValidation();
-        } else if (responseData.status === 500) {
-          this.setState({ loader: false });
-          this.openNotificationWithIcon("error", "Error", responseData.message);
-        } else {
-          this.setState({ loader: false });
-          this.openNotificationWithIcon("error", "Error", responseData.message);
-        }
+    if (this.state.checkOTP) {
+      this.setState({
+        showTFAModal: true
+        // loader: false
+      });
+      let otp1 = otp;
+      if (this.state.includeFees === 1) {
+        var values = {
+          Symbol: this.state.original_pair,
+          Side: this.state.OrdType,
+          OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
+          Quantity: parseFloat(this.state.Quantity).toFixed(8),
+          OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
+          Currency: this.state.crypto,
+          OrdType: "1",
+          original_pair: this.state.original_pair,
+          order_pair: this.state.order_pair,
+          faldax_fees: this.state.faldaxFee,
+          faldax_fees_actual: this.state.faldaxFeeActual,
+          network_fees: this.state.networkFee,
+          offer_code: this.state.appliedOfferCode,
+          buy_currency_amount: this.state.buy_currency_amount,
+          sell_currency_amount: this.state.sell_currency_amount,
+          otp: otp1
+        };
+        console.log(values);
+      } else {
+        var values = {
+          Symbol: this.state.original_pair,
+          Side: this.state.OrdType,
+          OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
+          Quantity: parseFloat(this.state.Quantity).toFixed(8),
+          OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
+          Currency: this.state.currency,
+          OrdType: "1",
+          original_pair: this.state.original_pair,
+          order_pair: this.state.order_pair,
+          faldax_fees: this.state.faldaxFee,
+          faldax_fees_actual: this.state.faldaxFeeActual,
+          network_fees: this.state.networkFee,
+          offer_code: this.state.appliedOfferCode,
+          buy_currency_amount: this.state.buy_currency_amount,
+          sell_currency_amount: this.state.sell_currency_amount,
+          otp: otp1
+        };
+        console.log(values);
+      }
+      fetch(`${API_URL}/converion/jst-create-order`, {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn
+        },
+        body: JSON.stringify(values)
       })
-      .catch(error => {});
+        .then(response => response.json())
+        .then(responseData => {
+          if (responseData.status === 200) {
+            this.openNotificationWithIcon(
+              "success",
+              "Success",
+              responseData.message
+            );
+            this.setState({
+              recieveCurrencyInput: 0,
+              includeFees: 1,
+              sendCurrencyInput: 0,
+              fiatJSTValue: 0,
+              crypto: this.state.crypto,
+              displayCurrency: null,
+              currency: this.state.currency,
+              subTotal: 0,
+              totalAmount: 0,
+              faldaxFee: 0,
+              faldaxFeeActual: 0,
+              networkFee: 0,
+              appliedOfferCode: "",
+              showTFAModal: false
+              // loader: false
+            });
+            this.clearValidation();
+          } else {
+            console.log("--------------------", otp);
+            if (values.otp === "") {
+              // console.log(otp);
+            } else {
+              // console.log(otp);
+              this.openNotificationWithIcon(
+                "error",
+                "Error",
+                responseData.message
+              );
+            }
+          }
+          this.setState({ loader: false });
+        })
+        .catch(error => {});
+    } else {
+      if (this.state.includeFees === 1) {
+        var values = {
+          Symbol: this.state.original_pair,
+          Side: this.state.OrdType,
+          OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
+          Quantity: parseFloat(this.state.Quantity).toFixed(8),
+          OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
+          Currency: this.state.crypto,
+          OrdType: "1",
+          original_pair: this.state.original_pair,
+          order_pair: this.state.order_pair,
+          faldax_fees: this.state.faldaxFee,
+          faldax_fees_actual: this.state.faldaxFeeActual,
+          network_fees: this.state.networkFee,
+          offer_code: this.state.appliedOfferCode,
+          buy_currency_amount: this.state.buy_currency_amount,
+          sell_currency_amount: this.state.sell_currency_amount,
+          otp: ""
+        };
+        console.log(values);
+      } else {
+        var values = {
+          Symbol: this.state.original_pair,
+          Side: this.state.OrdType,
+          OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
+          Quantity: parseFloat(this.state.Quantity).toFixed(8),
+          OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
+          Currency: this.state.currency,
+          OrdType: "1",
+          original_pair: this.state.original_pair,
+          order_pair: this.state.order_pair,
+          faldax_fees: this.state.faldaxFee,
+          faldax_fees_actual: this.state.faldaxFeeActual,
+          network_fees: this.state.networkFee,
+          offer_code: this.state.appliedOfferCode,
+          buy_currency_amount: this.state.buy_currency_amount,
+          sell_currency_amount: this.state.sell_currency_amount,
+          otp: ""
+        };
+        console.log(values);
+      }
+      fetch(`${API_URL}/converion/jst-create-order`, {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn
+        },
+        body: JSON.stringify(values)
+      })
+        .then(response => response.json())
+        .then(responseData => {
+          if (responseData.status === 200) {
+            this.openNotificationWithIcon(
+              "success",
+              "Success",
+              responseData.message
+            );
+            this.setState({
+              recieveCurrencyInput: 0,
+              includeFees: 1,
+              sendCurrencyInput: 0,
+              fiatJSTValue: 0,
+              crypto: this.state.crypto,
+              displayCurrency: null,
+              currency: this.state.currency,
+              subTotal: 0,
+              totalAmount: 0,
+              faldaxFee: 0,
+              faldaxFeeActual: 0,
+              networkFee: 0,
+              appliedOfferCode: ""
+              // loader: false
+            });
+            this.clearValidation();
+          } else {
+            this.openNotificationWithIcon(
+              "error",
+              "Error",
+              responseData.message
+            );
+          }
+          this.setState({ loader: false });
+        })
+        .catch(error => {});
+    }
   }
   getFiatCurrencyList() {
     this.setState({
@@ -1370,10 +1485,11 @@ class ConversionDetail extends React.Component {
       }
     );
   }
-  btnClicked() {
+  btnClicked(otp = "") {
     if (this.state.includeFees === 1) {
       if (this.validator1.allValid()) {
-        this.calculateOrderVaules();
+        console.log(otp);
+        this.calculateOrderVaules(otp);
         // alert("success");
       } else {
         this.validator1.showMessages();
@@ -1382,7 +1498,7 @@ class ConversionDetail extends React.Component {
     }
     if (this.state.includeFees === 2) {
       if (this.validator2.allValid()) {
-        this.calculateOrderVaules();
+        this.calculateOrderVaules(otp);
 
         // alert("success");
       } else {
@@ -2299,7 +2415,7 @@ class ConversionDetail extends React.Component {
                 <Col>
                   <ConversionSubmitBtn
                     className={`conversion_btn ${this.state.disabledClass}`}
-                    onClick={this.btnClicked}
+                    onClick={() => this.btnClicked()}
                     type="primary"
                     size="large"
                     block
@@ -2319,6 +2435,11 @@ class ConversionDetail extends React.Component {
           comingCancel={e => this.comingCancel(e)}
           visible={this.state.completeKYC}
         /> */}
+        <TFAModal
+          visible={this.state.showTFAModal}
+          isLoggedIn={this.props.isLoggedIn}
+          submit={otp => this.btnClicked(otp)}
+        />
         {this.state.loader == true ? <FaldaxLoader /> : ""}
       </ConversionWrap>
     );
