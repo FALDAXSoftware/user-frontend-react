@@ -2329,14 +2329,26 @@ class ConversionDetail extends React.Component {
                           </span>
                         )}
                       </NewP>
-                      {this.state.validPromo ? (
-                        <ButtonDiv className="promo_check">
-                          <NewButton onClick={this.applyPromo}>Apply</NewButton>
-                        </ButtonDiv>
-                      ) : (
+                      {this.state.offerMsg === "" ? (
                         <ButtonDiv className="promo_check">
                           <NewButton onClick={this.checkPromo}>Check</NewButton>
                         </ButtonDiv>
+                      ) : (
+                        <div>
+                          {this.state.validPromo ? (
+                            <ButtonDiv className="promo_check">
+                              <NewButton onClick={this.applyPromo}>
+                                Apply
+                              </NewButton>
+                            </ButtonDiv>
+                          ) : (
+                            <ButtonDiv className="promo_check">
+                              <NewButton onClick={this.closePromoModal}>
+                                Ok
+                              </NewButton>
+                            </ButtonDiv>
+                          )}
+                        </div>
                       )}
                     </VerifyModal>
                     <VerifyModal
@@ -2384,7 +2396,7 @@ class ConversionDetail extends React.Component {
                           </span>
                         )}
                       </NewP>
-                      {this.state.validPromo ? (
+                      {/* {this.state.validPromo ? (
                         <ButtonDiv className="promo_check">
                           <NewButton onClick={this.applyPromo}>Apply</NewButton>
                         </ButtonDiv>
@@ -2392,6 +2404,27 @@ class ConversionDetail extends React.Component {
                         <ButtonDiv className="promo_check">
                           <NewButton onClick={this.checkPromo}>Check</NewButton>
                         </ButtonDiv>
+                      )} */}
+                      {this.state.offerMsg === "" ? (
+                        <ButtonDiv className="promo_check">
+                          <NewButton onClick={this.checkPromo}>Check</NewButton>
+                        </ButtonDiv>
+                      ) : (
+                        <div>
+                          {this.state.validPromo ? (
+                            <ButtonDiv className="promo_check">
+                              <NewButton onClick={this.applyPromo}>
+                                Apply
+                              </NewButton>
+                            </ButtonDiv>
+                          ) : (
+                            <ButtonDiv className="promo_check">
+                              <NewButton onClick={this.closePromoModal}>
+                                Ok
+                              </NewButton>
+                            </ButtonDiv>
+                          )}
+                        </div>
                       )}
                     </VerifyModal>
                     <Row>
