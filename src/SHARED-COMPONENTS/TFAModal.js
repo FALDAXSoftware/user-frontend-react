@@ -36,12 +36,15 @@ class TFAModal extends Component {
     this.validator = new SimpleReactValidator();
   }
   componentWillReceiveProps(props) {
-    console.log("CWRP", props.visible);
+    // console.log("CWRP", props.visible);
     if (props.visible !== undefined)
-      this.setState({ visibleTFA: props.visible });
+      this.setState({ visibleTFA: props.visible }, () => {
+        this.validator.hideMessages();
+        this.forceUpdate();
+      });
   }
   componentDidMount() {
-    console.log("DID", this.props.visible);
+    // console.log("DID", this.props.visible);
   }
   onChangeField = (field, e) => {
     let fields = this.state.fields;
@@ -54,16 +57,20 @@ class TFAModal extends Component {
   };
   verifyOTP() {
     var self = this;
+    self.validator.hideMessages();
+    self.forceUpdate();
     if (this.validator.allValid()) {
       var otp = this.state.fields.otp;
-      var fields = {};
-      fields["otp"] = "";
+      // var fields = {};
+      // fields["otp"] = "";
       this.setState(
         {
-          fields
+          // fields
         },
         () => {
           self.props.submit(otp);
+          this.validator.hideMessages();
+          this.forceUpdate();
         }
       );
     } else {
@@ -114,7 +121,4 @@ const mapDispatchToProps = dispatch => ({
   verifyTF: (isLoggedIn, value) => dispatch(verifyTF(isLoggedIn, value))
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(TFAModal);
+export default connect(null, mapDispatchToProps)(TFAModal);
