@@ -37,14 +37,20 @@ class TFAModal extends Component {
   }
   componentWillReceiveProps(props) {
     // console.log("CWRP", props.visible);
-    if (props.visible !== undefined)
-      this.setState({ visibleTFA: props.visible }, () => {
-        this.validator.hideMessages();
-        this.forceUpdate();
-      });
+    if (props.visible !== undefined) var fields = {};
+    fields["otp"] = "";
+    this.setState({ visibleTFA: props.visible, fields }, () => {
+      this.validator.hideMessages();
+      this.forceUpdate();
+    });
   }
   componentDidMount() {
     // console.log("DID", this.props.visible);
+    var fields = {};
+    fields["otp"] = "";
+    this.setState({
+      fields
+    });
   }
   onChangeField = (field, e) => {
     let fields = this.state.fields;
