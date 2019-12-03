@@ -120,7 +120,7 @@ class ConversionDetail extends React.Component {
     this.validator1 = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message: "Amount must be greater than zero",
+        message: "Value should be greater than 0",
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -132,7 +132,7 @@ class ConversionDetail extends React.Component {
       },
       gtzerofiat: {
         // name the rule
-        message: "Amount must be greater than zero",
+        message: "Value should be greater than 0",
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -184,7 +184,7 @@ class ConversionDetail extends React.Component {
     this.validator2 = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message: "Amount must be greater than zero",
+        message: "Value should be greater than 0",
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -196,7 +196,7 @@ class ConversionDetail extends React.Component {
       },
       gtzerofiat: {
         // name the rule
-        message: "Amount must be greater than zero",
+        message: "Value should be greater than 0",
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -472,6 +472,7 @@ class ConversionDetail extends React.Component {
     // }
   }
   showCalculatedValues() {
+    // console.log(!isNaN(this.state.recieveCurrencyInput));
     this.setState({ loader: true });
     if (this.state.includeFees === 1) {
       var values = {
@@ -505,17 +506,21 @@ class ConversionDetail extends React.Component {
     }
     // console.log("Values-----------", values);
     if (
-      (values.OrderQty === null || values.OrderQty === "") &&
+      (values.OrderQty === null ||
+        values.OrderQty === "" ||
+        isNaN(this.state.recieveCurrencyInput) === true) &&
+      // isNaN(this.state.recieveCurrencyInput) === true &&
       this.state.includeFees === 1
     ) {
+      // console.log(!isNaN(this.state.recieveCurrencyInput));
       // this.setState({ loader: false });
       this.validator1.showMessages();
       this.forceUpdate();
       this.setState({
-        recieveCurrencyInput: 0,
+        // recieveCurrencyInput: "",
         includeFees: 1,
         sendCurrencyInput: 0,
-        fiatJSTValue: 0,
+        fiatJSTValue: "",
         crypto: this.state.crypto,
         displayCurrency: null,
         currency: this.state.currency,
@@ -527,17 +532,20 @@ class ConversionDetail extends React.Component {
         loader: false
       });
     } else if (
-      (values.OrderQty === null || values.OrderQty === "") &&
+      (values.OrderQty === null ||
+        values.OrderQty === "" ||
+        isNaN(this.state.sendCurrencyInput) === true) &&
+      // !isNaN(this.state.sendCurrencyInput) &&
       this.state.includeFees === 2
     ) {
       // this.setState({ loader: false });
       this.validator2.showMessages();
       this.forceUpdate();
       this.setState({
-        sendCurrencyInput: 0,
+        // sendCurrencyInput: 0,
         includeFees: 2,
-        sendCurrencyInput: 0,
-        fiatJSTValue: 0,
+        recieveCurrencyInput: 0,
+        fiatJSTValue: "",
         crypto: this.state.crypto,
         displayCurrency: null,
         currency: this.state.currency,
@@ -757,17 +765,19 @@ class ConversionDetail extends React.Component {
       };
     }
     if (
-      (values.usd_value === null || values.usd_value === "") &&
+      (values.usd_value === null ||
+        values.usd_value === "" ||
+        isNaN(this.state.fiatJSTValue) === true) &&
       this.state.includeFees === 1
     ) {
       // this.setState({ loader: false });
       this.validator1.showMessages();
       this.forceUpdate();
       this.setState({
-        recieveCurrencyInput: 0,
+        recieveCurrencyInput: "",
         includeFees: 1,
         sendCurrencyInput: 0,
-        fiatJSTValue: 0,
+        // fiatJSTValue: 0,
         crypto: this.state.crypto,
         displayCurrency: null,
         currency: this.state.currency,
@@ -779,17 +789,19 @@ class ConversionDetail extends React.Component {
         loader: false
       });
     } else if (
-      (values.usd_value === null || values.usd_value === "") &&
+      (values.usd_value === null ||
+        values.usd_value === "" ||
+        isNaN(this.state.fiatJSTValue) === true) &&
       this.state.includeFees === 2
     ) {
       // this.setState({ loader: false });
       this.validator2.showMessages();
       this.forceUpdate();
       this.setState({
-        sendCurrencyInput: 0,
+        sendCurrencyInput: "",
         includeFees: 2,
-        sendCurrencyInput: 0,
-        fiatJSTValue: 0,
+        recieveCurrencyInput: 0,
+        // fiatJSTValue: 0,
         crypto: this.state.crypto,
         displayCurrency: null,
         currency: this.state.currency,
@@ -1485,7 +1497,7 @@ class ConversionDetail extends React.Component {
                         <RowTitle>You Recieve</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
-                            type="number"
+                            type="text"
                             value={this.state.recieveCurrencyInput}
                             disabled
                             placeholder="0"
@@ -1585,7 +1597,7 @@ class ConversionDetail extends React.Component {
                         <RowTitle>You Recieve</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
-                            type="number"
+                            type="text"
                             value={this.state.recieveCurrencyInput}
                             onChange={this.recieveCurrencyChange}
                             placeholder="0"
@@ -1597,7 +1609,8 @@ class ConversionDetail extends React.Component {
                             `required|numeric|gtzero|decimalrestrict8|minCryptoValid`,
                             "text-danger-validation",
                             {
-                              minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
+                              minCryptoValid: `Minimum limit is ${this.state.minCrypto}`,
+                              numeric: "Please enter valid data"
                             }
                           )}
                         </Col>
@@ -1696,21 +1709,21 @@ class ConversionDetail extends React.Component {
                         <RowTitle>Fiat Value</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
-                            type="number"
+                            type="text"
                             value={this.state.fiatJSTValue}
                             onChange={this.fiatJSTValueChange}
                             placeholder="0"
                             step="0.01"
                           />
-                          {/* {this.validator1.message(
+                          {this.validator1.message(
                             "fiat value",
                             this.state.fiatJSTValue,
                             `required|numeric|gtzerofiat|decimalrestrict2`,
-                            "text-danger-validation"
-                            // {
-                            //   minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
-                            // }
-                          )} */}
+                            "text-danger-validation",
+                            {
+                              numeric: "Please enter valid data"
+                            }
+                          )}
                         </Col>
                         <Col
                           xs={12}
@@ -1739,7 +1752,7 @@ class ConversionDetail extends React.Component {
                         <RowTitle>You Send</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
-                            type="number"
+                            type="text"
                             value={this.state.sendCurrencyInput}
                             disabled
                             placeholder="0"
@@ -1840,7 +1853,7 @@ class ConversionDetail extends React.Component {
                         <RowTitle>You Send</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
-                            type="number"
+                            type="text"
                             value={this.state.sendCurrencyInput}
                             onChange={this.sendCurrencyChange}
                             placeholder="0"
@@ -1852,7 +1865,8 @@ class ConversionDetail extends React.Component {
                             `required|numeric|gtzero|decimalrestrict8|minCurrValid`,
                             "text-danger-validation",
                             {
-                              minCurrValid: `Minimum limit is ${this.state.minCurrency}`
+                              minCurrValid: `Minimum limit is ${this.state.minCurrency}`,
+                              numeric: "Please enter valid data"
                             }
                           )}
                         </Col>
@@ -1981,15 +1995,15 @@ class ConversionDetail extends React.Component {
                             placeholder="0"
                             step="0.01"
                           />
-                          {/* {this.validator2.message(
+                          {this.validator2.message(
                             "fiat value",
                             this.state.fiatJSTValue,
                             `required|numeric|gtzerofiat|decimalrestrict2`,
-                            "text-danger-validation"
-                            // {
-                            //   minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
-                            // }
-                          )} */}
+                            "text-danger-validation",
+                            {
+                              numeric: "Please enter valid data"
+                            }
+                          )}
                         </Col>
                         <Col xs={12} sm={12} md={10} className="height-col">
                           <CryptoFiatRow>

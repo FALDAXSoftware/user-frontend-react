@@ -3,6 +3,7 @@ import React from "react";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import TFAModal from "SHARED-COMPONENTS/TFAModal";
 import SimpleReactValidator from "simple-react-validator";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -61,7 +62,9 @@ class SimplexExchange extends React.Component {
       cryptoCode: null,
       wallet_details: null,
       coin_name: null,
-      currencyList: []
+      currencyList: [],
+      showTFAModal: false,
+      checkOTP: false
     };
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
@@ -177,6 +180,19 @@ class SimplexExchange extends React.Component {
   componentDidMount(e) {
     this.getCrypto();
     this.calculateDigitalCurrency();
+    console.log(
+      "this.props.profileDetails.is_kyc_done",
+      this.props.profileDetails.is_twofactor
+    );
+    if (this.props.profileDetails.is_twofactor) {
+      this.setState({
+        checkOTP: true
+      });
+    } else {
+      this.setState({
+        checkOTP: false
+      });
+    }
   }
   getCrypto() {
     this.setState({
@@ -192,7 +208,6 @@ class SimplexExchange extends React.Component {
     })
       .then(response => response.json())
       .then(responseData => {
-        console.log(responseData);
         if (responseData.status == 200) {
           console.log("responsedata 200", responseData.object.coinList);
           this.setState({
@@ -202,7 +217,7 @@ class SimplexExchange extends React.Component {
           });
         }
       })
-      .catch(error => { });
+      .catch(error => {});
   }
   calculateDigitalCurrency() {
     this.setState({
@@ -290,7 +305,7 @@ class SimplexExchange extends React.Component {
           //   quote_id: responseData.data.quote_id
           // });
         })
-        .catch(error => { });
+        .catch(error => {});
     }
   }
   handleCurrencyPayChange(e) {
@@ -339,64 +354,154 @@ class SimplexExchange extends React.Component {
       }
     );
   }
-  btnClicked() {
+  btnClicked(otp = "") {
     this.setState({
       loader: true
     });
+    console.log("---------------------.", otp);
     if (this.validator1.allValid()) {
-      var values = {
-        quote_id: this.state.quote_id,
-        address: this.state.address,
-        currency: this.state.crypto,
-        fiat_amount: this.state.currencyToPay,
-        fiat_currency: this.state.currency,
-        total_amount: this.state.currencyToGet,
-        digital_currency: this.state.crypto
-      };
-      fetch(`${API_URL}/get-partner-data-info`, {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        },
-        body: JSON.stringify(values)
-      })
-        .then(response => response.json())
-        .then(responseData => {
-          console.log(responseData);
-          if (responseData.status === 400) {
-            this.setState({
-              loader: false
-            });
-            if (this.state.wallet_details === "") {
-              this.openNotificationWithIcon(
-                "error",
-                "Error",
-                "Please create wallet and then continue."
-              );
-            } else {
-              this.openNotificationWithIcon(
-                "warning",
-                "Transaction Error",
-                "There is some error in the transaction. Please retry."
-              );
-              this.props.history.push("/simplex");
-            }
-          } else if (responseData.status === 200) {
-            this.setState({
-              response: responseData.data,
-              loader: false
-            });
-            // console.log(this.state.response);
-            document.getElementById("frm_sumbit").click();
-            // window.location = this.state.response.action;
-          } else if (responseData.status === 500) {
-            this.openNotificationWithIcon("error", "Error", responseData.err);
-            this.setState({ loader: false });
-          }
+      if (this.state.checkOTP) {
+        this.setState({
+          showTFAModal: true
+          // loader: false
+        });
+        let otp1 = otp;
+        var values = {
+          quote_id: this.state.quote_id,
+          address: this.state.address,
+          currency: this.state.crypto,
+          fiat_amount: this.state.currencyToPay,
+          fiat_currency: this.state.currency,
+          total_amount: this.state.currencyToGet,
+          digital_currency: this.state.crypto,
+          otp: otp1
+        };
+        console.log("values", values);
+        fetch(`${API_URL}/get-partner-data-info`, {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.props.isLoggedIn
+          },
+          body: JSON.stringify(values)
         })
-        .catch(error => { });
+          .then(response => response.json())
+          .then(responseData => {
+            // console.log(responseData);
+            if (responseData.status === 400) {
+              this.setState({
+                // loader: false
+              });
+              if (this.state.wallet_details === "") {
+                this.openNotificationWithIcon(
+                  "error",
+                  "Error",
+                  "Please create wallet and then continue."
+                );
+              } else {
+                this.openNotificationWithIcon(
+                  "warning",
+                  "Transaction Error",
+                  "There is some error in the transaction. Please retry."
+                );
+                this.props.history.push("/simplex");
+              }
+            } else if (responseData.status === 200) {
+              this.setState({
+                response: responseData.data,
+                showTFAModal: false
+                // loader: false
+              });
+              // console.log(this.state.response);
+              document.getElementById("frm_sumbit").click();
+              // window.location = this.state.response.action;
+            } else {
+              // this.setState({
+              //   loader: false
+              //   // showTFAModal: false
+              // });
+              if (values.otp === "") {
+              } else {
+                this.openNotificationWithIcon(
+                  "error",
+                  "Error",
+                  responseData.err
+                );
+              }
+            }
+            this.setState({
+              loader: false
+              // showTFAModal: false
+            });
+          })
+          .catch(error => {});
+      } else {
+        this.setState({
+          loader: true
+        });
+        var values = {
+          quote_id: this.state.quote_id,
+          address: this.state.address,
+          currency: this.state.crypto,
+          fiat_amount: this.state.currencyToPay,
+          fiat_currency: this.state.currency,
+          total_amount: this.state.currencyToGet,
+          digital_currency: this.state.crypto,
+          otp: ""
+        };
+        fetch(`${API_URL}/get-partner-data-info`, {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.props.isLoggedIn
+          },
+          body: JSON.stringify(values)
+        })
+          .then(response => response.json())
+          .then(responseData => {
+            console.log(responseData);
+            if (responseData.status === 400) {
+              // this.setState({
+              //   loader: false
+              // });
+              if (this.state.wallet_details === "") {
+                this.openNotificationWithIcon(
+                  "error",
+                  "Error",
+                  "Please create wallet and then continue."
+                );
+              } else {
+                this.openNotificationWithIcon(
+                  "warning",
+                  "Transaction Error",
+                  "There is some error in the transaction. Please retry."
+                );
+                this.props.history.push("/simplex");
+              }
+            } else if (responseData.status === 200) {
+              this.setState({
+                response: responseData.data
+                // loader: false
+              });
+              // console.log(this.state.response);
+              document.getElementById("frm_sumbit").click();
+              // window.location = this.state.response.action;
+            } else {
+              // this.setState({
+              //   loader: false
+              //   // showTFAModal: false
+              // });
+              this.openNotificationWithIcon("error", "Error", responseData.err);
+            }
+            this.setState({
+              loader: false
+              // showTFAModal: false
+            });
+          })
+          .catch(error => {});
+      }
     } else {
       this.validator1.showMessages();
       this.setState({
@@ -471,7 +576,7 @@ class SimplexExchange extends React.Component {
                     placeholder="0"
                     readOnly
                     value={this.state.currencyToGet}
-                  // onChange={this.handleCurrencyGetChange}
+                    // onChange={this.handleCurrencyGetChange}
                   />
                 </Col>
                 <Col xs={12} sm={12} md={8} className="currency-display">
@@ -547,39 +652,39 @@ class SimplexExchange extends React.Component {
                   </Row>
                 </div>
               ) : (
-                  <div>
-                    <BorderRow>
-                      <Col>
-                        <ConversionInput
-                          className="address_field"
-                          type="text"
-                          placeholder="Address"
-                          value={this.state.address}
-                          // readOnly
-                          onChange={this.handleAddressChange}
-                        />
-                        {this.validator1.message(
-                          "address",
-                          this.state.address,
-                          `required|alpha_num|min:15|max:120`,
-                          "text-danger-validation"
-                        )}
-                      </Col>
-                    </BorderRow>
-                    <Row>
-                      <Col>
-                        <ConversionSubmitBtn
-                          onClick={this.btnClicked}
-                          type="primary"
-                          size="large"
-                          block
-                        >
-                          Continue
+                <div>
+                  <BorderRow>
+                    <Col>
+                      <ConversionInput
+                        className="address_field"
+                        type="text"
+                        placeholder="Address"
+                        value={this.state.address}
+                        // readOnly
+                        onChange={this.handleAddressChange}
+                      />
+                      {/* {this.validator1.message(
+                        "address",
+                        this.state.address,
+                        `required|alpha_num|min:15|max:120`,
+                        "text-danger-validation"
+                      )} */}
+                    </Col>
+                  </BorderRow>
+                  <Row>
+                    <Col>
+                      <ConversionSubmitBtn
+                        onClick={() => this.btnClicked()}
+                        type="primary"
+                        size="large"
+                        block
+                      >
+                        Continue
                       </ConversionSubmitBtn>
-                      </Col>
-                    </Row>
-                  </div>
-                )}
+                    </Col>
+                  </Row>
+                </div>
+              )}
               {/* {this.state.address === "" ? (
                 <CreateWalletRow className="create-wallet-link">
                   <Col>
@@ -688,6 +793,11 @@ class SimplexExchange extends React.Component {
               Submit
             </button>
           </FormValueDisplay>
+          <TFAModal
+            visible={this.state.showTFAModal}
+            isLoggedIn={this.props.isLoggedIn}
+            submit={otp => this.btnClicked(otp)}
+          />
         </ConversionContainer>
         {this.state.loader == true ? <FaldaxLoader /> : ""}
       </ConversionWrap>
