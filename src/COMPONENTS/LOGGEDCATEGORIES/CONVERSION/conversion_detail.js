@@ -89,6 +89,7 @@ class ConversionDetail extends React.Component {
       networkFee: 0,
       faldaxFee: 0,
       faldaxFeeActual: 0,
+      limitPrice: 0,
       totalAmount: 0,
       subTotal: 0,
       fiat: "USD",
@@ -540,6 +541,7 @@ class ConversionDetail extends React.Component {
         totalAmount: 0,
         faldaxFee: 0,
         faldaxFeeActual: 0,
+        limitPrice: 0,
         networkFee: 0,
         loader: false
       });
@@ -565,6 +567,7 @@ class ConversionDetail extends React.Component {
         totalAmount: 0,
         faldaxFee: 0,
         faldaxFeeActual: 0,
+        limitPrice: 0,
         networkFee: 0,
         loader: false
       });
@@ -589,6 +592,7 @@ class ConversionDetail extends React.Component {
               faldaxFeeActual: parseFloat(
                 responseData.data.faldax_fees_actual
               ).toFixed(8),
+              limitPrice: parseFloat(responseData.data.limit_price).toFixed(8),
               networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
               totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
               fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
@@ -797,6 +801,7 @@ class ConversionDetail extends React.Component {
         totalAmount: 0,
         faldaxFee: 0,
         faldaxFeeActual: 0,
+        limitPrice: 0,
         networkFee: 0,
         loader: false
       });
@@ -821,6 +826,7 @@ class ConversionDetail extends React.Component {
         totalAmount: 0,
         faldaxFee: 0,
         faldaxFeeActual: 0,
+        limitPrice: 0,
         networkFee: 0,
         loader: false
       });
@@ -844,6 +850,7 @@ class ConversionDetail extends React.Component {
               faldaxFeeActual: parseFloat(
                 responseData.data.faldax_fees_actual
               ).toFixed(8),
+              limitPrice: parseFloat(responseData.data.limit_price).toFixed(8),
               networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
               // totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
               displayCurrency: responseData.data.currency,
@@ -980,6 +987,7 @@ class ConversionDetail extends React.Component {
           order_pair: this.state.order_pair,
           faldax_fees: this.state.faldaxFee,
           faldax_fees_actual: this.state.faldaxFeeActual,
+          limit_price: this.state.limitPrice,
           network_fees: this.state.networkFee,
           offer_code: this.state.appliedOfferCode,
           buy_currency_amount: this.state.buy_currency_amount,
@@ -1000,6 +1008,7 @@ class ConversionDetail extends React.Component {
           order_pair: this.state.order_pair,
           faldax_fees: this.state.faldaxFee,
           faldax_fees_actual: this.state.faldaxFeeActual,
+          limit_price: this.state.limitPrice,
           network_fees: this.state.networkFee,
           offer_code: this.state.appliedOfferCode,
           buy_currency_amount: this.state.buy_currency_amount,
@@ -1073,6 +1082,7 @@ class ConversionDetail extends React.Component {
           order_pair: this.state.order_pair,
           faldax_fees: this.state.faldaxFee,
           faldax_fees_actual: this.state.faldaxFeeActual,
+          limit_price: this.state.limitPrice,
           network_fees: this.state.networkFee,
           offer_code: this.state.appliedOfferCode,
           buy_currency_amount: this.state.buy_currency_amount,
@@ -1093,6 +1103,7 @@ class ConversionDetail extends React.Component {
           order_pair: this.state.order_pair,
           faldax_fees: this.state.faldaxFee,
           faldax_fees_actual: this.state.faldaxFeeActual,
+          limit_price: this.state.limitPrice,
           network_fees: this.state.networkFee,
           offer_code: this.state.appliedOfferCode,
           buy_currency_amount: this.state.buy_currency_amount,
@@ -1130,6 +1141,7 @@ class ConversionDetail extends React.Component {
               totalAmount: 0,
               faldaxFee: 0,
               faldaxFeeActual: 0,
+              limitPrice: 0,
               networkFee: 0,
               appliedOfferCode: ""
               // loader: false
@@ -1462,6 +1474,7 @@ class ConversionDetail extends React.Component {
         subTotal: 0,
         faldaxFee: 0,
         faldaxFeeActual: 0,
+        limitPrice: 0,
         networkFee: 0,
         totalFees: 0,
         fiatJSTValue: 0,
@@ -2237,6 +2250,7 @@ class ConversionDetail extends React.Component {
                                 this.clearValidation();
                                 this.setState({
                                   showPromoModal: true,
+                                  offerMsg: "",
                                   promoCode: ""
                                 });
                               }}
