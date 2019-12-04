@@ -151,7 +151,19 @@ class ChangeEmail extends Component {
       isShowOTP: false,
       errType: ""
     };
-    this.validator = new SimpleReactValidator();
+    this.validator = new SimpleReactValidator({
+      email: {
+        // name the rule
+        message: "Please enter valid email address.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        rule: function(val, options) {
+          // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+          // check that it is a valid IP address and is not blacklisted
+          var re = /^[-a-zA-Z0-9~!$%^&*_=+}{\'?]+(\.[-a-zA-Z0-9~!$%^&*_=+}{\'?]+)*@([a-zA-Z0-9_][-a-zA-Z0-9_]*(\.[-a-zA-Z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|AERO|ARPA|BIZ|COM|COOP|EDU|GOV|INFO|INT|MIL|MUSEUM|NAME|NET|ORG|PRO|TRAVEL|MOBI|[a-zA-Z][a-zA-Z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/;
+          var bool = re.test(String(val).toLowerCase());
+          return bool;
+        }
+      }
+    });
     this.otpValidator = new SimpleReactValidator();
     this.clearValidation = this.clearValidation.bind(this);
   }
