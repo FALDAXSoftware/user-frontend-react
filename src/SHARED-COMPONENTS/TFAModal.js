@@ -92,7 +92,7 @@ class TFAModal extends Component {
   };
   render() {
     const { fields, visibleTFA } = this.state;
-    console.log(visibleTFA);
+    // console.log(visibleTFA);
     return (
       <VerifyModal
         // closable={false}

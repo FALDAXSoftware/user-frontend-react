@@ -65,23 +65,13 @@ class ConversionDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 1,
       currencyList: [],
       cryptoList: [],
       originalCoinList: [],
       JSTPairList: [],
       currency: "BTC",
       crypto: "XRP",
-      prevRoom: "",
-      askPrice: 0,
-      bidPrice: 0,
-      buyCryptoInput: null,
-      buyCurrencyInput: null,
-      sellCryptoInput: null,
-      sellCurrencyInput: null,
       includeFees: 1,
-      krakenFees: 0,
-      faldaxFees: 0,
       loader: false,
       minCrypto: 0,
       minCurrency: 0,
@@ -117,7 +107,9 @@ class ConversionDetail extends React.Component {
       buy_currency_amount: 0,
       sell_currency_amount: 0,
       showTFAModal: false,
-      checkOTP: false
+      checkOTP: false,
+      startSocket: false,
+      socketTime: 20000
     };
     io = this.props.io;
     this.timeout = null;
@@ -263,10 +255,12 @@ class ConversionDetail extends React.Component {
     this.fiatJSTValueChange = this.fiatJSTValueChange.bind(this);
     this.calculateOrderVaules = this.calculateOrderVaules.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
-    this.showCalculatedValues = this.showCalculatedValues.bind(this);
-    this.showCalculatedValuesUSDTerms = this.showCalculatedValuesUSDTerms.bind(
-      this
-    );
+    // this.showCalculatedValues = this.showCalculatedValues.bind(this);
+    // this.showCalculatedValuesUSDTerms = this.showCalculatedValuesUSDTerms.bind(
+    //   this
+    // );
+    this.getValuesSocket = this.getValuesSocket.bind(this);
+    this.getValuesUSDSocket = this.getValuesUSDSocket.bind(this);
   }
 
   /* Life-Cycle Methods */
@@ -291,6 +285,55 @@ class ConversionDetail extends React.Component {
     }
   }
   componentDidMount() {
+    // if (this.state.includeFees === 1) {
+    //   if (
+    //     this.state.recieveCurrencyInput !== "" ||
+    //     this.state.fiatJSTValue !== ""
+    //   ) {
+    //     console.log("recieve editable");
+    //     this.interval = setInterval(() => {
+    //       this.getValuesSocket();
+    //     }, 5000);
+    //   } else {
+    //     console.log("clear editable");
+    //     clearInterval(this.interval);
+    //   }
+    //   // else {
+    //   //   clearInterval(this.interval);
+    //   // }
+    //   // else if (
+    //   //   this.state.fiatJSTValue !== "" &&
+    //   //   this.state.recieveCurrencyInput === ""
+    //   // ) {
+    //   //   console.log("fiat editable");
+    //   //   this.interval1 = setInterval(() => {
+    //   //     this.getValuesUSDSocket();
+    //   //   }, 5000);
+    //   // } else {
+    //   //   // clearInterval(this.interval1);
+    //   //   console.log("else");
+    //   //   clearInterval(this.interval);
+    //   // }
+    // }
+    // if (this.state.includeFees === 2) {
+    //   if (
+    //     this.state.sendCurrencyInput !== "" ||
+    //     this.state.fiatJSTValue !== ""
+    //   ) {
+    //     this.interval = setInterval(() => {
+    //       this.getValuesSocket();
+    //     }, 5000);
+    //   } else {
+    //     clearInterval(this.interval);
+    //   }
+    //   if (this.state.fiatJSTValue !== "") {
+    //     this.interval1 = setInterval(() => {
+    //       this.getValuesUSDSocket();
+    //     }, 5000);
+    //   } else {
+    //     clearInterval(this.interval1);
+    //   }
+    // }
     this.getCrypto();
     if (this.props.profileDetails.is_twofactor) {
       this.setState({
@@ -302,8 +345,373 @@ class ConversionDetail extends React.Component {
       });
     }
   }
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+  getValuesSocket(showLoader = true) {
+    if (showLoader) {
+      this.setState({
+        loader: true
+      });
+    }
+    if (this.state.includeFees === 1) {
+      var values = {
+        Symbol: this.state.original_pair,
+        // Symbol: `${this.state.crypto}/${this.state.currency}`,
+        Side: this.state.OrdType,
+        OrderQty: this.state.recieveCurrencyInput,
+        Currency: this.state.crypto,
+        OrdType: "1",
+        flag: "2",
+        usd_value: "",
+        original_pair: this.state.original_pair,
+        order_pair: this.state.order_pair,
+        offer_code: this.state.appliedOfferCode
+      };
+      // console.log(values);
+    } else {
+      var values = {
+        Symbol: this.state.original_pair,
+        // Symbol: `${this.state.crypto}/${this.state.currency}`,
+        Side: this.state.OrdType,
+        OrderQty: this.state.sendCurrencyInput,
+        Currency: this.state.currency,
+        OrdType: "1",
+        flag: "1",
+        usd_value: "",
+        original_pair: this.state.original_pair,
+        order_pair: this.state.order_pair,
+        offer_code: this.state.appliedOfferCode
+      };
+    }
+    if (
+      (values.OrderQty === null ||
+        values.OrderQty === "" ||
+        isNaN(this.state.recieveCurrencyInput) === true) &&
+      // isNaN(this.state.recieveCurrencyInput) === true &&
+      this.state.includeFees === 1
+    ) {
+      // console.log(!isNaN(this.state.recieveCurrencyInput));
+      // this.setState({ loader: false });
+      // this.validator1.showMessages();
+      // this.forceUpdate();
+      this.setState({
+        // recieveCurrencyInput: "",
+        includeFees: 1,
+        sendCurrencyInput: 0,
+        fiatJSTValue: "",
+        crypto: this.state.crypto,
+        displayCurrency: null,
+        currency: this.state.currency,
+        subTotal: 0,
+        totalAmount: 0,
+        faldaxFee: 0,
+        faldaxFeeActual: 0,
+        limitPrice: 0,
+        networkFee: 0,
+        loader: false
+      });
+    } else if (
+      (values.OrderQty === null ||
+        values.OrderQty === "" ||
+        isNaN(this.state.sendCurrencyInput) === true) &&
+      // !isNaN(this.state.sendCurrencyInput) &&
+      this.state.includeFees === 2
+    ) {
+      // this.setState({ loader: false });
+      // this.validator2.showMessages();
+      // this.forceUpdate();
+      this.setState({
+        // sendCurrencyInput: 0,
+        includeFees: 2,
+        recieveCurrencyInput: 0,
+        fiatJSTValue: "",
+        crypto: this.state.crypto,
+        displayCurrency: null,
+        currency: this.state.currency,
+        subTotal: 0,
+        totalAmount: 0,
+        faldaxFee: 0,
+        faldaxFeeActual: 0,
+        limitPrice: 0,
+        networkFee: 0,
+        loader: false
+      });
+    } else {
+      let URL = `/socket/get-conversionDetail?Currency=${values.Currency}&OrdType=${values.OrdType}&OrderQty=${values.OrderQty}&Side=${values.Side}&Symbol=${values.Symbol}&flag=${values.flag}&offer_code=${values.offer_code}&order_pair=${values.order_pair}&original_pair=${values.original_pair}&usd_value=${values.usd_value}`;
+      io.socket.request(
+        {
+          method: "GET",
+          url: URL,
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.props.isLoggedIn
+          }
+        },
+        (body, JWR) => {
+          if (body.status === 200) {
+            let res = body.data;
+            console.log("getsocketvalues", res);
+            this.setState({
+              // loader: false,
+              subTotal: parseFloat(res.original_value).toFixed(8),
+              faldaxFee: parseFloat(res.faldax_fee).toFixed(8),
+              faldaxFeeActual: parseFloat(res.faldax_fees_actual).toFixed(8),
+              limitPrice: parseFloat(res.limit_price).toFixed(8),
+              networkFee: parseFloat(res.network_fee).toFixed(8),
+              totalAmount: parseFloat(res.total_value).toFixed(8),
+              fiatJSTValue: parseFloat(res.price_usd).toFixed(2),
+              displayCurrency: res.currency,
+              Quantity: parseFloat(res.total_value).toFixed(8)
+            });
+            if (this.state.includeFees === 1) {
+              this.setState({
+                sendCurrencyInput: parseFloat(res.currency_value).toFixed(8),
+                orderQuantity: parseFloat(res.currency_value).toFixed(8)
+                // loader: false
+              });
+            } else {
+              this.setState({
+                recieveCurrencyInput: parseFloat(res.total_value).toFixed(8),
+                orderQuantity: parseFloat(res.currency_value).toFixed(8)
+                // loader: false
+              });
+            }
+            if (this.state.includeFees === 1 && this.state.OrdType === "1") {
+              this.setState({
+                OriginalQuantity: parseFloat(res.original_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 2 &&
+              this.state.OrdType === "1"
+            ) {
+              this.setState({
+                OriginalQuantity: parseFloat(res.total_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 2 &&
+              this.state.OrdType === "2"
+            ) {
+              this.setState({
+                OriginalQuantity: parseFloat(res.currency_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 1 &&
+              this.state.OrdType === "2"
+            ) {
+              this.setState({
+                OriginalQuantity: parseFloat(res.currency_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
+              });
+            } else {
+              console.log("no scenario");
+            }
+          } else {
+            // console.log(body.err);
+            this.openNotificationWithIcon("error", "Error", body.err);
+          }
+          this.setState({
+            loader: false
+          });
+        }
+      );
+    }
+  }
+  getValuesUSDSocket(showLoader = true) {
+    if (showLoader) {
+      this.setState({
+        loader: true
+      });
+    }
+    if (this.state.includeFees === 1) {
+      var values = {
+        Symbol: this.state.original_pair,
+        Side: this.state.OrdType,
+        OrderQty: this.state.recieveCurrencyInput,
+        Currency: this.state.crypto,
+        OrdType: "1",
+        flag: "2",
+        usd_value: this.state.fiatJSTValue,
+        original_pair: this.state.original_pair,
+        order_pair: this.state.order_pair,
+        offer_code: this.state.appliedOfferCode
+      };
+    } else {
+      var values = {
+        Symbol: this.state.original_pair,
+        Side: this.state.OrdType,
+        OrderQty: this.state.sendCurrencyInput,
+        Currency: this.state.currency,
+        OrdType: "1",
+        flag: "1",
+        usd_value: this.state.fiatJSTValue,
+        original_pair: this.state.original_pair,
+        order_pair: this.state.order_pair,
+        offer_code: this.state.appliedOfferCode
+      };
+    }
+    if (
+      (values.usd_value === null ||
+        values.usd_value === "" ||
+        isNaN(this.state.fiatJSTValue) === true) &&
+      this.state.includeFees === 1
+    ) {
+      // this.validator1.showMessages();
+      // this.forceUpdate();
+      this.setState({
+        recieveCurrencyInput: "",
+        includeFees: 1,
+        sendCurrencyInput: 0,
+        crypto: this.state.crypto,
+        displayCurrency: null,
+        currency: this.state.currency,
+        subTotal: 0,
+        totalAmount: 0,
+        faldaxFee: 0,
+        faldaxFeeActual: 0,
+        limitPrice: 0,
+        networkFee: 0,
+        loader: false
+      });
+    } else if (
+      (values.usd_value === null ||
+        values.usd_value === "" ||
+        isNaN(this.state.fiatJSTValue) === true) &&
+      this.state.includeFees === 2
+    ) {
+      // this.validator2.showMessages();
+      // this.forceUpdate();
+      this.setState({
+        sendCurrencyInput: "",
+        includeFees: 2,
+        recieveCurrencyInput: 0,
+        crypto: this.state.crypto,
+        displayCurrency: null,
+        currency: this.state.currency,
+        subTotal: 0,
+        totalAmount: 0,
+        faldaxFee: 0,
+        faldaxFeeActual: 0,
+        limitPrice: 0,
+        networkFee: 0,
+        loader: false
+      });
+    } else {
+      let URL = `/socket/get-conversionDetail?Currency=${values.Currency}&OrdType=${values.OrdType}&OrderQty=${values.OrderQty}&Side=${values.Side}&Symbol=${values.Symbol}&flag=${values.flag}&offer_code=${values.offer_code}&order_pair=${values.order_pair}&original_pair=${values.original_pair}&usd_value=${values.usd_value}`;
+      io.socket.request(
+        {
+          method: "GET",
+          url: URL,
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.props.isLoggedIn
+          }
+        },
+        (body, JWR) => {
+          if (body.status === 200) {
+            let res = body.data;
+            console.log("getsocketUSdvalues", res);
+            this.setState({
+              faldaxFee: parseFloat(res.faldax_fee).toFixed(8),
+              faldaxFeeActual: parseFloat(res.faldax_fees_actual).toFixed(8),
+              limitPrice: parseFloat(res.limit_price).toFixed(8),
+              networkFee: parseFloat(res.network_fee).toFixed(8),
+              displayCurrency: res.currency,
+              Quantity: parseFloat(res.total_value).toFixed(8)
+            });
+            if (this.state.includeFees === 1) {
+              this.setState({
+                sendCurrencyInput: parseFloat(res.currency_value).toFixed(8),
+                recieveCurrencyInput: parseFloat(res.original_value).toFixed(8),
+                orderQuantity: parseFloat(res.currency_value).toFixed(8),
+                subTotal: parseFloat(res.original_value).toFixed(8),
+                totalAmount: parseFloat(res.total_value).toFixed(8)
+              });
+            } else {
+              this.setState({
+                recieveCurrencyInput: parseFloat(res.total_value).toFixed(8),
+                sendCurrencyInput: parseFloat(res.currency_value).toFixed(8),
+                orderQuantity: parseFloat(res.currency_value).toFixed(8),
+                subTotal: parseFloat(res.original_value).toFixed(8),
+                totalAmount: parseFloat(res.total_value).toFixed(8)
+              });
+            }
+            if (this.state.includeFees === 1 && this.state.OrdType === "1") {
+              this.setState({
+                OriginalQuantity: parseFloat(res.original_value).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 2 &&
+              this.state.OrdType === "1"
+            ) {
+              this.setState({
+                OriginalQuantity: parseFloat(res.total_value).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 2 &&
+              this.state.OrdType === "2"
+            ) {
+              this.setState({
+                OriginalQuantity: parseFloat(res.currency_value).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 1 &&
+              this.state.OrdType === "2"
+            ) {
+              this.setState({
+                OriginalQuantity: parseFloat(res.currency_value).toFixed(8)
+              });
+            } else {
+              console.log("no scenario");
+            }
+          } else {
+            // console.log(body.err);
+            this.openNotificationWithIcon("error", "Error", body.err);
+          }
+          this.setState({
+            loader: false
+          });
+        }
+      );
+    }
+  }
   sendCurrencyChange(e) {
     clearTimeout(this.timeout);
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
     this.clearValidation();
     this.state.JSTPairList.map((element, i) => {
       if (
@@ -325,7 +733,7 @@ class ConversionDetail extends React.Component {
         });
       }
     });
-    this.timeout = setTimeout(this.showCalculatedValues, 1000);
+    this.timeout = setTimeout(this.getValuesSocket, 1000);
     if (this.validator2.allValid() && e.target.value != null) {
       this.setState(
         {
@@ -346,6 +754,8 @@ class ConversionDetail extends React.Component {
   }
   recieveCurrencyChange(e) {
     clearTimeout(this.timeout);
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
     this.clearValidation();
     this.state.JSTPairList.map((element, i) => {
       if (
@@ -367,20 +777,29 @@ class ConversionDetail extends React.Component {
         });
       }
     });
-    this.timeout = setTimeout(this.showCalculatedValues, 1000);
-    if (this.validator1.allValid() && e.target.value != null) {
+    this.timeout = setTimeout(this.getValuesSocket, 1000);
+    this.interval = setInterval(() => {
+      this.getValuesSocket(false);
+    }, this.state.socketTime);
+    if (this.validator1.allValid()) {
       this.setState(
         {
           recieveCurrencyInput: e.target.value
         },
-        () => {}
+        () => {
+          // clearInterval(this.interval);
+          // console.log("set", e);
+        }
       );
     } else {
       this.setState(
         {
           recieveCurrencyInput: e.target.value
         },
-        () => {}
+        () => {
+          // console.log("clear", e);
+          // clearInterval(this.interval);
+        }
       );
       this.validator1.showMessages();
       this.forceUpdate();
@@ -388,7 +807,9 @@ class ConversionDetail extends React.Component {
   }
   fiatJSTValueChange(e) {
     clearTimeout(this.timeout);
-    console.log("Fiat Currency Change");
+    // console.log("Fiat Currency Change");
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
     this.clearValidation();
     this.state.JSTPairList.map((element, i) => {
       if (
@@ -410,7 +831,10 @@ class ConversionDetail extends React.Component {
         });
       }
     });
-    this.timeout = setTimeout(this.showCalculatedValuesUSDTerms, 1000);
+    this.timeout = setTimeout(this.getValuesUSDSocket, 1000);
+    this.interval = setInterval(() => {
+      this.getValuesUSDSocket(false);
+    }, this.state.socketTime);
     if (this.state.includeFees === 1) {
       if (this.validator1.allValid() && e.target.value != null) {
         this.setState(
@@ -484,490 +908,442 @@ class ConversionDetail extends React.Component {
     //   );
     // }
   }
-  showCalculatedValues() {
-    // console.log(!isNaN(this.state.recieveCurrencyInput));
-    this.setState({ loader: true });
-    if (this.state.includeFees === 1) {
-      var values = {
-        Symbol: this.state.original_pair,
-        // Symbol: `${this.state.crypto}/${this.state.currency}`,
-        Side: this.state.OrdType,
-        OrderQty: this.state.recieveCurrencyInput,
-        Currency: this.state.crypto,
-        OrdType: "1",
-        flag: "2",
-        usd_value: "",
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair,
-        offer_code: this.state.appliedOfferCode
-      };
-      // console.log(values);
-    } else {
-      var values = {
-        Symbol: this.state.original_pair,
-        // Symbol: `${this.state.crypto}/${this.state.currency}`,
-        Side: this.state.OrdType,
-        OrderQty: this.state.sendCurrencyInput,
-        Currency: this.state.currency,
-        OrdType: "1",
-        flag: "1",
-        usd_value: "",
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair,
-        offer_code: this.state.appliedOfferCode
-      };
-    }
-    // console.log("Values-----------", values);
-    if (
-      (values.OrderQty === null ||
-        values.OrderQty === "" ||
-        isNaN(this.state.recieveCurrencyInput) === true) &&
-      // isNaN(this.state.recieveCurrencyInput) === true &&
-      this.state.includeFees === 1
-    ) {
-      // console.log(!isNaN(this.state.recieveCurrencyInput));
-      // this.setState({ loader: false });
-      this.validator1.showMessages();
-      this.forceUpdate();
-      this.setState({
-        // recieveCurrencyInput: "",
-        includeFees: 1,
-        sendCurrencyInput: 0,
-        fiatJSTValue: "",
-        crypto: this.state.crypto,
-        displayCurrency: null,
-        currency: this.state.currency,
-        subTotal: 0,
-        totalAmount: 0,
-        faldaxFee: 0,
-        faldaxFeeActual: 0,
-        limitPrice: 0,
-        networkFee: 0,
-        loader: false
-      });
-    } else if (
-      (values.OrderQty === null ||
-        values.OrderQty === "" ||
-        isNaN(this.state.sendCurrencyInput) === true) &&
-      // !isNaN(this.state.sendCurrencyInput) &&
-      this.state.includeFees === 2
-    ) {
-      // this.setState({ loader: false });
-      this.validator2.showMessages();
-      this.forceUpdate();
-      this.setState({
-        // sendCurrencyInput: 0,
-        includeFees: 2,
-        recieveCurrencyInput: 0,
-        fiatJSTValue: "",
-        crypto: this.state.crypto,
-        displayCurrency: null,
-        currency: this.state.currency,
-        subTotal: 0,
-        totalAmount: 0,
-        faldaxFee: 0,
-        faldaxFeeActual: 0,
-        limitPrice: 0,
-        networkFee: 0,
-        loader: false
-      });
-    } else {
-      fetch(`${API_URL}/conversion/get-jst-price-value`, {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        },
-        body: JSON.stringify(values)
-      })
-        .then(response => response.json())
-        .then(responseData => {
-          if (responseData.status === 200) {
-            // this.setState({ loader: false })
-            this.setState({
-              loader: false,
-              subTotal: parseFloat(responseData.data.original_value).toFixed(8),
-              faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
-              faldaxFeeActual: parseFloat(
-                responseData.data.faldax_fees_actual
-              ).toFixed(8),
-              limitPrice: parseFloat(responseData.data.limit_price).toFixed(8),
-              networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
-              totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
-              fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
-              displayCurrency: responseData.data.currency,
-              Quantity: parseFloat(responseData.data.total_value).toFixed(8)
-            });
-            if (this.state.includeFees === 1) {
-              // if (this.state.OrdType === "1") {
-              //   console.log(this.state.includeFees, this.state.OrdType);
-              //   this.setState({
-              //     OriginalQuantity: parseFloat(
-              //       responseData.original_value
-              //     ).toFixed(8)
-              //   });
-              // } else {
-              //   console.log(this.state.includeFees, this.state.OrdType);
-              //   this.setState({
-              //     OriginalQuantity: parseFloat(
-              //       responseData.total_value
-              //     ).toFixed(8)
-              //   });
-              // }
-              this.setState({
-                sendCurrencyInput: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                orderQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8)
-                // loader: false
-              });
-            } else {
-              // if (this.state.OrdType === "2") {
-              //   console.log("if", this.state.OrdType);
-              //   this.setState({
-              //     OriginalQuantity: parseFloat(
-              //       responseData.original_value
-              //     ).toFixed(8)
-              //   });
-              // } else {
-              //   console.log("else", this.state.OrdType);
-              //   this.setState({
-              //     OriginalQuantity: parseFloat(
-              //       responseData.original_value
-              //     ).toFixed(8)
-              //   });
-              // }
-              this.setState({
-                recieveCurrencyInput: parseFloat(
-                  responseData.data.total_value
-                ).toFixed(8),
-                orderQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8)
-                // loader: false
-              });
-            }
-            if (this.state.includeFees === 1 && this.state.OrdType === "1") {
-              // console.log(
-              //   this.state.includeFees,
-              //   this.state.OrdType,
-              //   responseData.data.original_value
-              // );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.original_value
-                ).toFixed(8),
-                buy_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(responseData.data.total_value).toFixed(8)
-                    : parseFloat(responseData.data.original_value).toFixed(8),
-                sell_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(responseData.data.currency_value).toFixed(8)
-                    : parseFloat(responseData.data.currency_value).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 2 &&
-              this.state.OrdType === "1"
-            ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.total_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.total_value
-                ).toFixed(8),
-                buy_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(responseData.data.total_value).toFixed(8)
-                    : parseFloat(responseData.data.original_value).toFixed(8),
-                sell_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(responseData.data.currency_value).toFixed(8)
-                    : parseFloat(responseData.data.currency_value).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 2 &&
-              this.state.OrdType === "2"
-            ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.currency_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                buy_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(responseData.data.total_value).toFixed(8)
-                    : parseFloat(responseData.data.original_value).toFixed(8),
-                sell_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(responseData.data.currency_value).toFixed(8)
-                    : parseFloat(responseData.data.currency_value).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 1 &&
-              this.state.OrdType === "2"
-            ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.currency_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                buy_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(responseData.data.total_value).toFixed(8)
-                    : parseFloat(responseData.data.original_value).toFixed(8),
-                sell_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(responseData.data.currency_value).toFixed(8)
-                    : parseFloat(responseData.data.currency_value).toFixed(8)
-              });
-            } else {
-              console.log("no scenario");
-            }
-            this.setState({ loader: false });
-          } else if (responseData.status === 500) {
-            this.setState({ loader: false });
-            this.openNotificationWithIcon("error", "Error", responseData.err);
-          } else {
-            this.setState({ loader: false });
-            this.openNotificationWithIcon("error", "Error", responseData.err);
-          }
-        })
-        .catch(error => {});
-    }
-  }
-  showCalculatedValuesUSDTerms() {
-    this.setState({ loader: true });
-    console.log("Order values to display");
-    if (this.state.includeFees === 1) {
-      var values = {
-        Symbol: this.state.original_pair,
-        Side: this.state.OrdType,
-        OrderQty: this.state.recieveCurrencyInput,
-        Currency: this.state.crypto,
-        OrdType: "1",
-        flag: "2",
-        usd_value: this.state.fiatJSTValue,
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair,
-        offer_code: this.state.appliedOfferCode
-      };
-    } else {
-      var values = {
-        Symbol: this.state.original_pair,
-        Side: this.state.OrdType,
-        OrderQty: this.state.sendCurrencyInput,
-        Currency: this.state.currency,
-        OrdType: "1",
-        flag: "1",
-        usd_value: this.state.fiatJSTValue,
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair,
-        offer_code: this.state.appliedOfferCode
-      };
-    }
-    if (
-      (values.usd_value === null ||
-        values.usd_value === "" ||
-        isNaN(this.state.fiatJSTValue) === true) &&
-      this.state.includeFees === 1
-    ) {
-      // this.setState({ loader: false });
-      this.validator1.showMessages();
-      this.forceUpdate();
-      this.setState({
-        recieveCurrencyInput: "",
-        includeFees: 1,
-        sendCurrencyInput: 0,
-        // fiatJSTValue: 0,
-        crypto: this.state.crypto,
-        displayCurrency: null,
-        currency: this.state.currency,
-        subTotal: 0,
-        totalAmount: 0,
-        faldaxFee: 0,
-        faldaxFeeActual: 0,
-        limitPrice: 0,
-        networkFee: 0,
-        loader: false
-      });
-    } else if (
-      (values.usd_value === null ||
-        values.usd_value === "" ||
-        isNaN(this.state.fiatJSTValue) === true) &&
-      this.state.includeFees === 2
-    ) {
-      // this.setState({ loader: false });
-      this.validator2.showMessages();
-      this.forceUpdate();
-      this.setState({
-        sendCurrencyInput: "",
-        includeFees: 2,
-        recieveCurrencyInput: 0,
-        // fiatJSTValue: 0,
-        crypto: this.state.crypto,
-        displayCurrency: null,
-        currency: this.state.currency,
-        subTotal: 0,
-        totalAmount: 0,
-        faldaxFee: 0,
-        faldaxFeeActual: 0,
-        limitPrice: 0,
-        networkFee: 0,
-        loader: false
-      });
-    } else {
-      fetch(`${API_URL}/conversion/get-jst-price-value`, {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        },
-        body: JSON.stringify(values)
-      })
-        .then(response => response.json())
-        .then(responseData => {
-          if (responseData.status === 200) {
-            console.log("Response Data 200", responseData.data);
-            this.setState({
-              // subTotal: parseFloat(responseData.data.original_value).toFixed(8),
-              faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
-              faldaxFeeActual: parseFloat(
-                responseData.data.faldax_fees_actual
-              ).toFixed(8),
-              limitPrice: parseFloat(responseData.data.limit_price).toFixed(8),
-              networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
-              // totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
-              displayCurrency: responseData.data.currency,
-              Quantity: parseFloat(responseData.data.total_value).toFixed(8),
-              loader: false
-              // orderQuantity: responseData.data.orderQuantity
-            });
-            if (this.state.includeFees === 1) {
-              this.setState({
-                sendCurrencyInput: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                recieveCurrencyInput: parseFloat(
-                  responseData.data.original_value
-                ).toFixed(8),
-                orderQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                subTotal: parseFloat(responseData.data.original_value).toFixed(
-                  8
-                ),
-                totalAmount: parseFloat(responseData.data.total_value).toFixed(
-                  8
-                ),
-                loader: false
-              });
-            } else {
-              this.setState({
-                recieveCurrencyInput: parseFloat(
-                  responseData.data.total_value
-                ).toFixed(8),
-                sendCurrencyInput: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                orderQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                subTotal: parseFloat(responseData.data.original_value).toFixed(
-                  8
-                ),
-                totalAmount: parseFloat(responseData.data.total_value).toFixed(
-                  8
-                ),
-                loader: false
-              });
-            }
-            if (this.state.includeFees === 1 && this.state.OrdType === "1") {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.original_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.original_value
-                ).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 2 &&
-              this.state.OrdType === "1"
-            ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.total_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.total_value
-                ).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 2 &&
-              this.state.OrdType === "2"
-            ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.currency_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 1 &&
-              this.state.OrdType === "2"
-            ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.currency_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8)
-              });
-            } else {
-              console.log("no scenario");
-            }
-          } else if (responseData.status === 500) {
-            this.setState({ loader: false });
-            this.openNotificationWithIcon("error", "Error", responseData.err);
-          } else {
-            this.setState({ loader: false });
-            this.openNotificationWithIcon("error", "Error", responseData.err);
-          }
-        })
-        .catch(error => {});
-    }
-  }
+  // showCalculatedValues() {
+  //   // console.log(!isNaN(this.state.recieveCurrencyInput));
+  //   this.setState({ loader: true });
+  //   if (this.state.includeFees === 1) {
+  //     var values = {
+  //       Symbol: this.state.original_pair,
+  //       // Symbol: `${this.state.crypto}/${this.state.currency}`,
+  //       Side: this.state.OrdType,
+  //       OrderQty: this.state.recieveCurrencyInput,
+  //       Currency: this.state.crypto,
+  //       OrdType: "1",
+  //       flag: "2",
+  //       usd_value: "",
+  //       original_pair: this.state.original_pair,
+  //       order_pair: this.state.order_pair,
+  //       offer_code: this.state.appliedOfferCode
+  //     };
+  //     // console.log(values);
+  //   } else {
+  //     var values = {
+  //       Symbol: this.state.original_pair,
+  //       // Symbol: `${this.state.crypto}/${this.state.currency}`,
+  //       Side: this.state.OrdType,
+  //       OrderQty: this.state.sendCurrencyInput,
+  //       Currency: this.state.currency,
+  //       OrdType: "1",
+  //       flag: "1",
+  //       usd_value: "",
+  //       original_pair: this.state.original_pair,
+  //       order_pair: this.state.order_pair,
+  //       offer_code: this.state.appliedOfferCode
+  //     };
+  //   }
+  //   // console.log("Values-----------", values);
+  //   if (
+  //     (values.OrderQty === null ||
+  //       values.OrderQty === "" ||
+  //       isNaN(this.state.recieveCurrencyInput) === true) &&
+  //     // isNaN(this.state.recieveCurrencyInput) === true &&
+  //     this.state.includeFees === 1
+  //   ) {
+  //     // console.log(!isNaN(this.state.recieveCurrencyInput));
+  //     // this.setState({ loader: false });
+  //     this.validator1.showMessages();
+  //     this.forceUpdate();
+  //     this.setState({
+  //       // recieveCurrencyInput: "",
+  //       includeFees: 1,
+  //       sendCurrencyInput: 0,
+  //       fiatJSTValue: "",
+  //       crypto: this.state.crypto,
+  //       displayCurrency: null,
+  //       currency: this.state.currency,
+  //       subTotal: 0,
+  //       totalAmount: 0,
+  //       faldaxFee: 0,
+  //       faldaxFeeActual: 0,
+  //       limitPrice: 0,
+  //       networkFee: 0,
+  //       loader: false
+  //     });
+  //   } else if (
+  //     (values.OrderQty === null ||
+  //       values.OrderQty === "" ||
+  //       isNaN(this.state.sendCurrencyInput) === true) &&
+  //     // !isNaN(this.state.sendCurrencyInput) &&
+  //     this.state.includeFees === 2
+  //   ) {
+  //     // this.setState({ loader: false });
+  //     this.validator2.showMessages();
+  //     this.forceUpdate();
+  //     this.setState({
+  //       // sendCurrencyInput: 0,
+  //       includeFees: 2,
+  //       recieveCurrencyInput: 0,
+  //       fiatJSTValue: "",
+  //       crypto: this.state.crypto,
+  //       displayCurrency: null,
+  //       currency: this.state.currency,
+  //       subTotal: 0,
+  //       totalAmount: 0,
+  //       faldaxFee: 0,
+  //       faldaxFeeActual: 0,
+  //       limitPrice: 0,
+  //       networkFee: 0,
+  //       loader: false
+  //     });
+  //   } else {
+  //     fetch(`${API_URL}/conversion/get-jst-price-value`, {
+  //       method: "post",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + this.props.isLoggedIn
+  //       },
+  //       body: JSON.stringify(values)
+  //     })
+  //       .then(response => response.json())
+  //       .then(responseData => {
+  //         if (responseData.status === 200) {
+  //           // this.setState({ loader: false })
+  //           this.setState({
+  //             loader: false,
+  //             subTotal: parseFloat(responseData.data.original_value).toFixed(8),
+  //             faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
+  //             faldaxFeeActual: parseFloat(
+  //               responseData.data.faldax_fees_actual
+  //             ).toFixed(8),
+  //             limitPrice: parseFloat(responseData.data.limit_price).toFixed(8),
+  //             networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
+  //             totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
+  //             fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
+  //             displayCurrency: responseData.data.currency,
+  //             Quantity: parseFloat(responseData.data.total_value).toFixed(8)
+  //           });
+  //           if (this.state.includeFees === 1) {
+  //             this.setState({
+  //               sendCurrencyInput: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               orderQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8)
+  //               // loader: false
+  //             });
+  //           } else {
+  //             this.setState({
+  //               recieveCurrencyInput: parseFloat(
+  //                 responseData.data.total_value
+  //               ).toFixed(8),
+  //               orderQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8)
+  //               // loader: false
+  //             });
+  //           }
+  //           if (this.state.includeFees === 1 && this.state.OrdType === "1") {
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.original_value
+  //               ).toFixed(8),
+  //               buy_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.total_value).toFixed(8)
+  //                   : parseFloat(responseData.data.original_value).toFixed(8),
+  //               sell_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.currency_value).toFixed(8)
+  //                   : parseFloat(responseData.data.currency_value).toFixed(8)
+  //             });
+  //           } else if (
+  //             this.state.includeFees === 2 &&
+  //             this.state.OrdType === "1"
+  //           ) {
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.total_value
+  //               ).toFixed(8),
+  //               buy_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.total_value).toFixed(8)
+  //                   : parseFloat(responseData.data.original_value).toFixed(8),
+  //               sell_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.currency_value).toFixed(8)
+  //                   : parseFloat(responseData.data.currency_value).toFixed(8)
+  //             });
+  //           } else if (
+  //             this.state.includeFees === 2 &&
+  //             this.state.OrdType === "2"
+  //           ) {
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               buy_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.total_value).toFixed(8)
+  //                   : parseFloat(responseData.data.original_value).toFixed(8),
+  //               sell_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.currency_value).toFixed(8)
+  //                   : parseFloat(responseData.data.currency_value).toFixed(8)
+  //             });
+  //           } else if (
+  //             this.state.includeFees === 1 &&
+  //             this.state.OrdType === "2"
+  //           ) {
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               buy_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.total_value).toFixed(8)
+  //                   : parseFloat(responseData.data.original_value).toFixed(8),
+  //               sell_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.currency_value).toFixed(8)
+  //                   : parseFloat(responseData.data.currency_value).toFixed(8)
+  //             });
+  //           } else {
+  //             console.log("no scenario");
+  //           }
+  //           this.setState({ loader: false });
+  //         } else if (responseData.status === 500) {
+  //           this.setState({ loader: false });
+  //           this.openNotificationWithIcon("error", "Error", responseData.err);
+  //         } else {
+  //           this.setState({ loader: false });
+  //           this.openNotificationWithIcon("error", "Error", responseData.err);
+  //         }
+  //       })
+  //       .catch(error => {});
+  //   }
+  // }
+  // showCalculatedValuesUSDTerms() {
+  //   this.setState({ loader: true });
+  //   // console.log("Order values to display");
+  //   if (this.state.includeFees === 1) {
+  //     var values = {
+  //       Symbol: this.state.original_pair,
+  //       Side: this.state.OrdType,
+  //       OrderQty: this.state.recieveCurrencyInput,
+  //       Currency: this.state.crypto,
+  //       OrdType: "1",
+  //       flag: "2",
+  //       usd_value: this.state.fiatJSTValue,
+  //       original_pair: this.state.original_pair,
+  //       order_pair: this.state.order_pair,
+  //       offer_code: this.state.appliedOfferCode
+  //     };
+  //   } else {
+  //     var values = {
+  //       Symbol: this.state.original_pair,
+  //       Side: this.state.OrdType,
+  //       OrderQty: this.state.sendCurrencyInput,
+  //       Currency: this.state.currency,
+  //       OrdType: "1",
+  //       flag: "1",
+  //       usd_value: this.state.fiatJSTValue,
+  //       original_pair: this.state.original_pair,
+  //       order_pair: this.state.order_pair,
+  //       offer_code: this.state.appliedOfferCode
+  //     };
+  //   }
+  //   if (
+  //     (values.usd_value === null ||
+  //       values.usd_value === "" ||
+  //       isNaN(this.state.fiatJSTValue) === true) &&
+  //     this.state.includeFees === 1
+  //   ) {
+  //     // this.setState({ loader: false });
+  //     this.validator1.showMessages();
+  //     this.forceUpdate();
+  //     this.setState({
+  //       recieveCurrencyInput: "",
+  //       includeFees: 1,
+  //       sendCurrencyInput: 0,
+  //       // fiatJSTValue: 0,
+  //       crypto: this.state.crypto,
+  //       displayCurrency: null,
+  //       currency: this.state.currency,
+  //       subTotal: 0,
+  //       totalAmount: 0,
+  //       faldaxFee: 0,
+  //       faldaxFeeActual: 0,
+  //       limitPrice: 0,
+  //       networkFee: 0,
+  //       loader: false
+  //     });
+  //   } else if (
+  //     (values.usd_value === null ||
+  //       values.usd_value === "" ||
+  //       isNaN(this.state.fiatJSTValue) === true) &&
+  //     this.state.includeFees === 2
+  //   ) {
+  //     // this.setState({ loader: false });
+  //     this.validator2.showMessages();
+  //     this.forceUpdate();
+  //     this.setState({
+  //       sendCurrencyInput: "",
+  //       includeFees: 2,
+  //       recieveCurrencyInput: 0,
+  //       // fiatJSTValue: 0,
+  //       crypto: this.state.crypto,
+  //       displayCurrency: null,
+  //       currency: this.state.currency,
+  //       subTotal: 0,
+  //       totalAmount: 0,
+  //       faldaxFee: 0,
+  //       faldaxFeeActual: 0,
+  //       limitPrice: 0,
+  //       networkFee: 0,
+  //       loader: false
+  //     });
+  //   } else {
+  //     fetch(`${API_URL}/conversion/get-jst-price-value`, {
+  //       method: "post",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + this.props.isLoggedIn
+  //       },
+  //       body: JSON.stringify(values)
+  //     })
+  //       .then(response => response.json())
+  //       .then(responseData => {
+  //         if (responseData.status === 200) {
+  //           // console.log("Response Data 200", responseData.data);
+  //           this.setState({
+  //             // subTotal: parseFloat(responseData.data.original_value).toFixed(8),
+  //             faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
+  //             faldaxFeeActual: parseFloat(
+  //               responseData.data.faldax_fees_actual
+  //             ).toFixed(8),
+  //             limitPrice: parseFloat(responseData.data.limit_price).toFixed(8),
+  //             networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
+  //             // totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
+  //             displayCurrency: responseData.data.currency,
+  //             Quantity: parseFloat(responseData.data.total_value).toFixed(8),
+  //             loader: false
+  //             // orderQuantity: responseData.data.orderQuantity
+  //           });
+  //           if (this.state.includeFees === 1) {
+  //             this.setState({
+  //               sendCurrencyInput: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               recieveCurrencyInput: parseFloat(
+  //                 responseData.data.original_value
+  //               ).toFixed(8),
+  //               orderQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               subTotal: parseFloat(responseData.data.original_value).toFixed(
+  //                 8
+  //               ),
+  //               totalAmount: parseFloat(responseData.data.total_value).toFixed(
+  //                 8
+  //               ),
+  //               loader: false
+  //             });
+  //           } else {
+  //             this.setState({
+  //               recieveCurrencyInput: parseFloat(
+  //                 responseData.data.total_value
+  //               ).toFixed(8),
+  //               sendCurrencyInput: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               orderQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               subTotal: parseFloat(responseData.data.original_value).toFixed(
+  //                 8
+  //               ),
+  //               totalAmount: parseFloat(responseData.data.total_value).toFixed(
+  //                 8
+  //               ),
+  //               loader: false
+  //             });
+  //           }
+  //           if (this.state.includeFees === 1 && this.state.OrdType === "1") {
+  //             // console.log(
+  //             //   this.state.includeFees,
+  //             //   this.state.OrdType,
+  //             //   responseData.data.original_value
+  //             // );
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.original_value
+  //               ).toFixed(8)
+  //             });
+  //           } else if (
+  //             this.state.includeFees === 2 &&
+  //             this.state.OrdType === "1"
+  //           ) {
+  //             // console.log(
+  //             //   this.state.includeFees,
+  //             //   this.state.OrdType,
+  //             //   responseData.data.total_value
+  //             // );
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.total_value
+  //               ).toFixed(8)
+  //             });
+  //           } else if (
+  //             this.state.includeFees === 2 &&
+  //             this.state.OrdType === "2"
+  //           ) {
+  //             // console.log(
+  //             //   this.state.includeFees,
+  //             //   this.state.OrdType,
+  //             //   responseData.data.currency_value
+  //             // );
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8)
+  //             });
+  //           } else if (
+  //             this.state.includeFees === 1 &&
+  //             this.state.OrdType === "2"
+  //           ) {
+  //             // console.log(
+  //             //   this.state.includeFees,
+  //             //   this.state.OrdType,
+  //             //   responseData.data.currency_value
+  //             // );
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8)
+  //             });
+  //           } else {
+  //             console.log("no scenario");
+  //           }
+  //         } else if (responseData.status === 500) {
+  //           this.setState({ loader: false });
+  //           this.openNotificationWithIcon("error", "Error", responseData.err);
+  //         } else {
+  //           this.setState({ loader: false });
+  //           this.openNotificationWithIcon("error", "Error", responseData.err);
+  //         }
+  //       })
+  //       .catch(error => {});
+  //   }
+  // }
   calculateOrderVaules(otp = "") {
-    console.log("Order");
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
+    // console.log("Order");
     this.setState({ loader: true });
-    console.log(this.state);
+    // console.log(this.state);
     if (this.state.checkOTP) {
       this.setState({
         showTFAModal: true
@@ -994,7 +1370,7 @@ class ConversionDetail extends React.Component {
           sell_currency_amount: this.state.sell_currency_amount,
           otp: otp1
         };
-        console.log(values);
+        // console.log(values);
       } else {
         var values = {
           Symbol: this.state.original_pair,
@@ -1015,7 +1391,7 @@ class ConversionDetail extends React.Component {
           sell_currency_amount: this.state.sell_currency_amount,
           otp: otp1
         };
-        console.log(values);
+        // console.log(values);
       }
       fetch(`${API_URL}/converion/jst-create-order`, {
         method: "post",
@@ -1053,7 +1429,7 @@ class ConversionDetail extends React.Component {
             });
             this.clearValidation();
           } else {
-            console.log("--------------------", otp);
+            // console.log("--------------------", otp);
             if (values.otp === "") {
               // console.log(otp);
             } else {
@@ -1089,7 +1465,7 @@ class ConversionDetail extends React.Component {
           sell_currency_amount: this.state.sell_currency_amount,
           otp: ""
         };
-        console.log(values);
+        // console.log(values);
       } else {
         var values = {
           Symbol: this.state.original_pair,
@@ -1110,7 +1486,7 @@ class ConversionDetail extends React.Component {
           sell_currency_amount: this.state.sell_currency_amount,
           otp: ""
         };
-        console.log(values);
+        // console.log(values);
       }
       fetch(`${API_URL}/converion/jst-create-order`, {
         method: "post",
@@ -1228,6 +1604,8 @@ class ConversionDetail extends React.Component {
     //   "option.props.selectedData.min_limit",
     //   option.props.selectedData.jst_min_coin_limit
     // );
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
     if (value === this.state.currency) {
       this.state.currencyList.map((element, i) => {
         if (element.coin === this.state.currency) {
@@ -1290,14 +1668,14 @@ class ConversionDetail extends React.Component {
                 OrdType: "1"
               });
             }
-            console.log(
-              "Matched crytpo and currency pair selected Crypto change",
-              this.state.currency + this.state.crypto
-            );
-            console.log(
-              "Matched crytpo and currency pair crypto change",
-              element.crypto + element.currency
-            );
+            // console.log(
+            //   "Matched crytpo and currency pair selected Crypto change",
+            //   this.state.currency + this.state.crypto
+            // );
+            // console.log(
+            //   "Matched crytpo and currency pair crypto change",
+            //   element.crypto + element.currency
+            // );
             this.setState({
               original_pair: element.original_pair,
               order_pair: element.order_pair
@@ -1311,45 +1689,48 @@ class ConversionDetail extends React.Component {
             },
             () => {
               if (this.state.recieveCurrencyInput > 0) {
-                console.log(
-                  "If original_pair-----------",
-                  this.state.original_pair
-                );
-                console.log("If order_pair-----------", this.state.order_pair);
-                console.log("If crypto-----------", this.state.crypto);
-                console.log("If currency-----------", this.state.currency);
-                this.timeout = setTimeout(this.showCalculatedValues, 1000);
+                // console.log(
+                //   "If original_pair-----------",
+                //   this.state.original_pair
+                // );
+                // console.log("If order_pair-----------", this.state.order_pair);
+                // console.log("If crypto-----------", this.state.crypto);
+                // console.log("If currency-----------", this.state.currency);
+                this.timeout = setTimeout(this.getValuesSocket, 1000);
+                this.interval = setInterval(() => {
+                  this.getValuesSocket(false);
+                }, this.state.socketTime);
               }
             }
           );
         } else {
           if (this.state.sendCurrencyInput > 0) {
-            console.log(
-              "Else original_pair-----------",
-              this.state.original_pair
-            );
-            console.log("Else order_pair-----------", this.state.order_pair);
-            console.log("Else crypto-----------", this.state.crypto);
-            console.log("Else currency-----------", this.state.currency);
-            this.timeout = setTimeout(this.showCalculatedValues, 1000);
+            // console.log(
+            //   "Else original_pair-----------",
+            //   this.state.original_pair
+            // );
+            // // console.log("Else order_pair-----------", this.state.order_pair);
+            // console.log("Else crypto-----------", this.state.crypto);
+            // console.log("Else currency-----------", this.state.currency);
+            this.timeout = setTimeout(this.getValuesSocket, 1000);
+            this.interval = setInterval(() => {
+              this.getValuesSocket(false);
+            }, this.state.socketTime);
           }
         }
       }
     );
   }
   handleFiatChange(value, option: Option) {
-    console.log(option.props.selectedData.min_limit);
+    // console.log(option.props.selectedData.min_limit);
     let prevRoom = this.state.crypto + "-" + this.state.currency;
-    this.setState(
-      {
-        fiat: value
-      },
-      () => {
-        // this.showCalculatedValues();
-      }
-    );
+    this.setState({
+      fiat: value
+    });
   }
   handleCurrencyChange(value, option: Option) {
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
     if (value === this.state.crypto) {
       this.state.cryptoList.map((element, i) => {
         if (element.coin === this.state.crypto) {
@@ -1412,14 +1793,14 @@ class ConversionDetail extends React.Component {
                 OrdType: "1"
               });
             }
-            console.log(
-              "Matched crytpo and currency pair selected currency change",
-              this.state.crypto + this.state.currency
-            );
-            console.log(
-              "Matched crytpo and currency pair Currency change",
-              element.crypto + element.currency
-            );
+            // console.log(
+            //   "Matched crytpo and currency pair selected currency change",
+            //   this.state.crypto + this.state.currency
+            // );
+            // console.log(
+            //   "Matched crytpo and currency pair Currency change",
+            //   element.crypto + element.currency
+            // );
             this.setState({
               original_pair: element.original_pair,
               order_pair: element.order_pair
@@ -1428,7 +1809,10 @@ class ConversionDetail extends React.Component {
         });
         if (this.state.includeFees === 1) {
           if (this.state.recieveCurrencyInput > 0) {
-            this.timeout = setTimeout(this.showCalculatedValues, 1000);
+            this.timeout = setTimeout(this.getValuesSocket, 1000);
+            this.interval = setInterval(() => {
+              this.getValuesSocket(false);
+            }, this.state.socketTime);
           }
         } else {
           this.setState(
@@ -1437,7 +1821,10 @@ class ConversionDetail extends React.Component {
             },
             () => {
               if (this.state.sendCurrencyInput > 0) {
-                this.timeout = setTimeout(this.showCalculatedValues, 1000);
+                this.timeout = setTimeout(this.getValuesSocket, 1000);
+                this.interval = setInterval(() => {
+                  this.getValuesSocket(false);
+                }, this.state.socketTime);
               }
             }
           );
@@ -1448,6 +1835,8 @@ class ConversionDetail extends React.Component {
   radioChange(e) {
     this.setState({ loader: true });
     this.clearValidation();
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
     this.state.JSTPairList.map((element, i) => {
       if (
         element.crypto === this.state.crypto &&
@@ -1485,12 +1874,18 @@ class ConversionDetail extends React.Component {
       () => {
         clearTimeout(this.timeout);
         if (e.target.value === 1) {
-          this.timeout = setTimeout(this.showCalculatedValues, 1000);
+          this.timeout = setTimeout(this.getValuesSocket, 1000);
+          this.interval = setInterval(() => {
+            this.getValuesSocket(false);
+          }, this.state.socketTime);
           this.setState({
             recieveCurrencyInput: this.state.minCrypto
           });
         } else {
-          this.timeout = setTimeout(this.showCalculatedValues, 1000);
+          this.timeout = setTimeout(this.getValuesSocket, 1000);
+          this.interval = setInterval(() => {
+            this.getValuesSocket(false);
+          }, this.state.socketTime);
           this.setState({
             sendCurrencyInput: this.state.minCurrency
           });
@@ -1501,7 +1896,7 @@ class ConversionDetail extends React.Component {
   btnClicked(otp = "") {
     if (this.state.includeFees === 1) {
       if (this.validator1.allValid()) {
-        console.log(otp);
+        // console.log(otp);
         this.calculateOrderVaules(otp);
         // alert("success");
       } else {
@@ -1533,7 +1928,7 @@ class ConversionDetail extends React.Component {
     // rerender to hide messages for the first time
   }
   promoCode(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     this.setState({
       promoCode: e.target.value,
       validPromo: false,
@@ -1590,7 +1985,7 @@ class ConversionDetail extends React.Component {
         showAppliedPromoModal: false
       },
       () => {
-        this.showCalculatedValues();
+        this.getValuesSocket();
       }
     );
   }
@@ -2023,7 +2418,7 @@ class ConversionDetail extends React.Component {
                                 )}
                               </ConversionDropDown>
                             )} */}
-                          {console.log(this.state.currencyList)}
+                          {/* {console.log(this.state.currencyList)} */}
                           {this.state.currencyList &&
                             this.state.currencyList.length > 0 && (
                               <ConversionDropDown
@@ -2275,7 +2670,7 @@ class ConversionDetail extends React.Component {
                                   validPromo: false
                                 },
                                 () => {
-                                  this.showCalculatedValues();
+                                  this.getValuesSocket();
                                 }
                               );
                             }}
