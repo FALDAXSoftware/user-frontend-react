@@ -1483,6 +1483,11 @@ class Acc_settings extends Component {
                       onChange={this.deleteText.bind(this)}
                       name="ip"
                       style={{ marginBottom: "20px" }}
+                      onPaste={e => {
+                        e.preventDefault();
+                        return false;
+                      }}
+                      autoComplete={false}
                     />
                     {this.validator1.message(
                       "text",
@@ -1567,6 +1572,11 @@ class Acc_settings extends Component {
                       onChange={this.deactivateText.bind(this)}
                       name="ip"
                       style={{ marginBottom: "20px" }}
+                      onPaste={e => {
+                        e.preventDefault();
+                        return false;
+                      }}
+                      autoComplete={false}
                     />
                     {this.validator1.message(
                       "text",

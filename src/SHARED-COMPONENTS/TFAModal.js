@@ -85,15 +85,22 @@ class TFAModal extends Component {
       this.forceUpdate();
     }
   }
+  comingCancel = e => {
+    this.setState({
+      visibleTFA: false
+    });
+  };
   render() {
     const { fields, visibleTFA } = this.state;
-    console.log(visibleTFA);
+    // console.log(visibleTFA);
     return (
       <VerifyModal
-        closable={false}
+        // closable={false}
         title="Two-Factor Authentication Code"
         visible={visibleTFA}
         footer={null}
+        onCancel={e => this.comingCancel(e)}
+        maskClosable={false}
       >
         <Description>
           {" "}
