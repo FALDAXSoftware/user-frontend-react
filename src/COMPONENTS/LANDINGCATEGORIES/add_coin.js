@@ -1,47 +1,51 @@
-import React, { Component } from 'react';
-import 'antd/dist/antd.css';
-import { notification } from 'antd';
-import styled from 'styled-components';
-import SimpleReactValidator from 'simple-react-validator';
+import React, { Component } from "react";
+import "antd/dist/antd.css";
+import { notification } from "antd";
+import styled from "styled-components";
+import SimpleReactValidator from "simple-react-validator";
 import "react-datepicker/dist/react-datepicker.css";
-import 'react-intl-tel-input/dist/main.css';
-import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';
-import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
+import "react-intl-tel-input/dist/main.css";
+import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
 /* import { Spin_Ex } from 'STYLED-COMPONENTS/HOMEPAGE/style' */
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
-import { Container } from 'STYLED-COMPONENTS/HOMEPAGE/style';
+import { Container } from "STYLED-COMPONENTS/HOMEPAGE/style";
 import {
-    ContactWrap, GreyWrap, Head, HeadDesc, MsgInput
-} from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
+  ContactWrap,
+  GreyWrap,
+  Head,
+  HeadDesc,
+  MsgInput
+} from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import { globalVariables } from "Globals.js";
 
 let { API_URL } = globalVariables;
 /* const Option = Select.Option; */
 
 export const ContainerContact = styled(Container)`
-    background-color:${props => props.theme.mode === "dark" ? "#041422" : "white"};
-    border-radius:5px;
-    padding-right:30px;
-    padding-left:30px;
-    padding-bottom:70px;
-    @media(max-width:480px)
-    {
-        padding-right:0px;
-        padding-left:0px;
-    }
-`
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#041422" : "white"};
+  border-radius: 5px;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-bottom: 70px;
+  @media (max-width: 480px) {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+`;
 export const TextAreaInput = styled(MsgInput)`
-    min-height: 60px;
-`
+  min-height: 60px;
+`;
 const TokenTitle = styled.span`
   font-size: 40px;
   font-family: "Open sans";
   font-weight: bold;
   display: block;
   text-align: center;
-  color:${props => props.theme.mode === "dark" ? "white" : ""};
+  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   &:before {
-    content: '';
+    content: "";
     width: calc(50% - 190px);
     height: 1px;
     display: inline-block;
@@ -51,7 +55,7 @@ const TokenTitle = styled.span`
     top: calc(50% - 1px);
   }
   &:after {
-    content: '';
+    content: "";
     width: calc(50% - 190px);
     height: 1px;
     display: inline-block;
@@ -60,254 +64,265 @@ const TokenTitle = styled.span`
     right: 0;
     top: calc(50% - 1px);
   }
-  @media(max-width:767px)
-  {
+  @media (max-width: 767px) {
     &:before {
-      display:none;
+      display: none;
     }
     &:after {
-      display:none;
+      display: none;
     }
   }
 `;
 
 class AddCoin extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            fields: {
-                email: '',
-                message: '',
-                target_date: '',
-                url: '',
-                coin_name: '',
-                is_secure: '',
-                country: '',
-                skype: '',
-                phone: '',
-                other_site: '',
-                loader: false
-            },
-            startDate: null,
-            is_secure: '',
-            selectedCountry: '',
-            selectedReference: '',
-            isTextBox: false,
-            phoneCode: '',
-            countries: []
-        };
-        this._onChangeFields = this._onChangeFields.bind(this);
-        this.dateChange = this.dateChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.validator = new SimpleReactValidator({
-            validEmail: { // name the rule
-                message: 'Please enter valid email address.', // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-                rule: function (val, options) { // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
-                    // check that it is a valid IP address and is not blacklisted
-                    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                    var bool = re.test(String(val).toLowerCase());
-                    return bool;
-                }
-            }
-        });
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      fields: {
+        email: "",
+        message: "",
+        target_date: "",
+        url: "",
+        coin_name: "",
+        is_secure: "",
+        country: "",
+        skype: "",
+        phone: "",
+        other_site: "",
+        loader: false
+      },
+      startDate: null,
+      is_secure: "",
+      selectedCountry: "",
+      selectedReference: "",
+      isTextBox: false,
+      phoneCode: "",
+      countries: []
+    };
+    this._onChangeFields = this._onChangeFields.bind(this);
+    this.dateChange = this.dateChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.validator = new SimpleReactValidator({
+      validEmail: {
+        // name the rule
+        message: "Please enter valid email address.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        rule: function(val, options) {
+          // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+          // check that it is a valid IP address and is not blacklisted
+          var re = /^[-a-zA-Z0-9~!$%^&*_=+}{\'?]+(\.[-a-zA-Z0-9~!$%^&*_=+}{\'?]+)*@([a-zA-Z0-9_][-a-zA-Z0-9_]*(\.[-a-zA-Z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|AERO|ARPA|BIZ|COM|COOP|EDU|GOV|INFO|INT|MIL|MUSEUM|NAME|NET|ORG|PRO|TRAVEL|MOBI|[a-zA-Z][a-zA-Z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/;
+          var bool = re.test(String(val).toLowerCase());
+          return bool;
+        }
+      }
+    });
+  }
 
-    /* Life Cycle Methods */
+  /* Life Cycle Methods */
 
-    componentDidMount() {
-        this._getAllCountries();
-        //document.getElementsByClassName("date-input")[0].setAttribute("readOnly", "readOnly")
-    }
+  componentDidMount() {
+    this._getAllCountries();
+    //document.getElementsByClassName("date-input")[0].setAttribute("readOnly", "readOnly")
+  }
 
-    /*  
+  /*  
         Page:/addcoin
         This method is called when fields are changed
     */
 
-    _onChangeFields(e) {
-        let fields = this.state.fields;
-        let field = e.target.name;
+  _onChangeFields(e) {
+    let fields = this.state.fields;
+    let field = e.target.name;
 
-        if (e.target.value.trim() === "") {
-            fields[field] = "";
-        } else {
-            fields[field] = e.target.value;
-        }
-        this.setState({ fields });
+    if (e.target.value.trim() === "") {
+      fields[field] = "";
+    } else {
+      fields[field] = e.target.value;
     }
+    this.setState({ fields });
+  }
 
-    /*  
+  /*  
         Page:/addcoin
         This method is called when fields are changed.
     */
 
-    dateChange(date) {
-        let fields = this.state.fields;
-        if (date != null) {
-            fields["target_date"] = date.format("DD/MM/YYYY");
-        } else {
-            fields["target_date"] = date;
-        }
-        this.setState({ fields, startDate: date });
+  dateChange(date) {
+    let fields = this.state.fields;
+    if (date != null) {
+      fields["target_date"] = date.format("DD/MM/YYYY");
+    } else {
+      fields["target_date"] = date;
     }
+    this.setState({ fields, startDate: date });
+  }
 
-    /*  
+  /*  
         Page:/addcoin
         This method is called for custom notifications.
     */
 
-    openNotificationWithIcon(type, head, desc) {
-        notification[type]({
-            message: head,
-            description: desc,
-            duration: 5
-        });
-    };
+  openNotificationWithIcon(type, head, desc) {
+    notification[type]({
+      message: head,
+      description: desc,
+      duration: 5
+    });
+  }
 
-    /*  
+  /*  
         Page:/addcoin
         This method is called to get all countries data.
     */
 
-    _getAllCountries = () => {
-        fetch(globalVariables.API_URL + "/users/countries", {
-            method: "GET",
-        }).then(response => response.json())
-            .then((responseData) => {
-                if (responseData.status === 200) {
-                    this.setState({ countries: responseData.data });
-                }
-            })
-            .catch(error => { })
-    }
+  _getAllCountries = () => {
+    fetch(globalVariables.API_URL + "/users/countries", {
+      method: "GET"
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status === 200) {
+          this.setState({ countries: responseData.data });
+        }
+      })
+      .catch(error => {});
+  };
 
-    /*  
+  /*  
         Page:/addcoin
         This method is called when we submit all fields input.
     */
 
-    onSubmit() {
-        if (this.validator.allValid()) {
-            this.setState({ loader: true })
+  onSubmit() {
+    if (this.validator.allValid()) {
+      this.setState({ loader: true });
 
-            let formdata = new FormData();
-            formdata.append('first_name', this.state.fields['first_name']);
-            formdata.append('last_name', this.state.fields['last_name'])
-            formdata.append('email', this.state.fields['email'])
-            formdata.append('target_date', this.state.fields['target_date'])
-            formdata.append('url', this.state.fields['url'])
-            formdata.append('message', this.state.fields['message'])
-            formdata.append('ref_site', this.state.fields['ref_site'])
-            formdata.append('skype', this.state.fields['skype'])
-            formdata.append('country', this.state.fields['country'])
-            formdata.append('title', this.state.fields['title'])
-            formdata.append('coin_name', this.state.fields['coin_name'])
-            formdata.append('elevator_pitch', this.state.fields['elevator_pitch'])
-            formdata.append('coin_symbol', this.state.fields['coin_symbol'])
-            formdata.append('phone', this.state.fields['phone'])
-            formdata.append('is_secure', this.state.fields['is_secure'])
-            formdata.append('other_site', this.state.fields['other_site'])
+      let formdata = new FormData();
+      formdata.append("first_name", this.state.fields["first_name"]);
+      formdata.append("last_name", this.state.fields["last_name"]);
+      formdata.append("email", this.state.fields["email"]);
+      formdata.append("target_date", this.state.fields["target_date"]);
+      formdata.append("url", this.state.fields["url"]);
+      formdata.append("message", this.state.fields["message"]);
+      formdata.append("ref_site", this.state.fields["ref_site"]);
+      formdata.append("skype", this.state.fields["skype"]);
+      formdata.append("country", this.state.fields["country"]);
+      formdata.append("title", this.state.fields["title"]);
+      formdata.append("coin_name", this.state.fields["coin_name"]);
+      formdata.append("elevator_pitch", this.state.fields["elevator_pitch"]);
+      formdata.append("coin_symbol", this.state.fields["coin_symbol"]);
+      formdata.append("phone", this.state.fields["phone"]);
+      formdata.append("is_secure", this.state.fields["is_secure"]);
+      formdata.append("other_site", this.state.fields["other_site"]);
 
-            fetch(API_URL + "/users/add-coin-request", {
-                method: "post",
-                body: formdata
-            })
-                .then(response => response.json())
-                .then((responseData) => {
-                    this.props.history.push('/thank-you');
-                    this.openNotificationWithIcon('success', 'Success', responseData.message);
-                    let fields = this.state.fields;
-                    Object.keys(fields).map(function (index) {
-                        fields[index] = ""
-                        return 1;
-                    })
+      fetch(API_URL + "/users/add-coin-request", {
+        method: "post",
+        body: formdata
+      })
+        .then(response => response.json())
+        .then(responseData => {
+          this.props.history.push("/thank-you");
+          this.openNotificationWithIcon(
+            "success",
+            "Success",
+            responseData.message
+          );
+          let fields = this.state.fields;
+          Object.keys(fields).map(function(index) {
+            fields[index] = "";
+            return 1;
+          });
 
-                    this.setState({
-                        fields: fields, startDate: null, loader: false,
-                        selectedCountry: '', selectedReference: '', is_secure: ''
-                    }, () => {
-                        this.validator.hideMessages();
-                        this.forceUpdate();
-                    })
-                })
-                .catch(error => {
-                })
-        } else {
-            this.validator.showMessages();
-            // rerender to show messages for the first time
-            this.forceUpdate();
-        }
+          this.setState(
+            {
+              fields: fields,
+              startDate: null,
+              loader: false,
+              selectedCountry: "",
+              selectedReference: "",
+              is_secure: ""
+            },
+            () => {
+              this.validator.hideMessages();
+              this.forceUpdate();
+            }
+          );
+        })
+        .catch(error => {});
+    } else {
+      this.validator.showMessages();
+      // rerender to show messages for the first time
+      this.forceUpdate();
     }
+  }
 
-    /*  
+  /*  
         Page:/addcoin
         This method is called to check security.
     */
 
-    _changeSecurity = (isSecure) => {
-        let fields = this.state.fields;
-        if (isSecure.trim() === "") {
-            fields['is_secure'] = "";
-        } else {
-            fields['is_secure'] = isSecure;
-        }
-        this.setState({ fields });
+  _changeSecurity = isSecure => {
+    let fields = this.state.fields;
+    if (isSecure.trim() === "") {
+      fields["is_secure"] = "";
+    } else {
+      fields["is_secure"] = isSecure;
     }
+    this.setState({ fields });
+  };
 
-    /*  
+  /*  
         Page:/addcoin
         This method is called when we change country.
     */
 
-    _changeCountry = (val) => {
-        let fields = this.state.fields;
-        if (val.trim() === "") {
-            fields['country'] = "";
-        } else {
-            fields['country'] = val;
-        }
-        this.setState({ fields });
-
+  _changeCountry = val => {
+    let fields = this.state.fields;
+    if (val.trim() === "") {
+      fields["country"] = "";
+    } else {
+      fields["country"] = val;
     }
+    this.setState({ fields });
+  };
 
-    /*  
+  /*  
         Page:/addcoin
         This method is called when ref. is changed.
     */
 
-    _changeReference = (val) => {
-        var isTextBox;
-        if (val === 'Other') {
-            isTextBox = true;
-        } else {
-            isTextBox = false;
-        }
-        let fields = this.state.fields;
-        if (val.trim() === "") {
-            fields['ref_site'] = "";
-        } else {
-            fields['ref_site'] = val;
-        }
-        this.setState({ fields, isTextBox });
+  _changeReference = val => {
+    var isTextBox;
+    if (val === "Other") {
+      isTextBox = true;
+    } else {
+      isTextBox = false;
     }
+    let fields = this.state.fields;
+    if (val.trim() === "") {
+      fields["ref_site"] = "";
+    } else {
+      fields["ref_site"] = val;
+    }
+    this.setState({ fields, isTextBox });
+  };
 
-    /*  
+  /*  
         Page:/addcoin
         This method is called when ref. is changed .
     */
 
-    _changeNumber(a, mob, code) {
-        if (mob.trim !== "") {
-            var temp = `+${code.dialCode}`;
-            var mobile = temp.concat(mob);;
-            let fields = this.state.fields;
-            fields['phone'] = mobile;
-            this.setState({ fields });
-        }
+  _changeNumber(a, mob, code) {
+    if (mob.trim !== "") {
+      var temp = `+${code.dialCode}`;
+      var mobile = temp.concat(mob);
+      let fields = this.state.fields;
+      fields["phone"] = mobile;
+      this.setState({ fields });
     }
-    render() {
-        /*  const { countries, isTextBox } = this.state; */
-        /* let countryOptions = countries.map((country) => {
+  }
+  render() {
+    /*  const { countries, isTextBox } = this.state; */
+    /* let countryOptions = countries.map((country) => {
             return (
                 <Option value={country.name}>{country.name}</Option>
             )
@@ -319,36 +334,61 @@ class AddCoin extends Component {
             )
         }) */
 
-        return (
-            <ContactWrap>
-                <Navigation />
-                <GreyWrap>
-                    <ContainerContact>
-                        <div style={{ display: 'inline-block', width: '100%', position: 'relative' }}>
-                            <TokenTitle>List Your Token </TokenTitle>
-                        </div>
-                        <Head>
-                            {/* <Head_title>List Your Token</Head_title> */}
-                            {/* <Subtitle>Here are the requirements to list your coin:</Subtitle> */}
-                            <HeadDesc>We speak to coin creators about struggles from their side of the crypto industry, and a common complaint is exchange access. Crypto, as a financial asset, is what gets the most attention but the beauty of crypto is the utility offered by tokens based on innovative ideas. We aim to help intelligent and motivated people like you focus on those ideas rather than the politics and logistics of proliferating your token. So, we made it easy:
-                                <ul style={{ marginTop: "20px !important" }}>
-                                    <li>Complete the form below.</li>
-                                    <li> We will review your information and reply with relevant questions and next steps within 24 hours.</li>
-                                </ul>
-                            </HeadDesc>
-                            <HeadDesc>
-                                Why should you want to work with us?
-
-                                <ul style={{ marginTop: "20px !important" }}>
-                                    <li>We do not require you to pay us.</li>
-                                    <li>We do not hold any of your tokens in reserve, escrow, hostage, etc.</li>
-                                    <li>Our terms are simple, fair, and clear.</li>
-                                    <li>We treat others with respect. Always.</li>
-                                </ul>
-                            </HeadDesc>
-                        </Head>
-                        <iframe title="title" style={{ border: 'none' }} height="1800px" width="100%" src={API_URL + "/get-list-token-form"}></iframe>
-                        {/* <Body>
+    return (
+      <ContactWrap>
+        <Navigation />
+        <GreyWrap>
+          <ContainerContact>
+            <div
+              style={{
+                display: "inline-block",
+                width: "100%",
+                position: "relative"
+              }}
+            >
+              <TokenTitle>List Your Token </TokenTitle>
+            </div>
+            <Head>
+              {/* <Head_title>List Your Token</Head_title> */}
+              {/* <Subtitle>Here are the requirements to list your coin:</Subtitle> */}
+              <HeadDesc>
+                We speak to coin creators about struggles from their side of the
+                crypto industry, and a common complaint is exchange access.
+                Crypto, as a financial asset, is what gets the most attention
+                but the beauty of crypto is the utility offered by tokens based
+                on innovative ideas. We aim to help intelligent and motivated
+                people like you focus on those ideas rather than the politics
+                and logistics of proliferating your token. So, we made it easy:
+                <ul style={{ marginTop: "20px !important" }}>
+                  <li>Complete the form below.</li>
+                  <li>
+                    {" "}
+                    We will review your information and reply with relevant
+                    questions and next steps within 24 hours.
+                  </li>
+                </ul>
+              </HeadDesc>
+              <HeadDesc>
+                Why should you want to work with us?
+                <ul style={{ marginTop: "20px !important" }}>
+                  <li>We do not require you to pay us.</li>
+                  <li>
+                    We do not hold any of your tokens in reserve, escrow,
+                    hostage, etc.
+                  </li>
+                  <li>Our terms are simple, fair, and clear.</li>
+                  <li>We treat others with respect. Always.</li>
+                </ul>
+              </HeadDesc>
+            </Head>
+            <iframe
+              title="title"
+              style={{ border: "none" }}
+              height="1800px"
+              width="100%"
+              src={API_URL + "/get-list-token-form"}
+            ></iframe>
+            {/* <Body>
                             <Body_form>
                                 <Form_coin>
                                     <OneDiv>
@@ -622,13 +662,13 @@ class AddCoin extends Component {
                                 </Form_coin>
                             </Body_form>
                         </Body> */}
-                    </ContainerContact>
-                </GreyWrap>
-                <CommonFooter />
-                {(this.state.loader) ? <FaldaxLoader /> : ""}
-            </ContactWrap>
-        );
-    }
+          </ContainerContact>
+        </GreyWrap>
+        <CommonFooter />
+        {this.state.loader ? <FaldaxLoader /> : ""}
+      </ContactWrap>
+    );
+  }
 }
 
 export default AddCoin;
