@@ -129,7 +129,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(process.env);
+    // console.log(process.env);
     const { isLoggedIn } = this.props;
 
     const RestrictedRoute = ({
@@ -142,7 +142,7 @@ class App extends Component {
       <Route
         {...rest}
         render={props => {
-          console.log(props, rest, isLoggedIn);
+          // console.log(props, rest, isLoggedIn);
           if (isLoggedIn) {
             if (props.location.pathname === "/") {
               return (

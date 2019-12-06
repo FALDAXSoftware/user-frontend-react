@@ -550,6 +550,8 @@ class PasswordChange extends Component {
     // }
     if (field === "current_password") {
       //   alert("current");
+      var regexp = /^[a-zA-Z0-9]*$/;
+      console.log("value.trim()", regexp.test(value));
 
       if (value.trim() !== "") {
         document.querySelector("#passchange_icon_success").style.display =
@@ -590,6 +592,7 @@ class PasswordChange extends Component {
       var numb = /^\d+$/,
         letters = /^[A-Za-z]+$/,
         alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
+      // alphanum = /^[a-zA-Z0-9]*$/;
       if (numb.test(value) || letters.test(value)) {
         this.setState({ stroke: "red", percent: 20 });
       }

@@ -230,11 +230,11 @@ class Simplex extends React.Component {
         .then(responseData => {
           if (responseData.status === 200) {
             if (responseData.data.error) {
-              this.openNotificationWithIcon(
-                "error",
-                "Error",
-                responseData.data.errors[0].message
-              );
+              // this.openNotificationWithIcon(
+              //   "error",
+              //   "Error",
+              //   responseData.data.errors[0].message
+              // );
               this.setState({
                 loader: false
               });
