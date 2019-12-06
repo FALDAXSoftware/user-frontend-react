@@ -630,7 +630,7 @@ class TradeView extends React.Component {
               subTotal: parseFloat(responseData.data.original_value).toFixed(8),
               faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
               networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
-              totalAmount: responseData.data.total_value.toFixed(8),
+              totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
               fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
               displayCurrency: responseData.data.currency,
               Quantity: parseFloat(responseData.data.total_value).toFixed(8)
@@ -742,6 +742,7 @@ class TradeView extends React.Component {
             } else {
               console.log("no scenario");
             }
+            this.setState({ loader: false });
           } else if (responseData.status === 500) {
             this.setState({ loader: false });
             this.openNotificationWithIcon("error", "Error", responseData.err);
