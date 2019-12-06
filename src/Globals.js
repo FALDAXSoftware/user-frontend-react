@@ -5,7 +5,9 @@ export const globalVariables = {
 
   _AMAZONBUCKET: "https://s3.us-east-2.amazonaws.com/production-static-asset/",
 
-  WordpressSiteURL: "https://www.faldax.com",
+  // WordpressSiteURL: "https://www.faldax.com", //Live URL
+
+  WordpressSiteURL: "https://preprod.faldax.com", //Pre-Production URL
 
   tvChartURL: "/chart",
 

@@ -27,7 +27,7 @@ const WalletModal = styled(Modal)`
   }
   > .ant-modal-content > .ant-modal-body {
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#061a2b" : ""};
+      props.theme.mode === "dark" ? "#061a2b" : ""};
   }
   > .ant-modal-content > .ant-modal-close > .ant-modal-close-x {
     color: white;
@@ -228,7 +228,7 @@ class WalletPopup extends Component {
         }
       },
       minLimitCheck: {
-        message: `Minimum amount should be greater than ${this.props.coin_min_limit}`,
+        message: `Amount should be greater than ${this.props.coin_min_limit}`,
         rule: (val, params, validator) => {
           // console.log("this is val?????", val);
           if (val >= this.props.coin_min_limit) {
@@ -254,7 +254,7 @@ class WalletPopup extends Component {
   /* Life Cycle Methods */
 
   componentDidMount() {
-    console.log(this.props)
+    console.log(this.props);
     if (this.props.title === "RECEIVE") {
       this.setState({ loader: true });
       // console.log(this.props.coin_code)
@@ -295,7 +295,7 @@ class WalletPopup extends Component {
     // Copy to clipboard example
     document.querySelectorAll(
       ".ant-input-search-button"
-    )[0].onclick = function () {
+    )[0].onclick = function() {
       // Select the content
       if (document.querySelectorAll(".receive_add > input")[0]) {
         document.querySelectorAll(".receive_add > input")[0].select();
@@ -423,7 +423,7 @@ class WalletPopup extends Component {
           }
           this.setState({ loader: false });
         })
-        .catch(error => { });
+        .catch(error => {});
     } else {
       this.setState({ loader: false });
       this.validator.showMessages();
@@ -454,7 +454,7 @@ class WalletPopup extends Component {
     if (e.target.value === "" || e.target.value === null) {
       let subtotal = parseFloat(
         parseFloat(fields[name]) +
-        parseFloat(fields[name]) * (this.props.coinFee / 100)
+          parseFloat(fields[name]) * (this.props.coinFee / 100)
       ).toFixed(8);
       let fiatValueamount = parseFloat(
         parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
@@ -467,18 +467,20 @@ class WalletPopup extends Component {
     } else {
       let subtotal = parseFloat(
         parseFloat(fields[name]) +
-        parseFloat(fields[name]) * (this.props.coinFee / 100)
+          parseFloat(fields[name]) * (this.props.coinFee / 100)
       ).toFixed(8);
       // let fiatValueamount = parseFloat(
       //   parseFloat(this.state.singlefiatValue) * parseFloat(e.target.value)
       // ).toFixed(2);
-      console.log(subtotal)
+      console.log(subtotal);
       console.log(parseFloat(this.state.singlefiatValue));
-      console.log(parseFloat(this.state.singlefiatValue) * parseFloat(subtotal))
+      console.log(
+        parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
+      );
       let fiatValueamount = parseFloat(
         parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
       ).toFixed(2);
-      console.log(fiatValueamount)
+      console.log(fiatValueamount);
       fields["subtotal"] = subtotal;
       this.setState({
         sendFields: fields,
@@ -526,109 +528,109 @@ class WalletPopup extends Component {
         {(this.props.title === "RECEIVE" &&
           this.props.visible &&
           this.state.show === true) ||
-          this.props.title === "SEND" ? (
-            <WalletModal
-              title={
-                <TitleDiv>
-                  <Title>{this.props.title}</Title>
-                </TitleDiv>
-              }
-              visible={this.props.visible}
-              onOk={e => this.handleComing()}
-              onCancel={e => this.comingCancel(e)}
-              footer={null}
-              className="wallet-popup"
-            >
-              {this.props.title === "RECEIVE" ? (
-                <ModalWrap>
-                  {Object.keys(this.state.receive).length > 0 ? (
-                    <ReceiveDiv>
-                      <div>
-                        <img src={this.state.receive.url} alt="no photo" />
-                      </div>
-                      <CopyAddress>
-                        <CopyToClipboardCSS
-                          text={this.state.receive.receive_address}
-                          onCopy={() =>
-                            this.setState({ copied: true }, () =>
-                              this.comingCancel()
-                            )
-                          }
-                        >
-                          <AddressDiv>
-                            <RefInput
-                              value={this.state.receive.receive_address}
-                              className={this.state.receiveAdd}
-                              placeholder="Referral"
-                              enterButton="Copy"
-                              size="large"
-                              onSearch={value => this.SearchText()}
-                            />
-                          </AddressDiv>
-                        </CopyToClipboardCSS>
-                      </CopyAddress>
-                    </ReceiveDiv>
-                  ) : (
-                      ""
-                    )}
-                </ModalWrap>
-              ) : this.state.withdrawFlag == true ? (
-                <ModalWrap>
-                  <WithrawMsg>{this.state.withdrawMsg}</WithrawMsg>
-                  <ConfirmDiv>
-                    <Button
-                      onClick={this.confirmFunc}
-                      className="confirm"
-                      size="large"
-                      type="primary"
-                    >
-                      Confirm
+        this.props.title === "SEND" ? (
+          <WalletModal
+            title={
+              <TitleDiv>
+                <Title>{this.props.title}</Title>
+              </TitleDiv>
+            }
+            visible={this.props.visible}
+            onOk={e => this.handleComing()}
+            onCancel={e => this.comingCancel(e)}
+            footer={null}
+            className="wallet-popup"
+          >
+            {this.props.title === "RECEIVE" ? (
+              <ModalWrap>
+                {Object.keys(this.state.receive).length > 0 ? (
+                  <ReceiveDiv>
+                    <div>
+                      <img src={this.state.receive.url} alt="no photo" />
+                    </div>
+                    <CopyAddress>
+                      <CopyToClipboardCSS
+                        text={this.state.receive.receive_address}
+                        onCopy={() =>
+                          this.setState({ copied: true }, () =>
+                            this.comingCancel()
+                          )
+                        }
+                      >
+                        <AddressDiv>
+                          <RefInput
+                            value={this.state.receive.receive_address}
+                            className={this.state.receiveAdd}
+                            placeholder="Referral"
+                            enterButton="Copy"
+                            size="large"
+                            onSearch={value => this.SearchText()}
+                          />
+                        </AddressDiv>
+                      </CopyToClipboardCSS>
+                    </CopyAddress>
+                  </ReceiveDiv>
+                ) : (
+                  ""
+                )}
+              </ModalWrap>
+            ) : this.state.withdrawFlag == true ? (
+              <ModalWrap>
+                <WithrawMsg>{this.state.withdrawMsg}</WithrawMsg>
+                <ConfirmDiv>
+                  <Button
+                    onClick={this.confirmFunc}
+                    className="confirm"
+                    size="large"
+                    type="primary"
+                  >
+                    Confirm
                   </Button>
-                    <Button
-                      onClick={this.cancelFunc}
-                      className="cancel"
-                      size="large"
-                      type="primary"
-                    >
-                      Cancel
+                  <Button
+                    onClick={this.cancelFunc}
+                    className="cancel"
+                    size="large"
+                    type="primary"
+                  >
+                    Cancel
                   </Button>
-                  </ConfirmDiv>
-                </ModalWrap>
-              ) : (
-                    <ModalWrap>
-                      <Rediv>
-                        <Label>Destination Address</Label>
-                        <WallInput
-                          value={this.state.sendFields.destination_address}
-                          name="destination_address"
-                          onChange={this.sendAddressChange}
-                        />
-                        {/* <Scan>Scan QR</Scan> */}
-                        {this.validator.message(
-                          "destination_address",
-                          this.state.sendFields.destination_address,
-                          "required|alpha_num|min:15|max:120",
-                          "text-danger-validation"
-                        )}
-                      </Rediv>
-                      <Rediv>
-                        <Label>Amount</Label>
-                        {/* <Sec_wrap> */}
-                        <WallInput
-                          type="number"
-                          min="0"
-                          value={this.state.sendFields.amount}
-                          name="amount"
-                          step="0.00000001"
-                          onChange={this.sendChange}
-                        />
-                        {this.validator.message(
-                          "amount",
-                          this.state.sendFields.amount,
-                          "required|gtzero|numeric|decimalrestrict|minLimitCheck",
-                          "text-danger-validation"
-                        )}
-                        {/*  <RightInput />
+                </ConfirmDiv>
+              </ModalWrap>
+            ) : (
+              <ModalWrap>
+                <Rediv>
+                  <Label>Destination Address</Label>
+                  <WallInput
+                    value={this.state.sendFields.destination_address}
+                    name="destination_address"
+                    onChange={this.sendAddressChange}
+                  />
+                  {/* <Scan>Scan QR</Scan> */}
+                  {this.validator.message(
+                    "destination_address",
+                    this.state.sendFields.destination_address,
+                    "required|alpha_num|min:15|max:120",
+                    "text-danger-validation"
+                  )}
+                </Rediv>
+                <Rediv>
+                  <Label>Amount</Label>
+                  {/* <Sec_wrap> */}
+                  <WallInput
+                    type="number"
+                    min="0"
+                    value={this.state.sendFields.amount}
+                    name="amount"
+                    step="0.00000001"
+                    onChange={this.sendChange}
+                  />
+                  {this.validator.message(
+                    "amount",
+                    this.state.sendFields.amount,
+                    "required|gtzero|numeric|decimalrestrict|minLimitCheck",
+                    "text-danger-validation"
+                  )}
+                  {/*  <RightInput />
                                     <ButtonToolbarS>
                                         <DropdownButtonS title="USD" id="dropdown-size-medium">
                                             <MenuItem eventKey="1">Action</MenuItem>
@@ -637,45 +639,45 @@ class WalletPopup extends Component {
                                             <MenuItem eventKey="4">Separated link</MenuItem>
                                         </DropdownButtonS>
                                     </ButtonToolbarS> */}
-                        {/* </Sec_wrap> */}
-                        {/* {console.log(this.props.coinFee)} */}
-                        <TotDiv>
-                          <Fee>
-                            <span>
-                              <span>
-                                <b>Fee: </b>
-                                {this.props.coinFee ? `${this.props.coinFee} %` : 0}
-                              </span>
-                            </span>
-                            <span>
-                              {/* {this.props.fiatValue
+                  {/* </Sec_wrap> */}
+                  {/* {console.log(this.props.coinFee)} */}
+                  <TotDiv>
+                    <Fee>
+                      <span>
+                        <span>
+                          <b>Fee: </b>
+                          {this.props.coinFee ? `${this.props.coinFee} %` : 0}
+                        </span>
+                      </span>
+                      <span>
+                        {/* {this.props.fiatValue
                           ? `${this.props.fiatValue.toFixed(2)} USD`
                           : 0} */}
-                              <span>
-                                <b>Fiat Value: </b> {this.state.fiatValue} USD
+                        <span>
+                          <b>Fiat Value: </b> {this.state.fiatValue} USD
                         </span>
-                            </span>
-                          </Fee>
-                          <TotPay>
-                            {/* <b>Total Payout:</b> {subtotal.toFixed(8)}{" "} */}
-                            <span>
-                              <b>Total Payout: </b> {this.state.sendFields.subtotal}{" "}
-                              {this.props.coin_code}
-                            </span>
-                          </TotPay>
-                        </TotDiv>
-                      </Rediv>
-                      <SendWrap>
-                        <SendButton
-                          onClick={this.sendSubmit}
-                        >{`SEND ${this.props.coin_code}`}</SendButton>
-                      </SendWrap>
-                    </ModalWrap>
-                  )}
-            </WalletModal>
-          ) : (
-            ""
-          )}
+                      </span>
+                    </Fee>
+                    <TotPay>
+                      {/* <b>Total Payout:</b> {subtotal.toFixed(8)}{" "} */}
+                      <span>
+                        <b>Total Payout: </b> {this.state.sendFields.subtotal}{" "}
+                        {this.props.coin_code}
+                      </span>
+                    </TotPay>
+                  </TotDiv>
+                </Rediv>
+                <SendWrap>
+                  <SendButton
+                    onClick={this.sendSubmit}
+                  >{`SEND ${this.props.coin_code}`}</SendButton>
+                </SendWrap>
+              </ModalWrap>
+            )}
+          </WalletModal>
+        ) : (
+          ""
+        )}
         {console.log(this.state.showTFAModal)}
         <TFAModal
           visible={this.state.showTFAModal}

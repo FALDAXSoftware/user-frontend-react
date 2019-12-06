@@ -123,6 +123,9 @@ export const EXPButton = styled(Button)`
     margin-left: 0px;
     margin-top: 20px;
   }
+  &.reset_btn {
+    margin-left: 15px;
+  }
 `;
 export const Dropwrap = styled.div`
   display: inline-block;
