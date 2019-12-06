@@ -671,28 +671,60 @@ class ConversionDetail extends React.Component {
             }
             if (this.state.includeFees === 1 && this.state.OrdType === "1") {
               this.setState({
-                OriginalQuantity: parseFloat(res.original_value).toFixed(8)
+                OriginalQuantity: parseFloat(res.original_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
               });
             } else if (
               this.state.includeFees === 2 &&
               this.state.OrdType === "1"
             ) {
               this.setState({
-                OriginalQuantity: parseFloat(res.total_value).toFixed(8)
+                OriginalQuantity: parseFloat(res.total_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
               });
             } else if (
               this.state.includeFees === 2 &&
               this.state.OrdType === "2"
             ) {
               this.setState({
-                OriginalQuantity: parseFloat(res.currency_value).toFixed(8)
+                OriginalQuantity: parseFloat(res.currency_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
               });
             } else if (
               this.state.includeFees === 1 &&
               this.state.OrdType === "2"
             ) {
               this.setState({
-                OriginalQuantity: parseFloat(res.currency_value).toFixed(8)
+                OriginalQuantity: parseFloat(res.currency_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
               });
             } else {
               console.log("no scenario");
