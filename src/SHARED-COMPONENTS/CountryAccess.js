@@ -92,7 +92,7 @@ class ComingSoon extends React.Component {
               <img alt="coming" src={_COMINGIMG} />{" "}
               <img
                 alt="coming"
-                style={{ marginLeft: "10px" }}
+                // style={{ marginLeft: "10px" }}
                 src={_COMINGIMG2}
               />
             </div>
