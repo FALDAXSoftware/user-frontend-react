@@ -54,6 +54,7 @@ class TFAModal extends Component {
   }
   onChangeField = (field, e) => {
     let fields = this.state.fields;
+    console.log(e.target.value);
     if (e.target.value.trim() === "") {
       fields[field] = "";
     } else {
@@ -63,8 +64,8 @@ class TFAModal extends Component {
   };
   verifyOTP() {
     var self = this;
-    self.validator.hideMessages();
-    self.forceUpdate();
+    // self.validator.hideMessages();
+    // self.forceUpdate();
     if (this.validator.allValid()) {
       var otp = this.state.fields.otp;
       // var fields = {};
@@ -114,11 +115,13 @@ class TFAModal extends Component {
               size="medium"
               onChange={this.onChangeField.bind(this, "otp")}
               name="Verification Code"
+              type="number"
             />
             {this.validator.message(
               "verification code",
               fields["otp"],
-              "required|numeric"
+              "required|numeric",
+              "text-danger-validation"
             )}
           </div>
         </NewP>

@@ -228,7 +228,7 @@ class WalletPopup extends Component {
         }
       },
       minLimitCheck: {
-        message: `Amount should be greater than ${this.props.coin_min_limit}`,
+        message: `Amount must be greater than ${this.props.coin_min_limit}`,
         rule: (val, params, validator) => {
           // console.log("this is val?????", val);
           if (val >= this.props.coin_min_limit) {
@@ -392,6 +392,7 @@ class WalletPopup extends Component {
               withdrawMsg: responseData.message
             });
           } else if (responseData.status === 202) {
+            // alert("here");
             this.setState({
               showTFAModal: true
             });
@@ -414,6 +415,7 @@ class WalletPopup extends Component {
                 "Warning",
                 responseData.message ? `${responseData.message}${local}` : ""
               );
+              this.comingCancel();
             } else
               this.openNotificationWithIcon(
                 "warning",
@@ -462,7 +464,8 @@ class WalletPopup extends Component {
       fields["subtotal"] = 0;
       this.setState({
         sendFields: fields,
-        fiatValue: 0
+        fiatValue: 0,
+        showTFAModal: false
       });
     } else {
       let subtotal = parseFloat(
@@ -484,7 +487,8 @@ class WalletPopup extends Component {
       fields["subtotal"] = subtotal;
       this.setState({
         sendFields: fields,
-        fiatValue: fiatValueamount
+        fiatValue: fiatValueamount,
+        showTFAModal: false
       });
     }
     // let subtotal = parseFloat(
