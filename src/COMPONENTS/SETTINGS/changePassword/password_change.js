@@ -553,7 +553,7 @@ class PasswordChange extends Component {
       var regexp = /^[a-zA-Z0-9]*$/;
       console.log("value.trim()", regexp.test(value));
 
-      if (value.trim() !== "") {
+      if (value !== "") {
         document.querySelector("#passchange_icon_success").style.display =
           "none";
         document.querySelector("#passchange_icon_fail").style.display = "none";

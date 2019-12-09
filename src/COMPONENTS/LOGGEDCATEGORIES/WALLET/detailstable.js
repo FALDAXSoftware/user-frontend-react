@@ -129,7 +129,7 @@ class DetailsTable extends React.Component {
                   <SubHead>AMOUNT</SubHead>
                   {/* <Sub_head>USD
                                 <Dropdown overlay={menu} trigger={['click']}>
-                                <a className="ant-dropdown-link" style={{ verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
+                                <a className="ant-dropdown-link"  verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
                             </Dropdown>
                         </Sub_head> */}
                 </Head>
