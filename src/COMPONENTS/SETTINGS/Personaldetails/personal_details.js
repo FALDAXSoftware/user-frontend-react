@@ -749,6 +749,7 @@ class PersonalDetails extends Component {
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
+      console.log("---------->", this.state.dfmsg);
       if (
         error === null &&
         this.state.fiatIcon !== false &&
@@ -760,6 +761,7 @@ class PersonalDetails extends Component {
         this.state.street1Icon !== false &&
         this.state.street2Icon !== false &&
         this.state.postalIcon !== false &&
+        this.state.date_format !== "" &&
         ((this.props.profileDetails.country !== undefined &&
           this.props.profileDetails.country !== "" &&
           this.props.profileDetails.country !== null) ||

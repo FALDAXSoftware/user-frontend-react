@@ -855,6 +855,12 @@ class PasswordChange extends Component {
                 />
               </div>
               <Passreq className="newchange_msg">{this.state.new_msg}</Passreq>
+              <Progressbar
+                type="line"
+                size="small"
+                percent={percent}
+                strokeColor={this.state.stroke}
+              />
             </NewP>
             <Repeat>
               <Repeatlabel>Re-Enter New Password*</Repeatlabel>
@@ -898,12 +904,12 @@ class PasswordChange extends Component {
                 {this.state.confirmPass_msg}
               </Passreq>
 
-              <Progressbar
+              {/* <Progressbar
                 type="line"
                 size="small"
                 percent={percent}
                 strokeColor={this.state.stroke}
-              />
+              /> */}
             </Repeat>
             <Buttondiv>
               <NewButton onClick={this.submit}>Save New Password</NewButton>
