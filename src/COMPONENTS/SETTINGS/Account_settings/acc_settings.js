@@ -221,7 +221,7 @@ class Acc_settings extends Component {
               ) : (
                 <div
                   onClick={this.deleteIP.bind(this, src)}
-                  style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
+                  // style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
                 >
                   Delete
                 </div>
@@ -1093,7 +1093,9 @@ class Acc_settings extends Component {
           </NotiDesc>
         </NotiWrap>
 
-        <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+        <div
+        // style={{ paddingLeft: "10px", paddingRight: "10px" }}
+        >
           <WrapTable>
             <NotificationTable
               className={this.state.notiCSS}
@@ -1133,7 +1135,7 @@ class Acc_settings extends Component {
           </TableWrap>
 
           <PaginationS
-            style={{ marginTop: "15px" }}
+            // style={{ marginTop: "15px" }}
             className="ant-users-pagination"
             size="small"
             onChange={this.handleHistoryPagination.bind(this)}
@@ -1152,8 +1154,12 @@ class Acc_settings extends Component {
           <DeleteHead>
             <span>Security Settings</span>
           </DeleteHead>
-          <DeleteDesc style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ width: "1000px" }}>
+          <DeleteDesc
+          // style={{ display: "flex", justifyContent: "center" }}
+          >
+            <div
+            // style={{ width: "1000px" }}
+            >
               When set 'ON', changes to any security settings on your account
               will disable debits from your wallets for 24 hours. Additionally,
               you will be notified prior to changing any security settings and
@@ -1214,7 +1220,7 @@ class Acc_settings extends Component {
                 />
               </TableWrap>
               <PaginationS
-                style={{ marginTop: "15px" }}
+                // style={{ marginTop: "15px" }}
                 className="ant-users-pagination"
                 onChange={this.handleIpPagination.bind(this)}
                 pageSize={10}
@@ -1281,7 +1287,7 @@ class Acc_settings extends Component {
                 size="medium"
                 onChange={this.ipChange.bind(this)}
                 name="ip"
-                style={{ marginBottom: "20px" }}
+                // style={{ marginBottom: "20px" }}
               />
               {this.validator.message(
                 "ip",
@@ -1476,7 +1482,7 @@ class Acc_settings extends Component {
                       size="medium"
                       onChange={this.deleteText.bind(this)}
                       name="ip"
-                      style={{ marginBottom: "20px" }}
+                      // style={{ marginBottom: "20px" }}
                     />
                     {this.validator1.message(
                       "text",
@@ -1493,7 +1499,7 @@ class Acc_settings extends Component {
                       </InputLabel>
                       <div>
                         <OTPInput
-                          style={{ paddingRight: "10px" }}
+                          // style={{ paddingRight: "10px" }}
                           min="1"
                           value={this.state.code2fa}
                           type="text"
@@ -1560,7 +1566,7 @@ class Acc_settings extends Component {
                       size="medium"
                       onChange={this.deactivateText.bind(this)}
                       name="ip"
-                      style={{ marginBottom: "20px" }}
+                      // style={{ marginBottom: "20px" }}
                     />
                     {this.validator1.message(
                       "text",
@@ -1577,7 +1583,7 @@ class Acc_settings extends Component {
                       </InputLabel>
                       <div>
                         <OTPInput
-                          style={{ paddingRight: "10px" }}
+                          // style={{ paddingRight: "10px" }}
                           min="1"
                           value={this.state.code2fa}
                           type="text"

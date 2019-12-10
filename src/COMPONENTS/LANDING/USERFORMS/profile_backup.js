@@ -433,16 +433,16 @@ class ProfileBackup extends Component {
                       onClick={() => {
                         this.removeFile("front-doc");
                       }}
-                      style={{ display: `${this.state.displayFirst}` }}
+                      // style={{ display: `${this.state.displayFirst}` }}
                       type={"close"}
                       theme="outlined"
                     />
 
                     {console.log(this.state)}
                     <ButtonUpDup
-                      style={{
-                        backgroundImage: `url('${this.state.profileImg}')`
-                      }}
+                      // style={{
+                      //   backgroundImage: `url('${this.state.profileImg}')`
+                      // }}
                       className="file-select-btn"
                       onClick={() => {
                         this.handleFileSelectClick("front");
@@ -483,9 +483,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    null
-  )(ProfileBackup)
-);
+export default withRouter(connect(mapStateToProps, null)(ProfileBackup));
