@@ -315,7 +315,8 @@ class SimplexExchange extends React.Component {
       // this.timeout = setTimeout(this.calculateDigitalCurrency, 2000);
       this.setState({
         currencyToPay: e.target.value,
-        currencyToGet: null
+        currencyToGet: "",
+        showTFAModal: false
       });
     } else {
       this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
@@ -331,7 +332,8 @@ class SimplexExchange extends React.Component {
   // }
   handleAddressChange(e) {
     this.setState({
-      address: e.target.value
+      address: e.target.value,
+      showTFAModal: false
     });
   }
   handleCurrencyChange(value) {
