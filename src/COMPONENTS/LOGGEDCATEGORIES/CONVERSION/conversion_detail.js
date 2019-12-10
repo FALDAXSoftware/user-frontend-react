@@ -769,14 +769,16 @@ class ConversionDetail extends React.Component {
     if (this.validator2.allValid() && e.target.value != null) {
       this.setState(
         {
-          sendCurrencyInput: e.target.value
+          sendCurrencyInput: e.target.value,
+          showTFAModal: false
         },
         () => {}
       );
     } else {
       this.setState(
         {
-          sendCurrencyInput: e.target.value
+          sendCurrencyInput: e.target.value,
+          showTFAModal: false
         },
         () => {}
       );
@@ -816,7 +818,8 @@ class ConversionDetail extends React.Component {
     if (this.validator1.allValid()) {
       this.setState(
         {
-          recieveCurrencyInput: e.target.value
+          recieveCurrencyInput: e.target.value,
+          showTFAModal: false
         },
         () => {
           // clearInterval(this.interval);
@@ -826,7 +829,8 @@ class ConversionDetail extends React.Component {
     } else {
       this.setState(
         {
-          recieveCurrencyInput: e.target.value
+          recieveCurrencyInput: e.target.value,
+          showTFAModal: false
         },
         () => {
           // console.log("clear", e);
@@ -871,14 +875,16 @@ class ConversionDetail extends React.Component {
       if (this.validator1.allValid() && e.target.value != null) {
         this.setState(
           {
-            fiatJSTValue: e.target.value
+            fiatJSTValue: e.target.value,
+            showTFAModal: false
           },
           () => {}
         );
       } else {
         this.setState(
           {
-            fiatJSTValue: e.target.value
+            fiatJSTValue: e.target.value,
+            showTFAModal: false
           },
           () => {}
         );
@@ -889,14 +895,16 @@ class ConversionDetail extends React.Component {
       if (this.validator2.allValid() && e.target.value != null) {
         this.setState(
           {
-            fiatJSTValue: e.target.value
+            fiatJSTValue: e.target.value,
+            showTFAModal: false
           },
           () => {}
         );
       } else {
         this.setState(
           {
-            fiatJSTValue: e.target.value
+            fiatJSTValue: e.target.value,
+            showTFAModal: false
           },
           () => {}
         );
@@ -2022,11 +2030,19 @@ class ConversionDetail extends React.Component {
     );
   }
   closePromoModal() {
-    this.setState({
-      showPromoModal: false,
-      showAppliedPromoModal: false,
-      offerMsg: ""
-    });
+    if (this.state.showAppliedPromoModal) {
+      this.setState({
+        showPromoModal: false,
+        showAppliedPromoModal: false
+        // offerMsg: ""
+      });
+    } else {
+      this.setState({
+        showPromoModal: false,
+        showAppliedPromoModal: false,
+        offerMsg: ""
+      });
+    }
   }
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
@@ -2659,11 +2675,12 @@ class ConversionDetail extends React.Component {
                     <Row className="network_fee">
                       <Col xs={12} className="left-style">
                         <LeftTotal className="promo-apply">
-                          {this.state.appliedOfferCode !== "" ? (
+                          {this.state.appliedOfferCode ? (
                             <span
                               onClick={() => {
                                 this.clearValidation();
                                 this.setState({
+                                  showTFAModal: false,
                                   showAppliedPromoModal: true,
                                   promoCode: this.state.appliedOfferCode
                                 });
@@ -2676,6 +2693,7 @@ class ConversionDetail extends React.Component {
                               onClick={() => {
                                 this.clearValidation();
                                 this.setState({
+                                  showTFAModal: false,
                                   showPromoModal: true,
                                   offerMsg: "",
                                   promoCode: ""
