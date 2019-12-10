@@ -192,7 +192,7 @@ class WalletPopup extends Component {
       fiatValue: 0,
       singlefiatValue: "",
       sendFields: {
-        amount: 0,
+        amount: "",
         destination_address: "",
         subtotal: 0
       },
@@ -608,6 +608,7 @@ class WalletPopup extends Component {
                     value={this.state.sendFields.destination_address}
                     name="destination_address"
                     onChange={this.sendAddressChange}
+                    placeholder="37NFX8KWAQbaodUG6pE1hNUH1dXgkpzbyZ"
                   />
                   {/* <Scan>Scan QR</Scan> */}
                   {this.validator.message(
@@ -621,8 +622,9 @@ class WalletPopup extends Component {
                   <Label>Amount</Label>
                   {/* <Sec_wrap> */}
                   <WallInput
-                    type="number"
+                    type="text"
                     min="0"
+                    placeholder="0"
                     value={this.state.sendFields.amount}
                     name="amount"
                     step="0.00000001"
@@ -631,7 +633,7 @@ class WalletPopup extends Component {
                   {this.validator.message(
                     "amount",
                     this.state.sendFields.amount,
-                    "required|gtzero|numeric|decimalrestrict|minLimitCheck",
+                    "required|numeric|gtzero|decimalrestrict|minLimitCheck",
                     "text-danger-validation"
                   )}
                   {/*  <RightInput />
