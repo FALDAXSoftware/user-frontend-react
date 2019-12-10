@@ -384,12 +384,12 @@ class DocUpload extends Component {
                 onClick={() => {
                   this.removeFile("front-doc");
                 }}
-                style={{ display: `${this.state.displayFirst}` }}
+                // style={{ display: `${this.state.displayFirst}` }}
                 type={"close"}
                 theme="outlined"
               />
               <ButtonUp
-                style={{ backgroundImage: `url('${this.state.profileImg}')` }}
+                // style={{ backgroundImage: `url('${this.state.profileImg}')` }}
                 className="file-select-btn"
                 onClick={() => {
                   this.handleFileSelectClick("front");
@@ -412,12 +412,12 @@ class DocUpload extends Component {
                 onClick={() => {
                   this.removeFile("back-doc");
                 }}
-                style={{ display: `${this.state.displaySecond}` }}
+                // style={{ display: `${this.state.displaySecond}` }}
                 type={"close"}
                 theme="outlined"
               />
               <ButtonUp2
-                style={{ backgroundImage: `url('${this.state.profileImg2}')` }}
+                // style={{ backgroundImage: `url('${this.state.profileImg2}')` }}
                 className="file-select-btn"
                 onClick={() => {
                   this.handleFileSelectClick("back");
@@ -477,7 +477,4 @@ const mapDispatchToProps = dispatch => ({
     dispatch(kycFormAction(isLoggedIn, value))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DocUpload);
+export default connect(mapStateToProps, mapDispatchToProps)(DocUpload);
