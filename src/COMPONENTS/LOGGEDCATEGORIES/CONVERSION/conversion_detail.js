@@ -15,6 +15,7 @@ import { withRouter } from "react-router-dom";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import TFAModal from "SHARED-COMPONENTS/TFAModal";
 import NumberFormat from "react-number-format";
 // import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
 // import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
@@ -43,6 +44,16 @@ import {
   CryptoFiatCol,
   CryptoFiatText
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
+import {
+  VerifyModal,
+  NewP,
+  OTPInput,
+  ButtonDiv
+} from "../../SETTINGS/Account_settings/ip_modal";
+import {
+  NewButton,
+  NewInput
+} from "../../SETTINGS/changePassword/change_email";
 import { parse } from "@fortawesome/fontawesome-svg-core";
 
 const API_URL = globalVariables.API_URL;
@@ -54,29 +65,21 @@ class ConversionDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 1,
       currencyList: [],
       cryptoList: [],
       originalCoinList: [],
       JSTPairList: [],
       currency: "BTC",
       crypto: "XRP",
-      prevRoom: "",
-      askPrice: 0,
-      bidPrice: 0,
-      buyCryptoInput: null,
-      buyCurrencyInput: null,
-      sellCryptoInput: null,
-      sellCurrencyInput: null,
       includeFees: 1,
-      krakenFees: 0,
-      faldaxFees: 0,
       loader: false,
       minCrypto: 0,
       minCurrency: 0,
       fiatValue: 0,
       networkFee: 0,
       faldaxFee: 0,
+      faldaxFeeActual: 0,
+      limitPrice: 0,
       totalAmount: 0,
       subTotal: 0,
       fiat: "USD",
@@ -93,14 +96,27 @@ class ConversionDetail extends React.Component {
       OriginalQuantity: "",
       minCrypto: 0,
       minCurrency: 0,
-      disabledClass: ""
+      disabledClass: "",
+      promoCode: "",
+      showPromoModal: false,
+      offerMsg: "",
+      applyPromoCode: false,
+      appliedOfferCode: "",
+      showAppliedPromoModal: false,
+      validPromo: false,
+      buy_currency_amount: 0,
+      sell_currency_amount: 0,
+      showTFAModal: false,
+      checkOTP: false,
+      startSocket: false,
+      socketTime: 20000
     };
     io = this.props.io;
     this.timeout = null;
     this.validator1 = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message: "Amount must be greater than zero",
+        message: "Value should be greater than 0",
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -112,7 +128,7 @@ class ConversionDetail extends React.Component {
       },
       gtzerofiat: {
         // name the rule
-        message: "Amount must be greater than zero",
+        message: "Value should be greater than 0",
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -164,7 +180,7 @@ class ConversionDetail extends React.Component {
     this.validator2 = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message: "Amount must be greater than zero",
+        message: "Value should be greater than 0",
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -176,7 +192,7 @@ class ConversionDetail extends React.Component {
       },
       gtzerofiat: {
         // name the rule
-        message: "Amount must be greater than zero",
+        message: "Value should be greater than 0",
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -222,24 +238,16 @@ class ConversionDetail extends React.Component {
         required: true // optional
       }
     });
-    // this.getCurrencies = this.getCurrencies.bind(this);
+    this.validator3 = new SimpleReactValidator({});
     this.getCrypto = this.getCrypto.bind(this);
     this.radioChange = this.radioChange.bind(this);
-    // this.getPairDetails = this.getPairDetails.bind(this);
     this.handleCryptoChange = this.handleCryptoChange.bind(this);
     this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
-    // this.handleTabChange = this.handleTabChange.bind(this);
-    // this.onBuyCryptoChange = this.onBuyCryptoChange.bind(this);
-    // this.onBuyCurrencyChange = this.onBuyCurrencyChange.bind(this);
-    // this.calculateBuyCurrency = this.calculateBuyCurrency.bind(this);
-    // this.calculateBuyCrypto = this.calculateBuyCrypto.bind(this);
-    // this.onSellCryptoChange = this.onSellCryptoChange.bind(this);
-    // this.onSellCurrencyChange = this.onSellCurrencyChange.bind(this);
-    // this.calculateSellCurrency = this.calculateSellCurrency.bind(this);
-    // this.calculateSellCrypto = this.calculateSellCrypto.bind(this);
     this.btnClicked = this.btnClicked.bind(this);
-    // this.getBuyCurrencyWithFees = this.getBuyCurrencyWithFees.bind(this);
-    // this.getFiatValue = this.getFiatValue.bind(this);
+    this.promoCode = this.promoCode.bind(this);
+    this.checkPromo = this.checkPromo.bind(this);
+    this.applyPromo = this.applyPromo.bind(this);
+    this.closePromoModal = this.closePromoModal.bind(this);
     this.getFiatCurrencyList = this.getFiatCurrencyList.bind(this);
     this.handleFiatChange = this.handleFiatChange.bind(this);
     this.sendCurrencyChange = this.sendCurrencyChange.bind(this);
@@ -247,11 +255,12 @@ class ConversionDetail extends React.Component {
     this.fiatJSTValueChange = this.fiatJSTValueChange.bind(this);
     this.calculateOrderVaules = this.calculateOrderVaules.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
-    this.showCalculatedValues = this.showCalculatedValues.bind(this);
-    this.showCalculatedValuesUSDTerms = this.showCalculatedValuesUSDTerms.bind(
-      this
-    );
-    // this.getPairWiseCrypto = this.getPairWiseCrypto.bind(this);
+    // this.showCalculatedValues = this.showCalculatedValues.bind(this);
+    // this.showCalculatedValuesUSDTerms = this.showCalculatedValuesUSDTerms.bind(
+    //   this
+    // );
+    this.getValuesSocket = this.getValuesSocket.bind(this);
+    this.getValuesUSDSocket = this.getValuesUSDSocket.bind(this);
   }
 
   /* Life-Cycle Methods */
@@ -275,15 +284,467 @@ class ConversionDetail extends React.Component {
       }
     }
   }
-
   componentDidMount() {
+    // if (this.state.includeFees === 1) {
+    //   if (
+    //     this.state.recieveCurrencyInput !== "" ||
+    //     this.state.fiatJSTValue !== ""
+    //   ) {
+    //     console.log("recieve editable");
+    //     this.interval = setInterval(() => {
+    //       this.getValuesSocket();
+    //     }, 5000);
+    //   } else {
+    //     console.log("clear editable");
+    //     clearInterval(this.interval);
+    //   }
+    //   // else {
+    //   //   clearInterval(this.interval);
+    //   // }
+    //   // else if (
+    //   //   this.state.fiatJSTValue !== "" &&
+    //   //   this.state.recieveCurrencyInput === ""
+    //   // ) {
+    //   //   console.log("fiat editable");
+    //   //   this.interval1 = setInterval(() => {
+    //   //     this.getValuesUSDSocket();
+    //   //   }, 5000);
+    //   // } else {
+    //   //   // clearInterval(this.interval1);
+    //   //   console.log("else");
+    //   //   clearInterval(this.interval);
+    //   // }
+    // }
+    // if (this.state.includeFees === 2) {
+    //   if (
+    //     this.state.sendCurrencyInput !== "" ||
+    //     this.state.fiatJSTValue !== ""
+    //   ) {
+    //     this.interval = setInterval(() => {
+    //       this.getValuesSocket();
+    //     }, 5000);
+    //   } else {
+    //     clearInterval(this.interval);
+    //   }
+    //   if (this.state.fiatJSTValue !== "") {
+    //     this.interval1 = setInterval(() => {
+    //       this.getValuesUSDSocket();
+    //     }, 5000);
+    //   } else {
+    //     clearInterval(this.interval1);
+    //   }
+    // }
     this.getCrypto();
-    // this.getCurrencies();
-    // this.getFiatCurrencyList();
+    if (this.props.profileDetails.is_twofactor) {
+      this.setState({
+        checkOTP: true
+      });
+    } else {
+      this.setState({
+        checkOTP: false
+      });
+    }
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+  getValuesSocket(showLoader = true) {
+    if (showLoader) {
+      this.setState({
+        loader: true
+      });
+    }
+    if (this.state.includeFees === 1) {
+      var values = {
+        Symbol: this.state.original_pair,
+        // Symbol: `${this.state.crypto}/${this.state.currency}`,
+        Side: this.state.OrdType,
+        OrderQty: this.state.recieveCurrencyInput,
+        Currency: this.state.crypto,
+        OrdType: "1",
+        flag: "2",
+        usd_value: "",
+        original_pair: this.state.original_pair,
+        order_pair: this.state.order_pair,
+        offer_code: this.state.appliedOfferCode
+      };
+      // console.log(values);
+    } else {
+      var values = {
+        Symbol: this.state.original_pair,
+        // Symbol: `${this.state.crypto}/${this.state.currency}`,
+        Side: this.state.OrdType,
+        OrderQty: this.state.sendCurrencyInput,
+        Currency: this.state.currency,
+        OrdType: "1",
+        flag: "1",
+        usd_value: "",
+        original_pair: this.state.original_pair,
+        order_pair: this.state.order_pair,
+        offer_code: this.state.appliedOfferCode
+      };
+    }
+    if (
+      (values.OrderQty === null ||
+        values.OrderQty === "" ||
+        isNaN(this.state.recieveCurrencyInput) === true) &&
+      // isNaN(this.state.recieveCurrencyInput) === true &&
+      this.state.includeFees === 1
+    ) {
+      // console.log(!isNaN(this.state.recieveCurrencyInput));
+      // this.setState({ loader: false });
+      // this.validator1.showMessages();
+      // this.forceUpdate();
+      this.setState({
+        // recieveCurrencyInput: "",
+        includeFees: 1,
+        sendCurrencyInput: 0,
+        fiatJSTValue: "",
+        crypto: this.state.crypto,
+        displayCurrency: null,
+        currency: this.state.currency,
+        subTotal: 0,
+        totalAmount: 0,
+        faldaxFee: 0,
+        faldaxFeeActual: 0,
+        limitPrice: 0,
+        networkFee: 0,
+        loader: false
+      });
+    } else if (
+      (values.OrderQty === null ||
+        values.OrderQty === "" ||
+        isNaN(this.state.sendCurrencyInput) === true) &&
+      // !isNaN(this.state.sendCurrencyInput) &&
+      this.state.includeFees === 2
+    ) {
+      // this.setState({ loader: false });
+      // this.validator2.showMessages();
+      // this.forceUpdate();
+      this.setState({
+        // sendCurrencyInput: 0,
+        includeFees: 2,
+        recieveCurrencyInput: 0,
+        fiatJSTValue: "",
+        crypto: this.state.crypto,
+        displayCurrency: null,
+        currency: this.state.currency,
+        subTotal: 0,
+        totalAmount: 0,
+        faldaxFee: 0,
+        faldaxFeeActual: 0,
+        limitPrice: 0,
+        networkFee: 0,
+        loader: false
+      });
+    } else {
+      let URL = `/socket/get-conversionDetail?Currency=${values.Currency}&OrdType=${values.OrdType}&OrderQty=${values.OrderQty}&Side=${values.Side}&Symbol=${values.Symbol}&flag=${values.flag}&offer_code=${values.offer_code}&order_pair=${values.order_pair}&original_pair=${values.original_pair}&usd_value=${values.usd_value}`;
+      io.socket.request(
+        {
+          method: "GET",
+          url: URL,
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.props.isLoggedIn
+          }
+        },
+        (body, JWR) => {
+          if (body.status === 200) {
+            let res = body.data;
+            console.log("getsocketvalues", res);
+            this.setState({
+              // loader: false,
+              subTotal: parseFloat(res.original_value).toFixed(8),
+              faldaxFee: parseFloat(res.faldax_fee).toFixed(8),
+              faldaxFeeActual: parseFloat(res.faldax_fees_actual).toFixed(8),
+              limitPrice: parseFloat(res.limit_price).toFixed(8),
+              networkFee: parseFloat(res.network_fee).toFixed(8),
+              totalAmount: parseFloat(res.total_value).toFixed(8),
+              fiatJSTValue: parseFloat(res.price_usd).toFixed(2),
+              displayCurrency: res.currency,
+              Quantity: parseFloat(res.total_value).toFixed(8),
+              flag: values.flag
+            });
+            if (this.state.includeFees === 1) {
+              this.setState({
+                sendCurrencyInput: parseFloat(res.currency_value).toFixed(8),
+                orderQuantity: parseFloat(res.currency_value).toFixed(8)
+                // loader: false
+              });
+            } else {
+              this.setState({
+                recieveCurrencyInput: parseFloat(res.total_value).toFixed(8),
+                orderQuantity: parseFloat(res.currency_value).toFixed(8)
+                // loader: false
+              });
+            }
+            if (this.state.includeFees === 1 && this.state.OrdType === "1") {
+              this.setState({
+                OriginalQuantity: parseFloat(res.original_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 2 &&
+              this.state.OrdType === "1"
+            ) {
+              this.setState({
+                OriginalQuantity: parseFloat(res.total_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 2 &&
+              this.state.OrdType === "2"
+            ) {
+              this.setState({
+                OriginalQuantity: parseFloat(res.currency_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 1 &&
+              this.state.OrdType === "2"
+            ) {
+              this.setState({
+                OriginalQuantity: parseFloat(res.currency_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
+              });
+            } else {
+              console.log("no scenario");
+            }
+          } else {
+            // console.log(body.err);
+            this.openNotificationWithIcon("error", "Error", body.err);
+          }
+          this.setState({
+            loader: false
+          });
+        }
+      );
+    }
+  }
+  getValuesUSDSocket(showLoader = true) {
+    if (showLoader) {
+      this.setState({
+        loader: true
+      });
+    }
+    if (this.state.includeFees === 1) {
+      var values = {
+        Symbol: this.state.original_pair,
+        Side: this.state.OrdType,
+        OrderQty: this.state.recieveCurrencyInput,
+        Currency: this.state.crypto,
+        OrdType: "1",
+        flag: "2",
+        usd_value: this.state.fiatJSTValue,
+        original_pair: this.state.original_pair,
+        order_pair: this.state.order_pair,
+        offer_code: this.state.appliedOfferCode
+      };
+    } else {
+      var values = {
+        Symbol: this.state.original_pair,
+        Side: this.state.OrdType,
+        OrderQty: this.state.sendCurrencyInput,
+        Currency: this.state.currency,
+        OrdType: "1",
+        flag: "1",
+        usd_value: this.state.fiatJSTValue,
+        original_pair: this.state.original_pair,
+        order_pair: this.state.order_pair,
+        offer_code: this.state.appliedOfferCode
+      };
+    }
+    if (
+      (values.usd_value === null ||
+        values.usd_value === "" ||
+        isNaN(this.state.fiatJSTValue) === true) &&
+      this.state.includeFees === 1
+    ) {
+      // this.validator1.showMessages();
+      // this.forceUpdate();
+      this.setState({
+        recieveCurrencyInput: "",
+        includeFees: 1,
+        sendCurrencyInput: 0,
+        crypto: this.state.crypto,
+        displayCurrency: null,
+        currency: this.state.currency,
+        subTotal: 0,
+        totalAmount: 0,
+        faldaxFee: 0,
+        faldaxFeeActual: 0,
+        limitPrice: 0,
+        networkFee: 0,
+        loader: false
+      });
+    } else if (
+      (values.usd_value === null ||
+        values.usd_value === "" ||
+        isNaN(this.state.fiatJSTValue) === true) &&
+      this.state.includeFees === 2
+    ) {
+      // this.validator2.showMessages();
+      // this.forceUpdate();
+      this.setState({
+        sendCurrencyInput: "",
+        includeFees: 2,
+        recieveCurrencyInput: 0,
+        crypto: this.state.crypto,
+        displayCurrency: null,
+        currency: this.state.currency,
+        subTotal: 0,
+        totalAmount: 0,
+        faldaxFee: 0,
+        faldaxFeeActual: 0,
+        limitPrice: 0,
+        networkFee: 0,
+        loader: false
+      });
+    } else {
+      let URL = `/socket/get-conversionDetail?Currency=${values.Currency}&OrdType=${values.OrdType}&OrderQty=${values.OrderQty}&Side=${values.Side}&Symbol=${values.Symbol}&flag=${values.flag}&offer_code=${values.offer_code}&order_pair=${values.order_pair}&original_pair=${values.original_pair}&usd_value=${values.usd_value}`;
+      io.socket.request(
+        {
+          method: "GET",
+          url: URL,
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.props.isLoggedIn
+          }
+        },
+        (body, JWR) => {
+          if (body.status === 200) {
+            let res = body.data;
+            console.log("getsocketUSdvalues", res);
+            this.setState({
+              faldaxFee: parseFloat(res.faldax_fee).toFixed(8),
+              faldaxFeeActual: parseFloat(res.faldax_fees_actual).toFixed(8),
+              limitPrice: parseFloat(res.limit_price).toFixed(8),
+              networkFee: parseFloat(res.network_fee).toFixed(8),
+              displayCurrency: res.currency,
+              Quantity: parseFloat(res.total_value).toFixed(8)
+            });
+            if (this.state.includeFees === 1) {
+              this.setState({
+                sendCurrencyInput: parseFloat(res.currency_value).toFixed(8),
+                recieveCurrencyInput: parseFloat(res.original_value).toFixed(8),
+                orderQuantity: parseFloat(res.currency_value).toFixed(8),
+                subTotal: parseFloat(res.original_value).toFixed(8),
+                totalAmount: parseFloat(res.total_value).toFixed(8)
+              });
+            } else {
+              this.setState({
+                recieveCurrencyInput: parseFloat(res.total_value).toFixed(8),
+                sendCurrencyInput: parseFloat(res.currency_value).toFixed(8),
+                orderQuantity: parseFloat(res.currency_value).toFixed(8),
+                subTotal: parseFloat(res.original_value).toFixed(8),
+                totalAmount: parseFloat(res.total_value).toFixed(8)
+              });
+            }
+            if (this.state.includeFees === 1 && this.state.OrdType === "1") {
+              this.setState({
+                OriginalQuantity: parseFloat(res.original_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 2 &&
+              this.state.OrdType === "1"
+            ) {
+              this.setState({
+                OriginalQuantity: parseFloat(res.total_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 2 &&
+              this.state.OrdType === "2"
+            ) {
+              this.setState({
+                OriginalQuantity: parseFloat(res.currency_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
+              });
+            } else if (
+              this.state.includeFees === 1 &&
+              this.state.OrdType === "2"
+            ) {
+              this.setState({
+                OriginalQuantity: parseFloat(res.currency_value).toFixed(8),
+                buy_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.total_value).toFixed(8)
+                    : parseFloat(res.original_value).toFixed(8),
+                sell_currency_amount:
+                  values.flag == 1
+                    ? parseFloat(res.currency_value).toFixed(8)
+                    : parseFloat(res.currency_value).toFixed(8)
+              });
+            } else {
+              console.log("no scenario");
+            }
+          } else {
+            // console.log(body.err);
+            this.openNotificationWithIcon("error", "Error", body.err);
+          }
+          this.setState({
+            loader: false
+          });
+        }
+      );
+    }
   }
   sendCurrencyChange(e) {
-    // console.log("Send Currency Change");
     clearTimeout(this.timeout);
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
     this.clearValidation();
     this.state.JSTPairList.map((element, i) => {
       if (
@@ -305,30 +766,32 @@ class ConversionDetail extends React.Component {
         });
       }
     });
-    this.timeout = setTimeout(this.showCalculatedValues, 1000);
+    this.timeout = setTimeout(this.getValuesSocket, 1000);
     if (this.validator2.allValid() && e.target.value != null) {
       this.setState(
         {
-          sendCurrencyInput: e.target.value
+          sendCurrencyInput: e.target.value,
+          showTFAModal: false
         },
-        () => {}
+        () => { }
       );
     } else {
       this.setState(
         {
-          sendCurrencyInput: e.target.value
+          sendCurrencyInput: e.target.value,
+          showTFAModal: false
         },
-        () => {}
+        () => { }
       );
       this.validator2.showMessages();
       this.forceUpdate();
     }
   }
   recieveCurrencyChange(e) {
-    console.log("this is???????", e.target.value);
     clearTimeout(this.timeout);
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
     this.clearValidation();
-    // console.log("Recieve Currency Change");
     this.state.JSTPairList.map((element, i) => {
       if (
         element.crypto === this.state.crypto &&
@@ -349,20 +812,31 @@ class ConversionDetail extends React.Component {
         });
       }
     });
-    this.timeout = setTimeout(this.showCalculatedValues, 1000);
-    if (this.validator1.allValid() && e.target.value != null) {
+    this.timeout = setTimeout(this.getValuesSocket, 1000);
+    this.interval = setInterval(() => {
+      this.getValuesSocket(false);
+    }, this.state.socketTime);
+    if (this.validator1.allValid()) {
       this.setState(
         {
-          recieveCurrencyInput: e.target.value
+          recieveCurrencyInput: e.target.value,
+          showTFAModal: false
         },
-        () => {}
+        () => {
+          // clearInterval(this.interval);
+          // console.log("set", e);
+        }
       );
     } else {
       this.setState(
         {
-          recieveCurrencyInput: e.target.value
+          recieveCurrencyInput: e.target.value,
+          showTFAModal: false
         },
-        () => {}
+        () => {
+          // console.log("clear", e);
+          // clearInterval(this.interval);
+        }
       );
       this.validator1.showMessages();
       this.forceUpdate();
@@ -370,7 +844,9 @@ class ConversionDetail extends React.Component {
   }
   fiatJSTValueChange(e) {
     clearTimeout(this.timeout);
-    console.log("Fiat Currency Change");
+    // console.log("Fiat Currency Change");
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
     this.clearValidation();
     this.state.JSTPairList.map((element, i) => {
       if (
@@ -392,21 +868,26 @@ class ConversionDetail extends React.Component {
         });
       }
     });
-    this.timeout = setTimeout(this.showCalculatedValuesUSDTerms, 1000);
+    this.timeout = setTimeout(this.getValuesUSDSocket, 1000);
+    this.interval = setInterval(() => {
+      this.getValuesUSDSocket(false);
+    }, this.state.socketTime);
     if (this.state.includeFees === 1) {
       if (this.validator1.allValid() && e.target.value != null) {
         this.setState(
           {
-            fiatJSTValue: e.target.value
+            fiatJSTValue: e.target.value,
+            showTFAModal: false
           },
-          () => {}
+          () => { }
         );
       } else {
         this.setState(
           {
-            fiatJSTValue: e.target.value
+            fiatJSTValue: e.target.value,
+            showTFAModal: false
           },
-          () => {}
+          () => { }
         );
         this.validator1.showMessages();
         this.forceUpdate();
@@ -415,16 +896,18 @@ class ConversionDetail extends React.Component {
       if (this.validator2.allValid() && e.target.value != null) {
         this.setState(
           {
-            fiatJSTValue: e.target.value
+            fiatJSTValue: e.target.value,
+            showTFAModal: false
           },
-          () => {}
+          () => { }
         );
       } else {
         this.setState(
           {
-            fiatJSTValue: e.target.value
+            fiatJSTValue: e.target.value,
+            showTFAModal: false
           },
-          () => {}
+          () => { }
         );
         this.validator2.showMessages();
         this.forceUpdate();
@@ -466,81 +949,494 @@ class ConversionDetail extends React.Component {
     //   );
     // }
   }
-  showCalculatedValues() {
+  // showCalculatedValues() {
+  //   // console.log(!isNaN(this.state.recieveCurrencyInput));
+  //   this.setState({ loader: true });
+  //   if (this.state.includeFees === 1) {
+  //     var values = {
+  //       Symbol: this.state.original_pair,
+  //       // Symbol: `${this.state.crypto}/${this.state.currency}`,
+  //       Side: this.state.OrdType,
+  //       OrderQty: this.state.recieveCurrencyInput,
+  //       Currency: this.state.crypto,
+  //       OrdType: "1",
+  //       flag: "2",
+  //       usd_value: "",
+  //       original_pair: this.state.original_pair,
+  //       order_pair: this.state.order_pair,
+  //       offer_code: this.state.appliedOfferCode
+  //     };
+  //     // console.log(values);
+  //   } else {
+  //     var values = {
+  //       Symbol: this.state.original_pair,
+  //       // Symbol: `${this.state.crypto}/${this.state.currency}`,
+  //       Side: this.state.OrdType,
+  //       OrderQty: this.state.sendCurrencyInput,
+  //       Currency: this.state.currency,
+  //       OrdType: "1",
+  //       flag: "1",
+  //       usd_value: "",
+  //       original_pair: this.state.original_pair,
+  //       order_pair: this.state.order_pair,
+  //       offer_code: this.state.appliedOfferCode
+  //     };
+  //   }
+  //   // console.log("Values-----------", values);
+  //   if (
+  //     (values.OrderQty === null ||
+  //       values.OrderQty === "" ||
+  //       isNaN(this.state.recieveCurrencyInput) === true) &&
+  //     // isNaN(this.state.recieveCurrencyInput) === true &&
+  //     this.state.includeFees === 1
+  //   ) {
+  //     // console.log(!isNaN(this.state.recieveCurrencyInput));
+  //     // this.setState({ loader: false });
+  //     this.validator1.showMessages();
+  //     this.forceUpdate();
+  //     this.setState({
+  //       // recieveCurrencyInput: "",
+  //       includeFees: 1,
+  //       sendCurrencyInput: 0,
+  //       fiatJSTValue: "",
+  //       crypto: this.state.crypto,
+  //       displayCurrency: null,
+  //       currency: this.state.currency,
+  //       subTotal: 0,
+  //       totalAmount: 0,
+  //       faldaxFee: 0,
+  //       faldaxFeeActual: 0,
+  //       limitPrice: 0,
+  //       networkFee: 0,
+  //       loader: false
+  //     });
+  //   } else if (
+  //     (values.OrderQty === null ||
+  //       values.OrderQty === "" ||
+  //       isNaN(this.state.sendCurrencyInput) === true) &&
+  //     // !isNaN(this.state.sendCurrencyInput) &&
+  //     this.state.includeFees === 2
+  //   ) {
+  //     // this.setState({ loader: false });
+  //     this.validator2.showMessages();
+  //     this.forceUpdate();
+  //     this.setState({
+  //       // sendCurrencyInput: 0,
+  //       includeFees: 2,
+  //       recieveCurrencyInput: 0,
+  //       fiatJSTValue: "",
+  //       crypto: this.state.crypto,
+  //       displayCurrency: null,
+  //       currency: this.state.currency,
+  //       subTotal: 0,
+  //       totalAmount: 0,
+  //       faldaxFee: 0,
+  //       faldaxFeeActual: 0,
+  //       limitPrice: 0,
+  //       networkFee: 0,
+  //       loader: false
+  //     });
+  //   } else {
+  //     fetch(`${API_URL}/conversion/get-jst-price-value`, {
+  //       method: "post",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + this.props.isLoggedIn
+  //       },
+  //       body: JSON.stringify(values)
+  //     })
+  //       .then(response => response.json())
+  //       .then(responseData => {
+  //         if (responseData.status === 200) {
+  //           // this.setState({ loader: false })
+  //           this.setState({
+  //             loader: false,
+  //             subTotal: parseFloat(responseData.data.original_value).toFixed(8),
+  //             faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
+  //             faldaxFeeActual: parseFloat(
+  //               responseData.data.faldax_fees_actual
+  //             ).toFixed(8),
+  //             limitPrice: parseFloat(responseData.data.limit_price).toFixed(8),
+  //             networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
+  //             totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
+  //             fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
+  //             displayCurrency: responseData.data.currency,
+  //             Quantity: parseFloat(responseData.data.total_value).toFixed(8)
+  //           });
+  //           if (this.state.includeFees === 1) {
+  //             this.setState({
+  //               sendCurrencyInput: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               orderQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8)
+  //               // loader: false
+  //             });
+  //           } else {
+  //             this.setState({
+  //               recieveCurrencyInput: parseFloat(
+  //                 responseData.data.total_value
+  //               ).toFixed(8),
+  //               orderQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8)
+  //               // loader: false
+  //             });
+  //           }
+  //           if (this.state.includeFees === 1 && this.state.OrdType === "1") {
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.original_value
+  //               ).toFixed(8),
+  //               buy_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.total_value).toFixed(8)
+  //                   : parseFloat(responseData.data.original_value).toFixed(8),
+  //               sell_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.currency_value).toFixed(8)
+  //                   : parseFloat(responseData.data.currency_value).toFixed(8)
+  //             });
+  //           } else if (
+  //             this.state.includeFees === 2 &&
+  //             this.state.OrdType === "1"
+  //           ) {
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.total_value
+  //               ).toFixed(8),
+  //               buy_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.total_value).toFixed(8)
+  //                   : parseFloat(responseData.data.original_value).toFixed(8),
+  //               sell_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.currency_value).toFixed(8)
+  //                   : parseFloat(responseData.data.currency_value).toFixed(8)
+  //             });
+  //           } else if (
+  //             this.state.includeFees === 2 &&
+  //             this.state.OrdType === "2"
+  //           ) {
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               buy_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.total_value).toFixed(8)
+  //                   : parseFloat(responseData.data.original_value).toFixed(8),
+  //               sell_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.currency_value).toFixed(8)
+  //                   : parseFloat(responseData.data.currency_value).toFixed(8)
+  //             });
+  //           } else if (
+  //             this.state.includeFees === 1 &&
+  //             this.state.OrdType === "2"
+  //           ) {
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               buy_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.total_value).toFixed(8)
+  //                   : parseFloat(responseData.data.original_value).toFixed(8),
+  //               sell_currency_amount:
+  //                 values.flag == 1
+  //                   ? parseFloat(responseData.data.currency_value).toFixed(8)
+  //                   : parseFloat(responseData.data.currency_value).toFixed(8)
+  //             });
+  //           } else {
+  //             console.log("no scenario");
+  //           }
+  //           this.setState({ loader: false });
+  //         } else if (responseData.status === 500) {
+  //           this.setState({ loader: false });
+  //           this.openNotificationWithIcon("error", "Error", responseData.err);
+  //         } else {
+  //           this.setState({ loader: false });
+  //           this.openNotificationWithIcon("error", "Error", responseData.err);
+  //         }
+  //       })
+  //       .catch(error => {});
+  //   }
+  // }
+  // showCalculatedValuesUSDTerms() {
+  //   this.setState({ loader: true });
+  //   // console.log("Order values to display");
+  //   if (this.state.includeFees === 1) {
+  //     var values = {
+  //       Symbol: this.state.original_pair,
+  //       Side: this.state.OrdType,
+  //       OrderQty: this.state.recieveCurrencyInput,
+  //       Currency: this.state.crypto,
+  //       OrdType: "1",
+  //       flag: "2",
+  //       usd_value: this.state.fiatJSTValue,
+  //       original_pair: this.state.original_pair,
+  //       order_pair: this.state.order_pair,
+  //       offer_code: this.state.appliedOfferCode
+  //     };
+  //   } else {
+  //     var values = {
+  //       Symbol: this.state.original_pair,
+  //       Side: this.state.OrdType,
+  //       OrderQty: this.state.sendCurrencyInput,
+  //       Currency: this.state.currency,
+  //       OrdType: "1",
+  //       flag: "1",
+  //       usd_value: this.state.fiatJSTValue,
+  //       original_pair: this.state.original_pair,
+  //       order_pair: this.state.order_pair,
+  //       offer_code: this.state.appliedOfferCode
+  //     };
+  //   }
+  //   if (
+  //     (values.usd_value === null ||
+  //       values.usd_value === "" ||
+  //       isNaN(this.state.fiatJSTValue) === true) &&
+  //     this.state.includeFees === 1
+  //   ) {
+  //     // this.setState({ loader: false });
+  //     this.validator1.showMessages();
+  //     this.forceUpdate();
+  //     this.setState({
+  //       recieveCurrencyInput: "",
+  //       includeFees: 1,
+  //       sendCurrencyInput: 0,
+  //       // fiatJSTValue: 0,
+  //       crypto: this.state.crypto,
+  //       displayCurrency: null,
+  //       currency: this.state.currency,
+  //       subTotal: 0,
+  //       totalAmount: 0,
+  //       faldaxFee: 0,
+  //       faldaxFeeActual: 0,
+  //       limitPrice: 0,
+  //       networkFee: 0,
+  //       loader: false
+  //     });
+  //   } else if (
+  //     (values.usd_value === null ||
+  //       values.usd_value === "" ||
+  //       isNaN(this.state.fiatJSTValue) === true) &&
+  //     this.state.includeFees === 2
+  //   ) {
+  //     // this.setState({ loader: false });
+  //     this.validator2.showMessages();
+  //     this.forceUpdate();
+  //     this.setState({
+  //       sendCurrencyInput: "",
+  //       includeFees: 2,
+  //       recieveCurrencyInput: 0,
+  //       // fiatJSTValue: 0,
+  //       crypto: this.state.crypto,
+  //       displayCurrency: null,
+  //       currency: this.state.currency,
+  //       subTotal: 0,
+  //       totalAmount: 0,
+  //       faldaxFee: 0,
+  //       faldaxFeeActual: 0,
+  //       limitPrice: 0,
+  //       networkFee: 0,
+  //       loader: false
+  //     });
+  //   } else {
+  //     fetch(`${API_URL}/conversion/get-jst-price-value`, {
+  //       method: "post",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + this.props.isLoggedIn
+  //       },
+  //       body: JSON.stringify(values)
+  //     })
+  //       .then(response => response.json())
+  //       .then(responseData => {
+  //         if (responseData.status === 200) {
+  //           // console.log("Response Data 200", responseData.data);
+  //           this.setState({
+  //             // subTotal: parseFloat(responseData.data.original_value).toFixed(8),
+  //             faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
+  //             faldaxFeeActual: parseFloat(
+  //               responseData.data.faldax_fees_actual
+  //             ).toFixed(8),
+  //             limitPrice: parseFloat(responseData.data.limit_price).toFixed(8),
+  //             networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
+  //             // totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
+  //             displayCurrency: responseData.data.currency,
+  //             Quantity: parseFloat(responseData.data.total_value).toFixed(8),
+  //             loader: false
+  //             // orderQuantity: responseData.data.orderQuantity
+  //           });
+  //           if (this.state.includeFees === 1) {
+  //             this.setState({
+  //               sendCurrencyInput: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               recieveCurrencyInput: parseFloat(
+  //                 responseData.data.original_value
+  //               ).toFixed(8),
+  //               orderQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               subTotal: parseFloat(responseData.data.original_value).toFixed(
+  //                 8
+  //               ),
+  //               totalAmount: parseFloat(responseData.data.total_value).toFixed(
+  //                 8
+  //               ),
+  //               loader: false
+  //             });
+  //           } else {
+  //             this.setState({
+  //               recieveCurrencyInput: parseFloat(
+  //                 responseData.data.total_value
+  //               ).toFixed(8),
+  //               sendCurrencyInput: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               orderQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8),
+  //               subTotal: parseFloat(responseData.data.original_value).toFixed(
+  //                 8
+  //               ),
+  //               totalAmount: parseFloat(responseData.data.total_value).toFixed(
+  //                 8
+  //               ),
+  //               loader: false
+  //             });
+  //           }
+  //           if (this.state.includeFees === 1 && this.state.OrdType === "1") {
+  //             // console.log(
+  //             //   this.state.includeFees,
+  //             //   this.state.OrdType,
+  //             //   responseData.data.original_value
+  //             // );
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.original_value
+  //               ).toFixed(8)
+  //             });
+  //           } else if (
+  //             this.state.includeFees === 2 &&
+  //             this.state.OrdType === "1"
+  //           ) {
+  //             // console.log(
+  //             //   this.state.includeFees,
+  //             //   this.state.OrdType,
+  //             //   responseData.data.total_value
+  //             // );
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.total_value
+  //               ).toFixed(8)
+  //             });
+  //           } else if (
+  //             this.state.includeFees === 2 &&
+  //             this.state.OrdType === "2"
+  //           ) {
+  //             // console.log(
+  //             //   this.state.includeFees,
+  //             //   this.state.OrdType,
+  //             //   responseData.data.currency_value
+  //             // );
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8)
+  //             });
+  //           } else if (
+  //             this.state.includeFees === 1 &&
+  //             this.state.OrdType === "2"
+  //           ) {
+  //             // console.log(
+  //             //   this.state.includeFees,
+  //             //   this.state.OrdType,
+  //             //   responseData.data.currency_value
+  //             // );
+  //             this.setState({
+  //               OriginalQuantity: parseFloat(
+  //                 responseData.data.currency_value
+  //               ).toFixed(8)
+  //             });
+  //           } else {
+  //             console.log("no scenario");
+  //           }
+  //         } else if (responseData.status === 500) {
+  //           this.setState({ loader: false });
+  //           this.openNotificationWithIcon("error", "Error", responseData.err);
+  //         } else {
+  //           this.setState({ loader: false });
+  //           this.openNotificationWithIcon("error", "Error", responseData.err);
+  //         }
+  //       })
+  //       .catch(error => {});
+  //   }
+  // }
+  calculateOrderVaules(otp = "") {
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
+    // console.log("Order");
     this.setState({ loader: true });
-    if (this.state.includeFees === 1) {
-      var values = {
-        Symbol: this.state.original_pair,
-        // Symbol: `${this.state.crypto}/${this.state.currency}`,
-        Side: this.state.OrdType,
-        OrderQty: this.state.recieveCurrencyInput,
-        Currency: this.state.crypto,
-        OrdType: "1",
-        flag: "2",
-        usd_value: "",
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair
-      };
-      // console.log(values);
-    } else {
-      var values = {
-        Symbol: this.state.original_pair,
-        // Symbol: `${this.state.crypto}/${this.state.currency}`,
-        Side: this.state.OrdType,
-        OrderQty: this.state.sendCurrencyInput,
-        Currency: this.state.currency,
-        OrdType: "1",
-        flag: "1",
-        usd_value: "",
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair
-      };
-    }
-    // console.log("Values-----------", values);
-    if (
-      (values.OrderQty === null || values.OrderQty === "") &&
-      this.state.includeFees === 1
-    ) {
-      // this.setState({ loader: false });
-      this.validator1.showMessages();
-      this.forceUpdate();
+    // console.log(this.state);
+    if (this.state.checkOTP) {
       this.setState({
-        recieveCurrencyInput: 0,
-        includeFees: 1,
-        sendCurrencyInput: 0,
-        fiatJSTValue: 0,
-        crypto: this.state.crypto,
-        displayCurrency: null,
-        currency: this.state.currency,
-        subTotal: 0,
-        totalAmount: 0,
-        faldaxFee: 0,
-        networkFee: 0,
-        loader: false
+        showTFAModal: true
+        // loader: false
       });
-    } else if (
-      (values.OrderQty === null || values.OrderQty === "") &&
-      this.state.includeFees === 2
-    ) {
-      // this.setState({ loader: false });
-      this.validator2.showMessages();
-      this.forceUpdate();
-      this.setState({
-        sendCurrencyInput: 0,
-        includeFees: 2,
-        sendCurrencyInput: 0,
-        fiatJSTValue: 0,
-        crypto: this.state.crypto,
-        displayCurrency: null,
-        currency: this.state.currency,
-        subTotal: 0,
-        totalAmount: 0,
-        faldaxFee: 0,
-        networkFee: 0,
-        loader: false
-      });
-    } else {
-      fetch(`${API_URL}/conversion/get-jst-price-value`, {
+      let otp1 = otp;
+      if (this.state.includeFees === 1) {
+        var values = {
+          Symbol: this.state.original_pair,
+          Side: this.state.OrdType,
+          OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
+          Quantity: parseFloat(this.state.Quantity).toFixed(8),
+          OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
+          Currency: this.state.crypto,
+          OrdType: "1",
+          original_pair: this.state.original_pair,
+          order_pair: this.state.order_pair,
+          faldax_fees: this.state.faldaxFee,
+          faldax_fees_actual: this.state.faldaxFeeActual,
+          limit_price: this.state.limitPrice,
+          network_fees: this.state.networkFee,
+          offer_code: this.state.appliedOfferCode,
+          buy_currency_amount: this.state.buy_currency_amount,
+          sell_currency_amount: this.state.sell_currency_amount,
+          otp: otp1,
+          flag: this.state.flag
+        };
+        // console.log(values);
+      } else {
+        var values = {
+          Symbol: this.state.original_pair,
+          Side: this.state.OrdType,
+          OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
+          Quantity: parseFloat(this.state.Quantity).toFixed(8),
+          OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
+          Currency: this.state.currency,
+          OrdType: "1",
+          original_pair: this.state.original_pair,
+          order_pair: this.state.order_pair,
+          faldax_fees: this.state.faldaxFee,
+          faldax_fees_actual: this.state.faldaxFeeActual,
+          limit_price: this.state.limitPrice,
+          network_fees: this.state.networkFee,
+          offer_code: this.state.appliedOfferCode,
+          buy_currency_amount: this.state.buy_currency_amount,
+          sell_currency_amount: this.state.sell_currency_amount,
+          otp: otp1,
+          flag: this.state.flag
+        };
+        // console.log(values);
+      }
+      fetch(`${API_URL}/converion/jst-create-order`, {
         method: "post",
         headers: {
           Accept: "application/json",
@@ -552,205 +1448,95 @@ class ConversionDetail extends React.Component {
         .then(response => response.json())
         .then(responseData => {
           if (responseData.status === 200) {
+            this.openNotificationWithIcon(
+              "success",
+              "Success",
+              responseData.message
+            );
             this.setState({
-              subTotal: parseFloat(responseData.data.original_value).toFixed(8),
-              faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
-              networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
-              totalAmount: responseData.data.total_value.toFixed(8),
-              fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
-              displayCurrency: responseData.data.currency,
-              Quantity: parseFloat(responseData.data.total_value).toFixed(8)
+              recieveCurrencyInput: 0,
+              includeFees: 1,
+              sendCurrencyInput: 0,
+              fiatJSTValue: 0,
+              crypto: this.state.crypto,
+              displayCurrency: null,
+              currency: this.state.currency,
+              subTotal: 0,
+              totalAmount: 0,
+              faldaxFee: 0,
+              faldaxFeeActual: 0,
+              networkFee: 0,
+              appliedOfferCode: "",
+              showTFAModal: false
+              // loader: false
             });
-            if (this.state.includeFees === 1) {
-              // if (this.state.OrdType === "1") {
-              //   console.log(this.state.includeFees, this.state.OrdType);
-              //   this.setState({
-              //     OriginalQuantity: parseFloat(
-              //       responseData.original_value
-              //     ).toFixed(8)
-              //   });
-              // } else {
-              //   console.log(this.state.includeFees, this.state.OrdType);
-              //   this.setState({
-              //     OriginalQuantity: parseFloat(
-              //       responseData.total_value
-              //     ).toFixed(8)
-              //   });
-              // }
-              this.setState({
-                sendCurrencyInput: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                orderQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                loader: false
-              });
-            } else {
-              // if (this.state.OrdType === "2") {
-              //   console.log("if", this.state.OrdType);
-              //   this.setState({
-              //     OriginalQuantity: parseFloat(
-              //       responseData.original_value
-              //     ).toFixed(8)
-              //   });
-              // } else {
-              //   console.log("else", this.state.OrdType);
-              //   this.setState({
-              //     OriginalQuantity: parseFloat(
-              //       responseData.original_value
-              //     ).toFixed(8)
-              //   });
-              // }
-              this.setState({
-                recieveCurrencyInput: parseFloat(
-                  responseData.data.total_value
-                ).toFixed(8),
-                orderQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                loader: false
-              });
-            }
-            if (this.state.includeFees === 1 && this.state.OrdType === "1") {
-              // console.log(
-              //   this.state.includeFees,
-              //   this.state.OrdType,
-              //   responseData.data.original_value
-              // );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.original_value
-                ).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 2 &&
-              this.state.OrdType === "1"
-            ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.total_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.total_value
-                ).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 2 &&
-              this.state.OrdType === "2"
-            ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.currency_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 1 &&
-              this.state.OrdType === "2"
-            ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.currency_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8)
-              });
-            } else {
-              console.log("no scenario");
-            }
-          } else if (responseData.status === 500) {
-            this.setState({ loader: false });
-            this.openNotificationWithIcon("error", "Error", responseData.err);
+            this.clearValidation();
           } else {
-            this.setState({ loader: false });
-            this.openNotificationWithIcon("error", "Error", responseData.err);
+            // console.log("--------------------", otp);
+            if (values.otp === "") {
+              // console.log(otp);
+            } else {
+              // console.log(otp);
+              this.openNotificationWithIcon(
+                "error",
+                "Error",
+                responseData.message
+              );
+              this.setState({
+                showTFAModal: false
+              });
+            }
           }
+          this.setState({ loader: false });
         })
-        .catch(error => {});
-    }
-  }
-  showCalculatedValuesUSDTerms() {
-    this.setState({ loader: true });
-    console.log("Order values to display");
-    if (this.state.includeFees === 1) {
-      var values = {
-        Symbol: this.state.original_pair,
-        Side: this.state.OrdType,
-        OrderQty: this.state.recieveCurrencyInput,
-        Currency: this.state.crypto,
-        OrdType: "1",
-        flag: "2",
-        usd_value: this.state.fiatJSTValue,
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair
-      };
+        .catch(error => { });
     } else {
-      var values = {
-        Symbol: this.state.original_pair,
-        Side: this.state.OrdType,
-        OrderQty: this.state.sendCurrencyInput,
-        Currency: this.state.currency,
-        OrdType: "1",
-        flag: "1",
-        usd_value: this.state.fiatJSTValue,
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair
-      };
-    }
-    if (
-      (values.usd_value === null || values.usd_value === "") &&
-      this.state.includeFees === 1
-    ) {
-      // this.setState({ loader: false });
-      this.validator1.showMessages();
-      this.forceUpdate();
-      this.setState({
-        recieveCurrencyInput: 0,
-        includeFees: 1,
-        sendCurrencyInput: 0,
-        fiatJSTValue: 0,
-        crypto: this.state.crypto,
-        displayCurrency: null,
-        currency: this.state.currency,
-        subTotal: 0,
-        totalAmount: 0,
-        faldaxFee: 0,
-        networkFee: 0,
-        loader: false
-      });
-    } else if (
-      (values.usd_value === null || values.usd_value === "") &&
-      this.state.includeFees === 2
-    ) {
-      // this.setState({ loader: false });
-      this.validator2.showMessages();
-      this.forceUpdate();
-      this.setState({
-        sendCurrencyInput: 0,
-        includeFees: 2,
-        sendCurrencyInput: 0,
-        fiatJSTValue: 0,
-        crypto: this.state.crypto,
-        displayCurrency: null,
-        currency: this.state.currency,
-        subTotal: 0,
-        totalAmount: 0,
-        faldaxFee: 0,
-        networkFee: 0,
-        loader: false
-      });
-    } else {
-      fetch(`${API_URL}/conversion/get-jst-price-value`, {
+      if (this.state.includeFees === 1) {
+        var values = {
+          Symbol: this.state.original_pair,
+          Side: this.state.OrdType,
+          OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
+          Quantity: parseFloat(this.state.Quantity).toFixed(8),
+          OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
+          Currency: this.state.crypto,
+          OrdType: "1",
+          original_pair: this.state.original_pair,
+          order_pair: this.state.order_pair,
+          faldax_fees: this.state.faldaxFee,
+          faldax_fees_actual: this.state.faldaxFeeActual,
+          limit_price: this.state.limitPrice,
+          network_fees: this.state.networkFee,
+          offer_code: this.state.appliedOfferCode,
+          buy_currency_amount: this.state.buy_currency_amount,
+          sell_currency_amount: this.state.sell_currency_amount,
+          otp: "",
+          flag: this.state.flag
+        };
+        // console.log(values);
+      } else {
+        var values = {
+          Symbol: this.state.original_pair,
+          Side: this.state.OrdType,
+          OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
+          Quantity: parseFloat(this.state.Quantity).toFixed(8),
+          OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
+          Currency: this.state.currency,
+          OrdType: "1",
+          original_pair: this.state.original_pair,
+          order_pair: this.state.order_pair,
+          faldax_fees: this.state.faldaxFee,
+          faldax_fees_actual: this.state.faldaxFeeActual,
+          limit_price: this.state.limitPrice,
+          network_fees: this.state.networkFee,
+          offer_code: this.state.appliedOfferCode,
+          buy_currency_amount: this.state.buy_currency_amount,
+          sell_currency_amount: this.state.sell_currency_amount,
+          otp: "",
+          flag: this.state.flag
+        };
+        // console.log(values);
+      }
+      fetch(`${API_URL}/converion/jst-create-order`, {
         method: "post",
         headers: {
           Accept: "application/json",
@@ -762,193 +1548,43 @@ class ConversionDetail extends React.Component {
         .then(response => response.json())
         .then(responseData => {
           if (responseData.status === 200) {
-            console.log("Response Data 200", responseData.data);
+            this.openNotificationWithIcon(
+              "success",
+              "Success",
+              responseData.message
+            );
             this.setState({
-              // subTotal: parseFloat(responseData.data.original_value).toFixed(8),
-              faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
-              networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
-              // totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
-              displayCurrency: responseData.data.currency,
-              Quantity: parseFloat(responseData.data.total_value).toFixed(8)
-              // orderQuantity: responseData.data.orderQuantity
+              recieveCurrencyInput: 0,
+              includeFees: 1,
+              sendCurrencyInput: 0,
+              fiatJSTValue: 0,
+              crypto: this.state.crypto,
+              displayCurrency: null,
+              currency: this.state.currency,
+              subTotal: 0,
+              totalAmount: 0,
+              faldaxFee: 0,
+              faldaxFeeActual: 0,
+              limitPrice: 0,
+              networkFee: 0,
+              appliedOfferCode: ""
+              // loader: false
             });
-            if (this.state.includeFees === 1) {
-              this.setState({
-                sendCurrencyInput: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                recieveCurrencyInput: parseFloat(
-                  responseData.data.original_value
-                ).toFixed(8),
-                orderQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                subTotal: parseFloat(responseData.data.original_value).toFixed(
-                  8
-                ),
-                totalAmount: parseFloat(responseData.data.total_value).toFixed(
-                  8
-                ),
-                loader: false
-              });
-            } else {
-              this.setState({
-                recieveCurrencyInput: parseFloat(
-                  responseData.data.total_value
-                ).toFixed(8),
-                sendCurrencyInput: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                orderQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8),
-                subTotal: parseFloat(responseData.data.original_value).toFixed(
-                  8
-                ),
-                totalAmount: parseFloat(responseData.data.total_value).toFixed(
-                  8
-                ),
-                loader: false
-              });
-            }
-            if (this.state.includeFees === 1 && this.state.OrdType === "1") {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.original_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.original_value
-                ).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 2 &&
-              this.state.OrdType === "1"
-            ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.total_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.total_value
-                ).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 2 &&
-              this.state.OrdType === "2"
-            ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.currency_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 1 &&
-              this.state.OrdType === "2"
-            ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.currency_value
-              );
-              this.setState({
-                OriginalQuantity: parseFloat(
-                  responseData.data.currency_value
-                ).toFixed(8)
-              });
-            } else {
-              console.log("no scenario");
-            }
-          } else if (responseData.status === 500) {
-            this.setState({ loader: false });
-            this.openNotificationWithIcon("error", "Error", responseData.err);
+            this.clearValidation();
           } else {
-            this.setState({ loader: false });
-            this.openNotificationWithIcon("error", "Error", responseData.err);
+            this.openNotificationWithIcon(
+              "error",
+              "Error",
+              responseData.message
+            );
+            this.setState({
+              showTFAModal: false
+            });
           }
+          this.setState({ loader: false });
         })
-        .catch(error => {});
+        .catch(error => { });
     }
-  }
-  calculateOrderVaules() {
-    console.log("Order");
-    this.setState({ loader: true });
-    if (this.state.includeFees === 1) {
-      var values = {
-        Symbol: this.state.original_pair,
-        Side: this.state.OrdType,
-        OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
-        Quantity: parseFloat(this.state.Quantity).toFixed(8),
-        OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
-        Currency: this.state.crypto,
-        OrdType: "1",
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair
-      };
-      console.log(values);
-    } else {
-      var values = {
-        Symbol: this.state.original_pair,
-        Side: this.state.OrdType,
-        OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
-        Quantity: parseFloat(this.state.Quantity).toFixed(8),
-        OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
-        Currency: this.state.currency,
-        OrdType: "1",
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair
-      };
-      console.log(values);
-    }
-    fetch(`${API_URL}/converion/jst-create-order`, {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      },
-      body: JSON.stringify(values)
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.status === 200) {
-          this.openNotificationWithIcon(
-            "success",
-            "Success",
-            responseData.message
-          );
-          this.setState({
-            recieveCurrencyInput: 0,
-            includeFees: 1,
-            sendCurrencyInput: 0,
-            fiatJSTValue: 0,
-            crypto: this.state.crypto,
-            displayCurrency: null,
-            currency: this.state.currency,
-            subTotal: 0,
-            totalAmount: 0,
-            faldaxFee: 0,
-            networkFee: 0,
-            loader: false
-          });
-          this.clearValidation();
-        } else if (responseData.status === 500) {
-          this.setState({ loader: false });
-          this.openNotificationWithIcon("error", "Error", responseData.message);
-        } else {
-          this.setState({ loader: false });
-          this.openNotificationWithIcon("error", "Error", responseData.message);
-        }
-      })
-      .catch(error => {});
   }
   getFiatCurrencyList() {
     this.setState({
@@ -971,7 +1607,7 @@ class ConversionDetail extends React.Component {
           });
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   }
   getCrypto() {
     this.setState({
@@ -1012,34 +1648,62 @@ class ConversionDetail extends React.Component {
           });
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   }
   handleCryptoChange(value, option: Option) {
-    console.log(
-      "option.props.selectedData.min_limit",
-      option.props.selectedData.jst_min_coin_limit
-    );
+    // console.log(
+    //   "option.props.selectedData.min_limit",
+    //   option.props.selectedData.jst_min_coin_limit
+    // );
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
     if (value === this.state.currency) {
       this.state.currencyList.map((element, i) => {
         if (element.coin === this.state.currency) {
           var list = this.state.currencyList.splice(i, 1);
-          // console.log(list);
           this.setState({
             cryptoList: this.state.cryptoList.push(list[0])
           });
         }
       });
-      this.setState({
-        currency: this.state.currencyList[0].coin,
-        minCurrency: this.state.currencyList[0].jst_min_coin_limit
-      });
+      if (value === "XRP") {
+        if (this.state.currencyList[0].coin === "LTC") {
+          this.setState({
+            currency: this.state.currencyList[1].coin,
+            minCurrency: this.state.currencyList[1].jst_min_coin_limit
+          });
+        } else {
+          this.setState({
+            currency: this.state.currencyList[0].coin,
+            minCurrency: this.state.currencyList[0].jst_min_coin_limit
+          });
+        }
+      } else if (value === "LTC") {
+        if (this.state.currencyList[0].coin === "XRP") {
+          this.setState({
+            currency: this.state.currencyList[1].coin,
+            minCurrency: this.state.currencyList[1].jst_min_coin_limit
+          });
+        } else {
+          this.setState({
+            currency: this.state.currencyList[0].coin,
+            minCurrency: this.state.currencyList[0].jst_min_coin_limit
+          });
+        }
+      } else {
+        this.setState({
+          currency: this.state.currencyList[0].coin,
+          minCurrency: this.state.currencyList[0].jst_min_coin_limit
+        });
+      }
     }
     clearTimeout(this.timeout);
     this.setState(
       {
         crypto: value,
         cryptoList: this.state.originalCoinList,
-        minCrypto: option.props.selectedData.jst_min_coin_limit
+        minCrypto: option.props.selectedData.jst_min_coin_limit,
+        showTFAModal: false
       },
       () => {
         this.state.JSTPairList.map((element, i) => {
@@ -1056,14 +1720,14 @@ class ConversionDetail extends React.Component {
                 OrdType: "1"
               });
             }
-            console.log(
-              "Matched crytpo and currency pair selected Crypto change",
-              this.state.currency + this.state.crypto
-            );
-            console.log(
-              "Matched crytpo and currency pair crypto change",
-              element.crypto + element.currency
-            );
+            // console.log(
+            //   "Matched crytpo and currency pair selected Crypto change",
+            //   this.state.currency + this.state.crypto
+            // );
+            // console.log(
+            //   "Matched crytpo and currency pair crypto change",
+            //   element.crypto + element.currency
+            // );
             this.setState({
               original_pair: element.original_pair,
               order_pair: element.order_pair
@@ -1071,66 +1735,101 @@ class ConversionDetail extends React.Component {
           }
         });
         if (this.state.includeFees === 1) {
-          if (this.state.recieveCurrencyInput > 0) {
-            console.log(
-              "If original_pair-----------",
-              this.state.original_pair
-            );
-            console.log("If order_pair-----------", this.state.order_pair);
-            console.log("If crypto-----------", this.state.crypto);
-            console.log("If currency-----------", this.state.currency);
-            this.timeout = setTimeout(this.showCalculatedValues, 1000);
-          }
+          this.setState(
+            {
+              recieveCurrencyInput: option.props.selectedData.jst_min_coin_limit
+            },
+            () => {
+              if (this.state.recieveCurrencyInput > 0) {
+                // console.log(
+                //   "If original_pair-----------",
+                //   this.state.original_pair
+                // );
+                // console.log("If order_pair-----------", this.state.order_pair);
+                // console.log("If crypto-----------", this.state.crypto);
+                // console.log("If currency-----------", this.state.currency);
+                this.timeout = setTimeout(this.getValuesSocket, 1000);
+                this.interval = setInterval(() => {
+                  this.getValuesSocket(false);
+                }, this.state.socketTime);
+              }
+            }
+          );
         } else {
           if (this.state.sendCurrencyInput > 0) {
-            console.log(
-              "Else original_pair-----------",
-              this.state.original_pair
-            );
-            console.log("Else order_pair-----------", this.state.order_pair);
-            console.log("Else crypto-----------", this.state.crypto);
-            console.log("Else currency-----------", this.state.currency);
-            this.timeout = setTimeout(this.showCalculatedValues, 1000);
+            // console.log(
+            //   "Else original_pair-----------",
+            //   this.state.original_pair
+            // );
+            // // console.log("Else order_pair-----------", this.state.order_pair);
+            // console.log("Else crypto-----------", this.state.crypto);
+            // console.log("Else currency-----------", this.state.currency);
+            this.timeout = setTimeout(this.getValuesSocket, 1000);
+            this.interval = setInterval(() => {
+              this.getValuesSocket(false);
+            }, this.state.socketTime);
           }
         }
       }
     );
   }
   handleFiatChange(value, option: Option) {
-    console.log(option.props.selectedData.min_limit);
+    // console.log(option.props.selectedData.min_limit);
     let prevRoom = this.state.crypto + "-" + this.state.currency;
-    this.setState(
-      {
-        fiat: value
-      },
-      () => {
-        // this.showCalculatedValues();
-      }
-    );
+    this.setState({
+      fiat: value
+    });
   }
   handleCurrencyChange(value, option: Option) {
-    console.log("option.props.selectedData.min_limit", option.props);
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
     if (value === this.state.crypto) {
       this.state.cryptoList.map((element, i) => {
         if (element.coin === this.state.crypto) {
           var list1 = this.state.cryptoList.splice(i, 1);
-          // console.log(list1);
           this.setState({
             currencyList: this.state.currencyList.push(list1[0])
           });
         }
       });
-      this.setState({
-        crypto: this.state.cryptoList[0].coin,
-        minCrypto: this.state.cryptoList[0].jst_min_coin_limit
-      });
+      if (value === "XRP") {
+        if (this.state.cryptoList[0].coin === "LTC") {
+          this.setState({
+            crypto: this.state.cryptoList[1].coin,
+            minCrypto: this.state.cryptoList[1].jst_min_coin_limit
+          });
+        } else {
+          this.setState({
+            crypto: this.state.cryptoList[0].coin,
+            minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+          });
+        }
+      } else if (value === "LTC") {
+        if (this.state.cryptoList[0].coin === "XRP") {
+          this.setState({
+            crypto: this.state.cryptoList[1].coin,
+            minCrypto: this.state.cryptoList[1].jst_min_coin_limit
+          });
+        } else {
+          this.setState({
+            crypto: this.state.cryptoList[0].coin,
+            minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+          });
+        }
+      } else {
+        this.setState({
+          crypto: this.state.cryptoList[0].coin,
+          minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+        });
+      }
     }
     clearTimeout(this.timeout);
     this.setState(
       {
         currency: value,
         currencyList: this.state.originalCoinList,
-        minCurrency: option.props.selectedData.jst_min_coin_limit
+        minCurrency: option.props.selectedData.jst_min_coin_limit,
+        showTFAModal: false
       },
       () => {
         this.state.JSTPairList.map((element, i) => {
@@ -1147,14 +1846,14 @@ class ConversionDetail extends React.Component {
                 OrdType: "1"
               });
             }
-            console.log(
-              "Matched crytpo and currency pair selected currency change",
-              this.state.crypto + this.state.currency
-            );
-            console.log(
-              "Matched crytpo and currency pair Currency change",
-              element.crypto + element.currency
-            );
+            // console.log(
+            //   "Matched crytpo and currency pair selected currency change",
+            //   this.state.crypto + this.state.currency
+            // );
+            // console.log(
+            //   "Matched crytpo and currency pair Currency change",
+            //   element.crypto + element.currency
+            // );
             this.setState({
               original_pair: element.original_pair,
               order_pair: element.order_pair
@@ -1163,20 +1862,34 @@ class ConversionDetail extends React.Component {
         });
         if (this.state.includeFees === 1) {
           if (this.state.recieveCurrencyInput > 0) {
-            this.timeout = setTimeout(this.showCalculatedValues, 1000);
+            this.timeout = setTimeout(this.getValuesSocket, 1000);
+            this.interval = setInterval(() => {
+              this.getValuesSocket(false);
+            }, this.state.socketTime);
           }
         } else {
-          if (this.state.sendCurrencyInput > 0) {
-            this.timeout = setTimeout(this.showCalculatedValues, 1000);
-          }
+          this.setState(
+            {
+              sendCurrencyInput: option.props.selectedData.jst_min_coin_limit
+            },
+            () => {
+              if (this.state.sendCurrencyInput > 0) {
+                this.timeout = setTimeout(this.getValuesSocket, 1000);
+                this.interval = setInterval(() => {
+                  this.getValuesSocket(false);
+                }, this.state.socketTime);
+              }
+            }
+          );
         }
-        // this.showCalculatedValues();
       }
     );
   }
   radioChange(e) {
     this.setState({ loader: true });
     this.clearValidation();
+    clearInterval(this.interval);
+    clearInterval(this.interval1);
     this.state.JSTPairList.map((element, i) => {
       if (
         element.crypto === this.state.crypto &&
@@ -1202,6 +1915,8 @@ class ConversionDetail extends React.Component {
         includeFees: e.target.value,
         subTotal: 0,
         faldaxFee: 0,
+        faldaxFeeActual: 0,
+        limitPrice: 0,
         networkFee: 0,
         totalFees: 0,
         fiatJSTValue: 0,
@@ -1212,12 +1927,18 @@ class ConversionDetail extends React.Component {
       () => {
         clearTimeout(this.timeout);
         if (e.target.value === 1) {
-          this.timeout = setTimeout(this.showCalculatedValues, 1000);
+          this.timeout = setTimeout(this.getValuesSocket, 1000);
+          this.interval = setInterval(() => {
+            this.getValuesSocket(false);
+          }, this.state.socketTime);
           this.setState({
             recieveCurrencyInput: this.state.minCrypto
           });
         } else {
-          this.timeout = setTimeout(this.showCalculatedValues, 1000);
+          this.timeout = setTimeout(this.getValuesSocket, 1000);
+          this.interval = setInterval(() => {
+            this.getValuesSocket(false);
+          }, this.state.socketTime);
           this.setState({
             sendCurrencyInput: this.state.minCurrency
           });
@@ -1225,10 +1946,11 @@ class ConversionDetail extends React.Component {
       }
     );
   }
-  btnClicked() {
+  btnClicked(otp = "") {
     if (this.state.includeFees === 1) {
       if (this.validator1.allValid()) {
-        this.calculateOrderVaules();
+        // console.log(otp);
+        this.calculateOrderVaules(otp);
         // alert("success");
       } else {
         this.validator1.showMessages();
@@ -1237,7 +1959,7 @@ class ConversionDetail extends React.Component {
     }
     if (this.state.includeFees === 2) {
       if (this.validator2.allValid()) {
-        this.calculateOrderVaules();
+        this.calculateOrderVaules(otp);
 
         // alert("success");
       } else {
@@ -1254,7 +1976,86 @@ class ConversionDetail extends React.Component {
       this.validator2.hideMessages();
       this.forceUpdate();
     }
+    this.validator3.hideMessages();
+    this.forceUpdate();
     // rerender to hide messages for the first time
+  }
+  promoCode(e) {
+    // console.log(e.target.value);
+    this.setState({
+      promoCode: e.target.value,
+      validPromo: false,
+      offerMsg: ""
+    });
+  }
+  checkPromo() {
+    this.clearValidation();
+    if (this.validator3.allValid()) {
+      this.setState({ loader: true });
+      let values = {};
+      values["offer_code"] = this.state.promoCode;
+      fetch(`${API_URL}/conversion/apply-offer-code`, {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn
+        },
+        body: JSON.stringify(values)
+      })
+        .then(response => response.json())
+        .then(responseData => {
+          if (responseData.status === 200) {
+            this.setState({
+              offerMsg: responseData.message,
+              applyPromoCode: true,
+              validPromo: true
+            });
+          } else if (responseData.status === 500) {
+            this.setState({
+              offerMsg: responseData.err,
+              validPromo: false
+            });
+          } else {
+            // console.log(responseData);
+            this.setState({
+              validPromo: false
+            });
+          }
+          this.setState({ loader: false });
+        })
+        .catch(error => { });
+    } else {
+      this.validator3.showMessages();
+      this.forceUpdate();
+    }
+  }
+  applyPromo() {
+    this.setState(
+      {
+        showPromoModal: false,
+        appliedOfferCode: this.state.promoCode,
+        showAppliedPromoModal: false
+      },
+      () => {
+        this.getValuesSocket();
+      }
+    );
+  }
+  closePromoModal() {
+    if (this.state.showAppliedPromoModal) {
+      this.setState({
+        showPromoModal: false,
+        showAppliedPromoModal: false
+        // offerMsg: ""
+      });
+    } else {
+      this.setState({
+        showPromoModal: false,
+        showAppliedPromoModal: false,
+        offerMsg: ""
+      });
+    }
   }
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
@@ -1281,7 +2082,7 @@ class ConversionDetail extends React.Component {
                         <RowTitle>You Recieve</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
-                            type="number"
+                            type="text"
                             value={this.state.recieveCurrencyInput}
                             disabled
                             placeholder="0"
@@ -1377,136 +2178,137 @@ class ConversionDetail extends React.Component {
                         </Col>
                       </RadioBorderRow>
                     ) : (
-                      <RadioBorderRow className="radio-row">
-                        <RowTitle>You Recieve</RowTitle>
-                        <Col xs={12} sm={12} md={14}>
-                          <ConversionInput
-                            type="number"
-                            value={this.state.recieveCurrencyInput}
-                            onChange={this.recieveCurrencyChange}
-                            placeholder="0"
-                            step="0.00000001"
-                          />
-                          {this.validator1.message(
-                            "recieve currency",
-                            this.state.recieveCurrencyInput,
-                            `required|numeric|gtzero|decimalrestrict8|minCryptoValid`,
-                            "text-danger-validation",
-                            {
-                              minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
-                            }
-                          )}
-                        </Col>
-                        <Col xs={12} sm={12} md={10} className="height-col">
-                          {this.state.cryptoList &&
-                            this.state.cryptoList.length > 0 && (
-                              <ConversionDropDown
-                                value={this.state.crypto}
-                                onChange={this.handleCryptoChange}
-                              >
-                                {this.state.cryptoList.map((element, index) => {
-                                  if (this.state.currency === "XRP") {
-                                    if (
-                                      // element.coin != this.state.currency &&
-                                      element.coin != "LTC"
-                                    ) {
-                                      // console.log(this.state.cryptoList);
-                                      return (
-                                        <DropDownOption
-                                          key={index}
-                                          value={element.coin}
-                                          selectedData={element}
-                                        >
-                                          {" "}
-                                          <DropIcon
-                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                            height="20px"
-                                          />{" "}
-                                          {element.coin}
-                                        </DropDownOption>
-                                      );
-                                    }
-                                  } else if (this.state.currency === "LTC") {
-                                    if (
-                                      // element.coin != this.state.currency &&
-                                      element.coin != "XRP"
-                                    ) {
-                                      // console.log(this.state.cryptoList);
-                                      return (
-                                        <DropDownOption
-                                          key={index}
-                                          value={element.coin}
-                                          selectedData={element}
-                                        >
-                                          {" "}
-                                          <DropIcon
-                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                            height="20px"
-                                          />{" "}
-                                          {element.coin}
-                                        </DropDownOption>
-                                      );
-                                    }
-                                  } else {
-                                    return (
-                                      <DropDownOption
-                                        key={index}
-                                        value={element.coin}
-                                        selectedData={element}
-                                      >
-                                        {" "}
-                                        <DropIcon
-                                          src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                          height="20px"
-                                        />{" "}
-                                        {element.coin}
-                                      </DropDownOption>
-                                    );
-                                  }
-                                  //  else {
-                                  //   if (element.coin != this.state.currency) {
-                                  //     return (
-                                  //       <DropDownOption
-                                  //         key={index}
-                                  //         value={element.coin}
-                                  //         selectedData={element}
-                                  //       >
-                                  //         {" "}
-                                  //         <DropIcon
-                                  //           src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                  //           height="20px"
-                                  //         />{" "}
-                                  //         {element.coin}
-                                  //       </DropDownOption>
-                                  //     );
-                                  //   }
-                                  // }
-                                })}
-                              </ConversionDropDown>
+                        <RadioBorderRow className="radio-row">
+                          <RowTitle>You Recieve</RowTitle>
+                          <Col xs={12} sm={12} md={14}>
+                            <ConversionInput
+                              type="text"
+                              value={this.state.recieveCurrencyInput}
+                              onChange={this.recieveCurrencyChange}
+                              placeholder="0"
+                              step="0.00000001"
+                            />
+                            {this.validator1.message(
+                              "recieve currency",
+                              this.state.recieveCurrencyInput,
+                              `required|numeric|gtzero|decimalrestrict8|minCryptoValid`,
+                              "text-danger-validation",
+                              {
+                                minCryptoValid: `Minimum limit is ${this.state.minCrypto}`,
+                                numeric: "Please enter valid data"
+                              }
                             )}
-                        </Col>
-                      </RadioBorderRow>
-                    )}
+                          </Col>
+                          <Col xs={12} sm={12} md={10} className="height-col">
+                            {this.state.cryptoList &&
+                              this.state.cryptoList.length > 0 && (
+                                <ConversionDropDown
+                                  value={this.state.crypto}
+                                  onChange={this.handleCryptoChange}
+                                >
+                                  {this.state.cryptoList.map((element, index) => {
+                                    if (this.state.currency === "XRP") {
+                                      if (
+                                        // element.coin != this.state.currency &&
+                                        element.coin != "LTC"
+                                      ) {
+                                        // console.log(this.state.cryptoList);
+                                        return (
+                                          <DropDownOption
+                                            key={index}
+                                            value={element.coin}
+                                            selectedData={element}
+                                          >
+                                            {" "}
+                                            <DropIcon
+                                              src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                              height="20px"
+                                            />{" "}
+                                            {element.coin}
+                                          </DropDownOption>
+                                        );
+                                      }
+                                    } else if (this.state.currency === "LTC") {
+                                      if (
+                                        // element.coin != this.state.currency &&
+                                        element.coin != "XRP"
+                                      ) {
+                                        // console.log(this.state.cryptoList);
+                                        return (
+                                          <DropDownOption
+                                            key={index}
+                                            value={element.coin}
+                                            selectedData={element}
+                                          >
+                                            {" "}
+                                            <DropIcon
+                                              src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                              height="20px"
+                                            />{" "}
+                                            {element.coin}
+                                          </DropDownOption>
+                                        );
+                                      }
+                                    } else {
+                                      return (
+                                        <DropDownOption
+                                          key={index}
+                                          value={element.coin}
+                                          selectedData={element}
+                                        >
+                                          {" "}
+                                          <DropIcon
+                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                            height="20px"
+                                          />{" "}
+                                          {element.coin}
+                                        </DropDownOption>
+                                      );
+                                    }
+                                    //  else {
+                                    //   if (element.coin != this.state.currency) {
+                                    //     return (
+                                    //       <DropDownOption
+                                    //         key={index}
+                                    //         value={element.coin}
+                                    //         selectedData={element}
+                                    //       >
+                                    //         {" "}
+                                    //         <DropIcon
+                                    //           src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                    //           height="20px"
+                                    //         />{" "}
+                                    //         {element.coin}
+                                    //       </DropDownOption>
+                                    //     );
+                                    //   }
+                                    // }
+                                  })}
+                                </ConversionDropDown>
+                              )}
+                          </Col>
+                        </RadioBorderRow>
+                      )}
                     {this.state.includeFees === 1 ? (
                       <RadioBorderRow className="radio-row">
                         <RowTitle>Fiat Value</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
-                            type="number"
+                            type="text"
                             value={this.state.fiatJSTValue}
                             onChange={this.fiatJSTValueChange}
                             placeholder="0"
                             step="0.01"
                           />
-                          {/* {this.validator1.message(
+                          {this.validator1.message(
                             "fiat value",
                             this.state.fiatJSTValue,
                             `required|numeric|gtzerofiat|decimalrestrict2`,
-                            "text-danger-validation"
-                            // {
-                            //   minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
-                            // }
-                          )} */}
+                            "text-danger-validation",
+                            {
+                              numeric: "Please enter valid data"
+                            }
+                          )}
                         </Col>
                         <Col
                           xs={12}
@@ -1523,8 +2325,8 @@ class ConversionDetail extends React.Component {
                         </Col>
                       </RadioBorderRow>
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                   </RadioMainRow>
                 </RadioGroupMainRow>
                 <RadioGroupMainRow>
@@ -1535,7 +2337,7 @@ class ConversionDetail extends React.Component {
                         <RowTitle>You Send</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
-                            type="number"
+                            type="text"
                             value={this.state.sendCurrencyInput}
                             disabled
                             placeholder="0"
@@ -1632,28 +2434,29 @@ class ConversionDetail extends React.Component {
                         </Col>
                       </RadioBorderRow>
                     ) : (
-                      <RadioBorderRow className="radio-row">
-                        <RowTitle>You Send</RowTitle>
-                        <Col xs={12} sm={12} md={14}>
-                          <ConversionInput
-                            type="number"
-                            value={this.state.sendCurrencyInput}
-                            onChange={this.sendCurrencyChange}
-                            placeholder="0"
-                            step="0.00000001"
-                          />
-                          {this.validator2.message(
-                            "send currency",
-                            this.state.sendCurrencyInput,
-                            `required|numeric|gtzero|decimalrestrict8|minCurrValid`,
-                            "text-danger-validation",
-                            {
-                              minCurrValid: `Minimum limit is ${this.state.minCurrency}`
-                            }
-                          )}
-                        </Col>
-                        <Col xs={12} sm={12} md={10} className="height-col">
-                          {/* {this.state.currencyList &&
+                        <RadioBorderRow className="radio-row">
+                          <RowTitle>You Send</RowTitle>
+                          <Col xs={12} sm={12} md={14}>
+                            <ConversionInput
+                              type="text"
+                              value={this.state.sendCurrencyInput}
+                              onChange={this.sendCurrencyChange}
+                              placeholder="0"
+                              step="0.00000001"
+                            />
+                            {this.validator2.message(
+                              "send currency",
+                              this.state.sendCurrencyInput,
+                              `required|numeric|gtzero|decimalrestrict8|minCurrValid`,
+                              "text-danger-validation",
+                              {
+                                minCurrValid: `Minimum limit is ${this.state.minCurrency}`,
+                                numeric: "Please enter valid data"
+                              }
+                            )}
+                          </Col>
+                          <Col xs={12} sm={12} md={10} className="height-col">
+                            {/* {this.state.currencyList &&
                             this.state.currencyList.length > 0 && (
                               <ConversionDropDown
                                 defaultValue={this.state.currency}
@@ -1676,20 +2479,56 @@ class ConversionDetail extends React.Component {
                                 )}
                               </ConversionDropDown>
                             )} */}
-                          {console.log(this.state.currencyList)}
-                          {this.state.currencyList &&
-                            this.state.currencyList.length > 0 && (
-                              <ConversionDropDown
-                                value={this.state.currency}
-                                onChange={this.handleCurrencyChange}
-                              >
-                                {this.state.currencyList.map(
-                                  (element, index) => {
-                                    if (this.state.crypto === "XRP") {
-                                      if (
-                                        // element.coin != this.state.crypto &&
-                                        element.coin != "LTC"
-                                      ) {
+                            {/* {console.log(this.state.currencyList)} */}
+                            {this.state.currencyList &&
+                              this.state.currencyList.length > 0 && (
+                                <ConversionDropDown
+                                  value={this.state.currency}
+                                  onChange={this.handleCurrencyChange}
+                                >
+                                  {this.state.currencyList.map(
+                                    (element, index) => {
+                                      if (this.state.crypto === "XRP") {
+                                        if (
+                                          // element.coin != this.state.crypto &&
+                                          element.coin != "LTC"
+                                        ) {
+                                          return (
+                                            <DropDownOption
+                                              key={index}
+                                              value={element.coin}
+                                              selectedData={element}
+                                            >
+                                              {" "}
+                                              <DropIcon
+                                                src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                                height="20px"
+                                              />{" "}
+                                              {element.coin}
+                                            </DropDownOption>
+                                          );
+                                        }
+                                      } else if (this.state.crypto === "LTC") {
+                                        if (
+                                          // element.coin != this.state.crypto &&
+                                          element.coin != "XRP"
+                                        ) {
+                                          return (
+                                            <DropDownOption
+                                              key={index}
+                                              value={element.coin}
+                                              selectedData={element}
+                                            >
+                                              {" "}
+                                              <DropIcon
+                                                src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                                height="20px"
+                                              />{" "}
+                                              {element.coin}
+                                            </DropDownOption>
+                                          );
+                                        }
+                                      } else {
                                         return (
                                           <DropDownOption
                                             key={index}
@@ -1705,67 +2544,31 @@ class ConversionDetail extends React.Component {
                                           </DropDownOption>
                                         );
                                       }
-                                    } else if (this.state.crypto === "LTC") {
-                                      if (
-                                        // element.coin != this.state.crypto &&
-                                        element.coin != "XRP"
-                                      ) {
-                                        return (
-                                          <DropDownOption
-                                            key={index}
-                                            value={element.coin}
-                                            selectedData={element}
-                                          >
-                                            {" "}
-                                            <DropIcon
-                                              src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                              height="20px"
-                                            />{" "}
-                                            {element.coin}
-                                          </DropDownOption>
-                                        );
-                                      }
-                                    } else {
-                                      return (
-                                        <DropDownOption
-                                          key={index}
-                                          value={element.coin}
-                                          selectedData={element}
-                                        >
-                                          {" "}
-                                          <DropIcon
-                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                            height="20px"
-                                          />{" "}
-                                          {element.coin}
-                                        </DropDownOption>
-                                      );
+                                      // else {
+                                      //   if (element.coin != this.state.crypto) {
+                                      //     return (
+                                      //       <DropDownOption
+                                      //         key={index}
+                                      //         value={element.coin}
+                                      //         selectedData={element}
+                                      //       >
+                                      //         {" "}
+                                      //         <DropIcon
+                                      //           src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                      //           height="20px"
+                                      //         />{" "}
+                                      //         {element.coin}
+                                      //       </DropDownOption>
+                                      //     );
+                                      //   }
+                                      // }
                                     }
-                                    // else {
-                                    //   if (element.coin != this.state.crypto) {
-                                    //     return (
-                                    //       <DropDownOption
-                                    //         key={index}
-                                    //         value={element.coin}
-                                    //         selectedData={element}
-                                    //       >
-                                    //         {" "}
-                                    //         <DropIcon
-                                    //           src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                    //           height="20px"
-                                    //         />{" "}
-                                    //         {element.coin}
-                                    //       </DropDownOption>
-                                    //     );
-                                    //   }
-                                    // }
-                                  }
-                                )}
-                              </ConversionDropDown>
-                            )}
-                        </Col>
-                      </RadioBorderRow>
-                    )}
+                                  )}
+                                </ConversionDropDown>
+                              )}
+                          </Col>
+                        </RadioBorderRow>
+                      )}
                     {this.state.includeFees === 2 ? (
                       <RadioBorderRow className="radio-row">
                         <RowTitle>Fiat Value</RowTitle>
@@ -1777,15 +2580,15 @@ class ConversionDetail extends React.Component {
                             placeholder="0"
                             step="0.01"
                           />
-                          {/* {this.validator2.message(
+                          {this.validator2.message(
                             "fiat value",
                             this.state.fiatJSTValue,
                             `required|numeric|gtzerofiat|decimalrestrict2`,
-                            "text-danger-validation"
-                            // {
-                            //   minCryptoValid: `Minimum limit is ${this.state.minCrypto}`
-                            // }
-                          )} */}
+                            "text-danger-validation",
+                            {
+                              numeric: "Please enter valid data"
+                            }
+                          )}
                         </Col>
                         <Col xs={12} sm={12} md={10} className="height-col">
                           <CryptoFiatRow>
@@ -1823,15 +2626,15 @@ class ConversionDetail extends React.Component {
                             {this.state.displayCurrency}
                           </ConversionLeftSpan>
                         ) : (
-                          <ConversionLeftSpan>
-                            <NumberFormat
-                              value={parseFloat(this.state.subTotal).toFixed(8)}
-                              displayType={"text"}
-                              thousandSeparator={true}
-                            />{" "}
-                            {this.state.displayCurrency}
-                          </ConversionLeftSpan>
-                        )}
+                            <ConversionLeftSpan>
+                              <NumberFormat
+                                value={parseFloat(this.state.subTotal).toFixed(8)}
+                                displayType={"text"}
+                                thousandSeparator={true}
+                              />{" "}
+                              {this.state.displayCurrency}
+                            </ConversionLeftSpan>
+                          )}
                       </Col>
                     </Row>
                     <Row>
@@ -1859,7 +2662,7 @@ class ConversionDetail extends React.Component {
                         </ConversionLeftSpan>
                       </Col>
                     </Row>
-                    <Row className="network_fee">
+                    <Row>
                       <Col xs={12} className="left-style">
                         <ConversionRightSpan>Network Fee</ConversionRightSpan>
                       </Col>
@@ -1882,6 +2685,206 @@ class ConversionDetail extends React.Component {
                         </ConversionLeftSpan>
                       </Col>
                     </Row>
+                    <Row className="network_fee">
+                      <Col xs={12} className="left-style">
+                        <LeftTotal className="promo-apply">
+                          {this.state.appliedOfferCode ? (
+                            <span
+                              onClick={() => {
+                                this.clearValidation();
+                                this.setState({
+                                  showTFAModal: false,
+                                  showAppliedPromoModal: true,
+                                  promoCode: this.state.appliedOfferCode
+                                });
+                              }}
+                            >
+                              {this.state.appliedOfferCode}
+                            </span>
+                          ) : (
+                              <span
+                                onClick={() => {
+                                  this.clearValidation();
+                                  this.setState({
+                                    showTFAModal: false,
+                                    showPromoModal: true,
+                                    offerMsg: "",
+                                    promoCode: ""
+                                  });
+                                }}
+                              >
+                                Apply Promo Code
+                              <Icon type="right" />
+                              </span>
+                            )}
+                        </LeftTotal>
+                      </Col>
+                      <Col xs={12} className="right-style">
+                        {this.state.appliedOfferCode && (
+                          <RightTotal
+                            onClick={() => {
+                              this.clearValidation();
+                              this.setState(
+                                {
+                                  appliedOfferCode: "",
+                                  promoCode: "",
+                                  offerMsg: "",
+                                  applyPromoCode: false,
+                                  validPromo: false
+                                },
+                                () => {
+                                  this.getValuesSocket();
+                                }
+                              );
+                            }}
+                          >
+                            <Icon type="close-circle" />
+                          </RightTotal>
+                        )}
+                      </Col>
+                    </Row>
+                    <VerifyModal
+                      visible={this.state.showPromoModal}
+                      onCancel={this.closePromoModal}
+                      title="Enter Promo Code"
+                      footer={null}
+                    >
+                      <NewP className="add_new_promo">
+                        <div className="otp-input-wrap promo_input_wrap">
+                          <OTPInput
+                            className="otp-input"
+                            value={this.state.promoCode}
+                            size="medium"
+                            placeholder="Promo Code"
+                            onChange={this.promoCode}
+                            name="promoCode"
+                            style={{ marginBottom: "20px" }}
+                          />
+                          {this.validator3.message(
+                            "Promo Code ",
+                            this.state.promoCode,
+                            "required",
+                            "text-danger-validation"
+                          )}
+                          {this.state.promoCode && (
+                            <span
+                              onClick={() => {
+                                this.setState({
+                                  promoCode: "",
+                                  offerMsg: "",
+                                  validPromo: false
+                                });
+                              }}
+                              className="promo_cross_wrap"
+                            >
+                              <Icon type="close-circle" />
+                            </span>
+                          )}
+                        </div>
+                        {this.state.offerMsg && (
+                          <span className="offer_msg">
+                            {this.state.offerMsg}
+                          </span>
+                        )}
+                      </NewP>
+                      {this.state.offerMsg === "" ? (
+                        <ButtonDiv className="promo_check">
+                          <NewButton onClick={this.checkPromo}>Check</NewButton>
+                        </ButtonDiv>
+                      ) : (
+                          <div>
+                            {this.state.validPromo ? (
+                              <ButtonDiv className="promo_check">
+                                <NewButton onClick={this.applyPromo}>
+                                  Apply
+                              </NewButton>
+                              </ButtonDiv>
+                            ) : (
+                                <ButtonDiv className="promo_check">
+                                  <NewButton onClick={this.closePromoModal}>
+                                    Ok
+                              </NewButton>
+                                </ButtonDiv>
+                              )}
+                          </div>
+                        )}
+                    </VerifyModal>
+                    <VerifyModal
+                      visible={this.state.showAppliedPromoModal}
+                      onCancel={this.closePromoModal}
+                      title="Enter Promo Code"
+                      footer={null}
+                    >
+                      <NewP className="add_new_promo">
+                        <div className="otp-input-wrap promo_input_wrap">
+                          <OTPInput
+                            className="otp-input"
+                            value={this.state.promoCode}
+                            size="medium"
+                            placeholder="Promo Code"
+                            onChange={this.promoCode}
+                            name="promoCode"
+                            style={{ marginBottom: "20px" }}
+                          />
+                          {this.validator3.message(
+                            "Promo Code ",
+                            this.state.promoCode,
+                            "required",
+                            "text-danger-validation"
+                          )}
+                          {this.state.promoCode && (
+                            <span
+                              onClick={() => {
+                                this.setState({
+                                  promoCode: "",
+                                  appliedOfferCode: "",
+                                  offerMsg: "",
+                                  validPromo: false
+                                });
+                              }}
+                              className="promo_cross_wrap"
+                            >
+                              <Icon type="close-circle" />
+                            </span>
+                          )}
+                        </div>
+                        {this.state.offerMsg && (
+                          <span className="offer_msg">
+                            {this.state.offerMsg}
+                          </span>
+                        )}
+                      </NewP>
+                      {/* {this.state.validPromo ? (
+                        <ButtonDiv className="promo_check">
+                          <NewButton onClick={this.applyPromo}>Apply</NewButton>
+                        </ButtonDiv>
+                      ) : (
+                        <ButtonDiv className="promo_check">
+                          <NewButton onClick={this.checkPromo}>Check</NewButton>
+                        </ButtonDiv>
+                      )} */}
+                      {this.state.offerMsg === "" ? (
+                        <ButtonDiv className="promo_check">
+                          <NewButton onClick={this.checkPromo}>Check</NewButton>
+                        </ButtonDiv>
+                      ) : (
+                          <div>
+                            {this.state.validPromo ? (
+                              <ButtonDiv className="promo_check">
+                                <NewButton onClick={this.applyPromo}>
+                                  Apply
+                              </NewButton>
+                              </ButtonDiv>
+                            ) : (
+                                <ButtonDiv className="promo_check">
+                                  <NewButton onClick={this.closePromoModal}>
+                                    Ok
+                              </NewButton>
+                                </ButtonDiv>
+                              )}
+                          </div>
+                        )}
+                    </VerifyModal>
                     <Row>
                       <Col xs={12} className="left-style">
                         <RightTotal>total</RightTotal>
@@ -1897,17 +2900,17 @@ class ConversionDetail extends React.Component {
                             {this.state.displayCurrency}
                           </LeftTotal>
                         ) : (
-                          <LeftTotal>
-                            <NumberFormat
-                              value={parseFloat(this.state.totalAmount).toFixed(
-                                8
-                              )}
-                              displayType={"text"}
-                              thousandSeparator={true}
-                            />{" "}
-                            {this.state.displayCurrency}
-                          </LeftTotal>
-                        )}
+                            <LeftTotal>
+                              <NumberFormat
+                                value={parseFloat(this.state.totalAmount).toFixed(
+                                  8
+                                )}
+                                displayType={"text"}
+                                thousandSeparator={true}
+                              />{" "}
+                              {this.state.displayCurrency}
+                            </LeftTotal>
+                          )}
                       </Col>
                     </Row>
                   </div>
@@ -1917,7 +2920,7 @@ class ConversionDetail extends React.Component {
                 <Col>
                   <ConversionSubmitBtn
                     className={`conversion_btn ${this.state.disabledClass}`}
-                    onClick={this.btnClicked}
+                    onClick={() => this.btnClicked()}
                     type="primary"
                     size="large"
                     block
@@ -1937,6 +2940,11 @@ class ConversionDetail extends React.Component {
           comingCancel={e => this.comingCancel(e)}
           visible={this.state.completeKYC}
         /> */}
+        <TFAModal
+          visible={this.state.showTFAModal}
+          isLoggedIn={this.props.isLoggedIn}
+          submit={otp => this.btnClicked(otp)}
+        />
         {this.state.loader == true ? <FaldaxLoader /> : ""}
       </ConversionWrap>
     );

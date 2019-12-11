@@ -104,7 +104,7 @@ class TierOne extends React.Component {
     */
 
   next_step(a, type = null, countryChange = null) {
-    // console.log("KYC CHECK", countryChange)
+    console.log("--------------------->", a, type, countryChange);
     this.setState({ next: a });
     if (
       type === "Passport" ||
@@ -195,6 +195,7 @@ class TierOne extends React.Component {
               )}
               {next === 2 && (
                 <SSN
+                  {...this.props}
                   kycData={this.state.kycData}
                   back_step={a => this.back_step(a)}
                   next_step={(a, type) => this.next_step(a, type)}

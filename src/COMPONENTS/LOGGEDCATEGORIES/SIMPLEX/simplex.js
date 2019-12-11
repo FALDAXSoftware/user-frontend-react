@@ -42,7 +42,8 @@ class Simplex extends React.Component {
       loader: false,
       currencyToPay: null,
       currencyToGet: null,
-      minCurrency: parseInt(50),
+      minCurrency: "50",
+      maxCurrency: "20000",
       cryptoList: [],
       crypto: "BTC",
       currency: "USD",
@@ -54,12 +55,23 @@ class Simplex extends React.Component {
     };
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
-        message: `Amount must be greater than or equal to ${this.state.minCurrency}`,
+        message: `Amount must be greater than or equal to 50`,
         rule: (val, params, validator) => {
-          if (val >= this.state.minCurrency) {
+          if (val >= parseInt(this.state.minCurrency)) {
             return true;
           } else {
             return false;
+          }
+        },
+        required: true // optional
+      },
+      maxCurrencyValid: {
+        message: `Amount must be less than or equal to 20,000`,
+        rule: (val, params, validator) => {
+          if (val > parseInt(this.state.maxCurrency)) {
+            return false;
+          } else {
+            return true;
           }
         },
         required: true // optional
@@ -182,7 +194,7 @@ class Simplex extends React.Component {
           });
         }
       })
-      .catch(error => { });
+      .catch(error => {});
   }
   calculateDigitalCurrency() {
     this.setState({
@@ -218,11 +230,11 @@ class Simplex extends React.Component {
         .then(responseData => {
           if (responseData.status === 200) {
             if (responseData.data.error) {
-              this.openNotificationWithIcon(
-                "error",
-                "Error",
-                responseData.data.errors[0].message
-              );
+              // this.openNotificationWithIcon(
+              //   "error",
+              //   "Error",
+              //   responseData.data.errors[0].message
+              // );
               this.setState({
                 loader: false
               });
@@ -262,7 +274,7 @@ class Simplex extends React.Component {
             );
           }
         })
-        .catch(error => { });
+        .catch(error => {});
     }
   }
   handleCurrencyPayChange(e) {
@@ -271,7 +283,7 @@ class Simplex extends React.Component {
     if (e.target.value === null || e.target.value === "") {
       this.setState({
         currencyToPay: e.target.value,
-        currencyToGet: null
+        currencyToGet: ""
       });
     } else {
       this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
@@ -353,7 +365,7 @@ class Simplex extends React.Component {
                   {this.validator1.message(
                     "amount pay",
                     this.state.currencyToPay,
-                    `required|gtzero|minCurrencyValid|decimalrestrict2`,
+                    `required|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
                     "text-danger-validation"
                   )}
                 </Col>
@@ -393,7 +405,7 @@ class Simplex extends React.Component {
                     placeholder="0"
                     readOnly
                     value={this.state.currencyToGet}
-                  // onChange={this.handleCurrencyGetChange}
+                    // onChange={this.handleCurrencyGetChange}
                   />
                 </Col>
                 <Col xs={12} sm={12} md={8} className="value-display">

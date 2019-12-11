@@ -526,7 +526,8 @@ class PersonalDetails extends Component {
     */
 
   onChangeField(value, field) {
-    if (field !== "dob" && field !== "country") value = value.trim();
+    if (field !== "dob" && field !== "country" && field !== "postal_code")
+      value = value.trim();
     if (field === "first_name") {
       value = value.trim();
       var re = /^[a-zA-Z0-9]{2,15}$/;
@@ -690,8 +691,10 @@ class PersonalDetails extends Component {
       }
     } else if (field === "postal_code") {
       if (value !== "") {
-        var reg = /^(?=.*[0-9A-Za-z])[- ()0-9A-Za-z]{3,25}$/;
+        // var reg = /^(?=.*[0-9A-Za-z])[-()0-9A-Za-z]{3,25}$/;
+        var reg = /^[a-zA-Z0-9-_]*$/;
         var bool = reg.test(value);
+        console.log("------------------->", bool, value);
         if (bool === true) {
           this.setState({ postalIcon: true });
           document.querySelectorAll(".postal_msg")[0].style.display = "none";
@@ -706,7 +709,7 @@ class PersonalDetails extends Component {
           else
             this.setState({
               postalmsg:
-                "Postal code should only contain alphabets , numbers , hyphen and space ."
+                "Postal code may only contain letters, numbers, and dashes."
             });
         }
       } else {
@@ -746,6 +749,7 @@ class PersonalDetails extends Component {
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
+      console.log("---------->", this.state.dfmsg);
       if (
         error === null &&
         this.state.fiatIcon !== false &&
@@ -757,6 +761,7 @@ class PersonalDetails extends Component {
         this.state.street1Icon !== false &&
         this.state.street2Icon !== false &&
         this.state.postalIcon !== false &&
+        this.state.date_format !== "" &&
         ((this.props.profileDetails.country !== undefined &&
           this.props.profileDetails.country !== "" &&
           this.props.profileDetails.country !== null) ||

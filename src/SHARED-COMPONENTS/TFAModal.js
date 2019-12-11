@@ -33,18 +33,40 @@ class TFAModal extends Component {
       },
       visibleTFA: false
     };
-    this.validator = new SimpleReactValidator();
+    this.validator = new SimpleReactValidator({
+      validOTP: {
+        message: "Please enter valid OTP.",
+        rule: val => {
+          var RE = /^[0-9]*$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+    });
   }
   componentWillReceiveProps(props) {
-    console.log("CWRP", props.visible);
-    if (props.visible !== undefined)
-      this.setState({ visibleTFA: props.visible });
+    // console.log("CWRP", props.visible);
+    if (props.visible !== undefined) var fields = {};
+    fields["otp"] = "";
+    this.setState({ visibleTFA: props.visible, fields }, () => {
+      this.validator.hideMessages();
+      this.forceUpdate();
+    });
   }
   componentDidMount() {
-    console.log("DID", this.props.visible);
+    // console.log("DID", this.props.visible);
+    var fields = {};
+    fields["otp"] = "";
+    this.setState({
+      fields
+    });
   }
   onChangeField = (field, e) => {
     let fields = this.state.fields;
+    console.log(e.target.value);
     if (e.target.value.trim() === "") {
       fields[field] = "";
     } else {
@@ -54,16 +76,20 @@ class TFAModal extends Component {
   };
   verifyOTP() {
     var self = this;
+    // self.validator.hideMessages();
+    // self.forceUpdate();
     if (this.validator.allValid()) {
       var otp = this.state.fields.otp;
-      var fields = {};
-      fields["otp"] = "";
+      // var fields = {};
+      // fields["otp"] = "";
       this.setState(
         {
-          fields
+          // fields
         },
         () => {
           self.props.submit(otp);
+          this.validator.hideMessages();
+          this.forceUpdate();
         }
       );
     } else {
@@ -72,15 +98,22 @@ class TFAModal extends Component {
       this.forceUpdate();
     }
   }
+  comingCancel = e => {
+    this.setState({
+      visibleTFA: false
+    });
+  };
   render() {
     const { fields, visibleTFA } = this.state;
-    console.log(visibleTFA);
+    // console.log(visibleTFA);
     return (
       <VerifyModal
-        closable={false}
+        // closable={false}
         title="Two-Factor Authentication Code"
         visible={visibleTFA}
         footer={null}
+        onCancel={e => this.comingCancel(e)}
+        maskClosable={false}
       >
         <Description>
           {" "}
@@ -94,11 +127,13 @@ class TFAModal extends Component {
               size="medium"
               onChange={this.onChangeField.bind(this, "otp")}
               name="Verification Code"
+              type="text"
             />
             {this.validator.message(
               "verification code",
               fields["otp"],
-              "required|numeric"
+              "required|numeric|validOTP",
+              "text-danger-validation"
             )}
           </div>
         </NewP>
@@ -114,7 +149,4 @@ const mapDispatchToProps = dispatch => ({
   verifyTF: (isLoggedIn, value) => dispatch(verifyTF(isLoggedIn, value))
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(TFAModal);
+export default connect(null, mapDispatchToProps)(TFAModal);

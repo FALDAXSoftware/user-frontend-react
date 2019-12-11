@@ -18,6 +18,7 @@ export function profileupdateAction(isLoggedIn, form) {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 200) {
+          console.log("-------->", responseData);
           dispatch(profileupdatedData(responseData));
           dispatch(getProfileDataAction(isLoggedIn));
         }
@@ -65,6 +66,7 @@ export const getProfileDataAction = token => dispatch => {
     .then(response => response.json())
     .then(responseData => {
       if (responseData.status == 200) {
+        console.log("----------------------->", responseData);
         dispatch(addprofileData(responseData));
       } else dispatch(profileError(responseData));
       if (responseData.status !== 403) dispatch(removeLoader());

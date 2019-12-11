@@ -550,8 +550,10 @@ class PasswordChange extends Component {
     // }
     if (field === "current_password") {
       //   alert("current");
+      var regexp = /^[a-zA-Z0-9]*$/;
+      console.log("value.trim()", regexp.test(value));
 
-      if (value.trim() !== "") {
+      if (value !== "") {
         document.querySelector("#passchange_icon_success").style.display =
           "none";
         document.querySelector("#passchange_icon_fail").style.display = "none";
@@ -568,6 +570,14 @@ class PasswordChange extends Component {
           //   alert("2");
           this.setState({ confirmIcon: true });
           document.querySelector("#confirmchange_icon_success").style.display =
+            "inline-block";
+          document.querySelector("#confirmchange_icon_fail").style.display =
+            "none";
+          document.querySelectorAll(".confirmchange_msg")[0].style.display =
+            "none";
+        } else if (this.state.confPass !== null || this.state.confPass !== "") {
+          this.setState({ confirmIcon: true });
+          document.querySelector("#confirmchange_icon_success").style.display =
             "none";
           document.querySelector("#confirmchange_icon_fail").style.display =
             "none";
@@ -575,14 +585,14 @@ class PasswordChange extends Component {
             "none";
         } else {
           //   alert("3");
-          //   this.setState({ confirmIcon: false });
-          //   document.querySelector("#confirmchange_icon_success").style.display =
-          //     "none";
-          //   document.querySelector("#confirmchange_icon_fail").style.display =
-          //     "inline-block";
-          //   document.querySelectorAll(".confirmchange_msg")[0].style.display =
-          //     "block";
-          //   this.setState({ confirmPass_msg: "Password does not match." });
+          // this.setState({ confirmIcon: false });
+          // document.querySelector("#confirmchange_icon_success").style.display =
+          //   "none";
+          // document.querySelector("#confirmchange_icon_fail").style.display =
+          //   "inline-block";
+          // document.querySelectorAll(".confirmchange_msg")[0].style.display =
+          //   "block";
+          // this.setState({ confirmPass_msg: "Password does not match." });
         }
       }
       var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%_])[A-Za-z\d!@#$%_]{8,60}$/;
@@ -590,6 +600,7 @@ class PasswordChange extends Component {
       var numb = /^\d+$/,
         letters = /^[A-Za-z]+$/,
         alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
+      // alphanum = /^[a-zA-Z0-9]*$/;
       if (numb.test(value) || letters.test(value)) {
         this.setState({ stroke: "red", percent: 20 });
       }
@@ -826,7 +837,7 @@ class PasswordChange extends Component {
                       me.onChangeField(e.target.value, "new_password");
                     }, // have to write original onChange here if you need
                     rules: [
-                      { type: "string", required: true, whitespace: true }
+                      { type: "string", required: true, whitespace: false }
                     ]
                   })}
                 />
@@ -852,6 +863,12 @@ class PasswordChange extends Component {
                 />
               </div>
               <Passreq className="newchange_msg">{this.state.new_msg}</Passreq>
+              <Progressbar
+                type="line"
+                size="small"
+                percent={percent}
+                strokeColor={this.state.stroke}
+              />
             </NewP>
             <Repeat>
               <Repeatlabel>Re-Enter New Password*</Repeatlabel>
@@ -895,12 +912,12 @@ class PasswordChange extends Component {
                 {this.state.confirmPass_msg}
               </Passreq>
 
-              <Progressbar
+              {/* <Progressbar
                 type="line"
                 size="small"
                 percent={percent}
                 strokeColor={this.state.stroke}
-              />
+              /> */}
             </Repeat>
             <Buttondiv>
               <NewButton onClick={this.submit}>Save New Password</NewButton>

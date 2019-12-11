@@ -100,7 +100,7 @@ const DaysInput = styled(NewInput)``;
 class Acc_settings extends Component {
   constructor(props) {
     super(props);
-
+    console.log("Propos ", this.props);
     this.state = {
       loginHistory: [],
       notiCSS: "",
@@ -462,6 +462,11 @@ class Acc_settings extends Component {
             savedDataNoti: b,
             loader: false
           });
+          this.openNotificationWithIcon(
+            "success",
+            "Success",
+            "Notifications setting saved successfully."
+          );
         } else {
           this.openNotificationWithIcon(
             "error",
@@ -1074,6 +1079,55 @@ class Acc_settings extends Component {
   }
   render() {
     const { fields, data_noti, savedDataNoti, startValue } = this.state;
+    const columnsIP = [
+      {
+        title: "IP Whitelist",
+        dataIndex: "ip",
+        key: "ip"
+      },
+      {
+        title: "Till Date",
+        dataIndex: "expire_time",
+        key: "day",
+        render: src => {
+          let date_format = this.props.profileDetails.date_format
+            ? this.props.profileDetails.date_format
+            : "DD/MM/YYYY";
+          // console.log(src);
+          return (
+            <span>
+              {src !== ""
+                ? moment
+                    .utc(src)
+                    .local()
+                    .format(`${date_format}, HH:mm:ss`)
+                : "-"}
+            </span>
+          );
+        }
+      },
+      {
+        title: "Action",
+        key: "action",
+        render: src => {
+          // console.log(src.is_permanent);
+          return (
+            <div>
+              {src.is_permanent == true ? (
+                "-"
+              ) : (
+                <div
+                  onClick={this.deleteIP.bind(this, src)}
+                  style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
+                >
+                  Delete
+                </div>
+              )}
+            </div>
+          );
+        }
+      }
+    ];
     let disabled = true;
     // console.log(savedDataNoti, "-------------->", data_noti);
     if (JSON.stringify(savedDataNoti) === JSON.stringify(data_noti)) {
@@ -1204,6 +1258,7 @@ class Acc_settings extends Component {
           )}
           <IpModal
             visible={this.state.visibleIpModal}
+            security={this.props.profileDetails.security_feature}
             ipModalCancel={() => this.ipModalCancel()}
             permanentIp={fields => this.addPerIpWhitelist(null, fields)}
           />
@@ -1216,7 +1271,7 @@ class Acc_settings extends Component {
                   pagination={false}
                   bordered
                   dataSource={this.state.whitelistData}
-                  columns={this.columnsIP}
+                  columns={columnsIP}
                 />
               </TableWrap>
               <PaginationS

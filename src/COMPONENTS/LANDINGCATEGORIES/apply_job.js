@@ -206,6 +206,19 @@ class ApplyJob extends Component {
             return bool;
           }
         }
+      },
+      linkedinurl: {
+        // name the rule
+        message: "Please enter valid Linkedin address.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        rule: function(val, options) {
+          // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+          // check that it is a valid IP address and is not blacklisted
+          if (val != "") {
+            var re = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+            var bool = re.test(String(val).toLowerCase());
+            return bool;
+          }
+        }
       }
     });
   }
@@ -608,7 +621,7 @@ class ApplyJob extends Component {
                         {this.validator.message(
                           "linkedin_profile",
                           this.state.fields.linkedin_profile,
-                          "required|url",
+                          "required|linkedinurl",
                           "text-danger-validation"
                         )}
                       </Col>
