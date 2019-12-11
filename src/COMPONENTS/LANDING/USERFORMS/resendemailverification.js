@@ -134,7 +134,8 @@ class EmailVerification extends Component {
   dispModal = () => {
     this.props.history.push("/login");
   };
-  _resendVerification = () => {
+  _resendVerification = e => {
+    e.preventDefault();
     if (this.validator.allValid()) {
       this.setState({ loader: true });
       fetch(API_URL + "/users/resend-email", {
@@ -201,21 +202,21 @@ class EmailVerification extends Component {
               <RightWrap className="wow fadeInDown">
                 <LoginHead>Resend Verification Link</LoginHead>
                 <EmailLabel>Enter Email:</EmailLabel>
-                <VerifyEmail
-                  name="email"
-                  value={this.state.fields.email}
-                  onChange={this._handleChange}
-                />
-                {this.validator.message(
-                  "email",
-                  this.state.fields.email,
-                  "required|email",
-                  "text-danger-validation"
-                )}
-                <br />
-                <ButtonResend onClick={this._resendVerification}>
-                  RE-SEND
-                </ButtonResend>
+                <form onSubmit={this._resendVerification}>
+                  <VerifyEmail
+                    name="email"
+                    value={this.state.fields.email}
+                    onChange={this._handleChange}
+                  />
+                  {this.validator.message(
+                    "email",
+                    this.state.fields.email,
+                    "required|email",
+                    "text-danger-validation"
+                  )}
+                  <br />
+                  <ButtonResend type="submit">RE-SEND</ButtonResend>
+                </form>
                 <Sign>
                   Already have an account?{" "}
                   <Signa onClick={this.dispModal}>Login</Signa>
@@ -236,9 +237,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    null
-  )(EmailVerification)
-);
+export default withRouter(connect(mapStateToProps, null)(EmailVerification));

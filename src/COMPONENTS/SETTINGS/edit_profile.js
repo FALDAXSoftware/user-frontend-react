@@ -67,6 +67,7 @@ class Editprofile extends Component {
   }
   callback(key) {
     // console.log("Key", key);
+    // console.log("sdjkfhksjhdfkhlksdfhlkasdhflkjasdhfkjh");
     this.setState({
       activeKey: key
     });
@@ -99,28 +100,28 @@ class Editprofile extends Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 201) {
-          console.log("responsedata summary=-----------", responseData.data);
+          // console.log("responsedata summary=-----------", responseData.data);
           this.setState({
             totalUSDOfWallet: responseData.usd_price.toFixed(2),
             walletCoins: responseData.data,
             user2fastatus: responseData.user2fastatus,
             loader: false
           });
-          console.log(
-            "responsedata walletCoins=-----------",
-            this.state.walletCoins
-          );
+          // console.log(
+          //   "responsedata walletCoins=-----------",
+          //   this.state.walletCoins
+          // );
         } else if (responseData.status == 200) {
-          console.log("responsedata summary=-----------", responseData.data);
+          // console.log("responsedata summary=-----------", responseData.data);
           this.setState({
             walletCoins: null,
             user2fastatus: responseData.user2fastatus,
             loader: false
           });
-          console.log(
-            "responsedata walletCoins=-----------",
-            this.state.walletCoins
-          );
+          // console.log(
+          //   "responsedata walletCoins=-----------",
+          //   this.state.walletCoins
+          // );
         }
       })
       .catch(error => {});

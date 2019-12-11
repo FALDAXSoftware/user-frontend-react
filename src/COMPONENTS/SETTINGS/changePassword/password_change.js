@@ -570,6 +570,14 @@ class PasswordChange extends Component {
           //   alert("2");
           this.setState({ confirmIcon: true });
           document.querySelector("#confirmchange_icon_success").style.display =
+            "inline-block";
+          document.querySelector("#confirmchange_icon_fail").style.display =
+            "none";
+          document.querySelectorAll(".confirmchange_msg")[0].style.display =
+            "none";
+        } else if (this.state.confPass !== null || this.state.confPass !== "") {
+          this.setState({ confirmIcon: true });
+          document.querySelector("#confirmchange_icon_success").style.display =
             "none";
           document.querySelector("#confirmchange_icon_fail").style.display =
             "none";
@@ -577,14 +585,14 @@ class PasswordChange extends Component {
             "none";
         } else {
           //   alert("3");
-          //   this.setState({ confirmIcon: false });
-          //   document.querySelector("#confirmchange_icon_success").style.display =
-          //     "none";
-          //   document.querySelector("#confirmchange_icon_fail").style.display =
-          //     "inline-block";
-          //   document.querySelectorAll(".confirmchange_msg")[0].style.display =
-          //     "block";
-          //   this.setState({ confirmPass_msg: "Password does not match." });
+          // this.setState({ confirmIcon: false });
+          // document.querySelector("#confirmchange_icon_success").style.display =
+          //   "none";
+          // document.querySelector("#confirmchange_icon_fail").style.display =
+          //   "inline-block";
+          // document.querySelectorAll(".confirmchange_msg")[0].style.display =
+          //   "block";
+          // this.setState({ confirmPass_msg: "Password does not match." });
         }
       }
       var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%_])[A-Za-z\d!@#$%_]{8,60}$/;
@@ -829,7 +837,7 @@ class PasswordChange extends Component {
                       me.onChangeField(e.target.value, "new_password");
                     }, // have to write original onChange here if you need
                     rules: [
-                      { type: "string", required: true, whitespace: true }
+                      { type: "string", required: true, whitespace: false }
                     ]
                   })}
                 />
