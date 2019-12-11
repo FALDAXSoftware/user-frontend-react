@@ -283,7 +283,7 @@ class Simplex extends React.Component {
     if (e.target.value === null || e.target.value === "") {
       this.setState({
         currencyToPay: e.target.value,
-        currencyToGet: null
+        currencyToGet: ""
       });
     } else {
       this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);

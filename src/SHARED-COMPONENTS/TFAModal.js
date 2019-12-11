@@ -33,7 +33,19 @@ class TFAModal extends Component {
       },
       visibleTFA: false
     };
-    this.validator = new SimpleReactValidator();
+    this.validator = new SimpleReactValidator({
+      validOTP: {
+        message: "Please enter valid OTP.",
+        rule: val => {
+          var RE = /^[0-9]*$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+    });
   }
   componentWillReceiveProps(props) {
     // console.log("CWRP", props.visible);
@@ -115,12 +127,12 @@ class TFAModal extends Component {
               size="medium"
               onChange={this.onChangeField.bind(this, "otp")}
               name="Verification Code"
-              type="number"
+              type="text"
             />
             {this.validator.message(
               "verification code",
               fields["otp"],
-              "required|numeric",
+              "required|numeric|validOTP",
               "text-danger-validation"
             )}
           </div>
