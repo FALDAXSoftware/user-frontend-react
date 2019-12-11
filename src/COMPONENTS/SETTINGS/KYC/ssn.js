@@ -79,8 +79,9 @@ class SSN extends Component {
   next_step() {
     var kycSSN = {};
     if (this.validator.allValid()) {
-      var profileData = this.state.fields;
-      profileData["steps"] = 1;
+      // var profileData = this.state.fields;
+      var profileData = this.state.value_input;
+      // profileData["steps"] = 1;
       this.props.kycFormAction(this.props.isLoggedIn, profileData);
       if (this.state.value_input !== "") {
         kycSSN["ssn"] = this.state.value_input;
@@ -159,7 +160,4 @@ const mapDispatchToProps = dispatch => ({
   kycFormAction: (is, data) => dispatch(kycFormAction(is, data))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SSN);
+export default connect(mapStateToProps, mapDispatchToProps)(SSN);
