@@ -303,6 +303,7 @@ class Referral extends Component {
   getReferralData() {
     let { profileDetails } = this.props;
     this.setState({ loader: true });
+    console.log(this.state);
     fetch(`${API_URL}/users/referredUsers`, {
       method: "get",
       headers: {
@@ -359,18 +360,26 @@ class Referral extends Component {
               }
             }
           });
+          console.log(responseData.leftReferredData);
           responseData.leftReferredData.map(function(temp) {
-            // console.log(temp);
+            console.log(temp);
+            console.log(parseFloat(temp.amount));
+            console.log(parseFloat(temp.quote[`${fiat}`].price));
             let fiatAmt =
               parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
-            // console.log(fiatAmt);
-            sum2 = sum2 + parseFloat(fiatAmt.toFixed(4));
+            console.log(fiatAmt);
+            fiatAmt = parseFloat(fiatAmt).toFixed(8);
+            console.log(fiatAmt);
+            console.log(sum2);
+            sum2 = parseFloat(sum2) + parseFloat(fiatAmt);
+            sum2 = parseFloat(sum2.toFixed(8));
+            console.log("After Sum ??????", sum2);
           });
-          // console.log(sum2, fields)
+          console.log(sum2, fields);
           this.setState({
             referredData: responseData.data,
             referredCoin: fields,
-            totalEarned: sum.toFixed(5),
+            totalEarned: sum.toFixed(8),
             leftOutRef: sum2.toFixed(8),
             loader: false
           });
@@ -441,7 +450,7 @@ class Referral extends Component {
       }
     })
       .then(response => response.json())
-      .then(responseData => {
+      .then(async responseData => {
         if (responseData.status == 200) {
           // this.getReferralData();
           this.openNotificationWithIcon(
@@ -449,18 +458,23 @@ class Referral extends Component {
             "Success",
             responseData.message
           );
-          this.setState({
-            coinSelected: "",
-            perCoinEarned: ""
-          });
-          this.getReferralData();
+          this.setState(
+            {
+              coinSelected: "",
+              perCoinEarned: ""
+              // loader: false
+            },
+            () => {
+              this.getReferralData();
+            }
+          );
         } else {
           this.openNotificationWithIcon("error", "Error", responseData.message);
+          this.setState({ loader: false });
         }
-        this.setState({ loader: false });
       })
       .catch(error => {
-        /* console.log(error) */
+        console.log(error);
         this.setState({ loader: false });
       });
     // this.getReferralData();

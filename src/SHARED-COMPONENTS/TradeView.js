@@ -31,18 +31,13 @@ import {
   DropDownOption,
   DropIcon,
   ConversionSubmitBtn,
-  ConversionRightSpan,
-  ConversionLeftSpan,
-  RightTotal,
-  LeftTotal,
-  RadioMainRow,
-  RadioGroupMainRow,
   ConversionLeftCol,
   CryptoFiatRow,
   CryptoFiatCol,
+  RadioMainRow,
+  RadioGroupMainRow,
   CryptoFiatText
 } from "../STYLED-COMPONENTS/CONVERSION/style";
-import { parse } from "@fortawesome/fontawesome-svg-core";
 
 const API_URL = globalVariables.API_URL;
 const TRADE_URL = globalVariables.TRADE_URL;
@@ -107,17 +102,14 @@ class TradeView extends React.Component {
     this.recieveCurrencyChange = this.recieveCurrencyChange.bind(this);
     this.fiatJSTValueChange = this.fiatJSTValueChange.bind(this);
     this.calculateOrderVaules = this.calculateOrderVaules.bind(this);
-    // this.clearValidation = this.clearValidation.bind(this);
     this.showCalculatedValues = this.showCalculatedValues.bind(this);
     this.showCalculatedValuesUSDTerms = this.showCalculatedValuesUSDTerms.bind(
       this
     );
-    // this.getPairWiseCrypto = this.getPairWiseCrypto.bind(this);
   }
   componentDidMount() {
     this.getCrypto();
-    // this.getCurrencies();
-    // this.getFiatCurrencyList();
+    console.log("this.props.isLoggedIn", this.props.isLoggedIn);
   }
   getFiatCurrencyList() {
     this.setState({
@@ -128,7 +120,6 @@ class TradeView extends React.Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
-        // Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
       .then(response => response.json())
@@ -155,7 +146,6 @@ class TradeView extends React.Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
-        // Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
       .then(response => response.json())
@@ -345,24 +335,45 @@ class TradeView extends React.Component {
     );
   }
   handleCryptoChange(value, option: Option) {
-    console.log(
-      "option.props.selectedData.min_limit",
-      option.props.selectedData.jst_min_coin_limit
-    );
     if (value === this.state.currency) {
       this.state.currencyList.map((element, i) => {
         if (element.coin === this.state.currency) {
           var list = this.state.currencyList.splice(i, 1);
-          // console.log(list);
           this.setState({
             cryptoList: this.state.cryptoList.push(list[0])
           });
         }
       });
-      this.setState({
-        currency: this.state.currencyList[0].coin,
-        minCurrency: this.state.currencyList[0].jst_min_coin_limit
-      });
+      if (value === "XRP") {
+        if (this.state.currencyList[0].coin === "LTC") {
+          this.setState({
+            currency: this.state.currencyList[1].coin,
+            minCurrency: this.state.currencyList[1].jst_min_coin_limit
+          });
+        } else {
+          this.setState({
+            currency: this.state.currencyList[0].coin,
+            minCurrency: this.state.currencyList[0].jst_min_coin_limit
+          });
+        }
+      } else if (value === "LTC") {
+        if (this.state.currencyList[0].coin === "XRP") {
+          this.setState({
+            currency: this.state.currencyList[1].coin,
+            minCurrency: this.state.currencyList[1].jst_min_coin_limit
+          });
+        } else {
+          this.setState({
+            currency: this.state.currencyList[0].coin,
+            minCurrency: this.state.currencyList[0].jst_min_coin_limit
+          });
+        }
+      } else {
+        this.setState({
+          currency: this.state.currencyList[0].coin,
+          minCurrency: this.state.currencyList[0].jst_min_coin_limit
+        });
+      }
     }
     clearTimeout(this.timeout);
     this.setState(
@@ -401,16 +412,23 @@ class TradeView extends React.Component {
           }
         });
         if (this.state.includeFees === 1) {
-          if (this.state.recieveCurrencyInput > 0) {
-            console.log(
-              "If original_pair-----------",
-              this.state.original_pair
-            );
-            console.log("If order_pair-----------", this.state.order_pair);
-            console.log("If crypto-----------", this.state.crypto);
-            console.log("If currency-----------", this.state.currency);
-            this.timeout = setTimeout(this.showCalculatedValues, 1000);
-          }
+          this.setState(
+            {
+              recieveCurrencyInput: option.props.selectedData.jst_min_coin_limit
+            },
+            () => {
+              if (this.state.recieveCurrencyInput > 0) {
+                console.log(
+                  "If original_pair-----------",
+                  this.state.original_pair
+                );
+                console.log("If order_pair-----------", this.state.order_pair);
+                console.log("If crypto-----------", this.state.crypto);
+                console.log("If currency-----------", this.state.currency);
+                this.timeout = setTimeout(this.showCalculatedValues, 1000);
+              }
+            }
+          );
         } else {
           if (this.state.sendCurrencyInput > 0) {
             console.log(
@@ -427,21 +445,45 @@ class TradeView extends React.Component {
     );
   }
   handleCurrencyChange(value, option: Option) {
-    console.log("option.props.selectedData.min_limit", option.props);
     if (value === this.state.crypto) {
       this.state.cryptoList.map((element, i) => {
         if (element.coin === this.state.crypto) {
           var list1 = this.state.cryptoList.splice(i, 1);
-          // console.log(list1);
           this.setState({
             currencyList: this.state.currencyList.push(list1[0])
           });
         }
       });
-      this.setState({
-        crypto: this.state.cryptoList[0].coin,
-        minCrypto: this.state.cryptoList[0].jst_min_coin_limit
-      });
+      if (value === "XRP") {
+        if (this.state.cryptoList[0].coin === "LTC") {
+          this.setState({
+            crypto: this.state.cryptoList[1].coin,
+            minCrypto: this.state.cryptoList[1].jst_min_coin_limit
+          });
+        } else {
+          this.setState({
+            crypto: this.state.cryptoList[0].coin,
+            minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+          });
+        }
+      } else if (value === "LTC") {
+        if (this.state.cryptoList[0].coin === "XRP") {
+          this.setState({
+            crypto: this.state.cryptoList[1].coin,
+            minCrypto: this.state.cryptoList[1].jst_min_coin_limit
+          });
+        } else {
+          this.setState({
+            crypto: this.state.cryptoList[0].coin,
+            minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+          });
+        }
+      } else {
+        this.setState({
+          crypto: this.state.cryptoList[0].coin,
+          minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+        });
+      }
     }
     clearTimeout(this.timeout);
     this.setState(
@@ -484,11 +526,17 @@ class TradeView extends React.Component {
             this.timeout = setTimeout(this.showCalculatedValues, 1000);
           }
         } else {
-          if (this.state.sendCurrencyInput > 0) {
-            this.timeout = setTimeout(this.showCalculatedValues, 1000);
-          }
+          this.setState(
+            {
+              sendCurrencyInput: option.props.selectedData.jst_min_coin_limit
+            },
+            () => {
+              if (this.state.sendCurrencyInput > 0) {
+                this.timeout = setTimeout(this.showCalculatedValues, 1000);
+              }
+            }
+          );
         }
-        // this.showCalculatedValues();
       }
     );
   }
@@ -582,7 +630,7 @@ class TradeView extends React.Component {
               subTotal: parseFloat(responseData.data.original_value).toFixed(8),
               faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
               networkFee: parseFloat(responseData.data.network_fee).toFixed(8),
-              totalAmount: responseData.data.total_value.toFixed(8),
+              totalAmount: parseFloat(responseData.data.total_value).toFixed(8),
               fiatJSTValue: parseFloat(responseData.data.price_usd).toFixed(2),
               displayCurrency: responseData.data.currency,
               Quantity: parseFloat(responseData.data.total_value).toFixed(8)
@@ -694,6 +742,7 @@ class TradeView extends React.Component {
             } else {
               console.log("no scenario");
             }
+            this.setState({ loader: false });
           } else if (responseData.status === 500) {
             this.setState({ loader: false });
             this.openNotificationWithIcon("error", "Error", responseData.err);
@@ -987,10 +1036,18 @@ class TradeView extends React.Component {
     //     "_blank" // <- This is what makes it open in a new window.
     //   );
     // } else {
-    window.open(
-      TRADE_URL + "/login/",
-      "_blank" // <- This is what makes it open in a new window.
-    );
+    if (this.props.isLoggedIn) {
+      window.open(
+        TRADE_URL + "/crypto-conversion",
+        "_blank" // <- This is what makes it open in a new window.
+      );
+    } else {
+      window.open(
+        TRADE_URL + "/login/",
+        "_blank" // <- This is what makes it open in a new window.
+      );
+    }
+
     // }
   }
   render() {
@@ -1595,16 +1652,9 @@ class TradeView extends React.Component {
 // export default Conversion;
 function mapStateToProps(state) {
   return {
-    isLoggedIn: state.simpleReducer.isLoggedIn,
-    profileDetails:
-      state.simpleReducer.profileDetails !== undefined
-        ? state.simpleReducer.profileDetails.data !== undefined
-          ? state.simpleReducer.profileDetails.data[0]
-          : ""
-        : "",
+    isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
     theme:
       state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
-    /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }
 

@@ -273,10 +273,17 @@ class SimplexView extends React.Component {
     this.setState({
       loader: false
     });
-    window.open(
-      TRADE_URL + "/login/",
-      "_blank" // <- This is what makes it open in a new window.
-    );
+    if (this.props.isLoggedIn) {
+      window.open(
+        TRADE_URL + "/simplex",
+        "_blank" // <- This is what makes it open in a new window.
+      );
+    } else {
+      window.open(
+        TRADE_URL + "/login/",
+        "_blank" // <- This is what makes it open in a new window.
+      );
+    }
   }
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
@@ -424,15 +431,7 @@ class SimplexView extends React.Component {
 // export default Conversion;
 function mapStateToProps(state) {
   return {
-    isLoggedIn: state.simpleReducer.isLoggedIn,
-    profileDetails:
-      state.simpleReducer.profileDetails !== undefined
-        ? state.simpleReducer.profileDetails.data !== undefined
-          ? state.simpleReducer.profileDetails.data[0]
-          : ""
-        : "",
-    theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+    isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }

@@ -192,7 +192,7 @@ class WalletPopup extends Component {
       fiatValue: 0,
       singlefiatValue: "",
       sendFields: {
-        amount: 0,
+        amount: "",
         destination_address: "",
         subtotal: 0
       },
@@ -200,7 +200,7 @@ class WalletPopup extends Component {
       showTFAModal: false,
       withdrawFlag: false,
       withdrawMsg:
-        "Your Withdrawl request may take 24-28 hours to process due to its size. Do you wish to proceed?"
+        "Your Withdrawal request may take 24-28 hours to process due to its size. Do you wish to proceed?"
     };
     this.validator = new SimpleReactValidator({
       gtzero: {
@@ -226,6 +226,20 @@ class WalletPopup extends Component {
             return false;
           }
         }
+      },
+      minLimitCheck: {
+        message: `Amount must be greater than ${this.props.coin_min_limit}`,
+        rule: (val, params, validator) => {
+          // console.log("this is val?????", val);
+          if (val >= this.props.coin_min_limit) {
+            // console.log("here call");
+            return true;
+          } else {
+            // console.log("else call");
+            return false;
+          }
+        },
+        required: true // optional
       }
     });
     this.sendChange = this.sendChange.bind(this);
@@ -240,6 +254,7 @@ class WalletPopup extends Component {
   /* Life Cycle Methods */
 
   componentDidMount() {
+    console.log(this.props);
     if (this.props.title === "RECEIVE") {
       this.setState({ loader: true });
       // console.log(this.props.coin_code)
@@ -377,6 +392,7 @@ class WalletPopup extends Component {
               withdrawMsg: responseData.message
             });
           } else if (responseData.status === 202) {
+            // alert("here");
             this.setState({
               showTFAModal: true
             });
@@ -399,6 +415,7 @@ class WalletPopup extends Component {
                 "Warning",
                 responseData.message ? `${responseData.message}${local}` : ""
               );
+              this.comingCancel();
             } else
               this.openNotificationWithIcon(
                 "warning",
@@ -442,12 +459,13 @@ class WalletPopup extends Component {
           parseFloat(fields[name]) * (this.props.coinFee / 100)
       ).toFixed(8);
       let fiatValueamount = parseFloat(
-        parseFloat(this.state.singlefiatValue) * parseFloat(e.target.value)
+        parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
       ).toFixed(2);
       fields["subtotal"] = 0;
       this.setState({
         sendFields: fields,
-        fiatValue: 0
+        fiatValue: 0,
+        showTFAModal: false
       });
     } else {
       let subtotal = parseFloat(
@@ -457,13 +475,20 @@ class WalletPopup extends Component {
       // let fiatValueamount = parseFloat(
       //   parseFloat(this.state.singlefiatValue) * parseFloat(e.target.value)
       // ).toFixed(2);
+      console.log(subtotal);
+      console.log(parseFloat(this.state.singlefiatValue));
+      console.log(
+        parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
+      );
       let fiatValueamount = parseFloat(
-        parseFloat(this.state.singlefiatValue) * subtotal
+        parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
       ).toFixed(2);
+      console.log(fiatValueamount);
       fields["subtotal"] = subtotal;
       this.setState({
         sendFields: fields,
-        fiatValue: fiatValueamount
+        fiatValue: fiatValueamount,
+        showTFAModal: false
       });
     }
     // let subtotal = parseFloat(
@@ -583,6 +608,7 @@ class WalletPopup extends Component {
                     value={this.state.sendFields.destination_address}
                     name="destination_address"
                     onChange={this.sendAddressChange}
+                    placeholder="37NFX8KWAQbaodUG6pE1hNUH1dXgkpzbyZ"
                   />
                   {/* <Scan>Scan QR</Scan> */}
                   {this.validator.message(
@@ -596,8 +622,9 @@ class WalletPopup extends Component {
                   <Label>Amount</Label>
                   {/* <Sec_wrap> */}
                   <WallInput
-                    type="number"
+                    type="text"
                     min="0"
+                    placeholder="0"
                     value={this.state.sendFields.amount}
                     name="amount"
                     step="0.00000001"
@@ -606,7 +633,7 @@ class WalletPopup extends Component {
                   {this.validator.message(
                     "amount",
                     this.state.sendFields.amount,
-                    "required|gtzero|numeric|decimalrestrict",
+                    "required|numeric|gtzero|decimalrestrict|minLimitCheck",
                     "text-danger-validation"
                   )}
                   {/*  <RightInput />

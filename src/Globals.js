@@ -5,7 +5,9 @@ export const globalVariables = {
 
   _AMAZONBUCKET: "https://s3.us-east-2.amazonaws.com/production-static-asset/",
 
-  WordpressSiteURL: "https://www.faldax.com",
+  // WordpressSiteURL: "https://www.faldax.com", //Live URL
+
+  WordpressSiteURL: "https://preprod.faldax.com", //Pre-Production URL
 
   tvChartURL: "/chart",
 
@@ -15,7 +17,7 @@ export const globalVariables = {
 
   //API_URL: 'http://192.168.0.85:1337'
 
-  // API_URL: "http://192.168.1.96:1337" //Jagdish's URL
+  // API_URL: "http://192.168.1.96:1337", //Jagdish's URL
 
   //API_URL: 'http://192.168.2.224:1337', //Kalpit Local URL
 
@@ -28,6 +30,8 @@ export const globalVariables = {
 //   API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
 
   TRADE_URL: "https://preprod-trade.faldax.com"
+
+  // TRADE_URL: "http://localhost:3006/"
 
   // API_URL: "https://prod-backend.faldax.com"
 
