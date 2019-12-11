@@ -1075,7 +1075,12 @@ class TradeView extends React.Component {
                             placeholder="0"
                           />
                         </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
+                        <Col
+                          xs={12}
+                          sm={12}
+                          md={10}
+                          // style={{ height: "42px" }}
+                        >
                           {this.state.cryptoList &&
                             this.state.cryptoList.length > 0 && (
                               <ConversionDropDown
@@ -1185,7 +1190,12 @@ class TradeView extends React.Component {
                             }
                           )} */}
                         </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
+                        <Col
+                          xs={12}
+                          sm={12}
+                          md={10}
+                          // style={{ height: "42px" }}
+                        >
                           {this.state.cryptoList &&
                             this.state.cryptoList.length > 0 && (
                               <ConversionDropDown
@@ -1300,11 +1310,11 @@ class TradeView extends React.Component {
                           xs={12}
                           sm={12}
                           md={10}
-                          style={{
-                            height: "42px",
-                            alignItems: "center",
-                            display: "flex"
-                          }}
+                          // style={{
+                          //   height: "42px",
+                          //   alignItems: "center",
+                          //   display: "flex"
+                          // }}
                         >
                           <CryptoFiatRow>
                             <CryptoFiatCol>
@@ -1333,7 +1343,12 @@ class TradeView extends React.Component {
                             placeholder="0"
                           />
                         </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
+                        <Col
+                          xs={12}
+                          sm={12}
+                          md={10}
+                          // style={{ height: "42px" }}
+                        >
                           {this.state.currencyList &&
                             this.state.currencyList.length > 0 && (
                               <ConversionDropDown
@@ -1444,7 +1459,12 @@ class TradeView extends React.Component {
                             }
                           )} */}
                         </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
+                        <Col
+                          xs={12}
+                          sm={12}
+                          md={10}
+                          // style={{ height: "42px" }}
+                        >
                           {/* {this.state.currencyList &&
                         this.state.currencyList.length > 0 && (
                           <ConversionDropDown
@@ -1579,7 +1599,12 @@ class TradeView extends React.Component {
                         // }
                       )} */}
                         </Col>
-                        <Col xs={12} sm={12} md={10} style={{ height: "42px" }}>
+                        <Col
+                          xs={12}
+                          sm={12}
+                          md={10}
+                          // style={{ height: "42px" }}
+                        >
                           <CryptoFiatRow>
                             <CryptoFiatCol>
                               <img src="https://s3.us-east-2.amazonaws.com/production-static-asset/coin/usd.png" />
