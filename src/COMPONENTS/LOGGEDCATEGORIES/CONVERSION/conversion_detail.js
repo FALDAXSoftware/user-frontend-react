@@ -1479,6 +1479,9 @@ class ConversionDetail extends React.Component {
                 "Error",
                 responseData.message
               );
+              this.setState({
+                showTFAModal: false
+              });
             }
           }
           this.setState({ loader: false });
@@ -1569,6 +1572,9 @@ class ConversionDetail extends React.Component {
               "Error",
               responseData.message
             );
+            this.setState({
+              showTFAModal: false
+            });
           }
           this.setState({ loader: false });
         })
@@ -1691,7 +1697,8 @@ class ConversionDetail extends React.Component {
       {
         crypto: value,
         cryptoList: this.state.originalCoinList,
-        minCrypto: option.props.selectedData.jst_min_coin_limit
+        minCrypto: option.props.selectedData.jst_min_coin_limit,
+        showTFAModal: false
       },
       () => {
         this.state.JSTPairList.map((element, i) => {
@@ -1816,7 +1823,8 @@ class ConversionDetail extends React.Component {
       {
         currency: value,
         currencyList: this.state.originalCoinList,
-        minCurrency: option.props.selectedData.jst_min_coin_limit
+        minCurrency: option.props.selectedData.jst_min_coin_limit,
+        showTFAModal: false
       },
       () => {
         this.state.JSTPairList.map((element, i) => {
