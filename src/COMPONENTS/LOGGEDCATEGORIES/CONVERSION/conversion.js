@@ -92,7 +92,7 @@ class Conversion extends React.Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status === 200) {
-          console.log("responsedata 200", responseData.data);
+          // console.log("responsedata 200", responseData.data);
           this.setState({
             panic_status: JSON.parse(responseData.data),
             // panic_status: true,
@@ -117,7 +117,7 @@ class Conversion extends React.Component {
         this.props.profileDetails.is_kyc_done === 2
       ) {
         // alert("IF");
-        console.log("I am here", this.props.location.pathname);
+        // console.log("I am here", this.props.location.pathname);
         // this.props.history.push('/trade');
         if (this.props.location.pathname !== "/crypto-conversion")
           this.props.history.push("/crypto-conversion");
@@ -145,7 +145,7 @@ class Conversion extends React.Component {
         this.props.profileDetails.is_kyc_done === 2
       ) {
         // alert("IF");
-        console.log("I am here", this.props.location.pathname);
+        // console.log("I am here", this.props.location.pathname);
         // this.props.history.push('/trade');
         if (this.props.location.pathname !== "/simplex")
           this.props.history.push("/simplex");
@@ -193,7 +193,7 @@ class Conversion extends React.Component {
     // }
   }
   render() {
-    console.log(this.props.theme);
+    // console.log(this.props.theme);
     return (
       <div>
         {/* {this.state.showConversion ? (

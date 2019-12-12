@@ -374,7 +374,7 @@ class PasswordChange extends Component {
     }
     if (props.verifyOTP) {
       if (props.verifyOTP.status === 200) {
-        console.log(props.verifyOTP);
+        // console.log(props.verifyOTP);
         this.openNotificationWithIcon(
           "success",
           "Two-Factor Authentication",
@@ -551,7 +551,7 @@ class PasswordChange extends Component {
     if (field === "current_password") {
       //   alert("current");
       var regexp = /^[a-zA-Z0-9]*$/;
-      console.log("value.trim()", regexp.test(value));
+      // console.log("value.trim()", regexp.test(value));
 
       if (value !== "") {
         document.querySelector("#passchange_icon_success").style.display =
@@ -681,7 +681,7 @@ class PasswordChange extends Component {
           "none";
       }
     } else {
-      console.log("no break");
+      // console.log("no break");
     }
   }
 
@@ -961,7 +961,7 @@ class PasswordChange extends Component {
                   {`${this.state.is_twofactor} AUTHENTICATOR`}
                 </NewButton>
               </Buttondiv>
-              {console.log("Password Change", this.state.backupCodeTFA)}
+              {/* {console.log("Password Change", this.state.backupCodeTFA)} */}
               <TFAModal
                 visible={this.state.showModalTFA}
                 TFAModalCancel={() => this.TFAModalCancel()}
@@ -1027,7 +1027,7 @@ class PasswordChange extends Component {
             ""
           )}
         </ChangeRow>
-        {console.log(isEnabled)}
+        {/* {console.log(isEnabled)} */}
         {isEnabled === "ENABLED" && <RegenerateBackupCode />}
         {this.props.loader === true ? <FaldaxLoader /> : ""}
       </Wrapper>

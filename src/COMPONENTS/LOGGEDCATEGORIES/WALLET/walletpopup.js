@@ -254,7 +254,7 @@ class WalletPopup extends Component {
   /* Life Cycle Methods */
 
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
     if (this.props.title === "RECEIVE") {
       this.setState({ loader: true });
       // console.log(this.props.coin_code)
@@ -352,14 +352,14 @@ class WalletPopup extends Component {
     */
 
   sendSubmit(confirmFlag, otp = null) {
-    console.log(confirmFlag, otp, this.state.sendFields);
+    // console.log(confirmFlag, otp, this.state.sendFields);
     if (this.validator.allValid()) {
       var values = this.state.sendFields;
       //   values["amount"] = parseFloat(this.state.sendFields.amount).toFixed(8);
       values["amount"] = this.state.sendFields.amount;
       values["total_fees"] = this.state.sendFields.subtotal;
       values["coin_code"] = this.props.coin_code;
-      console.log("values", values);
+      // console.log("values", values);
       if (confirmFlag == true) values["confirm_for_wait"] = confirmFlag;
       if (otp !== null) {
         values["otp"] = otp;
@@ -401,15 +401,15 @@ class WalletPopup extends Component {
               this.setState({
                 showTFAModal: false
               });
-            console.log(responseData);
+            // console.log(responseData);
             if (responseData.status == 203) {
-              console.log(responseData.datetime);
+              // console.log(responseData.datetime);
               var gmtDateTime = moment.utc(
                 responseData.datetime,
                 "YYYY-MM-DD HH:mm:ss"
               );
               var local = gmtDateTime.local().format("YYYY-MMM-DD HH:mm:ss");
-              console.log(local);
+              // console.log(local);
               this.openNotificationWithIcon(
                 "warning",
                 "Warning",
@@ -475,15 +475,15 @@ class WalletPopup extends Component {
       // let fiatValueamount = parseFloat(
       //   parseFloat(this.state.singlefiatValue) * parseFloat(e.target.value)
       // ).toFixed(2);
-      console.log(subtotal);
-      console.log(parseFloat(this.state.singlefiatValue));
-      console.log(
-        parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
-      );
+      // console.log(subtotal);
+      // console.log(parseFloat(this.state.singlefiatValue));
+      // console.log(
+      //   parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
+      // );
       let fiatValueamount = parseFloat(
         parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
       ).toFixed(2);
-      console.log(fiatValueamount);
+      // console.log(fiatValueamount);
       fields["subtotal"] = subtotal;
       this.setState({
         sendFields: fields,
@@ -684,7 +684,7 @@ class WalletPopup extends Component {
         ) : (
           ""
         )}
-        {console.log(this.state.showTFAModal)}
+        {/* {console.log(this.state.showTFAModal)} */}
         <TFAModal
           visible={this.state.showTFAModal}
           isLoggedIn={this.props.isLoggedIn}
