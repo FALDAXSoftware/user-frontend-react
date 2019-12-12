@@ -168,11 +168,11 @@ class SimplexExchange extends React.Component {
         this.props.profileDetails.is_kyc_done !== 2
       ) {
         this.props.history.push("/conversion");
-        console.log("history", this.props.history);
+        // console.log("history", this.props.history);
       } else {
         this.setState({ countryAccess: true });
         this.props.history.push("/conversion");
-        console.log("history", this.props.history);
+        // console.log("history", this.props.history);
       }
     }
   }
@@ -209,7 +209,7 @@ class SimplexExchange extends React.Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 200) {
-          console.log("responsedata 200", responseData.object.coinList);
+          // console.log("responsedata 200", responseData.object.coinList);
           this.setState({
             currencyList: responseData.object.fiat,
             cryptoList: responseData.object.coinList,
@@ -360,7 +360,7 @@ class SimplexExchange extends React.Component {
     this.setState({
       loader: true
     });
-    console.log("---------------------.", otp);
+    // console.log("---------------------.", otp);
     if (this.validator1.allValid()) {
       if (this.state.checkOTP) {
         this.setState({
@@ -378,7 +378,7 @@ class SimplexExchange extends React.Component {
           digital_currency: this.state.crypto,
           otp: otp1
         };
-        console.log("values", values);
+        // console.log("values", values);
         fetch(`${API_URL}/get-partner-data-info`, {
           method: "post",
           headers: {
@@ -463,7 +463,7 @@ class SimplexExchange extends React.Component {
         })
           .then(response => response.json())
           .then(responseData => {
-            console.log(responseData);
+            // console.log(responseData);
             if (responseData.status === 400) {
               // this.setState({
               //   loader: false

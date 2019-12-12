@@ -199,16 +199,16 @@ class AppRouter extends Component {
     }
    */
   _onIdle(e) {
-    console.log(this.props);
+    // console.log(this.props);
     this.props.LogoutUser(this.props.isLoggedIn, {
       jwt_token: this.props.isLoggedIn,
       user_id: this.props.profileDetails.id
     });
-    console.log("user is idle", e);
-    console.log(
-      "last active",
-      moment.unix(this.idleTimer.getLastActiveTime()).format("MM/DD/YYYY")
-    );
+    // console.log("user is idle", e);
+    // console.log(
+    //   "last active",
+    //   moment.unix(this.idleTimer.getLastActiveTime()).format("MM/DD/YYYY")
+    // );
   }
   render() {
     const { url } = this.props.match;

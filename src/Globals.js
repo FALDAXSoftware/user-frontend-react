@@ -25,7 +25,7 @@ export const globalVariables = {
 
   //API_URL: 'http://192.168.0.93:1337'
 
-  // API_URL: "https://dev-backend.faldax.com",
+  //  API_URL: "https://dev-backend.faldax.com",
 
   API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
 

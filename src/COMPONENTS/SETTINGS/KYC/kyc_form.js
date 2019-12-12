@@ -97,7 +97,7 @@ const PhoneDiv = styled.div`
   & .form-control {
     border: 1px solid #e2e6ea;
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
+      props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
     border-radius: 5px;
     min-height: 45px;
@@ -115,8 +115,8 @@ const RightColkyc = styled(RightCol)``;
 const SixthRowkyc = styled(FourthRow)``;
 
 const CountryError = styled.span`
-    color: red;
-`
+  color: red;
+`;
 
 class KYCForm extends Component {
   constructor(props) {
@@ -151,7 +151,7 @@ class KYCForm extends Component {
         // name the rule
         message:
           "First Name should have min. 2 and max. 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function (val, options) {
+        rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^[a-zA-Z0-9]{2,15}$/;
@@ -163,7 +163,7 @@ class KYCForm extends Component {
         // name the rule
         message:
           "Last Name should have min. 2 and max. 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function (val, options) {
+        rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^[a-zA-Z0-9]{2,15}$/;
@@ -174,7 +174,7 @@ class KYCForm extends Component {
       onlyNumber: {
         // name the rule
         message: "Only numbers are not allowed.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function (val, options) {
+        rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^[0-9]*$/;
@@ -185,7 +185,7 @@ class KYCForm extends Component {
       mobileVal: {
         // name the rule
         message: "Mobile No. should have only numbers.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function (val, options) {
+        rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$/;
@@ -196,7 +196,7 @@ class KYCForm extends Component {
       zipValid: {
         message:
           "Postal Code should only contain alphabets , numbers , hyphen and space .", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function (val, options) {
+        rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^(?=.*[0-9a-zA-Z])[- 0-9a-zA-Z]+$/;
@@ -272,11 +272,11 @@ class KYCForm extends Component {
               : "";
           if (responseData.data.phone_number) {
             fields["phone_number"] = responseData.data.phone_number;
-            console.log("country_code", responseData.data.country_code);
+            // console.log("country_code", responseData.data.country_code);
             let phone = responseData.data.phone_number.split("-")[1];
             let arr = [];
             arr.push(responseData.data.country_code);
-            console.log("country_code", this.state.phoneCountry);
+            // console.log("country_code", this.state.phoneCountry);
             this.setState(
               {
                 displayCountry: true,
@@ -325,8 +325,8 @@ class KYCForm extends Component {
     if (
       value.day !== "" &&
       value.day !== undefined &&
-      (value.year !== undefined && value.year !== "") &&
-      (value.month !== undefined && value.month !== "")
+      value.year !== undefined && value.year !== "" &&
+      value.month !== undefined && value.month !== ""
     ) {
       var date = moment
         .utc(tempDate)
@@ -435,9 +435,9 @@ class KYCForm extends Component {
   changeNumber(a, mob, code) {
     if (mob.trim !== "") {
       var temp = `+${code.dialCode}`;
-      console.log("a", a);
-      console.log("mob", mob);
-      console.log("code", code);
+      // console.log("a", a);
+      // console.log("mob", mob);
+      // console.log("code", code);
       var mobile = mob.includes(`+${code.dialCode}`) ? mob : temp.concat(mob);
       let fields = this.state.fields;
       fields["phone_number"] = mobile;
@@ -464,13 +464,13 @@ class KYCForm extends Component {
 
   render() {
     let countryBool = this.validator.message(
-      "country",
-      this.state.fields.country,
-      "required",
-      "text-danger-validation"
-    )
-      ? true
-      : false,
+        "country",
+        this.state.fields.country,
+        "required",
+        "text-danger-validation"
+      )
+        ? true
+        : false,
       stateBool = this.validator.message(
         "state",
         this.state.fields.state,
@@ -675,12 +675,12 @@ class KYCForm extends Component {
                 }
               />
               {countryBool === true ||
-                stateBool === true ||
-                cityBool === true ? (
-                  <CountryError>{countrymsg}</CountryError>
-                ) : (
-                  <span></span>
-                )}
+              stateBool === true ||
+              cityBool === true ? (
+                <CountryError>{countrymsg}</CountryError>
+              ) : (
+                <span></span>
+              )}
             </Col>
           </FourthRowkyc>
           {/* {console.log(this.state.phoneCountry, this.state.phoneCountry[0])} */}
@@ -732,8 +732,8 @@ class KYCForm extends Component {
               </Col>
             </SixthRowkyc>
           ) : (
-              ""
-            )}
+            ""
+          )}
           <SixthRowkyc>
             <Col
               md={{ span: 24 }}
@@ -809,7 +809,4 @@ const mapDispatchToProps = dispatch => ({
   kycformData: data => dispatch(kycformData(data))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(KYCForm);
+export default connect(mapStateToProps, mapDispatchToProps)(KYCForm);

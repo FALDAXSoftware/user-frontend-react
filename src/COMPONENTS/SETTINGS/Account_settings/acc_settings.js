@@ -100,7 +100,7 @@ const DaysInput = styled(NewInput)``;
 class Acc_settings extends Component {
   constructor(props) {
     super(props);
-    console.log("Propos ", this.props);
+    // console.log("Propos ", this.props);
     this.state = {
       loginHistory: [],
       notiCSS: "",
@@ -182,55 +182,55 @@ class Acc_settings extends Component {
         }
       }
     ];
-    // this.columnsIP = [
-    //   {
-    //     title: "IP Whitelist",
-    //     dataIndex: "ip",
-    //     key: "ip"
-    //   },
-    //   {
-    //     title: "Till Date",
-    //     dataIndex: "expire_time",
-    //     key: "day",
-    //     render: src => {
-    //       let date_format = this.props.profileDetails.date_format
-    //         ? this.props.profileDetails.date_format
-    //         : "DD/MM/YYYY";
-    //       // console.log(src);
-    //       return (
-    //         <span>
-    //           {src !== ""
-    //             ? moment
-    //                 .utc(src)
-    //                 .local()
-    //                 .format(`${date_format}, HH:mm:ss`)
-    //             : "-"}
-    //         </span>
-    //       );
-    //     }
-    //   },
-    //   {
-    //     title: "Action",
-    //     key: "action",
-    //     render: src => {
-    //       // console.log(src.is_permanent);
-    //       return (
-    //         <div>
-    //           {src.is_permanent == true ? (
-    //             "-"
-    //           ) : (
-    //             <div
-    //               onClick={this.deleteIP.bind(this, src)}
-    //               style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
-    //             >
-    //               Delete
-    //             </div>
-    //           )}
-    //         </div>
-    //       );
-    //     }
-    //   }
-    // ];
+    this.columnsIP = [
+      {
+        title: "IP Whitelist",
+        dataIndex: "ip",
+        key: "ip"
+      },
+      {
+        title: "Till Date",
+        dataIndex: "expire_time",
+        key: "day",
+        render: src => {
+          let date_format = this.props.profileDetails.date_format
+            ? this.props.profileDetails.date_format
+            : "DD/MM/YYYY";
+          // console.log(src);
+          return (
+            <span>
+              {src !== ""
+                ? moment
+                    .utc(src)
+                    .local()
+                    .format(`${date_format}, HH:mm:ss`)
+                : "-"}
+            </span>
+          );
+        }
+      },
+      {
+        title: "Action",
+        key: "action",
+        render: src => {
+          // console.log(src.is_permanent);
+          return (
+            <div>
+              {src.is_permanent == true ? (
+                "-"
+              ) : (
+                <div
+                  onClick={this.deleteIP.bind(this, src)}
+                  // style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
+                >
+                  Delete
+                </div>
+              )}
+            </div>
+          );
+        }
+      }
+    ];
 
     this.validator = new SimpleReactValidator({
       ipvalid: {
@@ -332,7 +332,7 @@ class Acc_settings extends Component {
              }
          } */
     this.setState({ user2fastatus: this.props.profileDetails.is_twofactor });
-    console.log("walletCoins-------------------", this.state.user2fastatus);
+    // console.log("walletCoins-------------------", this.state.user2fastatus);
   }
   componentWillMount() {
     this.getWalletSummary();
@@ -465,7 +465,7 @@ class Acc_settings extends Component {
           this.openNotificationWithIcon(
             "success",
             "Success",
-            "Notifications setting saved successfully."
+            responseData.message
           );
         } else {
           this.openNotificationWithIcon(
@@ -526,7 +526,7 @@ class Acc_settings extends Component {
       value["jwt_token"] = this.props.isLoggedIn;
       value["otp"] = this.state.code2fa;
       // value["otp"] = this.state.code2fa;
-      console.log("deleteUserAccount value======================", value);
+      // console.log("deleteUserAccount value======================", value);
       // this.props.deleteAccount(this.props.isLoggedIn, value);
       fetch(API_URL + "/users/deleteAccount", {
         method: "delete",
@@ -578,7 +578,7 @@ class Acc_settings extends Component {
     value["user_id"] = this.props.profileDetails.id;
     value["jwt_token"] = this.props.isLoggedIn;
     value["otp"] = this.state.code2fa;
-    console.log("deleteAccount value======================", value);
+    // console.log("deleteAccount value======================", value);
     this.props.deleteAccount(this.props.isLoggedIn, value);
   }
 
@@ -1023,7 +1023,7 @@ class Acc_settings extends Component {
             }) */
   }
   ipModalCancel() {
-    console.log("IP Modal Cancel");
+    // console.log("IP Modal Cancel");
     this.setState({ visibleIpModal: false, checkedIP: false });
   }
   getWalletSummary() {
@@ -1041,28 +1041,28 @@ class Acc_settings extends Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 201) {
-          console.log("responsedata summary=-----------", responseData.data);
+          // console.log("responsedata summary=-----------", responseData.data);
           this.setState({
             totalUSDOfWallet: responseData.usd_price.toFixed(2),
             walletCoins: responseData.data,
             user2fastatus: responseData.user2fastatus,
             loader: false
           });
-          console.log(
-            "responsedata walletCoins=-----------",
-            this.state.walletCoins
-          );
+          // console.log(
+          //   "responsedata walletCoins=-----------",
+          //   this.state.walletCoins
+          // );
         } else if (responseData.status == 200) {
-          console.log("responsedata summary=-----------", responseData.data);
+          // console.log("responsedata summary=-----------", responseData.data);
           this.setState({
             walletCoins: null,
             user2fastatus: responseData.user2fastatus,
             loader: false
           });
-          console.log(
-            "responsedata walletCoins=-----------",
-            this.state.walletCoins
-          );
+          // console.log(
+          //   "responsedata walletCoins=-----------",
+          //   this.state.walletCoins
+          // );
         }
       })
       .catch(error => {});
@@ -1147,7 +1147,9 @@ class Acc_settings extends Component {
           </NotiDesc>
         </NotiWrap>
 
-        <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+        <div
+        // style={{ paddingLeft: "10px", paddingRight: "10px" }}
+        >
           <WrapTable>
             <NotificationTable
               className={this.state.notiCSS}
@@ -1187,7 +1189,7 @@ class Acc_settings extends Component {
           </TableWrap>
 
           <PaginationS
-            style={{ marginTop: "15px" }}
+            // style={{ marginTop: "15px" }}
             className="ant-users-pagination"
             size="small"
             onChange={this.handleHistoryPagination.bind(this)}
@@ -1206,8 +1208,12 @@ class Acc_settings extends Component {
           <DeleteHead>
             <span>Security Settings</span>
           </DeleteHead>
-          <DeleteDesc style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ width: "1000px" }}>
+          <DeleteDesc
+          // style={{ display: "flex", justifyContent: "center" }}
+          >
+            <div
+            // style={{ width: "1000px" }}
+            >
               When set 'ON', changes to any security settings on your account
               will disable debits from your wallets for 24 hours. Additionally,
               you will be notified prior to changing any security settings and
@@ -1269,7 +1275,7 @@ class Acc_settings extends Component {
                 />
               </TableWrap>
               <PaginationS
-                style={{ marginTop: "15px" }}
+                // style={{ marginTop: "15px" }}
                 className="ant-users-pagination"
                 onChange={this.handleIpPagination.bind(this)}
                 pageSize={10}
@@ -1336,7 +1342,7 @@ class Acc_settings extends Component {
                 size="medium"
                 onChange={this.ipChange.bind(this)}
                 name="ip"
-                style={{ marginBottom: "20px" }}
+                // style={{ marginBottom: "20px" }}
               />
               {this.validator.message(
                 "ip",
@@ -1531,12 +1537,7 @@ class Acc_settings extends Component {
                       size="medium"
                       onChange={this.deleteText.bind(this)}
                       name="ip"
-                      style={{ marginBottom: "20px" }}
-                      onPaste={e => {
-                        e.preventDefault();
-                        return false;
-                      }}
-                      autoComplete={false}
+                      // style={{ marginBottom: "20px" }}
                     />
                     {this.validator1.message(
                       "text",
@@ -1553,7 +1554,7 @@ class Acc_settings extends Component {
                       </InputLabel>
                       <div>
                         <OTPInput
-                          style={{ paddingRight: "10px" }}
+                          // style={{ paddingRight: "10px" }}
                           min="1"
                           value={this.state.code2fa}
                           type="text"
@@ -1620,12 +1621,7 @@ class Acc_settings extends Component {
                       size="medium"
                       onChange={this.deactivateText.bind(this)}
                       name="ip"
-                      style={{ marginBottom: "20px" }}
-                      onPaste={e => {
-                        e.preventDefault();
-                        return false;
-                      }}
-                      autoComplete={false}
+                      // style={{ marginBottom: "20px" }}
                     />
                     {this.validator1.message(
                       "text",
@@ -1642,7 +1638,7 @@ class Acc_settings extends Component {
                       </InputLabel>
                       <div>
                         <OTPInput
-                          style={{ paddingRight: "10px" }}
+                          // style={{ paddingRight: "10px" }}
                           min="1"
                           value={this.state.code2fa}
                           type="text"

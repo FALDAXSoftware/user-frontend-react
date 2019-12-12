@@ -345,10 +345,10 @@ class ResetPassword extends Component {
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      console.log(error, value, this.state.confirmIcon, this.state.newpassIcon);
+      // console.log(error, value, this.state.confirmIcon, this.state.newpassIcon);
       if (error === null && this.state.confirmIcon && this.state.newpassIcon) {
         if (value.password === value.confirm_password) {
-          console.log(value);
+          // console.log(value);
           this._resetPassword(value);
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
           document.querySelectorAll(".comp_pass")[0].style.display = "block";
@@ -367,7 +367,7 @@ class ResetPassword extends Component {
           );
         }
       } else {
-        console.log("ABCD", error);
+        // console.log("ABCD", error);
         if (error !== null) {
           if (error.password !== undefined) {
             if (
