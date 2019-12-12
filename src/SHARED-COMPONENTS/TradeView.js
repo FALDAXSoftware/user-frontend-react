@@ -109,7 +109,7 @@ class TradeView extends React.Component {
   }
   componentDidMount() {
     this.getCrypto();
-    console.log("this.props.isLoggedIn", this.props.isLoggedIn);
+    // console.log("this.props.isLoggedIn", this.props.isLoggedIn);
   }
   getFiatCurrencyList() {
     this.setState({
@@ -198,14 +198,14 @@ class TradeView extends React.Component {
             OrdType: "1"
           });
         }
-        console.log(
-          "Matched crytpo and currency pair selected Radio change",
-          this.state.crypto + this.state.currency
-        );
-        console.log(
-          "Matched crytpo and currency pair Radiochange",
-          element.crypto + element.currency
-        );
+        // console.log(
+        //   "Matched crytpo and currency pair selected Radio change",
+        //   this.state.crypto + this.state.currency
+        // );
+        // console.log(
+        //   "Matched crytpo and currency pair Radiochange",
+        //   element.crypto + element.currency
+        // );
         this.setState({
           original_pair: element.original_pair,
           order_pair: element.order_pair
@@ -296,7 +296,7 @@ class TradeView extends React.Component {
   }
   fiatJSTValueChange(e) {
     clearTimeout(this.timeout);
-    console.log("Fiat Currency Change");
+    // console.log("Fiat Currency Change");
     this.state.JSTPairList.map((element, i) => {
       if (
         element.crypto === this.state.crypto &&
@@ -323,7 +323,7 @@ class TradeView extends React.Component {
     this.timeout = setTimeout(this.showCalculatedValuesUSDTerms, 1000);
   }
   handleFiatChange(value, option: Option) {
-    console.log(option.props.selectedData.min_limit);
+    // console.log(option.props.selectedData.min_limit);
     let prevRoom = this.state.crypto + "-" + this.state.currency;
     this.setState(
       {
@@ -397,14 +397,14 @@ class TradeView extends React.Component {
                 OrdType: "1"
               });
             }
-            console.log(
-              "Matched crytpo and currency pair selected Crypto change",
-              this.state.currency + this.state.crypto
-            );
-            console.log(
-              "Matched crytpo and currency pair crypto change",
-              element.crypto + element.currency
-            );
+            // console.log(
+            //   "Matched crytpo and currency pair selected Crypto change",
+            //   this.state.currency + this.state.crypto
+            // );
+            // console.log(
+            //   "Matched crytpo and currency pair crypto change",
+            //   element.crypto + element.currency
+            // );
             this.setState({
               original_pair: element.original_pair,
               order_pair: element.order_pair
@@ -418,26 +418,26 @@ class TradeView extends React.Component {
             },
             () => {
               if (this.state.recieveCurrencyInput > 0) {
-                console.log(
-                  "If original_pair-----------",
-                  this.state.original_pair
-                );
-                console.log("If order_pair-----------", this.state.order_pair);
-                console.log("If crypto-----------", this.state.crypto);
-                console.log("If currency-----------", this.state.currency);
+                // console.log(
+                //   "If original_pair-----------",
+                //   this.state.original_pair
+                // );
+                // console.log("If order_pair-----------", this.state.order_pair);
+                // console.log("If crypto-----------", this.state.crypto);
+                // console.log("If currency-----------", this.state.currency);
                 this.timeout = setTimeout(this.showCalculatedValues, 1000);
               }
             }
           );
         } else {
           if (this.state.sendCurrencyInput > 0) {
-            console.log(
-              "Else original_pair-----------",
-              this.state.original_pair
-            );
-            console.log("Else order_pair-----------", this.state.order_pair);
-            console.log("Else crypto-----------", this.state.crypto);
-            console.log("Else currency-----------", this.state.currency);
+            // console.log(
+            //   "Else original_pair-----------",
+            //   this.state.original_pair
+            // );
+            // console.log("Else order_pair-----------", this.state.order_pair);
+            // console.log("Else crypto-----------", this.state.crypto);
+            // console.log("Else currency-----------", this.state.currency);
             this.timeout = setTimeout(this.showCalculatedValues, 1000);
           }
         }
@@ -507,14 +507,14 @@ class TradeView extends React.Component {
                 OrdType: "1"
               });
             }
-            console.log(
-              "Matched crytpo and currency pair selected currency change",
-              this.state.crypto + this.state.currency
-            );
-            console.log(
-              "Matched crytpo and currency pair Currency change",
-              element.crypto + element.currency
-            );
+            // console.log(
+            //   "Matched crytpo and currency pair selected currency change",
+            //   this.state.crypto + this.state.currency
+            // );
+            // console.log(
+            //   "Matched crytpo and currency pair Currency change",
+            //   element.crypto + element.currency
+            // );
             this.setState({
               original_pair: element.original_pair,
               order_pair: element.order_pair
@@ -701,11 +701,11 @@ class TradeView extends React.Component {
               this.state.includeFees === 2 &&
               this.state.OrdType === "1"
             ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.total_value
-              );
+              // console.log(
+              //   this.state.includeFees,
+              //   this.state.OrdType,
+              //   responseData.data.total_value
+              // );
               this.setState({
                 OriginalQuantity: parseFloat(
                   responseData.data.total_value
@@ -715,11 +715,11 @@ class TradeView extends React.Component {
               this.state.includeFees === 2 &&
               this.state.OrdType === "2"
             ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.currency_value
-              );
+              // console.log(
+              //   this.state.includeFees,
+              //   this.state.OrdType,
+              //   responseData.data.currency_value
+              // );
               this.setState({
                 OriginalQuantity: parseFloat(
                   responseData.data.currency_value
@@ -729,18 +729,18 @@ class TradeView extends React.Component {
               this.state.includeFees === 1 &&
               this.state.OrdType === "2"
             ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.currency_value
-              );
+              // console.log(
+              //   this.state.includeFees,
+              //   this.state.OrdType,
+              //   responseData.data.currency_value
+              // );
               this.setState({
                 OriginalQuantity: parseFloat(
                   responseData.data.currency_value
                 ).toFixed(8)
               });
             } else {
-              console.log("no scenario");
+              // console.log("no scenario");
             }
             this.setState({ loader: false });
           } else if (responseData.status === 500) {
@@ -756,7 +756,7 @@ class TradeView extends React.Component {
   }
   showCalculatedValuesUSDTerms() {
     this.setState({ loader: true });
-    console.log("Order values to display");
+    // console.log("Order values to display");
     if (this.state.includeFees === 1) {
       var values = {
         Symbol: this.state.original_pair,
@@ -837,7 +837,7 @@ class TradeView extends React.Component {
         .then(response => response.json())
         .then(responseData => {
           if (responseData.status === 200) {
-            console.log("Response Data 200", responseData.data);
+            // console.log("Response Data 200", responseData.data);
             this.setState({
               // subTotal: parseFloat(responseData.data.original_value).toFixed(8),
               faldaxFee: parseFloat(responseData.data.faldax_fee).toFixed(8),
@@ -887,11 +887,11 @@ class TradeView extends React.Component {
               });
             }
             if (this.state.includeFees === 1 && this.state.OrdType === "1") {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.original_value
-              );
+              // console.log(
+              //   this.state.includeFees,
+              //   this.state.OrdType,
+              //   responseData.data.original_value
+              // );
               this.setState({
                 OriginalQuantity: parseFloat(
                   responseData.data.original_value
@@ -901,11 +901,11 @@ class TradeView extends React.Component {
               this.state.includeFees === 2 &&
               this.state.OrdType === "1"
             ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.total_value
-              );
+              // console.log(
+              //   this.state.includeFees,
+              //   this.state.OrdType,
+              //   responseData.data.total_value
+              // );
               this.setState({
                 OriginalQuantity: parseFloat(
                   responseData.data.total_value
@@ -915,11 +915,11 @@ class TradeView extends React.Component {
               this.state.includeFees === 2 &&
               this.state.OrdType === "2"
             ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.currency_value
-              );
+              // console.log(
+              //   this.state.includeFees,
+              //   this.state.OrdType,
+              //   responseData.data.currency_value
+              // );
               this.setState({
                 OriginalQuantity: parseFloat(
                   responseData.data.currency_value
@@ -929,18 +929,18 @@ class TradeView extends React.Component {
               this.state.includeFees === 1 &&
               this.state.OrdType === "2"
             ) {
-              console.log(
-                this.state.includeFees,
-                this.state.OrdType,
-                responseData.data.currency_value
-              );
+              // console.log(
+              //   this.state.includeFees,
+              //   this.state.OrdType,
+              //   responseData.data.currency_value
+              // );
               this.setState({
                 OriginalQuantity: parseFloat(
                   responseData.data.currency_value
                 ).toFixed(8)
               });
             } else {
-              console.log("no scenario");
+              // console.log("no scenario");
             }
           } else if (responseData.status === 500) {
             this.setState({ loader: false });
@@ -954,7 +954,7 @@ class TradeView extends React.Component {
     }
   }
   calculateOrderVaules() {
-    console.log("Order");
+    // console.log("Order");
     this.setState({ loader: true });
     if (this.state.includeFees === 1) {
       var values = {
@@ -968,7 +968,7 @@ class TradeView extends React.Component {
         original_pair: this.state.original_pair,
         order_pair: this.state.order_pair
       };
-      console.log(values);
+      // console.log(values);
     } else {
       var values = {
         Symbol: this.state.original_pair,
@@ -981,7 +981,7 @@ class TradeView extends React.Component {
         original_pair: this.state.original_pair,
         order_pair: this.state.order_pair
       };
-      console.log(values);
+      // console.log(values);
     }
     fetch(`${API_URL}/converion/jst-create-order`, {
       method: "post",
@@ -1468,7 +1468,7 @@ class TradeView extends React.Component {
                             )}
                           </ConversionDropDown>
                         )} */}
-                          {console.log(this.state.currencyList)}
+                          {/* {console.log(this.state.currencyList)} */}
                           {this.state.currencyList &&
                             this.state.currencyList.length > 0 && (
                               <ConversionDropDown

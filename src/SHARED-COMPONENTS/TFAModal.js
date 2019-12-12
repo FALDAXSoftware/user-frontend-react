@@ -66,7 +66,7 @@ class TFAModal extends Component {
   }
   onChangeField = (field, e) => {
     let fields = this.state.fields;
-    console.log(e.target.value);
+    // console.log(e.target.value);
     if (e.target.value.trim() === "") {
       fields[field] = "";
     } else {

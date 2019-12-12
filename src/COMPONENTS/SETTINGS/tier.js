@@ -49,16 +49,16 @@ class Tier extends Component {
           tierData: responseData.data,
           loader: false
         });
-        console.log("tierData", responseData.data);
+        // console.log("tierData", responseData.data);
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
       });
   }
 
   render() {
     let { tierData } = this.state;
-    console.log("Tier:", this.props.history);
+    // console.log("Tier:", this.props.history);
 
     return (
       <div>

@@ -104,7 +104,7 @@ class TierOne extends React.Component {
     */
 
   next_step(a, type = null, countryChange = null) {
-    console.log("--------------------->", a, type, countryChange);
+    // console.log("--------------------->", a, type, countryChange);
     this.setState({ next: a });
     if (
       type === "Passport" ||

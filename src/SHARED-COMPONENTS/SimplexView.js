@@ -174,7 +174,7 @@ class SimplexView extends React.Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 200) {
-          console.log("responsedata 200", responseData.object.coinList);
+          // console.log("responsedata 200", responseData.object.coinList);
           this.setState({
             currencyList: responseData.object.fiat,
             cryptoList: responseData.object.coinList,

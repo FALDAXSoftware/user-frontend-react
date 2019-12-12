@@ -294,9 +294,9 @@ class ConversionDetail extends React.Component {
           networkFee: responseData.data.network_fees,
           faldaxFee: responseData.data.faldax_fees
         });
-        console.log("Fiat", responseData.data.price);
-        console.log("Network", responseData.data.network_fees);
-        console.log("Faldax", responseData.data.faldax_fees);
+        // console.log("Fiat", responseData.data.price);
+        // console.log("Network", responseData.data.network_fees);
+        // console.log("Faldax", responseData.data.faldax_fees);
         if (this.state.selectedTab === 1) {
           this.getBuyCurrencyWithFees();
         } else {
@@ -309,7 +309,7 @@ class ConversionDetail extends React.Component {
       .catch(error => {});
   }
   handleCryptoChange(value, option: Option) {
-    console.log(option.props.selectedData.min_limit);
+    // console.log(option.props.selectedData.min_limit);
     let prevRoom = this.state.crypto + "-" + this.state.currency;
     this.setState(
       {

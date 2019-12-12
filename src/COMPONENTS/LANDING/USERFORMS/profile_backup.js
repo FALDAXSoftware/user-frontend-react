@@ -243,7 +243,7 @@ class ProfileBackup extends Component {
     var e1 = e;
     let name = e1.target.name;
     let target = e1.target;
-    console.log(e1.target);
+    // console.log(e1.target);
     _self.setState(
       {
         targetName: name,
@@ -259,7 +259,7 @@ class ProfileBackup extends Component {
               ? file.type.substring(0, file.type.indexOf("/"))
               : "";
           const fileSize = file && file.size ? file.size : 0;
-          console.log(file);
+          // console.log(file);
           if (file !== undefined)
             if (fileType === "image") {
               if (fileType === "image" && fileSize < 5242880) {
@@ -354,7 +354,7 @@ class ProfileBackup extends Component {
 
   submitProfile() {
     if (this.state.flagImage) {
-      console.log(this.state, this.state.profileImage, this.state.email);
+      // console.log(this.state, this.state.profileImage, this.state.email);
       let dataForm = new FormData();
       dataForm.append("email", this.state.email);
       dataForm.append("uploaded_file", this.state.profileImage);
@@ -438,7 +438,7 @@ class ProfileBackup extends Component {
                       theme="outlined"
                     />
 
-                    {console.log(this.state)}
+                    {/* {this.state)} */}
                     <ButtonUpDup
                       style={{
                         backgroundImage: `url('${this.state.profileImg}')`
@@ -483,9 +483,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    null
-  )(ProfileBackup)
-);
+export default withRouter(connect(mapStateToProps, null)(ProfileBackup));

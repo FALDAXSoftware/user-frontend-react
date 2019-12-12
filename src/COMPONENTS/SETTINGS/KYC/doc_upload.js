@@ -178,7 +178,7 @@ class DocUpload extends Component {
     var e1 = e;
     let name = e1.target.name;
     let target = e1.target;
-    console.log(e1.target);
+    // console.log(e1.target);
     _self.setState(
       {
         targetName: name,
@@ -194,7 +194,7 @@ class DocUpload extends Component {
               ? file.type.substring(0, file.type.indexOf("/"))
               : "";
           const fileSize = file && file.size ? file.size : 0;
-          console.log(file);
+          // console.log(file);
           if (fileType === "image") {
             if (fileType === "image" && fileSize < 5242880) {
               var fr = new FileReader();
@@ -335,21 +335,21 @@ class DocUpload extends Component {
     */
 
   next_step() {
-    console.log(
-      this.state.icon1,
-      this.state.icon2,
-      this.state.frontImg,
-      this.state.backImg
-    );
+    // console.log(
+    //   this.state.icon1,
+    //   this.state.icon2,
+    //   this.state.frontImg,
+    //   this.state.backImg
+    // );
     if (this.state.icon1 === "check" && this.state.icon2 === "check") {
       if (this.state.frontImg !== "" && this.state.backImg !== "") {
         var kycDoc = {};
         kycDoc["front_doc"] = this.state.frontImg;
         kycDoc["back_doc"] = this.state.backImg;
         kycDoc["steps"] = 3;
-        console.log(
-          "FINALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
-        );
+        // console.log(
+        //   "FINALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
+        // );
         this.props.kycFormAction(this.props.isLoggedIn, kycDoc);
       }
     } else {
@@ -379,7 +379,7 @@ class DocUpload extends Component {
           </SSNSub>
           <Filewrap>
             <Fileselect1 className="file-select-col">
-              {console.log(this.state)}
+              {/* {console.log(this.state)} */}
               <RemoveIcon1
                 onClick={() => {
                   this.removeFile("front-doc");
@@ -477,7 +477,4 @@ const mapDispatchToProps = dispatch => ({
     dispatch(kycFormAction(isLoggedIn, value))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DocUpload);
+export default connect(mapStateToProps, mapDispatchToProps)(DocUpload);

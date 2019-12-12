@@ -570,7 +570,7 @@ class LoggedNavigation extends Component {
         this.props.profileDetails.is_kyc_done === 2
       ) {
         // alert("IF");
-        console.log("I am here", this.props.location.pathname);
+        // console.log("I am here", this.props.location.pathname);
         // this.props.history.push('/trade');
         if (this.props.location.pathname !== "/crypto-conversion")
           this.props.history.push("/crypto-conversion");
@@ -598,7 +598,7 @@ class LoggedNavigation extends Component {
         this.props.profileDetails.is_kyc_done === 2
       ) {
         // alert("IF");
-        console.log("I am here", this.props.location.pathname);
+        // console.log("I am here", this.props.location.pathname);
         // this.props.history.push('/trade');
         if (this.props.location.pathname !== "/simplex")
           this.props.history.push("/simplex");
