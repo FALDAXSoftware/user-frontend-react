@@ -18,7 +18,7 @@ export function profileupdateAction(isLoggedIn, form) {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 200) {
-          console.log("-------->", responseData);
+          // console.log("-------->", responseData);
           dispatch(profileupdatedData(responseData));
           dispatch(getProfileDataAction(isLoggedIn));
         }
@@ -66,7 +66,7 @@ export const getProfileDataAction = token => dispatch => {
     .then(response => response.json())
     .then(responseData => {
       if (responseData.status == 200) {
-        console.log("----------------------->", responseData);
+        // console.log("----------------------->", responseData);
         dispatch(addprofileData(responseData));
       } else dispatch(profileError(responseData));
       if (responseData.status !== 403) dispatch(removeLoader());
@@ -80,14 +80,14 @@ export const getProfileDataAction = token => dispatch => {
     Action :  This action is called to pass response of above action through Redux.
 */
 export const addprofileData = Data => dispatch => {
-  console.log(Data);
+  // console.log(Data);
   dispatch({
     type: "ADDPROFILE",
     payload: Data
   });
 };
 export const profileError = Data => dispatch => {
-  console.log(Data);
+  // console.log(Data);
   dispatch({
     type: "ERRORPROFILE",
     payload: Data

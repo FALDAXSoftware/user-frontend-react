@@ -104,7 +104,7 @@ class TierOne extends React.Component {
     */
 
   next_step(a, type = null, countryChange = null) {
-    console.log("--------------------->", a, type, countryChange);
+    // console.log("--------------------->", a, type, countryChange);
     this.setState({ next: a });
     if (
       type === "Passport" ||
@@ -214,7 +214,7 @@ class TierOne extends React.Component {
           {this.props.is_kyc_done === 1 && (
             <DoneWrap>
               <Icon
-                style={{ fontSize: "50px" }}
+                // style={{ fontSize: "50px" }}
                 type="info-circle"
                 theme="twoTone"
                 twoToneColor="#ffc107"
@@ -235,7 +235,7 @@ class TierOne extends React.Component {
           {this.props.is_kyc_done === 2 && (
             <DoneWrap>
               <Icon
-                style={{ fontSize: "50px" }}
+                // style={{ fontSize: "50px" }}
                 type="check-circle"
                 theme="twoTone"
                 twoToneColor="#52c41a"
