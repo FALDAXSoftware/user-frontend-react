@@ -463,7 +463,8 @@ class ConversionDetail extends React.Component {
               totalAmount: parseFloat(res.total_value).toFixed(8),
               fiatJSTValue: parseFloat(res.price_usd).toFixed(2),
               displayCurrency: res.currency,
-              Quantity: parseFloat(res.total_value).toFixed(8)
+              Quantity: parseFloat(res.total_value).toFixed(8),
+              flag: values.flag
             });
             if (this.state.includeFees === 1) {
               this.setState({
@@ -650,7 +651,8 @@ class ConversionDetail extends React.Component {
               limitPrice: parseFloat(res.limit_price).toFixed(8),
               networkFee: parseFloat(res.network_fee).toFixed(8),
               displayCurrency: res.currency,
-              Quantity: parseFloat(res.total_value).toFixed(8)
+              Quantity: parseFloat(res.total_value).toFixed(8),
+              flag: values.flag
             });
             if (this.state.includeFees === 1) {
               this.setState({
@@ -1408,7 +1410,8 @@ class ConversionDetail extends React.Component {
           offer_code: this.state.appliedOfferCode,
           buy_currency_amount: this.state.buy_currency_amount,
           sell_currency_amount: this.state.sell_currency_amount,
-          otp: otp1
+          otp: otp1,
+          flag: this.state.flag
         };
         // console.log(values);
       } else {
@@ -1429,7 +1432,8 @@ class ConversionDetail extends React.Component {
           offer_code: this.state.appliedOfferCode,
           buy_currency_amount: this.state.buy_currency_amount,
           sell_currency_amount: this.state.sell_currency_amount,
-          otp: otp1
+          otp: otp1,
+          flag: this.state.flag
         };
         // console.log(values);
       }
@@ -1506,7 +1510,8 @@ class ConversionDetail extends React.Component {
           offer_code: this.state.appliedOfferCode,
           buy_currency_amount: this.state.buy_currency_amount,
           sell_currency_amount: this.state.sell_currency_amount,
-          otp: ""
+          otp: "",
+          flag: this.state.flag
         };
         // console.log(values);
       } else {
@@ -1527,7 +1532,8 @@ class ConversionDetail extends React.Component {
           offer_code: this.state.appliedOfferCode,
           buy_currency_amount: this.state.buy_currency_amount,
           sell_currency_amount: this.state.sell_currency_amount,
-          otp: ""
+          otp: "",
+          flag: this.state.flag
         };
         // console.log(values);
       }
