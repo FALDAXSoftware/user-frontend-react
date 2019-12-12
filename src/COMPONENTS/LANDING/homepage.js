@@ -482,7 +482,7 @@
 //         <Layout>
 //           <Header_main {...this.props} />
 //           <Content_style>
-//             {/* {console.log("HOMEPAGE")} */}
+//             {/* {"HOMEPAGE")} */}
 //             {/* <Home_first /> */}
 //             <About />
 //             {/* <Home_second data={data} /> */}

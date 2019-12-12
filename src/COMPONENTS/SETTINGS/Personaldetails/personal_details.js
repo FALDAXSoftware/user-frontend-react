@@ -694,7 +694,7 @@ class PersonalDetails extends Component {
         // var reg = /^(?=.*[0-9A-Za-z])[-()0-9A-Za-z]{3,25}$/;
         var reg = /^[a-zA-Z0-9-_]*$/;
         var bool = reg.test(value);
-        console.log("------------------->", bool, value);
+        // console.log("------------------->", bool, value);
         if (bool === true) {
           this.setState({ postalIcon: true });
           document.querySelectorAll(".postal_msg")[0].style.display = "none";
@@ -749,7 +749,7 @@ class PersonalDetails extends Component {
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
-      console.log("---------->", this.state.dfmsg);
+      // console.log("---------->", this.state.dfmsg);
       if (
         error === null &&
         this.state.fiatIcon !== false &&

@@ -219,7 +219,7 @@ class IpModal extends Component {
   }
   ipModalCancel = () => {
     this.clearValidation();
-    console.log(this.props);
+    // console.log(this.props);
     this.props.ipModalCancel();
   };
   permanentIp() {

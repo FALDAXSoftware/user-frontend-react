@@ -122,6 +122,7 @@ class EmailVerification extends Component {
       }
     };
     this.validator = new SimpleReactValidator();
+    this.resendVerification = this.resendVerification.bind(this);
   }
 
   openNotificationWithIcon(type, head, desc) {
@@ -134,7 +135,11 @@ class EmailVerification extends Component {
   dispModal = () => {
     this.props.history.push("/login");
   };
-  _resendVerification = e => {
+  // handleSubmit(event) {
+  //   this._resendVerification();
+  //   event.preventDefault();
+  // }
+  resendVerification = e => {
     e.preventDefault();
     if (this.validator.allValid()) {
       this.setState({ loader: true });
@@ -152,11 +157,7 @@ class EmailVerification extends Component {
             );
           } else {
             this.setState({ loader: false });
-            this.openNotificationWithIcon(
-              "warning",
-              responseData.err,
-              "Please check it by logging in."
-            );
+            this.openNotificationWithIcon("error", "Error", responseData.err);
           }
         })
         .catch(error => {
@@ -202,7 +203,7 @@ class EmailVerification extends Component {
               <RightWrap className="wow fadeInDown">
                 <LoginHead>Resend Verification Link</LoginHead>
                 <EmailLabel>Enter Email:</EmailLabel>
-                <form onSubmit={this._resendVerification}>
+                <form onSubmit={this.resendVerification}>
                   <VerifyEmail
                     name="email"
                     value={this.state.fields.email}
@@ -215,7 +216,9 @@ class EmailVerification extends Component {
                     "text-danger-validation"
                   )}
                   <br />
-                  <ButtonResend type="submit">RE-SEND</ButtonResend>
+                  <ButtonResend htmlType="submit" value="submit">
+                    RE-SEND
+                  </ButtonResend>
                 </form>
                 <Sign>
                   Already have an account?{" "}
