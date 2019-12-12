@@ -651,7 +651,8 @@ class ConversionDetail extends React.Component {
               limitPrice: parseFloat(res.limit_price).toFixed(8),
               networkFee: parseFloat(res.network_fee).toFixed(8),
               displayCurrency: res.currency,
-              Quantity: parseFloat(res.total_value).toFixed(8)
+              Quantity: parseFloat(res.total_value).toFixed(8),
+              flag: values.flag
             });
             if (this.state.includeFees === 1) {
               this.setState({
