@@ -177,7 +177,7 @@ class ThreshholdNotification extends React.Component {
     });
   };
   checkChange(key, e, record) {
-    console.log(key, e.target.checked, record);
+    // console.log(key, e.target.checked, record);
     const { thresholdData } = this.state;
     var tempData = thresholdData;
     tempData.map(function(data, index) {
@@ -273,7 +273,7 @@ class ThreshholdNotification extends React.Component {
             this.openNotificationWithIcon(
               "success",
               "Success",
-              "Threshold Notifications setting saved successfully."
+              responseData.message
             );
           } else {
             this.openNotificationWithIcon(

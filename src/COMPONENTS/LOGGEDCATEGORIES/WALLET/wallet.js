@@ -69,7 +69,7 @@ const Inputsearch = styled(Search)`
     >input
     {
         background-color:${props =>
-    props.theme.mode === "dark" ? "#020e18" : ""};
+          props.theme.mode === "dark" ? "#020e18" : ""};
         color:${props => (props.theme.mode === "dark" ? "white" : "")}
         caret-color:${props => (props.theme.mode === "dark" ? "white" : "")}
     }
@@ -98,40 +98,73 @@ class Wallet extends Component {
       searchedWallet: null,
       currencySeq: ["USD", "EUR", "INR"]
     };
-    /*  this.currChangeWallet = this.currChangeWallet.bind(this);
-         this.currChangeList = this.currChangeList.bind(this); */
     this.searchChangeCoins = this.searchChangeCoins.bind(this);
     this.searchChangeWallet = this.searchChangeWallet.bind(this);
   }
 
   /* Life Cycle Methods */
-  componentWillReceiveProps(props, newProps) {
-    var total = 0,
-      me = this;
-    if (this.props.walletDetails !== null) {
-      // console.log(this.props.walletDetails);
-      var tableData = this.props.walletDetails;
-      var FIAT = this.props.profileDetails.fiat;
-      if (tableData !== undefined) {
-        tableData.map(function (index, key) {
-          // console.log(index.quote)
-          if (index.quote !== null)
-            if (
-              index.quote[`${FIAT}`].price !== undefined &&
-              index.quote[`${FIAT}`].price !== null
-            ) {
-              var fiat = me.props.profileDetails.fiat;
-              total = total + index.quote[`${fiat}`].price * index.balance;
-            }
-        });
-        // console.log(total)
+  componentWillReceiveProps(newProps) {
+    var total = 0;
+    if (this.props != newProps) {
+      if (newProps.walletDetails !== null) {
+        // console.log("props", newProps.walletDetails);
+        var tableData = newProps.walletDetails;
+        var FIAT = newProps.profileDetails.fiat;
+        if (tableData !== undefined) {
+          tableData.map(function(index, key) {
+            // console.log(index.quote);
+            if (index.quote !== null)
+              if (
+                index.quote[`${FIAT}`].price !== undefined &&
+                index.quote[`${FIAT}`].price !== null
+              ) {
+                var fiat = newProps.profileDetails.fiat;
+
+                total = total + index.quote[`${fiat}`].price * index.balance;
+              }
+          });
+          // console.log(total)
+        }
       }
+      this.setState({ total });
     }
-    this.setState({ total });
   }
   componentDidMount() {
     this.props.walletBal(this.props.isLoggedIn);
     this.props.getAllCoins(this.props.isLoggedIn);
+    // var total = 0,
+    //   me = this;
+    // if (this.props.walletDetails !== null) {
+    //   console.log("props", this.props.walletDetails);
+    //   var tableData = this.props.walletDetails;
+    //   var FIAT = this.props.profileDetails.fiat;
+    //   if (tableData !== undefined) {
+    //     tableData.map(function(index, key) {
+    //       // console.log(index.quote);
+    //       if (index.quote !== null)
+    //         if (
+    //           index.quote[`${FIAT}`].price !== undefined &&
+    //           index.quote[`${FIAT}`].price !== null
+    //         ) {
+    //           var fiat = me.props.profileDetails.fiat;
+
+    //           total = total + index.quote[`${fiat}`].price * index.balance;
+    //           console.log(
+    //             "fiat",
+    //             fiat,
+    //             index.quote[`${fiat}`].price,
+    //             index.balance,
+    //             total
+    //           );
+    //         }
+    //     });
+    //     // console.log(total)
+    //   }
+    // } else {
+    //   console.log("mount", this.props);
+    // }
+    // this.setState({ total });
+    // console.log("mount", this.props.walletDetails);
   }
 
   /* 
@@ -143,7 +176,7 @@ class Wallet extends Component {
     var search = e.target.value;
     if (search !== "") {
       if (search.trim() !== "") {
-        var searchedWallet = this.props.walletDetails.filter(function (temp) {
+        var searchedWallet = this.props.walletDetails.filter(function(temp) {
           if (
             temp.coin.toLowerCase().includes(search.toLowerCase()) ||
             temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
@@ -172,7 +205,7 @@ class Wallet extends Component {
     var search = e.target.value;
     if (search !== "") {
       if (search.trim() !== "") {
-        var searchedCoins = this.props.nowalletBalance.filter(function (temp) {
+        var searchedCoins = this.props.nowalletBalance.filter(function(temp) {
           if (
             temp.coin.toLowerCase().includes(search.toLowerCase()) ||
             temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
@@ -234,8 +267,8 @@ class Wallet extends Component {
                       thousandSeparator={true}
                     />
                   ) : (
-                      ""
-                    )}
+                    ""
+                  )}
                 </Money>
                 <Currency>{FIAT}</Currency>
               </Total>
@@ -252,18 +285,18 @@ class Wallet extends Component {
                       }
                     />
                   ) : (
-                      <TableofCoinUpper
-                        type="wallet data"
-                        noBalance={false}
-                        currencySeq={this.state.currencySeq}
+                    <TableofCoinUpper
+                      type="wallet data"
+                      noBalance={false}
+                      currencySeq={this.state.currencySeq}
                       /* currChange={(currency) => this.currChangeWallet(currency)}  */ tableData={
-                          this.props.walletDetails
-                        }
-                      />
-                    )
+                        this.props.walletDetails
+                      }
+                    />
+                  )
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
               </TableWrap>
             </CoinTable>
           </ContainerContact>
@@ -296,18 +329,18 @@ class Wallet extends Component {
                       }
                     />
                   ) : (
-                      <TableofCoinUpper
-                        type="no wallet data"
-                        currencySeq={this.state.currencySeq}
-                        noBalance={true}
+                    <TableofCoinUpper
+                      type="no wallet data"
+                      currencySeq={this.state.currencySeq}
+                      noBalance={true}
                       /* currChange={(currency) => this.currChangeList(currency)} */ tableData={
-                          this.props.nowalletBalance
-                        }
-                      />
-                    )
+                        this.props.nowalletBalance
+                      }
+                    />
+                  )
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
               </TableWrap>
             </CoinTable>
           </ContainerContact2>
@@ -347,7 +380,4 @@ const mapDispatchToProps = dispatch => ({
   getAllCoins: (isLoggedIn, currency) =>
     dispatch(getAllCoins(isLoggedIn, currency))
 });
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

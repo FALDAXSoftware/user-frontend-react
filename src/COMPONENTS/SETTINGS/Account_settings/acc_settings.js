@@ -100,7 +100,7 @@ const DaysInput = styled(NewInput)``;
 class Acc_settings extends Component {
   constructor(props) {
     super(props);
-    console.log("Propos ", this.props);
+    // console.log("Propos ", this.props);
     this.state = {
       loginHistory: [],
       notiCSS: "",
@@ -332,7 +332,7 @@ class Acc_settings extends Component {
              }
          } */
     this.setState({ user2fastatus: this.props.profileDetails.is_twofactor });
-    console.log("walletCoins-------------------", this.state.user2fastatus);
+    // console.log("walletCoins-------------------", this.state.user2fastatus);
   }
   componentWillMount() {
     this.getWalletSummary();
@@ -465,7 +465,7 @@ class Acc_settings extends Component {
           this.openNotificationWithIcon(
             "success",
             "Success",
-            "Notifications setting saved successfully."
+            responseData.message
           );
         } else {
           this.openNotificationWithIcon(
@@ -526,7 +526,7 @@ class Acc_settings extends Component {
       value["jwt_token"] = this.props.isLoggedIn;
       value["otp"] = this.state.code2fa;
       // value["otp"] = this.state.code2fa;
-      console.log("deleteUserAccount value======================", value);
+      // console.log("deleteUserAccount value======================", value);
       // this.props.deleteAccount(this.props.isLoggedIn, value);
       fetch(API_URL + "/users/deleteAccount", {
         method: "delete",
@@ -578,7 +578,7 @@ class Acc_settings extends Component {
     value["user_id"] = this.props.profileDetails.id;
     value["jwt_token"] = this.props.isLoggedIn;
     value["otp"] = this.state.code2fa;
-    console.log("deleteAccount value======================", value);
+    // console.log("deleteAccount value======================", value);
     this.props.deleteAccount(this.props.isLoggedIn, value);
   }
 
@@ -1023,7 +1023,7 @@ class Acc_settings extends Component {
             }) */
   }
   ipModalCancel() {
-    console.log("IP Modal Cancel");
+    // console.log("IP Modal Cancel");
     this.setState({ visibleIpModal: false, checkedIP: false });
   }
   getWalletSummary() {
@@ -1041,28 +1041,28 @@ class Acc_settings extends Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 201) {
-          console.log("responsedata summary=-----------", responseData.data);
+          // console.log("responsedata summary=-----------", responseData.data);
           this.setState({
             totalUSDOfWallet: responseData.usd_price.toFixed(2),
             walletCoins: responseData.data,
             user2fastatus: responseData.user2fastatus,
             loader: false
           });
-          console.log(
-            "responsedata walletCoins=-----------",
-            this.state.walletCoins
-          );
+          // console.log(
+          //   "responsedata walletCoins=-----------",
+          //   this.state.walletCoins
+          // );
         } else if (responseData.status == 200) {
-          console.log("responsedata summary=-----------", responseData.data);
+          // console.log("responsedata summary=-----------", responseData.data);
           this.setState({
             walletCoins: null,
             user2fastatus: responseData.user2fastatus,
             loader: false
           });
-          console.log(
-            "responsedata walletCoins=-----------",
-            this.state.walletCoins
-          );
+          // console.log(
+          //   "responsedata walletCoins=-----------",
+          //   this.state.walletCoins
+          // );
         }
       })
       .catch(error => {});

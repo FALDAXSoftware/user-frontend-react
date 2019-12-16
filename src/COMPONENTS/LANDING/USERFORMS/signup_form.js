@@ -273,7 +273,7 @@ class SignupForm extends Component {
     if (props.isSignUp) {
       if (props.isSignUp.status === 200) {
         //this.props.dispModal("thankyou");
-        console.log(this.props.form.getFieldValue("email"));
+        // console.log(this.props.form.getFieldValue("email"));
         var email = this.props.form.getFieldValue("email");
         this.props.history.push(`/signup-success/${encodeURIComponent(email)}`);
       } else {

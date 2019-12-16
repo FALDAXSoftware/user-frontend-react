@@ -452,7 +452,7 @@ class ConversionDetail extends React.Component {
         (body, JWR) => {
           if (body.status === 200) {
             let res = body.data;
-            console.log("getsocketvalues", res);
+            // console.log("getsocketvalues", res);
             this.setState({
               // loader: false,
               subTotal: parseFloat(res.original_value).toFixed(8),
@@ -537,7 +537,7 @@ class ConversionDetail extends React.Component {
                     : parseFloat(res.currency_value).toFixed(8)
               });
             } else {
-              console.log("no scenario");
+              // console.log("no scenario");
             }
           } else {
             // console.log(body.err);
@@ -644,14 +644,15 @@ class ConversionDetail extends React.Component {
         (body, JWR) => {
           if (body.status === 200) {
             let res = body.data;
-            console.log("getsocketUSdvalues", res);
+            // console.log("getsocketUSdvalues", res);
             this.setState({
               faldaxFee: parseFloat(res.faldax_fee).toFixed(8),
               faldaxFeeActual: parseFloat(res.faldax_fees_actual).toFixed(8),
               limitPrice: parseFloat(res.limit_price).toFixed(8),
               networkFee: parseFloat(res.network_fee).toFixed(8),
               displayCurrency: res.currency,
-              Quantity: parseFloat(res.total_value).toFixed(8)
+              Quantity: parseFloat(res.total_value).toFixed(8),
+              flag: values.flag
             });
             if (this.state.includeFees === 1) {
               this.setState({
@@ -728,7 +729,7 @@ class ConversionDetail extends React.Component {
                     : parseFloat(res.currency_value).toFixed(8)
               });
             } else {
-              console.log("no scenario");
+              // console.log("no scenario");
             }
           } else {
             // console.log(body.err);
@@ -1650,7 +1651,7 @@ class ConversionDetail extends React.Component {
       })
       .catch(error => { });
   }
-  handleCryptoChange(value, option: Option) {
+  handleCryptoChange(value, option) {
     // console.log(
     //   "option.props.selectedData.min_limit",
     //   option.props.selectedData.jst_min_coin_limit
@@ -1773,14 +1774,14 @@ class ConversionDetail extends React.Component {
       }
     );
   }
-  handleFiatChange(value, option: Option) {
+  handleFiatChange(value, option) {
     // console.log(option.props.selectedData.min_limit);
     let prevRoom = this.state.crypto + "-" + this.state.currency;
     this.setState({
       fiat: value
     });
   }
-  handleCurrencyChange(value, option: Option) {
+  handleCurrencyChange(value, option) {
     clearInterval(this.interval);
     clearInterval(this.interval1);
     if (value === this.state.crypto) {

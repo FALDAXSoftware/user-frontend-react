@@ -47,7 +47,7 @@ const Select1 = styled(Select)`
   }
   & .ant-select-selection {
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#01090f" : ""};
+      props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
@@ -68,7 +68,7 @@ const Select2 = styled(Select)`
   }
   & .ant-select-selection {
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#01090f" : ""};
+      props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
@@ -100,7 +100,7 @@ const NDF = styled.tbody`
     > td {
       border-top: 0 !important;
       background: ${props =>
-    props.theme.mode === "dark" ? "#041422" : "white"};
+        props.theme.mode === "dark" ? "#041422" : "white"};
     }
   }
   @media (max-width: 767px) {
@@ -173,6 +173,7 @@ class History extends Component {
         { label: "Coin", key: "symbol" },
         { label: "Side", key: "side" },
         { label: "Date", key: "date" },
+        { label: "Status", key: "order_status" },
         { label: "Filled Price", key: "filled_price" },
         { label: "Amount", key: "amount" },
         { label: "Fees", key: "fees" }
@@ -222,7 +223,7 @@ class History extends Component {
   loadCoinList() {
     var self = this;
     if (this.state.activeKey === "1") {
-      console.log("here");
+      // console.log("here");
       fetch(API_URL + "/conversion/get-jst-pair", {
         method: "get",
         headers: {
@@ -233,7 +234,7 @@ class History extends Component {
       })
         .then(response => response.json())
         .then(responseData => {
-          console.log("Else 200", responseData.coinList);
+          // console.log("Else 200", responseData.coinList);
           self.setState({
             coinList: responseData.coinList,
             drop1List: responseData.coinList,
@@ -243,7 +244,7 @@ class History extends Component {
           // console.log("Else 200 drop1List", this.state.drop1List);
           // console.log("Else 200 drop2List", this.state.drop2List);
         })
-        .catch(error => { });
+        .catch(error => {});
     } else if (this.state.activeKey === "2") {
       // alert("load simplex coin list");
       fetch(API_URL + "/get-simplex-coin-list", {
@@ -266,7 +267,7 @@ class History extends Component {
           // console.log("If 200 drop1List", this.state.drop1List);
           // console.log("If 200 drop2List", this.state.drop2List);
         })
-        .catch(error => { });
+        .catch(error => {});
     }
   }
 
@@ -296,7 +297,7 @@ class History extends Component {
 
   historyResult() {
     // console.log("Activekey===============>", this.state.activeKey);
-    console.log("URL inside the loop");
+    // console.log("URL inside the loop");
     let { drop1Value, drop2Value } = this.state;
     // let flag = false;
     if (drop1Value !== null && drop2Value !== null) {
@@ -361,11 +362,13 @@ class History extends Component {
                   ).toFixed(8);
                   var amount = parseFloat(
                     parseFloat(temp.execution_report.CumQty) -
-                    parseFloat(fees_total)
+                      parseFloat(fees_total)
                   ).toFixed(8);
+                  var status = temp.order_status.toUpperCase();
                   obj["symbol"] = symbol;
                   obj["side"] = temp.side;
                   obj["date"] = date;
+                  obj["order_status"] = status;
                   obj["filled_price"] = fill_price;
                   obj["amount"] = amount;
                   obj["fees"] = fees_total;
@@ -385,10 +388,10 @@ class History extends Component {
                     csvJSTFields
                   },
                   () => {
-                    console.log(
-                      "historySimplexData Else If",
-                      this.state.historyJSTData
-                    );
+                    // console.log(
+                    //   "historySimplexData Else If",
+                    //   this.state.historyJSTData
+                    // );
                   }
                 );
               } else {
@@ -440,10 +443,10 @@ class History extends Component {
                 this.setState(
                   { historySimplexData: responseData.data, csvSimplexFields },
                   () => {
-                    console.log(
-                      "historySimplexData IF",
-                      this.state.historySimplexData
-                    );
+                    // console.log(
+                    //   "historySimplexData IF",
+                    //   this.state.historySimplexData
+                    // );
                   }
                 );
               } else if (responseData.data.length === 0) {
@@ -540,9 +543,9 @@ class History extends Component {
           }
           this.setState({ loader: false });
         })
-        .catch(error => { });
+        .catch(error => {});
     } else {
-      console.log("URL out of loop");
+      // console.log("URL out of loop");
       let url =
         API_URL +
         `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}&trade_type=${this.state.activeKey}`;
@@ -578,12 +581,13 @@ class History extends Component {
                   ).toFixed(8);
                   var amount = parseFloat(
                     parseFloat(temp.execution_report.CumQty) -
-                    parseFloat(fees_total)
+                      parseFloat(fees_total)
                   ).toFixed(8);
-
+                  var status = temp.order_status.toUpperCase();
                   obj["symbol"] = symbol;
                   obj["side"] = temp.side;
                   obj["date"] = date;
+                  obj["order_status"] = status;
                   obj["filled_price"] = fill_price;
                   obj["amount"] = amount;
                   obj["fees"] = fees_total;
@@ -603,10 +607,10 @@ class History extends Component {
                     csvJSTFields
                   },
                   () => {
-                    console.log(
-                      "historySimplexData Else If",
-                      this.state.historyJSTData
-                    );
+                    // console.log(
+                    //   "historySimplexData Else If",
+                    //   this.state.historyJSTData
+                    // );
                   }
                 );
               } else {
@@ -763,7 +767,7 @@ class History extends Component {
           }
           this.setState({ loader: false });
         })
-        .catch(error => { });
+        .catch(error => {});
     }
   }
 
@@ -1162,7 +1166,7 @@ class History extends Component {
                       onChange={this.selectChange2}
                       value={this.state.drop2Value}
 
-                    // defaultValue={"Select Currency"}
+                      // defaultValue={"Select Currency"}
                     >
                       {this.state.drop2List.map(element => {
                         // if (element.coin != this.state.drop1Value) {
@@ -1240,33 +1244,33 @@ class History extends Component {
                             </CSVLink>
                           </EXPButton>
                         ) : (
-                            ""
-                          )
-                      ) : (
                           ""
-                        )}
+                        )
+                      ) : (
+                        ""
+                      )}
                     </div>
                   )}
                   {this.state.activeKey === "2" && (
                     <div>
                       {this.state.csvSimplexFields !== undefined ? (
                         this.state.csvSimplexFields.length > 0 &&
-                          this.state.csvSimplexFields !== null ? (
-                            <EXPButton>
-                              <CSVLink
-                                filename="simplexreportfile.csv"
-                                data={this.state.csvSimplexFields}
-                                headers={this.state.csvHeadersSimplex}
-                              >
-                                EXPORT
+                        this.state.csvSimplexFields !== null ? (
+                          <EXPButton>
+                            <CSVLink
+                              filename="simplexreportfile.csv"
+                              data={this.state.csvSimplexFields}
+                              headers={this.state.csvHeadersSimplex}
+                            >
+                              EXPORT
                             </CSVLink>
-                            </EXPButton>
-                          ) : (
-                            ""
-                          )
-                      ) : (
+                          </EXPButton>
+                        ) : (
                           ""
-                        )}
+                        )
+                      ) : (
+                        ""
+                      )}
                     </div>
                   )}
                   {/* {this.state.activeKey === "1" && (
@@ -1373,6 +1377,7 @@ class History extends Component {
                             <th>Coin</th>
                             <th>Side</th>
                             <th>Date</th>
+                            <th>Status</th>
                             <th>Filled Price</th>
                             <th>Amount</th>
                             <th>Fees</th>
@@ -1381,7 +1386,8 @@ class History extends Component {
                         {this.state.historyJSTData !== undefined ? (
                           this.state.historyJSTData.length > 0 ? (
                             <tbody>
-                              {this.state.historyJSTData.map(function (temps) {
+                              {this.state.historyJSTData.map(function(temps) {
+                                // console.log(temps);
                                 var date = moment
                                   .utc(temps.created_at)
                                   .local()
@@ -1393,9 +1399,15 @@ class History extends Component {
                                   parseFloat(temps.network_fees)
                                 ).toFixed(8);
 
-                                var coin = (temps.side == 'Buy') ? temps.currency : temps.settle_currency
+                                var coin =
+                                  temps.side == "Buy"
+                                    ? temps.currency
+                                    : temps.settle_currency;
 
-                                fees_total = fees_total + " " + coin
+                                fees_total =
+                                  temps.fill_price == 0 && temps.quantity == 0
+                                    ? 0.0 + " " + coin
+                                    : fees_total + " " + coin;
                                 var fill_price = temps.execution_report.SettlCurrAmt.toFixed(
                                   8
                                 );
@@ -1405,12 +1417,27 @@ class History extends Component {
                                 var amount = parseFloat(temps.quantity).toFixed(
                                   8
                                 );
+                                var str = temps.order_status;
+                                var status =
+                                  str.charAt(0).toUpperCase() + str.slice(1);
 
                                 return (
                                   <tr>
                                     <td>{temps.symbol}</td>
                                     <td>{temps.side}</td>
                                     <td>{date}</td>
+                                    <td>
+                                      {/* {console.log(status)} */}
+                                      <span
+                                        className={
+                                          status == "Filled"
+                                            ? "order-sucess"
+                                            : "order-cancelled"
+                                        }
+                                      >
+                                        {status}
+                                      </span>
+                                    </td>
                                     <td>{fill_price}</td>
                                     <td>{amount}</td>
                                     <td>{fees_total}</td>
@@ -1419,15 +1446,15 @@ class History extends Component {
                               })}
                             </tbody>
                           ) : (
-                              <NDF>
-                                <tr>
-                                  <td colSpan="5">No Data Found</td>
-                                </tr>
-                              </NDF>
-                            )
+                            <NDF>
+                              <tr>
+                                <td colSpan="5">No Data Found</td>
+                              </tr>
+                            </NDF>
+                          )
                         ) : (
-                            ""
-                          )}
+                          ""
+                        )}
                       </HisTable>
                     </Tablediv>
                   </TabPane>
@@ -1449,7 +1476,7 @@ class History extends Component {
                         {this.state.historySimplexData !== undefined ? (
                           this.state.historySimplexData.length > 0 ? (
                             <tbody>
-                              {this.state.historySimplexData.map(function (
+                              {this.state.historySimplexData.map(function(
                                 temps
                               ) {
                                 var date = moment
@@ -1460,11 +1487,11 @@ class History extends Component {
                                   );
                                 var side =
                                   Number(temps.user_id) ===
-                                    self.props.profileData.id
+                                  self.props.profileData.id
                                     ? temps.side
                                     : temps.side === "Buy"
-                                      ? "Sell"
-                                      : "Buy";
+                                    ? "Sell"
+                                    : "Buy";
                                 if (temps.simplex_payment_status === 1) {
                                   var simplex_payment_status = "Under Approval";
                                 }
@@ -1490,15 +1517,15 @@ class History extends Component {
                               })}
                             </tbody>
                           ) : (
-                              <NDF>
-                                <tr>
-                                  <td colSpan="8">No Data Found</td>
-                                </tr>
-                              </NDF>
-                            )
+                            <NDF>
+                              <tr>
+                                <td colSpan="8">No Data Found</td>
+                              </tr>
+                            </NDF>
+                          )
                         ) : (
-                            ""
-                          )}
+                          ""
+                        )}
                       </HisTable>
                     </Tablediv>
                   </TabPane>
