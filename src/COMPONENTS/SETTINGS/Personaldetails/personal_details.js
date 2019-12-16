@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { connect } from "react-redux";
 import { createForm, formShape } from "rc-form";
-import { Row, Col, Input, Button, notification, Radio } from "antd";
+import { Row, Col, Input, Button, notification, Radio, Checkbox } from "antd";
 import styled from "styled-components";
 import moment from "moment";
 
@@ -22,6 +22,7 @@ import {
 import { LogoutUser } from "ACTIONS/authActions";
 import { _DEFAULTPROFILE } from "CONSTANTS/images";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import { Link } from "react-router-dom";
 
 /* const Option = Select.Option; */
 const RadioGroup = Radio.Group;
@@ -255,6 +256,7 @@ class PersonalDetails extends Component {
       postalmsg: null,
       fiatmsg: null,
       dfmsg: null,
+      agree_check_msg: null,
       profileImg: undefined,
       imageName: null,
       imageType: null,
@@ -278,7 +280,8 @@ class PersonalDetails extends Component {
       remove_pic: false,
       fiat: "",
       date_format: "",
-      showFileInput: true
+      showFileInput: true,
+      agreeCheck: false
     };
     this.handleProfile = this.handleProfile.bind(this);
   }
@@ -361,6 +364,32 @@ class PersonalDetails extends Component {
       fiat: e.target.value
     });
     this.onChangeField(e.target.value, "fiat");
+  };
+
+  onCheckboxChange = e => {
+    console.log(`checked = ${e.target.checked}`);
+    this.setState(
+      {
+        agreeCheck: e.target.checked
+      },
+      () => {
+        if (this.state.agreeCheck !== true) {
+          // this.setState({ dateFIcon: false });
+          document.querySelectorAll(".agree_check_msg")[0].style.display =
+            "block";
+          this.setState({
+            agree_check_msg:
+              "Please agree to all the Policies before proceeding further."
+          });
+        } else {
+          document.querySelectorAll(".agree_check_msg")[0].style.display =
+            "none";
+          this.setState({
+            agree_check_msg: null
+          });
+        }
+      }
+    );
   };
 
   /* 
@@ -765,7 +794,8 @@ class PersonalDetails extends Component {
         this.state.street1Icon !== false &&
         this.state.street2Icon !== false &&
         this.state.postalIcon !== false &&
-        this.state.date_format !== "" &&
+        // this.state.date_format !== "" &&
+        this.state.agreeCheck !== false &&
         ((this.props.profileDetails.country !== undefined &&
           this.props.profileDetails.country !== "" &&
           this.props.profileDetails.country !== null) ||
@@ -933,6 +963,20 @@ class PersonalDetails extends Component {
         this.setState({ dateFIcon: false });
         document.querySelectorAll(".df_msg")[0].style.display = "block";
         this.setState({ dfmsg: "Date Format is required." });
+      }
+      if (this.state.agreeCheck !== true) {
+        // this.setState({ dateFIcon: false });
+        document.querySelectorAll(".agree_check_msg")[0].style.display =
+          "block";
+        this.setState({
+          agree_check_msg:
+            "Please agree to all the Policies before proceeding further."
+        });
+      } else {
+        document.querySelectorAll(".agree_check_msg")[0].style.display = "none";
+        this.setState({
+          agree_check_msg: null
+        });
       }
     });
   };
@@ -1185,6 +1229,49 @@ class PersonalDetails extends Component {
                     </RadioGroup>
                     <FIATMsg className="df_msg">{this.state.dfmsg}</FIATMsg>
                   </Col>
+                </SixthRow>
+                <SixthRow>
+                  <Col>
+                    <Checkbox
+                      value={this.state.agreeCheck}
+                      onChange={this.onCheckboxChange}
+                    ></Checkbox>
+                    <span>
+                      {" "}
+                      I agree to{" "}
+                      <a
+                        target="_blank"
+                        href={`${globalVariables.Terms_and_services}`}
+                      >
+                        Terms of Services
+                      </a>
+                      ,{" "}
+                      <a
+                        target="_blank"
+                        href={`${globalVariables.Privacy_policy}`}
+                      >
+                        Privacy Policy
+                      </a>
+                      ,{" "}
+                      <a
+                        target="_blank"
+                        href={`${globalVariables.Anti_money_laundering_policy}`}
+                      >
+                        Anti-Money Laundering Policy
+                      </a>{" "}
+                      and{" "}
+                      <a
+                        target="_blank"
+                        href={`${globalVariables.Cookie_policy}`}
+                      >
+                        Cookies Policy
+                      </a>
+                      .
+                    </span>
+                  </Col>
+                  <FIATMsg className="agree_check_msg">
+                    {this.state.agree_check_msg}
+                  </FIATMsg>
                 </SixthRow>
                 <FifthRow>
                   <Col
