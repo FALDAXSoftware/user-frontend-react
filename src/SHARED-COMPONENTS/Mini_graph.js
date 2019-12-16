@@ -4,7 +4,7 @@ import { Row, Col } from 'antd';
 import { connect } from "react-redux";
 import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
-import { globalVariables } from '../Globals';
+import { globalVariables } from '../Globals.js';
 const moment = require('moment');
 let { _AMAZONBUCKET } = globalVariables;
 
@@ -211,10 +211,10 @@ class Mini_graph extends React.Component {
                         <ImageWrapper src={_AMAZONBUCKET + image} />
                     </Col>
                     <Col xs={11} md={12}>
-                        <SpanCoinPrice> {price.toFixed(2)} {this.props.currency} </SpanCoinPrice>
+                        <SpanCoinPrice> {price.toFixed(5)} {this.props.currency} </SpanCoinPrice>
                     </Col>
                     <Col xs={8} md={7}>
-                        <SpanCoinPercentage value={percentage}> {percentage === 0 ? '' : percentage >= 0 ? '+' : ''}{Math.abs(percentage.toFixed(2))}% </SpanCoinPercentage>
+                        <SpanCoinPercentage value={percentage}> {percentage === 0 ? '' : percentage >= 0 ? '+' : ''}{Math.abs(percentage.toFixed(5))}% </SpanCoinPercentage>
                     </Col>
                 </Row>
                 <Row style={{ paddingTop: "10px" }}>

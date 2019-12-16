@@ -7,7 +7,7 @@ import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 import OverlayLoader from 'react-overlay-loading/lib/OverlayLoader';
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home"
 import { SpinEx } from 'STYLED-COMPONENTS/HOMEPAGE/style'
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 import ReactHtmlParser from 'react-html-parser';
 let { API_URL } = globalVariables;
 

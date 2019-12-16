@@ -9,7 +9,7 @@ import ReactHtmlParser from 'react-html-parser';
 import Navigation from 'COMPONENTS/NAVIGATIONS/navigation';
 /* import { Spin_Ex } from 'STYLED-COMPONENTS/HOMEPAGE/style' */
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 import { _ABOUTPEOPLE1, _ABOUTPEOPLE2, _ABOUTPEOPLE3, /* _ABOUTUS2  */ } from 'CONSTANTS/images';
 import ComingSoon from 'COMPONENTS/comingsoon';
 import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader';

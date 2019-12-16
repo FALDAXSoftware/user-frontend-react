@@ -6,7 +6,7 @@ import { Modal, Icon, notification } from 'antd';
 import styled from 'styled-components'
 
 /* components */
-import { globalVariables } from 'Globals';
+import { globalVariables } from 'Globals.js';
 import { _COMINGIMG } from "CONSTANTS/images";
 
 const API_URL = globalVariables.API_URL;
@@ -15,6 +15,11 @@ export const ModalWrap = styled.div`
 width: 465px;
 margin-left: auto;
 margin-right: auto;
+> iframe {
+    border: none;
+    height: 300px;
+    width: 100%;
+}
 @media(max-width:576px)
     {
         width:350px;   
@@ -24,6 +29,16 @@ margin-right: auto;
         width:256px;
     }
 `
+
+export const ModalHeaderTag = styled.h3`
+    fontFamily: Open Sans;
+    fontSize: 40px; 
+    textAlign: center;
+    color: rgb( 15, 71, 123 );
+    fontWeight: 600;
+    marginTop: 40px;
+`
+
 export const SubWrap = styled.div`
     margin-top:40px;
 `
@@ -125,7 +140,7 @@ class ComingSoon extends Component {
                     className="simple-maps"
                 >
                     <ModalWrap>
-                        <h3 style={{ fontFamily: "Open Sans", fontSize: "40px", textAlign: "center", color: "rgb( 15, 71, 123 )", fontWeight: "600", marginTop: "40px" }}>Coming Soon</h3>
+                        <ModalHeaderTag>Coming Soon</ModalHeaderTag>
                         {/* <Sub_wrap>
                             <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>
                             <Email_input placeholder="Email Address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
@@ -133,7 +148,7 @@ class ComingSoon extends Component {
                         <div style={{ marginTop: '20px', minHeight: '20px' }}>
                             <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff', backgroundColor: "#0f477b", height: "45px" }} onClick={() => this.send_email()}>SUBMIT</Button>
                         </div> */}
-                        <iframe title="Title" style={{ border: 'none' }} height="300px" width="100%" src={API_URL + "/get-subscriber-form"}></iframe>
+                        <iframe title="Title" src={API_URL + "/get-subscriber-form"}></iframe>
                     </ModalWrap>
                 </Modal>
             </div >

@@ -10,13 +10,15 @@
     "antd": "^3.17.0",
     "babel-polyfill": "^6.26.0",
     "chart.js": "^2.7.2",
+    "classnames": "^2.2.6",
     "country-state-city": "0.0.5",
     "d3-geo": "^1.11.1",
+    "dompurify": "^2.0.7",
     "express": "^4.16.3",
     "moment": "^2.22.2",
     "rc-form": "^2.2.2",
     "rc-form-validation": "^2.5.0",
-    "react": "^16.8.4",
+    "react": "^16.9.0",
     "react-bootstrap": "^0.32.4",
     "react-chartjs-2": "^2.7.4",
     "react-copy-to-clipboard": "^5.0.1",
@@ -32,6 +34,7 @@
     "react-grid-layout": "^0.16.6",
     "react-html-parser": "^2.0.2",
     "react-hubspot-form": "^1.3.7",
+    "react-idle-timer": "^4.2.9",
     "react-infinite-scroller": "^1.2.4",
     "react-intl-tel-input": "^6.0.0",
     "react-loader-spinner": "^2.3.0",
@@ -44,7 +47,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^4.0.8",
-    "react-scripts": "1.1.5",
+    "react-scripts": "^3.3.0",
     "react-simple-maps": "^0.12.1",
     "react-slick": "^0.23.1",
     "react-swipe-events": "^1.0.3",
@@ -52,13 +55,13 @@
     "redux": "^4.0.0",
     "redux-devtools": "^3.5.0",
     "redux-thunk": "^2.3.0",
-    "redux-tooltip": "^0.7.2",
     "sails.io.js": "^1.2.1",
     "simple-react-validator": "^0.0.8",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^2.2.0",
     "source-map-explorer": "^1.8.0",
     "styled-components": "^3.4.5",
+    "typescript": "^3.7.3",
     "wsdm-tooltip": "^0.1.3"
   },
   "scripts": {
@@ -70,8 +73,21 @@
   },
   "secure": false,
   "devDependencies": {
-    "webpack": "^3.10.0",
     "dotenv": "^6.2.0",
-    "react-masonry-css": "^1.0.12"
+    "react-masonry-css": "^1.0.12",
+    "webpack": "^4.41.2",
+    "webpack-dev-server": "3.9.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

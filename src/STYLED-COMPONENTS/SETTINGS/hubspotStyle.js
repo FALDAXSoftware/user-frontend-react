@@ -53,6 +53,7 @@ export const Date = styled.span`
 padding-right: 8px;
 font-size: 14px;
 line-height: 2.3;
+display: block;
 color:${props => props.theme.mode === "dark" ? "#ccbebe69" : "#00000070"};
 `
 export const NDF = styled.div`
