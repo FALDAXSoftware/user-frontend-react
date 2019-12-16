@@ -308,7 +308,7 @@ class ConversionDetail extends React.Component {
       })
       .catch(error => {});
   }
-  handleCryptoChange(value, option: Option) {
+  handleCryptoChange(value, option) {
     // console.log(option.props.selectedData.min_limit);
     let prevRoom = this.state.crypto + "-" + this.state.currency;
     this.setState(

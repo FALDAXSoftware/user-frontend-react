@@ -246,7 +246,7 @@ export const CopiedText = styled.div`
 class Referral extends Component {
   constructor(props) {
     super(props);
-    (this.state = {
+    this.state = {
       referralLink: null,
       copied: false,
       referredData: [],
@@ -257,8 +257,8 @@ class Referral extends Component {
       totalEarned: 0,
       leftOutRef: 0,
       loader: false
-    }),
-      (this.coinsEarned = this.coinsEarned.bind(this));
+    };
+    this.coinsEarned = this.coinsEarned.bind(this);
     this.collectRefCoins = this.collectRefCoins.bind(this);
     this.getReferralData = this.getReferralData.bind(this);
   }
@@ -360,7 +360,7 @@ class Referral extends Component {
               }
             }
           });
-          console.log(responseData.leftReferredData);
+          // console.log(responseData.leftReferredData);
           responseData.leftReferredData.map(function(temp) {
             // console.log(temp);
             // console.log(parseFloat(temp.amount));

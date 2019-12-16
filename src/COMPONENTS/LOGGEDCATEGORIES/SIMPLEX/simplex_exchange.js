@@ -321,7 +321,8 @@ class SimplexExchange extends React.Component {
     } else {
       this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
       this.setState({
-        currencyToPay: parseFloat(e.target.value)
+        currencyToPay: parseFloat(e.target.value),
+        showTFAModal: false
       });
     }
   }
@@ -339,7 +340,8 @@ class SimplexExchange extends React.Component {
   handleCurrencyChange(value) {
     this.setState(
       {
-        currency: value
+        currency: value,
+        showTFAModal: false
       },
       () => {
         this.calculateDigitalCurrency();
@@ -349,7 +351,8 @@ class SimplexExchange extends React.Component {
   handleCryptoChange(value) {
     this.setState(
       {
-        crypto: value
+        crypto: value,
+        showTFAModal: false
       },
       () => {
         this.calculateDigitalCurrency();
@@ -507,7 +510,8 @@ class SimplexExchange extends React.Component {
     } else {
       this.validator1.showMessages();
       this.setState({
-        loader: false
+        loader: false,
+        showTFAModal: false
       });
       this.forceUpdate();
     }

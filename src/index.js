@@ -26,7 +26,7 @@ store.subscribe(() => {
 ReactDOM.render(
   <Router>
     <Provider store={store}>
-      <App {...this.props} />
+      <App />
     </Provider>
   </Router>,
   document.getElementById("root")
