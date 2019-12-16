@@ -438,6 +438,10 @@ class PersonalDetails extends Component {
             "Error",
             "File size must not be more than 5 MB"
           );
+          // this.setState({
+          //   showFileInput: false
+          // });
+          this.removePic();
         }
       } else {
         if (file !== undefined)

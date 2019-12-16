@@ -322,7 +322,7 @@ class TradeView extends React.Component {
     });
     this.timeout = setTimeout(this.showCalculatedValuesUSDTerms, 1000);
   }
-  handleFiatChange(value, option: Option) {
+  handleFiatChange(value, option) {
     // console.log(option.props.selectedData.min_limit);
     let prevRoom = this.state.crypto + "-" + this.state.currency;
     this.setState(
@@ -334,7 +334,7 @@ class TradeView extends React.Component {
       }
     );
   }
-  handleCryptoChange(value, option: Option) {
+  handleCryptoChange(value, option) {
     if (value === this.state.currency) {
       this.state.currencyList.map((element, i) => {
         if (element.coin === this.state.currency) {
@@ -444,7 +444,7 @@ class TradeView extends React.Component {
       }
     );
   }
-  handleCurrencyChange(value, option: Option) {
+  handleCurrencyChange(value, option) {
     if (value === this.state.crypto) {
       this.state.cryptoList.map((element, i) => {
         if (element.coin === this.state.crypto) {

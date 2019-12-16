@@ -173,6 +173,7 @@ class History extends Component {
         { label: "Coin", key: "symbol" },
         { label: "Side", key: "side" },
         { label: "Date", key: "date" },
+        { label: "Status", key: "order_status" },
         { label: "Filled Price", key: "filled_price" },
         { label: "Amount", key: "amount" },
         { label: "Fees", key: "fees" }
@@ -296,7 +297,7 @@ class History extends Component {
 
   historyResult() {
     // console.log("Activekey===============>", this.state.activeKey);
-    console.log("URL inside the loop");
+    // console.log("URL inside the loop");
     let { drop1Value, drop2Value } = this.state;
     // let flag = false;
     if (drop1Value !== null && drop2Value !== null) {
@@ -363,9 +364,11 @@ class History extends Component {
                     parseFloat(temp.execution_report.CumQty) -
                       parseFloat(fees_total)
                   ).toFixed(8);
+                  var status = temp.order_status.toUpperCase();
                   obj["symbol"] = symbol;
                   obj["side"] = temp.side;
                   obj["date"] = date;
+                  obj["order_status"] = status;
                   obj["filled_price"] = fill_price;
                   obj["amount"] = amount;
                   obj["fees"] = fees_total;
@@ -385,10 +388,10 @@ class History extends Component {
                     csvJSTFields
                   },
                   () => {
-                    console.log(
-                      "historySimplexData Else If",
-                      this.state.historyJSTData
-                    );
+                    // console.log(
+                    //   "historySimplexData Else If",
+                    //   this.state.historyJSTData
+                    // );
                   }
                 );
               } else {
@@ -440,10 +443,10 @@ class History extends Component {
                 this.setState(
                   { historySimplexData: responseData.data, csvSimplexFields },
                   () => {
-                    console.log(
-                      "historySimplexData IF",
-                      this.state.historySimplexData
-                    );
+                    // console.log(
+                    //   "historySimplexData IF",
+                    //   this.state.historySimplexData
+                    // );
                   }
                 );
               } else if (responseData.data.length === 0) {
@@ -542,7 +545,7 @@ class History extends Component {
         })
         .catch(error => {});
     } else {
-      console.log("URL out of loop");
+      // console.log("URL out of loop");
       let url =
         API_URL +
         `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}&trade_type=${this.state.activeKey}`;
@@ -580,10 +583,11 @@ class History extends Component {
                     parseFloat(temp.execution_report.CumQty) -
                       parseFloat(fees_total)
                   ).toFixed(8);
-
+                  var status = temp.order_status.toUpperCase();
                   obj["symbol"] = symbol;
                   obj["side"] = temp.side;
                   obj["date"] = date;
+                  obj["order_status"] = status;
                   obj["filled_price"] = fill_price;
                   obj["amount"] = amount;
                   obj["fees"] = fees_total;
@@ -603,10 +607,10 @@ class History extends Component {
                     csvJSTFields
                   },
                   () => {
-                    console.log(
-                      "historySimplexData Else If",
-                      this.state.historyJSTData
-                    );
+                    // console.log(
+                    //   "historySimplexData Else If",
+                    //   this.state.historyJSTData
+                    // );
                   }
                 );
               } else {
@@ -1373,6 +1377,7 @@ class History extends Component {
                             <th>Coin</th>
                             <th>Side</th>
                             <th>Date</th>
+                            <th>Status</th>
                             <th>Filled Price</th>
                             <th>Amount</th>
                             <th>Fees</th>
@@ -1382,6 +1387,7 @@ class History extends Component {
                           this.state.historyJSTData.length > 0 ? (
                             <tbody>
                               {this.state.historyJSTData.map(function(temps) {
+                                // console.log(temps);
                                 var date = moment
                                   .utc(temps.created_at)
                                   .local()
@@ -1398,7 +1404,10 @@ class History extends Component {
                                     ? temps.currency
                                     : temps.settle_currency;
 
-                                fees_total = fees_total + " " + coin;
+                                fees_total =
+                                  temps.fill_price == 0 && temps.quantity == 0
+                                    ? 0.0 + " " + coin
+                                    : fees_total + " " + coin;
                                 var fill_price = temps.execution_report.SettlCurrAmt.toFixed(
                                   8
                                 );
@@ -1408,12 +1417,27 @@ class History extends Component {
                                 var amount = parseFloat(temps.quantity).toFixed(
                                   8
                                 );
+                                var str = temps.order_status;
+                                var status =
+                                  str.charAt(0).toUpperCase() + str.slice(1);
 
                                 return (
                                   <tr>
                                     <td>{temps.symbol}</td>
                                     <td>{temps.side}</td>
                                     <td>{date}</td>
+                                    <td>
+                                      {/* {console.log(status)} */}
+                                      <span
+                                        className={
+                                          status == "Filled"
+                                            ? "order-sucess"
+                                            : "order-cancelled"
+                                        }
+                                      >
+                                        {status}
+                                      </span>
+                                    </td>
                                     <td>{fill_price}</td>
                                     <td>{amount}</td>
                                     <td>{fees_total}</td>
