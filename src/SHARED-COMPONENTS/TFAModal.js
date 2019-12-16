@@ -35,7 +35,7 @@ class TFAModal extends Component {
     };
     this.validator = new SimpleReactValidator({
       validOTP: {
-        message: "Please enter valid OTP.",
+        message: "The verification code must be a number.",
         rule: val => {
           var RE = /^[0-9]*$/;
           if (RE.test(val)) {
@@ -66,7 +66,7 @@ class TFAModal extends Component {
   }
   onChangeField = (field, e) => {
     let fields = this.state.fields;
-    console.log(e.target.value);
+    // console.log(e.target.value);
     if (e.target.value.trim() === "") {
       fields[field] = "";
     } else {

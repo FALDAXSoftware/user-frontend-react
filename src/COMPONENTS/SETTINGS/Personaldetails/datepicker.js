@@ -23,7 +23,7 @@ export default class Datepicker extends Component {
   }
   /* Life-Cycle Methods */
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
     if (this.props.theme !== undefined) {
       if (this.props.theme !== this.state.theme) {
         if (this.props.theme === false)
@@ -204,13 +204,13 @@ export default class Datepicker extends Component {
         // console.log("profile ", this.props.kyc)
 
         if (this.props.profileDetails.dob !== undefined) {
-          console.log(
-            "this.props.profileDetails.dob",
-            moment(this.props.profileDetails.dob).date(),
-            moment(this.props.profileDetails.dob).year(),
-            moment(this.props.profileDetails.dob).get("month")
-          );
-          console.log(this.props.profileDetails.dob);
+          // console.log(
+          //   "this.props.profileDetails.dob",
+          //   moment(this.props.profileDetails.dob).date(),
+          //   moment(this.props.profileDetails.dob).year(),
+          //   moment(this.props.profileDetails.dob).get("month")
+          // );
+          // console.log(this.props.profileDetails.dob);
           date = this.props.profileDetails.dob.split("-");
           // year = moment(this.props.profileDetails.dob).year();
           // month = moment(this.props.profileDetails.dob).get("month");
@@ -218,7 +218,7 @@ export default class Datepicker extends Component {
           year = Number(date[2]);
           month = date[1];
           day = Number(date[0]);
-          console.log("date---------", date, year, month, day);
+          // console.log("date---------", date, year, month, day);
           if (month !== null) {
             month = Number(month) - 1;
           }

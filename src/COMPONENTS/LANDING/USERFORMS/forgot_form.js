@@ -157,15 +157,16 @@ const BackLink = styled.a``;
 export const RightLogin = styled.div`
   width: 100%;
 `;
+
 class ForgotForm extends Component {
   constructor(props) {
     super(props);
-    (this.state = {
+    this.state = {
       forgot: false,
       email: "",
       recaptchaToken: null
-    }),
-      (this.validator = new SimpleReactValidator());
+    };
+    this.validator = new SimpleReactValidator();
     this.fieldChange = this.fieldChange.bind(this);
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
     this.verifyCallback = this.verifyCallback.bind(this);

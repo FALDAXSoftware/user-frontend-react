@@ -14,16 +14,10 @@ import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { connect } from "react-redux";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faStroopwafel } from "@fortawesome/free-solid-svg-icons";
-/* import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; */
 
 /* Components */
-
-/* import { Signup } from 'ACTIONS/authActions'; */
-// import HomePage from 'components/LANDING/HomePage';
-// import Login from "components/LANDING/USERFORMS/Login_Form"
 import AppRouter from "routes";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
-// import NotFound from "./SHARED-COMPONENTS/NotFound";
 import TradeView from "./SHARED-COMPONENTS/TradeView";
 import SimplexView from "./SHARED-COMPONENTS/SimplexView";
 
@@ -37,27 +31,12 @@ const ForgotForm = lazy(() =>
 const ResetPassword = lazy(() =>
   import("COMPONENTS/LANDING/USERFORMS/reset_form")
 );
-// const FaqPage = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/faq_page"));
-// const AboutUs = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/about_us"));
-// const Blog = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/blog"));
-// const BlogDetails = lazy(() =>
-//   import("COMPONENTS/LANDINGCATEGORIES/blog_details")
-// );
-// const ContactUs = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/contact_us"));
 const CareerDetails = lazy(() =>
   import("COMPONENTS/LANDINGCATEGORIES/career_details")
 );
 const Careers = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/careers"));
-// const MediaContact = lazy(() =>
-//   import("COMPONENTS/LANDINGCATEGORIES/media_contact")
-// );
-// const Fees = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/fees"));
-// const Addcoin = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/add_coin"));
 const ApplyJob = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/apply_job"));
-// const Policy = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/policy"));
-// const News = lazy(() => import("COMPONENTS/LANDINGCATEGORIES/news"));
 const ThankYou = lazy(() => import("SHARED-COMPONENTS/thank_you"));
-// const Chart = lazy(() => import("COMPONENTS/tradingviewchart"));
 const SignupSuccess = lazy(() =>
   import("COMPONENTS/LANDING/USERFORMS/signup_success")
 );
@@ -126,6 +105,13 @@ class App extends Component {
     //             this.setState({theme: "dark"})
     //         }
     //     }
+  }
+  componentDidCatch(error, info) {
+    // // Display fallback UI
+    // this.setState({ hasError: true });
+    // // You can also log the error to an error reporting service
+    // logErrorToMyService(error, info);
+    window.location.href = "https://www.faldax.com";
   }
 
   render() {
