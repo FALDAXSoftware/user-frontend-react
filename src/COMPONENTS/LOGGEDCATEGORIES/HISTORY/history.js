@@ -173,6 +173,7 @@ class History extends Component {
         { label: "Coin", key: "symbol" },
         { label: "Side", key: "side" },
         { label: "Date", key: "date" },
+        { label: "Status", key: "order_status" },
         { label: "Filled Price", key: "filled_price" },
         { label: "Amount", key: "amount" },
         { label: "Fees", key: "fees" }
@@ -363,9 +364,11 @@ class History extends Component {
                     parseFloat(temp.execution_report.CumQty) -
                       parseFloat(fees_total)
                   ).toFixed(8);
+                  var status = temp.order_status.toUpperCase();
                   obj["symbol"] = symbol;
                   obj["side"] = temp.side;
                   obj["date"] = date;
+                  obj["order_status"] = status;
                   obj["filled_price"] = fill_price;
                   obj["amount"] = amount;
                   obj["fees"] = fees_total;
@@ -580,10 +583,11 @@ class History extends Component {
                     parseFloat(temp.execution_report.CumQty) -
                       parseFloat(fees_total)
                   ).toFixed(8);
-
+                  var status = temp.order_status.toUpperCase();
                   obj["symbol"] = symbol;
                   obj["side"] = temp.side;
                   obj["date"] = date;
+                  obj["order_status"] = status;
                   obj["filled_price"] = fill_price;
                   obj["amount"] = amount;
                   obj["fees"] = fees_total;
@@ -1373,6 +1377,7 @@ class History extends Component {
                             <th>Coin</th>
                             <th>Side</th>
                             <th>Date</th>
+                            <th>Status</th>
                             <th>Filled Price</th>
                             <th>Amount</th>
                             <th>Fees</th>
