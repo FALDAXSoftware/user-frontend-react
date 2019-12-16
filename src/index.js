@@ -26,11 +26,7 @@ store.subscribe(() => {
 ReactDOM.render(
   <Router>
     <Provider store={store}>
-<<<<<<< HEAD
       <App />
-=======
-      <App {...this.props} />
->>>>>>> c715e5522c3c05e4353612a09f87e72603cdd19a
     </Provider>
   </Router>,
   document.getElementById("root")
