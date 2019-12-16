@@ -336,7 +336,7 @@ table .ant-table-tbody > tr > td {
 /* Country Picker Day Mode */
 .Country_Select {
   width: 85%;
-  margin-left: 30px;
+  /* margin-left: 30px; */
 }
 .Country_Select:first-child {
   margin-left: 0px !important;
@@ -382,9 +382,9 @@ table .ant-table-tbody > tr > td {
   box-shadow: none;
 }
 
-.country_select_drop {
+/* .country_select_drop {
   background-color: red;
-}
+} */
 .ant-dropdown-menu {
   margin-top: 10px !important;
 }
