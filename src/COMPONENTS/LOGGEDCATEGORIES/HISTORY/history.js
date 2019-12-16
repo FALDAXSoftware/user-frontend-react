@@ -296,7 +296,11 @@ class History extends Component {
 
   historyResult() {
     // console.log("Activekey===============>", this.state.activeKey);
+<<<<<<< HEAD
     // console.log("URL inside the loop");
+=======
+    console.log("URL inside the loop");
+>>>>>>> c715e5522c3c05e4353612a09f87e72603cdd19a
     let { drop1Value, drop2Value } = this.state;
     // let flag = false;
     if (drop1Value !== null && drop2Value !== null) {
@@ -385,10 +389,17 @@ class History extends Component {
                     csvJSTFields
                   },
                   () => {
+<<<<<<< HEAD
                     // console.log(
                     //   "historySimplexData Else If",
                     //   this.state.historyJSTData
                     // );
+=======
+                    console.log(
+                      "historySimplexData Else If",
+                      this.state.historyJSTData
+                    );
+>>>>>>> c715e5522c3c05e4353612a09f87e72603cdd19a
                   }
                 );
               } else {
@@ -440,10 +451,17 @@ class History extends Component {
                 this.setState(
                   { historySimplexData: responseData.data, csvSimplexFields },
                   () => {
+<<<<<<< HEAD
                     // console.log(
                     //   "historySimplexData IF",
                     //   this.state.historySimplexData
                     // );
+=======
+                    console.log(
+                      "historySimplexData IF",
+                      this.state.historySimplexData
+                    );
+>>>>>>> c715e5522c3c05e4353612a09f87e72603cdd19a
                   }
                 );
               } else if (responseData.data.length === 0) {
@@ -542,7 +560,11 @@ class History extends Component {
         })
         .catch(error => {});
     } else {
+<<<<<<< HEAD
       // console.log("URL out of loop");
+=======
+      console.log("URL out of loop");
+>>>>>>> c715e5522c3c05e4353612a09f87e72603cdd19a
       let url =
         API_URL +
         `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&sell=${this.state.sell}&trade_type=${this.state.activeKey}`;
@@ -603,10 +625,17 @@ class History extends Component {
                     csvJSTFields
                   },
                   () => {
+<<<<<<< HEAD
                     // console.log(
                     //   "historySimplexData Else If",
                     //   this.state.historyJSTData
                     // );
+=======
+                    console.log(
+                      "historySimplexData Else If",
+                      this.state.historyJSTData
+                    );
+>>>>>>> c715e5522c3c05e4353612a09f87e72603cdd19a
                   }
                 );
               } else {
@@ -1056,6 +1085,7 @@ class History extends Component {
       duration: 5
     });
   }
+<<<<<<< HEAD
 
   // resetFilters() {
   //   console.log(
@@ -1497,6 +1527,430 @@ class History extends Component {
                                   var simplex_payment_status = "Cancelled";
                                 }
 
+=======
+
+  // resetFilters() {
+  //   console.log(
+  //     "reset",
+  //     this.state.toDate,
+  //     this.state.fromDate,
+  //     this.state.sell,
+  //     this.state.buy,
+  //     this.state.drop1Value,
+  //     this.state.drop2
+  //   );
+  //   this.setState(
+  //     {
+  //       toDate: moment().format("YYYY-MM-DD"),
+  //       fromDate: moment(moment().subtract(1, "months"), "YYYY-MM-DD").format(
+  //         "YYYY-MM-DD"
+  //       ),
+  //       sell: true,
+  //       buy: true,
+  //       drop1Value: null,
+  //       drop2Value: null
+  //     },
+  //     () => {
+  //       this.loadCoinList();
+  //       this.historyResult();
+  //       console.log(
+  //         "reset after",
+  //         this.state.toDate,
+  //         this.state.fromDate,
+  //         this.state.sell,
+  //         this.state.buy,
+  //         this.state.drop1Value,
+  //         this.state.drop2
+  //       );
+  //     }
+  //   );
+  // }
+
+  render() {
+    var self = this;
+    return (
+      <div>
+        <ContactWrap>
+          <LoggedNavigation />
+          <GreyWrap>
+            <ContainerContact>
+              <HeadHis>
+                <Filter>
+                  <FilterDiv>
+                    <Select1
+                      showSearch
+                      className="display-value"
+                      onChange={this.selectChange1}
+                      value={this.state.drop1Value}
+                    >
+                      {this.state.drop1List.map(element => {
+                        if (this.state.activeKey === "1") {
+                          if (this.state.drop2Value === "XRP") {
+                            if (
+                              element.coin != this.state.drop2Value &&
+                              element.coin != "LTC"
+                            ) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          } else if (this.state.drop2Value === "LTC") {
+                            if (
+                              element.coin != this.state.drop2Value &&
+                              element.coin != "XRP"
+                            ) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          } else {
+                            if (element.coin != this.state.drop2Value) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          }
+                        } else {
+                          if (element.coin != this.state.drop2Value) {
+                            return (
+                              <Option value={element.coin}>
+                                {element.coin}
+                              </Option>
+                            );
+                          }
+                        }
+                      })}
+                    </Select1>
+                    <FontAwesomeIconS icon={faExchangeAlt} color="#909090" />
+                    <Select2
+                      showSearch
+                      className="display-value"
+                      onChange={this.selectChange2}
+                      value={this.state.drop2Value}
+
+                      // defaultValue={"Select Currency"}
+                    >
+                      {this.state.drop2List.map(element => {
+                        // if (element.coin != this.state.drop1Value) {
+                        //   return (
+                        //     <Option value={element.coin}>{element.coin}</Option>
+                        //   );
+                        // }
+                        if (this.state.activeKey === "1") {
+                          if (this.state.drop1Value === "XRP") {
+                            if (
+                              element.coin != this.state.drop1Value &&
+                              element.coin != "LTC"
+                            ) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          } else if (this.state.drop1Value === "LTC") {
+                            if (
+                              element.coin != this.state.drop1Value &&
+                              element.coin != "XRP"
+                            ) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          } else {
+                            if (element.coin != this.state.drop1Value) {
+                              return (
+                                <Option value={element.coin}>
+                                  {element.coin}
+                                </Option>
+                              );
+                            }
+                          }
+                        } else {
+                          if (element.coin != this.state.drop1Value) {
+                            return (
+                              <Option value={element.coin}>
+                                {element.coin}
+                              </Option>
+                            );
+                          }
+                        }
+                      })}
+                    </Select2>
+                  </FilterDiv>
+                  <Datediv>
+                    <RangePickerS
+                      disabledDate={this.disabledDate}
+                      disabledTime={this.disabledRangeTime}
+                      onChange={this.changeDate}
+                      defaultValue={[
+                        moment(moment().subtract(1, "months"), "YYYY-MM-DD"),
+                        moment(moment(), "YYYY-MM-DD")
+                      ]}
+                      format="YYYY-MM-DD"
+                    />
+                  </Datediv>
+                  {this.state.activeKey === "1" && (
+                    <div>
+                      {this.state.csvJSTFields !== undefined ? (
+                        this.state.csvJSTFields.length > 0 ? (
+                          <EXPButton>
+                            <CSVLink
+                              filename="jstreportfile.csv"
+                              data={this.state.csvJSTFields}
+                              headers={this.state.csvHeadersJST}
+                            >
+                              EXPORT
+                            </CSVLink>
+                          </EXPButton>
+                        ) : (
+                          ""
+                        )
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  )}
+                  {this.state.activeKey === "2" && (
+                    <div>
+                      {this.state.csvSimplexFields !== undefined ? (
+                        this.state.csvSimplexFields.length > 0 &&
+                        this.state.csvSimplexFields !== null ? (
+                          <EXPButton>
+                            <CSVLink
+                              filename="simplexreportfile.csv"
+                              data={this.state.csvSimplexFields}
+                              headers={this.state.csvHeadersSimplex}
+                            >
+                              EXPORT
+                            </CSVLink>
+                          </EXPButton>
+                        ) : (
+                          ""
+                        )
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  )}
+                  {/* {this.state.activeKey === "1" && (
+                    <div>
+                      <EXPButton onClick={this.resetFilters}>Reset</EXPButton>
+                    </div>
+                  )} */}
+                </Filter>
+                {this.state.activeKey === "1" && (
+                  <FilterDivSelection>
+                    <CheckboxGroupS
+                      options={options}
+                      defaultValue={["SEND", "RECEIVE", "SELL", "BUY"]}
+                      onChange={this.onChangeCheck}
+                    />
+                  </FilterDivSelection>
+                )}
+              </HeadHis>
+              <HisWrap>
+                <Tabs
+                  activeKey={this.state.activeKey}
+                  // onChange={this.handleChange}
+                  onChange={this.callback}
+                >
+                  {/* <TabPane tab="Trade History" key="1">
+                    <Tablediv>
+                      <HisTable responsive striped condensed>
+                        <thead>
+                          <tr>
+                            <th>Coin</th>
+                            <th>Date</th>
+                            <th>Side</th>
+                            <th>Filled price</th>
+                            <th>Amount</th>
+                            <th>FEE</th>
+                            <th>Volume</th>
+                          </tr>
+                        </thead>
+                        {this.state.historyData !== undefined ? (
+                          this.state.historyData.length > 0 ? (
+                            <tbody>
+                              {this.state.historyData.map(function(temp) {
+                                var date = moment
+                                  .utc(temp.created_at)
+                                  .local()
+                                  .format(
+                                    `${self.props.profileData.date_format} HH:mm:ss`
+                                  );
+                                var side =
+                                  Number(temp.user_id) ===
+                                  self.props.profileData.id
+                                    ? temp.side
+                                    : temp.side === "Buy"
+                                    ? "Sell"
+                                    : "Buy";
+                                var fee =
+                                  Number(temp.user_id) ===
+                                  self.props.profileData.id
+                                    ? temp.user_fee !== null
+                                      ? temp.user_fee.toFixed(8)
+                                      : "-"
+                                    : temp.requested_fee !== null
+                                    ? temp.requested_fee.toFixed(8)
+                                    : "-";
+                                return (
+                                  <tr>
+                                    <td>{temp.symbol}</td>
+                                    <td>{date}</td>
+                                    <SideBuySell
+                                      side={side === "Buy" ? true : false}
+                                    >
+                                      {side}
+                                    </SideBuySell>
+                                    <td>{temp.fill_price.toFixed(5)}</td>
+                                    <td>{temp.quantity.toFixed(3)}</td>
+                                    <td>{fee}</td>
+                                    <td>
+                                      {(
+                                        temp.fill_price * temp.quantity
+                                      ).toFixed(8)}
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          ) : (
+                            <NDF>
+                              <tr>
+                                <td colSpan="8">No Data Found</td>
+                              </tr>
+                            </NDF>
+                          )
+                        ) : (
+                          ""
+                        )}
+                      </HisTable>
+                    </Tablediv>
+                  </TabPane> */}
+                  <TabPane tab="Crypto Only" key="1">
+                    <Tablediv>
+                      <HisTable responsive striped condensed>
+                        <thead>
+                          <tr>
+                            <th>Coin</th>
+                            <th>Side</th>
+                            <th>Date</th>
+                            <th>Filled Price</th>
+                            <th>Amount</th>
+                            <th>Fees</th>
+                          </tr>
+                        </thead>
+                        {this.state.historyJSTData !== undefined ? (
+                          this.state.historyJSTData.length > 0 ? (
+                            <tbody>
+                              {this.state.historyJSTData.map(function(temps) {
+                                var date = moment
+                                  .utc(temps.created_at)
+                                  .local()
+                                  .format(
+                                    `${self.props.profileData.date_format} HH:mm:ss`
+                                  );
+                                var fees_total = (
+                                  parseFloat(temps.faldax_fees) +
+                                  parseFloat(temps.network_fees)
+                                ).toFixed(8);
+
+                                var coin =
+                                  temps.side == "Buy"
+                                    ? temps.currency
+                                    : temps.settle_currency;
+
+                                fees_total = fees_total + " " + coin;
+                                var fill_price = temps.execution_report.SettlCurrAmt.toFixed(
+                                  8
+                                );
+                                // var amount = (
+                                //   temps.execution_report.CumQty - fees_total
+                                // ).toFixed(8);
+                                var amount = parseFloat(temps.quantity).toFixed(
+                                  8
+                                );
+
+                                return (
+                                  <tr>
+                                    <td>{temps.symbol}</td>
+                                    <td>{temps.side}</td>
+                                    <td>{date}</td>
+                                    <td>{fill_price}</td>
+                                    <td>{amount}</td>
+                                    <td>{fees_total}</td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          ) : (
+                            <NDF>
+                              <tr>
+                                <td colSpan="5">No Data Found</td>
+                              </tr>
+                            </NDF>
+                          )
+                        ) : (
+                          ""
+                        )}
+                      </HisTable>
+                    </Tablediv>
+                  </TabPane>
+                  <TabPane tab="Credit Card" key="2">
+                    <Tablediv>
+                      <HisTable responsive striped condensed>
+                        <thead>
+                          <tr>
+                            <th>Coin</th>
+                            <th>Date</th>
+                            <th>Filled Price</th>
+                            <th>Amount</th>
+                            <th>Wallet Address</th>
+                            <th>Payment Id</th>
+                            <th>Quote Id</th>
+                            <th>Payment Status</th>
+                          </tr>
+                        </thead>
+                        {this.state.historySimplexData !== undefined ? (
+                          this.state.historySimplexData.length > 0 ? (
+                            <tbody>
+                              {this.state.historySimplexData.map(function(
+                                temps
+                              ) {
+                                var date = moment
+                                  .utc(temps.created_at)
+                                  .local()
+                                  .format(
+                                    `${self.props.profileData.date_format} HH:mm:ss`
+                                  );
+                                var side =
+                                  Number(temps.user_id) ===
+                                  self.props.profileData.id
+                                    ? temps.side
+                                    : temps.side === "Buy"
+                                    ? "Sell"
+                                    : "Buy";
+                                if (temps.simplex_payment_status === 1) {
+                                  var simplex_payment_status = "Under Approval";
+                                }
+                                if (temps.simplex_payment_status === 2) {
+                                  var simplex_payment_status = "Approved";
+                                }
+                                if (temps.simplex_payment_status === 3) {
+                                  var simplex_payment_status = "Cancelled";
+                                }
+
+>>>>>>> c715e5522c3c05e4353612a09f87e72603cdd19a
                                 return (
                                   <tr>
                                     <td>{temps.symbol}</td>

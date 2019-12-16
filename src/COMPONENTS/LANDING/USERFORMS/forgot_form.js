@@ -153,20 +153,32 @@ const RightWrap = styled.div`
 `;
 export const Icon = styled.i``;
 const BackLink = styled.a``;
+<<<<<<< HEAD
 
 export const RightLogin = styled.div`
   width: 100%;
 `;
 
+=======
+
+export const RightLogin = styled.div`
+  width: 100%;
+`;
+>>>>>>> c715e5522c3c05e4353612a09f87e72603cdd19a
 class ForgotForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    (this.state = {
       forgot: false,
       email: "",
       recaptchaToken: null
+<<<<<<< HEAD
     };
     this.validator = new SimpleReactValidator();
+=======
+    }),
+      (this.validator = new SimpleReactValidator());
+>>>>>>> c715e5522c3c05e4353612a09f87e72603cdd19a
     this.fieldChange = this.fieldChange.bind(this);
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
     this.verifyCallback = this.verifyCallback.bind(this);

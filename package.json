@@ -75,6 +75,7 @@
   "devDependencies": {
     "dotenv": "^6.2.0",
     "react-masonry-css": "^1.0.12",
+<<<<<<< HEAD
     "webpack": "^4.41.2",
     "webpack-dev-server": "3.9.0"
   },
@@ -89,5 +90,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+=======
+    "webpack": "^3.10.0"
+>>>>>>> c715e5522c3c05e4353612a09f87e72603cdd19a
   }
 }
