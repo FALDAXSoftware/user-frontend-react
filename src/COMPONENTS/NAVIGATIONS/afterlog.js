@@ -269,7 +269,7 @@ class Afterlog extends Component {
         >
           <AnchorName className="ant-dropdown-link" href="#">
             <HeaderAvatar
-            // style={{ backgroundImage: "url('" + Avatar_img + "')" }}
+              style={{ backgroundImage: "url('" + Avatar_img + "')" }}
             />
             <UserName>
               {this.props.prof_name}
