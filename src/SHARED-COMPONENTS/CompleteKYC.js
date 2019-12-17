@@ -94,7 +94,7 @@ class ComingSoon extends Component {
               <img
                 className="faldax_logo"
                 alt="FALDAX"
-                style={{ marginLeft: "10px" }}
+                // style={{ marginLeft: "10px" }}
                 src={_COMINGIMG2}
               />
             </div>
