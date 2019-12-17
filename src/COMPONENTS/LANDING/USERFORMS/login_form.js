@@ -512,7 +512,8 @@ class Login_Form extends Component {
     //   }
     // }
     else if (field === "otp") {
-      var re = /^\b[a-zA-Z0-9]{6}\b|\b[a-zA-Z0-9]{6}\b/;
+      // var re = /^\b[a-zA-Z0-9]{6}\b|\b[a-zA-Z0-9]{6}\b/;
+      var re = /^[0-9]{1,6}$/;
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
@@ -527,7 +528,7 @@ class Login_Form extends Component {
           document.querySelector("#otp_icon_fail").style.display =
             "inline-block";
           document.querySelectorAll(".otp_msg")[0].style.display = "block";
-          this.setState({ otp_msg: "Otp should have 6 characters." });
+          this.setState({ otp_msg: "Otp should have 6 digits." });
         }
       } else {
         this.setState({ otpIcon: false });
@@ -538,7 +539,7 @@ class Login_Form extends Component {
       }
     } else if (field === "twofactor_backup_code") {
       // var re = /^\b[a-zA-Z0-9]{10}\b|\b[a-zA-Z0-9]{10}\b/;
-      var re = /^[a-zA-Z0-9]{1,10}$/;
+      var re = /^[a-zA-Z0-9]{10}$/;
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
