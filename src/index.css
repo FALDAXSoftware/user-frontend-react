@@ -382,9 +382,9 @@ table .ant-table-tbody > tr > td {
   box-shadow: none;
 }
 
-.country_select_drop {
+/* .country_select_drop {
   background-color: red;
-}
+} */
 .ant-dropdown-menu {
   margin-top: 10px !important;
 }
