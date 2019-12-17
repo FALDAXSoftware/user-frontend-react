@@ -40,6 +40,7 @@ const socketIOClient = require("socket.io-client");
 const sailsIOClient = require("sails.io.js");
 let io = sailsIOClient(socketIOClient);
 io.sails.url = API_URL;
+io.sails.environment = "production";
 
 const routes = [
   {
