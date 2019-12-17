@@ -49,8 +49,8 @@ const KYCProgress = styled.div`
 `;
 const DoneWrap = styled.div`
   margin-top: 80px;
-  & .icon-display{
-    fontSize: 50px;
+  > .icon-display {
+    fontsize: 50px;
   }
 `;
 const KycSucc = styled.div`
@@ -273,7 +273,4 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(createForm()(KYC));
+export default connect(mapStateToProps, mapDispatchToProps)(createForm()(KYC));
