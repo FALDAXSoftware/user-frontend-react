@@ -295,7 +295,8 @@ class PersonalDetails extends Component {
     this.props.getProfileDataAction(this.props.isLoggedIn);
   }
 
-  componentWillReceiveProps(props, newProps) {
+  componentWillReceiveProps(props) {
+    // console.log(props);
     if (
       props.profileDetails.profile_pic !== null &&
       props.profileDetails.profile_pic !== undefined &&
@@ -315,15 +316,8 @@ class PersonalDetails extends Component {
         });
       }
     }
-    if (
-      props.apiStatus === 200 &&
-      props.apiMessage === "User details updated successfully"
-    ) {
-      this.openNotificationWithProfile(
-        "success",
-        "Success",
-        "Profile updated successfully"
-      );
+    if (props.apiStatus === 200) {
+      this.openNotificationWithProfile("success", "Success", props.apiMessage);
       this.props.clearEditData();
     }
     if (props.profileError !== undefined) {
@@ -367,7 +361,7 @@ class PersonalDetails extends Component {
   };
 
   onCheckboxChange = e => {
-    console.log(`checked = ${e.target.checked}`);
+    // console.log(`checked = ${e.target.checked}`);
     this.setState(
       {
         agreeCheck: e.target.checked
