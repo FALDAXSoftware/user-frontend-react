@@ -446,7 +446,7 @@ class WalletPopup extends Component {
     //     parseFloat(fields[name]) * (this.props.coinFee / 100)
     // ).toFixed(8);
     // fields["subtotal"] = subtotal;
-    this.setState({ sendFields: fields });
+    this.setState({ sendFields: fields, showTFAModal: false });
   }
 
   sendChange(e) {
