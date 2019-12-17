@@ -63,6 +63,9 @@ const KYCProgress = styled.div`
 `;
 const DoneWrap = styled.div`
   text-align: center;
+  > .icon-display {
+    font-size: 50px;
+  }
 `;
 const KycSucc = styled.div`
   width: 80%;
@@ -214,7 +217,7 @@ class TierOne extends React.Component {
           {this.props.is_kyc_done === 1 && (
             <DoneWrap>
               <Icon
-                style={{ fontSize: "50px" }}
+                // style={{ fontSize: "50px" }}
                 type="info-circle"
                 theme="twoTone"
                 twoToneColor="#ffc107"
@@ -235,7 +238,7 @@ class TierOne extends React.Component {
           {this.props.is_kyc_done === 2 && (
             <DoneWrap>
               <Icon
-                style={{ fontSize: "50px" }}
+                className="icon-display"
                 type="check-circle"
                 theme="twoTone"
                 twoToneColor="#52c41a"

@@ -64,7 +64,7 @@ const KYCProgress = styled.div`
 `;
 const DoneWrap = styled.div`
   margin-top: 80px;
-  & .icon-display {
+  > .icon-display {
     fontsize: 50px;
   }
 `;

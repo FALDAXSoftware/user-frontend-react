@@ -29,7 +29,7 @@ const SelectS = styled(Select)`
   width: 85%;
   & .Country_Select {
     width: 85%;
-    // margin: 0;
+    margin: 0;
   }
   & .Country_Select:first-child {
     margin-left: 0px !important;
