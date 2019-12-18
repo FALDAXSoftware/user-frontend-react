@@ -611,14 +611,7 @@ class PersonalDetails extends Component {
         this.setState({ lastmsg: "Last Name field is required" });
       }
     } else if (field === "country") {
-      if (
-        value.country !== undefined &&
-        value.country !== null &&
-        value.state !== null &&
-        value.state !== undefined &&
-        value.city !== null &&
-        value.city !== undefined
-      ) {
+      if (value.country && value.state && value.city) {
         this.setState({ countryIcon: true });
         document.querySelectorAll(".country_msg")[0].style.display = "none";
       } else {
@@ -1150,7 +1143,23 @@ class PersonalDetails extends Component {
                     xxl={{ span: 24 }}
                   >
                     <CountryPick
-                      {...this.props}
+                      // {...this.props}
+                      theme={this.props.theme}
+                      country={
+                        this.state.countrySelected !== null
+                          ? this.state.countrySelected
+                          : this.props.profileDetails.country
+                      }
+                      state={
+                        this.state.stateSelected !== null
+                          ? this.state.stateSelected
+                          : this.props.profileDetails.state
+                      }
+                      city={
+                        this.state.citySelected !== null
+                          ? this.state.citySelected
+                          : this.props.profileDetails.city_town
+                      }
                       onCountryChange={(country, state, city) =>
                         this.onCountryChange(country, state, city)
                       }

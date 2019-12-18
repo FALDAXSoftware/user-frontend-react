@@ -110,7 +110,8 @@ class ConversionDetail extends React.Component {
       showTFAModal: false,
       checkOTP: false,
       startSocket: false,
-      socketTime: 20000
+      socketTime: 20000,
+      disabledButton: true
     };
     io = this.props.io;
     this.timeout = null;
@@ -465,7 +466,8 @@ class ConversionDetail extends React.Component {
               fiatJSTValue: parseFloat(res.price_usd).toFixed(2),
               displayCurrency: res.currency,
               Quantity: parseFloat(res.total_value).toFixed(8),
-              flag: values.flag
+              flag: values.flag,
+              disabledButton: false
             });
             if (this.state.includeFees === 1) {
               this.setState({
@@ -655,7 +657,8 @@ class ConversionDetail extends React.Component {
               networkFee: parseFloat(res.network_fee).toFixed(8),
               displayCurrency: res.currency,
               Quantity: parseFloat(res.total_value).toFixed(8),
-              flag: values.flag
+              flag: values.flag,
+              disabledButton: false
             });
             if (this.state.includeFees === 1) {
               this.setState({
@@ -748,6 +751,9 @@ class ConversionDetail extends React.Component {
     }
   }
   sendCurrencyChange(e) {
+    this.setState({
+      disabledButton: true
+    });
     clearTimeout(this.timeout);
     clearInterval(this.interval);
     clearInterval(this.interval1);
@@ -794,6 +800,9 @@ class ConversionDetail extends React.Component {
     }
   }
   recieveCurrencyChange(e) {
+    this.setState({
+      disabledButton: true
+    });
     clearTimeout(this.timeout);
     clearInterval(this.interval);
     clearInterval(this.interval1);
@@ -849,6 +858,9 @@ class ConversionDetail extends React.Component {
     }
   }
   fiatJSTValueChange(e) {
+    this.setState({
+      disabledButton: true
+    });
     clearTimeout(this.timeout);
     // console.log("Fiat Currency Change");
     clearInterval(this.interval);
@@ -1665,6 +1677,9 @@ class ConversionDetail extends React.Component {
     //   "option.props.selectedData.min_limit",
     //   option.props.selectedData.jst_min_coin_limit
     // );
+    this.setState({
+      disabledButton: true
+    });
     clearInterval(this.interval);
     clearInterval(this.interval1);
     if (value === this.state.currency) {
@@ -1784,6 +1799,9 @@ class ConversionDetail extends React.Component {
     );
   }
   handleFiatChange(value, option) {
+    this.setState({
+      disabledButton: true
+    });
     // console.log(option.props.selectedData.min_limit);
     let prevRoom = this.state.crypto + "-" + this.state.currency;
     this.setState({
@@ -1791,6 +1809,9 @@ class ConversionDetail extends React.Component {
     });
   }
   handleCurrencyChange(value, option) {
+    this.setState({
+      disabledButton: true
+    });
     clearInterval(this.interval);
     clearInterval(this.interval1);
     if (value === this.state.crypto) {
@@ -1896,6 +1917,9 @@ class ConversionDetail extends React.Component {
     );
   }
   radioChange(e) {
+    this.setState({
+      disabledButton: true
+    });
     this.setState({ loader: true });
     this.clearValidation();
     clearInterval(this.interval);
@@ -2934,6 +2958,7 @@ class ConversionDetail extends React.Component {
                     type="primary"
                     size="large"
                     block
+                    disabled={this.state.disabledButton}
                   >
                     Confirm
                   </ConversionSubmitBtn>
