@@ -1244,28 +1244,28 @@ class PersonalDetails extends Component {
                       I agree to{" "}
                       <a
                         target="_blank"
-                        href={`${globalVariables.Terms_and_services}`}
+                        href={`${globalVariables.WordpressSiteURL}/policies`}
                       >
                         Terms of Services
                       </a>
                       ,{" "}
                       <a
                         target="_blank"
-                        href={`${globalVariables.Privacy_policy}`}
+                        href={`${globalVariables.WordpressSiteURL}/policies`}
                       >
                         Privacy Policy
                       </a>
                       ,{" "}
                       <a
                         target="_blank"
-                        href={`${globalVariables.Anti_money_laundering_policy}`}
+                        href={`${globalVariables.WordpressSiteURL}/policies`}
                       >
                         Anti-Money Laundering Policy
                       </a>{" "}
                       and{" "}
                       <a
                         target="_blank"
-                        href={`${globalVariables.Cookie_policy}`}
+                        href={`${globalVariables.WordpressSiteURL}/policies`}
                       >
                         Cookies Policy
                       </a>
