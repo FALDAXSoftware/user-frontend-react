@@ -217,7 +217,7 @@ class TierOne extends React.Component {
           {this.props.is_kyc_done === 1 && (
             <DoneWrap>
               <Icon
-                // style={{ fontSize: "50px" }}
+                className="icon-display"
                 type="info-circle"
                 theme="twoTone"
                 twoToneColor="#ffc107"
