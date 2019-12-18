@@ -325,8 +325,10 @@ class KYCForm extends Component {
     if (
       value.day !== "" &&
       value.day !== undefined &&
-      value.year !== undefined && value.year !== "" &&
-      value.month !== undefined && value.month !== ""
+      value.year !== undefined &&
+      value.year !== "" &&
+      value.month !== undefined &&
+      value.month !== ""
     ) {
       var date = moment
         .utc(tempDate)
@@ -375,27 +377,32 @@ class KYCForm extends Component {
         It is called when we country is changed and it is passed as callback to child.
     */
 
-  onCountryChange(country, state, city, stateID, countryID) {
+  onCountryChange(country, state, city, country_code) {
     let self = this;
     let fields = this.state.fields;
-    fields["country"] = country !== null ? country : "";
-    fields["state"] = state !== null ? state : "";
-    fields["city_town"] = city !== null ? city : "";
-    fields["state_id"] = stateID;
-    fields["country_id"] = countryID;
-    this.setState({ fields }, () => {
-      // To rerender the mobile input field
-      self.setState(
-        {
-          displayCountry: false
-        },
-        () => {
-          self.setState({
-            displayCountry: true
-          });
-        }
-      );
-    });
+    fields["country"] = country;
+    fields["state"] = state;
+    fields["city_town"] = city;
+    fields["country_code"] = country_code;
+    this.setState(
+      {
+        kycData: { ...this.state.kycData, ...fields },
+        fields
+      },
+      () => {
+        // To rerender the mobile input field
+        self.setState(
+          {
+            displayCountry: false
+          },
+          () => {
+            self.setState({
+              displayCountry: true
+            });
+          }
+        );
+      }
+    );
   }
 
   /* 
@@ -662,18 +669,20 @@ class KYCForm extends Component {
               xl={{ span: 24 }}
               xxl={{ span: 24 }}
             >
-              <CountryPick
-                kycData2={this.state.kycData}
-                {...this.props}
-                onCountryName={name => {
-                  this.onCountryName(name);
-                }}
-                kyc="kyc"
-                isLoggedIn={this.props.simpleReducer.isLoggedIn}
-                onCountryChange={(country, state, city, stateID, countryID) =>
-                  this.onCountryChange(country, state, city, stateID, countryID)
-                }
-              />
+              {this.state.kycData && (
+                <CountryPick
+                  theme={this.props.theme}
+                  kycData2={this.state.kycData}
+                  country={this.state.kycData.country}
+                  state={this.state.kycData.state}
+                  city={this.state.kycData.city_town}
+                  kyc="kyc"
+                  // isLoggedIn={this.props.simpleReducer.isLoggedIn}
+                  onCountryChange={(country, state, city, country_code) =>
+                    this.onCountryChange(country, state, city, country_code)
+                  }
+                />
+              )}
               {countryBool === true ||
               stateBool === true ||
               cityBool === true ? (
