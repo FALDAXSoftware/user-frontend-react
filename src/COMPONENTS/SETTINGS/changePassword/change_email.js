@@ -113,6 +113,11 @@ export const OTPInput = styled(NewInput)`
 export const ButtonDiv = styled.div`
   margin-top: 30px;
   margin-bottom: 50px;
+  > p {
+    > button {
+      margin: 20px 0 0 0;
+    }
+  }
 `;
 export const NewButton = styled(Save)`
   border: none;
