@@ -99,6 +99,7 @@ class WalletDetails extends Component {
       loader: false,
       coin_code: "",
       min_limit: "",
+      max_limit: "",
       walletUserData: [],
       currencyConv: {},
       defaultCoin: "",
@@ -185,6 +186,7 @@ class WalletDetails extends Component {
               currencyConv: responseData.currencyConversionData,
               defaultCoin: walletUserDetails.coin_code,
               min_limit: walletUserDetails.min_limit,
+              max_limit: walletUserDetails.max_limit,
               walletDetails: transDetails,
               loader: false,
               coin_code: coin_name[1],
@@ -540,6 +542,7 @@ class WalletDetails extends Component {
                     coinFee={this.state.coinFee}
                     coin_code={this.state.coin_code}
                     coin_min_limit={this.state.min_limit}
+                    coin_max_limit={this.state.max_limit}
                     isLoggedIn={this.props.isLoggedIn}
                     title="RECEIVE"
                     comingCancel={e => this.comingCancel(e)}
@@ -555,6 +558,7 @@ class WalletDetails extends Component {
                     fiatValue={this.state.fiatValue}
                     coin_code={this.state.coin_code}
                     coin_min_limit={this.state.min_limit}
+                    coin_max_limit={this.state.max_limit}
                     isLoggedIn={this.props.isLoggedIn}
                     title="SEND"
                     comingCancel={e => this.comingCancel(e)}
