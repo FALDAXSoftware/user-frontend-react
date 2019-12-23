@@ -277,7 +277,7 @@ class KYCForm extends Component {
             let arr = [];
             arr.push(responseData.data.country_code);
             // console.log("country_code", this.state.phoneCountry);
-            console.log(responseData.data.phone_number);
+            // console.log(responseData.data.phone_number);
 
             this.setState(
               {
@@ -389,7 +389,7 @@ class KYCForm extends Component {
     let mobile = this.state.mobile;
     if (this.state.phoneCountry && this.state.phoneCountry[0] != country_code) {
       mobile = `+${phoneCode}`;
-      console.log("from pick ", mobile);
+      // console.log("from pick ", mobile);
     }
     this.setState(
       {
@@ -453,7 +453,7 @@ class KYCForm extends Component {
 
     if (mob.trim !== "") {
       var temp = `+${code.dialCode}`;
-      console.log(temp);
+      // console.log(temp);
 
       // console.log("a", a);
       // console.log("mob", mob);
@@ -729,12 +729,13 @@ class KYCForm extends Component {
                 xxl={{ span: 24 }}
               >
                 <Postalkyc>Mobile No.*</Postalkyc>
-                <PhoneDiv>
-                  {console.log(
+                <PhoneDiv className="jkasdhkasjd">
+                  {/* {console.log(
+                    "Test",
                     this.state.mobile,
                     this.state.phoneCountry,
                     this.state.phoneCountry[0]
-                  )}
+                  )} */}
                   {this.state.displayCountry && (
                     <IntlTelInputS
                       value={this.state.mobile}

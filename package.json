@@ -36,7 +36,7 @@
     "react-hubspot-form": "^1.3.7",
     "react-idle-timer": "^4.2.9",
     "react-infinite-scroller": "^1.2.4",
-    "react-intl-tel-input": "^6.0.0",
+    "react-intl-tel-input": "^7.1.0",
     "react-loader-spinner": "^2.3.0",
     "react-moment": "^0.8.1",
     "react-number-format": "^4.0.7",
