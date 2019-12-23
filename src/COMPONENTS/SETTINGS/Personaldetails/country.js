@@ -119,9 +119,13 @@ export default class CountryPick extends Component {
   handleChange(value, position) {
     var newPosition = Number(position.key) - 1;
     var countrySelected = CountryData.getCountryById(newPosition);
+    console.log(countrySelected);
+
     let country_code = "";
+    let phoneCode = "";
     if (countrySelected) {
       country_code = countrySelected.sortname;
+      phoneCode = countrySelected.phonecode;
     }
     // var states = CountryData.getStatesOfCountry(newPosition + 1);
     this.setState(
@@ -129,7 +133,8 @@ export default class CountryPick extends Component {
         city_selected: "",
         state_selected: "",
         country_selected: value,
-        country_code
+        country_code,
+        phoneCode
         // stateID: null,
         // countryID: newPosition,
         // states
@@ -198,11 +203,14 @@ export default class CountryPick extends Component {
     return undefined;
   }
   passOnChangeToParent = () => {
+    console.log(this.state.phoneCode);
+
     this.props.onCountryChange(
       this.state.country_selected,
       this.state.state_selected,
       this.state.city_selected,
-      this.state.country_code
+      this.state.country_code,
+      this.state.phoneCode
     );
   };
   render() {
@@ -224,6 +232,7 @@ export default class CountryPick extends Component {
 
     // ----------
     let allCountries = CountryData.getAllCountries();
+
     let countryId = this.getCountryId(this.state.country_selected);
     let allStates = [];
     let allCities = [];
