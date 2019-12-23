@@ -240,6 +240,20 @@ class WalletPopup extends Component {
           }
         },
         required: true // optional
+      },
+      maxLimitCheck: {
+        message: `Amount must be less than ${this.props.coin_max_limit}`,
+        rule: (val, params, validator) => {
+          // console.log("this is val?????", val);
+          if (val <= this.props.coin_max_limit) {
+            // console.log("here call");
+            return true;
+          } else {
+            // console.log("else call");
+            return false;
+          }
+        },
+        required: true // optional
       }
     });
     this.sendChange = this.sendChange.bind(this);
@@ -633,7 +647,7 @@ class WalletPopup extends Component {
                   {this.validator.message(
                     "amount",
                     this.state.sendFields.amount,
-                    "required|numeric|gtzero|decimalrestrict|minLimitCheck",
+                    "required|numeric|gtzero|decimalrestrict|minLimitCheck|maxLimitCheck",
                     "text-danger-validation"
                   )}
                   {/*  <RightInput />

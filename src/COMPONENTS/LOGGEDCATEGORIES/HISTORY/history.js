@@ -173,7 +173,8 @@ class History extends Component {
         { label: "Coin", key: "symbol" },
         { label: "Side", key: "side" },
         { label: "Date", key: "date" },
-        { label: "Status", key: "order_status" },
+        { label: "Date", key: "date" },
+        { label: "Order Id", key: "order_id" },
         { label: "Filled Price", key: "filled_price" },
         { label: "Amount", key: "amount" },
         { label: "Fees", key: "fees" }
@@ -365,9 +366,11 @@ class History extends Component {
                       parseFloat(fees_total)
                   ).toFixed(8);
                   var status = temp.order_status.toUpperCase();
+                  var order_id = temp.order_id;
                   obj["symbol"] = symbol;
                   obj["side"] = temp.side;
                   obj["date"] = date;
+                  obj["order_id"] = order_id;
                   obj["order_status"] = status;
                   obj["filled_price"] = fill_price;
                   obj["amount"] = amount;
@@ -584,9 +587,11 @@ class History extends Component {
                       parseFloat(fees_total)
                   ).toFixed(8);
                   var status = temp.order_status.toUpperCase();
+                  var order_id = temp.order_id;
                   obj["symbol"] = symbol;
                   obj["side"] = temp.side;
                   obj["date"] = date;
+                  obj["order_id"] = order_id;
                   obj["order_status"] = status;
                   obj["filled_price"] = fill_price;
                   obj["amount"] = amount;
@@ -1377,6 +1382,7 @@ class History extends Component {
                             <th>Coin</th>
                             <th>Side</th>
                             <th>Date</th>
+                            <th>Order Id</th>
                             <th>Status</th>
                             <th>Filled Price</th>
                             <th>Amount</th>
@@ -1426,6 +1432,7 @@ class History extends Component {
                                     <td>{temps.symbol}</td>
                                     <td>{temps.side}</td>
                                     <td>{date}</td>
+                                    <td>{temps.order_id}</td>
                                     <td>
                                       {/* {console.log(status)} */}
                                       <span

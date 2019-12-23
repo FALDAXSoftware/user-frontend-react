@@ -21,6 +21,7 @@ import {
   ButtonDiv,
   NewButton
 } from "COMPONENTS/SETTINGS/changePassword/change_email.js";
+import { Popover, Button } from "antd";
 
 let { API_URL } = globalVariables;
 
@@ -28,6 +29,7 @@ class TFAModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      visible: false,
       fields: {
         otp: ""
       },
@@ -64,6 +66,16 @@ class TFAModal extends Component {
       fields
     });
   }
+
+  hide = () => {
+    this.setState({
+      visible: false
+    });
+  };
+
+  handleVisibleChange = visible => {
+    this.setState({ visible });
+  };
   onChangeField = (field, e) => {
     let fields = this.state.fields;
     // console.log(e.target.value);
@@ -139,6 +151,21 @@ class TFAModal extends Component {
         </NewP>
         <ButtonDiv>
           <NewButton onClick={this.verifyOTP.bind(this)}>Verify</NewButton>
+          <p>
+            <Popover
+              placement="topLeft"
+              content={
+                <b>
+                  Please logout and reset your Two-Factor Authentication code.
+                </b>
+              }
+              trigger="click"
+              visible={this.state.visible}
+              onVisibleChange={this.handleVisibleChange}
+            >
+              <Button type="link">Don't have Two-Factor Authentication?</Button>
+            </Popover>
+          </p>
         </ButtonDiv>
       </VerifyModal>
     );
