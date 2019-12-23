@@ -69,6 +69,7 @@ class ConversionDetail extends React.Component {
       cryptoList: [],
       originalCoinList: [],
       JSTPairList: [],
+      faldax_fee_value: "",
       currency: "BTC",
       crypto: "XRP",
       includeFees: 1,
@@ -1474,10 +1475,10 @@ class ConversionDetail extends React.Component {
               responseData.message
             );
             this.setState({
-              recieveCurrencyInput: 0,
+              recieveCurrencyInput: "",
               includeFees: 1,
-              sendCurrencyInput: 0,
-              fiatJSTValue: 0,
+              sendCurrencyInput: "",
+              fiatJSTValue: "",
               crypto: this.state.crypto,
               displayCurrency: null,
               currency: this.state.currency,
@@ -1576,10 +1577,10 @@ class ConversionDetail extends React.Component {
               responseData.message
             );
             this.setState({
-              recieveCurrencyInput: 0,
+              recieveCurrencyInput: "",
               includeFees: 1,
-              sendCurrencyInput: 0,
-              fiatJSTValue: 0,
+              sendCurrencyInput: "",
+              fiatJSTValue: "",
               crypto: this.state.crypto,
               displayCurrency: null,
               currency: this.state.currency,
@@ -1662,6 +1663,7 @@ class ConversionDetail extends React.Component {
             currencyList: responseData.coinList,
             originalCoinList: responseData.coinList,
             JSTPairList: responseData.getJSTPair,
+            faldax_fee_value: responseData.faldax_fee.value,
             minCrypto: minLimit,
             minCurrency: minCurrLimit
           });
@@ -2674,7 +2676,7 @@ class ConversionDetail extends React.Component {
                     <Row>
                       <Col xs={12} className="left-style">
                         <ConversionRightSpan>
-                          FALDAX Fee (0.24%)
+                          FALDAX Fee ({this.state.faldax_fee_value}%)
                         </ConversionRightSpan>
                       </Col>
                       <Col xs={12} className="right-style">
