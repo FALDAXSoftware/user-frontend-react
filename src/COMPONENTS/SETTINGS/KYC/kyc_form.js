@@ -273,16 +273,18 @@ class KYCForm extends Component {
           if (responseData.data.phone_number) {
             fields["phone_number"] = responseData.data.phone_number;
             // console.log("country_code", responseData.data.country_code);
-            let phone = responseData.data.phone_number.split("-")[1];
+            let phone = responseData.data.phone_number;
             let arr = [];
             arr.push(responseData.data.country_code);
             // console.log("country_code", this.state.phoneCountry);
+            console.log(responseData.data.phone_number);
+
             this.setState(
               {
-                displayCountry: true,
                 countrychange: true,
                 mobile: responseData.data.phone_number,
-                phoneCountry: arr
+                phoneCountry: arr,
+                displayCountry: true
               },
               () => {
                 // console.log("KYC CHECK", responseData.data.country_code)
@@ -377,17 +379,24 @@ class KYCForm extends Component {
         It is called when we country is changed and it is passed as callback to child.
     */
 
-  onCountryChange(country, state, city, country_code) {
+  onCountryChange(country, state, city, country_code, phoneCode) {
     let self = this;
     let fields = this.state.fields;
     fields["country"] = country;
     fields["state"] = state;
     fields["city_town"] = city;
     fields["country_code"] = country_code;
+    let mobile = this.state.mobile;
+    if (this.state.phoneCountry && this.state.phoneCountry[0] != country_code) {
+      mobile = `+${phoneCode}`;
+      console.log("from pick ", mobile);
+    }
     this.setState(
       {
         kycData: { ...this.state.kycData, ...fields },
-        fields
+        fields,
+        phoneCountry: [country_code],
+        mobile
       },
       () => {
         // To rerender the mobile input field
@@ -440,14 +449,20 @@ class KYCForm extends Component {
     */
 
   changeNumber(a, mob, code) {
+    console.log("chnage number", mob, code);
+
     if (mob.trim !== "") {
       var temp = `+${code.dialCode}`;
+      console.log(temp);
+
       // console.log("a", a);
       // console.log("mob", mob);
       // console.log("code", code);
       var mobile = mob.includes(`+${code.dialCode}`) ? mob : temp.concat(mob);
       let fields = this.state.fields;
       fields["phone_number"] = mobile;
+      // console.log(mobile);
+
       this.setState({ fields, mobile: mob });
     }
   }
@@ -678,8 +693,20 @@ class KYCForm extends Component {
                   city={this.state.kycData.city_town}
                   kyc="kyc"
                   // isLoggedIn={this.props.simpleReducer.isLoggedIn}
-                  onCountryChange={(country, state, city, country_code) =>
-                    this.onCountryChange(country, state, city, country_code)
+                  onCountryChange={(
+                    country,
+                    state,
+                    city,
+                    country_code,
+                    phoneCode
+                  ) =>
+                    this.onCountryChange(
+                      country,
+                      state,
+                      city,
+                      country_code,
+                      phoneCode
+                    )
                   }
                 />
               )}
@@ -703,12 +730,18 @@ class KYCForm extends Component {
               >
                 <Postalkyc>Mobile No.*</Postalkyc>
                 <PhoneDiv>
-                  {/* {console.log(this.state.mobile, this.state.phoneCountry, this.state.phoneCountry[0])} */}
+                  {console.log(
+                    this.state.mobile,
+                    this.state.phoneCountry,
+                    this.state.phoneCountry[0]
+                  )}
                   {this.state.displayCountry && (
                     <IntlTelInputS
                       value={this.state.mobile}
                       allowDropdown={false}
+                      autoHideDialCode={true}
                       preferredCountries={[]}
+                      inputClassName="intl-tel-input form-control"
                       onlyCountries={
                         this.state.phoneCountry[0] !== null
                           ? this.state.phoneCountry
@@ -716,14 +749,13 @@ class KYCForm extends Component {
                       }
                       defaultCountry={
                         this.state.phoneCountry[0] !== null
-                          ? this.state.phoneCountry[0]
+                          ? this.state.phoneCountry[0].toLowerCase()
                           : ""
                       }
                       separateDialCode={true}
                       onPhoneNumberChange={(a, b, c) =>
                         this.changeNumber(a, b, c)
                       }
-                      css={["intl-tel-input", "form-control"]}
                     />
                   )}
                 </PhoneDiv>
