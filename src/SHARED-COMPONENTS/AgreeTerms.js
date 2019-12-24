@@ -167,7 +167,7 @@ class AgreeTerms extends Component {
                 <h4>
                   <a
                     target="_blank"
-                    href={`${globalVariables.WordpressSiteURL}/policies`}
+                    href={`${globalVariables.Terms_and_services}`}
                   >
                     Terms of Services <Icon type="download" />
                   </a>
@@ -175,7 +175,7 @@ class AgreeTerms extends Component {
               </Col>
               <Col span={18}>
                 <iframe
-                  src="https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Terms+of+Service.pdf"
+                  src={globalVariables.Terms_and_services}
                   className="content-box"
                   width="100%"
                 ></iframe>
@@ -184,17 +184,14 @@ class AgreeTerms extends Component {
             <Row className="row-main">
               <Col span={6}>
                 <h4>
-                  <a
-                    target="_blank"
-                    href={`${globalVariables.WordpressSiteURL}/policies`}
-                  >
+                  <a target="_blank" href={`${globalVariables.Privacy_policy}`}>
                     Privacy Policy <Icon type="download" />
                   </a>
                 </h4>
               </Col>
               <Col span={18}>
                 <iframe
-                  src="https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Privacy+Policy.pdf"
+                  src={globalVariables.Privacy_policy}
                   className="content-box"
                   width="100%"
                 ></iframe>
@@ -205,7 +202,7 @@ class AgreeTerms extends Component {
                 <h4>
                   <a
                     target="_blank"
-                    href={`${globalVariables.WordpressSiteURL}/policies`}
+                    href={`${globalVariables.Anti_money_laundering_policy}`}
                   >
                     Anti-Money Laundering Policy <Icon type="download" />
                   </a>
@@ -213,7 +210,7 @@ class AgreeTerms extends Component {
               </Col>
               <Col span={18}>
                 <iframe
-                  src="https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Anti-Money+Laundering+Policy+v2.pdf"
+                  src={globalVariables.Anti_money_laundering_policy}
                   className="content-box"
                   width="100%"
                 ></iframe>
@@ -222,17 +219,14 @@ class AgreeTerms extends Component {
             <Row className="row-main">
               <Col span={6}>
                 <h4>
-                  <a
-                    target="_blank"
-                    href={`${globalVariables.WordpressSiteURL}/policies`}
-                  >
+                  <a target="_blank" href={`${globalVariables.Cookie_policy}`}>
                     Cookies Policy <Icon type="download" />
                   </a>
                 </h4>
               </Col>
               <Col span={18}>
                 <iframe
-                  src="https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Cookie+Policy.pdf"
+                  src={globalVariables.Cookie_policy}
                   className="content-box"
                   width="100%"
                 ></iframe>

@@ -1414,28 +1414,28 @@ class PersonalDetails extends Component {
                       By clicking on SAVE you agree to FALDAX{" "}
                       <a
                         target="_blank"
-                        href={`${globalVariables.WordpressSiteURL}/policies`}
+                        href={`${globalVariables.Terms_and_services}`}
                       >
                         Terms of Services
                       </a>
                       ,{" "}
                       <a
                         target="_blank"
-                        href={`${globalVariables.WordpressSiteURL}/policies`}
+                        href={`${globalVariables.Privacy_policy}`}
                       >
                         Privacy Policy
                       </a>
                       ,{" "}
                       <a
                         target="_blank"
-                        href={`${globalVariables.WordpressSiteURL}/policies`}
+                        href={`${globalVariables.Anti_money_laundering_policy}`}
                       >
                         Anti-Money Laundering Policy
                       </a>{" "}
                       and{" "}
                       <a
                         target="_blank"
-                        href={`${globalVariables.WordpressSiteURL}/policies`}
+                        href={`${globalVariables.Cookie_policy}`}
                       >
                         Cookies Policy
                       </a>
