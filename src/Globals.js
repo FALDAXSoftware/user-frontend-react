@@ -13,7 +13,7 @@ export const globalVariables = {
 
   //API_URL: 'http://18.191.87.133:8084', //Live URL
 
-  // API_URL: "http://192.168.0.213:1337", //Mansi's
+  API_URL: "http://192.168.0.213:1337", //Mansi's
 
   //API_URL: 'http://192.168.0.85:1337'
 
@@ -27,15 +27,17 @@ export const globalVariables = {
 
   // API_URL: "https://dev-backend.faldax.com", // DEV url
 
-  API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
-
-  TRADE_URL: "https://preprod-trade.faldax.com",
+  // API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
+  //
+  TRADE_URL: "https://preprod-trade.faldax.com"
 
   // TRADE_URL: "https://dev-trade.faldax.com", // DEV url
 
   // TRADE_URL: "http://localhost:3006/"
 
-  // API_URL: "https://prod-backend.faldax.com"
+  // API_URL: "https://prod-backend.faldax.com", // Live URL
+
+  // TRADE_URL: "https://trade.faldax.com" // Live URL
 
   //API_URL: process.env.REACT_APP_ENV_URL==='production' ?
   /* 'https://prod-backend.faldax.com':
@@ -43,15 +45,15 @@ export const globalVariables = {
     */
   // API_URL: 'http://13.58.130.154:8989' //Client Live URL,
 
-  Terms_and_services:
-    "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Terms+of+Service.pdf",
+  // Terms_and_services:
+  //   "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Terms+of+Service.pdf",
 
-  Privacy_policy:
-    "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Privacy+Policy.pdf",
+  // Privacy_policy:
+  //   "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Privacy+Policy.pdf",
 
-  Anti_money_laundering_policy:
-    "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Anti-Money+Laundering+Policy+v2.pdf",
+  // Anti_money_laundering_policy:
+  //   "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Anti-Money+Laundering+Policy+v2.pdf",
 
-  Cookie_policy:
-    "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Cookie+Policy.pdf"
+  // Cookie_policy:
+  //   "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Cookie+Policy.pdf"
 };

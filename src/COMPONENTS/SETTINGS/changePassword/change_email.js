@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { connect } from "react-redux";
-import { Row, Col, Input, notification, Modal } from "antd";
+import { Row, Col, Input, notification, Modal, Button } from "antd";
 import styled from "styled-components";
 import { createForm, formShape } from "rc-form";
 import SimpleReactValidator from "simple-react-validator";
@@ -14,7 +14,7 @@ import { getProfileDataAction } from "ACTIONS/SETTINGS/settingActions";
 import { LogoutUser } from "ACTIONS/authActions";
 
 /* STYLED-COMPONENTS */
-import { HeaderCol, Save } from "../Personaldetails/personal_details";
+import { HeaderCol } from "../Personaldetails/personal_details";
 let { API_URL } = globalVariables;
 
 const ChangeRow = styled(Row)`
@@ -117,6 +117,33 @@ export const ButtonDiv = styled.div`
     > button {
       margin: 20px 0 0 0;
     }
+  }
+  &.terms_btn_div {
+    margin-top: 50px;
+    text-align: center;
+    > button {
+      margin: 0 20px;
+    }
+  }
+`;
+export const Save = styled(Button)`
+  font-size: 13.217px;
+  font-family: "Open Sans";
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  -moz-transform: matrix(1.2195120140195, 0, 0, 1.20991183157525, 0, 0);
+  -webkit-transform: matrix(1.2195120140195, 0, 0, 1.20991183157525, 0, 0);
+  -ms-transform: matrix(1.2195120140195, 0, 0, 1.20991183157525, 0, 0);
+  border-radius: 24px;
+  background-color: rgb(76, 132, 255);
+  box-shadow: 0px 4px 10px 0px rgba(76, 132, 255, 0.33);
+  margin-left: 10px;
+  width: 15%;
+  height: 40px;
+  @media (max-width: 600px) {
+    width: 100px;
   }
 `;
 export const NewButton = styled(Save)`
