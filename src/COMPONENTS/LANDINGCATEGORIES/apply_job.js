@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { Row, Col, notification } from "antd";
-import { ReCaptcha } from "react-recaptcha-google";
+// import { ReCaptcha } from "react-recaptcha-google";
+import { ReCaptcha } from "react-recaptcha-v3";
 import styled from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
 import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
@@ -116,7 +117,8 @@ class ApplyJob extends Component {
         position_flag: null,
         coverLimit: null,
         resumeLimit: null,
-        recaptchaToken: null
+        recaptchaToken: null,
+        loadCaptch: false
       }
     };
     this._onChangeFields = this._onChangeFields.bind(this);
@@ -395,10 +397,16 @@ class ApplyJob extends Component {
     */
 
   onLoadRecaptcha() {
-    if (this.captchaDemo) {
-      this.captchaDemo.reset();
-      this.captchaDemo.execute();
-    }
+    this.setState(
+      {
+        loadCaptch: false
+      },
+      () => {
+        this.setState({
+          loadCaptch: true
+        });
+      }
+    );
   }
 
   /*  
@@ -645,7 +653,7 @@ class ApplyJob extends Component {
                       </Col>
                     </Row>
                   </Gap>
-                  <ReCaptcha
+                  {/* <ReCaptcha
                     ref={el => {
                       this.captchaDemo = el;
                     }}
@@ -655,7 +663,14 @@ class ApplyJob extends Component {
                     onloadCallback={this.onLoadRecaptcha}
                     verifyCallback={this.verifyCallback}
                     badge="bottomleft"
-                  />
+                  /> */}
+                  {this.state.loadCaptch && (
+                    <ReCaptcha
+                      sitekey={GOOGLE_SITE_KEY}
+                      // action="action_name"
+                      verifyCallback={this.verifyCallback}
+                    />
+                  )}
                   <BtnApply onClick={this.onSubmit}>SUBMIT</BtnApply>
                 </FormApply>
               </ApplyWrap>

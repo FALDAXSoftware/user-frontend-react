@@ -119,7 +119,7 @@ export default class CountryPick extends Component {
   handleChange(value, position) {
     var newPosition = Number(position.key) - 1;
     var countrySelected = CountryData.getCountryById(newPosition);
-    console.log(countrySelected);
+    // console.log(countrySelected);
 
     let country_code = "";
     let phoneCode = "";
@@ -203,7 +203,7 @@ export default class CountryPick extends Component {
     return undefined;
   }
   passOnChangeToParent = () => {
-    console.log(this.state.phoneCode);
+    // console.log(this.state.phoneCode);
 
     this.props.onCountryChange(
       this.state.country_selected,
@@ -262,6 +262,7 @@ export default class CountryPick extends Component {
           <Col sm={24} md={8} xl={8} xxl={8}>
             <Country>Country*</Country>
             <SelectS
+              disabled={this.props.disabled}
               showSearch
               value={this.state.country_selected}
               placeholder="Select a Country"
@@ -291,6 +292,7 @@ export default class CountryPick extends Component {
             <SelectWrap>
               <Country>State*</Country>
               <SelectS
+                disabled={this.props.disabled}
                 showSearch
                 value={this.state.state_selected}
                 placeholder="Select a State"
@@ -321,6 +323,7 @@ export default class CountryPick extends Component {
             <SelectWrap>
               <Country>City*</Country>
               <SelectS
+                disabled={this.props.disabled}
                 showSearch
                 value={this.state.city_selected}
                 placeholder="Select a City"
