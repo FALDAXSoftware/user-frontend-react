@@ -449,6 +449,17 @@ table .ant-table-tbody > tr > td {
   outline: 0;
   box-shadow: none;
 }
+.terms-outer-wrap .ant-modal-body {
+  height: calc(100vh - 330px);
+  overflow: auto;
+  padding: 0;
+}
+.terms-outer-wrap .ant-modal-header .ant-modal-title {
+  text-align: center;
+}
+.profile_details .ant-input[disabled] {
+  color: rgba(0, 0, 0, 0.4);
+}
 @media (max-width: 991px) {
   #profile-year {
     width: 85%;

@@ -17,6 +17,7 @@ import TierOne from "./TIERS/tier_one";
 // import KYC from "./KYC/kyc";
 /* import Paymethods from './Payment/paymethods'; */
 import SupportHub from "./Account_settings/support_hub";
+// import AgreeTerms from "../../SHARED-COMPONENTS/AgreeTerms";
 
 const TabPane = Tabs.TabPane;
 let { API_URL } = globalVariables;
@@ -61,6 +62,7 @@ class Editprofile extends Component {
       user2fastatus: "",
       totalUSDOfWallet: "",
       walletCoins: ""
+      // agreeTermsShow: false
     };
     this.callback = this.callback.bind(this);
     this.getWalletSummary = this.getWalletSummary.bind(this);
@@ -85,6 +87,11 @@ class Editprofile extends Component {
     // }
     this.getWalletSummary();
   }
+  // comingCancel = e => {
+  //   this.setState({
+  //     agreeTermsShow: false
+  //   });
+  // };
   getWalletSummary() {
     this.setState({
       loader: true
@@ -167,6 +174,10 @@ class Editprofile extends Component {
               </TabPane>
               {/* <TabPane tab="Payment Methods" key="7"><Paymethods /></TabPane> */}
             </TabsStyle>
+            {/* <AgreeTerms
+              comingCancel={e => this.comingCancel(e)}
+              visible={this.state.agreeTermsShow}
+            /> */}
           </ProfileDiv>
         </ProfileWrapper>
         <FooterHome />

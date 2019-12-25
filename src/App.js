@@ -7,7 +7,8 @@ import {
   Redirect,
   withRouter
 } from "react-router-dom";
-import { loadReCaptcha } from "react-recaptcha-google";
+// import { loadReCaptcha } from "react-recaptcha-google";
+import { loadReCaptcha } from "react-recaptcha-v3";
 import "./App.css";
 import { ThemeProvider } from "styled-components";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
@@ -20,6 +21,9 @@ import AppRouter from "routes";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import TradeView from "./SHARED-COMPONENTS/TradeView";
 import SimplexView from "./SHARED-COMPONENTS/SimplexView";
+import { globalVariables } from "Globals.js";
+
+let { GOOGLE_SITE_KEY } = globalVariables;
 
 const SignupForm = lazy(() =>
   import("COMPONENTS/LANDING/USERFORMS/signup_form")
@@ -90,10 +94,10 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    setTimeout(function() {
-      loadReCaptcha();
-    }, 2000);
-
+    // setTimeout(function() {
+    //   loadReCaptcha();
+    // }, 2000);
+    loadReCaptcha(GOOGLE_SITE_KEY);
     window.scrollTo(0, 0);
     // if(this.props.theme!==undefined)
     //     {

@@ -4,7 +4,8 @@ import { createForm, formShape } from "rc-form";
 import styled from "styled-components";
 import { Row, Col, Button, notification, Icon } from "antd";
 import { connect } from "react-redux";
-import { ReCaptcha } from "react-recaptcha-google";
+// import { ReCaptcha } from "react-recaptcha-google";
+import { ReCaptcha } from "react-recaptcha-v3";
 
 /* Components */
 import { _EYE, _ACTIVEEYE } from "CONSTANTS/images";
@@ -270,7 +271,8 @@ class Login_Form extends Component {
       verify: false,
       recaptchaToken: null,
       showBackUpInput: false,
-      backupIcon: null
+      backupIcon: null,
+      loadCaptch: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.IpVerify = this.IpVerify.bind(this);
@@ -285,10 +287,16 @@ class Login_Form extends Component {
     form: formShape
   };
   onLoadRecaptcha() {
-    if (this.captchaDemo) {
-      this.captchaDemo.reset();
-      this.captchaDemo.execute();
-    }
+    this.setState(
+      {
+        loadCaptch: false
+      },
+      () => {
+        this.setState({
+          loadCaptch: true
+        });
+      }
+    );
   }
   verifyCallback(recaptchaToken) {
     // Here you will get the final recaptchaToken!!!
@@ -1032,7 +1040,7 @@ class Login_Form extends Component {
             </FormWrap>
           </ColRight>
         </RowWrap>
-        <ReCaptcha
+        {/* <ReCaptcha
           ref={el => {
             this.captchaDemo = el;
           }}
@@ -1042,7 +1050,14 @@ class Login_Form extends Component {
           onloadCallback={this.onLoadRecaptcha}
           verifyCallback={this.verifyCallback}
           badge="bottomleft"
-        />
+        /> */}
+        {this.state.loadCaptch && (
+          <ReCaptcha
+            sitekey={GOOGLE_SITE_KEY}
+            // action="action_name"
+            verifyCallback={this.verifyCallback}
+          />
+        )}
       </LoginWrap>
     );
   }

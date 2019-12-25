@@ -6,7 +6,11 @@ import { YearPicker, MonthPicker, DayPicker } from "react-dropdown-date";
 import styled from "styled-components";
 import moment from "moment";
 
-const Picker_wrap = styled.div``;
+const Picker_wrap = styled.div`
+  & select[disabled] {
+    color: rgba(0, 0, 0, 0.4) !important;
+  }
+`;
 let fields = {};
 
 export default class Datepicker extends Component {
@@ -234,6 +238,7 @@ export default class Datepicker extends Component {
           <Col md={8} xl={8}>
             <DayPicker
               // mandatory
+              disabled={this.props.disabled}
               year={this.state.year}
               // mandatory
               month={this.state.month}
@@ -256,6 +261,7 @@ export default class Datepicker extends Component {
           <Col md={8} xl={8}>
             <MonthPicker
               // mandatory if end={} is given in YearPicker
+              disabled={this.props.disabled}
               endYearGiven
               // mandatory
               year={this.state.year}
@@ -279,6 +285,7 @@ export default class Datepicker extends Component {
           </Col>
           <Col md={8} xl={8}>
             <YearPicker
+              disabled={this.props.disabled}
               placeholder={"Select Year"}
               // default is 1900
               start={lowerDate}

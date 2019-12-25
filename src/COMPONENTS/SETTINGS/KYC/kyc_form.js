@@ -449,7 +449,7 @@ class KYCForm extends Component {
     */
 
   changeNumber(a, mob, code) {
-    console.log("chnage number", mob, code);
+    // console.log("chnage number", mob, code);
 
     if (mob.trim !== "") {
       var temp = `+${code.dialCode}`;
