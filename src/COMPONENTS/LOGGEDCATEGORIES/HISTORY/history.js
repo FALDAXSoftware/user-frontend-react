@@ -1508,7 +1508,6 @@ class History extends Component {
                                 if (temps.simplex_payment_status === 3) {
                                   var simplex_payment_status = "Cancelled";
                                 }
-
                                 return (
                                   <tr>
                                     <td>{temps.symbol}</td>
@@ -1518,7 +1517,25 @@ class History extends Component {
                                     <td>{temps.address}</td>
                                     <td>{temps.payment_id}</td>
                                     <td>{temps.quote_id}</td>
-                                    <td>{simplex_payment_status}</td>
+                                    <td>
+                                      {simplex_payment_status ==
+                                        "Under Approval" && (
+                                        <span className="order-inapproval">
+                                          {simplex_payment_status}
+                                        </span>
+                                      )}
+                                      {simplex_payment_status == "Approved" && (
+                                        <span className="order-sucess">
+                                          {simplex_payment_status}
+                                        </span>
+                                      )}
+                                      {simplex_payment_status ==
+                                        "Cancelled" && (
+                                        <span className="order-cancelled">
+                                          {simplex_payment_status}
+                                        </span>
+                                      )}
+                                    </td>
                                   </tr>
                                 );
                               })}
