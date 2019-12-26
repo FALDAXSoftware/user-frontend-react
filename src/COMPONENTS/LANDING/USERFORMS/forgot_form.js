@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Button, notification, Row, Col } from "antd";
 import { connect } from "react-redux";
 // import { ReCaptcha } from "react-recaptcha-google";
-import { ReCaptcha } from "react-recaptcha-v3";
+import { ReCaptcha, loadReCaptcha } from "react-recaptcha-v3";
 import SimpleReactValidator from "simple-react-validator";
 import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
 /* Components */
@@ -174,6 +174,7 @@ class ForgotForm extends Component {
     this.verifyCallback = this.verifyCallback.bind(this);
   }
   onLoadRecaptcha() {
+    loadReCaptcha(GOOGLE_SITE_KEY);
     this.setState(
       {
         loadCaptch: false
@@ -221,7 +222,17 @@ class ForgotForm extends Component {
     Page: /forgot-password
     This method is called when you change in fields of Forgot Password Form.
   */
-
+  unload = () => {
+    const nodeBadges = document.querySelectorAll(".grecaptcha-badge");
+    nodeBadges.forEach((e, index) => {
+      if (e.getAttribute("data-style") != "none") {
+        document.body.removeChild(e.parentNode);
+      }
+    });
+  };
+  componentWillUnmount() {
+    this.unload();
+  }
   fieldChange(e) {
     var value = e.target.value;
     this.setState({
@@ -238,6 +249,8 @@ class ForgotForm extends Component {
     this.props.dispModal(pressed);
   }
   componentDidMount() {
+    loadReCaptcha(GOOGLE_SITE_KEY);
+
     this.onLoadRecaptcha();
   }
   componentWillReceiveProps(props, newProps) {
