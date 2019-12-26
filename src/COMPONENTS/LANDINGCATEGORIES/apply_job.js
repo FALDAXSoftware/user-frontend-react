@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { Row, Col, notification } from "antd";
 // import { ReCaptcha } from "react-recaptcha-google";
-import { ReCaptcha } from "react-recaptcha-v3";
+import { ReCaptcha, loadReCaptcha } from "react-recaptcha-v3";
 import styled from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
 import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
@@ -227,6 +227,9 @@ class ApplyJob extends Component {
 
   /* Life Cycle Method */
   componentDidMount() {
+    loadReCaptcha(GOOGLE_SITE_KEY);
+
+    this.onLoadRecaptcha();
     if (this.captchaDemo) {
       this.captchaDemo.reset();
       this.captchaDemo.execute();
@@ -397,6 +400,7 @@ class ApplyJob extends Component {
     */
 
   onLoadRecaptcha() {
+    loadReCaptcha(GOOGLE_SITE_KEY);
     this.setState(
       {
         loadCaptch: false
@@ -413,7 +417,17 @@ class ApplyJob extends Component {
         Page:/applyjob
         This method is called to verify recaptcha.
     */
-
+  unload = () => {
+    const nodeBadges = document.querySelectorAll(".grecaptcha-badge");
+    nodeBadges.forEach((e, index) => {
+      if (e.getAttribute("data-style") != "none") {
+        document.body.removeChild(e.parentNode);
+      }
+    });
+  };
+  componentWillUnmount() {
+    this.unload();
+  }
   verifyCallback(recaptchaToken) {
     // Here you will get the final recaptchaToken!!!
     // console.log(recaptchaToken, "<= your recaptcha token");

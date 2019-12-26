@@ -7,8 +7,6 @@ import {
   Redirect,
   withRouter
 } from "react-router-dom";
-// import { loadReCaptcha } from "react-recaptcha-google";
-import { loadReCaptcha } from "react-recaptcha-v3";
 import "./App.css";
 import { ThemeProvider } from "styled-components";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
@@ -97,7 +95,6 @@ class App extends Component {
     // setTimeout(function() {
     //   loadReCaptcha();
     // }, 2000);
-    loadReCaptcha(GOOGLE_SITE_KEY);
     window.scrollTo(0, 0);
     // if(this.props.theme!==undefined)
     //     {
