@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { Row, Col, notification } from "antd";
-import { ReCaptcha } from "react-recaptcha-google";
+// import { ReCaptcha } from "react-recaptcha-google";
+import { ReCaptcha, loadReCaptcha } from "react-recaptcha-v3";
 import styled from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
 import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
@@ -116,7 +117,8 @@ class ApplyJob extends Component {
         position_flag: null,
         coverLimit: null,
         resumeLimit: null,
-        recaptchaToken: null
+        recaptchaToken: null,
+        loadCaptch: false
       }
     };
     this._onChangeFields = this._onChangeFields.bind(this);
@@ -225,6 +227,9 @@ class ApplyJob extends Component {
 
   /* Life Cycle Method */
   componentDidMount() {
+    loadReCaptcha(GOOGLE_SITE_KEY);
+
+    this.onLoadRecaptcha();
     if (this.captchaDemo) {
       this.captchaDemo.reset();
       this.captchaDemo.execute();
@@ -395,17 +400,34 @@ class ApplyJob extends Component {
     */
 
   onLoadRecaptcha() {
-    if (this.captchaDemo) {
-      this.captchaDemo.reset();
-      this.captchaDemo.execute();
-    }
+    loadReCaptcha(GOOGLE_SITE_KEY);
+    this.setState(
+      {
+        loadCaptch: false
+      },
+      () => {
+        this.setState({
+          loadCaptch: true
+        });
+      }
+    );
   }
 
   /*  
         Page:/applyjob
         This method is called to verify recaptcha.
     */
-
+  unload = () => {
+    const nodeBadges = document.querySelectorAll(".grecaptcha-badge");
+    nodeBadges.forEach((e, index) => {
+      if (e.getAttribute("data-style") != "none") {
+        document.body.removeChild(e.parentNode);
+      }
+    });
+  };
+  componentWillUnmount() {
+    this.unload();
+  }
   verifyCallback(recaptchaToken) {
     // Here you will get the final recaptchaToken!!!
     // console.log(recaptchaToken, "<= your recaptcha token");
@@ -645,7 +667,7 @@ class ApplyJob extends Component {
                       </Col>
                     </Row>
                   </Gap>
-                  <ReCaptcha
+                  {/* <ReCaptcha
                     ref={el => {
                       this.captchaDemo = el;
                     }}
@@ -655,7 +677,14 @@ class ApplyJob extends Component {
                     onloadCallback={this.onLoadRecaptcha}
                     verifyCallback={this.verifyCallback}
                     badge="bottomleft"
-                  />
+                  /> */}
+                  {this.state.loadCaptch && (
+                    <ReCaptcha
+                      sitekey={GOOGLE_SITE_KEY}
+                      // action="action_name"
+                      verifyCallback={this.verifyCallback}
+                    />
+                  )}
                   <BtnApply onClick={this.onSubmit}>SUBMIT</BtnApply>
                 </FormApply>
               </ApplyWrap>

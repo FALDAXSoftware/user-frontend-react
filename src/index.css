@@ -449,6 +449,17 @@ table .ant-table-tbody > tr > td {
   outline: 0;
   box-shadow: none;
 }
+.terms-outer-wrap .ant-modal-body {
+  height: calc(100vh - 330px);
+  overflow: auto;
+  padding: 0;
+}
+.terms-outer-wrap .ant-modal-header .ant-modal-title {
+  text-align: center;
+}
+.profile_details .ant-input[disabled] {
+  color: rgba(0, 0, 0, 0.4);
+}
 @media (max-width: 991px) {
   #profile-year {
     width: 85%;
@@ -1297,4 +1308,14 @@ div.scrollbar>div:nth-child(3)>div{
   border-color: #3b88f2;
   background: #4c84ff;
   color: #fff;
+}
+.grecaptcha-badge {
+  width: 70px !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease !important;
+  left: 4px !important;
+}
+
+.grecaptcha-badge:hover {
+  width: 256px !important;
 }

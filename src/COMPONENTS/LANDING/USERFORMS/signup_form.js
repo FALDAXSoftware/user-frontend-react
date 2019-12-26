@@ -4,7 +4,8 @@ import { createForm, formShape } from "rc-form";
 import styled from "styled-components";
 import { Row, Col, Button, notification, Icon, Progress } from "antd";
 import { connect } from "react-redux";
-import { ReCaptcha } from "react-recaptcha-google";
+// import { ReCaptcha } from "react-recaptcha-google";
+import { ReCaptcha, loadReCaptcha } from "react-recaptcha-v3";
 import "react-password-strength/dist/style.css";
 
 /* Components */
@@ -254,7 +255,8 @@ class SignupForm extends Component {
       repeatEye: "password",
       qP: "",
       isSignDisable: false,
-      recaptchaToken: null
+      recaptchaToken: null,
+      loadCaptch: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.dispModal = this.dispModal.bind(this);
@@ -292,6 +294,8 @@ class SignupForm extends Component {
     this.props.clearSignUp();
   }
   componentDidMount() {
+    loadReCaptcha(GOOGLE_SITE_KEY);
+
     this.onLoadRecaptcha();
     let queryParams;
     if (this.props.isLoggedIn) this.props.history.push("/editProfile");
@@ -309,12 +313,29 @@ class SignupForm extends Component {
   _resendVerLink() {
     this.props.history.push("/resend-verification");
   }
-
+  unload = () => {
+    const nodeBadges = document.querySelectorAll(".grecaptcha-badge");
+    nodeBadges.forEach((e, index) => {
+      if (e.getAttribute("data-style") != "none") {
+        document.body.removeChild(e.parentNode);
+      }
+    });
+  };
+  componentWillUnmount() {
+    this.unload();
+  }
   onLoadRecaptcha() {
-    if (this.captchaDemo) {
-      this.captchaDemo.reset();
-      this.captchaDemo.execute();
-    }
+    loadReCaptcha(GOOGLE_SITE_KEY);
+    this.setState(
+      {
+        loadCaptch: false
+      },
+      () => {
+        this.setState({
+          loadCaptch: true
+        });
+      }
+    );
   }
   verifyCallback(recaptchaToken) {
     // Here you will get the final recaptchaToken!!!
@@ -891,7 +912,7 @@ class SignupForm extends Component {
             </FormWrap>
           </ColRight>
         </RowWrap>
-        <ReCaptcha
+        {/* <ReCaptcha
           ref={el => {
             this.captchaDemo = el;
           }}
@@ -901,7 +922,14 @@ class SignupForm extends Component {
           onloadCallback={this.onLoadRecaptcha}
           verifyCallback={this.verifyCallback}
           badge="bottomleft"
-        />
+        /> */}
+        {this.state.loadCaptch && (
+          <ReCaptcha
+            sitekey={GOOGLE_SITE_KEY}
+            // action="action_name"
+            verifyCallback={this.verifyCallback}
+          />
+        )}
       </LoginWrap>
     );
   }
