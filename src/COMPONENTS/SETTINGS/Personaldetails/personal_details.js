@@ -6,6 +6,7 @@ import { createForm, formShape } from "rc-form";
 import { Row, Col, Input, Button, notification, Radio, Checkbox } from "antd";
 import styled from "styled-components";
 import moment from "moment";
+import AgreeTerms from "../../../SHARED-COMPONENTS/AgreeTerms";
 
 /* Components */
 import Datepicker from "./datepicker";
@@ -192,6 +193,13 @@ export const Postal = styled(Firstname)`
 export const FifthRow = styled(Row)`
   text-align: left;
   margin-top: 50px;
+  > .ant-col {
+    .edit_profile_actions {
+      > button {
+        margin: 0 15px;
+      }
+    }
+  }
 `;
 export const SixthRow = styled(Row)`
   text-align: left;
@@ -281,7 +289,10 @@ class PersonalDetails extends Component {
       fiat: "",
       date_format: "",
       showFileInput: true,
-      agreeCheck: false
+      agreeCheck: false,
+      agreeTermsShow: false,
+      editMode: false,
+      isFirstLogin: ""
     };
     this.handleProfile = this.handleProfile.bind(this);
   }
@@ -426,7 +437,11 @@ class PersonalDetails extends Component {
             Page: /editProfile --> Personal Details
             It is called when a file is selected on profile pic in personal details form.
     */
-
+  comingCancel = e => {
+    this.setState({
+      agreeTermsShow: false
+    });
+  };
   handleProfile(e) {
     try {
       const reader = new FileReader();
@@ -764,8 +779,32 @@ class PersonalDetails extends Component {
             Page: /editProfile --> Personal Details
             It is called when we submit Personal Details form.
     */
-
-  submit = () => {
+  dontAgreeTerms() {
+    this.setState(
+      {
+        agreeTermsShow: false
+      },
+      () => {
+        this.openNotificationWithProfile(
+          "error",
+          "Error",
+          "Please agree to all the Policies before proceeding further."
+        );
+      }
+    );
+  }
+  agreeTerms() {
+    this.setState(
+      {
+        agreeTermsShow: false,
+        editMode: false
+      },
+      () => {
+        this.submit();
+      }
+    );
+  }
+  openAgreePopup = () => {
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
@@ -782,7 +821,7 @@ class PersonalDetails extends Component {
         this.state.street2Icon !== false &&
         this.state.postalIcon !== false &&
         // this.state.date_format !== "" &&
-        this.state.agreeCheck !== false &&
+        // this.state.agreeCheck !== false &&
         ((this.props.profileDetails.country !== undefined &&
           this.props.profileDetails.country !== "" &&
           this.props.profileDetails.country !== null) ||
@@ -790,89 +829,9 @@ class PersonalDetails extends Component {
             this.state.countrySelected !== undefined &&
             this.state.countrySelected !== ""))
       ) {
-        document.querySelectorAll(".first_msg")[0].style.display = "none";
-        document.querySelectorAll(".last_msg")[0].style.display = "none";
-        document.querySelectorAll(".country_msg")[0].style.display = "none";
-        document.querySelectorAll(".dob_msg")[0].style.display = "none";
-        document.querySelectorAll(".street1_msg")[0].style.display = "none";
-        document.querySelectorAll(".street2_msg")[0].style.display = "none";
-        /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
-        document.querySelectorAll(".postal_msg")[0].style.display = "none";
-
         this.setState({
-          first_msg: null,
-          last_msg: null,
-          country_msg: null,
-          dob_msg: null,
-          street_msg: null,
-          street2_msg: null,
-          city_msg: null,
-          postal_msg: null,
-          spin_show: true
+          agreeTermsShow: true
         });
-
-        let number = value.postal_code;
-        let country = this.state.countrySelected;
-        if (this.state.Datedata !== undefined && this.state.Datedata !== null) {
-          dataDate = this.state.Datedata;
-        } else {
-          dataDate = this.props.profileDetails.dob;
-        }
-        if (country === undefined && country === null) {
-          country = this.props.profileDetails.country
-            ? this.props.profileDetails.country
-            : "";
-        }
-        profileData.append("first_name", value.first_name);
-        profileData.append("email", this.props.email);
-        profileData.append("last_name", value.last_name);
-        if (this.state.citySelected !== null)
-          profileData.append("city_town", this.state.citySelected);
-        if (this.state.stateSelected !== null) {
-          profileData.append("state", this.state.stateSelected);
-        }
-        if (this.state.countrySelected !== null) {
-          profileData.append("country", this.state.countrySelected);
-        }
-        profileData.append("street_address", value.street_address);
-
-        if (
-          value.street_address_2 !== null &&
-          value.street_address_2 !== "" &&
-          value.street_address_2 !== undefined
-        )
-          profileData.append("street_address_2", value.street_address_2);
-        profileData.append("postal_code", number);
-
-        var fiat =
-          this.state.fiat !== ""
-            ? this.state.fiat
-            : this.props.profileDetails.fiat;
-        var date_format =
-          this.state.date_format !== ""
-            ? this.state.date_format
-            : this.props.profileDetails.date_format;
-
-        profileData.append("fiat", fiat);
-        profileData.append("date_format", date_format);
-
-        if (this.state.Datedata !== undefined)
-          profileData.append("dob", this.state.Datedata);
-        profileData.append("remove_pic", this.state.remove_pic);
-        this.setState({
-          profileImg: undefined,
-          profileImage: undefined,
-          remove_pic: false
-        });
-        if (
-          this.state.profileImage !== null &&
-          this.state.profileImage !== undefined &&
-          !this.state.profileImg.includes("def_profile.jpg")
-        ) {
-          profileData.append("profile_pic", this.state.profileImage);
-        }
-        // console.log("---------------->> USER API CALLED");
-        this.props.profileupdateAction(this.props.isLoggedIn, profileData);
       } else {
         this.openNotificationWithProfile(
           "error",
@@ -951,20 +910,221 @@ class PersonalDetails extends Component {
         document.querySelectorAll(".df_msg")[0].style.display = "block";
         this.setState({ dfmsg: "Date Format is required." });
       }
-      if (this.state.agreeCheck !== true) {
-        // this.setState({ dateFIcon: false });
-        document.querySelectorAll(".agree_check_msg")[0].style.display =
-          "block";
+      // if (this.state.agreeCheck !== true) {
+      //   // this.setState({ dateFIcon: false });
+      //   document.querySelectorAll(".agree_check_msg")[0].style.display =
+      //     "block";
+      //   this.setState({
+      //     agree_check_msg:
+      //       "Please agree to all the Policies before proceeding further."
+      //   });
+      // } else {
+      //   document.querySelectorAll(".agree_check_msg")[0].style.display = "none";
+      //   this.setState({
+      //     agree_check_msg: null
+      //   });
+      // }
+    });
+  };
+  submit = () => {
+    // e.preventDefault();
+
+    this.props.form.validateFields((error, value) => {
+      let dataDate = "";
+      const profileData = new FormData();
+      // console.log("---------->", this.state.dfmsg);
+      if (
+        error === null &&
+        this.state.fiatIcon !== false &&
+        this.state.dateFIcon !== false &&
+        this.state.firstIcon !== false &&
+        this.state.lastIcon !== false &&
+        this.state.countryIcon !== false &&
+        this.state.dobIcon !== false &&
+        this.state.street1Icon !== false &&
+        this.state.street2Icon !== false &&
+        this.state.postalIcon !== false &&
+        // this.state.date_format !== "" &&
+        // this.state.agreeCheck !== false &&
+        ((this.props.profileDetails.country !== undefined &&
+          this.props.profileDetails.country !== "" &&
+          this.props.profileDetails.country !== null) ||
+          (this.state.countrySelected !== null &&
+            this.state.countrySelected !== undefined &&
+            this.state.countrySelected !== ""))
+      ) {
+        document.querySelectorAll(".first_msg")[0].style.display = "none";
+        document.querySelectorAll(".last_msg")[0].style.display = "none";
+        document.querySelectorAll(".country_msg")[0].style.display = "none";
+        document.querySelectorAll(".dob_msg")[0].style.display = "none";
+        document.querySelectorAll(".street1_msg")[0].style.display = "none";
+        document.querySelectorAll(".street2_msg")[0].style.display = "none";
+        /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
+        document.querySelectorAll(".postal_msg")[0].style.display = "none";
         this.setState({
-          agree_check_msg:
-            "Please agree to all the Policies before proceeding further."
+          first_msg: null,
+          last_msg: null,
+          country_msg: null,
+          dob_msg: null,
+          street_msg: null,
+          street2_msg: null,
+          city_msg: null,
+          postal_msg: null,
+          spin_show: true
+        });
+        let number = value.postal_code;
+        let country = this.state.countrySelected;
+        if (this.state.Datedata !== undefined && this.state.Datedata !== null) {
+          dataDate = this.state.Datedata;
+        } else {
+          dataDate = this.props.profileDetails.dob;
+        }
+        if (country === undefined && country === null) {
+          country = this.props.profileDetails.country
+            ? this.props.profileDetails.country
+            : "";
+        }
+        profileData.append("first_name", value.first_name);
+        profileData.append("email", this.props.email);
+        profileData.append("last_name", value.last_name);
+        if (this.state.citySelected !== null)
+          profileData.append("city_town", this.state.citySelected);
+        if (this.state.stateSelected !== null) {
+          profileData.append("state", this.state.stateSelected);
+        }
+        if (this.state.countrySelected !== null) {
+          profileData.append("country", this.state.countrySelected);
+        }
+        profileData.append("street_address", value.street_address);
+        if (
+          value.street_address_2 !== null &&
+          value.street_address_2 !== "" &&
+          value.street_address_2 !== undefined
+        )
+          profileData.append("street_address_2", value.street_address_2);
+        profileData.append("postal_code", number);
+        var fiat =
+          this.state.fiat !== ""
+            ? this.state.fiat
+            : this.props.profileDetails.fiat;
+        var date_format =
+          this.state.date_format !== ""
+            ? this.state.date_format
+            : this.props.profileDetails.date_format;
+        profileData.append("fiat", fiat);
+        profileData.append("date_format", date_format);
+        if (this.state.Datedata !== undefined)
+          profileData.append("dob", this.state.Datedata);
+        profileData.append("remove_pic", this.state.remove_pic);
+        this.setState({
+          profileImg: undefined,
+          profileImage: undefined,
+          remove_pic: false
+        });
+        if (
+          this.state.profileImage !== null &&
+          this.state.profileImage !== undefined &&
+          !this.state.profileImg.includes("def_profile.jpg")
+        ) {
+          profileData.append("profile_pic", this.state.profileImage);
+        }
+        // console.log("---------------->> USER API CALLED");
+        this.props.profileupdateAction(this.props.isLoggedIn, profileData);
+        this.setState({
+          editMode: false
         });
       } else {
-        document.querySelectorAll(".agree_check_msg")[0].style.display = "none";
-        this.setState({
-          agree_check_msg: null
-        });
+        this.openNotificationWithProfile(
+          "error",
+          "Error",
+          "Please complete all required details to continue"
+        );
       }
+      if (
+        this.state.firstIcon === null &&
+        this.props.profileDetails.first_name === null
+      ) {
+        this.setState({ firstIcon: false });
+        document.querySelectorAll(".first_msg")[0].style.display = "block";
+        this.setState({ firstmsg: "First Name field is required." });
+      }
+      if (
+        this.state.lastIcon === null &&
+        this.props.profileDetails.last_name === null
+      ) {
+        this.setState({ lastIcon: false });
+        document.querySelectorAll(".last_msg")[0].style.display = "block";
+        this.setState({ lastmsg: "Last Name field is required." });
+      }
+      if (
+        (this.state.countryIcon === null || this.state.countryIcon === false) &&
+        (this.props.profileDetails.country === "" ||
+          this.props.profileDetails.country === null)
+      ) {
+        this.setState({ countryIcon: false });
+        document.querySelectorAll(".country_msg")[0].style.display = "block";
+        this.setState({ countrymsg: "Country field is required." });
+      }
+      if (
+        this.state.dobIcon === null &&
+        this.state.Datedata === undefined &&
+        this.props.profileDetails.dob === null
+      ) {
+        this.setState({ dobIcon: false });
+        document.querySelectorAll(".dob_msg")[0].style.display = "block";
+        this.setState({ dobmsg: "Date of Birth is required." });
+      }
+      if (
+        this.state.street1Icon === null &&
+        this.props.profileDetails.street_address === null
+      ) {
+        this.setState({ street1Icon: false });
+        document.querySelectorAll(".street1_msg")[0].style.display = "block";
+        this.setState({ street1msg: "Street Address is required." });
+      }
+      /* if (this.state.street2Icon===null && this.props.profileDetails.street_address_2===null) {
+                this.setState({ street2Icon: false })
+                document.querySelectorAll(".street2_msg")[0].style.display = "block";
+                this.setState({ street2msg: "Street Address is required" })
+            } */
+      if (
+        this.state.postalIcon === null &&
+        this.props.profileDetails.postal_code === null
+      ) {
+        this.setState({ postalIcon: false });
+        document.querySelectorAll(".postal_msg")[0].style.display = "block";
+        this.setState({ postalmsg: "Postal Code is required." });
+      }
+      if (
+        this.state.fiatIcon === false &&
+        this.props.profileDetails.fiat === ""
+      ) {
+        this.setState({ fiatIcon: false });
+        document.querySelectorAll(".fiat_msg")[0].style.display = "block";
+        this.setState({ fiatmsg: "currency is required." });
+      }
+      if (
+        this.state.dateFIcon !== true &&
+        this.props.profileDetails.date_format === ""
+      ) {
+        this.setState({ dateFIcon: false });
+        document.querySelectorAll(".df_msg")[0].style.display = "block";
+        this.setState({ dfmsg: "Date Format is required." });
+      }
+      // if (this.state.agreeCheck !== true) {
+      //   // this.setState({ dateFIcon: false });
+      //   document.querySelectorAll(".agree_check_msg")[0].style.display =
+      //     "block";
+      //   this.setState({
+      //     agree_check_msg:
+      //       "Please agree to all the Policies before proceeding further."
+      //   });
+      // } else {
+      //   document.querySelectorAll(".agree_check_msg")[0].style.display = "none";
+      //   this.setState({
+      //     agree_check_msg: null
+      //   });
+      // }
     });
   };
 
@@ -977,7 +1137,7 @@ class PersonalDetails extends Component {
     var me = this;
 
     return (
-      <Profilewrap>
+      <Profilewrap className="profile_details">
         <Row>
           <Col span={6} />
           <HeaderCol span={12}>
@@ -1003,6 +1163,7 @@ class PersonalDetails extends Component {
                       onChange={this.handleProfile}
                       name="file"
                       id="file"
+                      disabled={!this.state.editMode}
                     />
                   )}
                   <Imageup>
@@ -1018,7 +1179,12 @@ class PersonalDetails extends Component {
                     (this.state.profileImg !== undefined
                       ? !this.state.profileImg.includes("def_profile.jpg")
                       : true) ? (
-                      <Remove onClick={this.removePic.bind(this)}>
+                      <Remove
+                        disabled={!this.state.editMode}
+                        onClick={
+                          !this.state.editMode ? "" : this.removePic.bind(this)
+                        }
+                      >
                         Remove
                       </Remove>
                     ) : (
@@ -1043,6 +1209,7 @@ class PersonalDetails extends Component {
                   >
                     <Firstname>First Name*</Firstname>
                     <Firstinput
+                      disabled={!this.state.editMode}
                       placeholder="First Name"
                       {...getFieldProps("first_name", {
                         onChange(e) {
@@ -1064,6 +1231,7 @@ class PersonalDetails extends Component {
                   >
                     <Lastname>Last Name*</Lastname>
                     <Lastinput
+                      disabled={!this.state.editMode}
                       placeholder="Last Name"
                       {...getFieldProps("last_name", {
                         onChange(e) {
@@ -1089,6 +1257,7 @@ class PersonalDetails extends Component {
                       onDateChange={(value, field) =>
                         this.onDateChange(value, field)
                       }
+                      disabled={!this.state.editMode}
                     />
                     <DobMsg className="dob_msg">{this.state.dobmsg}</DobMsg>
                   </Col>
@@ -1110,6 +1279,7 @@ class PersonalDetails extends Component {
                         initialValue: profileDetails.street_address, // have to write original onChange here if you need
                         rules: [{ type: "string", required: true }]
                       })}
+                      disabled={!this.state.editMode}
                     />
                     <StreetMsg className="street1_msg">
                       {this.state.street1msg}
@@ -1119,6 +1289,7 @@ class PersonalDetails extends Component {
                 <ThirdRow>
                   <StreetAddress>Street Address Line 2</StreetAddress>
                   <Streetinput
+                    disabled={!this.state.editMode}
                     placeholder="Street Address"
                     {...getFieldProps("street_address_2", {
                       onChange(e) {
@@ -1144,6 +1315,7 @@ class PersonalDetails extends Component {
                   >
                     <CountryPick
                       // {...this.props}
+                      disabled={!this.state.editMode}
                       theme={this.props.theme}
                       country={
                         this.state.countrySelected !== null
@@ -1173,6 +1345,7 @@ class PersonalDetails extends Component {
                   <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
                     <Postal>Postal Code*</Postal>
                     <Postalinput
+                      disabled={!this.state.editMode}
                       placeholder="Postal Code"
                       {...getFieldProps("postal_code", {
                         onChange(e) {
@@ -1196,6 +1369,7 @@ class PersonalDetails extends Component {
                   >
                     <FIAT>Default Currency*</FIAT>
                     <RadioGroup
+                      disabled={!this.state.editMode}
                       onChange={this.onChangeFiat}
                       value={
                         this.state.fiat !== ""
@@ -1219,6 +1393,7 @@ class PersonalDetails extends Component {
                   >
                     <FIAT>Default Date Format*</FIAT>
                     <RadioGroup
+                      disabled={!this.state.editMode}
                       onChange={this.onChangeFormat}
                       value={
                         this.state.date_format !== ""
@@ -1235,37 +1410,37 @@ class PersonalDetails extends Component {
                 </SixthRow>
                 <SixthRow>
                   <Col>
-                    <Checkbox
+                    {/* <Checkbox
                       value={this.state.agreeCheck}
                       onChange={this.onCheckboxChange}
-                    ></Checkbox>
+                    ></Checkbox> */}
                     <span>
                       {" "}
-                      I agree to{" "}
+                      By clicking on SAVE you agree to FALDAX{" "}
                       <a
                         target="_blank"
-                        href={`${globalVariables.WordpressSiteURL}/policies`}
+                        href={`${globalVariables.Terms_and_services}`}
                       >
                         Terms of Services
                       </a>
                       ,{" "}
                       <a
                         target="_blank"
-                        href={`${globalVariables.WordpressSiteURL}/policies`}
+                        href={`${globalVariables.Privacy_policy}`}
                       >
                         Privacy Policy
                       </a>
                       ,{" "}
                       <a
                         target="_blank"
-                        href={`${globalVariables.WordpressSiteURL}/policies`}
+                        href={`${globalVariables.Anti_money_laundering_policy}`}
                       >
                         Anti-Money Laundering Policy
                       </a>{" "}
                       and{" "}
                       <a
                         target="_blank"
-                        href={`${globalVariables.WordpressSiteURL}/policies`}
+                        href={`${globalVariables.Cookie_policy}`}
                       >
                         Cookies Policy
                       </a>
@@ -1283,15 +1458,78 @@ class PersonalDetails extends Component {
                     xl={{ span: 24 }}
                     xxl={{ span: 24 }}
                   >
-                    <Save type="primary" onClick={this.submit}>
+                    {/* <Save type="primary" onClick={this.openAgreePopup}>
                       Save
-                    </Save>
+                    </Save> */}
+                    {this.state.editMode ? (
+                      <div className="edit_profile_actions">
+                        {this.state.isFirstLogin ? (
+                          <Save type="primary" onClick={this.submit}>
+                            Save
+                          </Save>
+                        ) : (
+                          <Save type="primary" onClick={this.openAgreePopup}>
+                            Save
+                          </Save>
+                        )}
+
+                        <Save
+                          type="primary"
+                          onClick={() => {
+                            this.setState(
+                              {
+                                editMode: false
+                              },
+                              () => {
+                                this.props.getProfileDataAction(
+                                  this.props.isLoggedIn
+                                );
+                              }
+                            );
+                          }}
+                        >
+                          Cancel
+                        </Save>
+                      </div>
+                    ) : (
+                      <Save
+                        onClick={() => {
+                          this.setState({
+                            editMode: true
+                          });
+                        }}
+                      >
+                        Edit
+                      </Save>
+                    )}
                   </Col>
                 </FifthRow>
               </RightCol>
+              <AgreeTerms
+                agreeTerms={(e, isUpdate) => {
+                  if (isUpdate) {
+                    this.agreeTerms(e);
+                  } else {
+                    this.props.getProfileDataAction(this.props.isLoggedIn);
+                    this.setState({
+                      editMode: true,
+                      isFirstLogin: !isUpdate
+                    });
+                  }
+                }}
+                dontAgreeTerms={e => this.dontAgreeTerms(e)}
+                comingCancel={e => this.comingCancel(e)}
+                visible={
+                  this.state.agreeTermsShow ||
+                  profileDetails.is_terms_agreed == false
+                }
+                showCancelBtn={profileDetails.is_terms_agreed}
+                isLoggedIn={this.props.isLoggedIn}
+              />
               {this.props.loader === true ? <FaldaxLoader /> : ""}
             </Row>
           </Col>
+
           {(errors = getFieldError("required")) ? errors.join(",") : null}
         </Mainrow>
       </Profilewrap>

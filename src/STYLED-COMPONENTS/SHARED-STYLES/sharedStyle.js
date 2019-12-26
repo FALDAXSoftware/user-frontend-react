@@ -1,5 +1,25 @@
 import styled from "styled-components";
 
+export const ModalAgreeWrap = styled.div`
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  > .row-main {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    > .ant-col {
+      > .content-box {
+        height: 350px;
+        overflow: auto;
+        border: 1px solid #dadfe3;
+        padding: 10px;
+        border-radius: 4px;
+      }
+    }
+  }
+`;
+
 export const ModalWrap = styled.div`
   width: 465px;
   margin-left: auto;

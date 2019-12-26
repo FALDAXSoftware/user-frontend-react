@@ -695,7 +695,9 @@ class Acc_settings extends Component {
         me.deleteAccount();
         return new Promise((resolve, reject) => {
           setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-        }).catch(() => console.log("Oops errors!"));
+        }).catch(() => {
+          // console.log("Oops errors!")
+        });
       },
       onCancel() {}
     });
