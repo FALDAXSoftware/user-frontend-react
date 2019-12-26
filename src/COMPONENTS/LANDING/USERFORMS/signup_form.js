@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Row, Col, Button, notification, Icon, Progress } from "antd";
 import { connect } from "react-redux";
 // import { ReCaptcha } from "react-recaptcha-google";
-import { ReCaptcha } from "react-recaptcha-v3";
+import { ReCaptcha, loadReCaptcha } from "react-recaptcha-v3";
 import "react-password-strength/dist/style.css";
 
 /* Components */
@@ -294,6 +294,8 @@ class SignupForm extends Component {
     this.props.clearSignUp();
   }
   componentDidMount() {
+    loadReCaptcha(GOOGLE_SITE_KEY);
+
     this.onLoadRecaptcha();
     let queryParams;
     if (this.props.isLoggedIn) this.props.history.push("/editProfile");
@@ -311,8 +313,19 @@ class SignupForm extends Component {
   _resendVerLink() {
     this.props.history.push("/resend-verification");
   }
-
+  unload = () => {
+    const nodeBadges = document.querySelectorAll(".grecaptcha-badge");
+    nodeBadges.forEach((e, index) => {
+      if (e.getAttribute("data-style") != "none") {
+        document.body.removeChild(e.parentNode);
+      }
+    });
+  };
+  componentWillUnmount() {
+    this.unload();
+  }
   onLoadRecaptcha() {
+    loadReCaptcha(GOOGLE_SITE_KEY);
     this.setState(
       {
         loadCaptch: false

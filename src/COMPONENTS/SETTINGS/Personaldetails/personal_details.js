@@ -1179,7 +1179,12 @@ class PersonalDetails extends Component {
                     (this.state.profileImg !== undefined
                       ? !this.state.profileImg.includes("def_profile.jpg")
                       : true) ? (
-                      <Remove onClick={this.removePic.bind(this)}>
+                      <Remove
+                        disabled={!this.state.editMode}
+                        onClick={
+                          !this.state.editMode ? "" : this.removePic.bind(this)
+                        }
+                      >
                         Remove
                       </Remove>
                     ) : (

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Row, Col, Button, notification, Icon } from "antd";
 import { connect } from "react-redux";
 // import { ReCaptcha } from "react-recaptcha-google";
-import { ReCaptcha } from "react-recaptcha-v3";
+import { ReCaptcha, loadReCaptcha } from "react-recaptcha-v3";
 
 /* Components */
 import { _EYE, _ACTIVEEYE } from "CONSTANTS/images";
@@ -287,6 +287,8 @@ class Login_Form extends Component {
     form: formShape
   };
   onLoadRecaptcha() {
+    loadReCaptcha(GOOGLE_SITE_KEY);
+
     this.setState(
       {
         loadCaptch: false
@@ -593,6 +595,8 @@ class Login_Form extends Component {
   }
 
   componentDidMount() {
+    loadReCaptcha(GOOGLE_SITE_KEY);
+
     this.onLoadRecaptcha();
     if (this.getUrlParameter("token")) {
       this.tokenVerify();
@@ -604,7 +608,17 @@ class Login_Form extends Component {
       this.IpVerify();
     }
   }
-
+  unload = () => {
+    const nodeBadges = document.querySelectorAll(".grecaptcha-badge");
+    nodeBadges.forEach((e, index) => {
+      if (e.getAttribute("data-style") != "none") {
+        document.body.removeChild(e.parentNode);
+      }
+    });
+  };
+  componentWillUnmount() {
+    this.unload();
+  }
   componentWillReceiveProps(props, newProps) {
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
@@ -813,6 +827,7 @@ class Login_Form extends Component {
     var email = this.props.form.getFieldValue("email");
     this.props.history.push(`/profile-backup/${encodeURIComponent(email)}`);
   }
+
   render() {
     if (this.props.isLoggedIn) {
       this.props.history.push("/editProfile");
@@ -1054,7 +1069,7 @@ class Login_Form extends Component {
         {this.state.loadCaptch && (
           <ReCaptcha
             sitekey={GOOGLE_SITE_KEY}
-            // action="action_name"
+            action="login"
             verifyCallback={this.verifyCallback}
           />
         )}

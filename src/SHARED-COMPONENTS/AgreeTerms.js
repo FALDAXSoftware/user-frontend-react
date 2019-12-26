@@ -144,6 +144,7 @@ class AgreeTerms extends Component {
   render() {
     return (
       <div>
+        {/* {this.props.visible && ( */}
         <Modal
           title={
             <div>
@@ -153,7 +154,7 @@ class AgreeTerms extends Component {
           }
           visible={this.props.visible}
           onOk={e => this.handleComing()}
-          onCancel={e => this.comingCancel(e)}
+          // onCancel={e => this.comingCancel(e)}
           closable={false}
           maskClosable={false}
           footer={null}
