@@ -595,9 +595,11 @@ class Login_Form extends Component {
   }
 
   componentDidMount() {
-    loadReCaptcha(GOOGLE_SITE_KEY);
-
-    this.onLoadRecaptcha();
+    if (!this.props.isLoggedIn) {
+      loadReCaptcha(GOOGLE_SITE_KEY);
+      // alert("mount");
+      this.onLoadRecaptcha();
+    }
     if (this.getUrlParameter("token")) {
       this.tokenVerify();
     }
