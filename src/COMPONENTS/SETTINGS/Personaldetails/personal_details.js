@@ -1082,7 +1082,7 @@ class PersonalDetails extends Component {
         // ) {
         //   countrymsg = "";
         // }
-        this.setState({ countrymsg });
+        // this.setState({ countrymsg });
       }
       if (
         this.state.dobIcon === null &&
@@ -1505,28 +1505,28 @@ class PersonalDetails extends Component {
                                 this.props.getProfileDataAction(
                                   this.props.isLoggedIn
                                 );
-                                document.querySelectorAll(
-                                  ".first_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".last_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".country_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".dob_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".street1_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".street2_msg"
-                                )[0].style.display = "none";
-                                /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
-                                document.querySelectorAll(
-                                  ".postal_msg"
-                                )[0].style.display = "none";
+                                // document.querySelectorAll(
+                                //   ".first_msg"
+                                // )[0].style.display = "none";
+                                // document.querySelectorAll(
+                                //   ".last_msg"
+                                // )[0].style.display = "none";
+                                // document.querySelectorAll(
+                                //   ".country_msg"
+                                // )[0].style.display = "none";
+                                // document.querySelectorAll(
+                                //   ".dob_msg"
+                                // )[0].style.display = "none";
+                                // document.querySelectorAll(
+                                //   ".street1_msg"
+                                // )[0].style.display = "none";
+                                // document.querySelectorAll(
+                                //   ".street2_msg"
+                                // )[0].style.display = "none";
+                                // /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
+                                // document.querySelectorAll(
+                                //   ".postal_msg"
+                                // )[0].style.display = "none";
                               }
                             );
                           }}
