@@ -333,9 +333,7 @@ class ResetPassword extends Component {
           this.openNotificationWithProfile("error", "Error", responseData.err);
         }
       })
-      .catch(error => {
-        this.openNotificationWithProfile("error", "Error", "are re error ai");
-      });
+      .catch(error => {});
   };
 
   /* 

@@ -130,6 +130,12 @@ class Wallet extends Component {
     }
   }
   componentDidMount() {
+    if (
+      this.props.profileDetails &&
+      this.props.profileDetails.is_terms_agreed == false
+    ) {
+      this.props.history.push("/editProfile");
+    }
     this.props.walletBal(this.props.isLoggedIn);
     this.props.getAllCoins(this.props.isLoggedIn);
     // var total = 0,

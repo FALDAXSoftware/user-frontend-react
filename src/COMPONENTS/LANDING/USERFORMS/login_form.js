@@ -565,7 +565,7 @@ class Login_Form extends Component {
             "inline-block";
           document.querySelectorAll(".backup_msg")[0].style.display = "block";
           this.setState({
-            backup_msg: "Back-up code should have 10 characters."
+            backup_msg: "Back-up code should have 10 alphanumeric characters."
           });
         }
       } else {
