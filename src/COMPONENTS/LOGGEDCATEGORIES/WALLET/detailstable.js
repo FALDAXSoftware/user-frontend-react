@@ -126,7 +126,10 @@ class DetailsTable extends React.Component {
                   <SubHead>SEND/RECEIVE</SubHead>
                   <SubHead>SOURCE ADDRESS</SubHead>
                   <SubHead>DESTINATION ADDRESS</SubHead>
-                  <SubHead>AMOUNT</SubHead>
+                  <SubHead>BASE AMOUNT</SubHead>
+                  <SubHead>FALDAX FEES</SubHead>
+                  <SubHead>NETWORK FEES</SubHead>
+                  <SubHead>TOTAL AMOUNT</SubHead>
                   {/* <Sub_head>USD
                                 <Dropdown overlay={menu} trigger={['click']}>
                                 <a className="ant-dropdown-link"  verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
@@ -181,7 +184,30 @@ class DetailsTable extends React.Component {
                             </td>
                             <td>{details[index].source_address}</td>
                             <td>{details[index].destination_address}</td>
-                            <td>{details[index].amount.toFixed(8)}</td>
+                            <td>
+                              {parseFloat(details[index].amount).toFixed(8)}
+                            </td>
+                            <td>
+                              {details[index].faldax_fee === "-"
+                                ? details[index].faldax_fee
+                                : parseFloat(details[index].faldax_fee).toFixed(
+                                    8
+                                  )}
+                              {/* {parseFloat(details[index].faldax_fee).toFixed(8)} */}
+                            </td>
+                            <td>
+                              {details[index].network_fees === "-"
+                                ? details[index].network_fees
+                                : parseFloat(
+                                    details[index].network_fees
+                                  ).toFixed(8)}
+                              {/* {parseFloat(details[index].network_fees).toFixed(
+                                8
+                              )} */}
+                            </td>
+                            <td>
+                              {parseFloat(details[index].total).toFixed(8)}
+                            </td>
                             {/* <td>
 
                                 </td> */}
