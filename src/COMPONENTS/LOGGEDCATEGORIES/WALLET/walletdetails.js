@@ -117,6 +117,12 @@ class WalletDetails extends Component {
 
   /* Life Cycle Methods */
   componentDidMount() {
+    if (
+      this.props.profileDetails &&
+      this.props.profileDetails.is_terms_agreed == false
+    ) {
+      this.props.history.push("/editProfile");
+    }
     var self = this;
     var total = 0;
     this.panicStatus();

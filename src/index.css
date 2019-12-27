@@ -450,7 +450,7 @@ table .ant-table-tbody > tr > td {
   box-shadow: none;
 }
 .terms-outer-wrap .ant-modal-body {
-  height: calc(100vh - 330px);
+  height: calc(100vh - 210px);
   overflow: auto;
   padding: 0;
 }

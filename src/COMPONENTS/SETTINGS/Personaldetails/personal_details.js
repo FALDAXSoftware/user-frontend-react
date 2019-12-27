@@ -843,6 +843,7 @@ class PersonalDetails extends Component {
         this.state.firstIcon === null &&
         this.props.profileDetails.first_name === null
       ) {
+        alert("here");
         this.setState({ firstIcon: false });
         document.querySelectorAll(".first_msg")[0].style.display = "block";
         this.setState({ firstmsg: "First Name field is required." });
@@ -862,7 +863,23 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ countryIcon: false });
         document.querySelectorAll(".country_msg")[0].style.display = "block";
-        this.setState({ countrymsg: "Country field is required." });
+        // this.setState({ countrymsg: "Country field is required." });
+        // let countrymsg;
+        // if (this.state.countrySelected) {
+        //   // console.log("this.state.stateSelected", this.state.stateSelected);
+        //   countrymsg = "State and City Field are required.";
+        // }
+        // if (this.state.countrySelected && this.state.stateSelected) {
+        //   countrymsg = "City Field is required.";
+        // }
+        // if (
+        //   this.state.countrySelected &&
+        //   this.state.stateSelected &&
+        //   this.state.citySelected
+        // ) {
+        //   countrymsg = "";
+        // }
+        // this.setState({ countrymsg });
       }
       if (
         this.state.dobIcon === null &&
@@ -910,20 +927,6 @@ class PersonalDetails extends Component {
         document.querySelectorAll(".df_msg")[0].style.display = "block";
         this.setState({ dfmsg: "Date Format is required." });
       }
-      // if (this.state.agreeCheck !== true) {
-      //   // this.setState({ dateFIcon: false });
-      //   document.querySelectorAll(".agree_check_msg")[0].style.display =
-      //     "block";
-      //   this.setState({
-      //     agree_check_msg:
-      //       "Please agree to all the Policies before proceeding further."
-      //   });
-      // } else {
-      //   document.querySelectorAll(".agree_check_msg")[0].style.display = "none";
-      //   this.setState({
-      //     agree_check_msg: null
-      //   });
-      // }
     });
   };
   submit = () => {
@@ -1063,7 +1066,23 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ countryIcon: false });
         document.querySelectorAll(".country_msg")[0].style.display = "block";
-        this.setState({ countrymsg: "Country field is required." });
+        // this.setState({ countrymsg: "Country field is required." });
+        // let countrymsg;
+        // if (this.state.countrySelected) {
+        //   // console.log("this.state.stateSelected", this.state.stateSelected);
+        //   countrymsg = "State and City Field are required.";
+        // }
+        // if (this.state.countrySelected && this.state.stateSelected) {
+        //   countrymsg = "City Field is required.";
+        // }
+        // if (
+        //   this.state.countrySelected &&
+        //   this.state.stateSelected &&
+        //   this.state.citySelected
+        // ) {
+        //   countrymsg = "";
+        // }
+        // this.setState({ countrymsg });
       }
       if (
         this.state.dobIcon === null &&
@@ -1408,49 +1427,52 @@ class PersonalDetails extends Component {
                     <FIATMsg className="df_msg">{this.state.dfmsg}</FIATMsg>
                   </Col>
                 </SixthRow>
-                <SixthRow>
-                  <Col>
-                    {/* <Checkbox
+                {this.state.editMode && (
+                  <SixthRow>
+                    <Col>
+                      {/* <Checkbox
                       value={this.state.agreeCheck}
                       onChange={this.onCheckboxChange}
                     ></Checkbox> */}
-                    <span>
-                      {" "}
-                      By clicking on SAVE you agree to FALDAX{" "}
-                      <a
-                        target="_blank"
-                        href={`${globalVariables.Terms_and_services}`}
-                      >
-                        Terms of Services
-                      </a>
-                      ,{" "}
-                      <a
-                        target="_blank"
-                        href={`${globalVariables.Privacy_policy}`}
-                      >
-                        Privacy Policy
-                      </a>
-                      ,{" "}
-                      <a
-                        target="_blank"
-                        href={`${globalVariables.Anti_money_laundering_policy}`}
-                      >
-                        Anti-Money Laundering Policy
-                      </a>{" "}
-                      and{" "}
-                      <a
-                        target="_blank"
-                        href={`${globalVariables.Cookie_policy}`}
-                      >
-                        Cookies Policy
-                      </a>
-                      .
-                    </span>
-                  </Col>
-                  <FIATMsg className="agree_check_msg">
-                    {this.state.agree_check_msg}
-                  </FIATMsg>
-                </SixthRow>
+                      <span>
+                        {" "}
+                        By clicking on SAVE you agree to FALDAX{" "}
+                        <a
+                          target="_blank"
+                          href={`${globalVariables.Terms_and_services}`}
+                        >
+                          Terms of Services
+                        </a>
+                        ,{" "}
+                        <a
+                          target="_blank"
+                          href={`${globalVariables.Privacy_policy}`}
+                        >
+                          Privacy Policy
+                        </a>
+                        ,{" "}
+                        <a
+                          target="_blank"
+                          href={`${globalVariables.Anti_money_laundering_policy}`}
+                        >
+                          Anti-Money Laundering Policy
+                        </a>{" "}
+                        and{" "}
+                        <a
+                          target="_blank"
+                          href={`${globalVariables.Cookie_policy}`}
+                        >
+                          Cookies Policy
+                        </a>
+                        .
+                      </span>
+                    </Col>
+                    <FIATMsg className="agree_check_msg">
+                      {this.state.agree_check_msg}
+                    </FIATMsg>
+                  </SixthRow>
+                )}
+
                 <FifthRow>
                   <Col
                     md={{ span: 24 }}
@@ -1472,7 +1494,6 @@ class PersonalDetails extends Component {
                             Save
                           </Save>
                         )}
-
                         <Save
                           type="primary"
                           onClick={() => {
@@ -1484,6 +1505,28 @@ class PersonalDetails extends Component {
                                 this.props.getProfileDataAction(
                                   this.props.isLoggedIn
                                 );
+                                // document.querySelectorAll(
+                                //   ".first_msg"
+                                // )[0].style.display = "none";
+                                // document.querySelectorAll(
+                                //   ".last_msg"
+                                // )[0].style.display = "none";
+                                // document.querySelectorAll(
+                                //   ".country_msg"
+                                // )[0].style.display = "none";
+                                // document.querySelectorAll(
+                                //   ".dob_msg"
+                                // )[0].style.display = "none";
+                                // document.querySelectorAll(
+                                //   ".street1_msg"
+                                // )[0].style.display = "none";
+                                // document.querySelectorAll(
+                                //   ".street2_msg"
+                                // )[0].style.display = "none";
+                                // /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
+                                // document.querySelectorAll(
+                                //   ".postal_msg"
+                                // )[0].style.display = "none";
                               }
                             );
                           }}

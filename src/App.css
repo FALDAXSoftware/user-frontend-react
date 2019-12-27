@@ -61,3 +61,6 @@
 .order-cancelled {
   color: orangered;
 }
+.order-inapproval {
+  color: #174c7e;
+}
