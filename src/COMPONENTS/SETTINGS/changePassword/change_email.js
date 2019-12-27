@@ -119,7 +119,7 @@ export const ButtonDiv = styled.div`
     }
   }
   &.terms_btn_div {
-    margin-top: 50px;
+    margin: 10px 0;
     text-align: center;
     > button {
       margin: 0 20px;

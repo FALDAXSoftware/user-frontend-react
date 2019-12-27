@@ -58,6 +58,12 @@ class Conversion extends React.Component {
   //   });
   // }
   componentDidMount() {
+    if (
+      this.props.profileDetails &&
+      this.props.profileDetails.is_terms_agreed == false
+    ) {
+      this.props.history.push("/editProfile");
+    }
     this.panicStatus();
     if (this.props.conversion) {
       this.cryptoAccess();
