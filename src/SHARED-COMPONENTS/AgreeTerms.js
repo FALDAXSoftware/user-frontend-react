@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import "antd/dist/antd.css";
-import { Modal, Icon, notification, Row, Col, Button } from "antd";
+import { Modal, Icon, notification, Row, Col, Button, Tabs } from "antd";
 import { withRouter } from "react-router-dom";
 import { globalVariables } from "Globals.js";
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
@@ -8,8 +9,10 @@ import { ModalAgreeWrap } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
 import styled from "styled-components";
 import { ButtonDiv } from "COMPONENTS/SETTINGS/changePassword/change_email.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import { LogoutUser } from "ACTIONS/authActions";
 
 let { API_URL } = globalVariables;
+const TabPane = Tabs.TabPane;
 /* const API_URL = globalVariables.API_URL; */
 const Save = styled(Button)`
   font-size: 13.217px;
@@ -47,10 +50,13 @@ class AgreeTerms extends Component {
       comingSoon: this.props.visible ? true : "",
       email_address: "",
       email_msg: "",
-      loader: false
+      loader: false,
+      activeKey: "1"
     };
+    this.callback = this.callback.bind(this);
+    this.logout = this.logout.bind(this);
   }
-
+  componentDidMount() {}
   handleComing = e => {
     this.setState({ comingSoon: false });
   };
@@ -59,6 +65,20 @@ class AgreeTerms extends Component {
     this.setState({ comingSoon: false });
     this.props.comingCancel(e);
   };
+  logout() {
+    let loggedIn;
+    if (this.props.isLoggedIn) {
+      loggedIn = true;
+    } else {
+      loggedIn = false;
+    }
+    let formData = {
+      user_id: this.props.profileDetails.id,
+      jwt_token: loggedIn
+    };
+    this.props.LogoutUser(this.props.isLoggedIn, formData);
+    // this.props.Logout();
+  }
   agreeTerms = e => {
     this.setState({
       loader: true
@@ -74,6 +94,9 @@ class AgreeTerms extends Component {
       .then(responseData => {
         if (responseData.status == 200) {
           this.props.agreeTerms(e, this.props.showCancelBtn);
+          this.setState({
+            activeKey: "1"
+          });
         } else {
         }
         this.setState({
@@ -83,7 +106,15 @@ class AgreeTerms extends Component {
       .catch(error => {});
   };
   dontAgreeTerms = e => {
-    this.props.dontAgreeTerms(e);
+    if (this.props.showCancelBtn) {
+      this.props.dontAgreeTerms(e);
+    } else {
+      console.log("this.props.isLoggedIn", this.props.isLoggedIn);
+      this.logout();
+    }
+    this.setState({
+      activeKey: "1"
+    });
   };
   openNotification() {
     notification.open({
@@ -107,7 +138,13 @@ class AgreeTerms extends Component {
       description: desc
     });
   }
-
+  callback(key) {
+    // console.log("Key", key);
+    // console.log("sdjkfhksjhdfkhlksdfhlkasdhflkjasdhfkjh");
+    this.setState({
+      activeKey: key
+    });
+  }
   send_email() {
     const values = { email: this.state.email_address };
     this.setState({ email_address: "" });
@@ -163,83 +200,101 @@ class AgreeTerms extends Component {
           className="terms-outer-wrap"
         >
           <ModalAgreeWrap className="terms-wrap">
-            <Row className="row-main">
-              <Col span={6}>
-                <h4>
-                  <a
-                    target="_blank"
-                    href={`${globalVariables.Terms_and_services}`}
-                  >
-                    Terms of Services <Icon type="download" />
-                  </a>
-                </h4>
-              </Col>
-              <Col span={18}>
-                <iframe
-                  src={globalVariables.Terms_and_services}
-                  className="content-box"
-                  width="100%"
-                ></iframe>
-              </Col>
-            </Row>
-            <Row className="row-main">
-              <Col span={6}>
-                <h4>
-                  <a target="_blank" href={`${globalVariables.Privacy_policy}`}>
-                    Privacy Policy <Icon type="download" />
-                  </a>
-                </h4>
-              </Col>
-              <Col span={18}>
-                <iframe
-                  src={globalVariables.Privacy_policy}
-                  className="content-box"
-                  width="100%"
-                ></iframe>
-              </Col>
-            </Row>
-            <Row className="row-main">
-              <Col span={6}>
-                <h4>
-                  <a
-                    target="_blank"
-                    href={`${globalVariables.Anti_money_laundering_policy}`}
-                  >
-                    Anti-Money Laundering Policy <Icon type="download" />
-                  </a>
-                </h4>
-              </Col>
-              <Col span={18}>
-                <iframe
-                  src={globalVariables.Anti_money_laundering_policy}
-                  className="content-box"
-                  width="100%"
-                ></iframe>
-              </Col>
-            </Row>
-            <Row className="row-main">
-              <Col span={6}>
-                <h4>
-                  <a target="_blank" href={`${globalVariables.Cookie_policy}`}>
-                    Cookies Policy <Icon type="download" />
-                  </a>
-                </h4>
-              </Col>
-              <Col span={18}>
-                <iframe
-                  src={globalVariables.Cookie_policy}
-                  className="content-box"
-                  width="100%"
-                ></iframe>
-              </Col>
-            </Row>
+            <Tabs activeKey={this.state.activeKey} onChange={this.callback}>
+              <TabPane tab="Terms of Services" key="1">
+                <Row className="row-main">
+                  <Col span={6}>
+                    <h4>
+                      <a
+                        target="_blank"
+                        href={`${globalVariables.Terms_and_services}`}
+                      >
+                        Terms of Services <Icon type="download" />
+                      </a>
+                    </h4>
+                  </Col>
+                  <Col span={18}>
+                    <iframe
+                      src={`${globalVariables.Terms_and_services}#zoom=100`}
+                      className="content-box"
+                      width="100%"
+                    ></iframe>
+                  </Col>
+                </Row>
+              </TabPane>
+
+              <TabPane tab="Privacy Policy" key="2">
+                <Row className="row-main">
+                  <Col span={6}>
+                    <h4>
+                      <a
+                        target="_blank"
+                        href={`${globalVariables.Privacy_policy}`}
+                      >
+                        Privacy Policy <Icon type="download" />
+                      </a>
+                    </h4>
+                  </Col>
+                  <Col span={18}>
+                    <iframe
+                      src={globalVariables.Privacy_policy}
+                      className="content-box"
+                      width="100%"
+                    ></iframe>
+                  </Col>
+                </Row>
+              </TabPane>
+              <TabPane tab="Anti-Money Laundering Policy" key="3">
+                <Row className="row-main">
+                  <Col span={6}>
+                    <h4>
+                      <a
+                        target="_blank"
+                        href={`${globalVariables.Anti_money_laundering_policy}`}
+                      >
+                        Anti-Money Laundering Policy <Icon type="download" />
+                      </a>
+                    </h4>
+                  </Col>
+                  <Col span={18}>
+                    <iframe
+                      src={globalVariables.Anti_money_laundering_policy}
+                      className="content-box"
+                      width="100%"
+                    ></iframe>
+                  </Col>
+                </Row>
+              </TabPane>
+              <TabPane tab="Cookies Policy" key="4">
+                <Row className="row-main">
+                  <Col span={6}>
+                    <h4>
+                      <a
+                        target="_blank"
+                        href={`${globalVariables.Cookie_policy}`}
+                      >
+                        Cookies Policy <Icon type="download" />
+                      </a>
+                    </h4>
+                  </Col>
+                  <Col span={18}>
+                    <iframe
+                      src={globalVariables.Cookie_policy}
+                      className="content-box"
+                      width="100%"
+                    ></iframe>
+                  </Col>
+                </Row>
+              </TabPane>
+            </Tabs>
+
             <ButtonDiv className="terms_btn_div">
               <NewButton onClick={e => this.agreeTerms(e)}>I agree</NewButton>
-              {this.props.showCancelBtn && (
-                <NewButton onClick={e => this.dontAgreeTerms(e)}>
-                  I don't agree
-                </NewButton>
-              )}
+              {/* {this.props.showCancelBtn && ( */}
+              <NewButton onClick={e => this.dontAgreeTerms(e)}>
+                I don't agree
+              </NewButton>
+              {/* )} */}
             </ButtonDiv>
             {this.state.loader === true ? <FaldaxLoader /> : ""}
           </ModalAgreeWrap>
@@ -249,4 +304,23 @@ class AgreeTerms extends Component {
   }
 }
 
-export default withRouter(AgreeTerms);
+function mapStateToProps(state, ownProps) {
+  return {
+    // isLoggedIn: state.simpleReducer.isLoggedIn ? true : false,
+    profileDetails: state.simpleReducer.profileDetails
+      ? state.simpleReducer.profileDetails.data[0]
+      : ""
+  };
+}
+
+const mapDispatchToProps = dispatch => ({
+  //Logout: () => dispatch(Logout()),
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
+
+// export default withRouter(AgreeTerms);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(AgreeTerms));
