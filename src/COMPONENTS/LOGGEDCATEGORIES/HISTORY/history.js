@@ -196,6 +196,12 @@ class History extends Component {
 
   /* Life-Cycle Methods */
   componentDidMount() {
+    if (
+      this.props.profileData &&
+      this.props.profileData.is_terms_agreed == false
+    ) {
+      this.props.history.push("/editProfile");
+    }
     if (this.props.location.tradeType === "1") {
       this.setState({ activeKey: "1" }, () => {
         this.historyResult();
