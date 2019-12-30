@@ -688,6 +688,16 @@ export const TokComingSoonWrap = styled.div`
   display: flex;
   width: calc(33.33% - 30px);
   margin: 0 15px;
+  @media (max-width: 767px) {
+    width: calc(33.33% - 10px);
+    margin: 0 5px;
+    padding: 20px 10px;
+  }
+  @media (max-width: 650px) {
+    width: calc(100% - 40px);
+    margin: 0 20px 20px;
+    padding: 40px 30px;
+  }
 `;
 export const TokComingSoon = styled.a`
   position: absolute;
