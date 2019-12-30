@@ -203,6 +203,15 @@ const FontAwesomeIcons = styled(FontAwesomeIcon)`
   display: inline-block;
   font-size: 25px;
   color: ${props => (props.theme.mode === "dark" ? "white" : "#cccccc")};
+  &.facebook {
+    color: #4e64b5;
+  }
+  &.linkedin {
+    color: #0288d1;
+  }
+  &.twitter {
+    color: #00aced;
+  }
 `;
 
 class FooterHome extends Component {
@@ -386,7 +395,11 @@ class FooterHome extends Component {
                     <Iconul1>
                       <LI>
                         <a target="_blank" href={contactDetails.fb_profile}>
-                          <FontAwesomeIcons icon={faFacebook} color={"true"} />
+                          <FontAwesomeIcons
+                            className="facebook"
+                            icon={faFacebook}
+                            color={"true"}
+                          />
                         </a>
                       </LI>
                       <LI>
@@ -395,6 +408,7 @@ class FooterHome extends Component {
                           href={contactDetails.linkedin_profile}
                         >
                           <FontAwesomeIcons
+                            className="linkedin"
                             icon={faLinkedinIn}
                             color={"true"}
                           />
@@ -405,7 +419,11 @@ class FooterHome extends Component {
                           target="_blank"
                           href={contactDetails.twitter_profile}
                         >
-                          <FontAwesomeIcons icon={faTwitter} color={"true"} />
+                          <FontAwesomeIcons
+                            className="twitter"
+                            icon={faTwitter}
+                            color={"true"}
+                          />
                         </a>
                       </LI>
 

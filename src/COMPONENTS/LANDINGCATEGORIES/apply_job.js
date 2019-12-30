@@ -230,10 +230,10 @@ class ApplyJob extends Component {
     loadReCaptcha(GOOGLE_SITE_KEY);
 
     this.onLoadRecaptcha();
-    if (this.captchaDemo) {
-      this.captchaDemo.reset();
-      this.captchaDemo.execute();
-    }
+    // if (this.captchaDemo) {
+    //   this.captchaDemo.reset();
+    //   this.captchaDemo.execute();
+    // }
     if (this.props.location.search) {
       var arr = decodeURI(this.props.location.search).split("&");
       var arr2 = arr[1].split("=");
