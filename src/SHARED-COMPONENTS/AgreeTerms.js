@@ -338,8 +338,35 @@ class AgreeTerms extends Component {
                   >
                     <p>
                       You will not be able to access FALDAX Services by
-                      disagreeing to Terms of Services, Privacy Policy,
-                      Anti-Money Laundering Policy and Cookies Policy.
+                      disagreeing to{" "}
+                      <a
+                        target="_blank"
+                        href={`${globalVariables.Terms_and_services}`}
+                      >
+                        Terms of Services
+                      </a>
+                      ,{" "}
+                      <a
+                        target="_blank"
+                        href={`${globalVariables.Privacy_policy}`}
+                      >
+                        Privacy Policy
+                      </a>
+                      ,{" "}
+                      <a
+                        target="_blank"
+                        href={`${globalVariables.Anti_money_laundering_policy}`}
+                      >
+                        Anti-Money Laundering Policy
+                      </a>{" "}
+                      and{" "}
+                      <a
+                        target="_blank"
+                        href={`${globalVariables.Cookie_policy}`}
+                      >
+                        Cookies Policy
+                      </a>
+                      .
                     </p>
                   </Modal>
                 </div>
