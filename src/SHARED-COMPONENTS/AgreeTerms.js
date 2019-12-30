@@ -43,6 +43,7 @@ const NewButton = styled(Save)`
     border-color: #40a9ff;
   }
 `;
+
 class AgreeTerms extends Component {
   constructor(props) {
     super(props);
@@ -51,12 +52,35 @@ class AgreeTerms extends Component {
       email_address: "",
       email_msg: "",
       loader: false,
-      activeKey: "1"
+      activeKey: "1",
+      visible: false
     };
     this.callback = this.callback.bind(this);
     this.logout = this.logout.bind(this);
   }
   componentDidMount() {}
+  showCofirmModal = () => {
+    this.setState({
+      visible: true
+    });
+  };
+
+  handleOk = e => {
+    this.setState(
+      {
+        visible: false
+      },
+      () => {
+        this.logout();
+      }
+    );
+  };
+
+  handleCancel = e => {
+    this.setState({
+      visible: false
+    });
+  };
   handleComing = e => {
     this.setState({ comingSoon: false });
   };
@@ -109,7 +133,7 @@ class AgreeTerms extends Component {
     if (this.props.showCancelBtn) {
       this.props.dontAgreeTerms(e);
     } else {
-      console.log("this.props.isLoggedIn", this.props.isLoggedIn);
+      // console.log("this.props.isLoggedIn", this.props.isLoggedIn);
       this.logout();
     }
     this.setState({
@@ -222,7 +246,6 @@ class AgreeTerms extends Component {
                   </Col>
                 </Row>
               </TabPane>
-
               <TabPane tab="Privacy Policy" key="2">
                 <Row className="row-main">
                   <Col span={6}>
@@ -291,9 +314,40 @@ class AgreeTerms extends Component {
             <ButtonDiv className="terms_btn_div">
               <NewButton onClick={e => this.agreeTerms(e)}>I agree</NewButton>
               {/* {this.props.showCancelBtn && ( */}
-              <NewButton onClick={e => this.dontAgreeTerms(e)}>
+              {/* <NewButton onClick={e => this.dontAgreeTerms(e)}>
                 I don't agree
-              </NewButton>
+              </NewButton> */}
+              {!this.props.showCancelBtn ? (
+                <div>
+                  <NewButton onClick={this.showCofirmModal}>
+                    I don't agree
+                  </NewButton>
+                  <Modal
+                    title="Are you sure, you want to disagree?"
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    footer={[
+                      <Button key="No" onClick={this.handleCancel}>
+                        No
+                      </Button>,
+                      <Button key="Yes" type="primary" onClick={this.handleOk}>
+                        Yes
+                      </Button>
+                    ]}
+                  >
+                    <p>
+                      You will not be able to access FALDAX Services by
+                      disagreeing to Terms of Services, Privacy Policy,
+                      Anti-Money Laundering Policy and Cookies Policy.
+                    </p>
+                  </Modal>
+                </div>
+              ) : (
+                <NewButton onClick={e => this.dontAgreeTerms(e)}>
+                  I don't agree
+                </NewButton>
+              )}
               {/* )} */}
             </ButtonDiv>
             {this.state.loader === true ? <FaldaxLoader /> : ""}
