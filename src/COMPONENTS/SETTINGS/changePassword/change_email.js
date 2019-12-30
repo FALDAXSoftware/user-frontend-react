@@ -120,7 +120,8 @@ export const ButtonDiv = styled.div`
   }
   &.terms_btn_div {
     margin: 10px 0;
-    text-align: center;
+    display: flex;
+    justify-content: center;
     > button {
       margin: 0 20px;
     }
