@@ -391,15 +391,9 @@ class ConversionDetail extends React.Component {
       (values.OrderQty === null ||
         values.OrderQty === "" ||
         isNaN(this.state.recieveCurrencyInput) === true) &&
-      // isNaN(this.state.recieveCurrencyInput) === true &&
       this.state.includeFees === 1
     ) {
-      // console.log(!isNaN(this.state.recieveCurrencyInput));
-      // this.setState({ loader: false });
-      // this.validator1.showMessages();
-      // this.forceUpdate();
       this.setState({
-        // recieveCurrencyInput: "",
         includeFees: 1,
         sendCurrencyInput: 0,
         fiatJSTValue: "",
