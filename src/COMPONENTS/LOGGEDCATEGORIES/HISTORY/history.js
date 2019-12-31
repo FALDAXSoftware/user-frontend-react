@@ -143,7 +143,7 @@ class History extends Component {
       fromDate: "",
       historyData: [],
       historySimplexData: [],
-      historyJSTData: [],
+      historyJSTData: "",
       sell: true,
       buy: true,
       send: true,
@@ -196,6 +196,12 @@ class History extends Component {
 
   /* Life-Cycle Methods */
   componentDidMount() {
+    if (
+      this.props.profileData &&
+      this.props.profileData.is_terms_agreed == false
+    ) {
+      this.props.history.push("/editProfile");
+    }
     if (this.props.location.tradeType === "1") {
       this.setState({ activeKey: "1" }, () => {
         this.historyResult();
@@ -314,8 +320,11 @@ class History extends Component {
         this.setState({ loader: false });
         if (responseData.status === 200) {
           if (this.state.activeKey === "1") {
+            // alert("here");
+            // console.log("responseData", responseData.data.length);
             let csvJSTFields = [];
             if (responseData.data && responseData.data.length > 0) {
+              // console.log("responseData", responseData.data.length);
               for (var i = 0; i < responseData.data.length; i++) {
                 let temp = responseData.data[i];
                 let obj = {};
@@ -324,7 +333,16 @@ class History extends Component {
                   .utc(temp.created_at)
                   .local()
                   .format(`${this.props.profileData.date_format} HH:mm:ss`);
-                var fill_price = temp.execution_report.SettlCurrAmt.toFixed(8);
+                if (temp.side === "Sell") {
+                  var fill_price = parseFloat(temp.buy_currency_amount).toFixed(
+                    8
+                  );
+                } else {
+                  var fill_price = parseFloat(
+                    temp.sell_currency_amount
+                  ).toFixed(8);
+                }
+                // var fill_price = temp.execution_report.SettlCurrAmt.toFixed(8);
                 var fees_total = parseFloat(
                   parseFloat(temp.faldax_fees) + parseFloat(temp.network_fees)
                 ).toFixed(8);
@@ -932,9 +950,18 @@ class History extends Component {
                                   temps.fill_price == 0 && temps.quantity == 0
                                     ? 0.0 + " " + coin
                                     : fees_total + " " + coin;
-                                var fill_price = temps.execution_report.SettlCurrAmt.toFixed(
-                                  8
-                                );
+                                // var fill_price = temps.execution_report.SettlCurrAmt.toFixed(
+                                //   8
+                                // );
+                                if (temps.side === "Sell") {
+                                  var fill_price = parseFloat(
+                                    temps.buy_currency_amount
+                                  ).toFixed(8);
+                                } else {
+                                  var fill_price = parseFloat(
+                                    temps.sell_currency_amount
+                                  ).toFixed(8);
+                                }
                                 var amount = parseFloat(temps.quantity).toFixed(
                                   8
                                 );
