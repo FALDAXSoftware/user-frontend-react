@@ -207,6 +207,13 @@ export const SixthRow = styled(Row)`
   & .ant-radio-wrapper {
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   }
+  &.terms_conditions_dark {
+    > .ant-col {
+      > span {
+        color: #fff;
+      }
+    }
+  }
 `;
 export const FIAT = styled(Firstname)``;
 export const FIATMsg = styled(PostalMsg)``;
@@ -1154,9 +1161,14 @@ class PersonalDetails extends Component {
     const { profileDetails } = this.props;
     /* const { citymsg, postalmsg } = this.state; */
     var me = this;
+    // console.log("this.props.theme.mode", this.props.theme);
 
     return (
-      <Profilewrap className="profile_details">
+      <Profilewrap
+        className={
+          this.props.theme == true ? "profile_details_dark" : "profile_details"
+        }
+      >
         <Row>
           <Col span={6} />
           <HeaderCol span={12}>
@@ -1428,7 +1440,9 @@ class PersonalDetails extends Component {
                   </Col>
                 </SixthRow>
                 {this.state.editMode && (
-                  <SixthRow>
+                  <SixthRow
+                    className={this.props.theme ? "terms_conditions_dark" : ""}
+                  >
                     <Col>
                       {/* <Checkbox
                       value={this.state.agreeCheck}

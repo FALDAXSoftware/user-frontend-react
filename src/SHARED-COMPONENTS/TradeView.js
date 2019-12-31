@@ -101,7 +101,6 @@ class TradeView extends React.Component {
     this.sendCurrencyChange = this.sendCurrencyChange.bind(this);
     this.recieveCurrencyChange = this.recieveCurrencyChange.bind(this);
     this.fiatJSTValueChange = this.fiatJSTValueChange.bind(this);
-    this.calculateOrderVaules = this.calculateOrderVaules.bind(this);
     this.showCalculatedValues = this.showCalculatedValues.bind(this);
     this.showCalculatedValuesUSDTerms = this.showCalculatedValuesUSDTerms.bind(
       this
@@ -109,7 +108,6 @@ class TradeView extends React.Component {
   }
   componentDidMount() {
     this.getCrypto();
-    // console.log("this.props.isLoggedIn", this.props.isLoggedIn);
   }
   getFiatCurrencyList() {
     this.setState({
@@ -575,14 +573,12 @@ class TradeView extends React.Component {
       (values.OrderQty === null || values.OrderQty === "") &&
       this.state.includeFees === 1
     ) {
-      // this.setState({ loader: false });
-      this.validator1.showMessages();
       this.forceUpdate();
       this.setState({
-        recieveCurrencyInput: 0,
+        // recieveCurrencyInput: 0,
         includeFees: 1,
         sendCurrencyInput: 0,
-        fiatJSTValue: 0,
+        fiatJSTValue: "",
         crypto: "XRP",
         displayCurrency: null,
         currency: "BTC",
@@ -596,14 +592,12 @@ class TradeView extends React.Component {
       (values.OrderQty === null || values.OrderQty === "") &&
       this.state.includeFees === 2
     ) {
-      // this.setState({ loader: false });
-      this.validator2.showMessages();
       this.forceUpdate();
       this.setState({
-        sendCurrencyInput: 0,
+        // sendCurrencyInput: 0,
         includeFees: 2,
-        sendCurrencyInput: 0,
-        fiatJSTValue: 0,
+        recieveCurrencyInput: 0,
+        fiatJSTValue: "",
         crypto: "XRP",
         displayCurrency: null,
         currency: "BTC",
@@ -636,21 +630,6 @@ class TradeView extends React.Component {
               Quantity: parseFloat(responseData.data.total_value).toFixed(8)
             });
             if (this.state.includeFees === 1) {
-              // if (this.state.OrdType === "1") {
-              //   console.log(this.state.includeFees, this.state.OrdType);
-              //   this.setState({
-              //     OriginalQuantity: parseFloat(
-              //       responseData.original_value
-              //     ).toFixed(8)
-              //   });
-              // } else {
-              //   console.log(this.state.includeFees, this.state.OrdType);
-              //   this.setState({
-              //     OriginalQuantity: parseFloat(
-              //       responseData.total_value
-              //     ).toFixed(8)
-              //   });
-              // }
               this.setState({
                 sendCurrencyInput: parseFloat(
                   responseData.data.currency_value
@@ -786,14 +765,12 @@ class TradeView extends React.Component {
       (values.usd_value === null || values.usd_value === "") &&
       this.state.includeFees === 1
     ) {
-      // this.setState({ loader: false });
-      this.validator1.showMessages();
       this.forceUpdate();
       this.setState({
-        recieveCurrencyInput: 0,
+        recieveCurrencyInput: "",
         includeFees: 1,
-        sendCurrencyInput: 0,
-        fiatJSTValue: 0,
+        sendCurrencyInput: "",
+        // fiatJSTValue: 0,
         crypto: "XRP",
         displayCurrency: null,
         currency: "BTC",
@@ -807,14 +784,12 @@ class TradeView extends React.Component {
       (values.usd_value === null || values.usd_value === "") &&
       this.state.includeFees === 2
     ) {
-      // this.setState({ loader: false });
-      this.validator2.showMessages();
       this.forceUpdate();
       this.setState({
-        sendCurrencyInput: 0,
+        recieveCurrencyInput: "",
         includeFees: 2,
-        sendCurrencyInput: 0,
-        fiatJSTValue: 0,
+        sendCurrencyInput: "",
+        // fiatJSTValue: 0,
         crypto: "XRP",
         displayCurrency: null,
         currency: "BTC",
@@ -953,89 +928,10 @@ class TradeView extends React.Component {
         .catch(error => {});
     }
   }
-  calculateOrderVaules() {
-    // console.log("Order");
-    this.setState({ loader: true });
-    if (this.state.includeFees === 1) {
-      var values = {
-        Symbol: this.state.original_pair,
-        Side: this.state.OrdType,
-        OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
-        Quantity: parseFloat(this.state.Quantity).toFixed(8),
-        OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
-        Currency: this.state.crypto,
-        OrdType: "1",
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair
-      };
-      // console.log(values);
-    } else {
-      var values = {
-        Symbol: this.state.original_pair,
-        Side: this.state.OrdType,
-        OrderQty: parseFloat(this.state.orderQuantity).toFixed(8),
-        Quantity: parseFloat(this.state.Quantity).toFixed(8),
-        OriginalQuantity: parseFloat(this.state.OriginalQuantity).toFixed(8),
-        Currency: this.state.currency,
-        OrdType: "1",
-        original_pair: this.state.original_pair,
-        order_pair: this.state.order_pair
-      };
-      // console.log(values);
-    }
-    fetch(`${API_URL}/converion/jst-create-order`, {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      },
-      body: JSON.stringify(values)
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.status === 200) {
-          this.openNotificationWithIcon(
-            "success",
-            "Success",
-            responseData.message
-          );
-          this.setState({
-            recieveCurrencyInput: 0,
-            includeFees: 1,
-            sendCurrencyInput: 0,
-            fiatJSTValue: 0,
-            crypto: this.state.crypto,
-            displayCurrency: null,
-            currency: this.state.currency,
-            subTotal: 0,
-            totalAmount: 0,
-            faldaxFee: 0,
-            networkFee: 0,
-            loader: false
-          });
-          // this.clearValidation();
-        } else if (responseData.status === 500) {
-          this.setState({ loader: false });
-          this.openNotificationWithIcon("error", "Error", responseData.message);
-        } else {
-          this.setState({ loader: false });
-          this.openNotificationWithIcon("error", "Error", responseData.message);
-        }
-      })
-      .catch(error => {});
-  }
   btnClicked() {
     this.setState({
       loader: false
     });
-    // window.location = TRADE_URL + "/login/";
-    // if (this.props.isLoggedIn) {
-    //   window.open(
-    //     TRADE_URL + "/crypto-conversion/",
-    //     "_blank" // <- This is what makes it open in a new window.
-    //   );
-    // } else {
     if (this.props.isLoggedIn) {
       window.open(
         TRADE_URL + "/crypto-conversion",
@@ -1047,8 +943,6 @@ class TradeView extends React.Component {
         "_blank" // <- This is what makes it open in a new window.
       );
     }
-
-    // }
   }
   render() {
     return (
