@@ -33,6 +33,7 @@ const SelectS = styled(Select)`
     width: 85%;
     margin: 0;
   }
+
   & .Country_Select:first-child {
     margin-left: 0px !important;
   }
@@ -58,6 +59,11 @@ const SelectS = styled(Select)`
   @media (max-width: 767px) {
     margin-top: 0px;
     width: 100%;
+  }
+  & .ant-select-disabled {
+    > .ant-select-selection {
+      color: rgba(0, 0, 0, 0.4) !important;
+    }
   }
 `;
 const SelectWrap = styled.div`

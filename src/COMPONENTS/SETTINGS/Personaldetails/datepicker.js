@@ -8,7 +8,12 @@ import moment from "moment";
 
 const Picker_wrap = styled.div`
   & select[disabled] {
-    color: rgba(0, 0, 0, 0.4) !important;
+    color: ${props =>
+      props.theme.mode === "dark"
+        ? "#ffffff7a !important"
+        : "rgba(0, 0, 0, 0.4) !important"};
+    background: ${props =>
+      props.theme.mode === "dark" ? "transparent !important" : ""};
   }
 `;
 let fields = {};
