@@ -719,8 +719,8 @@ class KYCForm extends Component {
               )}
             </Col>
           </FourthRowkyc>
-          {/* {console.log(this.state.phoneCountry, this.state.phoneCountry[0])} */}
-          {this.state.countrychange === true ? (
+          {/* {console.log(this.state.countrychange, this.state.phoneCountry[0])} */}
+          {this.state.displayCountry && this.state.phoneCountry ? (
             <SixthRowkyc>
               <Col
                 md={{ span: 24 }}
@@ -733,6 +733,7 @@ class KYCForm extends Component {
                   {/* {console.log(
                     "Test",
                     this.state.mobile,
+                    this.state.displayCountry,
                     this.state.phoneCountry,
                     this.state.phoneCountry[0]
                   )} */}

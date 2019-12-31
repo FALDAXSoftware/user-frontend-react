@@ -143,7 +143,7 @@ class History extends Component {
       fromDate: "",
       historyData: [],
       historySimplexData: [],
-      historyJSTData: [],
+      historyJSTData: "",
       sell: true,
       buy: true,
       send: true,
@@ -320,8 +320,11 @@ class History extends Component {
         this.setState({ loader: false });
         if (responseData.status === 200) {
           if (this.state.activeKey === "1") {
+            // alert("here");
+            // console.log("responseData", responseData.data.length);
             let csvJSTFields = [];
             if (responseData.data && responseData.data.length > 0) {
+              // console.log("responseData", responseData.data.length);
               for (var i = 0; i < responseData.data.length; i++) {
                 let temp = responseData.data[i];
                 let obj = {};
@@ -331,9 +334,13 @@ class History extends Component {
                   .local()
                   .format(`${this.props.profileData.date_format} HH:mm:ss`);
                 if (temp.side === "Sell") {
-                  var fill_price = temp.buy_currency_amount.toFixed(8);
+                  var fill_price = parseFloat(temp.buy_currency_amount).toFixed(
+                    8
+                  );
                 } else {
-                  var fill_price = temp.sell_currency_amount.toFixed(8);
+                  var fill_price = parseFloat(
+                    temp.sell_currency_amount
+                  ).toFixed(8);
                 }
                 // var fill_price = temp.execution_report.SettlCurrAmt.toFixed(8);
                 var fees_total = parseFloat(
@@ -947,13 +954,13 @@ class History extends Component {
                                 //   8
                                 // );
                                 if (temps.side === "Sell") {
-                                  var fill_price = temps.buy_currency_amount.toFixed(
-                                    8
-                                  );
+                                  var fill_price = parseFloat(
+                                    temps.buy_currency_amount
+                                  ).toFixed(8);
                                 } else {
-                                  var fill_price = temps.sell_currency_amount.toFixed(
-                                    8
-                                  );
+                                  var fill_price = parseFloat(
+                                    temps.sell_currency_amount
+                                  ).toFixed(8);
                                 }
                                 var amount = parseFloat(temps.quantity).toFixed(
                                   8
