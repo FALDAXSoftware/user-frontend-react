@@ -474,6 +474,12 @@ table .ant-table-tbody > tr > td {
 .profile_details_dark .ant-radio-disabled + span {
   color: #ffffff7a;
 }
+.profile_details_dark .ant-radio-disabled .ant-radio-inner {
+  background-color: transparent;
+}
+.profile_details_dark .ant-radio-disabled .ant-radio-inner:after {
+  background: rgb(124, 132, 140) !important;
+}
 @media (max-width: 991px) {
   #profile-year {
     width: 85%;
