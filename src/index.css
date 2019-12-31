@@ -460,6 +460,20 @@ table .ant-table-tbody > tr > td {
 .profile_details .ant-input[disabled] {
   color: rgba(0, 0, 0, 0.4);
 }
+.profile_details_dark .ant-input[disabled] {
+  color: #ffffff7a;
+  background-color: transparent;
+}
+.profile_details .ant-select-disabled .ant-select-selection {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+.profile_details_dark .ant-select-disabled .ant-select-selection {
+  color: #ffffff7a;
+  background-color: transparent;
+}
+.profile_details_dark .ant-radio-disabled + span {
+  color: #ffffff7a;
+}
 @media (max-width: 991px) {
   #profile-year {
     width: 85%;
