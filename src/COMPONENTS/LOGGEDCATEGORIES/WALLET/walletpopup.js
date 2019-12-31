@@ -91,6 +91,12 @@ const Fee = styled.span`
   > span {
     display: flex;
     width: 100%;
+    > span {
+      > b {
+        min-width: 150px;
+        display: inline-block;
+      }
+    }
   }
   @media (max-width: 767px) {
     float: none;
@@ -102,6 +108,12 @@ const TotPay = styled.span`
   font-size: 16px;
   font-family: "Open Sans";
   color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  > span {
+    > b {
+      min-width: 150px;
+      display: inline-block;
+    }
+  }
   @media (max-width: 767px) {
     float: none;
     display: block;
@@ -196,12 +208,16 @@ class WalletPopup extends Component {
         destination_address: "",
         subtotal: 0
       },
+      disabled: true,
+      faldaxFee: 0,
+      networkFee: 0,
       loader: false,
       showTFAModal: false,
       withdrawFlag: false,
       withdrawMsg:
         "Your Withdrawal request may take 24-28 hours to process due to its size. Do you wish to proceed?"
     };
+    this.timeout = null;
     this.validator = new SimpleReactValidator({
       gtzero: {
         // name the rule
@@ -263,6 +279,7 @@ class WalletPopup extends Component {
     this.cancelFunc = this.cancelFunc.bind(this);
     this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
     this.sendAddressChange = this.sendAddressChange.bind(this);
+    this.getFeeValues = this.getFeeValues.bind(this);
   }
 
   /* Life Cycle Methods */
@@ -373,6 +390,7 @@ class WalletPopup extends Component {
       values["amount"] = this.state.sendFields.amount;
       values["total_fees"] = this.state.sendFields.subtotal;
       values["coin_code"] = this.props.coin_code;
+      values["networkFees"] = this.state.networkFee;
       // console.log("values", values);
       if (confirmFlag == true) values["confirm_for_wait"] = confirmFlag;
       if (otp !== null) {
@@ -460,10 +478,64 @@ class WalletPopup extends Component {
     //     parseFloat(fields[name]) * (this.props.coinFee / 100)
     // ).toFixed(8);
     // fields["subtotal"] = subtotal;
-    this.setState({ sendFields: fields, showTFAModal: false });
+    this.setState({ sendFields: fields, showTFAModal: false }, () => {
+      if (this.state.sendFields.amount && this.validator.allValid()) {
+        this.timeout = setTimeout(this.getFeeValues, 1000);
+      } else {
+        this.validator.showMessages();
+        this.setState({
+          disabled: true
+        });
+      }
+    });
   }
-
+  getFeeValues() {
+    // console.log("test");
+    this.setState({
+      loader: true
+    });
+    var fields = this.state.sendFields;
+    var values = {
+      coin: this.props.coin_code,
+      amount: this.state.sendFields.amount,
+      address: this.state.sendFields.destination_address
+    };
+    fetch(`${API_URL}/wallet/get-network-fee`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn
+      },
+      body: JSON.stringify(values)
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status === 200) {
+          // console.log(responseData);
+          let subtotal = parseFloat(
+            parseFloat(this.state.sendFields.subtotal) +
+              parseFloat(responseData.data)
+          ).toFixed(8);
+          fields["subtotal"] = subtotal;
+          this.setState({
+            networkFee: responseData.data,
+            disabled: false,
+            sendFields: fields
+          });
+        } else if (responseData.status === 500) {
+          this.openNotificationWithIcon("error", "Error", responseData.err);
+        } else {
+          this.openNotificationWithIcon("error", "Error", responseData.message);
+        }
+        this.setState({
+          loader: false
+        });
+      })
+      .catch(error => {});
+  }
   sendChange(e) {
+    clearTimeout(this.timeout);
     var fields = this.state.sendFields;
     var name = e.target.name;
     fields[name] = e.target.value;
@@ -479,31 +551,46 @@ class WalletPopup extends Component {
       this.setState({
         sendFields: fields,
         fiatValue: 0,
-        showTFAModal: false
+        faldaxFee: 0,
+        showTFAModal: false,
+        disabled: true,
+        networkFee: 0
       });
     } else {
       let subtotal = parseFloat(
         parseFloat(fields[name]) +
           parseFloat(fields[name]) * (this.props.coinFee / 100)
       ).toFixed(8);
-      // let fiatValueamount = parseFloat(
-      //   parseFloat(this.state.singlefiatValue) * parseFloat(e.target.value)
-      // ).toFixed(2);
-      // console.log(subtotal);
-      // console.log(parseFloat(this.state.singlefiatValue));
-      // console.log(
-      //   parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
-      // );
       let fiatValueamount = parseFloat(
         parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
       ).toFixed(2);
+      let faldaxFee = parseFloat(
+        e.target.value * (this.props.coinFee / 100)
+      ).toFixed(8);
       // console.log(fiatValueamount);
       fields["subtotal"] = subtotal;
-      this.setState({
-        sendFields: fields,
-        fiatValue: fiatValueamount,
-        showTFAModal: false
-      });
+      this.setState(
+        {
+          sendFields: fields,
+          fiatValue: fiatValueamount,
+          showTFAModal: false,
+          faldaxFee
+        },
+        () => {
+          if (
+            this.state.sendFields.destination_address &&
+            this.validator.allValid()
+          ) {
+            this.timeout = setTimeout(this.getFeeValues, 1000);
+          } else {
+            this.validator.showMessages();
+            this.setState({
+              disabled: true
+            });
+          }
+          // this.timeout = setTimeout(this.getFeeValues, 1000);
+        }
+      );
     }
     // let subtotal = parseFloat(
     //   parseFloat(fields[name]) +
@@ -665,35 +752,65 @@ class WalletPopup extends Component {
                     <Fee>
                       <span>
                         <span>
-                          <b>Fee: </b>
-                          {this.props.coinFee ? `${this.props.coinFee} %` : 0}
+                          <b>FALDAX Fee {`(${this.props.coinFee}%)`}: </b>
+                          {/* {this.props.coinFee ? `${this.props.coinFee} %` : 0} */}
+                          {this.props.coinFee
+                            ? `${this.state.faldaxFee}${" "}${
+                                this.props.coin_code
+                              }`
+                            : 0}
+                        </span>
+                      </span>
+                      <span>
+                        <span>
+                          <b>Network Fee*:</b>
+                          {this.props.coinFee
+                            ? `${this.state.networkFee}${" "}${
+                                this.props.coin_code
+                              }`
+                            : 0}
                         </span>
                       </span>
                       <span>
                         {/* {this.props.fiatValue
                           ? `${this.props.fiatValue.toFixed(2)} USD`
                           : 0} */}
+                        {/* <span>
+                          <b>Fiat Value: </b>
+                          {this.state.fiatValue} USD
+                        </span> */}
                         <span>
-                          <b>Fiat Value: </b> {this.state.fiatValue} USD
+                          <b>Total Payout: </b>
+                          {`${this.state.sendFields.subtotal}
+                          ${this.props.coin_code}`}
                         </span>
                       </span>
                     </Fee>
                     <TotPay>
                       {/* <b>Total Payout:</b> {subtotal.toFixed(8)}{" "} */}
-                      <span>
+                      {/* <span>
                         <b>Total Payout: </b> {this.state.sendFields.subtotal}{" "}
                         {this.props.coin_code}
+                      </span> */}
+                      <span>
+                        <b>Fiat Value: </b>
+                        {this.state.fiatValue} USD
                       </span>
                     </TotPay>
                   </TotDiv>
                 </Rediv>
                 <SendWrap>
                   <SendButton
+                    disabled={this.state.disabled}
                     onClick={this.sendSubmit}
                   >{`SEND ${this.props.coin_code}`}</SendButton>
                 </SendWrap>
               </ModalWrap>
             )}
+            <span>
+              *Network Fee amount could change during actual transaction
+              depending on the market conditions.
+            </span>
           </WalletModal>
         ) : (
           ""
