@@ -1161,7 +1161,7 @@ class PersonalDetails extends Component {
     const { profileDetails } = this.props;
     /* const { citymsg, postalmsg } = this.state; */
     var me = this;
-    console.log("this.props.theme.mode", this.props.theme);
+    // console.log("this.props.theme.mode", this.props.theme);
 
     return (
       <Profilewrap

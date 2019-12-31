@@ -480,6 +480,11 @@ table .ant-table-tbody > tr > td {
 .profile_details_dark .ant-radio-disabled .ant-radio-inner:after {
   background: rgb(124, 132, 140) !important;
 }
+.trade-view-conversion input[type="number"]::-webkit-inner-spin-button,
+.trade-view-conversion input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 @media (max-width: 991px) {
   #profile-year {
     width: 85%;
