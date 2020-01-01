@@ -166,8 +166,16 @@ const Password = styled(Username)`
   font-size: 16px;
   padding-right: 35px;
 `;
-const PassIconF = styled(UserIconS)``;
-const PassIconS = styled(UserIconF)``;
+const PassIconF = styled(UserIconS)`
+  &#passlog_icon_fail {
+    margin: 0 0 0 20px;
+  }
+`;
+const PassIconS = styled(UserIconF)`
+  &#passlog_icon_success {
+    margin: 0 0 0 20px;
+  }
+`;
 export const PassReq = styled.label`
   display: none;
   color: red;
@@ -397,7 +405,8 @@ class Login_Form extends Component {
             this.setState({ passIcon: false });
             document.querySelector("#passlog_icon_success").style.display =
               "none";
-            document.querySelector("#passlog_icon_fail").style.display = "none";
+            document.querySelector("#passlog_icon_fail").style.display =
+              "inline-block";
             document.querySelectorAll(".pass_msg")[0].style.display = "block";
             this.setState({ pass_msg: "Password is required" });
           }
@@ -490,7 +499,8 @@ class Login_Form extends Component {
       } else {
         this.setState({ passIcon: false });
         document.querySelector("#passlog_icon_success").style.display = "none";
-        document.querySelector("#passlog_icon_fail").style.display = "none";
+        document.querySelector("#passlog_icon_fail").style.display =
+          "inline-block";
         document.querySelectorAll(".pass_msg")[0].style.display = "block";
         this.setState({ pass_msg: "Password is required" });
       }
