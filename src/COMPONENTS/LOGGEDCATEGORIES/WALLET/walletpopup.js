@@ -391,6 +391,7 @@ class WalletPopup extends Component {
       values["total_fees"] = this.state.sendFields.subtotal;
       values["coin_code"] = this.props.coin_code;
       values["networkFees"] = this.state.networkFee;
+      values["faldaxFees"] = this.state.faldaxFee;
       // console.log("values", values);
       if (confirmFlag == true) values["confirm_for_wait"] = confirmFlag;
       if (otp !== null) {
