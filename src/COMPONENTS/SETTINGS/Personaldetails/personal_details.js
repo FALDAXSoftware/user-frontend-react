@@ -815,7 +815,6 @@ class PersonalDetails extends Component {
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
-      // console.log("---------->", this.state.dfmsg);
       if (
         error === null &&
         this.state.fiatIcon !== false &&
@@ -827,8 +826,6 @@ class PersonalDetails extends Component {
         this.state.street1Icon !== false &&
         this.state.street2Icon !== false &&
         this.state.postalIcon !== false &&
-        // this.state.date_format !== "" &&
-        // this.state.agreeCheck !== false &&
         ((this.props.profileDetails.country !== undefined &&
           this.props.profileDetails.country !== "" &&
           this.props.profileDetails.country !== null) ||
@@ -845,12 +842,16 @@ class PersonalDetails extends Component {
           "Error",
           "Please complete all required details to continue"
         );
+        console.log(
+          "sjdh",
+          this.state.street1Icon,
+          this.props.profileDetails.street_address
+        );
       }
       if (
         this.state.firstIcon === null &&
         this.props.profileDetails.first_name === null
       ) {
-        alert("here");
         this.setState({ firstIcon: false });
         document.querySelectorAll(".first_msg")[0].style.display = "block";
         this.setState({ firstmsg: "First Name field is required." });
@@ -870,26 +871,27 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ countryIcon: false });
         document.querySelectorAll(".country_msg")[0].style.display = "block";
-        // this.setState({ countrymsg: "Country field is required." });
-        // let countrymsg;
-        // if (this.state.countrySelected) {
-        //   // console.log("this.state.stateSelected", this.state.stateSelected);
-        //   countrymsg = "State and City Field are required.";
-        // }
-        // if (this.state.countrySelected && this.state.stateSelected) {
-        //   countrymsg = "City Field is required.";
-        // }
-        // if (
-        //   this.state.countrySelected &&
-        //   this.state.stateSelected &&
-        //   this.state.citySelected
-        // ) {
-        //   countrymsg = "";
-        // }
-        // this.setState({ countrymsg });
+        let countrymsg;
+        if (
+          this.state.countrySelected &&
+          (this.state.stateSelected == "" ||
+            this.state.stateSelected == null) &&
+          (this.state.citySelected == "" || this.state.citySelected == null)
+        ) {
+          countrymsg = "State and City Field are required.";
+        } else if (
+          this.state.countrySelected &&
+          this.state.stateSelected &&
+          (this.state.citySelected == "" || this.state.citySelected == null)
+        ) {
+          countrymsg = "City Field is required.";
+        } else {
+          countrymsg = "Country Field is required.";
+        }
+        this.setState({ countrymsg });
       }
       if (
-        this.state.dobIcon === null &&
+        (this.state.dobIcon === null || this.state.dobIcon === false) &&
         this.state.Datedata === undefined &&
         this.props.profileDetails.dob === null
       ) {
@@ -898,7 +900,7 @@ class PersonalDetails extends Component {
         this.setState({ dobmsg: "Date of Birth is required." });
       }
       if (
-        this.state.street1Icon === null &&
+        (this.state.street1Icon === null || this.state.street1Icon === false) &&
         this.props.profileDetails.street_address === null
       ) {
         this.setState({ street1Icon: false });
@@ -911,7 +913,7 @@ class PersonalDetails extends Component {
                 this.setState({ street2msg: "Street Address is required" })
             } */
       if (
-        this.state.postalIcon === null &&
+        (this.state.postalIcon === null || this.state.postalIcon === false) &&
         this.props.profileDetails.postal_code === null
       ) {
         this.setState({ postalIcon: false });
@@ -1071,25 +1073,24 @@ class PersonalDetails extends Component {
         (this.props.profileDetails.country === "" ||
           this.props.profileDetails.country === null)
       ) {
-        this.setState({ countryIcon: false });
-        document.querySelectorAll(".country_msg")[0].style.display = "block";
-        // this.setState({ countrymsg: "Country field is required." });
-        // let countrymsg;
-        // if (this.state.countrySelected) {
-        //   // console.log("this.state.stateSelected", this.state.stateSelected);
-        //   countrymsg = "State and City Field are required.";
-        // }
-        // if (this.state.countrySelected && this.state.stateSelected) {
-        //   countrymsg = "City Field is required.";
-        // }
-        // if (
-        //   this.state.countrySelected &&
-        //   this.state.stateSelected &&
-        //   this.state.citySelected
-        // ) {
-        //   countrymsg = "";
-        // }
-        // this.setState({ countrymsg });
+        let countrymsg;
+        if (
+          this.state.countrySelected &&
+          (this.state.stateSelected == "" ||
+            this.state.stateSelected == null) &&
+          (this.state.citySelected == "" || this.state.citySelected == null)
+        ) {
+          countrymsg = "State and City Field are required.";
+        } else if (
+          this.state.countrySelected &&
+          this.state.stateSelected &&
+          (this.state.citySelected == "" || this.state.citySelected == null)
+        ) {
+          countrymsg = "City Field is required.";
+        } else {
+          countrymsg = "Country Field is required.";
+        }
+        this.setState({ countrymsg });
       }
       if (
         this.state.dobIcon === null &&
@@ -1108,11 +1109,6 @@ class PersonalDetails extends Component {
         document.querySelectorAll(".street1_msg")[0].style.display = "block";
         this.setState({ street1msg: "Street Address is required." });
       }
-      /* if (this.state.street2Icon===null && this.props.profileDetails.street_address_2===null) {
-                this.setState({ street2Icon: false })
-                document.querySelectorAll(".street2_msg")[0].style.display = "block";
-                this.setState({ street2msg: "Street Address is required" })
-            } */
       if (
         this.state.postalIcon === null &&
         this.props.profileDetails.postal_code === null
@@ -1137,31 +1133,14 @@ class PersonalDetails extends Component {
         document.querySelectorAll(".df_msg")[0].style.display = "block";
         this.setState({ dfmsg: "Date Format is required." });
       }
-      // if (this.state.agreeCheck !== true) {
-      //   // this.setState({ dateFIcon: false });
-      //   document.querySelectorAll(".agree_check_msg")[0].style.display =
-      //     "block";
-      //   this.setState({
-      //     agree_check_msg:
-      //       "Please agree to all the Policies before proceeding further."
-      //   });
-      // } else {
-      //   document.querySelectorAll(".agree_check_msg")[0].style.display = "none";
-      //   this.setState({
-      //     agree_check_msg: null
-      //   });
-      // }
     });
   };
 
   render() {
     let errors;
-    /* let firstname = `${this.props.profileDetails.first_name}` */
     const { getFieldProps, getFieldError } = this.props.form;
     const { profileDetails } = this.props;
-    /* const { citymsg, postalmsg } = this.state; */
     var me = this;
-    // console.log("this.props.theme.mode", this.props.theme);
 
     return (
       <Profilewrap
@@ -1444,10 +1423,6 @@ class PersonalDetails extends Component {
                     className={this.props.theme ? "terms_conditions_dark" : ""}
                   >
                     <Col>
-                      {/* <Checkbox
-                      value={this.state.agreeCheck}
-                      onChange={this.onCheckboxChange}
-                    ></Checkbox> */}
                       <span>
                         {" "}
                         By clicking on SAVE you agree to FALDAX{" "}
@@ -1519,28 +1494,28 @@ class PersonalDetails extends Component {
                                 this.props.getProfileDataAction(
                                   this.props.isLoggedIn
                                 );
-                                // document.querySelectorAll(
-                                //   ".first_msg"
-                                // )[0].style.display = "none";
-                                // document.querySelectorAll(
-                                //   ".last_msg"
-                                // )[0].style.display = "none";
-                                // document.querySelectorAll(
-                                //   ".country_msg"
-                                // )[0].style.display = "none";
-                                // document.querySelectorAll(
-                                //   ".dob_msg"
-                                // )[0].style.display = "none";
-                                // document.querySelectorAll(
-                                //   ".street1_msg"
-                                // )[0].style.display = "none";
-                                // document.querySelectorAll(
-                                //   ".street2_msg"
-                                // )[0].style.display = "none";
-                                // /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
-                                // document.querySelectorAll(
-                                //   ".postal_msg"
-                                // )[0].style.display = "none";
+                                document.querySelectorAll(
+                                  ".first_msg"
+                                )[0].style.display = "none";
+                                document.querySelectorAll(
+                                  ".last_msg"
+                                )[0].style.display = "none";
+                                document.querySelectorAll(
+                                  ".country_msg"
+                                )[0].style.display = "none";
+                                document.querySelectorAll(
+                                  ".dob_msg"
+                                )[0].style.display = "none";
+                                document.querySelectorAll(
+                                  ".street1_msg"
+                                )[0].style.display = "none";
+                                document.querySelectorAll(
+                                  ".street2_msg"
+                                )[0].style.display = "none";
+                                /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
+                                document.querySelectorAll(
+                                  ".postal_msg"
+                                )[0].style.display = "none";
                               }
                             );
                           }}
