@@ -637,7 +637,13 @@ table .ant-table-tbody > tr > td {
     width: 100%;
   }
 }
-
+@media (max-width: 450px) {
+  .terms-outer-wrap .ant-modal-body {
+    height: 100%;
+    overflow: auto;
+    padding: 0;
+  }
+}
 /*Wallet Screen Popup  */
 
 .wallet-popup {
