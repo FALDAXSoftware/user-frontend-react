@@ -14,6 +14,19 @@ import { LogoutUser } from "ACTIONS/authActions";
 let { API_URL } = globalVariables;
 const TabPane = Tabs.TabPane;
 /* const API_URL = globalVariables.API_URL; */
+const AgreeTabPane = styled(TabPane)`
+  @media (max-width: 450px) {
+    & .ant-row.row-main {
+      > .ant-col {
+        width: 100%;
+        text-align: center;
+      }
+      > .ant-col.ant-col-18 {
+        display: none;
+      }
+    }
+  }
+`;
 const Save = styled(Button)`
   font-size: 13.217px;
   font-family: "Open Sans";
@@ -33,6 +46,10 @@ const Save = styled(Button)`
   @media (max-width: 600px) {
     width: 100px;
   }
+  @media (max-width: 400px) {
+    font-size: 10.217px;
+    height: 35px;
+  }
 `;
 const NewButton = styled(Save)`
   border: none;
@@ -41,6 +58,10 @@ const NewButton = styled(Save)`
     color: #fff;
     background-color: #40a9ff;
     border-color: #40a9ff;
+  }
+  &:focus {
+    background-color: rgb(76, 132, 255);
+    color: #fff;
   }
 `;
 
@@ -225,7 +246,11 @@ class AgreeTerms extends Component {
         >
           <ModalAgreeWrap className="terms-wrap">
             <Tabs activeKey={this.state.activeKey} onChange={this.callback}>
-              <TabPane tab="Terms of Services" key="1">
+              <AgreeTabPane
+                className="agree-tabs"
+                tab="Terms of Services"
+                key="1"
+              >
                 <Row className="row-main">
                   <Col span={6}>
                     <h4>
@@ -245,8 +270,8 @@ class AgreeTerms extends Component {
                     ></iframe>
                   </Col>
                 </Row>
-              </TabPane>
-              <TabPane tab="Privacy Policy" key="2">
+              </AgreeTabPane>
+              <AgreeTabPane tab="Privacy Policy" key="2">
                 <Row className="row-main">
                   <Col span={6}>
                     <h4>
@@ -266,8 +291,8 @@ class AgreeTerms extends Component {
                     ></iframe>
                   </Col>
                 </Row>
-              </TabPane>
-              <TabPane tab="Anti-Money Laundering Policy" key="3">
+              </AgreeTabPane>
+              <AgreeTabPane tab="Anti-Money Laundering Policy" key="3">
                 <Row className="row-main">
                   <Col span={6}>
                     <h4>
@@ -287,8 +312,8 @@ class AgreeTerms extends Component {
                     ></iframe>
                   </Col>
                 </Row>
-              </TabPane>
-              <TabPane tab="Cookies Policy" key="4">
+              </AgreeTabPane>
+              <AgreeTabPane tab="Cookies Policy" key="4">
                 <Row className="row-main">
                   <Col span={6}>
                     <h4>
@@ -308,7 +333,7 @@ class AgreeTerms extends Component {
                     ></iframe>
                   </Col>
                 </Row>
-              </TabPane>
+              </AgreeTabPane>
             </Tabs>
 
             <ButtonDiv className="terms_btn_div">
