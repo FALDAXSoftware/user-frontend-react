@@ -8,6 +8,9 @@ export default (
   switch (action.type) {
     case "LOGIN":
       if (action.payload !== undefined) {
+        if (action.payload.token) {
+          document.cookie = "isLoggedIn=true";
+        }
         return {
           ...state,
           isLoggedIn: action.payload.token,
