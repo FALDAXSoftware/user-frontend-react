@@ -19,7 +19,7 @@ export const globalVariables = {
 
   // API_URL: "http://192.168.1.96:1337", //Jagdish's URL
 
-  //API_URL: 'http://192.168.2.224:1337', //Kalpit Local URL
+  API_URL: 'http://192.168.0.224:1337', //Kalpit Local URL
 
   // API_URL: "http://192.168.3.32:1337" //Krina Local URL
 
@@ -27,7 +27,7 @@ export const globalVariables = {
 
   //    API_URL: "https://dev-backend.faldax.com", // DEV url
 
-  API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
+  // API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
 
   TRADE_URL: "https://preprod-trade.faldax.com",
 

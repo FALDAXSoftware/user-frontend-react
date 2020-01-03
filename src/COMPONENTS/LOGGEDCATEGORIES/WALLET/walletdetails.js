@@ -130,7 +130,7 @@ class WalletDetails extends Component {
       var tableData = this.props.walletDetails.coins;
       if (tableData !== undefined) {
         // console.log(tableData);
-        Object.keys(tableData).map(function(index, key) {
+        Object.keys(tableData).map(function (index, key) {
           if (tableData[index].USD !== undefined)
             total =
               total +
@@ -186,6 +186,8 @@ class WalletDetails extends Component {
           if (Object.keys(responseData.walletUserData).length > 0) {
             walletUserDetails = responseData.walletUserData;
           }
+          console.log("wallet details props walletDetails", walletUserDetails);
+
           self.setState(
             {
               walletUserData: walletUserDetails,
@@ -197,9 +199,11 @@ class WalletDetails extends Component {
               loader: false,
               coin_code: coin_name[1],
               coinFee: responseData.default_send_Coin_fee,
-              fiatValue: responseData.currencyConversionData.quote.USD.price
+              fiatValue: responseData.currencyConversionData ? responseData.currencyConversionData.quote.USD.price : ''
             },
             () => {
+              console.log("wallet details props -----", self.state);
+
               // console.log(
               //   "responseData.currencyConversionData.quote.USD.price===========",
               //   this.state.coinFee
@@ -215,7 +219,7 @@ class WalletDetails extends Component {
         }
       })
       .catch(error => {
-        // console.log(error);
+        console.log("wallet details props -----error ", error);
         // this.openNotificationWithIcon(
         //   "error",
         //   "Error",
@@ -280,7 +284,7 @@ class WalletDetails extends Component {
           });
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   }
 
   /* 
@@ -359,7 +363,7 @@ class WalletDetails extends Component {
       <ContactWrap>
         <LoggedNavigation />
         <GreyWrap>
-          {/* {console.log(this.props, walletUserData)} */}
+          {console.log("wallet details props", this.props, walletUserData)}
           {Object.keys(walletUserData).length > 0 ? (
             walletUserData.flag == 0 ? (
               <ContainerContact2>
@@ -377,53 +381,53 @@ class WalletDetails extends Component {
                         {this.state.balanceFlag === false ? (
                           <WalletCoin>
                             {this.props.walletDetails !== null &&
-                            this.props.walletDetails !== undefined ? (
-                              <Select
-                                onChange={this.changeCoins}
-                                value={defaultCoin}
+                              this.props.walletDetails !== undefined ? (
+                                <Select
+                                  onChange={this.changeCoins}
+                                  value={defaultCoin}
                                 // style={{ width: "100%" }}
                                 // className = "select-display"
-                              >
-                                {this.props.walletDetails.map(function(temp) {
-                                  return (
-                                    <Option value={temp.coin_code}>
-                                      {temp.coin}
-                                    </Option>
-                                  );
-                                })}
-                              </Select>
-                            ) : (
-                              ""
-                            )}
+                                >
+                                  {this.props.walletDetails.map(function (temp) {
+                                    return (
+                                      <Option value={temp.coin_code}>
+                                        {temp.coin}
+                                      </Option>
+                                    );
+                                  })}
+                                </Select>
+                              ) : (
+                                ""
+                              )}
                           </WalletCoin>
                         ) : (
-                          ""
-                        )}
+                            ""
+                          )}
                         {this.state.balanceFlag === true ? (
                           <WalletCoin>
                             {this.props.nowalletBalance !== null &&
-                            this.props.nowalletBalance !== undefined ? (
-                              <Select
-                                onChange={this.changeCoins}
-                                value={defaultCoin}
+                              this.props.nowalletBalance !== undefined ? (
+                                <Select
+                                  onChange={this.changeCoins}
+                                  value={defaultCoin}
                                 // style={{ width: "100%" }}
                                 // className="select-display"
-                              >
-                                {this.props.nowalletBalance.map(function(temp) {
-                                  return (
-                                    <Option value={temp.coin}>
-                                      {temp.coin}
-                                    </Option>
-                                  );
-                                })}
-                              </Select>
-                            ) : (
-                              ""
-                            )}
+                                >
+                                  {this.props.nowalletBalance.map(function (temp) {
+                                    return (
+                                      <Option value={temp.coin}>
+                                        {temp.coin}
+                                      </Option>
+                                    );
+                                  })}
+                                </Select>
+                              ) : (
+                                ""
+                              )}
                           </WalletCoin>
                         ) : (
-                          ""
-                        )}
+                            ""
+                          )}
                       </LeftHead>
                     </Col>
                     {/* <Col xxl={12} xl={12} lg={12} sm={24}>
@@ -465,8 +469,8 @@ class WalletDetails extends Component {
                             <CoinImage
                               src={
                                 Object.keys(walletUserData).length > 0 &&
-                                walletUserData.coin_icon !== null &&
-                                walletUserData.coin_icon !== undefined
+                                  walletUserData.coin_icon !== null &&
+                                  walletUserData.coin_icon !== undefined
                                   ? _AMAZONBUCKET + walletUserData.coin_icon
                                   : _AMAZONBUCKET + "coin/defualt_coin.png"
                               }
@@ -482,8 +486,8 @@ class WalletDetails extends Component {
                                   thousandSeparator={true}
                                 />
                               ) : (
-                                ""
-                              )}{" "}
+                                  ""
+                                )}{" "}
                               <BTC>
                                 {Object.keys(walletUserData).length > 0
                                   ? walletUserData.coin_code
@@ -501,27 +505,27 @@ class WalletDetails extends Component {
                                   : "$"}{" "}
                                 {parseFloat(
                                   currencyConv.quote["USD"].price *
-                                    walletUserData.balance
+                                  walletUserData.balance
                                 ).toFixed(8)}
                                 <AMT>{FIAT}</AMT>
                               </FIATAmt>
                             ) : (
-                              ""
-                            )}
+                                ""
+                              )}
                           </CryptAmt>
                         </LeftBit>
                         <PlacedDiv>
                           In Orders:{" "}
                           {walletUserData.balance >
-                          walletUserData.placed_balance
+                            walletUserData.placed_balance
                             ? (
-                                walletUserData.balance -
-                                walletUserData.placed_balance
-                              ).toFixed(8)
+                              walletUserData.balance -
+                              walletUserData.placed_balance
+                            ).toFixed(8)
                             : (
-                                walletUserData.placed_balance -
-                                walletUserData.balance
-                              ).toFixed(8)}
+                              walletUserData.placed_balance -
+                              walletUserData.balance
+                            ).toFixed(8)}
                         </PlacedDiv>
                       </Col>
                       <Col xxl={8} xl={12} lg={24} md={24}>
@@ -555,8 +559,8 @@ class WalletDetails extends Component {
                     visible={this.state.withdraw}
                   />
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
                 {this.state.send === true ? (
                   <WalletPopup
                     walletDetailsApi={() => this.walletDetailsApi()}
@@ -571,8 +575,8 @@ class WalletDetails extends Component {
                     visible={this.state.send}
                   />
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </ContainerContact2>
             ) : walletUserData.flag == 1 ? (
               <ContainerContact2>
@@ -587,8 +591,8 @@ class WalletDetails extends Component {
                       <BTC>{walletUserData.coin_name} </BTC>
                     </div>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
 
                   <PendingPara>
                     {/* <p>
@@ -619,28 +623,45 @@ class WalletDetails extends Component {
                       ? walletUserData.coin_name
                       : ""}
                   </BTC>
-                  <PendingPara>
-                    <p>
-                      Your wallet is not created yet. Please click on the button
-                      below to create your wallet for {walletUserData.coin_name}
-                      .
-                    </p>
-                    <WalletCreateButton onClick={this._walletCreate}>
-                      Create {walletUserData.coin_name} Wallet
+                  {walletUserData.iserc &&
+                    <PendingPara>
+                      <p>
+                        Your wallet is not created yet. Please create your Ethereum wallet to use {walletUserData.coin_name}
+                        .
+                    {/* </p>
+                      <WalletCreateButton onClick={this._walletCreate}>
+                        Create {walletUserData.coin_name} Wallet
                     </WalletCreateButton>
-                    <p>
-                      If you still have any issue , please feel free to contact
+                      <p> */}
+                        If you still have any issue , please feel free to contact
                       us <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
                     </p>
-                  </PendingPara>
+                    </PendingPara>
+                  }
+                  {!walletUserData.iserc &&
+                    <PendingPara>
+                      <p>
+                        Your wallet is not created yet. Please click on the button
+                      below to create your wallet for {walletUserData.coin_name}
+                        .
+                    </p>
+                      <WalletCreateButton onClick={this._walletCreate}>
+                        Create {walletUserData.coin_name} Wallet
+                    </WalletCreateButton>
+                      <p>
+                        If you still have any issue , please feel free to contact
+                      us <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                    </p>
+                    </PendingPara>
+                  }
                 </PendingWrap>
               </ContainerContact2>
             ) : (
-              ""
-            )
+                    ""
+                  )
           ) : (
-            ""
-          )}
+              ""
+            )}
         </GreyWrap>
         <PanicEnabled
           comingCancel={e => this.comingCancel(e)}
