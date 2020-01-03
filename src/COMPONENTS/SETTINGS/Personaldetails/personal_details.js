@@ -410,6 +410,8 @@ class PersonalDetails extends Component {
     */
 
   onDateChange(value, field) {
+    // console.log("date---", value);
+
     var tempDate = value.day + "/" + value.month + "/" + value.year;
 
     var date = moment
@@ -842,11 +844,11 @@ class PersonalDetails extends Component {
           "Error",
           "Please complete all required details to continue"
         );
-        console.log(
-          "sjdh",
-          this.state.street1Icon,
-          this.props.profileDetails.street_address
-        );
+        // console.log(
+        //   "sjdh",
+        //   this.state.street1Icon,
+        //   this.props.profileDetails.street_address
+        // );
       }
       if (
         this.state.firstIcon === null &&

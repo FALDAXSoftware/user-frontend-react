@@ -62,6 +62,11 @@ export default class Datepicker extends Component {
       if (type === "year") {
         this.setState({ year: date });
         fields[type] = date;
+        // console.log(date, moment([date]).isLeapYear(), this.state);
+
+        // if (!moment([date]).isLeapYear() && this.state.day >= 28) {
+        //   this.setState({ day: "" });
+        // }
       } else if (type === "month") {
         let date1 = null;
         this.setState({ month: date });
@@ -130,6 +135,11 @@ export default class Datepicker extends Component {
         }
       }
       // console.log("Step 4------->", fields)
+      if (!moment([fields["year"]]).isLeapYear() && fields["day"] > 28) {
+        this.setState({ day: "" });
+        fields["day"] = "";
+      }
+
       this.props.onDateChange(fields, "dob");
     } else {
       if (type === "year") {
@@ -177,7 +187,11 @@ export default class Datepicker extends Component {
           fields["year"] = propFields[0];
         }
       }
-      // console.log("Final Result", fields);
+      if (!moment([fields["year"]]).isLeapYear() && fields["day"] > 28) {
+        this.setState({ day: "" });
+        fields["day"] = "";
+      }
+      console.log("Final Result", fields);
       this.props.onDateChange(fields, "dob");
     }
   }
