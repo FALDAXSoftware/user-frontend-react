@@ -287,7 +287,7 @@ class FooterHome extends Component {
         <Container>
           <FooterContainer>
             <Row>
-              <FooterLinkCol xs={24} sm={8} md={8} lg={6} xl={6}>
+              <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                 <Footerul>
                   <Footerheaders>Information</Footerheaders>
                   <li>
@@ -327,7 +327,7 @@ class FooterHome extends Component {
                   </li>
                 </Footerul>
               </FooterLinkCol>
-              <FooterLinkCol xs={24} sm={8} md={8} lg={6} xl={6}>
+              <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                 <Footerul>
                   <Footerheaders>Support</Footerheaders>
                   <li>
@@ -367,7 +367,7 @@ class FooterHome extends Component {
                   </li>
                 </Footerul>
               </FooterLinkCol>
-              <FooterLinkCol xs={24} sm={8} md={8} lg={6} xl={6}>
+              <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                 <Footerul>
                   <Footerheaders>Legal & Technical</Footerheaders>
                   <li>
@@ -386,7 +386,7 @@ class FooterHome extends Component {
                   </li>
                 </Footerul>
               </FooterLinkCol>
-              <Col xs={24} lg={6} xl={6}>
+              <Col xs={24} lg={5} xl={5}>
                 <Iconul1header>
                   <Footerheaders>Social</Footerheaders>
                 </Iconul1header>
@@ -452,7 +452,7 @@ class FooterHome extends Component {
                                     </LI2>
                                 </Iconul2> */}
               </Col>
-              {/* <StoreCol xs={24} lg={2} xl={2}>
+              <StoreCol xs={24} lg={2} xl={2}>
                 <Download>Download</Download>
                 <StoreWrap>
                   <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}>
@@ -462,7 +462,7 @@ class FooterHome extends Component {
                     <Playstore src={_PLAYSTORE} />
                   </a>
                 </StoreWrap>
-              </StoreCol> */}
+              </StoreCol>
             </Row>
           </FooterContainer>
           <HR />

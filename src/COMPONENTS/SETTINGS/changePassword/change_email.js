@@ -125,6 +125,23 @@ export const ButtonDiv = styled.div`
     > button {
       margin: 0 20px;
     }
+    > div {
+      > button {
+        margin: 0 20px;
+      }
+    }
+  }
+  @media (max-width: 400px) {
+    &.terms_btn_div {
+      > button {
+        margin: 0 15px;
+      }
+      > div {
+        > button {
+          margin: 0 15px;
+        }
+      }
+    }
   }
 `;
 export const Save = styled(Button)`

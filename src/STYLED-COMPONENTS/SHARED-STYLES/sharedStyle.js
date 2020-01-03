@@ -22,7 +22,6 @@ export const ModalAgreeWrap = styled.div`
         }
       }
   }
-
 `;
 
 export const ModalWrap = styled.div`
