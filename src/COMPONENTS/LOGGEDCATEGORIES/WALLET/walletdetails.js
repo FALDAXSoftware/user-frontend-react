@@ -186,6 +186,8 @@ class WalletDetails extends Component {
           if (Object.keys(responseData.walletUserData).length > 0) {
             walletUserDetails = responseData.walletUserData;
           }
+          // console.log("wallet details props walletDetails", walletUserDetails);
+
           self.setState(
             {
               walletUserData: walletUserDetails,
@@ -197,9 +199,12 @@ class WalletDetails extends Component {
               loader: false,
               coin_code: coin_name[1],
               coinFee: responseData.default_send_Coin_fee,
-              fiatValue: responseData.currencyConversionData.quote.USD.price
+              fiatValue: responseData.currencyConversionData
+                ? responseData.currencyConversionData.quote.USD.price
+                : ""
             },
             () => {
+              // console.log("wallet details props -----", self.state);
               // console.log(
               //   "responseData.currencyConversionData.quote.USD.price===========",
               //   this.state.coinFee
@@ -215,7 +220,7 @@ class WalletDetails extends Component {
         }
       })
       .catch(error => {
-        // console.log(error);
+        // console.log("wallet details props -----error ", error);
         // this.openNotificationWithIcon(
         //   "error",
         //   "Error",
@@ -359,7 +364,7 @@ class WalletDetails extends Component {
       <ContactWrap>
         <LoggedNavigation />
         <GreyWrap>
-          {/* {console.log(this.props, walletUserData)} */}
+          {/* {console.log("wallet details props", this.props, walletUserData)} */}
           {Object.keys(walletUserData).length > 0 ? (
             walletUserData.flag == 0 ? (
               <ContainerContact2>
@@ -619,20 +624,39 @@ class WalletDetails extends Component {
                       ? walletUserData.coin_name
                       : ""}
                   </BTC>
-                  <PendingPara>
-                    <p>
-                      Your wallet is not created yet. Please click on the button
-                      below to create your wallet for {walletUserData.coin_name}
-                      .
-                    </p>
-                    <WalletCreateButton onClick={this._walletCreate}>
-                      Create {walletUserData.coin_name} Wallet
+                  {walletUserData.iserc && (
+                    <PendingPara>
+                      <p>
+                        Your wallet is not created yet. Please create your
+                        Ethereum wallet to use {walletUserData.coin_name}.
+                        {/* </p>
+                      <WalletCreateButton onClick={this._walletCreate}>
+                        Create {walletUserData.coin_name} Wallet
                     </WalletCreateButton>
-                    <p>
-                      If you still have any issue , please feel free to contact
-                      us <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
-                    </p>
-                  </PendingPara>
+                      <p> */}
+                        If you still have any issue , please feel free to
+                        contact us{" "}
+                        <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                      </p>
+                    </PendingPara>
+                  )}
+                  {!walletUserData.iserc && (
+                    <PendingPara>
+                      <p>
+                        Your wallet is not created yet. Please click on the
+                        button below to create your wallet for{" "}
+                        {walletUserData.coin_name}.
+                      </p>
+                      <WalletCreateButton onClick={this._walletCreate}>
+                        Create {walletUserData.coin_name} Wallet
+                      </WalletCreateButton>
+                      <p>
+                        If you still have any issue , please feel free to
+                        contact us{" "}
+                        <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                      </p>
+                    </PendingPara>
+                  )}
                 </PendingWrap>
               </ContainerContact2>
             ) : (

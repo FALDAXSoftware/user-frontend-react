@@ -808,10 +808,12 @@ class WalletPopup extends Component {
                 </SendWrap>
               </ModalWrap>
             )}
-            <span>
-              *Network Fee amount could change during actual transaction
-              depending on the market conditions.
-            </span>
+            {this.props.title === "SEND" && (
+              <span>
+                *Network Fee amount could change during actual transaction
+                depending on the market conditions.
+              </span>
+            )}
           </WalletModal>
         ) : (
           ""
