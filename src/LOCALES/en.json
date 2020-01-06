@@ -1,1 +1,356 @@
-{ "Introduction": "Introduction", "conversion": "Conversion" }
+{
+  "header": {
+    "navbar_menu_conversion": {
+      "page": "Header",
+      "message": "Conversion",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_menu_wallet": {
+      "page": "Header",
+      "message": "Wallet",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_menu_history": {
+      "page": "Header",
+      "message": "History",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_menu_careers": {
+      "page": "Header",
+      "message": "Careers",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_conversation_crypto_only": {
+      "page": "Header",
+      "message": "Crypto Only",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_conversation_credit_card": {
+      "page": "Header",
+      "message": "Credit Card",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_conversation_bank_transfer": {
+      "page": "Header",
+      "message": "Bank Transfer",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_profile": {
+      "page": "Header",
+      "message": "Profile",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_ticket": {
+      "page": "Header",
+      "message": "Tickets",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_history_logout": {
+      "page": "Header",
+      "message": "Logout",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    }
+  },
+  "footer": {
+    "head_information": {
+      "page": "Footer",
+      "message": "Information",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "head_support": {
+      "page": "Footer",
+      "message": "Support",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "head_Legal_&_technical": {
+      "page": "Footer",
+      "message": "Legal & Technical",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "head_social": {
+      "page": "Footer",
+      "message": "Social",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "head_download": {
+      "page": "Footer",
+      "message": "Download",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "subhead_about_us": {
+      "page": "Footer",
+      "message": "About Us",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_contact_us": {
+      "page": "Footer",
+      "message": "Contact Us",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_media_contact": {
+      "page": "Footer",
+      "message": "Media Contact",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_blog": {
+      "page": "Footer",
+      "message": "Blog",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_fees": {
+      "page": "Footer",
+      "message": "Fees",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_open_a_ticket": {
+      "page": "Footer",
+      "message": "Open a Ticket",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_faq": {
+      "page": "Footer",
+      "message": "FAQ",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_List_your_token": {
+      "page": "Footer",
+      "message": "List Your Token",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_news": {
+      "page": "Footer",
+      "message": "News",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_policies": {
+      "page": "Footer",
+      "message": "Policies",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_service_availability": {
+      "page": "Footer",
+      "message": "Service Availability",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_all_rights_reserved.": {
+      "page": "Footer",
+      "message": "All Rights Reserved.",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    }
+  },
+  "edit_profile_titles": {
+    "head_personal_details": {
+      "page": "Edit Profile",
+      "message": "Personal Details",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_security": {
+      "page": "Edit Profile",
+      "message": "Security",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_settings": {
+      "page": "Edit Profile",
+      "message": "Settings",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_identity_verification": {
+      "page": "Edit Profile",
+      "message": "Identity Verification",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_referral": {
+      "page": "Edit Profile",
+      "message": "Referral",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_support": {
+      "page": "Edit Profile",
+      "message": "Support",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "subhead_personal_form_upload_new_photo": {
+      "page": "Edit Profile",
+      "message": "Upload New Photo",
+      "message_type": "Web content",
+      "context": "Personal detials form head to upload photo"
+    },
+    "subhead_personal_form_remove_photo": {
+      "page": "Edit Profile",
+      "message": "Remove",
+      "message_type": "Web content",
+      "context": "Personal detials form head to remove photo"
+    },
+    "subhead_personal_form_first_name": {
+      "page": "Edit Profile",
+      "message": "First Name",
+      "message_type": "Web content",
+      "context": "Personal detials form label for first name"
+    },
+    "subhead_personal_form_last_name": {
+      "page": "Edit Profile",
+      "message": "Last Name",
+      "message_type": "Web content",
+      "context": "Personal detials form label for last name"
+    },
+    "subhead_personal_form_dob": {
+      "page": "Edit Profile",
+      "message": "Date of Birth",
+      "message_type": "Web content",
+      "context": "Personal detials form label for date of birth"
+    },
+    "subhead_personal_form_street_address_line": {
+      "page": "Edit Profile",
+      "message": "Street Address Line",
+      "message_type": "Web content",
+      "context": "Personal detials form label for street line address"
+    },
+    "subhead_personal_form_country": {
+      "page": "Edit Profile",
+      "message": "Country",
+      "message_type": "Web content",
+      "context": "Personal detials form label for country"
+    },
+    "subhead_personal_form_state": {
+      "page": "Edit Profile",
+      "message": "State",
+      "message_type": "Web content",
+      "context": "Personal detials form label for state"
+    },
+    "subhead_personal_form_city": {
+      "page": "Edit Profile",
+      "message": "Upload New Photo",
+      "message_type": "Web content",
+      "context": "Personal detials form label for city"
+    },
+    "subhead_personal_form_postal_code": {
+      "page": "Edit Profile",
+      "message": "Postal Code",
+      "message_type": "Web content",
+      "context": "Personal detials form label for postal code"
+    },
+    "subhead_personal_form_default_date_format": {
+      "page": "Edit Profile",
+      "message": "Default Date Format",
+      "message_type": "Web content",
+      "context": "Personal detials form label for default date format"
+    },
+    "subhead_personal_form_default_currency": {
+      "page": "Edit Profile",
+      "message": "Upload New Photo",
+      "message_type": "Web content",
+      "context": "Personal detials form label for default currency"
+    },
+    "subhead_personal_form_edit_btn": {
+      "page": "Edit Profile",
+      "message": "Edit",
+      "message_type": "Web content",
+      "context": "Personal detials form button for edit"
+    },
+    "subhead_personal_form_save_btn": {
+      "page": "Edit Profile",
+      "message": "Save",
+      "message_type": "Web content",
+      "context": "Personal detials form button for save"
+    },
+    "subhead_personal_form_cancel_btn": {
+      "page": "Edit Profile",
+      "message": "Cancel",
+      "message_type": "Web content",
+      "context": "Personal detials form button for cancel"
+    },
+    "agree_terms_text": {
+      "page": "Edit Profile",
+      "message": "By clicking on SAVE you agree to FALDAX",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms text"
+    },
+    "agree_terms_of_services": {
+      "page": "Edit Profile",
+      "message": "Terms of Services",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms link text for Terms of Services"
+    },
+    "agree_privacy_policy": {
+      "page": "Edit Profile",
+      "message": "Privacy Policy",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms link text for Privacy Policy"
+    },
+    "agree_anti_money_laundering_policy": {
+      "page": "Edit Profile",
+      "message": "Anti-Money Laundering Policy",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms link text for Anti-Money Laundering Policy"
+    },
+    "agree_cookies_policy": {
+      "page": "Edit Profile",
+      "message": "Cookies Policy",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms link text for Cookies Policy"
+    },
+    "agree_btn": {
+      "page": "Edit Profile",
+      "message": "I agree",
+      "message_type": "Web content",
+      "context": "Agree terms pop up Agree button text"
+    },
+    "dont_agree_popup_text": {
+      "page": "Edit Profile",
+      "message": "You will not be able to access FALDAX Services by disagreeing to",
+      "message_type": "Web content",
+      "context": "Text on dont agree terms and conditions button click"
+    },
+    "dont_agree_yes_btn": {
+      "page": "Edit Profile",
+      "message": "Yes",
+      "message_type": "Web content",
+      "context": "Dont agree pop up yes buttton text"
+    },
+    "dont_agree_no_btn": {
+      "page": "Edit Profile",
+      "message": "No",
+      "message_type": "Web content",
+      "context": "Dont agree pop up yes buttton text"
+    },
+    "and_text": {
+      "page": "Edit Profile",
+      "message": "and",
+      "message_type": "Web content",
+      "context": "text"
+    }
+  }
+}

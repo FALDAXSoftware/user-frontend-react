@@ -1,1 +1,96 @@
-{ "Introduction": "前書き", "conversion": "変換" }
+{
+  "header": {
+    "navbar_menu_conversion": {
+      "page": "Header",
+      "message": "変換",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_menu_wallet": {
+      "page": "Header",
+      "message": "財布",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_menu_history": {
+      "page": "Header",
+      "message": "歴史",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_menu_careers": {
+      "page": "Header",
+      "message": "キャリア",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_conversation_crypto_only": {
+      "page": "Header",
+      "message": "暗号のみ",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_conversation_credit_card": {
+      "page": "Header",
+      "message": "クレジットカード",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_conversation_bank_transfer": {
+      "page": "Header",
+      "message": "銀行振込",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_profile": {
+      "page": "Header",
+      "message": "プロフィール",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_ticket": {
+      "page": "Header",
+      "message": "切符売場",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_history_logout": {
+      "page": "Header",
+      "message": "ログアウト",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    }
+  },
+  "footer": {
+    "head_information": {
+      "page": "Footer",
+      "message": "Information",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "head_support": {
+      "page": "Footer",
+      "message": "Support",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "head_Legal_&_technical": {
+      "page": "Footer",
+      "message": "Legal & Technical",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "head_social": {
+      "page": "Footer",
+      "message": "Social",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "head_download": {
+      "page": "Footer",
+      "message": "Download",
+      "message_type": "Web content",
+      "context": "footer head title"
+    }
+  }
+}

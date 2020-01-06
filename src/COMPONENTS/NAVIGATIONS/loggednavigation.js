@@ -682,17 +682,21 @@ class LoggedNavigation extends Component {
     const DropdownItems = (
       <Menu className="fixed-drop">
         <Menu.Item key="0">
-          <a onClick={this.cryptoAccess}>Crypto Only</a>
+          <a onClick={this.cryptoAccess}>
+            {t("navbar_sub_menu_conversation_crypto_only.message")}
+          </a>
         </Menu.Item>
         <Menu.Item key="1">
-          <a onClick={this.simplexAccess}>Credit Card</a>
+          <a onClick={this.simplexAccess}>
+            {t("navbar_sub_menu_conversation_credit_card.message")}
+          </a>
         </Menu.Item>
         <Menu.Item key="2">
           <a
             className="tokenlink"
             href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
           >
-            Bank Transfer
+            {t("navbar_sub_menu_conversation_bank_transfer.message")}
           </a>
         </Menu.Item>
       </Menu>
@@ -714,7 +718,7 @@ class LoggedNavigation extends Component {
               this.props.history.push({ pathname: "/history", tradeType: "1" })
             }
           >
-            Crypto Only
+            {t("navbar_sub_menu_conversation_crypto_only.message")}
           </a>
         </Menu.Item>
         <Menu.Item key="1">
@@ -723,7 +727,7 @@ class LoggedNavigation extends Component {
               this.props.history.push({ pathname: "/history", tradeType: "2" })
             }
           >
-            Credit Card
+            {t("navbar_sub_menu_conversation_credit_card.message")}
           </a>
         </Menu.Item>
       </Menu>
@@ -765,7 +769,7 @@ class LoggedNavigation extends Component {
               <NavLink className="ant-dropdown-link" to="/conversion">
                 {/* Conversion */}
                 {/* <Trans i18nKey="Introduction" /> */}
-                {t("conversion")}
+                {t("navbar_menu_conversion.message")}
               </NavLink>
             </DropDownDiv>
             {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
@@ -773,7 +777,7 @@ class LoggedNavigation extends Component {
           {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
           <Menuitem key="2">
             <NavLink className="Nav_selected" to="/wallet">
-              Wallet
+              {t("navbar_menu_wallet.message")}
             </NavLink>
           </Menuitem>
           <Menuitem key="3">
@@ -792,7 +796,7 @@ class LoggedNavigation extends Component {
                   }
                 }}
               >
-                History
+                {t("navbar_menu_history.message")}
               </NavLink>
             </DropDownDiv>
             {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
@@ -839,7 +843,9 @@ class LoggedNavigation extends Component {
               &times;
             </Close>
             <LogoutStyle>
-              <Link to="/editProfile">Profile</Link>
+              <Link to="/editProfile">
+                {t("navbar_sub_menu_profile.message")}
+              </Link>
             </LogoutStyle>
             {/* <span> <Link to="/dashboard">DASHBOARD</Link></span> */}
             {/* <span> <Link to="/conversion">CONVERSION</Link></span> */}
@@ -852,17 +858,21 @@ class LoggedNavigation extends Component {
               <DropMenu mode="inline">
                 <SubMenuNav key="mobsub1" title={"Conversion"}>
                   <Menu.Item key="0">
-                    <a onClick={this.cryptoAccess}>Crypto Only</a>
+                    <a onClick={this.cryptoAccess}>
+                      {t("navbar_sub_menu_conversation_crypto_only.message")}
+                    </a>
                   </Menu.Item>
                   <Menu.Item key="1">
-                    <a onClick={this.simplexAccess}>Credit Card</a>
+                    <a onClick={this.simplexAccess}>
+                      {t("navbar_sub_menu_conversation_credit_card.message")}
+                    </a>
                   </Menu.Item>
                   <Menu.Item key="2">
                     <a
                       className="tokenlink"
                       href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
                     >
-                      Bank Transfer
+                      {t("navbar_sub_menu_conversation_bank_transfer.message")}
                     </a>
                   </Menu.Item>
                 </SubMenuNav>
@@ -871,7 +881,7 @@ class LoggedNavigation extends Component {
             {/* <span onClick={this.tradeAccess}>TRADE</span> */}
             <span>
               {" "}
-              <Link to="/wallet">Wallet</Link>
+              <Link to="/wallet">{t("navbar_menu_wallet.message")}</Link>
             </span>
             {/* <span>
               {" "}
@@ -901,7 +911,7 @@ class LoggedNavigation extends Component {
                         })
                       }
                     >
-                      Crypto Only
+                      {t("navbar_sub_menu_history_crypto_only.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="1">
@@ -913,66 +923,77 @@ class LoggedNavigation extends Component {
                         })
                       }
                     >
-                      Credit Card
+                      {t("navbar_sub_menu_history_credit_card.message")}
                     </a>
                   </Menu.Item>
                 </SubMenuNav>
               </DropMenu>
             </a>
             <span>
-              <CarLink to="/careers">Careers</CarLink>
+              <CarLink to="/careers">
+                {t("navbar_menu_careers.message")}
+              </CarLink>
             </span>
             <a className="DROP">
               <DropMenu mode="inline">
-                <SubMenuNav key="sub1" title={"Information"}>
+                <SubMenuNav
+                  key="sub1"
+                  title={t("footer:head_information.message")}
+                >
                   <Menu.Item key="9">
                     <a href={`${globalVariables.WordpressSiteURL}/about-us`}>
-                      About Us
+                      {t("footer:subhead_about_us.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="10">
                     <a href={`${globalVariables.WordpressSiteURL}/contact-us`}>
-                      Contact Us
+                      {t("footer:subhead_contact_us.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="11">
                     <a
                       href={`${globalVariables.WordpressSiteURL}/media-contact`}
                     >
-                      Media Contact
+                      {t("footer:subhead_media_contact.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="12">
                     <a href={`${globalVariables.WordpressSiteURL}/blogs`}>
-                      Blogs
+                      {t("footer:subhead_blog.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="13">
-                    <a href={`${globalVariables.WordpressSiteURL}/fee`}>Fees</a>
+                    <a href={`${globalVariables.WordpressSiteURL}/fee`}>
+                      {t("footer:subhead_fees.message")}
+                    </a>
                   </Menu.Item>
                 </SubMenuNav>
               </DropMenu>
             </a>
             <a className="DROP">
               <DropMenu mode="inline">
-                <SubMenuNav key="sub2" title={"Support"}>
+                <SubMenuNav key="sub2" title={t("footer:head_support.message")}>
                   <Menu.Item key="9">
-                    <Link to="/open-ticket">Open a Ticket</Link>
+                    <Link to="/open-ticket">
+                      {t("footer:subhead_open_a_ticket.message")}
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="10">
-                    <a href="https://knowledge.faldax.com/">FAQ</a>
+                    <a href="https://knowledge.faldax.com/">
+                      {t("footer:subhead_faq.message")}
+                    </a>
                   </Menu.Item>
                   {/* <Menu.Item key="11"><a href="#">API Documentation</a></Menu.Item> */}
                   <Menu.Item key="12">
                     <a
                       href={`${globalVariables.WordpressSiteURL}/list-your-token`}
                     >
-                      List Your Token
+                      {t("footer:subhead_List_your_token.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="12">
                     <a href={`${globalVariables.WordpressSiteURL}/news`}>
-                      News
+                      {t("footer:subhead_news.message")}
                     </a>
                   </Menu.Item>
                 </SubMenuNav>
@@ -980,24 +1001,29 @@ class LoggedNavigation extends Component {
             </a>
             <a className="DROP">
               <DropMenu mode="inline">
-                <SubMenuNav key="sub3" title={"Legal & Technical"}>
+                <SubMenuNav
+                  key="sub3"
+                  title={t("footer:head_Legal_&_technical.message")}
+                >
                   <Menu.Item key="9">
                     <a href={`${globalVariables.WordpressSiteURL}/policies`}>
-                      Policies
+                      {t("footer:subhead_policies.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="10">
                     <a
                       href={`${globalVariables.WordpressSiteURL}/service-availability`}
                     >
-                      Service Availability
+                      {t("footer:subhead_service_availability.message")}
                     </a>
                   </Menu.Item>
                   {/* <Menu.Item key="11"><a onClick={this.showComing} href="#">Security</a></Menu.Item> */}
                 </SubMenuNav>
               </DropMenu>
             </a>
-            <LogoutStyle onClick={this.logout.bind(this)}> Logout </LogoutStyle>
+            <LogoutStyle onClick={this.logout.bind(this)}>
+              {t("navbar_sub_menu_history_logout.message")}{" "}
+            </LogoutStyle>
           </SideNav>
         </ReactSwipeEvents>
         <ComingSoon
@@ -1041,6 +1067,6 @@ const mapDispatchToProps = dispatch => ({
   langAction: lang => dispatch(langAction(lang))
 });
 
-export default translate("translations")(
+export default translate(["header", "footer"])(
   connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation))
 );

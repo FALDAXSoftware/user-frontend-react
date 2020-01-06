@@ -7,7 +7,7 @@ import { Row, Col, Input, Button, notification, Radio, Checkbox } from "antd";
 import styled from "styled-components";
 import moment from "moment";
 import AgreeTerms from "../../../SHARED-COMPONENTS/AgreeTerms";
-
+import { translate } from "react-i18next";
 /* Components */
 import Datepicker from "./datepicker";
 import CountryPick from "./country";
@@ -1156,7 +1156,7 @@ class PersonalDetails extends Component {
   render() {
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
-    const { profileDetails } = this.props;
+    const { profileDetails,t } = this.props;
     var me = this;
 
     return (
@@ -1168,7 +1168,7 @@ class PersonalDetails extends Component {
         <Row>
           <Col span={6} />
           <HeaderCol span={12}>
-            <span>Personal Details</span>
+            <span>{t("head_personal_details.message")}</span>
           </HeaderCol>
         </Row>
         <Mainrow>
@@ -1194,7 +1194,7 @@ class PersonalDetails extends Component {
                     />
                   )}
                   <Imageup>
-                    <Imageupload htmlFor="file">Upload New Photo</Imageupload>
+                    <Imageupload htmlFor="file">{t("subhead_personal_form_upload_new_photo.message")}</Imageupload>
                   </Imageup>
                 </div>
 
@@ -1212,7 +1212,7 @@ class PersonalDetails extends Component {
                           !this.state.editMode ? "" : this.removePic.bind(this)
                         }
                       >
-                        Remove
+                        {t("subhead_personal_form_remove_photo.message")}
                       </Remove>
                     ) : (
                       ""
@@ -1234,7 +1234,7 @@ class PersonalDetails extends Component {
                     xl={{ span: 12 }}
                     xxl={{ span: 12 }}
                   >
-                    <Firstname>First Name*</Firstname>
+                    <Firstname>{t("subhead_personal_form_first_name.message")}*</Firstname>
                     <Firstinput
                       disabled={!this.state.editMode}
                       placeholder="First Name"
@@ -1256,7 +1256,7 @@ class PersonalDetails extends Component {
                     xl={{ span: 12 }}
                     xxl={{ span: 12 }}
                   >
-                    <Lastname>Last Name*</Lastname>
+                    <Lastname>{t("subhead_personal_form_last_name.message")}*</Lastname>
                     <Lastinput
                       disabled={!this.state.editMode}
                       placeholder="Last Name"
@@ -1278,7 +1278,7 @@ class PersonalDetails extends Component {
                     xl={{ span: 24 }}
                     xxl={{ span: 24 }}
                   >
-                    <Datebirth>Date of Birth*</Datebirth>
+                    <Datebirth>{t("subhead_personal_form_dob.message")}*</Datebirth>
                     <Datepicker
                       {...this.props}
                       onDateChange={(value, field) =>
@@ -1296,7 +1296,7 @@ class PersonalDetails extends Component {
                     xl={{ span: 24 }}
                     xxl={{ span: 24 }}
                   >
-                    <StreetAddress>Street Address Line 1*</StreetAddress>
+                    <StreetAddress>{t("subhead_personal_form_street_address_line.message")} 1*</StreetAddress>
                     <Streetinput
                       placeholder="Street Address"
                       {...getFieldProps("street_address", {
@@ -1314,7 +1314,7 @@ class PersonalDetails extends Component {
                   </Col>
                 </ThirdRow>
                 <ThirdRow>
-                  <StreetAddress>Street Address Line 2</StreetAddress>
+                  <StreetAddress>{t("subhead_personal_form_street_address_line.message")} 2</StreetAddress>
                   <Streetinput
                     disabled={!this.state.editMode}
                     placeholder="Street Address"
@@ -1370,10 +1370,10 @@ class PersonalDetails extends Component {
                 </FourthRow>
                 <FourthRow>
                   <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
-                    <Postal>Postal Code*</Postal>
+                    <Postal>{t("subhead_personal_form_postal_code.message")}*</Postal>
                     <Postalinput
                       disabled={!this.state.editMode}
-                      placeholder="Postal Code"
+                      placeholder={t("subhead_personal_form_postal_code.message")}
                       {...getFieldProps("postal_code", {
                         onChange(e) {
                           me.onChangeField(e.target.value, "postal_code");
@@ -1418,7 +1418,7 @@ class PersonalDetails extends Component {
                     xl={{ span: 24 }}
                     xxl={{ span: 24 }}
                   >
-                    <FIAT>Default Date Format*</FIAT>
+                    <FIAT>{t("subhead_personal_form_default_date_format.message")}*</FIAT>
                     <RadioGroup
                       disabled={!this.state.editMode}
                       onChange={this.onChangeFormat}
@@ -1442,18 +1442,19 @@ class PersonalDetails extends Component {
                     <Col>
                       <span>
                         {" "}
-                        By clicking on SAVE you agree to FALDAX{" "}
+                        {t("agree_terms_text.message")} FALDAX{" "}
                         <a
                           target="_blank"
                           href={`${globalVariables.Terms_and_services}`}
                         >
-                          Terms of Services
+                          {t("agree_terms_of_services.message")}
                         </a>
                         ,{" "}
                         <a
                           target="_blank"
                           href={`${globalVariables.Privacy_policy}`}
                         >
+                          {t("agree_privacy_policy.message")}
                           Privacy Policy
                         </a>
                         ,{" "}
@@ -1461,14 +1462,14 @@ class PersonalDetails extends Component {
                           target="_blank"
                           href={`${globalVariables.Anti_money_laundering_policy}`}
                         >
-                          Anti-Money Laundering Policy
+                          {t("agree_anti_money_laundering_policy.message")}
                         </a>{" "}
                         and{" "}
                         <a
                           target="_blank"
                           href={`${globalVariables.Cookie_policy}`}
                         >
-                          Cookies Policy
+                          {t("agree_cookies_policy.message")}
                         </a>
                         .
                       </span>
@@ -1493,11 +1494,11 @@ class PersonalDetails extends Component {
                       <div className="edit_profile_actions">
                         {this.state.isFirstLogin ? (
                           <Save type="primary" onClick={this.submit}>
-                            Save
+                          {t("subhead_personal_form_save_btn.message")}
                           </Save>
                         ) : (
                           <Save type="primary" onClick={this.openAgreePopup}>
-                            Save
+                            {t("subhead_personal_form_save_btn.message")}
                           </Save>
                         )}
                         <Save
@@ -1537,7 +1538,7 @@ class PersonalDetails extends Component {
                             );
                           }}
                         >
-                          Cancel
+                        {t("subhead_personal_form_cancel_btn.message")}
                         </Save>
                       </div>
                     ) : (
@@ -1548,7 +1549,7 @@ class PersonalDetails extends Component {
                           });
                         }}
                       >
-                        Edit
+                        {t("subhead_personal_form_edit_btn.message")}
                       </Save>
                     )}
                   </Col>
@@ -1623,7 +1624,6 @@ const mapDispatchToProps = dispatch => ({
   LogoutUser: () => dispatch(LogoutUser())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(createForm()(PersonalDetails));
+export default translate("edit_profile_titles")(
+  connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails))
+);
