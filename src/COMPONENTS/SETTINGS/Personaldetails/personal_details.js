@@ -233,8 +233,23 @@ export const Save = styled(Button)`
   margin-left: 10px;
   width: 15%;
   height: 40px;
-  @media (max-width: 600px) {
-    width: 100px;
+  @media (max-width: 1200px) {
+    width: 20%;
+  }
+  @media (max-width: 990px) {
+    width: calc(20% - 30px);
+    font-size: 12.217px;
+  }
+  @media (max-width: 767px) {
+    width: calc(25% - 30px);
+    font-size: 12.217px;
+  }
+  @media (max-width: 599px) {
+    width: calc(30% - 30px);
+  }
+  @media (max-width: 450px) {
+    width: calc(50% - 30px);
+    font-size: 12.217px;
   }
 `;
 export const SpinEx = styled.div`
@@ -410,6 +425,8 @@ class PersonalDetails extends Component {
     */
 
   onDateChange(value, field) {
+    // console.log("date---", value);
+
     var tempDate = value.day + "/" + value.month + "/" + value.year;
 
     var date = moment
@@ -842,11 +859,11 @@ class PersonalDetails extends Component {
           "Error",
           "Please complete all required details to continue"
         );
-        console.log(
-          "sjdh",
-          this.state.street1Icon,
-          this.props.profileDetails.street_address
-        );
+        // console.log(
+        //   "sjdh",
+        //   this.state.street1Icon,
+        //   this.props.profileDetails.street_address
+        // );
       }
       if (
         this.state.firstIcon === null &&
