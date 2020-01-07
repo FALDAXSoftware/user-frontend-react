@@ -903,7 +903,7 @@ class PersonalDetails extends Component {
         ) {
           countrymsg = "City Field is required.";
         } else {
-          countrymsg = "Country Field is required.";
+          countrymsg = "Country, State and City Fields are required.'";
         }
         this.setState({ countrymsg });
       }
@@ -1105,7 +1105,7 @@ class PersonalDetails extends Component {
         ) {
           countrymsg = "City Field is required.";
         } else {
-          countrymsg = "Country Field is required.";
+          countrymsg = "Country, State and City Fields are required.'";
         }
         this.setState({ countrymsg });
       }
