@@ -1,12 +1,14 @@
 /* Built-in Packages */
 import React, { Component } from "react";
 import "antd/dist/antd.css";
-import { Row, Col, /* Input, */ Select, notification } from "antd";
+import { Row, Col, /* Input, */ Select, notification, Tabs } from "antd";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
+// import { Tabs } from 'antd';
+
 /* import { DropdownButton, ButtonToolbar } from 'react-bootstrap'; */
 
 /* Styled-Components */
@@ -52,9 +54,16 @@ import LoggedNavigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import WalletPopup from "./walletpopup";
 import DetailsTable from "./detailstable";
+
 import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import WithdrawTable from "./withdrawtable";
 
+const { TabPane } = Tabs;
+
+function callback(key) {
+  console.log(key);
+}
 let { API_URL, _AMAZONBUCKET, WordpressSiteURL } = globalVariables;
 const Option = Select.Option;
 
@@ -107,7 +116,8 @@ class WalletDetails extends Component {
       coinFee: [],
       fiatValue: "",
       panic_status: false,
-      panicEnabled: false
+      panicEnabled: false,
+      withdrawRequests: []
     };
     this.changeCoins = this.changeCoins.bind(this);
     this._walletCreate = this._walletCreate.bind(this);
@@ -178,6 +188,7 @@ class WalletDetails extends Component {
         if (responseData.status == 200) {
           let transDetails = null;
           let walletUserDetails = null;
+          let withdrawDetails = null;
           // console.log(responseData)
           if (Object.keys(responseData.walletTransData).length > 0) {
             transDetails = responseData.walletTransData;
@@ -185,6 +196,10 @@ class WalletDetails extends Component {
 
           if (Object.keys(responseData.walletUserData).length > 0) {
             walletUserDetails = responseData.walletUserData;
+          }
+
+          if (Object.keys(responseData.withdrawRequestData).length > 0) {
+            withdrawDetails = responseData.withdrawRequestData;
           }
           // console.log("wallet details props walletDetails", walletUserDetails);
 
@@ -196,6 +211,7 @@ class WalletDetails extends Component {
               min_limit: walletUserDetails.min_limit,
               max_limit: walletUserDetails.max_limit,
               walletDetails: transDetails,
+              withdrawRequests: withdrawDetails,
               loader: false,
               coin_code: coin_name[1],
               coinFee: responseData.default_send_Coin_fee,
@@ -542,12 +558,30 @@ class WalletDetails extends Component {
                     </Row>
                   </RowWrap>
                 </DetailWrap>
-                <TransTable>
+                <Tabs defaultActiveKey="1" onChange={callback}>
+                  <TabPane tab="Transaction History" key="1">
+                    <TransTable>
+                      {/* <TransTitle>Transaction History</TransTitle> */}
+                      <CoinTable>
+                        <DetailsTable wallet={this.state.walletDetails} />
+                      </CoinTable>
+                    </TransTable>
+                  </TabPane>
+                  <TabPane tab="Withdrawal Requests" key="2">
+                    <TransTable>
+                      {/* <TransTitle>Transaction History</TransTitle> */}
+                      <CoinTable>
+                        <WithdrawTable wallet={this.state.withdrawRequests} />
+                      </CoinTable>
+                    </TransTable>
+                  </TabPane>
+                </Tabs>
+                {/* <TransTable>
                   <TransTitle>Transaction History</TransTitle>
                   <CoinTable>
                     <DetailsTable wallet={this.state.walletDetails} />
                   </CoinTable>
-                </TransTable>
+                </TransTable> */}
                 {this.state.withdraw === true ? (
                   <WalletPopup
                     coinFee={this.state.coinFee}
