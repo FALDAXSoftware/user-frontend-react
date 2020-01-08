@@ -596,7 +596,7 @@ class PersonalDetails extends Component {
       value = value.trim();
     if (field === "first_name") {
       value = value.trim();
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      var re = /^[a-zA-Z0-9?']{2,15}$/;
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
@@ -608,6 +608,12 @@ class PersonalDetails extends Component {
           } else {
             this.setState({ firstIcon: true });
             document.querySelectorAll(".first_msg")[0].style.display = "none";
+            if (value.split("'").length - 1 > 1) {
+              this.setState({ firstIcon: false });
+              document.querySelectorAll(".first_msg")[0].style.display =
+                "block";
+              this.setState({ firstmsg: "Only one apostrophe is allowed" });
+            }
           }
         } else {
           this.setState({ firstIcon: false });
@@ -623,7 +629,7 @@ class PersonalDetails extends Component {
         this.setState({ firstmsg: "First Name field is required" });
       }
     } else if (field === "last_name") {
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      var re = /^[a-zA-Z0-9?']{2,15}$/;
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
@@ -635,6 +641,11 @@ class PersonalDetails extends Component {
           } else {
             this.setState({ lastIcon: true });
             document.querySelectorAll(".last_msg")[0].style.display = "none";
+            if (value.split("'").length - 1 > 1) {
+              this.setState({ lastIcon: false });
+              document.querySelectorAll(".last_msg")[0].style.display = "block";
+              this.setState({ lastmsg: "Only one apostrophe is allowed" });
+            }
           }
         } else {
           this.setState({ lastIcon: false });
@@ -903,7 +914,7 @@ class PersonalDetails extends Component {
         ) {
           countrymsg = "City Field is required.";
         } else {
-          countrymsg = "Country, State and City Fields are required.'";
+          countrymsg = "Country, State and City Fields are required.";
         }
         this.setState({ countrymsg });
       }
@@ -1013,9 +1024,9 @@ class PersonalDetails extends Component {
             ? this.props.profileDetails.country
             : "";
         }
-        profileData.append("first_name", value.first_name);
+        profileData.append("first_name", value.first_name.trim());
         profileData.append("email", this.props.email);
-        profileData.append("last_name", value.last_name);
+        profileData.append("last_name", value.last_name.trim());
         if (this.state.citySelected !== null)
           profileData.append("city_town", this.state.citySelected);
         if (this.state.stateSelected !== null) {
@@ -1024,13 +1035,13 @@ class PersonalDetails extends Component {
         if (this.state.countrySelected !== null) {
           profileData.append("country", this.state.countrySelected);
         }
-        profileData.append("street_address", value.street_address);
+        profileData.append("street_address", value.street_address.trim());
         if (
           value.street_address_2 !== null &&
           value.street_address_2 !== "" &&
           value.street_address_2 !== undefined
         )
-          profileData.append("street_address_2", value.street_address_2);
+          profileData.append("street_address_2", value.street_address_2.trim());
         profileData.append("postal_code", number);
         var fiat =
           this.state.fiat !== ""
@@ -1105,7 +1116,7 @@ class PersonalDetails extends Component {
         ) {
           countrymsg = "City Field is required.";
         } else {
-          countrymsg = "Country, State and City Fields are required.'";
+          countrymsg = "Country, State and City Fields are required.";
         }
         this.setState({ countrymsg });
       }

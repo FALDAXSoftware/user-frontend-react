@@ -154,9 +154,23 @@ class KYCForm extends Component {
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^[a-zA-Z0-9]{2,15}$/;
+          var re = /^[a-zA-Z0-9?']{2,15}$/;
           var bool = re.test(String(val).toLowerCase());
           return bool;
+        }
+      },
+      oneapostrophe: {
+        // name the rule
+        message: "Only one apostrophe is allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        rule: function(val, options) {
+          // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+          // check that it is a valid IP address and is not blacklisted
+          // var re = /^[a-zA-Z0-9?']{2,15}$/;
+          if (val.split("'").length - 1 > 1) {
+            return false;
+          } else {
+            return true;
+          }
         }
       },
       lastname: {
@@ -474,7 +488,13 @@ class KYCForm extends Component {
 
   onSubmit() {
     if (this.validator.allValid()) {
-      var profileData = this.state.fields;
+      // var profileData = this.state.fields;
+      console.log(" asdgh", this.state.fields);
+      let temp = this.state.fields;
+      temp["address"] = this.state.fields.address.trim();
+      temp["address_2"] = this.state.fields.address_2.trim();
+      temp["zip"] = this.state.fields.zip.trim();
+      var profileData = temp;
       profileData["steps"] = 1;
       this.props.kycFormAction(this.props.isLoggedIn, profileData);
     } else {
@@ -569,7 +589,7 @@ class KYCForm extends Component {
               {this.validator.message(
                 "first_name",
                 this.state.fields.first_name,
-                "required|firstname|onlyNumber",
+                "required|firstname|onlyNumber|oneapostrophe",
                 "text-danger-validation",
                 { required: "First Name field is required." }
               )}
@@ -590,7 +610,7 @@ class KYCForm extends Component {
               {this.validator.message(
                 "last_name",
                 this.state.fields.last_name,
-                "required|lastname|onlyNumber",
+                "required|lastname|onlyNumber|oneapostrophe",
                 "text-danger-validation",
                 { required: "Last Name field is required." }
               )}

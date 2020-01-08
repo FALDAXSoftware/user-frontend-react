@@ -661,11 +661,11 @@ class LoggedNavigation extends Component {
     );
   };
   render() {
-    console.log(
-      "this.state.langValue",
-      this.props.language,
-      this.state.langValue
-    );
+    // console.log(
+    //   "this.state.langValue",
+    //   this.props.language,
+    //   this.state.langValue
+    // );
     const radioStyle = {
       display: "block",
       height: "30px",
