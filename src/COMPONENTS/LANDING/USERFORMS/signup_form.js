@@ -446,7 +446,7 @@ class SignupForm extends Component {
         }
       }
     } else if (field === "firstname") {
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      var re = /^[a-zA-Z0-9?']{2,15}$/;
       var bool = re.test(value);
       if (value !== "" && value !== undefined) {
         if (bool === true) {
@@ -465,6 +465,16 @@ class SignupForm extends Component {
               "inline-block";
             document.querySelector("#first_icon_fail").style.display = "none";
             document.querySelectorAll(".first_sign")[0].style.display = "none";
+            if (value.split("'").length - 1 > 1) {
+              this.setState({ firstIcon: false });
+              document.querySelector("#first_icon_success").style.display =
+                "none";
+              document.querySelector("#first_icon_fail").style.display =
+                "inline-block";
+              document.querySelectorAll(".first_sign")[0].style.display =
+                "block";
+              this.setState({ first_msg: "Only one apostrophe is allowed" });
+            }
           }
         } else {
           this.setState({ firstIcon: false });
@@ -488,7 +498,7 @@ class SignupForm extends Component {
         }
       }
     } else if (field === "lastname") {
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      var re = /^[a-zA-Z0-9?']{2,15}$/;
       var bool = re.test(value);
       if (value !== "" && value !== undefined) {
         if (bool === true) {
@@ -506,6 +516,16 @@ class SignupForm extends Component {
               "inline-block";
             document.querySelector("#last_icon_fail").style.display = "none";
             document.querySelectorAll(".last_sign")[0].style.display = "none";
+            if (value.split("'").length - 1 > 1) {
+              this.setState({ lastIcon: false });
+              document.querySelector("#last_icon_success").style.display =
+                "none";
+              document.querySelector("#last_icon_fail").style.display =
+                "inline-block";
+              document.querySelectorAll(".last_sign")[0].style.display =
+                "block";
+              this.setState({ last_msg: "Only one apostrophe is allowed" });
+            }
           }
         } else {
           this.setState({ lastIcon: false });
@@ -569,15 +589,29 @@ class SignupForm extends Component {
           document.querySelector("#pass_icon_fail").style.display = "none";
           document.querySelectorAll(".pass_sign")[0].style.display = "none";
         } else {
-          this.setState({ passIcon: false });
-          document.querySelector("#pass_icon_success").style.display = "none";
-          document.querySelector("#pass_icon_fail").style.display =
-            "inline-block";
-          document.querySelectorAll(".pass_sign")[0].style.display = "block";
-          this.setState({
-            pass_msg:
-              "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters."
-          });
+          var regex = /\s/;
+          let check = regex.test(value);
+          if (check) {
+            this.setState({ passIcon: false });
+            document.querySelector("#pass_icon_success").style.display = "none";
+            document.querySelector("#pass_icon_fail").style.display =
+              "inline-block";
+            document.querySelectorAll(".pass_sign")[0].style.display = "block";
+            this.setState({
+              pass_msg: "Your password must not contain space."
+            });
+          } else {
+            this.setState({ newpassIcon: false });
+            this.setState({ passIcon: false });
+            document.querySelector("#pass_icon_success").style.display = "none";
+            document.querySelector("#pass_icon_fail").style.display =
+              "inline-block";
+            document.querySelectorAll(".pass_sign")[0].style.display = "block";
+            this.setState({
+              pass_msg:
+                "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters."
+            });
+          }
         }
       } else {
         this.setState({ passIcon: false, percent: 0 });
