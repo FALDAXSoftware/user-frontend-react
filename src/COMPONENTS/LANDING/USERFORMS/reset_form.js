@@ -233,16 +233,30 @@ class ResetPassword extends Component {
           document.querySelector("#newchange_icon_fail").style.display = "none";
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
         } else {
-          this.setState({ newpassIcon: false });
-          document.querySelector("#newchange_icon_success").style.display =
-            "none";
-          document.querySelector("#newchange_icon_fail").style.display =
-            "inline-block";
-          document.querySelectorAll(".pass_msg")[0].style.display = "block";
-          this.setState({
-            pass_msg:
-              "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters."
-          });
+          var regex = /\s/;
+          let check = regex.test(value);
+          if (check) {
+            this.setState({ newpassIcon: false });
+            document.querySelector("#newchange_icon_success").style.display =
+              "none";
+            document.querySelector("#newchange_icon_fail").style.display =
+              "inline-block";
+            document.querySelectorAll(".pass_msg")[0].style.display = "block";
+            this.setState({
+              pass_msg: "Your password must not contain space."
+            });
+          } else {
+            this.setState({ newpassIcon: false });
+            document.querySelector("#newchange_icon_success").style.display =
+              "none";
+            document.querySelector("#newchange_icon_fail").style.display =
+              "inline-block";
+            document.querySelectorAll(".pass_msg")[0].style.display = "block";
+            this.setState({
+              pass_msg:
+                "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters."
+            });
+          }
         }
       } else {
         this.setState({ newpassIcon: false, percent: 0 });

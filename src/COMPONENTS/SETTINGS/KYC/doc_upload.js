@@ -301,7 +301,8 @@ class DocUpload extends Component {
               document.getElementById("front").value = "";
               document.getElementById("back").value = "";
             }
-          } else {
+          } else if (fileType) {
+            // console.log(fileType);
             _self.openNotificationWithIcon(
               "error",
               "File Format",
