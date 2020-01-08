@@ -498,7 +498,9 @@ class WalletPopup extends Component {
     var fields = this.state.sendFields;
     var values = {
       coin: this.props.coin_code,
-      amount: this.state.sendFields.amount,
+      amount:
+        parseFloat(this.state.sendFields.amount) +
+        parseFloat(this.state.faldaxFee),
       address: this.state.sendFields.destination_address
     };
     fetch(`${API_URL}/wallet/get-network-fee`, {
