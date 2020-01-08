@@ -627,17 +627,33 @@ class PasswordChange extends Component {
           document.querySelector("#newchange_icon_fail").style.display = "none";
           document.querySelectorAll(".newchange_msg")[0].style.display = "none";
         } else {
-          this.setState({ newpassIcon: false });
-          document.querySelector("#newchange_icon_success").style.display =
-            "none";
-          document.querySelector("#newchange_icon_fail").style.display =
-            "inline-block";
-          document.querySelectorAll(".newchange_msg")[0].style.display =
-            "block";
-          this.setState({
-            new_msg:
-              "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters."
-          });
+          var regex = /\s/;
+          let check = regex.test(value);
+          // console.log("asd", check, value);
+          if (check) {
+            this.setState({ newpassIcon: false });
+            document.querySelector("#newchange_icon_success").style.display =
+              "none";
+            document.querySelector("#newchange_icon_fail").style.display =
+              "inline-block";
+            document.querySelectorAll(".newchange_msg")[0].style.display =
+              "block";
+            this.setState({
+              new_msg: "Your password must not contain space."
+            });
+          } else {
+            this.setState({ newpassIcon: false });
+            document.querySelector("#newchange_icon_success").style.display =
+              "none";
+            document.querySelector("#newchange_icon_fail").style.display =
+              "inline-block";
+            document.querySelectorAll(".newchange_msg")[0].style.display =
+              "block";
+            this.setState({
+              new_msg:
+                "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters."
+            });
+          }
         }
       } else {
         this.setState({ newpassIcon: false, percent: 0 });
@@ -649,7 +665,6 @@ class PasswordChange extends Component {
         this.setState({ new_msg: "New password is required." });
       }
     } else if (field === "confirm_password") {
-      //   alert("repeat");
       var boool = password === value ? true : false;
       if (value !== "") {
         this.setState({ confPass: value });
@@ -680,7 +695,6 @@ class PasswordChange extends Component {
         document.querySelectorAll(".confirmchange_msg")[0].style.display =
           "none";
       }
-    } else {
       // console.log("no break");
     }
   }
@@ -880,7 +894,7 @@ class PasswordChange extends Component {
                       me.onChangeField(e.target.value, "confirm_password");
                     }, // have to write original onChange here if you need
                     rules: [
-                      { type: "string", required: true, whitespace: true }
+                      { type: "string", required: true, whitespace: false }
                     ]
                   })}
                 />
