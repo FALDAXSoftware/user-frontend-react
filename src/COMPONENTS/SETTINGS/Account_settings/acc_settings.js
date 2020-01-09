@@ -8,7 +8,7 @@ import moment from "moment";
 import { faDesktop, faMobileAlt } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
-
+import { translate } from "react-i18next";
 /* Components */
 import { globalVariables } from "Globals.js";
 import { deleteAccount } from "ACTIONS/authActions";
@@ -1081,6 +1081,7 @@ class Acc_settings extends Component {
   }
   render() {
     const { fields, data_noti, savedDataNoti, startValue } = this.state;
+    const { t } = this.props;
     const columnsIP = [
       {
         title: "IP Whitelist",
@@ -1142,10 +1143,10 @@ class Acc_settings extends Component {
         {/* ----Notification code start ---- */}
         <NotiWrap>
           <NotiHead>
-            <span>Notifications</span>
+            <span>{t("head_notifications.message")}</span>
           </NotiHead>
           <NotiDesc>
-            <span>Automatic Email and/or Text Notifications</span>
+            <span>{t("subhead_notifications.message")}</span>
           </NotiDesc>
         </NotiWrap>
 
@@ -1164,7 +1165,7 @@ class Acc_settings extends Component {
           </WrapTable>
         </div>
         <AddButton disabled={disabled} onClick={this.addData}>
-          Save
+          {t("edit_profile_titles:subhead_personal_form_save_btn.message")}
         </AddButton>
 
         <HR />
@@ -1174,7 +1175,7 @@ class Acc_settings extends Component {
         <LoginHistory>
           <HistoryHead>
             <Heading>
-              <span>Login History</span>
+              <span>{t("head_login_history.message")}</span>
             </Heading>
             <Desc>
               {/* <span>This feature provides information about the last activity on this mail account and any concurrent activity.</span> */}
@@ -1208,7 +1209,7 @@ class Acc_settings extends Component {
         <div>
           <HR2 />
           <DeleteHead>
-            <span>Security Settings</span>
+            <span>{t("head_security_settings.message")}</span>
           </DeleteHead>
           <DeleteDesc
           // style={{ display: "flex", justifyContent: "center" }}
@@ -1216,11 +1217,7 @@ class Acc_settings extends Component {
             <div
             // style={{ width: "1000px" }}
             >
-              When set 'ON', changes to any security settings on your account
-              will disable debits from your wallets for 24 hours. Additionally,
-              you will be notified prior to changing any security settings and
-              will have to confirm that you want to make those changes to ensure
-              you don't accidently lock your wallet.
+              {t("subhead_security_settings.message")}
             </div>
           </DeleteDesc>
           {/* {console.log(this.state.checked)} */}
@@ -1241,7 +1238,7 @@ class Acc_settings extends Component {
         <LoginHistory>
           <HistoryHead>
             <Heading>
-              <span>IP Whitelist</span>
+              <span>{t("table_head_ip_whitelist.message")}</span>
             </Heading>
             <Desc>
               {/* <span>This feature provides information about the last activity on this mail account and any concurrent activity.</span> */}
@@ -1292,10 +1289,10 @@ class Acc_settings extends Component {
         <HR2 />
         <DeleteWrap>
           <DeleteHead>
-            <span>Deactivate Account</span>
+            <span>{t("head_deactivate_account.message")}</span>
           </DeleteHead>
           <DeleteDesc>
-            <span>Click on the button below to deactivate your account.</span>
+            <span>{t("subhead_deactivate_account.message")}</span>
           </DeleteDesc>
           <DeleteBtn>
             {/* <ButtonDel type="primary" onClick={this.showConfirm.bind(this)}> */}
@@ -1313,7 +1310,7 @@ class Acc_settings extends Component {
                 }
               }}
             >
-              Deactivate Account
+              {t("head_deactivate_account.message")}
             </ButtonDel>
           </DeleteBtn>
         </DeleteWrap>
@@ -1325,18 +1322,12 @@ class Acc_settings extends Component {
         <VerifyModal
           visible={this.state.showAddModal}
           onCancel={this.closeModal}
-          title="Whitelist an IP Address"
+          title={t("whitelist_popup_title.message")}
           footer={null}
         >
-          <Description>
-            {" "}
-            A Whitelist enhances the security of your account by limiting access
-            to your account from IP Addresses you specify. Speak to your
-            Internet Service Provider to ensure that your IP Address is 'Static'
-            and will not change prior to enabling this security feature.
-          </Description>
+          <Description> {t("whitelist_popup_text.message")}</Description>
           <NewP className="add_new_ip">
-            <InputLabel>IP Address*</InputLabel>
+            <InputLabel>{t("table_head_ip_address.message")}*</InputLabel>
             <div className="otp-input-wrap">
               <OTPInput
                 className="otp-input"
@@ -1398,24 +1389,26 @@ class Acc_settings extends Component {
             </div>
           </NewP>
           <ButtonDiv>
-            <NewButton onClick={this.addIpWhitelist}>Submit</NewButton>
+            <NewButton onClick={this.addIpWhitelist}>
+              {t("submit_btn.message")}
+            </NewButton>
           </ButtonDiv>
         </VerifyModal>
         <VerifyModal
           visible={this.state.showDeleteModal}
           onCancel={this.closeModal}
-          title="Deactivate Account"
+          title={t("head_deactivate_account.message")}
           footer={null}
           className="deactivate_modal"
         >
           <div>
-            <Description> Below is the summary of your wallet</Description>
+            <Description>{t("deactivate_popup_text.message")}</Description>
             <SummaryTable>
               <thead>
                 <tr>
-                  <th>Coins</th>
-                  <th>Quantity</th>
-                  <th>Fiat Value</th>
+                  <th>{t("deactivate_popup_table_head_coins.message")}</th>
+                  <th>{t("deactivate_popup_table_head_quantity.message")}</th>
+                  <th>{t("deactivate_popup_table_head_fiat_value.message")}</th>
                 </tr>
               </thead>
               {this.state.walletCoins ? (
@@ -1434,7 +1427,9 @@ class Acc_settings extends Component {
                     );
                   })}
                   <tr>
-                    <td colSpan="2">Total Value (USD)</td>
+                    <td colSpan="2">
+                      {t("deactivate_popup_table_footer_head.message")}
+                    </td>
                     <td>$ {this.state.totalUSDOfWallet}</td>
                   </tr>
                 </tbody>
@@ -1448,11 +1443,13 @@ class Acc_settings extends Component {
                   this.props.history.push("/wallet");
                 }}
               >
-                <DeNewButton>Remove Existing Funds</DeNewButton>
+                <DeNewButton>
+                  {t("deactivate_popup_remove_funds_btn.message")}
+                </DeNewButton>
               </DeButtonDiv>
               <DeButtonDiv className="right_btn" onClick={this.forfeitFunds}>
                 <DeNewButton className="right_text">
-                  Forfeit Funds & Deactivate
+                  {t("deactivate_popup_forfeit_funds_btn.message")}
                 </DeNewButton>
               </DeButtonDiv>
             </DeactivateButtonWarp>
@@ -1461,19 +1458,21 @@ class Acc_settings extends Component {
         <VerifyModal
           visible={this.state.showDeactivateModal}
           onCancel={this.closeModal}
-          title="Deactivate Account"
+          title={t("deactivate_popup_title.message")}
           footer={null}
           className="deactivate_modal"
         >
           {this.state.walletCoins ? (
             <div>
-              <Description> Below is the summary of your wallet</Description>
+              <Description>t{"deactivate_popup_text.message"}</Description>
               <SummaryTable>
                 <thead>
                   <tr>
-                    <th>Coins</th>
-                    <th>Quantity</th>
-                    <th>Fiat Value</th>
+                    <th>{t("deactivate_popup_table_head_coins.message")}</th>
+                    <th>{t("deactivate_popup_table_head_quantity.message")}</th>
+                    <th>
+                      {t("deactivate_popup_table_head_fiat_value.message")}
+                    </th>
                   </tr>
                 </thead>
 
@@ -1492,7 +1491,9 @@ class Acc_settings extends Component {
                     );
                   })}
                   <tr>
-                    <td colSpan="2">Total Value (USD)</td>
+                    <td colSpan="2">
+                      {t("deactivate_popup_table_footer_head.message")}
+                    </td>
                     <td>$ {this.state.totalUSDOfWallet}</td>
                   </tr>
                 </tbody>
@@ -1504,33 +1505,32 @@ class Acc_settings extends Component {
 
           <DeactiveWrap className="" id="deactivate">
             <Description className="final_deactivate">
-              Are you sure, you want to Deactivate your account?
+              {t("deactivate_popup_text_confirm.message")}
             </Description>
             <DeactivateButtonWarp className="final_deactivate">
               <DeButtonDiv
                 className="final_deactivate"
                 onClick={this.closeModal}
               >
-                <DeNewButton>No</DeNewButton>
+                <DeNewButton>{t("edit_profile_titles.dont_agree_no_btn.message")}</DeNewButton>
               </DeButtonDiv>
               <DeButtonDiv
                 className="right_btn final_deactivate"
                 onClick={this.handleDeactivateYes}
               >
-                <DeNewButton className="right_text">Yes</DeNewButton>
+                <DeNewButton className="right_text">{t("edit_profile_titles.dont_agree_yes_btn.message")}</DeNewButton>
               </DeButtonDiv>
             </DeactivateButtonWarp>
           </DeactiveWrap>
           {this.state.walletCoins ? (
             <DeactivateWrapper className="wrapper" id="wrapper">
               <Description>
-                *Any funds in your wallet will no longer be accessible after
-                deactivation of account.
+                *{t("deactivate_popup_text_note.message")}
               </Description>
               <div className="nav__body">
                 <NewP className="deactivate">
                   <InputLabel>
-                    Type 'FORFEIT FUNDS' in the box below:
+                    {t("deactivate_popup_label3.message")}
                   </InputLabel>
                   <div className="otp-input-wrap">
                     <OTPInput
@@ -1719,4 +1719,6 @@ const mapDispatchToProps = dispatch => ({
   LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Acc_settings);
+export default translate(["settings", "edit_profile_titles"])(
+  connect(mapStateToProps, mapDispatchToProps)(Acc_settings)
+);

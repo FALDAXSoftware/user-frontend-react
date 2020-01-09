@@ -64,33 +64,953 @@
   "footer": {
     "head_information": {
       "page": "Footer",
-      "message": "Information",
+      "message": "情報",
       "message_type": "Web content",
       "context": "footer head title"
     },
     "head_support": {
       "page": "Footer",
-      "message": "Support",
+      "message": "サポート",
       "message_type": "Web content",
       "context": "footer head title"
     },
     "head_Legal_&_technical": {
       "page": "Footer",
-      "message": "Legal & Technical",
+      "message": "法律および技術",
       "message_type": "Web content",
       "context": "footer head title"
     },
     "head_social": {
       "page": "Footer",
-      "message": "Social",
+      "message": "ソーシャル",
       "message_type": "Web content",
       "context": "footer head title"
     },
     "head_download": {
       "page": "Footer",
-      "message": "Download",
+      "message": "ダウンロード",
       "message_type": "Web content",
       "context": "footer head title"
+    },
+    "subhead_about_us": {
+      "page": "Footer",
+      "message": "私たちに関しては",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_contact_us": {
+      "page": "Footer",
+      "message": "お問い合わせ",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_media_contact": {
+      "page": "Footer",
+      "message": "メディア連絡先",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_blog": {
+      "page": "Footer",
+      "message": "ブログ",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_fees": {
+      "page": "Footer",
+      "message": "料金",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_open_a_ticket": {
+      "page": "Footer",
+      "message": "チケットを開く",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_faq": {
+      "page": "Footer",
+      "message": "よくある質問",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_List_your_token": {
+      "page": "Footer",
+      "message": "トークンをリストする",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_news": {
+      "page": "Footer",
+      "message": "ニュース",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_policies": {
+      "page": "Footer",
+      "message": "ポリシー",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_service_availability": {
+      "page": "Footer",
+      "message": "サービスの可用性",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_all_rights_reserved.": {
+      "page": "Footer",
+      "message": "全著作権所有。",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    }
+  },
+  "edit_profile_titles": {
+    "head_personal_details": {
+      "page": "Edit Profile",
+      "message": "個人情報",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_security": {
+      "page": "Edit Profile",
+      "message": "セキュリティ",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_settings": {
+      "page": "Edit Profile",
+      "message": "設定",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_identity_verification": {
+      "page": "Edit Profile",
+      "message": "本人確認",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_referral": {
+      "page": "Edit Profile",
+      "message": "照会",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_support": {
+      "page": "Edit Profile",
+      "message": "サポート",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "subhead_personal_form_upload_new_photo": {
+      "page": "Edit Profile",
+      "message": "新しい写真をアップロード",
+      "message_type": "Web content",
+      "context": "Personal detials form head to upload photo"
+    },
+    "subhead_personal_form_remove_photo": {
+      "page": "Edit Profile",
+      "message": "削除する",
+      "message_type": "Web content",
+      "context": "Personal detials form head to remove photo"
+    },
+    "subhead_personal_form_first_name": {
+      "page": "Edit Profile",
+      "message": "ファーストネーム",
+      "message_type": "Web content",
+      "context": "Personal detials form label for first name"
+    },
+    "subhead_personal_form_last_name": {
+      "page": "Edit Profile",
+      "message": "苗字",
+      "message_type": "Web content",
+      "context": "Personal detials form label for last name"
+    },
+    "subhead_personal_form_dob": {
+      "page": "Edit Profile",
+      "message": "生年月日",
+      "message_type": "Web content",
+      "context": "Personal detials form label for date of birth"
+    },
+    "subhead_personal_form_street_address_line": {
+      "page": "Edit Profile",
+      "message": "住所行",
+      "message_type": "Web content",
+      "context": "Personal detials form label for street line address"
+    },
+    "subhead_personal_form_country": {
+      "page": "Edit Profile",
+      "message": "国",
+      "message_type": "Web content",
+      "context": "Personal detials form label for country"
+    },
+    "subhead_personal_form_state": {
+      "page": "Edit Profile",
+      "message": "状態",
+      "message_type": "Web content",
+      "context": "Personal detials form label for state"
+    },
+    "subhead_personal_form_city": {
+      "page": "Edit Profile",
+      "message": "新しい写真をアップロード",
+      "message_type": "Web content",
+      "context": "Personal detials form label for city"
+    },
+    "subhead_personal_form_postal_code": {
+      "page": "Edit Profile",
+      "message": "郵便番号",
+      "message_type": "Web content",
+      "context": "Personal detials form label for postal code"
+    },
+    "subhead_personal_form_default_date_format": {
+      "page": "Edit Profile",
+      "message": "デフォルトの日付形式",
+      "message_type": "Web content",
+      "context": "Personal detials form label for default date format"
+    },
+    "subhead_personal_form_default_currency": {
+      "page": "Edit Profile",
+      "message": "デフォルト通貨",
+      "message_type": "Web content",
+      "context": "Personal detials form label for default currency"
+    },
+    "subhead_personal_form_edit_btn": {
+      "page": "Edit Profile",
+      "message": "編集",
+      "message_type": "Web content",
+      "context": "Personal detials form button for edit"
+    },
+    "subhead_personal_form_save_btn": {
+      "page": "Edit Profile",
+      "message": "セーブ",
+      "message_type": "Web content",
+      "context": "Personal detials form button for save"
+    },
+    "subhead_personal_form_cancel_btn": {
+      "page": "Edit Profile",
+      "message": "キャンセル",
+      "message_type": "Web content",
+      "context": "Personal detials form button for cancel"
+    },
+    "agree_terms_text": {
+      "page": "Edit Profile",
+      "message": "[保存]をクリックすると、FALDAXに同意したことになります",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms text"
+    },
+    "agree_terms_of_services": {
+      "page": "Edit Profile",
+      "message": "利用規約",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms link text for Terms of Services"
+    },
+    "agree_privacy_policy": {
+      "page": "Edit Profile",
+      "message": "個人情報保護方針",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms link text for Privacy Policy"
+    },
+    "agree_anti_money_laundering_policy": {
+      "page": "Edit Profile",
+      "message": "マネーロンダリング防止ポリシー",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms link text for Anti-Money Laundering Policy"
+    },
+    "agree_cookies_policy": {
+      "page": "Edit Profile",
+      "message": "クッキーポリシー",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms link text for Cookies Policy"
+    },
+    "agree_btn": {
+      "page": "Edit Profile",
+      "message": "同意する",
+      "message_type": "Web content",
+      "context": "Agree terms pop up Agree button text"
+    },
+    "dont_agree_btn": {
+      "page": "Edit Profile",
+      "message": "同意しません",
+      "message_type": "Web content",
+      "context": "Agree terms pop up Agree button text"
+    },
+    "dont_agree_popup_title": {
+      "page": "Edit Profile",
+      "message": "よろしいですか、あなたは同意しませんか？",
+      "message_type": "Web content",
+      "context": "Title on dont agree terms and conditions button click popup"
+    },
+    "dont_agree_popup_text": {
+      "page": "Edit Profile",
+      "message": "同意しないとFALDAXサービスにアクセスできなくなります",
+      "message_type": "Web content",
+      "context": "Text on dont agree terms and conditions button click"
+    },
+    "dont_agree_yes_btn": {
+      "page": "Edit Profile",
+      "message": "はい",
+      "message_type": "Web content",
+      "context": "Dont agree pop up yes buttton text"
+    },
+    "dont_agree_no_btn": {
+      "page": "Edit Profile",
+      "message": "番号",
+      "message_type": "Web content",
+      "context": "Dont agree pop up yes buttton text"
+    },
+    "and_text": {
+      "page": "Edit Profile",
+      "message": "そして",
+      "message_type": "Web content",
+      "context": "text"
+    }
+  },
+  "security_tab": {
+    "head_change_password": {
+      "page": "Edit Profile > Securtiy",
+      "message": "Change Your Password",
+      "message_type": "Web content",
+      "context": "Title of change password"
+    },
+    "head_change_email": {
+      "page": "Edit Profile > Securtiy",
+      "message": "Change Your Email Address",
+      "message_type": "Web content",
+      "context": "Title of change email"
+    },
+    "head_change_two_factor_status": {
+      "page": "Edit Profile > Securtiy",
+      "message": "Two-Factor Authentication",
+      "message_type": "Web content",
+      "context": "Title of two factor authentication status change"
+    },
+    "subhead_title_old_password": {
+      "page": "Edit Profile > Securtiy",
+      "message": "Old Password",
+      "message_type": "Web content",
+      "context": "Title of old password"
+    },
+    "subhead_title_new_password": {
+      "page": "Edit Profile > Securtiy",
+      "message": "New Password",
+      "message_type": "Web content",
+      "context": "Title of new password"
+    },
+    "subhead_title_re_enter_new_password": {
+      "page": "Edit Profile > Securtiy",
+      "message": "Re-Enter New Password",
+      "message_type": "Web content",
+      "context": "Title of re enter new password"
+    },
+    "subhead_title_email": {
+      "page": "Edit Profile > Securtiy",
+      "message": "Email",
+      "message_type": "Web content",
+      "context": "Title of email"
+    },
+    "subhead_title_new_email": {
+      "page": "Edit Profile > Securtiy",
+      "message": "Enter New Email",
+      "message_type": "Web content",
+      "context": "Title of enter new email"
+    },
+    "subhead_title_verification_code": {
+      "page": "Edit Profile > Securtiy > Verify Email Address",
+      "message": "Verification Code",
+      "message_type": "Web content",
+      "context": "Title of verification code"
+    },
+    "verify_email_popup_head": {
+      "page": "Edit Profile > Securtiy > Verify Email Address",
+      "message": "Verify Email Address",
+      "message_type": "Web content",
+      "context": "Head of pop up verify email address"
+    },
+    "verify_email_popup_text1": {
+      "page": "Edit Profile > Securtiy > Verify Email Address",
+      "message": "We have sent an one-time use verification code to old email address",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "verify_email_popup_text2": {
+      "page": "Edit Profile > Securtiy > Verify Email Address",
+      "message": "Please enter the code in the box below to complete the verification for",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "verify_btn": {
+      "page": "Edit Profile > Securtiy > Verify Email Address",
+      "message": "Verify",
+      "message_type": "Web content",
+      "context": "Button of pop up verify email address"
+    },
+    "save_new_password_btn": {
+      "page": "Edit Profile > Securtiy",
+      "message": "Save new password",
+      "message_type": "Web content",
+      "context": "Button of save new password"
+    },
+    "update_email_btn": {
+      "page": "Edit Profile > Securtiy",
+      "message": "Update Email",
+      "message_type": "Web content",
+      "context": "Button of save update email"
+    },
+    "enable_authenticator_btn": {
+      "page": "Edit Profile > Securtiy",
+      "message": "Enable Authenticator",
+      "message_type": "Web content",
+      "context": "Button of enable authenticator"
+    },
+    "disable_authenticator_btn": {
+      "page": "Edit Profile > Securtiy",
+      "message": "Disable Authenticator",
+      "message_type": "Web content",
+      "context": "Button of disable authenticator"
+    },
+    "enable_btn": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "Enable",
+      "message_type": "Web content",
+      "context": "Button of enable"
+    },
+    "title_status": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "Status",
+      "message_type": "Web content",
+      "context": "label for status"
+    },
+    "title_status_disabled": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "Disabled",
+      "message_type": "Web content",
+      "context": "status disabled text"
+    },
+    "title_status_enabled": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "Enabled",
+      "message_type": "Web content",
+      "context": "status enabled text"
+    },
+    "two_factor_text1": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "Two-Factor Authentication significantly increases the security of your account. We highly recommend that you enable it.",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_text2": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "Way to go! You care about your security as much as we do. Thanks for enabling Two-Factor Authentication!",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_text3": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "16 Digit Key",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_text_point1": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "Install an authenticator app on your mobile device. We suggest Google Authenticator.",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_text_point2": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "Scan the QR code when prompted by your Authenticator.",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_text_point3": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "In case your phone gets stolen or erased, you will need this code to link FALDAX with a new app.",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_text_point4": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "Do not share the code with anyone. FALDAX will never ask you for this code.",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_label_code": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "Enter your two-factor code here",
+      "message_type": "Web content",
+      "context": "Input label to enter code"
+    },
+    "subhead_title_enter_code": {
+      "page": "Edit Profile > Securtiy > Verify Email Address",
+      "message": "Enter your two-factor code here",
+      "message_type": "Web content",
+      "context": "Title to enter your two-factor code."
+    },
+    "two_factor_success_popup_head": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication(successfully enabled)",
+      "message": "Two-Factor Authentication",
+      "message_type": "Web content",
+      "context": "title of popup"
+    },
+    "two_factor_success_popup_text": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication(successfully enabled)",
+      "message": "Save this backup code in a secure place. It will be only method by which you can access your account if you are unable to generate a 2FA code.",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_success_title": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication(successfully enabled)",
+      "message": "BACKUP CODE",
+      "message_type": "Web content",
+      "context": "title"
+    },
+    "head_regenerate_backup_code": {
+      "page": "Edit Profile > Securtiy > Re-Generate Backup Code",
+      "message": "Re-Generate Backup Code",
+      "message_type": "Web content",
+      "context": "head"
+    },
+    "subhead_title_regenerate_code": {
+      "page": "Edit Profile > Securtiy > Re-Generate Backup Code",
+      "message": "Enter Two-Factor Authentication Code",
+      "message_type": "Web content",
+      "context": "Title of backup code regenerate"
+    }
+  },
+  "settings": {
+    "head_notifications": {
+      "page": "Edit Profile > Settings",
+      "message": "Notifications",
+      "message_type": "Web content",
+      "context": "Head text"
+    },
+    "head_threshold_notifications": {
+      "page": "Edit Profile > Settings",
+      "message": "Threshold Notifications",
+      "message_type": "Web content",
+      "context": "Head text"
+    },
+    "head_login_history": {
+      "page": "Edit Profile > Settings",
+      "message": "Login History",
+      "message_type": "Web content",
+      "context": "Head text"
+    },
+    "head_security_settings": {
+      "page": "Edit Profile > Settings",
+      "message": "Security Settings",
+      "message_type": "Web content",
+      "context": "Head text"
+    },
+    "head_ip_whitelist": {
+      "page": "Edit Profile > Settings",
+      "message": "IP Whitelist",
+      "message_type": "Web content",
+      "context": "Head text"
+    },
+    "head_deactivate_account": {
+      "page": "Edit Profile > Settings",
+      "message": "Deactivate Account",
+      "message_type": "Web content",
+      "context": "Head text"
+    },
+    "subhead_notifications": {
+      "page": "Edit Profile > Settings",
+      "message": "Automatic Email and/or Text Notifications",
+      "message_type": "Web content",
+      "context": "Sub head text"
+    },
+    "subhead_security_settings": {
+      "page": "Edit Profile > Settings",
+      "message": "When set 'ON', changes to any security settings on your account will disable debits from your wallets for 24 hours. Additionally, you will be notified prior to changing any security settings and will have to confirm that you want to make those changes to ensure you don't accidently lock your wallet.",
+      "message_type": "Web content",
+      "context": "Sub head text"
+    },
+    "subhead_deactivate_account": {
+      "page": "Edit Profile > Settings",
+      "message": "Click on the button below to deactivate your account.",
+      "message_type": "Web content",
+      "context": "Sub head text"
+    },
+    "subhead_setting_add_btn": {
+      "page": "Edit Profile > Settings",
+      "message": "Add",
+      "message_type": "Web content",
+      "context": "Settings button for Add"
+    },
+    "table_head_notifications": {
+      "page": "Edit Profile > Settings",
+      "message": "Notifications",
+      "message_type": "Web content",
+      "context": "Heading of table notifications"
+    },
+    "table_head_text": {
+      "page": "Edit Profile > Settings",
+      "message": "Text",
+      "message_type": "Web content",
+      "context": "Heading of table notifications"
+    },
+    "table_head_email": {
+      "page": "Edit Profile > Settings",
+      "message": "Email",
+      "message_type": "Web content",
+      "context": "Heading of table notifications"
+    },
+    "table_head_coin": {
+      "page": "Edit Profile > Settings",
+      "message": "Coin",
+      "message_type": "Web content",
+      "context": "Heading of table threshold notifications"
+    },
+    "table_head_lower_limit": {
+      "page": "Edit Profile > Settings",
+      "message": "Lower Limit",
+      "message_type": "Web content",
+      "context": "Heading of table threshold notifications"
+    },
+    "table_head_upper_limit": {
+      "page": "Edit Profile > Settings",
+      "message": "Upper Limit",
+      "message_type": "Web content",
+      "context": "Heading of table threshold notifications"
+    },
+    "table_head_email_notification": {
+      "page": "Edit Profile > Settings",
+      "message": "Email Notification",
+      "message_type": "Web content",
+      "context": "Heading of table threshold notifications"
+    },
+    "table_head_sms_notification": {
+      "page": "Edit Profile > Settings",
+      "message": "SMS Notification",
+      "message_type": "Web content",
+      "context": "Heading of table threshold notifications"
+    },
+    "currency_usd": {
+      "page": "Edit Profile > Settings",
+      "message": "USD",
+      "message_type": "Web content",
+      "context": "currency USD"
+    },
+    "table_head_date_time": {
+      "page": "Edit Profile > Settings",
+      "message": "Date/Time",
+      "message_type": "Web content",
+      "context": "Heading of table login history"
+    },
+    "table_head_ip_address": {
+      "page": "Edit Profile > Settings",
+      "message": "IP Address",
+      "message_type": "Web content",
+      "context": "Heading of table login history"
+    },
+    "table_head_device": {
+      "page": "Edit Profile > Settings",
+      "message": "Device",
+      "message_type": "Web content",
+      "context": "Heading of table login history"
+    },
+    "table_head_ip_whitelist": {
+      "page": "Edit Profile > Settings",
+      "message": "IP Whitelist",
+      "message_type": "Web content",
+      "context": "Heading of table IP Whitelist"
+    },
+    "table_head_till_date": {
+      "page": "Edit Profile > Settings",
+      "message": "Till Date",
+      "message_type": "Web content",
+      "context": "Heading of table IP Whitelist"
+    },
+    "table_head_action": {
+      "page": "Edit Profile > Settings",
+      "message": "Action",
+      "message_type": "Web content",
+      "context": "Heading of table IP Whitelist"
+    },
+    "whitelist_popup_title": {
+      "page": "Edit Profile > Settings > Add Whitelist IP",
+      "message": "Whitelist an IP Address",
+      "message_type": "Web content",
+      "context": "Title of whitelist an ip address popup"
+    },
+    "whitelist_popup_text": {
+      "page": "Edit Profile > Settings > Add Whitelist IP",
+      "message": "A Whitelist enhances the security of your account by limiting access to your account from IP Addresses you specify. Speak to your Internet Service Provider to ensure that your IP Address is 'Static' and will not change prior to enabling this security feature.",
+      "message_type": "Web content",
+      "context": "Text of whitelist an ip address popup"
+    },
+    "permanent_ip_popup_title": {
+      "page": "Edit Profile > Settings > Add Permanent IP",
+      "message": "Permanent IP Address",
+      "message_type": "Web content",
+      "context": "Title of Permanent IP Address popup"
+    },
+    "permanent_ip_popup_text": {
+      "page": "Edit Profile > Settings > Add Permanent IP",
+      "message": "Please enter IP which will be permanent for your FALDAX account.",
+      "message_type": "Web content",
+      "context": "Text of Permanent IP Address popup"
+    },
+    "permanent_ip_popup_label_ip": {
+      "page": "Edit Profile > Settings > Add Permanent IP",
+      "message": "Enter IP",
+      "message_type": "Web content",
+      "context": "label for enter ip of Permanent IP Address popup"
+    },
+    "submit_btn": {
+      "page": "Edit Profile > Settings",
+      "message": "Submit",
+      "message_type": "Web content",
+      "context": "Submit button text"
+    },
+    "deactivate_popup_title": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Deactivate Account",
+      "message_type": "Web content",
+      "context": "Title of deactivate account popup"
+    },
+    "deactivate_popup_text": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Below is the summary of your wallet",
+      "message_type": "Web content",
+      "context": "Title head of summary table deactivate account popup"
+    },
+    "deactivate_popup_text_note": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Any funds in your wallet will no longer be accessible after deactivation of account.",
+      "message_type": "Web content",
+      "context": "Text note for forfeit funds"
+    },
+    "deactivate_popup_table_head_coins": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Coins",
+      "message_type": "Web content",
+      "context": "Heading of summary table deactivate account popup"
+    },
+    "deactivate_popup_table_head_quantity": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Quantity",
+      "message_type": "Web content",
+      "context": "Heading of summary table deactivate account popup"
+    },
+    "deactivate_popup_table_head_fiat_value": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Fiat Value",
+      "message_type": "Web content",
+      "context": "Heading of summary table deactivate account popup"
+    },
+    "deactivate_popup_table_footer_head": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Total Value (USD)",
+      "message_type": "Web content",
+      "context": "Footer of summary table deactivate account popup"
+    },
+    "deactivate_popup_remove_funds_btn": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Remove Existing Funds",
+      "message_type": "Web content",
+      "context": "Remove Existing Funds button text"
+    },
+    "deactivate_popup_forfeit_funds_btn": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Forfeit Funds & Deactivate",
+      "message_type": "Web content",
+      "context": "Forfeit Funds & Deactivate Funds button text"
+    },
+    "deactivate_popup_text_confirm": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Are you sure, you want to Deactivate your account?",
+      "message_type": "Web content",
+      "context": "Text of deactivate account popup confirmation"
+    },
+    "deactivate_popup_label1": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Type 'DEACTIVATE' in the box below",
+      "message_type": "Web content",
+      "context": "Input label deactivate account popup confirmation"
+    },
+    "deactivate_popup_label2": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Enter your 2FA code in the box below",
+      "message_type": "Web content",
+      "context": "Input label deactivate account popup confirmation"
+    },
+    "deactivate_popup_label3": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Type 'FORFEIT FUNDS' in the box below:",
+      "message_type": "Web content",
+      "context": "Input label deactivate account popup confirmation"
+    },
+    "deactivate_popup_text1": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "2FA is mandatory to deactivate your account.",
+      "message_type": "Web content",
+      "context": "Text of deactivate account popup confirmation"
+    },
+    "deactivate_popup_text2": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Please click on below link to enable 2FA.",
+      "message_type": "Web content",
+      "context": "Text of deactivate account popup confirmation"
+    },
+    "deactivate_popup_click_here": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "Click here",
+      "message_type": "Web content",
+      "context": "Link text to activate 2FA"
+    }
+  },
+  "referral": {
+    "referral_head": {
+      "page": "Edit Profile > Referral",
+      "message": "Referral Program",
+      "message_type": "Web content",
+      "context": "Title of the referral section"
+    },
+    "referral_text1": {
+      "page": "Edit Profile > Referral",
+      "message": "YOUR REFERRAL LINK",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "referral_text2": {
+      "page": "Edit Profile > Referral",
+      "message": "COLLECT EARNINGS",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "copy_btn": {
+      "page": "Edit Profile > Referral",
+      "message": "Copy",
+      "message_type": "Web content",
+      "context": "Button text"
+    },
+    "collect_btn": {
+      "page": "Edit Profile > Referral",
+      "message": "Collect",
+      "message_type": "Web content",
+      "context": "Button text"
+    },
+    "no_data": {
+      "page": "Edit Profile > Referral",
+      "message": "No Data",
+      "message_type": "Web content",
+      "context": "No data text"
+    },
+    "referral_table_head_name": {
+      "page": "Edit Profile > Referral",
+      "message": "Name",
+      "message_type": "Web content",
+      "context": "Referral history table head"
+    },
+    "referral_table_head_accounts_referred": {
+      "page": "Edit Profile > Referral",
+      "message": "Accounts Referred",
+      "message_type": "Web content",
+      "context": "Referral history table head"
+    }
+  },
+  "support": {
+    "support_head": {
+      "page": "Edit Profile > Support",
+      "message": "Support Hub",
+      "message_type": "Web content",
+      "context": "Title of the support section"
+    },
+    "support_text_open_a_ticket": {
+      "page": "Edit Profile > Support",
+      "message": "Open a Ticket",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "support_text_view_all_tickets": {
+      "page": "Edit Profile > Support",
+      "message": "View all Tickets",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "support_text_all_tickets": {
+      "page": "Edit Profile > Support > View all Tickets",
+      "message": "All Tickets",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "no_data_found": {
+      "page": "Edit Profile > Support > View all Tickets",
+      "message": "No data found",
+      "message_type": "Web content",
+      "context": "Text"
+    }
+  },
+  "identity_verification": {
+    "subhead_mobile_no": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "Mobile No.",
+      "message_type": "Web content",
+      "context": "Identity verification form label for mobile no"
+    },
+    "subhead_btn_next": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "Next",
+      "message_type": "Web content",
+      "context": "Identity verification form btn text"
+    }
+  },
+  "validations": {
+    "field_is_required": {
+      "page": "Personal Details",
+      "message": "フィールドは必須項目です",
+      "message_type": "Web content",
+      "context": "validation for first name required"
+    },
+    "min_max_first_name": {
+      "page": "Personal Details",
+      "message": "分があるはずです2および最大15文字で、特殊文字は使用できません",
+      "message_type": "Web content",
+      "context": "validation for first name for min max and no special characters"
+    },
+    "apostrophe_first_name": {
+      "page": "Personal Details",
+      "message": "1つのアポストロフィのみが許可されます",
+      "message_type": "Web content",
+      "context": "validation for first name for one apostrophe only"
+    },
+    "required_country_state_city": {
+      "page": "Personal Details",
+      "message": "国、州、市区町村が必要です",
+      "message_type": "Web content",
+      "context": "validation for country, state and city field required"
+    },
+    "required_state_city": {
+      "page": "Personal Details",
+      "message": "州と市区町村が必要です",
+      "message_type": "Web content",
+      "context": "validation for state and city field required"
+    },
+    "required_city": {
+      "page": "Personal Details",
+      "message": "都市フィールドが必要です",
+      "message_type": "Web content",
+      "context": "validation for city field required"
+    },
+    "only_number_not_allowed": {
+      "page": "Personal Details",
+      "message": "数字のみは許可されていません",
+      "message_type": "Web content",
+      "context": "validation for only numbers are not allowed"
+    },
+    "min_max_postal_code": {
+      "page": "Personal Details",
+      "message": "郵便番号には最小が必要です。 3および最大25文字",
+      "message_type": "Web content",
+      "context": "validation for postal code min max numbers"
+    },
+    "postal_code_letters_numbers": {
+      "page": "Personal Details",
+      "message": "郵便番号には、文字、数字、ダッシュのみを含めることができます",
+      "message_type": "Web content",
+      "context": "validation for postal code contain letters, numbers, and dashes"
     }
   }
 }

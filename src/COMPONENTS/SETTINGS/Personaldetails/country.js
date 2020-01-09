@@ -6,7 +6,7 @@ import CountryData from "country-state-city";
 import { Select, Row, Col } from "antd";
 import { connect } from "react-redux";
 import { createForm, formShape } from "rc-form";
-
+import { translate } from "react-i18next";
 /* components */
 import { globalVariables } from "Globals.js";
 
@@ -79,7 +79,7 @@ const CountryWrap = styled.div`
     margin-right: 0px;
   }
 `;
-export default class CountryPick extends Component {
+class CountryPick extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -221,6 +221,7 @@ export default class CountryPick extends Component {
   };
   render() {
     let country, state, city;
+    const { t } = this.props;
     if (this.props.kyc !== undefined)
       if (this.props.kyc === "kyc") {
         if (
@@ -266,7 +267,7 @@ export default class CountryPick extends Component {
       <CountryWrap>
         <Row>
           <Col sm={24} md={8} xl={8} xxl={8}>
-            <Country>Country*</Country>
+            <Country>{t("subhead_personal_form_country.message")}*</Country>
             <SelectS
               disabled={this.props.disabled}
               showSearch
@@ -296,7 +297,7 @@ export default class CountryPick extends Component {
           </Col>
           <Col sm={24} md={8} xl={8} xxl={8}>
             <SelectWrap>
-              <Country>State*</Country>
+              <Country>{t("subhead_personal_form_state.message")}*</Country>
               <SelectS
                 disabled={this.props.disabled}
                 showSearch
@@ -327,7 +328,7 @@ export default class CountryPick extends Component {
           </Col>
           <Col sm={24} md={8} xl={8} xxl={8}>
             <SelectWrap>
-              <Country>City*</Country>
+              <Country>{t("subhead_personal_form_city.message")}*</Country>
               <SelectS
                 disabled={this.props.disabled}
                 showSearch
@@ -361,3 +362,5 @@ export default class CountryPick extends Component {
     );
   }
 }
+
+export default translate("edit_profile_titles")(CountryPick);

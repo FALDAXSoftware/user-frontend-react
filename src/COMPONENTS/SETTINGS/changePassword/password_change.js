@@ -12,6 +12,7 @@ import { _EYE, _ACTIVEEYE } from "CONSTANTS/images";
 import RegenerateBackupCode from "./regenerate_backup";
 import ChangeEmail from "./change_email";
 import TFAModal from "./twofactor_modal";
+import { translate } from "react-i18next";
 
 /* STYLED-COMPONENTS */
 import { HeaderCol, Save } from "../Personaldetails/personal_details";
@@ -771,6 +772,7 @@ class PasswordChange extends Component {
   render() {
     var me = this;
     const { getFieldProps } = this.props.form;
+    const { t } = this.props;
     const {
       isEnabled,
       typeEye,
@@ -785,13 +787,13 @@ class PasswordChange extends Component {
         <Row>
           <Col span={6} />
           <HeaderCol span={12}>
-            <span>Change Your Password</span>
+            <span>{t("head_change_password.message")}</span>
           </HeaderCol>
         </Row>
         <ChangeRow>
           <ChangeCol>
             <Old>
-              <OldLabel>Old Password*</OldLabel>
+              <OldLabel>{t("subhead_title_old_password.message")}*</OldLabel>
               <div>
                 <OldInput
                   type={typeEye}
@@ -828,7 +830,7 @@ class PasswordChange extends Component {
               <Passreq className="oldchange_msg">{current_msg}</Passreq>
             </Old>
             <NewP>
-              <Newlabel>New Password*</Newlabel>
+              <Newlabel>{t("subhead_title_new_password.message")}*</Newlabel>
               <div>
                 <NewInput
                   type={newEye}
@@ -871,7 +873,9 @@ class PasswordChange extends Component {
               />
             </NewP>
             <Repeat>
-              <Repeatlabel>Re-Enter New Password*</Repeatlabel>
+              <Repeatlabel>
+                {t("subhead_title_re_enter_new_password.message")}*
+              </Repeatlabel>
               <div>
                 <RepeatInput
                   type={repeatEye}
@@ -920,7 +924,9 @@ class PasswordChange extends Component {
               /> */}
             </Repeat>
             <Buttondiv>
-              <NewButton onClick={this.submit}>Save New Password</NewButton>
+              <NewButton onClick={this.submit}>
+                {t("save_new_password_btn.message")}
+              </NewButton>
             </Buttondiv>
           </ChangeCol>
         </ChangeRow>
@@ -931,10 +937,10 @@ class PasswordChange extends Component {
         <ChangeRow>
           <TwofactorRow>
             <TFCol>
-              <HeadTF>Two-Factor Authentication</HeadTF>
+              <HeadTF>{t("head_change_two_factor_status.message")}</HeadTF>
               <IsEnabled>
                 {" "}
-                Status:
+                {t("title_status.message")}:
                 {isEnabled === "DISABLED" ? (
                   <RedSpan> {isEnabled}</RedSpan>
                 ) : (
@@ -943,16 +949,9 @@ class PasswordChange extends Component {
               </IsEnabled>
               <Headtext>
                 {isEnabled === "DISABLED" ? (
-                  <span>
-                    Two-Factor Authentication significantly increases the
-                    security of your account. We highly recommend that you
-                    enable it.{" "}
-                  </span>
+                  <span>{t("two_factor_text1.message")} </span>
                 ) : (
-                  <span>
-                    Way to go! You care about your security as much as we do.
-                    Thanks for enabling Two-Factor Authentication!
-                  </span>
+                  <span>{t("two_factor_text2.message")}</span>
                 )}
               </Headtext>
               <Buttondiv>
@@ -977,28 +976,19 @@ class PasswordChange extends Component {
                   <Barcode src={this.state.QR_img} />
                 </ImageWrap>
                 <Keywrap>
-                  <Keytext>16 Digit Key</Keytext>
+                  <Keytext>{t("two_factor_text3.message")}</Keytext>
                   <Key>{this.state.Key}</Key>
                 </Keywrap>
               </LeftCol>
               <RightCol sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>
                 <Orderlist>
-                  <LI>
-                    Install an authenticator app on your mobile device. We
-                    suggest Google Authenticator.{" "}
-                  </LI>
-                  <LI>Scan the QR code when prompted by your Authenticator.</LI>
-                  <LI>
-                    In case your phone gets stolen or erased, you will need this
-                    code to link FALDAX with a new app.
-                  </LI>
-                  <LI>
-                    Do not share the code with anyone. FALDAX will never ask you
-                    for this code.
-                  </LI>
+                  <LI>{t("two_factor_text_point1.message")} </LI>
+                  <LI>{t("two_factor_text_point2.message")}</LI>
+                  <LI>{t("two_factor_text_point3.message")}</LI>
+                  <LI>{t("two_factor_text_point4.message")}</LI>
                 </Orderlist>
                 <TFcode>
-                  <TFlabel>Enter your two-factor code here:</TFlabel>
+                  <TFlabel>{t("subhead_title_enter_code.message")}:</TFlabel>
                   <div>
                     <TFinput onChange={this.OTPfield.bind(this)} />
                     <UserIconS
@@ -1018,7 +1008,7 @@ class PasswordChange extends Component {
                 </TFcode>
                 <Enable>
                   <Ebutton onClick={this.finalEnable.bind(this)}>
-                    ENABLE
+                    {t("enable_btn.message")}
                   </Ebutton>
                 </Enable>
               </RightCol>
@@ -1073,7 +1063,6 @@ const mapDispatchToProps = dispatch => ({
   disableAction: () => dispatch(disableAction())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(createForm()(PasswordChange));
+export default translate("security_tab")(
+  connect(mapStateToProps, mapDispatchToProps)(createForm()(PasswordChange))
+);

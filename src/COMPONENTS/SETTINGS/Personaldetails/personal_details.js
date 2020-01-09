@@ -592,6 +592,7 @@ class PersonalDetails extends Component {
     */
 
   onChangeField(value, field) {
+    let { t } = this.props;
     if (field !== "dob" && field !== "country" && field !== "postal_code")
       value = value.trim();
     if (field === "first_name") {
@@ -614,13 +615,20 @@ class PersonalDetails extends Component {
           document.querySelectorAll(".first_msg")[0].style.display = "block";
           this.setState({
             firstmsg:
-              "First Name should have min. 2 and max. 15 characters and no special characters are allowed"
+              t("subhead_personal_form_first_name.message") +
+              " " +
+              t("validations:min_max_first_name.message")
           });
         }
       } else {
         this.setState({ firstIcon: false });
         document.querySelectorAll(".first_msg")[0].style.display = "block";
-        this.setState({ firstmsg: "First Name field is required" });
+        this.setState({
+          firstmsg:
+            t("subhead_personal_form_first_name.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
     } else if (field === "last_name") {
       var re = /^[a-zA-Z0-9]{2,15}$/;
@@ -640,14 +648,17 @@ class PersonalDetails extends Component {
           this.setState({ lastIcon: false });
           document.querySelectorAll(".last_msg")[0].style.display = "block";
           this.setState({
-            lastmsg:
-              "Last Name should have min. 2 and max. 15 characters and no special characters are allowed"
+            lastmsg: t("subhead_personal_form_last_name.message") +
+            " " +
+            t("validations:min_max_first_name.message")
           });
         }
       } else {
         this.setState({ lastIcon: false });
         document.querySelectorAll(".last_msg")[0].style.display = "block";
-        this.setState({ lastmsg: "Last Name field is required" });
+        this.setState({ lastmsg:  t("subhead_personal_form_last_name.message") +
+        " " +
+        t("validations:field_is_required.message") });
       }
     } else if (field === "country") {
       if (value.country && value.state && value.city) {
@@ -679,19 +690,19 @@ class PersonalDetails extends Component {
           city = true;
         let countrymsg;
         if (country === true && state === false && city === false) {
-          countrymsg = "Country Field is required.";
+          countrymsg = t("subhead_personal_form_country.message") +" "+t("validations:field_is_required.message");
         } else if (country === true && state === true && city === false) {
-          countrymsg = "Country and State Field are required.";
+          countrymsg =t("subhead_personal_form_country.message")+" "+t("and_text.message")+" "+ t("subhead_personal_form_state.message") +" "+t("validations:field_is_required.message");
         } else if (country === true && state === true && city === true) {
-          countrymsg = "Country , State and City Field are required.";
+          countrymsg = t("subhead_personal_form_country.message")+" , "+t("subhead_personal_form_state.message")+" "+t("and_text.message")+" "+ t("subhead_personal_form_city.message") +" "+t("validations:field_is_required.message");
         } else if (country === false && state === true && city === false) {
-          countrymsg = "State Field is required.";
+          countrymsg =t("subhead_personal_form_state.message") +" "+t("validations:field_is_required.message");
         } else if (country === false && state === true && city === true) {
-          countrymsg = "State and City Field are required.";
+          countrymsg =t("subhead_personal_form_state.message")+" "+t("and_text.message")+" "+ t("subhead_personal_form_city.message") +" "+t("validations:field_is_required.message");
         } else if (country === false && state === false && city === true) {
-          countrymsg = "City Field is required.";
+          countrymsg = t("subhead_personal_form_city.message") +" "+t("validations:field_is_required.message");
         } else if (country === true && state === false && city === true) {
-          countrymsg = "Country and City Field are required.";
+          countrymsg = t("subhead_personal_form_country.message")+" "+t("and_text.message")+" "+ t("subhead_personal_form_city.message") +" "+t("validations:field_is_required.message");
         }
         this.setState({ countrymsg });
       }
@@ -733,7 +744,7 @@ class PersonalDetails extends Component {
       } else {
         this.setState({ street1Icon: false });
         document.querySelectorAll(".street1_msg")[0].style.display = "block";
-        this.setState({ street1msg: "Street Address field is required" });
+        this.setState({ street1msg:t("subhead_personal_form_street_address_line.message")+" "+t("validations:field_is_required.message")});
       }
     } else if (field === "street_address_2") {
       if (value.trim !== "") {
@@ -774,7 +785,7 @@ class PersonalDetails extends Component {
       } else {
         this.setState({ postalIcon: false });
         document.querySelectorAll(".postal_msg")[0].style.display = "block";
-        this.setState({ postalmsg: "Postal Code field is required" });
+        this.setState({ postalmsg: t("subhead_personal_form_postal_code.message")+" "+t("validations:field_is_required.message")})
       }
     } else if (field === "date_format") {
       /* else if (field==="fiat") {
@@ -829,6 +840,7 @@ class PersonalDetails extends Component {
     );
   }
   openAgreePopup = () => {
+    let {t}=this.props;
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
@@ -871,7 +883,7 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ firstIcon: false });
         document.querySelectorAll(".first_msg")[0].style.display = "block";
-        this.setState({ firstmsg: "First Name field is required." });
+        this.setState({ firstmsg:  t("subhead_personal_form_first_name.message") +" " +t("validations:field_is_required.message") });
       }
       if (
         this.state.lastIcon === null &&
@@ -879,7 +891,7 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ lastIcon: false });
         document.querySelectorAll(".last_msg")[0].style.display = "block";
-        this.setState({ lastmsg: "Last Name field is required." });
+        this.setState({ lastmsg: t("subhead_personal_form_last_name.message") +" " +t("validations:field_is_required.message") });
       }
       if (
         (this.state.countryIcon === null || this.state.countryIcon === false) &&
@@ -895,15 +907,15 @@ class PersonalDetails extends Component {
             this.state.stateSelected == null) &&
           (this.state.citySelected == "" || this.state.citySelected == null)
         ) {
-          countrymsg = "State and City Field are required.";
+          countrymsg = t("subhead_personal_form_state.message")+" "+t("and_text.message")+" "+ t("subhead_personal_form_city.message") +" "+t("validations:field_is_required.message");
         } else if (
           this.state.countrySelected &&
           this.state.stateSelected &&
           (this.state.citySelected == "" || this.state.citySelected == null)
         ) {
-          countrymsg = "City Field is required.";
+          countrymsg =t("subhead_personal_form_city.message") +" "+t("validations:field_is_required.message");
         } else {
-          countrymsg = "Country Field is required.";
+          countrymsg = t("subhead_personal_form_country.message")+" "+t("validations:field_is_required.message");
         }
         this.setState({ countrymsg });
       }
@@ -914,7 +926,7 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";
-        this.setState({ dobmsg: "Date of Birth is required." });
+        this.setState({ dobmsg: t("subhead_personal_form_dob.message")+" "+t("validations:field_is_required.message")});
       }
       if (
         (this.state.street1Icon === null || this.state.street1Icon === false) &&
@@ -922,7 +934,7 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ street1Icon: false });
         document.querySelectorAll(".street1_msg")[0].style.display = "block";
-        this.setState({ street1msg: "Street Address is required." });
+        this.setState({ street1msg: t("subhead_personal_form_street_address_line.message")+" "+t("validations:field_is_required.message") });
       }
       /* if (this.state.street2Icon===null && this.props.profileDetails.street_address_2===null) {
                 this.setState({ street2Icon: false })
@@ -935,7 +947,7 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ postalIcon: false });
         document.querySelectorAll(".postal_msg")[0].style.display = "block";
-        this.setState({ postalmsg: "Postal Code is required." });
+        this.setState({ postalmsg: t("subhead_personal_form_postal_code.message")+" "+t("validations:field_is_required.message") });
       }
       if (
         this.state.fiatIcon === false &&
@@ -957,7 +969,7 @@ class PersonalDetails extends Component {
   };
   submit = () => {
     // e.preventDefault();
-
+    let {t}=this.props;
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
@@ -1075,7 +1087,7 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ firstIcon: false });
         document.querySelectorAll(".first_msg")[0].style.display = "block";
-        this.setState({ firstmsg: "First Name field is required." });
+        this.setState({ firstmsg: t("subhead_personal_form_first_name.message") +" " +t("validations:field_is_required.message") });
       }
       if (
         this.state.lastIcon === null &&
@@ -1083,7 +1095,7 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ lastIcon: false });
         document.querySelectorAll(".last_msg")[0].style.display = "block";
-        this.setState({ lastmsg: "Last Name field is required." });
+        this.setState({ lastmsg: t("subhead_personal_form_last_name.message") +" " +t("validations:field_is_required.message") });
       }
       if (
         (this.state.countryIcon === null || this.state.countryIcon === false) &&
@@ -1097,15 +1109,15 @@ class PersonalDetails extends Component {
             this.state.stateSelected == null) &&
           (this.state.citySelected == "" || this.state.citySelected == null)
         ) {
-          countrymsg = "State and City Field are required.";
+          countrymsg = t('validations:required_state_city');
         } else if (
           this.state.countrySelected &&
           this.state.stateSelected &&
           (this.state.citySelected == "" || this.state.citySelected == null)
         ) {
-          countrymsg = "City Field is required.";
+          countrymsg = t('validations:required_city');
         } else {
-          countrymsg = "Country Field is required.";
+          countrymsg = t('validations:required_country');
         }
         this.setState({ countrymsg });
       }
@@ -1116,7 +1128,7 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";
-        this.setState({ dobmsg: "Date of Birth is required." });
+        this.setState({ dobmsg: t("subhead_personal_form_dob.message")+" "+t("validations:field_is_required.message")});
       }
       if (
         this.state.street1Icon === null &&
@@ -1124,7 +1136,7 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ street1Icon: false });
         document.querySelectorAll(".street1_msg")[0].style.display = "block";
-        this.setState({ street1msg: "Street Address is required." });
+        this.setState({ street1msg:t("subhead_personal_form_street_address_line.message")+" "+t("validations:field_is_required.message")});
       }
       if (
         this.state.postalIcon === null &&
@@ -1132,7 +1144,7 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ postalIcon: false });
         document.querySelectorAll(".postal_msg")[0].style.display = "block";
-        this.setState({ postalmsg: "Postal Code is required." });
+        this.setState({ postalmsg: t("subhead_personal_form_postal_code.message")+" "+t("validations:field_is_required.message")})
       }
       if (
         this.state.fiatIcon === false &&
@@ -1156,7 +1168,7 @@ class PersonalDetails extends Component {
   render() {
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
-    const { profileDetails,t } = this.props;
+    const { profileDetails, t } = this.props;
     var me = this;
 
     return (
@@ -1194,7 +1206,9 @@ class PersonalDetails extends Component {
                     />
                   )}
                   <Imageup>
-                    <Imageupload htmlFor="file">{t("subhead_personal_form_upload_new_photo.message")}</Imageupload>
+                    <Imageupload htmlFor="file">
+                      {t("subhead_personal_form_upload_new_photo.message")}
+                    </Imageupload>
                   </Imageup>
                 </div>
 
@@ -1234,7 +1248,9 @@ class PersonalDetails extends Component {
                     xl={{ span: 12 }}
                     xxl={{ span: 12 }}
                   >
-                    <Firstname>{t("subhead_personal_form_first_name.message")}*</Firstname>
+                    <Firstname>
+                      {t("subhead_personal_form_first_name.message")}*
+                    </Firstname>
                     <Firstinput
                       disabled={!this.state.editMode}
                       placeholder="First Name"
@@ -1256,7 +1272,9 @@ class PersonalDetails extends Component {
                     xl={{ span: 12 }}
                     xxl={{ span: 12 }}
                   >
-                    <Lastname>{t("subhead_personal_form_last_name.message")}*</Lastname>
+                    <Lastname>
+                      {t("subhead_personal_form_last_name.message")}*
+                    </Lastname>
                     <Lastinput
                       disabled={!this.state.editMode}
                       placeholder="Last Name"
@@ -1278,7 +1296,9 @@ class PersonalDetails extends Component {
                     xl={{ span: 24 }}
                     xxl={{ span: 24 }}
                   >
-                    <Datebirth>{t("subhead_personal_form_dob.message")}*</Datebirth>
+                    <Datebirth>
+                      {t("subhead_personal_form_dob.message")}*
+                    </Datebirth>
                     <Datepicker
                       {...this.props}
                       onDateChange={(value, field) =>
@@ -1296,7 +1316,10 @@ class PersonalDetails extends Component {
                     xl={{ span: 24 }}
                     xxl={{ span: 24 }}
                   >
-                    <StreetAddress>{t("subhead_personal_form_street_address_line.message")} 1*</StreetAddress>
+                    <StreetAddress>
+                      {t("subhead_personal_form_street_address_line.message")}{" "}
+                      1*
+                    </StreetAddress>
                     <Streetinput
                       placeholder="Street Address"
                       {...getFieldProps("street_address", {
@@ -1314,7 +1337,9 @@ class PersonalDetails extends Component {
                   </Col>
                 </ThirdRow>
                 <ThirdRow>
-                  <StreetAddress>{t("subhead_personal_form_street_address_line.message")} 2</StreetAddress>
+                  <StreetAddress>
+                    {t("subhead_personal_form_street_address_line.message")} 2
+                  </StreetAddress>
                   <Streetinput
                     disabled={!this.state.editMode}
                     placeholder="Street Address"
@@ -1370,10 +1395,14 @@ class PersonalDetails extends Component {
                 </FourthRow>
                 <FourthRow>
                   <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
-                    <Postal>{t("subhead_personal_form_postal_code.message")}*</Postal>
+                    <Postal>
+                      {t("subhead_personal_form_postal_code.message")}*
+                    </Postal>
                     <Postalinput
                       disabled={!this.state.editMode}
-                      placeholder={t("subhead_personal_form_postal_code.message")}
+                      placeholder={t(
+                        "subhead_personal_form_postal_code.message"
+                      )}
                       {...getFieldProps("postal_code", {
                         onChange(e) {
                           me.onChangeField(e.target.value, "postal_code");
@@ -1394,7 +1423,9 @@ class PersonalDetails extends Component {
                     xl={{ span: 24 }}
                     xxl={{ span: 24 }}
                   >
-                    <FIAT>Default Currency*</FIAT>
+                    <FIAT>
+                      {t("subhead_personal_form_default_currency.message")}*
+                    </FIAT>
                     <RadioGroup
                       disabled={!this.state.editMode}
                       onChange={this.onChangeFiat}
@@ -1418,7 +1449,9 @@ class PersonalDetails extends Component {
                     xl={{ span: 24 }}
                     xxl={{ span: 24 }}
                   >
-                    <FIAT>{t("subhead_personal_form_default_date_format.message")}*</FIAT>
+                    <FIAT>
+                      {t("subhead_personal_form_default_date_format.message")}*
+                    </FIAT>
                     <RadioGroup
                       disabled={!this.state.editMode}
                       onChange={this.onChangeFormat}
@@ -1455,7 +1488,6 @@ class PersonalDetails extends Component {
                           href={`${globalVariables.Privacy_policy}`}
                         >
                           {t("agree_privacy_policy.message")}
-                          Privacy Policy
                         </a>
                         ,{" "}
                         <a
@@ -1464,7 +1496,7 @@ class PersonalDetails extends Component {
                         >
                           {t("agree_anti_money_laundering_policy.message")}
                         </a>{" "}
-                        and{" "}
+                        {t("and_text.message")}{" "}
                         <a
                           target="_blank"
                           href={`${globalVariables.Cookie_policy}`}
@@ -1494,7 +1526,7 @@ class PersonalDetails extends Component {
                       <div className="edit_profile_actions">
                         {this.state.isFirstLogin ? (
                           <Save type="primary" onClick={this.submit}>
-                          {t("subhead_personal_form_save_btn.message")}
+                            {t("subhead_personal_form_save_btn.message")}
                           </Save>
                         ) : (
                           <Save type="primary" onClick={this.openAgreePopup}>
@@ -1538,7 +1570,7 @@ class PersonalDetails extends Component {
                             );
                           }}
                         >
-                        {t("subhead_personal_form_cancel_btn.message")}
+                          {t("subhead_personal_form_cancel_btn.message")}
                         </Save>
                       </div>
                     ) : (
@@ -1624,6 +1656,6 @@ const mapDispatchToProps = dispatch => ({
   LogoutUser: () => dispatch(LogoutUser())
 });
 
-export default translate("edit_profile_titles")(
+export default translate(["edit_profile_titles","validations"])(
   connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails))
 );

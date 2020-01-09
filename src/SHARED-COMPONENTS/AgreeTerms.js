@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { ButtonDiv } from "COMPONENTS/SETTINGS/changePassword/change_email.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { LogoutUser } from "ACTIONS/authActions";
+import { translate } from "react-i18next";
 
 let { API_URL } = globalVariables;
 const TabPane = Tabs.TabPane;
@@ -224,6 +225,7 @@ class AgreeTerms extends Component {
     }
   }
   render() {
+    let { t } = this.props;
     return (
       <div>
         {/* {this.props.visible && ( */}
@@ -248,7 +250,7 @@ class AgreeTerms extends Component {
             <Tabs activeKey={this.state.activeKey} onChange={this.callback}>
               <AgreeTabPane
                 className="agree-tabs"
-                tab="Terms of Services"
+                tab={t("agree_terms_of_services.message")}
                 key="1"
               >
                 <Row className="row-main">
@@ -258,7 +260,8 @@ class AgreeTerms extends Component {
                         target="_blank"
                         href={`${globalVariables.Terms_and_services}`}
                       >
-                        Terms of Services <Icon type="download" />
+                        {t("agree_terms_of_services.message")}{" "}
+                        <Icon type="download" />
                       </a>
                     </h4>
                   </Col>
@@ -271,7 +274,7 @@ class AgreeTerms extends Component {
                   </Col>
                 </Row>
               </AgreeTabPane>
-              <AgreeTabPane tab="Privacy Policy" key="2">
+              <AgreeTabPane tab={t("agree_privacy_policy.message")} key="2">
                 <Row className="row-main">
                   <Col span={6}>
                     <h4>
@@ -279,7 +282,8 @@ class AgreeTerms extends Component {
                         target="_blank"
                         href={`${globalVariables.Privacy_policy}`}
                       >
-                        Privacy Policy <Icon type="download" />
+                        {t("agree_privacy_policy.message")}
+                        <Icon type="download" />
                       </a>
                     </h4>
                   </Col>
@@ -292,7 +296,10 @@ class AgreeTerms extends Component {
                   </Col>
                 </Row>
               </AgreeTabPane>
-              <AgreeTabPane tab="Anti-Money Laundering Policy" key="3">
+              <AgreeTabPane
+                tab={t("agree_anti_money_laundering_policy.message")}
+                key="3"
+              >
                 <Row className="row-main">
                   <Col span={6}>
                     <h4>
@@ -300,7 +307,8 @@ class AgreeTerms extends Component {
                         target="_blank"
                         href={`${globalVariables.Anti_money_laundering_policy}`}
                       >
-                        Anti-Money Laundering Policy <Icon type="download" />
+                        {t("agree_anti_money_laundering_policy.message")}{" "}
+                        <Icon type="download" />
                       </a>
                     </h4>
                   </Col>
@@ -313,7 +321,7 @@ class AgreeTerms extends Component {
                   </Col>
                 </Row>
               </AgreeTabPane>
-              <AgreeTabPane tab="Cookies Policy" key="4">
+              <AgreeTabPane tab={t("agree_cookies_policy.message")} key="4">
                 <Row className="row-main">
                   <Col span={6}>
                     <h4>
@@ -321,7 +329,8 @@ class AgreeTerms extends Component {
                         target="_blank"
                         href={`${globalVariables.Cookie_policy}`}
                       >
-                        Cookies Policy <Icon type="download" />
+                        {t("agree_cookies_policy.message")}{" "}
+                        <Icon type="download" />
                       </a>
                     </h4>
                   </Col>
@@ -337,7 +346,9 @@ class AgreeTerms extends Component {
             </Tabs>
 
             <ButtonDiv className="terms_btn_div">
-              <NewButton onClick={e => this.agreeTerms(e)}>I agree</NewButton>
+              <NewButton onClick={e => this.agreeTerms(e)}>
+                {t("agree_btn.message")}
+              </NewButton>
               {/* {this.props.showCancelBtn && ( */}
               {/* <NewButton onClick={e => this.dontAgreeTerms(e)}>
                 I don't agree
@@ -345,51 +356,50 @@ class AgreeTerms extends Component {
               {!this.props.showCancelBtn ? (
                 <div>
                   <NewButton onClick={this.showCofirmModal}>
-                    I don't agree
+                    {t("dont_agree_btn.message")}
                   </NewButton>
                   <Modal
-                    title="Are you sure, you want to disagree?"
+                    title={t("dont_agree_popup_title.message")}
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     footer={[
                       <Button key="No" onClick={this.handleCancel}>
-                        No
+                        {t("dont_agree_no_btn.message")}
                       </Button>,
                       <Button key="Yes" type="primary" onClick={this.handleOk}>
-                        Yes
+                        {t("dont_agree_yes_btn.message")}
                       </Button>
                     ]}
                   >
                     <p>
-                      You will not be able to access FALDAX Services by
-                      disagreeing to{" "}
+                      {t("dont_agree_popup_text.message")}
                       <a
                         target="_blank"
                         href={`${globalVariables.Terms_and_services}`}
                       >
-                        Terms of Services
+                        {t("agree_terms_of_services.message")}
                       </a>
                       ,{" "}
                       <a
                         target="_blank"
                         href={`${globalVariables.Privacy_policy}`}
                       >
-                        Privacy Policy
+                        {t("agree_privacy_policy.message")}
                       </a>
                       ,{" "}
                       <a
                         target="_blank"
                         href={`${globalVariables.Anti_money_laundering_policy}`}
                       >
-                        Anti-Money Laundering Policy
+                        {t("agree_anti_money_laundering_policy.message")}
                       </a>{" "}
-                      and{" "}
+                      {t("and_text.message")}{" "}
                       <a
                         target="_blank"
                         href={`${globalVariables.Cookie_policy}`}
                       >
-                        Cookies Policy
+                        {t("agree_cookies_policy.message")}
                       </a>
                       .
                     </p>
@@ -397,7 +407,7 @@ class AgreeTerms extends Component {
                 </div>
               ) : (
                 <NewButton onClick={e => this.dontAgreeTerms(e)}>
-                  I don't agree
+                  {t("dont_agree_btn.messgae")}
                 </NewButton>
               )}
               {/* )} */}
@@ -426,7 +436,6 @@ const mapDispatchToProps = dispatch => ({
 
 // export default withRouter(AgreeTerms);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(AgreeTerms));
+export default translate("edit_profile_titles")(
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(AgreeTerms))
+);
