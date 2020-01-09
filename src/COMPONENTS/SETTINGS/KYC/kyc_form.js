@@ -332,10 +332,9 @@ class KYCForm extends Component {
       value.month !== undefined &&
       value.month !== ""
     ) {
-      var date = moment
-        .utc(tempDate)
-        .local()
-        .format("DD-MM-YYYY");
+      var date = moment(tempDate)
+        // .local()
+        .format("YYYY-MM-DD");
       let fields = this.state.fields;
       fields["dob"] = date;
       this.setState({ fields });
