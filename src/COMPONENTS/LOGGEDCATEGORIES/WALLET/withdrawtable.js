@@ -96,7 +96,7 @@ class WithdrawTable extends React.Component {
     }
   }
   componentDidMount() {
-    console.log(this.props.wallet);
+    // console.log(this.props.wallet);
     if (this.props.wallet !== null)
       if (this.props.wallet.length > 0)
         this.setState({

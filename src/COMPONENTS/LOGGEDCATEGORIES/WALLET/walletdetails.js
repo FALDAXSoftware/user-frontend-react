@@ -189,7 +189,7 @@ class WalletDetails extends Component {
           let transDetails = null;
           let walletUserDetails = null;
           let withdrawDetails = null;
-          // console.log(responseData)
+          // console.log(responseData);
           if (Object.keys(responseData.walletTransData).length > 0) {
             transDetails = responseData.walletTransData;
           }
@@ -198,9 +198,12 @@ class WalletDetails extends Component {
             walletUserDetails = responseData.walletUserData;
           }
 
-          if (Object.keys(responseData.withdrawRequestData).length > 0) {
-            withdrawDetails = responseData.withdrawRequestData;
+          if (responseData.withdrawRequestData) {
+            if (Object.keys(responseData.withdrawRequestData).length > 0) {
+              withdrawDetails = responseData.withdrawRequestData;
+            }
           }
+
           // console.log("wallet details props walletDetails", walletUserDetails);
 
           self.setState(
@@ -220,10 +223,10 @@ class WalletDetails extends Component {
                 : ""
             },
             () => {
-              // console.log("wallet details props -----", self.state);
+              // console.log("wallet details props -----", this.state.fiatValue);
               // console.log(
               //   "responseData.currencyConversionData.quote.USD.price===========",
-              //   this.state.coinFee
+              //   responseData.currencyConversionData.quote.USD.price
               // );
             }
           );
@@ -370,12 +373,14 @@ class WalletDetails extends Component {
   }
   render() {
     /* var self = this; */
+
     const {
       walletUserData,
       defaultCoin,
       currencyConv /*,  walletDetails */
     } = this.state;
     let FIAT = this.props.profileDetails.fiat;
+    // console.log("^", walletUserData);
     return (
       <ContactWrap>
         <LoggedNavigation />
