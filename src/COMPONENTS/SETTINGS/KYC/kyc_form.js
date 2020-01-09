@@ -338,6 +338,14 @@ class KYCForm extends Component {
 
   onDateChange(value) {
     var tempDate = value.day + "/" + value.month + "/" + value.year;
+    // var today = new Date(value.day + "-" + value.month + "-" + value.year);
+    // var fomatedDate =
+    //   ("0" + today.getDate()).slice(-2) +
+    //   "-" +
+    //   ("0" + (today.getMonth() + 1)).slice(-2) +
+    //   "-" +
+    //   today.getFullYear();
+    // console.log(fomatedDate);
     if (
       value.day !== "" &&
       value.day !== undefined &&
@@ -346,11 +354,13 @@ class KYCForm extends Component {
       value.month !== undefined &&
       value.month !== ""
     ) {
-      var date = moment
-        .utc(tempDate)
-        .local()
-        .format("DD-MM-YYYY");
+      var date = moment(tempDate)
+        // .utc(tempDate)
+        // .local()
+        .format("YYYY-MM-DD");
+      // var date = value.year + "-" + value.month + "-" + value.day;
       let fields = this.state.fields;
+      // console.log("Moment date >>>>>>>", date);
       fields["dob"] = date;
       this.setState({ fields });
     } else {
@@ -492,7 +502,7 @@ class KYCForm extends Component {
       console.log(" asdgh", this.state.fields);
       let temp = this.state.fields;
       temp["address"] = this.state.fields.address.trim();
-      temp["address_2"] = this.state.fields.address_2.trim();
+      temp["address_2"] = this.state.fields.address_2;
       temp["zip"] = this.state.fields.zip.trim();
       var profileData = temp;
       profileData["steps"] = 1;
