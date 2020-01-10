@@ -25,13 +25,13 @@ export const globalVariables = {
 
   //API_URL: 'http://192.168.0.93:1337'
 
-  //    API_URL: "https://dev-backend.faldax.com", // DEV url
+      API_URL: "https://dev-backend.faldax.com", // DEV url
 
-  API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
+//   API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
 
-  TRADE_URL: "https://preprod-trade.faldax.com",
+//   TRADE_URL: "https://preprod-trade.faldax.com",
 
-  //    TRADE_URL: "https://dev-trade.faldax.com", // DEV url
+      TRADE_URL: "https://dev-trade.faldax.com", // DEV url
 
   // TRADE_URL: "http://localhost:3006/"
 
