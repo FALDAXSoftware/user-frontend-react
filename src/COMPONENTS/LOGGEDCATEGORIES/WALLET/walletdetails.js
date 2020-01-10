@@ -62,7 +62,7 @@ import WithdrawTable from "./withdrawtable";
 const { TabPane } = Tabs;
 
 function callback(key) {
-  console.log(key);
+  // console.log(key);
 }
 let { API_URL, _AMAZONBUCKET, WordpressSiteURL } = globalVariables;
 const Option = Select.Option;
@@ -570,7 +570,10 @@ class WalletDetails extends Component {
                     <TransTable>
                       {/* <TransTitle>Transaction History</TransTitle> */}
                       <CoinTable>
-                        <DetailsTable wallet={this.state.walletDetails} />
+                        <DetailsTable
+                          wallet={this.state.walletDetails}
+                          coin_code={this.state.coin_code}
+                        />
                       </CoinTable>
                     </TransTable>
                   </TabPane>
