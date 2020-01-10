@@ -115,8 +115,8 @@ class ComingSoon extends React.Component {
               availability. Visit the world map on our home page to see where
               trading is considered legal in your area, but you are unable to
               trade, that simply means we are working through the licensing
-              process with the authoritiesin your area. Check back often, or
-              subscribe to our newsletter, to be notifiedwhen services become
+              process with the authorities in your area. Check back often, or
+              subscribe to our newsletter, to be notified when services become
               available for you.
             </p>
             <p className="second-subhead">
