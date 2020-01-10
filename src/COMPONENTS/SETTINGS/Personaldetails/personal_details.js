@@ -592,10 +592,17 @@ class PersonalDetails extends Component {
     */
 
   onChangeField(value, field) {
-    if (field !== "dob" && field !== "country" && field !== "postal_code")
+    if (
+      field !== "dob" &&
+      field !== "country" &&
+      field !== "postal_code" &&
+      field !== "first_name" &&
+      field !== "last_name" &&
+      field !== "street_address"
+    )
       value = value.trim();
     if (field === "first_name") {
-      value = value.trim();
+      // value = value.trim();
       var re = /^[a-zA-Z0-9?']{2,15}$/;
       var bool = re.test(value);
       if (value !== "") {
@@ -730,6 +737,8 @@ class PersonalDetails extends Component {
       //   this.setState({ dobmsg: "Date of Birth field is required" });
       // }
     } else if (field === "street_address") {
+      var re = value;
+      var value = value.trim("");
       if (value !== "") {
         if (value.length < 100) {
           this.setState({ street1Icon: true });
@@ -739,6 +748,16 @@ class PersonalDetails extends Component {
           document.querySelectorAll(".street1_msg")[0].style.display = "block";
           this.setState({
             street1msg: "Street Address limit is 100 characters"
+          });
+        }
+        if (re === value) {
+          this.setState({ street1Icon: true });
+          document.querySelectorAll(".street1_msg")[0].style.display = "none";
+        } else {
+          this.setState({ street1Icon: false });
+          document.querySelectorAll(".street1_msg")[0].style.display = "block";
+          this.setState({
+            street1msg: "Space is not allowed in prefix/suffix."
           });
         }
       } else {

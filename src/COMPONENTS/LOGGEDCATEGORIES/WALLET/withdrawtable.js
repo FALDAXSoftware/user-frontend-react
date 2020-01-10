@@ -78,7 +78,7 @@ const menu = (
   </Menu>
 );
 
-class DetailsTable extends React.Component {
+class WithdrawTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -128,9 +128,8 @@ class DetailsTable extends React.Component {
                   <SubHead>SOURCE ADDRESS</SubHead>
                   <SubHead>DESTINATION ADDRESS</SubHead>
                   <SubHead>BASE AMOUNT</SubHead>
-                  <SubHead>FALDAX FEES</SubHead>
-                  <SubHead>NETWORK FEES</SubHead>
-                  <SubHead>TOTAL AMOUNT</SubHead>
+                  <SubHead>STATUS</SubHead>
+                  <SubHead>REASON</SubHead>
                   {/* <Sub_head>USD
                                 <Dropdown overlay={menu} trigger={['click']}>
                                 <a className="ant-dropdown-link"  verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
@@ -158,7 +157,16 @@ class DetailsTable extends React.Component {
                           .local()
                           .format("DD/MM/YYYY, LTS");
                         var details = me.state.walletDetails;
-
+                        var status;
+                        if (details[index].is_approve === null) {
+                          status = "Pending";
+                        }
+                        if (details[index].is_approve === true) {
+                          status = "Approved";
+                        }
+                        if (details[index].is_approve === false) {
+                          status = "Rejected";
+                        }
                         return (
                           <Col1 wallet>
                             <td>
@@ -188,26 +196,11 @@ class DetailsTable extends React.Component {
                             <td>
                               {parseFloat(details[index].amount).toFixed(8)}
                             </td>
+                            <td>{status}</td>
                             <td>
-                              {details[index].faldax_fee === "-"
-                                ? details[index].faldax_fee
-                                : parseFloat(details[index].faldax_fee).toFixed(
-                                    8
-                                  )}
-                              {/* {parseFloat(details[index].faldax_fee).toFixed(8)} */}
-                            </td>
-                            <td>
-                              {details[index].network_fees === "-"
-                                ? details[index].network_fees
-                                : parseFloat(
-                                    details[index].network_fees
-                                  ).toFixed(8)}
-                              {/* {parseFloat(details[index].network_fees).toFixed(
-                                8
-                              )} */}
-                            </td>
-                            <td>
-                              {parseFloat(details[index].total).toFixed(8)}
+                              {details[index].reason === ""
+                                ? "-"
+                                : details[index].reason}
                             </td>
                             {/* <td>
 
@@ -243,4 +236,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(DetailsTable);
+export default connect(mapStateToProps)(WithdrawTable);

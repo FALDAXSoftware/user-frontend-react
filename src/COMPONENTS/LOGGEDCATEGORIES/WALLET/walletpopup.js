@@ -92,9 +92,11 @@ const Fee = styled.span`
     display: flex;
     width: 100%;
     > span {
+      text-transform: uppercase;
       > b {
         min-width: 150px;
         display: inline-block;
+        text-transform: none;
       }
     }
   }
@@ -312,7 +314,7 @@ class WalletPopup extends Component {
     if (this.props.fiatValue) {
       this.setState({
         fiatValue: 0,
-        singlefiatValue: this.props.fiatValue.toFixed(2)
+        singlefiatValue: this.props.fiatValue.toFixed(8)
       });
     }
   }
@@ -416,6 +418,12 @@ class WalletPopup extends Component {
               "Successfully Sent",
               responseData.message
             );
+            // setTimeout(
+            //   function() {
+            //     this.props.walletDetailsApi();
+            //   }.bind(this),
+            //   10000
+            // );
             this.props.walletDetailsApi();
             this.comingCancel();
           } else if (responseData.status === 201) {
@@ -498,7 +506,9 @@ class WalletPopup extends Component {
     var fields = this.state.sendFields;
     var values = {
       coin: this.props.coin_code,
-      amount: this.state.sendFields.amount,
+      amount:
+        parseFloat(this.state.sendFields.amount) +
+        parseFloat(this.state.faldaxFee),
       address: this.state.sendFields.destination_address
     };
     fetch(`${API_URL}/wallet/get-network-fee`, {
@@ -638,7 +648,9 @@ class WalletPopup extends Component {
           <WalletModal
             title={
               <TitleDiv>
-                <Title>{this.props.title}</Title>
+                <Title>
+                  {this.props.title} {this.props.coin_code}
+                </Title>
               </TitleDiv>
             }
             visible={this.props.visible}
@@ -710,7 +722,7 @@ class WalletPopup extends Component {
                     value={this.state.sendFields.destination_address}
                     name="destination_address"
                     onChange={this.sendAddressChange}
-                    placeholder="37NFX8KWAQbaodUG6pE1hNUH1dXgkpzbyZ"
+                    placeholder="Enter destination address"
                   />
                   {/* <Scan>Scan QR</Scan> */}
                   {this.validator.message(
@@ -794,8 +806,7 @@ class WalletPopup extends Component {
                         {this.props.coin_code}
                       </span> */}
                       <span>
-                        <b>Fiat Value: </b>
-                        {this.state.fiatValue} USD
+                        <b>Fiat Value: </b>$ {this.state.fiatValue}
                       </span>
                     </TotPay>
                   </TotDiv>
