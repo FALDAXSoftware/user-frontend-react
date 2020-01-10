@@ -238,7 +238,7 @@ class WalletDetails extends Component {
         responseData.err
       );
     }
-    // this.setState({ loader: false });
+    this.setState({ loader: false });
     // })
     // .catch(error => {
     //   // console.log("wallet details props -----error ", error);

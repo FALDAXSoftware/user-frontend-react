@@ -418,6 +418,12 @@ class WalletPopup extends Component {
               "Successfully Sent",
               responseData.message
             );
+            // setTimeout(
+            //   function() {
+            //     this.props.walletDetailsApi();
+            //   }.bind(this),
+            //   10000
+            // );
             this.props.walletDetailsApi();
             this.comingCancel();
           } else if (responseData.status === 201) {
