@@ -6,7 +6,6 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import "antd/dist/antd.css";
 import ReactSwipeEvents from "react-swipe-events";
-import { translate, Trans } from "react-i18next";
 
 /* Components */
 import Afterlog from "./afterlog";
@@ -16,7 +15,6 @@ import ComingSoon from "COMPONENTS/comingsoon";
 import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
 import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
 import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
-import { langAction } from "../../ACTIONS/authActions";
 // import { DropMenu, SubMenuNav } from "./navigation";
 
 /* CONSTANTS */
@@ -341,8 +339,7 @@ class LoggedNavigation extends Component {
       countryAccess: false,
       completeKYC: false,
       panicEnabled: false,
-      panic_status: false,
-      langValue: this.props.language
+      panic_status: false
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
     this.cryptoAccess = this.cryptoAccess.bind(this);
@@ -661,17 +658,6 @@ class LoggedNavigation extends Component {
     );
   };
   render() {
-    // console.log(
-    //   "this.state.langValue",
-    //   this.props.language,
-    //   this.state.langValue
-    // );
-    const radioStyle = {
-      display: "block",
-      height: "30px",
-      lineHeight: "30px"
-    };
-    const { t } = this.props;
     let prof_name =
       this.props.profileDetails.first_name !== null &&
       this.props.profileDetails.first_name !== undefined
@@ -728,16 +714,7 @@ class LoggedNavigation extends Component {
         </Menu.Item>
       </Menu>
     );
-    const langItems = (
-      <Radio.Group onChange={this.onChange} value={this.state.langValue}>
-        <Radio style={radioStyle} value="en">
-          English
-        </Radio>
-        <Radio style={radioStyle} value="jap">
-          Japanese
-        </Radio>
-      </Radio.Group>
-    );
+
     return (
       <Headermain id="main">
         <Logo>
@@ -763,9 +740,7 @@ class LoggedNavigation extends Component {
               overlayClassName="custom_dropdown_menu"
             >
               <NavLink className="ant-dropdown-link" to="/conversion">
-                {/* Conversion */}
-                {/* <Trans i18nKey="Introduction" /> */}
-                {t("conversion")}
+                Conversion
               </NavLink>
             </DropDownDiv>
             {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
@@ -794,17 +769,6 @@ class LoggedNavigation extends Component {
               >
                 History
               </NavLink>
-            </DropDownDiv>
-            {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
-          </Menuitem>
-          <Menuitem key="4">
-            <DropDownDiv
-              className="Drop-main"
-              overlay={langItems}
-              // trigger={["click"]}
-              overlayClassName="custom_dropdown_menu"
-            >
-              <div>Language</div>
             </DropDownDiv>
             {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
           </Menuitem>
@@ -1030,17 +994,15 @@ function mapStateToProps(state) {
           : ""
         : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
-    language: state.themeReducer.lang
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
   };
 }
 const mapDispatchToProps = dispatch => ({
   // Logout: () => dispatch(Logout()),
-  LogoutUser: (isLoggedIn, user_id) =>
-    dispatch(LogoutUser(isLoggedIn, user_id)),
-  langAction: lang => dispatch(langAction(lang))
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 
-export default translate("translations")(
-  connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation))
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(LoggedNavigation));

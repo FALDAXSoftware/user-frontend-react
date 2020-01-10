@@ -32,7 +32,7 @@ export default class Datepicker extends Component {
   }
   /* Life-Cycle Methods */
   componentDidMount() {
-    // console.log(this.props);
+    // console.log(this.props.kycData2);
     if (this.props.theme !== undefined) {
       if (this.props.theme !== this.state.theme) {
         if (this.props.theme === false)
@@ -134,8 +134,12 @@ export default class Datepicker extends Component {
           fields["year"] = propFields[2];
         }
       }
-      // console.log("Step 4------->", fields)
-      if (!moment([fields["year"]]).isLeapYear() && fields["day"] > 28) {
+      // console.log("Step 4------->", fields);
+      if (
+        !moment([fields["year"]]).isLeapYear() &&
+        (fields["month"] == "February" || fields["month"] == "02") &&
+        fields["day"] > 28
+      ) {
         this.setState({ day: "" });
         fields["day"] = "";
       }
@@ -191,7 +195,7 @@ export default class Datepicker extends Component {
         this.setState({ day: "" });
         fields["day"] = "";
       }
-      console.log("Final Result", fields);
+      // console.log("Final Result", fields);
       this.props.onDateChange(fields, "dob");
     }
   }
@@ -211,9 +215,9 @@ export default class Datepicker extends Component {
         ) {
           date = this.props.kycData2.dob.split("-");
 
-          year = Number(date[2]);
+          year = Number(date[0]);
           month = date[1];
-          day = Number(date[0]);
+          day = Number(date[2]);
           if (month !== null) {
             month = Number(month) - 1;
           }
