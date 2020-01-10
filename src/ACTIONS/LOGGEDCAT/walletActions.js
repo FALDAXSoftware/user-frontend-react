@@ -10,7 +10,7 @@ let count = 0;
 export function walletBal(isLoggedIn) {
   return dispatch => {
     /* dispatch(addLoader()) */
-    console.log("Count >>>", count);
+    // console.log("Count >>>", count);
     dispatch(addLoader());
     fetch(API_URL + "/wallet/balance", {
       method: "get",

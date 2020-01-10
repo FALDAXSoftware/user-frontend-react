@@ -159,6 +159,18 @@ class KYCForm extends Component {
           return bool;
         }
       },
+      lastname: {
+        // name the rule
+        message:
+          "Last Name should have min. 2 and max. 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        rule: function(val, options) {
+          // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+          // check that it is a valid IP address and is not blacklisted
+          var re = /^[a-zA-Z0-9?']{2,15}$/;
+          var bool = re.test(String(val).toLowerCase());
+          return bool;
+        }
+      },
       oneapostrophe: {
         // name the rule
         message: "Only one apostrophe is allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
@@ -173,16 +185,20 @@ class KYCForm extends Component {
           }
         }
       },
-      lastname: {
+      streetaddress: {
         // name the rule
-        message:
-          "Last Name should have min. 2 and max. 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: "Space is not allowed in prefix/suffix.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^[a-zA-Z0-9]{2,15}$/;
-          var bool = re.test(String(val).toLowerCase());
-          return bool;
+          var re = val.trim(" ");
+          if (re === val) {
+            // alert("here", re.length, val.length);
+            return true;
+          } else {
+            // alert("hersdfugsdjfgjh", re.length, val.length);
+            return false;
+          }
         }
       },
       onlyNumber: {
@@ -668,7 +684,7 @@ class KYCForm extends Component {
               {this.validator.message(
                 "street_address",
                 this.state.fields.address,
-                "required|max:100",
+                "required|max:100|streetaddress",
                 "text-danger-validation",
                 {
                   required: "Street Address Line 1 field is required.",
