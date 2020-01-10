@@ -126,7 +126,7 @@ class WalletDetails extends Component {
   }
 
   /* Life Cycle Methods */
-  componentDidMount() {
+  async componentDidMount() {
     if (
       this.props.profileDetails &&
       this.props.profileDetails.is_terms_agreed == false
@@ -135,7 +135,8 @@ class WalletDetails extends Component {
     }
     var self = this;
     var total = 0;
-    this.panicStatus();
+    this.setState({ loader: true });
+    await this.panicStatus();
     if (this.props.walletDetails !== null) {
       var tableData = this.props.walletDetails.coins;
       if (tableData !== undefined) {
@@ -159,94 +160,95 @@ class WalletDetails extends Component {
     }
     if (this.props.location !== undefined) {
       if (this.props.location.search.includes("coinID")) {
-        this.walletDetailsApi();
+        await this.walletDetailsApi();
       }
     }
+    this.setState({ loader: false });
   }
 
   /*
         Page:/wallet-details
         All wallet user details.
     */
-  walletDetailsApi() {
+  async walletDetailsApi() {
     var self = this;
     var coin_name = this.props.location.search.split("=");
     this.setState({ loader: true });
-    fetch(API_URL + "/wallet-details", {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      },
-      body: JSON.stringify({
-        coinReceive: coin_name[1]
+    let responseData = await (
+      await fetch(API_URL + "/wallet-details", {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn
+        },
+        body: JSON.stringify({
+          coinReceive: coin_name[1]
+        })
       })
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.status == 200) {
-          let transDetails = null;
-          let walletUserDetails = null;
-          let withdrawDetails = null;
-          // console.log(responseData);
-          if (Object.keys(responseData.walletTransData).length > 0) {
-            transDetails = responseData.walletTransData;
-          }
+    ).json();
+    // .then(response => response.json())
+    // .then(responseData => {
+    if (responseData.status == 200) {
+      let transDetails = null;
+      let walletUserDetails = null;
+      let withdrawDetails = null;
+      // console.log(responseData);
+      if (Object.keys(responseData.walletTransData).length > 0) {
+        transDetails = responseData.walletTransData;
+      }
 
-          if (Object.keys(responseData.walletUserData).length > 0) {
-            walletUserDetails = responseData.walletUserData;
-          }
+      if (Object.keys(responseData.walletUserData).length > 0) {
+        walletUserDetails = responseData.walletUserData;
+      }
 
-          if (responseData.withdrawRequestData) {
-            if (Object.keys(responseData.withdrawRequestData).length > 0) {
-              withdrawDetails = responseData.withdrawRequestData;
-            }
-          }
-
-          // console.log("wallet details props walletDetails", walletUserDetails);
-
-          self.setState(
-            {
-              walletUserData: walletUserDetails,
-              currencyConv: responseData.currencyConversionData,
-              defaultCoin: walletUserDetails.coin_code,
-              min_limit: walletUserDetails.min_limit,
-              max_limit: walletUserDetails.max_limit,
-              walletDetails: transDetails,
-              withdrawRequests: withdrawDetails,
-              loader: false,
-              coin_code: coin_name[1],
-              coinFee: responseData.default_send_Coin_fee,
-              fiatValue: responseData.currencyConversionData
-                ? responseData.currencyConversionData.quote.USD.price
-                : ""
-            },
-            () => {
-              // console.log("wallet details props -----", this.state.fiatValue);
-              // console.log(
-              //   "responseData.currencyConversionData.quote.USD.price===========",
-              //   responseData.currencyConversionData.quote.USD.price
-              // );
-            }
-          );
-        } else {
-          this.openNotificationWithIcon(
-            "error",
-            responseData.status,
-            responseData.err
-          );
+      if (responseData.withdrawRequestData) {
+        if (Object.keys(responseData.withdrawRequestData).length > 0) {
+          withdrawDetails = responseData.withdrawRequestData;
         }
-      })
-      .catch(error => {
-        // console.log("wallet details props -----error ", error);
-        // this.openNotificationWithIcon(
-        //   "error",
-        //   "Error",
-        //   "Something went wrong!"
-        // );
-        this.setState({ loader: false });
-      });
+      }
+      // console.log("wallet details props walletDetails", walletUserDetails);
+      self.setState(
+        {
+          walletUserData: walletUserDetails,
+          currencyConv: responseData.currencyConversionData,
+          defaultCoin: walletUserDetails.coin_code,
+          min_limit: walletUserDetails.min_limit,
+          max_limit: walletUserDetails.max_limit,
+          walletDetails: transDetails,
+          withdrawRequests: withdrawDetails,
+          coin_code: coin_name[1],
+          coinFee: responseData.default_send_Coin_fee,
+          fiatValue: responseData.currencyConversionData
+            ? responseData.currencyConversionData.quote.USD.price
+            : ""
+        },
+        () => {
+          // console.log("wallet details props -----", this.state.fiatValue);
+          // console.log(
+          //   "responseData.currencyConversionData.quote.USD.price===========",
+          //   responseData.currencyConversionData.quote.USD.price
+          // );
+        }
+      );
+    } else {
+      this.openNotificationWithIcon(
+        "error",
+        responseData.status,
+        responseData.err
+      );
+    }
+    // this.setState({ loader: false });
+    // })
+    // .catch(error => {
+    //   // console.log("wallet details props -----error ", error);
+    //   // this.openNotificationWithIcon(
+    //   //   "error",
+    //   //   "Error",
+    //   //   "Something went wrong!"
+    //   // );
+    //   this.setState({ loader: false });
+    // });
   }
 
   /* 
@@ -276,35 +278,35 @@ class WalletDetails extends Component {
     });
   };
 
-  panicStatus() {
+  async panicStatus() {
     this.setState({
       loader: true
     });
-    fetch(API_URL + `/check-panic-status`, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.status === 200) {
-          // console.log("responsedata 200", responseData.data);
-          this.setState({
-            panic_status: JSON.parse(responseData.data),
-            // panic_status: true,
-            loader: false
-          });
-        } else {
-          this.setState({
-            panic_status: false,
-            loader: false
-          });
+    let responseData = await (
+      await fetch(API_URL + `/check-panic-status`, {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn
         }
       })
-      .catch(error => {});
+    ).json();
+    // .then(response => response.json())
+    // .then(responseData => {
+    if (responseData.status === 200) {
+      // console.log("responsedata 200", responseData.data);
+      this.setState({
+        panic_status: JSON.parse(responseData.data)
+        // panic_status: true,
+        // loader: false
+      });
+    } else {
+      this.setState({
+        panic_status: false
+        // loader: false
+      });
+    }
   }
 
   /* 
