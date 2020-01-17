@@ -180,7 +180,7 @@ export default class Datepicker extends Component {
         this.props.kycData2.dob !== undefined
       ) {
         propFields = this.props.kycData2.dob.split("-");
-        // console.log(fields["day"], propFields[2]);
+        // console.log("------------ dob", propFields);
         if (fields["day"] === undefined && propFields[2] !== undefined) {
           fields["day"] = propFields[2];
         }
@@ -191,11 +191,15 @@ export default class Datepicker extends Component {
           fields["year"] = propFields[0];
         }
       }
-      if (!moment([fields["year"]]).isLeapYear() && fields["day"] > 28) {
+      if (
+        !moment([fields["year"]]).isLeapYear() &&
+        (fields["month"] == "February" || fields["month"] == "02") &&
+        fields["day"] > 28
+      ) {
         this.setState({ day: "" });
         fields["day"] = "";
       }
-      // console.log("Final Result", fields);
+      // console.log("Final Result dob", fields);
       this.props.onDateChange(fields, "dob");
     }
   }
