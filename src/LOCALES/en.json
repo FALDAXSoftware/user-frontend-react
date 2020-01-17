@@ -363,6 +363,36 @@
       "message": "and",
       "message_type": "Web content",
       "context": "text"
+    },
+    "currency_inr": {
+      "page": "Edit Profile",
+      "message": "INR",
+      "message_type": "Web content",
+      "context": "currency INR"
+    },
+    "currency_eur": {
+      "page": "Edit Profile",
+      "message": "EUR",
+      "message_type": "Web content",
+      "context": "currency EUR"
+    },
+    "currency_date_format_1": {
+      "page": "Edit Profile",
+      "message": "MM/DD/YYYY",
+      "message_type": "Web content",
+      "context": "Date format text to display"
+    },
+    "currency_date_format_2": {
+      "page": "Edit Profile",
+      "message": "DD/MM/YYYY",
+      "message_type": "Web content",
+      "context": "Date format text to display"
+    },
+    "currency_date_format_3": {
+      "page": "Edit Profile",
+      "message": "MMM DD,YYYY",
+      "message_type": "Web content",
+      "context": "Date format text to display"
     }
   },
   "security_tab": {
@@ -978,7 +1008,7 @@
     },
     "required_country_state_city": {
       "page": "Personal Details",
-      "message": "Country, State and City Fields are required.",
+      "message": "Country, State and City Fields are required",
       "message_type": "Web content",
       "context": "validation for country, state and city field required"
     },
@@ -990,15 +1020,185 @@
     },
     "required_city": {
       "page": "Personal Details",
-      "message": "City Field is required.",
+      "message": "City Field is required",
       "message_type": "Web content",
       "context": "validation for city field required"
     },
-    "required_country": {
+    "only_number_not_allowed": {
       "page": "Personal Details",
-      "message": "City Field is required.",
+      "message": "Only numbers are not allowed",
       "message_type": "Web content",
-      "context": "validation for city field required"
+      "context": "validation for only numbers are not allowed"
+    },
+    "min_max_postal_code": {
+      "page": "Personal Details",
+      "message": "Postal code should have min. 3 and max. 25 characters.",
+      "message_type": "Web content",
+      "context": "validation for postal code min max numbers"
+    },
+    "postal_code_letters_numbers": {
+      "page": "Personal Details",
+      "message": "Postal code may only contain letters, numbers, and dashes",
+      "message_type": "Web content",
+      "context": "validation for postal code contain letters, numbers, and dashes"
+    }
+  },
+  "conversion": {
+    "conversion_head": {
+      "page": "Conversion",
+      "message": "",
+      "message_type": "Web content",
+      "context": "Page head"
+    },
+    "conversion_subhead": {
+      "page": "Conversion",
+      "message": "Coming Soon",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "confirm_btn": {
+      "page": "Conversion",
+      "message": "Confirm",
+      "message_type": "Web content",
+      "context": "Confirm button text"
+    },
+    "you_recieve_text": {
+      "page": "Crypto Conversion",
+      "message": "You Recieve",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "you_send_text": {
+      "page": "Crypto Conversion",
+      "message": "You Send",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "fiat_value_text": {
+      "page": "Crypto Conversion",
+      "message": "Fiat Value",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "details_text": {
+      "page": "Crypto Conversion",
+      "message": "Details",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "subtotal_text": {
+      "page": "Crypto Conversion",
+      "message": "Subtotal",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "fee_text": {
+      "page": "Crypto Conversion",
+      "message": "Fee",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "faldax_text": {
+      "page": "Crypto Conversion",
+      "message": "FALDAX",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "network_text": {
+      "page": "Crypto Conversion",
+      "message": "Network",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "total_text": {
+      "page": "Crypto Conversion",
+      "message": "Total",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "apply_promo_text": {
+      "page": "Crypto Conversion > Promo Code",
+      "message": "Apply Promo Code",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "enter_promo_text": {
+      "page": "Crypto Conversion > Promo Code",
+      "message": "Enter Promo Code",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "promo_text": {
+      "page": "Crypto Conversion > Promo Code",
+      "message": "Promo Code",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "check_btn": {
+      "page": "Crypto Conversion > Promo Code",
+      "message": "Check",
+      "message_type": "Web content",
+      "context": "Check button text"
+    },
+    "apply_btn": {
+      "page": "Crypto Conversion > Promo Code",
+      "message": "Apply",
+      "message_type": "Web content",
+      "context": "Apply button text"
+    },
+    "ok_btn": {
+      "page": "Crypto Conversion > Promo Code",
+      "message": "Ok",
+      "message_type": "Web content",
+      "context": "Ok button text"
+    },
+    "you_pay_text": {
+      "page": "Simplex Conversion",
+      "message": "You Pay",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "you_get_text": {
+      "page": "Simplex Conversion",
+      "message": "You Get",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "exchange_now_btn": {
+      "page": "Simplex Conversion",
+      "message": "Exchange Now",
+      "message_type": "Web content",
+      "context": "Exchange Now button text"
+    },
+    "safe_simple_secure_text": {
+      "page": "Simplex Conversion",
+      "message": "Safe. Simple. Secure.",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "we_accept_text": {
+      "page": "Simplex Conversion",
+      "message": "We accept",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "pay with_card_text": {
+      "page": "Simplex Conversion",
+      "message": "Pay With a Bank Card",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "powered_by_text": {
+      "page": "Simplex Conversion",
+      "message": "Powered by",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "simplex_text": {
+      "page": "Simplex Conversion",
+      "message": "FALDAX, in partnership with Simplex, brings the world's most prevalent crypto assets directly to you. Thank you for choosing FALDAX!",
+      "message_type": "Web content",
+      "context": "Text"
     }
   }
 }
