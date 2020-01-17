@@ -987,66 +987,10 @@
       "context": "Identity verification form btn text"
     }
   },
-  "validations": {
-    "field_is_required": {
-      "page": "Personal Details",
-      "message": "field is required",
-      "message_type": "Web content",
-      "context": "validation for first name required"
-    },
-    "min_max_first_name": {
-      "page": "Personal Details",
-      "message": "should have min. 2 and max. 15 characters and no special characters are allowed",
-      "message_type": "Web content",
-      "context": "validation for first name for min max and no special characters"
-    },
-    "apostrophe_first_name": {
-      "page": "Personal Details",
-      "message": "Only one apostrophe is allowed",
-      "message_type": "Web content",
-      "context": "validation for first name for one apostrophe only"
-    },
-    "required_country_state_city": {
-      "page": "Personal Details",
-      "message": "Country, State and City Fields are required",
-      "message_type": "Web content",
-      "context": "validation for country, state and city field required"
-    },
-    "required_state_city": {
-      "page": "Personal Details",
-      "message": "State and City Fields are required.",
-      "message_type": "Web content",
-      "context": "validation for state and city field required"
-    },
-    "required_city": {
-      "page": "Personal Details",
-      "message": "City Field is required",
-      "message_type": "Web content",
-      "context": "validation for city field required"
-    },
-    "only_number_not_allowed": {
-      "page": "Personal Details",
-      "message": "Only numbers are not allowed",
-      "message_type": "Web content",
-      "context": "validation for only numbers are not allowed"
-    },
-    "min_max_postal_code": {
-      "page": "Personal Details",
-      "message": "Postal code should have min. 3 and max. 25 characters.",
-      "message_type": "Web content",
-      "context": "validation for postal code min max numbers"
-    },
-    "postal_code_letters_numbers": {
-      "page": "Personal Details",
-      "message": "Postal code may only contain letters, numbers, and dashes",
-      "message_type": "Web content",
-      "context": "validation for postal code contain letters, numbers, and dashes"
-    }
-  },
   "conversion": {
     "conversion_head": {
       "page": "Conversion",
-      "message": "",
+      "message": "Conversion Methods",
       "message_type": "Web content",
       "context": "Page head"
     },
@@ -1199,6 +1143,302 @@
       "message": "FALDAX, in partnership with Simplex, brings the world's most prevalent crypto assets directly to you. Thank you for choosing FALDAX!",
       "message_type": "Web content",
       "context": "Text"
+    },
+    "continue_btn": {
+      "page": "Simplex Conversion",
+      "message": "Continue",
+      "message_type": "Web content",
+      "context": "Continue button text"
+    }
+  },
+  "wallet": {
+    "search_text": {
+      "page": "Wallet",
+      "message": "Search",
+      "message_type": "Web content",
+      "context": "Search input placeholder text"
+    },
+    "coins_text_subhead": {
+      "page": "Wallet",
+      "message": "Coins",
+      "message_type": "Web content",
+      "context": "Subhead text"
+    },
+    "address_text": {
+      "page": "Wallet Details",
+      "message": "Address",
+      "message_type": "Web content",
+      "context": "Address text"
+    },
+    "send_btn": {
+      "page": "Wallet Details",
+      "message": "Send",
+      "message_type": "Web content",
+      "context": "Send button text"
+    },
+    "recieve_btn": {
+      "page": "Wallet Details",
+      "message": "Recieve",
+      "message_type": "Web content",
+      "context": "Recieve button text"
+    },
+    "in_order_text": {
+      "page": "Wallet Details",
+      "message": "In Orders",
+      "message_type": "Web content",
+      "context": "In Orders text"
+    },
+    "transaction_text": {
+      "page": "Wallet Details",
+      "message": "Transaction",
+      "message_type": "Web content",
+      "context": "Transaction text in tabbing"
+    },
+    "withdrawal_requests_text": {
+      "page": "Wallet Details",
+      "message": "Withdrawal Requests",
+      "message_type": "Web content",
+      "context": "Withdrawal Requests text in tabbing"
+    },
+    "date_text": {
+      "page": "Wallet Details",
+      "message": "Date",
+      "message_type": "Web content",
+      "context": "Date text in table head"
+    },
+    "source_text": {
+      "page": "Wallet Details",
+      "message": "Source",
+      "message_type": "Web content",
+      "context": "Source text in table head"
+    },
+    "destination_text": {
+      "page": "Wallet Details",
+      "message": "Destination",
+      "message_type": "Web content",
+      "context": "Destination text in table head"
+    },
+    "amount_text": {
+      "page": "Wallet Details",
+      "message": "Amount",
+      "message_type": "Web content",
+      "context": "Amount text in table head"
+    },
+    "base_text": {
+      "page": "Wallet Details",
+      "message": "Base",
+      "message_type": "Web content",
+      "context": "Base text in table head"
+    },
+    "hash_text": {
+      "page": "Wallet Details",
+      "message": "Hash",
+      "message_type": "Web content",
+      "context": "Hash text in table head"
+    },
+    "no_data_found_text": {
+      "page": "Wallet Details",
+      "message": "No Data Found",
+      "message_type": "Web content",
+      "context": "No Data Found text in table head"
+    },
+    "reason_text": {
+      "page": "Wallet Details",
+      "message": "Reason",
+      "message_type": "Web content",
+      "context": "Reason text in table head"
+    },
+    "payout_text": {
+      "page": "Wallet Details > Send",
+      "message": "Payout",
+      "message_type": "Web content",
+      "context": "Payout text in send popup"
+    },
+    "fiat_text": {
+      "page": "Wallet Details > Send",
+      "message": "Fiat",
+      "message_type": "Web content",
+      "context": "Fiat text in send popup"
+    },
+    "value_text": {
+      "page": "Wallet Details > Send",
+      "message": "Value",
+      "message_type": "Web content",
+      "context": "Value text in send popup"
+    },
+    "send_amount_note_text": {
+      "page": "Wallet Details > Send",
+      "message": "Network Fee amount could change during actual transaction depending on the market conditions.",
+      "message_type": "Web content",
+      "context": "Note text in send popup"
+    }
+  },
+  "history": {
+    "export_btn": {
+      "page": "History",
+      "message": "Export",
+      "message_type": "Web content",
+      "context": "Export button text"
+    },
+    "reset_btn": {
+      "page": "History",
+      "message": "Reset",
+      "message_type": "Web content",
+      "context": "Reset button text"
+    },
+    "start_date_text": {
+      "page": "History",
+      "message": "Start date",
+      "message_type": "Web content",
+      "context": "Start date placeholder text"
+    },
+    "end_date_text": {
+      "page": "History",
+      "message": "End date",
+      "message_type": "Web content",
+      "context": "End date placeholder text"
+    },
+    "side_text": {
+      "page": "History",
+      "message": "Side",
+      "message_type": "Web content",
+      "context": "Side table head text"
+    },
+    "order_text": {
+      "page": "History",
+      "message": "Order",
+      "message_type": "Web content",
+      "context": "Order table head text"
+    },
+    "id_text": {
+      "page": "History",
+      "message": "Id",
+      "message_type": "Web content",
+      "context": "Id table head text"
+    },
+    "filled_text": {
+      "page": "History",
+      "message": "Filled",
+      "message_type": "Web content",
+      "context": "Filled table head text"
+    },
+    "price_text": {
+      "page": "History",
+      "message": "Price",
+      "message_type": "Web content",
+      "context": "Price table head text"
+    },
+    "buy_text": {
+      "page": "History",
+      "message": "Buy",
+      "message_type": "Web content",
+      "context": "Buy filter checkbox label"
+    },
+    "sell_text": {
+      "page": "History",
+      "message": "Sell",
+      "message_type": "Web content",
+      "context": "Sell filter checkbox label"
+    },
+    "cancelled_text": {
+      "page": "History",
+      "message": "Cancelled",
+      "message_type": "Web content",
+      "context": "Cancelled text for status"
+    },
+    "pending_text": {
+      "page": "History",
+      "message": "Pending",
+      "message_type": "Web content",
+      "context": "Pending text for status"
+    },
+    "approved_text": {
+      "page": "History",
+      "message": "Approved",
+      "message_type": "Web content",
+      "context": "Approved text for status"
+    },
+    "payment_text": {
+      "page": "History",
+      "message": "Payment",
+      "message_type": "Web content",
+      "context": "Payment table head text"
+    },
+    "quote_text": {
+      "page": "History",
+      "message": "Quote",
+      "message_type": "Web content",
+      "context": "Quote table head text"
+    }
+  },
+  "general": {
+    "open_a_ticket_head": {
+      "page": "Open a Ticket",
+      "message": "Open a Ticket",
+      "message_type": "Web content",
+      "context": "Open a Ticket head"
+    },
+    "careers_head": {
+      "page": "Careers",
+      "message": "Careers",
+      "message_type": "Web content",
+      "context": "Careers head"
+    }
+  },
+  "validations": {
+    "field_is_required": {
+      "page": "Personal Details",
+      "message": "field is required",
+      "message_type": "Web content",
+      "context": "validation for first name required"
+    },
+    "min_max_first_name": {
+      "page": "Personal Details",
+      "message": "should have min. 2 and max. 15 characters and no special characters are allowed",
+      "message_type": "Web content",
+      "context": "validation for first name for min max and no special characters"
+    },
+    "apostrophe_first_name": {
+      "page": "Personal Details",
+      "message": "Only one apostrophe is allowed",
+      "message_type": "Web content",
+      "context": "validation for first name for one apostrophe only"
+    },
+    "required_country_state_city": {
+      "page": "Personal Details",
+      "message": "Country, State and City Fields are required",
+      "message_type": "Web content",
+      "context": "validation for country, state and city field required"
+    },
+    "required_state_city": {
+      "page": "Personal Details",
+      "message": "State and City Fields are required.",
+      "message_type": "Web content",
+      "context": "validation for state and city field required"
+    },
+    "required_city": {
+      "page": "Personal Details",
+      "message": "City Field is required",
+      "message_type": "Web content",
+      "context": "validation for city field required"
+    },
+    "only_number_not_allowed": {
+      "page": "Personal Details",
+      "message": "Only numbers are not allowed",
+      "message_type": "Web content",
+      "context": "validation for only numbers are not allowed"
+    },
+    "min_max_postal_code": {
+      "page": "Personal Details",
+      "message": "Postal code should have min. 3 and max. 25 characters.",
+      "message_type": "Web content",
+      "context": "validation for postal code min max numbers"
+    },
+    "postal_code_letters_numbers": {
+      "page": "Personal Details",
+      "message": "Postal code may only contain letters, numbers, and dashes",
+      "message_type": "Web content",
+      "context": "validation for postal code contain letters, numbers, and dashes"
     }
   }
 }
