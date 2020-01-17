@@ -15,7 +15,7 @@ i18n
     },
     // we init with resources
     fallbackLng: "en",
-    debug: true,
+    debug: false,
 
     interpolation: {
       escapeValue: false // not needed for react!!
