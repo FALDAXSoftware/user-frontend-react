@@ -419,24 +419,71 @@ class KYCForm extends Component {
         It is called when we country is changed and it is passed as callback to child.
     */
 
-  onCountryChange(country, state, city, country_code, phoneCode) {
-    let self = this;
+  onCountryChange(country, state, city, country_code, phoneCode, phone_number) {
     let fields = this.state.fields;
+    if (this.state.fields.country === country) {
+      // alert("same");
+      // console.log(
+      //   "^^country",
+      //   this.state.fields.phone_number,
+      //   this.state.mobile
+      // );
+      if (this.state.fields.phone_number === phone_number) {
+        fields["phone_number"] = phone_number;
+        let mobile = phone_number;
+        this.setState(
+          {
+            phoneCountry: [country_code],
+            mobile
+          },
+          () => {
+            // console.log("same same  ^^country", phone_number, mobile);
+          }
+        );
+      } else {
+        fields["phone_number"] = this.state.fields.phone_number;
+        let mobile = this.state.mobile;
+        this.setState(
+          {
+            phoneCountry: [country_code],
+            mobile
+          },
+          () => {
+            // console.log("same ^^country", phone_number, mobile);
+          }
+        );
+      }
+    } else {
+      // alert("alag");
+      let mobile = this.state.mobile;
+      if (
+        this.state.phoneCountry &&
+        this.state.phoneCountry[0] != country_code
+      ) {
+        mobile = `+${phoneCode}`;
+      }
+      this.setState(
+        {
+          phoneCountry: [country_code],
+          mobile
+        },
+        () => {
+          // console.log("Different country", phone_number, mobile);
+        }
+      );
+    }
+    let self = this;
     fields["country"] = country;
     fields["state"] = state;
     fields["city_town"] = city;
     fields["country_code"] = country_code;
-    let mobile = this.state.mobile;
-    if (this.state.phoneCountry && this.state.phoneCountry[0] != country_code) {
-      mobile = `+${phoneCode}`;
-      // console.log("from pick ", mobile);
-    }
+
     this.setState(
       {
         kycData: { ...this.state.kycData, ...fields },
-        fields,
-        phoneCountry: [country_code],
-        mobile
+        fields
+        // phoneCountry: [country_code],
+        // mobile
       },
       () => {
         // To rerender the mobile input field
@@ -515,7 +562,7 @@ class KYCForm extends Component {
   onSubmit() {
     if (this.validator.allValid()) {
       // var profileData = this.state.fields;
-      console.log(" asdgh", this.state.fields);
+      // console.log(" asdgh", this.state.fields);
       let temp = this.state.fields;
       temp["address"] = this.state.fields.address.trim();
       temp["address_2"] = this.state.fields.address_2;
@@ -737,6 +784,8 @@ class KYCForm extends Component {
                   country={this.state.kycData.country}
                   state={this.state.kycData.state}
                   city={this.state.kycData.city_town}
+                  country_id={this.state.kycData.countryJsonId}
+                  phone_number={this.state.kycData.phone_number}
                   kyc="kyc"
                   // isLoggedIn={this.props.simpleReducer.isLoggedIn}
                   onCountryChange={(
@@ -744,14 +793,16 @@ class KYCForm extends Component {
                     state,
                     city,
                     country_code,
-                    phoneCode
+                    phoneCode,
+                    phone_number
                   ) =>
                     this.onCountryChange(
                       country,
                       state,
                       city,
                       country_code,
-                      phoneCode
+                      phoneCode,
+                      phone_number
                     )
                   }
                 />
@@ -775,7 +826,7 @@ class KYCForm extends Component {
                 xxl={{ span: 24 }}
               >
                 <Postalkyc>Mobile No.*</Postalkyc>
-                <PhoneDiv className="jkasdhkasjd">
+                <PhoneDiv>
                   {/* {console.log(
                     "Test",
                     this.state.mobile,
