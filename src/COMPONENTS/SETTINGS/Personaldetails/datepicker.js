@@ -57,7 +57,6 @@ export default class Datepicker extends Component {
     */
 
   onChangeDate(date, type) {
-    // console.log("Step 1 -------> ", date, type)
     if (this.props.kyc !== "kyc") {
       if (type === "year") {
         this.setState({ year: date });
@@ -138,12 +137,11 @@ export default class Datepicker extends Component {
       if (
         !moment([fields["year"]]).isLeapYear() &&
         (fields["month"] == "February" || fields["month"] == "02") &&
-        fields["day"] > 28
+        (fields["day"] > 28 || (type === "day" && date > 28))
       ) {
         this.setState({ day: "" });
         fields["day"] = "";
       }
-
       this.props.onDateChange(fields, "dob");
     } else {
       if (type === "year") {
@@ -194,7 +192,7 @@ export default class Datepicker extends Component {
       if (
         !moment([fields["year"]]).isLeapYear() &&
         (fields["month"] == "February" || fields["month"] == "02") &&
-        fields["day"] > 28
+        (fields["day"] > 28 || (type === "day" && date > 28))
       ) {
         this.setState({ day: "" });
         fields["day"] = "";
