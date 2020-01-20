@@ -232,11 +232,17 @@
       "message_type": "Web content",
       "context": "Personal detials form label for date of birth"
     },
-    "subhead_personal_form_street_address_line": {
+    "subhead_personal_form_street_address_line1": {
       "page": "Edit Profile",
-      "message": "Street Address Line",
+      "message": "Street Address Line 1",
       "message_type": "Web content",
-      "context": "Personal detials form label for street line address"
+      "context": "Personal detials form label for street line address 1"
+    },
+    "subhead_personal_form_street_address_line2": {
+      "page": "Edit Profile",
+      "message": "Street Address Line 2",
+      "message_type": "Web content",
+      "context": "Personal detials form label for street line address 2"
     },
     "subhead_personal_form_country": {
       "page": "Edit Profile",
@@ -432,6 +438,12 @@
       "message_type": "Web content",
       "context": "Title of re enter new password"
     },
+    "confirm_password_text": {
+      "page": "Edit Profile > Securtiy",
+      "message": "Confirm password",
+      "message_type": "Web content",
+      "context": "text for validation"
+    },
     "subhead_title_email": {
       "page": "Edit Profile > Securtiy",
       "message": "Email",
@@ -605,6 +617,12 @@
       "message": "Enter Two-Factor Authentication Code",
       "message_type": "Web content",
       "context": "Title of backup code regenerate"
+    },
+    "change_password_text": {
+      "page": "Edit Profile > Securtiy",
+      "message": "Change Password",
+      "message_type": "Web content",
+      "context": "text"
     }
   },
   "settings": {
@@ -976,7 +994,7 @@
   "identity_verification": {
     "subhead_mobile_no": {
       "page": "Edit Profile > Identity Verification",
-      "message": "Mobile No.",
+      "message": "Mobile No",
       "message_type": "Web content",
       "context": "Identity verification form label for mobile no"
     },
@@ -985,6 +1003,72 @@
       "message": "Next",
       "message_type": "Web content",
       "context": "Identity verification form btn text"
+    },
+    "step_1_no": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "1",
+      "message_type": "Web content",
+      "context": "Steps text 1"
+    },
+    "step_2_no": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "2",
+      "message_type": "Web content",
+      "context": "Steps text 2"
+    },
+    "step_3_no": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "3",
+      "message_type": "Web content",
+      "context": "Steps text 3"
+    },
+    "select_id_type_text": {
+      "page": "Edit Profile > Identity Verification > Step 2",
+      "message": "Select ID type",
+      "message_type": "Web content",
+      "context": "Select ID type text"
+    },
+    "id_type_passport": {
+      "page": "Edit Profile > Identity Verification > Step 2",
+      "message": "Passport",
+      "message_type": "Web content",
+      "context": "Passport text"
+    },
+    "id_type_driving_licence": {
+      "page": "Edit Profile > Identity Verification > Step 2",
+      "message": "Driving licence",
+      "message_type": "Web content",
+      "context": "Driving licence text"
+    },
+    "id_type_identity": {
+      "page": "Edit Profile > Identity Verification > Step 2",
+      "message": "Identity",
+      "message_type": "Web content",
+      "context": "Identity text"
+    },
+    "id_type_ssn": {
+      "page": "Edit Profile > Identity Verification > Step 2",
+      "message": "Social Security Number",
+      "message_type": "Web content",
+      "context": "Social Security Number text"
+    },
+    "front_text": {
+      "page": "Edit Profile > Identity Verification > Step 3",
+      "message": "Front",
+      "message_type": "Web content",
+      "context": "Front text"
+    },
+    "back_text": {
+      "page": "Edit Profile > Identity Verification > Step 3",
+      "message": "Back",
+      "message_type": "Web content",
+      "context": "Back text"
+    },
+    "upload_your_text": {
+      "page": "Edit Profile > Identity Verification > Step 3",
+      "message": "Upload Your",
+      "message_type": "Web content",
+      "context": "Upload Your text"
     }
   },
   "conversion": {
@@ -1383,6 +1467,30 @@
       "message": "Careers",
       "message_type": "Web content",
       "context": "Careers head"
+    },
+    "day_text": {
+      "page": "Personal Details",
+      "message": "Day",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "month_text": {
+      "page": "Personal Details",
+      "message": "Month",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "year_text": {
+      "page": "Personal Details",
+      "message": "Year",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "street_holder_placeholder": {
+      "page": "Personal Details",
+      "message": "Street Address",
+      "message_type": "Web content",
+      "context": "Street Address placeholder text"
     }
   },
   "validations": {
@@ -1430,7 +1538,7 @@
     },
     "min_max_postal_code": {
       "page": "Personal Details",
-      "message": "Postal code should have min. 3 and max. 25 characters.",
+      "message": "Postal code should have min. 3 and max. 25 characters",
       "message_type": "Web content",
       "context": "validation for postal code min max numbers"
     },
@@ -1439,6 +1547,156 @@
       "message": "Postal code may only contain letters, numbers, and dashes",
       "message_type": "Web content",
       "context": "validation for postal code contain letters, numbers, and dashes"
+    },
+    "success_text": {
+      "page": "General",
+      "message": "Success",
+      "message_type": "Web content",
+      "context": "Success text ijn notification toaster"
+    },
+    "warning_text": {
+      "page": "General",
+      "message": "Warning",
+      "message_type": "Web content",
+      "context": "Warning text ijn notification toaster"
+    },
+    "error_text": {
+      "page": "General",
+      "message": "Error",
+      "message_type": "Web content",
+      "context": "Error text ijn notification toaster"
+    },
+    "policies_error": {
+      "page": "Personal Details",
+      "message": "Please agree to all the Policies before proceeding further",
+      "message_type": "Web content",
+      "context": "Displayed when policies are not accepted during edit profile"
+    },
+    "profile_img_error1": {
+      "page": "Personal Details",
+      "message": "File size must not be more than 5 MB",
+      "message_type": "Web content",
+      "context": "Displayed when profile image is more than 5 MB edit profile"
+    },
+    "profile_img_error2": {
+      "page": "Personal Details",
+      "message": "Please upload only images",
+      "message_type": "Web content",
+      "context": "Displayed when profile image other than image is uploaded edit profile"
+    },
+    "street_address_error": {
+      "page": "Personal Details",
+      "message": "Street Address limit is 100 characters",
+      "message_type": "Web content",
+      "context": "Displayed when street address is more then max characters edit profile"
+    },
+    "street_address_required_error": {
+      "page": "Personal Details",
+      "message": "Street Address field is required",
+      "message_type": "Web content",
+      "context": "Displayed for required field"
+    },
+    "no_suffix_prefix_error": {
+      "page": "Personal Details",
+      "message": "Space is not allowed in prefix/suffix",
+      "message_type": "Web content",
+      "context": "Displayed when space is entered in prefix/suffix"
+    },
+    "error_on_submit_profile": {
+      "page": "Personal Details",
+      "message": "Please complete all required details to continue",
+      "message_type": "Web content",
+      "context": "when required fields are not filled up and submit is clicked"
+    },
+    "space_in_password": {
+      "page": "Edit Profile > Security",
+      "message": "Your password must not contain space",
+      "message_type": "Web content",
+      "context": "When space is included in password"
+    },
+    "password_error": {
+      "page": "Edit Profile > Security",
+      "message": "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters",
+      "message_type": "Web content",
+      "context": "When space is included in password"
+    },
+    "password_mismatch_error": {
+      "page": "Edit Profile > Security",
+      "message": "Password does not match",
+      "message_type": "Web content",
+      "context": "When new and confirm password does not match"
+    },
+    "otp_error": {
+      "page": "Edit Profile > Security",
+      "message": "Otp should have 6 digit number",
+      "message_type": "Web content",
+      "context": "when otp is not a valid number"
+    },
+    "invalid_email_error": {
+      "page": "Edit Profile > Security",
+      "message": "Please enter valid email address",
+      "message_type": "Web content",
+      "context": "when email is not a valid email"
+    },
+    "invalid_ip_error": {
+      "page": "Edit Profile > Security",
+      "message": "Enter a valid IP address",
+      "message_type": "Web content",
+      "context": "when ip is not a valid ip"
+    },
+    "forfeit_funds_error": {
+      "page": "Edit Profile > Security",
+      "message": "Please enter 'FORFEIT FUNDS'",
+      "message_type": "Web content",
+      "context": "FORFEIT FUNDS error message"
+    },
+    "invalid_end_date_error": {
+      "page": "Edit Profile > Security",
+      "message": "Please enter upcoming date",
+      "message_type": "Web content",
+      "context": "invalid date error"
+    },
+    "deactivate_error": {
+      "page": "Edit Profile > Security",
+      "message": "Please enter 'DEACTIVATE'",
+      "message_type": "Web content",
+      "context": "DEACTIVATE error message"
+    },
+    "mobile_no_error": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "Mobile No. should have only numbers",
+      "message_type": "Web content",
+      "context": "invalid mobile number validation message"
+    },
+    "mobile_no_min_error": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "Mobile No. should have min. 5 characters",
+      "message_type": "Web content",
+      "context": "min mobile number validation message"
+    },
+    "mobile_no_max_error": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "Mobile No. should have max. 30 characters",
+      "message_type": "Web content",
+      "context": "max mobile number validation message"
+    },
+    "Postal_min_error": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "Postal code should have min. 3 characters",
+      "message_type": "Web content",
+      "context": "min postal code validation message"
+    },
+    "postal_max_error": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "Postal code should have max. 25 characters",
+      "message_type": "Web content",
+      "context": "max postal code validation message"
+    },
+    "image_upload_error": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "File should be greater than 450*600 in dimension",
+      "message_type": "Web content",
+      "context": "Uploaded image is less than 450*600 dimension"
     }
   }
 }
