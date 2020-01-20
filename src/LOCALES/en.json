@@ -158,7 +158,7 @@
       "message_type": "Web content",
       "context": "footer sub head title"
     },
-    "subhead_all_rights_reserved.": {
+    "subhead_all_rights_reserved": {
       "page": "Footer",
       "message": "All Rights Reserved.",
       "message_type": "Web content",
@@ -261,6 +261,24 @@
       "message": "City",
       "message_type": "Web content",
       "context": "Personal detials form label for city"
+    },
+    "subhead_personal_form_country_placeholder": {
+      "page": "Edit Profile",
+      "message": "Select a Country",
+      "message_type": "Web content",
+      "context": "Personal detials form Placeholder for country"
+    },
+    "subhead_personal_form_state_placeholder": {
+      "page": "Edit Profile",
+      "message": "Select a State",
+      "message_type": "Web content",
+      "context": "Personal detials form Placeholder for state"
+    },
+    "subhead_personal_form_city_placeholder": {
+      "page": "Edit Profile",
+      "message": "Select a City",
+      "message_type": "Web content",
+      "context": "Personal detials form Placeholder for city"
     },
     "subhead_personal_form_postal_code": {
       "page": "Edit Profile",
@@ -1069,6 +1087,30 @@
       "message": "Upload Your",
       "message_type": "Web content",
       "context": "Upload Your text"
+    },
+    "kyc_submit_text": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "All of your information has been received and will be reviewed by our Identity Verification team. You will receive a notification and an email within 24 hours informing you of our decision. If you don't hear anything after 24 hours, please visit the support page to let us know.",
+      "message_type": "Web content",
+      "context": "Identity verification kyc submit text"
+    },
+    "thank_you_text": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "Thank you.",
+      "message_type": "Web content",
+      "context": "Identity verification kyc submit text"
+    },
+    "kyc_verified_text": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "Verification Completed.",
+      "message_type": "Web content",
+      "context": "Identity verification kyc submit text"
+    },
+    "kyc_verified_text1": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "Your Account is Verified successfully.",
+      "message_type": "Web content",
+      "context": "Identity verification kyc successfully verified subtext"
     }
   },
   "conversion": {
@@ -1144,6 +1186,12 @@
       "message_type": "Web content",
       "context": "Text"
     },
+    "earned_text": {
+      "page": "Crypto Conversion",
+      "message": "Earned",
+      "message_type": "Web content",
+      "context": "Text"
+    },
     "apply_promo_text": {
       "page": "Crypto Conversion > Promo Code",
       "message": "Apply Promo Code",
@@ -1210,7 +1258,7 @@
       "message_type": "Web content",
       "context": "Text"
     },
-    "pay with_card_text": {
+    "pay_with_card_text": {
       "page": "Simplex Conversion",
       "message": "Pay With a Bank Card",
       "message_type": "Web content",
@@ -1355,6 +1403,24 @@
       "message": "Network Fee amount could change during actual transaction depending on the market conditions.",
       "message_type": "Web content",
       "context": "Note text in send popup"
+    },
+    "wallet_generation_in_process": {
+      "page": "Wallet Details",
+      "message": "Your wallet is being generated and you will recieve a notification when it is ready for use. If you do not recieve a notification within 24 hours, or if you have any other concerns, please feel free to contact us",
+      "message_type": "Web content",
+      "context": "wallet generation under process message"
+    },
+    "here_text": {
+      "page": "Wallet Details",
+      "message": "here",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "thanks_note_text": {
+      "page": "Wallet Details",
+      "message": "Thank you for choosing FALDAX!",
+      "message_type": "Web content",
+      "context": "Thank you text"
     }
   },
   "history": {
@@ -1491,6 +1557,118 @@
       "message": "Street Address",
       "message_type": "Web content",
       "context": "Street Address placeholder text"
+    },
+    "captcha_not_loaded_error_head": {
+      "page": "General",
+      "message": "Seems like a robot",
+      "message_type": "Web content",
+      "context": "Captcha is not loaded due to some network issue"
+    },
+    "captcha_not_loaded_error": {
+      "page": "General",
+      "message": "Please try again after reloading the page.",
+      "message_type": "Web content",
+      "context": "Captcha is not loaded due to some network issue"
+    }
+  },
+  "popups": {
+    "kyc_popup_head": {
+      "page": "ID Verification Incomplete Pop up",
+      "message": "ID Verification Incomplete",
+      "message_type": "Web content",
+      "context": "ID Verification Incomplete pop up head"
+    },
+    "kyc_popup_subtext": {
+      "page": "ID Verification Incomplete Pop up",
+      "message": "Before you can trade, you must complete the ID Verification Process. Please click the 'Get Verified' button below to begin.",
+      "message_type": "Web content",
+      "context": "ID Verification Incomplete pop up subtext"
+    },
+    "kyc_popup_btn": {
+      "page": "ID Verification Incomplete Pop up",
+      "message": "Get Verified",
+      "message_type": "Web content",
+      "context": "ID Verification Incomplete pop up button for getting verified"
+    },
+    "illegal_popup_head": {
+      "page": "Access Denied Pop up",
+      "message": "Access Denied",
+      "message_type": "Web content",
+      "context": "Access Denied pop up head"
+    },
+    "illegal_popup_subtext1": {
+      "page": "Access Denied Pop up",
+      "message": "Unfortunately, FALDAX does not offer trading services in your area at this time, but we are actively working to increase availability. Visit the world map on our home page to see where trading is considered legal in your area, but you are unable to trade, that simply means we are working through the licensing process with the authoritiesin your area. Check back often, or subscribe to our newsletter, to be notifiedwhen services become available for you.",
+      "message_type": "Web content",
+      "context": "Access Denied pop up subtext"
+    },
+    "illegal_popup_subtext2": {
+      "page": "Access Denied Pop up",
+      "message": "Thank you for your support and your patience.",
+      "message_type": "Web content",
+      "context": "Access Denied pop up subtext"
+    },
+    "panic_popup_head": {
+      "page": "Panic enabled Pop up",
+      "message": "System Lockout In Effect",
+      "message_type": "Web content",
+      "context": "Panic enabled pop up head"
+    },
+    "panic_popup_subtext": {
+      "page": "Panic enabled Pop up",
+      "message": "Our systems have detected unwarranted and suspicious behavior which triggered our automatic lockout protocols. In order to ensure the safety and security of your assets and information, all assets system-wide are frozen and you will not be able to trade or move assets during this time. The balance you see in each of your wallets is secure accurate, and those assets are secure. By default, the lockout goes into effect for 24 hours, but this time may vary depending upon what our security team finds, if anything, and mitigates any known risks to you and our other customers. Please follow our twitter page, or look for notifications we will send via text and email, for updates as they become available. We are deeply sorry for any inconvenience, but our primary concern is to always be the best possible stewards of your information and assets. Rest assured that we are working to ensure that goal, and we thank you for your support and patience.",
+      "message_type": "Web content",
+      "context": "Panic enabled pop up subtext"
+    }
+  },
+  "apply_job": {
+    "position_label": {
+      "page": "Apply Job",
+      "message": "Position",
+      "message_type": "Web content",
+      "context": "Position label"
+    },
+    "phone_label": {
+      "page": "Apply Job",
+      "message": "Phone",
+      "message_type": "Web content",
+      "context": "Phone label"
+    },
+    "resume_cv_label": {
+      "page": "Apply Job",
+      "message": "Resume/CV",
+      "message_type": "Web content",
+      "context": "Resume/CV label"
+    },
+    "choose_file_text": {
+      "page": "Apply Job",
+      "message": "Choose a file or drag it here",
+      "message_type": "Web content",
+      "context": "Choose a file or drag it here text"
+    },
+    "wrong_file_text": {
+      "page": "Apply Job",
+      "message": "Wrong File Selected",
+      "message_type": "Web content",
+      "context": "Wrong File Selected text"
+    },
+    "supported_formats_text": {
+      "page": "Apply Job",
+      "message": "Supported format : .doc , .docx , .pdf.",
+      "message_type": "Web content",
+      "context": "Supported formats text"
+    },
+    "linkedin_label": {
+      "page": "Apply Job",
+      "message": "Linkedin Profile",
+      "message_type": "Web content",
+      "context": "Linkedin Profile label"
+    },
+    "website_label": {
+      "page": "Apply Job",
+      "message": "Website",
+      "message_type": "Web content",
+      "context": "Website Profile label"
     }
   },
   "validations": {
@@ -1587,6 +1765,12 @@
     "street_address_error": {
       "page": "Personal Details",
       "message": "Street Address limit is 100 characters",
+      "message_type": "Web content",
+      "context": "Displayed when street address is more then max characters edit profile"
+    },
+    "street_address2_error": {
+      "page": "Personal Details",
+      "message": "Street Address Line 2 field should have max. 100 characters",
       "message_type": "Web content",
       "context": "Displayed when street address is more then max characters edit profile"
     },
@@ -1697,6 +1881,72 @@
       "message": "File should be greater than 450*600 in dimension",
       "message_type": "Web content",
       "context": "Uploaded image is less than 450*600 dimension"
+    },
+    "cover_limit_error": {
+      "page": "Apply Job",
+      "message": "Please upload the document of less than 2 mb.",
+      "message_type": "Web content",
+      "context": "Uploaded document is greater than 2 MB"
+    },
+    "valid_website_url_error": {
+      "page": "Apply Job",
+      "message": "Please enter valid webiste address.",
+      "message_type": "Web content",
+      "context": "invalid website url is entered"
+    },
+    "valid_linkedin_url_error": {
+      "page": "Apply Job",
+      "message": "Please enter valid Linkedin address.",
+      "message_type": "Web content",
+      "context": "invalid linkedin url is entered"
+    },
+    "min_threshold_error": {
+      "page": "Crypto Conversion",
+      "message": "Minimum limit is",
+      "message_type": "Web content",
+      "context": "minimum limit message"
+    },
+    "invalid_data_error": {
+      "page": "Crypto Conversion",
+      "message": "Please enter valid data",
+      "message_type": "Web content",
+      "context": "if any invalid data is entered"
+    },
+    "value_greater_than_0_error": {
+      "page": "Crypto Conversion",
+      "message": "Value should be greater than 0",
+      "message_type": "Web content",
+      "context": "Value should be greater than 0 error"
+    },
+    "2_decimal_error": {
+      "page": "Crypto Conversion",
+      "message": "Value must be less than or equal to 2 digits after decimal point.",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 2 digits after decimal point error"
+    },
+    "8_decimal_error": {
+      "page": "Crypto Conversion",
+      "message": "Value must be less than or equal to 8 digits after decimal point.",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 8 digits after decimal point error"
+    },
+    "min_limit_error": {
+      "page": "Crypto Conversion",
+      "message": "Minimum amount should be greater than",
+      "message_type": "Web content",
+      "context": "Minimum amount should be greater than error"
+    },
+    "simplex_min_limit_error": {
+      "page": "Simplex",
+      "message": "Amount must be greater than or equal to 50",
+      "message_type": "Web content",
+      "context": "Amount must be greater than or equal to 50 error"
+    },
+    "simplex_max_limit_error": {
+      "page": "Simplex",
+      "message": "Amount must be less than or equal to 20,000",
+      "message_type": "Web content",
+      "context": "Amount must be less than or equal to 20,000 error"
     }
   }
 }
