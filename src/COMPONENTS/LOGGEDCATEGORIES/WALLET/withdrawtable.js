@@ -124,7 +124,7 @@ class WithdrawTable extends React.Component {
               <thead>
                 <Head wallet>
                   <SubHead>Date</SubHead>
-                  <SubHead>SEND/RECEIVE</SubHead>
+                  {/* <SubHead>SEND/RECEIVE</SubHead> */}
                   <SubHead>SOURCE ADDRESS</SubHead>
                   <SubHead>DESTINATION ADDRESS</SubHead>
                   <SubHead>BASE AMOUNT</SubHead>
@@ -172,7 +172,7 @@ class WithdrawTable extends React.Component {
                             <td>
                               <div>{date}</div>
                             </td>
-                            <td>
+                            {/* <td>
                               {details[index].transaction_type === "receive" ? (
                                 <span>
                                   <Icon
@@ -190,7 +190,7 @@ class WithdrawTable extends React.Component {
                                   SENT
                                 </span>
                               )}
-                            </td>
+                            </td> */}
                             <td>{details[index].source_address}</td>
                             <td>{details[index].destination_address}</td>
                             <td>
