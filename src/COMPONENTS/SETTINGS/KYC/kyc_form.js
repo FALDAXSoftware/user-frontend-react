@@ -225,11 +225,11 @@ class KYCForm extends Component {
       },
       zipValid: {
         message:
-          "Postal Code should only contain alphabets , numbers , hyphen and space .", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+          "Postal Code should only contain alphabets , numbers and hyphen.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^(?=.*[0-9a-zA-Z])[- 0-9a-zA-Z]+$/;
+          var re = /^(?=.*[0-9a-zA-Z])[-0-9a-zA-Z]+$/;
           var bool = re.test(String(val));
           return bool;
         }

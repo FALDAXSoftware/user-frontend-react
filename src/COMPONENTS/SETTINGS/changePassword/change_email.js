@@ -300,7 +300,7 @@ class ChangeEmail extends Component {
       let formData = {
         new_email_token: fields["otp"]
       };
-      let _this = this;
+      // let _this = this;
 
       this.setState({ loader: true });
       fetch(API_URL + `/users/confirm-new-email`, {
@@ -331,8 +331,8 @@ class ChangeEmail extends Component {
               errMessage: responseData.message
             });
             this.props.props.history.push("/verify-email");
-            _this.validator = new SimpleReactValidator();
-            _this.props.LogoutUser(this.props.isLoggedIn, formData);
+            this.validator = new SimpleReactValidator();
+            this.props.LogoutUser(this.props.isLoggedIn, formData);
           } else {
             this.setState({
               loader: false,
