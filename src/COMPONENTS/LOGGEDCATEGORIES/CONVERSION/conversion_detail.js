@@ -17,6 +17,7 @@ import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import TFAModal from "SHARED-COMPONENTS/TFAModal";
 import NumberFormat from "react-number-format";
+import { translate } from "react-i18next";
 // import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
 // import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
 
@@ -115,11 +116,12 @@ class ConversionDetail extends React.Component {
       disabledButton: true
     };
     io = this.props.io;
+    this.t=this.props.t;
     this.timeout = null;
     this.validator1 = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message: "Value should be greater than 0",
+        message:this.t("value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -131,7 +133,7 @@ class ConversionDetail extends React.Component {
       },
       gtzerofiat: {
         // name the rule
-        message: "Value should be greater than 0",
+        message:this.t("value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -143,7 +145,7 @@ class ConversionDetail extends React.Component {
       },
       decimalrestrict2: {
         message:
-          "Value must be less than or equal to 2 digits after decimal point.",
+          this.t("2_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,2}$/;
           if (RE.test(val)) {
@@ -155,7 +157,7 @@ class ConversionDetail extends React.Component {
       },
       decimalrestrict8: {
         message:
-          "Value must be less than or equal to 8 digits after decimal point.",
+         this.t("8_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
@@ -166,7 +168,7 @@ class ConversionDetail extends React.Component {
         }
       },
       minCryptoValid: {
-        message: `Minimum amount should be greater than ${this.state.minCrypto}`,
+        message: `${this.t("min_limit_error.message")} ${this.state.minCrypto}`,
         rule: (val, params, validator) => {
           // console.log("this is val?????", val);
           if (val >= this.state.minCrypto) {
@@ -183,7 +185,7 @@ class ConversionDetail extends React.Component {
     this.validator2 = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message: "Value should be greater than 0",
+        message:this.t("value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -195,7 +197,7 @@ class ConversionDetail extends React.Component {
       },
       gtzerofiat: {
         // name the rule
-        message: "Value should be greater than 0",
+        message:this.t("value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -207,7 +209,7 @@ class ConversionDetail extends React.Component {
       },
       decimalrestrict2: {
         message:
-          "Value must be less than or equal to 2 digits after decimal point.",
+        this.t("2_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,2}$/;
           if (RE.test(val)) {
@@ -218,8 +220,7 @@ class ConversionDetail extends React.Component {
         }
       },
       decimalrestrict8: {
-        message:
-          "Value must be less than or equal to 8 digits after decimal point.",
+        message:this.t("8_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
@@ -230,7 +231,7 @@ class ConversionDetail extends React.Component {
         }
       },
       minCurrValid: {
-        message: `Minimum amount should be greater than ${this.state.minCurrency}`,
+        message: `${this.t("min_limit_error.message")} ${this.state.minCurrency}`,
         rule: (val, params, validator) => {
           if (val >= this.state.minCurrency) {
             return true;
@@ -2094,6 +2095,7 @@ class ConversionDetail extends React.Component {
     });
   }
   render() {
+    const { t } = this.props;
     return (
       <ConversionWrap>
         <Navigation conversion={true} />
@@ -2109,7 +2111,7 @@ class ConversionDetail extends React.Component {
                   <RadioMainRow>
                     {this.state.includeFees === 2 ? (
                       <RadioBorderRow className="radio-row">
-                        <RowTitle>You Recieve</RowTitle>
+                        <RowTitle>{t("you_recieve_text.message")}</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
                             type="text"
@@ -2209,7 +2211,7 @@ class ConversionDetail extends React.Component {
                       </RadioBorderRow>
                     ) : (
                       <RadioBorderRow className="radio-row">
-                        <RowTitle>You Recieve</RowTitle>
+                        <RowTitle>{t("you_recieve_text.message")}</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
                             type="text"
@@ -2321,7 +2323,7 @@ class ConversionDetail extends React.Component {
                     )}
                     {this.state.includeFees === 1 ? (
                       <RadioBorderRow className="radio-row">
-                        <RowTitle>Fiat Value</RowTitle>
+                        <RowTitle>{t("fiat_value_text.message")}</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
                             type="text"
@@ -2364,7 +2366,7 @@ class ConversionDetail extends React.Component {
                   <RadioMainRow>
                     {this.state.includeFees === 1 ? (
                       <RadioBorderRow className="radio-row">
-                        <RowTitle>You Send</RowTitle>
+                        <RowTitle>{t("you_send_text.message")}</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
                             type="text"
@@ -2465,7 +2467,7 @@ class ConversionDetail extends React.Component {
                       </RadioBorderRow>
                     ) : (
                       <RadioBorderRow className="radio-row">
-                        <RowTitle>You Send</RowTitle>
+                        <RowTitle>{t("you_send_text.message")}</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
                             type="text"
@@ -2601,7 +2603,7 @@ class ConversionDetail extends React.Component {
                     )}
                     {this.state.includeFees === 2 ? (
                       <RadioBorderRow className="radio-row">
-                        <RowTitle>Fiat Value</RowTitle>
+                        <RowTitle>{t("fiat_value_text.message")}</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
                             type="text"
@@ -2640,7 +2642,9 @@ class ConversionDetail extends React.Component {
                   <div>
                     <Row>
                       <Col xs={12} className="left-style">
-                        <ConversionRightSpan>Subtotal</ConversionRightSpan>
+                        <ConversionRightSpan>
+                          {t("subtotal_text.message")}
+                        </ConversionRightSpan>
                       </Col>
                       <Col xs={12} className="right-style">
                         {this.state.includeFees === 1 ? (
@@ -2670,7 +2674,8 @@ class ConversionDetail extends React.Component {
                     <Row>
                       <Col xs={12} className="left-style">
                         <ConversionRightSpan>
-                          FALDAX Fee ({this.state.faldax_fee_value}%)
+                          FALDAX {t("fee_text.message")} (
+                          {this.state.faldax_fee_value}%)
                         </ConversionRightSpan>
                       </Col>
                       <Col xs={12} className="right-style">
@@ -2694,7 +2699,9 @@ class ConversionDetail extends React.Component {
                     </Row>
                     <Row>
                       <Col xs={12} className="left-style">
-                        <ConversionRightSpan>Network Fee</ConversionRightSpan>
+                        <ConversionRightSpan>
+                          {t("network_text")} {t("fee_text.message")}
+                        </ConversionRightSpan>
                       </Col>
                       <Col xs={12} className="right-style">
                         {/* <ConversionRightSpan>{this.state.krakenFees.toFixed(5)}%</ConversionRightSpan> */}
@@ -2743,7 +2750,7 @@ class ConversionDetail extends React.Component {
                                 });
                               }}
                             >
-                              Apply Promo Code
+                              {t("apply_promo_text.message")}
                               <Icon type="right" />
                             </span>
                           )}
@@ -2776,7 +2783,7 @@ class ConversionDetail extends React.Component {
                     <VerifyModal
                       visible={this.state.showPromoModal}
                       onCancel={this.closePromoModal}
-                      title="Enter Promo Code"
+                      title={t("enter_promo_text.message")}
                       footer={null}
                     >
                       <NewP className="add_new_promo">
@@ -2785,7 +2792,7 @@ class ConversionDetail extends React.Component {
                             className="otp-input"
                             value={this.state.promoCode}
                             size="medium"
-                            placeholder="Promo Code"
+                            placeholder={t("promo_text.message")}
                             onChange={this.promoCode}
                             name="promoCode"
                             style={{ marginBottom: "20px" }}
@@ -2819,20 +2826,20 @@ class ConversionDetail extends React.Component {
                       </NewP>
                       {this.state.offerMsg === "" ? (
                         <ButtonDiv className="promo_check">
-                          <NewButton onClick={this.checkPromo}>Check</NewButton>
+                          <NewButton onClick={this.checkPromo}>{t("check_btn.message")}</NewButton>
                         </ButtonDiv>
                       ) : (
                         <div>
                           {this.state.validPromo ? (
                             <ButtonDiv className="promo_check">
                               <NewButton onClick={this.applyPromo}>
-                                Apply
+                               {t("apply_btn.message")}
                               </NewButton>
                             </ButtonDiv>
                           ) : (
                             <ButtonDiv className="promo_check">
                               <NewButton onClick={this.closePromoModal}>
-                                Ok
+                                {t("ok_btn.message")}
                               </NewButton>
                             </ButtonDiv>
                           )}
@@ -2842,7 +2849,7 @@ class ConversionDetail extends React.Component {
                     <VerifyModal
                       visible={this.state.showAppliedPromoModal}
                       onCancel={this.closePromoModal}
-                      title="Enter Promo Code"
+                      title={t("enter_promo_text.message")}
                       footer={null}
                     >
                       <NewP className="add_new_promo">
@@ -2851,7 +2858,7 @@ class ConversionDetail extends React.Component {
                             className="otp-input"
                             value={this.state.promoCode}
                             size="medium"
-                            placeholder="Promo Code"
+                            placeholder={t("promo_text.message")}
                             onChange={this.promoCode}
                             name="promoCode"
                             style={{ marginBottom: "20px" }}
@@ -2902,13 +2909,13 @@ class ConversionDetail extends React.Component {
                           {this.state.validPromo ? (
                             <ButtonDiv className="promo_check">
                               <NewButton onClick={this.applyPromo}>
-                                Apply
+                                {t("apply_btn.message")}
                               </NewButton>
                             </ButtonDiv>
                           ) : (
                             <ButtonDiv className="promo_check">
                               <NewButton onClick={this.closePromoModal}>
-                                Ok
+                                {t("ok_btn.message")}
                               </NewButton>
                             </ButtonDiv>
                           )}
@@ -2917,7 +2924,7 @@ class ConversionDetail extends React.Component {
                     </VerifyModal>
                     <Row>
                       <Col xs={12} className="left-style">
-                        <RightTotal>total</RightTotal>
+                        <RightTotal>{t("total_text.message")}</RightTotal>
                       </Col>
                       <Col xs={12} className="right-style">
                         {this.state.includeFees === 1 ? (
@@ -2956,7 +2963,7 @@ class ConversionDetail extends React.Component {
                     block
                     disabled={this.state.disabledButton}
                   >
-                    Confirm
+                    {t("confirm_btn.message")}
                   </ConversionSubmitBtn>
                 </Col>
               </Row>
@@ -2997,4 +3004,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(withRouter(ConversionDetail));
+export default translate("conversion")(
+  connect(mapStateToProps)(withRouter(ConversionDetail))
+);

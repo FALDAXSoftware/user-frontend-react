@@ -911,7 +911,7 @@ class LoggedNavigation extends Component {
                         })
                       }
                     >
-                      {t("navbar_sub_menu_history_crypto_only.message")}
+                      {t("navbar_sub_menu_conversation_crypto_only.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="1">
@@ -923,7 +923,7 @@ class LoggedNavigation extends Component {
                         })
                       }
                     >
-                      {t("navbar_sub_menu_history_credit_card.message")}
+                      {t("navbar_sub_menu_conversation_credit_card.message")}
                     </a>
                   </Menu.Item>
                 </SubMenuNav>

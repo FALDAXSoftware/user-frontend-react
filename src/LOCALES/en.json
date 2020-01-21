@@ -1496,11 +1496,11 @@
       "message_type": "Web content",
       "context": "Cancelled text for status"
     },
-    "pending_text": {
+    "under_approval_text": {
       "page": "History",
-      "message": "Pending",
+      "message": "Under Approval",
       "message_type": "Web content",
-      "context": "Pending text for status"
+      "context": "Under Approval text for status"
     },
     "approved_text": {
       "page": "History",

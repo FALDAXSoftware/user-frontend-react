@@ -605,7 +605,7 @@ class PersonalDetails extends Component {
           if (regexnum.test(value)) {
             this.setState({ firstIcon: false });
             document.querySelectorAll(".first_msg")[0].style.display = "block";
-            this.setState({ firstmsg: "Only numbers are not allowed" });
+            this.setState({ firstmsg: t("only_number_not_allowed.message") });
           } else {
             this.setState({ firstIcon: true });
             document.querySelectorAll(".first_msg")[0].style.display = "none";
@@ -639,7 +639,7 @@ class PersonalDetails extends Component {
           if (regexnum.test(value)) {
             this.setState({ lastIcon: false });
             document.querySelectorAll(".last_msg")[0].style.display = "block";
-            this.setState({ lastmsg: "Only numbers are not allowed" });
+            this.setState({ lastmsg: t("only_number_not_allowed.message") });
           } else {
             this.setState({ lastIcon: true });
             document.querySelectorAll(".last_msg")[0].style.display = "none";
@@ -648,17 +648,21 @@ class PersonalDetails extends Component {
           this.setState({ lastIcon: false });
           document.querySelectorAll(".last_msg")[0].style.display = "block";
           this.setState({
-            lastmsg: t("subhead_personal_form_last_name.message") +
-            " " +
-            t("validations:min_max_first_name.message")
+            lastmsg:
+              t("subhead_personal_form_last_name.message") +
+              " " +
+              t("validations:min_max_first_name.message")
           });
         }
       } else {
         this.setState({ lastIcon: false });
         document.querySelectorAll(".last_msg")[0].style.display = "block";
-        this.setState({ lastmsg:  t("subhead_personal_form_last_name.message") +
-        " " +
-        t("validations:field_is_required.message") });
+        this.setState({
+          lastmsg:
+            t("subhead_personal_form_last_name.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
     } else if (field === "country") {
       if (value.country && value.state && value.city) {
@@ -690,19 +694,58 @@ class PersonalDetails extends Component {
           city = true;
         let countrymsg;
         if (country === true && state === false && city === false) {
-          countrymsg = t("subhead_personal_form_country.message") +" "+t("validations:field_is_required.message");
+          countrymsg =
+            t("subhead_personal_form_country.message") +
+            " " +
+            t("validations:field_is_required.message");
         } else if (country === true && state === true && city === false) {
-          countrymsg =t("subhead_personal_form_country.message")+" "+t("and_text.message")+" "+ t("subhead_personal_form_state.message") +" "+t("validations:field_is_required.message");
+          countrymsg =
+            t("subhead_personal_form_country.message") +
+            " " +
+            t("and_text.message") +
+            " " +
+            t("subhead_personal_form_state.message") +
+            " " +
+            t("validations:field_is_required.message");
         } else if (country === true && state === true && city === true) {
-          countrymsg = t("subhead_personal_form_country.message")+" , "+t("subhead_personal_form_state.message")+" "+t("and_text.message")+" "+ t("subhead_personal_form_city.message") +" "+t("validations:field_is_required.message");
+          countrymsg =
+            t("subhead_personal_form_country.message") +
+            " , " +
+            t("subhead_personal_form_state.message") +
+            " " +
+            t("and_text.message") +
+            " " +
+            t("subhead_personal_form_city.message") +
+            " " +
+            t("validations:field_is_required.message");
         } else if (country === false && state === true && city === false) {
-          countrymsg =t("subhead_personal_form_state.message") +" "+t("validations:field_is_required.message");
+          countrymsg =
+            t("subhead_personal_form_state.message") +
+            " " +
+            t("validations:field_is_required.message");
         } else if (country === false && state === true && city === true) {
-          countrymsg =t("subhead_personal_form_state.message")+" "+t("and_text.message")+" "+ t("subhead_personal_form_city.message") +" "+t("validations:field_is_required.message");
+          countrymsg =
+            t("subhead_personal_form_state.message") +
+            " " +
+            t("and_text.message") +
+            " " +
+            t("subhead_personal_form_city.message") +
+            " " +
+            t("validations:field_is_required.message");
         } else if (country === false && state === false && city === true) {
-          countrymsg = t("subhead_personal_form_city.message") +" "+t("validations:field_is_required.message");
+          countrymsg =
+            t("subhead_personal_form_city.message") +
+            " " +
+            t("validations:field_is_required.message");
         } else if (country === true && state === false && city === true) {
-          countrymsg = t("subhead_personal_form_country.message")+" "+t("and_text.message")+" "+ t("subhead_personal_form_city.message") +" "+t("validations:field_is_required.message");
+          countrymsg =
+            t("subhead_personal_form_country.message") +
+            " " +
+            t("and_text.message") +
+            " " +
+            t("subhead_personal_form_city.message") +
+            " " +
+            t("validations:field_is_required.message");
         }
         this.setState({ countrymsg });
       }
@@ -744,7 +787,12 @@ class PersonalDetails extends Component {
       } else {
         this.setState({ street1Icon: false });
         document.querySelectorAll(".street1_msg")[0].style.display = "block";
-        this.setState({ street1msg:t("subhead_personal_form_street_address_line.message")+" "+t("validations:field_is_required.message")});
+        this.setState({
+          street1msg:
+            t("subhead_personal_form_street_address_line.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
     } else if (field === "street_address_2") {
       if (value.trim !== "") {
@@ -785,7 +833,12 @@ class PersonalDetails extends Component {
       } else {
         this.setState({ postalIcon: false });
         document.querySelectorAll(".postal_msg")[0].style.display = "block";
-        this.setState({ postalmsg: t("subhead_personal_form_postal_code.message")+" "+t("validations:field_is_required.message")})
+        this.setState({
+          postalmsg:
+            t("subhead_personal_form_postal_code.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
     } else if (field === "date_format") {
       /* else if (field==="fiat") {
@@ -840,7 +893,7 @@ class PersonalDetails extends Component {
     );
   }
   openAgreePopup = () => {
-    let {t}=this.props;
+    let { t } = this.props;
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
@@ -883,7 +936,12 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ firstIcon: false });
         document.querySelectorAll(".first_msg")[0].style.display = "block";
-        this.setState({ firstmsg:  t("subhead_personal_form_first_name.message") +" " +t("validations:field_is_required.message") });
+        this.setState({
+          firstmsg:
+            t("subhead_personal_form_first_name.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
       if (
         this.state.lastIcon === null &&
@@ -891,7 +949,12 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ lastIcon: false });
         document.querySelectorAll(".last_msg")[0].style.display = "block";
-        this.setState({ lastmsg: t("subhead_personal_form_last_name.message") +" " +t("validations:field_is_required.message") });
+        this.setState({
+          lastmsg:
+            t("subhead_personal_form_last_name.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
       if (
         (this.state.countryIcon === null || this.state.countryIcon === false) &&
@@ -907,15 +970,28 @@ class PersonalDetails extends Component {
             this.state.stateSelected == null) &&
           (this.state.citySelected == "" || this.state.citySelected == null)
         ) {
-          countrymsg = t("subhead_personal_form_state.message")+" "+t("and_text.message")+" "+ t("subhead_personal_form_city.message") +" "+t("validations:field_is_required.message");
+          countrymsg =
+            t("subhead_personal_form_state.message") +
+            " " +
+            t("and_text.message") +
+            " " +
+            t("subhead_personal_form_city.message") +
+            " " +
+            t("validations:field_is_required.message");
         } else if (
           this.state.countrySelected &&
           this.state.stateSelected &&
           (this.state.citySelected == "" || this.state.citySelected == null)
         ) {
-          countrymsg =t("subhead_personal_form_city.message") +" "+t("validations:field_is_required.message");
+          countrymsg =
+            t("subhead_personal_form_city.message") +
+            " " +
+            t("validations:field_is_required.message");
         } else {
-          countrymsg = t("subhead_personal_form_country.message")+" "+t("validations:field_is_required.message");
+          countrymsg =
+            t("subhead_personal_form_country.message") +
+            " " +
+            t("validations:field_is_required.message");
         }
         this.setState({ countrymsg });
       }
@@ -926,7 +1002,12 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";
-        this.setState({ dobmsg: t("subhead_personal_form_dob.message")+" "+t("validations:field_is_required.message")});
+        this.setState({
+          dobmsg:
+            t("subhead_personal_form_dob.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
       if (
         (this.state.street1Icon === null || this.state.street1Icon === false) &&
@@ -934,7 +1015,12 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ street1Icon: false });
         document.querySelectorAll(".street1_msg")[0].style.display = "block";
-        this.setState({ street1msg: t("subhead_personal_form_street_address_line.message")+" "+t("validations:field_is_required.message") });
+        this.setState({
+          street1msg:
+            t("subhead_personal_form_street_address_line.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
       /* if (this.state.street2Icon===null && this.props.profileDetails.street_address_2===null) {
                 this.setState({ street2Icon: false })
@@ -947,7 +1033,12 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ postalIcon: false });
         document.querySelectorAll(".postal_msg")[0].style.display = "block";
-        this.setState({ postalmsg: t("subhead_personal_form_postal_code.message")+" "+t("validations:field_is_required.message") });
+        this.setState({
+          postalmsg:
+            t("subhead_personal_form_postal_code.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
       if (
         this.state.fiatIcon === false &&
@@ -969,7 +1060,7 @@ class PersonalDetails extends Component {
   };
   submit = () => {
     // e.preventDefault();
-    let {t}=this.props;
+    let { t } = this.props;
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
@@ -1087,7 +1178,12 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ firstIcon: false });
         document.querySelectorAll(".first_msg")[0].style.display = "block";
-        this.setState({ firstmsg: t("subhead_personal_form_first_name.message") +" " +t("validations:field_is_required.message") });
+        this.setState({
+          firstmsg:
+            t("subhead_personal_form_first_name.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
       if (
         this.state.lastIcon === null &&
@@ -1095,7 +1191,12 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ lastIcon: false });
         document.querySelectorAll(".last_msg")[0].style.display = "block";
-        this.setState({ lastmsg: t("subhead_personal_form_last_name.message") +" " +t("validations:field_is_required.message") });
+        this.setState({
+          lastmsg:
+            t("subhead_personal_form_last_name.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
       if (
         (this.state.countryIcon === null || this.state.countryIcon === false) &&
@@ -1109,15 +1210,15 @@ class PersonalDetails extends Component {
             this.state.stateSelected == null) &&
           (this.state.citySelected == "" || this.state.citySelected == null)
         ) {
-          countrymsg = t('validations:required_state_city');
+          countrymsg = t("validations:required_state_city");
         } else if (
           this.state.countrySelected &&
           this.state.stateSelected &&
           (this.state.citySelected == "" || this.state.citySelected == null)
         ) {
-          countrymsg = t('validations:required_city');
+          countrymsg = t("validations:required_city");
         } else {
-          countrymsg = t('validations:required_country');
+          countrymsg = t("validations:required_country");
         }
         this.setState({ countrymsg });
       }
@@ -1128,7 +1229,12 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";
-        this.setState({ dobmsg: t("subhead_personal_form_dob.message")+" "+t("validations:field_is_required.message")});
+        this.setState({
+          dobmsg:
+            t("subhead_personal_form_dob.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
       if (
         this.state.street1Icon === null &&
@@ -1136,7 +1242,12 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ street1Icon: false });
         document.querySelectorAll(".street1_msg")[0].style.display = "block";
-        this.setState({ street1msg:t("subhead_personal_form_street_address_line.message")+" "+t("validations:field_is_required.message")});
+        this.setState({
+          street1msg:
+            t("subhead_personal_form_street_address_line.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
       if (
         this.state.postalIcon === null &&
@@ -1144,7 +1255,12 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ postalIcon: false });
         document.querySelectorAll(".postal_msg")[0].style.display = "block";
-        this.setState({ postalmsg: t("subhead_personal_form_postal_code.message")+" "+t("validations:field_is_required.message")})
+        this.setState({
+          postalmsg:
+            t("subhead_personal_form_postal_code.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
       if (
         this.state.fiatIcon === false &&
@@ -1317,8 +1433,7 @@ class PersonalDetails extends Component {
                     xxl={{ span: 24 }}
                   >
                     <StreetAddress>
-                      {t("subhead_personal_form_street_address_line.message")}{" "}
-                      1*
+                      {t("subhead_personal_form_street_address_line1.message")}*
                     </StreetAddress>
                     <Streetinput
                       placeholder="Street Address"
@@ -1338,7 +1453,7 @@ class PersonalDetails extends Component {
                 </ThirdRow>
                 <ThirdRow>
                   <StreetAddress>
-                    {t("subhead_personal_form_street_address_line.message")} 2
+                    {t("subhead_personal_form_street_address_line2.message")}
                   </StreetAddress>
                   <Streetinput
                     disabled={!this.state.editMode}
@@ -1656,6 +1771,6 @@ const mapDispatchToProps = dispatch => ({
   LogoutUser: () => dispatch(LogoutUser())
 });
 
-export default translate(["edit_profile_titles","validations"])(
+export default translate(["edit_profile_titles", "validations"])(
   connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails))
 );

@@ -4,7 +4,7 @@ import "antd/dist/antd.css";
 import { connect } from "react-redux";
 import { Row, Col, Button, notification } from "antd";
 import styled from "styled-components";
-
+import { translate } from "react-i18next";
 /* Components */
 import { kycFormAction, kycformData } from "ACTIONS/SETTINGS/passwordActions";
 import {
@@ -161,13 +161,16 @@ class IDselect extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div>
         <KYCTypeSelectRow>
           {/* {console.log("KYC CHECK", this.props.countryFlag)} */}
           {this.props.countryFlag === true ? (
             <Row>
-              <SelectTitle md={{ span: 24 }}>Select ID type</SelectTitle>
+              <SelectTitle md={{ span: 24 }}>
+                {t("select_id_type_text.message")}
+              </SelectTitle>
               <PassportCol
                 sm={{ span: 12 }}
                 md={{ span: 12 }}
@@ -187,7 +190,9 @@ class IDselect extends Component {
                       src={_PASSPORTLOGO}
                       className="normal"
                     />
-                    <span className="text">Passport</span>
+                    <span className="text">
+                      {t("id_type_passport.message")}
+                    </span>
                   </span>
                 </label>
               </PassportCol>
@@ -210,7 +215,9 @@ class IDselect extends Component {
                       src={_LICENSELOGO}
                       className="normal"
                     />
-                    <span className="text">Driving license</span>
+                    <span className="text">
+                      {t("id_type_driving_licence.message")}
+                    </span>
                   </span>
                 </label>
               </LicenceCol>
@@ -233,7 +240,9 @@ class IDselect extends Component {
                       src={_IDENTITYLOGO}
                       className="normal"
                     />
-                    <span className="text">Identity</span>
+                    <span className="text">
+                      {t("id_type_identity.message")}
+                    </span>
                   </span>
                 </label>
               </IdentityCol>
@@ -252,14 +261,16 @@ class IDselect extends Component {
                       className="active"
                     />
                     <img alt="ID SELECTION" src={_SSN} className="normal" />
-                    <span className="text">Social Security Number</span>
+                    <span className="text">{t("id_type_ssn.message")}</span>
                   </span>
                 </label>
               </SSNCol>
             </Row>
           ) : (
             <Row>
-              <SelectTitle md={{ span: 24 }}>Select ID type</SelectTitle>
+              <SelectTitle md={{ span: 24 }}>
+                {t("select_id_type_text.message")}
+              </SelectTitle>
               <PassportCol
                 sm={{ span: 12 }}
                 md={{ span: 12 }}
@@ -279,7 +290,9 @@ class IDselect extends Component {
                       src={_PASSPORTLOGO}
                       className="normal"
                     />
-                    <span className="text">Passport</span>
+                    <span className="text">
+                      {t("id_type_passport.message")}
+                    </span>
                   </span>
                 </label>
               </PassportCol>
@@ -302,7 +315,9 @@ class IDselect extends Component {
                       src={_LICENSELOGO}
                       className="normal"
                     />
-                    <span className="text">Driving license</span>
+                    <span className="text">
+                      {t("id_type_driving_licence.message")}
+                    </span>
                   </span>
                 </label>
               </LicenceCol>
@@ -325,7 +340,9 @@ class IDselect extends Component {
                       src={_IDENTITYLOGO}
                       className="normal"
                     />
-                    <span className="text">Identity</span>
+                    <span className="text">
+                      {t("id_type_identity.message")}
+                    </span>
                   </span>
                 </label>
               </IdentityCol>
@@ -335,10 +352,10 @@ class IDselect extends Component {
         <ButtonWrap>
           <SubWrap>
             <BackButton onClick={this.back_step.bind(this)} type="primary">
-              Back
+              {t("back_text.message")}
             </BackButton>
             <NextButton onClick={this.next_step.bind(this)} type="primary">
-              Next
+              {t("subhead_btn_next.message")}
             </NextButton>
           </SubWrap>
         </ButtonWrap>
@@ -361,7 +378,6 @@ const mapDispatchToProps = dispatch => ({
   kycformData: data => dispatch(kycformData(data))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IDselect);
+export default translate("identity_verification")(
+  connect(mapStateToProps, mapDispatchToProps)(IDselect)
+);

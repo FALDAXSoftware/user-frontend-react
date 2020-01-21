@@ -14,6 +14,7 @@ import DocUpload from "../KYC/doc_upload";
 import Tier from "../tier";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
+import { translate } from "react-i18next";
 
 const Step = Steps.Step;
 
@@ -136,6 +137,7 @@ class TierOne extends React.Component {
 
   render() {
     const { next /* , is_kyc_done  */ } = this.state;
+    const { t } = this.props;
     return (
       // <KYC_wrap>
       //     {(this.props.is_kyc_done !== true && next !== 5) ?
@@ -167,7 +169,11 @@ class TierOne extends React.Component {
             <div>
               {next !== 5 && (
                 <div>
-                  <KYCHead>Identity Verification</KYCHead>
+                  <KYCHead>
+                    {t(
+                      "edit_profile_titles:head_identity_verification.message"
+                    )}
+                  </KYCHead>
                   <KYCProgress>
                     <Steps
                       direction="horizontal"
@@ -224,13 +230,9 @@ class TierOne extends React.Component {
               />
               <KycSucc>
                 <span>
-                  <b>Thank you.</b>
+                  <b>{t("thank_you_text.message")}</b>
                   <br />
-                  All of your information has been received and will be reviewed
-                  by our Identity Verification team. You will receive a
-                  notification and an email within 24 hours informing you of our
-                  decision. If you don't hear anything after 24 hours, please
-                  visit the support page to let us know.
+                  {t("kyc_submit_text.message")}
                 </span>
               </KycSucc>
             </DoneWrap>
@@ -245,10 +247,10 @@ class TierOne extends React.Component {
               />
               <KycSucc>
                 <span>
-                  <b>Verification Completed.</b>
+                  <b>{t("kyc_verified_text.message")}</b>
                   <br />
                   <br />
-                  Your Account is Verified successfully.
+                  {t("kyc_verified_text1.message")}
                 </span>
               </KycSucc>
             </DoneWrap>
@@ -287,7 +289,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(createForm()(TierOne));
+export default translate(
+  "identity_verification",
+  "edit_profile_titles"
+)(connect(mapStateToProps, mapDispatchToProps)(createForm()(TierOne)));

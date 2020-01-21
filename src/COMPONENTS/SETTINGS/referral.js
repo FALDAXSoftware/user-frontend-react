@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { globalVariables } from "Globals.js";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import { translate } from "react-i18next";
 
 let { API_URL, _AMAZONBUCKET, TRADE_URL } = globalVariables;
 /* CONSTANTS */
@@ -480,17 +481,20 @@ class Referral extends Component {
     // this.getReferralData();
   }
   render() {
-    const { referralLink, referTable, referredData } = this.state;
+    const [{ referralLink, referTable, referredData }, { t }] = [
+      this.state,
+      this.props
+    ];
     return (
       <ParentWrap>
-        <Header_text>Referral Program</Header_text>
+        <Header_text>{t("referral_head.message")}</Header_text>
         {/*  <Coming>
                     <span>Coming soon.</span>
                 </Coming> */}
         <Ref_div>
           <Row>
             <Ref_leftcol sm={24} md={18}>
-              <Ref_text>YOUR REFERRAL LINK</Ref_text>
+              <Ref_text>{t("referral_text1.message")}</Ref_text>
               <CopyToClipboard
                 text={referralLink}
                 onCopy={() => this.setState({ copied: true })}
@@ -499,8 +503,8 @@ class Referral extends Component {
                   <RefInput
                     value={this.props.profileDetails.referral_code}
                     className={this.state.searchCSS}
-                    placeholder="Referral"
-                    enterButton="Copy"
+                    placeholder={t("edit_profile_titles:head_referral.message")}
+                    enterButton={t("copy_btn.message")}
                     size="large"
                     onSearch={value => this.SearchText()}
                   />
@@ -508,7 +512,7 @@ class Referral extends Component {
               </CopyToClipboard>
             </Ref_leftcol>
             <Ref_rightcol sm={24} md={6}>
-              <Right_text>Collect Earnings</Right_text>
+              <Right_text>{t("referral_text2.message")}</Right_text>
               <Right_value>
                 {this.state.leftOutRef} {this.props.profileDetails.fiat}
               </Right_value>
@@ -517,7 +521,7 @@ class Referral extends Component {
                   this.collectRefCoins();
                 }}
               >
-                Collect
+                {t("collect_btn.message")}
               </CollectButton>
             </Ref_rightcol>
           </Row>
@@ -545,7 +549,9 @@ class Referral extends Component {
                 </Col>
                 <Col xs={24} sm={24} md={8}>
                   <div className="ColWrap">
-                    <span className="earnTitle">Earned:</span>
+                    <span className="earnTitle">
+                      {t("earned_text.message")}:
+                    </span>
                     {this.state.perCoinEarned !== "" ? (
                       <span className="amtSpan">
                         {" "}
@@ -559,7 +565,10 @@ class Referral extends Component {
                 </Col>
                 <Col xs={24} sm={24} md={8}>
                   <div className="ColWrap">
-                    <span className="earnTitle">Total Earned:</span>
+                    <span className="earnTitle">
+                      {t("conversion:total_text.message")}{" "}
+                      {t("earned_text.message")}:
+                    </span>
                     <span className="amtSpan">
                       {this.state.totalEarned} {this.props.profileDetails.fiat}
                     </span>
@@ -602,4 +611,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Referral);
+export default translate(["referral", "edit_profile_titles", "conversion"])(
+  connect(mapStateToProps)(Referral)
+);

@@ -14,6 +14,7 @@ import CountryPick from "../Personaldetails/country";
 import { kycFormAction, kycformData } from "ACTIONS/SETTINGS/passwordActions";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { globalVariables } from "Globals.js";
+import { translate } from "react-i18next";
 
 /* STYLED-COMPONENTS */
 import { IntlTelInputS } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
@@ -145,12 +146,14 @@ class KYCForm extends Component {
     };
 
     /* Simple React Validator Custom Messages */
-
+    this.t = this.props.t;
     this.validator = new SimpleReactValidator({
       firstname: {
         // name the rule
         message:
-          "First Name should have min. 2 and max. 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+          this.t("subhead_personal_form_first_name.message") +
+          " " +
+          this.t("validations:min_max_first_name.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -162,7 +165,9 @@ class KYCForm extends Component {
       lastname: {
         // name the rule
         message:
-          "Last Name should have min. 2 and max. 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+          this.t("subhead_personal_form_last_name.message") +
+          " " +
+          this.t("validations:min_max_first_name.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -173,7 +178,7 @@ class KYCForm extends Component {
       },
       onlyNumber: {
         // name the rule
-        message: "Only numbers are not allowed.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("only_number_not_allowed.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -184,7 +189,7 @@ class KYCForm extends Component {
       },
       mobileVal: {
         // name the rule
-        message: "Mobile No. should have only numbers.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("validations:mobile_no_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -485,6 +490,7 @@ class KYCForm extends Component {
   }
 
   render() {
+    const { t } = this.props;
     let countryBool = this.validator.message(
         "country",
         this.state.fields.country,
@@ -511,43 +517,80 @@ class KYCForm extends Component {
         : false;
     let countrymsg;
     if (countryBool === true && stateBool === false && cityBool === false) {
-      countrymsg = "Country Field is required.";
+      countrymsg =
+        t("subhead_personal_form_country.message") +
+        " " +
+        t("validations:field_is_required.message");
     } else if (
       countryBool === true &&
       stateBool === true &&
       cityBool === false
     ) {
-      countrymsg = "Country and State Fields are required.";
+      countrymsg =
+        t("subhead_personal_form_country.message") +
+        " " +
+        t("and_text.message") +
+        " " +
+        t("subhead_personal_form_state.message") +
+        " " +
+        t("validations:field_is_required.message");
     } else if (
       countryBool === true &&
       stateBool === true &&
       cityBool === true
     ) {
-      countrymsg = "Country , State and City Fields are required.";
+      countrymsg =
+        t("subhead_personal_form_country.message") +
+        " " +
+        t("and_text.message") +
+        " " +
+        t("subhead_personal_form_state.message") +
+        " " +
+        t("validations:field_is_required.message");
     } else if (
       countryBool === false &&
       stateBool === true &&
       cityBool === false
     ) {
-      countrymsg = "State Field is required.";
+      countrymsg =
+        t("subhead_personal_form_state.message") +
+        " " +
+        t("validations:field_is_required.message");
     } else if (
       countryBool === false &&
       stateBool === true &&
       cityBool === true
     ) {
-      countrymsg = "State and City Fields are required.";
+      countrymsg =
+        t("subhead_personal_form_state.message") +
+        " " +
+        t("and_text.message") +
+        " " +
+        t("subhead_personal_form_city.message") +
+        " " +
+        t("validations:field_is_required.message");
     } else if (
       countryBool === false &&
       stateBool === false &&
       cityBool === true
     ) {
-      countrymsg = "City Field is required.";
+      countrymsg =
+        t("subhead_personal_form_city.message") +
+        " " +
+        t("validations:field_is_required.message");
     } else if (
       countryBool === true &&
       stateBool === false &&
       cityBool === true
     ) {
-      countrymsg = "Country and City Fields are required.";
+      countrymsg =
+        t("subhead_personal_form_country.message") +
+        " " +
+        t("and_text.message") +
+        " " +
+        t("subhead_personal_form_city.message") +
+        " " +
+        t("validations:field_is_required.message");
     }
     return (
       <KYCform>
@@ -559,19 +602,27 @@ class KYCForm extends Component {
               xl={{ span: 12 }}
               xxl={{ span: 12 }}
             >
-              <Firstnamekyc>First Name*</Firstnamekyc>
+              <Firstnamekyc>
+                {" "}
+                {t("subhead_personal_form_first_name.message")}*
+              </Firstnamekyc>
               <Firstinputkyc
                 value={this.state.fields.first_name}
                 name="first_name"
                 onChange={this.onChangeFields}
-                placeholder="First Name"
+                placeholder={t("subhead_personal_form_first_name.message")}
               />
               {this.validator.message(
                 "first_name",
                 this.state.fields.first_name,
                 "required|firstname|onlyNumber",
                 "text-danger-validation",
-                { required: "First Name field is required." }
+                {
+                  required:
+                    t("subhead_personal_form_first_name.message") +
+                    " " +
+                    t("validations:field_is_required.message")
+                }
               )}
             </Col>
             <Col
@@ -580,19 +631,27 @@ class KYCForm extends Component {
               xl={{ span: 12 }}
               xxl={{ span: 12 }}
             >
-              <Lastnamekyc>Last Name*</Lastnamekyc>
+              <Lastnamekyc>
+                {" "}
+                {t("subhead_personal_form_last_name.message")}*
+              </Lastnamekyc>
               <Lastinputkyc
                 value={this.state.fields.last_name}
                 name="last_name"
                 onChange={this.onChangeFields}
-                placeholder="Last Name"
+                placeholder={t("subhead_personal_form_last_name.message")}
               />
               {this.validator.message(
                 "last_name",
                 this.state.fields.last_name,
                 "required|lastname|onlyNumber",
                 "text-danger-validation",
-                { required: "Last Name field is required." }
+                {
+                  required:
+                    t("subhead_personal_form_last_name.message") +
+                    " " +
+                    t("validations:field_is_required.message")
+                }
               )}
             </Col>
           </FirstRowkyc>
@@ -604,7 +663,9 @@ class KYCForm extends Component {
               xl={{ span: 24 }}
               xxl={{ span: 24 }}
             >
-              <Datebirthkyc>Date of Birth*</Datebirthkyc>
+              <Datebirthkyc>
+                {t("subhead_personal_form_dob.message")}*
+              </Datebirthkyc>
               <Datepicker
                 kycData2={this.state.kycData}
                 {...this.props}
@@ -616,7 +677,12 @@ class KYCForm extends Component {
                 this.state.fields.dob,
                 "required",
                 "text-danger-validation",
-                { required: "Date of Birth field is required." }
+                {
+                  required:
+                    t("subhead_personal_form_dob.message") +
+                    " " +
+                    t("validations:field_is_required.message")
+                }
               )}
             </Col>
           </SecondRowkyc>
@@ -628,12 +694,17 @@ class KYCForm extends Component {
               xl={{ span: 24 }}
               xxl={{ span: 24 }}
             >
-              <StreetAddresskyc>Street Address Line 1*</StreetAddresskyc>
+              <StreetAddresskyc>
+                {" "}
+                {t("subhead_personal_form_street_address_line1.message")}*
+              </StreetAddresskyc>
               <Streetinputkyc
                 value={this.state.fields.address}
                 name="address"
                 onChange={this.onChangeFields}
-                placeholder="Street Address"
+                placeholder={t(
+                  "subhead_personal_form_street_address_line1.message"
+                )}
               />
               {this.validator.message(
                 "street_address",
@@ -641,9 +712,11 @@ class KYCForm extends Component {
                 "required|max:100",
                 "text-danger-validation",
                 {
-                  required: "Street Address Line 1 field is required.",
-                  max:
-                    "Street Address Line 1 field should have max. 100 characters "
+                  required:
+                    t("subhead_personal_form_street_address_line1.message") +
+                    " " +
+                    t("validations:field_is_required.message"),
+                  max: t("street_address_error.message")
                 }
               )}
             </Col>
@@ -654,12 +727,16 @@ class KYCForm extends Component {
               xxl={{ span: 24 }}
             >
               <Street2wrap>
-                <StreetAddresskyc>Street Address Line 2</StreetAddresskyc>
+                <StreetAddresskyc>
+                  {t("subhead_personal_form_street_address_line2.message")}
+                </StreetAddresskyc>
                 <Streetinputkyc
                   value={this.state.fields.address_2}
                   name="address_2"
                   onChange={this.onChangeFields}
-                  placeholder="Street Address"
+                  placeholder={t(
+                    "subhead_personal_form_street_address_line2.message"
+                  )}
                   autosize={{ minRows: 3, maxRows: 6 }}
                 />
                 {this.validator.message(
@@ -668,9 +745,11 @@ class KYCForm extends Component {
                   "max:100",
                   "text-danger-validation",
                   {
-                    required: "Street Address Line 2 field is required.",
-                    max:
-                      "Street Address Line 2 field should have max. 100 characters "
+                    required:
+                      t("subhead_personal_form_street_address_line2.message") +
+                      " " +
+                      t("validations:field_is_required.message"),
+                    max: t("postal_code_letters_numbers.message")
                   }
                 )}
               </Street2wrap>
@@ -728,7 +807,9 @@ class KYCForm extends Component {
                 xl={{ span: 24 }}
                 xxl={{ span: 24 }}
               >
-                <Postalkyc>Mobile No.*</Postalkyc>
+                <Postalkyc>
+                  {t("identity_verification:subhead_mobile_no.message")}*
+                </Postalkyc>
                 <PhoneDiv className="jkasdhkasjd">
                   {/* {console.log(
                     "Test",
@@ -767,9 +848,12 @@ class KYCForm extends Component {
                   "required|mobileVal|min:5|max:30",
                   "text-danger-validation",
                   {
-                    required: "Mobile No. field is required.",
-                    min: "Mobile No. should have min. 5 characters.",
-                    max: "Mobile No. should have max. 30 characters."
+                    required:
+                      t("identity_verification:subhead_mobile_no.message") +
+                      " " +
+                      t("validations:field_is_required.message"),
+                    min: t("validations:mobile_no_min_error.message"),
+                    max: t("validations:mobile_no_max_error.message")
                   }
                 )}
               </Col>
@@ -784,12 +868,15 @@ class KYCForm extends Component {
               xl={{ span: 24 }}
               xxl={{ span: 24 }}
             >
-              <Postalkyc>Postal Code*</Postalkyc>
+              <Postalkyc>
+                {" "}
+                {t("subhead_personal_form_postal_code.message")}*
+              </Postalkyc>
               <Zip
                 value={this.state.fields.zip}
                 name="zip"
                 onChange={this.onChangeFields}
-                placeholder="Postal Code"
+                placeholder={t("subhead_personal_form_postal_code.message")}
               />
               {this.validator.message(
                 "postal_code",
@@ -797,9 +884,12 @@ class KYCForm extends Component {
                 "required|min:3|max:25|zipValid",
                 "text-danger-validation",
                 {
-                  required: "Postal code field is required.",
-                  min: "Postal code should have min. 3 characters.",
-                  max: "Postal code should have max. 25 characters."
+                  required:
+                    t("subhead_personal_form_postal_code.message") +
+                    " " +
+                    t("validations:field_is_required.message"),
+                  min: t("validations.Postal_min_error.message"),
+                  max: t("validations.Postal_max_error.message")
                 }
               )}
             </Col>
@@ -852,4 +942,8 @@ const mapDispatchToProps = dispatch => ({
   kycformData: data => dispatch(kycformData(data))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(KYCForm);
+export default translate([
+  "edit_profile_titles",
+  "validations",
+  "identity_verification"
+])(connect(mapStateToProps, mapDispatchToProps)(KYCForm));

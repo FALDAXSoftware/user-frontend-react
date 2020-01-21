@@ -4,7 +4,7 @@ import "antd/dist/antd.css";
 import { connect } from "react-redux";
 import { notification, Icon } from "antd";
 import styled from "styled-components";
-
+import { translate } from "react-i18next";
 /* components */
 import { kycDoc, kycFormAction } from "ACTIONS/SETTINGS/passwordActions";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
@@ -398,11 +398,20 @@ class DocUpload extends Component {
   }
 
   render() {
+    const { t } = this.props;
+    console.log("this.props.docText", this.props.docText);
     return (
       <div>
         <SSNWrap>
           <SSNSub>
-            <SSNlabel>Upload Your {this.props.docText}</SSNlabel>
+            <SSNlabel>
+              {t("upload_your_text.message")}{" "}
+              {this.props.docText.toLowerCase() == "passport"
+                ? t("id_type_passport.message")
+                : this.props.docText.toLowerCase() == "driving license"
+                ? t("id_type_driving_licence.message")
+                : t("id_type_identity.message")}
+            </SSNlabel>
           </SSNSub>
           <Filewrap>
             <Fileselect1 className="file-select-col">
@@ -425,7 +434,7 @@ class DocUpload extends Component {
                 <Plus className="plus">
                   <Icon type={this.state.icon1} theme="outlined" />
                 </Plus>
-                <Plustext className="text">Front</Plustext>
+                <Plustext className="text">{t("front_text.message")}</Plustext>
               </ButtonUp>
               <Fileinput
                 onChange={this.handleProfile}
@@ -453,7 +462,7 @@ class DocUpload extends Component {
                 <Plus2 className="plus">
                   <Icon type={this.state.icon2} theme="outlined" />
                 </Plus2>
-                <Plustext2 className="text">Back</Plustext2>
+                <Plustext2 className="text">{t("back_text.message")}</Plustext2>
               </ButtonUp2>
               <Fileinput2
                 onChange={this.handleProfile}
@@ -467,10 +476,10 @@ class DocUpload extends Component {
         <ButtonWrap>
           <SubWrap>
             <BackButton onClick={this.back_step.bind(this)} type="primary">
-              Back
+              {t("back_text.message")}
             </BackButton>
             <NextButton onClick={this.next_step.bind(this)} type="primary">
-              Next
+              {t("subhead_btn_next.message")}
             </NextButton>
           </SubWrap>
         </ButtonWrap>
@@ -504,4 +513,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(kycFormAction(isLoggedIn, value))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DocUpload);
+export default translate("identity_verification")(
+  connect(mapStateToProps, mapDispatchToProps)(DocUpload)
+);

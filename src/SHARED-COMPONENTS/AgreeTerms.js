@@ -407,7 +407,7 @@ class AgreeTerms extends Component {
                 </div>
               ) : (
                 <NewButton onClick={e => this.dontAgreeTerms(e)}>
-                  {t("dont_agree_btn.messgae")}
+                  {t("dont_agree_btn.message")}
                 </NewButton>
               )}
               {/* )} */}
