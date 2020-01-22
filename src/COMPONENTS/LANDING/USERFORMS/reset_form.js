@@ -202,7 +202,8 @@ class ResetPassword extends Component {
           self.onChangeField(self.state.confPass, "confirm_password");
         }
       });
-      var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%_])[A-Za-z\d!@#$%_]{8,60}$/;
+      // var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%_])[A-Za-z\d!@#$%_]{8,60}$/;
+      var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~])[A-Za-z\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]{8,60}$/;
       var bool = re.test(value);
       var numb = /^\d+$/,
         letters = /^[A-Za-z]+$/,
