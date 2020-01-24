@@ -57,6 +57,7 @@ export default class Datepicker extends Component {
     */
 
   onChangeDate(date, type) {
+    // console.log("Step dob 4------->", fields);
     if (this.props.kyc !== "kyc") {
       if (type === "year") {
         this.setState({ year: date });
@@ -119,7 +120,7 @@ export default class Datepicker extends Component {
         fields[type] = date;
       }
       let propFields;
-      if (this.props.profileDetails.dob !== null) {
+      if (this.props.profileDetails.dob) {
         // console.log("Step 3------->", this.props.profileDetails.dob)
         propFields = this.props.profileDetails.dob.split("-");
         // console.log(fields, fields["day"], fields["month"]);
@@ -133,12 +134,22 @@ export default class Datepicker extends Component {
           fields["year"] = propFields[2];
         }
       }
-      // console.log("Step 4------->", fields);
+      console.log("Step dob 4------->", this.props.profileDetails.dob, fields);
       if (
         !moment([fields["year"]]).isLeapYear() &&
         (fields["month"] == "February" || fields["month"] == "02") &&
         (fields["day"] > 28 || (type === "day" && date > 28))
       ) {
+        console.log("Not Leapyear dob------->", fields);
+        this.setState({ day: "" });
+        fields["day"] = "";
+      }
+      if (
+        moment([fields["year"]]).isLeapYear() &&
+        (fields["month"] == "February" || fields["month"] == "02") &&
+        (fields["day"] > 29 || (type === "day" && date > 29))
+      ) {
+        console.log("Leapyear dob------->", fields);
         this.setState({ day: "" });
         fields["day"] = "";
       }
@@ -194,6 +205,16 @@ export default class Datepicker extends Component {
         (fields["month"] == "February" || fields["month"] == "02") &&
         (fields["day"] > 28 || (type === "day" && date > 28))
       ) {
+        // console.log("Step dob 4asdfsdf------->", fields);
+        this.setState({ day: "" });
+        fields["day"] = "";
+      }
+      if (
+        moment([fields["year"]]).isLeapYear() &&
+        (fields["month"] == "February" || fields["month"] == "02") &&
+        (fields["day"] > 29 || (type === "day" && date > 29))
+      ) {
+        // console.log("Step dob 786565asdfsdf------->", fields);
         this.setState({ day: "" });
         fields["day"] = "";
       }

@@ -270,69 +270,138 @@ class KYCForm extends Component {
       .then(responseData => {
         if (responseData.status === 200) {
           let fields = {};
-          fields["first_name"] =
-            responseData.data.first_name !== null
-              ? responseData.data.first_name
-              : "";
-          fields["last_name"] =
-            responseData.data.last_name !== null
-              ? responseData.data.last_name
-              : "";
-          fields["address"] =
-            responseData.data.address !== null ? responseData.data.address : "";
-          fields["address_2"] =
-            responseData.data.address_2 !== null
-              ? responseData.data.address_2
-              : "";
-          fields["zip"] =
-            responseData.data.zip !== null ? responseData.data.zip : "";
-          fields["city_town"] =
-            responseData.data.city_town !== null
-              ? responseData.data.city_town
-              : "";
-          fields["country"] =
-            responseData.data.country !== null ? responseData.data.country : "";
-          fields["state"] =
-            responseData.data.state !== null ? responseData.data.state : "";
-          fields["dob"] =
-            responseData.data.dob !== null ? responseData.data.dob : "";
-          fields["country_code"] =
-            responseData.data.country_code !== null
-              ? responseData.data.country_code
-              : "";
-          if (responseData.data.phone_number) {
-            fields["phone_number"] = responseData.data.phone_number;
-            // console.log("country_code", responseData.data.country_code);
-            let phone = responseData.data.phone_number;
-            let arr = [];
-            arr.push(responseData.data.country_code);
-            // console.log("country_code", this.state.phoneCountry);
-            // console.log(responseData.data.phone_number);
+          if (responseData.data.first_name) {
+            fields["first_name"] =
+              responseData.data.first_name !== null
+                ? responseData.data.first_name
+                : "";
+            fields["last_name"] =
+              responseData.data.last_name !== null
+                ? responseData.data.last_name
+                : "";
+            fields["address"] =
+              responseData.data.address !== null
+                ? responseData.data.address
+                : "";
+            fields["address_2"] =
+              responseData.data.address_2 !== null
+                ? responseData.data.address_2
+                : "";
+            fields["zip"] =
+              responseData.data.zip !== null ? responseData.data.zip : "";
+            fields["city_town"] =
+              responseData.data.city_town !== null
+                ? responseData.data.city_town
+                : "";
+            fields["country"] =
+              responseData.data.country !== null
+                ? responseData.data.country
+                : "";
+            fields["state"] =
+              responseData.data.state !== null ? responseData.data.state : "";
+            fields["dob"] =
+              responseData.data.dob !== null ? responseData.data.dob : "";
+            // console.log("kyc dob if", responseData.data.dob);
+            fields["country_code"] =
+              responseData.data.country_code !== null
+                ? responseData.data.country_code
+                : "";
+            if (responseData.data.phone_number) {
+              fields["phone_number"] = responseData.data.phone_number;
+              // console.log("country_code", responseData.data.country_code);
+              let phone = responseData.data.phone_number;
+              let arr = [];
+              arr.push(responseData.data.country_code);
+              // console.log("country_code", this.state.phoneCountry);
+              // console.log(responseData.data.phone_number);
 
-            this.setState(
-              {
-                countrychange: true,
-                mobile: responseData.data.phone_number,
-                phoneCountry: arr,
-                displayCountry: true
-              },
-              () => {
-                // console.log("KYC CHECK", responseData.data.country_code)
-                if (
-                  responseData.data.country_code == "US" ||
-                  responseData.data.country_code == "CA"
-                )
-                  self.setState({
-                    showSSN: true
-                  });
-              }
-            );
+              this.setState(
+                {
+                  countrychange: true,
+                  mobile: responseData.data.phone_number,
+                  phoneCountry: arr,
+                  displayCountry: true
+                },
+                () => {
+                  // console.log("KYC CHECK", responseData.data.country_code)
+                  if (
+                    responseData.data.country_code == "US" ||
+                    responseData.data.country_code == "CA"
+                  )
+                    self.setState({
+                      showSSN: true
+                    });
+                }
+              );
+            }
+            this.setState({
+              fields: fields,
+              kycData: responseData.data,
+              loader: false
+            });
+          } else {
+            // console.log("kyc else", this.props.profileDetails);
+            let profileData = this.props.profileDetails;
+            fields["first_name"] =
+              profileData.first_name !== null ? profileData.first_name : "";
+            fields["last_name"] =
+              profileData.last_name !== null ? profileData.last_name : "";
+            fields["address"] =
+              profileData.street_address !== null
+                ? profileData.street_address
+                : "";
+            fields["address_2"] =
+              profileData.street_address_2 !== null
+                ? profileData.street_address_2
+                : "";
+            fields["zip"] =
+              profileData.postal_code !== null ? profileData.postal_code : "";
+            fields["city_town"] =
+              profileData.city_town !== null ? profileData.city_town : "";
+            fields["country"] =
+              profileData.country !== null ? profileData.country : "";
+            fields["state"] =
+              profileData.state !== null ? profileData.state : "";
+            fields["dob"] =
+              profileData.dob !== null
+                ? moment(profileData.dob).format("YYYY-DD-MM")
+                : "";
+            fields["country_code"] =
+              profileData.country_code !== null ? profileData.country_code : "";
+            let dob = moment(profileData.dob).format("YYYY-DD-MM");
+            // console.log("kyc dob else", dob);
+            if (profileData.phone_number) {
+              fields["phone_number"] = profileData.phone_number;
+              let phone = profileData.phone_number;
+              let arr = [];
+              arr.push(profileData.country_code);
+              this.setState(
+                {
+                  countrychange: true,
+                  mobile: profileData.phone_number,
+                  phoneCountry: arr,
+                  displayCountry: true
+                },
+                () => {
+                  if (
+                    profileData.country_code == "US" ||
+                    profileData.country_code == "CA"
+                  )
+                    self.setState({
+                      showSSN: true
+                    });
+                }
+              );
+            }
+            let temp = profileData;
+            temp["dob"] = moment(profileData.dob).format("YYYY-DD-MM");
+
+            this.setState({
+              fields: fields,
+              kycData: temp,
+              loader: false
+            });
           }
-          this.setState({
-            fields: fields,
-            kycData: responseData.data,
-            loader: false
-          });
         } else {
           this.openNotificationWithIcon(
             "error",
@@ -420,6 +489,15 @@ class KYCForm extends Component {
     */
 
   onCountryChange(country, state, city, country_code, phoneCode, phone_number) {
+    // console.log(
+    //   "^^^kyc",
+    //   country,
+    //   state,
+    //   city,
+    //   country_code,
+    //   phoneCode,
+    //   phone_number
+    // );
     let fields = this.state.fields;
     if (this.state.fields.country === country) {
       // alert("same");
@@ -462,6 +540,7 @@ class KYCForm extends Component {
       ) {
         mobile = `+${phoneCode}`;
       }
+      // console.log("^^^^^", country_code, mobile);
       this.setState(
         {
           phoneCountry: [country_code],
