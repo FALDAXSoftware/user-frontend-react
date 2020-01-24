@@ -213,7 +213,7 @@ class Afterlog extends Component {
   render() {
     const DropdownItems = (
       <Menu className="fixed-drop">
-        <Menu.Item key="0">User ID: {this.props.profileDetails.id}</Menu.Item>
+        {/* <Menu.Item key="0">User ID: {this.props.profileDetails.id}</Menu.Item> */}
         <Menu.Item key="1">
           <a onClick={() => this.props.history.push("/editProfile")}>
             {" "}
