@@ -449,6 +449,12 @@ table .ant-table-tbody > tr > td {
   outline: 0;
   box-shadow: none;
 }
+#profile-day[disabled]:hover,
+#profile-month[disabled]:hover,
+#profile-year[disabled]:hover {
+  border-color: #dadfe3;
+  cursor: not-allowed;
+}
 .terms-outer-wrap .ant-modal-body {
   height: calc(100vh - 210px);
   overflow: auto;
