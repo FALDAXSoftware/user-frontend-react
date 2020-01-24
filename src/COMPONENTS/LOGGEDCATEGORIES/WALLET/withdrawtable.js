@@ -127,7 +127,7 @@ class WithdrawTable extends React.Component {
                   {/* <SubHead>SEND/RECEIVE</SubHead> */}
                   <SubHead>SOURCE ADDRESS</SubHead>
                   <SubHead>DESTINATION ADDRESS</SubHead>
-                  <SubHead>BASE AMOUNT</SubHead>
+                  <SubHead>AMOUNT</SubHead>
                   <SubHead>STATUS</SubHead>
                   <SubHead>REASON</SubHead>
                   {/* <Sub_head>USD

@@ -150,7 +150,11 @@ class Acc_settings extends Component {
         key: "title"
       },
       {
-        title: "Text",
+        title: (
+          <>
+            Text <Checkbox></Checkbox>
+          </>
+        ),
         className: "column-Text",
         dataIndex: "text",
         key: "text",
@@ -166,7 +170,11 @@ class Acc_settings extends Component {
         }
       },
       {
-        title: "Email",
+        title: (
+          <>
+            Email <Checkbox></Checkbox>
+          </>
+        ),
         className: "column-Email",
         dataIndex: "email",
         key: "email",
