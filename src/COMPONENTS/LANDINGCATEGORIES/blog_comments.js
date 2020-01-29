@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Spin } from 'antd';
 import moment from 'moment';
 import { SpinEx } from 'STYLED-COMPONENTS/HOMEPAGE/style'
-import { globalVariables } from "Globals"
+import { globalVariables } from "Globals.js"
 import {
     PostHeadBelow, CommentBox, PostHeadSpan, CommentSpan1, CommentButton, CommentArea,
     AllComments, CommentWrap, CommentImage, CommentSpan2, CommentP, CommentText,
