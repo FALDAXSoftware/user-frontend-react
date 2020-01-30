@@ -576,7 +576,7 @@ class WalletPopup extends Component {
       let faldaxFee = parseFloat(
         e.target.value * (this.props.coinFee / 100)
       ).toFixed(8);
-      console.log("^^^^^", subtotal);
+      // console.log("^^^^^", subtotal);
       fields["subtotal"] = subtotal;
       this.setState(
         {
@@ -758,7 +758,7 @@ class WalletPopup extends Component {
                                         </DropdownButtonS>
                                     </ButtonToolbarS> */}
                   {/* </Sec_wrap> */}
-                  {/* {console.log(this.props.coinFee)} */}
+                  {/* {console.log("^^^", this.state.faldaxFee)} */}
                   <TotDiv>
                     <Fee>
                       <span>

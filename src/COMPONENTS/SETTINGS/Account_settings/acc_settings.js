@@ -1138,7 +1138,7 @@ class Acc_settings extends Component {
     ];
 
     const { fields, data_noti, savedDataNoti, startValue } = this.state;
-    console.log("Render method data is >>", this.state.data_noti);
+    // console.log("Render method data is >>", this.state.data_noti);
     const columnsIP = [
       {
         title: "IP Whitelist",

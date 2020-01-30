@@ -255,7 +255,7 @@ class ResetPassword extends Component {
             document.querySelectorAll(".pass_msg")[0].style.display = "block";
             this.setState({
               pass_msg:
-                "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters."
+                "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_^&*), and one number. Minimum 8 characters and maximum 60 characters."
             });
           }
         }
