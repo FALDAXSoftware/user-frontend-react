@@ -99,6 +99,23 @@ export const TableWrap = styled.div`
   margin-left: auto;
   margin-right: auto;
   border-radius: 5px;
+  @media (min-width: 1980px) {
+    &.historyTable {
+      width: 100%;
+      > .history_table {
+        width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    > .history_table {
+      > .ant-spin-nested-loading {
+        width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
   & .ant-table-placeholder {
     background-color: ${props =>
       props.theme.mode === "dark" ? "#041421" : ""};
@@ -132,6 +149,13 @@ export const DeleteDesc = styled.div`
   display: flex;
   justify-content: center;
   color: ${props => (props.theme.mode === "dark" ? "#3c4b64" : "")};
+  @media (min-width: 1980px) {
+    &.maxWidth {
+      width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
 `;
 export const DeleteBtn = styled.div`
   margin-top: 35px;

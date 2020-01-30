@@ -476,8 +476,11 @@ class PasswordChange extends Component {
         document.querySelectorAll(".newchange_msg")[0].style.display = "none";
         document.querySelectorAll(".confirmchange_msg")[0].style.display =
           "none";
-
         this.props.passwordChange(this.props.isLoggedIn, value);
+        document.querySelector("#newchange_icon_success").style.display =
+          "none";
+        document.querySelector("#confirmchange_icon_success").style.display =
+          "none";
       } else {
         if (
           value.current_password === "" ||
