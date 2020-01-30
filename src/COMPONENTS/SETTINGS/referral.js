@@ -77,7 +77,9 @@ const Ref_div = styled.div`
   margin-top: 40px;
   border-radius: 10px;
   height: auto;
-
+  @media (min-width: 2500px) {
+    width: 40%;
+  }
   & .coin-value {
     width: 200px !important;
   }
@@ -222,9 +224,12 @@ const Ref_acc = styled.div`
   border-radius: 10px;
   height: auto;
   margin-bottom: 65px;
-  overflow: scroll;
+  overflow: auto;
   > div {
     border-radius: 10px;
+  }
+  @media (min-width: 2500px) {
+    width: 40%;
   }
 `;
 

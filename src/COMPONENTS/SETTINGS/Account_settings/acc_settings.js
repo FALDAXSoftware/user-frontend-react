@@ -1239,7 +1239,7 @@ class Acc_settings extends Component {
               {/* <span>This feature provides information about the last activity on this mail account and any concurrent activity.</span> */}
             </Desc>
           </HistoryHead>
-          <TableWrap>
+          <TableWrap className="historyTable">
             <Table
               className={this.state.historyCSS}
               pagination={false}
@@ -1270,7 +1270,8 @@ class Acc_settings extends Component {
             <span>Security Settings</span>
           </DeleteHead>
           <DeleteDesc
-          // style={{ display: "flex", justifyContent: "center" }}
+            className="maxWidth"
+            // style={{ display: "flex", justifyContent: "center" }}
           >
             <div
             // style={{ width: "1000px" }}
@@ -1353,7 +1354,7 @@ class Acc_settings extends Component {
           <DeleteHead>
             <span>Deactivate Account</span>
           </DeleteHead>
-          <DeleteDesc>
+          <DeleteDesc className="maxWidth">
             <span>Click on the button below to deactivate your account.</span>
           </DeleteDesc>
           <DeleteBtn>
