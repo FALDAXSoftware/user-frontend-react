@@ -754,7 +754,7 @@ class PersonalDetails extends Component {
       var re = value;
       var value = value.trim("");
       if (value !== "") {
-        if (value.length < 100) {
+        if (value.length <= 100) {
           this.setState({ street1Icon: true });
           document.querySelectorAll(".street1_msg")[0].style.display = "none";
         } else {

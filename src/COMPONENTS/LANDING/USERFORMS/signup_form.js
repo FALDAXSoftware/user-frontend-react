@@ -545,7 +545,7 @@ class SignupForm extends Component {
           "inline-block";
         document.querySelectorAll(".last_sign")[0].style.display = "block";
         if (value === "" || value === undefined) {
-          this.setState({ last_msg: "Last Name is required" });
+          this.setState({ last_msg: "Last name is required" });
         }
       }
     } else if (field === "password") {
