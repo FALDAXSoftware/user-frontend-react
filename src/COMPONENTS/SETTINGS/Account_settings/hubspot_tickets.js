@@ -24,6 +24,7 @@ import {
   Status,
   Date,
   NDF,
+  TicketA,
   TicketTitle
 } from "STYLED-COMPONENTS/SETTINGS/hubspotStyle";
 import styled from "styled-components";
@@ -45,7 +46,8 @@ class HubSpotTickets extends Component {
     super(props);
     this.state = {
       ticketData: null,
-      loader: false
+      loader: false,
+      showDescription: false
     };
   }
   /* Life-Cycle Methods */
@@ -147,10 +149,36 @@ class HubSpotTickets extends Component {
                             {temp.properties.subject &&
                               temp.properties.subject.value}
                           </Title>
-                          <Desc>
+
+                          <Desc
+                            className={
+                              this.state.showDescription ? "" : "description"
+                            }
+                          >
                             {temp.properties.content &&
                               temp.properties.content.value}
                           </Desc>
+                          {!this.state.showDescription ? (
+                            <TicketA
+                              onClick={() => {
+                                this.setState({
+                                  showDescription: true
+                                });
+                              }}
+                            >
+                              Read more
+                            </TicketA>
+                          ) : (
+                            <TicketA
+                              onClick={() => {
+                                this.setState({
+                                  showDescription: false
+                                });
+                              }}
+                            >
+                              Read less
+                            </TicketA>
+                          )}
                         </Col>
                       </TicketWrap>
                     ))
