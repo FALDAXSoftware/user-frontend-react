@@ -714,10 +714,24 @@ class PersonalDetails extends Component {
         this.setState({ countrymsg });
       }
     } else if (field === "dob") {
-      // console.log("Step 4 ------>", value);
+      console.log("^^^^^^", value);
       if (value["day"] && value["month"] && value["year"]) {
         this.setState({ dobIcon: true });
         document.querySelectorAll(".dob_msg")[0].style.display = "none";
+      } else if (
+        (value["day"] === "" ||
+          value["day"] === undefined ||
+          value["day"] === null) &&
+        (value["month"] === "" ||
+          value["month"] === undefined ||
+          value["month"] === null) &&
+        (value["year"] === "" ||
+          value["year"] === undefined ||
+          value["year"] === null)
+      ) {
+        this.setState({ dobIcon: false });
+        document.querySelectorAll(".dob_msg")[0].style.display = "block";
+        this.setState({ dobmsg: "Date of Birth field is required." });
       } else if (value["day"] === "" || value["day"] === "") {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";
@@ -944,7 +958,7 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";
-        this.setState({ dobmsg: "Date of Birth is required." });
+        this.setState({ dobmsg: "Date of Birth field is required." });
       }
       if (
         (this.state.street1Icon === null || this.state.street1Icon === false) &&
@@ -1146,7 +1160,7 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";
-        this.setState({ dobmsg: "Date of Birth is required." });
+        this.setState({ dobmsg: "Date of Birth field is required." });
       }
       if (
         this.state.street1Icon === null &&
