@@ -77,9 +77,9 @@ const LoginHead = styled.div`
   padding-bottom: 10px;
   border-bottom: 3px solid #ced9e0;
   display: inline-block;
-  @media (max-width: 400px) {
-    border-bottom: none;
-  }
+  // @media (max-width: 400px) {
+  //   border-bottom: none;
+  // }
 `;
 const SubText = styled.span`
   font-size: 16px;
