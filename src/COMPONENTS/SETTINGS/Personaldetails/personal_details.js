@@ -752,26 +752,27 @@ class PersonalDetails extends Component {
       // }
     } else if (field === "street_address") {
       var re = value;
-      var value = value.trim("");
-      if (value !== "") {
+      // var value = value.trim("");
+      if (value.trim("") !== "") {
         if (value.length <= 100) {
           this.setState({ street1Icon: true });
           document.querySelectorAll(".street1_msg")[0].style.display = "none";
+          if (re === value.trim("")) {
+            this.setState({ street1Icon: true });
+            document.querySelectorAll(".street1_msg")[0].style.display = "none";
+          } else {
+            this.setState({ street1Icon: false });
+            document.querySelectorAll(".street1_msg")[0].style.display =
+              "block";
+            this.setState({
+              street1msg: "Space is not allowed in prefix/suffix."
+            });
+          }
         } else {
           this.setState({ street1Icon: false });
           document.querySelectorAll(".street1_msg")[0].style.display = "block";
           this.setState({
             street1msg: "Street Address limit is 100 characters"
-          });
-        }
-        if (re === value) {
-          this.setState({ street1Icon: true });
-          document.querySelectorAll(".street1_msg")[0].style.display = "none";
-        } else {
-          this.setState({ street1Icon: false });
-          document.querySelectorAll(".street1_msg")[0].style.display = "block";
-          this.setState({
-            street1msg: "Space is not allowed in prefix/suffix."
           });
         }
       } else {

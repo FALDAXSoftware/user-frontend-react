@@ -237,7 +237,7 @@ class ResetPassword extends Component {
           var regex = /\s/;
           let check = regex.test(value);
           if (check) {
-            this.setState({ newpassIcon: false });
+            this.setState({ newpassIcon: false, password: value });
             document.querySelector("#newchange_icon_success").style.display =
               "none";
             document.querySelector("#newchange_icon_fail").style.display =
@@ -247,7 +247,7 @@ class ResetPassword extends Component {
               pass_msg: "Your password must not contain space."
             });
           } else {
-            this.setState({ newpassIcon: false });
+            this.setState({ newpassIcon: false, password: value });
             document.querySelector("#newchange_icon_success").style.display =
               "none";
             document.querySelector("#newchange_icon_fail").style.display =
@@ -260,7 +260,7 @@ class ResetPassword extends Component {
           }
         }
       } else {
-        this.setState({ newpassIcon: false, percent: 0 });
+        this.setState({ newpassIcon: false, percent: 0, password: value });
         document.querySelector("#newchange_icon_success").style.display =
           "none";
         document.querySelector("#newchange_icon_fail").style.display = "none";
@@ -292,7 +292,7 @@ class ResetPassword extends Component {
           });
         }
       } else {
-        this.setState({ confirmIcon: false });
+        this.setState({ confirmIcon: false, confPass: value });
         document.querySelector("#confirmchange_icon_success").style.display =
           "none";
         document.querySelector("#confirmchange_icon_fail").style.display =

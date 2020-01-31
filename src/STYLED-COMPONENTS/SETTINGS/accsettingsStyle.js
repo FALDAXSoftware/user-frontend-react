@@ -168,6 +168,13 @@ export const ButtonDel = styled(Button)`
   width: 240px;
   border-radius: 40px;
   height: 50px;
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: ${props =>
+      props.theme.mode === "dark" ? "#a21d1d" : "#fce8e8"};
+    color: ${props => (props.theme.mode === "dark" ? "white" : "#fe1f1f")};
+  }
 `;
 export const PaginationS = styled(Pagination)`
   margin-top: 30px !important;
