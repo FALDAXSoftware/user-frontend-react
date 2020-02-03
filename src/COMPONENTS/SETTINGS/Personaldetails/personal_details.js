@@ -874,6 +874,7 @@ class PersonalDetails extends Component {
     );
   }
   openAgreePopup = () => {
+    console.log(this.state.dateFIcon);
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
@@ -881,6 +882,7 @@ class PersonalDetails extends Component {
         error === null &&
         this.state.fiatIcon !== false &&
         this.state.dateFIcon !== false &&
+        this.state.dateFIcon !== null &&
         this.state.firstIcon !== false &&
         this.state.lastIcon !== false &&
         this.state.countryIcon !== false &&
@@ -919,12 +921,12 @@ class PersonalDetails extends Component {
         this.setState({ firstmsg: "First Name field is required." });
       }
       if (
-        this.state.lastIcon === null &&
-        this.props.profileDetails.last_name === null
+        this.state.firstIcon === null &&
+        this.props.profileDetails.first_name === null
       ) {
-        this.setState({ lastIcon: false });
-        document.querySelectorAll(".last_msg")[0].style.display = "block";
-        this.setState({ lastmsg: "Last Name field is required." });
+        this.setState({ firstIcon: false });
+        document.querySelectorAll(".first_msg")[0].style.display = "block";
+        this.setState({ firstmsg: "First Name field is required." });
       }
       if (
         (this.state.countryIcon === null || this.state.countryIcon === false) &&
@@ -991,7 +993,7 @@ class PersonalDetails extends Component {
         this.setState({ fiatmsg: "currency is required." });
       }
       if (
-        this.state.dateFIcon !== true &&
+        (this.state.dateFIcon !== true || this.state.dateFIcon === null) &&
         this.props.profileDetails.date_format === ""
       ) {
         this.setState({ dateFIcon: false });
@@ -1188,7 +1190,7 @@ class PersonalDetails extends Component {
         this.setState({ fiatmsg: "currency is required." });
       }
       if (
-        this.state.dateFIcon !== true &&
+        (this.state.dateFIcon !== true || this.state.dateFIcon === null) &&
         this.props.profileDetails.date_format === ""
       ) {
         this.setState({ dateFIcon: false });
@@ -1577,6 +1579,9 @@ class PersonalDetails extends Component {
                                 /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
                                 document.querySelectorAll(
                                   ".postal_msg"
+                                )[0].style.display = "none";
+                                document.querySelectorAll(
+                                  ".df_msg"
                                 )[0].style.display = "none";
                               }
                             );
