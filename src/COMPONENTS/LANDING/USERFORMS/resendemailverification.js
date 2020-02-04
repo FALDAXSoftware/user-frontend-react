@@ -68,7 +68,6 @@ const HorImg = styled.img`
 `;
 const FormWrap = styled.div`
   padding-left: 100px;
-
   background-color: #f0f3f2;
   min-height: 100vh;
   display: flex;
@@ -80,11 +79,18 @@ const FormWrap = styled.div`
   @media (max-width: 767px) {
     padding: 30px;
   }
+  @media (min-width: 2000px) {
+    padding: 0;
+  }
 `;
 const RightWrap = styled.div`
   width: 100%;
   @media (max-width: 991px) {
     height: auto;
+  }
+  @media (min-width: 2000px) {
+    width: 60%;
+    margin: 0 auto;
   }
 `;
 const LoginHead = styled.div`

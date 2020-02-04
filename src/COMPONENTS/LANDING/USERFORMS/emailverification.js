@@ -101,6 +101,9 @@ const SubText = styled.span`
 `;
 
 class EmailVerification extends Component {
+  // componentDidMount() {
+  //   // console.log("mount", this.props.location.state);
+  // }
   render() {
     return (
       <div>
@@ -123,7 +126,10 @@ class EmailVerification extends Component {
                 <WelcomeText>
                   To continue, please verify your new email address.
                 </WelcomeText>
-                <SubText>Please check your updated email address.</SubText>
+                <SubText>
+                  Please check your updated email address{" "}
+                  {this.props.location.state}.
+                </SubText>
               </RightWrap>
             </FormWrap>
           </ColRight>
