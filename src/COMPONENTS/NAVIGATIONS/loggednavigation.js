@@ -279,6 +279,9 @@ const NavLink = styled(Link)`
   &:hover {
     color: #1890ff !important;
   }
+  @media (min-width: 2000px) {
+    font-size: 20px;
+  }
 `;
 /* const LogNav = styled.span`
     color: ${props => props.theme.mode === "dark" ? "white" : "black"} !important;
