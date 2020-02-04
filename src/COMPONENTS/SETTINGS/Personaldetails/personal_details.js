@@ -874,7 +874,6 @@ class PersonalDetails extends Component {
     );
   }
   openAgreePopup = () => {
-    console.log(this.state.dateFIcon);
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
@@ -882,7 +881,6 @@ class PersonalDetails extends Component {
         error === null &&
         this.state.fiatIcon !== false &&
         this.state.dateFIcon !== false &&
-        this.state.dateFIcon !== null &&
         this.state.firstIcon !== false &&
         this.state.lastIcon !== false &&
         this.state.countryIcon !== false &&
