@@ -89,12 +89,19 @@ export const FormWrap = styled.div`
   @media (max-width: 767px) {
     padding: 30px;
   }
+  @media (min-width: 2000px) {
+    padding: 0;
+  }
 `;
 const RightWrap = styled.div`
   overflow: auto;
   height: 100vh;
   @media (max-width: 991px) {
     height: auto;
+  }
+  @media (min-width: 2000px) {
+    width: 60%;
+    margin: 0 auto;
   }
 `;
 const LoginHead = styled.div`
@@ -223,6 +230,9 @@ export const ButtonLabel = styled.input`
 `;
 const ProgressBar = styled(Progress)`
   width: 77%;
+  @media (min-width: 2000px) {
+    width: 95%;
+  }
 `;
 const FAI = styled.img`
   margin-left: -35px;
@@ -800,13 +810,13 @@ class SignupForm extends Component {
                   <PhLabel>Email Address*</PhLabel>
                   <div>
                     <Email
-                      type="email"
+                      // type="email"
                       {...getFieldProps("email", {
                         onChange(e) {
                           me.onChangeField(e.target.value, "email");
                         }, // have to write original onChange here if you need
                         initialValue: me.props.init,
-                        rules: [{ type: "email", required: true }]
+                        rules: [{ type: "string", required: true }]
                       })}
                     />
                     <EmailIconS

@@ -41,6 +41,9 @@ const PassLabel = styled(EmailLabel)`
 `;
 const PasswordReq = styled(PassReq)`
   display: block;
+  @media (min-width: 2000px) {
+    width: 95%;
+  }
 `;
 const PassconfirmLabel = styled(EmailLabel)`
   margin-top: 30px;
@@ -49,7 +52,11 @@ const Full = styled(Username)`
   margin-top: 15px;
   padding-right: 40px;
 `;
-const FullReq = styled(EmailReq)``;
+const FullReq = styled(EmailReq)`
+  @media (min-width: 2000px) {
+    width: 95%;
+  }
+`;
 const CommonReq = styled(EmailReq)``;
 const Password = styled(Username)`
   margin-top: 15px;
@@ -143,11 +150,18 @@ const FormWrap = styled.div`
   @media (max-width: 767px) {
     padding: 30px;
   }
+  @media (min-width: 2000px) {
+    padding: 0;
+  }
 `;
 const RightWrap = styled.div`
   width: 100%;
   @media (max-width: 991px) {
     height: auto;
+  }
+  @media (min-width: 2000px) {
+    width: 60%;
+    margin: 0 auto;
   }
 `;
 const FAI = styled.img`
@@ -165,6 +179,9 @@ const Progressbar = styled(Progress)`
   width: 76%;
   > div > .ant-progress-text {
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  }
+  @media (min-width: 2000px) {
+    width: 95%;
   }
 `;
 let password;
@@ -346,6 +363,34 @@ class ResetPassword extends Component {
           this.props.history.push("/login");
         } else {
           this.openNotificationWithProfile("error", "Error", responseData.err);
+        }
+      })
+      .catch(error => {});
+  };
+  componentDidMount() {
+    this._resetPasswordTokenCheck();
+  }
+  _resetPasswordTokenCheck = () => {
+    let url = this.props.location.search.split("=");
+
+    let form = {};
+    // form["password"] = value.password;
+    form["reset_token"] = url[1];
+
+    fetch(`${globalVariables.API_URL}/users/check-forgot-password-token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(form)
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status === 400) {
+          this.openNotificationWithProfile("error", "Error", responseData.err);
+          // this.props.history.push("/login");
+        } else {
+          // this.openNotificationWithProfile("error", "Error", responseData.err);
         }
       })
       .catch(error => {});

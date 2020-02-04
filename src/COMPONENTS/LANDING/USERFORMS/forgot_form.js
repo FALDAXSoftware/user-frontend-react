@@ -157,6 +157,10 @@ const BackLink = styled.a``;
 
 export const RightLogin = styled.div`
   width: 100%;
+  @media (min-width: 2000px) {
+    width: 60%;
+    margin: 0 auto;
+  }
 `;
 
 class ForgotForm extends Component {
