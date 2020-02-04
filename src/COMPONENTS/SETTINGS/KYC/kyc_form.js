@@ -394,13 +394,26 @@ class KYCForm extends Component {
               );
             }
             let temp = profileData;
-            temp["dob"] = moment(profileData.dob).format("YYYY-DD-MM");
-
-            this.setState({
-              fields: fields,
-              kycData: temp,
-              loader: false
-            });
+            temp["dob"] = moment(profileData.dob, "DD-MM-YYYY").format(
+              "YYYY-MM-DD"
+            );
+            // temp["dob"] = profileData.dob;
+            // console.log(
+            //   "dob",
+            //   profileData.dob,
+            //   moment(profileData.dob),
+            //   moment(profileData.dob, "DD-MM-YYYY").format("YYYY-DD-MM")
+            // );
+            this.setState(
+              {
+                fields: fields,
+                kycData: temp,
+                loader: false
+              },
+              () => {
+                // console.log("dob", this.state.kycData);
+              }
+            );
           }
         } else {
           this.openNotificationWithIcon(
