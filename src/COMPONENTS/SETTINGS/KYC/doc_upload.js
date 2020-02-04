@@ -241,11 +241,32 @@ class DocUpload extends Component {
                       _self.state.targetName
                     );
                   } else {
+                    if (_self.state.targetName === "front-doc") {
+                      _self.setState({
+                        profileImg: "Default Photo",
+                        imageName: "",
+                        imageType: fileType,
+                        profileImage: "",
+                        icon1: "plus",
+                        displayFirst: "none"
+                      });
+                    } else {
+                      _self.setState({
+                        profileImg2: "Default Photo",
+                        imageName2: "",
+                        imageType2: fileType,
+                        profileImage2: "",
+                        icon2: "plus",
+                        displaySecond: "none"
+                      });
+                    }
                     _self.openNotificationWithIcon(
                       "error",
                       "File Size",
                       "File should be greater than 450*600 in dimension"
                     );
+                    document.getElementById("front").value = "";
+                    document.getElementById("back").value = "";
                   }
                 };
                 img.src = fr.result;
@@ -256,6 +277,9 @@ class DocUpload extends Component {
                   profileImg: "Default Photo",
                   imageName: "",
                   imageType: fileType,
+                  profileImage: "",
+                  icon1: "plus",
+                  displayFirst: "none",
                   imagemsg: "Please select image with less then 5 mb"
                 });
               } else {
@@ -263,7 +287,10 @@ class DocUpload extends Component {
                   profileImg2: "Default Photo",
                   imageName2: "",
                   imageType2: fileType,
-                  imagemsg2: "Please select image with less then 5 mb"
+                  imagemsg2: "Please select image with less then 5 mb",
+                  profileImage2: "",
+                  icon2: "plus",
+                  displaySecond: "none"
                 });
               }
               _self.openNotificationWithIcon(
@@ -274,7 +301,8 @@ class DocUpload extends Component {
               document.getElementById("front").value = "";
               document.getElementById("back").value = "";
             }
-          } else {
+          } else if (fileType) {
+            // console.log(fileType);
             _self.openNotificationWithIcon(
               "error",
               "File Format",

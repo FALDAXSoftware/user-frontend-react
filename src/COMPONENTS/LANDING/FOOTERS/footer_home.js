@@ -46,6 +46,9 @@ const Footerheaders = styled.li`
   @media (max-width: 1200px) {
     margin-top: 30px;
   }
+  @media (min-width: 2000px) {
+    font-size: 22px;
+  }
 `;
 const Footerul = styled.ul`
   margin-top: 20px;
@@ -128,6 +131,9 @@ const Download = styled.span`
   @media (max-width: 1200px) {
     margin-top: 30px;
   }
+  @media (min-width: 2000px) {
+    font-size: 22px;
+  }
 `;
 const StoreCol = styled(Col)`
   margin-top: 20px;
@@ -184,6 +190,9 @@ const FooterLink = styled.a`
   cursor: pointer;
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb(0, 0, 0, 0.65)"};
+  @media (min-width: 2000px) {
+    font-size: 20px;
+  }
 `;
 const CareerLink = styled(Link)`
   color: ${props =>
@@ -284,7 +293,7 @@ class FooterHome extends Component {
 
     return (
       <Footermain>
-        <Container>
+        <Container className="footer_main_div">
           <FooterContainer>
             <Row>
               <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>

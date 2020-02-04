@@ -32,15 +32,18 @@ const LoginHead = styled.div`
   padding-bottom: 10px;
   border-bottom: 3px solid #ced9e0;
   display: inline-block;
-  @media (max-width: 400px) {
-    border-bottom: none;
-  }
+  // @media (max-width: 400px) {
+  //   border-bottom: none;
+  // }
 `;
 const PassLabel = styled(EmailLabel)`
   margin-top: 50px;
 `;
 const PasswordReq = styled(PassReq)`
   display: block;
+  @media (min-width: 2000px) {
+    width: 95%;
+  }
 `;
 const PassconfirmLabel = styled(EmailLabel)`
   margin-top: 30px;
@@ -49,7 +52,11 @@ const Full = styled(Username)`
   margin-top: 15px;
   padding-right: 40px;
 `;
-const FullReq = styled(EmailReq)``;
+const FullReq = styled(EmailReq)`
+  @media (min-width: 2000px) {
+    width: 95%;
+  }
+`;
 const CommonReq = styled(EmailReq)``;
 const Password = styled(Username)`
   margin-top: 15px;
@@ -143,11 +150,18 @@ const FormWrap = styled.div`
   @media (max-width: 767px) {
     padding: 30px;
   }
+  @media (min-width: 2000px) {
+    padding: 0;
+  }
 `;
 const RightWrap = styled.div`
   width: 100%;
   @media (max-width: 991px) {
     height: auto;
+  }
+  @media (min-width: 2000px) {
+    width: 60%;
+    margin: 0 auto;
   }
 `;
 const FAI = styled.img`
@@ -165,6 +179,9 @@ const Progressbar = styled(Progress)`
   width: 76%;
   > div > .ant-progress-text {
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  }
+  @media (min-width: 2000px) {
+    width: 95%;
   }
 `;
 let password;
@@ -202,7 +219,8 @@ class ResetPassword extends Component {
           self.onChangeField(self.state.confPass, "confirm_password");
         }
       });
-      var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%_])[A-Za-z\d!@#$%_]{8,60}$/;
+      // var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%_])[A-Za-z\d!@#$%_]{8,60}$/;
+      var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~])[A-Za-z\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]{8,60}$/;
       var bool = re.test(value);
       var numb = /^\d+$/,
         letters = /^[A-Za-z]+$/,
@@ -233,19 +251,33 @@ class ResetPassword extends Component {
           document.querySelector("#newchange_icon_fail").style.display = "none";
           document.querySelectorAll(".pass_msg")[0].style.display = "none";
         } else {
-          this.setState({ newpassIcon: false });
-          document.querySelector("#newchange_icon_success").style.display =
-            "none";
-          document.querySelector("#newchange_icon_fail").style.display =
-            "inline-block";
-          document.querySelectorAll(".pass_msg")[0].style.display = "block";
-          this.setState({
-            pass_msg:
-              "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters."
-          });
+          var regex = /\s/;
+          let check = regex.test(value);
+          if (check) {
+            this.setState({ newpassIcon: false, password: value });
+            document.querySelector("#newchange_icon_success").style.display =
+              "none";
+            document.querySelector("#newchange_icon_fail").style.display =
+              "inline-block";
+            document.querySelectorAll(".pass_msg")[0].style.display = "block";
+            this.setState({
+              pass_msg: "Your password must not contain space."
+            });
+          } else {
+            this.setState({ newpassIcon: false, password: value });
+            document.querySelector("#newchange_icon_success").style.display =
+              "none";
+            document.querySelector("#newchange_icon_fail").style.display =
+              "inline-block";
+            document.querySelectorAll(".pass_msg")[0].style.display = "block";
+            this.setState({
+              pass_msg:
+                "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_^&*), and one number. Minimum 8 characters and maximum 60 characters."
+            });
+          }
         }
       } else {
-        this.setState({ newpassIcon: false, percent: 0 });
+        this.setState({ newpassIcon: false, percent: 0, password: value });
         document.querySelector("#newchange_icon_success").style.display =
           "none";
         document.querySelector("#newchange_icon_fail").style.display = "none";
@@ -277,7 +309,7 @@ class ResetPassword extends Component {
           });
         }
       } else {
-        this.setState({ confirmIcon: false });
+        this.setState({ confirmIcon: false, confPass: value });
         document.querySelector("#confirmchange_icon_success").style.display =
           "none";
         document.querySelector("#confirmchange_icon_fail").style.display =
@@ -331,6 +363,34 @@ class ResetPassword extends Component {
           this.props.history.push("/login");
         } else {
           this.openNotificationWithProfile("error", "Error", responseData.err);
+        }
+      })
+      .catch(error => {});
+  };
+  componentDidMount() {
+    this._resetPasswordTokenCheck();
+  }
+  _resetPasswordTokenCheck = () => {
+    let url = this.props.location.search.split("=");
+
+    let form = {};
+    // form["password"] = value.password;
+    form["reset_token"] = url[1];
+
+    fetch(`${globalVariables.API_URL}/users/check-forgot-password-token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(form)
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status === 400) {
+          this.openNotificationWithProfile("error", "Error", responseData.err);
+          // this.props.history.push("/login");
+        } else {
+          // this.openNotificationWithProfile("error", "Error", responseData.err);
         }
       })
       .catch(error => {});

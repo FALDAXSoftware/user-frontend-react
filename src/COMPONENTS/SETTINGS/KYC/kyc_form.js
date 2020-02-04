@@ -154,7 +154,7 @@ class KYCForm extends Component {
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^[a-zA-Z0-9]{2,15}$/;
+          var re = /^[a-zA-Z0-9?']{2,15}$/;
           var bool = re.test(String(val).toLowerCase());
           return bool;
         }
@@ -166,9 +166,39 @@ class KYCForm extends Component {
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^[a-zA-Z0-9]{2,15}$/;
+          var re = /^[a-zA-Z0-9?']{2,15}$/;
           var bool = re.test(String(val).toLowerCase());
           return bool;
+        }
+      },
+      oneapostrophe: {
+        // name the rule
+        message: "Only one apostrophe is allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        rule: function(val, options) {
+          // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+          // check that it is a valid IP address and is not blacklisted
+          // var re = /^[a-zA-Z0-9?']{2,15}$/;
+          if (val.split("'").length - 1 > 1) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+      },
+      streetaddress: {
+        // name the rule
+        message: "Space is not allowed in prefix/suffix.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        rule: function(val, options) {
+          // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+          // check that it is a valid IP address and is not blacklisted
+          var re = val.trim(" ");
+          if (re === val) {
+            // alert("here", re.length, val.length);
+            return true;
+          } else {
+            // alert("hersdfugsdjfgjh", re.length, val.length);
+            return false;
+          }
         }
       },
       onlyNumber: {
@@ -195,11 +225,11 @@ class KYCForm extends Component {
       },
       zipValid: {
         message:
-          "Postal Code should only contain alphabets , numbers , hyphen and space .", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+          "Postal Code should only contain alphabets , numbers and hyphen.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^(?=.*[0-9a-zA-Z])[- 0-9a-zA-Z]+$/;
+          var re = /^(?=.*[0-9a-zA-Z])[-0-9a-zA-Z]+$/;
           var bool = re.test(String(val));
           return bool;
         }
@@ -240,69 +270,138 @@ class KYCForm extends Component {
       .then(responseData => {
         if (responseData.status === 200) {
           let fields = {};
-          fields["first_name"] =
-            responseData.data.first_name !== null
-              ? responseData.data.first_name
-              : "";
-          fields["last_name"] =
-            responseData.data.last_name !== null
-              ? responseData.data.last_name
-              : "";
-          fields["address"] =
-            responseData.data.address !== null ? responseData.data.address : "";
-          fields["address_2"] =
-            responseData.data.address_2 !== null
-              ? responseData.data.address_2
-              : "";
-          fields["zip"] =
-            responseData.data.zip !== null ? responseData.data.zip : "";
-          fields["city_town"] =
-            responseData.data.city_town !== null
-              ? responseData.data.city_town
-              : "";
-          fields["country"] =
-            responseData.data.country !== null ? responseData.data.country : "";
-          fields["state"] =
-            responseData.data.state !== null ? responseData.data.state : "";
-          fields["dob"] =
-            responseData.data.dob !== null ? responseData.data.dob : "";
-          fields["country_code"] =
-            responseData.data.country_code !== null
-              ? responseData.data.country_code
-              : "";
-          if (responseData.data.phone_number) {
-            fields["phone_number"] = responseData.data.phone_number;
-            // console.log("country_code", responseData.data.country_code);
-            let phone = responseData.data.phone_number;
-            let arr = [];
-            arr.push(responseData.data.country_code);
-            // console.log("country_code", this.state.phoneCountry);
-            // console.log(responseData.data.phone_number);
+          if (responseData.data.first_name) {
+            fields["first_name"] =
+              responseData.data.first_name !== null
+                ? responseData.data.first_name
+                : "";
+            fields["last_name"] =
+              responseData.data.last_name !== null
+                ? responseData.data.last_name
+                : "";
+            fields["address"] =
+              responseData.data.address !== null
+                ? responseData.data.address
+                : "";
+            fields["address_2"] =
+              responseData.data.address_2 !== null
+                ? responseData.data.address_2
+                : "";
+            fields["zip"] =
+              responseData.data.zip !== null ? responseData.data.zip : "";
+            fields["city_town"] =
+              responseData.data.city_town !== null
+                ? responseData.data.city_town
+                : "";
+            fields["country"] =
+              responseData.data.country !== null
+                ? responseData.data.country
+                : "";
+            fields["state"] =
+              responseData.data.state !== null ? responseData.data.state : "";
+            fields["dob"] =
+              responseData.data.dob !== null ? responseData.data.dob : "";
+            // console.log("kyc dob if", responseData.data.dob);
+            fields["country_code"] =
+              responseData.data.country_code !== null
+                ? responseData.data.country_code
+                : "";
+            if (responseData.data.phone_number) {
+              fields["phone_number"] = responseData.data.phone_number;
+              // console.log("country_code", responseData.data.country_code);
+              let phone = responseData.data.phone_number;
+              let arr = [];
+              arr.push(responseData.data.country_code);
+              // console.log("country_code", this.state.phoneCountry);
+              // console.log(responseData.data.phone_number);
 
-            this.setState(
-              {
-                countrychange: true,
-                mobile: responseData.data.phone_number,
-                phoneCountry: arr,
-                displayCountry: true
-              },
-              () => {
-                // console.log("KYC CHECK", responseData.data.country_code)
-                if (
-                  responseData.data.country_code == "US" ||
-                  responseData.data.country_code == "CA"
-                )
-                  self.setState({
-                    showSSN: true
-                  });
-              }
-            );
+              this.setState(
+                {
+                  countrychange: true,
+                  mobile: responseData.data.phone_number,
+                  phoneCountry: arr,
+                  displayCountry: true
+                },
+                () => {
+                  // console.log("KYC CHECK", responseData.data.country_code)
+                  if (
+                    responseData.data.country_code == "US" ||
+                    responseData.data.country_code == "CA"
+                  )
+                    self.setState({
+                      showSSN: true
+                    });
+                }
+              );
+            }
+            this.setState({
+              fields: fields,
+              kycData: responseData.data,
+              loader: false
+            });
+          } else {
+            // console.log("kyc else", this.props.profileDetails);
+            let profileData = this.props.profileDetails;
+            fields["first_name"] =
+              profileData.first_name !== null ? profileData.first_name : "";
+            fields["last_name"] =
+              profileData.last_name !== null ? profileData.last_name : "";
+            fields["address"] =
+              profileData.street_address !== null
+                ? profileData.street_address
+                : "";
+            fields["address_2"] =
+              profileData.street_address_2 !== null
+                ? profileData.street_address_2
+                : "";
+            fields["zip"] =
+              profileData.postal_code !== null ? profileData.postal_code : "";
+            fields["city_town"] =
+              profileData.city_town !== null ? profileData.city_town : "";
+            fields["country"] =
+              profileData.country !== null ? profileData.country : "";
+            fields["state"] =
+              profileData.state !== null ? profileData.state : "";
+            fields["dob"] =
+              profileData.dob !== null
+                ? moment(profileData.dob).format("YYYY-DD-MM")
+                : "";
+            fields["country_code"] =
+              profileData.country_code !== null ? profileData.country_code : "";
+            let dob = moment(profileData.dob).format("YYYY-DD-MM");
+            // console.log("kyc dob else", dob);
+            if (profileData.phone_number) {
+              fields["phone_number"] = profileData.phone_number;
+              let phone = profileData.phone_number;
+              let arr = [];
+              arr.push(profileData.country_code);
+              this.setState(
+                {
+                  countrychange: true,
+                  mobile: profileData.phone_number,
+                  phoneCountry: arr,
+                  displayCountry: true
+                },
+                () => {
+                  if (
+                    profileData.country_code == "US" ||
+                    profileData.country_code == "CA"
+                  )
+                    self.setState({
+                      showSSN: true
+                    });
+                }
+              );
+            }
+            let temp = profileData;
+            temp["dob"] = moment(profileData.dob).format("YYYY-DD-MM");
+
+            this.setState({
+              fields: fields,
+              kycData: temp,
+              loader: false
+            });
           }
-          this.setState({
-            fields: fields,
-            kycData: responseData.data,
-            loader: false
-          });
         } else {
           this.openNotificationWithIcon(
             "error",
@@ -324,6 +423,14 @@ class KYCForm extends Component {
 
   onDateChange(value) {
     var tempDate = value.day + "/" + value.month + "/" + value.year;
+    // var today = new Date(value.day + "-" + value.month + "-" + value.year);
+    // var fomatedDate =
+    //   ("0" + today.getDate()).slice(-2) +
+    //   "-" +
+    //   ("0" + (today.getMonth() + 1)).slice(-2) +
+    //   "-" +
+    //   today.getFullYear();
+    // console.log(fomatedDate);
     if (
       value.day !== "" &&
       value.day !== undefined &&
@@ -333,9 +440,12 @@ class KYCForm extends Component {
       value.month !== ""
     ) {
       var date = moment(tempDate)
+        // .utc(tempDate)
         // .local()
         .format("YYYY-MM-DD");
+      // var date = value.year + "-" + value.month + "-" + value.day;
       let fields = this.state.fields;
+      // console.log("Moment date >>>>>>>", date);
       fields["dob"] = date;
       this.setState({ fields });
     } else {
@@ -378,24 +488,81 @@ class KYCForm extends Component {
         It is called when we country is changed and it is passed as callback to child.
     */
 
-  onCountryChange(country, state, city, country_code, phoneCode) {
-    let self = this;
+  onCountryChange(country, state, city, country_code, phoneCode, phone_number) {
+    // console.log(
+    //   "^^^kyc",
+    //   country,
+    //   state,
+    //   city,
+    //   country_code,
+    //   phoneCode,
+    //   phone_number
+    // );
     let fields = this.state.fields;
+    if (this.state.fields.country === country) {
+      // alert("same");
+      // console.log(
+      //   "^^country",
+      //   this.state.fields.phone_number,
+      //   this.state.mobile
+      // );
+      if (this.state.fields.phone_number === phone_number) {
+        fields["phone_number"] = phone_number;
+        let mobile = phone_number;
+        this.setState(
+          {
+            phoneCountry: [country_code],
+            mobile
+          },
+          () => {
+            // console.log("same same  ^^country", phone_number, mobile);
+          }
+        );
+      } else {
+        fields["phone_number"] = this.state.fields.phone_number;
+        let mobile = this.state.mobile;
+        this.setState(
+          {
+            phoneCountry: [country_code],
+            mobile
+          },
+          () => {
+            // console.log("same ^^country", phone_number, mobile);
+          }
+        );
+      }
+    } else {
+      // alert("alag");
+      let mobile = this.state.mobile;
+      if (
+        this.state.phoneCountry &&
+        this.state.phoneCountry[0] != country_code
+      ) {
+        mobile = `+${phoneCode}`;
+      }
+      // console.log("^^^^^", country_code, mobile);
+      this.setState(
+        {
+          phoneCountry: [country_code],
+          mobile
+        },
+        () => {
+          // console.log("Different country", phone_number, mobile);
+        }
+      );
+    }
+    let self = this;
     fields["country"] = country;
     fields["state"] = state;
     fields["city_town"] = city;
     fields["country_code"] = country_code;
-    let mobile = this.state.mobile;
-    if (this.state.phoneCountry && this.state.phoneCountry[0] != country_code) {
-      mobile = `+${phoneCode}`;
-      // console.log("from pick ", mobile);
-    }
+
     this.setState(
       {
         kycData: { ...this.state.kycData, ...fields },
-        fields,
-        phoneCountry: [country_code],
-        mobile
+        fields
+        // phoneCountry: [country_code],
+        // mobile
       },
       () => {
         // To rerender the mobile input field
@@ -473,7 +640,13 @@ class KYCForm extends Component {
 
   onSubmit() {
     if (this.validator.allValid()) {
-      var profileData = this.state.fields;
+      // var profileData = this.state.fields;
+      // console.log(" asdgh", this.state.fields);
+      let temp = this.state.fields;
+      temp["address"] = this.state.fields.address.trim();
+      temp["address_2"] = this.state.fields.address_2;
+      temp["zip"] = this.state.fields.zip.trim();
+      var profileData = temp;
       profileData["steps"] = 1;
       this.props.kycFormAction(this.props.isLoggedIn, profileData);
     } else {
@@ -568,7 +741,7 @@ class KYCForm extends Component {
               {this.validator.message(
                 "first_name",
                 this.state.fields.first_name,
-                "required|firstname|onlyNumber",
+                "required|firstname|onlyNumber|oneapostrophe",
                 "text-danger-validation",
                 { required: "First Name field is required." }
               )}
@@ -589,7 +762,7 @@ class KYCForm extends Component {
               {this.validator.message(
                 "last_name",
                 this.state.fields.last_name,
-                "required|lastname|onlyNumber",
+                "required|lastname|onlyNumber|oneapostrophe",
                 "text-danger-validation",
                 { required: "Last Name field is required." }
               )}
@@ -637,7 +810,7 @@ class KYCForm extends Component {
               {this.validator.message(
                 "street_address",
                 this.state.fields.address,
-                "required|max:100",
+                "required|max:100|streetaddress",
                 "text-danger-validation",
                 {
                   required: "Street Address Line 1 field is required.",
@@ -690,6 +863,8 @@ class KYCForm extends Component {
                   country={this.state.kycData.country}
                   state={this.state.kycData.state}
                   city={this.state.kycData.city_town}
+                  country_id={this.state.kycData.countryJsonId}
+                  phone_number={this.state.kycData.phone_number}
                   kyc="kyc"
                   // isLoggedIn={this.props.simpleReducer.isLoggedIn}
                   onCountryChange={(
@@ -697,14 +872,16 @@ class KYCForm extends Component {
                     state,
                     city,
                     country_code,
-                    phoneCode
+                    phoneCode,
+                    phone_number
                   ) =>
                     this.onCountryChange(
                       country,
                       state,
                       city,
                       country_code,
-                      phoneCode
+                      phoneCode,
+                      phone_number
                     )
                   }
                 />
@@ -728,7 +905,7 @@ class KYCForm extends Component {
                 xxl={{ span: 24 }}
               >
                 <Postalkyc>Mobile No.*</Postalkyc>
-                <PhoneDiv className="jkasdhkasjd">
+                <PhoneDiv>
                   {/* {console.log(
                     "Test",
                     this.state.mobile,

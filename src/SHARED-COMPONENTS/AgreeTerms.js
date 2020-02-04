@@ -15,13 +15,22 @@ let { API_URL } = globalVariables;
 const TabPane = Tabs.TabPane;
 /* const API_URL = globalVariables.API_URL; */
 const AgreeTabPane = styled(TabPane)`
+  & .ant-row.row-main {
+    > .ant-col {
+      display: none;
+    }
+    > .ant-col.ant-col-24 {
+      display: block;
+    }
+  }
   @media (max-width: 450px) {
     & .ant-row.row-main {
       > .ant-col {
+        display: block;
         width: 100%;
         text-align: center;
       }
-      > .ant-col.ant-col-18 {
+      > .ant-col.ant-col-24 {
         display: none;
       }
     }
@@ -262,7 +271,7 @@ class AgreeTerms extends Component {
                       </a>
                     </h4>
                   </Col>
-                  <Col span={18}>
+                  <Col span={24}>
                     <iframe
                       src={`${globalVariables.Terms_and_services}#zoom=100`}
                       className="content-box"
@@ -283,9 +292,9 @@ class AgreeTerms extends Component {
                       </a>
                     </h4>
                   </Col>
-                  <Col span={18}>
+                  <Col span={24}>
                     <iframe
-                      src={globalVariables.Privacy_policy}
+                      src={`${globalVariables.Privacy_policy}#zoom=100`}
                       className="content-box"
                       width="100%"
                     ></iframe>
@@ -304,9 +313,9 @@ class AgreeTerms extends Component {
                       </a>
                     </h4>
                   </Col>
-                  <Col span={18}>
+                  <Col span={24}>
                     <iframe
-                      src={globalVariables.Anti_money_laundering_policy}
+                      src={`${globalVariables.Anti_money_laundering_policy}#zoom=100`}
                       className="content-box"
                       width="100%"
                     ></iframe>
@@ -325,9 +334,9 @@ class AgreeTerms extends Component {
                       </a>
                     </h4>
                   </Col>
-                  <Col span={18}>
+                  <Col span={24}>
                     <iframe
-                      src={globalVariables.Cookie_policy}
+                      src={`${globalVariables.Cookie_policy}#zoom=100`}
                       className="content-box"
                       width="100%"
                     ></iframe>

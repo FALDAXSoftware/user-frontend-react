@@ -1,6 +1,6 @@
 /* IN-built */
 import React, { Component } from "react";
-import { Layout, Menu, Dropdown } from "antd";
+import { Layout, Menu, Dropdown, Radio } from "antd";
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -278,6 +278,9 @@ const NavLink = styled(Link)`
     props.theme.mode === "dark" ? "white" : "black"} !important;
   &:hover {
     color: #1890ff !important;
+  }
+  @media (min-width: 2000px) {
+    font-size: 20px;
   }
 `;
 /* const LogNav = styled.span`
@@ -645,7 +648,18 @@ class LoggedNavigation extends Component {
     //   }
     // }
   }
-
+  onChange = e => {
+    console.log("radio checked", e.target.value);
+    this.props.i18n.changeLanguage(e.target.value);
+    this.setState(
+      {
+        langValue: e.target.value
+      },
+      () => {
+        this.props.langAction(this.state.langValue);
+      }
+    );
+  };
   render() {
     let prof_name =
       this.props.profileDetails.first_name !== null &&
@@ -703,6 +717,7 @@ class LoggedNavigation extends Component {
         </Menu.Item>
       </Menu>
     );
+
     return (
       <Headermain id="main">
         <Logo>
