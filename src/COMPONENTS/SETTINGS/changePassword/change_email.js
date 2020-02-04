@@ -199,7 +199,8 @@ class ChangeEmail extends Component {
       fields: {},
       loader: false,
       isShowOTP: false,
-      errType: ""
+      errType: "",
+      newEmail: ""
     };
     this.validator = new SimpleReactValidator({
       email: {
@@ -328,9 +329,14 @@ class ChangeEmail extends Component {
               isShowOTP: false,
               errMsg: true,
               errType: "Success",
-              errMessage: responseData.message
+              errMessage: responseData.message,
+              newEmail: responseData.data
             });
-            this.props.props.history.push("/verify-email");
+            // this.props.props.history.push("/verify-email");
+            this.props.props.history.push({
+              pathname: "/verify-email",
+              state: this.state.newEmail
+            });
             this.validator = new SimpleReactValidator();
             this.props.LogoutUser(this.props.isLoggedIn, formData);
           } else {

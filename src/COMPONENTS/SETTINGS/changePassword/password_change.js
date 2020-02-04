@@ -578,7 +578,16 @@ class PasswordChange extends Component {
             "none";
           document.querySelectorAll(".confirmchange_msg")[0].style.display =
             "none";
-        } else if (this.state.confPass !== null || this.state.confPass !== "") {
+        } else if (this.state.confPass) {
+          this.setState({ confirmIcon: true });
+          document.querySelector("#confirmchange_icon_success").style.display =
+            "none";
+          document.querySelector("#confirmchange_icon_fail").style.display =
+            "none";
+          document.querySelectorAll(".confirmchange_msg")[0].style.display =
+            "block";
+          this.setState({ confirmPass_msg: "Password does not match." });
+        } else {
           this.setState({ confirmIcon: true });
           document.querySelector("#confirmchange_icon_success").style.display =
             "none";
@@ -586,7 +595,6 @@ class PasswordChange extends Component {
             "none";
           document.querySelectorAll(".confirmchange_msg")[0].style.display =
             "none";
-        } else {
           //   alert("3");
           // this.setState({ confirmIcon: false });
           // document.querySelector("#confirmchange_icon_success").style.display =
@@ -607,6 +615,20 @@ class PasswordChange extends Component {
       // alphanum = /^[a-zA-Z0-9]*$/;
       if (numb.test(value) || letters.test(value)) {
         this.setState({ stroke: "red", percent: 20 });
+      }
+      if (value.length >= 8 && value.length <= 60) {
+        this.setState({ stroke: "red", percent: 20 });
+      }
+      if (value.length >= 8 && value.length <= 60 && alphanum.test(value)) {
+        this.setState({ stroke: "orange", percent: 40 });
+      }
+      if (
+        value.length >= 8 &&
+        value.length <= 60 &&
+        alphanum.test(value) &&
+        re.test(value)
+      ) {
+        this.setState({ stroke: "#7CFC00", percent: 80 });
       }
       if (alphanum.test(value) && value.length < 6) {
         this.setState({ stroke: "orange", percent: 40 });
