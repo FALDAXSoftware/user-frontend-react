@@ -72,7 +72,6 @@ const HorImg = styled.img`
 `;
 export const FormWrap = styled.div`
   padding-left: 100px;
-
   background-color: #f0f3f2;
   min-height: 100vh;
   @media (max-width: 991px) {
@@ -81,6 +80,9 @@ export const FormWrap = styled.div`
   }
   @media (max-width: 767px) {
     padding: 30px;
+  }
+  @media (min-width: 2000px) {
+    padding: 0;
   }
 `;
 const RightWrap = styled.div`
@@ -92,6 +94,12 @@ const RightWrap = styled.div`
   }
   @media (max-width: 991px) {
     height: auto;
+  }
+  @media (min-width: 2000px) {
+    > div.fadeInDown {
+      width: 60%;
+      margin: 0 auto;
+    }
   }
 `;
 const LoginHead = styled.div`
@@ -140,12 +148,18 @@ export const Username = styled.input`
   @media (max-width: 767px) {
     width: 85%;
   }
+  @media (min-width: 2000px) {
+    width: 95%;
+  }
 `;
 export const EmailReq = styled.div`
   display: none;
   color: red;
   font-size: 14px;
   width: 76%;
+  @media (min-width: 2000px) {
+    width: 95%;
+  }
 `;
 export const UserIconS = styled(Icon)`
   font-size: 19px;
@@ -182,6 +196,9 @@ export const PassReq = styled.label`
   font-size: 14px;
   width: 76%;
   font-weight: normal;
+  @media (min-width: 2000px) {
+    width: 95%;
+  }
 `;
 const OtpLabel = styled(EmailLabel)`
   width: 76%;
@@ -193,6 +210,9 @@ const CheckWrap = styled.div`
   @media (max-width: 767px) {
     width: 100%;
     text-align: left;
+  }
+  @media (min-width: 2000px) {
+    width: 95%;
   }
 `;
 const Forgot = styled.a`
@@ -862,7 +882,7 @@ class Login_Form extends Component {
               </a>
             </LeftWrap>
           </ColLeft>
-          <ColRight sm={24} lg={12}>
+          <ColRight sm={24} lg={12} className="login_main_div">
             <FormWrap>
               <RightWrap>
                 <div className="wow fadeInDown">

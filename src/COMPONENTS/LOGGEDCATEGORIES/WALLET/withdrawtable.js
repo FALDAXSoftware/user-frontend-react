@@ -78,7 +78,7 @@ const menu = (
   </Menu>
 );
 
-class DetailsTable extends React.Component {
+class WithdrawTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -115,8 +115,6 @@ class DetailsTable extends React.Component {
 
   render() {
     var me = this;
-    // console.log(this.props.coin_code);
-
     return (
       <OrderWrapRide>
         <OTwrap>
@@ -126,14 +124,12 @@ class DetailsTable extends React.Component {
               <thead>
                 <Head wallet>
                   <SubHead>Date</SubHead>
-                  <SubHead>SEND/RECEIVE</SubHead>
+                  {/* <SubHead>SEND/RECEIVE</SubHead> */}
                   <SubHead>SOURCE ADDRESS</SubHead>
                   <SubHead>DESTINATION ADDRESS</SubHead>
-                  <SubHead>BASE AMOUNT</SubHead>
-                  <SubHead>FALDAX FEES</SubHead>
-                  <SubHead>NETWORK FEES</SubHead>
-                  <SubHead>TOTAL AMOUNT</SubHead>
-                  <SubHead>TRANSACTION HASH</SubHead>
+                  <SubHead>AMOUNT</SubHead>
+                  <SubHead>STATUS</SubHead>
+                  <SubHead>REASON</SubHead>
                   {/* <Sub_head>USD
                                 <Dropdown overlay={menu} trigger={['click']}>
                                 <a className="ant-dropdown-link"  verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
@@ -161,41 +157,22 @@ class DetailsTable extends React.Component {
                           .local()
                           .format("DD/MM/YYYY, LTS");
                         var details = me.state.walletDetails;
-                        let url;
-                        if (me.props.coin_code != undefined) {
-                          if (me.props.coin_code == "tbtc") {
-                            url =
-                              "https://blockstream.info/testnet/tx/" +
-                              details[index].transaction_id;
-                          }
-                          if (me.props.coin_code == "txrp") {
-                            url =
-                              "https://test.bithomp.com/explorer/" +
-                              details[index].transaction_id;
-                          }
-                          if (me.props.coin_code == "tltc") {
-                            url =
-                              "https://blockexplorer.one/litecoin/testnet/tx/" +
-                              details[index].transaction_id;
-                          }
-                          if (me.props.coin_code == "tbch") {
-                            url =
-                              "https://explorer.bitcoin.com/tbch/tx/" +
-                              details[index].transaction_id;
-                          }
-                          if (me.props.coin_code == "SUSU") {
-                            url =
-                              "http://explore.susukino.com/tx/" +
-                              details[index].transaction_id;
-                          }
+                        var status;
+                        if (details[index].is_approve === null) {
+                          status = "Pending";
                         }
-
+                        if (details[index].is_approve === true) {
+                          status = "Approved";
+                        }
+                        if (details[index].is_approve === false) {
+                          status = "Rejected";
+                        }
                         return (
                           <Col1 wallet>
                             <td>
                               <div>{date}</div>
                             </td>
-                            <td>
+                            {/* <td>
                               {details[index].transaction_type === "receive" ? (
                                 <span>
                                   <Icon
@@ -213,37 +190,17 @@ class DetailsTable extends React.Component {
                                   SENT
                                 </span>
                               )}
-                            </td>
+                            </td> */}
                             <td>{details[index].source_address}</td>
                             <td>{details[index].destination_address}</td>
                             <td>
                               {parseFloat(details[index].amount).toFixed(8)}
                             </td>
+                            <td>{status}</td>
                             <td>
-                              {details[index].faldax_fee === "-"
-                                ? details[index].faldax_fee
-                                : parseFloat(details[index].faldax_fee).toFixed(
-                                    8
-                                  )}
-                              {/* {parseFloat(details[index].faldax_fee).toFixed(8)} */}
-                            </td>
-                            <td>
-                              {details[index].network_fees === "-"
-                                ? details[index].network_fees
-                                : parseFloat(
-                                    details[index].network_fees
-                                  ).toFixed(8)}
-                              {/* {parseFloat(details[index].network_fees).toFixed(
-                                8
-                              )} */}
-                            </td>
-                            <td>
-                              {parseFloat(details[index].total).toFixed(8)}
-                            </td>
-                            <td>
-                              <a target="_blank" href={url}>
-                                {details[index].transaction_id}
-                              </a>
+                              {details[index].reason === ""
+                                ? "-"
+                                : details[index].reason}
                             </td>
                             {/* <td>
 
@@ -279,4 +236,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(DetailsTable);
+export default connect(mapStateToProps)(WithdrawTable);

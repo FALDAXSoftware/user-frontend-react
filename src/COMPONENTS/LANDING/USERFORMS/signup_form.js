@@ -89,12 +89,19 @@ export const FormWrap = styled.div`
   @media (max-width: 767px) {
     padding: 30px;
   }
+  @media (min-width: 2000px) {
+    padding: 0;
+  }
 `;
 const RightWrap = styled.div`
   overflow: auto;
   height: 100vh;
   @media (max-width: 991px) {
     height: auto;
+  }
+  @media (min-width: 2000px) {
+    width: 60%;
+    margin: 0 auto;
   }
 `;
 const LoginHead = styled.div`
@@ -223,6 +230,9 @@ export const ButtonLabel = styled.input`
 `;
 const ProgressBar = styled(Progress)`
   width: 77%;
+  @media (min-width: 2000px) {
+    width: 95%;
+  }
 `;
 const FAI = styled.img`
   margin-left: -35px;
@@ -446,7 +456,7 @@ class SignupForm extends Component {
         }
       }
     } else if (field === "firstname") {
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      var re = /^[a-zA-Z0-9?']{2,15}$/;
       var bool = re.test(value);
       if (value !== "" && value !== undefined) {
         if (bool === true) {
@@ -465,6 +475,16 @@ class SignupForm extends Component {
               "inline-block";
             document.querySelector("#first_icon_fail").style.display = "none";
             document.querySelectorAll(".first_sign")[0].style.display = "none";
+            if (value.split("'").length - 1 > 1) {
+              this.setState({ firstIcon: false });
+              document.querySelector("#first_icon_success").style.display =
+                "none";
+              document.querySelector("#first_icon_fail").style.display =
+                "inline-block";
+              document.querySelectorAll(".first_sign")[0].style.display =
+                "block";
+              this.setState({ first_msg: "Only one apostrophe is allowed" });
+            }
           }
         } else {
           this.setState({ firstIcon: false });
@@ -488,7 +508,7 @@ class SignupForm extends Component {
         }
       }
     } else if (field === "lastname") {
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      var re = /^[a-zA-Z0-9?']{2,15}$/;
       var bool = re.test(value);
       if (value !== "" && value !== undefined) {
         if (bool === true) {
@@ -506,6 +526,16 @@ class SignupForm extends Component {
               "inline-block";
             document.querySelector("#last_icon_fail").style.display = "none";
             document.querySelectorAll(".last_sign")[0].style.display = "none";
+            if (value.split("'").length - 1 > 1) {
+              this.setState({ lastIcon: false });
+              document.querySelector("#last_icon_success").style.display =
+                "none";
+              document.querySelector("#last_icon_fail").style.display =
+                "inline-block";
+              document.querySelectorAll(".last_sign")[0].style.display =
+                "block";
+              this.setState({ last_msg: "Only one apostrophe is allowed" });
+            }
           }
         } else {
           this.setState({ lastIcon: false });
@@ -525,12 +555,13 @@ class SignupForm extends Component {
           "inline-block";
         document.querySelectorAll(".last_sign")[0].style.display = "block";
         if (value === "" || value === undefined) {
-          this.setState({ last_msg: "Last Name is required" });
+          this.setState({ last_msg: "Last name is required" });
         }
       }
     } else if (field === "password") {
       var self = this;
-      var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%_])[A-Za-z\d!@#$%_]{8,60}$/;
+      // var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%_])[A-Za-z\d!@#$%_]{8,60}$/;
+      var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~])[A-Za-z\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]{8,60}$/;
       var bool = re.test(value);
       var numb = /^\d+$/,
         letters = /^[A-Za-z]+$/,
@@ -569,15 +600,29 @@ class SignupForm extends Component {
           document.querySelector("#pass_icon_fail").style.display = "none";
           document.querySelectorAll(".pass_sign")[0].style.display = "none";
         } else {
-          this.setState({ passIcon: false });
-          document.querySelector("#pass_icon_success").style.display = "none";
-          document.querySelector("#pass_icon_fail").style.display =
-            "inline-block";
-          document.querySelectorAll(".pass_sign")[0].style.display = "block";
-          this.setState({
-            pass_msg:
-              "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters."
-          });
+          var regex = /\s/;
+          let check = regex.test(value);
+          if (check) {
+            this.setState({ passIcon: false });
+            document.querySelector("#pass_icon_success").style.display = "none";
+            document.querySelector("#pass_icon_fail").style.display =
+              "inline-block";
+            document.querySelectorAll(".pass_sign")[0].style.display = "block";
+            this.setState({
+              pass_msg: "Your password must not contain space."
+            });
+          } else {
+            this.setState({ newpassIcon: false });
+            this.setState({ passIcon: false });
+            document.querySelector("#pass_icon_success").style.display = "none";
+            document.querySelector("#pass_icon_fail").style.display =
+              "inline-block";
+            document.querySelectorAll(".pass_sign")[0].style.display = "block";
+            this.setState({
+              pass_msg:
+                "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_^&*), and one number. Minimum 8 characters and maximum 60 characters."
+            });
+          }
         }
       } else {
         this.setState({ passIcon: false, percent: 0 });
@@ -765,13 +810,13 @@ class SignupForm extends Component {
                   <PhLabel>Email Address*</PhLabel>
                   <div>
                     <Email
-                      type="email"
+                      // type="email"
                       {...getFieldProps("email", {
                         onChange(e) {
                           me.onChangeField(e.target.value, "email");
                         }, // have to write original onChange here if you need
                         initialValue: me.props.init,
-                        rules: [{ type: "email", required: true }]
+                        rules: [{ type: "string", required: true }]
                       })}
                     />
                     <EmailIconS
