@@ -236,6 +236,7 @@ export default class Datepicker extends Component {
           this.props.kycData2.dob !== undefined &&
           this.props.kycData2.dob !== null
         ) {
+          // console.log("dob1", this.props.kycData2.dob);
           date = this.props.kycData2.dob.split("-");
 
           year = Number(date[0]);
