@@ -865,7 +865,7 @@ class Login_Form extends Component {
       if (
         this.props.location.state &&
         this.props.location.state.from &&
-        this.props.location.state.from.pathname != "/"
+        this.props.location.state.from.pathname == "/open-ticket"
       ) {
         this.props.history.push(this.props.location.state.from.pathname);
       } else {

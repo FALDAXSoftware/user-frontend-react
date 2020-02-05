@@ -55,6 +55,7 @@ import {
   NewInput
 } from "../../SETTINGS/changePassword/change_email";
 import { parse } from "@fortawesome/fontawesome-svg-core";
+import { LogoutUser } from "../../../ACTIONS/authActions";
 
 const API_URL = globalVariables.API_URL;
 const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
@@ -539,6 +540,13 @@ class ConversionDetail extends React.Component {
             } else {
               // console.log("no scenario");
             }
+          } else if (body.status === 403) {
+            // console.log(body.err);
+            this.openNotificationWithIcon("error", "Error", body.err);
+            let tempValue2 = {};
+            tempValue2["user_id"] = this.props.profileDetails.id;
+            tempValue2["jwt_token"] = this.props.isLoggedIn;
+            this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
           } else {
             // console.log(body.err);
             this.openNotificationWithIcon("error", "Error", body.err);
@@ -734,6 +742,13 @@ class ConversionDetail extends React.Component {
             } else {
               // console.log("no scenario");
             }
+          } else if (body.status === 403) {
+            // console.log(body.err);
+            this.openNotificationWithIcon("error", "Error", body.err);
+            let tempValue2 = {};
+            tempValue2["user_id"] = this.props.profileDetails.id;
+            tempValue2["jwt_token"] = this.props.isLoggedIn;
+            this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
           } else {
             // console.log(body.err);
             this.openNotificationWithIcon("error", "Error", body.err);
@@ -1619,10 +1634,12 @@ class ConversionDetail extends React.Component {
       .then(responseData => {
         if (responseData.status == 200) {
           this.setState({
-            fiatCurrencyList: responseData.object.fiat,
-            loader: false
+            fiatCurrencyList: responseData.object.fiat
           });
         }
+        this.setState({
+          loader: false
+        });
       })
       .catch(error => {});
   }
@@ -1661,10 +1678,10 @@ class ConversionDetail extends React.Component {
             minCrypto: minLimit,
             minCurrency: minCurrLimit
           });
-          this.setState({
-            loader: false
-          });
         }
+        this.setState({
+          loader: false
+        });
       })
       .catch(error => {});
   }
@@ -2981,6 +2998,10 @@ class ConversionDetail extends React.Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => ({
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
+
 // export default Conversion;
 function mapStateToProps(state) {
   return {
@@ -2997,4 +3018,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(withRouter(ConversionDetail));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(ConversionDetail));

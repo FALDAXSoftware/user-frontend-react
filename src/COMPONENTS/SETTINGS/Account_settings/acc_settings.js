@@ -989,28 +989,31 @@ class Acc_settings extends Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 201) {
-          // console.log("responsedata summary=-----------", responseData.data);
           this.setState({
             totalUSDOfWallet: responseData.usd_price.toFixed(2),
             walletCoins: responseData.data,
             user2fastatus: responseData.user2fastatus,
             loader: false
           });
-          // console.log(
-          //   "responsedata walletCoins=-----------",
-          //   this.state.walletCoins
-          // );
         } else if (responseData.status == 200) {
-          // console.log("responsedata summary=-----------", responseData.data);
           this.setState({
             walletCoins: null,
             user2fastatus: responseData.user2fastatus,
             loader: false
           });
-          // console.log(
-          //   "responsedata walletCoins=-----------",
-          //   this.state.walletCoins
-          // );
+        } else if (responseData.status == 403) {
+          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.setState(
+            {
+              loader: false
+            },
+            () => {
+              let tempValue2 = {};
+              tempValue2["user_id"] = this.props.profileDetails.id;
+              tempValue2["jwt_token"] = this.props.isLoggedIn;
+              this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
+            }
+          );
         }
       })
       .catch(error => {});
