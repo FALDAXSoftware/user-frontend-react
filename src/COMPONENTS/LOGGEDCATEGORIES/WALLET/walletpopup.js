@@ -489,7 +489,7 @@ class WalletPopup extends Component {
     // fields["subtotal"] = subtotal;
     this.setState({ sendFields: fields, showTFAModal: false }, () => {
       if (this.state.sendFields.amount && this.validator.allValid()) {
-        this.timeout = setTimeout(this.getFeeValues, 1000);
+        this.timeout = setTimeout(this.getFeeValues, 1500);
       } else {
         this.validator.showMessages();
         this.setState({
@@ -590,7 +590,7 @@ class WalletPopup extends Component {
             this.state.sendFields.destination_address &&
             this.validator.allValid()
           ) {
-            this.timeout = setTimeout(this.getFeeValues, 1000);
+            this.timeout = setTimeout(this.getFeeValues, 1500);
           } else {
             this.validator.showMessages();
             this.setState({
