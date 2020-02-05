@@ -10,6 +10,7 @@ export default (
       if (action.payload !== undefined) {
         if (action.payload.token) {
           document.cookie = "isLoggedIn=true";
+          document.cookie = "isLoggedIn=true; domain=faldax.com";
         }
         return {
           ...state,
