@@ -258,7 +258,9 @@ class FooterHome extends Component {
     })
       .then(response => response.json())
       .then(responseData => {
-        this.setState({ contactDetails: responseData.data });
+        if (responseData.status === 200) {
+          this.setState({ contactDetails: responseData.data });
+        }
       })
       .catch(error => {});
   }

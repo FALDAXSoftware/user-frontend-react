@@ -1,5 +1,6 @@
 import { globalVariables } from "Globals.js";
 import { removeLoader, addLoader } from "../SETTINGS/settingActions";
+import { LogoutUser } from "../authActions";
 
 let { API_URL } = globalVariables;
 let count = 0;
@@ -25,6 +26,9 @@ export function walletBal(isLoggedIn) {
         count++;
         // console.log(responseData);
         if (responseData.status == 200) dispatch(walletData(responseData));
+        else if (responseData.status == 403) {
+          dispatch(LogoutUser(isLoggedIn));
+        }
         if (count == 2) {
           count = 0;
           dispatch(removeLoader());
@@ -66,6 +70,9 @@ export function getAllCoins(isLoggedIn) {
       .then(responseData => {
         count++;
         if (responseData.status == 200) dispatch(allCoinsData(responseData));
+        else if (responseData.status == 403) {
+          dispatch(LogoutUser(isLoggedIn));
+        }
         if (count == 2) {
           count = 0;
           dispatch(removeLoader());
