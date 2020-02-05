@@ -3,7 +3,16 @@ import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { connect } from "react-redux";
 import { createForm, formShape } from "rc-form";
-import { Row, Col, Input, Button, notification, Radio, Checkbox } from "antd";
+import {
+  Row,
+  Col,
+  Input,
+  Button,
+  notification,
+  Radio,
+  Checkbox,
+  Select
+} from "antd";
 import styled from "styled-components";
 import moment from "moment";
 import AgreeTerms from "../../../SHARED-COMPONENTS/AgreeTerms";
@@ -27,6 +36,8 @@ import { Link } from "react-router-dom";
 
 /* const Option = Select.Option; */
 const RadioGroup = Radio.Group;
+const { Option } = Select;
+
 /* Styled-Components */
 const Profilewrap = styled.div`
   width: 71%;
@@ -183,6 +194,36 @@ export const Streetinput = styled(Firstinput)`
 export const FourthRow = styled(SecondRow)`
   text-align: left;
   margin-top: 25px;
+  &.language {
+    & .ant-select {
+      width: 95%;
+    }
+    & .ant-select-selection {
+      background-color: ${props =>
+        props.theme.mode === "dark" ? "transparent" : "#f8f8f8"};
+      color: ${props =>
+        props.theme.mode === "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
+      width: 100%;
+      padding: 5px;
+      height: auto;
+      font-family: "Open Sans";
+      font-weight: 600;
+      & .ant-select-arrow-icon {
+        color: ${props =>
+          props.theme.mode === "dark" ? "white" : "rgba(0, 0, 0, 0.25)"};
+      }
+    }
+    & .ant-select-disabled {
+      & .ant-select-selection {
+        color: ${props =>
+          props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.25)"};
+        & .ant-select-arrow-icon {
+          color: ${props =>
+            props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.25)"};
+        }
+      }
+    }
+  }
 `;
 export const City = styled(Firstname)``;
 export const Postal = styled(Firstname)`
@@ -314,9 +355,11 @@ class PersonalDetails extends Component {
       agreeCheck: false,
       agreeTermsShow: false,
       editMode: false,
-      isFirstLogin: ""
+      isFirstLogin: "",
+      language: "e"
     };
     this.handleProfile = this.handleProfile.bind(this);
+    this.handleLangChange = this.handleLangChange.bind(this);
   }
   static propTypes = {
     form: formShape
@@ -326,6 +369,15 @@ class PersonalDetails extends Component {
 
   componentDidMount() {
     this.props.getProfileDataAction(this.props.isLoggedIn);
+    if (this.props.profileDetails.default_language) {
+      this.setState({
+        language: this.props.profileDetails.default_language
+      });
+    } else {
+      this.setState({
+        language: "en"
+      });
+    }
   }
 
   componentWillReceiveProps(props) {
@@ -1160,6 +1212,7 @@ class PersonalDetails extends Component {
         ) {
           profileData.append("profile_pic", this.state.profileImage);
         }
+        profileData.append("default_language", this.state.language);
         // console.log("---------------->> USER API CALLED");
         this.props.profileupdateAction(this.props.isLoggedIn, profileData);
         this.setState({
@@ -1280,7 +1333,12 @@ class PersonalDetails extends Component {
       }
     });
   };
-
+  handleLangChange(value) {
+    // console.log(`selected ${value}`);
+    this.setState({
+      language: value
+    });
+  }
   render() {
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
@@ -1529,6 +1587,23 @@ class PersonalDetails extends Component {
                     <PostalMsg className="postal_msg">
                       {this.state.postalmsg}
                     </PostalMsg>
+                  </Col>
+                </FourthRow>
+                <FourthRow className="language">
+                  <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
+                    <Postal>Default Language</Postal>
+                    <Select
+                      disabled={!this.state.editMode}
+                      value={this.state.language}
+                      onChange={this.handleLangChange}
+                    >
+                      <Option value="en">English</Option>
+                      <Option value="ja">Japanese</Option>
+                      <Option value="es">Spanish</Option>
+                      <Option value="uk">Ukrainian</Option>
+                      <Option value="ru">Russia</Option>
+                      <Option value="zh">Mandarin</Option>
+                    </Select>
                   </Col>
                 </FourthRow>
                 <SixthRow>

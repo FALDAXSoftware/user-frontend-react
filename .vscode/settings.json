@@ -3,6 +3,6 @@
     "editor.showUnused": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "breadcrumbs.enabled": true,
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 1,
     "react-i18n.i18nPaths": ""
 }
