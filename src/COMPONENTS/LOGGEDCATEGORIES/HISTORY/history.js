@@ -32,6 +32,7 @@ import {
   RangePickerS
 } from "STYLED-COMPONENTS/LOGGED_STYLE/historyStyle";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import { LogoutUser } from "../../../ACTIONS/authActions";
 
 let { API_URL } = globalVariables;
 const { TabPane } = Tabs;
@@ -254,11 +255,18 @@ class History extends Component {
       })
         .then(response => response.json())
         .then(responseData => {
-          self.setState({
-            coinList: responseData.object.coinList,
-            drop1List: responseData.object.coinList,
-            drop2List: responseData.object.fiat
-          });
+          if (responseData.status === 200) {
+            self.setState({
+              coinList: responseData.object.coinList,
+              drop1List: responseData.object.coinList,
+              drop2List: responseData.object.fiat
+            });
+          } else if (responseData.status === 403) {
+            let tempValue2 = {};
+            tempValue2["user_id"] = this.props.profileData.id;
+            tempValue2["jwt_token"] = this.props.isLoggedIn;
+            this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
+          }
         })
         .catch(error => {});
     }
@@ -424,6 +432,12 @@ class History extends Component {
               this.openNotificationWithIcon("error", "Error", responseData.err);
             }
           }
+        } else if (responseData.status === 403) {
+          this.openNotificationWithIcon("error", "Error", responseData.err);
+          let tempValue2 = {};
+          tempValue2["user_id"] = this.props.profileData.id;
+          tempValue2["jwt_token"] = this.props.isLoggedIn;
+          this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
         } else {
           this.openNotificationWithIcon("error", "Error", responseData.err);
         }
@@ -734,29 +748,39 @@ class History extends Component {
                       onChange={this.selectChange1}
                       value={this.state.drop1Value}
                     >
-                      {this.state.drop1List.map(element => {
-                        if (this.state.activeKey === "1") {
-                          if (this.state.drop2Value === "XRP") {
-                            if (
-                              element.coin != this.state.drop2Value &&
-                              element.coin != "LTC"
-                            ) {
-                              return (
-                                <Option value={element.coin}>
-                                  {element.coin}
-                                </Option>
-                              );
-                            }
-                          } else if (this.state.drop2Value === "LTC") {
-                            if (
-                              element.coin != this.state.drop2Value &&
-                              element.coin != "XRP"
-                            ) {
-                              return (
-                                <Option value={element.coin}>
-                                  {element.coin}
-                                </Option>
-                              );
+                      {this.state.drop1List &&
+                        this.state.drop1List.map(element => {
+                          if (this.state.activeKey === "1") {
+                            if (this.state.drop2Value === "XRP") {
+                              if (
+                                element.coin != this.state.drop2Value &&
+                                element.coin != "LTC"
+                              ) {
+                                return (
+                                  <Option value={element.coin}>
+                                    {element.coin}
+                                  </Option>
+                                );
+                              }
+                            } else if (this.state.drop2Value === "LTC") {
+                              if (
+                                element.coin != this.state.drop2Value &&
+                                element.coin != "XRP"
+                              ) {
+                                return (
+                                  <Option value={element.coin}>
+                                    {element.coin}
+                                  </Option>
+                                );
+                              }
+                            } else {
+                              if (element.coin != this.state.drop2Value) {
+                                return (
+                                  <Option value={element.coin}>
+                                    {element.coin}
+                                  </Option>
+                                );
+                              }
                             }
                           } else {
                             if (element.coin != this.state.drop2Value) {
@@ -767,16 +791,7 @@ class History extends Component {
                               );
                             }
                           }
-                        } else {
-                          if (element.coin != this.state.drop2Value) {
-                            return (
-                              <Option value={element.coin}>
-                                {element.coin}
-                              </Option>
-                            );
-                          }
-                        }
-                      })}
+                        })}
                     </Select1>
                     <FontAwesomeIconS icon={faExchangeAlt} color="#909090" />
                     <Select2
@@ -785,29 +800,39 @@ class History extends Component {
                       onChange={this.selectChange2}
                       value={this.state.drop2Value}
                     >
-                      {this.state.drop2List.map(element => {
-                        if (this.state.activeKey === "1") {
-                          if (this.state.drop1Value === "XRP") {
-                            if (
-                              element.coin != this.state.drop1Value &&
-                              element.coin != "LTC"
-                            ) {
-                              return (
-                                <Option value={element.coin}>
-                                  {element.coin}
-                                </Option>
-                              );
-                            }
-                          } else if (this.state.drop1Value === "LTC") {
-                            if (
-                              element.coin != this.state.drop1Value &&
-                              element.coin != "XRP"
-                            ) {
-                              return (
-                                <Option value={element.coin}>
-                                  {element.coin}
-                                </Option>
-                              );
+                      {this.state.drop2List &&
+                        this.state.drop2List.map(element => {
+                          if (this.state.activeKey === "1") {
+                            if (this.state.drop1Value === "XRP") {
+                              if (
+                                element.coin != this.state.drop1Value &&
+                                element.coin != "LTC"
+                              ) {
+                                return (
+                                  <Option value={element.coin}>
+                                    {element.coin}
+                                  </Option>
+                                );
+                              }
+                            } else if (this.state.drop1Value === "LTC") {
+                              if (
+                                element.coin != this.state.drop1Value &&
+                                element.coin != "XRP"
+                              ) {
+                                return (
+                                  <Option value={element.coin}>
+                                    {element.coin}
+                                  </Option>
+                                );
+                              }
+                            } else {
+                              if (element.coin != this.state.drop1Value) {
+                                return (
+                                  <Option value={element.coin}>
+                                    {element.coin}
+                                  </Option>
+                                );
+                              }
                             }
                           } else {
                             if (element.coin != this.state.drop1Value) {
@@ -818,16 +843,7 @@ class History extends Component {
                               );
                             }
                           }
-                        } else {
-                          if (element.coin != this.state.drop1Value) {
-                            return (
-                              <Option value={element.coin}>
-                                {element.coin}
-                              </Option>
-                            );
-                          }
-                        }
-                      })}
+                        })}
                     </Select2>
                   </FilterDiv>
                   <Datediv>
@@ -1105,7 +1121,9 @@ class History extends Component {
     );
   }
 }
-
+const mapDispatchToProps = dispatch => ({
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
 function mapStateToProps(state) {
   return {
     isLoggedIn: state.simpleReducer.isLoggedIn,
@@ -1117,4 +1135,4 @@ function mapStateToProps(state) {
         : {}
   };
 }
-export default connect(mapStateToProps)(History);
+export default connect(mapStateToProps, mapDispatchToProps)(History);
