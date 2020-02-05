@@ -737,7 +737,7 @@ class LoggedNavigation extends Component {
         <Radio style={radioStyle} value="en">
           English
         </Radio>
-        <Radio style={radioStyle} value="jap">
+        <Radio style={radioStyle} value="ja">
           Japanese
         </Radio>
       </Radio.Group>

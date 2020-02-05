@@ -44,7 +44,7 @@ i18n
     },
     resources: {
       en: translationEng,
-      jap: translationJap
+      ja: translationJap
     },
     // we init with resources
     fallbackLng: "en",

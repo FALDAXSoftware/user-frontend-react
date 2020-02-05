@@ -33,6 +33,7 @@ import { LogoutUser } from "ACTIONS/authActions";
 import { _DEFAULTPROFILE } from "CONSTANTS/images";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { Link } from "react-router-dom";
+import { langAction } from "../../../ACTIONS/authActions";
 
 /* const Option = Select.Option; */
 const RadioGroup = Radio.Group;
@@ -1215,6 +1216,8 @@ class PersonalDetails extends Component {
         profileData.append("default_language", this.state.language);
         // console.log("---------------->> USER API CALLED");
         this.props.profileupdateAction(this.props.isLoggedIn, profileData);
+        this.props.i18n.changeLanguage(this.state.language);
+        this.props.langAction(this.state.language);
         this.setState({
           editMode: false
         });
@@ -1831,7 +1834,8 @@ const mapStateToProps = state => {
     profileError:
       state.simpleReducer.profileError !== undefined
         ? state.simpleReducer.profileError
-        : undefined
+        : undefined,
+    language: state.themeReducer.lang
   };
 };
 const mapDispatchToProps = dispatch => ({
@@ -1843,7 +1847,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(removepicAction(isLoggedIn, form)),
   clearEditData: () => dispatch(clearEditData()),
   profileErr: () => dispatch(profileError()),
-  LogoutUser: () => dispatch(LogoutUser())
+  LogoutUser: () => dispatch(LogoutUser()),
+  langAction: lang => dispatch(langAction(lang))
 });
 
 export default translate(["edit_profile_titles", "validations"])(
