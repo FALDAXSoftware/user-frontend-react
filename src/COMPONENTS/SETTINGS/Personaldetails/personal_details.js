@@ -428,11 +428,18 @@ class PersonalDetails extends Component {
     // console.log("date---", value);
 
     var tempDate = value.day + "/" + value.month + "/" + value.year;
+    if (value.month) {
+      if (value.month.length > 2) {
+        // console.log("string");
+        var date = moment(tempDate, "DD/MMM/YYYY").format("DD-MM-YYYY");
+      } else {
+        // console.log("numeric");
+        var date = moment(tempDate, "DD/MM/YYYY").format("DD-MM-YYYY");
+      }
+    }
 
-    var date = moment
-      .utc(tempDate)
-      .local()
-      .format("DD-MM-YYYY");
+    // var date = moment(tempDate, "DD/MM/YYYY").format("DD-MM-YYYY");
+    // console.log("date--- after convert", date);
     this.setState({ Datedata: date });
     // console.log("onDateChange", value, field);
     this.onChangeField(value, field);
@@ -714,7 +721,7 @@ class PersonalDetails extends Component {
         this.setState({ countrymsg });
       }
     } else if (field === "dob") {
-      console.log("^^^^^^", value);
+      // console.log("^^^^^^", value);
       if (value["day"] && value["month"] && value["year"]) {
         this.setState({ dobIcon: true });
         document.querySelectorAll(".dob_msg")[0].style.display = "none";
@@ -735,7 +742,7 @@ class PersonalDetails extends Component {
       } else if (value["day"] === "" || value["day"] === "") {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";
-        this.setState({ dobmsg: "Day field is required" });
+        this.setState({ dobmsg: "Date of Birth field is required." });
       } else if (value["month"] === "" || value["month"] === "") {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";

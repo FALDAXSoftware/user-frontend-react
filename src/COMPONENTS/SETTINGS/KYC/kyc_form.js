@@ -435,15 +435,8 @@ class KYCForm extends Component {
     */
 
   onDateChange(value) {
+    // console.log("string", value);
     var tempDate = value.day + "/" + value.month + "/" + value.year;
-    // var today = new Date(value.day + "-" + value.month + "-" + value.year);
-    // var fomatedDate =
-    //   ("0" + today.getDate()).slice(-2) +
-    //   "-" +
-    //   ("0" + (today.getMonth() + 1)).slice(-2) +
-    //   "-" +
-    //   today.getFullYear();
-    // console.log(fomatedDate);
     if (
       value.day !== "" &&
       value.day !== undefined &&
@@ -452,13 +445,21 @@ class KYCForm extends Component {
       value.month !== undefined &&
       value.month !== ""
     ) {
-      var date = moment(tempDate)
-        // .utc(tempDate)
-        // .local()
-        .format("YYYY-MM-DD");
-      // var date = value.year + "-" + value.month + "-" + value.day;
+      if (value.month) {
+        if (value.month.length > 2) {
+          // console.log("string");
+          // var date = moment(tempDate, "DD/MMM/YYYY").format("DD-MM-YYYY");
+          var date = moment(tempDate, "DD/MMM/YYYY").format("YYYY-MM-DD");
+        } else {
+          // console.log("numeric");
+          // var date = moment(tempDate, "DD/MM/YYYY").format("DD-MM-YYYY");
+          var date = moment(tempDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+        }
+      }
+      // var date = moment(tempDate)
+      //   // .local()
+      //   .format("YYYY-MM-DD");
       let fields = this.state.fields;
-      // console.log("Moment date >>>>>>>", date);
       fields["dob"] = date;
       this.setState({ fields });
     } else {
@@ -654,7 +655,7 @@ class KYCForm extends Component {
   onSubmit() {
     if (this.validator.allValid()) {
       // var profileData = this.state.fields;
-      // console.log(" asdgh", this.state.fields);
+      console.log(" asdgh", this.state.fields);
       let temp = this.state.fields;
       temp["address"] = this.state.fields.address.trim();
       temp["address_2"] = this.state.fields.address_2;
