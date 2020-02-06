@@ -1601,11 +1601,11 @@ class PersonalDetails extends Component {
                       onChange={this.handleLangChange}
                     >
                       <Option value="en">English</Option>
-                      <Option value="ja">Japanese</Option>
-                      <Option value="es">Spanish</Option>
-                      <Option value="uk">Ukrainian</Option>
-                      <Option value="ru">Russia</Option>
-                      <Option value="zh">Mandarin</Option>
+                      <Option value="ja">日本語</Option>
+                      <Option value="es">Española</Option>
+                      <Option value="uk">Українська</Option>
+                      <Option value="ru">русский</Option>
+                      <Option value="zh">普通话</Option>
                     </Select>
                   </Col>
                 </FourthRow>
