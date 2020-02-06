@@ -163,31 +163,61 @@ class DetailsTable extends React.Component {
                         var details = me.state.walletDetails;
                         let url;
                         if (me.props.coin_code != undefined) {
-                          if (me.props.coin_code == "tbtc") {
-                            url =
-                              "https://blockstream.info/testnet/tx/" +
-                              details[index].transaction_id;
+                          switch (me.props.coin_code) {
+                            case "tbtc":
+                              url =
+                                "https://blockstream.info/testnet/tx/" +
+                                details[index].transaction_id;
+                              break;
+                            case "txrp":
+                              url =
+                                "https://test.bithomp.com/explorer/" +
+                                details[index].transaction_id;
+                              break;
+                            case "tltc":
+                              url =
+                                "https://blockexplorer.one/litecoin/testnet/tx/" +
+                                details[index].transaction_id;
+                              break;
+                            case "tbch":
+                              url =
+                                "https://explorer.bitcoin.com/tbch/tx/" +
+                                details[index].transaction_id;
+                              break;
+                            case "SUSU":
+                              url =
+                                "http://explore.susukino.com/tx/" +
+                                details[index].transaction_id;
+                              break;
+                            default:
+                              url = "";
+                              break;
                           }
-                          if (me.props.coin_code == "txrp") {
-                            url =
-                              "https://test.bithomp.com/explorer/" +
-                              details[index].transaction_id;
-                          }
-                          if (me.props.coin_code == "tltc") {
-                            url =
-                              "https://blockexplorer.one/litecoin/testnet/tx/" +
-                              details[index].transaction_id;
-                          }
-                          if (me.props.coin_code == "tbch") {
-                            url =
-                              "https://explorer.bitcoin.com/tbch/tx/" +
-                              details[index].transaction_id;
-                          }
-                          if (me.props.coin_code == "SUSU") {
-                            url =
-                              "http://explore.susukino.com/tx/" +
-                              details[index].transaction_id;
-                          }
+                          // if (me.props.coin_code == "tbtc") {
+                          //   url =
+                          //     "https://blockstream.info/testnet/tx/" +
+                          //     details[index].transaction_id;
+                          // }
+                          // if (me.props.coin_code == "txrp") {
+                          //   url =
+                          //     "https://test.bithomp.com/explorer/" +
+                          //     details[index].transaction_id;
+                          // }
+                          // if (me.props.coin_code == "tltc") {
+                          //   url =
+                          //     "https://blockexplorer.one/litecoin/testnet/tx/" +
+                          //     details[index].transaction_id;
+                          // }
+                          // if (me.props.coin_code == "tbch") {
+                          //   url =
+                          //     "https://explorer.bitcoin.com/tbch/tx/" +
+                          //     details[index].transaction_id;
+                          // }
+                          // if (me.props.coin_code == "SUSU") {
+                          //   url =
+                          //     "http://explore.susukino.com/tx/" +
+                          //     details[index].transaction_id;
+                          // }
                         }
 
                         return (
