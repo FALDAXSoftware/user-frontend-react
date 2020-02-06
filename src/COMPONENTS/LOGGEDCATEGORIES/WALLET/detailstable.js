@@ -176,7 +176,7 @@ class DetailsTable extends React.Component {
                               break;
                             case "ltc":
                               url =
-                                "https://blockchair.com/litecoin/block/" +
+                                "https://blockchair.com/litecoin/transaction/" +
                                 details[index].transaction_id;
                               break;
                             case "eth":
