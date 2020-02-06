@@ -721,7 +721,7 @@ class PersonalDetails extends Component {
         this.setState({ countrymsg });
       }
     } else if (field === "dob") {
-      console.log("^^^^^^", value);
+      // console.log("^^^^^^", value);
       if (value["day"] && value["month"] && value["year"]) {
         this.setState({ dobIcon: true });
         document.querySelectorAll(".dob_msg")[0].style.display = "none";
