@@ -163,33 +163,42 @@ class DetailsTable extends React.Component {
                         var details = me.state.walletDetails;
                         let url;
                         if (me.props.coin_code != undefined) {
-                          if (me.props.coin_code == "tbtc") {
-                            url =
-                              "https://blockstream.info/testnet/tx/" +
-                              details[index].transaction_id;
-                          }
-                          if (me.props.coin_code == "txrp") {
-                            url =
-                              "https://test.bithomp.com/explorer/" +
-                              details[index].transaction_id;
-                          }
-                          if (me.props.coin_code == "tltc") {
-                            url =
-                              "https://blockexplorer.one/litecoin/testnet/tx/" +
-                              details[index].transaction_id;
-                          }
-                          if (me.props.coin_code == "tbch") {
-                            url =
-                              "https://explorer.bitcoin.com/tbch/tx/" +
-                              details[index].transaction_id;
-                          }
-                          if (me.props.coin_code == "SUSU") {
-                            url =
-                              "http://explore.susukino.com/tx/" +
-                              details[index].transaction_id;
+                          switch (me.props.coin_code) {
+                            case "btc":
+                              url =
+                                "https://blockchair.com/bitcoin/transaction/" +
+                                details[index].transaction_id;
+                              break;
+                            case "xrp":
+                              url =
+                                "https://blockchair.com/ripple/transaction/" +
+                                details[index].transaction_id;
+                              break;
+                            case "ltc":
+                              url =
+                                "https://blockchair.com/litecoin/block/" +
+                                details[index].transaction_id;
+                              break;
+                            case "eth":
+                              url =
+                                "https://blockchair.com/ethereum/transaction/" +
+                                details[index].transaction_id;
+                              break;
+                            case "bch":
+                              url =
+                                "https://blockchair.com/bitcoin-cash/transaction/" +
+                                details[index].transaction_id;
+                              break;
+                            case "SUSU":
+                              url =
+                                "https://explore.susukino.com/tx/" +
+                                details[index].transaction_id;
+                              break;
+                            default:
+                              url = "";
+                              break;
                           }
                         }
-
                         return (
                           <Col1 wallet>
                             <td>
