@@ -32,7 +32,7 @@ export default class Datepicker extends Component {
   }
   /* Life-Cycle Methods */
   componentDidMount() {
-    // console.log(this.props.kycData2);
+    // console.log(this.props);
     if (this.props.theme !== undefined) {
       if (this.props.theme !== this.state.theme) {
         if (this.props.theme === false)
@@ -57,16 +57,11 @@ export default class Datepicker extends Component {
     */
 
   onChangeDate(date, type) {
-    // console.log("Step dob 4------->", fields);
+    // console.log("Step 1 -------> ", date, type);
     if (this.props.kyc !== "kyc") {
       if (type === "year") {
         this.setState({ year: date });
         fields[type] = date;
-        // console.log(date, moment([date]).isLeapYear(), this.state);
-
-        // if (!moment([date]).isLeapYear() && this.state.day >= 28) {
-        //   this.setState({ day: "" });
-        // }
       } else if (type === "month") {
         let date1 = null;
         this.setState({ month: date });
@@ -120,8 +115,8 @@ export default class Datepicker extends Component {
         fields[type] = date;
       }
       let propFields;
-      if (this.props.profileDetails.dob) {
-        // console.log("Step 3------->", this.props.profileDetails.dob)
+      if (this.props.profileDetails.dob !== null) {
+        // console.log("Step 2------->", this.props.profileDetails.dob);
         propFields = this.props.profileDetails.dob.split("-");
         // console.log(fields, fields["day"], fields["month"]);
         if (fields["day"] === undefined && propFields[2] !== undefined) {
@@ -134,27 +129,28 @@ export default class Datepicker extends Component {
           fields["year"] = propFields[2];
         }
       }
-      console.log("Step dob 4------->", this.props.profileDetails.dob, fields);
       if (
         !moment([fields["year"]]).isLeapYear() &&
-        (fields["month"] == "February" || fields["month"] == "02") &&
-        (fields["day"] > 28 || (type === "day" && date > 28))
+        (fields["month"] == "02" || fields["month"] == "February") &&
+        fields["day"] > 28
       ) {
-        console.log("Not Leapyear dob------->", fields);
+        console.log("here");
         this.setState({ day: "" });
         fields["day"] = "";
       }
       if (
         moment([fields["year"]]).isLeapYear() &&
-        (fields["month"] == "February" || fields["month"] == "02") &&
-        (fields["day"] > 29 || (type === "day" && date > 29))
+        (fields["month"] == "02" || fields["month"] == "February") &&
+        fields["day"] > 29
       ) {
-        console.log("Leapyear dob------->", fields);
+        // console.log("here");
         this.setState({ day: "" });
         fields["day"] = "";
       }
+      // console.log("Step 4------->", fields)
       this.props.onDateChange(fields, "dob");
     } else {
+      // console.log("step 2^^^^^^^^^^", date, type);
       if (type === "year") {
         this.setState({ year: date });
         fields[type] = date;
@@ -173,8 +169,38 @@ export default class Datepicker extends Component {
         if (date == 9) date1 = "October";
         if (date == 10) date1 = "November";
         if (date == 11) date1 = "December";
+
         if (date === "") {
-          date1 = ""; /* console.log(" i am in IF") */
+          date1 = "";
+        }
+        if (
+          (date == 0 ||
+            date == 2 ||
+            date == 4 ||
+            date == 6 ||
+            date == 7 ||
+            date == 9 ||
+            date == 11) &&
+          this.state.day !== null
+        ) {
+          fields[type] = date1;
+        } else {
+          if (fields["day"] !== undefined && fields["day"] !== "") {
+            if (date == 1) {
+              if (fields["day"] > 29) {
+                // console.log("Step 2------->", fields, date, date1)
+                this.setState({ day: "" });
+                fields["day"] = "";
+              }
+            } else if (date !== 1) {
+              if (fields["day"] > 30) {
+                // console.log("Step 2------->", fields, date, date1)
+                this.setState({ day: "" });
+                fields["day"] = "";
+              }
+            }
+          }
+          fields[type] = date1;
         }
 
         fields[type] = date1;
@@ -183,42 +209,43 @@ export default class Datepicker extends Component {
         fields[type] = date;
       }
       // console.log("KYC date", fields);
-      let propFields;
+      let propFields1;
       if (
         this.props.kycData2.dob !== null &&
         this.props.kycData2.dob !== undefined
       ) {
-        propFields = this.props.kycData2.dob.split("-");
-        // console.log("------------ dob", propFields);
-        if (fields["day"] === undefined && propFields[2] !== undefined) {
-          fields["day"] = propFields[2];
+        propFields1 = this.props.kycData2.dob.split("-");
+        // console.log(fields["day"], propFields1[2]);
+        // console.log("step 3", propFields1);
+        if (fields["day"] === undefined && propFields1[2] !== undefined) {
+          fields["day"] = propFields1[2];
         }
-        if (fields["month"] === undefined && propFields[1] !== undefined) {
-          fields["month"] = propFields[1];
+        if (fields["month"] === undefined && propFields1[1] !== undefined) {
+          fields["month"] = propFields1[1];
         }
-        if (fields["year"] === undefined && propFields[0] !== undefined) {
-          fields["year"] = propFields[0];
+        if (fields["year"] === undefined && propFields1[0] !== undefined) {
+          fields["year"] = propFields1[0];
         }
       }
       if (
         !moment([fields["year"]]).isLeapYear() &&
-        (fields["month"] == "February" || fields["month"] == "02") &&
-        (fields["day"] > 28 || (type === "day" && date > 28))
+        (fields["month"] == "02" || fields["month"] == "February") &&
+        fields["day"] > 28
       ) {
-        // console.log("Step dob 4asdfsdf------->", fields);
+        // console.log("here");
         this.setState({ day: "" });
         fields["day"] = "";
       }
       if (
         moment([fields["year"]]).isLeapYear() &&
-        (fields["month"] == "February" || fields["month"] == "02") &&
-        (fields["day"] > 29 || (type === "day" && date > 29))
+        (fields["month"] == "02" || fields["month"] == "February") &&
+        fields["day"] > 29
       ) {
-        // console.log("Step dob 786565asdfsdf------->", fields);
+        // console.log("here");
         this.setState({ day: "" });
         fields["day"] = "";
       }
-      // console.log("Final Result dob", fields);
+      // console.log("Final Result", fields);
       this.props.onDateChange(fields, "dob");
     }
   }
@@ -236,7 +263,6 @@ export default class Datepicker extends Component {
           this.props.kycData2.dob !== undefined &&
           this.props.kycData2.dob !== null
         ) {
-          // console.log("dob1", this.props.kycData2.dob);
           date = this.props.kycData2.dob.split("-");
 
           year = Number(date[0]);

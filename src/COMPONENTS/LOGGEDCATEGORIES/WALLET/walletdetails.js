@@ -58,6 +58,7 @@ import DetailsTable from "./detailstable";
 import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import WithdrawTable from "./withdrawtable";
+import { LogoutUser } from "../../../ACTIONS/authActions";
 
 const { TabPane } = Tabs;
 
@@ -231,6 +232,12 @@ class WalletDetails extends Component {
           // );
         }
       );
+    } else if (responseData.status == 403) {
+      this.openNotificationWithIcon("error", "Error", responseData.err);
+      let tempValue2 = {};
+      tempValue2["user_id"] = this.props.profileDetails.id;
+      tempValue2["jwt_token"] = this.props.isLoggedIn;
+      this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
     } else {
       this.openNotificationWithIcon(
         "error",
@@ -720,7 +727,9 @@ class WalletDetails extends Component {
     );
   }
 }
-
+const mapDispatchToProps = dispatch => ({
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
 function mapStateToProps(state) {
   return {
     walletDetails:
@@ -744,4 +753,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(WalletDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(WalletDetails);

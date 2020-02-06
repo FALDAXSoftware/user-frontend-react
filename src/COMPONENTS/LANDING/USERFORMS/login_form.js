@@ -862,7 +862,15 @@ class Login_Form extends Component {
 
   render() {
     if (this.props.isLoggedIn) {
-      this.props.history.push("/editProfile");
+      if (
+        this.props.location.state &&
+        this.props.location.state.from &&
+        this.props.location.state.from.pathname == "/open-ticket"
+      ) {
+        this.props.history.push(this.props.location.state.from.pathname);
+      } else {
+        this.props.history.push("/editProfile");
+      }
     }
     var me = this;
     let errors;

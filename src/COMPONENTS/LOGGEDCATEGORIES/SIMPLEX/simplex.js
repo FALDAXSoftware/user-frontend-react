@@ -31,6 +31,7 @@ import {
   SimLastRow,
   SimTopHead
 } from "../../../STYLED-COMPONENTS/SIMPLEX/simplexStyle";
+import { LogoutUser } from "../../../ACTIONS/authActions";
 
 const API_URL = globalVariables.API_URL;
 const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
@@ -189,10 +190,15 @@ class Simplex extends React.Component {
           // console.log("responsedata 200", responseData.object.coinList);
           this.setState({
             currencyList: responseData.object.fiat,
-            cryptoList: responseData.object.coinList,
-            loader: false
+            cryptoList: responseData.object.coinList
           });
+        } else if (responseData.status === 403) {
+          let tempValue2 = {};
+          tempValue2["user_id"] = this.props.profileDetails.id;
+          tempValue2["jwt_token"] = this.props.isLoggedIn;
+          this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
         }
+        this.setState({ loader: false });
       })
       .catch(error => {});
   }
@@ -481,7 +487,9 @@ class Simplex extends React.Component {
     );
   }
 }
-
+const mapDispatchToProps = dispatch => ({
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
 // export default Conversion;
 function mapStateToProps(state) {
   return {
@@ -498,4 +506,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(withRouter(Simplex));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Simplex));
