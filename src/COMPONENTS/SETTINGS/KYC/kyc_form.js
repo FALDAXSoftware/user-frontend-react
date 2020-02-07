@@ -563,7 +563,7 @@ class KYCForm extends Component {
     */
 
   onCountryChange(country, state, city, country_code, phoneCode, phone_number) {
-    console.log("^^^kyc", country, state, city, country_code);
+    // console.log("^^^kyc", country, state, city, country_code);
     let fields = this.state.fields;
     if (this.state.fields.country === country) {
       // alert("same");
