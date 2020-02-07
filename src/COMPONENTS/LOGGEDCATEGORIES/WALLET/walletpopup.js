@@ -246,7 +246,7 @@ class WalletPopup extends Component {
         }
       },
       minLimitCheck: {
-        message: `Amount must be greater than ${this.props.coin_min_limit}`,
+        message: `Amount must be greater than ${this.props.coin_min_limit}.`,
         rule: (val, params, validator) => {
           // console.log("this is val?????", val);
           if (val >= this.props.coin_min_limit) {
@@ -260,7 +260,7 @@ class WalletPopup extends Component {
         required: true // optional
       },
       maxLimitCheck: {
-        message: `Amount must be less than ${this.props.coin_max_limit}`,
+        message: `Amount must be less than ${this.props.coin_max_limit}.`,
         rule: (val, params, validator) => {
           // console.log("this is val?????", val);
           if (val <= this.props.coin_max_limit) {
@@ -272,6 +272,17 @@ class WalletPopup extends Component {
           }
         },
         required: true // optional
+      },
+      allowSpecial: {
+        message: "Please enter valid destination address.",
+        rule: val => {
+          var RE = /^[A-Za-z0-9_/?=]*$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     });
     this.sendChange = this.sendChange.bind(this);
@@ -711,7 +722,7 @@ class WalletPopup extends Component {
                   {this.validator.message(
                     "destination_address",
                     this.state.sendFields.destination_address,
-                    "required|alpha_num|min:15|max:120",
+                    "required|min:15|max:120|allowSpecial",
                     "text-danger-validation"
                   )}
                 </Rediv>
