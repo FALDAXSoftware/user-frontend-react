@@ -250,7 +250,7 @@ class KYCForm extends Component {
         // console.log("KYC CHECK", this.state.showSSN);
         this.props.next_step(1, null, this.state.showSSN);
       } else {
-        this.openNotificationWithIcon("error", "KYC", props.kycData.err);
+        this.openNotificationWithIcon("error", "Error", props.kycData.err);
         this.props.kycformData();
       }
     }
@@ -300,8 +300,8 @@ class KYCForm extends Component {
             fields["state"] =
               responseData.data.state !== null ? responseData.data.state : "";
             fields["dob"] =
-              responseData.data.dob !== null ||
-              responseData.data.dob !== "Invalid date"
+              responseData.data.dob === null ||
+              responseData.data.dob === "Invalid date"
                 ? ""
                 : responseData.data.dob;
             // console.log("kyc dob if", responseData.data.dob);
@@ -366,7 +366,7 @@ class KYCForm extends Component {
             fields["state"] =
               profileData.state !== null ? profileData.state : "";
             fields["dob"] =
-              profileData.dob !== null || profileData.dob !== "Invalid date"
+              profileData.dob === null || profileData.dob === "Invalid date"
                 ? ""
                 : moment(profileData.dob).format("YYYY-DD-MM");
             // fields["dob"] =
@@ -660,6 +660,7 @@ class KYCForm extends Component {
     */
 
   onSubmit() {
+    console.log(this.state.fields);
     if (this.validator.allValid()) {
       let temp = this.state.fields;
       temp["address"] = this.state.fields.address.trim();

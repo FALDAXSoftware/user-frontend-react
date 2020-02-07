@@ -133,7 +133,7 @@ class IDselect extends Component {
     } else {
       this.openNotificationWithIcon(
         "error",
-        "KYC",
+        "Error",
         "Please select any one option."
       );
     }
@@ -361,7 +361,4 @@ const mapDispatchToProps = dispatch => ({
   kycformData: data => dispatch(kycformData(data))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IDselect);
+export default connect(mapStateToProps, mapDispatchToProps)(IDselect);
