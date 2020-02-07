@@ -300,7 +300,10 @@ class KYCForm extends Component {
             fields["state"] =
               responseData.data.state !== null ? responseData.data.state : "";
             fields["dob"] =
-              responseData.data.dob !== null ? responseData.data.dob : "";
+              responseData.data.dob !== null ||
+              responseData.data.dob !== "Invalid date"
+                ? ""
+                : responseData.data.dob;
             // console.log("kyc dob if", responseData.data.dob);
             fields["country_code"] =
               responseData.data.country_code !== null
@@ -363,9 +366,13 @@ class KYCForm extends Component {
             fields["state"] =
               profileData.state !== null ? profileData.state : "";
             fields["dob"] =
-              profileData.dob !== null
-                ? moment(profileData.dob).format("YYYY-DD-MM")
-                : "";
+              profileData.dob !== null || profileData.dob !== "Invalid date"
+                ? ""
+                : moment(profileData.dob).format("YYYY-DD-MM");
+            // fields["dob"] =
+            //   profileData.dob !== null
+            //     ? moment(profileData.dob).format("YYYY-DD-MM")
+            //     : "";
             fields["country_code"] =
               profileData.country_code !== null ? profileData.country_code : "";
             let dob = moment(profileData.dob).format("YYYY-DD-MM");
@@ -654,8 +661,6 @@ class KYCForm extends Component {
 
   onSubmit() {
     if (this.validator.allValid()) {
-      // var profileData = this.state.fields;
-      console.log(" asdgh", this.state.fields);
       let temp = this.state.fields;
       temp["address"] = this.state.fields.address.trim();
       temp["address_2"] = this.state.fields.address_2;
