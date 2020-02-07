@@ -98,6 +98,9 @@ const SubText = styled.span`
   font-size: 16px;
   font-family: "Open Sans";
   color: rgb(163, 163, 163);
+  > b {
+    color: #000;
+  }
 `;
 
 class EmailVerification extends Component {
@@ -128,7 +131,7 @@ class EmailVerification extends Component {
                 </WelcomeText>
                 <SubText>
                   Please check your updated email address{" "}
-                  {this.props.location.state}.
+                  <b>{this.props.location.state}</b>.
                 </SubText>
               </RightWrap>
             </FormWrap>
