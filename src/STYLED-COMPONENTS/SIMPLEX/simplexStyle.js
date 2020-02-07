@@ -34,6 +34,13 @@ export const SimLeftCol = styled(Col)`
   padding: 60px 20px;
   &.simplex_left_col_exchange {
     margin: 0 auto;
+    & .simplex_row {
+      display: flex;
+      > .ant-col {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
   }
   @media (max-width: 991px) {
     width: 100%;
