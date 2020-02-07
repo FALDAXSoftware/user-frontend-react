@@ -284,6 +284,9 @@ class Simplex extends React.Component {
     }
   }
   handleCurrencyPayChange(e) {
+    if (this.state.loader) {
+      return false;
+    }
     clearTimeout(this.timeout);
 
     if (e.target.value === null || e.target.value === "") {

@@ -761,6 +761,9 @@ class ConversionDetail extends React.Component {
     }
   }
   sendCurrencyChange(e) {
+    if (this.state.loader) {
+      return false;
+    }
     this.setState({
       disabledButton: true
     });
@@ -810,6 +813,9 @@ class ConversionDetail extends React.Component {
     }
   }
   recieveCurrencyChange(e) {
+    if (this.state.loader) {
+      return false;
+    }
     this.setState({
       disabledButton: true
     });
@@ -868,6 +874,9 @@ class ConversionDetail extends React.Component {
     }
   }
   fiatJSTValueChange(e) {
+    if (this.state.loader) {
+      return false;
+    }
     this.setState({
       disabledButton: true
     });

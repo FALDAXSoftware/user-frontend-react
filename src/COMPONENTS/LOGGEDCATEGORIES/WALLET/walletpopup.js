@@ -544,6 +544,9 @@ class WalletPopup extends Component {
       .catch(error => {});
   }
   sendChange(e) {
+    if (this.state.loader) {
+      return false;
+    }
     clearTimeout(this.timeout);
     var fields = this.state.sendFields;
     var name = e.target.name;
@@ -576,7 +579,6 @@ class WalletPopup extends Component {
       let faldaxFee = parseFloat(
         e.target.value * (this.props.coinFee / 100)
       ).toFixed(8);
-      // console.log("^^^^^", subtotal);
       fields["subtotal"] = subtotal;
       this.setState(
         {
@@ -597,33 +599,18 @@ class WalletPopup extends Component {
               disabled: true
             });
           }
-          // this.timeout = setTimeout(this.getFeeValues, 1000);
         }
       );
     }
-    // let subtotal = parseFloat(
-    //   parseFloat(fields[name]) +
-    //     parseFloat(fields[name]) * (this.props.coinFee / 100)
-    // ).toFixed(8);
-    // let fiatValueamount = parseFloat(
-    //   parseFloat(this.state.singlefiatValue) * parseFloat(e.target.value)
-    // ).toFixed(2);
-    // fields["subtotal"] = subtotal;
-    // this.setState({
-    //   sendFields: fields,
-    //   fiatValue: fiatValueamount
-    // });
   }
 
   /* After confirming Button*/
-
   confirmFunc() {
     this.sendSubmit(true);
     this.handleComing();
   }
   /* After Cancel Button*/
   cancelFunc() {
-    // console.log(this)
     let _this = this;
     _this.openNotificationWithIcon(
       "success",
@@ -635,8 +622,6 @@ class WalletPopup extends Component {
 
   render() {
     let amount = Number(this.state.sendFields.amount);
-    // let subtotal = amount + amount * (this.props.coinFee / 100);
-
     return (
       <div>
         {(this.props.title === "RECEIVE" &&

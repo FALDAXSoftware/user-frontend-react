@@ -309,6 +309,9 @@ class SimplexExchange extends React.Component {
     }
   }
   handleCurrencyPayChange(e) {
+    if (this.state.loader) {
+      return false;
+    }
     clearTimeout(this.timeout);
 
     if (e.target.value === null || e.target.value === "") {
@@ -529,7 +532,7 @@ class SimplexExchange extends React.Component {
         <ConversionContainer>
           <SimMainRow className="simplex_main_row">
             <SimLeftCol className="simplex_left_col_exchange" lg={12}>
-              <BorderRow>
+              <BorderRow className="simplex_row">
                 <RowTitle>You Pay</RowTitle>
                 <Col xs={12} sm={12} md={16}>
                   <ConversionInput
@@ -574,7 +577,7 @@ class SimplexExchange extends React.Component {
                     )}
                 </Col>
               </BorderRow>
-              <BorderRow>
+              <BorderRow className="simplex_row">
                 <RowTitle>You Get</RowTitle>
                 <Col xs={12} sm={12} md={16}>
                   <ConversionInput
