@@ -184,6 +184,11 @@ class DetailsTable extends React.Component {
                                 "https://explorer.bitcoin.com/tbch/tx/" +
                                 details[index].transaction_id;
                               break;
+                            case "eth":
+                              url =
+                                "https://kovan.etherscan.io/tx/" +
+                                details[index].transaction_id;
+                              break;
                             case "SUSU":
                               url =
                                 "http://explore.susukino.com/tx/" +

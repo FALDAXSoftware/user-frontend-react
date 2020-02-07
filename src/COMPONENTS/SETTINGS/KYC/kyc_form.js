@@ -6,6 +6,7 @@ import { Col, notification } from "antd";
 import styled from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
 import moment from "moment";
+import CountryData from "country-state-city";
 import "react-intl-tel-input/dist/main.css";
 
 /* Components */
@@ -250,7 +251,7 @@ class KYCForm extends Component {
         // console.log("KYC CHECK", this.state.showSSN);
         this.props.next_step(1, null, this.state.showSSN);
       } else {
-        this.openNotificationWithIcon("error", "KYC", props.kycData.err);
+        this.openNotificationWithIcon("error", "Error", props.kycData.err);
         this.props.kycformData();
       }
     }
@@ -300,21 +301,26 @@ class KYCForm extends Component {
             fields["state"] =
               responseData.data.state !== null ? responseData.data.state : "";
             fields["dob"] =
-              responseData.data.dob !== null ? responseData.data.dob : "";
-            // console.log("kyc dob if", responseData.data.dob);
+              responseData.data.dob === null ||
+              responseData.data.dob === "Invalid date"
+                ? ""
+                : responseData.data.dob;
             fields["country_code"] =
               responseData.data.country_code !== null
                 ? responseData.data.country_code
                 : "";
+            var countrySelected = CountryData.getCountryById(
+              responseData.data.countryJsonId - 1
+            );
+            let country_code = "";
+            if (countrySelected) {
+              country_code = countrySelected.sortname;
+            }
             if (responseData.data.phone_number) {
               fields["phone_number"] = responseData.data.phone_number;
-              // console.log("country_code", responseData.data.country_code);
               let phone = responseData.data.phone_number;
               let arr = [];
               arr.push(responseData.data.country_code);
-              // console.log("country_code", this.state.phoneCountry);
-              // console.log(responseData.data.phone_number);
-
               this.setState(
                 {
                   countrychange: true,
@@ -323,7 +329,6 @@ class KYCForm extends Component {
                   displayCountry: true
                 },
                 () => {
-                  // console.log("KYC CHECK", responseData.data.country_code)
                   if (
                     responseData.data.country_code == "US" ||
                     responseData.data.country_code == "CA"
@@ -331,6 +336,26 @@ class KYCForm extends Component {
                     self.setState({
                       showSSN: true
                     });
+                }
+              );
+            } else {
+              fields["phone_number"] = responseData.data.phone_number;
+              let phone = responseData.data.phone_number;
+              let arr = [];
+              arr.push(country_code);
+              this.setState(
+                {
+                  countrychange: true,
+                  mobile: responseData.data.phone_number,
+                  phoneCountry: arr,
+                  displayCountry: true
+                },
+                () => {
+                  if (country_code == "US" || country_code == "CA") {
+                    self.setState({
+                      showSSN: true
+                    });
+                  }
                 }
               );
             }
@@ -363,13 +388,28 @@ class KYCForm extends Component {
             fields["state"] =
               profileData.state !== null ? profileData.state : "";
             fields["dob"] =
-              profileData.dob !== null
-                ? moment(profileData.dob).format("YYYY-DD-MM")
-                : "";
+              profileData.dob === null || profileData.dob === "Invalid date"
+                ? ""
+                : moment(profileData.dob).format("YYYY-DD-MM");
+            // fields["dob"] =
+            //   profileData.dob !== null
+            //     ? moment(profileData.dob).format("YYYY-DD-MM")
+            //     : "";
             fields["country_code"] =
               profileData.country_code !== null ? profileData.country_code : "";
             let dob = moment(profileData.dob).format("YYYY-DD-MM");
-            // console.log("kyc dob else", dob);
+            let country_code = "";
+            if (profileData.country) {
+              // console.log("kyc dob ^^^^", profileData.countryJsonId);
+              var countrySelected = CountryData.getCountryById(
+                profileData.countryJsonId - 1
+              );
+
+              if (countrySelected) {
+                country_code = countrySelected.sortname;
+              }
+              // console.log("kyc dob else ^^^^^", country_code);
+            }
             if (profileData.phone_number) {
               fields["phone_number"] = profileData.phone_number;
               let phone = profileData.phone_number;
@@ -390,6 +430,26 @@ class KYCForm extends Component {
                     self.setState({
                       showSSN: true
                     });
+                }
+              );
+            } else if (profileData.country) {
+              fields["phone_number"] = profileData.phone_number;
+              let phone = profileData.phone_number;
+              let arr = [];
+              arr.push(country_code);
+              this.setState(
+                {
+                  countrychange: true,
+                  mobile: profileData.phone_number,
+                  phoneCountry: arr,
+                  displayCountry: true
+                },
+                () => {
+                  if (country_code == "US" || country_code == "CA") {
+                    self.setState({
+                      showSSN: true
+                    });
+                  }
                 }
               );
             }
@@ -503,15 +563,7 @@ class KYCForm extends Component {
     */
 
   onCountryChange(country, state, city, country_code, phoneCode, phone_number) {
-    // console.log(
-    //   "^^^kyc",
-    //   country,
-    //   state,
-    //   city,
-    //   country_code,
-    //   phoneCode,
-    //   phone_number
-    // );
+    console.log("^^^kyc", country, state, city, country_code);
     let fields = this.state.fields;
     if (this.state.fields.country === country) {
       // alert("same");
@@ -570,7 +622,18 @@ class KYCForm extends Component {
     fields["state"] = state;
     fields["city_town"] = city;
     fields["country_code"] = country_code;
-
+    if (
+      country_code.toLowerCase() === "ca" ||
+      country_code.toLowerCase() === "us"
+    ) {
+      this.setState({
+        showSSN: true
+      });
+    } else {
+      this.setState({
+        showSSN: false
+      });
+    }
     this.setState(
       {
         kycData: { ...this.state.kycData, ...fields },
@@ -653,9 +716,8 @@ class KYCForm extends Component {
     */
 
   onSubmit() {
+    // console.log(this.state.fields);
     if (this.validator.allValid()) {
-      // var profileData = this.state.fields;
-      console.log(" asdgh", this.state.fields);
       let temp = this.state.fields;
       temp["address"] = this.state.fields.address.trim();
       temp["address_2"] = this.state.fields.address_2;
