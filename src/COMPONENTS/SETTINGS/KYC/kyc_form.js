@@ -219,7 +219,7 @@ class KYCForm extends Component {
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$/;
+          var re = /^(\(?\+?[0-9]*\)?)?[0-9_\-\(\)]*$/;
           var bool = re.test(String(val).toLowerCase());
           return bool;
         }

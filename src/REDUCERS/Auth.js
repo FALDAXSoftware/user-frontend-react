@@ -46,6 +46,8 @@ export default (
       }
 
     case "LOGOUT":
+      document.cookie = "isLoggedIn=false";
+      document.cookie = "isLoggedIn=false; domain=faldax.com";
       return {
         ...state,
         isLoggedIn: undefined,
