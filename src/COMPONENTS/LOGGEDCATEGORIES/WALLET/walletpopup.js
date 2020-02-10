@@ -815,7 +815,7 @@ class WalletPopup extends Component {
             )}
             {this.props.title === "SEND" && (
               <span>
-                *Network Fee amount could change during actual transaction
+                Note*: Network Fee amount could change during actual transaction
                 depending on the market conditions.
               </span>
             )}
