@@ -354,13 +354,13 @@
     },
     "dont_agree_btn": {
       "page": "Edit Profile",
-      "message": "I don't agree",
+      "message": "I disagree",
       "message_type": "Web content",
       "context": "Agree terms pop up Agree button text"
     },
     "dont_agree_popup_title": {
       "page": "Edit Profile",
-      "message": "Are you sure, you want to disagree?",
+      "message": "Are you sure you want to disagree?",
       "message_type": "Web content",
       "context": "Title on dont agree terms and conditions button click popup"
     },
@@ -414,7 +414,7 @@
     },
     "currency_date_format_3": {
       "page": "Edit Profile",
-      "message": "MMM DD,YYYY",
+      "message": "MMM DD, YYYY",
       "message_type": "Web content",
       "context": "Date format text to display"
     }
@@ -488,13 +488,13 @@
     },
     "verify_email_popup_text1": {
       "page": "Edit Profile > Securtiy > Verify Email Address",
-      "message": "We have sent an one-time use verification code to old email address",
+      "message": "We have sent a one-time use verification code to ",
       "message_type": "Web content",
       "context": "text"
     },
     "verify_email_popup_text2": {
       "page": "Edit Profile > Securtiy > Verify Email Address",
-      "message": "Please enter the code in the box below to complete the verification for",
+      "message": "Please enter the code in the box below to verify ",
       "message_type": "Web content",
       "context": "text"
     },
@@ -560,7 +560,7 @@
     },
     "two_factor_text2": {
       "page": "Edit Profile > Securtiy > Two-Factor Authentication",
-      "message": "Way to go! You care about your security as much as we do. Thanks for enabling Two-Factor Authentication!",
+      "message": "Way to go! You care about your security as much as we do. Thank you for enabling Two-Factor Authentication!",
       "message_type": "Web content",
       "context": "text"
     },
@@ -844,7 +844,7 @@
     },
     "deactivate_popup_text_note": {
       "page": "Edit Profile > Settings > Deactivate Account",
-      "message": "Any funds in your wallet will no longer be accessible after deactivation of account.",
+      "message": "Any funds in your wallet will no longer be accessible after the deactivation of your account.",
       "message_type": "Web content",
       "context": "Text note for forfeit funds"
     },
@@ -886,7 +886,7 @@
     },
     "deactivate_popup_text_confirm": {
       "page": "Edit Profile > Settings > Deactivate Account",
-      "message": "Are you sure, you want to Deactivate your account?",
+      "message": "Are you sure you want to Deactivate your account?",
       "message_type": "Web content",
       "context": "Text of deactivate account popup confirmation"
     },
@@ -1054,7 +1054,7 @@
     },
     "id_type_driving_licence": {
       "page": "Edit Profile > Identity Verification > Step 2",
-      "message": "Driving licence",
+      "message": "Driving license",
       "message_type": "Web content",
       "context": "Driving licence text"
     },
@@ -1134,7 +1134,7 @@
     },
     "you_recieve_text": {
       "page": "Crypto Conversion",
-      "message": "You Recieve",
+      "message": "You Receive",
       "message_type": "Web content",
       "context": "Text"
     },
@@ -1260,7 +1260,7 @@
     },
     "pay_with_card_text": {
       "page": "Simplex Conversion",
-      "message": "Pay With a Bank Card",
+      "message": "Pay with a Bank Card",
       "message_type": "Web content",
       "context": "Text"
     },
@@ -1310,7 +1310,7 @@
     },
     "recieve_btn": {
       "page": "Wallet Details",
-      "message": "Recieve",
+      "message": "Receive",
       "message_type": "Web content",
       "context": "Recieve button text"
     },
@@ -1400,13 +1400,13 @@
     },
     "send_amount_note_text": {
       "page": "Wallet Details > Send",
-      "message": "Network Fee amount could change during actual transaction depending on the market conditions.",
+      "message": "Network Fee amount could change during the transaction depending on the market conditions.",
       "message_type": "Web content",
       "context": "Note text in send popup"
     },
     "wallet_generation_in_process": {
       "page": "Wallet Details",
-      "message": "Your wallet is being generated and you will recieve a notification when it is ready for use. If you do not recieve a notification within 24 hours, or if you have any other concerns, please feel free to contact us",
+      "message": "Your wallet is being generated and you will receive a notification when it is ready for use. If you do not receive a notification within 24 hours, or if you have any other concerns, please feel free to contact us",
       "message_type": "Web content",
       "context": "wallet generation under process message"
     },
@@ -1560,7 +1560,7 @@
     },
     "captcha_not_loaded_error_head": {
       "page": "General",
-      "message": "Seems like a robot",
+      "message": "The automated human verification system encountered an error. Please refresh the page and try again. We apologize for any inconvenience.",
       "message_type": "Web content",
       "context": "Captcha is not loaded due to some network issue"
     },
@@ -1598,7 +1598,7 @@
     },
     "illegal_popup_subtext1": {
       "page": "Access Denied Pop up",
-      "message": "Unfortunately, FALDAX does not offer trading services in your area at this time, but we are actively working to increase availability. Visit the world map on our home page to see where trading is considered legal in your area, but you are unable to trade, that simply means we are working through the licensing process with the authoritiesin your area. Check back often, or subscribe to our newsletter, to be notifiedwhen services become available for you.",
+      "message": "Unfortunately, FALDAX does not offer trading services in your area at this time, but we are actively working to increase availability. Visit the world map on our home page to see where trading is considered legal in your area. If you are unable to trade that simply means we are working through the licensing process with the authorities in your area. Check back often or subscribe to our newsletter to be notified when services become available for you.",
       "message_type": "Web content",
       "context": "Access Denied pop up subtext"
     },
@@ -1610,13 +1610,13 @@
     },
     "panic_popup_head": {
       "page": "Panic enabled Pop up",
-      "message": "System Lockout In Effect",
+      "message": "System Lockout in Effect",
       "message_type": "Web content",
       "context": "Panic enabled pop up head"
     },
     "panic_popup_subtext": {
       "page": "Panic enabled Pop up",
-      "message": "Our systems have detected unwarranted and suspicious behavior which triggered our automatic lockout protocols. In order to ensure the safety and security of your assets and information, all assets system-wide are frozen and you will not be able to trade or move assets during this time. The balance you see in each of your wallets is secure accurate, and those assets are secure. By default, the lockout goes into effect for 24 hours, but this time may vary depending upon what our security team finds, if anything, and mitigates any known risks to you and our other customers. Please follow our twitter page, or look for notifications we will send via text and email, for updates as they become available. We are deeply sorry for any inconvenience, but our primary concern is to always be the best possible stewards of your information and assets. Rest assured that we are working to ensure that goal, and we thank you for your support and patience.",
+      "message": "Our systems have detected unwarranted and suspicious behavior which triggered our automatic lockout protocols. In order to ensure the safety and security of your assets and information, all assets system-wide are frozen and you will not be able to trade or move assets during this time. The balance you see in each of your wallets is secure and accurate. By default, the lockout goes into effect for 24 hours, but this time may vary depending upon what our security team finds and mitigates any known risks to you and all of our valued customers. Please follow our Twitter page and notifications we will send via text and email for the latest updates. Our primary concern is to always be the best possible stewards of your information and assets, and we are deeply sorry for any inconvenience. We thank you for your support and patience.",
       "message_type": "Web content",
       "context": "Panic enabled pop up subtext"
     }
@@ -1654,13 +1654,13 @@
     },
     "supported_formats_text": {
       "page": "Apply Job",
-      "message": "Supported format : .doc , .docx , .pdf.",
+      "message": "Supported format: .doc, .docx, .pdf.",
       "message_type": "Web content",
       "context": "Supported formats text"
     },
     "linkedin_label": {
       "page": "Apply Job",
-      "message": "Linkedin Profile",
+      "message": "LinkedIn Profile",
       "message_type": "Web content",
       "context": "Linkedin Profile label"
     },
@@ -1680,7 +1680,7 @@
     },
     "min_max_first_name": {
       "page": "Personal Details",
-      "message": "should have min. 2 and max. 15 characters and no special characters are allowed",
+      "message": "should have a minimum of 2 and a maximum of 15 characters and no special characters are allowed",
       "message_type": "Web content",
       "context": "validation for first name for min max and no special characters"
     },
@@ -1692,7 +1692,7 @@
     },
     "required_country_state_city": {
       "page": "Personal Details",
-      "message": "Country, State and City Fields are required",
+      "message": "Country, State, and City Fields are required",
       "message_type": "Web content",
       "context": "validation for country, state and city field required"
     },
@@ -1710,13 +1710,13 @@
     },
     "only_number_not_allowed": {
       "page": "Personal Details",
-      "message": "Only numbers are not allowed",
+      "message": "Field must include more than just numbers",
       "message_type": "Web content",
       "context": "validation for only numbers are not allowed"
     },
     "min_max_postal_code": {
       "page": "Personal Details",
-      "message": "Postal code should have min. 3 and max. 25 characters",
+      "message": "Postal code should have a minimum of 3 and a maximum of 25 characters",
       "message_type": "Web content",
       "context": "validation for postal code min max numbers"
     },
@@ -1764,13 +1764,13 @@
     },
     "street_address_error": {
       "page": "Personal Details",
-      "message": "Street Address limit is 100 characters",
+      "message": "Street Address Line 1 field has a maximum limit of 100 characters",
       "message_type": "Web content",
       "context": "Displayed when street address is more then max characters edit profile"
     },
     "street_address2_error": {
       "page": "Personal Details",
-      "message": "Street Address Line 2 field should have max. 100 characters",
+      "message": "Street Address Line 2 field has a maximum limit of 100 characters",
       "message_type": "Web content",
       "context": "Displayed when street address is more then max characters edit profile"
     },
@@ -1782,25 +1782,25 @@
     },
     "no_suffix_prefix_error": {
       "page": "Personal Details",
-      "message": "Space is not allowed in prefix/suffix",
+      "message": "Spaces are not allowed in prefix/suffix",
       "message_type": "Web content",
       "context": "Displayed when space is entered in prefix/suffix"
     },
     "error_on_submit_profile": {
       "page": "Personal Details",
-      "message": "Please complete all required details to continue",
+      "message": "Please complete all required fields to continue",
       "message_type": "Web content",
       "context": "when required fields are not filled up and submit is clicked"
     },
     "space_in_password": {
       "page": "Edit Profile > Security",
-      "message": "Your password must not contain space",
+      "message": "Your password must not contain any spaces",
       "message_type": "Web content",
       "context": "When space is included in password"
     },
     "password_error": {
       "page": "Edit Profile > Security",
-      "message": "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters",
+      "message": "Your password must contain at least one uppercase letter, one lowercase letter, one special character (!@#$%_), and one number. Minimum of 8 characters and a maximum of 60 characters",
       "message_type": "Web content",
       "context": "When space is included in password"
     },
@@ -1812,7 +1812,7 @@
     },
     "otp_error": {
       "page": "Edit Profile > Security",
-      "message": "Otp should have 6 digit number",
+      "message": "Your Two-Factor Authentication code should be six digits.",
       "message_type": "Web content",
       "context": "when otp is not a valid number"
     },
@@ -1848,55 +1848,55 @@
     },
     "mobile_no_error": {
       "page": "Edit Profile > Identity Verification",
-      "message": "Mobile No. should have only numbers",
+      "message": "Mobile number should have only numbers",
       "message_type": "Web content",
       "context": "invalid mobile number validation message"
     },
     "mobile_no_min_error": {
       "page": "Edit Profile > Identity Verification",
-      "message": "Mobile No. should have min. 5 characters",
+      "message": "Mobile number has a minimum of 5 characters",
       "message_type": "Web content",
       "context": "min mobile number validation message"
     },
     "mobile_no_max_error": {
       "page": "Edit Profile > Identity Verification",
-      "message": "Mobile No. should have max. 30 characters",
+      "message": "Mobile number has a maximum of 30 characters",
       "message_type": "Web content",
       "context": "max mobile number validation message"
     },
     "Postal_min_error": {
       "page": "Edit Profile > Identity Verification",
-      "message": "Postal code should have min. 3 characters",
+      "message": "Postal code has a minimum of 3 characters",
       "message_type": "Web content",
       "context": "min postal code validation message"
     },
     "postal_max_error": {
       "page": "Edit Profile > Identity Verification",
-      "message": "Postal code should have max. 25 characters",
+      "message": "Postal code has a maximum of 25 characters",
       "message_type": "Web content",
       "context": "max postal code validation message"
     },
     "image_upload_error": {
       "page": "Edit Profile > Identity Verification",
-      "message": "File should be greater than 450*600 in dimension",
+      "message": "File needs to be greater than 450*600 in dimension",
       "message_type": "Web content",
       "context": "Uploaded image is less than 450*600 dimension"
     },
     "cover_limit_error": {
       "page": "Apply Job",
-      "message": "Please upload the document of less than 2 mb.",
+      "message": "Please upload the document with a file size less than 2 mb.",
       "message_type": "Web content",
       "context": "Uploaded document is greater than 2 MB"
     },
     "valid_website_url_error": {
       "page": "Apply Job",
-      "message": "Please enter valid webiste address.",
+      "message": "Please enter a valid website address.",
       "message_type": "Web content",
       "context": "invalid website url is entered"
     },
     "valid_linkedin_url_error": {
       "page": "Apply Job",
-      "message": "Please enter valid Linkedin address.",
+      "message": "Please enter a valid LinkedIn address.",
       "message_type": "Web content",
       "context": "invalid linkedin url is entered"
     },
@@ -1947,6 +1947,14 @@
       "message": "Amount must be less than or equal to 20,000",
       "message_type": "Web content",
       "context": "Amount must be less than or equal to 20,000 error"
+    }
+  },
+  "general_1": {
+    "language_head": {
+      "page": "Header",
+      "message": "Language",
+      "message_type": "Web content",
+      "context": "Header top menu to change language"
     }
   }
 }

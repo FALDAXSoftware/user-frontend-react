@@ -1012,5 +1012,13 @@
       "message_type": "Web content",
       "context": "validation for postal code contain letters, numbers, and dashes"
     }
+  },
+  "general_1": {
+    "language_head": {
+      "page": "Header",
+      "message": "言語",
+      "message_type": "Web content",
+      "context": "Header top menu to change language"
+    }
   }
 }

@@ -649,11 +649,11 @@ class LoggedNavigation extends Component {
     // }
   }
   onChange = e => {
-    console.log("radio checked", e.target.value);
-    this.props.i18n.changeLanguage(e.target.value);
+    console.log("radio checked", e.key);
+    this.props.i18n.changeLanguage(e.key);
     this.setState(
       {
-        langValue: e.target.value
+        langValue: e.key
       },
       () => {
         this.props.langAction(this.state.langValue);
@@ -732,15 +732,45 @@ class LoggedNavigation extends Component {
         </Menu.Item>
       </Menu>
     );
+    // const langItems = (
+    //   <Radio.Group onChange={this.onChange} value={this.state.langValue}>
+    //     <Radio style={radioStyle} value="en">
+    //       English
+    //     </Radio>
+    //     <Radio style={radioStyle} value="ja">
+    //       Japanese
+    //     </Radio>
+    //   </Radio.Group>
+    // );
     const langItems = (
-      <Radio.Group onChange={this.onChange} value={this.state.langValue}>
-        <Radio style={radioStyle} value="en">
-          English
-        </Radio>
-        <Radio style={radioStyle} value="ja">
-          Japanese
-        </Radio>
-      </Radio.Group>
+      <Menu
+        // onClick={e => {
+        //   alert("change");
+        //   console.log("this", e.key);
+        // }}
+        onClick={this.onChange}
+      >
+        <Menu.Item
+          key="en"
+          // onClick={() => {
+          //   this.setState({
+          //     langValue: "en"
+          //   });
+          // }}
+        >
+          <a>English</a>
+        </Menu.Item>
+        <Menu.Item
+          key="ja"
+          // onClick={() => {
+          //   this.setState({
+          //     langValue: "ja"
+          //   });
+          // }}
+        >
+          <a>Japanese</a>
+        </Menu.Item>
+      </Menu>
     );
     return (
       <Headermain id="main">
@@ -803,12 +833,12 @@ class LoggedNavigation extends Component {
           </Menuitem>
           <Menuitem key="4">
             <DropDownDiv
-              className="Drop-main"
+              // className="Drop-main"
               overlay={langItems}
-              // trigger={["click"]}
-              overlayClassName="custom_dropdown_menu"
+              trigger={["click"]}
+              // overlayClassName="custom_dropdown_menu"
             >
-              <div>Language</div>
+              <div>{t("general_1:language_head.message")}</div>
             </DropDownDiv>
             {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
           </Menuitem>
@@ -1067,6 +1097,6 @@ const mapDispatchToProps = dispatch => ({
   langAction: lang => dispatch(langAction(lang))
 });
 
-export default translate(["header", "footer"])(
+export default translate(["header", "footer", "general_1"])(
   connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation))
 );
