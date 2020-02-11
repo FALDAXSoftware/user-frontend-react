@@ -412,8 +412,8 @@ class Login_Form extends Component {
         } else {
           this.openNotificationWithIcon(
             "error",
-            "Seems like a robot",
-            "Please try again after reloading the page."
+            "Error",
+            "The automated human verification system encountered an error. Please refresh the page and try again. We apologize for any inconvenience."
           );
         }
       } else {
