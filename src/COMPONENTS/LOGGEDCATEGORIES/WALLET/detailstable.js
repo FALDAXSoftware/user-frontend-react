@@ -179,11 +179,6 @@ class DetailsTable extends React.Component {
                                 "https://blockchair.com/litecoin/transaction/" +
                                 details[index].transaction_id;
                               break;
-                            case "eth":
-                              url =
-                                "https://blockchair.com/ethereum/transaction/" +
-                                details[index].transaction_id;
-                              break;
                             case "bch":
                               url =
                                 "https://blockchair.com/bitcoin-cash/transaction/" +
