@@ -191,7 +191,7 @@ class DetailsTable extends React.Component {
                               break;
                             case "eth":
                               url =
-                                "https://kovan.etherscan.io/tx/" +
+                                "https://etherscan.io/tx/" +
                                 details[index].transaction_id;
                               break;
                             case "SUSU":
@@ -203,31 +203,12 @@ class DetailsTable extends React.Component {
                               url = "";
                               break;
                           }
-                          // if (me.props.coin_code == "tbtc") {
-                          //   url =
-                          //     "https://blockstream.info/testnet/tx/" +
-                          //     details[index].transaction_id;
-                          // }
-                          // if (me.props.coin_code == "txrp") {
-                          //   url =
-                          //     "https://test.bithomp.com/explorer/" +
-                          //     details[index].transaction_id;
-                          // }
-                          // if (me.props.coin_code == "tltc") {
-                          //   url =
-                          //     "https://blockexplorer.one/litecoin/testnet/tx/" +
-                          //     details[index].transaction_id;
-                          // }
-                          // if (me.props.coin_code == "tbch") {
-                          //   url =
-                          //     "https://explorer.bitcoin.com/tbch/tx/" +
-                          //     details[index].transaction_id;
-                          // }
-                          // if (me.props.coin_code == "SUSU") {
-                          //   url =
-                          //     "http://explore.susukino.com/tx/" +
-                          //     details[index].transaction_id;
-                          // }
+                        }
+                        // console.log("^^^erc", me.props.isERC);
+                        if (me.props.isERC) {
+                          url =
+                            "https://etherscan.io/token/" +
+                            details[index].transaction_id;
                         }
                         return (
                           <Col1 wallet>
