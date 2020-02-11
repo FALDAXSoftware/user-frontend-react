@@ -116,6 +116,7 @@ class WalletDetails extends Component {
       balanceFlag: false,
       coinFee: [],
       fiatValue: "",
+      isERC: false,
       panic_status: false,
       panicEnabled: false,
       withdrawRequests: []
@@ -219,6 +220,7 @@ class WalletDetails extends Component {
           walletDetails: transDetails,
           withdrawRequests: withdrawDetails,
           coin_code: coin_name[1],
+          isERC: walletUserDetails.iserc,
           coinFee: responseData.default_send_Coin_fee,
           fiatValue: responseData.currencyConversionData
             ? responseData.currencyConversionData.quote.USD.price
@@ -580,6 +582,7 @@ class WalletDetails extends Component {
                         <DetailsTable
                           wallet={this.state.walletDetails}
                           coin_code={this.state.coin_code}
+                          isERC={this.state.isERC}
                         />
                       </CoinTable>
                     </TransTable>
