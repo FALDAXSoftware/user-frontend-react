@@ -116,6 +116,7 @@ class WalletDetails extends Component {
       balanceFlag: false,
       coinFee: [],
       fiatValue: "",
+      isERC: false,
       panic_status: false,
       panicEnabled: false,
       withdrawRequests: []
@@ -219,6 +220,7 @@ class WalletDetails extends Component {
           walletDetails: transDetails,
           withdrawRequests: withdrawDetails,
           coin_code: coin_name[1],
+          isERC: walletUserDetails.iserc,
           coinFee: responseData.default_send_Coin_fee,
           fiatValue: responseData.currencyConversionData
             ? responseData.currencyConversionData.quote.USD.price
@@ -545,7 +547,7 @@ class WalletDetails extends Component {
                             )}
                           </CryptAmt>
                         </LeftBit>
-                        <PlacedDiv>
+                        {/* <PlacedDiv>
                           In Orders:{" "}
                           {walletUserData.balance >
                           walletUserData.placed_balance
@@ -557,7 +559,7 @@ class WalletDetails extends Component {
                                 walletUserData.placed_balance -
                                 walletUserData.balance
                               ).toFixed(8)}
-                        </PlacedDiv>
+                        </PlacedDiv> */}
                       </Col>
                       <Col xxl={8} xl={12} lg={24} md={24}>
                         <RightBit>
@@ -580,6 +582,7 @@ class WalletDetails extends Component {
                         <DetailsTable
                           wallet={this.state.walletDetails}
                           coin_code={this.state.coin_code}
+                          isERC={this.state.isERC}
                         />
                       </CoinTable>
                     </TransTable>
