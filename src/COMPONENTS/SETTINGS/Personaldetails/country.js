@@ -33,7 +33,11 @@ const SelectS = styled(Select)`
     width: 85%;
     margin: 0;
   }
-
+  & .ant-select-search--inline {
+    & .ant-select-search__field {
+      padding-left: 0 !important;
+    }
+  }
   & .Country_Select:first-child {
     margin-left: 0px !important;
   }
