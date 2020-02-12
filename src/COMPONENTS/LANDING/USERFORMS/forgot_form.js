@@ -335,7 +335,10 @@ class ForgotForm extends Component {
                   </ButtonLogin>
                   <LinkWrap>
                     <Icon className="material-icons">keyboard_backspace</Icon>
-                    <BackLink onClick={() => this.props.history.push("/login")}>
+                    <BackLink
+                      href="/login"
+                      // onClick={() => this.props.history.push("/login")}
+                    >
                       {" "}
                       Back To Login{" "}
                     </BackLink>
