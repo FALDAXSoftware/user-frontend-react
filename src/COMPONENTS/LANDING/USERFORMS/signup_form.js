@@ -944,13 +944,21 @@ class SignupForm extends Component {
                 <SignWrap>
                   <Sign>
                     Already Signed Up ?{" "}
-                    <Signa onClick={this._resendVerLink}>
+                    <Signa
+                      href="/resend-verification"
+                      // onClick={this._resendVerLink}
+                    >
                       Resend Verification Link
                     </Signa>
                   </Sign>
                   <Sign>
                     Already have an account?{" "}
-                    <Signa onClick={this.dispModal}>Login</Signa>
+                    <Signa
+                      href="/login"
+                      // onClick={this.dispModal}
+                    >
+                      Login
+                    </Signa>
                   </Sign>
                 </SignWrap>
               </RightWrap>
