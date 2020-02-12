@@ -391,7 +391,8 @@ class WalletPopup extends Component {
         This method is called when we have to copy address to clipboard.
     */
 
-  SearchText() {
+  SearchText(e, value) {
+    // e.stopPropagation();
     // Copy to clipboard example
     document.querySelectorAll(
       ".ant-input-search-button"
@@ -408,6 +409,7 @@ class WalletPopup extends Component {
       "Copied",
       "Address Copied to Clipboard"
     );
+    this.comingCancel();
   }
 
   /* 
@@ -727,11 +729,12 @@ class WalletPopup extends Component {
                     <CopyAddress>
                       <CopyToClipboardCSS
                         text={this.state.receive.receive_address}
-                        onCopy={() =>
+                        onCopy={() => {
                           this.setState({ copied: true }, () =>
-                            this.comingCancel()
-                          )
-                        }
+                            // this.comingCancel()
+                            {}
+                          );
+                        }}
                       >
                         <AddressDiv>
                           <RefInput
@@ -740,7 +743,7 @@ class WalletPopup extends Component {
                             placeholder="Referral"
                             enterButton="Copy"
                             size="large"
-                            onSearch={value => this.SearchText()}
+                            onSearch={(e, value) => this.SearchText(e, value)}
                           />
                         </AddressDiv>
                       </CopyToClipboardCSS>

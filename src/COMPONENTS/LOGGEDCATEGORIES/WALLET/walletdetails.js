@@ -272,7 +272,6 @@ class WalletDetails extends Component {
       duration: 5
     });
   }
-
   /* 
         Page: /wallet
         This method is called when we close the modal.
