@@ -15,6 +15,20 @@ const Picker_wrap = styled.div`
     background: ${props =>
       props.theme.mode === "dark" ? "transparent !important" : ""};
   }
+  & .ant-row.datepicker_main_row {
+    & select {
+      webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-size: 10px 8px !important;
+      background-repeat: no-repeat !important;
+      background-position: top 17px right 10px !important;
+      background-image: ${props =>
+        props.theme.mode === "dark"
+          ? "url(/images/arrow_down_dark.png)!important"
+          : "url(/images/arrow_down_light.png)"};
+    }
+  }
 `;
 let fields = {};
 
@@ -307,7 +321,7 @@ export default class Datepicker extends Component {
 
     return (
       <Picker_wrap>
-        <Row>
+        <Row className="datepicker_main_row">
           <Col md={8} xl={8}>
             <DayPicker
               // mandatory
