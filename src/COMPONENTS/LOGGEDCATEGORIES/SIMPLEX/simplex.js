@@ -284,28 +284,53 @@ class Simplex extends React.Component {
     }
   }
   handleCurrencyPayChange(e) {
+    // console.log("^^^", e, e.target.value, this.state.currencyToPay);
+    clearTimeout(this.timeout);
     if (this.state.loader) {
       return false;
     }
-    clearTimeout(this.timeout);
+    this.setState(
+      {
+        currencyToPay: e.target.value
+      },
+      () => {
+        if (this.validator1.allValid()) {
+          this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
+        } else {
+          this.setState({
+            currencyToGet: ""
+          });
+          this.validator1.showMessages();
+          this.forceUpdate();
+        }
+      }
+    );
 
-    if (e.target.value === null || e.target.value === "") {
-      this.setState({
-        currencyToPay: e.target.value,
-        currencyToGet: ""
-      });
-    } else {
-      this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
-      this.setState({
-        currencyToPay: parseFloat(e.target.value)
-      });
-    }
+    // clearTimeout(this.timeout);
+    // // debugger;
+    // if (this.state.loader) {
+    //   return false;
+    // }
+    // this.setState(
+    //   {
+    //     currencyToPay: e.target.value,
+    //     currencyToGet: ""
+    //   },
+    //   () => {
+    //     if (this.validator1.allValid()) {
+    //       console.log("^^^", e.target.value);
+    //       this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
+    //     } else {
+    //       // this.setState({
+    //       //   currencyToPay: parseFloat(e.target.value),
+    //       //   currencyToGet: ""
+    //       // });
+    //       this.validator1.showMessages();
+    //     }
+    //   }
+    // );
   }
-  // handleCurrencyGetChange(e) {
-  //   this.setState({
-  //     currencyToGet: parseFloat(e.target.value)
-  //   });
-  // }
+
   handleCurrencyChange(value) {
     this.setState(
       {
@@ -365,17 +390,22 @@ class Simplex extends React.Component {
                 <RowTitle>You Pay</RowTitle>
                 <Col xs={12} sm={12} md={16}>
                   <ConversionInput
-                    type="number"
+                    type="text"
                     placeholder="0"
-                    step="0.01"
+                    // step="0.01"
                     value={this.state.currencyToPay}
-                    onChange={this.handleCurrencyPayChange}
+                    onChange={e => {
+                      this.handleCurrencyPayChange(e);
+                    }}
                   />
                   {this.validator1.message(
                     "amount pay",
                     this.state.currencyToPay,
-                    `required|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
-                    "text-danger-validation"
+                    `required|numeric|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
+                    "text-danger-validation",
+                    {
+                      numeric: "Enter only integer or a decimal number"
+                    }
                   )}
                 </Col>
                 <Col xs={12} sm={12} md={8} className="value-display">

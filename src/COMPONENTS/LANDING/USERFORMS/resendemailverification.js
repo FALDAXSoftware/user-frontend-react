@@ -228,7 +228,12 @@ class EmailVerification extends Component {
                 </form>
                 <Sign>
                   Already have an account?{" "}
-                  <Signa onClick={this.dispModal}>Login</Signa>
+                  <Signa
+                    href="/login"
+                    // onClick={this.dispModal}
+                  >
+                    Login
+                  </Signa>
                 </Sign>
               </RightWrap>
             </FormWrap>

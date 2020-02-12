@@ -12,6 +12,7 @@ import { _EYE, _ACTIVEEYE } from "CONSTANTS/images";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { loginAction, Login, clearLogin } from "ACTIONS/authActions";
 import { globalVariables } from "Globals.js";
+import { Link } from "react-router-dom";
 
 let { API_URL, GOOGLE_SITE_KEY } = globalVariables;
 /* Global CONSTANTS */
@@ -1003,9 +1004,7 @@ class Login_Form extends Component {
                   </form>
                   {!this.state.isOtpRequired && (
                     <CheckWrap>
-                      <Forgot onClick={this._goToForgotPwd}>
-                        Forgot Password?
-                      </Forgot>
+                      <Forgot href="/forgot-password">Forgot Password?</Forgot>
                     </CheckWrap>
                   )}
                   {this.state.isOtpRequired && !this.state.showBackUpInput ? (
@@ -1085,7 +1084,10 @@ class Login_Form extends Component {
                   </ButtonLogin>
                   <Sign>
                     No account?{" "}
-                    <Signa onClick={() => this.dispModal("signup")}>
+                    <Signa
+                      href="/signup"
+                      // onClick={() => this.dispModal("signup")}
+                    >
                       Sign Up
                     </Signa>
                   </Sign>

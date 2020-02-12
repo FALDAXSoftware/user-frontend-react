@@ -15,6 +15,7 @@ import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import TFAModal from "SHARED-COMPONENTS/TFAModal";
 import { parse } from "@fortawesome/fontawesome-svg-core";
+import NumberFormat from "react-number-format";
 
 let { API_URL } = globalVariables;
 const WalletModal = styled(Modal)`
@@ -38,6 +39,9 @@ const WalletModal = styled(Modal)`
   }
   @media (max-width: 575px) {
     width: 300px !important;
+  }
+  & .note_text {
+    color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
   }
 `;
 const Label = styled.label`
@@ -153,6 +157,24 @@ const TotDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  &.available_balance {
+    margin: 10px 0 0 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 16px;
+    color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+    > label {
+      display: inherit;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+    > span {
+      margin: 0 0 0 10px;
+      text-transform: uppercase;
+    }
+  }
 `;
 const WithrawMsg = styled.div`
   font-size: 20px;
@@ -216,6 +238,7 @@ class WalletPopup extends Component {
       loader: false,
       showTFAModal: false,
       withdrawFlag: false,
+      availableBalance: "",
       withdrawMsg:
         "Your Withdrawal request may take 24-28 hours to process due to its size. Do you wish to proceed?"
     };
@@ -293,12 +316,14 @@ class WalletPopup extends Component {
     this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
     this.sendAddressChange = this.sendAddressChange.bind(this);
     this.getFeeValues = this.getFeeValues.bind(this);
+    this.getAvailableBalance = this.getAvailableBalance.bind(this);
   }
 
   /* Life Cycle Methods */
 
   componentDidMount() {
     // console.log(this.props);
+    this.getAvailableBalance();
     if (this.props.title === "RECEIVE") {
       this.setState({ loader: true });
       // console.log(this.props.coin_code)
@@ -328,6 +353,37 @@ class WalletPopup extends Component {
         singlefiatValue: this.props.fiatValue.toFixed(8)
       });
     }
+  }
+
+  // Get Availabel balance API
+  getAvailableBalance() {
+    this.setState({
+      loader: true
+    });
+    let coin = this.props.coin_code;
+    fetch(`${API_URL}/users/get-available-balance?coin=${coin}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn
+      }
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status === 200) {
+          // console.log("^^^", responseData);
+          this.setState({
+            availableBalance: parseFloat(responseData.data).toFixed(8)
+          });
+        } else {
+          this.openNotificationWithIcon("error", "Error", responseData.error);
+        }
+        this.setState({
+          loader: false
+        });
+      })
+      .catch(error => {});
   }
 
   /* 
@@ -500,7 +556,11 @@ class WalletPopup extends Component {
     // fields["subtotal"] = subtotal;
     this.setState({ sendFields: fields, showTFAModal: false }, () => {
       if (this.state.sendFields.amount && this.validator.allValid()) {
-        this.timeout = setTimeout(this.getFeeValues, 1500);
+        this.timeout = setTimeout(() => {
+          this.getFeeValues();
+          this.getAvailableBalance();
+        }, 1500);
+        // this.getAvailableBalance();
       } else {
         this.validator.showMessages();
         this.setState({
@@ -603,7 +663,11 @@ class WalletPopup extends Component {
             this.state.sendFields.destination_address &&
             this.validator.allValid()
           ) {
-            this.timeout = setTimeout(this.getFeeValues, 1500);
+            this.timeout = setTimeout(() => {
+              this.getFeeValues();
+              this.getAvailableBalance();
+            }, 1500);
+            // this.getAvailableBalance();
           } else {
             this.validator.showMessages();
             this.setState({
@@ -755,6 +819,18 @@ class WalletPopup extends Component {
                                     </ButtonToolbarS> */}
                   {/* </Sec_wrap> */}
                   {/* {console.log("^^^", this.state.faldaxFee)} */}
+                  <TotDiv className="available_balance">
+                    <label>Available Balance for Send: </label>
+                    <span>
+                      <NumberFormat
+                        value={this.state.availableBalance}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                      />{" "}
+                      {this.props.coin_code}
+                      {/* {this.state.availableBalance} {this.props.coin_code} */}
+                    </span>
+                  </TotDiv>
                   <TotDiv>
                     <Fee>
                       <span>
@@ -814,7 +890,7 @@ class WalletPopup extends Component {
               </ModalWrap>
             )}
             {this.props.title === "SEND" && (
-              <span>
+              <span className="note_text">
                 Note*: Network Fee amount could change during actual transaction
                 depending on the market conditions.
               </span>
