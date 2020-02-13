@@ -823,7 +823,7 @@ class WalletPopup extends Component {
                   {/* </Sec_wrap> */}
                   {/* {console.log("^^^", this.state.faldaxFee)} */}
                   <TotDiv className="available_balance">
-                    <label>Available Balance for Send: </label>
+                    <label>Available Balance to Send: </label>
                     <span>
                       <NumberFormat
                         value={this.state.availableBalance}

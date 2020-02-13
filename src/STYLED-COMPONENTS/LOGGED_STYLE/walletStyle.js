@@ -139,6 +139,9 @@ export const Col1 = styled.tr`
       text-align: left;
     }
   }
+  &.tableofcoinupper.disabled {
+    background: #e0e0e0;
+  }
   & td {
     > span {
       > .icon-display {
