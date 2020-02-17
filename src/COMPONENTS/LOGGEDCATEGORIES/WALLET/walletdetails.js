@@ -5,7 +5,7 @@ import { Row, Col, /* Input, */ Select, notification, Tabs } from "antd";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import NumberFormat from "react-number-format";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
 // import { Tabs } from 'antd';
 
@@ -120,7 +120,9 @@ class WalletDetails extends Component {
       panic_status: false,
       panicEnabled: false,
       withdrawRequests: [],
-      is_deactivated_asset: ""
+      is_deactivated_asset: "",
+      eth_for_erc_address: "",
+      eth_for_erc_status: ""
     };
     this.changeCoins = this.changeCoins.bind(this);
     this._walletCreate = this._walletCreate.bind(this);
@@ -225,6 +227,8 @@ class WalletDetails extends Component {
           isERC: walletUserDetails.iserc,
           coinFee: responseData.default_send_Coin_fee,
           is_deactivated_asset: responseData.is_active,
+          eth_for_erc_status: responseData.eth_for_erc_status,
+          eth_for_erc_address: responseData.eth_for_erc_address,
           fiatValue: responseData.currencyConversionData
             ? responseData.currencyConversionData.quote.USD.price
             : ""
@@ -391,6 +395,8 @@ class WalletDetails extends Component {
       walletUserData,
       defaultCoin,
       is_deactivated_asset,
+      eth_for_erc_address,
+      eth_for_erc_status,
       currencyConv /*,  walletDetails */
     } = this.state;
     let FIAT = this.props.profileDetails.fiat;
@@ -727,7 +733,7 @@ class WalletDetails extends Component {
                       ? walletUserData.coin_name
                       : ""}
                   </BTC>
-                  {walletUserData.iserc && (
+                  {walletUserData.iserc && !eth_for_erc_address && (
                     <PendingPara>
                       <p>
                         Your wallet is not created yet. Please create your
@@ -742,6 +748,26 @@ class WalletDetails extends Component {
                         <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
                       </p>
                     </PendingPara>
+                  )}
+                  {eth_for_erc_address && eth_for_erc_status && (
+                    <PendingPara>
+                      <p>
+                        Your wallet is not created yet. Please click on the
+                        button below to create your wallet for{" "}
+                        {walletUserData.coin_name}.
+                      </p>
+                      <WalletCreateButton onClick={this._walletCreate}>
+                        Create {walletUserData.coin_name} Wallet
+                      </WalletCreateButton>
+                      <p>
+                        If you still have any issue , please feel free to
+                        contact us{" "}
+                        <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                      </p>
+                    </PendingPara>
+                  )}
+                  {!eth_for_erc_status && !eth_for_erc_address && (
+                    <Redirect to="/wallet"></Redirect>
                   )}
                   {!walletUserData.iserc && (
                     <PendingPara>

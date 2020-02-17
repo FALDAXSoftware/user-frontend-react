@@ -118,6 +118,8 @@ class Wallet extends Component {
       myCoins: {},
       total: null,
       searchedCoins: null,
+      searchedERCTokens: null,
+      searchedDeactivatedWallet: null,
       searchedWallet: null,
       currencySeq: ["USD", "EUR", "INR"]
     };
@@ -126,32 +128,32 @@ class Wallet extends Component {
   }
 
   /* Life Cycle Methods */
-  // componentWillReceiveProps(newProps) {
-  //   var total = 0;
-  //   if (this.props != newProps) {
-  //     if (newProps.walletDetails.activated_asset_lists !== null) {
-  //       // console.log("props", newProps.walletDetails);
-  //       var tableData = newProps.walletDetails.activated_asset_lists;
-  //       var FIAT = newProps.profileDetails.fiat;
-  //       if (tableData !== undefined) {
-  //         tableData.map(function(index, key) {
-  //           // console.log(index.quote);
-  //           if (index.quote !== null)
-  //             if (
-  //               index.quote[`${FIAT}`].price !== undefined &&
-  //               index.quote[`${FIAT}`].price !== null
-  //             ) {
-  //               var fiat = newProps.profileDetails.fiat;
+  componentWillReceiveProps(newProps) {
+    var total = 0;
+    if (this.props != newProps) {
+      if (newProps.walletDetails.activated_asset_lists !== null) {
+        // console.log("props", newProps.walletDetails);
+        var tableData = newProps.walletDetails.activated_asset_lists;
+        var FIAT = newProps.profileDetails.fiat;
+        if (tableData !== undefined) {
+          tableData.map(function(index, key) {
+            // console.log(index.quote);
+            if (index.quote !== null)
+              if (
+                index.quote[`${FIAT}`].price !== undefined &&
+                index.quote[`${FIAT}`].price !== null
+              ) {
+                var fiat = newProps.profileDetails.fiat;
 
-  //               total = total + index.quote[`${fiat}`].price * index.balance;
-  //             }
-  //         });
-  //         // console.log(total)
-  //       }
-  //     }
-  //     this.setState({ total });
-  //   }
-  // }
+                total = total + index.quote[`${fiat}`].price * index.balance;
+              }
+          });
+          // console.log(total)
+        }
+      }
+      this.setState({ total });
+    }
+  }
   componentDidMount() {
     var coll = document.getElementsByClassName("collapsible");
     var i;
@@ -215,27 +217,44 @@ class Wallet extends Component {
         This method is called when u want to search from my wallet table.
     */
 
-  searchChangeWallet(e) {
+  searchChangeWallet(e, field) {
     var search = e.target.value;
     if (search !== "") {
-      if (search.trim() !== "") {
-        var searchedWallet = this.props.walletDetails.filter(function(temp) {
-          if (
-            temp.coin.toLowerCase().includes(search.toLowerCase()) ||
-            temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
-            temp.coin_code.toLowerCase().includes(search.toLowerCase())
-          ) {
-            return true;
-          } else {
-            return false;
+      if (search.trim() !== "" && field == "active_wallet") {
+        var searchedWallet = this.props.walletDetails.activated_asset_lists.filter(
+          function(temp) {
+            if (
+              temp.coin.toLowerCase().includes(search.toLowerCase()) ||
+              temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
+              temp.coin_code.toLowerCase().includes(search.toLowerCase())
+            ) {
+              return true;
+            } else {
+              return false;
+            }
           }
-        });
+        );
         this.setState({ searchedWallet });
+      } else if (search.trim() !== "" && field == "deactive_wallet") {
+        var searchedDeactivatedWallet = this.props.walletDetails.deactivated_asset_lists.filter(
+          function(temp) {
+            if (
+              temp.coin.toLowerCase().includes(search.toLowerCase()) ||
+              temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
+              temp.coin_code.toLowerCase().includes(search.toLowerCase())
+            ) {
+              return true;
+            } else {
+              return false;
+            }
+          }
+        );
+        this.setState({ searchedDeactivatedWallet });
       } else {
-        this.setState({ searchedWallet: [] });
+        this.setState({ searchedWallet: [], searchedDeactivatedWallet: [] });
       }
     } else {
-      this.setState({ searchedWallet: null });
+      this.setState({ searchedWallet: null, searchedDeactivatedWallet: null });
     }
   }
 
@@ -244,27 +263,44 @@ class Wallet extends Component {
         This method is called when u want to search from all coins table.
     */
 
-  searchChangeCoins(e) {
+  searchChangeCoins(e, field) {
     var search = e.target.value;
     if (search !== "") {
-      if (search.trim() !== "") {
-        var searchedCoins = this.props.nowalletBalance.filter(function(temp) {
-          if (
-            temp.coin.toLowerCase().includes(search.toLowerCase()) ||
-            temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
-            temp.coin_code.toLowerCase().includes(search.toLowerCase())
-          ) {
-            return true;
-          } else {
-            return false;
+      if (search.trim() !== "" && field == "all_assets") {
+        var searchedCoins = this.props.nowalletBalance.all_assets_lists.filter(
+          function(temp) {
+            if (
+              temp.coin.toLowerCase().includes(search.toLowerCase()) ||
+              temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
+              temp.coin_code.toLowerCase().includes(search.toLowerCase())
+            ) {
+              return true;
+            } else {
+              return false;
+            }
           }
-        });
+        );
         this.setState({ searchedCoins });
+      } else if (search.trim() !== "" && field == "all_erc_tokens") {
+        var searchedERCTokens = this.props.nowalletBalance.all_erctoken_lists.filter(
+          function(temp) {
+            if (
+              temp.coin.toLowerCase().includes(search.toLowerCase()) ||
+              temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
+              temp.coin_code.toLowerCase().includes(search.toLowerCase())
+            ) {
+              return true;
+            } else {
+              return false;
+            }
+          }
+        );
+        this.setState({ searchedERCTokens });
       } else {
-        this.setState({ searchedCoins: [] });
+        this.setState({ searchedCoins: [], searchedERCTokens: [] });
       }
     } else {
-      this.setState({ searchedCoins: null });
+      this.setState({ searchedCoins: null, searchedERCTokens: null });
     }
   }
 
@@ -291,7 +327,9 @@ class Wallet extends Component {
                   <SearchCoin>
                     <Inputsearch
                       placeholder="Search Coins"
-                      onChange={value => this.searchChangeWallet(value)}
+                      onChange={value =>
+                        this.searchChangeWallet(value, "active_wallet")
+                      }
                       className=""
                     />
                   </SearchCoin>
@@ -360,7 +398,9 @@ class Wallet extends Component {
                   <SearchCoin2>
                     <Inputsearch
                       placeholder="Search Coins"
-                      onChange={value => this.searchChangeCoins(value)}
+                      onChange={value =>
+                        this.searchChangeCoins(value, "all_assets")
+                      }
                       className=""
                     />
                   </SearchCoin2>
@@ -405,7 +445,9 @@ class Wallet extends Component {
                   <SearchCoin2>
                     <Inputsearch
                       placeholder="Search Tokens"
-                      onChange={value => this.searchChangeCoins(value)}
+                      onChange={value =>
+                        this.searchChangeCoins(value, "all_erc_tokens")
+                      }
                       className=""
                     />
                   </SearchCoin2>
@@ -413,11 +455,11 @@ class Wallet extends Component {
                 <CoinTable className="">
                   <TableWrap>
                     {this.props.nowalletBalance.all_erctoken_lists !== null ? (
-                      this.state.searchedCoins !== null ? (
+                      this.state.searchedERCTokens !== null ? (
                         <TableofCoinUpper
                           currencySeq={this.state.currencySeq}
                           noBalance={true}
-                          tableData={this.state.searchedCoins}
+                          tableData={this.state.searchedERCTokens}
                         />
                       ) : (
                         <TableofCoinUpper
@@ -448,7 +490,9 @@ class Wallet extends Component {
                   <SearchCoin2>
                     <Inputsearch
                       placeholder="Search Coins/Tokens"
-                      onChange={value => this.searchChangeCoins(value)}
+                      onChange={value =>
+                        this.searchChangeWallet(value, "deactive_wallet")
+                      }
                       className=""
                     />
                   </SearchCoin2>
@@ -457,11 +501,11 @@ class Wallet extends Component {
                   <TableWrap>
                     {this.props.walletDetails.deactivated_asset_lists !==
                     null ? (
-                      this.state.searchedCoins !== null ? (
+                      this.state.searchedDeactivatedWallet !== null ? (
                         <TableofCoinUpper
                           currencySeq={this.state.currencySeq}
                           noBalance={true}
-                          tableData={this.state.searchedCoins}
+                          tableData={this.state.searchedDeactivatedWallet}
                         />
                       ) : (
                         <TableofCoinUpper
