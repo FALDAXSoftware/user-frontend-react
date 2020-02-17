@@ -119,7 +119,8 @@ class WalletDetails extends Component {
       isERC: false,
       panic_status: false,
       panicEnabled: false,
-      withdrawRequests: []
+      withdrawRequests: [],
+      is_deactivated_asset: ""
     };
     this.changeCoins = this.changeCoins.bind(this);
     this._walletCreate = this._walletCreate.bind(this);
@@ -129,6 +130,7 @@ class WalletDetails extends Component {
 
   /* Life Cycle Methods */
   async componentDidMount() {
+    // console.log("^^^", this.props.walletDetails);
     if (
       this.props.profileDetails &&
       this.props.profileDetails.is_terms_agreed == false
@@ -222,6 +224,7 @@ class WalletDetails extends Component {
           coin_code: coin_name[1],
           isERC: walletUserDetails.iserc,
           coinFee: responseData.default_send_Coin_fee,
+          is_deactivated_asset: responseData.is_active,
           fiatValue: responseData.currencyConversionData
             ? responseData.currencyConversionData.quote.USD.price
             : ""
@@ -387,6 +390,7 @@ class WalletDetails extends Component {
     const {
       walletUserData,
       defaultCoin,
+      is_deactivated_asset,
       currencyConv /*,  walletDetails */
     } = this.state;
     let FIAT = this.props.profileDetails.fiat;
@@ -412,21 +416,25 @@ class WalletDetails extends Component {
                         </MYWallet>
                         {this.state.balanceFlag === false ? (
                           <WalletCoin>
-                            {this.props.walletDetails !== null &&
-                            this.props.walletDetails !== undefined ? (
+                            {this.props.walletDetails.activated_asset_lists !==
+                              null &&
+                            this.props.walletDetails.activated_asset_lists !==
+                              undefined ? (
                               <Select
                                 onChange={this.changeCoins}
                                 value={defaultCoin}
                                 // style={{ width: "100%" }}
                                 // className = "select-display"
                               >
-                                {this.props.walletDetails.map(function(temp) {
-                                  return (
-                                    <Option value={temp.coin_code}>
-                                      {temp.coin}
-                                    </Option>
-                                  );
-                                })}
+                                {this.props.walletDetails.activated_asset_lists.map(
+                                  function(temp) {
+                                    return (
+                                      <Option value={temp.coin_code}>
+                                        {temp.coin}
+                                      </Option>
+                                    );
+                                  }
+                                )}
                               </Select>
                             ) : (
                               ""
@@ -435,7 +443,8 @@ class WalletDetails extends Component {
                         ) : (
                           ""
                         )}
-                        {this.state.balanceFlag === true ? (
+                        {this.state.balanceFlag === true &&
+                        is_deactivated_asset ? (
                           <WalletCoin>
                             {this.props.nowalletBalance !== null &&
                             this.props.nowalletBalance !== undefined ? (
@@ -452,6 +461,37 @@ class WalletDetails extends Component {
                                     </Option>
                                   );
                                 })}
+                              </Select>
+                            ) : (
+                              ""
+                            )}
+                          </WalletCoin>
+                        ) : (
+                          ""
+                        )}
+                        {this.state.balanceFlag === true &&
+                        is_deactivated_asset === false ? (
+                          <WalletCoin>
+                            {/* test */}
+                            {this.props.walletDetails
+                              .deactivated_asset_lists !== null &&
+                            this.props.walletDetails.deactivated_asset_lists !==
+                              undefined ? (
+                              <Select
+                                onChange={this.changeCoins}
+                                value={defaultCoin}
+                                // style={{ width: "100%" }}
+                                // className="select-display"
+                              >
+                                {this.props.walletDetails.deactivated_asset_lists.map(
+                                  function(temp) {
+                                    return (
+                                      <Option value={temp.coin_code}>
+                                        {temp.coin}
+                                      </Option>
+                                    );
+                                  }
+                                )}
                               </Select>
                             ) : (
                               ""
@@ -561,14 +601,24 @@ class WalletDetails extends Component {
                         </PlacedDiv> */}
                       </Col>
                       <Col xxl={8} xl={12} lg={24} md={24}>
-                        <RightBit>
+                        {this.state.is_deactivated_asset && (
+                          <RightBit>
+                            <DepButton name="SEND" onClick={this.showModal}>
+                              SEND
+                            </DepButton>
+                            <WithButton name="RECEIVE" onClick={this.showModal}>
+                              RECEIVE
+                            </WithButton>
+                          </RightBit>
+                        )}
+                        {/* <RightBit>
                           <DepButton name="SEND" onClick={this.showModal}>
                             SEND
                           </DepButton>
                           <WithButton name="RECEIVE" onClick={this.showModal}>
                             RECEIVE
                           </WithButton>
-                        </RightBit>
+                        </RightBit> */}
                       </Col>
                     </Row>
                   </RowWrap>

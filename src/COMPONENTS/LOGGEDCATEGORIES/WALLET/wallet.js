@@ -49,6 +49,29 @@ const ContainerContact = styled(Container)`
     padding-right: 0px;
     padding-left: 0px;
   }
+  & .collapsible {
+    // background-color: #777;
+    // color: white;
+    cursor: pointer;
+    // padding: 18px;
+    // width: 100%;
+    // border: none;
+    // text-align: left;
+    // outline: none;
+    // font-size: 15px;
+  }
+
+  & .active,
+  & .collapsible:hover {
+    // background-color: #555;
+  }
+
+  & .content {
+    // padding: 0 18px;
+    display: none;
+    // overflow: hidden;
+    // background-color: #f1f1f1;
+  }
 `;
 const ContainerContact2 = styled(ContainerContact)`
   background-color: ${props =>
@@ -103,33 +126,47 @@ class Wallet extends Component {
   }
 
   /* Life Cycle Methods */
-  componentWillReceiveProps(newProps) {
-    var total = 0;
-    if (this.props != newProps) {
-      if (newProps.walletDetails !== null) {
-        // console.log("props", newProps.walletDetails);
-        var tableData = newProps.walletDetails;
-        var FIAT = newProps.profileDetails.fiat;
-        if (tableData !== undefined) {
-          tableData.map(function(index, key) {
-            // console.log(index.quote);
-            if (index.quote !== null)
-              if (
-                index.quote[`${FIAT}`].price !== undefined &&
-                index.quote[`${FIAT}`].price !== null
-              ) {
-                var fiat = newProps.profileDetails.fiat;
+  // componentWillReceiveProps(newProps) {
+  //   var total = 0;
+  //   if (this.props != newProps) {
+  //     if (newProps.walletDetails.activated_asset_lists !== null) {
+  //       // console.log("props", newProps.walletDetails);
+  //       var tableData = newProps.walletDetails.activated_asset_lists;
+  //       var FIAT = newProps.profileDetails.fiat;
+  //       if (tableData !== undefined) {
+  //         tableData.map(function(index, key) {
+  //           // console.log(index.quote);
+  //           if (index.quote !== null)
+  //             if (
+  //               index.quote[`${FIAT}`].price !== undefined &&
+  //               index.quote[`${FIAT}`].price !== null
+  //             ) {
+  //               var fiat = newProps.profileDetails.fiat;
 
-                total = total + index.quote[`${fiat}`].price * index.balance;
-              }
-          });
-          // console.log(total)
-        }
-      }
-      this.setState({ total });
-    }
-  }
+  //               total = total + index.quote[`${fiat}`].price * index.balance;
+  //             }
+  //         });
+  //         // console.log(total)
+  //       }
+  //     }
+  //     this.setState({ total });
+  //   }
+  // }
   componentDidMount() {
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
     if (
       this.props.profileDetails &&
       this.props.profileDetails.is_terms_agreed == false
@@ -238,118 +275,212 @@ class Wallet extends Component {
       <ContactWrap>
         <LoggedNavigation />
         <GreyWrap>
-          <ContainerContact>
-            <HeaderWrap>
-              <MYWallet>
-                <span>
-                  {profileDetails !== ""
-                    ? profileDetails.first_name + "'s"
-                    : ""}{" "}
-                  WALLET
-                </span>
-              </MYWallet>
-              <SearchCoin>
-                <Inputsearch
-                  placeholder="Search Coin"
-                  onChange={value => this.searchChangeWallet(value)}
-                  className=""
-                />
-              </SearchCoin>
-              <Total>
-                <Tot>Total:</Tot>
-                {/* {console.log(this.state.total)} */}
-                <Money>
-                  {FIAT !== "USD"
-                    ? FIAT !== "EUR"
-                      ? FIAT !== "INR"
-                        ? ""
-                        : "\u20B9"
-                      : "\u20AC"
-                    : "$"}
-                  {this.state.total !== null ? (
-                    <NumberFormat
-                      value={parseFloat(this.state.total).toFixed(2)}
-                      displayType={"text"}
-                      thousandSeparator={true}
+          {/* walletDetails > activated_asset_lists start */}
+          {this.props.walletDetails &&
+            this.props.walletDetails["activated_asset_lists"].length > 0 && (
+              <ContainerContact>
+                <HeaderWrap className="">
+                  <MYWallet>
+                    <span>
+                      {profileDetails !== ""
+                        ? profileDetails.first_name + "'s"
+                        : ""}{" "}
+                      WALLET
+                    </span>
+                  </MYWallet>
+                  <SearchCoin>
+                    <Inputsearch
+                      placeholder="Search Coins"
+                      onChange={value => this.searchChangeWallet(value)}
+                      className=""
                     />
-                  ) : (
-                    ""
-                  )}
-                </Money>
-                <Currency>{FIAT}</Currency>
-              </Total>
-            </HeaderWrap>
-            <CoinTable>
-              <TableWrap>
-                {this.props.walletDetails !== null ? (
-                  this.state.searchedWallet !== null ? (
-                    <TableofCoinUpper
-                      noBalance={false}
-                      currencySeq={this.state.currencySeq}
-                      /* currChange={(currency) => this.currChangeWallet(currency)} */ tableData={
-                        this.state.searchedWallet
-                      }
+                  </SearchCoin>
+                  <Total>
+                    <Tot>Total:</Tot>
+                    {/* {console.log(this.state.total)} */}
+                    <Money>
+                      {FIAT !== "USD"
+                        ? FIAT !== "EUR"
+                          ? FIAT !== "INR"
+                            ? ""
+                            : "\u20B9"
+                          : "\u20AC"
+                        : "$"}
+                      {this.state.total !== null ? (
+                        <NumberFormat
+                          value={parseFloat(this.state.total).toFixed(2)}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </Money>
+                    <Currency>{FIAT}</Currency>
+                  </Total>
+                </HeaderWrap>
+                <CoinTable className="">
+                  <TableWrap>
+                    {this.props.walletDetails.activated_asset_lists.length >
+                      0 &&
+                    this.props.walletDetails.activated_asset_lists !== null ? (
+                      this.state.searchedWallet !== null ? (
+                        <TableofCoinUpper
+                          noBalance={false}
+                          currencySeq={this.state.currencySeq}
+                          tableData={this.state.searchedWallet}
+                        />
+                      ) : (
+                        <TableofCoinUpper
+                          type="wallet data"
+                          noBalance={false}
+                          currencySeq={this.state.currencySeq}
+                          tableData={
+                            this.props.walletDetails.activated_asset_lists
+                          }
+                        />
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </TableWrap>
+                </CoinTable>
+              </ContainerContact>
+            )}
+
+          {/* walletDetails > activated_asset_lists start */}
+          {/* nowalletBalance > all_assets_lists start */}
+          {this.props.nowalletBalance &&
+            this.props.nowalletBalance["all_assets_lists"].length > 0 && (
+              <ContainerContact2>
+                <HeaderWrap2 className="">
+                  <MYWallet>
+                    <span>Available Coins</span>
+                  </MYWallet>
+                  <SearchCoin2>
+                    <Inputsearch
+                      placeholder="Search Coins"
+                      onChange={value => this.searchChangeCoins(value)}
+                      className=""
                     />
-                  ) : (
-                    <TableofCoinUpper
-                      type="wallet data"
-                      noBalance={false}
-                      currencySeq={this.state.currencySeq}
-                      /* currChange={(currency) => this.currChangeWallet(currency)}  */ tableData={
-                        this.props.walletDetails
-                      }
+                  </SearchCoin2>
+                </HeaderWrap2>
+                <CoinTable className="">
+                  <TableWrap>
+                    {this.props.nowalletBalance.all_assets_lists.length > 0 &&
+                    this.props.nowalletBalance.all_assets_lists !== null ? (
+                      this.state.searchedCoins !== null ? (
+                        <TableofCoinUpper
+                          currencySeq={this.state.currencySeq}
+                          noBalance={true}
+                          tableData={this.state.searchedCoins}
+                        />
+                      ) : (
+                        <TableofCoinUpper
+                          type="no wallet data"
+                          currencySeq={this.state.currencySeq}
+                          noBalance={true}
+                          tableData={
+                            this.props.nowalletBalance.all_assets_lists
+                          }
+                        />
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </TableWrap>
+                </CoinTable>
+              </ContainerContact2>
+            )}
+
+          {/* nowalletBalance > all_assets_lists end */}
+          {/* nowalletBalance > all_erctoken_lists start */}
+          {this.props.nowalletBalance &&
+            this.props.nowalletBalance["all_erctoken_lists"].length > 0 && (
+              <ContainerContact2>
+                <HeaderWrap2 className="">
+                  <MYWallet>
+                    <span>Available ERC-20 Tokens</span>
+                  </MYWallet>
+                  <SearchCoin2>
+                    <Inputsearch
+                      placeholder="Search Tokens"
+                      onChange={value => this.searchChangeCoins(value)}
+                      className=""
                     />
-                  )
-                ) : (
-                  ""
-                )}
-              </TableWrap>
-            </CoinTable>
-          </ContainerContact>
-          <ContainerContact2>
-            <HeaderWrap2>
-              <MYWallet>
-                <span>COINS</span>
-              </MYWallet>
-              <SearchCoin2>
-                <Inputsearch
-                  placeholder="Search Coin"
-                  onChange={value => this.searchChangeCoins(value)}
-                  className=""
-                />
-              </SearchCoin2>
-            </HeaderWrap2>
-            <CoinTable>
-              <TableWrap>
-                {/* {this.props.allCoins !== null ?
-                                    (this.state.searchedCoins.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.state.searchedCoins} /> : (this.props.allCoins.data.length > 0 ? <ListofCoins currChange={(currency) => this.currChangeList(currency)} tableData={this.props.allCoins.data} /> : ""))
-                                    : ""} */}
-                {/* {console.log(this.props.nowalletBalance)} */}
-                {this.props.nowalletBalance !== null ? (
-                  this.state.searchedCoins !== null ? (
-                    <TableofCoinUpper
-                      currencySeq={this.state.currencySeq}
-                      noBalance={true}
-                      /* currChange={(currency) => this.currChangeList(currency)} */ tableData={
-                        this.state.searchedCoins
-                      }
+                  </SearchCoin2>
+                </HeaderWrap2>
+                <CoinTable className="">
+                  <TableWrap>
+                    {this.props.nowalletBalance.all_erctoken_lists !== null ? (
+                      this.state.searchedCoins !== null ? (
+                        <TableofCoinUpper
+                          currencySeq={this.state.currencySeq}
+                          noBalance={true}
+                          tableData={this.state.searchedCoins}
+                        />
+                      ) : (
+                        <TableofCoinUpper
+                          type="no wallet data"
+                          currencySeq={this.state.currencySeq}
+                          noBalance={true}
+                          tableData={
+                            this.props.nowalletBalance.all_erctoken_lists
+                          }
+                        />
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </TableWrap>
+                </CoinTable>
+              </ContainerContact2>
+            )}
+          {/* nowalletBalance > all_erctoken_lists end */}
+          {/* walletDetails > deactivated_asset_lists start */}
+          {this.props.walletDetails &&
+            this.props.walletDetails["deactivated_asset_lists"].length > 0 && (
+              <ContainerContact2>
+                <HeaderWrap2 className="">
+                  <MYWallet>
+                    <span>Deactivated Coins/Tokens</span>
+                  </MYWallet>
+                  <SearchCoin2>
+                    <Inputsearch
+                      placeholder="Search Coins/Tokens"
+                      onChange={value => this.searchChangeCoins(value)}
+                      className=""
                     />
-                  ) : (
-                    <TableofCoinUpper
-                      type="no wallet data"
-                      currencySeq={this.state.currencySeq}
-                      noBalance={true}
-                      /* currChange={(currency) => this.currChangeList(currency)} */ tableData={
-                        this.props.nowalletBalance
-                      }
-                    />
-                  )
-                ) : (
-                  ""
-                )}
-              </TableWrap>
-            </CoinTable>
-          </ContainerContact2>
+                  </SearchCoin2>
+                </HeaderWrap2>
+                <CoinTable className="">
+                  <TableWrap>
+                    {this.props.walletDetails.deactivated_asset_lists !==
+                    null ? (
+                      this.state.searchedCoins !== null ? (
+                        <TableofCoinUpper
+                          currencySeq={this.state.currencySeq}
+                          noBalance={true}
+                          tableData={this.state.searchedCoins}
+                        />
+                      ) : (
+                        <TableofCoinUpper
+                          type="no wallet data"
+                          currencySeq={this.state.currencySeq}
+                          noBalance={true}
+                          tableData={
+                            this.props.walletDetails.deactivated_asset_lists
+                          }
+                        />
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </TableWrap>
+                </CoinTable>
+              </ContainerContact2>
+            )}
+          {/* walletDetails > deactivated_asset_lists end */}
         </GreyWrap>
         <CommonFooter />
         {this.props.loader === true ? <FaldaxLoader /> : ""}
