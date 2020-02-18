@@ -128,36 +128,28 @@ class Wallet extends Component {
   }
 
   /* Life Cycle Methods */
-  componentWillReceiveProps(newProps) {
-    var total = 0;
-    if (this.props != newProps) {
-      if (newProps.walletDetails.activated_asset_lists !== null) {
-        // console.log("props", newProps.walletDetails);
-        var tableData = newProps.walletDetails.activated_asset_lists;
-        var FIAT = newProps.profileDetails.fiat;
-        if (tableData !== undefined) {
-          tableData.map(function(index, key) {
-            // console.log(index.quote);
-            if (index.quote !== null)
-              if (
-                index.quote[`${FIAT}`].price !== undefined &&
-                index.quote[`${FIAT}`].price !== null
-              ) {
-                var fiat = newProps.profileDetails.fiat;
-
-                total = total + index.quote[`${fiat}`].price * index.balance;
-              }
-          });
-          // console.log(total)
-        }
-      }
-      this.setState({ total });
-    }
-  }
   componentDidMount() {
+    // var total = 0;
+    // var tableData = this.props.walletDetails.activated_asset_lists;
+    // var FIAT = this.props.profileDetails.fiat;
+    // if (tableData !== undefined) {
+    //   tableData.map(function(index, key) {
+    //     // console.log(index.quote);
+    //     if (index.quote !== null)
+    //       if (
+    //         index.quote[`${FIAT}`].price !== undefined &&
+    //         index.quote[`${FIAT}`].price !== null
+    //       ) {
+    //         var fiat = this.props.profileDetails.fiat;
+
+    //         total = total + index.quote[`${fiat}`].price * index.balance;
+    //       }
+    //   });
+    //   console.log("Total^^^", total);
+    //   this.setState({ total });
+    // }
     var coll = document.getElementsByClassName("collapsible");
     var i;
-
     for (i = 0; i < coll.length; i++) {
       coll[i].addEventListener("click", function() {
         this.classList.toggle("active");
@@ -210,6 +202,38 @@ class Wallet extends Component {
     // }
     // this.setState({ total });
     // console.log("mount", this.props.walletDetails);
+  }
+  componentWillReceiveProps(newProps) {
+    var total = 0;
+    if (
+      this.props.walletDetails != newProps.walletDetails &&
+      newProps.walletDetails
+    ) {
+      if (
+        newProps.walletDetails.activated_asset_lists !== null &&
+        newProps.walletDetails.activated_asset_lists
+      ) {
+        // console.log("props", newProps.walletDetails);
+        var tableData = newProps.walletDetails.activated_asset_lists;
+        var FIAT = newProps.profileDetails.fiat;
+        if (tableData !== undefined) {
+          tableData.map(function(index, key) {
+            // console.log(index.quote);
+            if (index.quote !== null)
+              if (
+                index.quote[`${FIAT}`].price !== undefined &&
+                index.quote[`${FIAT}`].price !== null
+              ) {
+                var fiat = newProps.profileDetails.fiat;
+
+                total = total + index.quote[`${fiat}`].price * index.balance;
+              }
+          });
+          // console.log(total)
+        }
+      }
+      this.setState({ total });
+    }
   }
 
   /* 
