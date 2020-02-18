@@ -422,7 +422,8 @@ class WalletDetails extends Component {
                         </MYWallet>
                         {this.state.balanceFlag === false ? (
                           <WalletCoin>
-                            {this.props.walletDetails.activated_asset_lists !==
+                            {this.props.walletDetails.activated_asset_lists &&
+                            this.props.walletDetails.activated_asset_lists !==
                               null &&
                             this.props.walletDetails.activated_asset_lists !==
                               undefined ? (
@@ -766,9 +767,9 @@ class WalletDetails extends Component {
                       </p>
                     </PendingPara>
                   )}
-                  {!eth_for_erc_status && !eth_for_erc_address && (
-                    <Redirect to="/wallet"></Redirect>
-                  )}
+                  {!eth_for_erc_status &&
+                    !eth_for_erc_address &&
+                    walletUserData.iserc && <Redirect to="/wallet"></Redirect>}
                   {!walletUserData.iserc && (
                     <PendingPara>
                       <p>
