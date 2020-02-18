@@ -35,6 +35,8 @@ import TierIDConfirmation from "./COMPONENTS/SETTINGS/tier_id_confirmation.js";
 import Simplex from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex.js";
 import SimplexExchange from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex_exchange.js";
 import NotFound from "./SHARED-COMPONENTS/NotFound.js";
+import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
+import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
 let { API_URL } = globalVariables;
 const socketIOClient = require("socket.io-client");
 const sailsIOClient = require("sails.io.js");
@@ -63,22 +65,22 @@ const routes = [
     path: "/walletDetails",
     component: WalletDetails
   },
-  // {
-  //   exact: false,
-  //   path: "/trade",
-  //   component: () => <Trade io={io} />
-  // },
+  {
+    exact: false,
+    path: "/trade",
+    component: () => <Trade io={io} />
+  },
   {
     exact: false,
     path: "/history",
     component: History2
   },
-  // {
-  //   exact: false,
-  //   path: "/dashboard",
-  //   component: () => <Dashboard io={io} />,
-  //   io: io
-  // },
+  {
+    exact: false,
+    path: "/dashboard",
+    component: () => <Dashboard io={io} />,
+    io: io
+  },
   {
     exact: false,
     path: "/open-ticket",
