@@ -50,7 +50,9 @@ class Market extends Component {
       buyPayAmt: 0,
       buyEstPrice: 0,
       sellEstPrice: 0,
-      sellPayAmt: 0
+      sellPayAmt: 0,
+      disabledMode: false,
+      panic_status: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -103,7 +105,33 @@ class Market extends Component {
       }
     }
   }
-
+  // componentDidMount() {
+  //   if (this.state.panic_status === true) {
+  //     this.setState({ panicEnabled: true });
+  //   } else {
+  //     if (
+  //       this.props.profileDetails.is_allowed === true &&
+  //       this.props.profileDetails.is_kyc_done === 2
+  //     ) {
+  //       if (this.props.location.pathname !== "/trade")
+  //         this.setState({
+  //           disabledMode: false
+  //         });
+  //     } else {
+  //       this.setState({
+  //         disabledMode: true
+  //       });
+  //       if (
+  //         this.props.profileDetails.is_allowed === false &&
+  //         this.props.profileDetails.is_kyc_done !== 2
+  //       ) {
+  //         this.setState({ completeKYC: true });
+  //       } else {
+  //         this.setState({ countryAccess: true });
+  //       }
+  //     }
+  //   }
+  // }
   /* 
         Page: /trade --> market
         this method is called for clearing validation messages.
@@ -520,7 +548,11 @@ class Market extends Component {
           ""
         )}
         <ButtonWrap>
-          <ButtonETH side={this.state.side} onClick={this.onSubmit}>
+          <ButtonETH
+            disabled={this.state.disabledMode}
+            side={this.state.side}
+            onClick={this.onSubmit}
+          >
             {`${this.state.side.toUpperCase()} ${" "} ${this.state.crypto}`}
           </ButtonETH>
         </ButtonWrap>
@@ -544,6 +576,10 @@ function mapStateToProps(state) {
     cryptoPair:
       state.walletReducer.cryptoPair !== undefined
         ? state.walletReducer.cryptoPair
+        : "",
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data[0]
         : ""
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };

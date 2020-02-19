@@ -459,8 +459,19 @@ class StopLimit extends Component {
               name="amount"
               onChange={this.onChange}
             />
+            {/* {this.validator.message(
+              "amount",
+              this.state.amount,
+              "required|gtzero|numeric|decimalrestrict3",
+              "text-danger-validation",
+              {
+                gtzero: "Amount should be greater than zero.",
+                decimalrestrict3:
+                  "Amount must be less than or equal to 5 digits after decimal point."
+              }
+            )} */}
             {this.validator.message(
-              "Amount",
+              "amount",
               this.state.amount,
               "required|gtzero|numeric|decimalrestrict3",
               "text-danger-validation",
@@ -486,14 +497,14 @@ class StopLimit extends Component {
               onChange={this.onChange}
             />
             {this.validator.message(
-              "Stop_Price",
+              "stop_price",
               this.state.stop_price,
-              "required|gtzero||decimalrestrict5",
+              "required|gtzero|numeric|decimalrestrict5",
               "text-danger-validation",
               {
-                gtzero: "Stop Price should be greater than zero.",
+                gtzero: "Amount should be greater than zero.",
                 decimalrestrict5:
-                  "Stop Price must be less than or equal to 5 digits after decimal point."
+                  "Amount must be less than or equal to 5 digits after decimal point."
               }
             )}
           </TotalWrap>

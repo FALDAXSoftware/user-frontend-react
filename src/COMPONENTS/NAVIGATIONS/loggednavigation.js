@@ -344,7 +344,7 @@ class LoggedNavigation extends Component {
       panicEnabled: false,
       panic_status: false
     };
-    this.tradeAccess = this.tradeAccess.bind(this);
+    // this.tradeAccess = this.tradeAccess.bind(this);
     this.cryptoAccess = this.cryptoAccess.bind(this);
     this.simplexAccess = this.simplexAccess.bind(this);
     this.tokenAccess = this.tokenAccess.bind(this);
@@ -603,28 +603,28 @@ class LoggedNavigation extends Component {
       }
     }
   }
-  tradeAccess() {
-    if (this.state.panic_status === true) {
-      this.setState({ panicEnabled: true });
-    } else {
-      if (
-        this.props.profileDetails.is_allowed === true &&
-        this.props.profileDetails.is_kyc_done === 2
-      ) {
-        if (this.props.location.pathname !== "/trade")
-          this.props.history.push("/trade");
-      } else {
-        if (
-          this.props.profileDetails.is_allowed === false &&
-          this.props.profileDetails.is_kyc_done !== 2
-        ) {
-          this.setState({ completeKYC: true });
-        } else {
-          this.setState({ countryAccess: true });
-        }
-      }
-    }
-  }
+  // tradeAccess() {
+  //   if (this.state.panic_status === true) {
+  //     this.setState({ panicEnabled: true });
+  //   } else {
+  //     if (
+  //       this.props.profileDetails.is_allowed === true &&
+  //       this.props.profileDetails.is_kyc_done === 2
+  //     ) {
+  //       if (this.props.location.pathname !== "/trade")
+  //         this.props.history.push("/trade");
+  //     } else {
+  //       if (
+  //         this.props.profileDetails.is_allowed === false &&
+  //         this.props.profileDetails.is_kyc_done !== 2
+  //       ) {
+  //         this.setState({ completeKYC: true });
+  //       } else {
+  //         this.setState({ countryAccess: true });
+  //       }
+  //     }
+  //   }
+  // }
   tokenAccess() {
     this.props.history.push("/token-coming-soon");
     // if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
@@ -721,6 +721,15 @@ class LoggedNavigation extends Component {
             Credit Card
           </a>
         </Menu.Item>
+        <Menu.Item key="2">
+          <a
+            onClick={() =>
+              this.props.history.push({ pathname: "/history", tradeType: "3" })
+            }
+          >
+            Trade
+          </a>
+        </Menu.Item>
       </Menu>
     );
 
@@ -743,7 +752,9 @@ class LoggedNavigation extends Component {
             </NavLink>
           </Menuitem>
           <Menuitem key="2" onClick={this.tradeAccess}>
-            <span>Trade</span>
+            <NavLink className="" to="/trade">
+              Trade
+            </NavLink>
           </Menuitem>
           <Menuitem key="3">
             <DropDownDiv
@@ -835,7 +846,7 @@ class LoggedNavigation extends Component {
               </DropMenu>
             </a>
             <span onClick={this.tradeAccess}>
-              <a>Trade</a>
+              <Link to="/trade">Trade</Link>
             </span>
             <span>
               {" "}
@@ -878,6 +889,18 @@ class LoggedNavigation extends Component {
                       }
                     >
                       Credit Card
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="2">
+                    <a
+                      onClick={() =>
+                        this.props.history.push({
+                          pathname: "/history",
+                          tradeType: "3"
+                        })
+                      }
+                    >
+                      Trade
                     </a>
                   </Menu.Item>
                 </SubMenuNav>
