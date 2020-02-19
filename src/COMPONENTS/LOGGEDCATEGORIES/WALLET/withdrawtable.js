@@ -142,7 +142,7 @@ class WithdrawTable extends React.Component {
         </OTwrap>
         <OTwrap>
           <ScrollTableContent>
-            <Scrollbars className="scrollbar">
+            <Scrollbars className="scrollbar scrollbarwallet">
               <TableContentRide cellpadding="10px" cellspacing="0" border="0">
                 <tbody>
                   {this.state.walletDetails !== null ? (

@@ -988,6 +988,7 @@ class Trade extends Component {
                           >
                             <RadioButton value="BTC">BTC</RadioButton>
                             <RadioButton value="XRP">XRP</RadioButton>
+                            <RadioButton value="ETH">ETH</RadioButton>
                           </RadioSelect>
                         </FIAT>
                       </FIATWrap>
