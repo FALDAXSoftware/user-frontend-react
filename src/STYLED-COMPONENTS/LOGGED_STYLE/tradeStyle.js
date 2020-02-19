@@ -732,7 +732,7 @@ export const DropdownButtonOne = styled(DropdownButton)`
 export const ScrollTableContent = styled.div`
   overflow-x: auto;
   > .scrollbarwallet {
-    // height: 500px !important;
+    height: 500px !important;
   }
   & .scrollbar > div:first-child {
     overflow: auto !important;
