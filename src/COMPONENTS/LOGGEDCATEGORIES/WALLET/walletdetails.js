@@ -595,7 +595,7 @@ class WalletDetails extends Component {
                             )}
                           </CryptAmt>
                         </LeftBit>
-                        {/* <PlacedDiv>
+                        <PlacedDiv>
                           In Orders:{" "}
                           {walletUserData.balance >
                           walletUserData.placed_balance
@@ -607,7 +607,7 @@ class WalletDetails extends Component {
                                 walletUserData.placed_balance -
                                 walletUserData.balance
                               ).toFixed(8)}
-                        </PlacedDiv> */}
+                        </PlacedDiv>
                       </Col>
                       <Col xxl={8} xl={12} lg={24} md={24}>
                         {this.state.is_deactivated_asset && (
