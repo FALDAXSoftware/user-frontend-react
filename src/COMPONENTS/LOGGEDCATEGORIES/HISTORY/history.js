@@ -438,7 +438,7 @@ class History extends Component {
               this.openNotificationWithIcon("error", "Error", responseData.err);
             }
           } else if (this.state.activeKey === "3") {
-            alert("trade");
+            // alert("trade");
             let csvTradeFields = [];
             if (responseData.data && responseData.data.length > 0) {
               for (var i = 0; i < responseData.data.length; i++) {
