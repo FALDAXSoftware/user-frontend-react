@@ -420,7 +420,8 @@ class WalletDetails extends Component {
                               : "COIN"}
                           </span>
                         </MYWallet>
-                        {this.state.balanceFlag === false ? (
+                        {this.props.walletDetails.activated_asset_lists &&
+                        this.state.balanceFlag === false ? (
                           <WalletCoin>
                             {this.props.walletDetails.activated_asset_lists &&
                             this.props.walletDetails.activated_asset_lists !==
@@ -476,7 +477,8 @@ class WalletDetails extends Component {
                         ) : (
                           ""
                         )}
-                        {this.state.balanceFlag === true &&
+                        {is_deactivated_asset &&
+                        this.state.balanceFlag === true &&
                         is_deactivated_asset === false ? (
                           <WalletCoin>
                             {/* test */}
