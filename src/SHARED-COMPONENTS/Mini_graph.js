@@ -168,10 +168,11 @@ class Mini_graph extends React.Component {
       timeStampArray.push(moment.utc(element.created_at).unix());
     });
     let graphOptions = this.state.data;
-    graphOptions.image =
-      !this.coin_icon || this.coin_icon === "" || this.coin_icon === null
-        ? "coin/defualt_coin.png"
-        : data.icon;
+    // graphOptions.image =
+    //   !this.coin_icon || this.coin_icon === "" || this.coin_icon === null
+    //     ? "coin/defualt_coin.png"
+    //     : data.icon;
+    graphOptions.image = data.icon;
     graphOptions.datasets[0].data = dataArray;
     graphOptions.timeStamps = timeStampArray;
     graphOptions.price = Math.round(data.average_price * 100) / 100;

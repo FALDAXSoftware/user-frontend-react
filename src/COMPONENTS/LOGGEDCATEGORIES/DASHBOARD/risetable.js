@@ -91,16 +91,17 @@ export default class RiseTable extends Component {
       .then(responseData => {
         let activityData = [];
         if (responseData.status === 200) {
-          var element = responseData.data.data;
+          var element = responseData.data;
+          console.log("responseDta^^^^", responseData.data);
           for (var i = 0; i < element.length; i++) {
-            if (self.state.idList.includes(element[i].id)) {
-              activityData.push({
-                name: element[i].name,
-                last_price: element[i].quote.USD.price,
-                change: element[i].quote.USD.percent_change_24h,
-                volume: element[i].quote.USD.volume_24h
-              });
-            }
+            // if (self.state.idList.includes(element[i].id)) {
+            activityData.push({
+              name: element[i].symbol,
+              last_price: element[i].quote.USD.price,
+              change: element[i].quote.USD.percent_change_24h,
+              volume: element[i].quote.USD.volume_24h
+            });
+            // }
           }
           self.setState({
             activityData: activityData,
@@ -139,7 +140,7 @@ export default class RiseTable extends Component {
             <tbody>
               {console.log(activityData)}
               {activityData.map(function(record, index) {
-                console.log("Record >>>>>>>>>>>>>>>>>>>>>>.", record, index);
+                // console.log("Record >>>>>>>>>>>>>>>>>>>>>>.", record, index);
                 return (
                   <tr>
                     <td>{record.name.toUpperCase()}</td>
