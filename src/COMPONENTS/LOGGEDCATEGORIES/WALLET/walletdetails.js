@@ -7,6 +7,7 @@ import styled from "styled-components";
 import NumberFormat from "react-number-format";
 import { Redirect } from "react-router-dom";
 import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
+import { walletBal, getAllCoins } from "ACTIONS/LOGGEDCAT/walletActions";
 // import { Tabs } from 'antd';
 
 /* import { DropdownButton, ButtonToolbar } from 'react-bootstrap'; */
@@ -120,7 +121,7 @@ class WalletDetails extends Component {
       panic_status: false,
       panicEnabled: false,
       withdrawRequests: [],
-      is_deactivated_asset: "",
+      is_active_asset: "",
       eth_for_erc_address: "",
       eth_for_erc_status: ""
     };
@@ -133,6 +134,7 @@ class WalletDetails extends Component {
   /* Life Cycle Methods */
   async componentDidMount() {
     // console.log("^^^", this.props.walletDetails);
+    // this.props.walletBal(this.props.isLoggedIn);
     if (
       this.props.profileDetails &&
       this.props.profileDetails.is_terms_agreed == false
@@ -166,6 +168,7 @@ class WalletDetails extends Component {
     }
     if (this.props.location !== undefined) {
       if (this.props.location.search.includes("coinID")) {
+        // this.props.walletBal(this.props.isLoggedIn);
         await this.walletDetailsApi();
       }
     }
@@ -213,6 +216,8 @@ class WalletDetails extends Component {
           withdrawDetails = responseData.withdrawRequestData;
         }
       }
+      this.props.walletBal(this.props.isLoggedIn);
+      this.props.getAllCoins(this.props.isLoggedIn);
       // console.log("wallet details props walletDetails", walletUserDetails);
       self.setState(
         {
@@ -226,7 +231,7 @@ class WalletDetails extends Component {
           coin_code: coin_name[1],
           isERC: walletUserDetails.iserc,
           coinFee: responseData.default_send_Coin_fee,
-          is_deactivated_asset: responseData.is_active,
+          is_active_asset: responseData.is_active,
           eth_for_erc_status: responseData.eth_for_erc_status,
           eth_for_erc_address: responseData.eth_for_erc_address,
           fiatValue: responseData.currencyConversionData
@@ -394,7 +399,7 @@ class WalletDetails extends Component {
     const {
       walletUserData,
       defaultCoin,
-      is_deactivated_asset,
+      is_active_asset,
       eth_for_erc_address,
       eth_for_erc_status,
       currencyConv /*,  walletDetails */
@@ -420,7 +425,7 @@ class WalletDetails extends Component {
                               : "COIN"}
                           </span>
                         </MYWallet>
-                        {this.props.walletDetails.activated_asset_lists &&
+                        {/* {this.props.walletDetails.activated_asset_lists &&
                         this.state.balanceFlag === false ? (
                           <WalletCoin>
                             {this.props.walletDetails.activated_asset_lists &&
@@ -450,25 +455,27 @@ class WalletDetails extends Component {
                           </WalletCoin>
                         ) : (
                           ""
-                        )}
-                        {this.state.balanceFlag === true &&
-                        is_deactivated_asset ? (
+                        )} */}
+                        {this.state.balanceFlag === false && is_active_asset ? (
                           <WalletCoin>
-                            {this.props.nowalletBalance !== null &&
-                            this.props.nowalletBalance !== undefined ? (
+                            {this.props.walletDetails &&
+                            this.props.walletDetails.activated_asset_lists !==
+                              null &&
+                            this.props.walletDetails.activated_asset_lists !==
+                              undefined ? (
                               <Select
                                 onChange={this.changeCoins}
                                 value={defaultCoin}
-                                // style={{ width: "100%" }}
-                                // className="select-display"
                               >
-                                {this.props.nowalletBalance.map(function(temp) {
-                                  return (
-                                    <Option value={temp.coin}>
-                                      {temp.coin}
-                                    </Option>
-                                  );
-                                })}
+                                {this.props.walletDetails.activated_asset_lists.map(
+                                  function(temp) {
+                                    return (
+                                      <Option value={temp.coin_code}>
+                                        {temp.coin}
+                                      </Option>
+                                    );
+                                  }
+                                )}
                               </Select>
                             ) : (
                               ""
@@ -477,20 +484,17 @@ class WalletDetails extends Component {
                         ) : (
                           ""
                         )}
-                        {is_deactivated_asset &&
-                        this.state.balanceFlag === true &&
-                        is_deactivated_asset === false ? (
+                        {this.state.balanceFlag === false &&
+                        !is_active_asset ? (
                           <WalletCoin>
-                            {/* test */}
-                            {this.props.walletDetails
-                              .deactivated_asset_lists !== null &&
+                            {this.props.walletDetails &&
+                            this.props.walletDetails.deactivated_asset_lists !==
+                              null &&
                             this.props.walletDetails.deactivated_asset_lists !==
                               undefined ? (
                               <Select
                                 onChange={this.changeCoins}
                                 value={defaultCoin}
-                                // style={{ width: "100%" }}
-                                // className="select-display"
                               >
                                 {this.props.walletDetails.deactivated_asset_lists.map(
                                   function(temp) {
@@ -509,24 +513,38 @@ class WalletDetails extends Component {
                         ) : (
                           ""
                         )}
+
+                        {/* {is_active_asset &&
+                        this.state.balanceFlag === true &&
+                        is_active_asset === false ? (
+                          <WalletCoin>
+                            {this.props.walletDetails
+                              .deactivated_asset_lists !== null &&
+                            this.props.walletDetails.deactivated_asset_lists !==
+                              undefined ? (
+                              <Select
+                                onChange={this.changeCoins}
+                                value={defaultCoin}
+                              >
+                                {this.props.walletDetails.deactivated_asset_lists.map(
+                                  function(temp) {
+                                    return (
+                                      <Option value={temp.coin_code}>
+                                        {temp.coin}
+                                      </Option>
+                                    );
+                                  }
+                                )}
+                              </Select>
+                            ) : (
+                              ""
+                            )}
+                          </WalletCoin>
+                        ) : (
+                          ""
+                        )} */}
                       </LeftHead>
                     </Col>
-                    {/* <Col xxl={12} xl={12} lg={12} sm={24}>
-                                    <RightHead>
-                                        <WallTotal>
-                                            <Tot>Total:</Tot>
-                                            <Money>${this.state.total !== null ? this.state.total : ""}</Money>
-                                            <Currency>USD</Currency>
-                                        </WallTotal>
-
-                                        <Select defaultValue="USD" style={{ width: 200, marginLeft: "auto" }}>
-                                            <Option value="USD">USD</Option>
-                                            <Option value="EUR">EUR</Option>
-                                            <Option value="INR">INR</Option>
-                                        </Select>
-
-                                    </RightHead>
-                                </Col> */}
                   </Row>
                 </HeaderWrap>
                 <DetailWrap>
@@ -610,7 +628,7 @@ class WalletDetails extends Component {
                         </PlacedDiv>
                       </Col>
                       <Col xxl={8} xl={12} lg={24} md={24}>
-                        {this.state.is_deactivated_asset && (
+                        {this.state.is_active_asset && (
                           <RightBit>
                             <DepButton name="SEND" onClick={this.showModal}>
                               SEND
@@ -808,9 +826,7 @@ class WalletDetails extends Component {
     );
   }
 }
-const mapDispatchToProps = dispatch => ({
-  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
-});
+
 function mapStateToProps(state) {
   return {
     walletDetails:
@@ -833,5 +849,11 @@ function mapStateToProps(state) {
         : ""
   };
 }
-
+const mapDispatchToProps = dispatch => ({
+  walletBal: (isLoggedIn, currency) =>
+    dispatch(walletBal(isLoggedIn, currency)),
+  getAllCoins: (isLoggedIn, currency) =>
+    dispatch(getAllCoins(isLoggedIn, currency)),
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
 export default connect(mapStateToProps, mapDispatchToProps)(WalletDetails);

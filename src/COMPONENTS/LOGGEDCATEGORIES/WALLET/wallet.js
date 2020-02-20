@@ -528,14 +528,14 @@ class Wallet extends Component {
                       this.state.searchedDeactivatedWallet !== null ? (
                         <TableofCoinUpper
                           currencySeq={this.state.currencySeq}
-                          noBalance={true}
+                          noBalance={false}
                           tableData={this.state.searchedDeactivatedWallet}
                         />
                       ) : (
                         <TableofCoinUpper
                           type="no wallet data"
                           currencySeq={this.state.currencySeq}
-                          noBalance={true}
+                          noBalance={false}
                           tableData={
                             this.props.walletDetails.deactivated_asset_lists
                           }
