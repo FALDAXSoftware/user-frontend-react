@@ -144,6 +144,7 @@ class History extends Component {
       fromDate: "",
       historyData: [],
       historySimplexData: [],
+      historyTradeData: [],
       historyJSTData: "",
       sell: true,
       buy: true,
@@ -182,12 +183,21 @@ class History extends Component {
         { label: "Filled Price", key: "filled_price" },
         { label: "Amount", key: "amount" },
         { label: "Fees", key: "fees" }
+      ],
+      csvHeadersTrade: [
+        { label: "Coin", key: "symbol" },
+        { label: "Side", key: "side" },
+        { label: "Date", key: "date" },
+        { label: "Date", key: "date" },
+        { label: "Order Id", key: "order_id" },
+        { label: "Filled Price", key: "filled_price" },
+        { label: "Amount", key: "amount" },
+        { label: "Fees", key: "fees" }
       ]
     };
     this.historyResult = this.historyResult.bind(this);
     this.changeDate = this.changeDate.bind(this);
     this.onChangeCheck = this.onChangeCheck.bind(this);
-    // this.repeatClick = this.repeatClick.bind(this);
     this.loadCoinList = this.loadCoinList.bind(this);
     this.selectChange1 = this.selectChange1.bind(this);
     this.selectChange2 = this.selectChange2.bind(this);
@@ -328,11 +338,8 @@ class History extends Component {
         this.setState({ loader: false });
         if (responseData.status === 200) {
           if (this.state.activeKey === "1") {
-            // alert("here");
-            // console.log("responseData", responseData.data.length);
             let csvJSTFields = [];
             if (responseData.data && responseData.data.length > 0) {
-              // console.log("responseData", responseData.data.length);
               for (var i = 0; i < responseData.data.length; i++) {
                 let temp = responseData.data[i];
                 let obj = {};
@@ -350,7 +357,6 @@ class History extends Component {
                     temp.sell_currency_amount
                   ).toFixed(8);
                 }
-                // var fill_price = temp.execution_report.SettlCurrAmt.toFixed(8);
                 var fees_total = parseFloat(
                   parseFloat(temp.faldax_fees) + parseFloat(temp.network_fees)
                 ).toFixed(8);
@@ -427,6 +433,58 @@ class History extends Component {
               this.setState({
                 historySimplexData: responseData.data,
                 csvSimplexFields
+              });
+            } else {
+              this.openNotificationWithIcon("error", "Error", responseData.err);
+            }
+          } else if (this.state.activeKey === "3") {
+            // alert("trade");
+            let csvTradeFields = [];
+            if (responseData.data && responseData.data.length > 0) {
+              for (var i = 0; i < responseData.data.length; i++) {
+                let temp = responseData.data[i];
+                let obj = {};
+                var symbol = temp.symbol;
+                var date = moment
+                  .utc(temp.created_at)
+                  .local()
+                  .format(`${this.props.profileData.date_format} HH:mm:ss`);
+                if (temp.side === "Sell") {
+                  var fill_price = parseFloat(temp.buy_currency_amount).toFixed(
+                    8
+                  );
+                } else {
+                  var fill_price = parseFloat(
+                    temp.sell_currency_amount
+                  ).toFixed(8);
+                }
+                var fees_total = parseFloat(
+                  parseFloat(temp.faldax_fees) + parseFloat(temp.network_fees)
+                ).toFixed(8);
+                var amount = parseFloat(
+                  parseFloat(temp.execution_report.CumQty) -
+                    parseFloat(fees_total)
+                ).toFixed(8);
+                var status = temp.order_status.toUpperCase();
+                var order_id = temp.order_id;
+                obj["symbol"] = symbol;
+                obj["side"] = temp.side;
+                obj["date"] = date;
+                obj["order_id"] = order_id;
+                obj["order_status"] = status;
+                obj["filled_price"] = fill_price;
+                obj["amount"] = amount;
+                obj["fees"] = fees_total;
+                csvTradeFields.push(obj);
+              }
+              this.setState({
+                historyTradeData: responseData.data,
+                csvTradeFields
+              });
+            } else if (responseData.data.length === 0) {
+              this.setState({
+                historyTradeData: responseData.data,
+                csvTradeFields
               });
             } else {
               this.openNotificationWithIcon("error", "Error", responseData.err);
@@ -545,7 +603,6 @@ class History extends Component {
         },
         () => {
           self.loadCoinList();
-          // self.historyResult();
         }
       );
     }
@@ -581,108 +638,10 @@ class History extends Component {
         },
         () => {
           self.loadCoinList();
-          // self.historyResult();
         }
       );
     }
   }
-
-  // repeatClick(data) {
-  //   if (data.order_type === "Limit") {
-  //     let params = {
-  //       symbol: data.symbol,
-  //       side: data.side,
-  //       order_type: data.order_type,
-  //       orderQuantity: data.quantity,
-  //       limit_price: data.limit_price
-  //     };
-  //     fetch(API_URL + "/limit/" + data.side.toLowerCase(), {
-  //       method: "post",
-  //       headers: {
-  //         Accept: "application/json",
-  //         "Content-Type": "application/json",
-  //         Authorization: "Bearer " + this.props.isLoggedIn
-  //       },
-  //       body: JSON.stringify(params)
-  //     })
-  //       .then(response => response.json())
-  //       .then(responseData => {
-  //         if (responseData.status === 200) {
-  //           this.historyResult();
-  //         } else {
-  //         }
-  //       })
-  //       .catch(error => {
-  //         this.openNotificationWithIcon(
-  //           "error",
-  //           "Error",
-  //           "Something went wrong!"
-  //         );
-  //       });
-  //   } else if (data.order_type === "StopLimit") {
-  //     let params = {
-  //       symbol: data.symbol,
-  //       side: data.side,
-  //       order_type: data.order_type,
-  //       orderQuantity: data.quantity,
-  //       limit_price: data.limit_price,
-  //       stop_price: data.stop_price
-  //     };
-  //     fetch(API_URL + "/stop/limit/" + data.side.toLowerCase(), {
-  //       method: "post",
-  //       headers: {
-  //         Accept: "application/json",
-  //         "Content-Type": "application/json",
-  //         Authorization: "Bearer " + this.props.isLoggedIn
-  //       },
-  //       body: JSON.stringify(params)
-  //     })
-  //       .then(response => response.json())
-  //       .then(responseData => {
-  //         if (responseData.status === 200) {
-  //           this.historyResult();
-  //         } else {
-  //         }
-  //       })
-  //       .catch(error => {
-  //         this.openNotificationWithIcon(
-  //           "error",
-  //           "Error",
-  //           "Something went wrong!"
-  //         );
-  //       });
-  //   } else if (data.order_type === "Market") {
-  //     let params = {
-  //       symbol: data.symbol,
-  //       side: data.side,
-  //       order_type: data.order_type,
-  //       orderQuantity: data.quantity
-  //     };
-  //     fetch(API_URL + "/market/" + data.side.toLowerCase(), {
-  //       method: "post",
-  //       headers: {
-  //         Accept: "application/json",
-  //         "Content-Type": "application/json",
-  //         Authorization: "Bearer " + this.props.isLoggedIn
-  //       },
-  //       body: JSON.stringify(params)
-  //     })
-  //       .then(response => response.json())
-  //       .then(responseData => {
-  //         if (responseData.status === 200) {
-  //           this.historyResult();
-  //         } else {
-  //         }
-  //       })
-  //       .catch(error => {
-  //         this.openNotificationWithIcon(
-  //           "error",
-  //           "Error",
-  //           "Something went wrong!"
-  //         );
-  //       });
-  //   }
-  // }
 
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
@@ -693,16 +652,6 @@ class History extends Component {
   }
 
   resetFilters() {
-    // alert("reset");
-    // console.log(
-    //   "reset",
-    //   this.state.toDate,
-    //   this.state.fromDate,
-    //   this.state.sell,
-    //   this.state.buy,
-    //   this.state.drop1Value,
-    //   this.state.drop2
-    // );
     this.setState(
       {
         toDate: "",
@@ -718,15 +667,6 @@ class History extends Component {
       () => {
         this.loadCoinList();
         this.historyResult();
-        // console.log(
-        //   "reset after",
-        //   this.state.toDate,
-        //   this.state.fromDate,
-        //   this.state.sell,
-        //   this.state.buy,
-        //   this.state.drop1Value,
-        //   this.state.drop2
-        // );
       }
     );
   }
@@ -851,10 +791,6 @@ class History extends Component {
                       disabledDate={this.disabledDate}
                       disabledTime={this.disabledRangeTime}
                       onChange={this.changeDate}
-                      // defaultValue={[
-                      //   moment(moment().subtract(1, "months"), "YYYY-MM-DD"),
-                      //   moment(moment(), "YYYY-MM-DD")
-                      // ]}
                       allowClear={false}
                       value={[this.state.fromDate, this.state.toDate]}
                       format="YYYY-MM-DD"
@@ -915,8 +851,37 @@ class History extends Component {
                       )}
                     </div>
                   )}
+                  {this.state.activeKey === "3" && (
+                    <div>
+                      <EXPButton
+                        onClick={this.resetFilters}
+                        className="reset_btn"
+                      >
+                        RESET
+                      </EXPButton>
+                      {this.state.csvTradeFields !== undefined ? (
+                        this.state.csvTradeFields.length > 0 ? (
+                          <EXPButton>
+                            <CSVLink
+                              filename="tradereportfile.csv"
+                              data={this.state.csvTradeFields}
+                              headers={this.state.csvHeadersTrade}
+                            >
+                              EXPORT
+                            </CSVLink>
+                          </EXPButton>
+                        ) : (
+                          ""
+                        )
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  )}
                 </Filter>
-                {this.state.activeKey === "1" && (
+                {this.state.activeKey === "2" ? (
+                  ""
+                ) : (
                   <FilterDivSelection>
                     <CheckboxGroupS
                       options={options}
@@ -1110,6 +1075,66 @@ class History extends Component {
                       </HisTable>
                     </Tablediv>
                   </TabPane>
+                  {/* <TabPane tab="Trade" key="3">
+                    <Tablediv>
+                      <HisTable responsive striped condensed>
+                        <thead>
+                          <tr>
+                            <th>Coin</th>
+                            <th>Date</th>
+                            <th>Filled Price</th>
+                            <th>Amount</th>
+                            <th>Wallet Address</th>
+                            <th>Payment Id</th>
+                            <th>Quote Id</th>
+                            <th>Payment Status</th>
+                          </tr>
+                        </thead>
+                        {this.state.historyTradeData !== undefined ? (
+                          this.state.historyTradeData.length > 0 ? (
+                            <tbody>
+                              {this.state.historyTradeData.map(function(temps) {
+                                var date = moment
+                                  .utc(temps.created_at)
+                                  .local()
+                                  .format(
+                                    `${self.props.profileData.date_format} HH:mm:ss`
+                                  );
+                                var side =
+                                  Number(temps.user_id) ===
+                                  self.props.profileData.id
+                                    ? temps.side
+                                    : temps.side === "Buy"
+                                    ? "Sell"
+                                    : "Buy";
+
+                                return (
+                                  <tr>
+                                    <td>{temps.symbol}</td>
+                                    <td>{date}</td>
+                                    <td>{temps.fill_price}</td>
+                                    <td>{temps.quantity}</td>
+                                    <td>{temps.address}</td>
+                                    <td>{temps.payment_id}</td>
+                                    <td>{temps.quote_id}</td>
+                                    <td>{temps.symbol}</td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          ) : (
+                            <NDF>
+                              <tr>
+                                <td colSpan="8">No Data Found</td>
+                              </tr>
+                            </NDF>
+                          )
+                        ) : (
+                          ""
+                        )}
+                      </HisTable>
+                    </Tablediv>
+                  </TabPane> */}
                 </Tabs>
               </HisWrap>
             </ContainerContact>

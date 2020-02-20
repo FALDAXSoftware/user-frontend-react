@@ -10,39 +10,34 @@ import {
   Select
 } from "antd";
 import styled from "styled-components";
-import {
-  DropdownButton,
-  ButtonToolbar
-} from "react-bootstrap";
+import { DropdownButton, ButtonToolbar } from "react-bootstrap";
 
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const Search = Input.Search;
 
-export const Rowwrap = styled.div ``;
-export const Rowwrap2 = styled.div `
+export const Rowwrap = styled.div``;
+export const Rowwrap2 = styled.div`
   margin-top: 25px;
 `;
-export const Layout = styled.div `
+export const Layout = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 15px;
   margin-top: 40px;
 `;
-export const SaveButton = styled(Button)
-`
+export const SaveButton = styled(Button)`
   margin-left: 15px;
 `;
-export const EditButton = styled(Button)
-`
+export const EditButton = styled(Button)`
   margin-right: 15px;
 `;
-export const MainTV = styled.div `
+export const MainTV = styled.div`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#2e3141" : "#eceff1"};
   height: calc(100% - 38px);
 `;
-export const TVBar = styled.div `
+export const TVBar = styled.div`
   display: flex;
   align-items: center;
   background-color: ${props =>
@@ -65,7 +60,7 @@ export const TVBar = styled.div `
     color: ${props => (props.theme.mode === "dark" ? "#687786;" : "")};
   }
 `;
-export const LeftDiv = styled.div `
+export const LeftDiv = styled.div`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
   padding-top: 25px;
@@ -78,8 +73,7 @@ export const LeftDiv = styled.div `
     padding-top: 15px;
   }
 `;
-export const EditDiv = styled(LeftDiv)
-`
+export const EditDiv = styled(LeftDiv)`
   display: flex;
   justify-content: center;
   height: auto;
@@ -90,12 +84,10 @@ export const EditDiv = styled(LeftDiv)
     font-weight: 600;
   }
 `;
-export const SwitchS = styled(Switch)
-`
+export const SwitchS = styled(Switch)`
   margin-left: 15px;
 `;
-export const LeftDiv1 = styled(LeftDiv)
-`
+export const LeftDiv1 = styled(LeftDiv)`
   padding-top: 30px;
   padding-bottom: 8px;
   box-shadow: ${props =>
@@ -109,8 +101,7 @@ export const LeftDiv1 = styled(LeftDiv)
     margin-right: 0px;
   }
 `;
-export const LeftDiv2 = styled(LeftDiv)
-`
+export const LeftDiv2 = styled(LeftDiv)`
   padding-top: 30px;
   margin-right: 0px;
   padding-bottom: 22px;
@@ -119,7 +110,7 @@ export const LeftDiv2 = styled(LeftDiv)
   border-radius: 5px;
   height: auto;
 `;
-export const Instru = styled.p `
+export const Instru = styled.p`
   display: inline-block;
   font-size: 19px;
   font-weight: bold;
@@ -129,8 +120,7 @@ export const Instru = styled.p `
     display: block;
   }
 `;
-export const SearchInput = styled(Search)
-`
+export const SearchInput = styled(Search)`
     display:inline-block;
     width:270px;
     float:right;
@@ -168,7 +158,7 @@ export const SearchInput = styled(Search)
         float:none;
     }
 `;
-export const FIATWrap = styled.div `
+export const FIATWrap = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 5px;
@@ -178,7 +168,7 @@ export const FIATWrap = styled.div `
     margin-left: 25px;
   }
 `;
-export const FIATWrap2 = styled.div `
+export const FIATWrap2 = styled.div`
   display: inline-block;
   float: right;
   & .ant-radio-button-wrapper {
@@ -190,13 +180,12 @@ export const FIATWrap2 = styled.div `
     margin-top: 20px;
   }
 `;
-export const FIAT = styled.div `
+export const FIAT = styled.div`
   display: inline-block;
   margin-right: 30px;
 `;
 
-export const RadioSelect = styled(RadioGroup)
-`
+export const RadioSelect = styled(RadioGroup)`
   font-family: "Open Sans";
 
   & .ant-radio-button-wrapper {
@@ -211,8 +200,7 @@ export const RadioSelect = styled(RadioGroup)
     }
   }
 `;
-export const Sect = styled(Button)
-`
+export const Sect = styled(Button)`
   display: inline-block;
   padding: 10px 15px;
   background-color: ${props =>
@@ -230,7 +218,7 @@ export const Sect = styled(Button)
     border-right: 0px;
   }
 `;
-export const RightDiv = styled.div `
+export const RightDiv = styled.div`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
   box-shadow: ${props =>
@@ -241,8 +229,7 @@ export const RightDiv = styled.div `
     margin-top: 0px;
   }
 `;
-export const RightDiv1 = styled(RightDiv)
-`
+export const RightDiv1 = styled(RightDiv)`
   height: 100%;
   @media (max-width: 575px) {
     height: auto;
@@ -251,11 +238,10 @@ export const RightDiv1 = styled(RightDiv)
     margin-top: 0px;
   }
 `;
-export const InstruTable = styled.div `
+export const InstruTable = styled.div`
   margin-top: 25px;
 `;
-export const TableIns = styled(Table)
-`
+export const TableIns = styled(Table)`
   & .ant-table-column-sorter {
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   }
@@ -378,8 +364,7 @@ export const TableIns = styled(Table)
     font-family: "Open Sans";
   }
 `;
-export const TabsRight = styled(Tabs)
-`
+export const TabsRight = styled(Tabs)`
   .ant-tabs-nav-container > .ant-tabs-nav-wrap > .ant-tabs-nav-scroll {
     display: flex !important;
     justify-content: center !important;
@@ -405,23 +390,22 @@ export const TabsRight = styled(Tabs)
 
 /* Market Style */
 
-export const Label = styled.label `
+export const Label = styled.label`
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
 `;
-export const MarketWrap = styled.div `
+export const MarketWrap = styled.div`
   padding-left: 30px;
   padding-right: 30px;
 `;
-export const BuyWrap = styled.div ``;
-export const BuySell = styled.div `
+export const BuyWrap = styled.div``;
+export const BuySell = styled.div`
   width: 100%;
   margin-left: auto;
   margin-right: auto;
   height: auto;
   text-align: center;
 `;
-export const BuySellRadio = styled(RadioButton)
-`
+export const BuySellRadio = styled(RadioButton)`
   padding-left: 40px;
   padding-right: 40px;
   @media (max-width: 375px) {
@@ -430,8 +414,7 @@ export const BuySellRadio = styled(RadioButton)
     width: 115px;
   }
 `;
-export const Buy = styled(Button)
-`
+export const Buy = styled(Button)`
   display: inline-block;
   background-color: ${props =>
     props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
@@ -445,8 +428,7 @@ export const Buy = styled(Button)
     border-right: 1px solid #40a9ff;
   }
 `;
-export const Sell = styled(Button)
-`
+export const Sell = styled(Button)`
   display: inline-block;
   background-color: ${props =>
     props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
@@ -456,7 +438,7 @@ export const Sell = styled(Button)
   border-bottom-left-radius: 0px !important;
   height: 40px;
 `;
-export const BalanceWrap = styled.div `
+export const BalanceWrap = styled.div`
   margin-top: 30px;
   > .ant-row {
     > .ant-col {
@@ -464,29 +446,27 @@ export const BalanceWrap = styled.div `
     }
   }
 `;
-export const Balance = styled.p `
+export const Balance = styled.p`
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   word-break: break-all;
 `;
-export const Balance1 = styled(Balance)
-`
+export const Balance1 = styled(Balance)`
   font-weight: 600;
 `;
-export const Total = styled.p `
+export const Total = styled.p`
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   word-break: break-all;
 `;
-export const CheckWrap = styled.div `
+export const CheckWrap = styled.div`
   > .ant-checkbox-wrapper > span {
     color: ${props => (props.theme.mode === "dark" ? "#617090" : "")};
   }
 `;
-export const ETHWrap = styled.div `
+export const ETHWrap = styled.div`
   margin-top: 15px;
 `;
 
-export const AMTInput = styled(Input)
-`
+export const AMTInput = styled(Input)`
   input {
     display: block;
     height: 35px;
@@ -500,24 +480,24 @@ export const AMTInput = styled(Input)
   }
 `;
 
-export const BTCWrap = styled.div `
+export const BTCWrap = styled.div`
   margin-top: 10px;
 `;
-export const Willpay = styled.span `
+export const Willpay = styled.span`
   font-size: 12px;
   font-family: "Open Sans";
   font-weight: 600;
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
 `;
-export const Willpay2 = styled.span `
+export const Willpay2 = styled.span`
   font-size: 20px;
   font-family: "NotoSansThai";
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
   font-weight: 600;
 `;
-export const TotalWrap = styled.div `
+export const TotalWrap = styled.div`
   > .ant-input-group-wrapper > .ant-input-group > .ant-input {
     border-right: 0px;
   }
@@ -535,8 +515,7 @@ export const TotalWrap = styled.div `
     -moz-appearance: textfield;
   }
 `;
-export const TotInput = styled(Input)
-`
+export const TotInput = styled(Input)`
   input {
     display: block;
     height: 35px;
@@ -549,20 +528,19 @@ export const TotInput = styled(Input)
       props.theme.mode === "dark" ? "#041b2c" : ""} !important;
   }
 `;
-export const Pay = styled.div `
+export const Pay = styled.div`
   margin-top: 30px;
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
 `;
-export const Esti = styled.div `
+export const Esti = styled.div`
   margin-top: 30px;
 `;
-export const Best = styled.span `
+export const Best = styled.span`
   font-size: 12px;
   font-family: "Open Sans";
   color: rgba(51, 51, 51, 0.8);
 `;
-export const ButtonETH = styled(Button)
-`
+export const ButtonETH = styled(Button)`
   background-color: ${props => (props.side === "Buy" ? "#64ba71" : "#ba6471")};
   border-color: ${props => (props.side === "Buy" ? "#64ba71" : "#ba6471")};
   font-size: 15px;
@@ -581,29 +559,28 @@ export const ButtonETH = styled(Button)
     border-color: ${props => (props.side === "Buy" ? "#64ba71" : "#ba6471")};
   }
 `;
-export const StopCheck = styled(Checkbox)
-`
+export const StopCheck = styled(Checkbox)`
   font-size: 14px;
   font-family: "Open Sans";
   font-weight: 600;
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 127, 127, 127 )"};
 `;
-export const ButtonWrap = styled.div `
+export const ButtonWrap = styled.div`
   margin-top: 25px;
 `;
-export const BBCWrap = styled.div `
+export const BBCWrap = styled.div`
   margin-left: 30px;
   margin-right: 30px;
 `;
-export const BBC = styled.span `
+export const BBC = styled.span`
   font-size: 16px;
   font-family: "Open Sans";
   color: rgb(76, 132, 255);
   text-transform: uppercase;
   font-weight: 600;
 `;
-export const TotalBTC = styled.span `
+export const TotalBTC = styled.span`
   float: right;
   display: inline-block;
   font-size: 13px;
@@ -612,7 +589,7 @@ export const TotalBTC = styled.span `
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
 `;
-export const BuyTable = styled.div `
+export const BuyTable = styled.div`
   margin-top: 15px;
   border: 1px solid #d8d8d8;
   > .table-responsive > .table-striped > thead {
@@ -625,27 +602,24 @@ export const BuyTable = styled.div `
     font-weight: 600;
   }
 `;
-export const BBCWrap2 = styled(BBCWrap)
-`
+export const BBCWrap2 = styled(BBCWrap)`
   margin-top: 20px;
 `;
-export const BBC2 = styled(BBC)
-`
+export const BBC2 = styled(BBC)`
   color: red;
 `;
 
 /* Depth Chart */
 
-export const Instru2 = styled(Instru)
-`
+export const Instru2 = styled(Instru)`
   margin-top: 25px;
   margin-left: 10px;
 `;
 
-export const WrapDepth = styled.div ``;
+export const WrapDepth = styled.div``;
 
-export const HistoryWrap = styled.div ``;
-export const HistoryWrap1 = styled.div `
+export const HistoryWrap = styled.div``;
+export const HistoryWrap1 = styled.div`
   overflow-x: auto;
   &::-webkit-scrollbar {
     width: 0.5em;
@@ -661,7 +635,7 @@ export const HistoryWrap1 = styled.div `
     background: ${props => (props.theme.mode === "dark" ? "#072135" : "")};
   }
 `;
-export const CustomTable = styled.table `
+export const CustomTable = styled.table`
   width: 100%;
   table-layout: fixed;
   & td {
@@ -677,8 +651,7 @@ export const CustomTable = styled.table `
   }
   font-family: "Open Sans";
 `;
-export const TableHeader = styled(CustomTable)
-`
+export const TableHeader = styled(CustomTable)`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
   > thead {
@@ -686,8 +659,7 @@ export const TableHeader = styled(CustomTable)
     height: 35px;
   }
 `;
-export const TableContent = styled(CustomTable)
-`
+export const TableContent = styled(CustomTable)`
   > tbody {
     color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
     font-size: 14px;
@@ -701,8 +673,7 @@ export const TableContent = styled(CustomTable)
 `;
 
 /* My orders and Trade */
-export const SelectMonth = styled(Select)
-`
+export const SelectMonth = styled(Select)`
   font-family: "Open Sans";
   font-weight: 700;
   & .ant-select-selection--single {
@@ -726,17 +697,16 @@ export const SelectMonth = styled(Select)
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
-export const InstruOrder = styled(Instru)
-`
+export const InstruOrder = styled(Instru)`
   margin-bottom: 0px !important;
 `;
-export const OrderWrap = styled.div `
+export const OrderWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   margin-bottom: 20px;
 `;
-export const DropWrap = styled.div `
+export const DropWrap = styled.div`
   display: inline - block;
   width: 165px;
   margin-right: 20px;
@@ -744,14 +714,12 @@ export const DropWrap = styled.div `
     width: 80px;
   }
 `;
-export const ButtonToolbarOne = styled(ButtonToolbar)
-`
+export const ButtonToolbarOne = styled(ButtonToolbar)`
   > .btn-group {
     width: 100 %;
   }
 `;
-export const DropdownButtonOne = styled(DropdownButton)
-`
+export const DropdownButtonOne = styled(DropdownButton)`
   background-color: ${props => (props.theme.mode === "dark" ? "#01090f" : "")};
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   width: 100 %;
@@ -761,9 +729,9 @@ export const DropdownButtonOne = styled(DropdownButton)
     margin-top: 8px;
   }
 `;
-export const ScrollTableContent = styled.div `
+export const ScrollTableContent = styled.div`
   overflow-x: auto;
-  > .scrollbar {
+  > .scrollbarwallet {
     height: 500px !important;
   }
   & .scrollbar > div:first-child {
@@ -788,8 +756,7 @@ export const ScrollTableContent = styled.div `
     background-color: rgb(136, 136, 136) !important;
   }
 `;
-export const SettingDropdown = styled(Dropdown)
-`
+export const SettingDropdown = styled(Dropdown)`
   position: fixed;
   top: 90px;
   right: 0px;

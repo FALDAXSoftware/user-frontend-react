@@ -230,7 +230,7 @@ class Acc_settings extends Component {
 
   /* Life Cycle Methods */
 
-  componentWillReceiveProps(props, newProps) {
+  componentWillReceiveProps(newProps) {
     /*  console.log(this.props)
          if(this.props.theme!==undefined)
          {
@@ -244,6 +244,13 @@ class Acc_settings extends Component {
          } */
     this.setState({ user2fastatus: this.props.profileDetails.is_twofactor });
     // console.log("walletCoins-------------------", this.state.user2fastatus);
+    if (
+      newProps.profileDetails.date_format !==
+        this.props.profileDetails.date_format &&
+      newProps.profileDetails.date_format
+    ) {
+      this.getAllLoginHistory(1);
+    }
   }
   componentWillMount() {
     this.getWalletSummary();
@@ -350,7 +357,6 @@ class Acc_settings extends Component {
     });
     return [selectedAllEmail, selectedAllText];
   };
-
   getNotificationList() {
     fetch(API_URL + `/get-notification-list`, {
       method: "get",
@@ -456,7 +462,6 @@ class Acc_settings extends Component {
         // console.log(error);
       });
   }
-
   /*
         Page: /editProfile --> Settings Tab
         it is called when we click Delete button and press confirm.
