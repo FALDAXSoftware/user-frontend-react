@@ -363,12 +363,11 @@ class LoggedNavigation extends Component {
   }
   componentDidMount() {
     if (this.props.location) {
-      // if (this.props.location.pathname.includes("dashboard")) {
-      //   this.setState({ selected: "1" });
-      // } else if (this.props.location.pathname.includes("trade")) {
-      //   this.setState({ selected: "2" });
-      // } else
-      if (this.props.location.pathname.includes("conversion")) {
+      if (this.props.location.pathname.includes("dashboard")) {
+        this.setState({ selected: "1" });
+      } else if (this.props.location.pathname.includes("trade")) {
+        this.setState({ selected: "2" });
+      } else if (this.props.location.pathname.includes("conversion")) {
         this.setState({ selected: "3" });
       } else if (this.props.location.pathname.includes("wallet")) {
         this.setState({ selected: "4" });
@@ -722,7 +721,7 @@ class LoggedNavigation extends Component {
             Credit Card
           </a>
         </Menu.Item>
-        {/* <Menu.Item key="2">
+        <Menu.Item key="2">
           <a
             onClick={() =>
               this.props.history.push({ pathname: "/history", tradeType: "3" })
@@ -730,7 +729,7 @@ class LoggedNavigation extends Component {
           >
             Trade
           </a>
-        </Menu.Item> */}
+        </Menu.Item>
       </Menu>
     );
 
@@ -747,7 +746,7 @@ class LoggedNavigation extends Component {
           defaultSelectedKeys={["1"]}
           selectedKeys={this.state.selected}
         >
-          {/* <Menuitem key="1" onClick={this.showComing}>
+          <Menuitem key="1" onClick={this.showComing}>
             <NavLink className="" to="/dashboard">
               DASHBOARD
             </NavLink>
@@ -756,7 +755,7 @@ class LoggedNavigation extends Component {
             <NavLink className="" to="/trade">
               Trade
             </NavLink>
-          </Menuitem> */}
+          </Menuitem>
           <Menuitem key="3">
             <DropDownDiv
               className="Drop-main "
@@ -816,10 +815,10 @@ class LoggedNavigation extends Component {
             <LogoutStyle>
               <Link to="/editProfile">Profile</Link>
             </LogoutStyle>
-            {/* <span>
+            <span>
               {" "}
               <Link to="/dashboard">Dashboard</Link>
-            </span> */}
+            </span>
             {/* <span> <Link to="/conversion">CONVERSION</Link></span> */}
             {/* <span onClick={this.tradeAccess}>CONVERSION</span> */}
             {/* <span>
@@ -846,9 +845,9 @@ class LoggedNavigation extends Component {
                 </SubMenuNav>
               </DropMenu>
             </a>
-            {/* <span onClick={this.tradeAccess}>
+            <span onClick={this.tradeAccess}>
               <Link to="/trade">Trade</Link>
-            </span> */}
+            </span>
             <span>
               {" "}
               <Link to="/wallet">Wallet</Link>
@@ -892,7 +891,7 @@ class LoggedNavigation extends Component {
                       Credit Card
                     </a>
                   </Menu.Item>
-                  {/* <Menu.Item key="2">
+                  <Menu.Item key="2">
                     <a
                       onClick={() =>
                         this.props.history.push({
@@ -903,7 +902,7 @@ class LoggedNavigation extends Component {
                     >
                       Trade
                     </a>
-                  </Menu.Item> */}
+                  </Menu.Item>
                 </SubMenuNav>
               </DropMenu>
             </a>

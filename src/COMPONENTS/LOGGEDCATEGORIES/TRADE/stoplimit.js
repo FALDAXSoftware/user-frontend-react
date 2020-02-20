@@ -332,7 +332,11 @@ class StopLimit extends Component {
                     </Col>
                     <Col span={12}>
                       <Balance>
-                        {this.props.userBal.currency[0].balance.toFixed(8)}{" "}
+                        {this.props.userBal.currency[0]
+                          ? `${this.props.userBal.currency[0].balance.toFixed(
+                              8
+                            )}${" "}`
+                          : `00${" "}`}
                         {this.state.currency}
                       </Balance>
                     </Col>
@@ -345,7 +349,11 @@ class StopLimit extends Component {
                     </Col>
                     <Col span={12}>
                       <Total>
-                        {this.props.userBal.currency[0].balance.toFixed(8)}{" "}
+                        {this.props.userBal.currency[0]
+                          ? `${this.props.userBal.currency[0].balance.toFixed(
+                              8
+                            )}${" "}`
+                          : `00${" "}`}
                         {this.state.currency}
                       </Total>
                     </Col>
@@ -358,10 +366,13 @@ class StopLimit extends Component {
                     </Col>
                     <Col span={12}>
                       <Total>
-                        {Math.abs(
-                          this.props.userBal.currency[0].balance -
-                            this.props.userBal.currency[0].placed_balance
-                        ).toFixed(8)}{" "}
+                        {this.props.userBal.currency[0]
+                          ? `${Math.abs(
+                              this.props.userBal.currency[0].balance -
+                                this.props.userBal.currency[0].placed_balance
+                            ).toFixed(8)}${" "}`
+                          : `00${" "}`}
+
                         {this.state.currency}
                       </Total>
                     </Col>
@@ -392,7 +403,11 @@ class StopLimit extends Component {
                     </Col>
                     <Col span={12}>
                       <Balance>
-                        {this.props.userBal.crypto[0].balance.toFixed(8)}{" "}
+                        {this.props.userBal.crypto[0]
+                          ? `${this.props.userBal.crypto[0].balance.toFixed(
+                              8
+                            )}${" "}`
+                          : `00${" "}`}
                         {this.state.crypto}
                       </Balance>
                     </Col>
@@ -405,7 +420,11 @@ class StopLimit extends Component {
                     </Col>
                     <Col span={12}>
                       <Total>
-                        {this.props.userBal.crypto[0].balance.toFixed(8)}{" "}
+                        {this.props.userBal.crypto[0]
+                          ? `${this.props.userBal.crypto[0].balance.toFixed(
+                              8
+                            )}${" "}`
+                          : `00${" "}`}
                         {this.state.crypto}
                       </Total>
                     </Col>
@@ -418,10 +437,12 @@ class StopLimit extends Component {
                     </Col>
                     <Col span={12}>
                       <Total>
-                        {Math.abs(
-                          this.props.userBal.crypto[0].balance -
-                            this.props.userBal.crypto[0].placed_balance
-                        ).toFixed(8)}{" "}
+                        {this.props.userBal.crypto[0]
+                          ? `${Math.abs(
+                              this.props.userBal.crypto[0].balance -
+                                this.props.userBal.crypto[0].placed_balance
+                            ).toFixed(8)}${" "}`
+                          : `00${" "}`}
                         {this.state.crypto}
                       </Total>
                     </Col>
