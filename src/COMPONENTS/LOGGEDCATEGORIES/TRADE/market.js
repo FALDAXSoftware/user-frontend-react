@@ -318,7 +318,11 @@ class Market extends Component {
                     </Col>
                     <Col span={12}>
                       <Balance>
-                        {this.props.userBal.currency[0].balance.toFixed(8)}{" "}
+                        {this.props.userBal.currency[0]
+                          ? `${this.props.userBal.currency[0].balance.toFixed(
+                            8
+                          )}${" "}`
+                          : "00"}
                         {this.state.currency}
                       </Balance>
                     </Col>
@@ -331,7 +335,11 @@ class Market extends Component {
                     </Col>
                     <Col span={12}>
                       <Total>
-                        {this.props.userBal.currency[0].balance.toFixed(8)}{" "}
+                        {this.props.userBal.currency[0]
+                          ? `${this.props.userBal.currency[0].balance.toFixed(
+                            8
+                          )}${" "}`
+                          : "00"}
                         {this.state.currency}
                       </Total>
                     </Col>
@@ -344,10 +352,12 @@ class Market extends Component {
                     </Col>
                     <Col span={12}>
                       <Total>
-                        {Math.abs(
-                          this.props.userBal.currency[0].balance -
+                        {this.props.userBal.currency[0]
+                          ? `${Math.abs(
+                            this.props.userBal.currency[0].balance -
                             this.props.userBal.currency[0].placed_balance
-                        ).toFixed(8)}{" "}
+                          ).toFixed(8)}${" "}`
+                          : "00"}
                         {this.state.currency}
                       </Total>
                     </Col>
@@ -369,79 +379,79 @@ class Market extends Component {
               </Row>
             </BalanceWrap>
           ) : (
-            <BalanceWrap>
-              <Row>
-                <Col xs={24} sm={12}>
-                  <Row>
-                    <Col span={12}>
-                      <Balance1>Balance</Balance1>
-                    </Col>
-                    <Col span={12}>
-                      <Balance>
-                        {this.props.userBal.crypto[0]
-                          ? `${this.props.userBal.crypto[0].balance.toFixed(
+              <BalanceWrap>
+                <Row>
+                  <Col xs={24} sm={12}>
+                    <Row>
+                      <Col span={12}>
+                        <Balance1>Balance</Balance1>
+                      </Col>
+                      <Col span={12}>
+                        <Balance>
+                          {this.props.userBal.crypto[0]
+                            ? `${this.props.userBal.crypto[0].balance.toFixed(
                               8
                             )}${" "}`
-                          : "00"}
-                        {this.state.crypto}
-                      </Balance>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xs={24} sm={12}>
-                  <Row>
-                    <Col span={12}>
-                      <Balance1>Total</Balance1>
-                    </Col>
-                    <Col span={12}>
-                      <Total>
-                        {this.props.userBal.crypto[0]
-                          ? `${this.props.userBal.crypto[0].balance.toFixed(
+                            : "00"}
+                          {this.state.crypto}
+                        </Balance>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <Row>
+                      <Col span={12}>
+                        <Balance1>Total</Balance1>
+                      </Col>
+                      <Col span={12}>
+                        <Total>
+                          {this.props.userBal.crypto[0]
+                            ? `${this.props.userBal.crypto[0].balance.toFixed(
                               8
                             )}${" "}`
-                          : "00"}
-                        {this.state.crypto}
-                      </Total>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xs={24} sm={12}>
-                  <Row>
-                    <Col span={12}>
-                      <Balance1>In orders</Balance1>
-                    </Col>
-                    <Col span={12}>
-                      <Total>
-                        {this.props.userBal.crypto[0]
-                          ? `${Math.abs(
+                            : "00"}
+                          {this.state.crypto}
+                        </Total>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <Row>
+                      <Col span={12}>
+                        <Balance1>In orders</Balance1>
+                      </Col>
+                      <Col span={12}>
+                        <Total>
+                          {this.props.userBal.crypto[0]
+                            ? `${Math.abs(
                               this.props.userBal.crypto[0].balance -
-                                this.props.userBal.crypto[0].placed_balance
+                              this.props.userBal.crypto[0].placed_balance
                             ).toFixed(8)}${" "}`
-                          : "00"}
-                        {this.state.crypto}
-                      </Total>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xs={24} sm={12}>
-                  <Row>
-                    <Col span={12}>
-                      <Balance1>Best ask</Balance1>
-                    </Col>
-                    <Col span={12}>
-                      <Total>
-                        {this.props.userBal.sellPay.toFixed(5)}{" "}
-                        {this.state.currency}
-                      </Total>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </BalanceWrap>
-          )
+                            : "00"}
+                          {this.state.crypto}
+                        </Total>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <Row>
+                      <Col span={12}>
+                        <Balance1>Best ask</Balance1>
+                      </Col>
+                      <Col span={12}>
+                        <Total>
+                          {this.props.userBal.sellPay.toFixed(5)}{" "}
+                          {this.state.currency}
+                        </Total>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </BalanceWrap>
+            )
         ) : (
-          ""
-        )}
+            ""
+          )}
         <ETHWrap>
           <Label>Amount</Label>
           <TotalWrap style={{ marginBottom: 16 }}>
@@ -510,43 +520,43 @@ class Market extends Component {
               </Esti>
             </Pay>
           ) : (
-            <Pay>
-              <Row>
-                <Col xs={15} sm={12}>
-                  <div>
-                    <Willpay>You will approximately receive</Willpay>
-                  </div>
-                </Col>
-                <Col xs={9} sm={12}>
-                  <div>
-                    <Willpay2>
-                      {sellEstPrice.toFixed(8)} {this.state.currency}
-                    </Willpay2>
-                  </div>
-                </Col>
-              </Row>
-              <Esti>
+              <Pay>
                 <Row>
                   <Col xs={15} sm={12}>
-                    Estimated Best Price
+                    <div>
+                      <Willpay>You will approximately receive</Willpay>
+                    </div>
                   </Col>
                   <Col xs={9} sm={12}>
-                    {sellPayAmt.toFixed(8)} {this.state.currency}
-                  </Col>
-                  <Col xs={15} sm={12}>
-                    Fee {this.state.userBalFees} %
-                  </Col>
-                  <Col xs={9} sm={12}>
-                    {(sellPayAmt - sellEstPrice).toFixed(8)}{" "}
-                    {this.state.currency}
+                    <div>
+                      <Willpay2>
+                        {sellEstPrice.toFixed(8)} {this.state.currency}
+                      </Willpay2>
+                    </div>
                   </Col>
                 </Row>
-              </Esti>
-            </Pay>
-          )
+                <Esti>
+                  <Row>
+                    <Col xs={15} sm={12}>
+                      Estimated Best Price
+                  </Col>
+                    <Col xs={9} sm={12}>
+                      {sellPayAmt.toFixed(8)} {this.state.currency}
+                    </Col>
+                    <Col xs={15} sm={12}>
+                      Fee {this.state.userBalFees} %
+                  </Col>
+                    <Col xs={9} sm={12}>
+                      {(sellPayAmt - sellEstPrice).toFixed(8)}{" "}
+                      {this.state.currency}
+                    </Col>
+                  </Row>
+                </Esti>
+              </Pay>
+            )
         ) : (
-          ""
-        )}
+            ""
+          )}
         <ButtonWrap>
           <ButtonETH
             disabled={this.state.disabledMode}
@@ -561,8 +571,8 @@ class Market extends Component {
             <Spin size="small" />
           </SpinSingle>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </MarketWrap>
     );
   }
