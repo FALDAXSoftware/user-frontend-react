@@ -363,12 +363,11 @@ class LoggedNavigation extends Component {
   }
   componentDidMount() {
     if (this.props.location) {
-      // if (this.props.location.pathname.includes("dashboard")) {
-      //   this.setState({ selected: "1" });
-      // } else if (this.props.location.pathname.includes("trade")) {
-      //   this.setState({ selected: "2" });
-      // } else
-      if (this.props.location.pathname.includes("conversion")) {
+      if (this.props.location.pathname.includes("dashboard")) {
+        this.setState({ selected: "1" });
+      } else if (this.props.location.pathname.includes("trade")) {
+        this.setState({ selected: "2" });
+      } else if (this.props.location.pathname.includes("conversion")) {
         this.setState({ selected: "3" });
       } else if (this.props.location.pathname.includes("wallet")) {
         this.setState({ selected: "4" });
