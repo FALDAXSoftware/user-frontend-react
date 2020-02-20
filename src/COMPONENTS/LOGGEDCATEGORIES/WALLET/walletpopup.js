@@ -564,10 +564,15 @@ class WalletPopup extends Component {
         }, 1500);
         // this.getAvailableBalance();
       } else {
-        this.validator.showMessages();
-        this.setState({
-          disabled: true
-        });
+        if (
+          this.state.sendFields.amount &&
+          this.state.sendFields.destination_address
+        ) {
+          this.validator.showMessages();
+          this.setState({
+            disabled: true
+          });
+        }
       }
     });
   }
@@ -670,7 +675,10 @@ class WalletPopup extends Component {
               this.getAvailableBalance();
             }, 1500);
             // this.getAvailableBalance();
-          } else {
+          } else if (
+            this.state.sendFields.amount &&
+            this.state.sendFields.destination_address
+          ) {
             this.validator.showMessages();
             this.setState({
               disabled: true
