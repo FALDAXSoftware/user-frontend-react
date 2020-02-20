@@ -4,6 +4,12 @@ export const ModalAgreeWrap = styled.div`
   width: 90%;
   margin-left: auto;
   margin-right: auto;
+  &.terms-wrap {
+    height: calc(100% - 60px);
+    & .ant-tabs.ant-tabs-top.ant-tabs-line {
+      height:100%;
+    }
+  }
   & .ant-tabs-nav-scroll {
     text-align: center;
   }
@@ -19,6 +25,7 @@ export const ModalAgreeWrap = styled.div`
           border: 1px solid #dadfe3;
           padding: 5px;
           border-radius: 4px;
+          height: calc(100vh - 370px);
         }
       }
   }
