@@ -438,7 +438,7 @@ class History extends Component {
               this.openNotificationWithIcon("error", "Error", responseData.err);
             }
           } else if (this.state.activeKey === "3") {
-            alert("trade");
+            // alert("trade");
             let csvTradeFields = [];
             if (responseData.data && responseData.data.length > 0) {
               for (var i = 0; i < responseData.data.length; i++) {
@@ -1075,7 +1075,7 @@ class History extends Component {
                       </HisTable>
                     </Tablediv>
                   </TabPane>
-                  <TabPane tab="Trade" key="3">
+                  {/* <TabPane tab="Trade" key="3">
                     <Tablediv>
                       <HisTable responsive striped condensed>
                         <thead>
@@ -1134,7 +1134,7 @@ class History extends Component {
                         )}
                       </HisTable>
                     </Tablediv>
-                  </TabPane>
+                  </TabPane> */}
                 </Tabs>
               </HisWrap>
             </ContainerContact>
