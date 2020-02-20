@@ -36,6 +36,11 @@ export const MainTV = styled.div`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#2e3141" : "#eceff1"};
   height: calc(100% - 38px);
+  &.trade_chart_view_main {
+    & .TVChartContainer {
+      height: 100%;
+    }
+  }
 `;
 export const TVBar = styled.div`
   display: flex;
@@ -448,14 +453,14 @@ export const BalanceWrap = styled.div`
 `;
 export const Balance = styled.p`
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
-  word-break: break-all;
+  word-break: break-word;
 `;
 export const Balance1 = styled(Balance)`
   font-weight: 600;
 `;
 export const Total = styled.p`
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
-  word-break: break-all;
+  word-break: break-word;
 `;
 export const CheckWrap = styled.div`
   > .ant-checkbox-wrapper > span {

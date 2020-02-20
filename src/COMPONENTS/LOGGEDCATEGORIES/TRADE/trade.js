@@ -926,7 +926,7 @@ class Trade extends Component {
               >
                 <div key="tradeView">
                   <div style={{ height: "100%", width: "100%" }}>
-                    <MainTV>
+                    <MainTV className="trade_chart_view_main">
                       <TVBar>
                         <div>
                           <span>
