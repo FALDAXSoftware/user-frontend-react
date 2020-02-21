@@ -1075,7 +1075,7 @@ class History extends Component {
                       </HisTable>
                     </Tablediv>
                   </TabPane>
-                  {/* <TabPane tab="Trade" key="3">
+                  <TabPane tab="Trade" key="3">
                     <Tablediv>
                       <HisTable responsive striped condensed>
                         <thead>
@@ -1134,7 +1134,7 @@ class History extends Component {
                         )}
                       </HisTable>
                     </Tablediv>
-                  </TabPane> */}
+                  </TabPane>
                 </Tabs>
               </HisWrap>
             </ContainerContact>
