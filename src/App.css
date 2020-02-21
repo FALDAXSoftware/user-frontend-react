@@ -70,3 +70,10 @@
 .order-inapproval {
   color: #174c7e;
 }
+.notification-table {
+  width: 800px;
+  margin: 0 auto;
+}
+.notification-table th {
+  background-color: #e4ecff !important;
+}

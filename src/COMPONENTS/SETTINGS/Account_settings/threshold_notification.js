@@ -1,335 +1,262 @@
 import React, { Component } from "react";
-import "antd/dist/antd.css";
-import { Button, Modal, Input, notification, Checkbox } from "antd";
-/* import { DropdownButton, ButtonToolbar } from 'react-bootstrap'; */
-import styled from "styled-components";
-import SimpleReactValidator from "simple-react-validator";
-import moment from "moment";
-
-import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
-import { globalVariables } from "Globals.js";
-
-/* Styled-Components */
 import {
-  Heading,
-  NotificationTable,
-  WrapTable,
-  AddButton
-} from "STYLED-COMPONENTS/SETTINGS/accsettingsStyle";
-
-export const LimitInput = styled.input`
-  width: 150px;
-  height: 32px;
-  padding: 4px 11px;
-  color: rgba(0, 0, 0, 0.65);
-  font-size: 14px;
-  line-height: 1.5;
-  background-color: #fff;
-  background-image: none;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-`;
-
-export const NotificationWrap = styled.div`
-  padding-left: 10px;
-  padding-right: 10px;
-`;
-
-let { API_URL } = globalVariables;
-
-class ThreshholdNotification extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      thresholdData: [],
-      savedData: [],
-      loader: false
-    };
-    this.validator = new SimpleReactValidator({
-      lowerpositiveDecimal: {
-        // name the rule
-        message: "Lower limit should be only positive decimals", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
-          // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
-          // check that it is a valid IP address and is not blacklisted
-          var re = /^(\d*\.)?\d+$/;
-          var bool = re.test(String(val).toLowerCase());
-          return bool;
-        }
-      },
-      upperpositiveDecimal: {
-        // name the rule
-        message: "Upper limit should be only positive decimals", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
-          // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
-          // check that it is a valid IP address and is not blacklisted
-          var re = /^(\d*\.)?\d+$/;
-          var bool = re.test(String(val).toLowerCase());
-          return bool;
-        }
-      }
-    });
-    this.columns = [
-      {
-        title: "Coin",
-        dataIndex: "coin",
-        key: "coin"
-      },
-      {
-        title: "Lower Limit",
-        dataIndex: "lower_limit",
-        key: "lower_limit",
-        align: "center",
-        render: (value, record) => (
-          <div>
-            <LimitInput
-              type="number"
-              min={0}
-              key={record.coin_id}
-              defaultValue={value}
-              onChange={e => this.inputChange("lower_limit", e, record)}
-            />
-            {` USD`}
-            {/* {console.log(value, record)} */}
-            {this.validator.message(
-              "lower_limit",
-              value,
-              "required|lowerpositiveDecimal",
-              "text-danger-validation",
-              { required: "Lower limit is required." }
-            )}
-          </div>
-        )
-      },
-      {
-        title: "Upper Limit",
-        dataIndex: "upper_limit",
-        key: "upper_limit",
-        align: "center",
-        render: (value, record) => (
-          <div>
-            <LimitInput
-              type="number"
-              min={0}
-              key={record.coin_id}
-              defaultValue={value}
-              onChange={e => this.inputChange("upper_limit", e, record)}
-            />
-            {` USD`}
-            {/* {console.log(value, record)} */}
-            {this.validator.message(
-              "upper_limit",
-              value,
-              "required|upperpositiveDecimal",
-              "text-danger-validation",
-              { required: "Upper limit is required." }
-            )}
-          </div>
-        )
-      },
-      {
-        title: "Email Notification",
-        key: "is_email_notification",
-        dataIndex: "is_email_notification",
-        align: "center",
-        render: (value, record) => {
-          // console.log(value, record);
-          return (
-            <Checkbox
-              defaultChecked={value}
-              key={record.coin_id}
-              onChange={e =>
-                this.checkChange("is_email_notification", e, record)
-              }
-            ></Checkbox>
-          );
-        }
-      },
-      {
-        title: "SMS Notification",
-        key: "is_sms_notification",
-        dataIndex: "is_sms_notification",
-        align: "center",
-        render: (value, record) => {
-          // console.log(value, record);
-          return (
-            <Checkbox
-              defaultChecked={value}
-              key={record.coin_id}
-              onChange={e => this.checkChange("is_sms_notification", e, record)}
-            ></Checkbox>
-          );
-        }
-      }
-    ];
-    this.getData = this.getData.bind(this);
-    this.addData = this.addData.bind(this);
-    this.checkChange = this.checkChange.bind(this);
-  }
-  componentDidMount() {
-    this.getData();
-  }
-  openNotificationWithIcon = (type, msg, desc) => {
-    notification[type]({
-      message: msg,
-      description: desc,
-      duration: 3
-    });
+  Table,
+  Input,
+  InputNumber,
+  Popconfirm,
+  Form,
+  Divider,
+  Checkbox
+} from "antd";
+import { APIUtility } from "../../../httpHelper";
+import clone from "clone";
+const EditableContext = React.createContext();
+const regEx = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/;
+class EditableCell extends React.Component {
+  getInput = () => {
+    if (this.props.inputType === "number") {
+      return <InputNumber />;
+    }
+    return <Input />;
   };
-  checkChange(key, e, record) {
-    // console.log(key, e.target.checked, record);
-    const { thresholdData } = this.state;
-    var tempData = thresholdData;
-    tempData.map(function(data, index) {
-      if (data.coin_id == record.coin_id) {
-        // console.log(tempData[key])
-        if (key == "is_email_notification")
-          tempData[index].is_email_notification = e.target.checked;
-        else tempData[index].is_sms_notification = e.target.checked;
-      }
-    });
-    // console.log("------>>>>>", tempData)
-    this.setState({ thresholdData: tempData });
-  }
-  inputChange(key, e, record) {
-    // console.log(key, e.target.value, record)
-    const { thresholdData } = this.state;
-    var tempData = thresholdData;
-    tempData.map(function(data, index) {
-      if (data.coin_id == record.coin_id) {
-        // console.log(tempData[key])
-        if (key == "lower_limit")
-          tempData[index].lower_limit = Number(e.target.value);
-        else tempData[index].upper_limit = Number(e.target.value);
-      }
-    });
-    // console.log("------>>>>>", tempData)
-    this.setState({ thresholdData: tempData });
-  }
-  getData() {
-    let self = this;
 
-    fetch(API_URL + `/users/get-user-thresholds`, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + this.props.isLoggedIn,
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        // console.log(responseData)
-        if (responseData.status == 200) {
-          // console.log(responseData.data);
-          let b = JSON.parse(JSON.stringify(responseData.data));
-
-          self.setState({
-            thresholdData: b,
-            savedData: responseData.data
-          });
-        } else {
-          self.openNotificationWithIcon(
-            "error",
-            responseData.status,
-            responseData.err
-          );
-        }
-        self.setState({ loader: false });
-      })
-      .catch(error => {
-        self.openNotificationWithIcon(
-          "error",
-          "Error",
-          "Something went wrong!"
-        );
-        self.setState({ loader: false });
-      });
-  }
-  addData() {
-    if (this.validator.allValid()) {
-      const { thresholdData } = this.state;
-      this.setState({
-        loader: true
-      });
-      fetch(API_URL + `/users/add-thresholds-limits`, {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + this.props.isLoggedIn,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(thresholdData)
-      })
-        .then(response => response.json())
-        .then(responseData => {
-          // console.log(responseData)
-          if (responseData.status == 200) {
-            // console.log(responseData.data);
-            let b = JSON.parse(JSON.stringify(responseData.data));
-
-            this.setState({
-              thresholdData: responseData.data,
-              savedData: b
-            });
-            this.openNotificationWithIcon(
-              "success",
-              "Success",
-              responseData.message
-            );
-          } else {
-            this.openNotificationWithIcon(
-              "error",
-              responseData.status,
-              responseData.err
-            );
-          }
-          this.setState({ loader: false });
-        })
-        .catch(error => {
-          this.openNotificationWithIcon(
-            "error",
-            "Error",
-            "Something went wrong!"
-          );
-          this.setState({ loader: false });
-        });
-    } else {
-      this.validator.showMessages();
-      // rerender to show messages for the first time
-      this.forceUpdate();
-    }
-  }
-  render() {
-    const { thresholdData, savedData } = this.state;
-    // console.log(JSON.stringify(savedData) === JSON.stringify(thresholdData), savedData, "------>", thresholdData);
-    let disabled = true;
-    if (JSON.stringify(savedData) === JSON.stringify(thresholdData)) {
-      disabled = true;
-    } else {
-      disabled = false;
-    }
+  renderCell = ({ getFieldDecorator }) => {
+    const {
+      editing,
+      dataIndex,
+      title,
+      inputType,
+      record,
+      index,
+      children,
+      ...restProps
+    } = this.props;
     return (
-      <div>
-        <Heading>
-          <span>Threshold Notifications</span>
-        </Heading>
-        {/* {console.log("------------->", thresholdData)} */}
-        <NotificationWrap>
-          <WrapTable>
-            <NotificationTable
-              columns={this.columns}
-              bordered={true}
-              dataSource={thresholdData}
-              pagination={{ pageSize: 5, size: "small" }}
-            />
-          </WrapTable>
-        </NotificationWrap>
-        <AddButton disabled={disabled} onClick={this.addData}>
-          Save
-        </AddButton>
-        {this.state.loader === true ? <FaldaxLoader /> : ""}
-      </div>
+      <td {...restProps}>
+        {editing ? (
+          <Form.Item style={{ margin: 0 }}>
+            {getFieldDecorator(dataIndex, {
+              rules: [
+                {
+                  pattern: regEx,
+                  message: "Please Enter Valid Positive Number"
+                }
+              ],
+              initialValue: record[dataIndex]
+            })(this.getInput())}
+          </Form.Item>
+        ) : (
+          children
+        )}
+      </td>
+    );
+  };
+
+  render() {
+    return (
+      <EditableContext.Consumer>{this.renderCell}</EditableContext.Consumer>
     );
   }
 }
 
-export default ThreshholdNotification;
+class EditableTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: [], loader: false, editingKey: "", dumpData: [] };
+    this.columns = [
+      {
+        title: "Coin",
+        dataIndex: "coin"
+      },
+      {
+        title: "Lower Limit",
+        dataIndex: "lower_limit",
+        editable: true
+      },
+      {
+        title: "Upper Limit",
+        dataIndex: "upper_limit",
+        editable: true
+      },
+      {
+        title: "Email Notification",
+        render: data => (
+          <Checkbox
+            value={data["is_email_notification"]}
+            checked={data["is_email_notification"]}
+            onChange={e =>
+              this.handleOnChange(data, "is_email_notification", e)
+            }
+          />
+        )
+      },
+      {
+        title: "SMS Notification",
+        render: data => (
+          <Checkbox
+            value={data["is_sms_notification"]}
+            checked={data["is_sms_notification"]}
+            onChange={e => this.handleOnChange(data, "is_sms_notification", e)}
+          />
+        )
+      },
+      {
+        title: "",
+        dataIndex: "operation",
+        render: (text, record) => {
+          const { editingKey } = this.state;
+          const editable = this.isEditing(record);
+          return editable ? (
+            <span>
+              <EditableContext.Consumer>
+                {form => (
+                  <a
+                    onClick={() => this.save(form, record.coin_id)}
+                    style={{ marginRight: 8 }}
+                  >
+                    Save
+                  </a>
+                )}
+              </EditableContext.Consumer>
+              <Popconfirm
+                title="Sure to cancel?"
+                onConfirm={() => this.cancel(record.coin_id)}
+              >
+                <a>Cancel</a>
+              </Popconfirm>
+            </span>
+          ) : (
+            <a
+              disabled={editingKey !== ""}
+              onClick={() => this.edit(record.coin_id)}
+            >
+              Edit
+            </a>
+          );
+        }
+      }
+    ];
+  }
+
+  componentDidMount() {
+    this.getThresholdData();
+  }
+  handleOnChange = (data, type, event) => {
+    let threshHoldData = this.state.data;
+    let index = threshHoldData.indexOf(data);
+    if (index > -1) {
+      threshHoldData[index][type] = event.target.checked;
+      this.setState({ data: threshHoldData });
+    }
+  };
+
+  getThresholdData = async () => {
+    try {
+      this.setState({ loader: true });
+      let res = await APIUtility.getThresholdData(this.props.isLoggedIn);
+      if (res.status == 200) {
+        this.setState({ data: res.data, dumpData: clone(res.data) });
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      this.setState({ loader: false });
+    }
+  };
+
+  isEditing = record => record.coin_id === this.state.editingKey;
+
+  cancel = () => {
+    let { dumpData } = this.state;
+    this.setState({ editingKey: "", data: dumpData });
+  };
+
+  save(form, key) {
+    form.validateFields(async (error, row) => {
+      if (error) {
+        return;
+      }
+      const newData = [...this.state.data];
+      const index = newData.findIndex(item => key === item.coin_id);
+      if (index > -1) {
+        const item = newData[index];
+        item["upper_limit"] = parseFloat(item["upper_limit"]);
+        item["lower_limit"] = parseFloat(item["lower_limit"]);
+        newData.splice(index, 1, {
+          ...item,
+          ...row
+        });
+        this.setState({ loader: true });
+        try {
+          let response = await APIUtility.setThresholdData(
+            this.props.isLoggedIn,
+            [
+              {
+                ...item,
+                ...row
+              }
+            ]
+          );
+          if (response.status == 200) {
+            await this.getThresholdData();
+          }
+        } catch (error) {
+        } finally {
+          this.setState({ loader: false });
+        }
+
+        this.setState({ data: newData, editingKey: "" });
+      } else {
+        newData.push(row);
+        this.setState({ data: newData, editingKey: "" });
+      }
+    });
+  }
+
+  edit(key) {
+    console.log("key", key);
+    this.setState({ editingKey: key });
+  }
+
+  render() {
+    const components = {
+      body: {
+        cell: EditableCell
+      }
+    };
+    const columns = this.columns.map(col => {
+      if (!col.editable) {
+        return col;
+      }
+      return {
+        ...col,
+        onCell: record => ({
+          record,
+          inputType: "text",
+          dataIndex: col.dataIndex,
+          title: col.title,
+          editing: this.isEditing(record)
+        })
+      };
+    });
+
+    return (
+      <EditableContext.Provider value={this.props.form}>
+        <Table
+          className="notification-table"
+          components={components}
+          bordered
+          dataSource={this.state.data}
+          columns={columns}
+          rowClassName="editable-row"
+          pagination={false}
+          loading={this.state.loader}
+        />
+      </EditableContext.Provider>
+    );
+  }
+}
+
+const EditableFormTable = Form.create()(EditableTable);
+
+export default EditableFormTable;

@@ -1236,7 +1236,14 @@ class Acc_settings extends Component {
 
         <HR />
         {/* ---- Notification code ends ---- */}
-        <ThresholdNotification isLoggedIn={this.props.isLoggedIn} />
+        <NotiWrap>
+          <NotiHead>
+            <span>Threshold Notifications</span>
+          </NotiHead>
+        </NotiWrap>
+        <WrapTable>
+          <ThresholdNotification isLoggedIn={this.props.isLoggedIn} />
+        </WrapTable>
         <HR2 />
         <LoginHistory>
           <HistoryHead>
