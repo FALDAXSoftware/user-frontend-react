@@ -83,6 +83,7 @@ class EditableTable extends React.Component {
         render: data => (
           <Checkbox
             value={data["is_email_notification"]}
+            disabled={this.state.editingKey != data.coin_id}
             checked={data["is_email_notification"]}
             onChange={e =>
               this.handleOnChange(data, "is_email_notification", e)
@@ -96,6 +97,7 @@ class EditableTable extends React.Component {
           <Checkbox
             value={data["is_sms_notification"]}
             checked={data["is_sms_notification"]}
+            disabled={this.state.editingKey != data.coin_id}
             onChange={e => this.handleOnChange(data, "is_sms_notification", e)}
           />
         )
@@ -214,7 +216,6 @@ class EditableTable extends React.Component {
   }
 
   edit(key) {
-    console.log("key", key);
     this.setState({ editingKey: key });
   }
 
