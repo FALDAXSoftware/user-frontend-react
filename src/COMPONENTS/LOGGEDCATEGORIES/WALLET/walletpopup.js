@@ -269,7 +269,7 @@ class WalletPopup extends Component {
         }
       },
       minLimitCheck: {
-        message: `Amount must be greater than ${this.props.coin_min_limit}.`,
+        message: `Amount must be greater than or equal to ${this.props.coin_min_limit}.`,
         rule: (val, params, validator) => {
           // console.log("this is val?????", val);
           if (val >= this.props.coin_min_limit) {
@@ -283,7 +283,7 @@ class WalletPopup extends Component {
         required: true // optional
       },
       maxLimitCheck: {
-        message: `Amount must be less than ${this.props.coin_max_limit}.`,
+        message: `Amount must be less than or equal to ${this.props.coin_max_limit}.`,
         rule: (val, params, validator) => {
           // console.log("this is val?????", val);
           if (val <= this.props.coin_max_limit) {
