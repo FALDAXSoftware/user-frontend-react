@@ -142,7 +142,7 @@ export default class Datepicker extends Component {
           monthName = ""; /* console.log(" i am in IF") */
         }
         this.setState({
-          day: date[2],
+          day: Number(date[2]),
           month: monthName,
           year: date[0]
         });
