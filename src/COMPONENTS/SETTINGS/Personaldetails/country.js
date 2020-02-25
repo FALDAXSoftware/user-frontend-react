@@ -114,7 +114,7 @@ export default class CountryPick extends Component {
       country_code = countrySelected.sortname;
       phoneCode = countrySelected.phonecode;
     }
-    // console.log("country", this.props.phone_number);
+    // console.log("^^^^country", this.props.country_id);
     this.setState({
       country_selected: this.props.country,
       state_selected: this.props.state,
@@ -126,6 +126,12 @@ export default class CountryPick extends Component {
     });
   }
   componentWillReceiveProps(newprops) {
+    // console.log("^^^^country", newprops.country_id);
+    if (this.props.country_id != newprops.country_id && newprops.country_id) {
+      this.setState({
+        country_json_id: newprops.country_id
+      });
+    }
     if (this.props != newprops) {
       var countrySelected = CountryData.getCountryById(
         this.state.country_json_id - 1
@@ -136,13 +142,23 @@ export default class CountryPick extends Component {
         country_code = countrySelected.sortname;
         phoneCode = countrySelected.phonecode;
       }
-      this.setState({
-        country_selected: newprops.country,
-        state_selected: newprops.state,
-        city_selected: newprops.city,
-        country_code,
-        phoneCode
-      });
+      this.setState(
+        {
+          country_selected: newprops.country,
+          state_selected: newprops.state,
+          city_selected: newprops.city,
+          country_code,
+          phoneCode
+        },
+        () => {
+          // console.log(
+          //   "^^^^data",
+          //   this.state.country_selected,
+          //   this.state.state_selected,
+          //   this.state.city_selected
+          // );
+        }
+      );
     }
   }
   /* 
