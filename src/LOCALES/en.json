@@ -1818,7 +1818,7 @@
     },
     "invalid_email_error": {
       "page": "Edit Profile > Security",
-      "message": "Please enter valid email address",
+      "message": "Please enter valid email address.",
       "message_type": "Web content",
       "context": "when email is not a valid email"
     },
@@ -1955,6 +1955,48 @@
       "message": "Language",
       "message_type": "Web content",
       "context": "Header top menu to change language"
+    },
+    "default_language_head": {
+      "page": "Edit profile",
+      "message": "Default Language",
+      "message_type": "Web content",
+      "context": "Edit profile head to change default language"
+    },
+    "numeric_valdation": {
+      "page": "Personal Details",
+      "message": "must be a number",
+      "message_type": "Web content",
+      "context": "validation for first name required"
+    },
+    "enable_text": {
+      "page": "Security",
+      "message": "ENABLE",
+      "message_type": "Web content",
+      "context": "enable text"
+    },
+    "disable_text": {
+      "page": "Security",
+      "message": "DISABLE",
+      "message_type": "Web content",
+      "context": "disable text"
+    },
+    "enabled_text": {
+      "page": "Security",
+      "message": "ENABLED",
+      "message_type": "Web content",
+      "context": "enabled text"
+    },
+    "disabled_text": {
+      "page": "Security",
+      "message": "DISABLED",
+      "message_type": "Web content",
+      "context": "disabled text"
+    },
+    "authenticator_text": {
+      "page": "Security",
+      "message": "Authenticator",
+      "message_type": "Web content",
+      "context": "Authenticator text"
     }
   }
 }

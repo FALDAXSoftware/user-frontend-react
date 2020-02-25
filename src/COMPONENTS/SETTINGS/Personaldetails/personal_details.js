@@ -1594,7 +1594,9 @@ class PersonalDetails extends Component {
                 </FourthRow>
                 <FourthRow className="language">
                   <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
-                    <Postal>Default Language</Postal>
+                    <Postal>
+                      {t("general_1:default_language_head.message")}
+                    </Postal>
                     <Select
                       disabled={!this.state.editMode}
                       value={this.state.language}
@@ -1628,9 +1630,11 @@ class PersonalDetails extends Component {
                           : profileDetails.fiat
                       }
                     >
-                      <Radio value={"USD"}>USD</Radio>
-                      <Radio value={"INR"}>INR</Radio>
-                      <Radio value={"EUR"}>EUR</Radio>
+                      <Radio value={"USD"}>
+                        {t("settings:currency_usd.message")}
+                      </Radio>
+                      <Radio value={"INR"}>{t("currency_inr.message")}</Radio>
+                      <Radio value={"EUR"}>{t("currency_eur.message")}</Radio>
                     </RadioGroup>
                     <FIATMsg className="fiat_msg">{this.state.fiatmsg}</FIATMsg>
                   </Col>
@@ -1654,9 +1658,15 @@ class PersonalDetails extends Component {
                           : profileDetails.date_format
                       }
                     >
-                      <Radio value={"MM/DD/YYYY"}>MM/DD/YYYY</Radio>
-                      <Radio value={"DD/MM/YYYY"}>DD/MM/YYYY</Radio>
-                      <Radio value={"MMM DD,YYYY"}>MMM DD,YYYY</Radio>
+                      <Radio value={"MM/DD/YYYY"}>
+                        {t("currency_date_format_1.message")}
+                      </Radio>
+                      <Radio value={"DD/MM/YYYY"}>
+                        {t("currency_date_format_2.message")}
+                      </Radio>
+                      <Radio value={"MMM DD,YYYY"}>
+                        {t("currency_date_format_3.message")}
+                      </Radio>
                     </RadioGroup>
                     <FIATMsg className="df_msg">{this.state.dfmsg}</FIATMsg>
                   </Col>
@@ -1851,6 +1861,9 @@ const mapDispatchToProps = dispatch => ({
   langAction: lang => dispatch(langAction(lang))
 });
 
-export default translate(["edit_profile_titles", "validations"])(
-  connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails))
-);
+export default translate([
+  "edit_profile_titles",
+  "validations",
+  "general_1",
+  "settings"
+])(connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails)));

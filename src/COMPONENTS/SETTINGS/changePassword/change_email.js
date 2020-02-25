@@ -6,6 +6,7 @@ import { Row, Col, Input, notification, Modal, Button } from "antd";
 import styled from "styled-components";
 import { createForm, formShape } from "rc-form";
 import SimpleReactValidator from "simple-react-validator";
+import { translate } from "react-i18next";
 
 /* components */
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
@@ -201,10 +202,11 @@ class ChangeEmail extends Component {
       isShowOTP: false,
       errType: ""
     };
+    this.t = this.props.t;
     this.validator = new SimpleReactValidator({
       email: {
         // name the rule
-        message: "Please enter valid email address.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("validations:invalid_email_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -411,7 +413,7 @@ class ChangeEmail extends Component {
 
   render() {
     const { fields, errMsg, loader, isShowOTP, errType } = this.state;
-
+    const { t } = this.props;
     if (errMsg) {
       this.openNotificationWithIcon(errType.toLowerCase());
     }
@@ -421,65 +423,77 @@ class ChangeEmail extends Component {
         <Row>
           <Col span={6} />
           <HeaderCol span={12}>
-            <span>Change Your Email Address</span>
+            <span>{t("security_tab:head_change_email.message")}</span>
           </HeaderCol>
         </Row>
         <ChangeRow>
           <ChangeCol>
             <NewP>
-              <InputLabel>Email:</InputLabel>
+              <InputLabel>
+                {t("security_tab:subhead_title_email.message")}:
+              </InputLabel>
               <EmailDN>
                 {fields.oldEmail !== null
                   ? fields.oldEmail
                   : this.props.profileDetails.email}
               </EmailDN>
 
-              <InputLabel>Enter New Email*</InputLabel>
+              <InputLabel>
+                {t("security_tab:subhead_title_new_email.message")}*
+              </InputLabel>
               <div>
                 <NewInput
                   value={fields.newEmail}
                   disabled={isShowOTP}
                   size="large"
-                  placeholder="Email"
+                  placeholder={`${t(
+                    "security_tab:subhead_title_email.message"
+                  )}`}
                   onChange={this.onChangeField.bind(this, "newEmail")}
                 />
                 {this.validator.message(
                   "Email",
                   this.state.fields["newEmail"],
-                  "required|email"
+                  "required|email",
+                  "text-danger-validation",
+                  {
+                    required: `${t(
+                      "security_tab:subhead_title_email.message"
+                    )} ${t("validations:field_is_required.message")}.`
+                  }
                 )}
               </div>
             </NewP>
             <ButtonDiv>
               <NewButton onClick={this.changeEmail.bind(this)}>
-                Update Email
+                {t("security_tab:update_email_btn.message")}
               </NewButton>
             </ButtonDiv>
             {isShowOTP && (
               <VerifyModal
                 closable={true}
-                title="Verify Email Address"
+                title={`${t("security_tab:verify_email_popup_head.message")}`}
                 onCancel={this.closeVerifyModal}
                 visible={isShowOTP}
                 footer={null}
               >
                 <Description>
                   {" "}
-                  We have sent an one-time use verification code to old email
-                  address
+                  {t("security_tab:verify_email_popup_text1.message")}
                   <a href={`mailto:${fields["oldEmail"]}`}>
                     {" "}
                     {fields["oldEmail"]}
                   </a>
-                  . Please enter the code in the box below to complete the
-                  verification for{" "}
+                  . {t("security_tab:verify_email_popup_text2.message")}{" "}
                   <a href={`mailto:${fields["newEmail"]}`}>
                     {fields["newEmail"]}
                   </a>
                   .
                 </Description>
                 <NewP>
-                  <InputLabel>Verification Code</InputLabel>
+                  <InputLabel>
+                    {t("security_tab:subhead_title_verification_code.message")}
+                  </InputLabel>
                   <div>
                     <OTPInput
                       value={fields.otp}
@@ -490,13 +504,22 @@ class ChangeEmail extends Component {
                     {this.otpValidator.message(
                       "verification code",
                       this.state.fields["otp"],
-                      "required|numeric"
+                      "required|numeric",
+                      "text-danger-validation",
+                      {
+                        required: `${t(
+                          "security_tab:subhead_title_verification_code.message"
+                        )} ${t("validations:field_is_required.message")}.`,
+                        numeric: `${t(
+                          "security_tab:subhead_title_verification_code.message"
+                        )} ${t("general_1:numeric_valdation.message")}.`
+                      }
                     )}
                   </div>
                 </NewP>
                 <ButtonDiv>
                   <NewButton onClick={this.verifyEmail.bind(this)}>
-                    Verify
+                    {t("security_tab:verify_btn.message")}
                   </NewButton>
                 </ButtonDiv>
               </VerifyModal>
@@ -525,7 +548,6 @@ const mapDispatchToProps = dispatch => ({
   LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(createForm()(ChangeEmail));
+export default translate(["security_tab", "validations", "general_1"])(
+  connect(mapStateToProps, mapDispatchToProps)(createForm()(ChangeEmail))
+);

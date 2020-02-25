@@ -1063,6 +1063,6 @@ const mapDispatchToProps = dispatch => ({
   disableAction: () => dispatch(disableAction())
 });
 
-export default translate("security_tab")(
+export default translate(["security_tab"])(
   connect(mapStateToProps, mapDispatchToProps)(createForm()(PasswordChange))
 );
