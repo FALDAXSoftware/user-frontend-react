@@ -2063,6 +2063,12 @@
       "message": "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters.",
       "message_type": "Web content",
       "context": "Password regex does not match error"
+    },
+    "password_no_space_error": {
+      "page": "Edit Profile > Security",
+      "message": "Your password must not contain space.",
+      "message_type": "Web content",
+      "context": "Password should not contain space error"
     }
   }
 }

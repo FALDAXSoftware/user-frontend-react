@@ -382,7 +382,7 @@ class DocUpload extends Component {
     } else {
       this.openNotificationWithIcon(
         "error",
-        "KYC",
+        "Error",
         "Please upload front and back of your document"
       );
     }

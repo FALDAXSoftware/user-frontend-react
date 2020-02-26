@@ -36,6 +36,9 @@ const UserName = styled.div`
   @media (max-width: 576px) {
     display: none;
   }
+  @media (min-width: 2000px) {
+    font-size: 20px;
+  }
 `;
 const Open = styled.span`
   display: none;
@@ -214,7 +217,8 @@ class Afterlog extends Component {
     const { t } = this.props;
     const DropdownItems = (
       <Menu className="fixed-drop">
-        <Menu.Item key="0">
+        {/* <Menu.Item key="0">User ID: {this.props.profileDetails.id}</Menu.Item> */}
+        <Menu.Item key="1">
           <a onClick={() => this.props.history.push("/editProfile")}>
             {" "}
             {t("navbar_sub_menu_profile.message")}{" "}

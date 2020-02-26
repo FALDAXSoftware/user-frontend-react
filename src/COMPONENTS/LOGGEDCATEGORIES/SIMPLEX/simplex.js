@@ -30,6 +30,7 @@ import {
   SimLastRow,
   SimTopHead
 } from "../../../STYLED-COMPONENTS/SIMPLEX/simplexStyle";
+import { LogoutUser } from "../../../ACTIONS/authActions";
 
 const API_URL = globalVariables.API_URL;
 const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
@@ -188,10 +189,15 @@ class Simplex extends React.Component {
           // console.log("responsedata 200", responseData.object.coinList);
           this.setState({
             currencyList: responseData.object.fiat,
-            cryptoList: responseData.object.coinList,
-            loader: false
+            cryptoList: responseData.object.coinList
           });
+        } else if (responseData.status === 403) {
+          let tempValue2 = {};
+          tempValue2["user_id"] = this.props.profileDetails.id;
+          tempValue2["jwt_token"] = this.props.isLoggedIn;
+          this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
         }
+        this.setState({ loader: false });
       })
       .catch(error => {});
   }
@@ -277,25 +283,53 @@ class Simplex extends React.Component {
     }
   }
   handleCurrencyPayChange(e) {
+    // console.log("^^^", e, e.target.value, this.state.currencyToPay);
     clearTimeout(this.timeout);
-
-    if (e.target.value === null || e.target.value === "") {
-      this.setState({
-        currencyToPay: e.target.value,
-        currencyToGet: ""
-      });
-    } else {
-      this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
-      this.setState({
-        currencyToPay: parseFloat(e.target.value)
-      });
+    if (this.state.loader) {
+      return false;
     }
+    this.setState(
+      {
+        currencyToPay: e.target.value
+      },
+      () => {
+        if (this.validator1.allValid()) {
+          this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
+        } else {
+          this.setState({
+            currencyToGet: ""
+          });
+          this.validator1.showMessages();
+          this.forceUpdate();
+        }
+      }
+    );
+
+    // clearTimeout(this.timeout);
+    // // debugger;
+    // if (this.state.loader) {
+    //   return false;
+    // }
+    // this.setState(
+    //   {
+    //     currencyToPay: e.target.value,
+    //     currencyToGet: ""
+    //   },
+    //   () => {
+    //     if (this.validator1.allValid()) {
+    //       console.log("^^^", e.target.value);
+    //       this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
+    //     } else {
+    //       // this.setState({
+    //       //   currencyToPay: parseFloat(e.target.value),
+    //       //   currencyToGet: ""
+    //       // });
+    //       this.validator1.showMessages();
+    //     }
+    //   }
+    // );
   }
-  // handleCurrencyGetChange(e) {
-  //   this.setState({
-  //     currencyToGet: parseFloat(e.target.value)
-  //   });
-  // }
+
   handleCurrencyChange(value) {
     this.setState(
       {
@@ -356,17 +390,22 @@ class Simplex extends React.Component {
                 <RowTitle>{t("you_pay_text.message")}</RowTitle>
                 <Col xs={12} sm={12} md={16}>
                   <ConversionInput
-                    type="number"
+                    type="text"
                     placeholder="0"
-                    step="0.01"
+                    // step="0.01"
                     value={this.state.currencyToPay}
-                    onChange={this.handleCurrencyPayChange}
+                    onChange={e => {
+                      this.handleCurrencyPayChange(e);
+                    }}
                   />
                   {this.validator1.message(
                     "amount pay",
                     this.state.currencyToPay,
-                    `required|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
-                    "text-danger-validation"
+                    `required|numeric|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
+                    "text-danger-validation",
+                    {
+                      numeric: "Enter only integer or a decimal number"
+                    }
                   )}
                 </Col>
                 <Col xs={12} sm={12} md={8} className="value-display">
@@ -479,7 +518,9 @@ class Simplex extends React.Component {
     );
   }
 }
-
+const mapDispatchToProps = dispatch => ({
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
 // export default Conversion;
 function mapStateToProps(state) {
   return {
@@ -497,5 +538,5 @@ function mapStateToProps(state) {
 }
 
 export default translate("conversion")(
-  connect(mapStateToProps)(withRouter(Simplex))
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(Simplex))
 );

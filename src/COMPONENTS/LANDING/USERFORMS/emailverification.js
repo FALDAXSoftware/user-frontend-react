@@ -98,9 +98,15 @@ const SubText = styled.span`
   font-size: 16px;
   font-family: "Open Sans";
   color: rgb(163, 163, 163);
+  > b {
+    color: #000;
+  }
 `;
 
 class EmailVerification extends Component {
+  // componentDidMount() {
+  //   // console.log("mount", this.props.location.state);
+  // }
   render() {
     return (
       <div>
@@ -123,7 +129,10 @@ class EmailVerification extends Component {
                 <WelcomeText>
                   To continue, please verify your new email address.
                 </WelcomeText>
-                <SubText>Please check your updated email address.</SubText>
+                <SubText>
+                  Please check your updated email address{" "}
+                  <b>{this.props.location.state}</b>.
+                </SubText>
               </RightWrap>
             </FormWrap>
           </ColRight>

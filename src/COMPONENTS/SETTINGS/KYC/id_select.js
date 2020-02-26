@@ -133,7 +133,7 @@ class IDselect extends Component {
     } else {
       this.openNotificationWithIcon(
         "error",
-        "KYC",
+        "Error",
         "Please select any one option."
       );
     }

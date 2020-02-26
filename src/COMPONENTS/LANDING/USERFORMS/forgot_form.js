@@ -77,9 +77,9 @@ const LoginHead = styled.div`
   padding-bottom: 10px;
   border-bottom: 3px solid #ced9e0;
   display: inline-block;
-  @media (max-width: 400px) {
-    border-bottom: none;
-  }
+  // @media (max-width: 400px) {
+  //   border-bottom: none;
+  // }
 `;
 const SubText = styled.span`
   font-size: 16px;
@@ -157,6 +157,10 @@ const BackLink = styled.a``;
 
 export const RightLogin = styled.div`
   width: 100%;
+  @media (min-width: 2000px) {
+    width: 60%;
+    margin: 0 auto;
+  }
 `;
 
 class ForgotForm extends Component {
@@ -331,7 +335,10 @@ class ForgotForm extends Component {
                   </ButtonLogin>
                   <LinkWrap>
                     <Icon className="material-icons">keyboard_backspace</Icon>
-                    <BackLink onClick={() => this.props.history.push("/login")}>
+                    <BackLink
+                      href="/login"
+                      // onClick={() => this.props.history.push("/login")}
+                    >
                       {" "}
                       Back To Login{" "}
                     </BackLink>

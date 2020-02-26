@@ -281,6 +281,9 @@ const NavLink = styled(Link)`
   &:hover {
     color: #1890ff !important;
   }
+  @media (min-width: 2000px) {
+    font-size: 20px;
+  }
 `;
 /* const LogNav = styled.span`
     color: ${props => props.theme.mode === "dark" ? "white" : "black"} !important;
@@ -363,14 +366,16 @@ class LoggedNavigation extends Component {
   }
   componentDidMount() {
     if (this.props.location) {
-      if (this.props.location.pathname.includes("trade")) {
-        this.setState({ selected: "2" });
-      } else if (this.props.location.pathname.includes("wallet")) {
+      if (this.props.location.pathname.includes("dashboard")) {
+        this.setState({ selected: "1" });
+      } else if (this.props.location.pathname.includes("trade")) {
         this.setState({ selected: "2" });
       } else if (this.props.location.pathname.includes("conversion")) {
-        this.setState({ selected: "1" });
-      } else if (this.props.location.pathname.includes("history")) {
         this.setState({ selected: "3" });
+      } else if (this.props.location.pathname.includes("wallet")) {
+        this.setState({ selected: "4" });
+      } else if (this.props.location.pathname.includes("history")) {
+        this.setState({ selected: "5" });
       }
     }
     if (this.props.theme !== undefined) {
@@ -508,24 +513,6 @@ class LoggedNavigation extends Component {
         It is called to check if trade can be accessed for KYC and eligible user.
     */
 
-  // tradeAccess() {
-  //   if (
-  //     this.props.profileDetails.is_allowed === true &&
-  //     this.props.profileDetails.is_kyc_done === 2
-  //   ) {
-  //     console.log("I am here", this.props.location.pathname);
-  //     // this.props.history.push('/trade');
-  //     if (this.props.location.pathname !== "/conversion")
-  //       this.props.history.push("/conversion");
-  //   } else {
-  //     if (
-  //       this.props.profileDetails.is_allowed === false &&
-  //       this.props.profileDetails.is_kyc_done !== 2
-  //     )
-  //       this.setState({ completeKYC: true });
-  //     else this.setState({ countryAccess: true });
-  //   }
-  // }
   panicStatus() {
     this.setState({
       loader: true
@@ -619,6 +606,28 @@ class LoggedNavigation extends Component {
       }
     }
   }
+  // tradeAccess() {
+  //   if (this.state.panic_status === true) {
+  //     this.setState({ panicEnabled: true });
+  //   } else {
+  //     if (
+  //       this.props.profileDetails.is_allowed === true &&
+  //       this.props.profileDetails.is_kyc_done === 2
+  //     ) {
+  //       if (this.props.location.pathname !== "/trade")
+  //         this.props.history.push("/trade");
+  //     } else {
+  //       if (
+  //         this.props.profileDetails.is_allowed === false &&
+  //         this.props.profileDetails.is_kyc_done !== 2
+  //       ) {
+  //         this.setState({ completeKYC: true });
+  //       } else {
+  //         this.setState({ countryAccess: true });
+  //       }
+  //     }
+  //   }
+  // }
   tokenAccess() {
     this.props.history.push("/token-coming-soon");
     // if (JSON.parse(this.props.profileDetails.is_panic_enabled) === true) {
@@ -730,6 +739,15 @@ class LoggedNavigation extends Component {
             {t("navbar_sub_menu_conversation_credit_card.message")}
           </a>
         </Menu.Item>
+        <Menu.Item key="2">
+          <a
+            onClick={() =>
+              this.props.history.push({ pathname: "/history", tradeType: "3" })
+            }
+          >
+            Trade
+          </a>
+        </Menu.Item>
       </Menu>
     );
     // const langItems = (
@@ -785,15 +803,20 @@ class LoggedNavigation extends Component {
           defaultSelectedKeys={["1"]}
           selectedKeys={this.state.selected}
         >
-          {/* <Menuitem key="1" onClick={this.showComing}><NavLink className="Nav_selected" to="/dashboard">DASHBOARD</NavLink></Menuitem> */}
-          {/* <Menuitem key="1" onClick={this.tradeAccess}>
-            CONVERSION
-          </Menuitem> */}
-          <Menuitem key="1">
+          <Menuitem key="1" onClick={this.showComing}>
+            <NavLink className="" to="/dashboard">
+              DASHBOARD
+            </NavLink>
+          </Menuitem>
+          <Menuitem key="2" onClick={this.tradeAccess}>
+            <NavLink className="" to="/trade">
+              Trade
+            </NavLink>
+          </Menuitem>
+          <Menuitem key="3">
             <DropDownDiv
-              className="Drop-main"
+              className="Drop-main "
               overlay={DropdownItems}
-              // trigger={["click"]}
               overlayClassName="custom_dropdown_menu"
             >
               <NavLink className="ant-dropdown-link" to="/conversion">
@@ -802,7 +825,6 @@ class LoggedNavigation extends Component {
                 {t("navbar_menu_conversion.message")}
               </NavLink>
             </DropDownDiv>
-            {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
           </Menuitem>
           {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
           <Menuitem key="2">
@@ -810,15 +832,14 @@ class LoggedNavigation extends Component {
               {t("navbar_menu_wallet.message")}
             </NavLink>
           </Menuitem>
-          <Menuitem key="3">
+          <Menuitem key="5">
             <DropDownDiv
               className="Drop-main"
               overlay={DropdownHistoryItems}
-              // trigger={["click"]}
               overlayClassName="custom_dropdown_menu"
             >
               <NavLink
-                className="ant-dropdown-link"
+                className="ant-dropdown-link "
                 to={{
                   pathname: "/history",
                   state: {
@@ -829,7 +850,6 @@ class LoggedNavigation extends Component {
                 {t("navbar_menu_history.message")}
               </NavLink>
             </DropDownDiv>
-            {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
           </Menuitem>
           <Menuitem key="4">
             <DropDownDiv
@@ -877,7 +897,10 @@ class LoggedNavigation extends Component {
                 {t("navbar_sub_menu_profile.message")}
               </Link>
             </LogoutStyle>
-            {/* <span> <Link to="/dashboard">DASHBOARD</Link></span> */}
+            <span>
+              {" "}
+              <Link to="/dashboard">Dashboard</Link>
+            </span>
             {/* <span> <Link to="/conversion">CONVERSION</Link></span> */}
             {/* <span onClick={this.tradeAccess}>CONVERSION</span> */}
             {/* <span>
@@ -908,15 +931,13 @@ class LoggedNavigation extends Component {
                 </SubMenuNav>
               </DropMenu>
             </a>
-            {/* <span onClick={this.tradeAccess}>TRADE</span> */}
+            <span onClick={this.tradeAccess}>
+              <Link to="/trade">Trade</Link>
+            </span>
             <span>
               {" "}
               <Link to="/wallet">{t("navbar_menu_wallet.message")}</Link>
             </span>
-            {/* <span>
-              {" "}
-              <Link to="/history">History</Link>
-            </span> */}
             <a className="DROPSUB">
               <DropMenu mode="inline">
                 <SubMenuNav key="mobsub2" title={"History"}>
@@ -954,6 +975,18 @@ class LoggedNavigation extends Component {
                       }
                     >
                       {t("navbar_sub_menu_conversation_credit_card.message")}
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="2">
+                    <a
+                      onClick={() =>
+                        this.props.history.push({
+                          pathname: "/history",
+                          tradeType: "3"
+                        })
+                      }
+                    >
+                      Trade
                     </a>
                   </Menu.Item>
                 </SubMenuNav>

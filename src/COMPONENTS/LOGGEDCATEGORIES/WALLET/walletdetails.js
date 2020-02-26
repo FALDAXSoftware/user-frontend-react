@@ -1,12 +1,15 @@
 /* Built-in Packages */
 import React, { Component } from "react";
 import "antd/dist/antd.css";
-import { Row, Col, /* Input, */ Select, notification } from "antd";
+import { Row, Col, /* Input, */ Select, notification, Tabs } from "antd";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import NumberFormat from "react-number-format";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
+import { walletBal, getAllCoins } from "ACTIONS/LOGGEDCAT/walletActions";
+// import { Tabs } from 'antd';
+
 /* import { DropdownButton, ButtonToolbar } from 'react-bootstrap'; */
 
 /* Styled-Components */
@@ -52,9 +55,17 @@ import LoggedNavigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import WalletPopup from "./walletpopup";
 import DetailsTable from "./detailstable";
+
 import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import WithdrawTable from "./withdrawtable";
+import { LogoutUser } from "../../../ACTIONS/authActions";
 
+const { TabPane } = Tabs;
+
+function callback(key) {
+  // console.log(key);
+}
 let { API_URL, _AMAZONBUCKET, WordpressSiteURL } = globalVariables;
 const Option = Select.Option;
 
@@ -106,8 +117,13 @@ class WalletDetails extends Component {
       balanceFlag: false,
       coinFee: [],
       fiatValue: "",
+      isERC: false,
       panic_status: false,
-      panicEnabled: false
+      panicEnabled: false,
+      withdrawRequests: [],
+      is_active_asset: "",
+      eth_for_erc_address: "",
+      eth_for_erc_status: ""
     };
     this.changeCoins = this.changeCoins.bind(this);
     this._walletCreate = this._walletCreate.bind(this);
@@ -116,7 +132,9 @@ class WalletDetails extends Component {
   }
 
   /* Life Cycle Methods */
-  componentDidMount() {
+  async componentDidMount() {
+    // console.log("^^^", this.props.walletDetails);
+    // this.props.walletBal(this.props.isLoggedIn);
     if (
       this.props.profileDetails &&
       this.props.profileDetails.is_terms_agreed == false
@@ -125,7 +143,8 @@ class WalletDetails extends Component {
     }
     var self = this;
     var total = 0;
-    this.panicStatus();
+    this.setState({ loader: true });
+    await this.panicStatus();
     if (this.props.walletDetails !== null) {
       var tableData = this.props.walletDetails.coins;
       if (tableData !== undefined) {
@@ -149,85 +168,108 @@ class WalletDetails extends Component {
     }
     if (this.props.location !== undefined) {
       if (this.props.location.search.includes("coinID")) {
-        this.walletDetailsApi();
+        // this.props.walletBal(this.props.isLoggedIn);
+        await this.walletDetailsApi();
       }
     }
+    this.setState({ loader: false });
   }
 
   /*
         Page:/wallet-details
         All wallet user details.
     */
-  walletDetailsApi() {
+  async walletDetailsApi() {
     var self = this;
     var coin_name = this.props.location.search.split("=");
     this.setState({ loader: true });
-    fetch(API_URL + "/wallet-details", {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      },
-      body: JSON.stringify({
-        coinReceive: coin_name[1]
+    let responseData = await (
+      await fetch(API_URL + "/wallet-details", {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn
+        },
+        body: JSON.stringify({
+          coinReceive: coin_name[1]
+        })
       })
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.status == 200) {
-          let transDetails = null;
-          let walletUserDetails = null;
-          // console.log(responseData)
-          if (Object.keys(responseData.walletTransData).length > 0) {
-            transDetails = responseData.walletTransData;
-          }
+    ).json();
+    // .then(response => response.json())
+    // .then(responseData => {
+    if (responseData.status == 200) {
+      let transDetails = null;
+      let walletUserDetails = null;
+      let withdrawDetails = null;
+      // console.log(responseData);
+      if (Object.keys(responseData.walletTransData).length > 0) {
+        transDetails = responseData.walletTransData;
+      }
 
-          if (Object.keys(responseData.walletUserData).length > 0) {
-            walletUserDetails = responseData.walletUserData;
-          }
-          // console.log("wallet details props walletDetails", walletUserDetails);
+      if (Object.keys(responseData.walletUserData).length > 0) {
+        walletUserDetails = responseData.walletUserData;
+      }
 
-          self.setState(
-            {
-              walletUserData: walletUserDetails,
-              currencyConv: responseData.currencyConversionData,
-              defaultCoin: walletUserDetails.coin_code,
-              min_limit: walletUserDetails.min_limit,
-              max_limit: walletUserDetails.max_limit,
-              walletDetails: transDetails,
-              loader: false,
-              coin_code: coin_name[1],
-              coinFee: responseData.default_send_Coin_fee,
-              fiatValue: responseData.currencyConversionData
-                ? responseData.currencyConversionData.quote.USD.price
-                : ""
-            },
-            () => {
-              // console.log("wallet details props -----", self.state);
-              // console.log(
-              //   "responseData.currencyConversionData.quote.USD.price===========",
-              //   this.state.coinFee
-              // );
-            }
-          );
-        } else {
-          this.openNotificationWithIcon(
-            "error",
-            responseData.status,
-            responseData.err
-          );
+      if (responseData.withdrawRequestData) {
+        if (Object.keys(responseData.withdrawRequestData).length > 0) {
+          withdrawDetails = responseData.withdrawRequestData;
         }
-      })
-      .catch(error => {
-        // console.log("wallet details props -----error ", error);
-        // this.openNotificationWithIcon(
-        //   "error",
-        //   "Error",
-        //   "Something went wrong!"
-        // );
-        this.setState({ loader: false });
-      });
+      }
+      this.props.walletBal(this.props.isLoggedIn);
+      this.props.getAllCoins(this.props.isLoggedIn);
+      // console.log("wallet details props walletDetails", walletUserDetails);
+      self.setState(
+        {
+          walletUserData: walletUserDetails,
+          currencyConv: responseData.currencyConversionData,
+          defaultCoin: walletUserDetails.coin_code,
+          min_limit: walletUserDetails.min_limit,
+          max_limit: walletUserDetails.max_limit,
+          walletDetails: transDetails,
+          withdrawRequests: withdrawDetails,
+          coin_code: coin_name[1],
+          isERC: walletUserDetails.iserc,
+          coinFee: responseData.default_send_Coin_fee,
+          is_active_asset: responseData.is_active,
+          eth_for_erc_status: responseData.eth_for_erc_status,
+          eth_for_erc_address: responseData.eth_for_erc_address,
+          fiatValue: responseData.currencyConversionData
+            ? responseData.currencyConversionData.quote.USD.price
+            : ""
+        },
+        () => {
+          // console.log("wallet details props -----", this.state.fiatValue);
+          // console.log(
+          //   "responseData.currencyConversionData.quote.USD.price===========",
+          //   responseData.currencyConversionData.quote.USD.price
+          // );
+        }
+      );
+    } else if (responseData.status == 403) {
+      this.openNotificationWithIcon("error", "Error", responseData.err);
+      let tempValue2 = {};
+      tempValue2["user_id"] = this.props.profileDetails.id;
+      tempValue2["jwt_token"] = this.props.isLoggedIn;
+      this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
+    } else {
+      this.openNotificationWithIcon(
+        "error",
+        responseData.status,
+        responseData.err
+      );
+    }
+    this.setState({ loader: false });
+    // })
+    // .catch(error => {
+    //   // console.log("wallet details props -----error ", error);
+    //   // this.openNotificationWithIcon(
+    //   //   "error",
+    //   //   "Error",
+    //   //   "Something went wrong!"
+    //   // );
+    //   this.setState({ loader: false });
+    // });
   }
 
   /* 
@@ -242,7 +284,6 @@ class WalletDetails extends Component {
       duration: 5
     });
   }
-
   /* 
         Page: /wallet
         This method is called when we close the modal.
@@ -257,35 +298,35 @@ class WalletDetails extends Component {
     });
   };
 
-  panicStatus() {
+  async panicStatus() {
     this.setState({
       loader: true
     });
-    fetch(API_URL + `/check-panic-status`, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.status === 200) {
-          // console.log("responsedata 200", responseData.data);
-          this.setState({
-            panic_status: JSON.parse(responseData.data),
-            // panic_status: true,
-            loader: false
-          });
-        } else {
-          this.setState({
-            panic_status: false,
-            loader: false
-          });
+    let responseData = await (
+      await fetch(API_URL + `/check-panic-status`, {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn
         }
       })
-      .catch(error => {});
+    ).json();
+    // .then(response => response.json())
+    // .then(responseData => {
+    if (responseData.status === 200) {
+      // console.log("responsedata 200", responseData.data);
+      this.setState({
+        panic_status: JSON.parse(responseData.data)
+        // panic_status: true,
+        // loader: false
+      });
+    } else {
+      this.setState({
+        panic_status: false
+        // loader: false
+      });
+    }
   }
 
   /* 
@@ -354,12 +395,17 @@ class WalletDetails extends Component {
   }
   render() {
     /* var self = this; */
+
     const {
       walletUserData,
       defaultCoin,
+      is_active_asset,
+      eth_for_erc_address,
+      eth_for_erc_status,
       currencyConv /*,  walletDetails */
     } = this.state;
     let FIAT = this.props.profileDetails.fiat;
+    // console.log("^", walletUserData);
     return (
       <ContactWrap>
         <LoggedNavigation />
@@ -379,23 +425,29 @@ class WalletDetails extends Component {
                               : "COIN"}
                           </span>
                         </MYWallet>
-                        {this.state.balanceFlag === false ? (
+                        {/* {this.props.walletDetails.activated_asset_lists &&
+                        this.state.balanceFlag === false ? (
                           <WalletCoin>
-                            {this.props.walletDetails !== null &&
-                            this.props.walletDetails !== undefined ? (
+                            {this.props.walletDetails.activated_asset_lists &&
+                            this.props.walletDetails.activated_asset_lists !==
+                              null &&
+                            this.props.walletDetails.activated_asset_lists !==
+                              undefined ? (
                               <Select
                                 onChange={this.changeCoins}
                                 value={defaultCoin}
                                 // style={{ width: "100%" }}
                                 // className = "select-display"
                               >
-                                {this.props.walletDetails.map(function(temp) {
-                                  return (
-                                    <Option value={temp.coin_code}>
-                                      {temp.coin}
-                                    </Option>
-                                  );
-                                })}
+                                {this.props.walletDetails.activated_asset_lists.map(
+                                  function(temp) {
+                                    return (
+                                      <Option value={temp.coin_code}>
+                                        {temp.coin}
+                                      </Option>
+                                    );
+                                  }
+                                )}
                               </Select>
                             ) : (
                               ""
@@ -403,24 +455,27 @@ class WalletDetails extends Component {
                           </WalletCoin>
                         ) : (
                           ""
-                        )}
-                        {this.state.balanceFlag === true ? (
+                        )} */}
+                        {this.state.balanceFlag === false && is_active_asset ? (
                           <WalletCoin>
-                            {this.props.nowalletBalance !== null &&
-                            this.props.nowalletBalance !== undefined ? (
+                            {this.props.walletDetails &&
+                            this.props.walletDetails.activated_asset_lists !==
+                              null &&
+                            this.props.walletDetails.activated_asset_lists !==
+                              undefined ? (
                               <Select
                                 onChange={this.changeCoins}
                                 value={defaultCoin}
-                                // style={{ width: "100%" }}
-                                // className="select-display"
                               >
-                                {this.props.nowalletBalance.map(function(temp) {
-                                  return (
-                                    <Option value={temp.coin}>
-                                      {temp.coin}
-                                    </Option>
-                                  );
-                                })}
+                                {this.props.walletDetails.activated_asset_lists.map(
+                                  function(temp) {
+                                    return (
+                                      <Option value={temp.coin_code}>
+                                        {temp.coin}
+                                      </Option>
+                                    );
+                                  }
+                                )}
                               </Select>
                             ) : (
                               ""
@@ -429,24 +484,67 @@ class WalletDetails extends Component {
                         ) : (
                           ""
                         )}
+                        {this.state.balanceFlag === false &&
+                        !is_active_asset ? (
+                          <WalletCoin>
+                            {this.props.walletDetails &&
+                            this.props.walletDetails.deactivated_asset_lists !==
+                              null &&
+                            this.props.walletDetails.deactivated_asset_lists !==
+                              undefined ? (
+                              <Select
+                                onChange={this.changeCoins}
+                                value={defaultCoin}
+                              >
+                                {this.props.walletDetails.deactivated_asset_lists.map(
+                                  function(temp) {
+                                    return (
+                                      <Option value={temp.coin_code}>
+                                        {temp.coin}
+                                      </Option>
+                                    );
+                                  }
+                                )}
+                              </Select>
+                            ) : (
+                              ""
+                            )}
+                          </WalletCoin>
+                        ) : (
+                          ""
+                        )}
+
+                        {/* {is_active_asset &&
+                        this.state.balanceFlag === true &&
+                        is_active_asset === false ? (
+                          <WalletCoin>
+                            {this.props.walletDetails
+                              .deactivated_asset_lists !== null &&
+                            this.props.walletDetails.deactivated_asset_lists !==
+                              undefined ? (
+                              <Select
+                                onChange={this.changeCoins}
+                                value={defaultCoin}
+                              >
+                                {this.props.walletDetails.deactivated_asset_lists.map(
+                                  function(temp) {
+                                    return (
+                                      <Option value={temp.coin_code}>
+                                        {temp.coin}
+                                      </Option>
+                                    );
+                                  }
+                                )}
+                              </Select>
+                            ) : (
+                              ""
+                            )}
+                          </WalletCoin>
+                        ) : (
+                          ""
+                        )} */}
                       </LeftHead>
                     </Col>
-                    {/* <Col xxl={12} xl={12} lg={12} sm={24}>
-                                    <RightHead>
-                                        <WallTotal>
-                                            <Tot>Total:</Tot>
-                                            <Money>${this.state.total !== null ? this.state.total : ""}</Money>
-                                            <Currency>USD</Currency>
-                                        </WallTotal>
-
-                                        <Select defaultValue="USD" style={{ width: 200, marginLeft: "auto" }}>
-                                            <Option value="USD">USD</Option>
-                                            <Option value="EUR">EUR</Option>
-                                            <Option value="INR">INR</Option>
-                                        </Select>
-
-                                    </RightHead>
-                                </Col> */}
                   </Row>
                 </HeaderWrap>
                 <DetailWrap>
@@ -530,24 +628,56 @@ class WalletDetails extends Component {
                         </PlacedDiv>
                       </Col>
                       <Col xxl={8} xl={12} lg={24} md={24}>
-                        <RightBit>
+                        {this.state.is_active_asset && (
+                          <RightBit>
+                            <DepButton name="SEND" onClick={this.showModal}>
+                              SEND
+                            </DepButton>
+                            <WithButton name="RECEIVE" onClick={this.showModal}>
+                              RECEIVE
+                            </WithButton>
+                          </RightBit>
+                        )}
+                        {/* <RightBit>
                           <DepButton name="SEND" onClick={this.showModal}>
                             SEND
                           </DepButton>
                           <WithButton name="RECEIVE" onClick={this.showModal}>
                             RECEIVE
                           </WithButton>
-                        </RightBit>
+                        </RightBit> */}
                       </Col>
                     </Row>
                   </RowWrap>
                 </DetailWrap>
-                <TransTable>
+                <Tabs defaultActiveKey="1" onChange={callback}>
+                  <TabPane tab="Transaction History" key="1">
+                    <TransTable>
+                      {/* <TransTitle>Transaction History</TransTitle> */}
+                      <CoinTable>
+                        <DetailsTable
+                          wallet={this.state.walletDetails}
+                          coin_code={this.state.coin_code}
+                          isERC={this.state.isERC}
+                        />
+                      </CoinTable>
+                    </TransTable>
+                  </TabPane>
+                  <TabPane tab="Withdrawal Requests" key="2">
+                    <TransTable>
+                      {/* <TransTitle>Transaction History</TransTitle> */}
+                      <CoinTable>
+                        <WithdrawTable wallet={this.state.withdrawRequests} />
+                      </CoinTable>
+                    </TransTable>
+                  </TabPane>
+                </Tabs>
+                {/* <TransTable>
                   <TransTitle>Transaction History</TransTitle>
                   <CoinTable>
                     <DetailsTable wallet={this.state.walletDetails} />
                   </CoinTable>
-                </TransTable>
+                </TransTable> */}
                 {this.state.withdraw === true ? (
                   <WalletPopup
                     coinFee={this.state.coinFee}
@@ -624,7 +754,7 @@ class WalletDetails extends Component {
                       ? walletUserData.coin_name
                       : ""}
                   </BTC>
-                  {walletUserData.iserc && (
+                  {walletUserData.iserc && !eth_for_erc_address && (
                     <PendingPara>
                       <p>
                         Your wallet is not created yet. Please create your
@@ -640,6 +770,26 @@ class WalletDetails extends Component {
                       </p>
                     </PendingPara>
                   )}
+                  {eth_for_erc_address && eth_for_erc_status && (
+                    <PendingPara>
+                      <p>
+                        Your wallet is not created yet. Please click on the
+                        button below to create your wallet for{" "}
+                        {walletUserData.coin_name}.
+                      </p>
+                      <WalletCreateButton onClick={this._walletCreate}>
+                        Create {walletUserData.coin_name} Wallet
+                      </WalletCreateButton>
+                      <p>
+                        If you still have any issue , please feel free to
+                        contact us{" "}
+                        <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                      </p>
+                    </PendingPara>
+                  )}
+                  {!eth_for_erc_status &&
+                    !eth_for_erc_address &&
+                    walletUserData.iserc && <Redirect to="/wallet"></Redirect>}
                   {!walletUserData.iserc && (
                     <PendingPara>
                       <p>
@@ -699,5 +849,11 @@ function mapStateToProps(state) {
         : ""
   };
 }
-
-export default connect(mapStateToProps)(WalletDetails);
+const mapDispatchToProps = dispatch => ({
+  walletBal: (isLoggedIn, currency) =>
+    dispatch(walletBal(isLoggedIn, currency)),
+  getAllCoins: (isLoggedIn, currency) =>
+    dispatch(getAllCoins(isLoggedIn, currency)),
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
+export default connect(mapStateToProps, mapDispatchToProps)(WalletDetails);

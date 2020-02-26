@@ -56,6 +56,7 @@ import {
   NewInput
 } from "../../SETTINGS/changePassword/change_email";
 import { parse } from "@fortawesome/fontawesome-svg-core";
+import { LogoutUser } from "../../../ACTIONS/authActions";
 
 const API_URL = globalVariables.API_URL;
 const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
@@ -116,12 +117,12 @@ class ConversionDetail extends React.Component {
       disabledButton: true
     };
     io = this.props.io;
-    this.t=this.props.t;
+    this.t = this.props.t;
     this.timeout = null;
     this.validator1 = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message:this.t("value_greater_than_0_error.message"),
+        message: this.t("value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -133,7 +134,7 @@ class ConversionDetail extends React.Component {
       },
       gtzerofiat: {
         // name the rule
-        message:this.t("value_greater_than_0_error.message"),
+        message: this.t("value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -144,8 +145,7 @@ class ConversionDetail extends React.Component {
         required: true // optional
       },
       decimalrestrict2: {
-        message:
-          this.t("2_decimal_error.message"),
+        message: this.t("2_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,2}$/;
           if (RE.test(val)) {
@@ -156,8 +156,7 @@ class ConversionDetail extends React.Component {
         }
       },
       decimalrestrict8: {
-        message:
-         this.t("8_decimal_error.message"),
+        message: this.t("8_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
@@ -185,7 +184,7 @@ class ConversionDetail extends React.Component {
     this.validator2 = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message:this.t("value_greater_than_0_error.message"),
+        message: this.t("value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -197,7 +196,7 @@ class ConversionDetail extends React.Component {
       },
       gtzerofiat: {
         // name the rule
-        message:this.t("value_greater_than_0_error.message"),
+        message: this.t("value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -208,8 +207,7 @@ class ConversionDetail extends React.Component {
         required: true // optional
       },
       decimalrestrict2: {
-        message:
-        this.t("2_decimal_error.message"),
+        message: this.t("2_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,2}$/;
           if (RE.test(val)) {
@@ -220,7 +218,7 @@ class ConversionDetail extends React.Component {
         }
       },
       decimalrestrict8: {
-        message:this.t("8_decimal_error.message"),
+        message: this.t("8_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
@@ -231,7 +229,9 @@ class ConversionDetail extends React.Component {
         }
       },
       minCurrValid: {
-        message: `${this.t("min_limit_error.message")} ${this.state.minCurrency}`,
+        message: `${this.t("min_limit_error.message")} ${
+          this.state.minCurrency
+        }`,
         rule: (val, params, validator) => {
           if (val >= this.state.minCurrency) {
             return true;
@@ -540,6 +540,13 @@ class ConversionDetail extends React.Component {
             } else {
               // console.log("no scenario");
             }
+          } else if (body.status === 403) {
+            // console.log(body.err);
+            this.openNotificationWithIcon("error", "Error", body.err);
+            let tempValue2 = {};
+            tempValue2["user_id"] = this.props.profileDetails.id;
+            tempValue2["jwt_token"] = this.props.isLoggedIn;
+            this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
           } else {
             // console.log(body.err);
             this.openNotificationWithIcon("error", "Error", body.err);
@@ -735,6 +742,13 @@ class ConversionDetail extends React.Component {
             } else {
               // console.log("no scenario");
             }
+          } else if (body.status === 403) {
+            // console.log(body.err);
+            this.openNotificationWithIcon("error", "Error", body.err);
+            let tempValue2 = {};
+            tempValue2["user_id"] = this.props.profileDetails.id;
+            tempValue2["jwt_token"] = this.props.isLoggedIn;
+            this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
           } else {
             // console.log(body.err);
             this.openNotificationWithIcon("error", "Error", body.err);
@@ -747,6 +761,9 @@ class ConversionDetail extends React.Component {
     }
   }
   sendCurrencyChange(e) {
+    if (this.state.loader) {
+      return false;
+    }
     this.setState({
       disabledButton: true
     });
@@ -796,6 +813,9 @@ class ConversionDetail extends React.Component {
     }
   }
   recieveCurrencyChange(e) {
+    if (this.state.loader) {
+      return false;
+    }
     this.setState({
       disabledButton: true
     });
@@ -854,6 +874,9 @@ class ConversionDetail extends React.Component {
     }
   }
   fiatJSTValueChange(e) {
+    if (this.state.loader) {
+      return false;
+    }
     this.setState({
       disabledButton: true
     });
@@ -1620,10 +1643,12 @@ class ConversionDetail extends React.Component {
       .then(responseData => {
         if (responseData.status == 200) {
           this.setState({
-            fiatCurrencyList: responseData.object.fiat,
-            loader: false
+            fiatCurrencyList: responseData.object.fiat
           });
         }
+        this.setState({
+          loader: false
+        });
       })
       .catch(error => {});
   }
@@ -1662,10 +1687,10 @@ class ConversionDetail extends React.Component {
             minCrypto: minLimit,
             minCurrency: minCurrLimit
           });
-          this.setState({
-            loader: false
-          });
         }
+        this.setState({
+          loader: false
+        });
       })
       .catch(error => {});
   }
@@ -2826,14 +2851,16 @@ class ConversionDetail extends React.Component {
                       </NewP>
                       {this.state.offerMsg === "" ? (
                         <ButtonDiv className="promo_check">
-                          <NewButton onClick={this.checkPromo}>{t("check_btn.message")}</NewButton>
+                          <NewButton onClick={this.checkPromo}>
+                            {t("check_btn.message")}
+                          </NewButton>
                         </ButtonDiv>
                       ) : (
                         <div>
                           {this.state.validPromo ? (
                             <ButtonDiv className="promo_check">
                               <NewButton onClick={this.applyPromo}>
-                               {t("apply_btn.message")}
+                                {t("apply_btn.message")}
                               </NewButton>
                             </ButtonDiv>
                           ) : (
@@ -2988,6 +3015,10 @@ class ConversionDetail extends React.Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => ({
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
+
 // export default Conversion;
 function mapStateToProps(state) {
   return {
@@ -3005,5 +3036,5 @@ function mapStateToProps(state) {
 }
 
 export default translate("conversion")(
-  connect(mapStateToProps)(withRouter(ConversionDetail))
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(ConversionDetail))
 );

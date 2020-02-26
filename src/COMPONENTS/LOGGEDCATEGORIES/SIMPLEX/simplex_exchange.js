@@ -310,21 +310,51 @@ class SimplexExchange extends React.Component {
   }
   handleCurrencyPayChange(e) {
     clearTimeout(this.timeout);
-
-    if (e.target.value === null || e.target.value === "") {
-      // this.timeout = setTimeout(this.calculateDigitalCurrency, 2000);
-      this.setState({
-        currencyToPay: e.target.value,
-        currencyToGet: "",
-        showTFAModal: false
-      });
-    } else {
-      this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
-      this.setState({
-        currencyToPay: parseFloat(e.target.value),
-        showTFAModal: false
-      });
+    if (this.state.loader) {
+      return false;
     }
+    this.setState(
+      {
+        currencyToPay: e.target.value
+      },
+      () => {
+        if (this.validator1.allValid()) {
+          this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
+        } else {
+          this.setState({
+            currencyToGet: ""
+          });
+          this.validator1.showMessages();
+          this.forceUpdate();
+        }
+      }
+    );
+    // if (this.state.loader) {
+    //   return false;
+    // }
+    // clearTimeout(this.timeout);
+    // if (this.validator1.allValid()) {
+    //   if (e.target.value === null || e.target.value === "") {
+    //     // this.timeout = setTimeout(this.calculateDigitalCurrency, 2000);
+    //     this.setState({
+    //       currencyToPay: e.target.value,
+    //       currencyToGet: "",
+    //       showTFAModal: false
+    //     });
+    //   } else {
+    //     this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
+    //     this.setState({
+    //       currencyToPay: parseFloat(e.target.value),
+    //       showTFAModal: false
+    //     });
+    //   }
+    // } else {
+    //   this.setState({
+    //     currencyToPay: e.target.value,
+    //     currencyToGet: ""
+    //   });
+    //   this.validator1.showMessages();
+    // }
   }
   // handleCurrencyGetChange(e) {
   //   this.setState({
@@ -529,11 +559,11 @@ class SimplexExchange extends React.Component {
         <ConversionContainer>
           <SimMainRow className="simplex_main_row">
             <SimLeftCol className="simplex_left_col_exchange" lg={12}>
-              <BorderRow>
+              <BorderRow className="simplex_row">
                 <RowTitle>You Pay</RowTitle>
                 <Col xs={12} sm={12} md={16}>
                   <ConversionInput
-                    type="number"
+                    type="text"
                     placeholder="0"
                     step="0.01"
                     value={this.state.currencyToPay}
@@ -542,8 +572,11 @@ class SimplexExchange extends React.Component {
                   {this.validator1.message(
                     "amount pay",
                     this.state.currencyToPay,
-                    `required|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
-                    "text-danger-validation"
+                    `required|numeric|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
+                    "text-danger-validation",
+                    {
+                      numeric: "Enter only integer or a decimal number"
+                    }
                   )}
                 </Col>
                 <Col xs={12} sm={12} md={8} className="cuurency-display">
@@ -574,7 +607,7 @@ class SimplexExchange extends React.Component {
                     )}
                 </Col>
               </BorderRow>
-              <BorderRow>
+              <BorderRow className="simplex_row">
                 <RowTitle>You Get</RowTitle>
                 <Col xs={12} sm={12} md={16}>
                   <ConversionInput
@@ -666,8 +699,8 @@ class SimplexExchange extends React.Component {
                         type="text"
                         placeholder="Address"
                         value={this.state.address}
-                        // readOnly
-                        onChange={this.handleAddressChange}
+                        readOnly
+                        // onChange={this.handleAddressChange}
                       />
                       {/* {this.validator1.message(
                         "address",

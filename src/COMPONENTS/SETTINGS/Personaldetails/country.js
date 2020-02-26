@@ -33,7 +33,11 @@ const SelectS = styled(Select)`
     width: 85%;
     margin: 0;
   }
-
+  & .ant-select-search--inline {
+    & .ant-select-search__field {
+      padding-left: 0 !important;
+    }
+  }
   & .Country_Select:first-child {
     margin-left: 0px !important;
   }
@@ -102,6 +106,14 @@ class CountryPick extends Component {
 
   /* Life-Cycle Methods */
   componentDidMount() {
+    var countrySelected = CountryData.getCountryById(this.props.country_id - 1);
+    let country_code = "";
+    let phoneCode = "";
+    if (countrySelected) {
+      country_code = countrySelected.sortname;
+      phoneCode = countrySelected.phonecode;
+    }
+    // console.log("^^^^country", this.props.country_id);
     this.setState({
       country_selected: this.props.country,
       state_selected: this.props.state,
@@ -109,12 +121,39 @@ class CountryPick extends Component {
     });
   }
   componentWillReceiveProps(newprops) {
-    if (this.props != newprops) {
+    // console.log("^^^^country", newprops.country_id);
+    if (this.props.country_id != newprops.country_id && newprops.country_id) {
       this.setState({
-        country_selected: newprops.country,
-        state_selected: newprops.state,
-        city_selected: newprops.city
+        country_json_id: newprops.country_id
       });
+    }
+    if (this.props != newprops) {
+      var countrySelected = CountryData.getCountryById(
+        this.state.country_json_id - 1
+      );
+      let country_code = "";
+      let phoneCode = "";
+      if (countrySelected) {
+        country_code = countrySelected.sortname;
+        phoneCode = countrySelected.phonecode;
+      }
+      this.setState(
+        {
+          country_selected: newprops.country,
+          state_selected: newprops.state,
+          city_selected: newprops.city,
+          country_code,
+          phoneCode
+        },
+        () => {
+          // console.log(
+          //   "^^^^data",
+          //   this.state.country_selected,
+          //   this.state.state_selected,
+          //   this.state.city_selected
+          // );
+        }
+      );
     }
   }
   /* 

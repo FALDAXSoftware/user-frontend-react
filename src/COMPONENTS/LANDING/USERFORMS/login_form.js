@@ -12,6 +12,7 @@ import { _EYE, _ACTIVEEYE } from "CONSTANTS/images";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { loginAction, Login, clearLogin } from "ACTIONS/authActions";
 import { globalVariables } from "Globals.js";
+import { Link } from "react-router-dom";
 
 let { API_URL, GOOGLE_SITE_KEY } = globalVariables;
 /* Global CONSTANTS */
@@ -72,7 +73,6 @@ const HorImg = styled.img`
 `;
 export const FormWrap = styled.div`
   padding-left: 100px;
-
   background-color: #f0f3f2;
   min-height: 100vh;
   @media (max-width: 991px) {
@@ -81,6 +81,9 @@ export const FormWrap = styled.div`
   }
   @media (max-width: 767px) {
     padding: 30px;
+  }
+  @media (min-width: 2000px) {
+    padding: 0;
   }
 `;
 const RightWrap = styled.div`
@@ -92,6 +95,12 @@ const RightWrap = styled.div`
   }
   @media (max-width: 991px) {
     height: auto;
+  }
+  @media (min-width: 2000px) {
+    > div.fadeInDown {
+      width: 60%;
+      margin: 0 auto;
+    }
   }
 `;
 const LoginHead = styled.div`
@@ -140,12 +149,18 @@ export const Username = styled.input`
   @media (max-width: 767px) {
     width: 85%;
   }
+  @media (min-width: 2000px) {
+    width: 95%;
+  }
 `;
 export const EmailReq = styled.div`
   display: none;
   color: red;
   font-size: 14px;
   width: 76%;
+  @media (min-width: 2000px) {
+    width: 95%;
+  }
 `;
 export const UserIconS = styled(Icon)`
   font-size: 19px;
@@ -182,6 +197,9 @@ export const PassReq = styled.label`
   font-size: 14px;
   width: 76%;
   font-weight: normal;
+  @media (min-width: 2000px) {
+    width: 95%;
+  }
 `;
 const OtpLabel = styled(EmailLabel)`
   width: 76%;
@@ -193,6 +211,9 @@ const CheckWrap = styled.div`
   @media (max-width: 767px) {
     width: 100%;
     text-align: left;
+  }
+  @media (min-width: 2000px) {
+    width: 95%;
   }
 `;
 const Forgot = styled.a`
@@ -392,8 +413,8 @@ class Login_Form extends Component {
         } else {
           this.openNotificationWithIcon(
             "error",
-            "Seems like a robot",
-            "Please try again after reloading the page."
+            "Error",
+            "The automated human verification system encountered an error. Please refresh the page and try again. We apologize for any inconvenience."
           );
         }
       } else {
@@ -842,7 +863,15 @@ class Login_Form extends Component {
 
   render() {
     if (this.props.isLoggedIn) {
-      this.props.history.push("/editProfile");
+      if (
+        this.props.location.state &&
+        this.props.location.state.from &&
+        this.props.location.state.from.pathname == "/open-ticket"
+      ) {
+        this.props.history.push(this.props.location.state.from.pathname);
+      } else {
+        this.props.history.push("/editProfile");
+      }
     }
     var me = this;
     let errors;
@@ -862,7 +891,7 @@ class Login_Form extends Component {
               </a>
             </LeftWrap>
           </ColLeft>
-          <ColRight sm={24} lg={12}>
+          <ColRight sm={24} lg={12} className="login_main_div">
             <FormWrap>
               <RightWrap>
                 <div className="wow fadeInDown">
@@ -975,9 +1004,7 @@ class Login_Form extends Component {
                   </form>
                   {!this.state.isOtpRequired && (
                     <CheckWrap>
-                      <Forgot onClick={this._goToForgotPwd}>
-                        Forgot Password?
-                      </Forgot>
+                      <Forgot href="/forgot-password">Forgot Password?</Forgot>
                     </CheckWrap>
                   )}
                   {this.state.isOtpRequired && !this.state.showBackUpInput ? (
@@ -1057,7 +1084,10 @@ class Login_Form extends Component {
                   </ButtonLogin>
                   <Sign>
                     No account?{" "}
-                    <Signa onClick={() => this.dispModal("signup")}>
+                    <Signa
+                      href="/signup"
+                      // onClick={() => this.dispModal("signup")}
+                    >
                       Sign Up
                     </Signa>
                   </Sign>
