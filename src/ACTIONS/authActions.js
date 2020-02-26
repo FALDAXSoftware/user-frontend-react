@@ -102,6 +102,14 @@ export const loginAction = data => dispatch => {
   });
 };
 
+// Language change action
+export const langAction = data => dispatch => {
+  dispatch({
+    type: "LANG_DATA",
+    payload: data
+  });
+};
+
 /*  
     Action : This action is called to clear login data.
 */

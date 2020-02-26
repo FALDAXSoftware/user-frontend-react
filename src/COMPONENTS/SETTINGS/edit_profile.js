@@ -62,36 +62,18 @@ class Editprofile extends Component {
       user2fastatus: "",
       totalUSDOfWallet: "",
       walletCoins: ""
-      // agreeTermsShow: false
     };
     this.callback = this.callback.bind(this);
     this.getWalletSummary = this.getWalletSummary.bind(this);
   }
   callback(key) {
-    // console.log("Key", key);
-    // console.log("sdjkfhksjhdfkhlksdfhlkasdhflkjasdhfkjh");
     this.setState({
       activeKey: key
     });
   }
   componentDidMount() {
-    // console.log("adhssskfjsdfjgsgjh========", this.props.location.state.tabNum);
-    // if (this.props.location.state.tabNum === undefined) {
-    //   this.setState({
-    //     activeKey: "1"
-    //   });
-    // } else {
-    //   this.setState({
-    //     activeKey: this.props.location.state.tabNum
-    //   });
-    // }
     this.getWalletSummary();
   }
-  // comingCancel = e => {
-  //   this.setState({
-  //     agreeTermsShow: false
-  //   });
-  // };
   getWalletSummary() {
     this.setState({
       loader: true
@@ -119,31 +101,23 @@ class Editprofile extends Component {
           //   this.state.walletCoins
           // );
         } else if (responseData.status == 200) {
-          // console.log("responsedata summary=-----------", responseData.data);
           this.setState({
             walletCoins: null,
             user2fastatus: responseData.user2fastatus,
             loader: false
           });
-          // console.log(
-          //   "responsedata walletCoins=-----------",
-          //   this.state.walletCoins
-          // );
         }
       })
       .catch(error => {});
   }
   render() {
-    // console.log("defaultActiveKey:", this.props.activeKey);
     return (
       <div>
-        {/* <LoggedNavigation /> */}
         <Navigation />
         <ProfileWrapper>
           <ProfileDiv>
             <TabsStyle
               defaultActiveKey={this.state.activeKey}
-              // onChange={this.handleChange}
               onChange={this.callback}
               className="profile-tabs"
             >
@@ -162,8 +136,6 @@ class Editprofile extends Component {
                 />
               </TabPane>
               <TabPane tab="Identity Verification" key="4">
-                {/* <KYC history={this.props.history} tier1_upgrade={true} /> */}
-                {/* <Tier {...this.props} /> */}
                 <TierOne />
               </TabPane>
               <TabPane tab="Referral" key="5">
@@ -172,12 +144,7 @@ class Editprofile extends Component {
               <TabPane tab="Support" key="6">
                 <SupportHub {...this.props} />
               </TabPane>
-              {/* <TabPane tab="Payment Methods" key="7"><Paymethods /></TabPane> */}
             </TabsStyle>
-            {/* <AgreeTerms
-              comingCancel={e => this.comingCancel(e)}
-              visible={this.state.agreeTermsShow}
-            /> */}
           </ProfileDiv>
         </ProfileWrapper>
         <FooterHome />
@@ -191,7 +158,6 @@ function mapStateToProps(state) {
     isLoggedIn: state.simpleReducer.isLoggedIn,
     theme:
       state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
-    /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }
 

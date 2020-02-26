@@ -96,6 +96,7 @@ class DetailsTable extends React.Component {
     }
   }
   componentDidMount() {
+    // console.log(this.props.wallet);
     if (this.props.wallet !== null)
       if (this.props.wallet.length > 0)
         this.setState({
@@ -114,6 +115,8 @@ class DetailsTable extends React.Component {
 
   render() {
     var me = this;
+    // console.log(this.props.coin_code);
+
     return (
       <OrderWrapRide>
         <OTwrap>
@@ -130,6 +133,7 @@ class DetailsTable extends React.Component {
                   <SubHead>FALDAX FEES</SubHead>
                   <SubHead>NETWORK FEES</SubHead>
                   <SubHead>TOTAL AMOUNT</SubHead>
+                  <SubHead>TRANSACTION HASH</SubHead>
                   {/* <Sub_head>USD
                                 <Dropdown overlay={menu} trigger={['click']}>
                                 <a className="ant-dropdown-link"  verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
@@ -142,7 +146,7 @@ class DetailsTable extends React.Component {
         </OTwrap>
         <OTwrap>
           <ScrollTableContent>
-            <Scrollbars className="scrollbar">
+            <Scrollbars className="scrollbar scrollbarwallet">
               <TableContentRide cellpadding="10px" cellspacing="0" border="0">
                 <tbody>
                   {this.state.walletDetails !== null ? (
@@ -157,7 +161,50 @@ class DetailsTable extends React.Component {
                           .local()
                           .format("DD/MM/YYYY, LTS");
                         var details = me.state.walletDetails;
-
+                        let url;
+                        if (me.props.coin_code != undefined) {
+                          switch (me.props.coin_code) {
+                            case "btc":
+                              url =
+                                "https://blockchair.com/bitcoin/transaction/" +
+                                details[index].transaction_id;
+                              break;
+                            case "xrp":
+                              url =
+                                "https://blockchair.com/ripple/transaction/" +
+                                details[index].transaction_id;
+                              break;
+                            case "ltc":
+                              url =
+                                "https://blockchair.com/litecoin/transaction/" +
+                                details[index].transaction_id;
+                              break;
+                            case "bch":
+                              url =
+                                "https://blockchair.com/bitcoin-cash/transaction/" +
+                                details[index].transaction_id;
+                              break;
+                            case "eth":
+                              url =
+                                "https://etherscan.io/tx/" +
+                                details[index].transaction_id;
+                              break;
+                            case "SUSU":
+                              url =
+                                "https://explore.susukino.com/tx/" +
+                                details[index].transaction_id;
+                              break;
+                            default:
+                              url = "";
+                              break;
+                          }
+                        }
+                        // console.log("^^^erc", me.props.isERC);
+                        if (me.props.isERC) {
+                          url =
+                            "https://etherscan.io/token/" +
+                            details[index].transaction_id;
+                        }
                         return (
                           <Col1 wallet>
                             <td>
@@ -207,6 +254,11 @@ class DetailsTable extends React.Component {
                             </td>
                             <td>
                               {parseFloat(details[index].total).toFixed(8)}
+                            </td>
+                            <td>
+                              <a target="_blank" href={url}>
+                                {details[index].transaction_id}
+                              </a>
                             </td>
                             {/* <td>
 

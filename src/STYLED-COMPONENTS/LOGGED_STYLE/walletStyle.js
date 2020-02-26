@@ -105,6 +105,7 @@ export const Head = styled.tr`
   padding-left: 45px;
   height: 40px;
   > th {
+    text-align: left !important;
     vertical-align: middle !important;
     padding-left: ${props => (props.wallet ? "" : "45px !important")};
     text-align: ${props => (props.wallet ? "center" : "")};
@@ -128,6 +129,7 @@ export const Head = styled.tr`
 `;
 export const SubHead = styled.th`
   border-bottom: 0px;
+  text-align: left;
   > a.ant-dropdown-link {
     vertical-align: middle;
   }
@@ -138,6 +140,15 @@ export const Col1 = styled.tr`
     td:first-child {
       text-align: left;
     }
+    > td {
+      > a {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+  &.tableofcoinupper.disabled {
+    background: #e0e0e0;
   }
   & td {
     > span {
@@ -206,6 +217,10 @@ export const BitPrice = styled.p`
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
   font-weight: 600;
   text-transform: uppercase;
+  > span {
+    display: inherit;
+    word-break: break-all;
+  }
   @media (max-width: 992px) {
     font-size: 14px;
   }

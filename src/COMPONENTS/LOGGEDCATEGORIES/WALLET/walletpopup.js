@@ -15,6 +15,7 @@ import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import TFAModal from "SHARED-COMPONENTS/TFAModal";
 import { parse } from "@fortawesome/fontawesome-svg-core";
+import NumberFormat from "react-number-format";
 
 let { API_URL } = globalVariables;
 const WalletModal = styled(Modal)`
@@ -38,6 +39,9 @@ const WalletModal = styled(Modal)`
   }
   @media (max-width: 575px) {
     width: 300px !important;
+  }
+  & .note_text {
+    color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
   }
 `;
 const Label = styled.label`
@@ -92,9 +96,11 @@ const Fee = styled.span`
     display: flex;
     width: 100%;
     > span {
+      text-transform: uppercase;
       > b {
         min-width: 150px;
         display: inline-block;
+        text-transform: none;
       }
     }
   }
@@ -151,6 +157,24 @@ const TotDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  &.available_balance {
+    margin: 10px 0 0 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 16px;
+    color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+    > label {
+      display: inherit;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+    > span {
+      margin: 0 0 0 10px;
+      text-transform: uppercase;
+    }
+  }
 `;
 const WithrawMsg = styled.div`
   font-size: 20px;
@@ -214,6 +238,7 @@ class WalletPopup extends Component {
       loader: false,
       showTFAModal: false,
       withdrawFlag: false,
+      availableBalance: "",
       withdrawMsg:
         "Your Withdrawal request may take 24-28 hours to process due to its size. Do you wish to proceed?"
     };
@@ -244,7 +269,7 @@ class WalletPopup extends Component {
         }
       },
       minLimitCheck: {
-        message: `Amount must be greater than ${this.props.coin_min_limit}`,
+        message: `Amount must be greater than or equal to ${this.props.coin_min_limit}.`,
         rule: (val, params, validator) => {
           // console.log("this is val?????", val);
           if (val >= this.props.coin_min_limit) {
@@ -258,7 +283,7 @@ class WalletPopup extends Component {
         required: true // optional
       },
       maxLimitCheck: {
-        message: `Amount must be less than ${this.props.coin_max_limit}`,
+        message: `Amount must be less than or equal to ${this.props.coin_max_limit}.`,
         rule: (val, params, validator) => {
           // console.log("this is val?????", val);
           if (val <= this.props.coin_max_limit) {
@@ -270,6 +295,17 @@ class WalletPopup extends Component {
           }
         },
         required: true // optional
+      },
+      allowSpecial: {
+        message: "Please enter valid destination address.",
+        rule: val => {
+          var RE = /^[A-Za-z0-9_/?=]*$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     });
     this.sendChange = this.sendChange.bind(this);
@@ -280,12 +316,14 @@ class WalletPopup extends Component {
     this.openNotificationWithIcon = this.openNotificationWithIcon.bind(this);
     this.sendAddressChange = this.sendAddressChange.bind(this);
     this.getFeeValues = this.getFeeValues.bind(this);
+    this.getAvailableBalance = this.getAvailableBalance.bind(this);
   }
 
   /* Life Cycle Methods */
 
   componentDidMount() {
     // console.log(this.props);
+    this.getAvailableBalance();
     if (this.props.title === "RECEIVE") {
       this.setState({ loader: true });
       // console.log(this.props.coin_code)
@@ -312,9 +350,40 @@ class WalletPopup extends Component {
     if (this.props.fiatValue) {
       this.setState({
         fiatValue: 0,
-        singlefiatValue: this.props.fiatValue.toFixed(2)
+        singlefiatValue: this.props.fiatValue.toFixed(8)
       });
     }
+  }
+
+  // Get Availabel balance API
+  getAvailableBalance() {
+    this.setState({
+      loader: true
+    });
+    let coin = this.props.coin_code;
+    fetch(`${API_URL}/users/get-available-balance?coin=${coin}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn
+      }
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status === 200) {
+          // console.log("^^^", responseData);
+          this.setState({
+            availableBalance: parseFloat(responseData.data).toFixed(8)
+          });
+        } else {
+          this.openNotificationWithIcon("error", "Error", responseData.error);
+        }
+        this.setState({
+          loader: false
+        });
+      })
+      .catch(error => {});
   }
 
   /* 
@@ -322,7 +391,8 @@ class WalletPopup extends Component {
         This method is called when we have to copy address to clipboard.
     */
 
-  SearchText() {
+  SearchText(e, value) {
+    // e.stopPropagation();
     // Copy to clipboard example
     document.querySelectorAll(
       ".ant-input-search-button"
@@ -339,6 +409,7 @@ class WalletPopup extends Component {
       "Copied",
       "Address Copied to Clipboard"
     );
+    this.comingCancel();
   }
 
   /* 
@@ -416,6 +487,12 @@ class WalletPopup extends Component {
               "Successfully Sent",
               responseData.message
             );
+            // setTimeout(
+            //   function() {
+            //     this.props.walletDetailsApi();
+            //   }.bind(this),
+            //   10000
+            // );
             this.props.walletDetailsApi();
             this.comingCancel();
           } else if (responseData.status === 201) {
@@ -481,12 +558,21 @@ class WalletPopup extends Component {
     // fields["subtotal"] = subtotal;
     this.setState({ sendFields: fields, showTFAModal: false }, () => {
       if (this.state.sendFields.amount && this.validator.allValid()) {
-        this.timeout = setTimeout(this.getFeeValues, 1000);
+        this.timeout = setTimeout(() => {
+          this.getFeeValues();
+          this.getAvailableBalance();
+        }, 1500);
+        // this.getAvailableBalance();
       } else {
-        this.validator.showMessages();
-        this.setState({
-          disabled: true
-        });
+        if (
+          this.state.sendFields.amount &&
+          this.state.sendFields.destination_address
+        ) {
+          this.validator.showMessages();
+          this.setState({
+            disabled: true
+          });
+        }
       }
     });
   }
@@ -498,7 +584,7 @@ class WalletPopup extends Component {
     var fields = this.state.sendFields;
     var values = {
       coin: this.props.coin_code,
-      amount: this.state.sendFields.amount,
+      amount: parseFloat(this.state.sendFields.amount),
       address: this.state.sendFields.destination_address
     };
     fetch(`${API_URL}/wallet/get-network-fee`, {
@@ -536,6 +622,9 @@ class WalletPopup extends Component {
       .catch(error => {});
   }
   sendChange(e) {
+    if (this.state.loader) {
+      return false;
+    }
     clearTimeout(this.timeout);
     var fields = this.state.sendFields;
     var name = e.target.name;
@@ -568,7 +657,6 @@ class WalletPopup extends Component {
       let faldaxFee = parseFloat(
         e.target.value * (this.props.coinFee / 100)
       ).toFixed(8);
-      // console.log(fiatValueamount);
       fields["subtotal"] = subtotal;
       this.setState(
         {
@@ -582,40 +670,32 @@ class WalletPopup extends Component {
             this.state.sendFields.destination_address &&
             this.validator.allValid()
           ) {
-            this.timeout = setTimeout(this.getFeeValues, 1000);
-          } else {
+            this.timeout = setTimeout(() => {
+              this.getFeeValues();
+              this.getAvailableBalance();
+            }, 1500);
+            // this.getAvailableBalance();
+          } else if (
+            this.state.sendFields.amount &&
+            this.state.sendFields.destination_address
+          ) {
             this.validator.showMessages();
             this.setState({
               disabled: true
             });
           }
-          // this.timeout = setTimeout(this.getFeeValues, 1000);
         }
       );
     }
-    // let subtotal = parseFloat(
-    //   parseFloat(fields[name]) +
-    //     parseFloat(fields[name]) * (this.props.coinFee / 100)
-    // ).toFixed(8);
-    // let fiatValueamount = parseFloat(
-    //   parseFloat(this.state.singlefiatValue) * parseFloat(e.target.value)
-    // ).toFixed(2);
-    // fields["subtotal"] = subtotal;
-    // this.setState({
-    //   sendFields: fields,
-    //   fiatValue: fiatValueamount
-    // });
   }
 
   /* After confirming Button*/
-
   confirmFunc() {
     this.sendSubmit(true);
     this.handleComing();
   }
   /* After Cancel Button*/
   cancelFunc() {
-    // console.log(this)
     let _this = this;
     _this.openNotificationWithIcon(
       "success",
@@ -627,8 +707,6 @@ class WalletPopup extends Component {
 
   render() {
     let amount = Number(this.state.sendFields.amount);
-    // let subtotal = amount + amount * (this.props.coinFee / 100);
-
     return (
       <div>
         {(this.props.title === "RECEIVE" &&
@@ -638,7 +716,9 @@ class WalletPopup extends Component {
           <WalletModal
             title={
               <TitleDiv>
-                <Title>{this.props.title}</Title>
+                <Title>
+                  {this.props.title} {this.props.coin_code}
+                </Title>
               </TitleDiv>
             }
             visible={this.props.visible}
@@ -657,11 +737,12 @@ class WalletPopup extends Component {
                     <CopyAddress>
                       <CopyToClipboardCSS
                         text={this.state.receive.receive_address}
-                        onCopy={() =>
+                        onCopy={() => {
                           this.setState({ copied: true }, () =>
-                            this.comingCancel()
-                          )
-                        }
+                            // this.comingCancel()
+                            {}
+                          );
+                        }}
                       >
                         <AddressDiv>
                           <RefInput
@@ -670,7 +751,7 @@ class WalletPopup extends Component {
                             placeholder="Referral"
                             enterButton="Copy"
                             size="large"
-                            onSearch={value => this.SearchText()}
+                            onSearch={(e, value) => this.SearchText(e, value)}
                           />
                         </AddressDiv>
                       </CopyToClipboardCSS>
@@ -710,13 +791,13 @@ class WalletPopup extends Component {
                     value={this.state.sendFields.destination_address}
                     name="destination_address"
                     onChange={this.sendAddressChange}
-                    placeholder="37NFX8KWAQbaodUG6pE1hNUH1dXgkpzbyZ"
+                    placeholder="Enter destination address"
                   />
                   {/* <Scan>Scan QR</Scan> */}
                   {this.validator.message(
                     "destination_address",
                     this.state.sendFields.destination_address,
-                    "required|alpha_num|min:15|max:120",
+                    "required|min:15|max:120|allowSpecial",
                     "text-danger-validation"
                   )}
                 </Rediv>
@@ -748,7 +829,19 @@ class WalletPopup extends Component {
                                         </DropdownButtonS>
                                     </ButtonToolbarS> */}
                   {/* </Sec_wrap> */}
-                  {/* {console.log(this.props.coinFee)} */}
+                  {/* {console.log("^^^", this.state.faldaxFee)} */}
+                  <TotDiv className="available_balance">
+                    <label>Available Balance to Send: </label>
+                    <span>
+                      <NumberFormat
+                        value={this.state.availableBalance}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                      />{" "}
+                      {this.props.coin_code}
+                      {/* {this.state.availableBalance} {this.props.coin_code} */}
+                    </span>
+                  </TotDiv>
                   <TotDiv>
                     <Fee>
                       <span>
@@ -794,8 +887,7 @@ class WalletPopup extends Component {
                         {this.props.coin_code}
                       </span> */}
                       <span>
-                        <b>Fiat Value: </b>
-                        {this.state.fiatValue} USD
+                        <b>Fiat Value: </b>$ {this.state.fiatValue}
                       </span>
                     </TotPay>
                   </TotDiv>
@@ -808,10 +900,12 @@ class WalletPopup extends Component {
                 </SendWrap>
               </ModalWrap>
             )}
-            <span>
-              *Network Fee amount could change during actual transaction
-              depending on the market conditions.
-            </span>
+            {this.props.title === "SEND" && (
+              <span className="note_text">
+                Note*: Network Fee amount could change during actual transaction
+                depending on the market conditions.
+              </span>
+            )}
           </WalletModal>
         ) : (
           ""

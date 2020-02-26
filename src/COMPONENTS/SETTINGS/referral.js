@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { globalVariables } from "Globals.js";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import { LogoutUser } from "../../ACTIONS/authActions";
 
 let { API_URL, _AMAZONBUCKET, TRADE_URL } = globalVariables;
 /* CONSTANTS */
@@ -77,7 +78,9 @@ const Ref_div = styled.div`
   margin-top: 40px;
   border-radius: 10px;
   height: auto;
-
+  @media (min-width: 2500px) {
+    width: 40%;
+  }
   & .coin-value {
     width: 200px !important;
   }
@@ -222,9 +225,12 @@ const Ref_acc = styled.div`
   border-radius: 10px;
   height: auto;
   margin-bottom: 65px;
-  overflow: scroll;
+  overflow: auto;
   > div {
     border-radius: 10px;
+  }
+  @media (min-width: 2500px) {
+    width: 40%;
   }
 `;
 
@@ -383,6 +389,12 @@ class Referral extends Component {
             leftOutRef: sum2.toFixed(8),
             loader: false
           });
+        } else if (responseData.status == 403) {
+          this.openNotificationWithIcon("error", "Error", responseData.err);
+          let tempValue2 = {};
+          tempValue2["user_id"] = this.props.profileDetails.id;
+          tempValue2["jwt_token"] = this.props.isLoggedIn;
+          this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
         }
       })
       .catch(error => {
@@ -592,6 +604,10 @@ class Referral extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
+
 function mapStateToProps(state) {
   return {
     isLoggedIn: state.simpleReducer.isLoggedIn,
@@ -602,4 +618,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Referral);
+export default connect(mapStateToProps, mapDispatchToProps)(Referral);

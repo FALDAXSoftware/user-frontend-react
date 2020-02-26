@@ -130,6 +130,8 @@ class Acc_settings extends Component {
       isDateValid: false,
       validDays: "",
       user2fastatus: this.props.profileDetails.is_twofactor,
+      selectAllText: false,
+      selectAllEmail: false,
       // totalUSDOfWallet: this.props.totalUSDOfWallet,
       // showDeactivateModal: false,
       // walletCoins: this.props.walletCoins,
@@ -140,97 +142,6 @@ class Acc_settings extends Component {
       },
       isWhitelistIp: false
     };
-
-    this.columns_text = [
-      ,
-      {
-        title: "Notifications",
-        dataIndex: "title",
-        className: "column-Noti",
-        key: "title"
-      },
-      {
-        title: "Text",
-        className: "column-Text",
-        dataIndex: "text",
-        key: "text",
-        render: (value, record) => {
-          // console.log(record, record.id);
-          return (
-            <Checkbox
-              defaultChecked={JSON.parse(value)}
-              key={record.id}
-              onChange={e => this.checkBoxChange("text", e, record)}
-            ></Checkbox>
-          );
-        }
-      },
-      {
-        title: "Email",
-        className: "column-Email",
-        dataIndex: "email",
-        key: "email",
-        render: (value, record) => {
-          // console.log(record, record.id);
-          return (
-            <Checkbox
-              defaultChecked={JSON.parse(value)}
-              key={record.id}
-              onChange={e => this.checkBoxChange("email", e, record)}
-            ></Checkbox>
-          );
-        }
-      }
-    ];
-    this.columnsIP = [
-      {
-        title: "IP Whitelist",
-        dataIndex: "ip",
-        key: "ip"
-      },
-      {
-        title: "Till Date",
-        dataIndex: "expire_time",
-        key: "day",
-        render: src => {
-          let date_format = this.props.profileDetails.date_format
-            ? this.props.profileDetails.date_format
-            : "DD/MM/YYYY";
-          // console.log(src);
-          return (
-            <span>
-              {src !== ""
-                ? moment
-                    .utc(src)
-                    .local()
-                    .format(`${date_format}, HH:mm:ss`)
-                : "-"}
-            </span>
-          );
-        }
-      },
-      {
-        title: "Action",
-        key: "action",
-        render: src => {
-          // console.log(src.is_permanent);
-          return (
-            <div>
-              {src.is_permanent == true ? (
-                "-"
-              ) : (
-                <div
-                  onClick={this.deleteIP.bind(this, src)}
-                  // style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
-                >
-                  Delete
-                </div>
-              )}
-            </div>
-          );
-        }
-      }
-    ];
 
     this.validator = new SimpleReactValidator({
       ipvalid: {
@@ -319,7 +230,7 @@ class Acc_settings extends Component {
 
   /* Life Cycle Methods */
 
-  componentWillReceiveProps(props, newProps) {
+  componentWillReceiveProps(newProps) {
     /*  console.log(this.props)
          if(this.props.theme!==undefined)
          {
@@ -333,6 +244,13 @@ class Acc_settings extends Component {
          } */
     this.setState({ user2fastatus: this.props.profileDetails.is_twofactor });
     // console.log("walletCoins-------------------", this.state.user2fastatus);
+    if (
+      newProps.profileDetails.date_format !==
+        this.props.profileDetails.date_format &&
+      newProps.profileDetails.date_format
+    ) {
+      this.getAllLoginHistory(1);
+    }
   }
   componentWillMount() {
     this.getWalletSummary();
@@ -399,20 +317,46 @@ class Acc_settings extends Component {
     // rerender to hide messages for the first time
   }
   checkBoxChange(key, e, record) {
-    // console.log(key, e, record);
     const { data_noti } = this.state;
-    var tempData = data_noti;
-    tempData.map(function(data, index) {
-      if (data.id == record.id) {
-        // console.log(tempData[key]);
-        if (key == "text") tempData[index].text = e.target.checked;
-        else tempData[index].email = e.target.checked;
+    if (key == "allEmail") {
+      let newData = data_noti.map(ele => {
+        ele["email"] = e.target.checked;
+        return ele;
+      });
+      this.setState({ selectAllEmail: e.target.checked, data_noti: newData });
+    } else if (key == "allText") {
+      let newData = data_noti.map(ele => {
+        ele["text"] = e.target.checked;
+        return ele;
+      });
+      this.setState({ selectAllText: e.target.checked, data_noti: newData });
+    } else {
+      let index = data_noti.indexOf(record);
+      if (index != -1) {
+        data_noti[index][key] = e.target.checked;
       }
-    });
-    // console.log("------>>>>>", tempData);
-    this.setState({ data_noti: tempData });
+      let [selectAllEmail, selectAllText] = this.getEmailAndText(data_noti);
+      this.setState({
+        data_noti,
+        selectAllEmail: selectAllEmail,
+        selectAllText: selectAllText
+      });
+    }
   }
 
+  getEmailAndText = data_noti => {
+    let [selectedAllText, selectedAllEmail] = [true, true];
+    data_noti.map(ele => {
+      if (ele["text"] == false || ele["text"] == "false") {
+        selectedAllText = false;
+      }
+      if (ele["email"] == false || ele["email"] == "false") {
+        selectedAllEmail = false;
+      }
+      return ele;
+    });
+    return [selectedAllEmail, selectedAllText];
+  };
   getNotificationList() {
     fetch(API_URL + `/get-notification-list`, {
       method: "get",
@@ -425,7 +369,15 @@ class Acc_settings extends Component {
         // console.log("Did IP : ", responseData);
         if (responseData.status == 200) {
           let b = JSON.parse(JSON.stringify(responseData.data));
-          this.setState({ data_noti: responseData.data, savedDataNoti: b });
+          let [selectAllEmail, selectAllText] = this.getEmailAndText(
+            responseData.data
+          );
+          this.setState({
+            data_noti: responseData.data,
+            savedDataNoti: b,
+            selectAllEmail,
+            selectAllText
+          });
         } else {
           this.openNotificationWithIcon(
             "error",
@@ -510,7 +462,6 @@ class Acc_settings extends Component {
         // console.log(error);
       });
   }
-
   /*
         Page: /editProfile --> Settings Tab
         it is called when we click Delete button and press confirm.
@@ -1043,28 +994,31 @@ class Acc_settings extends Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 201) {
-          // console.log("responsedata summary=-----------", responseData.data);
           this.setState({
             totalUSDOfWallet: responseData.usd_price.toFixed(2),
             walletCoins: responseData.data,
             user2fastatus: responseData.user2fastatus,
             loader: false
           });
-          // console.log(
-          //   "responsedata walletCoins=-----------",
-          //   this.state.walletCoins
-          // );
         } else if (responseData.status == 200) {
-          // console.log("responsedata summary=-----------", responseData.data);
           this.setState({
             walletCoins: null,
             user2fastatus: responseData.user2fastatus,
             loader: false
           });
-          // console.log(
-          //   "responsedata walletCoins=-----------",
-          //   this.state.walletCoins
-          // );
+        } else if (responseData.status == 403) {
+          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.setState(
+            {
+              loader: false
+            },
+            () => {
+              let tempValue2 = {};
+              tempValue2["user_id"] = this.props.profileDetails.id;
+              tempValue2["jwt_token"] = this.props.isLoggedIn;
+              this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
+            }
+          );
         }
       })
       .catch(error => {});
@@ -1080,7 +1034,119 @@ class Acc_settings extends Component {
     deactivate.classList.add("hide");
   }
   render() {
+    const columns_text = [
+      {
+        title: "Notifications",
+        dataIndex: "title",
+        className: "column-Noti",
+        key: "title"
+      },
+      {
+        title: (
+          <>
+            <Checkbox
+              className="mg-lt-45"
+              onChange={e => this.checkBoxChange("allText", e)}
+              value={this.state.selectAllText}
+              checked={this.state.selectAllText}
+            />
+            <span>&nbsp;Text</span>
+          </>
+        ),
+        className: "column-Text",
+        dataIndex: "text",
+        key: "text",
+        render: (value, record) => {
+          return (
+            <Checkbox
+              checked={typeof value == "string" ? JSON.parse(value) : value}
+              value={value}
+              key={record.id}
+              onChange={e => this.checkBoxChange("text", e, record)}
+            ></Checkbox>
+          );
+        }
+      },
+      {
+        title: (
+          <>
+            <Checkbox
+              className="mg-lt-50"
+              checked={this.state.selectAllEmail}
+              onChange={e => this.checkBoxChange("allEmail", e)}
+              value={this.state.selectAllEmail}
+            />
+            <span>&nbsp;Email</span>
+          </>
+        ),
+        className: "column-Email",
+        dataIndex: "email",
+        key: "email",
+        render: (value, record) => {
+          // console.log(record, record.id);
+          return (
+            <Checkbox
+              checked={typeof value == "string" ? JSON.parse(value) : value}
+              value={value}
+              key={record.id}
+              onChange={e => this.checkBoxChange("email", e, record)}
+            ></Checkbox>
+          );
+        }
+      }
+    ];
+    this.columnsIP = [
+      {
+        title: "IP Whitelist",
+        dataIndex: "ip",
+        key: "ip"
+      },
+      {
+        title: "Till Date",
+        dataIndex: "expire_time",
+        key: "day",
+        render: src => {
+          let date_format = this.props.profileDetails.date_format
+            ? this.props.profileDetails.date_format
+            : "DD/MM/YYYY";
+          // console.log(src);
+          return (
+            <span>
+              {src !== ""
+                ? moment
+                    .utc(src)
+                    .local()
+                    .format(`${date_format}, HH:mm:ss`)
+                : "-"}
+            </span>
+          );
+        }
+      },
+      {
+        title: "Action",
+        key: "action",
+        render: src => {
+          // console.log(src.is_permanent);
+          return (
+            <div>
+              {src.is_permanent == true ? (
+                "-"
+              ) : (
+                <div
+                  onClick={this.deleteIP.bind(this, src)}
+                  // style={{ cursor: "pointer", color: "rgb(0, 170, 250)" }}
+                >
+                  Delete
+                </div>
+              )}
+            </div>
+          );
+        }
+      }
+    ];
+
     const { fields, data_noti, savedDataNoti, startValue } = this.state;
+    // console.log("Render method data is >>", this.state.data_noti);
     const columnsIP = [
       {
         title: "IP Whitelist",
@@ -1154,12 +1220,13 @@ class Acc_settings extends Component {
         >
           <WrapTable>
             <NotificationTable
+              rowKey="id"
               className={this.state.notiCSS}
               pagination={false}
               bordered={true}
               dataSource={data_noti}
-              columns={this.columns_text}
-              pagination={{ pageSize: 5, size: "small" }}
+              columns={columns_text}
+              // pagination={{ pageSize: 5, size: "small" }}
             />
           </WrapTable>
         </div>
@@ -1169,7 +1236,14 @@ class Acc_settings extends Component {
 
         <HR />
         {/* ---- Notification code ends ---- */}
-        <ThresholdNotification isLoggedIn={this.props.isLoggedIn} />
+        <NotiWrap>
+          <NotiHead>
+            <span>Threshold Notifications</span>
+          </NotiHead>
+        </NotiWrap>
+        <WrapTable>
+          <ThresholdNotification isLoggedIn={this.props.isLoggedIn} />
+        </WrapTable>
         <HR2 />
         <LoginHistory>
           <HistoryHead>
@@ -1180,7 +1254,7 @@ class Acc_settings extends Component {
               {/* <span>This feature provides information about the last activity on this mail account and any concurrent activity.</span> */}
             </Desc>
           </HistoryHead>
-          <TableWrap>
+          <TableWrap className="historyTable">
             <Table
               className={this.state.historyCSS}
               pagination={false}
@@ -1211,7 +1285,8 @@ class Acc_settings extends Component {
             <span>Security Settings</span>
           </DeleteHead>
           <DeleteDesc
-          // style={{ display: "flex", justifyContent: "center" }}
+            className="maxWidth"
+            // style={{ display: "flex", justifyContent: "center" }}
           >
             <div
             // style={{ width: "1000px" }}
@@ -1294,7 +1369,7 @@ class Acc_settings extends Component {
           <DeleteHead>
             <span>Deactivate Account</span>
           </DeleteHead>
-          <DeleteDesc>
+          <DeleteDesc className="maxWidth">
             <span>Click on the button below to deactivate your account.</span>
           </DeleteDesc>
           <DeleteBtn>

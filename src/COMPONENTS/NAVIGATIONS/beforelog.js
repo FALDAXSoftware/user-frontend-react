@@ -28,6 +28,9 @@ export const Exchange = styled.div`
   @media (max-width: 670px) {
     display: none;
   }
+  @media (min-width: 2000px) {
+    font-size: 18px;
+  }
 `;
 const LoginText = styled.span`
   //border-left: 1px solid #f0f0f0;

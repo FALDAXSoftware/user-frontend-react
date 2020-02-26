@@ -15,6 +15,20 @@ const Picker_wrap = styled.div`
     background: ${props =>
       props.theme.mode === "dark" ? "transparent !important" : ""};
   }
+  & .ant-row.datepicker_main_row {
+    & select {
+      webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-size: 10px 8px !important;
+      background-repeat: no-repeat !important;
+      background-position: top 17px right 10px !important;
+      background-image: ${props =>
+        props.theme.mode === "dark"
+          ? "url(/images/arrow_down_dark.png)!important"
+          : "url(/images/arrow_down_light.png)"};
+    }
+  }
 `;
 let fields = {};
 
@@ -32,7 +46,35 @@ export default class Datepicker extends Component {
   }
   /* Life-Cycle Methods */
   componentDidMount() {
-    // console.log(this.props);
+    if (
+      this.props.profileDetails.dob &&
+      this.props.profileDetails.dob != "Invalid date" &&
+      this.props.kyc != "kyc"
+    ) {
+      var dob = this.props.profileDetails.dob.split("-");
+      let month = dob[1] - 1;
+      let monthName;
+      if (month == 0) monthName = "0";
+      if (month == 1) monthName = "1";
+      if (month == 2) monthName = "2";
+      if (month == 3) monthName = "3";
+      if (month == 4) monthName = "4";
+      if (month == 5) monthName = "5";
+      if (month == 6) monthName = "6";
+      if (month == 7) monthName = "7";
+      if (month == 8) monthName = "8";
+      if (month == 9) monthName = "9";
+      if (month == 10) monthName = "10";
+      if (month == 11) monthName = "11";
+      if (month === "") {
+        monthName = ""; /* console.log(" i am in IF") */
+      }
+      this.setState({
+        day: parseInt(dob[0]),
+        month: monthName,
+        year: dob[2]
+      });
+    }
     if (this.props.theme !== undefined) {
       if (this.props.theme !== this.state.theme) {
         if (this.props.theme === false)
@@ -50,14 +92,70 @@ export default class Datepicker extends Component {
       }
     }
   }
-
+  componentWillReceiveProps(newProps) {
+    if (
+      this.props.profileDetails.dob !== newProps.profileDetails.dob &&
+      newProps.profileDetails.dob
+    ) {
+      var dob = newProps.profileDetails.dob.split("-");
+      let month = dob[1] - 1;
+      let monthName;
+      if (month == 0) monthName = "0";
+      if (month == 1) monthName = "1";
+      if (month == 2) monthName = "2";
+      if (month == 3) monthName = "3";
+      if (month == 4) monthName = "4";
+      if (month == 5) monthName = "5";
+      if (month == 6) monthName = "6";
+      if (month == 7) monthName = "7";
+      if (month == 8) monthName = "8";
+      if (month == 9) monthName = "9";
+      if (month == 10) monthName = "10";
+      if (month == 11) monthName = "11";
+      if (month === "") {
+        monthName = ""; /* console.log(" i am in IF") */
+      }
+      this.setState({
+        day: parseInt(dob[0]),
+        month: monthName,
+        year: dob[2]
+      });
+    }
+    if (this.props.kyc == "kyc" && this.props.kycData2 !== newProps.kycData2) {
+      if (newProps.kycData2) {
+        var date = newProps.kycData2.dob.split("-");
+        let month1 = date[1] - 1;
+        let monthName;
+        if (month1 == 0) monthName = "0";
+        if (month1 == 1) monthName = "1";
+        if (month1 == 2) monthName = "2";
+        if (month1 == 3) monthName = "3";
+        if (month1 == 4) monthName = "4";
+        if (month1 == 5) monthName = "5";
+        if (month1 == 6) monthName = "6";
+        if (month1 == 7) monthName = "7";
+        if (month1 == 8) monthName = "8";
+        if (month1 == 9) monthName = "9";
+        if (month1 == 10) monthName = "10";
+        if (month1 == 11) monthName = "11";
+        if (month1 === "") {
+          monthName = ""; /* console.log(" i am in IF") */
+        }
+        this.setState({
+          day: Number(date[2]),
+          month: monthName,
+          year: date[0]
+        });
+      }
+    }
+  }
   /* 
         Page: /editProfile --> KYC/Personal Details
         It is called when date is changed.
     */
 
   onChangeDate(date, type) {
-    // console.log("Step 1 -------> ", date, type)
+    // console.log("Step 1 -------> ", date, type);
     if (this.props.kyc !== "kyc") {
       if (type === "year") {
         this.setState({ year: date });
@@ -116,7 +214,7 @@ export default class Datepicker extends Component {
       }
       let propFields;
       if (this.props.profileDetails.dob !== null) {
-        // console.log("Step 3------->", this.props.profileDetails.dob)
+        // console.log("Step 2------->", this.props.profileDetails.dob);
         propFields = this.props.profileDetails.dob.split("-");
         // console.log(fields, fields["day"], fields["month"]);
         if (fields["day"] === undefined && propFields[2] !== undefined) {
@@ -129,9 +227,28 @@ export default class Datepicker extends Component {
           fields["year"] = propFields[2];
         }
       }
+      if (
+        !moment([fields["year"]]).isLeapYear() &&
+        (fields["month"] == "02" || fields["month"] == "February") &&
+        fields["day"] > 28
+      ) {
+        console.log("here");
+        this.setState({ day: "" });
+        fields["day"] = "";
+      }
+      if (
+        moment([fields["year"]]).isLeapYear() &&
+        (fields["month"] == "02" || fields["month"] == "February") &&
+        fields["day"] > 29
+      ) {
+        // console.log("here");
+        this.setState({ day: "" });
+        fields["day"] = "";
+      }
       // console.log("Step 4------->", fields)
       this.props.onDateChange(fields, "dob");
     } else {
+      // console.log("step 2^^^^^^^^^^", date, type);
       if (type === "year") {
         this.setState({ year: date });
         fields[type] = date;
@@ -150,8 +267,38 @@ export default class Datepicker extends Component {
         if (date == 9) date1 = "October";
         if (date == 10) date1 = "November";
         if (date == 11) date1 = "December";
+
         if (date === "") {
-          date1 = ""; /* console.log(" i am in IF") */
+          date1 = "";
+        }
+        if (
+          (date == 0 ||
+            date == 2 ||
+            date == 4 ||
+            date == 6 ||
+            date == 7 ||
+            date == 9 ||
+            date == 11) &&
+          this.state.day !== null
+        ) {
+          fields[type] = date1;
+        } else {
+          if (fields["day"] !== undefined && fields["day"] !== "") {
+            if (date == 1) {
+              if (fields["day"] > 29) {
+                // console.log("Step 2------->", fields, date, date1)
+                this.setState({ day: "" });
+                fields["day"] = "";
+              }
+            } else if (date !== 1) {
+              if (fields["day"] > 30) {
+                // console.log("Step 2------->", fields, date, date1)
+                this.setState({ day: "" });
+                fields["day"] = "";
+              }
+            }
+          }
+          fields[type] = date1;
         }
 
         fields[type] = date1;
@@ -160,22 +307,41 @@ export default class Datepicker extends Component {
         fields[type] = date;
       }
       // console.log("KYC date", fields);
-      let propFields;
+      let propFields1;
       if (
         this.props.kycData2.dob !== null &&
         this.props.kycData2.dob !== undefined
       ) {
-        propFields = this.props.kycData2.dob.split("-");
-        // console.log(fields["day"], propFields[2]);
-        if (fields["day"] === undefined && propFields[2] !== undefined) {
-          fields["day"] = propFields[2];
+        propFields1 = this.props.kycData2.dob.split("-");
+        // console.log(fields["day"], propFields1[2]);
+        // console.log("step 3", propFields1);
+        if (fields["day"] === undefined && propFields1[2] !== undefined) {
+          fields["day"] = propFields1[2];
         }
-        if (fields["month"] === undefined && propFields[1] !== undefined) {
-          fields["month"] = propFields[1];
+        if (fields["month"] === undefined && propFields1[1] !== undefined) {
+          fields["month"] = propFields1[1];
         }
-        if (fields["year"] === undefined && propFields[0] !== undefined) {
-          fields["year"] = propFields[0];
+        if (fields["year"] === undefined && propFields1[0] !== undefined) {
+          fields["year"] = propFields1[0];
         }
+      }
+      if (
+        !moment([fields["year"]]).isLeapYear() &&
+        (fields["month"] == "02" || fields["month"] == "February") &&
+        fields["day"] > 28
+      ) {
+        // console.log("here");
+        this.setState({ day: "" });
+        fields["day"] = "";
+      }
+      if (
+        moment([fields["year"]]).isLeapYear() &&
+        (fields["month"] == "02" || fields["month"] == "February") &&
+        fields["day"] > 29
+      ) {
+        // console.log("here");
+        this.setState({ day: "" });
+        fields["day"] = "";
       }
       // console.log("Final Result", fields);
       this.props.onDateChange(fields, "dob");
@@ -185,7 +351,6 @@ export default class Datepicker extends Component {
   render() {
     let date, year, month, day;
     if (this.props.kyc !== undefined) {
-      // console.log("KYC", this.props.kyc)
       if (
         this.props.kycData2 !== "" &&
         this.props.kycData2 !== null &&
@@ -197,9 +362,9 @@ export default class Datepicker extends Component {
         ) {
           date = this.props.kycData2.dob.split("-");
 
-          year = Number(date[2]);
+          year = Number(date[0]);
           month = date[1];
-          day = Number(date[0]);
+          day = Number(date[2]);
           if (month !== null) {
             month = Number(month) - 1;
           }
@@ -239,7 +404,7 @@ export default class Datepicker extends Component {
 
     return (
       <Picker_wrap>
-        <Row>
+        <Row className="datepicker_main_row">
           <Col md={8} xl={8}>
             <DayPicker
               // mandatory
