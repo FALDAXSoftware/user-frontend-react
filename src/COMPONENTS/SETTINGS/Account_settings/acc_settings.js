@@ -74,24 +74,24 @@ const IpInput = styled(NewInput)`
 `;
 let { API_URL } = globalVariables;
 
-const columns = [
-  {
-    title: "Date/Time",
-    dataIndex: "date",
-    key: "date"
-  },
-  {
-    title: "IP Address",
-    dataIndex: "IP",
-    key: "IP"
-  },
-  {
-    title: "Device",
-    className: "column_device",
-    dataIndex: "Device",
-    key: "Device"
-  }
-];
+// const columns = [
+//   {
+//     title: "Date/Time",
+//     dataIndex: "date",
+//     key: "date"
+//   },
+//   {
+//     title: "IP Address",
+//     dataIndex: "IP",
+//     key: "IP"
+//   },
+//   {
+//     title: "Device",
+//     className: "column_device",
+//     dataIndex: "Device",
+//     key: "Device"
+//   }
+// ];
 
 const confirm = Modal.confirm;
 const ModalIpInput = styled(NewInput)``;
@@ -1034,9 +1034,10 @@ class Acc_settings extends Component {
     deactivate.classList.add("hide");
   }
   render() {
+    const { t } = this.props;
     const columns_text = [
       {
-        title: "Notifications",
+        title: `${t("head_notifications.message")}`,
         dataIndex: "title",
         className: "column-Noti",
         key: "title"
@@ -1050,7 +1051,7 @@ class Acc_settings extends Component {
               value={this.state.selectAllText}
               checked={this.state.selectAllText}
             />
-            <span>&nbsp;Text</span>
+            <span>&nbsp;{t("table_head_text.message")}</span>
           </>
         ),
         className: "column-Text",
@@ -1076,7 +1077,7 @@ class Acc_settings extends Component {
               onChange={e => this.checkBoxChange("allEmail", e)}
               value={this.state.selectAllEmail}
             />
-            <span>&nbsp;Email</span>
+            <span>&nbsp;{t("table_head_email.message")}</span>
           </>
         ),
         className: "column-Email",
@@ -1146,15 +1147,15 @@ class Acc_settings extends Component {
     ];
 
     const { fields, data_noti, savedDataNoti, startValue } = this.state;
-    const { t } = this.props;
+
     const columnsIP = [
       {
-        title: "IP Whitelist",
+        title: `${t("table_head_ip_whitelist.message")}`,
         dataIndex: "ip",
         key: "ip"
       },
       {
-        title: "Till Date",
+        title: `${t("table_head_till_date.message")}`,
         dataIndex: "expire_time",
         key: "day",
         render: src => {
@@ -1175,7 +1176,7 @@ class Acc_settings extends Component {
         }
       },
       {
-        title: "Action",
+        title: `${t("table_head_action.message")}`,
         key: "action",
         render: src => {
           // console.log(src.is_permanent);
@@ -1194,6 +1195,24 @@ class Acc_settings extends Component {
             </div>
           );
         }
+      }
+    ];
+    const columns = [
+      {
+        title: `${t("table_head_date_time.message")}`,
+        dataIndex: "date",
+        key: "date"
+      },
+      {
+        title: `${t("table_head_ip_address.message")}`,
+        dataIndex: "IP",
+        key: "IP"
+      },
+      {
+        title: `${t("table_head_device.message")}`,
+        className: "column_device",
+        dataIndex: "Device",
+        key: "Device"
       }
     ];
     let disabled = true;
@@ -1238,7 +1257,7 @@ class Acc_settings extends Component {
         {/* ---- Notification code ends ---- */}
         <NotiWrap>
           <NotiHead>
-            <span>Threshold Notifications</span>
+            <span>{t("head_threshold_notifications.message")}</span>
           </NotiHead>
         </NotiWrap>
         <WrapTable>
@@ -1297,8 +1316,8 @@ class Acc_settings extends Component {
           {/* {console.log(this.state.checked)} */}
           <TableWrap>
             <Switch
-              checkedChildren="ON"
-              unCheckedChildren="OFF"
+              checkedChildren={t("general_1:on_switch_text.message")}
+              unCheckedChildren={t("general_1:off_switch_text.message")}
               defaultChecked
               onChange={this.onChangeSwitch}
               checked={this.state.checked}
@@ -1356,7 +1375,9 @@ class Acc_settings extends Component {
                 current={this.state.pageIp}
                 total={this.state.ipCount}
               />
-              <IpButton onClick={this.openAddModal.bind(this)}>Add</IpButton>
+              <IpButton onClick={this.openAddModal.bind(this)}>
+                {t("subhead_setting_add_btn.message")}
+              </IpButton>
             </div>
           )}
         </LoginHistory>
@@ -1797,6 +1818,6 @@ const mapDispatchToProps = dispatch => ({
   LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 
-export default translate(["settings", "edit_profile_titles"])(
+export default translate(["settings", "edit_profile_titles", "general_1"])(
   connect(mapStateToProps, mapDispatchToProps)(Acc_settings)
 );

@@ -2069,6 +2069,30 @@
       "message": "Your password must not contain space.",
       "message_type": "Web content",
       "context": "Password should not contain space error"
+    },
+    "sure_cancel_popup_confirm_text": {
+      "page": "Edit Profile > Settings",
+      "message": "Sure to cancel?",
+      "message_type": "Web content",
+      "context": "Sure editing cancel popup text"
+    },
+    "valid_positive_error_msg": {
+      "page": "Edit Profile > Settings",
+      "message": "Please Enter Valid Positive Number.",
+      "message_type": "Web content",
+      "context": "Valid poitive nymber error message"
+    },
+    "on_switch_text": {
+      "page": "Edit Profile > Settings",
+      "message": "ON",
+      "message_type": "Web content",
+      "context": "On switch text"
+    },
+    "off_switch_text": {
+      "page": "Edit Profile > Settings",
+      "message": "OFF",
+      "message_type": "Web content",
+      "context": "Off switch text"
     }
   }
 }
