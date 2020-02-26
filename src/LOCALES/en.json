@@ -2093,6 +2093,12 @@
       "message": "OFF",
       "message_type": "Web content",
       "context": "Off switch text"
+    },
+    "amount_collected_text": {
+      "page": "Edit Profile > Referral",
+      "message": "Amount Collected",
+      "message_type": "Web content",
+      "context": "Amount Collected table head text of refferal"
     }
   }
 }

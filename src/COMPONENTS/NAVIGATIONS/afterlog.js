@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { translate } from "react-i18next";
 import { _FOOTERLOGO, _DEFAULTPROFILE } from "CONSTANTS/images";
 
 /* Components */
@@ -361,4 +362,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Afterlog);
+export default translate(["header"])(
+  connect(mapStateToProps, mapDispatchToProps)(Afterlog)
+);

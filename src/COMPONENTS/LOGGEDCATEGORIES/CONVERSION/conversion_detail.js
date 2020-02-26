@@ -450,7 +450,7 @@ class ConversionDetail extends React.Component {
         (body, JWR) => {
           if (body.status === 200) {
             let res = body.data;
-            // console.log("getsocketvalues", res);
+            console.log("getsocketvalues", res);
             this.setState({
               // loader: false,
               subTotal: parseFloat(res.original_value).toFixed(8),
@@ -551,6 +551,7 @@ class ConversionDetail extends React.Component {
             // console.log(body.err);
             this.openNotificationWithIcon("error", "Error", body.err);
           }
+          console.log("getsocketvalues", body);
           this.setState({
             loader: false
           });

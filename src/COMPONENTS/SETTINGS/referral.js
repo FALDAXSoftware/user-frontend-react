@@ -16,33 +16,33 @@ const Search = Input.Search;
 const Option = Select.Option;
 
 /* Styled Components */
-const columns1 = [
-  {
-    title: "Coin Name",
-    dataIndex: "coin_name"
-  },
-  {
-    title: "Amount Collected",
-    dataIndex: "amount"
-  }
-];
-const columns = [
-  {
-    title: "    ",
-    dataIndex: "profile_pic",
-    render: text => (
-      <img width="40px" height="40px" src={`${_AMAZONBUCKET}${text}`} />
-    )
-  },
-  {
-    title: "Name",
-    dataIndex: "full_name"
-  },
-  {
-    title: "Accounts Referred",
-    dataIndex: "email"
-  }
-];
+// const columns1 = [
+//   {
+//     title: "Coin Name",
+//     dataIndex: "coin_name"
+//   },
+//   {
+//     title: "Amount Collected",
+//     dataIndex: "amount"
+//   }
+// ];
+// const columns = [
+//   {
+//     title: "    ",
+//     dataIndex: "profile_pic",
+//     render: text => (
+//       <img width="40px" height="40px" src={`${_AMAZONBUCKET}${text}`} />
+//     )
+//   },
+//   {
+//     title: "Name",
+//     dataIndex: "full_name"
+//   },
+//   {
+//     title: "Accounts Referred",
+//     dataIndex: "email"
+//   }
+// ];
 const data = [
   {
     key: "1",
@@ -497,6 +497,35 @@ class Referral extends Component {
       this.state,
       this.props
     ];
+    const columns1 = [
+      {
+        title: `${t("settings:table_head_coin.message")} ${t(
+          "referral_table_head_name.message"
+        )}`,
+        dataIndex: "coin_name"
+      },
+      {
+        title: `${t("general_1:amount_collected_text.message")}`,
+        dataIndex: "amount"
+      }
+    ];
+    const columns = [
+      {
+        title: "    ",
+        dataIndex: "profile_pic",
+        render: text => (
+          <img width="40px" height="40px" src={`${_AMAZONBUCKET}${text}`} />
+        )
+      },
+      {
+        title: `${t("referral_table_head_name.message")}`,
+        dataIndex: "full_name"
+      },
+      {
+        title: `${t("referral_table_head_accounts_referred.message")}`,
+        dataIndex: "email"
+      }
+    ];
     return (
       <ParentWrap>
         <Header_text>{t("referral_head.message")}</Header_text>
@@ -627,6 +656,10 @@ function mapStateToProps(state) {
   };
 }
 
-export default translate(["referral", "edit_profile_titles", "conversion"])(
-  connect(mapStateToProps, mapDispatchToProps)(Referral)
-);
+export default translate([
+  "referral",
+  "edit_profile_titles",
+  "conversion",
+  "settings",
+  "general_1"
+])(connect(mapStateToProps, mapDispatchToProps)(Referral));
