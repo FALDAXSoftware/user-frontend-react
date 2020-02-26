@@ -1491,6 +1491,7 @@ class PersonalDetails extends Component {
                                 editMode: false
                               },
                               () => {
+                                this.props.form.resetFields();
                                 this.props.getProfileDataAction(
                                   this.props.isLoggedIn
                                 );
