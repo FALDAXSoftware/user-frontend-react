@@ -467,6 +467,7 @@ class PasswordChange extends Component {
     */
 
   submit = () => {
+    const { t } = this.props;
     this.props.form.validateFields((error, value) => {
       if (
         error === null &&
@@ -485,20 +486,34 @@ class PasswordChange extends Component {
           value.current_password === null ||
           value.current_password === undefined
         ) {
-          this.setState({ current_msg: "Old password is required." }, () => {
-            document.querySelectorAll(".oldchange_msg")[0].style.display =
-              "block";
-          });
+          this.setState(
+            {
+              current_msg: `${t("subhead_title_old_password.message")} ${t(
+                "validations:field_is_required.message"
+              )}.`
+            },
+            () => {
+              document.querySelectorAll(".oldchange_msg")[0].style.display =
+                "block";
+            }
+          );
         }
         if (
           value.new_password === "" ||
           value.new_password === null ||
           value.new_password === undefined
         ) {
-          this.setState({ new_msg: "New password is required." }, () => {
-            document.querySelectorAll(".newchange_msg")[0].style.display =
-              "block";
-          });
+          this.setState(
+            {
+              new_msg: `${t("subhead_title_new_password.message")} ${t(
+                "validations:field_is_required.message"
+              )}.`
+            },
+            () => {
+              document.querySelectorAll(".newchange_msg")[0].style.display =
+                "block";
+            }
+          );
         }
         if (
           value.confirm_password === "" ||
@@ -506,7 +521,11 @@ class PasswordChange extends Component {
           value.confirm_password === undefined
         ) {
           this.setState(
-            { confirmPass_msg: "Confirm password is required." },
+            {
+              confirmPass_msg: `${t(
+                "general_1:subhead_title_confirm_password.message"
+              )} ${t("validations:field_is_required.message")}.`
+            },
             () => {
               document.querySelectorAll(".confirmchange_msg")[0].style.display =
                 "block";
@@ -525,7 +544,7 @@ class PasswordChange extends Component {
 
   onChangeField(value, field) {
     // old password should not have validation except required.
-
+    const { t } = this.props;
     // if (field==="current_password") {
     //     var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
     //     var bool = re.test(value);
@@ -561,7 +580,11 @@ class PasswordChange extends Component {
         document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
       } else {
         document.querySelectorAll(".oldchange_msg")[0].style.display = "block";
-        this.setState({ current_msg: "Old password is required." });
+        this.setState({
+          current_msg: `${t("subhead_title_old_password.message")} ${t(
+            "validations:field_is_required.message"
+          )}.`
+        });
       }
     } else if (field === "new_password") {
       password = value;
@@ -636,8 +659,7 @@ class PasswordChange extends Component {
           document.querySelectorAll(".newchange_msg")[0].style.display =
             "block";
           this.setState({
-            new_msg:
-              "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters."
+            new_msg: `${t("general_1:password_regex_error.message")}`
           });
         }
       } else {
@@ -647,7 +669,11 @@ class PasswordChange extends Component {
         document.querySelector("#newchange_icon_fail").style.display =
           "inline-block";
         document.querySelectorAll(".newchange_msg")[0].style.display = "block";
-        this.setState({ new_msg: "New password is required." });
+        this.setState({
+          new_msg: `${t("subhead_title_new_password.message")} ${t(
+            "validations:field_is_required.message"
+          )}.`
+        });
       }
     } else if (field === "confirm_password") {
       //   alert("repeat");
@@ -670,7 +696,11 @@ class PasswordChange extends Component {
             "inline-block";
           document.querySelectorAll(".confirmchange_msg")[0].style.display =
             "block";
-          this.setState({ confirmPass_msg: "Password does not match." });
+          this.setState({
+            confirmPass_msg: `${t(
+              "general_1:password_not_match_error.message"
+            )}`
+          });
         }
       } else {
         this.setState({ confirmIcon: false });
@@ -703,6 +733,7 @@ class PasswordChange extends Component {
     */
 
   changeOTP(value, field) {
+    const { t } = this.props;
     if (field === "otp") {
       var re = /^[0-9]{6}$/;
       var bool = re.test(value);
@@ -717,14 +748,18 @@ class PasswordChange extends Component {
           document.querySelector("#otp_success").style.display = "none";
           document.querySelector("#otp_fail").style.display = "inline-block";
           document.querySelectorAll(".MSG_OTP")[0].style.display = "block";
-          this.setState({ otp_msg: "*Otp should have 6 digit number." });
+          this.setState({
+            otp_msg: `*${t("general_1:otp_6_digit_error.message")}`
+          });
         }
       } else {
         this.setState({ otpIcon: false });
         document.querySelector("#otp_success").style.display = "none";
         document.querySelector("#otp_fail").style.display = "none";
         document.querySelectorAll(".MSG_OTP")[0].style.display = "block";
-        this.setState({ otp_msg: "*Otp is required." });
+        this.setState({
+          otp_msg: `*${t("general_1:otp_required_error.message")}`
+        });
       }
     }
   }
@@ -942,9 +977,9 @@ class PasswordChange extends Component {
                 {" "}
                 {t("title_status.message")}:
                 {isEnabled === "DISABLED" ? (
-                  <RedSpan> {isEnabled}</RedSpan>
+                  <RedSpan> {t("general_1:disabled_text.message")}</RedSpan>
                 ) : (
-                  <GreenSpan> {isEnabled}</GreenSpan>
+                  <GreenSpan> {t("general_1:enabled_text.message")}</GreenSpan>
                 )}
               </IsEnabled>
               <Headtext>
@@ -956,8 +991,11 @@ class PasswordChange extends Component {
               </Headtext>
               <Buttondiv>
                 <NewButton onClick={this.TF_AUTH.bind(this)}>
-                  {" "}
-                  {`${this.state.is_twofactor} AUTHENTICATOR`}
+                  {(this.state.is_twofactor === "DISABLE"
+                    ? t("general_1:disable_text.message")
+                    : t("general_1:enable_text.message")) +
+                    " " +
+                    t("general_1:authenticator_text.message")}
                 </NewButton>
               </Buttondiv>
               {/* {console.log("Password Change", this.state.backupCodeTFA)} */}
@@ -1063,6 +1101,6 @@ const mapDispatchToProps = dispatch => ({
   disableAction: () => dispatch(disableAction())
 });
 
-export default translate(["security_tab"])(
+export default translate(["security_tab", "general_1", "validations"])(
   connect(mapStateToProps, mapDispatchToProps)(createForm()(PasswordChange))
 );

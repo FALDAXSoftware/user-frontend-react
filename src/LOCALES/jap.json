@@ -1967,6 +1967,36 @@
       "message": "数字でなければなりません",
       "message_type": "Web content",
       "context": "validation for first name required"
+    },
+    "enable_text": {
+      "page": "Security",
+      "message": "有効にする",
+      "message_type": "Web content",
+      "context": "enable text"
+    },
+    "disable_text": {
+      "page": "Security",
+      "message": "無効にする",
+      "message_type": "Web content",
+      "context": "disable text"
+    },
+    "enabled_text": {
+      "page": "Security",
+      "message": "有効",
+      "message_type": "Web content",
+      "context": "enabled text"
+    },
+    "disabled_text": {
+      "page": "Security",
+      "message": "無効",
+      "message_type": "Web content",
+      "context": "disabled text"
+    },
+    "authenticator_text": {
+      "page": "Security",
+      "message": "認証者",
+      "message_type": "Web content",
+      "context": "Authenticator text"
     }
   }
 }

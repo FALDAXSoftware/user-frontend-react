@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Row, Col, Input, notification, Modal } from "antd";
 import styled from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
+import { translate } from "react-i18next";
 
 /* components */
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
@@ -258,6 +259,7 @@ class RegenerateBackupCode extends Component {
     this.setState({ visible: false });
   };
   render() {
+    const { t } = this.props;
     const { fields, errMsg, loader, isShowOTP, errType } = this.state;
 
     if (errMsg) {
@@ -269,7 +271,7 @@ class RegenerateBackupCode extends Component {
         <Row>
           <Col span={6} />
           <HeaderCol span={12}>
-            <span>Re-Generate Backup Code</span>
+            <span>{t("head_regenerate_backup_code.message")}</span>
           </HeaderCol>
         </Row>
         <ChangeCol>
@@ -277,43 +279,54 @@ class RegenerateBackupCode extends Component {
             {/* <InputLabel>Two-Factor Authentication Code:</InputLabel>
                             <EmailDN>{fields.oldEmail !== null ? fields.oldEmail : this.props.profileDetails.email}</EmailDN> */}
 
-            <InputLabel>Enter Two-Factor Authentication Code:*</InputLabel>
+            <InputLabel>
+              {t("subhead_title_regenerate_code.message")}:*
+            </InputLabel>
             <div>
               <NewInput
                 value={fields.otp}
                 disabled={isShowOTP}
                 size="large"
-                placeholder="Code"
+                placeholder={t("general_1:code_placeholder.message")}
                 onChange={this.onChangeField.bind(this, "otp")}
               />
               {this.validator.message(
                 "two_factor_authentication_code",
                 this.state.fields["otp"],
-                "required|min:6|max:6"
+                "required|min:6|max:6",
+                "text-danger-validation",
+                {
+                  required: `${t("general_1:code_placeholder.message")} ${t(
+                    "validations:field_is_required.message"
+                  )}.`,
+                  min: `${t("general_1:code_placeholder.message")} ${t(
+                    "general_1:min_6_error.message"
+                  )}`,
+                  max: `${t("general_1:code_placeholder.message")} ${t(
+                    "general_1:max_6_error.message"
+                  )}`
+                }
               )}
             </div>
           </NewP>
           <ButtonDiv>
             <NewButton onClick={this.regenBackup.bind(this)}>
-              Re-Generate Code
+              {t("general_1:re_generate_code_btn.message")}
             </NewButton>
           </ButtonDiv>
           <VerifyModal
             onCancel={e => this.TFAModalCancel(e)}
             onOk={e => this.TFAModalCancel(e)}
-            title="Two Factor Authenticationn"
+            title={t("general_1:two_factor_authentication_head.message")}
             visible={this.state.visible}
             footer={null}
           >
-            {/* {console.log(this.state.backupCode)} */}
             <Description>
-              {" "}
-              Please keep Below backup code with you, in case you are unable to
-              enter Two-Factor Authentication.
+              {t("general_1:two_factor_authentication_subhead.message")}
             </Description>
-
             <div>
-              Back-up Code : <b>{this.state.backupCode}</b>
+              {t("two_factor_success_title.message")}:{" "}
+              <b>{this.state.backupCode}</b>
             </div>
           </VerifyModal>
         </ChangeCol>
@@ -339,7 +352,6 @@ const mapDispatchToProps = dispatch => ({
   LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RegenerateBackupCode);
+export default translate(["security_tab", "general_1", "validations"])(
+  connect(mapStateToProps, mapDispatchToProps)(RegenerateBackupCode)
+);

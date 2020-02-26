@@ -1997,6 +1997,72 @@
       "message": "Authenticator",
       "message_type": "Web content",
       "context": "Authenticator text"
+    },
+    "otp_required_error": {
+      "page": "Edit Profile > Security",
+      "message": "Otp is required.",
+      "message_type": "Web content",
+      "context": "when otp filed is blank"
+    },
+    "otp_6_digit_error": {
+      "page": "Edit Profile > Security",
+      "message": "Otp should have 6 digit number.",
+      "message_type": "Web content",
+      "context": "when otp filed is not a 6 digit number"
+    },
+    "re_generate_code_btn": {
+      "page": "Edit Profile > Settings",
+      "message": "Re-Generate Code",
+      "message_type": "Web content",
+      "context": "Settings button for Add"
+    },
+    "code_placeholder": {
+      "page": "Edit Profile > Settings",
+      "message": "Code",
+      "message_type": "Web content",
+      "context": "Code text for placeholder"
+    },
+    "max_6_error": {
+      "page": "Edit Profile > Security",
+      "message": "may not be greater than 6 characters.",
+      "message_type": "Web content",
+      "context": "Maximum 6 error"
+    },
+    "min_6_error": {
+      "page": "Edit Profile > Security",
+      "message": "must be at least 6 characters.",
+      "message_type": "Web content",
+      "context": "Maximum 6 error"
+    },
+    "two_factor_authentication_head": {
+      "page": "Edit Profile > Security > Regenerate Backup code",
+      "message": "Two Factor Authentication",
+      "message_type": "Web content",
+      "context": "Two Factor Authentication text"
+    },
+    "two_factor_authentication_subhead": {
+      "page": "Edit Profile > Security > Regenerate Backup code",
+      "message": "Please keep Below backup code with you, in case you are unable to enter Two-Factor Authentication.",
+      "message_type": "Web content",
+      "context": "Two Factor Authentication sub text"
+    },
+    "subhead_title_confirm_password": {
+      "page": "Edit Profile > Security",
+      "message": "Confirm password",
+      "message_type": "Web content",
+      "context": "Two Factor Authentication sub text"
+    },
+    "password_not_match_error": {
+      "page": "Edit Profile > Security",
+      "message": "Password does not match.",
+      "message_type": "Web content",
+      "context": "Password does not match error"
+    },
+    "password_regex_error": {
+      "page": "Edit Profile > Security",
+      "message": "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters.",
+      "message_type": "Web content",
+      "context": "Password regex does not match error"
     }
   }
 }
