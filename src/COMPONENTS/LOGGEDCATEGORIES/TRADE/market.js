@@ -176,9 +176,9 @@ class Market extends Component {
               buyEstPrice:
                 Number(this.state.amount) * this.props.userBal.buyEstimatedPrice
             });
-            // obj["total"] =
-            //   Number(this.state.amount) * this.props.userBal.buyPay;
-            // obj["amount"] = Number(this.state.amount).toFixed(3);
+            obj["total"] =
+              Number(this.state.amount) * this.props.userBal.buyPay;
+            obj["amount"] = Number(this.state.amount).toFixed(3);
           } else if (this.state.side === "Sell") {
             self.setState({
               sellPayAmt:
@@ -187,9 +187,9 @@ class Market extends Component {
                 Number(this.state.amount) *
                 this.props.userBal.sellEstimatedPrice
             });
-            // obj["total"] =
-            //   Number(this.state.amount) * this.props.userBal.sellPay;
-            // obj["amount"] = Number(this.state.amount).toFixed(3);
+            obj["total"] =
+              Number(this.state.amount) * this.props.userBal.sellPay;
+            obj["amount"] = Number(this.state.amount).toFixed(3);
           }
         } else {
           obj["total"] = 0;
