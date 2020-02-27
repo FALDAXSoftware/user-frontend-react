@@ -239,12 +239,11 @@ class KYCForm extends Component {
     this.onChangeFields = this.onChangeFields.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onCountryName = this.onCountryName.bind(this);
-    this.getKYCDetails = this.getKYCDetails.bind(this);
   }
 
   /* Life-Cycle Methods */
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps(props, newProps) {
     if (props.kycData !== undefined && props.kycData !== "") {
       if (props.kycData.status === 200) {
         //this.openNotificationWithIcon("success","KYC",props.kycData.message)
@@ -256,17 +255,8 @@ class KYCForm extends Component {
         this.props.kycformData();
       }
     }
-    // if (
-    //   props.profileDetails &&
-    //   this.props.profileDetails !== props.profileDetails
-    // ) {
-    //   this.getKYCDetails();
-    // }
   }
   componentDidMount() {
-    this.getKYCDetails();
-  }
-  getKYCDetails() {
     var self = this;
     this.setState({ loader: true });
     fetch(API_URL + "/users/get-kyc-detail", {
@@ -424,7 +414,7 @@ class KYCForm extends Component {
               fields["phone_number"] = profileData.phone_number;
               let phone = profileData.phone_number;
               let arr = [];
-              arr.push(country_code);
+              arr.push(profileData.country_code);
               this.setState(
                 {
                   countrychange: true,
@@ -498,6 +488,7 @@ class KYCForm extends Component {
         this.setState({ loader: false });
       });
   }
+
   /* 
         Page: /editProfile --> KYC
         It is called when we date is changed and it is passed as callback to child.
