@@ -64,7 +64,8 @@ class SimplexExchange extends React.Component {
       coin_name: null,
       currencyList: [],
       showTFAModal: false,
-      checkOTP: false
+      checkOTP: false,
+      btnDisabled: true
     };
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
@@ -270,7 +271,8 @@ class SimplexExchange extends React.Component {
                   cryptoCode: responseData.coinDetails.coin_code,
                   wallet_details: "",
                   address: "",
-                  coin_name: responseData.coinDetails.coin_name
+                  coin_name: responseData.coinDetails.coin_name,
+                  btnDisabled: false
                 });
               } else {
                 // alert("else", responseData.coinDetails.coin_name);
@@ -280,7 +282,8 @@ class SimplexExchange extends React.Component {
                   quote_id: responseData.data.quote_id,
                   address: responseData.walletDetails.receive_address,
                   wallet_details: responseData.walletDetails.receive_address,
-                  coin_name: responseData.coinDetails.coin_name
+                  coin_name: responseData.coinDetails.coin_name,
+                  btnDisabled: false
                 });
               }
             }
@@ -717,6 +720,7 @@ class SimplexExchange extends React.Component {
                         type="primary"
                         size="large"
                         block
+                        disabled={this.state.btnDisabled}
                       >
                         Continue
                       </ConversionSubmitBtn>

@@ -33,6 +33,24 @@ const APIUtility = {
       },
       data: data
     });
+  },
+  getPanicStatus: function(token) {
+    return axios({
+      method: "get",
+      url: API_URL + "/check-panic-status",
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    });
+  },
+  getUserTradeStatus: function(token) {
+    return axios({
+      method: "get",
+      url: API_URL + "/users/get-user-trade-status",
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    });
   }
 };
 export { APIUtility };

@@ -31,6 +31,7 @@ import {
   ConArrowWrap,
   TokComingSoon
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
+import { APIUtility } from "../../../httpHelper";
 
 const API_URL = globalVariables.API_URL;
 
@@ -43,28 +44,52 @@ class Conversion extends React.Component {
       countryAccess: false,
       comingSoon: false,
       panicEnabled: false,
-      panic_status: false
+      panic_status: false,
+      is_kyc_done: "",
+      is_allowed: ""
       // showConversion: false
     };
     this.comingCancel = this.comingCancel.bind(this);
     this.cryptoAccess = this.cryptoAccess.bind(this);
     this.simplexAccess = this.simplexAccess.bind(this);
     this.tokenAccess = this.tokenAccess.bind(this);
-    this.panicStatus = this.panicStatus.bind(this);
   }
   // onBrokerageButtonClick() {
   //   this.setState({
   //     showConversion: true
   //   });
   // }
-  componentDidMount() {
+  async componentDidMount() {
     if (
       this.props.profileDetails &&
       this.props.profileDetails.is_terms_agreed == false
     ) {
       this.props.history.push("/editProfile");
     }
-    this.panicStatus();
+    try {
+      this.setState({ loader: true });
+      let result = await APIUtility.getPanicStatus(this.props.isLoggedIn);
+      if (result.status == 200) {
+        this.setState({ panicStatus: JSON.parse(result.data) });
+      }
+      let result2 = await APIUtility.getUserTradeStatus(this.props.isLoggedIn);
+      if (result2.status == 200) {
+        this.setState({
+          is_allowed: result2.data.is_allowed,
+          is_kyc_done: result2.data.is_kyc_done
+        });
+      }
+      if (result2.status == 500) {
+        this.setState({
+          is_allowed: result2.data.is_allowed,
+          is_kyc_done: result2.data.is_kyc_done
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setState({ loader: false });
+    }
     if (this.props.conversion) {
       this.cryptoAccess();
     }
@@ -83,59 +108,17 @@ class Conversion extends React.Component {
       panicEnabled: false
     });
   };
-  panicStatus() {
-    this.setState({
-      loader: true
-    });
-    fetch(API_URL + `/check-panic-status`, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.status === 200) {
-          // console.log("responsedata 200", responseData.data);
-          this.setState({
-            panic_status: JSON.parse(responseData.data),
-            // panic_status: true,
-            loader: false
-          });
-        } else {
-          this.setState({
-            panic_status: false,
-            loader: false
-          });
-        }
-      })
-      .catch(error => {});
-  }
   cryptoAccess() {
     if (this.state.panic_status === true) {
-      // alert("Idf");
       this.setState({ panicEnabled: true });
     } else {
-      if (
-        this.props.profileDetails.is_allowed === true &&
-        this.props.profileDetails.is_kyc_done === 2
-      ) {
-        // alert("IF");
-        // console.log("I am here", this.props.location.pathname);
-        // this.props.history.push('/trade');
+      if (this.state.is_allowed === true && this.state.is_kyc_done === 2) {
         if (this.props.location.pathname !== "/crypto-conversion")
           this.props.history.push("/crypto-conversion");
       } else {
-        if (
-          this.props.profileDetails.is_allowed === false &&
-          this.props.profileDetails.is_kyc_done !== 2
-        ) {
-          // alert("ELSE IF");
+        if (this.state.is_allowed === false && this.state.is_kyc_done !== 2) {
           this.setState({ completeKYC: true });
         } else {
-          // alert("ELSE ELSE");
           this.setState({ countryAccess: true });
         }
       }
@@ -143,27 +126,15 @@ class Conversion extends React.Component {
   }
   simplexAccess() {
     if (this.state.panic_status === true) {
-      // alert("Idf");
       this.setState({ panicEnabled: true });
     } else {
-      if (
-        this.props.profileDetails.is_allowed === true &&
-        this.props.profileDetails.is_kyc_done === 2
-      ) {
-        // alert("IF");
-        // console.log("I am here", this.props.location.pathname);
-        // this.props.history.push('/trade');
+      if (this.state.is_allowed === true && this.state.is_kyc_done === 2) {
         if (this.props.location.pathname !== "/simplex")
           this.props.history.push("/simplex");
       } else {
-        if (
-          this.props.profileDetails.is_allowed === false &&
-          this.props.profileDetails.is_kyc_done !== 2
-        ) {
-          // alert("ELSE IF");
+        if (this.state.is_allowed === false && this.state.is_kyc_done !== 2) {
           this.setState({ completeKYC: true });
         } else {
-          // alert("ELSE ELSE");
           this.setState({ countryAccess: true });
         }
       }
@@ -176,8 +147,8 @@ class Conversion extends React.Component {
     //   this.setState({ panicEnabled: true });
     // } else {
     //   if (
-    //     this.props.profileDetails.is_allowed === true &&
-    //     this.props.profileDetails.is_kyc_done === 2
+    //     this.state.is_allowed === true &&
+    //     this.state.is_kyc_done === 2
     //   ) {
     //     // alert("IF");
     //     console.log("I am here", this.props.location.pathname);
@@ -186,8 +157,8 @@ class Conversion extends React.Component {
     //       this.props.history.push("/token");
     //   } else {
     //     if (
-    //       this.props.profileDetails.is_allowed === false &&
-    //       this.props.profileDetails.is_kyc_done !== 2
+    //       this.state.is_allowed === false &&
+    //       this.state.is_kyc_done !== 2
     //     ) {
     //       // alert("ELSE IF");
     //       this.setState({ completeKYC: true });
@@ -211,28 +182,39 @@ class Conversion extends React.Component {
             <ContainerConversion>
               <HeadStyle>Conversion Methods</HeadStyle>
               <RowConStyle>
-                <ColConStyle onClick={this.cryptoAccess}>
-                  <ColHeadConStyle>Crypto Only</ColHeadConStyle>
-                  <ColSubRow>
-                    <ConIconWrap>
-                      {this.props.theme === true ? (
-                        <img src="/images/bitcoin_icon_dark.png" />
-                      ) : (
-                        <img src="/images/bitcoin_icon.png" />
-                      )}
-                    </ConIconWrap>
-                    <ConArrowWrap>
-                      <Icon type="arrow-right" />
-                    </ConArrowWrap>
-                    <ConIconWrap>
-                      {this.props.theme === true ? (
-                        <img src="/images/eth_icon_dark.png" />
-                      ) : (
-                        <img src="/images/eth_icon.png" />
-                      )}
-                    </ConIconWrap>
-                  </ColSubRow>
-                </ColConStyle>
+                <TokComingSoonWrap
+                  href={`${globalVariables.WordpressSiteURL}/coming-soon`}
+                >
+                  <ColConTokStyle
+                  // onClick={this.cryptoAccess}
+                  >
+                    <ColHeadConStyle>Crypto Only</ColHeadConStyle>
+                    <ColSubRow>
+                      <ConIconWrap>
+                        {this.props.theme === true ? (
+                          <img src="/images/bitcoin_icon_dark.png" />
+                        ) : (
+                          <img src="/images/bitcoin_icon.png" />
+                        )}
+                      </ConIconWrap>
+                      <ConArrowWrap>
+                        <Icon type="arrow-right" />
+                      </ConArrowWrap>
+                      <ConIconWrap>
+                        {this.props.theme === true ? (
+                          <img src="/images/eth_icon_dark.png" />
+                        ) : (
+                          <img src="/images/eth_icon.png" />
+                        )}
+                      </ConIconWrap>
+                    </ColSubRow>
+                  </ColConTokStyle>
+                  <TokComingSoon
+                    href={`${globalVariables.WordpressSiteURL}/coming-soon`}
+                  >
+                    Coming Soon
+                  </TokComingSoon>
+                </TokComingSoonWrap>
                 <ColConStyle onClick={this.simplexAccess}>
                   <ColHeadConStyle>Credit Card</ColHeadConStyle>
                   <ColSubRow>
@@ -346,6 +328,7 @@ function mapStateToProps(state) {
           ? state.simpleReducer.profileDetails.data[0]
           : ""
         : "",
+    isLoggedIn: state.simpleReducer.isLoggedIn,
     theme:
       state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
   };

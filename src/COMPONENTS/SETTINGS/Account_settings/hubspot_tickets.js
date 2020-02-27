@@ -149,7 +149,6 @@ class HubSpotTickets extends Component {
                             {temp.properties.subject &&
                               temp.properties.subject.value}
                           </Title>
-
                           <Desc
                             className={
                               this.state.showDescription ? "" : "description"
@@ -158,7 +157,34 @@ class HubSpotTickets extends Component {
                             {temp.properties.content &&
                               temp.properties.content.value}
                           </Desc>
-                          {!this.state.showDescription ? (
+                          {temp.properties.content.value.length > 460 ? (
+                            <span>
+                              {!this.state.showDescription ? (
+                                <TicketA
+                                  onClick={() => {
+                                    this.setState({
+                                      showDescription: true
+                                    });
+                                  }}
+                                >
+                                  Read more
+                                </TicketA>
+                              ) : (
+                                <TicketA
+                                  onClick={() => {
+                                    this.setState({
+                                      showDescription: false
+                                    });
+                                  }}
+                                >
+                                  Read less
+                                </TicketA>
+                              )}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                          {/* {!this.state.showDescription ? (
                             <TicketA
                               onClick={() => {
                                 this.setState({
@@ -178,7 +204,7 @@ class HubSpotTickets extends Component {
                             >
                               Read less
                             </TicketA>
-                          )}
+                          )} */}
                         </Col>
                       </TicketWrap>
                     ))
