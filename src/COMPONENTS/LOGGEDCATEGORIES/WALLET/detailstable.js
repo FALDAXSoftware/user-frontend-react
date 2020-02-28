@@ -164,34 +164,34 @@ class DetailsTable extends React.Component {
                         let url;
                         if (me.props.coin_code != undefined) {
                           switch (me.props.coin_code) {
-                            case "tbtc":
+                            case "btc":
                               url =
-                                "https://blockstream.info/testnet/tx/" +
+                                "https://blockchair.com/bitcoin/transaction/" +
                                 details[index].transaction_id;
                               break;
-                            case "txrp":
+                            case "xrp":
                               url =
-                                "https://test.bithomp.com/explorer/" +
+                                "https://blockchair.com/ripple/transaction/" +
                                 details[index].transaction_id;
                               break;
-                            case "tltc":
+                            case "ltc":
                               url =
-                                "https://blockexplorer.one/litecoin/testnet/tx/" +
+                                "https://blockchair.com/litecoin/transaction/" +
                                 details[index].transaction_id;
                               break;
-                            case "tbch":
+                            case "bch":
                               url =
-                                "https://explorer.bitcoin.com/tbch/tx/" +
+                                "https://blockchair.com/bitcoin-cash/transaction/" +
                                 details[index].transaction_id;
                               break;
-                            case "teth":
+                            case "eth":
                               url =
-                                "https://kovan.etherscan.io/tx/" +
+                                "https://etherscan.io/tx/" +
                                 details[index].transaction_id;
                               break;
                             case "SUSU":
                               url =
-                                "http://explore.susukino.com/tx/" +
+                                "https://explore.susukino.com/tx/" +
                                 details[index].transaction_id;
                               break;
                             default:
@@ -256,9 +256,22 @@ class DetailsTable extends React.Component {
                               {parseFloat(details[index].total).toFixed(8)}
                             </td>
                             <td>
-                              <a target="_blank" href={url}>
+                              {me.props.coin_code === "xrp" ? (
+                                details[index].transaction_id ? (
+                                  <a target="_blank" href={url}>
+                                    {details[index].transaction_id}
+                                  </a>
+                                ) : (
+                                  "-"
+                                )
+                              ) : (
+                                <a target="_blank" href={url}>
+                                  {details[index].transaction_id}
+                                </a>
+                              )}
+                              {/* <a target="_blank" href={url}>
                                 {details[index].transaction_id}
-                              </a>
+                              </a> */}
                             </td>
                             {/* <td>
 

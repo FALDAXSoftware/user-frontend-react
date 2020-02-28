@@ -27,6 +27,7 @@ import {
   CreateWalletRow
 } from "../../../STYLED-COMPONENTS/SIMPLEX/simplexStyle";
 import styled from "styled-components";
+import { APIUtility } from "../../../httpHelper";
 
 export const FormValueDisplay = styled.form`
   display: none;
@@ -64,13 +65,14 @@ class SimplexExchange extends React.Component {
       coin_name: null,
       currencyList: [],
       showTFAModal: false,
-      checkOTP: false
+      checkOTP: false,
+      btnDisabled: true
     };
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
         message: `Amount must be greater than or equal to 50`,
         rule: (val, params, validator) => {
-          if (val >= this.state.minCurrency) {
+          if (parseFloat(val) >= parseFloat(this.state.minCurrency)) {
             return true;
           } else {
             return false;
@@ -81,7 +83,7 @@ class SimplexExchange extends React.Component {
       maxCurrencyValid: {
         message: `Amount must be less than or equal to 20,000`,
         rule: (val, params, validator) => {
-          if (val > parseInt(this.state.maxCurrency)) {
+          if (parseFloat(val) > parseFloat(this.state.maxCurrency)) {
             return false;
           } else {
             return true;
@@ -126,60 +128,64 @@ class SimplexExchange extends React.Component {
   }
 
   componentWillMount() {
+    // if (
+    //   this.props.profileDetails.is_allowed === true &&
+    //   this.props.profileDetails.is_kyc_done === 2
+    // ) {
+    //   if (this.props.location.pathname !== "/simplex-exchange")
+    //     this.props.history.push("/simplex-exchange");
     if (
-      this.props.profileDetails.is_allowed === true &&
-      this.props.profileDetails.is_kyc_done === 2
+      this.props.location.state === undefined ||
+      this.props.location.state.currencyToPay === "" ||
+      this.props.location.state.currencyToPay === null
     ) {
-      if (this.props.location.pathname !== "/simplex-exchange")
-        this.props.history.push("/simplex-exchange");
-      if (
-        this.props.location.state === undefined ||
-        this.props.location.state.currencyToPay === "" ||
-        this.props.location.state.currencyToPay === null
-      ) {
-        this.setState({
-          currencyToPay: null,
-          currencyToGet: null,
-          crypto: "XRP",
-          currency: "USD",
-          quote_id: null,
-          address: null,
-          cryptoCode: null,
-          wallet_details: null,
-          coin_name: null
-        });
-        this.props.history.push("/simplex");
-      } else {
-        this.setState({
-          currencyToPay: this.props.location.state.currencyToPay,
-          currencyToGet: this.props.location.state.currencyToGet,
-          crypto: this.props.location.state.crypto,
-          currency: this.props.location.state.currency,
-          quote_id: this.props.location.state.id,
-          address: this.props.location.state.wallet_address,
-          cryptoCode: this.props.location.state.crypto_code,
-          wallet_details: this.props.location.state.wallet_address,
-          coin_name: this.props.location.state.coin_name
-        });
-      }
+      this.setState({
+        currencyToPay: null,
+        currencyToGet: null,
+        crypto: "XRP",
+        currency: "USD",
+        quote_id: null,
+        address: null,
+        cryptoCode: null,
+        wallet_details: null,
+        coin_name: null
+      });
+      this.props.history.push("/simplex");
     } else {
-      if (
-        this.props.profileDetails.is_allowed === false &&
-        this.props.profileDetails.is_kyc_done !== 2
-      ) {
-        this.props.history.push("/conversion");
-        // console.log("history", this.props.history);
-      } else {
-        this.setState({ countryAccess: true });
-        this.props.history.push("/conversion");
-        // console.log("history", this.props.history);
-      }
+      this.setState({
+        currencyToPay: this.props.location.state.currencyToPay,
+        currencyToGet: this.props.location.state.currencyToGet,
+        crypto: this.props.location.state.crypto,
+        currency: this.props.location.state.currency,
+        quote_id: this.props.location.state.id,
+        address: this.props.location.state.wallet_address,
+        cryptoCode: this.props.location.state.crypto_code,
+        wallet_details: this.props.location.state.wallet_address,
+        coin_name: this.props.location.state.coin_name
+      });
     }
+    // } else {
+    //   if (
+    //     this.props.profileDetails.is_allowed === false &&
+    //     this.props.profileDetails.is_kyc_done !== 2
+    //   ) {
+    //     this.props.history.push("/conversion");
+    //     // console.log("history", this.props.history);
+    //   } else {
+    //     this.setState({ countryAccess: true });
+    //     this.props.history.push("/conversion");
+    //     // console.log("history", this.props.history);
+    //   }
+    // }
   }
 
-  componentDidMount(e) {
-    this.getCrypto();
-    this.calculateDigitalCurrency();
+  async componentDidMount(e) {
+    try {
+      await this.getCrypto();
+      await this.calculateDigitalCurrency();
+    } catch (error) {
+    } finally {
+    }
     // console.log(
     //   "this.props.profileDetails.is_kyc_done",
     //   this.props.profileDetails.is_twofactor
@@ -194,125 +200,220 @@ class SimplexExchange extends React.Component {
       });
     }
   }
-  getCrypto() {
-    this.setState({
-      loader: true
-    });
-    fetch(API_URL + `/get-simplex-coin-list`, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
+
+  async getCrypto() {
+    try {
+      this.setState({ loader: true });
+      let result = await APIUtility.getCrypto(this.props.isLoggedIn);
+      if (result.status == 200) {
+        this.setState({
+          currencyList: result.object.fiat,
+          cryptoList: result.object.coinList
+        });
       }
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.status == 200) {
-          // console.log("responsedata 200", responseData.object.coinList);
-          this.setState({
-            currencyList: responseData.object.fiat,
-            cryptoList: responseData.object.coinList,
-            loader: false
-          });
-        }
-      })
-      .catch(error => {});
-  }
-  calculateDigitalCurrency() {
-    this.setState({
-      loader: true
-    });
-    if (
-      this.state.currencyToPay === "" ||
-      this.state.currencyToPay === null ||
-      this.state.currencyToPay <= 0
-    ) {
-      this.setState({
-        loader: false,
-        currencyToGet: null
-      });
-    } else {
-      var values = {
-        digital_currency: this.state.crypto,
-        fiat_currency: this.state.currency,
-        requested_currency: this.state.currency,
-        requested_amount: this.state.currencyToPay
-      };
-      fetch(`${API_URL}/get-qoute-details`, {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        },
-        body: JSON.stringify(values)
-      })
-        .then(response => response.json())
-        .then(responseData => {
-          if (responseData.status === 200) {
-            if (responseData.data.error) {
-              this.openNotificationWithIcon(
-                "error",
-                "Error",
-                responseData.data.errors[0].message
-              );
-              this.setState({
-                loader: false
-              });
-            } else {
-              if (responseData.walletDetails === undefined) {
-                // alert("if");
-                this.setState({
-                  loader: false,
-                  currencyToGet: responseData.data.digital_money.amount,
-                  quote_id: responseData.data.quote_id,
-                  cryptoCode: responseData.coinDetails.coin_code,
-                  wallet_details: "",
-                  address: "",
-                  coin_name: responseData.coinDetails.coin_name
-                });
-              } else {
-                // alert("else", responseData.coinDetails.coin_name);
-                this.setState({
-                  loader: false,
-                  currencyToGet: responseData.data.digital_money.amount,
-                  quote_id: responseData.data.quote_id,
-                  address: responseData.walletDetails.receive_address,
-                  wallet_details: responseData.walletDetails.receive_address,
-                  coin_name: responseData.coinDetails.coin_name
-                });
-              }
-            }
-          } else if (responseData.status === 500) {
-            this.setState({ loader: false });
-            this.openNotificationWithIcon(
-              "error",
-              "Error",
-              responseData.message
-            );
-          } else {
-            this.setState({ loader: false });
-            this.openNotificationWithIcon(
-              "error",
-              "Error",
-              responseData.message
-            );
-          }
-          // this.setState({
-          //   loader: false,
-          //   currencyToGet: responseData.data.digital_money.amount,
-          //   quote_id: responseData.data.quote_id
-          // });
-        })
-        .catch(error => {});
+    } catch (error) {
+      console(error);
+    } finally {
+      this.setState({ loader: false });
     }
   }
+
+  async calculateDigitalCurrency() {
+    try {
+      this.setState({ loader: true });
+      if (
+        this.state.currencyToPay === "" ||
+        this.state.currencyToPay === null ||
+        this.state.currencyToPay <= 0
+      ) {
+        this.setState({
+          // loader: false,
+          currencyToGet: null
+        });
+      } else {
+        var values = {
+          digital_currency: this.state.crypto,
+          fiat_currency: this.state.currency,
+          requested_currency: this.state.currency,
+          requested_amount: this.state.currencyToPay
+        };
+      }
+      let result2 = await APIUtility.calculateDigitalCurrency(
+        this.props.isLoggedIn,
+        values
+      );
+      if (result2.status == 200) {
+        if (result2.data.error) {
+          this.openNotificationWithIcon(
+            "error",
+            "Error",
+            result2.data.errors[0].message
+          );
+          this.setState({
+            // loader: false
+          });
+        } else {
+          if (result2.walletDetails === undefined) {
+            // alert("if");
+            this.setState({
+              // loader: false,
+              currencyToGet: result2.data.digital_money.amount,
+              quote_id: result2.data.quote_id,
+              cryptoCode: result2.coinDetails.coin_code,
+              wallet_details: "",
+              address: "",
+              coin_name: result2.coinDetails.coin_name,
+              btnDisabled: false
+            });
+          } else {
+            this.setState({
+              currencyToGet: result2.data.digital_money.amount,
+              quote_id: result2.data.quote_id,
+              address: result2.walletDetails.receive_address,
+              wallet_details: result2.walletDetails.receive_address,
+              coin_name: result2.coinDetails.coin_name,
+              btnDisabled: false
+            });
+          }
+        }
+      } else {
+        this.openNotificationWithIcon("error", "Error", result2.message);
+      }
+    } catch (error) {
+      console.log(error);
+      this.openNotificationWithIcon("error", "Error", error.response.message);
+    } finally {
+      this.setState({ loader: false });
+    }
+  }
+
+  // getCrypto() {
+  //   this.setState({
+  //     loader: true
+  //   });
+  //   fetch(API_URL + `/get-simplex-coin-list`, {
+  //     method: "get",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + this.props.isLoggedIn
+  //     }
+  //   })
+  //     .then(response => response.json())
+  //     .then(responseData => {
+  //       if (responseData.status == 200) {
+  //         // console.log("responsedata 200", responseData.object.coinList);
+  //         this.setState({
+  //           currencyList: responseData.object.fiat,
+  //           cryptoList: responseData.object.coinList
+  //         });
+  //       }
+  //       this.setState({
+  //         loader: false
+  //       });
+  //     })
+  //     .catch(error => {});
+  // }
+  // calculateDigitalCurrency() {
+  //   this.setState({
+  //     loader: true
+  //   });
+  //   if (
+  //     this.state.currencyToPay === "" ||
+  //     this.state.currencyToPay === null ||
+  //     this.state.currencyToPay <= 0
+  //   ) {
+  //     this.setState({
+  //       // loader: false,
+  //       currencyToGet: null
+  //     });
+  //   } else {
+  //     var values = {
+  //       digital_currency: this.state.crypto,
+  //       fiat_currency: this.state.currency,
+  //       requested_currency: this.state.currency,
+  //       requested_amount: this.state.currencyToPay
+  //     };
+  //     fetch(`${API_URL}/get-qoute-details`, {
+  //       method: "post",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + this.props.isLoggedIn
+  //       },
+  //       body: JSON.stringify(values)
+  //     })
+  //       .then(response => response.json())
+  //       .then(responseData => {
+  //         if (responseData.status === 200) {
+  //           if (responseData.data.error) {
+  //             this.openNotificationWithIcon(
+  //               "error",
+  //               "Error",
+  //               responseData.data.errors[0].message
+  //             );
+  //             this.setState({
+  //               // loader: false
+  //             });
+  //           } else {
+  //             if (responseData.walletDetails === undefined) {
+  //               // alert("if");
+  //               this.setState({
+  //                 // loader: false,
+  //                 currencyToGet: responseData.data.digital_money.amount,
+  //                 quote_id: responseData.data.quote_id,
+  //                 cryptoCode: responseData.coinDetails.coin_code,
+  //                 wallet_details: "",
+  //                 address: "",
+  //                 coin_name: responseData.coinDetails.coin_name,
+  //                 btnDisabled: false
+  //               });
+  //             } else {
+  //               // alert("else", responseData.coinDetails.coin_name);
+  //               this.setState({
+  //                 // loader: false,
+  //                 currencyToGet: responseData.data.digital_money.amount,
+  //                 quote_id: responseData.data.quote_id,
+  //                 address: responseData.walletDetails.receive_address,
+  //                 wallet_details: responseData.walletDetails.receive_address,
+  //                 coin_name: responseData.coinDetails.coin_name,
+  //                 btnDisabled: false
+  //               });
+  //             }
+  //           }
+  //         } else if (responseData.status === 500) {
+  //           this.setState({ loader: false });
+  //           this.openNotificationWithIcon(
+  //             "error",
+  //             "Error",
+  //             responseData.message
+  //           );
+  //         } else {
+  //           this.setState({ loader: false });
+  //           this.openNotificationWithIcon(
+  //             "error",
+  //             "Error",
+  //             responseData.message
+  //           );
+  //         }
+  //         // this.setState({
+  //         //   loader: false
+  //         // });
+  //         // this.setState({
+  //         //   loader: false,
+  //         //   currencyToGet: responseData.data.digital_money.amount,
+  //         //   quote_id: responseData.data.quote_id
+  //         // });
+  //       })
+  //       .catch(error => {});
+  //   }
+  // }
   handleCurrencyPayChange(e) {
     clearTimeout(this.timeout);
     if (this.state.loader) {
       return false;
     }
+    // console.log("^^^^", e.target.value);
     this.setState(
       {
         currencyToPay: e.target.value
@@ -565,9 +666,12 @@ class SimplexExchange extends React.Component {
                   <ConversionInput
                     type="text"
                     placeholder="0"
-                    step="0.01"
+                    // step="0.01"
                     value={this.state.currencyToPay}
-                    onChange={this.handleCurrencyPayChange}
+                    // onChange={this.handleCurrencyPayChange}
+                    onChange={e => {
+                      this.handleCurrencyPayChange(e);
+                    }}
                   />
                   {this.validator1.message(
                     "amount pay",
@@ -717,6 +821,7 @@ class SimplexExchange extends React.Component {
                         type="primary"
                         size="large"
                         block
+                        disabled={this.state.btnDisabled}
                       >
                         Continue
                       </ConversionSubmitBtn>

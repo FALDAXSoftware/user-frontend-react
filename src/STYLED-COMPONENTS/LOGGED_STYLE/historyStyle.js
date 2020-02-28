@@ -34,13 +34,56 @@ export const HisWrap = styled.div`
   padding-top: 25px;
   padding-left: 15px;
   padding-right: 15px;
+  & .tabpane_crypto {
+    position: relative;
+    > a {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      font-size: 24px;
+      line-height: 30px;
+      font-weight: 600;
+      -webkit-text-decoration: none;
+      text-decoration: none;
+      color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
+    }
+  }
 `;
 export const Tablediv = styled.div`
   border: 1px solid #d8d8d8;
-  margin-top: 25px;
+  // margin-top: 25px;
   & .table-responsive {
     border: none !important;
     margin-bottom: 0px !important;
+  }
+  &.tablediv_crypto:after {
+    content: "";
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    position: absolute;
+    background: ${props =>
+      props.theme.mode === "dark" ? "#4d5861" : "#ffffff"};
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.7;
   }
 `;
 export const HisTable = styled(Table)`

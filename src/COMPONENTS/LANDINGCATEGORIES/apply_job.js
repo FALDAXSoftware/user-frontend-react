@@ -374,8 +374,9 @@ class ApplyJob extends Component {
               () => {
                 this.validator.hideMessages();
                 this.forceUpdate();
-                self.captchaDemo.reset();
-                self.captchaDemo.execute();
+                this.onLoadRecaptcha();
+                // self.captchaDemo.reset();
+                // self.captchaDemo.execute();
               }
             );
           })

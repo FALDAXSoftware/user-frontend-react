@@ -33,6 +33,44 @@ const APIUtility = {
       },
       data: data
     });
+  },
+  getPanicStatus: function(token) {
+    return axios({
+      method: "get",
+      url: API_URL + "/check-panic-status",
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    });
+  },
+  getUserTradeStatus: function(token) {
+    return axios({
+      method: "get",
+      url: API_URL + "/users/get-user-trade-status",
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    });
+  },
+  getCrypto: function(token) {
+    return axios({
+      method: "get",
+      url: API_URL + "/get-simplex-coin-list",
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    });
+  },
+  calculateDigitalCurrency: function(token, data) {
+    return axios({
+      method: "post",
+      url: API_URL + "/get-qoute-details",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json"
+      },
+      data: data
+    });
   }
 };
 export { APIUtility };
