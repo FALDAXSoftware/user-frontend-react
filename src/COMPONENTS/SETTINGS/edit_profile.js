@@ -75,11 +75,11 @@ class Editprofile extends Component {
   }
   componentDidMount() {
     this.getWalletSummary();
-    console.log(
-      "^^tier^",
-      this.props.profileDetails.is_user_updated,
-      this.props.profileDetails.is_kyc_done
-    );
+    // console.log(
+    //   "^^tier^",
+    //   this.props.profileDetails.is_user_updated,
+    //   this.props.profileDetails.is_kyc_done
+    // );
     if (
       !this.props.profileDetails.is_user_updated &&
       this.props.profileDetails.is_kyc_done != "2"

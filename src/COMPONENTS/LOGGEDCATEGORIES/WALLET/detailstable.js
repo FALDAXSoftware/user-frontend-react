@@ -256,9 +256,22 @@ class DetailsTable extends React.Component {
                               {parseFloat(details[index].total).toFixed(8)}
                             </td>
                             <td>
-                              <a target="_blank" href={url}>
+                              {me.props.coin_code === "xrp" ? (
+                                details[index].transaction_id ? (
+                                  <a target="_blank" href={url}>
+                                    {details[index].transaction_id}
+                                  </a>
+                                ) : (
+                                  "-"
+                                )
+                              ) : (
+                                <a target="_blank" href={url}>
+                                  {details[index].transaction_id}
+                                </a>
+                              )}
+                              {/* <a target="_blank" href={url}>
                                 {details[index].transaction_id}
-                              </a>
+                              </a> */}
                             </td>
                             {/* <td>
 

@@ -61,7 +61,7 @@ class Conversion extends React.Component {
   //   });
   // }
   async componentDidMount() {
-    console.log("^^^^conversion", this.props.profileDetails);
+    // console.log("^^^^conversion", this.props.profileDetails);
     if (!this.props.profileDetails) {
       this.props.getProfileDataAction(this.props.isLoggedIn);
     }
@@ -189,7 +189,7 @@ class Conversion extends React.Component {
               <HeadStyle>Conversion Methods</HeadStyle>
               <RowConStyle>
                 <TokComingSoonWrap
-                  href={`${globalVariables.WordpressSiteURL}/coming-soon`}
+                  href={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
                 >
                   <ColConTokStyle
                   // onClick={this.cryptoAccess}
@@ -216,7 +216,7 @@ class Conversion extends React.Component {
                     </ColSubRow>
                   </ColConTokStyle>
                   <TokComingSoon
-                    href={`${globalVariables.WordpressSiteURL}/coming-soon`}
+                    href={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
                   >
                     Coming Soon
                   </TokComingSoon>

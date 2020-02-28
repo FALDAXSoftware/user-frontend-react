@@ -685,7 +685,7 @@ class LoggedNavigation extends Component {
         <Menu.Item key="0">
           <a
             className="tokenlink"
-            href={`${globalVariables.WordpressSiteURL}/coming-soon`}
+            href={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
           >
             Crypto Only
           </a>
@@ -843,7 +843,7 @@ class LoggedNavigation extends Component {
                   <Menu.Item key="0">
                     <a
                       className="tokenlink"
-                      href={`${globalVariables.WordpressSiteURL}/coming-soon`}
+                      href={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
                     >
                       Crypto Only
                     </a>

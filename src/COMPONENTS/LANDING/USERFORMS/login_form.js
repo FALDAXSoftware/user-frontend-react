@@ -656,7 +656,7 @@ class Login_Form extends Component {
   componentWillReceiveProps(props, newProps) {
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
-        console.log("thisd^^^", props.errorStatus.user.is_kyc_done);
+        // console.log("thisd^^^", props.errorStatus.user.is_kyc_done);
         if (this.state.verify == true) {
           this.openNotificationWithIcon(
             "success",
@@ -872,7 +872,7 @@ class Login_Form extends Component {
       ) {
         this.props.history.push(this.props.location.state.from.pathname);
       } else {
-        console.log("^^^^logimn", this.props.isKYCDone);
+        // console.log("^^^^logimn", this.props.isKYCDone);
         if (this.props.isKYCDone == 2) {
           this.props.history.push("/conversion");
         } else {
