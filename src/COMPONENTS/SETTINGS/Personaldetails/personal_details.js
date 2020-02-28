@@ -314,8 +314,10 @@ class PersonalDetails extends Component {
       agreeCheck: false,
       agreeTermsShow: false,
       editMode: false,
-      isFirstLogin: ""
+      isFirstLogin: "",
+      profileDetails: this.props.profileDetails
     };
+    this.datePickerChild = React.createRef();
     this.handleProfile = this.handleProfile.bind(this);
   }
   static propTypes = {
@@ -1205,10 +1207,37 @@ class PersonalDetails extends Component {
     });
   };
 
+  onKycCancel = () => {
+    this.setState(
+      {
+        date_format: this.state.profileDetails.date_format,
+        fiat: this.state.profileDetails.fiat,
+        stateSelected: this.state.profileDetails.state,
+        countrySelected: this.state.profileDetails.country,
+        citySelected: this.state.profileDetails.city_town,
+        editMode: false
+      },
+      () => {
+        this.datePickerChild.current.resetDatePicker();
+        this.props.form.resetFields();
+        // this.props.getProfileDataAction(this.props.isLoggedIn);
+        document.querySelectorAll(".first_msg")[0].style.display = "none";
+        document.querySelectorAll(".last_msg")[0].style.display = "none";
+        document.querySelectorAll(".country_msg")[0].style.display = "none";
+        document.querySelectorAll(".dob_msg")[0].style.display = "none";
+        document.querySelectorAll(".street1_msg")[0].style.display = "none";
+        document.querySelectorAll(".street2_msg")[0].style.display = "none";
+        /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
+        document.querySelectorAll(".postal_msg")[0].style.display = "none";
+        document.querySelectorAll(".df_msg")[0].style.display = "none";
+      }
+    );
+  };
+
   render() {
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
-    const { profileDetails } = this.props;
+    const { profileDetails } = this.state;
     var me = this;
 
     return (
@@ -1332,6 +1361,7 @@ class PersonalDetails extends Component {
                   >
                     <Datebirth>Date of Birth*</Datebirth>
                     <Datepicker
+                      ref={this.datePickerChild}
                       {...this.props}
                       onDateChange={(value, field) =>
                         this.onDateChange(value, field)
@@ -1552,47 +1582,7 @@ class PersonalDetails extends Component {
                             Save
                           </Save>
                         )}
-                        <Save
-                          type="primary"
-                          onClick={() => {
-                            this.setState(
-                              {
-                                editMode: false
-                              },
-                              () => {
-                                this.props.form.resetFields();
-                                this.props.getProfileDataAction(
-                                  this.props.isLoggedIn
-                                );
-                                document.querySelectorAll(
-                                  ".first_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".last_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".country_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".dob_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".street1_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".street2_msg"
-                                )[0].style.display = "none";
-                                /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
-                                document.querySelectorAll(
-                                  ".postal_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".df_msg"
-                                )[0].style.display = "none";
-                              }
-                            );
-                          }}
-                        >
+                        <Save type="primary" onClick={this.onKycCancel}>
                           Cancel
                         </Save>
                       </div>

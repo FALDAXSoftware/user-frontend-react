@@ -92,6 +92,21 @@ export default class Datepicker extends Component {
       }
     }
   }
+
+  resetDatePicker = () => {
+    let dob = this.props.profileDetails.dob;
+    if (dob) {
+      dob = dob.split("-");
+      dob = new Date(dob[1] + "/" + dob[0] + "/" + dob[2]);
+      if (dob != "Invalid Date") {
+        this.setState({
+          day: dob.getDate(),
+          month: dob.getMonth(),
+          year: dob.getFullYear()
+        });
+      }
+    }
+  };
   componentWillReceiveProps(newProps) {
     if (
       this.props.profileDetails.dob !== newProps.profileDetails.dob &&
