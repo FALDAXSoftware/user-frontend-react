@@ -7,6 +7,7 @@ import styled, { consolidateStreamedStyles } from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import moment from "moment";
+import { connect } from "react-redux";
 /* Styled-Components */
 
 /* Components */
@@ -16,6 +17,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import TFAModal from "SHARED-COMPONENTS/TFAModal";
 import { parse } from "@fortawesome/fontawesome-svg-core";
 import NumberFormat from "react-number-format";
+import { LogoutUser } from "../../../ACTIONS/authActions";
 
 let { API_URL } = globalVariables;
 const WalletModal = styled(Modal)`
@@ -506,6 +508,14 @@ class WalletPopup extends Component {
             this.setState({
               showTFAModal: true
             });
+          } else if (responseData.status === 403) {
+            // this.openNotificationWithIcon("error", "Error", responseData.err);
+            let formData = {
+              user_id: this.props.profileDetails.id,
+              jwt_token: this.props.isLoggedIn
+            };
+            this.props.LogoutUser(this.props.isLoggedIn, formData);
+            this.openNotificationWithIcon("error", "Error", responseData.err);
           } else {
             if (responseData.status !== 402)
               this.setState({
@@ -921,5 +931,22 @@ class WalletPopup extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data !== undefined
+          ? state.simpleReducer.profileDetails.data[0]
+          : ""
+        : "",
+    isLoggedIn: state.simpleReducer.isLoggedIn
+      ? state.simpleReducer.isLoggedIn
+      : ""
+  };
+}
+const mapDispatchToProps = dispatch => ({
+  // Logout: () => dispatch(Logout()),
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
 
-export default WalletPopup;
+export default connect(mapStateToProps, mapDispatchToProps)(WalletPopup);

@@ -55,6 +55,7 @@
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^4.0.8",
     "react-scripts": "^3.3.0",
+    "react-show-more": "^2.0.0",
     "react-simple-maps": "^0.12.1",
     "react-slick": "^0.23.1",
     "react-swipe-events": "^1.0.3",
@@ -82,8 +83,7 @@
   "devDependencies": {
     "dotenv": "^6.2.0",
     "react-masonry-css": "^1.0.12",
-    "webpack": "^4.41.2",
-    "webpack-dev-server": "3.10.1"
+    "webpack": "^4.41.2"
   },
   "browserslist": {
     "production": [

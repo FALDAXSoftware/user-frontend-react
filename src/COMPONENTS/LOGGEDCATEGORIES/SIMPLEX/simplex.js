@@ -52,13 +52,16 @@ class Simplex extends React.Component {
       currencyList: [],
       wallet_address: "",
       crypto_code: "",
-      coin_name: ""
+      coin_name: "",
+      btnDisabled: true,
+      is_kyc_done: "",
+      is_allowed: ""
     };
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
         message: `Amount must be greater than or equal to 50`,
         rule: (val, params, validator) => {
-          if (val >= parseInt(this.state.minCurrency)) {
+          if (parseFloat(val) >= parseFloat(this.state.minCurrency)) {
             return true;
           } else {
             return false;
@@ -69,7 +72,7 @@ class Simplex extends React.Component {
       maxCurrencyValid: {
         message: `Amount must be less than or equal to 20,000`,
         rule: (val, params, validator) => {
-          if (val > parseInt(this.state.maxCurrency)) {
+          if (parseFloat(val) > parseFloat(this.state.maxCurrency)) {
             return false;
           } else {
             return true;
@@ -126,28 +129,29 @@ class Simplex extends React.Component {
   }
 
   componentWillMount() {
-    if (
-      this.props.profileDetails.is_allowed === true &&
-      this.props.profileDetails.is_kyc_done === 2
-    ) {
-      if (this.props.location.pathname !== "/simplex")
-        this.props.history.push("/simplex");
-    } else {
-      if (
-        this.props.profileDetails.is_allowed === false &&
-        this.props.profileDetails.is_kyc_done !== 2
-      ) {
-        this.props.history.push("/conversion");
-      } else {
-        this.setState({ countryAccess: true });
-        this.props.history.push("/conversion");
-      }
-    }
+    // if (
+    //   this.props.profileDetails.is_allowed === true &&
+    //   this.props.profileDetails.is_kyc_done === 2
+    // ) {
+    //   if (this.props.location.pathname !== "/simplex")
+    //     this.props.history.push("/simplex");
+    // } else {
+    //   if (
+    //     this.props.profileDetails.is_allowed === false &&
+    //     this.props.profileDetails.is_kyc_done !== 2
+    //   ) {
+    //     this.props.history.push("/conversion");
+    //   } else {
+    //     this.setState({ countryAccess: true });
+    //     this.props.history.push("/conversion");
+    //   }
+    // }
   }
 
   componentDidMount(e) {
     this.getCrypto();
   }
+
   // getCrypto() {
   //   this.setState({
   //     loader: true
@@ -252,7 +256,8 @@ class Simplex extends React.Component {
                   quote_id: responseData.data.quote_id,
                   crypto_code: responseData.coinDetails.coin_code,
                   wallet_address: "",
-                  coin_name: ""
+                  coin_name: "",
+                  btnDisabled: false
                 });
               } else {
                 this.setState({
@@ -260,7 +265,8 @@ class Simplex extends React.Component {
                   currencyToGet: responseData.data.digital_money.amount,
                   quote_id: responseData.data.quote_id,
                   wallet_address: responseData.walletDetails.receive_address,
-                  coin_name: responseData.coinDetails.coin_name
+                  coin_name: responseData.coinDetails.coin_name,
+                  btnDisabled: false
                 });
               }
             }
@@ -482,6 +488,7 @@ class Simplex extends React.Component {
                     type="primary"
                     size="large"
                     block
+                    disabled={this.state.btnDisabled}
                   >
                     Exchange Now
                   </ConversionSubmitBtn>

@@ -6,8 +6,6 @@ import { createForm, formShape } from "rc-form";
 import { Row, Col, Input, Button, notification, Radio, Checkbox } from "antd";
 import styled from "styled-components";
 import moment from "moment";
-import SimpleReactValidator from "simple-react-validator";
-import CountryData from "country-state-city";
 import AgreeTerms from "../../../SHARED-COMPONENTS/AgreeTerms";
 
 /* Components */
@@ -26,7 +24,6 @@ import { LogoutUser } from "ACTIONS/authActions";
 import { _DEFAULTPROFILE } from "CONSTANTS/images";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { Link } from "react-router-dom";
-import { IntlTelInputS } from "../../../STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 
 /* const Option = Select.Option; */
 const RadioGroup = Radio.Group;
@@ -44,103 +41,6 @@ export const HeaderCol = styled(Col)`
   padding-bottom: 12px;
   margin-left: 0px;
   font-family: "Open Sans";
-`;
-export const Firstname = styled.div`
-  font-size: 14.007px;
-  font-family: "Open Sans";
-  color: ${props =>
-    props.theme.mode === "dark"
-      ? "rgba( 152, 171, 215, 0.502 )"
-      : "rgba( 80, 80, 80, 0.502 )"};
-  -moz-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
-  -webkit-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
-  -ms-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
-  margin-bottom: 10px;
-`;
-export const Postal = styled(Firstname)`
-  @media (max-width: 767px) {
-    margin-top: 25px;
-  }
-`;
-const Postalkyc = styled(Postal)`
-  @media (max-width: 767px) {
-    margin-top: 0px;
-  }
-`;
-const PhoneDiv = styled.div`
-  > .intl-tel-input {
-    width: 95%;
-
-    @media (max-width: 992px) {
-      width: 95%;
-    }
-    @media (max-width: 767px) {
-      width: 100%;
-    }
-  }
-  & .form-control {
-    border: 1px solid #e2e6ea;
-    background-color: ${props =>
-      props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
-    border-radius: 5px;
-    min-height: 45px;
-    width: 100%;
-    padding-left: 5px;
-  }
-  & .selected-dial-code {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
-  }
-  &.mobile_field {
-    > .intl-tel-input {
-      & .selected-flag {
-        outline: none;
-        font-weight: 600;
-        background-color: ;
-        ${props =>
-          props.theme.mode === "dark"
-            ? "#06223c !important"
-            : "#f5f6fa !important"};
-      }
-      & .intl-tel-input.form-control {
-        font-weight: 600;
-        box-shadow: none;
-      }
-      & .intl-tel-input.form-control:focus {
-        box-shadow: none;
-      }
-      & .intl-tel-input.form-control:active,
-      .intl-tel-input.form-control:focus,
-      .intl-tel-input.form-control:hover {
-        border-color: rgb(0, 170, 250);
-      }
-    }
-  }
-  &.mobile_field.disabled {
-    > .intl-tel-input {
-      & .selected-flag {
-        cursor: not-allowed;
-        #b2b2b236background: #bfbfbf24 !important;
-        color: ${props =>
-          props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.4)"};
-      }
-      & .selected-dial-code {
-        color: ${props =>
-          props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.4)"};
-      }
-      & .intl-tel-input.form-control {
-        color: ${props =>
-          props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.4)"};
-        background-color: ${props =>
-          props.theme.mode === "dark" ? " #041422" : "#f5f6fa"};
-      }
-      & .intl-tel-input.form-control:active,
-      .intl-tel-input.form-control:focus,
-      .intl-tel-input.form-control:hover {
-        border: 1px solid #e2e6ea;
-      }
-    }
-  }
 `;
 const Mainrow = styled(Row)`
   margin-top: 40px;
@@ -183,7 +83,18 @@ export const FirstRow = styled(Row)`
     }
   }
 `;
-
+export const Firstname = styled.div`
+  font-size: 14.007px;
+  font-family: "Open Sans";
+  color: ${props =>
+    props.theme.mode === "dark"
+      ? "rgba( 152, 171, 215, 0.502 )"
+      : "rgba( 80, 80, 80, 0.502 )"};
+  -moz-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
+  -webkit-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
+  -ms-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
+  margin-bottom: 10px;
+`;
 export const Firstinput = styled(Input)`
   font-family: "Open Sans";
   font-size: 16;
@@ -274,7 +185,11 @@ export const FourthRow = styled(SecondRow)`
   margin-top: 25px;
 `;
 export const City = styled(Firstname)``;
-
+export const Postal = styled(Firstname)`
+  @media (max-width: 767px) {
+    margin-top: 25px;
+  }
+`;
 export const FifthRow = styled(Row)`
   text-align: left;
   margin-top: 50px;
@@ -400,32 +315,10 @@ class PersonalDetails extends Component {
       agreeTermsShow: false,
       editMode: false,
       isFirstLogin: "",
-      displayCountry: false,
-      phoneCountry: [],
-      mobile: "",
-      phoneCode: "",
-      fields: {
-        phone_number: "",
-        country_code: ""
-      },
-      countryJsonId: ""
+      profileDetails: this.props.profileDetails
     };
+    this.datePickerChild = React.createRef();
     this.handleProfile = this.handleProfile.bind(this);
-    this.changeNumber = this.changeNumber.bind(this);
-    this.clearValidation = this.clearValidation.bind(this);
-    this.validator = new SimpleReactValidator({
-      mobileVal: {
-        // name the rule
-        message: "Mobile No. should have only numbers.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
-          // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
-          // check that it is a valid IP address and is not blacklisted
-          var re = /^(\(?\+?[0-9]*\)?)?[0-9_\-\(\)]*$/;
-          var bool = re.test(String(val).toLowerCase());
-          return bool;
-        }
-      }
-    });
   }
   static propTypes = {
     form: formShape
@@ -435,153 +328,10 @@ class PersonalDetails extends Component {
 
   componentDidMount() {
     this.props.getProfileDataAction(this.props.isLoggedIn);
-    // console.log("^^^", this.props.profileDetails.countryJsonId);
-    var countrySelected = CountryData.getCountryById(
-      this.props.profileDetails.countryJsonId - 1
-    );
-    let country_code = "";
-    let arr = [];
-    let phoneCode = "";
-    if (countrySelected) {
-      country_code = countrySelected.sortname;
-      phoneCode = countrySelected.phonecode;
-      arr.push(country_code);
-      // console.log("^^^^phonecode", phoneCode);
-    }
-    if (this.props.profileDetails.country) {
-      this.setState({
-        displayCountry: true,
-        phoneCountry: arr,
-        phoneCode
-      });
-    }
-    if (this.props.profileDetails.phone_number) {
-      // let temp = this.props.profileDetails.phone_number;
-      // var mob = temp.split(`${this.state.phoneCode}`);
-      let phone = this.props.profileDetails.phone_number;
-      this.setState({
-        displayCountry: true,
-        fields: {
-          phone_number: phone
-        },
-        mobile: phone
-      });
-    }
-    if (this.props.profileDetails.country) {
-      this.setState({
-        countrySelected: this.props.profileDetails.country
-      });
-    }
-    if (this.props.profileDetails.state) {
-      this.setState({
-        stateSelected: this.props.profileDetails.state
-      });
-    }
-    if (this.props.profileDetails.city_town) {
-      this.setState({
-        citySelected: this.props.profileDetails.city_town
-      });
-    }
-    if (this.props.profileDetails.countryJsonId) {
-      this.setState({
-        countryJsonId: this.props.profileDetails.countryJsonId
-      });
-    }
   }
 
   componentWillReceiveProps(props) {
-    if (
-      props.profileDetails.countryJsonId &&
-      props.profileDetails.countryJsonId !==
-        this.props.profileDetails.countryJsonId
-    ) {
-      var countrySelected = CountryData.getCountryById(
-        props.profileDetails.countryJsonId - 1
-      );
-      let country_code = "";
-      let phoneCode = "";
-      let arr = [];
-      if (countrySelected) {
-        country_code = countrySelected.sortname;
-        phoneCode = countrySelected.phonecode;
-        arr.push(country_code);
-      }
-      if (props.profileDetails.country) {
-        this.setState({
-          displayCountry: true,
-          phoneCountry: arr,
-          phoneCode,
-          countryJsonId: props.profileDetails.countryJsonId
-        });
-      }
-    }
-    if (
-      props.profileDetails.phone_number &&
-      this.props.profileDetails.phone_number !==
-        props.profileDetails.phone_number
-    ) {
-      var countrySelected = CountryData.getCountryById(
-        props.profileDetails.countryJsonId - 1
-      );
-      let phoneCode = "";
-      if (countrySelected) {
-        phoneCode = countrySelected.phonecode;
-      }
-      // if (this.state.phoneCode) {
-      let temp = props.profileDetails.phone_number;
-      var mob = temp.split(`+${phoneCode}`);
-      // }
-      // let temp = props.profileDetails.phone_number;
-      // var mob = temp.split(`${this.state.phoneCode}`);
-      // console.log(
-      //   "this is phoneCode^^^^",
-      //   this.state.phoneCode,
-      //   props.profileDetails.phone_number,
-      //   phoneCode,
-      //   mob
-      // );
-      let phone = props.profileDetails.phone_number;
-      this.setState({
-        mobile: mob[1],
-        displayCountry: true,
-        fields: {
-          phone_number: phone
-        }
-      });
-    }
-    if (
-      props.profileDetails.country &&
-      this.props.profileDetails.country !== props.profileDetails.country
-    ) {
-      this.setState({
-        countrySelected: props.profileDetails.country
-      });
-    }
-    if (
-      props.profileDetails.state &&
-      this.props.profileDetails.state !== props.profileDetails.state
-    ) {
-      this.setState({
-        stateSelected: props.profileDetails.state
-      });
-    }
-    if (
-      props.profileDetails.city_town &&
-      this.props.profileDetails.city_town !== props.profileDetails.city_town
-    ) {
-      this.setState({
-        citySelected: props.profileDetails.city_town
-      });
-    }
-    if (
-      props.profileDetails.countryJsonId &&
-      this.props.profileDetails.countryJsonId !==
-        props.profileDetails.countryJsonId
-    ) {
-      this.setState({
-        countryJsonId: props.profileDetails.countryJsonId
-      });
-    }
+    // console.log(props);
     if (
       props.profileDetails.profile_pic !== null &&
       props.profileDetails.profile_pic !== undefined &&
@@ -693,7 +443,7 @@ class PersonalDetails extends Component {
     // var date = moment(tempDate, "DD/MM/YYYY").format("DD-MM-YYYY");
     // console.log("date--- after convert", date);
     this.setState({ Datedata: date });
-    // console.log("onDateChange", value, field);
+    console.log("onDateChange>>>", value, field);
     this.onChangeField(value, field);
   }
 
@@ -702,76 +452,12 @@ class PersonalDetails extends Component {
         It is passed as props(callback function) to Country component.
     */
 
-  // onCountryChange(country, state, city) {
-  //   this.setState({
-  //     countrySelected: country,
-  //     stateSelected: state,
-  //     citySelected: city
-  //   });
-  //   var loc = {
-  //     country: country,
-  //     state: state,
-  //     city: city
-  //   };
-  //   this.onChangeField(loc, "country");
-  // }
-  onCountryChange(country, state, city, country_code, phoneCode, phone_number) {
-    // console.log("^^^Before", this.state.countrySelected);
-    // console.log("^^^kyc", country, state, city, country_code);
-    let fields = this.state.fields;
-    if (this.state.countrySelected === country) {
-      if (this.state.fields.phone_number === phone_number) {
-        fields["phone_number"] = phone_number;
-        let mobile = phone_number;
-        this.setState({
-          phoneCountry: [country_code],
-          mobile
-        });
-      } else {
-        fields["phone_number"] = this.state.fields.phone_number;
-        let mobile = this.state.mobile;
-        this.setState({
-          phoneCountry: [country_code],
-          mobile
-        });
-      }
-    } else {
-      let mobile = this.state.mobile;
-      if (
-        this.state.phoneCountry &&
-        this.state.phoneCountry[0] != country_code
-      ) {
-        mobile = `+${phoneCode}`;
-      }
-
-      this.setState({
-        phoneCountry: [country_code],
-        mobile
-      });
-    }
-    let self = this;
-    fields["country_code"] = country_code;
-    this.setState(
-      {
-        countrySelected: country,
-        stateSelected: state,
-        citySelected: city,
-        fields
-      },
-      () => {
-        // To rerender the mobile input field
-        self.setState(
-          {
-            displayCountry: false
-          },
-          () => {
-            self.setState({
-              displayCountry: true
-            });
-          }
-        );
-      }
-    );
+  onCountryChange(country, state, city) {
+    this.setState({
+      countrySelected: country,
+      stateSelected: state,
+      citySelected: city
+    });
     var loc = {
       country: country,
       state: state,
@@ -779,6 +465,7 @@ class PersonalDetails extends Component {
     };
     this.onChangeField(loc, "country");
   }
+
   /* 
             Page: /editProfile --> Personal Details
             It is called when a file is selected on profile pic in personal details form.
@@ -1215,16 +902,12 @@ class PersonalDetails extends Component {
           this.props.profileDetails.country !== null) ||
           (this.state.countrySelected !== null &&
             this.state.countrySelected !== undefined &&
-            this.state.countrySelected !== "")) &&
-        this.validator.allValid()
+            this.state.countrySelected !== ""))
       ) {
         this.setState({
           agreeTermsShow: true
         });
       } else {
-        this.validator.showMessages();
-        // rerender to show messages for the first time
-        this.forceUpdate();
         this.openNotificationWithProfile(
           "error",
           "Error",
@@ -1328,6 +1011,7 @@ class PersonalDetails extends Component {
   };
   submit = () => {
     // e.preventDefault();
+
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
@@ -1350,8 +1034,7 @@ class PersonalDetails extends Component {
           this.props.profileDetails.country !== null) ||
           (this.state.countrySelected !== null &&
             this.state.countrySelected !== undefined &&
-            this.state.countrySelected !== "")) &&
-        this.validator.allValid()
+            this.state.countrySelected !== ""))
       ) {
         document.querySelectorAll(".first_msg")[0].style.display = "none";
         document.querySelectorAll(".last_msg")[0].style.display = "none";
@@ -1428,16 +1111,12 @@ class PersonalDetails extends Component {
         ) {
           profileData.append("profile_pic", this.state.profileImage);
         }
-        profileData.append("phone_number", this.state.fields.phone_number);
         // console.log("---------------->> USER API CALLED");
         this.props.profileupdateAction(this.props.isLoggedIn, profileData);
         this.setState({
           editMode: false
         });
       } else {
-        this.validator.showMessages();
-        // rerender to show messages for the first time
-        this.forceUpdate();
         this.openNotificationWithProfile(
           "error",
           "Error",
@@ -1528,37 +1207,37 @@ class PersonalDetails extends Component {
     });
   };
 
-  changeNumber(a, mob, code) {
-    // console.log("^^^code", code, mob);
-    if (mob.trim !== "") {
-      var temp = `+${code.dialCode}`;
-      var mobile = mob.includes(`+${code.dialCode}`) ? mob : temp.concat(mob);
-      let fields = this.state.fields;
-      fields["phone_number"] = mobile;
-      this.setState({ fields, mobile: mob }, () => {
-        // console.log(
-        //   "phone_number^^^^",
-        //   this.state.fields.phone_number,
-        //   this.state.mobile
-        // );
-      });
-    } else {
-      this.validator.showMessages();
-      // rerender to show messages for the first time
-      this.forceUpdate();
-    }
-  }
-
-  clearValidation() {
-    this.validator.hideMessages();
-    this.forceUpdate();
-    // rerender to hide messages for the first time
-  }
+  onKycCancel = () => {
+    this.setState(
+      {
+        date_format: this.state.profileDetails.date_format,
+        fiat: this.state.profileDetails.fiat,
+        stateSelected: this.state.profileDetails.state,
+        countrySelected: this.state.profileDetails.country,
+        citySelected: this.state.profileDetails.city_town,
+        editMode: false
+      },
+      () => {
+        this.datePickerChild.current.resetDatePicker();
+        this.props.form.resetFields();
+        // this.props.getProfileDataAction(this.props.isLoggedIn);
+        document.querySelectorAll(".first_msg")[0].style.display = "none";
+        document.querySelectorAll(".last_msg")[0].style.display = "none";
+        document.querySelectorAll(".country_msg")[0].style.display = "none";
+        document.querySelectorAll(".dob_msg")[0].style.display = "none";
+        document.querySelectorAll(".street1_msg")[0].style.display = "none";
+        document.querySelectorAll(".street2_msg")[0].style.display = "none";
+        /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
+        document.querySelectorAll(".postal_msg")[0].style.display = "none";
+        document.querySelectorAll(".df_msg")[0].style.display = "none";
+      }
+    );
+  };
 
   render() {
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
-    const { profileDetails } = this.props;
+    const { profileDetails } = this.state;
     var me = this;
 
     return (
@@ -1682,6 +1361,7 @@ class PersonalDetails extends Component {
                   >
                     <Datebirth>Date of Birth*</Datebirth>
                     <Datepicker
+                      ref={this.datePickerChild}
                       {...this.props}
                       onDateChange={(value, field) =>
                         this.onDateChange(value, field)
@@ -1743,6 +1423,7 @@ class PersonalDetails extends Component {
                     xxl={{ span: 24 }}
                   >
                     <CountryPick
+                      // {...this.props}
                       disabled={!this.state.editMode}
                       theme={this.props.theme}
                       country={
@@ -1760,27 +1441,8 @@ class PersonalDetails extends Component {
                           ? this.state.citySelected
                           : this.props.profileDetails.city_town
                       }
-                      country_id={this.state.countryJsonId}
-                      phone_number={this.state.fields.phone_number}
-                      // onCountryChange={(country, state, city) =>
-                      //   this.onCountryChange(country, state, city)
-                      // }
-                      onCountryChange={(
-                        country,
-                        state,
-                        city,
-                        country_code,
-                        phoneCode,
-                        phone_number
-                      ) =>
-                        this.onCountryChange(
-                          country,
-                          state,
-                          city,
-                          country_code,
-                          phoneCode,
-                          phone_number
-                        )
+                      onCountryChange={(country, state, city) =>
+                        this.onCountryChange(country, state, city)
                       }
                     />
                     <CountryMsg className="country_msg">
@@ -1788,63 +1450,6 @@ class PersonalDetails extends Component {
                     </CountryMsg>
                   </Col>
                 </FourthRow>
-                {this.state.displayCountry && this.state.phoneCountry ? (
-                  <FourthRow>
-                    <Col
-                      md={{ span: 24 }}
-                      lg={{ span: 24 }}
-                      xl={{ span: 24 }}
-                      xxl={{ span: 24 }}
-                    >
-                      <Postalkyc>Mobile No.*</Postalkyc>
-                      <PhoneDiv
-                        className={
-                          this.state.editMode
-                            ? "mobile_field"
-                            : "mobile_field disabled"
-                        }
-                      >
-                        {this.state.displayCountry && (
-                          <IntlTelInputS
-                            disabled={!this.state.editMode}
-                            value={this.state.mobile}
-                            allowDropdown={false}
-                            autoHideDialCode={true}
-                            preferredCountries={[]}
-                            inputClassName="intl-tel-input form-control"
-                            onlyCountries={
-                              this.state.phoneCountry[0] !== null
-                                ? this.state.phoneCountry
-                                : ""
-                            }
-                            defaultCountry={
-                              this.state.phoneCountry[0] !== null
-                                ? this.state.phoneCountry[0].toLowerCase()
-                                : ""
-                            }
-                            separateDialCode={true}
-                            onPhoneNumberChange={(a, b, c) =>
-                              this.changeNumber(a, b, c)
-                            }
-                          />
-                        )}
-                      </PhoneDiv>
-                      {this.validator.message(
-                        "phone_number",
-                        this.state.mobile,
-                        "required|mobileVal|min:5|max:30",
-                        "text-danger-validation",
-                        {
-                          required: "Mobile No. field is required.",
-                          min: "Mobile No. should have min. 5 characters.",
-                          max: "Mobile No. should have max. 30 characters."
-                        }
-                      )}
-                    </Col>
-                  </FourthRow>
-                ) : (
-                  ""
-                )}
                 <FourthRow>
                   <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
                     <Postal>Postal Code*</Postal>
@@ -1977,47 +1582,7 @@ class PersonalDetails extends Component {
                             Save
                           </Save>
                         )}
-                        <Save
-                          type="primary"
-                          onClick={() => {
-                            this.setState(
-                              {
-                                editMode: false
-                              },
-                              () => {
-                                this.props.getProfileDataAction(
-                                  this.props.isLoggedIn
-                                );
-                                this.clearValidation();
-                                document.querySelectorAll(
-                                  ".first_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".last_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".country_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".dob_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".street1_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".street2_msg"
-                                )[0].style.display = "none";
-                                /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
-                                document.querySelectorAll(
-                                  ".postal_msg"
-                                )[0].style.display = "none";
-                                document.querySelectorAll(
-                                  ".df_msg"
-                                )[0].style.display = "none";
-                              }
-                            );
-                          }}
-                        >
+                        <Save type="primary" onClick={this.onKycCancel}>
                           Cancel
                         </Save>
                       </div>

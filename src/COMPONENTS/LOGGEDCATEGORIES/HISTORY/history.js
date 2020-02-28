@@ -155,7 +155,7 @@ class History extends Component {
       loader: false,
       csvFields: [],
       checkedGroupValue: ["SEND", "RECEIVE", "SELL", "BUY"],
-      activeKey: "1",
+      activeKey: "2",
       csvHeadersTrade: [
         { label: "Date", key: "date" },
         { label: "Side", key: "side" },
@@ -893,7 +893,7 @@ class History extends Component {
               </HeadHis>
               <HisWrap>
                 <Tabs activeKey={this.state.activeKey} onChange={this.callback}>
-                  <TabPane tab="Crypto Only" key="1">
+                  {/* <TabPane tab="Crypto Only" key="1">
                     <Tablediv>
                       <HisTable responsive striped condensed>
                         <thead>
@@ -986,7 +986,7 @@ class History extends Component {
                         )}
                       </HisTable>
                     </Tablediv>
-                  </TabPane>
+                  </TabPane> */}
                   <TabPane tab="Credit Card" key="2">
                     <Tablediv>
                       <HisTable responsive striped condensed>
@@ -1075,7 +1075,7 @@ class History extends Component {
                       </HisTable>
                     </Tablediv>
                   </TabPane>
-                  <TabPane tab="Trade" key="3">
+                  {/* <TabPane tab="Trade" key="3">
                     <Tablediv>
                       <HisTable responsive striped condensed>
                         <thead>
@@ -1134,7 +1134,7 @@ class History extends Component {
                         )}
                       </HisTable>
                     </Tablediv>
-                  </TabPane>
+                  </TabPane> */}
                 </Tabs>
               </HisWrap>
             </ContainerContact>

@@ -5,6 +5,7 @@ import "antd/dist/antd.css";
 import { /* Row, */ Col } from "antd";
 import { connect } from "react-redux";
 import moment from "moment";
+import ShowMore from "react-show-more";
 
 /* components */
 import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
@@ -149,36 +150,14 @@ class HubSpotTickets extends Component {
                             {temp.properties.subject &&
                               temp.properties.subject.value}
                           </Title>
-
-                          <Desc
-                            className={
-                              this.state.showDescription ? "" : "description"
-                            }
+                          <ShowMore
+                            lines={4}
+                            more="Read more"
+                            less="Read less"
+                            anchorClass=""
                           >
-                            {temp.properties.content &&
-                              temp.properties.content.value}
-                          </Desc>
-                          {!this.state.showDescription ? (
-                            <TicketA
-                              onClick={() => {
-                                this.setState({
-                                  showDescription: true
-                                });
-                              }}
-                            >
-                              Read more
-                            </TicketA>
-                          ) : (
-                            <TicketA
-                              onClick={() => {
-                                this.setState({
-                                  showDescription: false
-                                });
-                              }}
-                            >
-                              Read less
-                            </TicketA>
-                          )}
+                            {temp.properties.content.value}
+                          </ShowMore>
                         </Col>
                       </TicketWrap>
                     ))

@@ -105,6 +105,7 @@ export const Head = styled.tr`
   padding-left: 45px;
   height: 40px;
   > th {
+    text-align: left !important;
     vertical-align: middle !important;
     padding-left: ${props => (props.wallet ? "" : "45px !important")};
     text-align: ${props => (props.wallet ? "center" : "")};
@@ -128,6 +129,7 @@ export const Head = styled.tr`
 `;
 export const SubHead = styled.th`
   border-bottom: 0px;
+  text-align: left;
   > a.ant-dropdown-link {
     vertical-align: middle;
   }

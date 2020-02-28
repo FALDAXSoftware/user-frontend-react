@@ -104,6 +104,9 @@ export const ModalWrap = styled.div`
       color: #ffffff;
     }
   }
+  .complete_profile {
+    width: 50%;
+  }
 `;
 export const SubWrap = styled.div`
   margin-top: 40px;
