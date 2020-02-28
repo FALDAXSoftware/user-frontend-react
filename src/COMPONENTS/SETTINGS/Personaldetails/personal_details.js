@@ -1014,7 +1014,6 @@ class PersonalDetails extends Component {
   };
   submit = () => {
     // e.preventDefault();
-    debugger
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
@@ -1213,15 +1212,15 @@ class PersonalDetails extends Component {
   onKycCancel = () => {
     this.setState(
       {
-        fiatIcon :null,
-        dateFIcon :null,
-        firstIcon :null,
-        lastIcon :null,
-        countryIcon :null,
-        dobIcon :null,
-        street1Icon :null,
-        street2Icon :null,
-        postalIcon :null,
+        fiatIcon: null,
+        dateFIcon: null,
+        firstIcon: null,
+        lastIcon: null,
+        countryIcon: null,
+        dobIcon: null,
+        street1Icon: null,
+        street2Icon: null,
+        postalIcon: null,
         date_format: this.state.profileDetails.date_format,
         fiat: this.state.profileDetails.fiat,
         stateSelected: this.state.profileDetails.state,
