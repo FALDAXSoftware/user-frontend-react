@@ -171,7 +171,7 @@ export default class Datepicker extends Component {
     */
 
   onChangeDate(date, type) {
-    console.log("Step 1 -------> ", date, type);
+    // console.log("Step 1 -------> ", date, type);
     if (this.props.kyc !== "kyc") {
       if (type === "year") {
         this.setState({ year: date });
