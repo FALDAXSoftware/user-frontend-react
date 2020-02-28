@@ -28,7 +28,9 @@ volumes: [
               namespace = getNamespace(myRepo.GIT_BRANCH);
               if (namespace){
               sh "ls -la"
-              sh "npm cache clear --force && npm install --no-shrinkwrap --update-binary " 
+              sh "npm cache clear --force && npm install --no-shrinkwrap --update-binary" 
+              sh "npm uninstall webpack"
+              sh "npm uninstall webpack-dev-server"
               sh "npm install"
               sh "npm run build"
               sh "ls -la" 
