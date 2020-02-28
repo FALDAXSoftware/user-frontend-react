@@ -315,7 +315,7 @@ class PersonalDetails extends Component {
       agreeTermsShow: false,
       editMode: false,
       isFirstLogin: "",
-      profileDetails: this.props.profileDetails
+      profileDetails: []
     };
     this.datePickerChild = React.createRef();
     this.handleProfile = this.handleProfile.bind(this);
@@ -368,6 +368,9 @@ class PersonalDetails extends Component {
         jwt_token: this.props.isLoggedIn
       };
       this.props.LogoutUser(this.props.isLoggedIn, form);
+    }
+    if (this.props.profileDetails != this.state.profileDetails) {
+      this.setState({ profileDetails: this.props.profileDetails });
     }
   }
 
@@ -1011,7 +1014,7 @@ class PersonalDetails extends Component {
   };
   submit = () => {
     // e.preventDefault();
-
+    debugger
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
@@ -1210,6 +1213,15 @@ class PersonalDetails extends Component {
   onKycCancel = () => {
     this.setState(
       {
+        fiatIcon :null,
+        dateFIcon :null,
+        firstIcon :null,
+        lastIcon :null,
+        countryIcon :null,
+        dobIcon :null,
+        street1Icon :null,
+        street2Icon :null,
+        postalIcon :null,
         date_format: this.state.profileDetails.date_format,
         fiat: this.state.profileDetails.fiat,
         stateSelected: this.state.profileDetails.state,
