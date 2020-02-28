@@ -32,6 +32,7 @@ import {
   TokComingSoon
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 import { APIUtility } from "../../../httpHelper";
+import { getProfileDataAction } from "../../../ACTIONS/SETTINGS/settingActions";
 
 const API_URL = globalVariables.API_URL;
 
@@ -60,6 +61,10 @@ class Conversion extends React.Component {
   //   });
   // }
   async componentDidMount() {
+    console.log("^^^^conversion", this.props.profileDetails);
+    if (!this.props.profileDetails) {
+      this.props.getProfileDataAction(this.props.isLoggedIn);
+    }
     if (
       this.props.profileDetails &&
       this.props.profileDetails.is_terms_agreed == false
@@ -78,8 +83,9 @@ class Conversion extends React.Component {
           is_allowed: result2.data.is_allowed,
           is_kyc_done: result2.data.is_kyc_done
         });
-      }
-      if (result2.status == 500) {
+      } else {
+        // console.log("result2.data.is_allowed^^^", result2.data.is_allowed);
+        // console.log("result2.data.is_allowed^^^", result2);
         this.setState({
           is_allowed: result2.data.is_allowed,
           is_kyc_done: result2.data.is_kyc_done
@@ -333,5 +339,11 @@ function mapStateToProps(state) {
       state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
   };
 }
+const mapDispatchToProps = dispatch => ({
+  getProfileDataAction: isLoggedIn => dispatch(getProfileDataAction(isLoggedIn))
+});
 
-export default connect(mapStateToProps)(withRouter(Conversion));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Conversion));

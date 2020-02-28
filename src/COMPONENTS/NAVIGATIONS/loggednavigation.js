@@ -577,6 +577,11 @@ class LoggedNavigation extends Component {
     }
   }
   simplexAccess() {
+    // console.log(
+    //   "^^^^",
+    //   this.props.profileDetails.is_allowed,
+    //   this.props.profileDetails.is_kyc_done
+    // );
     if (this.state.panic_status === true) {
       // alert("Idf");
       this.setState({ panicEnabled: true });
@@ -678,7 +683,13 @@ class LoggedNavigation extends Component {
     const DropdownItems = (
       <Menu className="fixed-drop">
         <Menu.Item key="0">
-          <a onClick={this.cryptoAccess}>Crypto Only</a>
+          <a
+            className="tokenlink"
+            href={`${globalVariables.WordpressSiteURL}/coming-soon`}
+          >
+            Crypto Only
+          </a>
+          {/* <a onClick={this.cryptoAccess}>Crypto Only</a> */}
         </Menu.Item>
         <Menu.Item key="1">
           <a onClick={this.simplexAccess}>Credit Card</a>
@@ -704,7 +715,7 @@ class LoggedNavigation extends Component {
             Trade History
           </a>
         </Menu.Item> */}
-        <Menu.Item key="0">
+        {/* <Menu.Item key="0">
           <a
             onClick={() =>
               this.props.history.push({ pathname: "/history", tradeType: "1" })
@@ -712,7 +723,7 @@ class LoggedNavigation extends Component {
           >
             Crypto Only
           </a>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="1">
           <a
             onClick={() =>
@@ -830,7 +841,13 @@ class LoggedNavigation extends Component {
               <DropMenu mode="inline">
                 <SubMenuNav key="mobsub1" title={"Conversion"}>
                   <Menu.Item key="0">
-                    <a onClick={this.cryptoAccess}>Crypto Only</a>
+                    <a
+                      className="tokenlink"
+                      href={`${globalVariables.WordpressSiteURL}/coming-soon`}
+                    >
+                      Crypto Only
+                    </a>
+                    {/* <a onClick={this.cryptoAccess}>Crypto Only</a> */}
                   </Menu.Item>
                   <Menu.Item key="1">
                     <a onClick={this.simplexAccess}>Credit Card</a>
@@ -868,7 +885,7 @@ class LoggedNavigation extends Component {
                       Trade History
                     </a>
                   </Menu.Item> */}
-                  <Menu.Item key="0">
+                  {/* <Menu.Item key="0">
                     <a
                       onClick={() =>
                         this.props.history.push({
@@ -879,7 +896,7 @@ class LoggedNavigation extends Component {
                     >
                       Crypto Only
                     </a>
-                  </Menu.Item>
+                  </Menu.Item> */}
                   <Menu.Item key="1">
                     <a
                       onClick={() =>

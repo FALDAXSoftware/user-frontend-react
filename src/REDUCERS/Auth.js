@@ -15,6 +15,7 @@ export default (
         return {
           ...state,
           isLoggedIn: action.payload.token,
+          isKYCDone: action.payload.user.is_kyc_done,
           errorStatus: action.payload
         };
       } else {
@@ -51,6 +52,7 @@ export default (
       return {
         ...state,
         isLoggedIn: undefined,
+        isKYCDone: undefined,
         profileDetails: undefined
       };
 

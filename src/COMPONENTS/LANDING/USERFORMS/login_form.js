@@ -13,6 +13,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { loginAction, Login, clearLogin } from "ACTIONS/authActions";
 import { globalVariables } from "Globals.js";
 import { Link } from "react-router-dom";
+import { getProfileDataAction } from "../../../ACTIONS/SETTINGS/settingActions";
 
 let { API_URL, GOOGLE_SITE_KEY } = globalVariables;
 /* Global CONSTANTS */
@@ -655,6 +656,7 @@ class Login_Form extends Component {
   componentWillReceiveProps(props, newProps) {
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
+        console.log("thisd^^^", props.errorStatus.user.is_kyc_done);
         if (this.state.verify == true) {
           this.openNotificationWithIcon(
             "success",
@@ -870,7 +872,12 @@ class Login_Form extends Component {
       ) {
         this.props.history.push(this.props.location.state.from.pathname);
       } else {
-        this.props.history.push("/editProfile");
+        console.log("^^^^logimn", this.props.isKYCDone);
+        if (this.props.isKYCDone == 2) {
+          this.props.history.push("/conversion");
+        } else {
+          this.props.history.push("/editProfile");
+        }
       }
     }
     var me = this;
@@ -1126,7 +1133,8 @@ function mapStateToProps(state) {
     errorStatus:
       state.simpleReducer.errorStatus !== undefined
         ? state.simpleReducer.errorStatus
-        : undefined
+        : undefined,
+    isKYCDone: state.simpleReducer.isKYCDone
     // isOtpRequired:state.simpleReducer.isOtpRequired,
   };
 }
@@ -1134,6 +1142,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => ({
   Login: values => dispatch(Login(values)),
   clearLogin: () => dispatch(clearLogin()),
+  getProfileDataAction: isLoggedIn =>
+    dispatch(getProfileDataAction(isLoggedIn)),
   loginAction: value => dispatch(loginAction(value))
 });
 

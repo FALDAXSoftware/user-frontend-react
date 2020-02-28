@@ -61,7 +61,7 @@ class Simplex extends React.Component {
       minCurrencyValid: {
         message: `Amount must be greater than or equal to 50`,
         rule: (val, params, validator) => {
-          if (val >= parseInt(this.state.minCurrency)) {
+          if (parseFloat(val) >= parseFloat(this.state.minCurrency)) {
             return true;
           } else {
             return false;
@@ -72,7 +72,7 @@ class Simplex extends React.Component {
       maxCurrencyValid: {
         message: `Amount must be less than or equal to 20,000`,
         rule: (val, params, validator) => {
-          if (val > parseInt(this.state.maxCurrency)) {
+          if (parseFloat(val) > parseFloat(this.state.maxCurrency)) {
             return false;
           } else {
             return true;

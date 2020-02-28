@@ -83,8 +83,7 @@
   "devDependencies": {
     "dotenv": "^6.2.0",
     "react-masonry-css": "^1.0.12",
-    "webpack": "^4.41.2",
-    "webpack-dev-server": "3.10.1"
+    "webpack": "^4.41.2"
   },
   "browserslist": {
     "production": [
