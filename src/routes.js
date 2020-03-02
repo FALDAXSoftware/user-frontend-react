@@ -37,7 +37,7 @@ import SimplexExchange from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex_excha
 import NotFound from "./SHARED-COMPONENTS/NotFound.js";
 import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
 import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
-// import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
+import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
 let { API_URL } = globalVariables;
 const socketIOClient = require("socket.io-client");
 const sailsIOClient = require("sails.io.js");
