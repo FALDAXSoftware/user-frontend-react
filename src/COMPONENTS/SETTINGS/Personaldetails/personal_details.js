@@ -62,6 +62,9 @@ const Imageupload = styled.label`
   cursor: pointer;
   font-family: "Open Sans";
   font-weight: 600;
+  &.disabled_mode {
+    cursor: not-allowed;
+  }
 `;
 const Remove = styled.div`
   margin-top: 20px;
@@ -69,6 +72,9 @@ const Remove = styled.div`
   cursor: pointer;
   font-family: "Open Sans";
   font-weight: 600;
+  &.disabled_mode {
+    cursor: not-allowed;
+  }
 `;
 export const RightCol = styled(Col)`
   @media (max-width: 992px) {
@@ -1226,6 +1232,14 @@ class PersonalDetails extends Component {
         stateSelected: this.state.profileDetails.state,
         countrySelected: this.state.profileDetails.country,
         citySelected: this.state.profileDetails.city_town,
+        profileImg:
+          globalVariables._AMAZONBUCKET + this.state.profileDetails.profile_pic,
+        remove_pic:
+          this.state.profileDetails.profile_pic ==
+          "/production-static-asset/assets/Settings/def_profile.jpg"
+            ? true
+            : false,
+        profileImage: undefined,
         editMode: false
       },
       () => {
@@ -1286,7 +1300,12 @@ class PersonalDetails extends Component {
                     />
                   )}
                   <Imageup>
-                    <Imageupload htmlFor="file">Upload New Photo</Imageupload>
+                    <Imageupload
+                      className={this.state.editMode ? "" : "disabled_mode"}
+                      htmlFor="file"
+                    >
+                      Upload New Photo
+                    </Imageupload>
                   </Imageup>
                 </div>
 
@@ -1300,6 +1319,7 @@ class PersonalDetails extends Component {
                       : true) ? (
                       <Remove
                         disabled={!this.state.editMode}
+                        className={this.state.editMode ? "" : "disabled_mode"}
                         onClick={
                           !this.state.editMode ? "" : this.removePic.bind(this)
                         }
@@ -1599,6 +1619,7 @@ class PersonalDetails extends Component {
                       </div>
                     ) : (
                       <Save
+                        type="primary"
                         onClick={() => {
                           this.setState({
                             editMode: true

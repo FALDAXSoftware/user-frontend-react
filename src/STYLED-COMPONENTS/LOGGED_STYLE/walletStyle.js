@@ -85,7 +85,7 @@ export const Currency = styled.span`
   }
 `;
 export const CoinTable = styled.div`
-  margin-top: 25px;
+  // margin-top: 25px;
   @media (max-width: 1160px) {
     overflow: auto;
   }
