@@ -446,7 +446,7 @@ class PersonalDetails extends Component {
     // var date = moment(tempDate, "DD/MM/YYYY").format("DD-MM-YYYY");
     // console.log("date--- after convert", date);
     this.setState({ Datedata: date });
-    console.log("onDateChange>>>", value, field);
+    // console.log("onDateChange>>>", value, field);
     this.onChangeField(value, field);
   }
 
@@ -1226,9 +1226,14 @@ class PersonalDetails extends Component {
         stateSelected: this.state.profileDetails.state,
         countrySelected: this.state.profileDetails.country,
         citySelected: this.state.profileDetails.city_town,
-        profileImg:globalVariables._AMAZONBUCKET + this.state.profileDetails.profile_pic,
-        remove_pic:this.state.profileDetails.profile_pic=="/production-static-asset/assets/Settings/def_profile.jpg"?true:false,
-        profileImage:undefined,
+        profileImg:
+          globalVariables._AMAZONBUCKET + this.state.profileDetails.profile_pic,
+        remove_pic:
+          this.state.profileDetails.profile_pic ==
+          "/production-static-asset/assets/Settings/def_profile.jpg"
+            ? true
+            : false,
+        profileImage: undefined,
         editMode: false
       },
       () => {

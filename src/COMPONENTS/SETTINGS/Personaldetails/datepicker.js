@@ -97,9 +97,9 @@ export default class Datepicker extends Component {
     let dob = this.props.profileDetails.dob;
     if (dob) {
       dob = dob.split("-");
-      fields["day"]=dob[0];
-      fields["month"]=("0"+dob[1]).slice(-2);
-      fields["year"]=dob[2];
+      fields["day"] = dob[0];
+      fields["month"] = ("0" + dob[1]).slice(-2);
+      fields["year"] = dob[2];
       dob = new Date(dob[1] + "/" + dob[0] + "/" + dob[2]);
       if (dob != "Invalid Date") {
         this.setState({
@@ -173,7 +173,7 @@ export default class Datepicker extends Component {
     */
 
   onChangeDate(date, type) {
-    console.log("Step 1 -------> ", date, type);
+    // console.log("Step 1 -------> ", date, type);
     if (this.props.kyc !== "kyc") {
       if (type === "year") {
         this.setState({ year: date });
