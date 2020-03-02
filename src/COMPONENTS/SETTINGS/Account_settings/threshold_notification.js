@@ -10,8 +10,42 @@ import {
 } from "antd";
 import { APIUtility } from "../../../httpHelper";
 import clone from "clone";
+import styled from "styled-components";
 const EditableContext = React.createContext();
 const regEx = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/;
+
+const NotiHead = styled.div`
+  font-size: 20px;
+  font-family: "Open Sans";
+  font-weight: 600;
+  color: ${props =>
+    props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
+`;
+
+const ThresholdTable = styled(Table)`
+  & .ant-table-thead {
+    > tr {
+      > th {
+        background: ${props =>
+          props.theme.mode === "dark" ? "#01090f" : "#e4ecff"};
+        color: ${props => (props.theme.mode === "dark" ? "#fff" : "#333")};
+      }
+    }
+  }
+  & .ant-table-tbody {
+    > tr {
+      > td {
+        color: ${props => (props.theme.mode === "dark" ? "#fff" : "#333")};
+      }
+    }
+    > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) {
+      > td {
+        background: ${props =>
+          props.theme.mode === "dark" ? "#01090f" : "#e4ecff"};
+      }
+    }
+  }
+`;
 class EditableCell extends React.Component {
   getInput = () => {
     if (this.props.inputType === "number") {
@@ -243,7 +277,7 @@ class EditableTable extends React.Component {
 
     return (
       <EditableContext.Provider value={this.props.form}>
-        <Table
+        <ThresholdTable
           className="notification-table"
           components={components}
           bordered

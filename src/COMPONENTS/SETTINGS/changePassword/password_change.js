@@ -40,6 +40,9 @@ const ChangeRow = styled(Row)`
     bottom: 0px;
     border-bottom: 1px solid #d6d6d6;
   }
+  &.two_factor_no_border:after {
+    border-bottom: 0;
+  }
 `;
 const EmailRow = styled(Row)`
   &:after {
@@ -968,7 +971,7 @@ class PasswordChange extends Component {
           <ChangeEmail props={this.props} />
         </EmailRow>
 
-        <ChangeRow>
+        <ChangeRow className="two_factor_no_border">
           <TwofactorRow>
             <TFCol>
               <HeadTF>Two-Factor Authentication</HeadTF>
