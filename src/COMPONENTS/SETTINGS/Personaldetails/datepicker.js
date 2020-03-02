@@ -95,9 +95,11 @@ export default class Datepicker extends Component {
 
   resetDatePicker = () => {
     let dob = this.props.profileDetails.dob;
-    console.log(">>>", dob);
     if (dob) {
       dob = dob.split("-");
+      fields["day"] = dob[0];
+      fields["month"] = ("0" + dob[1]).slice(-2);
+      fields["year"] = dob[2];
       dob = new Date(dob[1] + "/" + dob[0] + "/" + dob[2]);
       if (dob != "Invalid Date") {
         this.setState({
