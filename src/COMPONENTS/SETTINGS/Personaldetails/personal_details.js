@@ -1014,7 +1014,6 @@ class PersonalDetails extends Component {
   };
   submit = () => {
     // e.preventDefault();
-    debugger
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
       const profileData = new FormData();
@@ -1227,6 +1226,9 @@ class PersonalDetails extends Component {
         stateSelected: this.state.profileDetails.state,
         countrySelected: this.state.profileDetails.country,
         citySelected: this.state.profileDetails.city_town,
+        profileImg:globalVariables._AMAZONBUCKET + this.state.profileDetails.profile_pic,
+        remove_pic:this.state.profileDetails.profile_pic=="/production-static-asset/assets/Settings/def_profile.jpg"?true:false,
+        profileImage:undefined,
         editMode: false
       },
       () => {
