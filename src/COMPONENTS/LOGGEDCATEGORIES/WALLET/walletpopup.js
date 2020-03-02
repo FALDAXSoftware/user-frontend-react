@@ -228,6 +228,7 @@ class WalletPopup extends Component {
       receiveAdd: "receive_add",
       show: false,
       fiatValue: 0,
+      fiatCurrency: "",
       singlefiatValue: "",
       sendFields: {
         amount: "",
@@ -352,6 +353,7 @@ class WalletPopup extends Component {
     if (this.props.fiatValue) {
       this.setState({
         fiatValue: 0,
+        fiatCurrency: this.props.fiatCurrency,
         singlefiatValue: this.props.fiatValue.toFixed(8)
       });
     }
@@ -897,7 +899,8 @@ class WalletPopup extends Component {
                         {this.props.coin_code}
                       </span> */}
                       <span>
-                        <b>Fiat Value: </b>$ {this.state.fiatValue}
+                        <b>Fiat Value: </b>
+                        {this.state.fiatCurrency} {this.state.fiatValue}
                       </span>
                     </TotPay>
                   </TotDiv>

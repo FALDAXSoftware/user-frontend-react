@@ -117,6 +117,7 @@ class WalletDetails extends Component {
       balanceFlag: false,
       coinFee: [],
       fiatValue: "",
+      fiatCurrency: "",
       isERC: false,
       panic_status: false,
       panicEnabled: false,
@@ -219,6 +220,28 @@ class WalletDetails extends Component {
       this.props.walletBal(this.props.isLoggedIn);
       this.props.getAllCoins(this.props.isLoggedIn);
       // console.log("wallet details props walletDetails", walletUserDetails);
+      // console.log("asdgh^^^^", this.props.profileDetails.fiat);
+      let fiat, currency;
+      if (this.props.profileDetails) {
+        switch (this.props.profileDetails.fiat) {
+          case "USD":
+            fiat = responseData.currencyConversionData.quote.USD.price;
+            currency = "$";
+            break;
+          case "EUR":
+            fiat = responseData.currencyConversionData.quote.EUR.price;
+            currency = "€";
+            break;
+          case "INR":
+            fiat = responseData.currencyConversionData.quote.INR.price;
+            currency = "₹";
+            break;
+          default:
+            fiat = "";
+            currency = "";
+            break;
+        }
+      }
       self.setState(
         {
           walletUserData: walletUserDetails,
@@ -234,9 +257,8 @@ class WalletDetails extends Component {
           is_active_asset: responseData.is_active,
           eth_for_erc_status: responseData.eth_for_erc_status,
           eth_for_erc_address: responseData.eth_for_erc_address,
-          fiatValue: responseData.currencyConversionData
-            ? responseData.currencyConversionData.quote.USD.price
-            : ""
+          fiatValue: fiat,
+          fiatCurrency: currency
         },
         () => {
           // console.log("wallet details props -----", this.state.fiatValue);
@@ -697,6 +719,7 @@ class WalletDetails extends Component {
                     walletDetailsApi={() => this.walletDetailsApi()}
                     coinFee={this.state.coinFee}
                     fiatValue={this.state.fiatValue}
+                    fiatCurrency={this.state.fiatCurrency}
                     coin_code={this.state.coin_code}
                     coin_min_limit={this.state.min_limit}
                     coin_max_limit={this.state.max_limit}
