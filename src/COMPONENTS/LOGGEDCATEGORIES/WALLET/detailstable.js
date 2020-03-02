@@ -35,6 +35,10 @@ export const OTwrap = styled.div`
   @media (max-width: 991px) {
     min-width: 1100px;
   }
+  & .tbl-header {
+    border-radius: 30px;
+    border: 2px solid transparent;
+  }
 `;
 export const OrderWrap = styled.div`
   margin-left: 30px;
