@@ -413,7 +413,7 @@ class SimplexExchange extends React.Component {
     if (this.state.loader) {
       return false;
     }
-    console.log("^^^^", e.target.value);
+    // console.log("^^^^", e.target.value);
     this.setState(
       {
         currencyToPay: e.target.value
