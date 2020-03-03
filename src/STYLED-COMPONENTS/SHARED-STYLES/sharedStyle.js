@@ -51,6 +51,7 @@ export const ModalWrap = styled.div`
       text-align: center;
       color: black;
       margin-top: 34px;
+      padding: 0 0 30px 0;
     }
   }
   &.country-wrap {

@@ -12,7 +12,7 @@ const TVChart = styled.div`
   height: 100vh;
 `;
 
-class TraddingViewChart extends React.Component {
+class TradingViewChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -188,4 +188,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(TraddingViewChart);
+export default connect(mapStateToProps, null)(TradingViewChart);
