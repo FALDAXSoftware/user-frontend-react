@@ -49,7 +49,7 @@ export default (
 
     case "LOGOUT":
       document.cookie = "isLoggedIn=false";
-      document.cookie = "isLoggedInPreprod=true; domain=faldax.com";
+      document.cookie = "isLoggedInPreprod=false; domain=faldax.com";
       document.cookie = "isLoggedInLive=false; domain=faldax.com";
       return {
         ...state,
