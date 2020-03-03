@@ -244,6 +244,9 @@ export const RadioBorderRow = styled(Row)`
   margin-bottom: 0;
   width: calc(50% - 30px);
   margin: 0 15px;
+  > .ant-col.value-display {
+    height: 42px;
+  }
   > .ant-col {
     > input[disabled] {
       color: #a8acb3;
