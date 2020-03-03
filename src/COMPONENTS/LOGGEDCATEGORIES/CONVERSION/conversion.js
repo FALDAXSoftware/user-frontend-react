@@ -133,7 +133,7 @@ class Conversion extends React.Component {
     }
   }
   simplexAccess() {
-    console.log("^^^^^", this.state.panic_status);
+    // console.log("^^^^^", this.state.panic_status);
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
     } else {

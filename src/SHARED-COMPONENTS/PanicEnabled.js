@@ -8,25 +8,25 @@ import { ModalWrap } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
 import styled from "styled-components";
 
 export const ImageDisplay = styled.img`
-    margin-left: 10px;
-`
+  margin-left: 10px;
+`;
 
 export const PanicDisplay = styled.h3`
-    font-family: Open Sans;
-    font-size: 40px;
-    text-align: center;
-    color: rgb(3, 170, 249);
-    font-weight: 600;
-    margin-top: 10px;
-    margin-bottom: 10px;
-`
+  font-family: Open Sans;
+  font-size: 40px;
+  text-align: center;
+  color: rgb(3, 170, 249);
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
 
 export const PanicText = styled.p`
-    fontfamily: Open Sans;
-    font-size: 14px;
-    text-align: center;
-    color: black;
-`
+  fontfamily: Open Sans;
+  font-size: 14px;
+  text-align: center;
+  color: black;
+`;
 
 /* const API_URL = globalVariables.API_URL; */
 
@@ -95,7 +95,7 @@ class PanicEnabled extends Component {
             this.setState({ visible: false, email_msg: "" });
           }
         })
-        .catch(error => { });
+        .catch(error => {});
     } else {
       this.setState({ email_msg: "*email address not valid" });
       this.openNotificationWithIcon(
@@ -112,10 +112,7 @@ class PanicEnabled extends Component {
           title={
             <div>
               <img alt="FALDAX" src={_COMINGIMG} />{" "}
-              <ImageDisplay
-                alt="FALDAX"
-                src={_COMINGIMG2}
-              />
+              <ImageDisplay alt="FALDAX" src={_COMINGIMG2} />
             </div>
           }
           visible={this.props.visible}
@@ -129,13 +126,11 @@ class PanicEnabled extends Component {
           //   }
           footer={null}
           width={605}
-          height={490}
+          // height={490}
           className="simple-maps"
         >
           <ModalWrap className="kyc-wrap">
-            <PanicDisplay>
-              System Lockout In Effect
-            </PanicDisplay>
+            <PanicDisplay>System Lockout In Effect</PanicDisplay>
             <PanicText>
               Our systems have detected unwarranted and suspicious behavior
               which triggered our automatic lockout protocols. In order to
