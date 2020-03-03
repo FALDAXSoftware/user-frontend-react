@@ -28,7 +28,7 @@ import { LogoutUser } from "ACTIONS/authActions";
 
 /* import Chart from "COMPONENTS/tradingviewchart"; */
 import Conversion from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion";
-import ConversionDetail from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion_detail";
+// import ConversionDetail from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion_detail";
 import TierUpgradeInfo from "./COMPONENTS/SETTINGS/tier_upgrade_information.js";
 import TierUpgradeInfoImageRequirements from "./COMPONENTS/SETTINGS/tier-upgrade-info-image-requirements.js";
 import TierIDConfirmation from "./COMPONENTS/SETTINGS/tier_id_confirmation.js";
@@ -99,12 +99,12 @@ const routes = [
     component: () => <Conversion io={io} />,
     io: io
   },
-  {
-    exact: false,
-    path: "/crypto-conversion",
-    component: () => <ConversionDetail io={io} />,
-    io: io
-  },
+  // {
+  //   exact: false,
+  //   path: "/crypto-conversion",
+  //   component: () => <ConversionDetail io={io} />,
+  //   io: io
+  // },
   {
     exact: false,
     path: "/simplex",

@@ -53,7 +53,9 @@ class StopLimit extends Component {
       buyEstPrice: 0,
       sellEstPrice: 0,
       sellPayAmt: 0,
-      loader: false
+      loader: false,
+      fiatValue: "",
+      fiatCurrency: ""
     };
 
     this.onChange = this.onChange.bind(this);
@@ -102,6 +104,27 @@ class StopLimit extends Component {
   /*Life Cycle Methods  */
 
   componentDidMount() {
+    let fiat, currency;
+    if (this.props.profileDetails) {
+      switch (this.props.profileDetails.fiat) {
+        case "USD":
+          fiat = "10";
+          currency = "$";
+          break;
+        case "EUR":
+          fiat = "11";
+          currency = "€";
+          break;
+        case "INR":
+          fiat = "12";
+          currency = "₹";
+          break;
+        default:
+          fiat = "";
+          currency = "";
+          break;
+      }
+    }
     this.setState({
       userBalFees: this.props.userBal.fees,
       amount: "",
@@ -111,7 +134,9 @@ class StopLimit extends Component {
       buyEstPrice: 0,
       sellEstPrice: 0,
       sellPayAmt: 0,
-      buyPayAmt: 0
+      buyPayAmt: 0,
+      fiatValue: fiat,
+      fiatCurrency: currency
     });
   }
 
@@ -599,6 +624,13 @@ class StopLimit extends Component {
               <Esti>
                 <Row>
                   <Col xs={15} sm={12}>
+                    Fiat Value
+                  </Col>
+                  <Col xs={9} sm={12}>
+                    {this.state.fiatCurrency}{" "}
+                    {parseFloat(this.state.fiatValue).toFixed(8)}
+                  </Col>
+                  <Col xs={15} sm={12}>
                     Estimated Best Price
                   </Col>
                   <Col xs={9} sm={12}>
@@ -631,6 +663,13 @@ class StopLimit extends Component {
               </Row>
               <Esti>
                 <Row>
+                  <Col xs={15} sm={12}>
+                    Fiat Value
+                  </Col>
+                  <Col xs={9} sm={12}>
+                    {this.state.fiatCurrency}{" "}
+                    {parseFloat(this.state.fiatValue).toFixed(8)}
+                  </Col>
                   <Col xs={15} sm={12}>
                     Estimated Best Price
                   </Col>
@@ -676,6 +715,10 @@ function mapStateToProps(state) {
     cryptoPair:
       state.walletReducer.cryptoPair !== undefined
         ? state.walletReducer.cryptoPair
+        : "",
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data[0]
         : ""
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
