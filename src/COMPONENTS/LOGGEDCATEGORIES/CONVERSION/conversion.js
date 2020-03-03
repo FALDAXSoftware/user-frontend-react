@@ -74,8 +74,10 @@ class Conversion extends React.Component {
     try {
       this.setState({ loader: true });
       let result = await APIUtility.getPanicStatus(this.props.isLoggedIn);
+
       if (result.status == 200) {
-        this.setState({ panicStatus: JSON.parse(result.data) });
+        // console.log("^^^result", result.data);
+        this.setState({ panic_status: JSON.parse(result.data) });
       }
       let result2 = await APIUtility.getUserTradeStatus(this.props.isLoggedIn);
       if (result2.status == 200) {
@@ -131,6 +133,7 @@ class Conversion extends React.Component {
     }
   }
   simplexAccess() {
+    console.log("^^^^^", this.state.panic_status);
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
     } else {
