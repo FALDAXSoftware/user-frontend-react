@@ -1244,6 +1244,7 @@ class TradeView extends React.Component {
                           xs={12}
                           sm={12}
                           md={10}
+                          className="value-display"
                           // style={{ height: "42px" }}
                         >
                           {this.state.currencyList &&
@@ -1360,6 +1361,7 @@ class TradeView extends React.Component {
                           xs={12}
                           sm={12}
                           md={10}
+                          className="value-display"
                           // style={{ height: "42px" }}
                         >
                           {/* {this.state.currencyList &&
