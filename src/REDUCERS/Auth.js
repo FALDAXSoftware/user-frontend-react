@@ -10,6 +10,7 @@ export default (
       if (action.payload !== undefined) {
         if (action.payload.token) {
           document.cookie = "isLoggedIn=true";
+          document.cookie = "isLoggedInPreprod=true; domain=faldax.com";
           document.cookie = "isLoggedInLive=true; domain=faldax.com";
         }
         return {
@@ -48,6 +49,7 @@ export default (
 
     case "LOGOUT":
       document.cookie = "isLoggedIn=false";
+      document.cookie = "isLoggedInPreprod=false; domain=faldax.com";
       document.cookie = "isLoggedInLive=false; domain=faldax.com";
       return {
         ...state,
