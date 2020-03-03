@@ -104,7 +104,17 @@ const routes = [
   //   path: "/crypto-conversion",
   //   component: () => <ConversionDetail io={io} />,
   //   io: io
-  // },
+  // },{`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
+  {
+    exact: false,
+    path: "/crypto-conversion",
+    component: () => (
+      <Redirect
+        to={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
+      />
+    ),
+    io: io
+  },
   {
     exact: false,
     path: "/simplex",
