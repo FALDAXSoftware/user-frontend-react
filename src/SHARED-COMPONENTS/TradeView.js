@@ -41,6 +41,7 @@ import {
 
 const API_URL = globalVariables.API_URL;
 const TRADE_URL = globalVariables.TRADE_URL;
+const WP_URL = globalVariables.WordpressSiteURL;
 const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
 
 const { Panel } = Collapse;
@@ -934,7 +935,7 @@ class TradeView extends React.Component {
     });
     if (this.props.isLoggedIn) {
       window.open(
-        TRADE_URL + "/crypto-conversion",
+        WP_URL + "/crypto-only-coming-soon",
         "_blank" // <- This is what makes it open in a new window.
       );
     } else {

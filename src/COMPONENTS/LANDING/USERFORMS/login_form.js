@@ -871,6 +871,18 @@ class Login_Form extends Component {
         this.props.location.state.from.pathname == "/open-ticket"
       ) {
         this.props.history.push(this.props.location.state.from.pathname);
+      } else if (
+        this.props.location.state &&
+        this.props.location.state.from &&
+        this.props.location.state.from.pathname == "/simplex"
+      ) {
+        this.props.history.push(this.props.location.state.from.pathname);
+      } else if (
+        this.props.location.state &&
+        this.props.location.state.from &&
+        this.props.location.state.from.pathname == "/crypto-conversion"
+      ) {
+        this.props.history.push(this.props.location.state.from.pathname);
       } else {
         // console.log("^^^^logimn", this.props.isKYCDone);
         if (this.props.isKYCDone == 2) {
