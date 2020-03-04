@@ -1,35 +1,44 @@
-import styled from 'styled-components';
-import { Row } from 'antd';
+import styled from "styled-components";
+import { Row } from "antd";
 
 export const MainContainer = styled.div`
-    width: 100%;
+  width: 100%;
 `;
 
 export const Container = styled.div`
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    max-width:1170px;
-    width:100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1170px;
+  width: 100%;
+  @media (min-width: 2000px) {
+    &.footer_main_div {
+      max-width: 1980px;
+    }
+  }
 `;
 
 export const Section1 = styled.div`
-    background-color: #f5f5f5;
-    @media (max-width: 576px) {
-        background-color: white !important;
-    }
+  background-color: #f5f5f5;
+  @media (max-width: 576px) {
+    background-color: white !important;
+  }
 `;
 
 export const Section2 = styled.div`
-    width: 100%;
-    background-color: #f5f5f5;
-    padding-bottom: 70px;
+  width: 100%;
+  background-color: #f5f5f5;
+  padding-bottom: 70px;
 `;
 
 export const Section3 = styled.div`
-    width: 100%;
-    background-image: -webkit-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
+  width: 100%;
+  background-image: -webkit-linear-gradient(
+    90deg,
+    rgb(245, 245, 245) 0%,
+    rgb(255, 255, 255) 100%
+  );
 `;
 
 export const ContainerRow = styled(Row)`
@@ -58,40 +67,36 @@ export const ContainerRow = styled(Row)`
     }
 }`;
 export const SpinEx = styled.div`
-    text-align: center;
-    background: white;
-    border-radius: 4px;
-    margin: auto;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #f5f5f580;
-    height: 100%;
-    z-index: 9999;
-`
+  text-align: center;
+  background: white;
+  border-radius: 4px;
+  margin: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f5f5f580;
+  height: 100%;
+  z-index: 9999;
+`;
 export const SpinImg = styled.img`
-    @media(max-width:5000px)
-    {
-        width:200px;   
-    }
-    @media(max-width:1600px)
-    {
-        width:150px;
-    }
-    @media(max-width:992px)
-    {
-        width:100px;
-    }
-    @media(max-width:568px)
-    {
-        width:70px;
-    }
-`
+  @media (max-width: 5000px) {
+    width: 200px;
+  }
+  @media (max-width: 1600px) {
+    width: 150px;
+  }
+  @media (max-width: 992px) {
+    width: 100px;
+  }
+  @media (max-width: 568px) {
+    width: 70px;
+  }
+`;
 export const SpinDiv = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-width:100%;
-height:100%;
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
