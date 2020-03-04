@@ -156,7 +156,10 @@ class HubSpotTickets extends Component {
                             less="Read less"
                             anchorClass=""
                           >
-                            {temp.properties.content.value}
+                            {temp.properties.content &&
+                            temp.properties.content.value
+                              ? temp.properties.content.value
+                              : ""}
                           </ShowMore>
                         </Col>
                       </TicketWrap>
