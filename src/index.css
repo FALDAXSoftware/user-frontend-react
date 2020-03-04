@@ -295,7 +295,7 @@ table .ant-table-tbody > tr > td {
   color: black;
 }
 .simple-maps .ant-modal-content {
-  height: 100%;
+  /* height: 100%; */
 }
 .simple-maps .ant-modal-header {
   padding: 0px;
@@ -320,6 +320,9 @@ table .ant-table-tbody > tr > td {
   padding-bottom: 50px;
 }
 @media (max-width: 425px) {
+  .simple-maps img:first-child {
+    width: 50px;
+  }
   .simple-maps img {
     width: 210px;
   }
