@@ -104,7 +104,7 @@ class ComingSoon extends React.Component {
           // maskClosable={this.props.location.pathname == "/conversion" ? false : true}
           footer={null}
           width={605}
-          height={490}
+          // height={490}
           className="simple-maps"
         >
           <ModalWrap className="country-wrap">
