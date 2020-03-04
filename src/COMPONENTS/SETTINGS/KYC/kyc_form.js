@@ -342,13 +342,15 @@ class KYCForm extends Component {
               fields["phone_number"] = responseData.data.phone_number;
               let phone = responseData.data.phone_number;
               let arr = [];
-              arr.push(responseData.data.country_code);
+              fields["country_code"] = country_code;
+              arr.push(country_code);
               this.setState(
                 {
                   countrychange: true,
                   mobile: responseData.data.phone_number,
                   phoneCountry: arr,
-                  displayCountry: true
+                  displayCountry: true,
+                  fields
                 },
                 () => {
                   if (
@@ -387,7 +389,7 @@ class KYCForm extends Component {
               loader: false
             });
           } else {
-            // console.log("kyc else", this.props.profileDetails);
+            // console.log("kyc else^^^", this.props.profileDetails.country);
             let profileData = this.props.profileDetails;
             fields["first_name"] =
               profileData.first_name !== null ? profileData.first_name : "";
@@ -430,19 +432,22 @@ class KYCForm extends Component {
               if (countrySelected) {
                 country_code = countrySelected.sortname;
               }
+              fields["country_code"] = country_code;
               // console.log("kyc dob else ^^^^^", country_code);
             }
             if (profileData.phone_number) {
               fields["phone_number"] = profileData.phone_number;
               let phone = profileData.phone_number;
+              fields["country_code"] = country_code;
               let arr = [];
-              arr.push(profileData.country_code);
+              arr.push(country_code);
               this.setState(
                 {
                   countrychange: true,
                   mobile: profileData.phone_number,
                   phoneCountry: arr,
-                  displayCountry: true
+                  displayCountry: true,
+                  fields
                 },
                 () => {
                   if (
@@ -462,9 +467,10 @@ class KYCForm extends Component {
               this.setState(
                 {
                   countrychange: true,
-                  mobile: profileData.phone_number,
+                  // mobile: profileData.phone_number,
                   phoneCountry: arr,
-                  displayCountry: true
+                  displayCountry: true,
+                  fields
                 },
                 () => {
                   if (country_code == "US" || country_code == "CA") {
