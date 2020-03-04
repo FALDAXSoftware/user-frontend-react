@@ -110,7 +110,7 @@ class ComingSoon extends Component {
           //   }
           footer={null}
           width={605}
-          height={490}
+          // height={490}
           className="simple-maps"
         >
           <ModalWrap className="kyc-wrap">
