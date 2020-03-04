@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 /* Components */
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 import { Spin } from 'antd';
 
 /* Styled-components */
@@ -102,11 +102,13 @@ class SellTable extends Component {
 
 
             if (body.status === 200) {
-                let res = body.data;
+                let res = JSON.parse(JSON.stringify(body.data));
+                console.log(body.data)
                 this.updateData(res);
             }
         });
         io.socket.on('sellbookUpdate', (data) => {
+            console.log(data);
             this.updateData(data);
         });
     }
@@ -170,23 +172,51 @@ class SellTable extends Component {
         const row = [];
         let sum = 0;
         for (let index = 0; index < data.length; index++) {
+            console.log("Start From Here ------>", data[index])
             const element = data[index];
             let isAdded = false;
+            let value = [];
             element["my_size"] = 0;
-            if (element.user_id === self.props.profileDetails.id) {
-                element["my_size"] = element.quantity;
-            }
+            // if (element.user_id === self.props.profileDetails.id) {
+            //     element["my_size"] = element.quantity;
+            // }
             for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
                 const internalElement = row[internalIndex];
+                console.log(index, internalIndex, "==========>", internalElement.ask === element.price, element.price, internalElement.ask)
                 if (internalElement.ask === element.price) {
                     row[internalIndex].amount += element.quantity;
-                    if (internalElement.user_id === self.props.profileDetails.id) {
-                        row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
-                    }
+                    console.log("I am inside", data[index], data[internalIndex], Number(internalElement.user_id), self.props.profileDetails.id, Number(internalElement.user_id) == self.props.profileDetails.id);
+
+                    // if (Number(internalElement.user_id) == self.props.profileDetails.id) {
+                    //     console.log("I am inside", data[internalIndex])
+                    //     row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
+                    // }
                     isAdded = true;
                     break;
                 }
             }
+            element.my_size = 0;
+            for (let tempIndex = 0; tempIndex < data.length; tempIndex++) {
+                if (value.includes(element.price)) {
+                    if (element.price == data[tempIndex].price) {
+                        if (data[tempIndex].user_id == self.props.profileDetails.id) {
+                            element.my_size = value.my_size + data[tempIndex].quantity;
+                        }
+                    }
+                    value.my_size = element.my_size
+                } else {
+                    value.push(element.price);
+                    if (element.price == data[tempIndex].price) {
+                        if (data[tempIndex].user_id == self.props.profileDetails.id) {
+                            element.my_size = element.my_size + data[tempIndex].quantity;
+                        }
+                    }
+                    value.my_size = element.my_size
+                }
+                // value.push(element.price)
+
+            }
+            console.log(element)
             if (!isAdded) {
                 row.push({
                     my_size: element.my_size,
@@ -217,7 +247,7 @@ class SellTable extends Component {
         return (
             <div>
                 <BBC2>SELLING {this.props.crypto}</BBC2>
-                <TotalBTC>Total:  {this.state.lastsum && this.state.lastsum.toFixed(4)} {this.state.crypto}</TotalBTC>
+                <TotalBTC>Total:  {this.state.lastsum && this.state.lastsum.toFixed(8)} {this.state.crypto}</TotalBTC>
                 <BuyTable>
                     <HistoryWrap1>
                         <OTwrap2>
@@ -246,9 +276,9 @@ class SellTable extends Component {
                                                 return (
                                                     < tr >
                                                         <td>{element.my_size}</td>
-                                                        <td>{element.amount.toFixed(4)}</td>
-                                                        <td>{element.ask}</td>
-                                                        <td>{element.total.toFixed(4)}</td>
+                                                        <td>{element.amount.toFixed(3)}</td>
+                                                        <td>{element.ask.toFixed(5)}</td>
+                                                        <td>{element.total.toFixed(8)}</td>
                                                     </tr>
                                                 );
                                             })

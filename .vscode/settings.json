@@ -1,7 +1,0 @@
-{
-    "editor.formatOnSave": true,
-    "editor.showUnused": true,
-    "javascript.updateImportsOnFileMove.enabled": "always",
-    "breadcrumbs.enabled": true,
-    "window.zoomLevel": 0
-}
