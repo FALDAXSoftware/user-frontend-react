@@ -38,12 +38,12 @@ import NotFound from "./SHARED-COMPONENTS/NotFound.js";
 // import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
 // import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
 // import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
-let { API_URL } = globalVariables;
-const socketIOClient = require("socket.io-client");
-const sailsIOClient = require("sails.io.js");
-let io = sailsIOClient(socketIOClient);
-io.sails.url = API_URL;
-io.sails.environment = "production";
+// let { API_URL } = globalVariables;
+// const socketIOClient = require("socket.io-client");
+// const sailsIOClient = require("sails.io.js");
+// let io = sailsIOClient(socketIOClient);
+// io.sails.url = API_URL;
+// io.sails.environment = "production";
 
 const routes = [
   {
@@ -90,14 +90,14 @@ const routes = [
   {
     exact: false,
     path: "/open-ticket",
-    component: () => <OpenTicket io={io} />,
-    io: io
+    component: () => <OpenTicket />,
+    // io: io
   },
   {
     exact: false,
     path: "/conversion",
-    component: () => <Conversion io={io} />,
-    io: io
+    component: () => <Conversion />,
+    // io: io
   },
   // {
   //   exact: false,
@@ -118,14 +118,12 @@ const routes = [
   {
     exact: false,
     path: "/simplex",
-    component: () => <Simplex io={io} />,
-    io: io
+    component: () => <Simplex/>,
   },
   {
     exact: false,
     path: "/simplex-exchange",
-    component: () => <SimplexExchange io={io} />,
-    io: io
+    component: () => <SimplexExchange/>,
   },
   // {
   //   exact: false,
@@ -172,25 +170,22 @@ const routes = [
   {
     exact: false,
     path: "/tier-upgrade-information",
-    component: () => <TierUpgradeInfo io={io} />,
-    io: io
+    component: () => <TierUpgradeInfo/>,
   },
   {
     exact: false,
     path: "/tier-image-information",
-    component: () => <TierUpgradeInfoImageRequirements io={io} />,
-    io: io
+    component: () => <TierUpgradeInfoImageRequirements/>,
   },
   {
     exact: false,
     path: "/tier-idcp-confirmation",
-    component: () => <TierIDConfirmation io={io} />,
-    io: io
+    component: () => <TierIDConfirmation/>,
   },
   {
     exact: false,
     path: "/tickets",
-    component: () => <HubspotTickets io={io} />
+    component: () => <HubspotTickets/>
   }
   // {
   //   exact: true,
