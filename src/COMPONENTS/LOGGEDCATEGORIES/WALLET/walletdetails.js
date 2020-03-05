@@ -221,8 +221,9 @@ class WalletDetails extends Component {
       this.props.getAllCoins(this.props.isLoggedIn);
       // console.log("wallet details props walletDetails", walletUserDetails);
       // console.log("asdgh^^^^", this.props.profileDetails.fiat);
-      let fiat, currency;
-      if (this.props.profileDetails) {
+      let fiat = 0,
+        currency;
+      if (this.props.profileDetails && responseData.currencyConversionData) {
         switch (this.props.profileDetails.fiat) {
           case "USD":
             fiat = responseData.currencyConversionData.quote.USD.price;
@@ -261,7 +262,6 @@ class WalletDetails extends Component {
           fiatCurrency: currency
         },
         () => {
-          // console.log("wallet details props -----", this.state.fiatValue);
           // console.log(
           //   "responseData.currencyConversionData.quote.USD.price===========",
           //   responseData.currencyConversionData.quote.USD.price
@@ -427,7 +427,6 @@ class WalletDetails extends Component {
       currencyConv /*,  walletDetails */
     } = this.state;
     let FIAT = this.props.profileDetails.fiat;
-    // console.log("^", walletUserData);
     return (
       <ContactWrap>
         <LoggedNavigation />
@@ -758,9 +757,9 @@ class WalletDetails extends Component {
                       us <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
                     </p> */}
                     <p>
-                      Your wallet is being generated and you will recieve a
+                      Your wallet is being generated and you will receive a
                       notification when it is ready for use. If you do not
-                      recieve a notification within 24 hours, or if you have any
+                      receive a notification within 24 hours, or if you have any
                       other concerns, please feel free to contact us{" "}
                       <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
                     </p>

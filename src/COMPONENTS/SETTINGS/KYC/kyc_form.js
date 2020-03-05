@@ -152,7 +152,7 @@ class KYCForm extends Component {
       firstname: {
         // name the rule
         message:
-          "First Name should have min. 2 and max. 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+          "First Name should have a minimum of 2 and a maximum of 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -164,7 +164,7 @@ class KYCForm extends Component {
       lastname: {
         // name the rule
         message:
-          "Last Name should have min. 2 and max. 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+          "Last Name should have a minimum of 2 and a maximum of 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -189,7 +189,7 @@ class KYCForm extends Component {
       },
       streetaddress: {
         // name the rule
-        message: "Space is not allowed in prefix/suffix.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: "Spaces are not allowed in prefix/suffix.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -205,7 +205,7 @@ class KYCForm extends Component {
       },
       onlyNumber: {
         // name the rule
-        message: "Only numbers are not allowed.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: "Field must include more than just numbers.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -216,7 +216,7 @@ class KYCForm extends Component {
       },
       mobileVal: {
         // name the rule
-        message: "Mobile No. should have only numbers.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: "Mobile number should have only numbers.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -339,7 +339,11 @@ class KYCForm extends Component {
               country_code = countrySelected.sortname;
             }
             if (responseData.data.phone_number) {
-              fields["phone_number"] = responseData.data.phone_number;
+              fields["phone_number"] = responseData.data.phone_number
+                ? typeof responseData.data.phone_number == "string"
+                  ? responseData.data.phone_number.replace(/ /g, "")
+                  : responseData.data.phone_number
+                : "";
               let phone = responseData.data.phone_number;
               let arr = [];
               fields["country_code"] = country_code;
@@ -347,7 +351,11 @@ class KYCForm extends Component {
               this.setState(
                 {
                   countrychange: true,
-                  mobile: responseData.data.phone_number,
+                  mobile: responseData.data.phone_number
+                    ? typeof responseData.data.phone_number == "string"
+                      ? responseData.data.phone_number.replace(/ /g, "")
+                      : responseData.data.phone_number
+                    : "",
                   phoneCountry: arr,
                   displayCountry: true,
                   fields
@@ -363,14 +371,20 @@ class KYCForm extends Component {
                 }
               );
             } else {
-              fields["phone_number"] = responseData.data.phone_number;
+              fields["phone_number"] =
+                typeof responseData.data.phone_number == "string"
+                  ? responseData.data.phone_number.replace(/ /g, "")
+                  : responseData.data.phone_number;
               let phone = responseData.data.phone_number;
               let arr = [];
               arr.push(country_code);
               this.setState(
                 {
                   countrychange: true,
-                  mobile: responseData.data.phone_number,
+                  mobile:
+                    typeof responseData.data.phone_number == "string"
+                      ? responseData.data.phone_number.replace(/ /g, "")
+                      : responseData.data.phone_number,
                   phoneCountry: arr,
                   displayCountry: true
                 },
@@ -414,14 +428,13 @@ class KYCForm extends Component {
             fields["dob"] =
               profileData.dob === null || profileData.dob === "Invalid date"
                 ? ""
-                : moment(profileData.dob).format("YYYY-DD-MM");
+                : moment(profileData.dob, "DD-MM-YYYY").format("YYYY-MM-DD");
             // fields["dob"] =
             //   profileData.dob !== null
             //     ? moment(profileData.dob).format("YYYY-DD-MM")
             //     : "";
             fields["country_code"] =
               profileData.country_code !== null ? profileData.country_code : "";
-            let dob = moment(profileData.dob).format("YYYY-DD-MM");
             let country_code = "";
             if (profileData.country) {
               // console.log("kyc dob ^^^^", profileData.countryJsonId);
@@ -436,15 +449,17 @@ class KYCForm extends Component {
               // console.log("kyc dob else ^^^^^", country_code);
             }
             if (profileData.phone_number) {
-              fields["phone_number"] = profileData.phone_number;
-              let phone = profileData.phone_number;
+              fields["phone_number"] = profileData.phone_number.replace(
+                / /g,
+                ""
+              );
               fields["country_code"] = country_code;
               let arr = [];
               arr.push(country_code);
               this.setState(
                 {
                   countrychange: true,
-                  mobile: profileData.phone_number,
+                  mobile: profileData.phone_number.replace(/ /g, ""),
                   phoneCountry: arr,
                   displayCountry: true,
                   fields
@@ -460,7 +475,10 @@ class KYCForm extends Component {
                 }
               );
             } else if (profileData.country) {
-              fields["phone_number"] = profileData.phone_number;
+              fields["phone_number"] =
+                typeof profileData.phone_number == "string"
+                  ? profileData.phone_number.replace(/ /g, "")
+                  : profileData.phone_number;
               let phone = profileData.phone_number;
               let arr = [];
               arr.push(country_code);
@@ -730,10 +748,14 @@ class KYCForm extends Component {
       // console.log("code", code);
       var mobile = mob.includes(`+${code.dialCode}`) ? mob : temp.concat(mob);
       let fields = this.state.fields;
-      fields["phone_number"] = mobile;
+      fields["phone_number"] =
+        typeof mobile == "string" ? mobile.replace(/ /g, "") : mobile;
       // console.log(mobile);
 
-      this.setState({ fields, mobile: mob });
+      this.setState({
+        fields,
+        mobile: typeof mob == "string" ? mob.replace(/ /g, "") : mob
+      });
     }
   }
 
@@ -1018,7 +1040,13 @@ class KYCForm extends Component {
                   )} */}
                   {this.state.displayCountry && (
                     <IntlTelInputS
-                      value={this.state.mobile}
+                      value={
+                        this.state.mobile
+                          ? typeof this.state.mobile == "string"
+                            ? this.state.mobile.replace(/ /g, "")
+                            : this.state.mobile
+                          : ""
+                      }
                       allowDropdown={false}
                       autoHideDialCode={true}
                       preferredCountries={[]}
@@ -1046,9 +1074,9 @@ class KYCForm extends Component {
                   "required|mobileVal|min:5|max:30",
                   "text-danger-validation",
                   {
-                    required: "Mobile No. field is required.",
-                    min: "Mobile No. should have min. 5 characters.",
-                    max: "Mobile No. should have max. 30 characters."
+                    required: "Mobile number field is required.",
+                    min: "Mobile number has a minimum of 5 characters.",
+                    max: "Mobile number has a maximum of 30 characters."
                   }
                 )}
               </Col>
@@ -1077,8 +1105,8 @@ class KYCForm extends Component {
                 "text-danger-validation",
                 {
                   required: "Postal code field is required.",
-                  min: "Postal code should have min. 3 characters.",
-                  max: "Postal code should have max. 25 characters."
+                  min: "Postal code has a minimum of 3 characters.",
+                  max: "Postal code has a maximum of 25 characters."
                 }
               )}
             </Col>

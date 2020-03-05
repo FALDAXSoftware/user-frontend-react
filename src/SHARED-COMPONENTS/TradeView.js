@@ -37,7 +37,7 @@ import {
   RadioMainRow,
   RadioGroupMainRow,
   CryptoFiatText
-} from "../STYLED-COMPONENTS/CONVERSION/style";
+} from "../STYLED-COMPONENTS/CONVERSION/tradeCalcStyle";
 
 const API_URL = globalVariables.API_URL;
 const TRADE_URL = globalVariables.TRADE_URL;
@@ -934,10 +934,20 @@ class TradeView extends React.Component {
       loader: false
     });
     if (this.props.isLoggedIn) {
-      window.open(
-        WP_URL + "/crypto-only-coming-soon",
-        "_blank" // <- This is what makes it open in a new window.
-      );
+      if (
+        this.props.profileDetails.is_allowed &&
+        this.props.profileDetails.is_kyc_done == 2
+      ) {
+        window.open(
+          WP_URL + "/crypto-only-coming-soon",
+          "_blank" // <- This is what makes it open in a new window.
+        );
+      } else {
+        window.open(
+          WP_URL + "/conversion",
+          "_blank" // <- This is what makes it open in a new window.
+        );
+      }
     } else {
       window.open(
         TRADE_URL + "/login/",
@@ -961,7 +971,7 @@ class TradeView extends React.Component {
                   <RadioMainRow>
                     {this.state.includeFees === 2 ? (
                       <RadioBorderRow className="radio-row">
-                        <RowTitle>You Recieve</RowTitle>
+                        <RowTitle>You Receive</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
                             type="number"
@@ -1067,7 +1077,7 @@ class TradeView extends React.Component {
                       </RadioBorderRow>
                     ) : (
                       <RadioBorderRow className="radio-row">
-                        <RowTitle>You Recieve</RowTitle>
+                        <RowTitle>You Receive</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
                             type="number"
@@ -1552,8 +1562,13 @@ class TradeView extends React.Component {
 function mapStateToProps(state) {
   return {
     isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
-    theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+    theme: state.themeReducer.theme !== undefined ? false : "",
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data !== undefined
+          ? state.simpleReducer.profileDetails.data[0]
+          : ""
+        : ""
   };
 }
 

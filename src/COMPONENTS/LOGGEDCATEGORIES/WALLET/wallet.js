@@ -339,7 +339,7 @@ class Wallet extends Component {
           {this.props.walletDetails &&
             this.props.walletDetails["activated_asset_lists"].length > 0 && (
               <ContainerContact>
-                <HeaderWrap className="">
+                <HeaderWrap className="head_of_wallet">
                   <MYWallet>
                     <span>
                       {profileDetails !== ""
@@ -415,7 +415,7 @@ class Wallet extends Component {
           {this.props.nowalletBalance &&
             this.props.nowalletBalance["all_assets_lists"].length > 0 && (
               <ContainerContact2>
-                <HeaderWrap2 className="">
+                <HeaderWrap2 className="head_of_wallet">
                   <MYWallet>
                     <span>Available Coins</span>
                   </MYWallet>
@@ -462,7 +462,7 @@ class Wallet extends Component {
           {this.props.nowalletBalance &&
             this.props.nowalletBalance["all_erctoken_lists"].length > 0 && (
               <ContainerContact2>
-                <HeaderWrap2 className="">
+                <HeaderWrap2 className="head_of_wallet">
                   <MYWallet>
                     <span>Available ERC-20 Tokens</span>
                   </MYWallet>
@@ -507,7 +507,7 @@ class Wallet extends Component {
           {this.props.walletDetails &&
             this.props.walletDetails["deactivated_asset_lists"].length > 0 && (
               <ContainerContact2>
-                <HeaderWrap2 className="">
+                <HeaderWrap2 className="head_of_wallet">
                   <MYWallet>
                     <span>Deactivated Coins/Tokens</span>
                   </MYWallet>

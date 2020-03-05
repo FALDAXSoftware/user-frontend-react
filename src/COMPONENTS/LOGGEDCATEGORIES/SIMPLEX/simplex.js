@@ -6,6 +6,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import SimpleReactValidator from "simple-react-validator";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { browserHistory } from "react-router-dom";
 
 import { Col, Row, notification } from "antd";
@@ -386,144 +387,148 @@ class Simplex extends React.Component {
   }
   render() {
     return (
-      <ConversionWrap>
-        <Navigation />
-        <ConversionContainer>
-          <SimMainRow className="simplex_main_row">
-            <SimTopHead>Safe. Simple. Secure.</SimTopHead>
-            <SimLeftCol lg={12}>
-              <BorderRow>
-                <RowTitle>You Pay</RowTitle>
-                <Col xs={12} sm={12} md={16}>
-                  <ConversionInput
-                    type="text"
-                    placeholder="0"
-                    // step="0.01"
-                    value={this.state.currencyToPay}
-                    onChange={e => {
-                      this.handleCurrencyPayChange(e);
-                    }}
-                  />
-                  {this.validator1.message(
-                    "amount pay",
-                    this.state.currencyToPay,
-                    `required|numeric|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
-                    "text-danger-validation",
-                    {
-                      numeric: "Enter only integer or a decimal number"
-                    }
-                  )}
-                </Col>
-                <Col xs={12} sm={12} md={8} className="value-display">
-                  {this.state.currencyList &&
-                    this.state.currencyList.length > 0 && (
+      <div>
+        <ConversionWrap>
+          <Navigation />
+          <ConversionContainer>
+            <SimMainRow className="simplex_main_row">
+              <SimTopHead>Safe. Simple. Secure.</SimTopHead>
+              <SimLeftCol lg={12}>
+                <BorderRow>
+                  <RowTitle>You Pay</RowTitle>
+                  <Col xs={12} sm={12} md={16}>
+                    <ConversionInput
+                      type="text"
+                      placeholder="0"
+                      // step="0.01"
+                      value={this.state.currencyToPay}
+                      onChange={e => {
+                        this.handleCurrencyPayChange(e);
+                      }}
+                    />
+                    {this.validator1.message(
+                      "amount pay",
+                      this.state.currencyToPay,
+                      `required|numeric|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
+                      "text-danger-validation",
+                      {
+                        numeric: "Enter only integer or a decimal number"
+                      }
+                    )}
+                  </Col>
+                  <Col xs={12} sm={12} md={8} className="value-display">
+                    {this.state.currencyList &&
+                      this.state.currencyList.length > 0 && (
+                        <ConversionDropDown
+                          defaultValue={this.state.currency}
+                          onChange={this.handleCurrencyChange}
+                        >
+                          {this.state.currencyList.map((cur, i) => {
+                            // if (cur.coin != this.state.currency) {
+                            return (
+                              <DropDownOption
+                                key={i}
+                                value={cur.coin}
+                                selecteddata={cur}
+                              >
+                                {" "}
+                                <DropIcon
+                                  src={cur.coin_icon}
+                                  height="20px"
+                                />{" "}
+                                {cur.coin}
+                              </DropDownOption>
+                            );
+                          })}
+                        </ConversionDropDown>
+                      )}
+                  </Col>
+                </BorderRow>
+                <BorderRow>
+                  <RowTitle>You Get</RowTitle>
+                  <Col xs={12} sm={12} md={16}>
+                    <ConversionInput
+                      type="number"
+                      placeholder="0"
+                      readOnly
+                      value={this.state.currencyToGet}
+                      // onChange={this.handleCurrencyGetChange}
+                    />
+                  </Col>
+                  <Col xs={12} sm={12} md={8} className="value-display">
+                    {this.state.cryptoList && this.state.cryptoList.length > 0 && (
                       <ConversionDropDown
-                        defaultValue={this.state.currency}
-                        onChange={this.handleCurrencyChange}
+                        defaultValue={this.state.crypto}
+                        onChange={this.handleCryptoChange}
                       >
-                        {this.state.currencyList.map((cur, i) => {
-                          // if (cur.coin != this.state.currency) {
-                          return (
-                            <DropDownOption
-                              key={i}
-                              value={cur.coin}
-                              selecteddata={cur}
-                            >
-                              {" "}
-                              <DropIcon
-                                src={cur.coin_icon}
-                                height="20px"
-                              />{" "}
-                              {cur.coin}
-                            </DropDownOption>
-                          );
+                        {this.state.cryptoList.map((element, index) => {
+                          if (element.coin != this.state.currency) {
+                            return (
+                              <DropDownOption
+                                key={index}
+                                value={element.coin}
+                                selecteddata={element}
+                              >
+                                {" "}
+                                <DropIcon
+                                  src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                  height="20px"
+                                />{" "}
+                                {element.coin}
+                              </DropDownOption>
+                            );
+                          }
                         })}
                       </ConversionDropDown>
                     )}
-                </Col>
-              </BorderRow>
-              <BorderRow>
-                <RowTitle>You Get</RowTitle>
-                <Col xs={12} sm={12} md={16}>
-                  <ConversionInput
-                    type="number"
-                    placeholder="0"
-                    readOnly
-                    value={this.state.currencyToGet}
-                    // onChange={this.handleCurrencyGetChange}
-                  />
-                </Col>
-                <Col xs={12} sm={12} md={8} className="value-display">
-                  {this.state.cryptoList && this.state.cryptoList.length > 0 && (
-                    <ConversionDropDown
-                      defaultValue={this.state.crypto}
-                      onChange={this.handleCryptoChange}
+                  </Col>
+                </BorderRow>
+                <Row>
+                  <Col>
+                    <ConversionSubmitBtn
+                      onClick={this.btnClicked}
+                      type="primary"
+                      size="large"
+                      block
+                      disabled={this.state.btnDisabled}
                     >
-                      {this.state.cryptoList.map((element, index) => {
-                        if (element.coin != this.state.currency) {
-                          return (
-                            <DropDownOption
-                              key={index}
-                              value={element.coin}
-                              selecteddata={element}
-                            >
-                              {" "}
-                              <DropIcon
-                                src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                height="20px"
-                              />{" "}
-                              {element.coin}
-                            </DropDownOption>
-                          );
-                        }
-                      })}
-                    </ConversionDropDown>
-                  )}
-                </Col>
-              </BorderRow>
-              <Row>
-                <Col>
-                  <ConversionSubmitBtn
-                    onClick={this.btnClicked}
-                    type="primary"
-                    size="large"
-                    block
-                    disabled={this.state.btnDisabled}
-                  >
-                    Exchange Now
-                  </ConversionSubmitBtn>
-                </Col>
-              </Row>
-              <SimLastRow className="bottom-row">
-                <Col>
-                  <span>We accept </span>
-                  <img src="images/visa-card1.png" alt="visa icon" />
-                  <img src="images/mastercard1.png" alt="visa icon" />
-                </Col>
-                <Col className="buy_crypto_btn">Pay With a Bank Card</Col>
-              </SimLastRow>
-            </SimLeftCol>
-            <SimRightCol className="simplex_right_col" lg={12}>
-              <SimHead>
-                FALDAX, in partnership with Simplex, brings the world's most
-                prevalent crypto assets directly to you. Thank you for choosing
-                FALDAX!
-              </SimHead>
-              <SimSubHead>
-                <p>Powered by</p>
-                <img src="/images/simplex-logo.png" />
-                {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                      Exchange Now
+                    </ConversionSubmitBtn>
+                  </Col>
+                </Row>
+                <SimLastRow className="bottom-row">
+                  <Col>
+                    <span>We accept </span>
+                    <img src="images/visa-card1.png" alt="visa icon" />
+                    <img src="images/mastercard1.png" alt="visa icon" />
+                  </Col>
+                  <Col className="buy_crypto_btn">Pay With a Bank Card</Col>
+                </SimLastRow>
+              </SimLeftCol>
+              <SimRightCol className="simplex_right_col" lg={12}>
+                <SimHead>
+                  FALDAX, in partnership with Simplex, brings the world's most
+                  prevalent crypto assets directly to you. Thank you for
+                  choosing FALDAX!
+                </SimHead>
+                <SimSubHead>
+                  <p>Powered by</p>
+                  <img src="/images/simplex-logo.png" />
+                  {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
                 ipsum suspendisse ultrices gravida. Risus commodo viverra
                 maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit
                 amet, consectetur adipiscing elit, sed do eiusmod tempor
                 incididunt ut labore. */}
-              </SimSubHead>
-            </SimRightCol>
-          </SimMainRow>
-        </ConversionContainer>
-        {this.state.loader == true ? <FaldaxLoader /> : ""}
-      </ConversionWrap>
+                </SimSubHead>
+              </SimRightCol>
+            </SimMainRow>
+          </ConversionContainer>
+
+          {this.state.loader == true ? <FaldaxLoader /> : ""}
+        </ConversionWrap>
+        <CommonFooter />
+      </div>
     );
   }
 }
