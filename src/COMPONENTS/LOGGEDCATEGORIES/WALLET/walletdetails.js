@@ -757,9 +757,9 @@ class WalletDetails extends Component {
                       us <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
                     </p> */}
                     <p>
-                      Your wallet is being generated and you will recieve a
+                      Your wallet is being generated and you will receive a
                       notification when it is ready for use. If you do not
-                      recieve a notification within 24 hours, or if you have any
+                      receive a notification within 24 hours, or if you have any
                       other concerns, please feel free to contact us{" "}
                       <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
                     </p>
