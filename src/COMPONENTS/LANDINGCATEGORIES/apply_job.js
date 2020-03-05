@@ -5,7 +5,7 @@ import { Row, Col, notification } from "antd";
 import { ReCaptcha, loadReCaptcha } from "react-recaptcha-v3";
 import styled from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
-import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
+import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from "STYLED-COMPONENTS/HOMEPAGE/style";

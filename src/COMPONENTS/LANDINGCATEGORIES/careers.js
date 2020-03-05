@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import { Link, withRouter } from "react-router-dom";
 import { Button, notification } from "antd";
 import styled from "styled-components";
-import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
+import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from "STYLED-COMPONENTS/HOMEPAGE/style";
 import {
