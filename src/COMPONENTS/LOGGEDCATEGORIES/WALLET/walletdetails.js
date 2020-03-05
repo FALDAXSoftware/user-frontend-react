@@ -221,8 +221,9 @@ class WalletDetails extends Component {
       this.props.getAllCoins(this.props.isLoggedIn);
       // console.log("wallet details props walletDetails", walletUserDetails);
       // console.log("asdgh^^^^", this.props.profileDetails.fiat);
-      let fiat, currency;
-      if (this.props.profileDetails) {
+      let fiat = 0,
+        currency;
+      if (this.props.profileDetails && responseData.currencyConversionData) {
         switch (this.props.profileDetails.fiat) {
           case "USD":
             fiat = responseData.currencyConversionData.quote.USD.price;
@@ -261,7 +262,6 @@ class WalletDetails extends Component {
           fiatCurrency: currency
         },
         () => {
-          // console.log("wallet details props -----", this.state.fiatValue);
           // console.log(
           //   "responseData.currencyConversionData.quote.USD.price===========",
           //   responseData.currencyConversionData.quote.USD.price
@@ -427,7 +427,6 @@ class WalletDetails extends Component {
       currencyConv /*,  walletDetails */
     } = this.state;
     let FIAT = this.props.profileDetails.fiat;
-    // console.log("^", walletUserData);
     return (
       <ContactWrap>
         <LoggedNavigation />
