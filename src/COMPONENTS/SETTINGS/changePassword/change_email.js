@@ -471,14 +471,12 @@ class ChangeEmail extends Component {
               >
                 <Description>
                   {" "}
-                  We have sent an one-time use verification code to old email
-                  address
+                  We have sent a one-time use verification code to
                   <a href={`mailto:${fields["oldEmail"]}`}>
                     {" "}
                     {fields["oldEmail"]}
                   </a>
-                  . Please enter the code in the box below to complete the
-                  verification for{" "}
+                  . Please enter the code in the box below to verify{" "}
                   <a href={`mailto:${fields["newEmail"]}`}>
                     {fields["newEmail"]}
                   </a>

@@ -629,7 +629,9 @@ class PersonalDetails extends Component {
           if (regexnum.test(value)) {
             this.setState({ firstIcon: false });
             document.querySelectorAll(".first_msg")[0].style.display = "block";
-            this.setState({ firstmsg: "Only numbers are not allowed" });
+            this.setState({
+              firstmsg: "Field must include more than just numbers"
+            });
           } else {
             this.setState({ firstIcon: true });
             document.querySelectorAll(".first_msg")[0].style.display = "none";
@@ -645,7 +647,7 @@ class PersonalDetails extends Component {
           document.querySelectorAll(".first_msg")[0].style.display = "block";
           this.setState({
             firstmsg:
-              "First Name should have min. 2 and max. 15 characters and no special characters are allowed"
+              "First Name should have a minimum of 2 and a maximum of 15 characters and no special characters are allowed"
           });
         }
       } else {
@@ -662,7 +664,9 @@ class PersonalDetails extends Component {
           if (regexnum.test(value)) {
             this.setState({ lastIcon: false });
             document.querySelectorAll(".last_msg")[0].style.display = "block";
-            this.setState({ lastmsg: "Only numbers are not allowed" });
+            this.setState({
+              lastmsg: "Field must include more than just numbers"
+            });
           } else {
             this.setState({ lastIcon: true });
             document.querySelectorAll(".last_msg")[0].style.display = "none";
@@ -677,7 +681,7 @@ class PersonalDetails extends Component {
           document.querySelectorAll(".last_msg")[0].style.display = "block";
           this.setState({
             lastmsg:
-              "Last Name should have min. 2 and max. 15 characters and no special characters are allowed"
+              "Last Name should have a minimum of 2 and a maximum of 15 characters and no special characters are allowed"
           });
         }
       } else {
@@ -783,14 +787,15 @@ class PersonalDetails extends Component {
             document.querySelectorAll(".street1_msg")[0].style.display =
               "block";
             this.setState({
-              street1msg: "Space is not allowed in prefix/suffix."
+              street1msg: "Spaces are not allowed in prefix/suffix."
             });
           }
         } else {
           this.setState({ street1Icon: false });
           document.querySelectorAll(".street1_msg")[0].style.display = "block";
           this.setState({
-            street1msg: "Street Address limit is 100 characters"
+            street1msg:
+              "Street Address Line 1 field has a maximum limit of 100 characters"
           });
         }
       } else {
@@ -807,7 +812,8 @@ class PersonalDetails extends Component {
           this.setState({ street2Icon: false });
           document.querySelectorAll(".street2_msg")[0].style.display = "block";
           this.setState({
-            street2msg: "Street Address limit is 100 characters"
+            street2msg:
+              "Street Address Line 2 field has a maximum limit of 100 characters"
           });
         }
       }
@@ -826,7 +832,7 @@ class PersonalDetails extends Component {
           if (value.length < 3 || value.length > 25)
             this.setState({
               postalmsg:
-                "Postal code should have min. 3 and max. 25 characters."
+                "Postal code should have a minimum of 3 and a maximum of 25 characters."
             });
           else
             this.setState({
@@ -920,7 +926,7 @@ class PersonalDetails extends Component {
         this.openNotificationWithProfile(
           "error",
           "Error",
-          "Please complete all required details to continue"
+          "Please complete all required fields to continue"
         );
         // console.log(
         //   "sjdh",
@@ -966,7 +972,7 @@ class PersonalDetails extends Component {
         ) {
           countrymsg = "City Field is required.";
         } else {
-          countrymsg = "Country, State and City Fields are required.";
+          countrymsg = "Country, State, and City Fields are required.";
         }
         this.setState({ countrymsg });
       }
@@ -1128,7 +1134,7 @@ class PersonalDetails extends Component {
         this.openNotificationWithProfile(
           "error",
           "Error",
-          "Please complete all required details to continue"
+          "Please complete all required fields to continue"
         );
       }
       if (
@@ -1167,7 +1173,7 @@ class PersonalDetails extends Component {
         ) {
           countrymsg = "City Field is required.";
         } else {
-          countrymsg = "Country, State and City Fields are required.";
+          countrymsg = ",";
         }
         this.setState({ countrymsg });
       }
@@ -1543,7 +1549,7 @@ class PersonalDetails extends Component {
                     >
                       <Radio value={"MM/DD/YYYY"}>MM/DD/YYYY</Radio>
                       <Radio value={"DD/MM/YYYY"}>DD/MM/YYYY</Radio>
-                      <Radio value={"MMM DD,YYYY"}>MMM DD,YYYY</Radio>
+                      <Radio value={"MMM DD, YYYY"}>MMM DD, YYYY</Radio>
                     </RadioGroup>
                     <FIATMsg className="df_msg">{this.state.dfmsg}</FIATMsg>
                   </Col>

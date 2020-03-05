@@ -668,7 +668,7 @@ class PasswordChange extends Component {
             document.querySelectorAll(".newchange_msg")[0].style.display =
               "block";
             this.setState({
-              new_msg: "Your password must not contain space."
+              new_msg: "Your password must not contain any spaces."
             });
           } else {
             this.setState({ newpassIcon: false });
@@ -680,7 +680,7 @@ class PasswordChange extends Component {
               "block";
             this.setState({
               new_msg:
-                "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_^&*), and one number. Minimum 8 characters and maximum 60 characters."
+                "Your password must contain at least one uppercase letter, one lowercase letter, one special character (!@#$%_), and one number. Minimum of 8 characters and a maximum of 60 characters."
             });
           }
         }
@@ -759,7 +759,10 @@ class PasswordChange extends Component {
           document.querySelector("#otp_success").style.display = "none";
           document.querySelector("#otp_fail").style.display = "inline-block";
           document.querySelectorAll(".MSG_OTP")[0].style.display = "block";
-          this.setState({ otp_msg: "*Otp should have 6 digit number." });
+          this.setState({
+            otp_msg:
+              "*Your Two-Factor Authentication code should be six digits.."
+          });
         }
       } else {
         this.setState({ otpIcon: false });
@@ -994,7 +997,7 @@ class PasswordChange extends Component {
                 ) : (
                   <span>
                     Way to go! You care about your security as much as we do.
-                    Thanks for enabling Two-Factor Authentication!
+                    Thank you for enabling Two-Factor Authentication!
                   </span>
                 )}
               </Headtext>

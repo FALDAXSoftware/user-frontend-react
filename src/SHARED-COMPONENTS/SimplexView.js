@@ -20,15 +20,20 @@ import {
   ConversionDropDown,
   DropDownOption,
   DropIcon,
-  ConversionSubmitBtn
-} from "../STYLED-COMPONENTS/CONVERSION/style";
-import {
+  ConversionSubmitBtn,
   SimRightCol,
   SimMainRow,
   SimLeftCol,
+  SimLastRow
+} from "../STYLED-COMPONENTS/CONVERSION/tradeCalcStyle";
+
+import {
+  // SimRightCol,
+  // SimMainRow,
+  // SimLeftCol,
   SimHead,
   SimSubHead,
-  SimLastRow,
+  // SimLastRow,
   SimTopHead
 } from "../STYLED-COMPONENTS/SIMPLEX/simplexStyle";
 
@@ -274,10 +279,20 @@ class SimplexView extends React.Component {
       loader: false
     });
     if (this.props.isLoggedIn) {
-      window.open(
-        TRADE_URL + "/simplex",
-        "_blank" // <- This is what makes it open in a new window.
-      );
+      if (
+        this.props.profileDetails.is_allowed &&
+        this.props.profileDetails.is_kyc_done == 2
+      ) {
+        window.open(
+          TRADE_URL + "/simplex",
+          "_blank" // <- This is what makes it open in a new window.
+        );
+      } else {
+        window.open(
+          TRADE_URL + "/conversion",
+          "_blank" // <- This is what makes it open in a new window.
+        );
+      }
     } else {
       window.open(
         TRADE_URL + "/login/",
@@ -431,7 +446,14 @@ class SimplexView extends React.Component {
 // export default Conversion;
 function mapStateToProps(state) {
   return {
-    isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false
+    isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
+    theme: state.themeReducer.theme !== undefined ? false : "",
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data !== undefined
+          ? state.simpleReducer.profileDetails.data[0]
+          : ""
+        : ""
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }

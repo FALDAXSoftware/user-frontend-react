@@ -5,7 +5,7 @@ import { Row, Col, notification } from "antd";
 import { ReCaptcha, loadReCaptcha } from "react-recaptcha-v3";
 import styled from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
-import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
+import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from "STYLED-COMPONENTS/HOMEPAGE/style";
@@ -175,7 +175,7 @@ class ApplyJob extends Component {
         }
       },
       coverLimit: {
-        message: "Please upload the document of less than 2 mb.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: "Please upload the document with a file size less than 2 mb.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -186,7 +186,7 @@ class ApplyJob extends Component {
         }
       },
       resumeLimit: {
-        message: "Please upload the document of less than 2 mb.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: "Please upload the document with a file size less than 2 mb.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -198,7 +198,7 @@ class ApplyJob extends Component {
       },
       websiteurl: {
         // name the rule
-        message: "Please enter valid webiste address.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: "Please enter a valid website address.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -211,7 +211,7 @@ class ApplyJob extends Component {
       },
       linkedinurl: {
         // name the rule
-        message: "Please enter valid Linkedin address.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: "Please enter a valid LinkedIn address.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -384,8 +384,8 @@ class ApplyJob extends Component {
       } else {
         this.openNotificationWithIcon(
           "error",
-          "Seems like a robot",
-          "Please try again after reloading the page."
+          "Error",
+          "The automated human verification system encountered an error. Please refresh the page and try again. We apologize for any inconvenience."
         );
       }
     } else {
@@ -574,7 +574,7 @@ class ApplyJob extends Component {
                           )}
                         </DropzoneStyle>
                         <SupportText>
-                          Supported format : .doc , .docx , .pdf.
+                          Supported format: .doc, .docx, .pdf.
                         </SupportText>
                         {this.validator.message(
                           "resume",
@@ -621,7 +621,7 @@ class ApplyJob extends Component {
                           )}
                         </DropzoneStyle>
                         <SupportText>
-                          Supported format : .doc , .docx , .pdf.
+                          Supported format: .doc, .docx, .pdf.
                         </SupportText>
                         {this.validator.message(
                           "cover",
