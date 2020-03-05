@@ -339,7 +339,11 @@ class KYCForm extends Component {
               country_code = countrySelected.sortname;
             }
             if (responseData.data.phone_number) {
-              fields["phone_number"] = responseData.data.phone_number;
+              fields["phone_number"] = responseData.data.phone_number
+                ? typeof responseData.data.phone_number == "string"
+                  ? responseData.data.phone_number.replace(/ /g, "")
+                  : responseData.data.phone_number
+                : "";
               let phone = responseData.data.phone_number;
               let arr = [];
               fields["country_code"] = country_code;
@@ -347,7 +351,11 @@ class KYCForm extends Component {
               this.setState(
                 {
                   countrychange: true,
-                  mobile: responseData.data.phone_number,
+                  mobile: responseData.data.phone_number
+                    ? typeof responseData.data.phone_number == "string"
+                      ? responseData.data.phone_number.replace(/ /g, "")
+                      : responseData.data.phone_number
+                    : "",
                   phoneCountry: arr,
                   displayCountry: true,
                   fields
@@ -363,14 +371,20 @@ class KYCForm extends Component {
                 }
               );
             } else {
-              fields["phone_number"] = responseData.data.phone_number;
+              fields["phone_number"] =
+                typeof responseData.data.phone_number == "string"
+                  ? responseData.data.phone_number.replace(/ /g, "")
+                  : responseData.data.phone_number;
               let phone = responseData.data.phone_number;
               let arr = [];
               arr.push(country_code);
               this.setState(
                 {
                   countrychange: true,
-                  mobile: responseData.data.phone_number,
+                  mobile:
+                    typeof responseData.data.phone_number == "string"
+                      ? responseData.data.phone_number.replace(/ /g, "")
+                      : responseData.data.phone_number,
                   phoneCountry: arr,
                   displayCountry: true
                 },
@@ -414,14 +428,13 @@ class KYCForm extends Component {
             fields["dob"] =
               profileData.dob === null || profileData.dob === "Invalid date"
                 ? ""
-                : moment(profileData.dob).format("YYYY-DD-MM");
+                : moment(profileData.dob, "DD-MM-YYYY").format("YYYY-MM-DD");
             // fields["dob"] =
             //   profileData.dob !== null
             //     ? moment(profileData.dob).format("YYYY-DD-MM")
             //     : "";
             fields["country_code"] =
               profileData.country_code !== null ? profileData.country_code : "";
-            let dob = moment(profileData.dob).format("YYYY-DD-MM");
             let country_code = "";
             if (profileData.country) {
               // console.log("kyc dob ^^^^", profileData.countryJsonId);
@@ -436,15 +449,17 @@ class KYCForm extends Component {
               // console.log("kyc dob else ^^^^^", country_code);
             }
             if (profileData.phone_number) {
-              fields["phone_number"] = profileData.phone_number;
-              let phone = profileData.phone_number;
+              fields["phone_number"] = profileData.phone_number.replace(
+                / /g,
+                ""
+              );
               fields["country_code"] = country_code;
               let arr = [];
               arr.push(country_code);
               this.setState(
                 {
                   countrychange: true,
-                  mobile: profileData.phone_number,
+                  mobile: profileData.phone_number.replace(/ /g, ""),
                   phoneCountry: arr,
                   displayCountry: true,
                   fields
@@ -460,7 +475,10 @@ class KYCForm extends Component {
                 }
               );
             } else if (profileData.country) {
-              fields["phone_number"] = profileData.phone_number;
+              fields["phone_number"] =
+                typeof profileData.phone_number == "string"
+                  ? profileData.phone_number.replace(/ /g, "")
+                  : profileData.phone_number;
               let phone = profileData.phone_number;
               let arr = [];
               arr.push(country_code);
@@ -730,10 +748,14 @@ class KYCForm extends Component {
       // console.log("code", code);
       var mobile = mob.includes(`+${code.dialCode}`) ? mob : temp.concat(mob);
       let fields = this.state.fields;
-      fields["phone_number"] = mobile;
+      fields["phone_number"] =
+        typeof mobile == "string" ? mobile.replace(/ /g, "") : mobile;
       // console.log(mobile);
 
-      this.setState({ fields, mobile: mob });
+      this.setState({
+        fields,
+        mobile: typeof mob == "string" ? mob.replace(/ /g, "") : mob
+      });
     }
   }
 
@@ -1018,7 +1040,13 @@ class KYCForm extends Component {
                   )} */}
                   {this.state.displayCountry && (
                     <IntlTelInputS
-                      value={this.state.mobile}
+                      value={
+                        this.state.mobile
+                          ? typeof this.state.mobile == "string"
+                            ? this.state.mobile.replace(/ /g, "")
+                            : this.state.mobile
+                          : ""
+                      }
                       allowDropdown={false}
                       autoHideDialCode={true}
                       preferredCountries={[]}
@@ -1046,7 +1074,7 @@ class KYCForm extends Component {
                   "required|mobileVal|min:5|max:30",
                   "text-danger-validation",
                   {
-                    required: "Mobile No. field is required.",
+                    required: "Mobile number field is required.",
                     min: "Mobile number has a minimum of 5 characters.",
                     max: "Mobile number has a maximum of 30 characters."
                   }
