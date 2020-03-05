@@ -654,8 +654,14 @@ class Login_Form extends Component {
     this.unload();
   }
   componentWillReceiveProps(props, newProps) {
+    console.log("^^^^", props);
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
+        this.openNotificationWithIcon(
+          "success",
+          "Success",
+          props.errorStatus.message
+        );
         // console.log("thisd^^^", props.errorStatus.user.is_kyc_done);
         if (this.state.verify == true) {
           this.openNotificationWithIcon(
