@@ -295,7 +295,7 @@ class ProfileBackup extends Component {
                       _self.openNotificationWithIcon(
                         "error",
                         "File Size",
-                        "File should be greater than 450*600 in dimension"
+                        "File needs to be greater than 450*600 in dimension"
                       );
                     }
                   };

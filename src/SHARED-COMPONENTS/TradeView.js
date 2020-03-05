@@ -971,7 +971,7 @@ class TradeView extends React.Component {
                   <RadioMainRow>
                     {this.state.includeFees === 2 ? (
                       <RadioBorderRow className="radio-row">
-                        <RowTitle>You Recieve</RowTitle>
+                        <RowTitle>You Receive</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
                             type="number"
@@ -1077,7 +1077,7 @@ class TradeView extends React.Component {
                       </RadioBorderRow>
                     ) : (
                       <RadioBorderRow className="radio-row">
-                        <RowTitle>You Recieve</RowTitle>
+                        <RowTitle>You Receive</RowTitle>
                         <Col xs={12} sm={12} md={14}>
                           <ConversionInput
                             type="number"

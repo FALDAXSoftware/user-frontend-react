@@ -1581,7 +1581,7 @@ class Acc_settings extends Component {
 
           <DeactiveWrap className="" id="deactivate">
             <Description className="final_deactivate">
-              Are you sure, you want to Deactivate your account?
+              Are you sure you want to Deactivate your account?
             </Description>
             <DeactivateButtonWarp className="final_deactivate">
               <DeButtonDiv
@@ -1601,8 +1601,8 @@ class Acc_settings extends Component {
           {this.state.walletCoins ? (
             <DeactivateWrapper className="wrapper" id="wrapper">
               <Description>
-                *Any funds in your wallet will no longer be accessible after
-                deactivation of account.
+                *Any funds in your wallet will no longer be accessible after the
+                deactivation of your account.
               </Description>
               <div className="nav__body">
                 <NewP className="deactivate">
