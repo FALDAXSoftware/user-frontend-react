@@ -350,11 +350,17 @@ class WalletPopup extends Component {
           // console.log(error)
         });
     }
-    if (this.props.fiatValue) {
+    if (this.props.fiatValue && parseFloat(this.props.fiatValue) != 0) {
       this.setState({
         fiatValue: 0,
         fiatCurrency: this.props.fiatCurrency,
         singlefiatValue: this.props.fiatValue.toFixed(8)
+      });
+    } else {
+      this.setState({
+        fiatValue: 0,
+        fiatCurrency: this.props.fiatCurrency,
+        singlefiatValue: 0
       });
     }
   }
@@ -663,9 +669,14 @@ class WalletPopup extends Component {
         parseFloat(fields[name]) +
           parseFloat(fields[name]) * (this.props.coinFee / 100)
       ).toFixed(8);
-      let fiatValueamount = parseFloat(
-        parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
-      ).toFixed(2);
+      let fiatValueamount;
+      if (this.state.singlefiatValue !== 0) {
+        fiatValueamount = parseFloat(
+          parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
+        ).toFixed(2);
+      } else {
+        fiatValueamount = 0;
+      }
       let faldaxFee = parseFloat(
         e.target.value * (this.props.coinFee / 100)
       ).toFixed(8);

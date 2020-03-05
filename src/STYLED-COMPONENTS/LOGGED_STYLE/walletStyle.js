@@ -8,10 +8,16 @@ export const HeaderWrap = styled.div`
   @media (max-width: 991px) {
     display: block;
   }
+  &.head_of_wallet {
+    padding-bottom: 30px;
+  }
 `;
 export const HeaderWrap2 = styled(HeaderWrap)`
   padding-top: 30px;
   align-items: center;
+  &.head_of_wallet {
+    padding-bottom: 30px;
+  }
 `;
 export const SearchCoin = styled.div`
   display: inline-block;
@@ -464,7 +470,7 @@ export const WalletCreateButton = styled.button`
   border: none;
   font-size: 18px;
   width: 230px;
-  height: 40px;
+  min-height: 40px;
   border-radius: 10px;
   cursor: pointer;
 `;
