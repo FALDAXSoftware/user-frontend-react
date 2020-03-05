@@ -608,6 +608,11 @@ export const DetailsP = styled.p`
   font-family: "Open Sans";
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 25, 25, 25 )"} !important;
+  & body {
+    background: transparent;
+    color: ${props =>
+      props.theme.mode === "dark" ? "white" : "rgb( 25, 25, 25 )"} !important;
+  }
 `;
 
 /* Careers Style */

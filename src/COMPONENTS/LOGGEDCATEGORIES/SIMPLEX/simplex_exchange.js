@@ -7,6 +7,7 @@ import TFAModal from "SHARED-COMPONENTS/TFAModal";
 import SimpleReactValidator from "simple-react-validator";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Col, Row, notification } from "antd";
 
 /* STYLED-COMPONENTS */
@@ -655,102 +656,103 @@ class SimplexExchange extends React.Component {
   }
   render() {
     return (
-      <ConversionWrap>
-        <Navigation />
-        <ConversionContainer>
-          <SimMainRow className="simplex_main_row">
-            <SimLeftCol className="simplex_left_col_exchange" lg={12}>
-              <BorderRow className="simplex_row">
-                <RowTitle>You Pay</RowTitle>
-                <Col xs={12} sm={12} md={16}>
-                  <ConversionInput
-                    type="text"
-                    placeholder="0"
-                    // step="0.01"
-                    value={this.state.currencyToPay}
-                    // onChange={this.handleCurrencyPayChange}
-                    onChange={e => {
-                      this.handleCurrencyPayChange(e);
-                    }}
-                  />
-                  {this.validator1.message(
-                    "amount pay",
-                    this.state.currencyToPay,
-                    `required|numeric|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
-                    "text-danger-validation",
-                    {
-                      numeric: "Enter only integer or a decimal number"
-                    }
-                  )}
-                </Col>
-                <Col xs={12} sm={12} md={8} className="cuurency-display">
-                  {this.state.currencyList &&
-                    this.state.currencyList.length > 0 && (
+      <div>
+        <ConversionWrap>
+          <Navigation />
+          <ConversionContainer>
+            <SimMainRow className="simplex_main_row">
+              <SimLeftCol className="simplex_left_col_exchange" lg={12}>
+                <BorderRow className="simplex_row">
+                  <RowTitle>You Pay</RowTitle>
+                  <Col xs={12} sm={12} md={16}>
+                    <ConversionInput
+                      type="text"
+                      placeholder="0"
+                      // step="0.01"
+                      value={this.state.currencyToPay}
+                      // onChange={this.handleCurrencyPayChange}
+                      onChange={e => {
+                        this.handleCurrencyPayChange(e);
+                      }}
+                    />
+                    {this.validator1.message(
+                      "amount pay",
+                      this.state.currencyToPay,
+                      `required|numeric|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
+                      "text-danger-validation",
+                      {
+                        numeric: "Enter only integer or a decimal number"
+                      }
+                    )}
+                  </Col>
+                  <Col xs={12} sm={12} md={8} className="cuurency-display">
+                    {this.state.currencyList &&
+                      this.state.currencyList.length > 0 && (
+                        <ConversionDropDown
+                          defaultValue={this.state.currency}
+                          onChange={this.handleCurrencyChange}
+                        >
+                          {this.state.currencyList.map((cur, i) => {
+                            // if (cur.coin != this.state.currency) {
+                            return (
+                              <DropDownOption
+                                key={i}
+                                value={cur.coin}
+                                selecteddata={cur}
+                              >
+                                {" "}
+                                <DropIcon
+                                  src={cur.coin_icon}
+                                  height="20px"
+                                />{" "}
+                                {cur.coin}
+                              </DropDownOption>
+                            );
+                          })}
+                        </ConversionDropDown>
+                      )}
+                  </Col>
+                </BorderRow>
+                <BorderRow className="simplex_row">
+                  <RowTitle>You Get</RowTitle>
+                  <Col xs={12} sm={12} md={16}>
+                    <ConversionInput
+                      type="number"
+                      placeholder="0"
+                      readOnly
+                      value={this.state.currencyToGet}
+                      // onChange={this.handleCurrencyGetChange}
+                    />
+                  </Col>
+                  <Col xs={12} sm={12} md={8} className="currency-display">
+                    {this.state.cryptoList && this.state.cryptoList.length > 0 && (
                       <ConversionDropDown
-                        defaultValue={this.state.currency}
-                        onChange={this.handleCurrencyChange}
+                        defaultValue={this.state.crypto}
+                        onChange={this.handleCryptoChange}
                       >
-                        {this.state.currencyList.map((cur, i) => {
-                          // if (cur.coin != this.state.currency) {
-                          return (
-                            <DropDownOption
-                              key={i}
-                              value={cur.coin}
-                              selecteddata={cur}
-                            >
-                              {" "}
-                              <DropIcon
-                                src={cur.coin_icon}
-                                height="20px"
-                              />{" "}
-                              {cur.coin}
-                            </DropDownOption>
-                          );
+                        {this.state.cryptoList.map((element, index) => {
+                          if (element.coin != this.state.currency) {
+                            return (
+                              <DropDownOption
+                                key={index}
+                                value={element.coin}
+                                selecteddata={element}
+                              >
+                                {" "}
+                                <DropIcon
+                                  src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                  height="20px"
+                                />{" "}
+                                {element.coin}
+                              </DropDownOption>
+                            );
+                          }
                         })}
                       </ConversionDropDown>
                     )}
-                </Col>
-              </BorderRow>
-              <BorderRow className="simplex_row">
-                <RowTitle>You Get</RowTitle>
-                <Col xs={12} sm={12} md={16}>
-                  <ConversionInput
-                    type="number"
-                    placeholder="0"
-                    readOnly
-                    value={this.state.currencyToGet}
-                    // onChange={this.handleCurrencyGetChange}
-                  />
-                </Col>
-                <Col xs={12} sm={12} md={8} className="currency-display">
-                  {this.state.cryptoList && this.state.cryptoList.length > 0 && (
-                    <ConversionDropDown
-                      defaultValue={this.state.crypto}
-                      onChange={this.handleCryptoChange}
-                    >
-                      {this.state.cryptoList.map((element, index) => {
-                        if (element.coin != this.state.currency) {
-                          return (
-                            <DropDownOption
-                              key={index}
-                              value={element.coin}
-                              selecteddata={element}
-                            >
-                              {" "}
-                              <DropIcon
-                                src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                height="20px"
-                              />{" "}
-                              {element.coin}
-                            </DropDownOption>
-                          );
-                        }
-                      })}
-                    </ConversionDropDown>
-                  )}
-                </Col>
-              </BorderRow>
-              {/* <BorderRow>
+                  </Col>
+                </BorderRow>
+                {/* <BorderRow>
                 <Col>
                   <ConversionInput
                     className="address_field"
@@ -768,68 +770,68 @@ class SimplexExchange extends React.Component {
                 </Col>
               </BorderRow> */}
 
-              {this.state.wallet_details === "" ? (
-                <div>
-                  <CreateWalletRow className="create-wallet-link">
-                    <Col>
-                      <span>Don't have {this.state.coin_name} wallet?</span>
-                      <Link
-                        to={`/walletDetails?coinID0=${this.state.cryptoCode}`}
-                      >
-                        Generate wallet
-                      </Link>
-                    </Col>
-                  </CreateWalletRow>
-                  <Row>
-                    <Col>
-                      <ConversionSubmitBtn
-                        onClick={() => this.btnClicked()}
-                        type="primary"
-                        size="large"
-                        block
-                        disabled
-                      >
-                        Continue
-                      </ConversionSubmitBtn>
-                    </Col>
-                  </Row>
-                </div>
-              ) : (
-                <div>
-                  <BorderRow>
-                    <Col>
-                      <ConversionInput
-                        className="address_field"
-                        type="text"
-                        placeholder="Address"
-                        value={this.state.address}
-                        // readOnly
-                        onChange={this.handleAddressChange}
-                      />
-                      {/* {this.validator1.message(
+                {this.state.wallet_details === "" ? (
+                  <div>
+                    <CreateWalletRow className="create-wallet-link">
+                      <Col>
+                        <span>Don't have {this.state.coin_name} wallet?</span>
+                        <Link
+                          to={`/walletDetails?coinID0=${this.state.cryptoCode}`}
+                        >
+                          Generate wallet
+                        </Link>
+                      </Col>
+                    </CreateWalletRow>
+                    <Row>
+                      <Col>
+                        <ConversionSubmitBtn
+                          onClick={() => this.btnClicked()}
+                          type="primary"
+                          size="large"
+                          block
+                          disabled
+                        >
+                          Continue
+                        </ConversionSubmitBtn>
+                      </Col>
+                    </Row>
+                  </div>
+                ) : (
+                  <div>
+                    <BorderRow>
+                      <Col>
+                        <ConversionInput
+                          className="address_field"
+                          type="text"
+                          placeholder="Address"
+                          value={this.state.address}
+                          // readOnly
+                          onChange={this.handleAddressChange}
+                        />
+                        {/* {this.validator1.message(
                         "address",
                         this.state.address,
                         `required|alpha_num|min:15|max:120`,
                         "text-danger-validation"
                       )} */}
-                    </Col>
-                  </BorderRow>
-                  <Row>
-                    <Col>
-                      <ConversionSubmitBtn
-                        onClick={() => this.btnClicked()}
-                        type="primary"
-                        size="large"
-                        block
-                        disabled={this.state.btnDisabled}
-                      >
-                        Continue
-                      </ConversionSubmitBtn>
-                    </Col>
-                  </Row>
-                </div>
-              )}
-              {/* {this.state.address === "" ? (
+                      </Col>
+                    </BorderRow>
+                    <Row>
+                      <Col>
+                        <ConversionSubmitBtn
+                          onClick={() => this.btnClicked()}
+                          type="primary"
+                          size="large"
+                          block
+                          disabled={this.state.btnDisabled}
+                        >
+                          Continue
+                        </ConversionSubmitBtn>
+                      </Col>
+                    </Row>
+                  </div>
+                )}
+                {/* {this.state.address === "" ? (
                 <CreateWalletRow className="create-wallet-link">
                   <Col>
                     <Link
@@ -842,7 +844,7 @@ class SimplexExchange extends React.Component {
               ) : (
                 ""
               )} */}
-              {/* <Row>
+                {/* <Row>
                 <Col>
                   <ConversionSubmitBtn
                     onClick={this.btnClicked}
@@ -854,97 +856,99 @@ class SimplexExchange extends React.Component {
                   </ConversionSubmitBtn>
                 </Col>
               </Row> */}
-            </SimLeftCol>
-          </SimMainRow>
-          <FormValueDisplay
-            id="payment_form"
-            action={this.state.response.action}
-            method="POST"
-            target="_self"
-          >
-            {/* {console.log(this.state.version)} */}
-            <input
-              type="text"
-              name="version"
-              value={this.state.response.version}
+              </SimLeftCol>
+            </SimMainRow>
+            <FormValueDisplay
+              id="payment_form"
+              action={this.state.response.action}
+              method="POST"
+              target="_self"
+            >
+              {/* {console.log(this.state.version)} */}
+              <input
+                type="text"
+                name="version"
+                value={this.state.response.version}
+              />
+              <input
+                type="text"
+                name="partner"
+                value={this.state.response.partner}
+              />
+              <input
+                type="text"
+                name="payment_flow_type"
+                value={this.state.response.payment_flow_type}
+              />
+              <input
+                type="text"
+                name="return_url_success"
+                value={this.state.response.return_url_success}
+              />
+              <input
+                type="text"
+                name="return_url_fail"
+                value={this.state.response.return_url_fail}
+              />
+              <input
+                type="text"
+                name="quote_id"
+                value={this.state.response.quote_id}
+              />
+              <input
+                type="text"
+                name="payment_id"
+                value={this.state.response.payment_id}
+              />
+              <input
+                type="text"
+                name="user_id"
+                value={this.state.response.user_id}
+              />
+              <input
+                type="text"
+                name="destination_wallet[address]"
+                value={this.state.response["destination_wallet[address]"]}
+              />
+              <input
+                type="text"
+                name="destination_wallet[currency]"
+                value={this.state.response["destination_wallet[currency]"]}
+              />
+              <input
+                type="text"
+                name="fiat_total_amount[amount]"
+                value={this.state.response["fiat_total_amount[amount]"]}
+              />
+              <input
+                type="text"
+                name="fiat_total_amount[currency]"
+                value={this.state.response["fiat_total_amount[currency]"]}
+              />
+              <input
+                type="text"
+                name="digital_total_amount[amount]"
+                value={this.state.response["digital_total_amount[amount]"]}
+              />
+              <input
+                type="text"
+                name="digital_total_amount[currency]"
+                value={this.state.response["digital_total_amount[currency]"]}
+              />
+              <button id="frm_sumbit" type="submit">
+                Submit
+              </button>
+            </FormValueDisplay>
+            <TFAModal
+              visible={this.state.showTFAModal}
+              isLoggedIn={this.props.isLoggedIn}
+              submit={otp => this.btnClicked(otp)}
             />
-            <input
-              type="text"
-              name="partner"
-              value={this.state.response.partner}
-            />
-            <input
-              type="text"
-              name="payment_flow_type"
-              value={this.state.response.payment_flow_type}
-            />
-            <input
-              type="text"
-              name="return_url_success"
-              value={this.state.response.return_url_success}
-            />
-            <input
-              type="text"
-              name="return_url_fail"
-              value={this.state.response.return_url_fail}
-            />
-            <input
-              type="text"
-              name="quote_id"
-              value={this.state.response.quote_id}
-            />
-            <input
-              type="text"
-              name="payment_id"
-              value={this.state.response.payment_id}
-            />
-            <input
-              type="text"
-              name="user_id"
-              value={this.state.response.user_id}
-            />
-            <input
-              type="text"
-              name="destination_wallet[address]"
-              value={this.state.response["destination_wallet[address]"]}
-            />
-            <input
-              type="text"
-              name="destination_wallet[currency]"
-              value={this.state.response["destination_wallet[currency]"]}
-            />
-            <input
-              type="text"
-              name="fiat_total_amount[amount]"
-              value={this.state.response["fiat_total_amount[amount]"]}
-            />
-            <input
-              type="text"
-              name="fiat_total_amount[currency]"
-              value={this.state.response["fiat_total_amount[currency]"]}
-            />
-            <input
-              type="text"
-              name="digital_total_amount[amount]"
-              value={this.state.response["digital_total_amount[amount]"]}
-            />
-            <input
-              type="text"
-              name="digital_total_amount[currency]"
-              value={this.state.response["digital_total_amount[currency]"]}
-            />
-            <button id="frm_sumbit" type="submit">
-              Submit
-            </button>
-          </FormValueDisplay>
-          <TFAModal
-            visible={this.state.showTFAModal}
-            isLoggedIn={this.props.isLoggedIn}
-            submit={otp => this.btnClicked(otp)}
-          />
-        </ConversionContainer>
-        {this.state.loader == true ? <FaldaxLoader /> : ""}
-      </ConversionWrap>
+          </ConversionContainer>
+          {this.state.loader == true ? <FaldaxLoader /> : ""}
+        </ConversionWrap>
+        <CommonFooter />
+      </div>
     );
   }
 }

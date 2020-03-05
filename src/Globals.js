@@ -37,7 +37,7 @@ export const globalVariables = {
 
   // TRADE_URL: "http://localhost:3006/"
 
-  // API_URL: "https://prod-backend.faldax.com", // Live URL
+  // API_URL: "https://api.faldax.com", // Live URL
 
   // TRADE_URL: "https://trade.faldax.com" // Live URL
 
