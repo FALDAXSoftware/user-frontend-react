@@ -152,7 +152,7 @@ class KYCForm extends Component {
       firstname: {
         // name the rule
         message:
-          "First Name should have min. 2 and max. 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+          "First Name should have a minimum of 2 and a maximum of 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -164,7 +164,7 @@ class KYCForm extends Component {
       lastname: {
         // name the rule
         message:
-          "Last Name should have min. 2 and max. 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+          "Last Name should have a minimum of 2 and a maximum of 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -189,7 +189,7 @@ class KYCForm extends Component {
       },
       streetaddress: {
         // name the rule
-        message: "Space is not allowed in prefix/suffix.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: "Spaces are not allowed in prefix/suffix.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -205,7 +205,7 @@ class KYCForm extends Component {
       },
       onlyNumber: {
         // name the rule
-        message: "Only numbers are not allowed.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: "Field must include more than just numbers.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -216,7 +216,7 @@ class KYCForm extends Component {
       },
       mobileVal: {
         // name the rule
-        message: "Mobile No. should have only numbers.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: "Mobile number should have only numbers.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -1047,8 +1047,8 @@ class KYCForm extends Component {
                   "text-danger-validation",
                   {
                     required: "Mobile No. field is required.",
-                    min: "Mobile No. should have min. 5 characters.",
-                    max: "Mobile No. should have max. 30 characters."
+                    min: "Mobile number has a minimum of 5 characters.",
+                    max: "Mobile number has a maximum of 30 characters."
                   }
                 )}
               </Col>
@@ -1077,8 +1077,8 @@ class KYCForm extends Component {
                 "text-danger-validation",
                 {
                   required: "Postal code field is required.",
-                  min: "Postal code should have min. 3 characters.",
-                  max: "Postal code should have max. 25 characters."
+                  min: "Postal code has a minimum of 3 characters.",
+                  max: "Postal code has a maximum of 25 characters."
                 }
               )}
             </Col>

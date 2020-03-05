@@ -263,7 +263,7 @@ class DocUpload extends Component {
                     _self.openNotificationWithIcon(
                       "error",
                       "File Size",
-                      "File should be greater than 450*600 in dimension"
+                      "File needs to be greater than 450*600 in dimension"
                     );
                     document.getElementById("front").value = "";
                     document.getElementById("back").value = "";

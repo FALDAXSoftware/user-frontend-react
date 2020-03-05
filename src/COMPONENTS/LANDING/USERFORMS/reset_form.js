@@ -261,7 +261,7 @@ class ResetPassword extends Component {
               "inline-block";
             document.querySelectorAll(".pass_msg")[0].style.display = "block";
             this.setState({
-              pass_msg: "Your password must not contain space."
+              pass_msg: "Your password must not contain any spaces."
             });
           } else {
             this.setState({ newpassIcon: false, password: value });
@@ -272,7 +272,7 @@ class ResetPassword extends Component {
             document.querySelectorAll(".pass_msg")[0].style.display = "block";
             this.setState({
               pass_msg:
-                "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_^&*), and one number. Minimum 8 characters and maximum 60 characters."
+                "Your password must contain at least one uppercase letter, one lowercase letter, one special character (!@#$%_), and one number. Minimum of 8 characters and a maximum of 60 characters."
             });
           }
         }
