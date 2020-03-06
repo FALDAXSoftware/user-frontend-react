@@ -944,7 +944,7 @@ class TradeView extends React.Component {
         );
       } else {
         window.open(
-          WP_URL + "/conversion",
+          TRADE_URL + "/conversion",
           "_blank" // <- This is what makes it open in a new window.
         );
       }
