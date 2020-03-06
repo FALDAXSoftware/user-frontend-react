@@ -616,7 +616,8 @@ class PersonalDetails extends Component {
       field !== "postal_code" &&
       field !== "first_name" &&
       field !== "last_name" &&
-      field !== "street_address"
+      field !== "street_address" &&
+      field !== "street_address_2"
     )
       value = value.trim();
     if (field === "first_name") {
@@ -804,10 +805,22 @@ class PersonalDetails extends Component {
         this.setState({ street1msg: "Street Address field is required" });
       }
     } else if (field === "street_address_2") {
-      if (value.trim !== "") {
+      var ex = value;
+      if (value.trim("") !== "") {
         if (value.length <= 100) {
           this.setState({ street2Icon: true });
           document.querySelectorAll(".street2_msg")[0].style.display = "none";
+          if (ex === value.trim("")) {
+            this.setState({ street1Icon: true });
+            document.querySelectorAll(".street2_msg")[0].style.display = "none";
+          } else {
+            this.setState({ street1Icon: false });
+            document.querySelectorAll(".street2_msg")[0].style.display =
+              "block";
+            this.setState({
+              street2msg: "Spaces are not allowed in prefix/suffix."
+            });
+          }
         } else {
           this.setState({ street2Icon: false });
           document.querySelectorAll(".street2_msg")[0].style.display = "block";
@@ -819,26 +832,37 @@ class PersonalDetails extends Component {
       }
     } else if (field === "postal_code") {
       if (value !== "") {
+        // console.log("sj^^^", value, value.length);
         // var reg = /^(?=.*[0-9A-Za-z])[-()0-9A-Za-z]{3,25}$/;
         var reg = /^[a-zA-Z0-9-_]*$/;
         var bool = reg.test(value);
         // console.log("------------------->", bool, value);
         if (bool === true) {
-          this.setState({ postalIcon: true });
-          document.querySelectorAll(".postal_msg")[0].style.display = "none";
-        } else {
-          this.setState({ postalIcon: false });
-          document.querySelectorAll(".postal_msg")[0].style.display = "block";
-          if (value.length < 3 || value.length > 25)
+          if (value.length < 3 || value.length > 25) {
+            this.setState({ postalIcon: false });
+            document.querySelectorAll(".postal_msg")[0].style.display = "block";
             this.setState({
               postalmsg:
                 "Postal code should have a minimum of 3 and a maximum of 25 characters."
             });
-          else
+          } else {
+            this.setState({ postalIcon: true });
+            document.querySelectorAll(".postal_msg")[0].style.display = "none";
+          }
+        } else {
+          this.setState({ postalIcon: false });
+          document.querySelectorAll(".postal_msg")[0].style.display = "block";
+          if (value.length < 3 || value.length > 25) {
+            this.setState({
+              postalmsg:
+                "Postal code should have a minimum of 3 and a maximum of 25 characters."
+            });
+          } else {
             this.setState({
               postalmsg:
                 "Postal code may only contain letters, numbers, and dashes."
             });
+          }
         }
       } else {
         this.setState({ postalIcon: false });

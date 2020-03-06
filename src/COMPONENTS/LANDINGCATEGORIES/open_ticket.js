@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
@@ -12,6 +14,7 @@ import {
 import { globalVariables } from "Globals.js";
 
 import HubspotForm from "react-hubspot-form";
+import { getProfileDataAction } from "../../ACTIONS/SETTINGS/settingActions";
 
 let API_URL = globalVariables.API_URL;
 
@@ -79,7 +82,11 @@ class OpenTicket extends Component {
     super(props);
     this.state = {};
   }
-
+  componentDidMount() {
+    if (!this.props.profileDetails) {
+      this.props.getProfileDataAction(this.props.isLoggedIn);
+    }
+  }
   render() {
     return (
       <ContactWrap>
@@ -103,4 +110,24 @@ class OpenTicket extends Component {
   }
 }
 
-export default OpenTicket;
+// export default OpenTicket;
+function mapStateToProps(state) {
+  return {
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data !== undefined
+          ? state.simpleReducer.profileDetails.data[0]
+          : ""
+        : "",
+    isLoggedIn: state.simpleReducer.isLoggedIn,
+    theme:
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+  };
+}
+const mapDispatchToProps = dispatch => ({
+  getProfileDataAction: isLoggedIn => dispatch(getProfileDataAction(isLoggedIn))
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(OpenTicket));
