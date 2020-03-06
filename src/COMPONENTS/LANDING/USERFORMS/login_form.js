@@ -654,7 +654,6 @@ class Login_Form extends Component {
     this.unload();
   }
   componentWillReceiveProps(props, newProps) {
-    console.log("^^^^", props);
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
         this.openNotificationWithIcon(
