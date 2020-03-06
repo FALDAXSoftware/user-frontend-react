@@ -100,3 +100,14 @@ export const SpinDiv = styled.div`
   width: 100%;
   height: 100%;
 `;
+export const NoteSpan = styled.span`
+  text-align: center;
+  display: block;
+  font-size: 12px;
+  font-style: italic;
+  padding: 20px 0 0;
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000")};
+  &.upload_note {
+    padding: 5px 0;
+  }
+`;
