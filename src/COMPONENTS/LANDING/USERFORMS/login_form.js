@@ -570,7 +570,9 @@ class Login_Form extends Component {
           document.querySelector("#otp_icon_fail").style.display =
             "inline-block";
           document.querySelectorAll(".otp_msg")[0].style.display = "block";
-          this.setState({ otp_msg: "Otp should have 6 digits." });
+          this.setState({
+            otp_msg: "Your Two-Factor Authentication code should be six digits."
+          });
         }
       } else {
         this.setState({ otpIcon: false });
