@@ -630,7 +630,7 @@ class Login_Form extends Component {
 
   componentDidMount() {
     document.cookie = "isLoggedInPreprod=false; domain=faldax.com";
-    document.cookie = "isLoggedInLive=false; domain=faldax.com";
+
     if (!this.props.isLoggedIn) {
       loadReCaptcha(GOOGLE_SITE_KEY);
       // alert("mount");
