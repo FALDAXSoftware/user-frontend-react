@@ -175,7 +175,7 @@ class ApplyJob extends Component {
         }
       },
       coverLimit: {
-        message: "Please upload the document with a file size less than 2 mb.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: "Please upload the document with a file size less than 3 mb.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -186,7 +186,7 @@ class ApplyJob extends Component {
         }
       },
       resumeLimit: {
-        message: "Please upload the document with a file size less than 2 mb.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: "Please upload the document with a file size less than 3 mb.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -514,7 +514,10 @@ class ApplyJob extends Component {
                             "phone_number",
                             fields.phone_number,
                             "required|integer|min:10|max:15",
-                            "text-danger-validation"
+                            "text-danger-validation",
+                            {
+                              integer: "Mobile number should have only numbers."
+                            }
                           )}
                         </RightWing>
                       </Col>
