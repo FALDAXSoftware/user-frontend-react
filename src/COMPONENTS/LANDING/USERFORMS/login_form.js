@@ -570,7 +570,9 @@ class Login_Form extends Component {
           document.querySelector("#otp_icon_fail").style.display =
             "inline-block";
           document.querySelectorAll(".otp_msg")[0].style.display = "block";
-          this.setState({ otp_msg: "Otp should have 6 digits." });
+          this.setState({
+            otp_msg: "Your Two-Factor Authentication code should be six digits."
+          });
         }
       } else {
         this.setState({ otpIcon: false });
@@ -628,7 +630,7 @@ class Login_Form extends Component {
 
   componentDidMount() {
     document.cookie = "isLoggedInPreprod=false; domain=faldax.com";
-    document.cookie = "isLoggedInLive=false; domain=faldax.com";
+
     if (!this.props.isLoggedIn) {
       loadReCaptcha(GOOGLE_SITE_KEY);
       // alert("mount");
