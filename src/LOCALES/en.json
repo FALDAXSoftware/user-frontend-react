@@ -2099,6 +2099,42 @@
       "message": "Amount Collected",
       "message_type": "Web content",
       "context": "Amount Collected table head text of refferal"
+    },
+    "currency_text": {
+      "page": "Edit Profile",
+      "message": "Currency",
+      "message_type": "Web content",
+      "context": "text for Currency keyword"
+    },
+    "dateformat_text": {
+      "page": "Edit Profile",
+      "message": "Date Format",
+      "message_type": "Web content",
+      "context": "text for Date Format keyword"
+    },
+    "ip_required_error": {
+      "page": "Edit Profile",
+      "message": "IP field is required",
+      "message_type": "Web content",
+      "context": "Error message for ip field required"
+    },
+    "select_end_date_placeholder": {
+      "page": "Edit Profile > settings > ip",
+      "message": "Select End Date",
+      "message_type": "Web content",
+      "context": "placeholder text for select end date"
+    },
+    "end_date_text": {
+      "page": "Edit Profile > settings > ip",
+      "message": "End Date",
+      "message_type": "Web content",
+      "context": "text for end date"
+    },
+    "this_field_required_error": {
+      "page": "Edit Profile > settings > Deactivate Account",
+      "message": "This field is required",
+      "message_type": "Web content",
+      "context": "This field is required error message"
     }
   }
 }

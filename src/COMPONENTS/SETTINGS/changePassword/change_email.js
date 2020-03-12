@@ -270,7 +270,7 @@ class ChangeEmail extends Component {
             this.setState({
               loader: false,
               errMsg: true,
-              errType: "Error",
+              errType: this.t("validations:error_text.message"),
               errMessage: responseData.err
             });
           }
@@ -330,7 +330,7 @@ class ChangeEmail extends Component {
               loader: false,
               isShowOTP: false,
               errMsg: true,
-              errType: "Success",
+              errType: this.t("validations:success_text.message"),
               errMessage: responseData.message,
               newEmail: responseData.data
             });
@@ -345,7 +345,7 @@ class ChangeEmail extends Component {
             this.setState({
               loader: false,
               errMsg: true,
-              errType: "Error",
+              errType: this.t("validations:error_text.message"),
               errMessage: responseData.err
             });
           }

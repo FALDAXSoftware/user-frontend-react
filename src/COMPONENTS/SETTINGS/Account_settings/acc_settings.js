@@ -142,10 +142,10 @@ class Acc_settings extends Component {
       },
       isWhitelistIp: false
     };
-
+    this.t = this.props.t;
     this.validator = new SimpleReactValidator({
       ipvalid: {
-        message: "Enter a valid IP address.",
+        message: this.t("validations:invalid_ip_error.message"),
         rule: val => {
           var RE = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
           if (RE.test(val)) {
@@ -156,7 +156,7 @@ class Acc_settings extends Component {
         }
       },
       matchDelete: {
-        message: "Please enter 'FORFEIT FUNDS'.",
+        message: this.t("validations:forfeit_funds_error.message"),
         rule: val => {
           var RE = /^FORFEIT FUNDS$/;
           if (RE.test(val)) {
@@ -167,7 +167,7 @@ class Acc_settings extends Component {
         }
       },
       gttoday: {
-        message: "Please enter upcoming date.",
+        message: this.t("valiadtions:invalid_end_date_error.message"),
         rule: val => {
           var a = moment();
           var b = moment(val);
@@ -184,7 +184,7 @@ class Acc_settings extends Component {
     });
     this.validator1 = new SimpleReactValidator({
       matchDelete: {
-        message: "Please enter 'FORFEIT FUNDS'.",
+        message: this.t("validations:forfeit_funds_error.message"),
         rule: val => {
           var RE = /^FORFEIT FUNDS$/;
           if (RE.test(val)) {
@@ -195,7 +195,7 @@ class Acc_settings extends Component {
         }
       },
       matchDeactivate: {
-        message: "Please enter 'DEACTIVATE'.",
+        message: this.t("validations:deactivate_error.message"),
         rule: val => {
           var RE = /^DEACTIVATE$/;
           if (RE.test(val)) {
@@ -224,26 +224,13 @@ class Acc_settings extends Component {
     this.handleDeactivateYes = this.handleDeactivateYes.bind(this);
     this.fianlPerIpWhitelist = this.fianlPerIpWhitelist.bind(this);
     this.addPerIpWhitelist = this.addPerIpWhitelist.bind(this);
-    // this.onStartChange = this.onStartChange.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
   /* Life Cycle Methods */
 
   componentWillReceiveProps(newProps) {
-    /*  console.log(this.props)
-         if(this.props.theme!==undefined)
-         {
-             if(this.props.theme !== this.state.theme)
-             {
-                 if(this.props.theme==false)
-                     this.setState({searchCSS:"Input_search_night"})
-                 else
-                     this.setState({searchCSS:"INPUT_search"})
-             }
-         } */
     this.setState({ user2fastatus: this.props.profileDetails.is_twofactor });
-    // console.log("walletCoins-------------------", this.state.user2fastatus);
     if (
       newProps.profileDetails.date_format !==
         this.props.profileDetails.date_format &&
@@ -267,12 +254,10 @@ class Acc_settings extends Component {
       this.setState({
         checked: this.props.profileDetails.security_feature
       });
-      // console.log(this.props);
       if (
         this.props.profileDetails.is_whitelist_ip !== undefined &&
         this.props.profileDetails.is_whitelist_ip !== null
       ) {
-        // console.log("9898989898988898989");
         this.setState({
           isWhitelistIp: this.props.profileDetails.is_whitelist_ip
         });
@@ -294,17 +279,6 @@ class Acc_settings extends Component {
     var a = moment();
     var b = moment(value);
     var ans = b.diff(a, "days"); // "in a day"
-
-    // if (a.format("DD-MM-YYYY") === b.format("DD-MM-YYYY")) {
-    //   this.setState({
-    //     validDays: 1
-    //   });
-    // } else {
-    //   this.setState({
-    //     validDays: ans + 2
-    //   });
-    // }
-    // console.log("startValue", ans + 1);
     this.setState({
       startValue: value,
       validDays: ans + 1
@@ -314,7 +288,6 @@ class Acc_settings extends Component {
     this.validator.hideMessages();
     this.validator1.hideMessages();
     this.forceUpdate();
-    // rerender to hide messages for the first time
   }
   checkBoxChange(key, e, record) {
     const { data_noti } = this.state;
@@ -366,7 +339,6 @@ class Acc_settings extends Component {
     })
       .then(response => response.json())
       .then(responseData => {
-        // console.log("Did IP : ", responseData);
         if (responseData.status == 200) {
           let b = JSON.parse(JSON.stringify(responseData.data));
           let [selectAllEmail, selectAllText] = this.getEmailAndText(
@@ -416,7 +388,7 @@ class Acc_settings extends Component {
           });
           this.openNotificationWithIcon(
             "success",
-            "Success",
+            this.t("validations:success_text.message"),
             responseData.message
           );
         } else {
@@ -431,8 +403,6 @@ class Acc_settings extends Component {
       .catch(error => {
         this.setState({ loader: false });
         this.openNotificationWithIcon("error", "Error", error);
-
-        // console.log(error);
       });
   }
   getIpWhitelist(pageIp) {
@@ -444,7 +414,6 @@ class Acc_settings extends Component {
     })
       .then(response => response.json())
       .then(responseData => {
-        // console.log("Did IP : ", responseData);
         if (responseData.status == 200) {
           this.setState({
             whitelistData: responseData.data,
@@ -470,15 +439,11 @@ class Acc_settings extends Component {
   deleteUserAccount() {
     if (this.validator1.allValid()) {
       this.setState({ loader: true });
-      // alert("btn clicked");
       let value = {};
       value["email"] = this.props.email;
       value["user_id"] = this.props.profileDetails.id;
       value["jwt_token"] = this.props.isLoggedIn;
       value["otp"] = this.state.code2fa;
-      // value["otp"] = this.state.code2fa;
-      // console.log("deleteUserAccount value======================", value);
-      // this.props.deleteAccount(this.props.isLoggedIn, value);
       fetch(API_URL + "/users/deleteAccount", {
         method: "delete",
         headers: {
@@ -582,7 +547,6 @@ class Acc_settings extends Component {
             };
             antTableData.push(temp);
           });
-          /* console.log("->>>>>>>>>",antTableData); */
           self.setState({
             loginHistory: antTableData,
             loader: false
@@ -713,7 +677,7 @@ class Acc_settings extends Component {
           this.getIpWhitelist(this.state.pageIp);
           this.openNotificationWithIcon(
             "success",
-            "SUCCESS",
+            this.t("validations:success_text.message"),
             responseData.message
           );
           let fields = {
@@ -731,7 +695,7 @@ class Acc_settings extends Component {
           this.setState({ loader: false });
           this.openNotificationWithIcon(
             "error",
-            "Error",
+            this.t("validations:error_text.message"),
             responseData.err ? responseData.err : responseData.message
           );
         } else {
@@ -772,7 +736,7 @@ class Acc_settings extends Component {
           this.getIpWhitelist(this.state.pageIp);
           this.openNotificationWithIcon(
             "success",
-            "SUCCESS",
+            this.t("validations:success_text.message"),
             responseData.message
           );
           let fields = {
@@ -792,7 +756,7 @@ class Acc_settings extends Component {
           this.setState({ loader: false });
           this.openNotificationWithIcon(
             "error",
-            "Error",
+            this.t("validations:error_text.message"),
             responseData.err ? responseData.err : responseData.message
           );
         } else {
@@ -823,28 +787,15 @@ class Acc_settings extends Component {
     }
   }
   addIpWhitelist(e, fields = null) {
-    // console.log(fields, e);
-    // if (fields == null) {
-    //   if (this.validator.allValid() && this.state.daysErrMsg === null) {
-    //     this.fianlIpWhitelist(this.state.fields);
-    //   } else {
-    //     this.validator.showMessages();
-    //     this.forceUpdate();
-    //   }
-    // } else {
-    //   this.fianlIpWhitelist(fields);
-    // }
     if (this.validator.allValid()) {
       this.fianlIpWhitelist(this.state.fields);
     } else {
-      // console.log("this.state.daysErrMsg", this.state.daysErrMsg);
       this.validator.showMessages();
       this.forceUpdate();
     }
   }
 
   deleteIP(src) {
-    // console.log(src, this.props.isLoggedIn);
     this.setState({ loader: true });
     fetch(API_URL + `/users/delete-whitelist-ip`, {
       method: "delete",
@@ -860,7 +811,7 @@ class Acc_settings extends Component {
         this.getIpWhitelist(this.state.pageIp);
         this.openNotificationWithIcon(
           "success",
-          "SUCCESS",
+          this.t("validations:success_text.message"),
           responseData.message
         );
         this.setState({ loader: false });
@@ -916,7 +867,7 @@ class Acc_settings extends Component {
             () => {
               this.openNotificationWithIcon(
                 "success",
-                "Success",
+                this.t("validations:success_text.message"),
                 responseData.message
               );
             }
@@ -941,42 +892,9 @@ class Acc_settings extends Component {
       });
   }
   onChangeIP(checked) {
-    // console.log(checked, API_URL, this.props);
-
     this.setState({ visibleIpModal: true, checkedIP: checked });
-    /* this.setState({ loader: true });
-
-        fetch(API_URL + `/users/whitelist-ip-status-change`, {
-            method: "post",
-            headers: {
-                Authorization: "Bearer " + this.props.isLoggedIn,
-            },
-            body: JSON.stringify({
-                status: checked
-            })
-        })
-            .then(response => response.json())
-            .then((responseData) => {
-                console.log(responseData)
-                if (responseData.status == 200) {
-                    console.log("Inside IF")
-                    if (checked == true)
-                        this.setState({ visibleIpModal: true, checkedIP: checked });
-                }
-                else {
-                    console.log("Inside ELSE")
-                    this.openNotificationWithIcon("error", responseData.status, responseData.err);
-                }
-                this.setState({ loader: false });
-            })
-            .catch(error => {
-                console.log(error)
-                this.openNotificationWithIcon("error", "Error", "Something went wrong!");
-                this.setState({ loader: false })
-            }) */
   }
   ipModalCancel() {
-    // console.log("IP Modal Cancel");
     this.setState({ visibleIpModal: false, checkedIP: false });
   }
   getWalletSummary() {
@@ -1007,7 +925,11 @@ class Acc_settings extends Component {
             loader: false
           });
         } else if (responseData.status == 403) {
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
           this.setState(
             {
               loader: false
@@ -1342,8 +1264,8 @@ class Acc_settings extends Component {
           {!this.state.isWhitelistIp && (
             <TableWrap>
               <Switch
-                checkedChildren="ON"
-                unCheckedChildren="OFF"
+                checkedChildren={this.t("general_1:on_switch_text.message")}
+                unCheckedChildren={this.t("general_1:off_switch_text.message")}
                 defaultChecked
                 onChange={this.onChangeIP}
                 checked={this.state.checkedIP}
@@ -1392,17 +1314,12 @@ class Acc_settings extends Component {
             <span>{t("subhead_deactivate_account.message")}</span>
           </DeleteDesc>
           <DeleteBtn>
-            {/* <ButtonDel type="primary" onClick={this.showConfirm.bind(this)}> */}
             <ButtonDel
               type="primary"
               onClick={() => {
                 if (this.state.walletCoins != null) {
-                  // alert("openDeleteModal", this.state.walletCoins);
-                  // console.log("openDeleteModal", this.state.walletCoins);
                   this.openDeleteModal();
                 } else {
-                  // alert("forfeitFunds", this.state.walletCoins);
-                  // console.log("forfeitFunds", this.state.walletCoins);
                   this.openDeactivateModal();
                 }
               }}
@@ -1432,42 +1349,22 @@ class Acc_settings extends Component {
                 size="medium"
                 onChange={this.ipChange.bind(this)}
                 name="ip"
-                // style={{ marginBottom: "20px" }}
               />
               {this.validator.message(
                 "ip",
                 this.state.fields.ip,
                 "required|ipvalid",
                 "text-danger-validation",
-                { required: "IP field is required." }
+                { required: this.t("general_1:ip_required_error.message") }
               )}
             </div>
-            {/* <InputLabel>Enter Days</InputLabel> */}
             <div className="range_picker_wrap">
-              {/* <OTPInput
-                style={{ paddingRight: "10px" }}
-                min="1"
-                value={this.state.fields.days}
-                type="number"
-                size="medium"
-                onChange={this.ipChange.bind(this)}
-                name="days"
-              />
-              {this.validator.message(
-                "days",
-                this.state.fields.days,
-                "required",
-                "text-danger-validation",
-                { required: "Days field is required." }
-              )} */}
               <DatePicker
-                // disabledDate={this.disabledStartDate}
-                // minDate={moment()}
-                // disabledDate={this.disabledDate}
-                // defaultValue={moment()}
                 format="YYYY-MM-DD"
                 value={startValue}
-                placeholder="Select End Date"
+                placeholder={this.t(
+                  "general_1:select_end_date_placeholder.message"
+                )}
                 onChange={this.onChange}
                 showToday={false}
               />
@@ -1476,13 +1373,12 @@ class Acc_settings extends Component {
                 this.state.startValue,
                 "required|gttoday",
                 "text-danger-validation",
-                { required: "End Date field is required." }
+                {
+                  required:
+                    this.t("general_1:end_date_text.message") +
+                    this.t("validations:field_is_required.message")
+                }
               )}
-              {/* {this.state.daysErrMsg && (
-                <div className="text-danger-validation">
-                  {this.state.daysErrMsg}
-                </div>
-              )} */}
             </div>
           </NewP>
           <ButtonDiv>
@@ -1647,7 +1543,11 @@ class Acc_settings extends Component {
                       this.state.deleteText,
                       "required|matchDelete",
                       "text-danger-validation",
-                      { required: "This field is required." }
+                      {
+                        required: this.t(
+                          "general_1:this_field_required_error.message"
+                        )
+                      }
                     )}
                   </div>
                   {this.state.user2fastatus ? (
@@ -1731,13 +1631,17 @@ class Acc_settings extends Component {
                       this.state.deactivateText,
                       "required|matchDeactivate",
                       "text-danger-validation",
-                      { required: "This field is required." }
+                      {
+                        required: this.t(
+                          "general_1:this_field_required_error.message"
+                        )
+                      }
                     )}
                   </div>
                   {this.state.user2fastatus ? (
                     <div>
                       <InputLabel>
-                        Enter your 2FA code in the box below:
+                        {this.t("deactivate_popup_label2.message")}:
                       </InputLabel>
                       <div>
                         <OTPInput
@@ -1820,6 +1724,9 @@ const mapDispatchToProps = dispatch => ({
   LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 
-export default translate(["settings", "edit_profile_titles", "general_1"])(
-  connect(mapStateToProps, mapDispatchToProps)(Acc_settings)
-);
+export default translate([
+  "settings",
+  "edit_profile_titles",
+  "general_1",
+  "validations"
+])(connect(mapStateToProps, mapDispatchToProps)(Acc_settings));
