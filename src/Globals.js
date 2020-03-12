@@ -27,6 +27,8 @@ export const globalVariables = {
 
   //    API_URL: "https://dev-backend.faldax.com", // DEV url
 
+  // API_URL: "https://mainnet-backend.faldax.com", //Pre-Production URL
+
   API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
 
   TRADE_URL: "https://preprod-trade.faldax.com",
@@ -35,7 +37,7 @@ export const globalVariables = {
 
   // TRADE_URL: "http://localhost:3006/"
 
-  // API_URL: "https://prod-backend.faldax.com", // Live URL
+  // API_URL: "https://api.faldax.com", // Live URL
 
   // TRADE_URL: "https://trade.faldax.com" // Live URL
 

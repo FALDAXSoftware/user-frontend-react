@@ -4,7 +4,7 @@ import { withRouter, Link } from "react-router-dom";
 /* import { Spin } from 'antd'; */
 import styled from "styled-components";
 import ReactHtmlParser from "react-html-parser";
-import Navigation from "COMPONENTS/NAVIGATIONS/navigation";
+import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 /* import { SpinEx } from 'STYLED-COMPONENTS/HOMEPAGE/style' */
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from "STYLED-COMPONENTS/HOMEPAGE/style";

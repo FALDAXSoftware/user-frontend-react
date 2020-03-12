@@ -104,20 +104,18 @@ class ComingSoon extends React.Component {
           // maskClosable={this.props.location.pathname == "/conversion" ? false : true}
           footer={null}
           width={605}
-          height={490}
+          // height={490}
           className="simple-maps"
         >
           <ModalWrap className="country-wrap">
             <h3>Access Denied</h3>
             <p className="first-subhead">
-              Unfortunately, FALDAX does not offer trading services in your area
-              at this time, but we are actively working to increase
-              availability. Visit the world map on our home page to see where
-              trading is considered legal in your area, but you are unable to
-              trade, that simply means we are working through the licensing
-              process with the authoritiesin your area. Check back often, or
-              subscribe to our newsletter, to be notifiedwhen services become
-              available for you.
+              While we are actively working to increase service availability,
+              FALDAX is unable to offer trading services in your area at this
+              time. Visit the world map on the{" "}
+              <a href={`${globalVariables.WordpressSiteURL}/`}>Home</a> page to
+              view currently trading availability. Subscribe to our newsletter
+              to receive notifications when services are available in your area.
             </p>
             <p className="second-subhead">
               Thank you for your support and your patience.

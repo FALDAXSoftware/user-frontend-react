@@ -11,6 +11,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 
 /* STYLED-COMPONENTS */
 import { ButtonWrap, SubWrap, BackButton, NextButton } from "./id_select";
+import { NoteSpan } from "../../../STYLED-COMPONENTS/HOMEPAGE/style";
 
 const SSNWrap = styled.div`
   width: 100%;
@@ -196,7 +197,7 @@ class DocUpload extends Component {
           const fileSize = file && file.size ? file.size : 0;
           // console.log(file);
           if (fileType === "image") {
-            if (fileType === "image" && fileSize < 5242880) {
+            if (fileType === "image" && fileSize < 4194304) {
               var fr = new FileReader();
               fr.readAsDataURL(file);
               fr.onload = function() {
@@ -263,7 +264,7 @@ class DocUpload extends Component {
                     _self.openNotificationWithIcon(
                       "error",
                       "File Size",
-                      "File should be greater than 450*600 in dimension"
+                      "File needs to be greater than 450*600 in dimension"
                     );
                     document.getElementById("front").value = "";
                     document.getElementById("back").value = "";
@@ -280,14 +281,14 @@ class DocUpload extends Component {
                   profileImage: "",
                   icon1: "plus",
                   displayFirst: "none",
-                  imagemsg: "Please select image with less then 5 mb"
+                  imagemsg: "Please select image with less than 4 mb"
                 });
               } else {
                 _self.setState({
                   profileImg2: "Default Photo",
                   imageName2: "",
                   imageType2: fileType,
-                  imagemsg2: "Please select image with less then 5 mb",
+                  imagemsg2: "Please select image with less than 4 mb",
                   profileImage2: "",
                   icon2: "plus",
                   displaySecond: "none"
@@ -296,7 +297,7 @@ class DocUpload extends Component {
               _self.openNotificationWithIcon(
                 "error",
                 "File Size",
-                "Please select image with less then 5 mb"
+                "Please select image with less than 4 mb"
               );
               document.getElementById("front").value = "";
               document.getElementById("back").value = "";
@@ -472,6 +473,10 @@ class DocUpload extends Component {
               />
             </Fileselect2>
           </Filewrap>
+          <NoteSpan>Supported format: .jpg, .jpeg, .png</NoteSpan>
+          <NoteSpan className="upload_note">
+            *Upload image with minimum size 400 KB and maximum upto 4 MB.
+          </NoteSpan>
         </SSNWrap>
         <ButtonWrap>
           <SubWrap>

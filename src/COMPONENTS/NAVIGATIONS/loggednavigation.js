@@ -579,6 +579,11 @@ class LoggedNavigation extends Component {
     }
   }
   simplexAccess() {
+    // console.log(
+    //   "^^^^",
+    //   this.props.profileDetails.is_allowed,
+    //   this.props.profileDetails.is_kyc_done
+    // );
     if (this.state.panic_status === true) {
       // alert("Idf");
       this.setState({ panicEnabled: true });
@@ -691,9 +696,13 @@ class LoggedNavigation extends Component {
     const DropdownItems = (
       <Menu className="fixed-drop">
         <Menu.Item key="0">
-          <a onClick={this.cryptoAccess}>
-            {t("navbar_sub_menu_conversation_crypto_only.message")}
+          <a
+            className="tokenlink"
+            href={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
+          >
+            Crypto Only
           </a>
+          {/* <a onClick={this.cryptoAccess}>Crypto Only</a> */}
         </Menu.Item>
         <Menu.Item key="1">
           <a onClick={this.simplexAccess}>
@@ -721,7 +730,7 @@ class LoggedNavigation extends Component {
             Trade History
           </a>
         </Menu.Item> */}
-        <Menu.Item key="0">
+        {/* <Menu.Item key="0">
           <a
             onClick={() =>
               this.props.history.push({ pathname: "/history", tradeType: "1" })
@@ -729,7 +738,7 @@ class LoggedNavigation extends Component {
           >
             {t("navbar_sub_menu_conversation_crypto_only.message")}
           </a>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="1">
           <a
             onClick={() =>
@@ -739,7 +748,7 @@ class LoggedNavigation extends Component {
             {t("navbar_sub_menu_conversation_credit_card.message")}
           </a>
         </Menu.Item>
-        <Menu.Item key="2">
+        {/* <Menu.Item key="2">
           <a
             onClick={() =>
               this.props.history.push({ pathname: "/history", tradeType: "3" })
@@ -747,7 +756,7 @@ class LoggedNavigation extends Component {
           >
             Trade
           </a>
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
     );
     // const langItems = (
@@ -898,7 +907,6 @@ class LoggedNavigation extends Component {
               </Link>
             </LogoutStyle>
             <span>
-              {" "}
               <Link to="/dashboard">Dashboard</Link>
             </span>
             {/* <span> <Link to="/conversion">CONVERSION</Link></span> */}
@@ -911,9 +919,13 @@ class LoggedNavigation extends Component {
               <DropMenu mode="inline">
                 <SubMenuNav key="mobsub1" title={"Conversion"}>
                   <Menu.Item key="0">
-                    <a onClick={this.cryptoAccess}>
-                      {t("navbar_sub_menu_conversation_crypto_only.message")}
+                    <a
+                      className="tokenlink"
+                      href={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
+                    >
+                      Crypto Only
                     </a>
+                    {/* <a onClick={this.cryptoAccess}>Crypto Only</a> */}
                   </Menu.Item>
                   <Menu.Item key="1">
                     <a onClick={this.simplexAccess}>
@@ -953,7 +965,7 @@ class LoggedNavigation extends Component {
                       Trade History
                     </a>
                   </Menu.Item> */}
-                  <Menu.Item key="0">
+                  {/* <Menu.Item key="0">
                     <a
                       onClick={() =>
                         this.props.history.push({
@@ -964,7 +976,7 @@ class LoggedNavigation extends Component {
                     >
                       {t("navbar_sub_menu_conversation_crypto_only.message")}
                     </a>
-                  </Menu.Item>
+                  </Menu.Item> */}
                   <Menu.Item key="1">
                     <a
                       onClick={() =>
@@ -977,7 +989,7 @@ class LoggedNavigation extends Component {
                       {t("navbar_sub_menu_conversation_credit_card.message")}
                     </a>
                   </Menu.Item>
-                  <Menu.Item key="2">
+                  {/* <Menu.Item key="2">
                     <a
                       onClick={() =>
                         this.props.history.push({
@@ -988,7 +1000,7 @@ class LoggedNavigation extends Component {
                     >
                       Trade
                     </a>
-                  </Menu.Item>
+                  </Menu.Item> */}
                 </SubMenuNav>
               </DropMenu>
             </a>

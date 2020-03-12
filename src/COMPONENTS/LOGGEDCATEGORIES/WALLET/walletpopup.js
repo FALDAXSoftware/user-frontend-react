@@ -7,6 +7,7 @@ import styled, { consolidateStreamedStyles } from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import moment from "moment";
+import { connect } from "react-redux";
 /* Styled-Components */
 
 /* Components */
@@ -16,6 +17,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import TFAModal from "SHARED-COMPONENTS/TFAModal";
 import { parse } from "@fortawesome/fontawesome-svg-core";
 import NumberFormat from "react-number-format";
+import { LogoutUser } from "../../../ACTIONS/authActions";
 
 let { API_URL } = globalVariables;
 const WalletModal = styled(Modal)`
@@ -224,6 +226,7 @@ class WalletPopup extends Component {
       receiveAdd: "receive_add",
       show: false,
       fiatValue: 0,
+      fiatCurrency: "",
       singlefiatValue: "",
       sendFields: {
         amount: "",
@@ -345,10 +348,17 @@ class WalletPopup extends Component {
           // console.log(error)
         });
     }
-    if (this.props.fiatValue) {
+    if (this.props.fiatValue && parseFloat(this.props.fiatValue) != 0) {
       this.setState({
         fiatValue: 0,
-        singlefiatValue: this.props.fiatValue.toFixed(2)
+        fiatCurrency: this.props.fiatCurrency,
+        singlefiatValue: this.props.fiatValue.toFixed(8)
+      });
+    } else {
+      this.setState({
+        fiatValue: 0,
+        fiatCurrency: this.props.fiatCurrency,
+        singlefiatValue: 0
       });
     }
   }
@@ -498,6 +508,14 @@ class WalletPopup extends Component {
             this.setState({
               showTFAModal: true
             });
+          } else if (responseData.status === 403) {
+            // this.openNotificationWithIcon("error", "Error", responseData.err);
+            let formData = {
+              user_id: this.props.profileDetails.id,
+              jwt_token: this.props.isLoggedIn
+            };
+            this.props.LogoutUser(this.props.isLoggedIn, formData);
+            this.openNotificationWithIcon("error", "Error", responseData.err);
           } else {
             if (responseData.status !== 402)
               this.setState({
@@ -643,9 +661,14 @@ class WalletPopup extends Component {
         parseFloat(fields[name]) +
           parseFloat(fields[name]) * (this.props.coinFee / 100)
       ).toFixed(8);
-      let fiatValueamount = parseFloat(
-        parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
-      ).toFixed(2);
+      let fiatValueamount;
+      if (this.state.singlefiatValue !== 0) {
+        fiatValueamount = parseFloat(
+          parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
+        ).toFixed(2);
+      } else {
+        fiatValueamount = 0;
+      }
       let faldaxFee = parseFloat(
         e.target.value * (this.props.coinFee / 100)
       ).toFixed(8);
@@ -878,7 +901,7 @@ class WalletPopup extends Component {
                       </span> */}
                       <span>
                         <b>Fiat Value: </b>
-                        {this.state.fiatValue} USD
+                        {this.state.fiatCurrency} {this.state.fiatValue}
                       </span>
                     </TotPay>
                   </TotDiv>
@@ -893,7 +916,7 @@ class WalletPopup extends Component {
             )}
             {this.props.title === "SEND" && (
               <span className="note_text">
-                Note*: Network Fee amount could change during actual transaction
+                Note*: Network Fee amount could change during the transaction
                 depending on the market conditions.
               </span>
             )}
@@ -912,5 +935,22 @@ class WalletPopup extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data !== undefined
+          ? state.simpleReducer.profileDetails.data[0]
+          : ""
+        : "",
+    isLoggedIn: state.simpleReducer.isLoggedIn
+      ? state.simpleReducer.isLoggedIn
+      : ""
+  };
+}
+const mapDispatchToProps = dispatch => ({
+  // Logout: () => dispatch(Logout()),
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
 
-export default WalletPopup;
+export default connect(mapStateToProps, mapDispatchToProps)(WalletPopup);

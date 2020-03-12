@@ -117,6 +117,7 @@ class WalletDetails extends Component {
       balanceFlag: false,
       coinFee: [],
       fiatValue: "",
+      fiatCurrency: "",
       isERC: false,
       panic_status: false,
       panicEnabled: false,
@@ -219,6 +220,29 @@ class WalletDetails extends Component {
       this.props.walletBal(this.props.isLoggedIn);
       this.props.getAllCoins(this.props.isLoggedIn);
       // console.log("wallet details props walletDetails", walletUserDetails);
+      // console.log("asdgh^^^^", this.props.profileDetails.fiat);
+      let fiat = 0,
+        currency;
+      if (this.props.profileDetails && responseData.currencyConversionData) {
+        switch (this.props.profileDetails.fiat) {
+          case "USD":
+            fiat = responseData.currencyConversionData.quote.USD.price;
+            currency = "$";
+            break;
+          case "EUR":
+            fiat = responseData.currencyConversionData.quote.EUR.price;
+            currency = "€";
+            break;
+          case "INR":
+            fiat = responseData.currencyConversionData.quote.INR.price;
+            currency = "₹";
+            break;
+          default:
+            fiat = "";
+            currency = "";
+            break;
+        }
+      }
       self.setState(
         {
           walletUserData: walletUserDetails,
@@ -234,12 +258,10 @@ class WalletDetails extends Component {
           is_active_asset: responseData.is_active,
           eth_for_erc_status: responseData.eth_for_erc_status,
           eth_for_erc_address: responseData.eth_for_erc_address,
-          fiatValue: responseData.currencyConversionData
-            ? responseData.currencyConversionData.quote.USD.price
-            : ""
+          fiatValue: fiat,
+          fiatCurrency: currency
         },
         () => {
-          // console.log("wallet details props -----", this.state.fiatValue);
           // console.log(
           //   "responseData.currencyConversionData.quote.USD.price===========",
           //   responseData.currencyConversionData.quote.USD.price
@@ -405,7 +427,6 @@ class WalletDetails extends Component {
       currencyConv /*,  walletDetails */
     } = this.state;
     let FIAT = this.props.profileDetails.fiat;
-    // console.log("^", walletUserData);
     return (
       <ContactWrap>
         <LoggedNavigation />
@@ -697,6 +718,7 @@ class WalletDetails extends Component {
                     walletDetailsApi={() => this.walletDetailsApi()}
                     coinFee={this.state.coinFee}
                     fiatValue={this.state.fiatValue}
+                    fiatCurrency={this.state.fiatCurrency}
                     coin_code={this.state.coin_code}
                     coin_min_limit={this.state.min_limit}
                     coin_max_limit={this.state.max_limit}
@@ -735,9 +757,9 @@ class WalletDetails extends Component {
                       us <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
                     </p> */}
                     <p>
-                      Your wallet is being generated and you will recieve a
+                      Your wallet is being generated and you will receive a
                       notification when it is ready for use. If you do not
-                      recieve a notification within 24 hours, or if you have any
+                      receive a notification within 24 hours, or if you have any
                       other concerns, please feel free to contact us{" "}
                       <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
                     </p>

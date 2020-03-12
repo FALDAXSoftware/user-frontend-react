@@ -41,6 +41,9 @@ const ChangeRow = styled(Row)`
     bottom: 0px;
     border-bottom: 1px solid #d6d6d6;
   }
+  &.two_factor_no_border:after {
+    border-bottom: 0;
+  }
 `;
 const EmailRow = styled(Row)`
   &:after {
@@ -791,7 +794,7 @@ class PasswordChange extends Component {
           document.querySelector("#otp_fail").style.display = "inline-block";
           document.querySelectorAll(".MSG_OTP")[0].style.display = "block";
           this.setState({
-            otp_msg: `*${t("general_1:otp_6_digit_error.message")}`
+            otp_msg: `*${t("validations:otp_error.message")}`
           });
         }
       } else {
@@ -1011,7 +1014,7 @@ class PasswordChange extends Component {
           <ChangeEmail props={this.props} />
         </EmailRow>
 
-        <ChangeRow>
+        <ChangeRow className="two_factor_no_border">
           <TwofactorRow>
             <TFCol>
               <HeadTF>{t("head_change_two_factor_status.message")}</HeadTF>

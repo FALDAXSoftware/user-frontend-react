@@ -18,6 +18,7 @@ import TierOne from "./TIERS/tier_one";
 /* import Paymethods from './Payment/paymethods'; */
 import SupportHub from "./Account_settings/support_hub";
 import { translate } from "react-i18next";
+import CompleteProfile from "../../SHARED-COMPONENTS/completeProfile";
 // import AgreeTerms from "../../SHARED-COMPONENTS/AgreeTerms";
 
 const TabPane = Tabs.TabPane;
@@ -62,7 +63,8 @@ class Editprofile extends Component {
       activeKey: "1",
       user2fastatus: "",
       totalUSDOfWallet: "",
-      walletCoins: ""
+      walletCoins: "",
+      countryAccess: false
     };
     this.callback = this.callback.bind(this);
     this.getWalletSummary = this.getWalletSummary.bind(this);
@@ -74,6 +76,61 @@ class Editprofile extends Component {
   }
   componentDidMount() {
     this.getWalletSummary();
+    // console.log(
+    //   "^^tier^",
+    //   this.props.profileDetails.is_user_updated,
+    //   this.props.profileDetails.is_kyc_done
+    // );
+    if (
+      !this.props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_kyc_done != "2"
+    ) {
+      this.setState({
+        countryAccess: true
+      });
+    } else {
+      this.setState({
+        countryAccess: false
+      });
+    }
+  }
+  componentWillReceiveProps(newProps) {
+    if (
+      newProps.profileDetails.is_kyc_done &&
+      this.props.profileDetails.is_kyc_done !==
+        newProps.profileDetails.is_kyc_done
+    ) {
+      if (
+        !newProps.profileDetails.is_user_updated &&
+        newProps.profileDetails.is_kyc_done != "2"
+      ) {
+        this.setState({
+          countryAccess: true
+        });
+      } else {
+        this.setState({
+          countryAccess: false
+        });
+      }
+    }
+    if (
+      newProps.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_user_updated !==
+        newProps.profileDetails.is_user_updated
+    ) {
+      if (
+        !newProps.profileDetails.is_user_updated &&
+        newProps.profileDetails.is_kyc_done != "2"
+      ) {
+        this.setState({
+          countryAccess: true
+        });
+      } else {
+        this.setState({
+          countryAccess: false
+        });
+      }
+    }
   }
   getWalletSummary() {
     this.setState({
@@ -111,6 +168,11 @@ class Editprofile extends Component {
       })
       .catch(error => {});
   }
+  comingCancel = e => {
+    this.setState({
+      countryAccess: false
+    });
+  };
   render() {
     const { t } = this.props;
     // console.log("defaultActiveKey:", this.props.activeKey);
@@ -139,9 +201,15 @@ class Editprofile extends Component {
                 />
               </TabPane>
               <TabPane tab={t("head_identity_verification.message")} key="4">
-                {/* <KYC history={this.props.history} tier1_upgrade={true} /> */}
-                {/* <Tier {...this.props} /> */}
-                <TierOne />
+                {/* <TierOne /> */}
+                {this.state.countryAccess ? (
+                  <CompleteProfile
+                    comingCancel={e => this.comingCancel(e)}
+                    visible={this.state.countryAccess}
+                  />
+                ) : (
+                  <TierOne />
+                )}
               </TabPane>
               <TabPane tab={t("head_referral.message")} key="5">
                 <Referral {...this.props} />
@@ -161,6 +229,10 @@ class Editprofile extends Component {
 function mapStateToProps(state) {
   return {
     isLoggedIn: state.simpleReducer.isLoggedIn,
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data[0]
+        : "",
     theme:
       state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
   };

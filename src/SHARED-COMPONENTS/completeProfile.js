@@ -1,15 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import "antd/dist/antd.css";
 import { Modal, Icon, notification } from "antd";
 import { withRouter } from "react-router-dom";
-import { globalVariables } from "Globals.js";
+import { globalVariables } from "../Globals.js";
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
 import { ModalWrap } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
 import { Link } from "react-router-dom";
 
 /* const API_URL = globalVariables.API_URL; */
 
-class ComingSoon extends Component {
+class CompleteProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,49 +51,15 @@ class ComingSoon extends Component {
     });
   }
 
-  send_email() {
-    const values = { email: this.state.email_address };
-    this.setState({ email_address: "" });
-    var re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-    if (re.test(this.state.email_address)) {
-      this.setState({ email_msg: "" });
-      fetch(globalVariables.API_URL + "/users/email-subscription", {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(values)
-      })
-        .then(response => response.json())
-        .then(responseData => {
-          if (responseData.status === 500) {
-            this.openNotification1();
-          } else {
-            this.openNotification();
-            this.setState({ visible: false, email_msg: "" });
-          }
-        })
-        .catch(error => {});
-    } else {
-      this.setState({ email_msg: "*email address not valid" });
-      this.openNotificationWithIcon(
-        "error",
-        "Error",
-        "Please enter valid email address."
-      );
-    }
-  }
   render() {
     return (
       <div>
         <Modal
           title={
             <div>
-              <img alt="FALDAX" src={_COMINGIMG} />{" "}
+              <img alt="coming" src={_COMINGIMG} />{" "}
               <img
-                className="faldax_logo"
-                alt="FALDAX"
+                alt="coming"
                 // style={{ marginLeft: "10px" }}
                 src={_COMINGIMG2}
               />
@@ -101,32 +67,32 @@ class ComingSoon extends Component {
           }
           visible={this.props.visible}
           onOk={e => this.handleComing()}
-          onCancel={e => this.comingCancel(e)}
-          //   closable={
-          //     this.props.location.pathname == "/conversion" ? false : true
-          //   }
-          //   maskClosable={
-          //     this.props.location.pathname == "/conversion" ? false : true
-          //   }
+          //   onCancel={e => this.comingCancel(e)}
+          // closable={this.props.location.pathname == "/conversion" ? false : true}
+          // maskClosable={this.props.location.pathname == "/conversion" ? false : true}
+          closable={false}
+          maskClosable={false}
           footer={null}
           width={605}
-          // height={490}
+          height={490}
           className="simple-maps"
         >
-          <ModalWrap className="kyc-wrap">
-            <h3>ID Verification Incomplete</h3>
-            <p>
-              Before you can trade, you must complete the ID Verification
-              Process. Please click the 'Get Verified' button below to begin.
-              {/* {this.props.data} */}
+          <ModalWrap className="country-wrap">
+            <h3>Access Denied</h3>
+            <p className="first-subhead">
+              Before proceeding to identity verification please complete your
+              profile.
+            </p>
+            <p className="second-subhead">
+              Thank you for your support and your patience.
             </p>
             <Link
-              className="get_verified_link"
+              className="get_verified_link complete_profile"
               to={{ pathname: "/editProfile", state: { tabNum: "3" } }}
               // state={{ testvalue: "hello" }}
               // pathname="/editProfile"
             >
-              Get Verified
+              Complete Profile
             </Link>
             {/* <Sub_wrap>
                             <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>
@@ -142,4 +108,4 @@ class ComingSoon extends Component {
   }
 }
 
-export default withRouter(ComingSoon);
+export default withRouter(CompleteProfile);

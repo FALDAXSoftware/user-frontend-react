@@ -8,10 +8,16 @@ export const HeaderWrap = styled.div`
   @media (max-width: 991px) {
     display: block;
   }
+  &.head_of_wallet {
+    padding-bottom: 30px;
+  }
 `;
 export const HeaderWrap2 = styled(HeaderWrap)`
   padding-top: 30px;
   align-items: center;
+  &.head_of_wallet {
+    padding-bottom: 30px;
+  }
 `;
 export const SearchCoin = styled.div`
   display: inline-block;
@@ -85,7 +91,7 @@ export const Currency = styled.span`
   }
 `;
 export const CoinTable = styled.div`
-  margin-top: 25px;
+  // margin-top: 25px;
   @media (max-width: 1160px) {
     overflow: auto;
   }
@@ -105,6 +111,7 @@ export const Head = styled.tr`
   padding-left: 45px;
   height: 40px;
   > th {
+    text-align: left !important;
     vertical-align: middle !important;
     padding-left: ${props => (props.wallet ? "" : "45px !important")};
     text-align: ${props => (props.wallet ? "center" : "")};
@@ -128,6 +135,7 @@ export const Head = styled.tr`
 `;
 export const SubHead = styled.th`
   border-bottom: 0px;
+  text-align: left;
   > a.ant-dropdown-link {
     vertical-align: middle;
   }
@@ -462,7 +470,7 @@ export const WalletCreateButton = styled.button`
   border: none;
   font-size: 18px;
   width: 230px;
-  height: 40px;
+  min-height: 40px;
   border-radius: 10px;
   cursor: pointer;
 `;

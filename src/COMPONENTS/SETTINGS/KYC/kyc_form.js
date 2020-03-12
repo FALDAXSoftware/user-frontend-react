@@ -133,6 +133,7 @@ class KYCForm extends Component {
       mobile: "",
       displayCountry: false,
       loader: false,
+      disableform: false,
       fields: {
         first_name: "",
         last_name: "",
@@ -177,6 +178,36 @@ class KYCForm extends Component {
           return bool;
         }
       },
+      oneapostrophe: {
+        // name the rule
+        message: "Only one apostrophe is allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        rule: function(val, options) {
+          // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+          // check that it is a valid IP address and is not blacklisted
+          // var re = /^[a-zA-Z0-9?']{2,15}$/;
+          if (val.split("'").length - 1 > 1) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+      },
+      streetaddress: {
+        // name the rule
+        message: "Spaces are not allowed in prefix/suffix.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        rule: function(val, options) {
+          // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+          // check that it is a valid IP address and is not blacklisted
+          var re = val.trim(" ");
+          if (re === val) {
+            // alert("here", re.length, val.length);
+            return true;
+          } else {
+            // alert("hersdfugsdjfgjh", re.length, val.length);
+            return false;
+          }
+        }
+      },
       onlyNumber: {
         // name the rule
         message: this.t("only_number_not_allowed.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
@@ -218,8 +249,7 @@ class KYCForm extends Component {
   }
 
   /* Life-Cycle Methods */
-
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps(props, newProps) {
     if (props.kycData !== undefined && props.kycData !== "") {
       if (props.kycData.status === 200) {
         //this.openNotificationWithIcon("success","KYC",props.kycData.message)
@@ -231,15 +261,27 @@ class KYCForm extends Component {
         this.props.kycformData();
       }
     }
-    // if (
-    //   props.profileDetails &&
-    //   this.props.profileDetails !== props.profileDetails
-    // ) {
-    //   this.getKYCDetails();
-    // }
+    if (
+      this.props.profileDetails != props.profileDetails &&
+      props.profileDetails
+    ) {
+      this.getKYCDetails();
+    }
   }
   componentDidMount() {
-    this.getKYCDetails();
+    this.setState({ loader: true });
+    if (
+      !this.props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_kyc_done != "2"
+    ) {
+      // this.props.history.push("/editProfile");
+      this.setState({ disableform: true, loader: false });
+    } else {
+      this.setState({
+        disableform: false
+      });
+      this.getKYCDetails();
+    }
   }
   getKYCDetails() {
     var self = this;
@@ -302,16 +344,26 @@ class KYCForm extends Component {
               country_code = countrySelected.sortname;
             }
             if (responseData.data.phone_number) {
-              fields["phone_number"] = responseData.data.phone_number;
+              fields["phone_number"] = responseData.data.phone_number
+                ? typeof responseData.data.phone_number == "string"
+                  ? responseData.data.phone_number.replace(/ /g, "")
+                  : responseData.data.phone_number
+                : "";
               let phone = responseData.data.phone_number;
               let arr = [];
-              arr.push(responseData.data.country_code);
+              fields["country_code"] = country_code;
+              arr.push(country_code);
               this.setState(
                 {
                   countrychange: true,
-                  mobile: responseData.data.phone_number,
+                  mobile: responseData.data.phone_number
+                    ? typeof responseData.data.phone_number == "string"
+                      ? responseData.data.phone_number.replace(/ /g, "")
+                      : responseData.data.phone_number
+                    : "",
                   phoneCountry: arr,
-                  displayCountry: true
+                  displayCountry: true,
+                  fields
                 },
                 () => {
                   if (
@@ -324,14 +376,20 @@ class KYCForm extends Component {
                 }
               );
             } else {
-              fields["phone_number"] = responseData.data.phone_number;
+              fields["phone_number"] =
+                typeof responseData.data.phone_number == "string"
+                  ? responseData.data.phone_number.replace(/ /g, "")
+                  : responseData.data.phone_number;
               let phone = responseData.data.phone_number;
               let arr = [];
               arr.push(country_code);
               this.setState(
                 {
                   countrychange: true,
-                  mobile: responseData.data.phone_number,
+                  mobile:
+                    typeof responseData.data.phone_number == "string"
+                      ? responseData.data.phone_number.replace(/ /g, "")
+                      : responseData.data.phone_number,
                   phoneCountry: arr,
                   displayCountry: true
                 },
@@ -350,7 +408,7 @@ class KYCForm extends Component {
               loader: false
             });
           } else {
-            // console.log("kyc else", this.props.profileDetails);
+            // console.log("kyc else^^^", this.props.profileDetails.country);
             let profileData = this.props.profileDetails;
             fields["first_name"] =
               profileData.first_name !== null ? profileData.first_name : "";
@@ -375,14 +433,13 @@ class KYCForm extends Component {
             fields["dob"] =
               profileData.dob === null || profileData.dob === "Invalid date"
                 ? ""
-                : moment(profileData.dob).format("YYYY-DD-MM");
+                : moment(profileData.dob, "DD-MM-YYYY").format("YYYY-MM-DD");
             // fields["dob"] =
             //   profileData.dob !== null
             //     ? moment(profileData.dob).format("YYYY-DD-MM")
             //     : "";
             fields["country_code"] =
               profileData.country_code !== null ? profileData.country_code : "";
-            let dob = moment(profileData.dob).format("YYYY-DD-MM");
             let country_code = "";
             if (profileData.country) {
               // console.log("kyc dob ^^^^", profileData.countryJsonId);
@@ -393,19 +450,24 @@ class KYCForm extends Component {
               if (countrySelected) {
                 country_code = countrySelected.sortname;
               }
+              fields["country_code"] = country_code;
               // console.log("kyc dob else ^^^^^", country_code);
             }
             if (profileData.phone_number) {
-              fields["phone_number"] = profileData.phone_number;
-              let phone = profileData.phone_number;
+              fields["phone_number"] = profileData.phone_number.replace(
+                / /g,
+                ""
+              );
+              fields["country_code"] = country_code;
               let arr = [];
               arr.push(country_code);
               this.setState(
                 {
                   countrychange: true,
-                  mobile: profileData.phone_number,
+                  mobile: profileData.phone_number.replace(/ /g, ""),
                   phoneCountry: arr,
-                  displayCountry: true
+                  displayCountry: true,
+                  fields
                 },
                 () => {
                   if (
@@ -418,16 +480,20 @@ class KYCForm extends Component {
                 }
               );
             } else if (profileData.country) {
-              fields["phone_number"] = profileData.phone_number;
+              fields["phone_number"] =
+                typeof profileData.phone_number == "string"
+                  ? profileData.phone_number.replace(/ /g, "")
+                  : profileData.phone_number;
               let phone = profileData.phone_number;
               let arr = [];
               arr.push(country_code);
               this.setState(
                 {
                   countrychange: true,
-                  mobile: profileData.phone_number,
+                  // mobile: profileData.phone_number,
                   phoneCountry: arr,
-                  displayCountry: true
+                  displayCountry: true,
+                  fields
                 },
                 () => {
                   if (country_code == "US" || country_code == "CA") {
@@ -687,10 +753,14 @@ class KYCForm extends Component {
       // console.log("code", code);
       var mobile = mob.includes(`+${code.dialCode}`) ? mob : temp.concat(mob);
       let fields = this.state.fields;
-      fields["phone_number"] = mobile;
+      fields["phone_number"] =
+        typeof mobile == "string" ? mobile.replace(/ /g, "") : mobile;
       // console.log(mobile);
 
-      this.setState({ fields, mobile: mob });
+      this.setState({
+        fields,
+        mobile: typeof mob == "string" ? mob.replace(/ /g, "") : mob
+      });
     }
   }
 
@@ -1048,7 +1118,13 @@ class KYCForm extends Component {
                   )} */}
                   {this.state.displayCountry && (
                     <IntlTelInputS
-                      value={this.state.mobile}
+                      value={
+                        this.state.mobile
+                          ? typeof this.state.mobile == "string"
+                            ? this.state.mobile.replace(/ /g, "")
+                            : this.state.mobile
+                          : ""
+                      }
                       allowDropdown={false}
                       autoHideDialCode={true}
                       preferredCountries={[]}
@@ -1129,7 +1205,11 @@ class KYCForm extends Component {
               xl={{ span: 24 }}
               xxl={{ span: 24 }}
             >
-              <Savekyc type="primary" onClick={this.onSubmit}>
+              <Savekyc
+                disabled={this.state.disableform}
+                type="primary"
+                onClick={this.onSubmit}
+              >
                 Next
               </Savekyc>
             </Col>

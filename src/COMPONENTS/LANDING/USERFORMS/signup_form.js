@@ -394,8 +394,8 @@ class SignupForm extends Component {
         } else {
           this.openNotificationWithIcon(
             "error",
-            "Seems like a robot",
-            "Please try again after reloading the page."
+            "Error",
+            "The automated human verification system encountered an error. Please refresh the page and try again. We apologize for any inconvenience."
           );
         }
       } else {
@@ -468,7 +468,9 @@ class SignupForm extends Component {
             document.querySelector("#first_icon_fail").style.display =
               "inline-block";
             document.querySelectorAll(".first_sign")[0].style.display = "block";
-            this.setState({ first_msg: "*Only numbers are not allowed" });
+            this.setState({
+              first_msg: "*Field must include more than just numbers"
+            });
           } else {
             this.setState({ firstIcon: true });
             document.querySelector("#first_icon_success").style.display =
@@ -509,7 +511,9 @@ class SignupForm extends Component {
             document.querySelector("#last_icon_fail").style.display =
               "inline-block";
             document.querySelectorAll(".last_sign")[0].style.display = "block";
-            this.setState({ last_msg: "*Only numbers are not allowed" });
+            this.setState({
+              last_msg: "*Field must include more than just numbers"
+            });
           } else {
             this.setState({ lastIcon: true });
             document.querySelector("#last_icon_success").style.display =
@@ -589,7 +593,7 @@ class SignupForm extends Component {
               "inline-block";
             document.querySelectorAll(".pass_sign")[0].style.display = "block";
             this.setState({
-              pass_msg: "Your password must not contain space."
+              pass_msg: "Your password must not contain any spaces."
             });
           } else {
             this.setState({ newpassIcon: false });
@@ -600,7 +604,7 @@ class SignupForm extends Component {
             document.querySelectorAll(".pass_sign")[0].style.display = "block";
             this.setState({
               pass_msg:
-                "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_^&*), and one number. Minimum 8 characters and maximum 60 characters."
+                "Your password must contain at least one uppercase letter, one lowercase letter, one special character (!@#$%_), and one number. Minimum of 8 characters and a maximum of 60 characters."
             });
           }
         }

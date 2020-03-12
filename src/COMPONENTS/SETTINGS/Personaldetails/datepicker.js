@@ -92,6 +92,24 @@ export default class Datepicker extends Component {
       }
     }
   }
+
+  resetDatePicker = () => {
+    let dob = this.props.profileDetails.dob;
+    if (dob) {
+      dob = dob.split("-");
+      fields["day"] = dob[0];
+      fields["month"] = ("0" + dob[1]).slice(-2);
+      fields["year"] = dob[2];
+      dob = new Date(dob[1] + "/" + dob[0] + "/" + dob[2]);
+      if (dob != "Invalid Date") {
+        this.setState({
+          day: dob.getDate(),
+          month: dob.getMonth(),
+          year: dob.getFullYear()
+        });
+      }
+    }
+  };
   componentWillReceiveProps(newProps) {
     if (
       this.props.profileDetails.dob !== newProps.profileDetails.dob &&
@@ -232,7 +250,7 @@ export default class Datepicker extends Component {
         (fields["month"] == "02" || fields["month"] == "February") &&
         fields["day"] > 28
       ) {
-        console.log("here");
+        // console.log("here");
         this.setState({ day: "" });
         fields["day"] = "";
       }

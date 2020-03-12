@@ -356,10 +356,10 @@ class AgreeTerms extends Component {
               {!this.props.showCancelBtn ? (
                 <div>
                   <NewButton onClick={this.showCofirmModal}>
-                    {t("dont_agree_btn.message")}
+                    I disagree
                   </NewButton>
                   <Modal
-                    title={t("dont_agree_popup_title.message")}
+                    title="Are you sure you want to disagree?"
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
@@ -407,7 +407,7 @@ class AgreeTerms extends Component {
                 </div>
               ) : (
                 <NewButton onClick={e => this.dontAgreeTerms(e)}>
-                  {t("dont_agree_btn.message")}
+                  I disagree
                 </NewButton>
               )}
               {/* )} */}

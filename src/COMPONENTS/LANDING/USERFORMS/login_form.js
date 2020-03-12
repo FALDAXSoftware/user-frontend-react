@@ -13,6 +13,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { loginAction, Login, clearLogin } from "ACTIONS/authActions";
 import { globalVariables } from "Globals.js";
 import { Link } from "react-router-dom";
+import { getProfileDataAction } from "../../../ACTIONS/SETTINGS/settingActions";
 
 let { API_URL, GOOGLE_SITE_KEY } = globalVariables;
 /* Global CONSTANTS */
@@ -569,7 +570,9 @@ class Login_Form extends Component {
           document.querySelector("#otp_icon_fail").style.display =
             "inline-block";
           document.querySelectorAll(".otp_msg")[0].style.display = "block";
-          this.setState({ otp_msg: "Otp should have 6 digits." });
+          this.setState({
+            otp_msg: "Your Two-Factor Authentication code should be six digits."
+          });
         }
       } else {
         this.setState({ otpIcon: false });
@@ -626,6 +629,8 @@ class Login_Form extends Component {
   }
 
   componentDidMount() {
+    document.cookie = "isLoggedInPreprod=false; domain=faldax.com";
+
     if (!this.props.isLoggedIn) {
       loadReCaptcha(GOOGLE_SITE_KEY);
       // alert("mount");
@@ -655,6 +660,12 @@ class Login_Form extends Component {
   componentWillReceiveProps(props, newProps) {
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
+        this.openNotificationWithIcon(
+          "success",
+          "Success",
+          props.errorStatus.message
+        );
+        // console.log("thisd^^^", props.errorStatus.user.is_kyc_done);
         if (this.state.verify == true) {
           this.openNotificationWithIcon(
             "success",
@@ -869,8 +880,25 @@ class Login_Form extends Component {
         this.props.location.state.from.pathname == "/open-ticket"
       ) {
         this.props.history.push(this.props.location.state.from.pathname);
+      } else if (
+        this.props.location.state &&
+        this.props.location.state.from &&
+        this.props.location.state.from.pathname == "/simplex"
+      ) {
+        this.props.history.push(this.props.location.state.from.pathname);
+      } else if (
+        this.props.location.state &&
+        this.props.location.state.from &&
+        this.props.location.state.from.pathname == "/crypto-conversion"
+      ) {
+        this.props.history.push(this.props.location.state.from.pathname);
       } else {
-        this.props.history.push("/editProfile");
+        // console.log("^^^^logimn", this.props.isKYCDone);
+        if (this.props.isKYCDone == 2) {
+          this.props.history.push("/conversion");
+        } else {
+          this.props.history.push("/editProfile");
+        }
       }
     }
     var me = this;
@@ -1126,7 +1154,8 @@ function mapStateToProps(state) {
     errorStatus:
       state.simpleReducer.errorStatus !== undefined
         ? state.simpleReducer.errorStatus
-        : undefined
+        : undefined,
+    isKYCDone: state.simpleReducer.isKYCDone
     // isOtpRequired:state.simpleReducer.isOtpRequired,
   };
 }
@@ -1134,6 +1163,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => ({
   Login: values => dispatch(Login(values)),
   clearLogin: () => dispatch(clearLogin()),
+  getProfileDataAction: isLoggedIn =>
+    dispatch(getProfileDataAction(isLoggedIn)),
   loginAction: value => dispatch(loginAction(value))
 });
 

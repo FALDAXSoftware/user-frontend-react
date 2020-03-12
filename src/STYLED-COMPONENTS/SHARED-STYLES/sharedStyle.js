@@ -37,6 +37,7 @@ export const ModalWrap = styled.div`
   margin-right: auto;
   &.kyc-wrap {
     width: 90%;
+    padding: 0 0 30px 0;
     > h3 {
       font-family: "Open Sans";
       font-size: 40px;
@@ -51,9 +52,12 @@ export const ModalWrap = styled.div`
       text-align: center;
       color: black;
       margin-top: 34px;
+      margin-bottom: 0;
+      // padding: 0 0 30px 0;
     }
   }
   &.country-wrap {
+    padding: 0 0 30px 0;
     > h3 {
       font-family: "Open Sans";
       font-size: 40px;
@@ -102,6 +106,22 @@ export const ModalWrap = styled.div`
       background: #4c84ff;
       border-color: #4c84ff;
       color: #ffffff;
+    }
+    @media (max-width: 450px) {
+      width: 60%;
+    }
+  }
+  .complete_profile {
+    width: 50%;
+  }
+  @media (max-width: 580px) {
+    .complete_profile {
+      width: 60%;
+    }
+  }
+  @media (max-width: 430px) {
+    .complete_profile {
+      width: 82%;
     }
   }
 `;

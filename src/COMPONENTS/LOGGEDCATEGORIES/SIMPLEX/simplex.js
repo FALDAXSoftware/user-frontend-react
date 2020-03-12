@@ -7,6 +7,9 @@ import SimpleReactValidator from "simple-react-validator";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { translate } from "react-i18next";
+import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
+import { browserHistory } from "react-router-dom";
+
 import { Col, Row, notification } from "antd";
 
 /* STYLED-COMPONENTS */
@@ -51,14 +54,17 @@ class Simplex extends React.Component {
       currencyList: [],
       wallet_address: "",
       crypto_code: "",
-      coin_name: ""
+      coin_name: "",
+      btnDisabled: true,
+      is_kyc_done: "",
+      is_allowed: ""
     };
     this.t = this.props.t;
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
         message: this.t("simplex_min_limit_error.message"),
         rule: (val, params, validator) => {
-          if (val >= parseInt(this.state.minCurrency)) {
+          if (parseFloat(val) >= parseFloat(this.state.minCurrency)) {
             return true;
           } else {
             return false;
@@ -69,7 +75,7 @@ class Simplex extends React.Component {
       maxCurrencyValid: {
         message: this.t("simplex_max_limit_error.message"),
         rule: (val, params, validator) => {
-          if (val > parseInt(this.state.maxCurrency)) {
+          if (parseFloat(val) > parseFloat(this.state.maxCurrency)) {
             return false;
           } else {
             return true;
@@ -125,28 +131,29 @@ class Simplex extends React.Component {
   }
 
   componentWillMount() {
-    if (
-      this.props.profileDetails.is_allowed === true &&
-      this.props.profileDetails.is_kyc_done === 2
-    ) {
-      if (this.props.location.pathname !== "/simplex")
-        this.props.history.push("/simplex");
-    } else {
-      if (
-        this.props.profileDetails.is_allowed === false &&
-        this.props.profileDetails.is_kyc_done !== 2
-      ) {
-        this.props.history.push("/conversion");
-      } else {
-        this.setState({ countryAccess: true });
-        this.props.history.push("/conversion");
-      }
-    }
+    // if (
+    //   this.props.profileDetails.is_allowed === true &&
+    //   this.props.profileDetails.is_kyc_done === 2
+    // ) {
+    //   if (this.props.location.pathname !== "/simplex")
+    //     this.props.history.push("/simplex");
+    // } else {
+    //   if (
+    //     this.props.profileDetails.is_allowed === false &&
+    //     this.props.profileDetails.is_kyc_done !== 2
+    //   ) {
+    //     this.props.history.push("/conversion");
+    //   } else {
+    //     this.setState({ countryAccess: true });
+    //     this.props.history.push("/conversion");
+    //   }
+    // }
   }
 
   componentDidMount(e) {
     this.getCrypto();
   }
+
   // getCrypto() {
   //   this.setState({
   //     loader: true
@@ -251,7 +258,8 @@ class Simplex extends React.Component {
                   quote_id: responseData.data.quote_id,
                   crypto_code: responseData.coinDetails.coin_code,
                   wallet_address: "",
-                  coin_name: ""
+                  coin_name: "",
+                  btnDisabled: false
                 });
               } else {
                 this.setState({
@@ -259,7 +267,8 @@ class Simplex extends React.Component {
                   currencyToGet: responseData.data.digital_money.amount,
                   quote_id: responseData.data.quote_id,
                   wallet_address: responseData.walletDetails.receive_address,
-                  coin_name: responseData.coinDetails.coin_name
+                  coin_name: responseData.coinDetails.coin_name,
+                  btnDisabled: false
                 });
               }
             }
@@ -380,141 +389,148 @@ class Simplex extends React.Component {
   render() {
     const { t } = this.props;
     return (
-      <ConversionWrap>
-        <Navigation />
-        <ConversionContainer>
-          <SimMainRow className="simplex_main_row">
-            <SimTopHead>{t("safe_simple_secure_text.message")}</SimTopHead>
-            <SimLeftCol lg={12}>
-              <BorderRow>
-                <RowTitle>{t("you_pay_text.message")}</RowTitle>
-                <Col xs={12} sm={12} md={16}>
-                  <ConversionInput
-                    type="text"
-                    placeholder="0"
-                    // step="0.01"
-                    value={this.state.currencyToPay}
-                    onChange={e => {
-                      this.handleCurrencyPayChange(e);
-                    }}
-                  />
-                  {this.validator1.message(
-                    "amount pay",
-                    this.state.currencyToPay,
-                    `required|numeric|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
-                    "text-danger-validation",
-                    {
-                      numeric: "Enter only integer or a decimal number"
-                    }
-                  )}
-                </Col>
-                <Col xs={12} sm={12} md={8} className="value-display">
-                  {this.state.currencyList &&
-                    this.state.currencyList.length > 0 && (
+      <div>
+        <ConversionWrap>
+          <Navigation />
+          <ConversionContainer>
+            <SimMainRow className="simplex_main_row">
+              <SimTopHead>Safe. Simple. Secure.</SimTopHead>
+              <SimLeftCol lg={12}>
+                <BorderRow>
+                  <RowTitle>You Pay</RowTitle>
+                  <Col xs={12} sm={12} md={16}>
+                    <ConversionInput
+                      type="text"
+                      placeholder="0"
+                      // step="0.01"
+                      value={this.state.currencyToPay}
+                      onChange={e => {
+                        this.handleCurrencyPayChange(e);
+                      }}
+                    />
+                    {this.validator1.message(
+                      "amount pay",
+                      this.state.currencyToPay,
+                      `required|numeric|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
+                      "text-danger-validation",
+                      {
+                        numeric: "Enter only integer or a decimal number"
+                      }
+                    )}
+                  </Col>
+                  <Col xs={12} sm={12} md={8} className="value-display">
+                    {this.state.currencyList &&
+                      this.state.currencyList.length > 0 && (
+                        <ConversionDropDown
+                          defaultValue={this.state.currency}
+                          onChange={this.handleCurrencyChange}
+                        >
+                          {this.state.currencyList.map((cur, i) => {
+                            // if (cur.coin != this.state.currency) {
+                            return (
+                              <DropDownOption
+                                key={i}
+                                value={cur.coin}
+                                selecteddata={cur}
+                              >
+                                {" "}
+                                <DropIcon
+                                  src={cur.coin_icon}
+                                  height="20px"
+                                />{" "}
+                                {cur.coin}
+                              </DropDownOption>
+                            );
+                          })}
+                        </ConversionDropDown>
+                      )}
+                  </Col>
+                </BorderRow>
+                <BorderRow>
+                  <RowTitle>You Get</RowTitle>
+                  <Col xs={12} sm={12} md={16}>
+                    <ConversionInput
+                      type="number"
+                      placeholder="0"
+                      readOnly
+                      value={this.state.currencyToGet}
+                      // onChange={this.handleCurrencyGetChange}
+                    />
+                  </Col>
+                  <Col xs={12} sm={12} md={8} className="value-display">
+                    {this.state.cryptoList && this.state.cryptoList.length > 0 && (
                       <ConversionDropDown
-                        defaultValue={this.state.currency}
-                        onChange={this.handleCurrencyChange}
+                        defaultValue={this.state.crypto}
+                        onChange={this.handleCryptoChange}
                       >
-                        {this.state.currencyList.map((cur, i) => {
-                          // if (cur.coin != this.state.currency) {
-                          return (
-                            <DropDownOption
-                              key={i}
-                              value={cur.coin}
-                              selecteddata={cur}
-                            >
-                              {" "}
-                              <DropIcon
-                                src={cur.coin_icon}
-                                height="20px"
-                              />{" "}
-                              {cur.coin}
-                            </DropDownOption>
-                          );
+                        {this.state.cryptoList.map((element, index) => {
+                          if (element.coin != this.state.currency) {
+                            return (
+                              <DropDownOption
+                                key={index}
+                                value={element.coin}
+                                selecteddata={element}
+                              >
+                                {" "}
+                                <DropIcon
+                                  src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                  height="20px"
+                                />{" "}
+                                {element.coin}
+                              </DropDownOption>
+                            );
+                          }
                         })}
                       </ConversionDropDown>
                     )}
-                </Col>
-              </BorderRow>
-              <BorderRow>
-                <RowTitle>{t("you_get_text.message")}</RowTitle>
-                <Col xs={12} sm={12} md={16}>
-                  <ConversionInput
-                    type="number"
-                    placeholder="0"
-                    readOnly
-                    value={this.state.currencyToGet}
-                    // onChange={this.handleCurrencyGetChange}
-                  />
-                </Col>
-                <Col xs={12} sm={12} md={8} className="value-display">
-                  {this.state.cryptoList && this.state.cryptoList.length > 0 && (
-                    <ConversionDropDown
-                      defaultValue={this.state.crypto}
-                      onChange={this.handleCryptoChange}
+                  </Col>
+                </BorderRow>
+                <Row>
+                  <Col>
+                    <ConversionSubmitBtn
+                      onClick={this.btnClicked}
+                      type="primary"
+                      size="large"
+                      block
+                      disabled={this.state.btnDisabled}
                     >
-                      {this.state.cryptoList.map((element, index) => {
-                        if (element.coin != this.state.currency) {
-                          return (
-                            <DropDownOption
-                              key={index}
-                              value={element.coin}
-                              selecteddata={element}
-                            >
-                              {" "}
-                              <DropIcon
-                                src={`${_AMAZONBUCKET}${element.coin_icon}`}
-                                height="20px"
-                              />{" "}
-                              {element.coin}
-                            </DropDownOption>
-                          );
-                        }
-                      })}
-                    </ConversionDropDown>
-                  )}
-                </Col>
-              </BorderRow>
-              <Row>
-                <Col>
-                  <ConversionSubmitBtn
-                    onClick={this.btnClicked}
-                    type="primary"
-                    size="large"
-                    block
-                  >
-                    {t("exchange_now_btn.message")}
-                  </ConversionSubmitBtn>
-                </Col>
-              </Row>
-              <SimLastRow className="bottom-row">
-                <Col>
-                  <span>{t("we_accept_text.message")}</span>
-                  <img src="images/visa-card1.png" alt="visa icon" />
-                  <img src="images/mastercard1.png" alt="visa icon" />
-                </Col>
-                <Col className="buy_crypto_btn">
-                  {t("pay_with_card_text.message")}
-                </Col>
-              </SimLastRow>
-            </SimLeftCol>
-            <SimRightCol className="simplex_right_col" lg={12}>
-              <SimHead>{t("simplex_text.message")}</SimHead>
-              <SimSubHead>
-                <p>{t("powered_by_text.message")}</p>
-                <img src="/images/simplex-logo.png" />
-                {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                      Exchange Now
+                    </ConversionSubmitBtn>
+                  </Col>
+                </Row>
+                <SimLastRow className="bottom-row">
+                  <Col>
+                    <span>We accept </span>
+                    <img src="images/visa-card1.png" alt="visa icon" />
+                    <img src="images/mastercard1.png" alt="visa icon" />
+                  </Col>
+                  <Col className="buy_crypto_btn">Pay With a Bank Card</Col>
+                </SimLastRow>
+              </SimLeftCol>
+              <SimRightCol className="simplex_right_col" lg={12}>
+                <SimHead>
+                  FALDAX, in partnership with Simplex, brings the world's most
+                  prevalent crypto assets directly to you. Thank you for
+                  choosing FALDAX!
+                </SimHead>
+                <SimSubHead>
+                  <p>Powered by</p>
+                  <img src="/images/simplex-logo.png" />
+                  {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
                 ipsum suspendisse ultrices gravida. Risus commodo viverra
                 maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit
                 amet, consectetur adipiscing elit, sed do eiusmod tempor
                 incididunt ut labore. */}
-              </SimSubHead>
-            </SimRightCol>
-          </SimMainRow>
-        </ConversionContainer>
-        {this.state.loader == true ? <FaldaxLoader /> : ""}
-      </ConversionWrap>
+                </SimSubHead>
+              </SimRightCol>
+            </SimMainRow>
+          </ConversionContainer>
+
+          {this.state.loader == true ? <FaldaxLoader /> : ""}
+        </ConversionWrap>
+        <CommonFooter />
+      </div>
     );
   }
 }

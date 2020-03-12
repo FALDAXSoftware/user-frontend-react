@@ -15,6 +15,8 @@ import Tier from "../tier";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { translate } from "react-i18next";
+// import CountryAccess from "../../../SHARED-COMPONENTS/CountryAccess";
+import CompleteProfile from "../../../SHARED-COMPONENTS/completeProfile";
 
 const Step = Steps.Step;
 
@@ -99,6 +101,7 @@ class TierOne extends React.Component {
       is_kyc_done: false,
       countryChange: null,
       kycData: {}
+      // countryAccess: false
     };
   }
 
@@ -106,7 +109,26 @@ class TierOne extends React.Component {
         Page: /editProfile --> KYC
         It is called when next button is clicked and proceed to next step. 
     */
-
+  componentDidMount() {
+    // console.log(
+    //   "^^tier^",
+    //   this.props.profileDetails.is_user_updated,
+    //   this.props.profileDetails.is_kyc_done
+    // );
+    // if (
+    //   !this.props.profileDetails.is_user_updated &&
+    //   this.props.profileDetails.is_kyc_done != "2"
+    // ) {
+    //   this.setState({
+    //     countryAccess: true
+    //   });
+    // }
+  }
+  // comingCancel = e => {
+  //   this.setState({
+  //     countryAccess: false
+  //   });
+  // };
   next_step(a, type = null, countryChange = null) {
     // console.log("--------------------->", a, type, countryChange);
     this.setState({ next: a });
@@ -256,6 +278,13 @@ class TierOne extends React.Component {
             </DoneWrap>
           )}
         </KYCWrap>
+        {/* <CountryAccess
+          
+        /> */}
+        {/* <CompleteProfile
+          comingCancel={e => this.comingCancel(e)}
+          visible={this.state.countryAccess}
+        /> */}
         {/* </TierWrapper> */}
         {/* <FooterHome /> */}
       </div>

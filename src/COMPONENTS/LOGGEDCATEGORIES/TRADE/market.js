@@ -52,7 +52,9 @@ class Market extends Component {
       sellEstPrice: 0,
       sellPayAmt: 0,
       disabledMode: false,
-      panic_status: false
+      panic_status: false,
+      fiatValue: "",
+      fiatCurrency: ""
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -105,33 +107,58 @@ class Market extends Component {
       }
     }
   }
-  // componentDidMount() {
-  //   if (this.state.panic_status === true) {
-  //     this.setState({ panicEnabled: true });
-  //   } else {
-  //     if (
-  //       this.props.profileDetails.is_allowed === true &&
-  //       this.props.profileDetails.is_kyc_done === 2
-  //     ) {
-  //       if (this.props.location.pathname !== "/trade")
-  //         this.setState({
-  //           disabledMode: false
-  //         });
-  //     } else {
-  //       this.setState({
-  //         disabledMode: true
-  //       });
-  //       if (
-  //         this.props.profileDetails.is_allowed === false &&
-  //         this.props.profileDetails.is_kyc_done !== 2
-  //       ) {
-  //         this.setState({ completeKYC: true });
-  //       } else {
-  //         this.setState({ countryAccess: true });
-  //       }
-  //     }
-  //   }
-  // }
+  componentDidMount() {
+    let fiat, currency;
+    if (this.props.profileDetails) {
+      switch (this.props.profileDetails.fiat) {
+        case "USD":
+          fiat = "10";
+          currency = "$";
+          break;
+        case "EUR":
+          fiat = "11";
+          currency = "€";
+          break;
+        case "INR":
+          fiat = "12";
+          currency = "₹";
+          break;
+        default:
+          fiat = "";
+          currency = "";
+          break;
+      }
+    }
+    this.setState({
+      fiatValue: fiat,
+      fiatCurrency: currency
+    });
+    //   if (this.state.panic_status === true) {
+    //     this.setState({ panicEnabled: true });
+    //   } else {
+    //     if (
+    //       this.props.profileDetails.is_allowed === true &&
+    //       this.props.profileDetails.is_kyc_done === 2
+    //     ) {
+    //       if (this.props.location.pathname !== "/trade")
+    //         this.setState({
+    //           disabledMode: false
+    //         });
+    //     } else {
+    //       this.setState({
+    //         disabledMode: true
+    //       });
+    //       if (
+    //         this.props.profileDetails.is_allowed === false &&
+    //         this.props.profileDetails.is_kyc_done !== 2
+    //       ) {
+    //         this.setState({ completeKYC: true });
+    //       } else {
+    //         this.setState({ countryAccess: true });
+    //       }
+    //     }
+    //   }
+  }
   /* 
         Page: /trade --> market
         this method is called for clearing validation messages.
@@ -176,9 +203,9 @@ class Market extends Component {
               buyEstPrice:
                 Number(this.state.amount) * this.props.userBal.buyEstimatedPrice
             });
-            // obj["total"] =
-            //   Number(this.state.amount) * this.props.userBal.buyPay;
-            // obj["amount"] = Number(this.state.amount).toFixed(3);
+            obj["total"] =
+              Number(this.state.amount) * this.props.userBal.buyPay;
+            obj["amount"] = Number(this.state.amount).toFixed(3);
           } else if (this.state.side === "Sell") {
             self.setState({
               sellPayAmt:
@@ -187,9 +214,9 @@ class Market extends Component {
                 Number(this.state.amount) *
                 this.props.userBal.sellEstimatedPrice
             });
-            // obj["total"] =
-            //   Number(this.state.amount) * this.props.userBal.sellPay;
-            // obj["amount"] = Number(this.state.amount).toFixed(3);
+            obj["total"] =
+              Number(this.state.amount) * this.props.userBal.sellPay;
+            obj["amount"] = Number(this.state.amount).toFixed(3);
           }
         } else {
           obj["total"] = 0;
@@ -505,6 +532,13 @@ class Market extends Component {
               <Esti>
                 <Row>
                   <Col xs={15} sm={12}>
+                    Fiat Value
+                  </Col>
+                  <Col xs={9} sm={12}>
+                    {this.state.fiatCurrency}{" "}
+                    {parseFloat(this.state.fiatValue).toFixed(8)}
+                  </Col>
+                  <Col xs={15} sm={12}>
                     Estimated Best Price
                   </Col>
                   <Col xs={9} sm={12}>
@@ -537,6 +571,13 @@ class Market extends Component {
               </Row>
               <Esti>
                 <Row>
+                  <Col xs={15} sm={12}>
+                    Fiat Value
+                  </Col>
+                  <Col xs={9} sm={12}>
+                    {this.state.fiatCurrency}{" "}
+                    {parseFloat(this.state.fiatValue).toFixed(8)}
+                  </Col>
                   <Col xs={15} sm={12}>
                     Estimated Best Price
                   </Col>
