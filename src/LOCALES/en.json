@@ -1818,7 +1818,7 @@
     },
     "invalid_email_error": {
       "page": "Edit Profile > Security",
-      "message": "Please enter valid email address.",
+      "message": "Please enter valid email address",
       "message_type": "Web content",
       "context": "when email is not a valid email"
     },
@@ -2135,6 +2135,462 @@
       "message": "This field is required",
       "message_type": "Web content",
       "context": "This field is required error message"
+    },
+    "2fa_field_required_error": {
+      "page": "Edit Profile > settings",
+      "message": "2FA field is required.",
+      "message_type": "Web content",
+      "context": "2FA field is required error message"
+    },
+    "2fa_must_number_error": {
+      "page": "Edit Profile > settings",
+      "message": "The 2FA code must be a number.",
+      "message_type": "Web content",
+      "context": "2FA field is must be a number error message"
+    },
+    "2fa_min_error": {
+      "page": "Edit Profile > settings",
+      "message": "The 2FA code must be at least 6 characters.",
+      "message_type": "Web content",
+      "context": "2FA field min error message"
+    },
+    "2fa_max_error": {
+      "page": "Edit Profile > settings",
+      "message": "The 2FA code may not be greater than 6 characters.",
+      "message_type": "Web content",
+      "context": "2FA field max error message"
+    },
+    "max_image_size_error": {
+      "page": "Edit Profile > settings",
+      "message": "Please select image with less than 4 mb",
+      "message_type": "Web content",
+      "context": "Max image size error message"
+    },
+    "only_images_error": {
+      "page": "Edit Profile > settings",
+      "message": "File format is not supported. Please upload only images",
+      "message_type": "Web content",
+      "context": "File format is not supported. Please upload only images error message"
+    },
+    "upload_front_back_error": {
+      "page": "Edit Profile > KYC",
+      "message": "Please upload front and back of your document",
+      "message_type": "Web content",
+      "context": "Upload front and back of your document error message"
+    },
+    "supported_format_text": {
+      "page": "Edit Profile > KYC",
+      "message": "Supported format: .jpg, .jpeg, .png",
+      "message_type": "Web content",
+      "context": "supported image note"
+    },
+    "upload_note_text": {
+      "page": "Edit Profile > KYC",
+      "message": "Upload image with minimum size 400 KB and maximum upto 4 MB.",
+      "message_type": "Web content",
+      "context": "upload note"
+    },
+    "referral_code_copy_text": {
+      "page": "Edit Profile > Refferal",
+      "message": "Referral Code Copied to Clipboard",
+      "message_type": "Web content",
+      "context": "On referral code copy button click"
+    },
+    "ticket_status_new_text": {
+      "page": "View all tickets",
+      "message": "New",
+      "message_type": "Web content",
+      "context": "Ticket status New text"
+    },
+    "ticket_status_waiting_text": {
+      "page": "View all tickets",
+      "message": "Waiting On Contact",
+      "message_type": "Web content",
+      "context": "Ticket status Waiting On Contact text"
+    },
+    "ticket_status_waiting_us_text": {
+      "page": "View all tickets",
+      "message": "Waiting On Us",
+      "message_type": "Web content",
+      "context": "Ticket status Waiting On Us text"
+    },
+    "ticket_status_closed_text": {
+      "page": "View all tickets",
+      "message": "Closed",
+      "message_type": "Web content",
+      "context": "Ticket status Closed text"
+    },
+    "ticket_status_closed_text": {
+      "page": "View all tickets",
+      "message": "Closed",
+      "message_type": "Web content",
+      "context": "Ticket status Closed text"
+    },
+    "ticket_read_more_text": {
+      "page": "View all tickets",
+      "message": "Read more",
+      "message_type": "Web content",
+      "context": "Ticket Read more text"
+    },
+    "ticket_read_less_text": {
+      "page": "View all tickets",
+      "message": "Read less",
+      "message_type": "Web content",
+      "context": "Ticket Read less text"
+    }
+  },
+  "login_page": {
+    "backup_required_text": {
+      "page": "Login",
+      "message": "Back-up code is required.",
+      "message_type": "Web content",
+      "context": "validation for backup code required"
+    },
+    "backup_alpha_error_text": {
+      "page": "Login",
+      "message": "Back-up code should have 10 alphanumeric characters.",
+      "message_type": "Web content",
+      "context": "validation for backup code alphanumeric 10 characters"
+    },
+    "robot_error_text": {
+      "page": "Login",
+      "message": "The automated human verification system encountered an error. Please refresh the page and try again. We apologize for any inconvenience.",
+      "message_type": "Web content",
+      "context": "Captcha error message"
+    },
+    "password_text": {
+      "page": "Login",
+      "message": "Password",
+      "message_type": "Web content",
+      "context": "Password text"
+    },
+    "login_successful_text": {
+      "page": "Login",
+      "message": "Login Successful",
+      "message_type": "Web content",
+      "context": "Login Successful text"
+    },
+    "verified_text": {
+      "page": "Login",
+      "message": "Verified",
+      "message_type": "Web content",
+      "context": "Verified text"
+    },
+    "not_verified_text": {
+      "page": "Login",
+      "message": "Not Verified",
+      "message_type": "Web content",
+      "context": "Not Verified text"
+    },
+    "login_text": {
+      "page": "Login",
+      "message": "Login",
+      "message_type": "Web content",
+      "context": "Login text"
+    },
+    "welcome_text": {
+      "page": "Login",
+      "message": "Welcome To FALDAX!",
+      "message_type": "Web content",
+      "context": "Welcome To FALDAX text"
+    },
+    "email_address_text": {
+      "page": "Login",
+      "message": "Email Address",
+      "message_type": "Web content",
+      "context": "Email Address text"
+    },
+    "2fa_enabled_text": {
+      "page": "Login",
+      "message": "Two-Factor Authentication is enabled for this account. Please enter your 2FA code below to proceed.",
+      "message_type": "Web content",
+      "context": "Email Address text"
+    },
+    "forgot_password_text": {
+      "page": "Login",
+      "message": "Forgot Password",
+      "message_type": "Web content",
+      "context": "Forgot Password text"
+    },
+    "no_2fa_text": {
+      "page": "Login",
+      "message": "Don't have Two-Factor Authentication",
+      "message_type": "Web content",
+      "context": "Don't have Two-Factor Authentication text"
+    },
+    "have_2fa_text": {
+      "page": "Login",
+      "message": "Have Two-Factor Authentication",
+      "message_type": "Web content",
+      "context": "Have Two-Factor Authentication text"
+    },
+    "backup_to_proceed_text": {
+      "page": "Login",
+      "message": "Please enter your Back-up code below to proceed.",
+      "message_type": "Web content",
+      "context": "enter your Back-up code below to proceed text"
+    },
+    "forgot_backupcode_text": {
+      "page": "Login",
+      "message": "Forgot Backup Code",
+      "message_type": "Web content",
+      "context": "Forgot Backup Code text"
+    },
+    "no_account_text": {
+      "page": "Login",
+      "message": "No account",
+      "message_type": "Web content",
+      "context": "No account text"
+    },
+    "sign_up_text": {
+      "page": "Login",
+      "message": "Sign Up",
+      "message_type": "Web content",
+      "context": "Sign Up text"
+    },
+    "forgot_message_text": {
+      "page": "Forgot Password",
+      "message": "Don't worry, It happen's to the best of us.",
+      "message_type": "Web content",
+      "context": "Forgot password message"
+    },
+    "send_reset_link_text": {
+      "page": "Forgot Password",
+      "message": "SEND RESET PASSWORD LINK",
+      "message_type": "Web content",
+      "context": "send reset password link text"
+    },
+    "back_to_login_text": {
+      "page": "Forgot Password",
+      "message": "Back To Login",
+      "message_type": "Web content",
+      "context": "Back To Login text"
+    },
+    "thank_you_text": {
+      "page": "Verification",
+      "message": "Thank You",
+      "message_type": "Web content",
+      "context": "Thank You text"
+    },
+    "verification_head1_text": {
+      "page": "Verification",
+      "message": "To continue, please verify your new email address.",
+      "message_type": "Web content",
+      "context": "verfication subhead text"
+    },
+    "verification_head2_text": {
+      "page": "Verification",
+      "message": "Please check your updated email address",
+      "message_type": "Web content",
+      "context": "verfication subhead text"
+    },
+    "upload_image_text": {
+      "page": "Verification",
+      "message": "Upload Image",
+      "message_type": "Web content",
+      "context": "Upload Image text"
+    },
+    "image_note_text": {
+      "page": "Verification",
+      "message": "Please upload your image and soon we will notify you about the 2FA status through an email.",
+      "message_type": "Web content",
+      "context": "Image note text"
+    },
+    "image_note1_text": {
+      "page": "Verification",
+      "message": "PS: Image size should not exceed 5MB.",
+      "message_type": "Web content",
+      "context": "Image note text"
+    },
+    "max_image_size_5_error": {
+      "page": "Profile backup",
+      "message": "Please select image with less than 5 mb",
+      "message_type": "Web content",
+      "context": "Max image size error message"
+    },
+    "resend_link_text": {
+      "page": "Resend Verification",
+      "message": "Resend Verification Link",
+      "message_type": "Web content",
+      "context": "Resend Verification Link text"
+    },
+    "enter_email_text": {
+      "page": "Resend Verification",
+      "message": "Enter Email",
+      "message_type": "Web content",
+      "context": "Enter Email text"
+    },
+    "resend_text": {
+      "page": "Resend Verification",
+      "message": "RE-SEND",
+      "message_type": "Web content",
+      "context": "RE-SEND text"
+    },
+    "already_have_account_text": {
+      "page": "Resend Verification",
+      "message": "Already have an account",
+      "message_type": "Web content",
+      "context": "Already have an account text"
+    },
+    "password_changed_successfully_text": {
+      "page": "Reset password",
+      "message": "Password changed successfully.",
+      "message_type": "Web content",
+      "context": "Password changed successfully text"
+    },
+    "reset_password_text": {
+      "page": "Reset password",
+      "message": "Reset password",
+      "message_type": "Web content",
+      "context": "Reset password text"
+    },
+    "confirmation_text": {
+      "page": "Signup success",
+      "message": "We have sent a confirmation email",
+      "message_type": "Web content",
+      "context": "Signup success text"
+    },
+    "confirmation_email_text": {
+      "page": "Signup success",
+      "message": "Please check your email",
+      "message_type": "Web content",
+      "context": "Signup success email text"
+    }
+  },
+  "general_2": {
+    "wallet_available_coin": {
+      "page": "Wallet",
+      "message": "Available Coins",
+      "message_type": "Web content",
+      "context": "Available coin"
+    },
+    "wallet_available_erc20_token": {
+      "page": "Wallet",
+      "message": "Available ERC-20 Tokens",
+      "message_type": "Web content",
+      "context": "Available ERC-20 Tokens"
+    },
+    "wallet_search_tokens": {
+      "page": "Wallet",
+      "message": "Search Tokens",
+      "message_type": "Web content",
+      "context": "Search Tokens"
+    },
+    "wallet_deactive_coin": {
+      "page": "Wallet",
+      "message": "Deactivated Coins/Tokens",
+      "message_type": "Web content",
+      "context": "Deactivated Coins/Tokens"
+    },
+    "wallet_search_coin": {
+      "page": "Wallet",
+      "message": "Search Coins/Tokens",
+      "message_type": "Web content",
+      "context": "Search Coins/Tokens"
+    },
+    "address": {
+      "page": "Wallet Details",
+      "message": "Address",
+      "message_type": "Web content",
+      "context": "Address"
+    },
+    "wallet_details_eth_not_created": {
+      "page": "Wallet Details",
+      "message": "Your wallet is not created yet. Please create your Ethereum wallet to use",
+      "message_type": "Web content",
+      "context": "Eth wallet not created"
+    },
+    "wallet_details_contact_us": {
+      "page": "Wallet Details",
+      "message": "If you still have any issue,please feel free to contact us",
+      "message_type": "Web content",
+      "context": "Eth wallet not created"
+    },
+    "wallet_details_create": {
+      "page": "Wallet Details",
+      "message": "Your wallet is not created yet. Please click on the button below to create your wallet for",
+      "message_type": "Web content",
+      "context": "Eth wallet not created"
+    },
+    "wallet_details_create_text": {
+      "page": "Wallet Details",
+      "message": "Create",
+      "message_type": "Web content",
+      "context": "Create wallet text"
+    },
+    "wallet_details_not_created": {
+      "page": "Wallet Details",
+      "message": "Your wallet is not created yet. Please click on the button below to create your wallet for",
+      "message_type": "Web content",
+      "context": "Create wallet text"
+    },
+    "Date": {
+      "page": "Wallet Details",
+      "message": "Transaction History",
+      "message_type": "Web content",
+      "context": "Transaction History"
+    },
+    "complete_profile_btn": {
+      "page": "Complete profile Popup",
+      "message": "Complete Profile",
+      "message_type": "Web content",
+      "context": "Complete Profile button text"
+    },
+    "complete_profile_text": {
+      "page": "Complete profile Popup",
+      "message": "Before proceeding to identity verification please complete your profile",
+      "message_type": "Web content",
+      "context": "Complete Profile text"
+    }
+  },
+  "sign_up": {
+    "email_address_text": {
+      "page": "Signup",
+      "message": "Email address",
+      "message_type": "Web content",
+      "context": "Email address text"
+    },
+    "first_name_error": {
+      "page": "Signup",
+      "message": "First Name must have min 2, max 15 characters and no special characters are allowed.",
+      "message_type": "Web content",
+      "context": "First name error text"
+    },
+    "last_name_error": {
+      "page": "Signup",
+      "message": "last Name must have min 2, max 15 characters and no special characters are allowed.",
+      "message_type": "Web content",
+      "context": "last name error text"
+    },
+    "sign_up_head_text": {
+      "page": "Signup",
+      "message": "A Better Trading Experience is Moments Away",
+      "message_type": "Web content",
+      "context": "signup head text"
+    },
+    "lets_get_started_text": {
+      "page": "Signup",
+      "message": "Let's Get Started",
+      "message_type": "Web content",
+      "context": "Let's Get Started text"
+    },
+    "confirm_password_text": {
+      "page": "Signup",
+      "message": "Confirm Password",
+      "message_type": "Web content",
+      "context": "Confirm Password text"
+    },
+    "referral_code_text": {
+      "page": "Signup",
+      "message": "Referral Code",
+      "message_type": "Web content",
+      "context": "Referral Code text"
+    },
+    "already_signed_up_text": {
+      "page": "Signup",
+      "message": "Already Signed Up",
+      "message_type": "Web content",
+      "context": "Already Signed Up text"
     }
   }
 }

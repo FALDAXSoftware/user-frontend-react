@@ -4,6 +4,7 @@ import { createForm, formShape } from "rc-form";
 import styled from "styled-components";
 import { Row, Col, Button, notification, Icon } from "antd";
 import { connect } from "react-redux";
+import { translate } from "react-i18next";
 // import { ReCaptcha } from "react-recaptcha-google";
 import { ReCaptcha, loadReCaptcha } from "react-recaptcha-v3";
 
@@ -311,6 +312,7 @@ class Login_Form extends Component {
     this.verifyCallback = this.verifyCallback.bind(this);
     this.onClickTFA = this.onClickTFA.bind(this);
     this.forgotBackup = this.forgotBackup.bind(this);
+    this.t = this.props.t;
   }
 
   static propTypes = {
@@ -330,6 +332,9 @@ class Login_Form extends Component {
       }
     );
   }
+  componentDidMount() {
+    console.log("jdf");
+  }
   verifyCallback(recaptchaToken) {
     // Here you will get the final recaptchaToken!!!
     // console.log(recaptchaToken, "<= your recaptcha token");
@@ -339,12 +344,6 @@ class Login_Form extends Component {
   }
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      // console.log(
-      //   this.state.isOtpRequired,
-      //   this.state.showBackUpInput,
-      //   this.state.backupIcon,
-      //   this.state.otpIcon
-      // );
       if (
         this.state.isOtpRequired === true &&
         this.state.showBackUpInput === false
@@ -1168,7 +1167,6 @@ const mapDispatchToProps = dispatch => ({
   loginAction: value => dispatch(loginAction(value))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(createForm()(Login_Form));
+export default translate(["referral"])(
+  connect(mapStateToProps, mapDispatchToProps)(createForm()(Login_Form))
+);

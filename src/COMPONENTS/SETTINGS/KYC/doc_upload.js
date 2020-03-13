@@ -145,6 +145,7 @@ class DocUpload extends Component {
       displaySecond: "none"
     };
     this.handleProfile = this.handleProfile.bind(this);
+    this.t = this.props.t;
   }
 
   /* Life-Cycle Methods */
@@ -263,8 +264,8 @@ class DocUpload extends Component {
                     }
                     _self.openNotificationWithIcon(
                       "error",
-                      "File Size",
-                      "File needs to be greater than 450*600 in dimension"
+                      this.t("validations:error_text.message"),
+                      this.t("validations:image_upload_error.message")
                     );
                     document.getElementById("front").value = "";
                     document.getElementById("back").value = "";
@@ -281,14 +282,14 @@ class DocUpload extends Component {
                   profileImage: "",
                   icon1: "plus",
                   displayFirst: "none",
-                  imagemsg: "Please select image with less than 4 mb"
+                  imagemsg: this.t("general_1:max_image_size_error.message")
                 });
               } else {
                 _self.setState({
                   profileImg2: "Default Photo",
                   imageName2: "",
                   imageType2: fileType,
-                  imagemsg2: "Please select image with less than 4 mb",
+                  imagemsg2: this.t("general_1:max_image_size_error.message"),
                   profileImage2: "",
                   icon2: "plus",
                   displaySecond: "none"
@@ -296,8 +297,8 @@ class DocUpload extends Component {
               }
               _self.openNotificationWithIcon(
                 "error",
-                "File Size",
-                "Please select image with less than 4 mb"
+                this.t("validations:error_text.message"),
+                this.t("general_1:max_image_size_error.message")
               );
               document.getElementById("front").value = "";
               document.getElementById("back").value = "";
@@ -305,8 +306,8 @@ class DocUpload extends Component {
           } else {
             _self.openNotificationWithIcon(
               "error",
-              "File Format",
-              "File format is not supported. Please upload only images."
+              this.t("validations:error_text.message"),
+              this.t("general_1:only_images_error.message")
             );
             document.getElementById("front").value = "";
             document.getElementById("back").value = "";
@@ -375,16 +376,13 @@ class DocUpload extends Component {
         kycDoc["front_doc"] = this.state.frontImg;
         kycDoc["back_doc"] = this.state.backImg;
         kycDoc["steps"] = 3;
-        // console.log(
-        //   "FINALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
-        // );
         this.props.kycFormAction(this.props.isLoggedIn, kycDoc);
       }
     } else {
       this.openNotificationWithIcon(
         "error",
-        "Error",
-        "Please upload front and back of your document"
+        this.t("validations:error_text.message"),
+        this.t("general_1:upload_front_back_error.message")
       );
     }
   }
@@ -473,9 +471,9 @@ class DocUpload extends Component {
               />
             </Fileselect2>
           </Filewrap>
-          <NoteSpan>Supported format: .jpg, .jpeg, .png</NoteSpan>
+          <NoteSpan>{t("general_1:supported_format_text.message")}</NoteSpan>
           <NoteSpan className="upload_note">
-            *Upload image with minimum size 400 KB and maximum upto 4 MB.
+            *{t("general_1:upload_note_text.message")}
           </NoteSpan>
         </SSNWrap>
         <ButtonWrap>
@@ -518,6 +516,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(kycFormAction(isLoggedIn, value))
 });
 
-export default translate("identity_verification")(
+export default translate(["identity_verification", "validations", "general_1"])(
   connect(mapStateToProps, mapDispatchToProps)(DocUpload)
 );

@@ -1395,7 +1395,7 @@ class Acc_settings extends Component {
           className="deactivate_modal"
         >
           <div>
-            <Description>{t("deactivate_popup_text.message")}</Description>
+            <Description>{this.t("deactivate_popup_text.message")}</Description>
             <SummaryTable>
               <thead>
                 <tr>
@@ -1457,7 +1457,7 @@ class Acc_settings extends Component {
         >
           {this.state.walletCoins ? (
             <div>
-              <Description>t{"deactivate_popup_text.message"}</Description>
+              <Description>{t("deactivate_popup_text.message")}</Description>
               <SummaryTable>
                 <thead>
                   <tr>
@@ -1506,7 +1506,7 @@ class Acc_settings extends Component {
                 onClick={this.closeModal}
               >
                 <DeNewButton>
-                  {t("edit_profile_titles.dont_agree_no_btn.message")}
+                  {t("edit_profile_titles:dont_agree_no_btn.message")}
                 </DeNewButton>
               </DeButtonDiv>
               <DeButtonDiv
@@ -1514,7 +1514,7 @@ class Acc_settings extends Component {
                 onClick={this.handleDeactivateYes}
               >
                 <DeNewButton className="right_text">
-                  {t("edit_profile_titles.dont_agree_yes_btn.message")}
+                  {t("edit_profile_titles:dont_agree_yes_btn.message")}
                 </DeNewButton>
               </DeButtonDiv>
             </DeactivateButtonWarp>
@@ -1553,11 +1553,10 @@ class Acc_settings extends Component {
                   {this.state.user2fastatus ? (
                     <div>
                       <InputLabel>
-                        Enter your 2FA code in the box below:
+                        {t("deactivate_popup_label2.message")}:
                       </InputLabel>
                       <div>
                         <OTPInput
-                          // style={{ paddingRight: "10px" }}
                           min="1"
                           value={this.state.code2fa}
                           type="text"
@@ -1570,15 +1569,26 @@ class Acc_settings extends Component {
                           this.state.code2fa,
                           "required|numeric|min:6|max:6",
                           "text-danger-validation",
-                          { required: "2FA field is required." }
+                          {
+                            required: t(
+                              "general_1:2fa_field_required_error.message"
+                            ),
+                            numeric: t(
+                              "general_1:2fa_must_number_error.message"
+                            ),
+                            min: t("general_1:2fa_min_error.message"),
+                            max: t("general_1:2fa_max_error.message")
+                          }
                         )}
                       </div>
                     </div>
                   ) : (
                     <Code2FADiv>
-                      <p>2FA is mandatory to deactivate your account.</p>
-                      <p>Please click on below link to enable 2FA.</p>
-                      <Link to={"/editProfile"}>Click here</Link>
+                      <p>{t("deactivate_popup_text1.message")}</p>
+                      <p>{t("deactivate_popup_text2.message")}</p>
+                      <Link to={"/editProfile"}>
+                        {t("deactivate_popup_click_here.message")}
+                      </Link>
                     </Code2FADiv>
                   )}
                 </NewP>
@@ -1587,14 +1597,20 @@ class Acc_settings extends Component {
                     className="final_deactivate"
                     onClick={this.closeModal}
                   >
-                    <DeNewButton>Cancel</DeNewButton>
+                    <DeNewButton>
+                      {t(
+                        "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                      )}
+                    </DeNewButton>
                   </DeButtonDiv>
                   {this.state.user2fastatus ? (
                     <DeButtonDiv
                       className="right_btn final_deactivate"
                       onClick={this.deleteUserAccount}
                     >
-                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                      <DeNewButton className="right_text">
+                        {t("conversion:confirm_btn.message")}
+                      </DeNewButton>
                     </DeButtonDiv>
                   ) : (
                     <DeButtonDiv
@@ -1602,7 +1618,9 @@ class Acc_settings extends Component {
                       className="right_btn final_deactivate disabled"
                       onClick={this.deleteUserAccount}
                     >
-                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                      <DeNewButton className="right_text">
+                        {t("conversion:confirm_btn.message")}
+                      </DeNewButton>
                     </DeButtonDiv>
                   )}
                 </DeactivateButtonWarp>
@@ -1616,7 +1634,9 @@ class Acc_settings extends Component {
               </Description> */}
               <div className="nav__body">
                 <NewP className="deactivate deactivate_no_funds">
-                  <InputLabel>Type 'DEACTIVATE' in the box below:</InputLabel>
+                  <InputLabel>
+                    {t("deactivate_popup_label1.message")}:
+                  </InputLabel>
                   <div className="otp-input-wrap">
                     <OTPInput
                       className="otp-input"
@@ -1658,15 +1678,22 @@ class Acc_settings extends Component {
                           this.state.code2fa,
                           "required|numeric|min:6|max:6",
                           "text-danger-validation",
-                          { required: "2FA field is required." }
+                          {
+                            required: this.t(
+                              "general_1:2fa_field_required_error.message"
+                            ),
+                            numeric: "test"
+                          }
                         )}
                       </div>
                     </div>
                   ) : (
                     <Code2FADiv>
-                      <p>2FA is mandatory to deactivate your account.</p>
-                      <p>Please click on below link to enable 2FA.</p>
-                      <Link to={"/editProfile"}>Click here</Link>
+                      <p>{t("deactivate_popup_text1.message")}</p>
+                      <p>{t("deactivate_popup_text2.message")}</p>
+                      <Link to={"/editProfile"}>
+                        {t("deactivate_popup_click_here.message")}
+                      </Link>
                     </Code2FADiv>
                   )}
                 </NewP>
@@ -1675,14 +1702,20 @@ class Acc_settings extends Component {
                     className="final_deactivate"
                     onClick={this.closeModal}
                   >
-                    <DeNewButton>Cancel</DeNewButton>
+                    <DeNewButton>
+                      {t(
+                        "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                      )}
+                    </DeNewButton>
                   </DeButtonDiv>
                   {this.state.user2fastatus ? (
                     <DeButtonDiv
                       className="right_btn final_deactivate"
                       onClick={this.deleteUserAccount}
                     >
-                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                      <DeNewButton className="right_text">
+                        {t("conversion:confirm_btn.message")}
+                      </DeNewButton>
                     </DeButtonDiv>
                   ) : (
                     <DeButtonDiv
@@ -1690,7 +1723,9 @@ class Acc_settings extends Component {
                       className="right_btn final_deactivate disabled"
                       onClick={this.deleteUserAccount}
                     >
-                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                      <DeNewButton className="right_text">
+                        {t("conversion:confirm_btn.message")}
+                      </DeNewButton>
                     </DeButtonDiv>
                   )}
                 </DeactivateButtonWarp>
@@ -1728,5 +1763,6 @@ export default translate([
   "settings",
   "edit_profile_titles",
   "general_1",
-  "validations"
+  "validations",
+  "conversion"
 ])(connect(mapStateToProps, mapDispatchToProps)(Acc_settings));

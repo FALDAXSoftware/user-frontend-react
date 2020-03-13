@@ -365,7 +365,7 @@ class PersonalDetails extends Component {
       agreeTermsShow: false,
       editMode: false,
       isFirstLogin: "",
-      language: "e",
+      language: "en",
       displayCountry: false,
       phoneCountry: [],
       mobile: "",
@@ -379,6 +379,7 @@ class PersonalDetails extends Component {
     };
     this.datePickerChild = React.createRef();
     this.handleProfile = this.handleProfile.bind(this);
+    this.handleLangChange = this.handleLangChange.bind(this);
     this.t = this.props.t;
   }
   static propTypes = {
@@ -388,6 +389,7 @@ class PersonalDetails extends Component {
   /* Life-Cycle Methods */
 
   componentDidMount() {
+    console.log("^^^^", this.props.profileDetails.default_language);
     this.props.getProfileDataAction(this.props.isLoggedIn);
     if (this.props.profileDetails.default_language) {
       this.setState({
@@ -398,7 +400,6 @@ class PersonalDetails extends Component {
         language: "en"
       });
     }
-    // console.log("^^^", this.props.profileDetails.countryJsonId);
     var countrySelected = CountryData.getCountryById(
       this.props.profileDetails.countryJsonId - 1
     );
@@ -409,7 +410,6 @@ class PersonalDetails extends Component {
       country_code = countrySelected.sortname;
       phoneCode = countrySelected.phonecode;
       arr.push(country_code);
-      // console.log("^^^^phonecode", phoneCode);
     }
     if (this.props.profileDetails.country) {
       this.setState({
@@ -419,8 +419,6 @@ class PersonalDetails extends Component {
       });
     }
     if (this.props.profileDetails.phone_number) {
-      // let temp = this.props.profileDetails.phone_number;
-      // var mob = temp.split(`${this.state.phoneCode}`);
       let phone = this.props.profileDetails.phone_number;
       this.setState({
         displayCountry: true,
@@ -453,7 +451,6 @@ class PersonalDetails extends Component {
   }
 
   componentWillReceiveProps(props) {
-    // console.log(props);
     if (
       props.profileDetails.profile_pic !== null &&
       props.profileDetails.profile_pic !== undefined &&
@@ -497,6 +494,15 @@ class PersonalDetails extends Component {
     }
     if (this.props.profileDetails != this.state.profileDetails) {
       this.setState({ profileDetails: this.props.profileDetails });
+    }
+    if (
+      props.profileDetails.default_language &&
+      this.props.profileDetails.default_language !=
+        props.profileDetails.default_language
+    ) {
+      this.setState({
+        language: props.profileDetails.default_language
+      });
     }
   }
 

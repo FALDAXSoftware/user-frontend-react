@@ -180,7 +180,7 @@ class KYCForm extends Component {
       },
       oneapostrophe: {
         // name the rule
-        message: "Only one apostrophe is allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("validations:apostrophe_first_name.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -194,7 +194,7 @@ class KYCForm extends Component {
       },
       streetaddress: {
         // name the rule
-        message: "Spaces are not allowed in prefix/suffix.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("validations:no_suffix_prefix_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -231,8 +231,7 @@ class KYCForm extends Component {
         }
       },
       zipValid: {
-        message:
-          "Postal Code should only contain alphabets , numbers and hyphen.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("validations:postal_code_letters_numbers.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -257,7 +256,11 @@ class KYCForm extends Component {
         // console.log("KYC CHECK", this.state.showSSN);
         this.props.next_step(1, null, this.state.showSSN);
       } else {
-        this.openNotificationWithIcon("error", "Error", props.kycData.err);
+        this.openNotificationWithIcon(
+          "error",
+          this.t("validations:error_text.message"),
+          props.kycData.err
+        );
         this.props.kycformData();
       }
     }
@@ -529,7 +532,9 @@ class KYCForm extends Component {
         } else {
           this.openNotificationWithIcon(
             "error",
-            `Error: ${responseData.status}`,
+            `${this.t("validations:error_text.message")}: ${
+              responseData.status
+            }`,
             responseData.err
           );
           this.setState({ loader: false });
