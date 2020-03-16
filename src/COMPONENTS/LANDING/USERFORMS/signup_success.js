@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { WelcomeText } from "./login_form";
+import { translate } from "react-i18next";
 import { Col, Row } from "antd";
 import { globalVariables } from "Globals.js";
 
@@ -109,6 +110,7 @@ class SignupSuccess extends Component {
     this.state = {
       email: ""
     };
+    this.t = this.props.t;
   }
   componentDidMount() {
     if (this.props.match)
@@ -136,10 +138,10 @@ class SignupSuccess extends Component {
           <ColRight sm={24} lg={12}>
             <FormWrap>
               <RightWrap className="wow fadeInDown">
-                <LoginHead>Thank You</LoginHead>
-                <WelcomeText>We have sent a confirmation email.</WelcomeText>
+                <LoginHead>{this.t("thank_you_text.message")}</LoginHead>
+                <WelcomeText>{this.t("confirmation_text.message")}</WelcomeText>
                 <SubText>
-                  Please check your email{" "}
+                  {this.t("confirmation_email_text.message")}{" "}
                   <SpanText> {this.state.email}</SpanText>.
                 </SubText>
               </RightWrap>
@@ -151,4 +153,4 @@ class SignupSuccess extends Component {
   }
 }
 
-export default SignupSuccess;
+export default translate(["login_page", "validations"])(SignupSuccess);

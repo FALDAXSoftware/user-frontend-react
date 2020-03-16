@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { globalVariables } from "Globals.js";
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
 import { ModalWrap } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
+import { translate } from "react-i18next";
 import styled from "styled-components";
 
 export const ImageDisplay = styled.img`
@@ -38,6 +39,7 @@ class PanicEnabled extends Component {
       email_address: "",
       email_msg: ""
     };
+    this.t = this.props.t;
   }
 
   handleComing = e => {
@@ -118,44 +120,13 @@ class PanicEnabled extends Component {
           visible={this.props.visible}
           onOk={e => this.handleComing()}
           onCancel={e => this.comingCancel(e)}
-          //   closable={
-          //     this.props.location.pathname == "/conversion" ? false : true
-          //   }
-          //   maskClosable={
-          //     this.props.location.pathname == "/conversion" ? false : true
-          //   }
           footer={null}
           width={605}
-          // height={490}
           className="simple-maps"
         >
           <ModalWrap className="kyc-wrap">
-            <PanicDisplay>System Lockout In Effect</PanicDisplay>
-            <PanicText>
-              Our systems have detected unwarranted and suspicious behavior
-              which triggered our automatic lockout protocols. In order to
-              ensure the safety and security of your assets and information, all
-              assets system-wide are frozen and you will not be able to trade or
-              move assets during this time. The balance you see in each of your
-              wallets is secure accurate, and those assets are secure. By
-              default, the lockout goes into effect for 24 hours, but this time
-              may vary depending upon what our security team finds, if anything,
-              and mitigates any known risks to you and our other customers.
-              Please follow our twitter page, or look for notifications we will
-              send via text and email, for updates as they become available. We
-              are deeply sorry for any inconvenience, but our primary concern is
-              to always be the best possible stewards of your information and
-              assets. Rest assured that we are working to ensure that goal, and
-              we thank you for your support and patience.
-              {/* {this.props.data} */}
-            </PanicText>
-            {/* <Sub_wrap>
-                            <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>
-                            <Email_input placeholder="Email Address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
-                        </Sub_wrap>
-                        <div style={{ marginTop: '20px', minHeight: '20px' }}>
-                            <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff', backgroundColor: "#0f477b", height: "45px" }} onClick={() => this.send_email()}>SUBMIT</Button>
-                        </div> */}
+            <PanicDisplay>{this.t("panic_popup_head.message")}</PanicDisplay>
+            <PanicText>{this.t("panic_popup_subtext.message")}</PanicText>
           </ModalWrap>
         </Modal>
       </div>
@@ -163,4 +134,4 @@ class PanicEnabled extends Component {
   }
 }
 
-export default withRouter(PanicEnabled);
+export default translate(["popups"])(withRouter(PanicEnabled));

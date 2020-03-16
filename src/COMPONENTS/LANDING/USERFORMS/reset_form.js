@@ -4,7 +4,7 @@ import { createForm, formShape } from "rc-form";
 import styled from "styled-components";
 import { Button, notification, Row, Col, Progress } from "antd";
 import { connect } from "react-redux";
-
+import { translate } from "react-i18next";
 /* Components */
 import { globalVariables } from "Globals.js";
 import { _EYE, _ACTIVEEYE } from "CONSTANTS/images";
@@ -199,6 +199,7 @@ class ResetPassword extends Component {
       percent: "",
       stroke: ""
     };
+    this.t = this.props.t;
   }
 
   static propTypes = {
@@ -261,7 +262,7 @@ class ResetPassword extends Component {
               "inline-block";
             document.querySelectorAll(".pass_msg")[0].style.display = "block";
             this.setState({
-              pass_msg: "Your password must not contain any spaces."
+              pass_msg: this.t("validations:space_in_password.message")
             });
           } else {
             this.setState({ newpassIcon: false, password: value });
@@ -271,8 +272,7 @@ class ResetPassword extends Component {
               "inline-block";
             document.querySelectorAll(".pass_msg")[0].style.display = "block";
             this.setState({
-              pass_msg:
-                "Your password must contain at least one uppercase letter, one lowercase letter, one special character (!@#$%_), and one number. Minimum of 8 characters and a maximum of 60 characters."
+              pass_msg: this.t("validations:password_error.message")
             });
           }
         }
@@ -305,7 +305,9 @@ class ResetPassword extends Component {
           document.querySelectorAll(".confirmchange_msg")[0].style.display =
             "block";
           this.setState({
-            confirmPass_msg: "Confirm Password does not match."
+            confirmPass_msg: this.t(
+              "general_1:password_not_match_error.message"
+            )
           });
         }
       } else {
@@ -357,12 +359,16 @@ class ResetPassword extends Component {
         if (responseData.status === 200) {
           this.openNotificationWithProfile(
             "success",
-            "Success",
-            "Password changed successfully."
+            this.t("validations:success_text.message"),
+            this.t("login_page:password_changed_successfully_text.message")
           );
           this.props.history.push("/login");
         } else {
-          this.openNotificationWithProfile("error", "Error", responseData.err);
+          this.openNotificationWithProfile(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
         }
       })
       .catch(error => {});
@@ -374,7 +380,6 @@ class ResetPassword extends Component {
     let url = this.props.location.search.split("=");
 
     let form = {};
-    // form["password"] = value.password;
     form["reset_token"] = url[1];
 
     fetch(`${globalVariables.API_URL}/users/check-forgot-password-token`, {
@@ -387,10 +392,12 @@ class ResetPassword extends Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status === 400) {
-          this.openNotificationWithProfile("error", "Error", responseData.err);
-          // this.props.history.push("/login");
+          this.openNotificationWithProfile(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
         } else {
-          // this.openNotificationWithProfile("error", "Error", responseData.err);
         }
       })
       .catch(error => {});
@@ -420,8 +427,8 @@ class ResetPassword extends Component {
             "none";
           this.openNotificationWithProfile(
             "error",
-            "Error",
-            "Password do not match."
+            this.t("validations:error_text.message"),
+            this.t("validations:password_mismatch_error.message")
           );
         }
       } else {
@@ -434,7 +441,12 @@ class ResetPassword extends Component {
               value.password == undefined
             ) {
               document.querySelectorAll(".pass_msg")[0].style.display = "block";
-              this.setState({ pass_msg: "Password is required" });
+              this.setState({
+                pass_msg:
+                  this.t("login_page:password_text.message") +
+                  " " +
+                  this.t("validations:field_is_required.message")
+              });
             } else {
               document.querySelectorAll(".pass_msg")[0].style.display = "none";
               this.setState({ pass_msg: null });
@@ -450,7 +462,10 @@ class ResetPassword extends Component {
               document.querySelectorAll(".confirmchange_msg")[0].style.display =
                 "block";
               this.setState({
-                confirmPass_msg: "Confirm password is required"
+                confirmPass_msg:
+                  this.t("security_tab:confirm_password_text.message") +
+                  " " +
+                  this.t("validations:field_is_required.message")
               });
             } else {
               document.querySelectorAll(".confirmchange_msg")[0].style.display =
@@ -521,8 +536,8 @@ class ResetPassword extends Component {
           <ColRight sm={24} lg={12}>
             <FormWrap>
               <RightWrap className="wow fadeInDown">
-                <LoginHead>Reset Password</LoginHead>
-                <PassLabel>Password*</PassLabel>
+                <LoginHead>{this.t("reset_password_text.message")}</LoginHead>
+                <PassLabel>{this.t("password_text.message")}*</PassLabel>
                 <div>
                   <Full
                     type={newEye}
@@ -565,7 +580,9 @@ class ResetPassword extends Component {
                   />
                 </div>
 
-                <PassconfirmLabel>Confirm Password*</PassconfirmLabel>
+                <PassconfirmLabel>
+                  {this.t("general_1:subhead_title_confirm_password.message")}*
+                </PassconfirmLabel>
                 <div>
                   <Password
                     type={repeatEye}
@@ -607,7 +624,9 @@ class ResetPassword extends Component {
                   {this.state.common_req}
                 </CommonReq>
                 {(errors = getFieldError("required")) ? errors.join(",") : null}
-                <ResetButton onClick={this.submit}>Reset</ResetButton>
+                <ResetButton onClick={this.submit}>
+                  {this.t("history:reset_btn.message")}
+                </ResetButton>
               </RightWrap>
             </FormWrap>
           </ColRight>
@@ -631,7 +650,10 @@ const mapDispatchToProps = dispatch => ({
   resetData: value => dispatch(resetData(value))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(createForm()(ResetPassword));
+export default translate([
+  "login_page",
+  "validations",
+  "security_tab",
+  "general_1",
+  "history"
+])(connect(mapStateToProps, mapDispatchToProps)(createForm()(ResetPassword)));

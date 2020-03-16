@@ -201,6 +201,7 @@ class History extends Component {
     this.selectChange2 = this.selectChange2.bind(this);
     this.callback = this.callback.bind(this);
     this.resetFilters = this.resetFilters.bind(this);
+    this.t = this.props.t;
   }
 
   /* Life-Cycle Methods */
@@ -384,7 +385,11 @@ class History extends Component {
                 csvJSTFields
               });
             } else {
-              this.openNotificationWithIcon("error", "Error", responseData.err);
+              this.openNotificationWithIcon(
+                "error",
+                this.t("validations:error_text.message"),
+                responseData.err
+              );
             }
           } else if (this.state.activeKey === "2") {
             let csvSimplexFields = [];
@@ -433,7 +438,11 @@ class History extends Component {
                 csvSimplexFields
               });
             } else {
-              this.openNotificationWithIcon("error", "Error", responseData.err);
+              this.openNotificationWithIcon(
+                "error",
+                this.t("validations:error_text.message"),
+                responseData.err
+              );
             }
           } else if (this.state.activeKey === "3") {
             // alert("trade");
@@ -485,17 +494,29 @@ class History extends Component {
                 csvTradeFields
               });
             } else {
-              this.openNotificationWithIcon("error", "Error", responseData.err);
+              this.openNotificationWithIcon(
+                "error",
+                this.t("validations:error_text.message"),
+                responseData.err
+              );
             }
           }
         } else if (responseData.status === 403) {
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
           let tempValue2 = {};
           tempValue2["user_id"] = this.props.profileData.id;
           tempValue2["jwt_token"] = this.props.isLoggedIn;
           this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
         } else {
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
         }
         this.setState({ loader: false });
       })
@@ -1003,7 +1024,12 @@ class History extends Component {
                       </HisTable>
                     </Tablediv>
                   </TabPane>  */}
-                  <TabPane tab="Credit Card" key="2">
+                  <TabPane
+                    tab={this.t(
+                      "header:navbar_sub_menu_conversation_credit_card.message"
+                    )}
+                    key="2"
+                  >
                     <Tablediv>
                       <HisTable responsive striped condensed>
                         <thead>

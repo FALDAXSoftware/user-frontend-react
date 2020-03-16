@@ -154,30 +154,6 @@ class Simplex extends React.Component {
     this.getCrypto();
   }
 
-  // getCrypto() {
-  //   this.setState({
-  //     loader: true
-  //   });
-  //   fetch(API_URL + `/coin-list-converison`, {
-  //     method: "get",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + this.props.isLoggedIn
-  //     }
-  //   })
-  //     .then(response => response.json())
-  //     .then(responseData => {
-  //       if (responseData.status == 200) {
-  //         console.log("responseData.data", responseData);
-  //         this.setState({
-  //           cryptoList: responseData.data,
-  //           loader: false
-  //         });
-  //       }
-  //     })
-  //     .catch(error => {});
-  // }
   getCrypto() {
     this.setState({
       loader: true
@@ -242,11 +218,6 @@ class Simplex extends React.Component {
         .then(responseData => {
           if (responseData.status === 200) {
             if (responseData.data.error) {
-              // this.openNotificationWithIcon(
-              //   "error",
-              //   "Error",
-              //   responseData.data.errors[0].message
-              // );
               this.setState({
                 loader: false
               });
@@ -276,14 +247,14 @@ class Simplex extends React.Component {
             this.setState({ loader: false });
             this.openNotificationWithIcon(
               "error",
-              "Error",
+              this.t("validations:error_text.message"),
               responseData.message
             );
           } else {
             this.setState({ loader: false });
             this.openNotificationWithIcon(
               "error",
-              "Error",
+              this.t("validations:error_text.message"),
               responseData.message
             );
           }
@@ -394,15 +365,16 @@ class Simplex extends React.Component {
           <Navigation />
           <ConversionContainer>
             <SimMainRow className="simplex_main_row">
-              <SimTopHead>Safe. Simple. Secure.</SimTopHead>
+              <SimTopHead>
+                {this.t("safe_simple_secure_text.message")}
+              </SimTopHead>
               <SimLeftCol lg={12}>
                 <BorderRow>
-                  <RowTitle>You Pay</RowTitle>
+                  <RowTitle>{this.t("you_pay_text.message")}</RowTitle>
                   <Col xs={12} sm={12} md={16}>
                     <ConversionInput
                       type="text"
                       placeholder="0"
-                      // step="0.01"
                       value={this.state.currencyToPay}
                       onChange={e => {
                         this.handleCurrencyPayChange(e);
@@ -414,7 +386,12 @@ class Simplex extends React.Component {
                       `required|numeric|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
                       "text-danger-validation",
                       {
-                        numeric: "Enter only integer or a decimal number"
+                        required: this.t(
+                          "general_3:validation_amount_required.message"
+                        ),
+                        numeric: this.t(
+                          "general_3:validation_amount_numeric.message"
+                        )
                       }
                     )}
                   </Col>
@@ -447,7 +424,7 @@ class Simplex extends React.Component {
                   </Col>
                 </BorderRow>
                 <BorderRow>
-                  <RowTitle>You Get</RowTitle>
+                  <RowTitle>{this.t("you_get_text.message")}</RowTitle>
                   <Col xs={12} sm={12} md={16}>
                     <ConversionInput
                       type="number"
@@ -494,34 +471,26 @@ class Simplex extends React.Component {
                       block
                       disabled={this.state.btnDisabled}
                     >
-                      Exchange Now
+                      {this.t("exchange_now_btn.message")}
                     </ConversionSubmitBtn>
                   </Col>
                 </Row>
                 <SimLastRow className="bottom-row">
                   <Col>
-                    <span>We accept </span>
+                    <span>{this.t("we_accept_text.message")} </span>
                     <img src="images/visa-card1.png" alt="visa icon" />
                     <img src="images/mastercard1.png" alt="visa icon" />
                   </Col>
-                  <Col className="buy_crypto_btn">Pay With a Bank Card</Col>
+                  <Col className="buy_crypto_btn">
+                    {this.t("pay_with_card_text.message")}
+                  </Col>
                 </SimLastRow>
               </SimLeftCol>
               <SimRightCol className="simplex_right_col" lg={12}>
-                <SimHead>
-                  FALDAX, in partnership with Simplex, brings the world's most
-                  prevalent crypto assets directly to you. Thank you for
-                  choosing FALDAX!
-                </SimHead>
+                <SimHead>{this.t("simplex_text.message")}</SimHead>
                 <SimSubHead>
-                  <p>Powered by</p>
+                  <p>{this.t("powered_by_text.message")}</p>
                   <img src="/images/simplex-logo.png" />
-                  {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-                ipsum suspendisse ultrices gravida. Risus commodo viverra
-                maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit
-                amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore. */}
                 </SimSubHead>
               </SimRightCol>
             </SimMainRow>
@@ -553,6 +522,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default translate("conversion")(
+export default translate(["conversion", "validations", "general_3"])(
   connect(mapStateToProps, mapDispatchToProps)(withRouter(Simplex))
 );

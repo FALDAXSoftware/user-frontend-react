@@ -10,6 +10,7 @@ import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
 /* Components */
 import { forgotAction, clearForgot } from "ACTIONS/authActions";
 import { globalVariables } from "Globals.js";
+import { translate } from "react-i18next";
 
 /* Global CONSTANTS */
 
@@ -176,6 +177,7 @@ class ForgotForm extends Component {
     this.fieldChange = this.fieldChange.bind(this);
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
     this.verifyCallback = this.verifyCallback.bind(this);
+    this.t = this.props.t;
   }
   onLoadRecaptcha() {
     loadReCaptcha(GOOGLE_SITE_KEY);
@@ -191,8 +193,6 @@ class ForgotForm extends Component {
     );
   }
   verifyCallback(recaptchaToken) {
-    // Here you will get the final recaptchaToken!!!
-    // console.log(recaptchaToken, "<= your recaptcha token");
     this.setState({
       recaptchaToken
     });
@@ -211,13 +211,12 @@ class ForgotForm extends Component {
       } else {
         this.openNotificationWithIcon(
           "error",
-          "Error",
-          "The automated human verification system encountered an error. Please refresh the page and try again. We apologize for any inconvenience."
+          this.t("validations:error_text.message"),
+          this.t("general:captcha_not_loaded_error_head.message")
         );
       }
     } else {
       this.validator.showMessages();
-      // rerender to show messages for the first time
       this.forceUpdate();
     }
   };
@@ -263,12 +262,16 @@ class ForgotForm extends Component {
         this.setState({ email: "", recaptchaToken: null, loader: false });
         this.openNotificationWithIcon(
           "success",
-          "Success",
+          this.t("validations:success_text.message"),
           props.forgot.message
         );
       } else {
         this.setState({ recaptchaToken: null, loader: false });
-        this.openNotificationWithIcon("error", "Error", props.forgot.err);
+        this.openNotificationWithIcon(
+          "error",
+          this.t("validations:error_text.message"),
+          props.forgot.err
+        );
       }
       this.onLoadRecaptcha();
       this.props.clearForgot();
@@ -316,10 +319,16 @@ class ForgotForm extends Component {
             <FormWrap>
               <RightWrap className="wow fadeInDown">
                 <RightLogin>
-                  <LoginHead>Forgot Password</LoginHead>
-                  <WelcomeText>Forgot Password?</WelcomeText>
-                  <SubText>Don't worry, It happen's to the best of us.</SubText>
-                  <EmailLabel>Email Address*</EmailLabel>
+                  <LoginHead>
+                    {this.t("forgot_password_text.message")}
+                  </LoginHead>
+                  <WelcomeText>
+                    {this.t("forgot_password_text.message")}?
+                  </WelcomeText>
+                  <SubText>{this.t("forgot_message_text.message")}</SubText>
+                  <EmailLabel>
+                    {this.t("sign_up:email_address_text.message")}*
+                  </EmailLabel>
                   <Username
                     type="email"
                     value={this.state.email}
@@ -328,10 +337,18 @@ class ForgotForm extends Component {
                   {this.validator.message(
                     "Email_Address",
                     this.state.email,
-                    "required|email"
+                    "required|email",
+                    "text-danger-validation",
+                    {
+                      required:
+                        this.t("sign_up:email_address_text.message") +
+                        " " +
+                        this.t("validations:field_is_required.message"),
+                      email: this.t("validations:invalid_email_error.message")
+                    }
                   )}
                   <ButtonLogin onClick={this.submit}>
-                    SEND RESET PASSWORD LINK
+                    {this.t("send_reset_link_text.message")}
                   </ButtonLogin>
                   <LinkWrap>
                     <Icon className="material-icons">keyboard_backspace</Icon>
@@ -340,7 +357,7 @@ class ForgotForm extends Component {
                       // onClick={() => this.props.history.push("/login")}
                     >
                       {" "}
-                      Back To Login{" "}
+                      {this.t("back_to_login_text.message")}{" "}
                     </BackLink>
                   </LinkWrap>
                 </RightLogin>
@@ -349,21 +366,9 @@ class ForgotForm extends Component {
           </ColRight>
         </RowWrap>
         {this.state.loader == true ? <FaldaxLoader /> : ""}
-        {/* <ReCaptcha
-          ref={el => {
-            this.captchaDemo = el;
-          }}
-          size="invisible"
-          render="explicit"
-          sitekey={GOOGLE_SITE_KEY}
-          onloadCallback={this.onLoadRecaptcha}
-          verifyCallback={this.verifyCallback}
-          badge="bottomleft"
-        /> */}
         {this.state.loadCaptch && (
           <ReCaptcha
             sitekey={GOOGLE_SITE_KEY}
-            // action="action_name"
             verifyCallback={this.verifyCallback}
           />
         )}
@@ -383,4 +388,6 @@ const mapDispatchToProps = dispatch => ({
   clearForgot: () => dispatch(clearForgot())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ForgotForm);
+export default translate(["login_page", "validations", "sign_up", "general"])(
+  connect(mapStateToProps, mapDispatchToProps)(ForgotForm)
+);

@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Col, Row, notification } from "antd";
 import SimpleReactValidator from "simple-react-validator";
+import { translate } from "react-i18next";
 
 import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
@@ -129,6 +130,7 @@ class EmailVerification extends Component {
     };
     this.validator = new SimpleReactValidator();
     this.resendVerification = this.resendVerification.bind(this);
+    this.t = this.props.t;
   }
 
   openNotificationWithIcon(type, head, desc) {
@@ -141,10 +143,6 @@ class EmailVerification extends Component {
   dispModal = () => {
     this.props.history.push("/login");
   };
-  // handleSubmit(event) {
-  //   this._resendVerification();
-  //   event.preventDefault();
-  // }
   resendVerification = e => {
     e.preventDefault();
     if (this.validator.allValid()) {
@@ -163,14 +161,18 @@ class EmailVerification extends Component {
             );
           } else {
             this.setState({ loader: false });
-            this.openNotificationWithIcon("error", "Error", responseData.err);
+            this.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.err
+            );
           }
         })
         .catch(error => {
           this.setState({ loader: false });
           this.openNotificationWithIcon(
             "error",
-            "Error",
+            this.t("validations:error_text.message"),
             "Something went wrong!"
           );
         });
@@ -207,8 +209,8 @@ class EmailVerification extends Component {
           <ColRight sm={24} lg={12}>
             <FormWrap>
               <RightWrap className="wow fadeInDown">
-                <LoginHead>Resend Verification Link</LoginHead>
-                <EmailLabel>Enter Email:</EmailLabel>
+                <LoginHead>{this.t("resend_link_text.message")}</LoginHead>
+                <EmailLabel>{this.t("enter_email_text.message")}:</EmailLabel>
                 <form onSubmit={this.resendVerification}>
                   <VerifyEmail
                     name="email"
@@ -219,20 +221,27 @@ class EmailVerification extends Component {
                     "email",
                     this.state.fields.email,
                     "required|email",
-                    "text-danger-validation"
+                    "text-danger-validation",
+                    {
+                      required:
+                        this.t("security_tab:subhead_title_email.message") +
+                        " " +
+                        this.t("validations:field_is_required.message"),
+                      email: this.t("validations:invalid_email_error.message")
+                    }
                   )}
                   <br />
                   <ButtonResend htmlType="submit" value="submit">
-                    RE-SEND
+                    {this.t("resend_text.message")}
                   </ButtonResend>
                 </form>
                 <Sign>
-                  Already have an account?{" "}
+                  {this.t("already_have_account_text.message")}?{" "}
                   <Signa
                     href="/login"
                     // onClick={this.dispModal}
                   >
-                    Login
+                    {this.t("login_text.message")}
                   </Signa>
                 </Sign>
               </RightWrap>
@@ -251,4 +260,6 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, null)(EmailVerification));
+export default translate(["login_page", "validations", "security_tab"])(
+  connect(mapStateToProps, null)(EmailVerification)
+);

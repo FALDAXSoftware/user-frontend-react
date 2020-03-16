@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { globalVariables } from "../Globals.js";
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
 import { ModalWrap } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
-import {translate} from "react-i18next"
+import { translate } from "react-i18next";
 /* const API_URL = globalVariables.API_URL; */
 
 class ComingSoon extends React.Component {
@@ -16,7 +16,7 @@ class ComingSoon extends React.Component {
       email_address: "",
       email_msg: ""
     };
-    this.t=this.props.t;
+    this.t = this.props.t;
   }
 
   handleComing = e => {
@@ -76,7 +76,9 @@ class ComingSoon extends React.Component {
         })
         .catch(error => {});
     } else {
-      this.setState({ email_msg: "*"+this.t("validations:invalid_email_error.message") });
+      this.setState({
+        email_msg: "*" + this.t("validations:invalid_email_error.message")
+      });
       this.openNotificationWithIcon(
         "error",
         this.t("validations:error_text.message"),
@@ -91,43 +93,32 @@ class ComingSoon extends React.Component {
           title={
             <div>
               <img alt="coming" src={_COMINGIMG} />{" "}
-              <img
-                alt="coming"
-                // style={{ marginLeft: "10px" }}
-                src={_COMINGIMG2}
-              />
+              <img alt="coming" src={_COMINGIMG2} />
             </div>
           }
           visible={this.props.visible}
           onOk={e => this.handleComing()}
           onCancel={e => this.comingCancel(e)}
-          // closable={this.props.location.pathname == "/conversion" ? false : true}
-          // maskClosable={this.props.location.pathname == "/conversion" ? false : true}
           footer={null}
           width={605}
-          // height={490}
           className="simple-maps"
         >
           <ModalWrap className="country-wrap">
-            <h3>{this.t('illegal_popup_head.message')}</h3>
+            <h3>{this.t("illegal_popup_head.message")}</h3>
             <p className="first-subhead">
-              While we are actively working to increase service availability,
-              FALDAX is unable to offer trading services in your area at this
-              time. Visit the world map on the{" "}
-              <a href={`${globalVariables.WordpressSiteURL}/`}>Home</a> page to
-              view currently trading availability. Subscribe to our newsletter
-              to receive notifications when services are available in your area.
+              {this.t(
+                "general_3:while_we_are_actively_working_to_increase_service_availability.message"
+              )}{" "}
+              <a href={`${globalVariables.WordpressSiteURL}/`}>
+                {this.t("general_3:home_text.message")}
+              </a>{" "}
+              {this.t(
+                "general_3:page_to_view_currently_trading_availability.message"
+              )}
             </p>
             <p className="second-subhead">
               {this.t("illegal_popup_subtext2.message")}
             </p>
-            {/* <Sub_wrap>
-                            <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>
-                            <Email_input placeholder="Email Address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
-                        </Sub_wrap>
-                        <div style={{ marginTop: '20px', minHeight: '20px' }}>
-                            <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff', backgroundColor: "#0f477b", height: "45px" }} onClick={() => this.send_email()}>SUBMIT</Button>
-                        </div> */}
           </ModalWrap>
         </Modal>
       </div>
@@ -135,4 +126,9 @@ class ComingSoon extends React.Component {
   }
 }
 
-export default translate(['popups','validations','identity_verification'])(withRouter(ComingSoon));
+export default translate([
+  "popups",
+  "validations",
+  "identity_verification",
+  "general_3"
+])(withRouter(ComingSoon));

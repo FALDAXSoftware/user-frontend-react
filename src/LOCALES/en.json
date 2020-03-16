@@ -2168,7 +2168,7 @@
     },
     "only_images_error": {
       "page": "Edit Profile > settings",
-      "message": "File format is not supported. Please upload only images",
+      "message": "File format is not supported. Please upload only images.",
       "message_type": "Web content",
       "context": "File format is not supported. Please upload only images error message"
     },
@@ -2446,13 +2446,13 @@
     },
     "confirmation_text": {
       "page": "Signup success",
-      "message": "We have sent a confirmation email",
+      "message": "We have sent a confirmation email.",
       "message_type": "Web content",
       "context": "Signup success text"
     },
     "confirmation_email_text": {
       "page": "Signup success",
-      "message": "Please check your email",
+      "message": "Please check your email.",
       "message_type": "Web content",
       "context": "Signup success email text"
     }
@@ -2591,6 +2591,212 @@
       "message": "Already Signed Up",
       "message_type": "Web content",
       "context": "Already Signed Up text"
+    }
+  },
+  "general_3": {
+    "withdraw_request_is_processed": {
+      "page": "Wallet Popup",
+      "message": "Your Withdrawal request may take 24-28 hours to process due to its size. Do you wish to proceed",
+      "message_type": "Web content",
+      "context": "Withdraw request processed"
+    },
+    "amount_gt_zero_validation": {
+      "page": "Wallet Popup",
+      "message": "Amount must be greater than 0",
+      "message_type": "Web content",
+      "context": "Amount Validation"
+    },
+    "amount_8_precision_validation": {
+      "page": "Wallet Popup",
+      "message": "Amount must be less than or equal to 8 digits after decimal point.",
+      "message_type": "Web content",
+      "context": "Amount Validation"
+    },
+    "amount_gte_validation": {
+      "page": "Wallet Popup",
+      "message": "Amount must be greater than or equal to",
+      "message_type": "Web content",
+      "context": "Amount Validation"
+    },
+    "amount_lte_validation": {
+      "page": "Wallet Popup",
+      "message": "Amount must be less than or equal to",
+      "message_type": "Web content",
+      "context": "Amount Validation"
+    },
+    "destination_address_validation": {
+      "page": "Wallet Popup",
+      "message": "Please enter valid destination address.",
+      "message_type": "Web content",
+      "context": "Amount Validation"
+    },
+    "copy_to_clipboard": {
+      "page": "Wallet Popup",
+      "message": "Address Copied to Clipboard",
+      "message_type": "Web content",
+      "context": "Copy text"
+    },
+    "copy_text": {
+      "page": "Wallet Popup",
+      "message": "Copied",
+      "message_type": "Web content",
+      "context": "Copy text"
+    },
+    "destination_address": {
+      "page": "Wallet Popup",
+      "message": "Destination Address",
+      "message_type": "Web content",
+      "context": "Destination Address"
+    },
+    "avail_balance_to_send": {
+      "page": "Wallet Popup",
+      "message": "Available Balance to Send",
+      "message_type": "Web content",
+      "context": "Available balance"
+    },
+    "wallet_total_payout_text": {
+      "page": "Wallet Popup",
+      "message": "Total Payout",
+      "message_type": "Web content",
+      "context": "Available balance"
+    },
+    "note_text": {
+      "page": "Wallet Popup",
+      "message": "Note",
+      "message_type": "Web content",
+      "context": "Note"
+    },
+    "validation_destination_address_required": {
+      "page": "Wallet Popup",
+      "message": "The destination address field is required.",
+      "message_type": "Web content",
+      "context": "Destination Address Required"
+    },
+    "validation_amount_required": {
+      "page": "Wallet Popup",
+      "message": "The amount field is required.",
+      "message_type": "Web content",
+      "context": "Amount is required"
+    },
+    "validation_amount_numeric": {
+      "page": "Wallet Popup",
+      "message": "The amount must be a number.",
+      "message_type": "Web content",
+      "context": "The amount must be a number."
+    },
+    "validation_destination_address_min_require": {
+      "page": "Wallet Popup",
+      "message": "The destination address must be at least 15 characters.",
+      "message_type": "Web content",
+      "context": "Validation"
+    },
+    "validation_destination_address_max_require": {
+      "page": "Wallet Popup",
+      "message": "The destination address may not be greater than 120 characters.",
+      "message_type": "Web content",
+      "context": "Validation"
+    },
+    "create_wallet_and_continue": {
+      "page": "Simplex",
+      "message": "Please create wallet and then continue",
+      "message_type": "Web content",
+      "context": "Create Wallet"
+    },
+    "transition_error": {
+      "page": "Simplex",
+      "message": "Transaction Error",
+      "message_type": "Web content",
+      "context": "Error"
+    },
+    "transition_error_please_try": {
+      "page": "Simplex",
+      "message": "There is some error in the transaction. Please retry.",
+      "message_type": "Web content",
+      "context": "Error"
+    },
+    "dont_have_text": {
+      "page": "Simplex",
+      "message": "Don't have",
+      "message_type": "Web content",
+      "context": "Error"
+    },
+    "generate_wallet_text": {
+      "page": "Simplex",
+      "message": "Generate wallet",
+      "message_type": "Web content",
+      "context": "Generate Wallet"
+    },
+    "resume_field_required": {
+      "page": "Jobs",
+      "message": "The resume field is required.",
+      "message_type": "Web content",
+      "context": "Field Validation"
+    },
+    "resume_not_valid": {
+      "page": "Jobs",
+      "message": "The resume field has not valid file.",
+      "message_type": "Web content",
+      "context": "Field Validation"
+    },
+    "cover_filed_not_valid": {
+      "page": "Jobs",
+      "message": "The cover field has not valid file.",
+      "message_type": "Web content",
+      "context": "Field Validation"
+    },
+    "file_size_3_mb": {
+      "page": "Jobs",
+      "message": "Please upload the document with a file size less than 3 mb.",
+      "message_type": "Web content",
+      "context": "Field Validation"
+    },
+    "job_applied_text": {
+      "page": "Jobs",
+      "message": "Job Applied",
+      "message_type": "Web content",
+      "context": "Field Validation"
+    },
+    "validate_not_gt_30_ch": {
+      "page": "Jobs",
+      "message": "may not be greater than 30 characters.",
+      "message_type": "Web content",
+      "context": "Field Validation"
+    },
+    "validate_should_number": {
+      "page": "Jobs",
+      "message": "Mobile number should have only numbers",
+      "message_type": "Web content",
+      "context": "Field Validation"
+    },
+    "validate_not_gt_15": {
+      "page": "Jobs",
+      "message": "may not be greater than 15 characters.",
+      "message_type": "Web content",
+      "context": "Field Validation"
+    },
+    "cover_latter_text": {
+      "page": "Jobs",
+      "message": "Cover Letter.",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "while_we_are_actively_working_to_increase_service_availability": {
+      "page": "Country access",
+      "message": "While we are actively working to increase service availability, FALDAX is unable to offer trading services in your area at this time. Visit the world map on the",
+      "message_type": "Web content",
+      "context": "Field Validation"
+    },
+    "home_text": {
+      "page": "Country access",
+      "message": "Home",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "page_to_view_currently_trading_availability": {
+      "page": "Country access",
+      "message": "page to view currently trading availability. Subscribe to our newsletter to receive notifications when services are available in your area.",
+      "message_type": "Web content",
+      "context": "Text"
     }
   }
 }
