@@ -123,7 +123,6 @@ class AgreeTerms extends Component {
       jwt_token: loggedIn
     };
     this.props.LogoutUser(this.props.isLoggedIn, formData);
-    // this.props.Logout();
   }
   agreeTerms = e => {
     this.setState({
@@ -185,8 +184,6 @@ class AgreeTerms extends Component {
     });
   }
   callback(key) {
-    // console.log("Key", key);
-    // console.log("sdjkfhksjhdfkhlksdfhlkasdhflkjasdhfkjh");
     this.setState({
       activeKey: key
     });
@@ -219,8 +216,8 @@ class AgreeTerms extends Component {
       this.setState({ email_msg: "*email address not valid" });
       this.openNotificationWithIcon(
         "error",
-        "Error",
-        "Please enter valid email address."
+        this.t("validations:error_text.message"),
+        this.t("validations:invalid_email_error.message")
       );
     }
   }
@@ -349,17 +346,13 @@ class AgreeTerms extends Component {
               <NewButton onClick={e => this.agreeTerms(e)}>
                 {t("agree_btn.message")}
               </NewButton>
-              {/* {this.props.showCancelBtn && ( */}
-              {/* <NewButton onClick={e => this.dontAgreeTerms(e)}>
-                I don't agree
-              </NewButton> */}
               {!this.props.showCancelBtn ? (
                 <div>
                   <NewButton onClick={this.showCofirmModal}>
                     I disagree
                   </NewButton>
                   <Modal
-                    title="Are you sure you want to disagree?"
+                    title={t("dont_agree_popup_title.message")}
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
@@ -407,7 +400,7 @@ class AgreeTerms extends Component {
                 </div>
               ) : (
                 <NewButton onClick={e => this.dontAgreeTerms(e)}>
-                  I disagree
+                  {t("dont_agree_btn.message")}
                 </NewButton>
               )}
               {/* )} */}
@@ -436,6 +429,6 @@ const mapDispatchToProps = dispatch => ({
 
 // export default withRouter(AgreeTerms);
 
-export default translate("edit_profile_titles")(
+export default translate(["edit_profile_titles", "validations"])(
   connect(mapStateToProps, mapDispatchToProps)(withRouter(AgreeTerms))
 );

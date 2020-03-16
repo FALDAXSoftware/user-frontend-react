@@ -307,14 +307,14 @@ class ProfileBackup extends Component {
                     profileImg: "Default Photo",
                     imageName: "",
                     imageType: fileType,
-                    imagemsg: "Please select image with less then 5 mb"
+                    imagemsg: "Please select image with less than 5 mb"
                   });
                 }
                 _self.setState({ flagImage: false });
                 _self.openNotificationWithIcon(
                   "error",
                   "File Size",
-                  "Please select image with less then 5 mb"
+                  "Please select image with less than 5 mb"
                 );
                 document.getElementById("front").value = "";
               }

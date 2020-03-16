@@ -342,6 +342,7 @@ class PasswordChange extends Component {
       showModalTFA: false,
       backupCodeTFA: ""
     };
+    this.t = this.props.t;
   }
   static propTypes = {
     form: formShape
@@ -364,13 +365,13 @@ class PasswordChange extends Component {
         this.setState({ percent: 0 });
         this.openNotificationWithIcon(
           "success",
-          "Change Password",
+          this.t("change_password_text.message"),
           props.passChange.message
         );
       } else {
         this.openNotificationWithIcon(
           "error",
-          "Change Password",
+          this.t("change_password_text.message"),
           props.passChange.err
         );
       }
@@ -381,7 +382,7 @@ class PasswordChange extends Component {
         // console.log(props.verifyOTP);
         this.openNotificationWithIcon(
           "success",
-          "Two-Factor Authentication",
+          this.t("head_change_two_factor_status.message"),
           props.verifyOTP.message
         );
         this.setState({
@@ -394,7 +395,7 @@ class PasswordChange extends Component {
       } else {
         this.openNotificationWithIcon(
           "error",
-          "Two-Factor Authentication",
+          this.t("head_change_two_factor_status.message"),
           props.verifyOTP.err
         );
       }
@@ -404,7 +405,7 @@ class PasswordChange extends Component {
       if (props.DisableTF.status === 200) {
         this.openNotificationWithIcon(
           "success",
-          "Two-Factor Authentication",
+          this.t("head_change_two_factor_status.message"),
           props.DisableTF.message
         );
         this.setState({
@@ -415,7 +416,7 @@ class PasswordChange extends Component {
       } else {
         this.openNotificationWithIcon(
           "error",
-          "Two-Factor Authentication",
+          this.t("head_change_two_factor_status.message"),
           props.DisableTF.err
         );
       }
@@ -538,7 +539,6 @@ class PasswordChange extends Component {
             }
           );
         }
-        //this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue.")
       }
     });
   };
@@ -547,38 +547,10 @@ class PasswordChange extends Component {
         Page: /editProfile --> Security
         It is called when any input is changed and handle it and also validate it.
     */
-
   onChangeField(value, field) {
-    // old password should not have validation except required.
     const { t } = this.props;
-    // if (field==="current_password") {
-    //     var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-    //     var bool = re.test(value);
-    //     if (value !== "") {
-    //         if (bool===true) {
-    //             this.setState({ currentpassIcon: true, password: value })
-    //             document.querySelector("#passchange_icon_success").style.display = "inline-block"
-    //             document.querySelector("#passchange_icon_fail").style.display = "none"
-    //             document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
-    //         } else {
-    //             this.setState({ currentpassIcon: false })
-    //             document.querySelector("#passchange_icon_success").style.display = "none"
-    //             document.querySelector("#passchange_icon_fail").style.display = "inline-block"
-    //             document.querySelectorAll(".oldchange_msg")[0].style.display = "block";
-    //             this.setState({ current_msg: "You" })
-    //         }
-    //     } else {
-    //         this.setState({ currentpassIcon: false })
-    //         document.querySelector("#passchange_icon_success").style.display = "none"
-    //         document.querySelector("#passchange_icon_fail").style.display = "none"
-    //         document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
-    //     }
-    // }
     if (field === "current_password") {
-      //   alert("current");
       var regexp = /^[a-zA-Z0-9]*$/;
-      // console.log("value.trim()", regexp.test(value));
-
       if (value !== "") {
         document.querySelector("#passchange_icon_success").style.display =
           "none";
@@ -613,7 +585,11 @@ class PasswordChange extends Component {
             "none";
           document.querySelectorAll(".confirmchange_msg")[0].style.display =
             "block";
-          this.setState({ confirmPass_msg: "Password does not match." });
+          this.setState({
+            confirmPass_msg: this.t(
+              "validations:password_mismatch_error.message"
+            )
+          });
         } else {
           this.setState({ confirmIcon: true });
           document.querySelector("#confirmchange_icon_success").style.display =
@@ -622,24 +598,13 @@ class PasswordChange extends Component {
             "none";
           document.querySelectorAll(".confirmchange_msg")[0].style.display =
             "none";
-          //   alert("3");
-          // this.setState({ confirmIcon: false });
-          // document.querySelector("#confirmchange_icon_success").style.display =
-          //   "none";
-          // document.querySelector("#confirmchange_icon_fail").style.display =
-          //   "inline-block";
-          // document.querySelectorAll(".confirmchange_msg")[0].style.display =
-          //   "block";
-          // this.setState({ confirmPass_msg: "Password does not match." });
         }
       }
-      // var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%_])[A-Za-z\d!@#$%_]{8,60}$/;
       var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~])[A-Za-z\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]{8,60}$/;
       var bool = re.test(value);
       var numb = /^\d+$/,
         letters = /^[A-Za-z]+$/,
         alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
-      // alphanum = /^[a-zA-Z0-9]*$/;
       if (numb.test(value) || letters.test(value)) {
         this.setState({ stroke: "red", percent: 20 });
       }
@@ -682,7 +647,6 @@ class PasswordChange extends Component {
         } else {
           var regex = /\s/;
           let check = regex.test(value);
-          // console.log("asd", check, value);
           if (check) {
             this.setState({ newpassIcon: false });
             document.querySelector("#newchange_icon_success").style.display =
@@ -757,7 +721,6 @@ class PasswordChange extends Component {
           "none";
       }
     } else {
-      // console.log("no break");
     }
   }
 
@@ -765,7 +728,6 @@ class PasswordChange extends Component {
         Page: /editProfile --> Security
         It is called when Enable/Disable TFAUTH is clicked so to check if TF is enabled or not.
     */
-
   TF_AUTH() {
     if (this.props.profileDetails.is_twofactor === true) {
       this.props.TF_Disable(this.props.isLoggedIn);
@@ -776,7 +738,6 @@ class PasswordChange extends Component {
         Page: /editProfile --> Security
         It is called when input field is changed and we can validate it. 
     */
-
   changeOTP(value, field) {
     const { t } = this.props;
     if (field === "otp") {
@@ -813,7 +774,6 @@ class PasswordChange extends Component {
         Page: /editProfile --> Security
         It is called when input field is changed and we can validate it. 
     */
-
   OTPfield(e) {
     this.setState({ verify_otp: e.target.value });
     this.changeOTP(e.target.value, "otp");
@@ -823,7 +783,6 @@ class PasswordChange extends Component {
         Page: /editProfile --> Security
         It is called when after entering OTP,we click on ENABLE and API is called to Enable the Two-Factor. 
     */
-
   finalEnable() {
     let value = {};
     value["otp"] = this.state.verify_otp;
@@ -836,7 +795,6 @@ class PasswordChange extends Component {
         Page: /editProfile --> Security
         It is called for cutom notifications.
     */
-
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
@@ -995,13 +953,6 @@ class PasswordChange extends Component {
               <Passreq className="confirmchange_msg">
                 {this.state.confirmPass_msg}
               </Passreq>
-
-              {/* <Progressbar
-                type="line"
-                size="small"
-                percent={percent}
-                strokeColor={this.state.stroke}
-              /> */}
             </Repeat>
             <Buttondiv>
               <NewButton onClick={this.submit}>
@@ -1043,7 +994,6 @@ class PasswordChange extends Component {
                     t("general_1:authenticator_text.message")}
                 </NewButton>
               </Buttondiv>
-              {/* {console.log("Password Change", this.state.backupCodeTFA)} */}
               <TFAModal
                 visible={this.state.showModalTFA}
                 TFAModalCancel={() => this.TFAModalCancel()}
@@ -1051,7 +1001,6 @@ class PasswordChange extends Component {
               />
             </TFCol>
           </TwofactorRow>
-
           {this.state.show_QR === true ? (
             <BarRow>
               <LeftCol sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>

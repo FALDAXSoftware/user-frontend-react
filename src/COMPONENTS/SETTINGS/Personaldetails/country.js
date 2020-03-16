@@ -102,6 +102,7 @@ class CountryPick extends Component {
     this.handleChangeState = this.handleChangeState.bind(this);
     this.handleChangeCity = this.handleChangeCity.bind(this);
     this.getCountryId = this.getCountryId.bind(this);
+    this.t = this.props.t;
   }
 
   /* Life-Cycle Methods */
@@ -295,7 +296,9 @@ class CountryPick extends Component {
               disabled={this.props.disabled}
               showSearch
               value={this.state.country_selected}
-              placeholder="Select a Country"
+              placeholder={t(
+                "subhead_personal_form_country_placeholder.message"
+              )}
               className={`${
                 this.props.theme == true
                   ? "Country_Select_night"
@@ -325,7 +328,9 @@ class CountryPick extends Component {
                 disabled={this.props.disabled}
                 showSearch
                 value={this.state.state_selected}
-                placeholder="Select a State"
+                placeholder={t(
+                  "subhead_personal_form_state_placeholder.message"
+                )}
                 className={`${
                   this.props.theme == true
                     ? "Country_Select_night"
@@ -356,7 +361,9 @@ class CountryPick extends Component {
                 disabled={this.props.disabled}
                 showSearch
                 value={this.state.city_selected}
-                placeholder="Select a City"
+                placeholder={t(
+                  "subhead_personal_form_city_placeholder.message"
+                )}
                 className={`${
                   this.props.theme == true
                     ? "Country_Select_night"

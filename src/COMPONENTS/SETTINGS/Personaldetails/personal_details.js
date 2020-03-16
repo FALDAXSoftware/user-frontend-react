@@ -20,6 +20,7 @@ import { translate } from "react-i18next";
 /* Components */
 import Datepicker from "./datepicker";
 import CountryPick from "./country";
+import CountryData from "country-state-city";
 import { EmailReq } from "COMPONENTS/LANDING/USERFORMS/login_form";
 import { globalVariables } from "Globals.js";
 import CountryData from "country-state-city";
@@ -365,7 +366,7 @@ class PersonalDetails extends Component {
       agreeTermsShow: false,
       editMode: false,
       isFirstLogin: "",
-      language: "e",
+      language: "en",
       displayCountry: false,
       phoneCountry: [],
       mobile: "",
@@ -379,6 +380,8 @@ class PersonalDetails extends Component {
     };
     this.datePickerChild = React.createRef();
     this.handleProfile = this.handleProfile.bind(this);
+    this.handleLangChange = this.handleLangChange.bind(this);
+    this.t = this.props.t;
   }
   static propTypes = {
     form: formShape
@@ -387,6 +390,7 @@ class PersonalDetails extends Component {
   /* Life-Cycle Methods */
 
   componentDidMount() {
+    console.log("^^^^", this.props.profileDetails.default_language);
     this.props.getProfileDataAction(this.props.isLoggedIn);
     if (this.props.profileDetails.default_language) {
       this.setState({
@@ -397,7 +401,6 @@ class PersonalDetails extends Component {
         language: "en"
       });
     }
-    // console.log("^^^", this.props.profileDetails.countryJsonId);
     var countrySelected = CountryData.getCountryById(
       this.props.profileDetails.countryJsonId - 1
     );
@@ -408,7 +411,6 @@ class PersonalDetails extends Component {
       country_code = countrySelected.sortname;
       phoneCode = countrySelected.phonecode;
       arr.push(country_code);
-      // console.log("^^^^phonecode", phoneCode);
     }
     if (this.props.profileDetails.country) {
       this.setState({
@@ -418,8 +420,6 @@ class PersonalDetails extends Component {
       });
     }
     if (this.props.profileDetails.phone_number) {
-      // let temp = this.props.profileDetails.phone_number;
-      // var mob = temp.split(`${this.state.phoneCode}`);
       let phone = this.props.profileDetails.phone_number;
       this.setState({
         displayCountry: true,
@@ -452,7 +452,6 @@ class PersonalDetails extends Component {
   }
 
   componentWillReceiveProps(props) {
-    // console.log(props);
     if (
       props.profileDetails.profile_pic !== null &&
       props.profileDetails.profile_pic !== undefined &&
@@ -473,14 +472,18 @@ class PersonalDetails extends Component {
       }
     }
     if (props.apiStatus === 200) {
-      this.openNotificationWithProfile("success", "Success", props.apiMessage);
+      this.openNotificationWithProfile(
+        "success",
+        this.t("validations:success_text.message"),
+        props.apiMessage
+      );
       this.props.clearEditData();
     }
     if (props.profileError !== undefined) {
       // console.log("Called Twice", props.profileError);
       this.openNotificationWithProfile(
         "error",
-        "Error",
+        this.t("validations:error_text.message"),
         props.profileError.err
       );
       this.props.profileErr();
@@ -492,6 +495,15 @@ class PersonalDetails extends Component {
     }
     if (this.props.profileDetails != this.state.profileDetails) {
       this.setState({ profileDetails: this.props.profileDetails });
+    }
+    if (
+      props.profileDetails.default_language &&
+      this.props.profileDetails.default_language !=
+        props.profileDetails.default_language
+    ) {
+      this.setState({
+        language: props.profileDetails.default_language
+      });
     }
   }
 
@@ -520,6 +532,7 @@ class PersonalDetails extends Component {
   };
 
   onCheckboxChange = e => {
+    let { t } = this.props;
     // console.log(`checked = ${e.target.checked}`);
     this.setState(
       {
@@ -531,8 +544,7 @@ class PersonalDetails extends Component {
           document.querySelectorAll(".agree_check_msg")[0].style.display =
             "block";
           this.setState({
-            agree_check_msg:
-              "Please agree to all the Policies before proceeding further."
+            agree_check_msg: t("validations:policies_error.message") + "."
           });
         } else {
           document.querySelectorAll(".agree_check_msg")[0].style.display =
@@ -630,8 +642,8 @@ class PersonalDetails extends Component {
         } else {
           this.openNotificationWithProfile(
             "error",
-            "Error",
-            "File size must not be more than 5 MB"
+            this.t("validations:error_text.message"),
+            this.t("validations:profile_img_error1.message")
           );
           // this.setState({
           //   showFileInput: false
@@ -642,8 +654,8 @@ class PersonalDetails extends Component {
         if (file !== undefined)
           this.openNotificationWithProfile(
             "error",
-            "Error",
-            "Please upload only images"
+            this.t("validations:error_text.message"),
+            this.t("validations:profile_img_error2.message")
           );
       }
 
@@ -657,10 +669,7 @@ class PersonalDetails extends Component {
         Page: /editProfile --> Personal Details
         It is called when we click remove pic below profile pic.
     */
-
   removePic() {
-    /* this.removeNotification("warning"); */
-    /* document.getElementById("file").value = ""; */
     if (this.state.profileImg !== _DEFAULTPROFILE) {
       this.setState(
         {
@@ -676,8 +685,6 @@ class PersonalDetails extends Component {
         }
       );
     }
-    /* 
-        this.props.removepicAction(this.props.isLoggedIn, formData) */
   }
 
   /* 
@@ -697,7 +704,6 @@ class PersonalDetails extends Component {
         Page: /editProfile --> Personal Details
         It is for notifications with profile icon.
     */
-
   openNotificationWithProfile = (type, head, desc) => {
     notification[type]({
       message: head,
@@ -710,7 +716,6 @@ class PersonalDetails extends Component {
         Page: /editProfile --> Personal Details
         It is for notifications for removing profile picture.
     */
-
   removeNotification = type => {
     notification[type]({
       message: "Removing profile picture",
@@ -723,10 +728,8 @@ class PersonalDetails extends Component {
             Page: /editProfile --> Personal Details
             It is called when we change input fields in form.
     */
-
   onChangeField(value, field) {
     let { t } = this.props;
-
     if (
       field !== "dob" &&
       field !== "country" &&
@@ -909,19 +912,39 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";
-        this.setState({ dobmsg: "Date of Birth field is required." });
+        this.setState({
+          dobmsg:
+            t("subhead_personal_form_dob.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       } else if (value["day"] === "" || value["day"] === "") {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";
-        this.setState({ dobmsg: "Date of Birth field is required." });
+        this.setState({
+          dobmsg:
+            t("subhead_personal_form_dob.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       } else if (value["month"] === "" || value["month"] === "") {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";
-        this.setState({ dobmsg: "Month field is required" });
+        this.setState({
+          dobmsg:
+            t("general:month_text.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       } else if (value["year"] === "" || value["year"] === "") {
         this.setState({ dobIcon: false });
         document.querySelectorAll(".dob_msg")[0].style.display = "block";
-        this.setState({ dobmsg: "Year field is required" });
+        this.setState({
+          dobmsg:
+            t("general:year_text.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
       // else {
       //   this.setState({ dobIcon: false });
@@ -943,15 +966,14 @@ class PersonalDetails extends Component {
             document.querySelectorAll(".street1_msg")[0].style.display =
               "block";
             this.setState({
-              street1msg: "Spaces are not allowed in prefix/suffix."
+              street1msg: t("validations:no_suffix_prefix_error.message")
             });
           }
         } else {
           this.setState({ street1Icon: false });
           document.querySelectorAll(".street1_msg")[0].style.display = "block";
           this.setState({
-            street1msg:
-              "Street Address Line 1 field has a maximum limit of 100 characters"
+            street1msg: t("validations:street_address_error.message")
           });
         }
       } else {
@@ -978,32 +1000,27 @@ class PersonalDetails extends Component {
             document.querySelectorAll(".street2_msg")[0].style.display =
               "block";
             this.setState({
-              street2msg: "Spaces are not allowed in prefix/suffix."
+              street2msg: t("validations:no_suffix_prefix_error.message")
             });
           }
         } else {
           this.setState({ street2Icon: false });
           document.querySelectorAll(".street2_msg")[0].style.display = "block";
           this.setState({
-            street2msg:
-              "Street Address Line 2 field has a maximum limit of 100 characters"
+            street2msg: t("validations:street_address2_error.message")
           });
         }
       }
     } else if (field === "postal_code") {
       if (value !== "") {
-        // console.log("sj^^^", value, value.length);
-        // var reg = /^(?=.*[0-9A-Za-z])[-()0-9A-Za-z]{3,25}$/;
         var reg = /^[a-zA-Z0-9-_]*$/;
         var bool = reg.test(value);
-        // console.log("------------------->", bool, value);
         if (bool === true) {
           if (value.length < 3 || value.length > 25) {
             this.setState({ postalIcon: false });
             document.querySelectorAll(".postal_msg")[0].style.display = "block";
             this.setState({
-              postalmsg:
-                "Postal code should have a minimum of 3 and a maximum of 25 characters."
+              postalmsg: t("validations:min_max_postal_code.message")
             });
           } else {
             this.setState({ postalIcon: true });
@@ -1014,13 +1031,11 @@ class PersonalDetails extends Component {
           document.querySelectorAll(".postal_msg")[0].style.display = "block";
           if (value.length < 3 || value.length > 25) {
             this.setState({
-              postalmsg:
-                "Postal code should have a minimum of 3 and a maximum of 25 characters."
+              postalmsg: t("validations:min_max_postal_code.message")
             });
           } else {
             this.setState({
-              postalmsg:
-                "Postal code may only contain letters, numbers, and dashes."
+              postalmsg: t("validations:postal_code_letters_numbers.message")
             });
           }
         }
@@ -1035,24 +1050,18 @@ class PersonalDetails extends Component {
         });
       }
     } else if (field === "date_format") {
-      /* else if (field==="fiat") {
-            if (value !== "") {
-                this.setState({ fiatIcon: true })
-                document.querySelectorAll(".fiat_msg")[0].style.display = "none";
-            }
-            else {
-                this.setState({ fiatIcon: false })
-                document.querySelectorAll(".fiat_msg")[0].style.display = "block";
-                this.setState({ fiatmsg: "currency is required" })
-            }
-        } */
       if (value !== "") {
         this.setState({ dateFIcon: true });
         document.querySelectorAll(".df_msg")[0].style.display = "none";
       } else {
         this.setState({ dateFIcon: false });
         document.querySelectorAll(".df_msg")[0].style.display = "block";
-        this.setState({ dfmsg: "currency is required" });
+        this.setState({
+          dfmsg:
+            t("general_1:currency_text.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
     }
   }
@@ -1069,8 +1078,8 @@ class PersonalDetails extends Component {
       () => {
         this.openNotificationWithProfile(
           "error",
-          "Error",
-          "Please agree to all the Policies before proceeding further."
+          this.t("validations:error_text.message"),
+          this.t("validations:policies_error.message")
         );
       }
     );
@@ -1115,14 +1124,9 @@ class PersonalDetails extends Component {
       } else {
         this.openNotificationWithProfile(
           "error",
-          "Error",
-          "Please complete all required fields to continue"
+          t("validations:error_text.message"),
+          t("validations:error_on_submit_profile.message")
         );
-        // console.log(
-        //   "sjdh",
-        //   this.state.street1Icon,
-        //   this.props.profileDetails.street_address
-        // );
       }
       if (
         this.state.firstIcon === null &&
@@ -1216,11 +1220,6 @@ class PersonalDetails extends Component {
             t("validations:field_is_required.message")
         });
       }
-      /* if (this.state.street2Icon===null && this.props.profileDetails.street_address_2===null) {
-                this.setState({ street2Icon: false })
-                document.querySelectorAll(".street2_msg")[0].style.display = "block";
-                this.setState({ street2msg: "Street Address is required" })
-            } */
       if (
         (this.state.postalIcon === null || this.state.postalIcon === false) &&
         this.props.profileDetails.postal_code === null
@@ -1240,7 +1239,12 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ fiatIcon: false });
         document.querySelectorAll(".fiat_msg")[0].style.display = "block";
-        this.setState({ fiatmsg: "currency is required." });
+        this.setState({
+          fiatmsg:
+            t("general_1.currency_text.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
       if (
         (this.state.dateFIcon !== true || this.state.dateFIcon === null) &&
@@ -1248,12 +1252,16 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ dateFIcon: false });
         document.querySelectorAll(".df_msg")[0].style.display = "block";
-        this.setState({ dfmsg: "Date Format is required." });
+        this.setState({
+          dfmsg:
+            t("general_1.dateformat_text.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
     });
   };
   submit = () => {
-    // e.preventDefault();
     let { t } = this.props;
     this.props.form.validateFields((error, value) => {
       let dataDate = "";
@@ -1356,7 +1364,6 @@ class PersonalDetails extends Component {
         }
         profileData.append("default_language", this.state.language);
         profileData.append("phone_number", this.state.fields.phone_number);
-        // console.log("---------------->> USER API CALLED");
         this.props.profileupdateAction(this.props.isLoggedIn, profileData);
         this.props.i18n.changeLanguage(this.state.language);
         this.props.langAction(this.state.language);
@@ -1366,8 +1373,8 @@ class PersonalDetails extends Component {
       } else {
         this.openNotificationWithProfile(
           "error",
-          "Error",
-          "Please complete all required fields to continue"
+          t("validations:error_text.message"),
+          t("validations:error_on_submit_profile.message")
         );
       }
       if (
@@ -1466,7 +1473,12 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ fiatIcon: false });
         document.querySelectorAll(".fiat_msg")[0].style.display = "block";
-        this.setState({ fiatmsg: "currency is required." });
+        this.setState({
+          fiatmsg:
+            t("general_1.currency_text.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
       if (
         (this.state.dateFIcon !== true || this.state.dateFIcon === null) &&
@@ -1474,7 +1486,12 @@ class PersonalDetails extends Component {
       ) {
         this.setState({ dateFIcon: false });
         document.querySelectorAll(".df_msg")[0].style.display = "block";
-        this.setState({ dfmsg: "Date Format is required." });
+        this.setState({
+          dfmsg:
+            t("general_1.dateformat_text.message") +
+            " " +
+            t("validations:field_is_required.message")
+        });
       }
     });
   };
@@ -1622,7 +1639,9 @@ class PersonalDetails extends Component {
                     </Firstname>
                     <Firstinput
                       disabled={!this.state.editMode}
-                      placeholder="First Name"
+                      placeholder={t(
+                        "subhead_personal_form_first_name.message"
+                      )}
                       {...getFieldProps("first_name", {
                         onChange(e) {
                           me.onChangeField(e.target.value, "first_name");
@@ -1646,7 +1665,7 @@ class PersonalDetails extends Component {
                     </Lastname>
                     <Lastinput
                       disabled={!this.state.editMode}
-                      placeholder="Last Name"
+                      placeholder={t("subhead_personal_form_last_name.message")}
                       {...getFieldProps("last_name", {
                         onChange(e) {
                           me.onChangeField(e.target.value, "last_name");
@@ -1690,7 +1709,9 @@ class PersonalDetails extends Component {
                       {t("subhead_personal_form_street_address_line1.message")}*
                     </StreetAddress>
                     <Streetinput
-                      placeholder="Street Address"
+                      placeholder={t(
+                        "general:street_holder_placeholder.message"
+                      )}
                       {...getFieldProps("street_address", {
                         onChange(e) {
                           me.onChangeField(e.target.value, "street_address");
@@ -1711,7 +1732,7 @@ class PersonalDetails extends Component {
                   </StreetAddress>
                   <Streetinput
                     disabled={!this.state.editMode}
-                    placeholder="Street Address"
+                    placeholder={t("general:street_holder_placeholder.message")}
                     {...getFieldProps("street_address_2", {
                       onChange(e) {
                         me.onChangeField(e.target.value, "street_address_2");
@@ -1797,10 +1818,10 @@ class PersonalDetails extends Component {
                     >
                       <Option value="en">English</Option>
                       <Option value="ja">日本語</Option>
-                      <Option value="es">Española</Option>
+                      {/* <Option value="es">Española</Option>
                       <Option value="uk">Українська</Option>
                       <Option value="ru">русский</Option>
-                      <Option value="zh">普通话</Option>
+                      <Option value="zh">普通话</Option> */}
                     </Select>
                   </Col>
                 </FourthRow>
@@ -1915,9 +1936,6 @@ class PersonalDetails extends Component {
                     xl={{ span: 24 }}
                     xxl={{ span: 24 }}
                   >
-                    {/* <Save type="primary" onClick={this.openAgreePopup}>
-                      Save
-                    </Save> */}
                     {this.state.editMode ? (
                       <div className="edit_profile_actions">
                         {this.state.isFirstLogin ? (
@@ -2022,6 +2040,7 @@ const mapDispatchToProps = dispatch => ({
 export default translate([
   "edit_profile_titles",
   "validations",
+  "general",
   "general_1",
   "settings"
 ])(connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails)));

@@ -670,7 +670,7 @@ class LoggedNavigation extends Component {
         langValue: e.key
       },
       () => {
-        this.props.langAction(this.state.langValue);
+        // this.props.langAction(this.state.langValue);
       }
     );
   };
