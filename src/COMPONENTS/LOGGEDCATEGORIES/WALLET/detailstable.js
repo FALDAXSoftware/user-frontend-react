@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import moment from "moment";
 import { Menu, Icon } from "antd";
-import {translate} from "react-i18next";
+import { translate } from "react-i18next";
 
 import { Scrollbars } from "react-custom-scrollbars";
 import {
@@ -89,6 +89,7 @@ class DetailsTable extends React.Component {
     this.state = {
       walletDetails: []
     };
+    this.t = this.props.t;
   }
 
   /* Life Cycle Methods */
@@ -127,19 +128,35 @@ class DetailsTable extends React.Component {
               {/* <Table_coin condensed> */}
               <thead>
                 <Head wallet>
-                  <SubHead>Date</SubHead>
-                  <SubHead>SEND/RECEIVE</SubHead>
-                  <SubHead>SOURCE ADDRESS</SubHead>
-                  <SubHead>DESTINATION ADDRESS</SubHead>
-                  <SubHead>BASE AMOUNT</SubHead>
-                  <SubHead>FALDAX FEES</SubHead>
-                  <SubHead>NETWORK FEES</SubHead>
-                  <SubHead>TOTAL AMOUNT</SubHead>
-                  {/* <Sub_head>USD
-                                <Dropdown overlay={menu} trigger={['click']}>
-                                <a className="ant-dropdown-link"  verticalAlign: "middle" }} href="#"><DropMenu type="down" /></a>
-                            </Dropdown>
-                        </Sub_head> */}
+                  <SubHead>{this.t("wallet:date_text.message")}</SubHead>
+                  <SubHead>
+                    {this.t("wallet:send_btn.message")}/
+                    {this.t("wallet:recieve_btn.message")}
+                  </SubHead>
+                  <SubHead>
+                    {this.t("wallet:source_text.message")}{" "}
+                    {this.t("wallet:address_text.message")}
+                  </SubHead>
+                  <SubHead>
+                    {this.t("wallet:destination_text.message")}{" "}
+                    {this.t("wallet:address_text.message")}
+                  </SubHead>
+                  <SubHead>
+                    {this.t("wallet:base_text.message")}{" "}
+                    {this.t("wallet:amount_text.message")}
+                  </SubHead>
+                  <SubHead>
+                    {this.t("conversion:faldax_text.message")}{" "}
+                    {this.t("footer:subhead_fees.message")}
+                  </SubHead>
+                  <SubHead>
+                    {this.t("conversion:network_text.message")}{" "}
+                    {this.t("footer:subhead_fees.message")}
+                  </SubHead>
+                  <SubHead>
+                    {this.t("conversion:total_text.message")}{" "}
+                    {this.t("wallet:amount_text.message")}
+                  </SubHead>
                 </Head>
               </thead>
             </TableHeader>
@@ -282,7 +299,9 @@ class DetailsTable extends React.Component {
                       })
                     ) : (
                       <TRDisplay>
-                        <NDF colspan="5">No Data Found</NDF>
+                        <NDF colspan="5">
+                          {this.t("wallet:no_data_found_text.message")}
+                        </NDF>
                       </TRDisplay>
                     )
                   ) : (
@@ -308,4 +327,10 @@ const mapStateToProps = state => {
   };
 };
 
-export default translate(["edit_profile_titles","settings"])(connect(mapStateToProps)(DetailsTable));
+export default translate([
+  "edit_profile_titles",
+  "settings",
+  "wallet",
+  "conversion",
+  "footer"
+])(connect(mapStateToProps)(DetailsTable));
