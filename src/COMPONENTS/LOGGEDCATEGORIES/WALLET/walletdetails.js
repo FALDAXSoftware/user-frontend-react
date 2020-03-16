@@ -630,7 +630,7 @@ class WalletDetails extends Component {
                     coin_min_limit={this.state.min_limit}
                     coin_max_limit={this.state.max_limit}
                     isLoggedIn={this.props.isLoggedIn}
-                    title={this.t("wallet:recieve_btn.message")}
+                    title="RECEIVE"
                     comingCancel={e => this.comingCancel(e)}
                     visible={this.state.withdraw}
                   />
@@ -647,7 +647,7 @@ class WalletDetails extends Component {
                     coin_min_limit={this.state.min_limit}
                     coin_max_limit={this.state.max_limit}
                     isLoggedIn={this.props.isLoggedIn}
-                    title={this.t("wallet:send_btn.message")}
+                    title="SEND"
                     comingCancel={e => this.comingCancel(e)}
                     visible={this.state.send}
                   />
