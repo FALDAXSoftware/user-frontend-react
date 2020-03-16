@@ -22,6 +22,7 @@ import Datepicker from "./datepicker";
 import CountryPick from "./country";
 import { EmailReq } from "COMPONENTS/LANDING/USERFORMS/login_form";
 import { globalVariables } from "Globals.js";
+import CountryData from "country-state-city";
 import {
   profileupdateAction,
   removepicAction,

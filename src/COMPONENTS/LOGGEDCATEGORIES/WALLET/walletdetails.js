@@ -8,6 +8,7 @@ import NumberFormat from "react-number-format";
 import { Redirect } from "react-router-dom";
 import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
 import { walletBal, getAllCoins } from "ACTIONS/LOGGEDCAT/walletActions";
+import {translate} from "react-i18next";
 // import { Tabs } from 'antd';
 
 /* import { DropdownButton, ButtonToolbar } from 'react-bootstrap'; */
@@ -130,6 +131,7 @@ class WalletDetails extends Component {
     this._walletCreate = this._walletCreate.bind(this);
     this.walletDetailsApi = this.walletDetailsApi.bind(this);
     this.panicStatus = this.panicStatus.bind(this);
+    this.t=this.props.t;
   }
 
   /* Life Cycle Methods */
@@ -366,6 +368,19 @@ class WalletDetails extends Component {
     }
   };
 
+  translateCurrency(currency){
+    switch(currency){
+      case "INR":
+          return this.t("edit_profile_titles:currency_inr.message");
+      case "EUR":
+          return this.t("edit_profile_titles:currency_eur.message");
+        case "USD":
+          return this.t("settings:currency_usd.message");
+      default:
+          return this.t("settings:currency_usd.message");
+    }
+  }
+
   /* 
         Page: /wallet
         This method is called when we choose other coins for details page.
@@ -573,7 +588,7 @@ class WalletDetails extends Component {
                     {Object.keys(walletUserData).length > 0
                       ? walletUserData.coin_name.toUpperCase()
                       : "COIN"}{" "}
-                    Address :{" "}
+                    {this.t("address.message")} :{" "}
                     <AddressDisplay>
                       {Object.keys(walletUserData).length > 0
                         ? walletUserData.receive_address
@@ -627,7 +642,7 @@ class WalletDetails extends Component {
                                   currencyConv.quote["USD"].price *
                                     walletUserData.balance
                                 ).toFixed(8)}
-                                <AMT>{FIAT}</AMT>
+                                <AMT>{this.translateCurrency(FIAT)}</AMT>
                               </FIATAmt>
                             ) : (
                               ""
@@ -652,10 +667,10 @@ class WalletDetails extends Component {
                         {this.state.is_active_asset && (
                           <RightBit>
                             <DepButton name="SEND" onClick={this.showModal}>
-                              SEND
+                              {this.t("wallet:send_btn.message")}
                             </DepButton>
                             <WithButton name="RECEIVE" onClick={this.showModal}>
-                              RECEIVE
+                            {this.t("wallet:recieve_btn.message")}
                             </WithButton>
                           </RightBit>
                         )}
@@ -672,7 +687,7 @@ class WalletDetails extends Component {
                   </RowWrap>
                 </DetailWrap>
                 <Tabs defaultActiveKey="1" onChange={callback}>
-                  <TabPane tab="Transaction History" key="1">
+                  <TabPane tab={this.t("wallet_details_transaction_history.message")} key="1">
                     <TransTable>
                       {/* <TransTitle>Transaction History</TransTitle> */}
                       <CoinTable>
@@ -684,7 +699,7 @@ class WalletDetails extends Component {
                       </CoinTable>
                     </TransTable>
                   </TabPane>
-                  <TabPane tab="Withdrawal Requests" key="2">
+                  <TabPane tab={this.t("wallet:withdrawal_requests_text.message")} key="2">
                     <TransTable>
                       {/* <TransTitle>Transaction History</TransTitle> */}
                       <CoinTable>
@@ -706,7 +721,7 @@ class WalletDetails extends Component {
                     coin_min_limit={this.state.min_limit}
                     coin_max_limit={this.state.max_limit}
                     isLoggedIn={this.props.isLoggedIn}
-                    title="RECEIVE"
+                    title={this.t("wallet:recieve_btn.message")}
                     comingCancel={e => this.comingCancel(e)}
                     visible={this.state.withdraw}
                   />
@@ -723,7 +738,7 @@ class WalletDetails extends Component {
                     coin_min_limit={this.state.min_limit}
                     coin_max_limit={this.state.max_limit}
                     isLoggedIn={this.props.isLoggedIn}
-                    title="SEND"
+                    title={this.t("wallet:send_btn.message")}
                     comingCancel={e => this.comingCancel(e)}
                     visible={this.state.send}
                   />
@@ -757,13 +772,10 @@ class WalletDetails extends Component {
                       us <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
                     </p> */}
                     <p>
-                      Your wallet is being generated and you will receive a
-                      notification when it is ready for use. If you do not
-                      receive a notification within 24 hours, or if you have any
-                      other concerns, please feel free to contact us{" "}
-                      <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                      {this.t("wallet:wallet_generation_in_process.message")}
+                      <a href={`${WordpressSiteURL}/contact-us/`}>{this.t("wallet:here_text.message")}</a>.
                     </p>
-                    <p>Thank you for choosing FALDAX!</p>
+                    <p>{this.t("wallet:thanks_note_text.message")}</p>
                   </PendingPara>
                 </PendingWrap>
               </ContainerContact2>
@@ -779,33 +791,29 @@ class WalletDetails extends Component {
                   {walletUserData.iserc && !eth_for_erc_address && (
                     <PendingPara>
                       <p>
-                        Your wallet is not created yet. Please create your
-                        Ethereum wallet to use {walletUserData.coin_name}.
+                        {this.t("wallet_details_eth_not_created.message")} {walletUserData.coin_name}.
                         {/* </p>
                       <WalletCreateButton onClick={this._walletCreate}>
                         Create {walletUserData.coin_name} Wallet
                     </WalletCreateButton>
                       <p> */}
-                        If you still have any issue , please feel free to
-                        contact us{" "}
-                        <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                      {this.t('wallet_details_contact_us.message')}{" "}
+                        <a href={`${WordpressSiteURL}/contact-us/`}>{this.t("wallet:here_text.message")}</a>.
                       </p>
                     </PendingPara>
                   )}
                   {eth_for_erc_address && eth_for_erc_status && (
                     <PendingPara>
                       <p>
-                        Your wallet is not created yet. Please click on the
-                        button below to create your wallet for{" "}
+                       {this.t("wallet_details_create.message")}{" "}
                         {walletUserData.coin_name}.
                       </p>
                       <WalletCreateButton onClick={this._walletCreate}>
-                        Create {walletUserData.coin_name} Wallet
+                        {this.t("wallet_details_create_text")} {walletUserData.coin_name} {this.t("header:wallet_details_create_text.message")}
                       </WalletCreateButton>
                       <p>
-                        If you still have any issue , please feel free to
-                        contact us{" "}
-                        <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                        {this.t("wallet_details_contact_us.message")}{" "}
+                        <a href={`${WordpressSiteURL}/contact-us/`}>{this.t("here_text.message")}</a>.
                       </p>
                     </PendingPara>
                   )}
@@ -815,17 +823,15 @@ class WalletDetails extends Component {
                   {!walletUserData.iserc && (
                     <PendingPara>
                       <p>
-                        Your wallet is not created yet. Please click on the
-                        button below to create your wallet for{" "}
+                        {this.t("wallet_details_not_created.message")}{" "}
                         {walletUserData.coin_name}.
                       </p>
                       <WalletCreateButton onClick={this._walletCreate}>
-                        Create {walletUserData.coin_name} Wallet
+                      {this.t("wallet_details_create_text")} {walletUserData.coin_name} {this.t("header:wallet_details_create_text.message")}
                       </WalletCreateButton>
                       <p>
-                        If you still have any issue , please feel free to
-                        contact us{" "}
-                        <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                        {this.t("wallet_details_contact_us.message")}{" "}
+                        <a href={`${WordpressSiteURL}/contact-us/`}>{this.t("here_text")}</a>.
                       </p>
                     </PendingPara>
                   )}
@@ -878,4 +884,4 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getAllCoins(isLoggedIn, currency)),
   LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
-export default connect(mapStateToProps, mapDispatchToProps)(WalletDetails);
+export default translate(['general_2','wallet','header'])(connect(mapStateToProps, mapDispatchToProps)(WalletDetails));

@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { globalVariables } from "../Globals.js";
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
 import { ModalWrap } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
-
+import {translate} from "react-i18next"
 /* const API_URL = globalVariables.API_URL; */
 
 class ComingSoon extends React.Component {
@@ -16,6 +16,7 @@ class ComingSoon extends React.Component {
       email_address: "",
       email_msg: ""
     };
+    this.t=this.props.t;
   }
 
   handleComing = e => {
@@ -29,7 +30,7 @@ class ComingSoon extends React.Component {
 
   openNotification() {
     notification.open({
-      message: "Thank You",
+      message: this.t("identity_verification:thank_you_text.message"),
       description: "You will receive an email shortly",
       duration: 6,
       icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
@@ -75,11 +76,11 @@ class ComingSoon extends React.Component {
         })
         .catch(error => {});
     } else {
-      this.setState({ email_msg: "*email address not valid" });
+      this.setState({ email_msg: "*"+this.t("validations:invalid_email_error.message") });
       this.openNotificationWithIcon(
         "error",
-        "Error",
-        "Please enter valid email address."
+        this.t("validations:error_text.message"),
+        this.t("validations:invalid_email_error.message")
       );
     }
   }
@@ -108,7 +109,7 @@ class ComingSoon extends React.Component {
           className="simple-maps"
         >
           <ModalWrap className="country-wrap">
-            <h3>Access Denied</h3>
+            <h3>{this.t('illegal_popup_head.message')}</h3>
             <p className="first-subhead">
               While we are actively working to increase service availability,
               FALDAX is unable to offer trading services in your area at this
@@ -118,7 +119,7 @@ class ComingSoon extends React.Component {
               to receive notifications when services are available in your area.
             </p>
             <p className="second-subhead">
-              Thank you for your support and your patience.
+              {this.t("illegal_popup_subtext2.message")}
             </p>
             {/* <Sub_wrap>
                             <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>
@@ -134,4 +135,4 @@ class ComingSoon extends React.Component {
   }
 }
 
-export default withRouter(ComingSoon);
+export default translate(['popups','validations','identity_verification'])(withRouter(ComingSoon));

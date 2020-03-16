@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import moment from "moment";
 import { Menu, Icon } from "antd";
+import {translate} from "react-i18next";
 
 import { Scrollbars } from "react-custom-scrollbars";
 import {
@@ -307,4 +308,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(DetailsTable);
+export default translate(["edit_profile_titles","settings"])(connect(mapStateToProps)(DetailsTable));

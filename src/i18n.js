@@ -12,22 +12,21 @@ i18n
     detection: {
       // order and from where user language should be detected
       order: [
-        // "querystring",
+        "querystring",
         "cookie",
         "localStorage",
-        // "navigator",
-        "htmlTag"
-        // "path",
-        // "subdomain"
+        "navigator",
+        "htmlTag",
+        "path",
+        "subdomain"
       ],
 
       // keys or params to lookup language from
-      // lookupQuerystring: "lng",
-      lookupCookie: "lan",
-      lookupLocalStorage: "lng",
+      lookupQuerystring: "lng",
+      lookupCookie: "i18next",
+      lookupLocalStorage: "i18nextLng",
       lookupFromPathIndex: 0,
       lookupFromSubdomainIndex: 0,
-
       // cache user language on
       caches: ["localStorage", "cookie"],
       excludeCacheFor: ["cimode"], // languages to not persist (cookie, localStorage)

@@ -2,7 +2,7 @@ import React from "react";
 import "antd/dist/antd.css";
 import { Modal, Icon, notification } from "antd";
 import { withRouter } from "react-router-dom";
-import { globalVariables } from "../Globals.js";
+// import { globalVariables } from "../Globals.js";
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
 import { ModalWrap } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
 import { Link } from "react-router-dom";
