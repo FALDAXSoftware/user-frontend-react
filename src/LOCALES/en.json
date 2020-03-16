@@ -2797,6 +2797,18 @@
       "message": "page to view currently trading availability. Subscribe to our newsletter to receive notifications when services are available in your area.",
       "message_type": "Web content",
       "context": "Text"
+    },
+    "enter_2fa_code": {
+      "page": "2FA Modal",
+      "message": "Please enter your Two-Factor Authentication Code to continue.",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "reset_2fa_code": {
+      "page": "2FA Modal",
+      "message": "Please logout and reset your Two-Factor Authentication code.",
+      "message_type": "Web content",
+      "context": "Text"
     }
   }
 }
