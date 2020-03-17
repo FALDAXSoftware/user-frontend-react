@@ -177,7 +177,7 @@ class ApplyJob extends Component {
         }
       },
       coverLimit: {
-        message: this.t("validations:file_size_3_mb.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("general_3:file_size_3_mb.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -188,7 +188,7 @@ class ApplyJob extends Component {
         }
       },
       resumeLimit: {
-        message: this.t("validations:file_size_3_mb.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("general_3:file_size_3_mb.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
