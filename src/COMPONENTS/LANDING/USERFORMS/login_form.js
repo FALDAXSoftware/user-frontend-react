@@ -892,7 +892,6 @@ class Login_Form extends Component {
       ) {
         this.props.history.push(this.props.location.state.from.pathname);
       } else {
-        // console.log("^^^^logimn", this.props.isKYCDone);
         if (this.props.isKYCDone == 2) {
           this.props.history.push("/conversion");
         } else {

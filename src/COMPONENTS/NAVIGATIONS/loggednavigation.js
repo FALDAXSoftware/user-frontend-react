@@ -700,7 +700,7 @@ class LoggedNavigation extends Component {
             className="tokenlink"
             href={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
           >
-            Crypto Only
+            {t("navbar_sub_menu_conversation_crypto_only.message")}
           </a>
           {/* <a onClick={this.cryptoAccess}>Crypto Only</a> */}
         </Menu.Item>

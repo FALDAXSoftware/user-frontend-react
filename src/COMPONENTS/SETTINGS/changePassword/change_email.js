@@ -270,7 +270,7 @@ class ChangeEmail extends Component {
             this.setState({
               loader: false,
               errMsg: true,
-              errType: this.t("validations:error_text.message"),
+              errType: "Error",
               errMessage: responseData.err
             });
           }

@@ -389,7 +389,6 @@ class PersonalDetails extends Component {
   /* Life-Cycle Methods */
 
   componentDidMount() {
-    console.log("^^^^", this.props.profileDetails.default_language);
     this.props.getProfileDataAction(this.props.isLoggedIn);
     if (this.props.profileDetails.default_language) {
       this.setState({

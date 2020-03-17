@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { createForm, formShape } from "rc-form";
 import styled from "styled-components";
-import { Row, Col, Button, notification, Icon, Progress } from "antd";
+import { Row, Col, Button, notification, Icon, Progress, Select } from "antd";
 import { connect } from "react-redux";
 import { translate } from "react-i18next";
 // import { ReCaptcha } from "react-recaptcha-google";
@@ -24,7 +24,7 @@ import {
   PassReq
 } from "./login_form";
 let { GOOGLE_SITE_KEY } = globalVariables;
-
+const { Option } = Select;
 export const LoginWrap = styled.div`
   background-color: #f0f3f2;
   min-height: 100%;
@@ -176,6 +176,19 @@ const Password = styled(Username)`
   padding-right: 40px;
 `;
 const Referral = styled(Username)``;
+export const DefaultLang = styled.div`
+  > .ant-select.ant-select-enabled {
+    width: 76%;
+    border-radius: 5px;
+    margin-top: 10px;
+    > .ant-select-selection.ant-select-selection--single {
+      height: 50px;
+      > .ant-select-selection__rendered {
+        line-height: 50px;
+      }
+    }
+  }
+`;
 export const ButtonLogin = styled(Button)`
   width: 110px;
   background-color: rgb(0, 170, 250);
@@ -267,13 +280,15 @@ class SignupForm extends Component {
       qP: "",
       isSignDisable: false,
       recaptchaToken: null,
-      loadCaptch: false
+      loadCaptch: false,
+      language: "en"
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.dispModal = this.dispModal.bind(this);
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
     this.verifyCallback = this.verifyCallback.bind(this);
     this._resendVerLink = this._resendVerLink.bind(this);
+    this.handleLangChange = this.handleLangChange.bind(this);
     this.t = this.props.t;
   }
 
@@ -325,7 +340,12 @@ class SignupForm extends Component {
       }
     }
   }
-
+  handleLangChange(value) {
+    // console.log(`selected ${value}`);
+    this.setState({
+      language: value
+    });
+  }
   _resendVerLink() {
     this.props.history.push("/resend-verification");
   }
@@ -391,6 +411,7 @@ class SignupForm extends Component {
         obj["confirm_password"] = value.confirm_password;
         obj["referral_code"] = value.referral_code;
         obj["device_type"] = 0;
+        obj["default_language"] = this.state.language;
         if (this.state.recaptchaToken != null) {
           obj["g_recaptcha_response"] = this.state.recaptchaToken;
           this.setState({ loader: true });
@@ -958,6 +979,20 @@ class SignupForm extends Component {
                   <ConfirmPassReq className="confirmPass_sign">
                     {this.state.confirmPass_msg}
                   </ConfirmPassReq>
+                  <PhLabel>Default Language</PhLabel>
+                  <DefaultLang>
+                    <Select
+                      value={this.state.language}
+                      onChange={this.handleLangChange}
+                    >
+                      <Option value="en">English</Option>
+                      <Option value="ja">日本語</Option>
+                      {/* <Option value="es">Española</Option>
+                      <Option value="uk">Українська</Option>
+                      <Option value="ru">русский</Option>
+                      <Option value="zh">普通话</Option> */}
+                    </Select>
+                  </DefaultLang>
                   <PhLabel>{this.t("referral_code_text.message")}</PhLabel>
                   <div>
                     <Referral
