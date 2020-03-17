@@ -917,7 +917,10 @@ class LoggedNavigation extends Component {
             </span> */}
             <a className="DROPSUB">
               <DropMenu mode="inline">
-                <SubMenuNav key="mobsub1" title={"Conversion"}>
+                <SubMenuNav
+                  key="mobsub1"
+                  title={t("navbar_menu_conversion.message")}
+                >
                   <Menu.Item key="0">
                     <a
                       className="tokenlink"
@@ -952,7 +955,10 @@ class LoggedNavigation extends Component {
             </span>
             <a className="DROPSUB">
               <DropMenu mode="inline">
-                <SubMenuNav key="mobsub2" title={"History"}>
+                <SubMenuNav
+                  key="mobsub2"
+                  title={t("navbar_menu_history.message")}
+                >
                   {/* <Menu.Item key="0">
                     <a
                       onClick={() =>
