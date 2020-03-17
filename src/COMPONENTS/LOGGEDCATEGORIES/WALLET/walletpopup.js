@@ -259,7 +259,7 @@ class WalletPopup extends Component {
         required: true // optional
       },
       amountNumeric:{
-        message:this.t("amount_8_precision_validation.message"),
+        message:this.t("validation_amount_numeric.message"),
         rule: val => {
           var RE = /^\d+.?\d*$/;
           if (RE.test(val)) {
@@ -271,7 +271,7 @@ class WalletPopup extends Component {
       }
       ,
       decimalrestrict: {
-        message:this.t("validation_amount_numeric.message"),
+        message:this.t("amount_8_precision_validation.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {

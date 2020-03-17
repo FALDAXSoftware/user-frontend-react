@@ -345,7 +345,7 @@ class ChangeEmail extends Component {
             this.setState({
               loader: false,
               errMsg: true,
-              errType: this.t("validations:error_text.message"),
+              errType:"Error",
               errMessage: responseData.err
             });
           }
@@ -395,8 +395,8 @@ class ChangeEmail extends Component {
 
   openNotificationWithIcon(type) {
     notification[type]({
-      message: this.state.errType,
-      description: this.state.errMessage
+      message:this.state.errType.toLowerCase()=="error"?this.t("validations:error_text.message"):this.t("validations:success_text.message"),
+      description:this.state.errMessage
     });
     this.setState({ errMsg: false });
   }

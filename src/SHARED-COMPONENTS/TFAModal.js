@@ -2,15 +2,14 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { connect } from "react-redux";
-import styled from "styled-components";
+// import styled from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
-
 /* components */
-import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+// import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { globalVariables } from "Globals.js";
-import { getProfileDataAction } from "ACTIONS/SETTINGS/settingActions";
+// import { getProfileDataAction } from "ACTIONS/SETTINGS/settingActions";
 import { verifyTF } from "ACTIONS/SETTINGS/passwordActions.js";
-
+import {translate} from "react-i18next"
 /* STYLED-COMPONENTS */
 import {
   VerifyModal,
@@ -33,19 +32,43 @@ class TFAModal extends Component {
       fields: {
         otp: ""
       },
-      visibleTFA: false
+      visibleTFA: false,
     };
+    this.t=this.props.t;
     this.validator = new SimpleReactValidator({
       validOTP: {
-        message: "The verification code must be a number.",
+        message: this.t("security_tab:subhead_title_verification_code.message")+" "+this.t("numeric_valdation.message"),
+        required:true,
         rule: val => {
-          var RE = /^[0-9]*$/;
+          var RE = /.+/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
+        } 
+      },
+      customVerificationCodeRequire:{
+        message:this.t("security_tab:subhead_title_verification_code.message")+" "+this.t("validation:field_is_required"),
+        rule: val => {
+          var RE = /^\d+.?\d*$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        } 
+      },
+      customVerificationCodeNumeric:{
+        message:this.t("security_tab:subhead_title_verification_code.message")+" "+this.t("numeric_valdation.message"),
+        rule: val => {
+          var RE = /^\d+.?\d*$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        } 
       }
     });
   }
@@ -121,7 +144,7 @@ class TFAModal extends Component {
     return (
       <VerifyModal
         // closable={false}
-        title="Two-Factor Authentication Code"
+        title={this.t("security_tab:head_change_two_factor_status.message")}
         visible={visibleTFA}
         footer={null}
         onCancel={e => this.comingCancel(e)}
@@ -129,10 +152,10 @@ class TFAModal extends Component {
       >
         <Description>
           {" "}
-          Please enter your Two-Factor Authentication Code to continue.
+          {this.t("general_3:enter_2fa_code.message")}.
         </Description>
         <NewP>
-          <InputLabel>Verification Code</InputLabel>
+          <InputLabel>{this.t("security_tab:subhead_title_verification_code.message")}</InputLabel>
           <div>
             <OTPInput
               value={fields.otp}
@@ -144,26 +167,26 @@ class TFAModal extends Component {
             {this.validator.message(
               "verification code",
               fields["otp"],
-              "required|numeric|validOTP",
+              "customVerificationCodeRequire|customVerificationCodeNumeric|validOTP",
               "text-danger-validation"
             )}
           </div>
         </NewP>
         <ButtonDiv>
-          <NewButton onClick={this.verifyOTP.bind(this)}>Verify</NewButton>
+          <NewButton onClick={this.verifyOTP.bind(this)}>{this.t("security_tab:verify_btn.message")}</NewButton>
           <p>
             <Popover
               placement="topLeft"
               content={
                 <b>
-                  Please logout and reset your Two-Factor Authentication code.
+                  {this.t("general_3.reset_2fa_code.message")}.
                 </b>
               }
               trigger="click"
               visible={this.state.visible}
               onVisibleChange={this.handleVisibleChange}
             >
-              <Button type="link">Don't have Two-Factor Authentication?</Button>
+              <Button type="link">{this.t("login_page:no_2fa_text.message")}?</Button>
             </Popover>
           </p>
         </ButtonDiv>
@@ -176,4 +199,4 @@ const mapDispatchToProps = dispatch => ({
   verifyTF: (isLoggedIn, value) => dispatch(verifyTF(isLoggedIn, value))
 });
 
-export default connect(null, mapDispatchToProps)(TFAModal);
+export default translate(["general_1","security_tab","general_3","login_page","validations"])(connect(null, mapDispatchToProps)(TFAModal));

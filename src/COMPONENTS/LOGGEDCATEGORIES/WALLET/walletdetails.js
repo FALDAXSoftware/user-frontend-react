@@ -556,7 +556,7 @@ class WalletDetails extends Component {
                           </CryptAmt>
                         </LeftBit>
                         <PlacedDiv>
-                          In Orders:{" "}
+                          {this.t("wallet.in_order_text.message")}:{" "}
                           {walletUserData.balance >
                           walletUserData.placed_balance
                             ? (

@@ -1682,7 +1682,15 @@ class Acc_settings extends Component {
                             required: this.t(
                               "general_1:2fa_field_required_error.message"
                             ),
-                            numeric: "test"
+                            numeric: this.t(
+                              "general_1:2fa_must_number_error.message"
+                            ),
+                            min:this.t(
+                              "general_1:2fa_min_error.message"
+                            ),
+                            max:this.t(
+                              "general_1:2fa_max_error.message"
+                            )
                           }
                         )}
                       </div>

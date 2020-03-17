@@ -2220,12 +2220,6 @@
       "message_type": "Web content",
       "context": "Ticket status Closed text"
     },
-    "ticket_status_closed_text": {
-      "page": "View all tickets",
-      "message": "Closed",
-      "message_type": "Web content",
-      "context": "Ticket status Closed text"
-    },
     "ticket_read_more_text": {
       "page": "View all tickets",
       "message": "Read more",
@@ -2798,6 +2792,12 @@
       "message_type": "Web content",
       "context": "Text"
     },
+    "transaction_cancel": {
+      "page": "Country access",
+      "message": "Your transaction has been cancelled.",
+      "message_type": "Web content",
+      "context": "Text"
+    },
     "enter_2fa_code": {
       "page": "2FA Modal",
       "message": "Please enter your Two-Factor Authentication Code to continue.",
@@ -2807,6 +2807,12 @@
     "reset_2fa_code": {
       "page": "2FA Modal",
       "message": "Please logout and reset your Two-Factor Authentication code.",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "restricted_withdrawal": {
+      "page": "IP Modal",
+      "message": "If your security feature is on, while you add a new IP address,you will be restricted to perform withdrawal for 24 hours.",
       "message_type": "Web content",
       "context": "Text"
     }
