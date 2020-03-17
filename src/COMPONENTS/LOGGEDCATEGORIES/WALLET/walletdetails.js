@@ -556,7 +556,7 @@ class WalletDetails extends Component {
                           </CryptAmt>
                         </LeftBit>
                         <PlacedDiv>
-                          {this.t("wallet.in_order_text.message")}:{" "}
+                          {this.t("wallet:in_order_text.message")}:{" "}
                           {walletUserData.balance >
                           walletUserData.placed_balance
                             ? (
@@ -725,14 +725,14 @@ class WalletDetails extends Component {
                         {walletUserData.coin_name}.
                       </p>
                       <WalletCreateButton onClick={this._walletCreate}>
-                        {this.t("wallet_details_create_text")}{" "}
+                        {this.t("header:wallet_details_create_text.message")}{" "}
                         {walletUserData.coin_name}{" "}
-                        {this.t("header:wallet_details_create_text.message")}
+                        {this.t("header:navbar_menu_wallet.message")}
                       </WalletCreateButton>
                       <p>
                         {this.t("wallet_details_contact_us.message")}{" "}
                         <a href={`${WordpressSiteURL}/contact-us/`}>
-                          {this.t("here_text.message")}
+                          {this.t("wallet:here_text.message")}
                         </a>
                         .
                       </p>
@@ -748,14 +748,14 @@ class WalletDetails extends Component {
                         {walletUserData.coin_name}.
                       </p>
                       <WalletCreateButton onClick={this._walletCreate}>
-                        {this.t("wallet_details_create_text")}{" "}
+                        {this.t("header:wallet_details_create_text")}{" "}
                         {walletUserData.coin_name}{" "}
-                        {this.t("header:wallet_details_create_text.message")}
+                        {this.t("header:navbar_menu_wallet.message")}
                       </WalletCreateButton>
                       <p>
                         {this.t("wallet_details_contact_us.message")}{" "}
                         <a href={`${WordpressSiteURL}/contact-us/`}>
-                          {this.t("here_text")}
+                          {this.t("wallet:here_text.message")}
                         </a>
                         .
                       </p>

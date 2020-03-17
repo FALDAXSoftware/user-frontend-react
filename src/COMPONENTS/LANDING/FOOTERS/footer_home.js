@@ -305,35 +305,35 @@ class FooterHome extends Component {
                   <Footerheaders>{t("head_information.message")}</Footerheaders>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/about-us`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/about-us`}
                     >
                       {t("subhead_about_us.message")}
                     </FooterLink>
                   </li>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/contact-us`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/contact-us`}
                     >
                       {t("subhead_contact_us.message")}
                     </FooterLink>
                   </li>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/media-contact`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/media-contact`}
                     >
                       {t("subhead_media_contact.message")}
                     </FooterLink>
                   </li>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/blogs`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/blogs`}
                     >
                       {t("subhead_blog.message")}
                     </FooterLink>
                   </li>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/fee`}
+                      href={`${globalVariables.WordpressSiteURL}/${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/fee`}
                     >
                       {t("subhead_fees.message")}
                     </FooterLink>
@@ -363,14 +363,14 @@ class FooterHome extends Component {
                   </li>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/list-your-token`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/list-your-token`}
                     >
                       {t("subhead_List_your_token.message")}
                     </FooterLink>
                   </li>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/news`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/news`}
                     >
                       {t("subhead_news.message")}
                     </FooterLink>
@@ -389,14 +389,14 @@ class FooterHome extends Component {
                   </Footerheaders>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/policies`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/policies`}
                     >
                       {t("subhead_policies.message")}
                     </FooterLink>
                   </li>
                   <li onClick={this.scrollMap.bind(this)}>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/service-availability/`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/service-availability/`}
                     >
                       {t("subhead_service_availability.message")}
                     </FooterLink>
@@ -472,10 +472,10 @@ class FooterHome extends Component {
               <StoreCol xs={24} lg={2} xl={2}>
                 <Download>{t("head_download.message")}</Download>
                 <StoreWrap>
-                  <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}>
+                  <a href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/coming-soon`}>
                     <Appstore src={_APPSTORE} />
                   </a>
-                  <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}>
+                  <a href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/coming-soon`}>
                     <Playstore src={_PLAYSTORE} />
                   </a>
                 </StoreWrap>

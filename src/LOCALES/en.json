@@ -2815,6 +2815,12 @@
       "message": "If your security feature is on, while you add a new IP address,you will be restricted to perform withdrawal for 24 hours.",
       "message_type": "Web content",
       "context": "Text"
+    },
+    "select_any_option": {
+      "page": "ID Select",
+      "message": "Please select any one option",
+      "message_type": "Web content",
+      "context": "Text"
     }
   }
 }

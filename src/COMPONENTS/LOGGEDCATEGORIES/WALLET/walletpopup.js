@@ -259,7 +259,7 @@ class WalletPopup extends Component {
         required: true // optional
       },
       amountNumeric:{
-        message:this.t("validation_amount_numeric.message"),
+        message:this.t("amount_8_precision_validation.message"),
         rule: val => {
           var RE = /^\d+.?\d*$/;
           if (RE.test(val)) {
@@ -271,7 +271,7 @@ class WalletPopup extends Component {
       }
       ,
       decimalrestrict: {
-        message:this.t("amount_8_precision_validation.message"),
+        message:this.t("validation_amount_numeric.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
@@ -593,14 +593,14 @@ class WalletPopup extends Component {
               // console.log(local);
               this.openNotificationWithIcon(
                 "warning",
-                this.t("validation.warning_text.message"),
+                this.t("validations:.warning_text.message"),
                 responseData.message ? `${responseData.message}${local}` : ""
               );
               this.comingCancel();
             } else
               this.openNotificationWithIcon(
                 "warning",
-                this.t("validation.warning_text.message"),
+                this.t("validations:warning_text.message"),
                 responseData.message ? responseData.message : responseData.err
               );
           }
@@ -682,7 +682,7 @@ class WalletPopup extends Component {
             sendFields: fields
           });
         } else if (responseData.status === 500) {
-          this.openNotificationWithIcon("error",this.t("validation.error_text.message"), responseData.err);
+          this.openNotificationWithIcon("error",this.t("validation:error_text.message"), responseData.err);
         } else {
           this.openNotificationWithIcon("error",this.t("validation.error_text.message"), responseData.message);
         }
@@ -823,7 +823,7 @@ class WalletPopup extends Component {
                             value={this.state.receive.receive_address}
                             className={this.state.receiveAdd}
                             placeholder="Referral"
-                            enterButton="Copy"
+                            enterButton={this.t('referral:copy_btn.message')}
                             size="large"
                             onSearch={(e, value) => this.SearchText(e, value)}
                           />
@@ -1013,4 +1013,4 @@ const mapDispatchToProps = dispatch => ({
   LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 
-export default translate(["general_3","validations","wallet","conversion","edit_profile_titles","settings"])(connect(mapStateToProps, mapDispatchToProps)(WalletPopup));
+export default translate(["general_3","validations","wallet","conversion","edit_profile_titles","settings","referral"])(connect(mapStateToProps, mapDispatchToProps)(WalletPopup));

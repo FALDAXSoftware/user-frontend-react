@@ -814,6 +814,7 @@ class History extends Component {
                     <RangePickerS
                       disabledDate={this.disabledDate}
                       disabledTime={this.disabledRangeTime}
+                      placeholder={[this.t("start_date_text.message"),this.t("end_date_text.message")]}
                       onChange={this.changeDate}
                       allowClear={false}
                       value={[this.state.fromDate, this.state.toDate]}

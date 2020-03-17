@@ -13,17 +13,13 @@ i18n
       // order and from where user language should be detected
       order: [
         "querystring",
-        "cookie",
         "localStorage",
-        "navigator",
         "htmlTag",
         "path",
-        "subdomain"
       ],
 
       // keys or params to lookup language from
       lookupQuerystring: "lng",
-      lookupCookie: "i18next",
       lookupLocalStorage: "i18nextLng",
       lookupFromPathIndex: 0,
       lookupFromSubdomainIndex: 0,

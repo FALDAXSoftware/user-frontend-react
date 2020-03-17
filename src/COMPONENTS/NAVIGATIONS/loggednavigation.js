@@ -345,7 +345,7 @@ class LoggedNavigation extends Component {
       completeKYC: false,
       panicEnabled: false,
       panic_status: false,
-      langValue: this.props.language
+      // langValue: this.props.language
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
     this.cryptoAccess = this.cryptoAccess.bind(this);
@@ -663,23 +663,9 @@ class LoggedNavigation extends Component {
     // }
   }
   onChange = e => {
-    console.log("radio checked", e.key);
     this.props.i18n.changeLanguage(e.key);
-    this.setState(
-      {
-        langValue: e.key
-      },
-      () => {
-        // this.props.langAction(this.state.langValue);
-      }
-    );
   };
   render() {
-    console.log(
-      "this.state.langValue",
-      this.props.language,
-      this.state.langValue
-    );
     const radioStyle = {
       display: "block",
       height: "30px",

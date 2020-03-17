@@ -655,6 +655,7 @@ class Login_Form extends Component {
   componentWillReceiveProps(props, newProps) {
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
+        this.props.i18n.changeLanguage(props.errorStatus.user.default_language);
         this.openNotificationWithIcon(
           "success",
           this.t("validations:success_text.message"),

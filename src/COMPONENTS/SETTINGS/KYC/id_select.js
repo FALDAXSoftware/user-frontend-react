@@ -105,6 +105,7 @@ class IDselect extends Component {
     */
 
   next_step() {
+    let {t}=this.props;
     var kycSteps = {};
     if (document.getElementById("passport").checked) {
       kycSteps["id_type"] = 1;
@@ -133,8 +134,8 @@ class IDselect extends Component {
     } else {
       this.openNotificationWithIcon(
         "error",
-        "Error",
-        "Please select any one option."
+        t('validations:error_text.message'),
+        t('general_3:select_any_option.message')
       );
     }
   }
@@ -378,6 +379,6 @@ const mapDispatchToProps = dispatch => ({
   kycformData: data => dispatch(kycformData(data))
 });
 
-export default translate("identity_verification")(
+export default translate(["identity_verification","general_3","validations"])(
   connect(mapStateToProps, mapDispatchToProps)(IDselect)
 );
