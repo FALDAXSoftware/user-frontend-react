@@ -10,6 +10,7 @@ import {
 } from "antd";
 import { APIUtility } from "../../../httpHelper";
 import clone from "clone";
+import { translate } from "react-i18next";
 import styled from "styled-components";
 const EditableContext = React.createContext();
 const regEx = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/;
@@ -63,6 +64,7 @@ class EditableCell extends React.Component {
       record,
       index,
       children,
+      t,
       ...restProps
     } = this.props;
     return (
@@ -73,7 +75,7 @@ class EditableCell extends React.Component {
               rules: [
                 {
                   pattern: regEx,
-                  message: "Please Enter Valid Positive Number"
+                  message: t("general_1:valid_positive_error_msg.message")
                 }
               ],
               initialValue: record[dataIndex]
@@ -87,6 +89,7 @@ class EditableCell extends React.Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <EditableContext.Consumer>{this.renderCell}</EditableContext.Consumer>
     );
@@ -97,23 +100,24 @@ class EditableTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = { data: [], loader: false, editingKey: "", dumpData: [] };
+    this.t = this.props.t;
     this.columns = [
       {
-        title: "Coin",
+        title: this.t("table_head_coin.message"),
         dataIndex: "coin"
       },
       {
-        title: "Lower Limit",
+        title: this.t("table_head_lower_limit.message"),
         dataIndex: "lower_limit",
         editable: true
       },
       {
-        title: "Upper Limit",
+        title: this.t("table_head_upper_limit.message"),
         dataIndex: "upper_limit",
         editable: true
       },
       {
-        title: "Email Notification",
+        title: this.t("table_head_email_notification.message"),
         render: data => (
           <Checkbox
             value={data["is_email_notification"]}
@@ -126,7 +130,7 @@ class EditableTable extends React.Component {
         )
       },
       {
-        title: "SMS Notification",
+        title: this.t("table_head_sms_notification.message"),
         render: data => (
           <Checkbox
             value={data["is_sms_notification"]}
@@ -150,15 +154,28 @@ class EditableTable extends React.Component {
                     onClick={() => this.save(form, record.coin_id)}
                     style={{ marginRight: 8 }}
                   >
-                    Save
+                    {this.t(
+                      "edit_profile_titles:subhead_personal_form_save_btn.message"
+                    )}
                   </a>
                 )}
               </EditableContext.Consumer>
               <Popconfirm
-                title="Sure to cancel?"
+                title={this.t(
+                  "general_1:sure_cancel_popup_confirm_text.message"
+                )}
                 onConfirm={() => this.cancel(record.coin_id)}
+                okText={this.t("conversion:ok_btn.message")}
+                cancelText={this.t(
+                  "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                )}
               >
-                <a>Cancel</a>
+                <a>
+                  {" "}
+                  {this.t(
+                    "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                  )}
+                </a>
               </Popconfirm>
             </span>
           ) : (
@@ -166,7 +183,9 @@ class EditableTable extends React.Component {
               disabled={editingKey !== ""}
               onClick={() => this.edit(record.coin_id)}
             >
-              Edit
+              {this.t(
+                "edit_profile_titles:subhead_personal_form_edit_btn.message"
+              )}
             </a>
           );
         }
@@ -194,7 +213,6 @@ class EditableTable extends React.Component {
         this.setState({ data: res.data, dumpData: clone(res.data) });
       }
     } catch (error) {
-      console.log("error", error);
     } finally {
       this.setState({ loader: false });
     }
@@ -256,7 +274,7 @@ class EditableTable extends React.Component {
   render() {
     const components = {
       body: {
-        cell: EditableCell
+        cell: translate(["general_1"])(EditableCell)
       }
     };
     const columns = this.columns.map(col => {
@@ -294,4 +312,9 @@ class EditableTable extends React.Component {
 
 const EditableFormTable = Form.create()(EditableTable);
 
-export default EditableFormTable;
+export default translate([
+  "settings",
+  "edit_profile_titles",
+  "conversion",
+  "general_1"
+])(EditableFormTable);

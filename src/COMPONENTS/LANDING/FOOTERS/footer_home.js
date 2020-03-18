@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { translate } from "react-i18next";
 import {
   faFacebook,
   faTwitter,
@@ -292,6 +293,7 @@ class FooterHome extends Component {
   }
   render() {
     const { contactDetails } = this.state;
+    const { t } = this.props;
 
     return (
       <Footermain>
@@ -300,106 +302,110 @@ class FooterHome extends Component {
             <Row>
               <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                 <Footerul>
-                  <Footerheaders>Information</Footerheaders>
+                  <Footerheaders>{t("head_information.message")}</Footerheaders>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/about-us`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/about-us`}
                     >
-                      About Us
+                      {t("subhead_about_us.message")}
                     </FooterLink>
                   </li>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/contact-us`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/contact-us`}
                     >
-                      Contact Us
+                      {t("subhead_contact_us.message")}
                     </FooterLink>
                   </li>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/media-contact`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/media-contact`}
                     >
-                      Media Contact
+                      {t("subhead_media_contact.message")}
                     </FooterLink>
                   </li>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/blogs`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/blogs`}
                     >
-                      Blog
+                      {t("subhead_blog.message")}
                     </FooterLink>
                   </li>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/fee`}
+                      href={`${globalVariables.WordpressSiteURL}/${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/fee`}
                     >
-                      Fees
+                      {t("subhead_fees.message")}
                     </FooterLink>
                   </li>
                 </Footerul>
               </FooterLinkCol>
               <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                 <Footerul>
-                  <Footerheaders>Support</Footerheaders>
+                  <Footerheaders>{t("head_support.message")}</Footerheaders>
                   <li>
                     {this.props.isLoggedIn ? (
                       <FooterLink href="/open-ticket">
                         {" "}
-                        Open a Ticket
+                        {t("subhead_open_a_ticket.message")}
                       </FooterLink>
                     ) : (
                       <FooterLink href="/login#openTicket">
                         {" "}
-                        Open a Ticket
+                        {t("subhead_open_a_ticket.message")}
                       </FooterLink>
                     )}
                   </li>
                   <li>
                     <FooterLink href="https://knowledge.faldax.com/">
-                      FAQ
+                      {t("subhead_faq.message")}
                     </FooterLink>
                   </li>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/list-your-token`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/list-your-token`}
                     >
-                      List Your Token
+                      {t("subhead_List_your_token.message")}
                     </FooterLink>
                   </li>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/news`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/news`}
                     >
-                      News
+                      {t("subhead_news.message")}
                     </FooterLink>
                   </li>
                   <li>
-                    <CareerLink to={"/careers"}>Careers</CareerLink>
+                    <CareerLink to={"/careers"}>
+                      {t("header:navbar_menu_careers.message")}
+                    </CareerLink>
                   </li>
                 </Footerul>
               </FooterLinkCol>
               <FooterLinkCol xs={24} sm={8} md={8} lg={5} xl={5}>
                 <Footerul>
-                  <Footerheaders>Legal & Technical</Footerheaders>
+                  <Footerheaders>
+                    {t("head_Legal_&_technical.message")}
+                  </Footerheaders>
                   <li>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/policies`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/policies`}
                     >
-                      Policies
+                      {t("subhead_policies.message")}
                     </FooterLink>
                   </li>
                   <li onClick={this.scrollMap.bind(this)}>
                     <FooterLink
-                      href={`${globalVariables.WordpressSiteURL}/service-availability/`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/service-availability/`}
                     >
-                      Service Availability
+                      {t("subhead_service_availability.message")}
                     </FooterLink>
                   </li>
                 </Footerul>
               </FooterLinkCol>
               <Col xs={24} lg={5} xl={5}>
                 <Iconul1header>
-                  <Footerheaders>Social</Footerheaders>
+                  <Footerheaders>{t("head_social.message")}</Footerheaders>
                 </Iconul1header>
                 {this.state.contactDetails !== undefined ? (
                   this.state.contactDetails.length !== 0 ? (
@@ -464,12 +470,12 @@ class FooterHome extends Component {
                                 </Iconul2> */}
               </Col>
               <StoreCol xs={24} lg={2} xl={2}>
-                <Download>Download</Download>
+                <Download>{t("head_download.message")}</Download>
                 <StoreWrap>
-                  <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}>
+                  <a href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/coming-soon`}>
                     <Appstore src={_APPSTORE} />
                   </a>
-                  <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}>
+                  <a href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/coming-soon`}>
                     <Playstore src={_PLAYSTORE} />
                   </a>
                 </StoreWrap>
@@ -480,9 +486,10 @@ class FooterHome extends Component {
           <BottomFooter>
             <FooterText>
               {" "}
-              ©{new Date().getFullYear()} FALDAX. All Rights Reserved.{" "}
+              ©{new Date().getFullYear()} FALDAX.{" "}
+              {t("subhead_all_rights_reserved.message")}
             </FooterText>
-            <a href={globalVariables.WordpressSiteURL}>
+            <a href={globalVariables.WordpressSiteURL+(localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:"")}>
               <Footerlogo src={this.state.footerLogo} />
             </a>
           </BottomFooter>
@@ -503,4 +510,7 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(withRouter(FooterHome));
+export default translate(
+  "footer",
+  "header"
+)(connect(mapStateToProps)(withRouter(FooterHome)));

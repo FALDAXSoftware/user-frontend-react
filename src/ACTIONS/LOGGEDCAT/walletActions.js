@@ -1,7 +1,6 @@
 import { globalVariables } from "Globals.js";
 import { removeLoader, addLoader } from "../SETTINGS/settingActions";
 import { LogoutUser } from "../authActions";
-
 let { API_URL } = globalVariables;
 let count = 0;
 /*  

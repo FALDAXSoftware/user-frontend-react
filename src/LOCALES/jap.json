@@ -1,0 +1,2002 @@
+{
+  "header": {
+    "navbar_menu_conversion": {
+      "page": "Header",
+      "message": "\u5909\u63db",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_menu_wallet": {
+      "page": "Header",
+      "message": "\u30a6\u30aa\u30ec\u30c3\u30c8",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_menu_history": {
+      "page": "Header",
+      "message": "\u5c65\u6b74",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_menu_careers": {
+      "page": "Header",
+      "message": "\u63a1\u7528\u60c5\u5831",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_conversation_crypto_only": {
+      "page": "Header",
+      "message": "\u6697\u53f7\u306e\u307f",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_conversation_credit_card": {
+      "page": "Header",
+      "message": "\u30af\u30ec\u30b8\u30c3\u30c8\u30ab\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_conversation_bank_transfer": {
+      "page": "Header",
+      "message": "\u9280\u884c\u632f\u8fbc",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_profile": {
+      "page": "Header",
+      "message": "\u30d7\u30ed\u30d5\u30a3\u30fc\u30eb",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_ticket": {
+      "page": "Header",
+      "message": "\u30c1\u30b1\u30c3\u30c8",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    },
+    "navbar_sub_menu_history_logout": {
+      "page": "Header",
+      "message": "\u30ed\u30b0\u30a2\u30a6\u30c8",
+      "message_type": "Web content",
+      "context": "Message show on menu"
+    }
+  },
+  "footer": {
+    "head_information": {
+      "page": "Footer",
+      "message": "\u60c5\u5831",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "head_support": {
+      "page": "Footer",
+      "message": "\u30b5\u30dd\u30fc\u30c8",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "head_Legal_&_technical": {
+      "page": "Footer",
+      "message": "\u6cd5\u5f8b\u30fb\u6280\u8853",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "head_social": {
+      "page": "Footer",
+      "message": "\u30bd\u30fc\u30b7\u30e3\u30eb",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "head_download": {
+      "page": "Footer",
+      "message": "\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "footer head title"
+    },
+    "subhead_about_us": {
+      "page": "Footer",
+      "message": "\u6cbf\u9769",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_contact_us": {
+      "page": "Footer",
+      "message": "\u304a\u554f\u3044\u5408\u308f\u305b",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_media_contact": {
+      "page": "Footer",
+      "message": "\u30e1\u30c7\u30a3\u30a2\u9023\u7d61\u5148",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_blog": {
+      "page": "Footer",
+      "message": "\u30d6\u30ed\u30b0",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_fees": {
+      "page": "Footer",
+      "message": "\u6599\u91d1",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_open_a_ticket": {
+      "page": "Footer",
+      "message": "\u30c1\u30b1\u30c3\u30c8\u3092\u958b\u304f",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_faq": {
+      "page": "Footer",
+      "message": "\u3088\u304f\u3042\u308b\u8cea\u554f",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_List_your_token": {
+      "page": "Footer",
+      "message": "\u30c8\u30fc\u30af\u30f3\u306e\u30ea\u30b9\u30c8",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_news": {
+      "page": "Footer",
+      "message": "\u30cb\u30e5\u30fc\u30b9",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_policies": {
+      "page": "Footer",
+      "message": "\u30dd\u30ea\u30b7\u30fc",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_service_availability": {
+      "page": "Footer",
+      "message": "\u30b5\u30fc\u30d3\u30b9\u53ef\u7528\u6027",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    },
+    "subhead_all_rights_reserved": {
+      "page": "Footer",
+      "message": "\u5168\u8457\u4f5c\u6a29\u6240\u6709",
+      "message_type": "Web content",
+      "context": "footer sub head title"
+    }
+  },
+  "edit_profile_titles": {
+    "head_personal_details": {
+      "page": "Edit Profile",
+      "message": "\u500b\u4eba\u60c5\u5831",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_security": {
+      "page": "Edit Profile",
+      "message": "\u5b89\u5168\u6027",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_settings": {
+      "page": "Edit Profile",
+      "message": "\u8a2d\u5b9a",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_identity_verification": {
+      "page": "Edit Profile",
+      "message": "\u672c\u4eba\u78ba\u8a8d",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_referral": {
+      "page": "Edit Profile",
+      "message": "\u7167\u4f1a",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "head_support": {
+      "page": "Edit Profile",
+      "message": "\u30b5\u30dd\u30fc\u30c8",
+      "message_type": "Web content",
+      "context": "tabbing heads"
+    },
+    "subhead_personal_form_upload_new_photo": {
+      "page": "Edit Profile",
+      "message": "\u65b0\u3057\u3044\u5199\u771f\u3092\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "Personal detials form head to upload photo"
+    },
+    "subhead_personal_form_remove_photo": {
+      "page": "Edit Profile",
+      "message": "\u524a\u9664",
+      "message_type": "Web content",
+      "context": "Personal detials form head to remove photo"
+    },
+    "subhead_personal_form_first_name": {
+      "page": "Edit Profile",
+      "message": "\u540d\u524d",
+      "message_type": "Web content",
+      "context": "Personal detials form label for first name"
+    },
+    "subhead_personal_form_last_name": {
+      "page": "Edit Profile",
+      "message": "\u82d7\u5b57",
+      "message_type": "Web content",
+      "context": "Personal detials form label for last name"
+    },
+    "subhead_personal_form_dob": {
+      "page": "Edit Profile",
+      "message": "\u751f\u5e74\u6708\u65e5",
+      "message_type": "Web content",
+      "context": "Personal detials form label for date of birth"
+    },
+    "subhead_personal_form_street_address_line1": {
+      "page": "Edit Profile",
+      "message": "\u4f4f\u6240\uff081\u884c\u76ee\uff09",
+      "message_type": "Web content",
+      "context": "Personal detials form label for street line address 1"
+    },
+    "subhead_personal_form_street_address_line2": {
+      "page": "Edit Profile",
+      "message": "\u4f4f\u6240\uff082\u884c\u76ee\uff09",
+      "message_type": "Web content",
+      "context": "Personal detials form label for street line address 2"
+    },
+    "subhead_personal_form_country": {
+      "page": "Edit Profile",
+      "message": "\u56fd",
+      "message_type": "Web content",
+      "context": "Personal detials form label for country"
+    },
+    "subhead_personal_form_state": {
+      "page": "Edit Profile",
+      "message": "\u5dde",
+      "message_type": "Web content",
+      "context": "Personal detials form label for state"
+    },
+    "subhead_personal_form_city": {
+      "page": "Edit Profile",
+      "message": "\u5e02",
+      "message_type": "Web content",
+      "context": "Personal detials form label for city"
+    },
+    "subhead_personal_form_country_placeholder": {
+      "page": "Edit Profile",
+      "message": "\u56fd\u3092\u9078\u629e",
+      "message_type": "Web content",
+      "context": "Personal detials form Placeholder for country"
+    },
+    "subhead_personal_form_state_placeholder": {
+      "page": "Edit Profile",
+      "message": "\u5dde\u3092\u9078\u629e",
+      "message_type": "Web content",
+      "context": "Personal detials form Placeholder for state"
+    },
+    "subhead_personal_form_city_placeholder": {
+      "page": "Edit Profile",
+      "message": "\u5e02\u3092\u9078\u629e",
+      "message_type": "Web content",
+      "context": "Personal detials form Placeholder for city"
+    },
+    "subhead_personal_form_postal_code": {
+      "page": "Edit Profile",
+      "message": "\u90f5\u4fbf\u756a\u53f7",
+      "message_type": "Web content",
+      "context": "Personal detials form label for postal code"
+    },
+    "subhead_personal_form_default_date_format": {
+      "page": "Edit Profile",
+      "message": "\u30c7\u30d5\u30a9\u30eb\u30c8\u65e5\u4ed8\u5f62\u5f0f",
+      "message_type": "Web content",
+      "context": "Personal detials form label for default date format"
+    },
+    "subhead_personal_form_default_currency": {
+      "page": "Edit Profile",
+      "message": "\u30c7\u30d5\u30a9\u30eb\u30c8\u901a\u8ca8",
+      "message_type": "Web content",
+      "context": "Personal detials form label for default currency"
+    },
+    "subhead_personal_form_edit_btn": {
+      "page": "Edit Profile",
+      "message": "\u7de8\u96c6",
+      "message_type": "Web content",
+      "context": "Personal detials form button for edit"
+    },
+    "subhead_personal_form_save_btn": {
+      "page": "Edit Profile",
+      "message": "\u4fdd\u5b58",
+      "message_type": "Web content",
+      "context": "Personal detials form button for save"
+    },
+    "subhead_personal_form_cancel_btn": {
+      "page": "Edit Profile",
+      "message": "\u30ad\u30e3\u30f3\u30bb\u30eb",
+      "message_type": "Web content",
+      "context": "Personal detials form button for cancel"
+    },
+    "agree_terms_text": {
+      "page": "Edit Profile",
+      "message": "\uff3b\u4fdd\u5b58\uff3d\u3092\u30af\u30ea\u30c3\u30af\u3059\u308b\u3053\u3068\u3067\u3001FALDAX\u306b\u540c\u610f\u3059\u308b\u3053\u3068\u306b\u306a\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms text"
+    },
+    "agree_terms_of_services": {
+      "page": "Edit Profile",
+      "message": "\u30b5\u30fc\u30d3\u30b9\u5229\u7528\u898f\u7d04",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms link text for Terms of Services"
+    },
+    "agree_privacy_policy": {
+      "page": "Edit Profile",
+      "message": "\u500b\u4eba\u60c5\u5831\u4fdd\u8b77\u65b9\u91dd",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms link text for Privacy Policy"
+    },
+    "agree_anti_money_laundering_policy": {
+      "page": "Edit Profile",
+      "message": "\u30a2\u30f3\u30c1\u30de\u30cd\u30fc\u30ed\u30f3\u30c0\u30ea\u30f3\u30b0\u30dd\u30ea\u30b7\u30fc",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms link text for Anti-Money Laundering Policy"
+    },
+    "agree_cookies_policy": {
+      "page": "Edit Profile",
+      "message": "\u30af\u30c3\u30ad\u30fc\u30dd\u30ea\u30b7\u30fc",
+      "message_type": "Web content",
+      "context": "Personal detials form agree terms link text for Cookies Policy"
+    },
+    "agree_btn": {
+      "page": "Edit Profile",
+      "message": "\u540c\u610f\u3059\u308b",
+      "message_type": "Web content",
+      "context": "Agree terms pop up Agree button text"
+    },
+    "dont_agree_btn": {
+      "page": "Edit Profile",
+      "message": "\u540c\u610f\u3057\u306a\u3044",
+      "message_type": "Web content",
+      "context": "Agree terms pop up Agree button text"
+    },
+    "dont_agree_popup_title": {
+      "page": "Edit Profile",
+      "message": "\u540c\u610f\u3092\u62d2\u5426\u3057\u307e\u3059\u304b\uff1f",
+      "message_type": "Web content",
+      "context": "Title on dont agree terms and conditions button click popup"
+    },
+    "dont_agree_popup_text": {
+      "page": "Edit Profile",
+      "message": "\u540c\u610f\u3092\u62d2\u5426\u3059\u308b\u3068\u3001FALDAX\u306e\u30b5\u30fc\u30d3\u30b9\u3092\u5229\u7528\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "Text on dont agree terms and conditions button click"
+    },
+    "dont_agree_yes_btn": {
+      "page": "Edit Profile",
+      "message": "\u306f\u3044",
+      "message_type": "Web content",
+      "context": "Dont agree pop up yes buttton text"
+    },
+    "dont_agree_no_btn": {
+      "page": "Edit Profile",
+      "message": "\u3044\u3044\u3048",
+      "message_type": "Web content",
+      "context": "Dont agree pop up yes buttton text"
+    },
+    "and_text": {
+      "page": "Edit Profile",
+      "message": "\u305d\u3057\u3066",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "currency_inr": {
+      "page": "Edit Profile",
+      "message": "\u30a4\u30f3\u30c9\u30fb\u30eb\u30d4\u30fc",
+      "message_type": "Web content",
+      "context": "currency INR"
+    },
+    "currency_eur": {
+      "page": "Edit Profile",
+      "message": "\u30e6\u30fc\u30ed",
+      "message_type": "Web content",
+      "context": "currency EUR"
+    },
+    "currency_date_format_1": {
+      "page": "Edit Profile",
+      "message": "\u6708/\u65e5/\u5e74",
+      "message_type": "Web content",
+      "context": "Date format text to display"
+    },
+    "currency_date_format_2": {
+      "page": "Edit Profile",
+      "message": "\u65e5/\u6708/\u5e74",
+      "message_type": "Web content",
+      "context": "Date format text to display"
+    },
+    "currency_date_format_3": {
+      "page": "Edit Profile",
+      "message": "\u6708\u65e5\u3001\u5e74",
+      "message_type": "Web content",
+      "context": "Date format text to display"
+    }
+  },
+  "security_tab": {
+    "head_change_password": {
+      "page": "Edit Profile > Securtiy",
+      "message": "\u30d1\u30b9\u30ef\u30fc\u30c9\u3092\u5909\u66f4",
+      "message_type": "Web content",
+      "context": "Title of change password"
+    },
+    "head_change_email": {
+      "page": "Edit Profile > Securtiy",
+      "message": "\u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9\u3092\u5909\u66f4",
+      "message_type": "Web content",
+      "context": "Title of change email"
+    },
+    "head_change_two_factor_status": {
+      "page": "Edit Profile > Securtiy",
+      "message": "2 \u30d5\u30a1\u30af\u30bf\u30fc\u8a8d\u8a3c",
+      "message_type": "Web content",
+      "context": "Title of two factor authentication status change"
+    },
+    "subhead_title_old_password": {
+      "page": "Edit Profile > Securtiy",
+      "message": "\u4ee5\u524d\u306e\u30d1\u30b9\u30ef\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "Title of old password"
+    },
+    "subhead_title_new_password": {
+      "page": "Edit Profile > Securtiy",
+      "message": "\u65b0\u3057\u3044\u30d1\u30b9\u30ef\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "Title of new password"
+    },
+    "subhead_title_re_enter_new_password": {
+      "page": "Edit Profile > Securtiy",
+      "message": "\u65b0\u3057\u3044\u30d1\u30b9\u30ef\u30fc\u30c9\u3092\u518d\u5165\u529b",
+      "message_type": "Web content",
+      "context": "Title of re enter new password"
+    },
+    "confirm_password_text": {
+      "page": "Edit Profile > Securtiy",
+      "message": "\u30d1\u30b9\u30ef\u30fc\u30c9\u3092\u8a8d\u8a3c",
+      "message_type": "Web content",
+      "context": "text for validation"
+    },
+    "subhead_title_email": {
+      "page": "Edit Profile > Securtiy",
+      "message": "\u30e1\u30fc\u30eb",
+      "message_type": "Web content",
+      "context": "Title of email"
+    },
+    "subhead_title_new_email": {
+      "page": "Edit Profile > Securtiy",
+      "message": "\u65b0\u3057\u3044\u30e1\u30fc\u30eb\u3092\u5165\u529b",
+      "message_type": "Web content",
+      "context": "Title of enter new email"
+    },
+    "subhead_title_verification_code": {
+      "page": "Edit Profile > Securtiy > Verify Email Address",
+      "message": "\u78ba\u8a8d\u30b3\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "Title of verification code"
+    },
+    "verify_email_popup_head": {
+      "page": "Edit Profile > Securtiy > Verify Email Address",
+      "message": "\u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9\u3092\u78ba\u8a8d",
+      "message_type": "Web content",
+      "context": "Head of pop up verify email address"
+    },
+    "verify_email_popup_text1": {
+      "page": "Edit Profile > Securtiy > Verify Email Address",
+      "message": "\u30ef\u30f3\u30bf\u30a4\u30e0\u78ba\u8a8d\u30b3\u30fc\u30c9\u3092\u9001\u4fe1\u3057\u307e\u3057\u305f",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "verify_email_popup_text2": {
+      "page": "Edit Profile > Securtiy > Verify Email Address",
+      "message": "\u3053\u306e\u78ba\u8a8d\u30b3\u30fc\u30c9\u3092\u4e0b\u306e\u30dc\u30c3\u30af\u30b9\u306b\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "verify_btn": {
+      "page": "Edit Profile > Securtiy > Verify Email Address",
+      "message": "\u78ba\u8a8d",
+      "message_type": "Web content",
+      "context": "Button of pop up verify email address"
+    },
+    "save_new_password_btn": {
+      "page": "Edit Profile > Securtiy",
+      "message": "\u65b0\u3057\u3044\u30d1\u30b9\u30ef\u30fc\u30c9\u306e\u4fdd\u5b58",
+      "message_type": "Web content",
+      "context": "Button of save new password"
+    },
+    "update_email_btn": {
+      "page": "Edit Profile > Securtiy",
+      "message": "\u30e1\u30fc\u30eb\u3092\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8",
+      "message_type": "Web content",
+      "context": "Button of save update email"
+    },
+    "enable_authenticator_btn": {
+      "page": "Edit Profile > Securtiy",
+      "message": "\u8a8d\u8a3c\u3092\u6709\u52b9\u306b\u3059\u308b",
+      "message_type": "Web content",
+      "context": "Button of enable authenticator"
+    },
+    "disable_authenticator_btn": {
+      "page": "Edit Profile > Securtiy",
+      "message": "\u8a8d\u8a3c\u3092\u7121\u52b9\u306b\u3059\u308b",
+      "message_type": "Web content",
+      "context": "Button of disable authenticator"
+    },
+    "enable_btn": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "\u6709\u52b9\u306b\u3059\u308b",
+      "message_type": "Web content",
+      "context": "Button of enable"
+    },
+    "title_status": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "\u72b6\u614b",
+      "message_type": "Web content",
+      "context": "label for status"
+    },
+    "title_status_disabled": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "\u7121\u52b9\u306b\u3059\u308b",
+      "message_type": "Web content",
+      "context": "status disabled text"
+    },
+    "title_status_enabled": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "\u6709\u52b9",
+      "message_type": "Web content",
+      "context": "status enabled text"
+    },
+    "two_factor_text1": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "2\u30d5\u30a1\u30af\u30bf\u30fc\u8a8d\u8a3c\u3067\u30a2\u30ab\u30a6\u30f3\u30c8\u306e\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u304c\u8457\u3057\u304f\u5411\u4e0a\u3057\u307e\u3059\u30022\u30d5\u30a1\u30af\u30bf\u30fc\u8a8d\u8a3c\u3092\u6709\u52b9\u306b\u3059\u308b\u3053\u3068\u3092\u5f37\u304f\u304a\u52e7\u3081\u3057\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_text2": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "\u305d\u306e\u8abf\u5b50\u3067\u3059\uff012\u30d5\u30a1\u30af\u30bf\u30fc\u8a8d\u8a3c\u3092\u6709\u52b9\u306b\u3057\u3066\u3044\u305f\u3060\u304d\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059\u3002\u5f53\u793e\u3067\u306f\u3001\u304a\u5ba2\u69d8\u306e\u5b89\u5168\u6027\u3092\u91cd\u8996\u3057\u307e\u3059\u3002 ",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_text3": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "16\u6570\u5b57\u30ad\u30fc",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_text_point1": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "\u304a\u4f7f\u3044\u306e\u30e2\u30d0\u30a4\u30eb\u30c7\u30d0\u30a4\u30b9\u4e0a\u306bAuthenticator\u30a2\u30d7\u30ea\u3092\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb\u3057\u307e\u3059\u3002Google Authenticator\u3092\u304a\u52e7\u3081\u3057\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_text_point2": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "Authenticator\u304c\u8981\u6c42\u3057\u305f\u3089\u3001QR\u30b3\u30fc\u30c9\u3092\u30b9\u30ad\u30e3\u30f3\u3057\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_text_point3": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "\u304a\u4f7f\u3044\u306e\u643a\u5e2f\u96fb\u8a71\u304c\u76d7\u307e\u308c\u305f\u308a\u524a\u9664\u3055\u308c\u305f\u5834\u5408\u3001FALDAX\u3068\u65b0\u3057\u3044\u30a2\u30d7\u30ea\u3092\u30ea\u30f3\u30af\u3059\u308b\u305f\u3081\u306b\u3001\u3053\u306e\u30b3\u30fc\u30c9\u304c\u5fc5\u8981\u306b\u306a\u308a\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_text_point4": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "\u30b3\u30fc\u30c9\u3092\u8ab0\u3068\u3082\u5171\u6709\u3057\u306a\u3044\u3067\u304f\u3060\u3055\u3044\u3002 FALDAX\u304c\u3001\u3053\u306e\u30b3\u30fc\u30c9\u3092\u5c0b\u306d\u308b\u3053\u3068\u306f\u3042\u308a\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_label_code": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication",
+      "message": "\u3053\u3053\u306b2\u30d5\u30a1\u30af\u30bf\u30fc\u30b3\u30fc\u30c9\u3092\u5165\u529b\u3057\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Input label to enter code"
+    },
+    "subhead_title_enter_code": {
+      "page": "Edit Profile > Securtiy > Verify Email Address",
+      "message": "\u3053\u3053\u306b2\u30d5\u30a1\u30af\u30bf\u30fc\u30b3\u30fc\u30c9\u3092\u5165\u529b\u3057\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Title to enter your two-factor code."
+    },
+    "two_factor_success_popup_head": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication(successfully enabled)",
+      "message": "2\u30d5\u30a1\u30af\u30bf\u30fc\u627f\u8a8d",
+      "message_type": "Web content",
+      "context": "title of popup"
+    },
+    "two_factor_success_popup_text": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication(successfully enabled)",
+      "message": "\u3053\u306e\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u30b3\u30fc\u30c9\u306f\u5b89\u5168\u306a\u5834\u6240\u306b\u4fdd\u7ba1\u3057\u3066\u304f\u3060\u3055\u3044\u30022\u30d5\u30a1\u30af\u30bf\u30fc\u30b3\u30fc\u30c9\u3092\u751f\u6210\u3067\u304d\u306a\u3044\u5834\u5408\u3001\u30a2\u30ab\u30a6\u30f3\u30c8\u306b\u30a2\u30af\u30bb\u30b9\u3067\u304d\u308b\u552f\u4e00\u306e\u65b9\u6cd5\u3067\u3059\u3002",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "two_factor_success_title": {
+      "page": "Edit Profile > Securtiy > Two-Factor Authentication(successfully enabled)",
+      "message": "\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u30b3\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "title"
+    },
+    "head_regenerate_backup_code": {
+      "page": "Edit Profile > Securtiy > Re-Generate Backup Code",
+      "message": "\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u30b3\u30fc\u30c9\u3092\u518d\u751f\u6210\u3057\u307e\u3059",
+      "message_type": "Web content",
+      "context": "head"
+    },
+    "subhead_title_regenerate_code": {
+      "page": "Edit Profile > Securtiy > Re-Generate Backup Code",
+      "message": "2\u30d5\u30a1\u30af\u30bf\u30fc\u8a8d\u8a3c\u30b3\u30fc\u30c9\u3092\u5165\u529b\u3057\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Title of backup code regenerate"
+    },
+    "change_password_text": {
+      "page": "Edit Profile > Securtiy",
+      "message": "\u30d1\u30b9\u30ef\u30fc\u30c9\u3092\u5909\u66f4",
+      "message_type": "Web content",
+      "context": "text"
+    }
+  },
+  "settings": {
+    "head_notifications": {
+      "page": "Edit Profile > Settings",
+      "message": "\u901a\u77e5",
+      "message_type": "Web content",
+      "context": "Head text"
+    },
+    "head_threshold_notifications": {
+      "page": "Edit Profile > Settings",
+      "message": "\u3057\u304d\u3044\u5024\u901a\u77e5",
+      "message_type": "Web content",
+      "context": "Head text"
+    },
+    "head_login_history": {
+      "page": "Edit Profile > Settings",
+      "message": "\u30ed\u30b0\u30a4\u30f3\u5c65\u6b74",
+      "message_type": "Web content",
+      "context": "Head text"
+    },
+    "head_security_settings": {
+      "page": "Edit Profile > Settings",
+      "message": "\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u8a2d\u5b9a",
+      "message_type": "Web content",
+      "context": "Head text"
+    },
+    "head_ip_whitelist": {
+      "page": "Edit Profile > Settings",
+      "message": "IP\u30db\u30ef\u30a4\u30c8\u30ea\u30b9\u30c8",
+      "message_type": "Web content",
+      "context": "Head text"
+    },
+    "head_deactivate_account": {
+      "page": "Edit Profile > Settings",
+      "message": "\u30a2\u30ab\u30a6\u30f3\u30c8\u3092\u7121\u52b9\u5316",
+      "message_type": "Web content",
+      "context": "Head text"
+    },
+    "subhead_notifications": {
+      "page": "Edit Profile > Settings",
+      "message": "\u81ea\u52d5\u96fb\u5b50\u30e1\u30fc\u30eb\u304a\u3088\u3073/\u307e\u305f\u306f\u30c6\u30ad\u30b9\u30c8\u901a\u77e5",
+      "message_type": "Web content",
+      "context": "Sub head text"
+    },
+    "subhead_security_settings": {
+      "page": "Edit Profile > Settings",
+      "message": "\u300cON\u300d\u306b\u8a2d\u5b9a\u3055\u308c\u3001\u30a2\u30ab\u30a6\u30f3\u30c8\u3067\u4efb\u610f\u306e\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u8a2d\u5b9a\u306e\u5909\u66f4\u304c\u3042\u3063\u305f\u5834\u5408\u3001\u30a6\u30a9\u30ec\u30c3\u30c8\u304b\u3089\u306e\u30c7\u30d3\u30c3\u30c8\u309224\u6642\u9593\u7121\u52b9\u306b\u3057\u307e\u3059\u3002\u3055\u3089\u306b\u3001\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u8a2d\u5b9a\u3092\u5909\u66f4\u3059\u308b\u524d\u306b\u901a\u77e5\u304c\u9001\u4fe1\u3055\u308c\u3001\u9593\u9055\u3063\u3066\u30a6\u30a9\u30ec\u30c3\u30c8\u3092\u30ed\u30c3\u30af\u3057\u306a\u3044\u3088\u3046\u306b\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u8a2d\u5b9a\u306e\u5909\u66f4\u3092\u78ba\u8a8d\u3057\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "Sub head text"
+    },
+    "subhead_deactivate_account": {
+      "page": "Edit Profile > Settings",
+      "message": "\u4e0b\u306e\u30dc\u30bf\u30f3\u3092\u30af\u30ea\u30c3\u30af\u3057\u3066\u3001\u30a2\u30ab\u30a6\u30f3\u30c8\u3092\u7121\u52b9\u306b\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Sub head text"
+    },
+    "subhead_setting_add_btn": {
+      "page": "Edit Profile > Settings",
+      "message": "\u8ffd\u52a0",
+      "message_type": "Web content",
+      "context": "Settings button for Add"
+    },
+    "table_head_notifications": {
+      "page": "Edit Profile > Settings",
+      "message": "\u901a\u77e5",
+      "message_type": "Web content",
+      "context": "Heading of table notifications"
+    },
+    "table_head_text": {
+      "page": "Edit Profile > Settings",
+      "message": "\u30c6\u30ad\u30b9\u30c8",
+      "message_type": "Web content",
+      "context": "Heading of table notifications"
+    },
+    "table_head_email": {
+      "page": "Edit Profile > Settings",
+      "message": "\u30e1\u30fc\u30eb",
+      "message_type": "Web content",
+      "context": "Heading of table notifications"
+    },
+    "table_head_coin": {
+      "page": "Edit Profile > Settings",
+      "message": "\u30b3\u30a4\u30f3",
+      "message_type": "Web content",
+      "context": "Heading of table threshold notifications"
+    },
+    "table_head_lower_limit": {
+      "page": "Edit Profile > Settings",
+      "message": "\u4e0b\u9650",
+      "message_type": "Web content",
+      "context": "Heading of table threshold notifications"
+    },
+    "table_head_upper_limit": {
+      "page": "Edit Profile > Settings",
+      "message": "\u4e0a\u9650",
+      "message_type": "Web content",
+      "context": "Heading of table threshold notifications"
+    },
+    "table_head_email_notification": {
+      "page": "Edit Profile > Settings",
+      "message": "\u30e1\u30fc\u30eb\u901a\u77e5",
+      "message_type": "Web content",
+      "context": "Heading of table threshold notifications"
+    },
+    "table_head_sms_notification": {
+      "page": "Edit Profile > Settings",
+      "message": "SMS\u901a\u77e5",
+      "message_type": "Web content",
+      "context": "Heading of table threshold notifications"
+    },
+    "currency_usd": {
+      "page": "Edit Profile > Settings",
+      "message": "\u7c73\u30c9\u30eb",
+      "message_type": "Web content",
+      "context": "currency USD"
+    },
+    "table_head_date_time": {
+      "page": "Edit Profile > Settings",
+      "message": "\u65e5\u4ed8/\u6642\u523b",
+      "message_type": "Web content",
+      "context": "Heading of table login history"
+    },
+    "table_head_ip_address": {
+      "page": "Edit Profile > Settings",
+      "message": "IP\u30a2\u30c9\u30ec\u30b9",
+      "message_type": "Web content",
+      "context": "Heading of table login history"
+    },
+    "table_head_device": {
+      "page": "Edit Profile > Settings",
+      "message": "\u7aef\u672b",
+      "message_type": "Web content",
+      "context": "Heading of table login history"
+    },
+    "table_head_ip_whitelist": {
+      "page": "Edit Profile > Settings",
+      "message": "IP\u30db\u30ef\u30a4\u30c8\u30ea\u30b9\u30c8",
+      "message_type": "Web content",
+      "context": "Heading of table IP Whitelist"
+    },
+    "table_head_till_date": {
+      "page": "Edit Profile > Settings",
+      "message": "\u65e5\u307e\u3067",
+      "message_type": "Web content",
+      "context": "Heading of table IP Whitelist"
+    },
+    "table_head_action": {
+      "page": "Edit Profile > Settings",
+      "message": "\u30a2\u30af\u30b7\u30e7\u30f3",
+      "message_type": "Web content",
+      "context": "Heading of table IP Whitelist"
+    },
+    "whitelist_popup_title": {
+      "page": "Edit Profile > Settings > Add Whitelist IP",
+      "message": "IP\u30a2\u30c9\u30ec\u30b9\u3092\u30db\u30ef\u30a4\u30c8\u30ea\u30b9\u30c8\u306b\u3059\u308b",
+      "message_type": "Web content",
+      "context": "Title of whitelist an ip address popup"
+    },
+    "whitelist_popup_text": {
+      "page": "Edit Profile > Settings > Add Whitelist IP",
+      "message": "\u30db\u30ef\u30a4\u30c8\u30ea\u30b9\u30c8\u306f\u3001\u6307\u5b9a\u3057\u305fIP\u30a2\u30c9\u30ec\u30b9\u304b\u3089\u30a2\u30ab\u30a6\u30f3\u30c8\u3078\u306e\u30a2\u30af\u30bb\u30b9\u3092\u3092\u5236\u9650\u3059\u308b\u3053\u3068\u306b\u3088\u308a\u3001\u30a2\u30ab\u30a6\u30f3\u30c8\u306e\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u3092\u5f37\u5316\u3057\u307e\u3059\u3002\u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8\u30b5\u30fc\u30d3\u30b9\u30d7\u30ed\u30d0\u30a4\u30c0\u306b\u554f\u3044\u5408\u308f\u305b\u3066\u3001\u304a\u4f7f\u3044\u306eIP\u30a2\u30c9\u30ec\u30b9\u304c\u300c\u9759\u7684\u300d\u3067\u3042\u308a\u3001\u3053\u306e\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u6a5f\u80fd\u3092\u6709\u52b9\u306b\u3059\u308b\u524d\u306b\u5909\u66f4\u304c\u306a\u3044\u3053\u3068\u3092\u78ba\u304b\u3081\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Text of whitelist an ip address popup"
+    },
+    "permanent_ip_popup_title": {
+      "page": "Edit Profile > Settings > Add Permanent IP",
+      "message": "\u534a\u6c38\u4e45\u7684\u306aIP\u30a2\u30c9\u30ec\u30b9",
+      "message_type": "Web content",
+      "context": "Title of Permanent IP Address popup"
+    },
+    "permanent_ip_popup_text": {
+      "page": "Edit Profile > Settings > Add Permanent IP",
+      "message": "FALDAX\u30a2\u30ab\u30a6\u30f3\u30c8\u306b\u534a\u6c38\u4e45\u7684\u306b\u4f7f\u7528\u3067\u304d\u308bIP\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Text of Permanent IP Address popup"
+    },
+    "permanent_ip_popup_label_ip": {
+      "page": "Edit Profile > Settings > Add Permanent IP",
+      "message": "IP\u3092\u5165\u529b",
+      "message_type": "Web content",
+      "context": "label for enter ip of Permanent IP Address popup"
+    },
+    "submit_btn": {
+      "page": "Edit Profile > Settings",
+      "message": "\u9001\u4fe1",
+      "message_type": "Web content",
+      "context": "Submit button text"
+    },
+    "deactivate_popup_title": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u30a2\u30ab\u30a6\u30f3\u30c8\u3092\u7121\u52b9\u5316",
+      "message_type": "Web content",
+      "context": "Title of deactivate account popup"
+    },
+    "deactivate_popup_text": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u4ee5\u4e0b\u306f\u3001\u304a\u4f7f\u3044\u306e\u30a6\u30a9\u30ec\u30c3\u30c8\u306e\u5185\u5bb9\u3067\u3059",
+      "message_type": "Web content",
+      "context": "Title head of summary table deactivate account popup"
+    },
+    "deactivate_popup_text_note": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u304a\u4f7f\u3044\u306e\u30a6\u30a9\u30ec\u30c3\u30c8\u306e\u3042\u3089\u3086\u308b\u8cc7\u91d1\u306f\u3001\u30a2\u30ab\u30a6\u30f3\u30c8\u306e\u7121\u52b9\u5316\u5f8c\u3001\u4f7f\u7528\u3067\u304d\u306a\u304f\u306a\u308a\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Text note for forfeit funds"
+    },
+    "deactivate_popup_table_head_coins": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u30b3\u30a4\u30f3",
+      "message_type": "Web content",
+      "context": "Heading of summary table deactivate account popup"
+    },
+    "deactivate_popup_table_head_quantity": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u91cf",
+      "message_type": "Web content",
+      "context": "Heading of summary table deactivate account popup"
+    },
+    "deactivate_popup_table_head_fiat_value": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u30d5\u30a3\u30a2\u30c3\u30c8\u5024",
+      "message_type": "Web content",
+      "context": "Heading of summary table deactivate account popup"
+    },
+    "deactivate_popup_table_footer_head": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u5408\u8a08\u5024\uff08USD\uff09",
+      "message_type": "Web content",
+      "context": "Footer of summary table deactivate account popup"
+    },
+    "deactivate_popup_remove_funds_btn": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u65e2\u5b58\u306e\u8cc7\u91d1\u3092\u524a\u9664",
+      "message_type": "Web content",
+      "context": "Remove Existing Funds button text"
+    },
+    "deactivate_popup_forfeit_funds_btn": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u6ca1\u53ce\u8cc7\u91d1\uff06\u7121\u52b9\u5316",
+      "message_type": "Web content",
+      "context": "Forfeit Funds & Deactivate Funds button text"
+    },
+    "deactivate_popup_text_confirm": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u672c\u5f53\u306b\u30a2\u30ab\u30a6\u30f3\u30c8\u3092\u7121\u52b9\u306b\u3057\u3066\u3082\u3088\u308d\u3057\u3044\u3067\u3059\u304b\uff1f",
+      "message_type": "Web content",
+      "context": "Text of deactivate account popup confirmation"
+    },
+    "deactivate_popup_label1": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u4e0b\u306e\u30dc\u30c3\u30af\u30b9\u306b\u300c\u7121\u52b9\u5316\u300d\u3068\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Input label deactivate account popup confirmation"
+    },
+    "deactivate_popup_label2": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u4e0b\u306e\u30dc\u30c3\u30af\u30b9\u306b2\u30d5\u30a1\u30af\u30bf\u30fc\u30b3\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Input label deactivate account popup confirmation"
+    },
+    "deactivate_popup_label3": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u4e0b\u306e\u30dc\u30c3\u30af\u30b9\u306b\u300c\u6ca1\u53ce\u8cc7\u91d1\u300d\u3068\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Input label deactivate account popup confirmation"
+    },
+    "deactivate_popup_text1": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "2\u30d5\u30a1\u30af\u30bf\u30fc\u306f\u30a2\u30ab\u30a6\u30f3\u30c8\u3092\u7121\u52b9\u5316\u3059\u308b\u306e\u306b\u5fc5\u8981\u3067\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Text of deactivate account popup confirmation"
+    },
+    "deactivate_popup_text2": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u4e0b\u306e\u30ea\u30f3\u30af\u3092\u30af\u30ea\u30c3\u30af\u3057\u3066\u30012\u30d5\u30a1\u30af\u30bf\u30fc\u3092\u6709\u52b9\u306b\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Text of deactivate account popup confirmation"
+    },
+    "deactivate_popup_click_here": {
+      "page": "Edit Profile > Settings > Deactivate Account",
+      "message": "\u3053\u3053\u3092\u30af\u30ea\u30c3\u30af\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Link text to activate 2FA"
+    }
+  },
+  "referral": {
+    "referral_head": {
+      "page": "Edit Profile > Referral",
+      "message": "\u7d39\u4ecb\u30d7\u30ed\u30b0\u30e9\u30e0",
+      "message_type": "Web content",
+      "context": "Title of the referral section"
+    },
+    "referral_text1": {
+      "page": "Edit Profile > Referral",
+      "message": "\u7d39\u4ecb\u30ea\u30f3\u30af",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "referral_text2": {
+      "page": "Edit Profile > Referral",
+      "message": "\u53ce\u76ca\u3092\u56de\u53ce",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "copy_btn": {
+      "page": "Edit Profile > Referral",
+      "message": "\u30b3\u30d4\u30fc",
+      "message_type": "Web content",
+      "context": "Button text"
+    },
+    "collect_btn": {
+      "page": "Edit Profile > Referral",
+      "message": "\u56de\u53ce",
+      "message_type": "Web content",
+      "context": "Button text"
+    },
+    "no_data": {
+      "page": "Edit Profile > Referral",
+      "message": "\u30c7\u30fc\u30bf\u304c\u3042\u308a\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "No data text"
+    },
+    "referral_table_head_name": {
+      "page": "Edit Profile > Referral",
+      "message": "\u540d\u524d",
+      "message_type": "Web content",
+      "context": "Referral history table head"
+    },
+    "referral_table_head_accounts_referred": {
+      "page": "Edit Profile > Referral",
+      "message": "\u7d39\u4ecb\u3055\u308c\u305f\u30a2\u30ab\u30a6\u30f3\u30c8",
+      "message_type": "Web content",
+      "context": "Referral history table head"
+    }
+  },
+  "support": {
+    "support_head": {
+      "page": "Edit Profile > Support",
+      "message": "\u30b5\u30dd\u30fc\u30c8\u30cf\u30d6",
+      "message_type": "Web content",
+      "context": "Title of the support section"
+    },
+    "support_text_open_a_ticket": {
+      "page": "Edit Profile > Support",
+      "message": "\u30c1\u30b1\u30c3\u30c8\u3092\u958b\u304f",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "support_text_view_all_tickets": {
+      "page": "Edit Profile > Support",
+      "message": "\u3059\u3079\u3066\u306e\u30c1\u30b1\u30c3\u30c8\u3092\u95b2\u89a7",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "support_text_all_tickets": {
+      "page": "Edit Profile > Support > View all Tickets",
+      "message": "\u3059\u3079\u3066\u306e\u30c1\u30b1\u30c3\u30c8",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "no_data_found": {
+      "page": "Edit Profile > Support > View all Tickets",
+      "message": "\u30c7\u30fc\u30bf\u304c\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f",
+      "message_type": "Web content",
+      "context": "Text"
+    }
+  },
+  "identity_verification": {
+    "subhead_mobile_no": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "\u643a\u5e2f\u96fb\u8a71\u756a\u53f7",
+      "message_type": "Web content",
+      "context": "Identity verification form label for mobile no"
+    },
+    "subhead_btn_next": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "\u6b21",
+      "message_type": "Web content",
+      "context": "Identity verification form btn text"
+    },
+    "step_1_no": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "1",
+      "message_type": "Web content",
+      "context": "Steps text 1"
+    },
+    "step_2_no": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "2",
+      "message_type": "Web content",
+      "context": "Steps text 2"
+    },
+    "step_3_no": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "3",
+      "message_type": "Web content",
+      "context": "Steps text 3"
+    },
+    "select_id_type_text": {
+      "page": "Edit Profile > Identity Verification > Step 2",
+      "message": "ID\u306e\u7a2e\u985e\u3092\u9078\u629e",
+      "message_type": "Web content",
+      "context": "Select ID type text"
+    },
+    "id_type_passport": {
+      "page": "Edit Profile > Identity Verification > Step 2",
+      "message": "\u30d1\u30b9\u30dd\u30fc\u30c8",
+      "message_type": "Web content",
+      "context": "Passport text"
+    },
+    "id_type_driving_licence": {
+      "page": "Edit Profile > Identity Verification > Step 2",
+      "message": "\u904b\u8ee2\u514d\u8a31\u8a3c",
+      "message_type": "Web content",
+      "context": "Driving licence text"
+    },
+    "id_type_identity": {
+      "page": "Edit Profile > Identity Verification > Step 2",
+      "message": "\u8eab\u5143",
+      "message_type": "Web content",
+      "context": "Identity text"
+    },
+    "id_type_ssn": {
+      "page": "Edit Profile > Identity Verification > Step 2",
+      "message": "\u793e\u4f1a\u4fdd\u969c\u756a\u53f7",
+      "message_type": "Web content",
+      "context": "Social Security Number text"
+    },
+    "front_text": {
+      "page": "Edit Profile > Identity Verification > Step 3",
+      "message": "\u30d5\u30ed\u30f3\u30c8",
+      "message_type": "Web content",
+      "context": "Front text"
+    },
+    "back_text": {
+      "page": "Edit Profile > Identity Verification > Step 3",
+      "message": "\u30d0\u30c3\u30af",
+      "message_type": "Web content",
+      "context": "Back text"
+    },
+    "upload_your_text": {
+      "page": "Edit Profile > Identity Verification > Step 3",
+      "message": "\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "Upload Your text"
+    },
+    "kyc_submit_text": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "\u304a\u5ba2\u69d8\u306e\u60c5\u5831\u306f\u3059\u3079\u3066\u53d7\u9818\u3055\u308c\u3001\u5f53\u793e\u306e\u8eab\u5143\u78ba\u8a8d\u30c1\u30fc\u30e0\u304c\u5be9\u67fb\u3057\u307e\u3059\u300224\u6642\u9593\u4ee5\u5185\u306b\u5f53\u793e\u306e\u6c7a\u5b9a\u3092\u901a\u77e5\u3059\u308b\u30e1\u30fc\u30eb\u304c\u5c4a\u304d\u307e\u3059\u300224\u6642\u9593\u4ee5\u5185\u306b\u901a\u77e5\u304c\u306a\u3044\u5834\u5408\u306f\u3001\u30b5\u30dd\u30fc\u30c8\u30da\u30fc\u30b8\u304b\u3089\u5f53\u793e\u306b\u304a\u554f\u3044\u5408\u308f\u305b\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Identity verification kyc submit text"
+    },
+    "thank_you_text": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3057\u305f\u3002",
+      "message_type": "Web content",
+      "context": "Identity verification kyc submit text"
+    },
+    "kyc_verified_text": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "\u8eab\u5143\u78ba\u8a8d\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\u3002",
+      "message_type": "Web content",
+      "context": "Identity verification kyc submit text"
+    },
+    "kyc_verified_text1": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "\u30a2\u30ab\u30a6\u30f3\u30c8\u304c\u6b63\u5e38\u306b\u8a8d\u8a3c\u3055\u308c\u307e\u3057\u305f\u3002",
+      "message_type": "Web content",
+      "context": "Identity verification kyc successfully verified subtext"
+    }
+  },
+  "conversion": {
+    "conversion_head": {
+      "page": "Conversion",
+      "message": "\u5909\u63db\u65b9\u6cd5",
+      "message_type": "Web content",
+      "context": "Page head"
+    },
+    "conversion_subhead": {
+      "page": "Conversion",
+      "message": "\u8fd1\u65e5\u516c\u958b",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "confirm_btn": {
+      "page": "Conversion",
+      "message": "\u78ba\u8a8d",
+      "message_type": "Web content",
+      "context": "Confirm button text"
+    },
+    "you_recieve_text": {
+      "page": "Crypto Conversion",
+      "message": "\u53d7\u3051\u53d6\u308a",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "you_send_text": {
+      "page": "Crypto Conversion",
+      "message": "\u9001\u4fe1",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "fiat_value_text": {
+      "page": "Crypto Conversion",
+      "message": "\u30d5\u30a3\u30a2\u30c3\u30c8\u5024",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "details_text": {
+      "page": "Crypto Conversion",
+      "message": "\u8a73\u7d30",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "subtotal_text": {
+      "page": "Crypto Conversion",
+      "message": "\u5c0f\u8a08",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "fee_text": {
+      "page": "Crypto Conversion",
+      "message": "\u624b\u6570\u6599",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "faldax_text": {
+      "page": "Crypto Conversion",
+      "message": "FALDAX",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "network_text": {
+      "page": "Crypto Conversion",
+      "message": "\u30cd\u30c3\u30c8\u30ef\u30fc\u30af",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "total_text": {
+      "page": "Crypto Conversion",
+      "message": "\u5408\u8a08",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "earned_text": {
+      "page": "Crypto Conversion",
+      "message": "\u53ce\u76ca",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "apply_promo_text": {
+      "page": "Crypto Conversion > Promo Code",
+      "message": "\u30d7\u30ed\u30e2\u30fc\u30b7\u30e7\u30f3\u30b3\u30fc\u30c9\u3092\u9069\u7528",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "enter_promo_text": {
+      "page": "Crypto Conversion > Promo Code",
+      "message": "\u30d7\u30ed\u30e2\u30fc\u30b7\u30e7\u30f3\u30b3\u30fc\u30c9\u3092\u5165\u529b",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "promo_text": {
+      "page": "Crypto Conversion > Promo Code",
+      "message": "\u30d7\u30ed\u30e2\u30fc\u30b7\u30e7\u30f3\u30b3\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "check_btn": {
+      "page": "Crypto Conversion > Promo Code",
+      "message": "\u5c0f\u5207\u624b",
+      "message_type": "Web content",
+      "context": "Check button text"
+    },
+    "apply_btn": {
+      "page": "Crypto Conversion > Promo Code",
+      "message": "\u9069\u5fdc",
+      "message_type": "Web content",
+      "context": "Apply button text"
+    },
+    "ok_btn": {
+      "page": "Crypto Conversion > Promo Code",
+      "message": "OK",
+      "message_type": "Web content",
+      "context": "Ok button text"
+    },
+    "you_pay_text": {
+      "page": "Simplex Conversion",
+      "message": "\u652f\u6255\u3044",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "you_get_text": {
+      "page": "Simplex Conversion",
+      "message": "\u53ce\u76ca",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "exchange_now_btn": {
+      "page": "Simplex Conversion",
+      "message": "\u4eca\u3059\u3050\u4e21\u66ff",
+      "message_type": "Web content",
+      "context": "Exchange Now button text"
+    },
+    "safe_simple_secure_text": {
+      "page": "Simplex Conversion",
+      "message": "\u5b89\u5168\u3002\u30b7\u30f3\u30d7\u30eb\u3002\u5b89\u5fc3\u3002",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "we_accept_text": {
+      "page": "Simplex Conversion",
+      "message": "\u5f53\u793e\u306f\u9280\u884c\u30ab\u30fc\u30c9\u3067\u306e",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "pay_with_card_text": {
+      "page": "Simplex Conversion",
+      "message": "\u652f\u6255\u3092\u53d7\u3051\u5165\u308c\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "powered_by_text": {
+      "page": "Simplex Conversion",
+      "message": "\u63d0\u4f9b\u8005",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "simplex_text": {
+      "page": "Simplex Conversion",
+      "message": "FALDAX\u306f\u3001Simplex\u3068\u63d0\u643a\u3057\u3066\u4e16\u754c\u3067\u6700\u3082\u666e\u53ca\u3057\u3066\u3044\u308b\u6697\u53f7\u8cc7\u7523\u3092\u76f4\u306b\u63d0\u4f9b\u3057\u307e\u3059\u3002 FALDAX\u3092\u304a\u9078\u3073\u3044\u305f\u3060\u304d\u3001\u8aa0\u306b\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "continue_btn": {
+      "page": "Simplex Conversion",
+      "message": "\u7d9a\u3051\u308b",
+      "message_type": "Web content",
+      "context": "Continue button text"
+    }
+  },
+  "wallet": {
+    "search_text": {
+      "page": "Wallet",
+      "message": "\u691c\u7d22",
+      "message_type": "Web content",
+      "context": "Search input placeholder text"
+    },
+    "coins_text_subhead": {
+      "page": "Wallet",
+      "message": "\u30b3\u30a4\u30f3",
+      "message_type": "Web content",
+      "context": "Subhead text"
+    },
+    "address_text": {
+      "page": "Wallet Details",
+      "message": "\u4f4f\u6240",
+      "message_type": "Web content",
+      "context": "Address text"
+    },
+    "send_btn": {
+      "page": "Wallet Details",
+      "message": "\u9001\u4fe1",
+      "message_type": "Web content",
+      "context": "Send button text"
+    },
+    "recieve_btn": {
+      "page": "Wallet Details",
+      "message": "\u53d7\u3051\u53d6\u308b",
+      "message_type": "Web content",
+      "context": "Recieve button text"
+    },
+    "in_order_text": {
+      "page": "Wallet Details",
+      "message": "\u6ce8\u6587\u4e2d",
+      "message_type": "Web content",
+      "context": "In Orders text"
+    },
+    "transaction_text": {
+      "page": "Wallet Details",
+      "message": "\u30c8\u30e9\u30f3\u30b6\u30af\u30b7\u30e7\u30f3",
+      "message_type": "Web content",
+      "context": "Transaction text in tabbing"
+    },
+    "withdrawal_requests_text": {
+      "page": "Wallet Details",
+      "message": "\u51fa\u91d1\u30ea\u30af\u30a8\u30b9\u30c8",
+      "message_type": "Web content",
+      "context": "Withdrawal Requests text in tabbing"
+    },
+    "date_text": {
+      "page": "Wallet Details",
+      "message": "\u65e5\u4ed8",
+      "message_type": "Web content",
+      "context": "Date text in table head"
+    },
+    "source_text": {
+      "page": "Wallet Details",
+      "message": "\u5f15\u7528\u5143",
+      "message_type": "Web content",
+      "context": "Source text in table head"
+    },
+    "destination_text": {
+      "page": "Wallet Details",
+      "message": "\u5b9b\u5148",
+      "message_type": "Web content",
+      "context": "Destination text in table head"
+    },
+    "amount_text": {
+      "page": "Wallet Details",
+      "message": "\u91cf",
+      "message_type": "Web content",
+      "context": "Amount text in table head"
+    },
+    "base_text": {
+      "page": "Wallet Details",
+      "message": "\u30d9\u30fc\u30b9",
+      "message_type": "Web content",
+      "context": "Base text in table head"
+    },
+    "hash_text": {
+      "page": "Wallet Details",
+      "message": "\u30cf\u30c3\u30b7\u30e5",
+      "message_type": "Web content",
+      "context": "Hash text in table head"
+    },
+    "no_data_found_text": {
+      "page": "Wallet Details",
+      "message": "\u30c7\u30fc\u30bf\u304c\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f",
+      "message_type": "Web content",
+      "context": "No Data Found text in table head"
+    },
+    "reason_text": {
+      "page": "Wallet Details",
+      "message": "\u7406\u7531",
+      "message_type": "Web content",
+      "context": "Reason text in table head"
+    },
+    "payout_text": {
+      "page": "Wallet Details > Send",
+      "message": "\u652f\u6255\u3044",
+      "message_type": "Web content",
+      "context": "Payout text in send popup"
+    },
+    "fiat_text": {
+      "page": "Wallet Details > Send",
+      "message": "\u30d5\u30a3\u30a2\u30c3\u30c8",
+      "message_type": "Web content",
+      "context": "Fiat text in send popup"
+    },
+    "value_text": {
+      "page": "Wallet Details > Send",
+      "message": "\u5024",
+      "message_type": "Web content",
+      "context": "Value text in send popup"
+    },
+    "send_amount_note_text": {
+      "page": "Wallet Details > Send",
+      "message": "\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u624b\u6570\u6599\u306e\u91d1\u984d\u306f\u3001\u5e02\u5834\u306e\u72b6\u6cc1\u306b\u5fdc\u3058\u3066\u3001\u30c8\u30e9\u30f3\u30b6\u30af\u30b7\u30e7\u30f3\u4e2d\u306b\u5909\u66f4\u3059\u308b\u3053\u3068\u304c\u3042\u308a\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Note text in send popup"
+    },
+    "wallet_generation_in_process": {
+      "page": "Wallet Details",
+      "message": "\u304a\u5ba2\u69d8\u306e\u30a6\u30a9\u30ec\u30c3\u30c8\u304c\u751f\u6210\u3055\u308c\u3001\u4f7f\u7528\u53ef\u80fd\u306b\u306a\u308a\u6b21\u7b2c\u901a\u77e5\u3092\u53d7\u3051\u53d6\u308b\u3053\u3068\u306b\u306a\u308a\u307e\u3059\u300224\u6642\u9593\u4ee5\u5185\u306b\u901a\u77e5\u304c\u5c4a\u304b\u306a\u3044\u5834\u5408\u3001\u307e\u305f\u306f\u4ed6\u306b\u8cea\u554f\u304c\u3042\u308b\u5834\u5408\u306f\u3001\u3053\u3053\u3067\u304a\u6c17\u8efd\u306b\u5f53\u793e\u3078\u304a\u554f\u3044\u5408\u308f\u305b\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "wallet generation under process message"
+    },
+    "here_text": {
+      "page": "Wallet Details",
+      "message": "here",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "thanks_note_text": {
+      "page": "Wallet Details",
+      "message": "FALDAX\u3092\u304a\u9078\u3073\u3044\u305f\u3060\u304d\u3001\u8aa0\u306b\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Thank you text"
+    }
+  },
+  "history": {
+    "export_btn": {
+      "page": "History",
+      "message": "\u30a8\u30af\u30b9\u30dd\u30fc\u30c8",
+      "message_type": "Web content",
+      "context": "Export button text"
+    },
+    "reset_btn": {
+      "page": "History",
+      "message": "\u30ea\u30bb\u30c3\u30c8",
+      "message_type": "Web content",
+      "context": "Reset button text"
+    },
+    "start_date_text": {
+      "page": "History",
+      "message": "\u958b\u59cb\u65e5",
+      "message_type": "Web content",
+      "context": "Start date placeholder text"
+    },
+    "end_date_text": {
+      "page": "History",
+      "message": "\u7d42\u4e86\u65e5",
+      "message_type": "Web content",
+      "context": "End date placeholder text"
+    },
+    "side_text": {
+      "page": "History",
+      "message": "\u8ffd\u52a0\u6ce8\u6587",
+      "message_type": "Web content",
+      "context": "Side table head text"
+    },
+    "order_text": {
+      "page": "History",
+      "message": "\u6ce8\u6587",
+      "message_type": "Web content",
+      "context": "Order table head text"
+    },
+    "id_text": {
+      "page": "History",
+      "message": "\u8eab\u5143\u78ba\u8a8d",
+      "message_type": "Web content",
+      "context": "Id table head text"
+    },
+    "filled_text": {
+      "page": "History",
+      "message": "\u8a18\u5165\u6e08\u307f",
+      "message_type": "Web content",
+      "context": "Filled table head text"
+    },
+    "price_text": {
+      "page": "History",
+      "message": "\u4fa1\u683c",
+      "message_type": "Web content",
+      "context": "Price table head text"
+    },
+    "buy_text": {
+      "page": "History",
+      "message": "\u8cb7\u3044",
+      "message_type": "Web content",
+      "context": "Buy filter checkbox label"
+    },
+    "sell_text": {
+      "page": "History",
+      "message": "\u58f2\u308a",
+      "message_type": "Web content",
+      "context": "Sell filter checkbox label"
+    },
+    "cancelled_text": {
+      "page": "History",
+      "message": "\u30ad\u30e3\u30f3\u30bb\u30eb",
+      "message_type": "Web content",
+      "context": "Cancelled text for status"
+    },
+    "under_approval_text": {
+      "page": "History",
+      "message": "\u627f\u8a8d\u4e2d\u3067\u3059",
+      "message_type": "Web content",
+      "context": "Under Approval text for status"
+    },
+    "approved_text": {
+      "page": "History",
+      "message": "\u627f\u8a8d\u3055\u308c\u307e\u3057\u305f",
+      "message_type": "Web content",
+      "context": "Approved text for status"
+    },
+    "payment_text": {
+      "page": "History",
+      "message": "\u652f\u6255\u3044",
+      "message_type": "Web content",
+      "context": "Payment table head text"
+    },
+    "quote_text": {
+      "page": "History",
+      "message": "\u898b\u7a4d\u3082\u308a",
+      "message_type": "Web content",
+      "context": "Quote table head text"
+    }
+  },
+  "general": {
+    "open_a_ticket_head": {
+      "page": "Open a Ticket",
+      "message": "\u30c1\u30b1\u30c3\u30c8\u3092\u958b\u304f",
+      "message_type": "Web content",
+      "context": "Open a Ticket head"
+    },
+    "careers_head": {
+      "page": "Careers",
+      "message": "\u63a1\u7528\u60c5\u5831",
+      "message_type": "Web content",
+      "context": "Careers head"
+    },
+    "day_text": {
+      "page": "Personal Details",
+      "message": "\u65e5",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "month_text": {
+      "page": "Personal Details",
+      "message": "\u6708",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "year_text": {
+      "page": "Personal Details",
+      "message": "\u5e74",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "street_holder_placeholder": {
+      "page": "Personal Details",
+      "message": "\u4f4f\u6240",
+      "message_type": "Web content",
+      "context": "Street Address placeholder text"
+    },
+    "captcha_not_loaded_error_head": {
+      "page": "General",
+      "message": "\u4eba\u306b\u3088\u308b\u81ea\u52d5\u5316\u691c\u8a3c\u30b7\u30b9\u30c6\u30e0\u3067\u30a8\u30e9\u30fc\u304c\u767a\u751f\u3057\u307e\u3057\u305f\u3002\u30da\u30fc\u30b8\u3092\u66f4\u65b0\u3057\u3066\u3001\u3082\u3046\u4e00\u5ea6\u304a\u8a66\u3057\u304f\u3060\u3055\u3044\u3002\u3054\u4e0d\u4fbf\u3092\u304a\u304b\u3051\u3057\u3066\u7533\u3057\u8a33\u3054\u3056\u3044\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "Captcha is not loaded due to some network issue"
+    },
+    "captcha_not_loaded_error": {
+      "page": "General",
+      "message": "\u30da\u30fc\u30b8\u3092\u518d\u8aad\u307f\u8fbc\u307f\u3057\u3066\u3001\u3082\u3046\u4e00\u5ea6\u304a\u8a66\u3057\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Captcha is not loaded due to some network issue"
+    }
+  },
+  "popups": {
+    "kyc_popup_head": {
+      "page": "ID Verification Incomplete Pop up",
+      "message": "\u8eab\u5143\u78ba\u8a8d\u304c\u5b8c\u4e86\u3057\u3066\u3044\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "ID Verification Incomplete pop up head"
+    },
+    "kyc_popup_subtext": {
+      "page": "ID Verification Incomplete Pop up",
+      "message": "\u53d6\u5f15\u3092\u958b\u59cb\u3059\u308b\u524d\u306b\u3001\u8eab\u5143\u78ba\u8a8d\u3092\u5b8c\u4e86\u3057\u3066\u304f\u3060\u3055\u3044\u3002\u300c\u8eab\u5143\u78ba\u8a8d\u3092\u3059\u308b\u300d\u30dc\u30bf\u30f3\u3092\u30af\u30ea\u30c3\u30af\u3057\u3066\u3001\u8eab\u5143\u78ba\u8a8d\u3092\u59cb\u3081\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "ID Verification Incomplete pop up subtext"
+    },
+    "kyc_popup_btn": {
+      "page": "ID Verification Incomplete Pop up",
+      "message": "\u8eab\u5143\u78ba\u8a8d\u3092\u3059\u308b",
+      "message_type": "Web content",
+      "context": "ID Verification Incomplete pop up button for getting verified"
+    },
+    "illegal_popup_head": {
+      "page": "Access Denied Pop up",
+      "message": "\u30a2\u30af\u30bb\u30b9\u304c\u62d2\u5426\u3055\u308c\u307e\u3057\u305f",
+      "message_type": "Web content",
+      "context": "Access Denied pop up head"
+    },
+    "illegal_popup_subtext1": {
+      "page": "Access Denied Pop up",
+      "message": "\u6b8b\u5ff5\u306a\u304c\u3089\u3001FALDAX\u306f\u73fe\u6642\u70b9\u3067\u304a\u5ba2\u69d8\u306e\u304a\u4f4f\u307e\u3044\u306e\u5730\u57df\u3067\u306f\u53d6\u5f15\u30b5\u30fc\u30d3\u30b9\u3092\u63d0\u4f9b\u3057\u3066\u3044\u307e\u305b\u3093\u3002\u5f53\u793e\u306f\u53ef\u7528\u6027\u306e\u5411\u4e0a\u306b\u7a4d\u6975\u7684\u306b\u53d6\u308a\u7d44\u3093\u3067\u3044\u307e\u3059\u3002\u5f53\u793e\u306e\u30db\u30fc\u30e0\u30da\u30fc\u30b8\u306b\u3042\u308b\u4e16\u754c\u5730\u56f3\u3092\u898b\u3066\u3001\u304a\u4f4f\u3044\u306e\u5730\u57df\u3067\u53d6\u5f15\u304c\u5408\u6cd5\u3068\u3055\u308c\u308b\u5834\u6240\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044\u3002\u53d6\u5f15\u304c\u3067\u304d\u306a\u3044\u5834\u5408\u306f\u3001\u5358\u306b\u304a\u4f4f\u307e\u3044\u306e\u5730\u57df\u3067\u7ba1\u8f44\u5f53\u5c40\u3068\u8a31\u8a8d\u53ef\u624b\u7d9a\u3092\u884c\u3063\u3066\u3044\u308b\u3053\u3068\u3092\u610f\u5473\u3057\u307e\u3059\u3002\u983b\u7e41\u306b\u78ba\u8a8d\u3059\u308b\u304b\u3001\u30cb\u30e5\u30fc\u30b9\u30ec\u30bf\u30fc\u3092\u8cfc\u8aad\u3057\u3066\u304b\u3089\u30b5\u30fc\u30d3\u30b9\u5229\u7528\u53ef\u80fd\u65e5\u306b\u3064\u3044\u3066\u306e\u901a\u77e5\u3092\u53d7\u3051\u53d6\u308b\u3088\u3046\u306b\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Access Denied pop up subtext"
+    },
+    "illegal_popup_subtext2": {
+      "page": "Access Denied Pop up",
+      "message": "\u304a\u5ba2\u69d8\u306e\u5fa1\u652f\u63f4\u3068\u5fa1\u5354\u529b\u306b\u611f\u8b1d\u3044\u305f\u3057\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Access Denied pop up subtext"
+    },
+    "panic_popup_head": {
+      "page": "Panic enabled Pop up",
+      "message": "\u30b7\u30b9\u30c6\u30e0\u306b\u3088\u308b\u30ed\u30c3\u30af\u30a2\u30a6\u30c8\u5b9f\u65bd\u4e2d",
+      "message_type": "Web content",
+      "context": "Panic enabled pop up head"
+    },
+    "panic_popup_subtext": {
+      "page": "Panic enabled Pop up",
+      "message": "\u5f53\u793e\u306e\u30b7\u30b9\u30c6\u30e0\u306b\u3088\u308a\u4e0d\u5f53\u3067\u7591\u308f\u3057\u3044\u52d5\u4f5c\u304c\u691c\u51fa\u3055\u308c\u305f\u306e\u3067\u3001\u81ea\u52d5\u30ed\u30c3\u30af\u30a2\u30a6\u30c8\u3092\u958b\u59cb\u3057\u307e\u3057\u305f\u3002\u304a\u5ba2\u69d8\u306e\u8cc7\u7523\u3068\u60c5\u5831\u306e\u5b89\u5168\u6027\u3068\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u3092\u78ba\u4fdd\u3059\u308b\u305f\u3081\u3001\u30b7\u30b9\u30c6\u30e0\u5168\u4f53\u3059\u3079\u3066\u306e\u8cc7\u7523\u304c\u51cd\u7d50\u3055\u308c\u3001\u3053\u306e\u671f\u9593\u4e2d\u306b\u8cc7\u7523\u306e\u53d6\u5f15\u307e\u305f\u306f\u79fb\u52d5\u306f\u3067\u304d\u307e\u305b\u3093\u3002\u73fe\u5728\u8868\u793a\u3055\u308c\u3066\u3044\u308b\u305d\u308c\u305e\u308c\u306e\u30a6\u30a9\u30ec\u30c3\u30c8\u6b8b\u9ad8\u306f\u5b89\u5168\u304b\u3064\u6b63\u78ba\u3067\u3059\u3002\u30c7\u30d5\u30a9\u30eb\u30c8\u3067\u306f\u3001\u30ed\u30c3\u30af\u30a2\u30a6\u30c8\u306f24\u6642\u9593\u6709\u52b9\u306b\u306a\u308a\u307e\u3059\u304c\u3001\u5f53\u793e\u306e\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u30c1\u30fc\u30e0\u306e\u767a\u898b\u5185\u5bb9\u306b\u3088\u308a\u3001\u3053\u306e\u6642\u9593\u306f\u7570\u306a\u308b\u3053\u3068\u304c\u3042\u308a\u307e\u3059\u3002\u5f53\u793e\u306e\u30c1\u30fc\u30e0\u304c\u5927\u5207\u306a\u304a\u5ba2\u69d8\u306e\u3059\u3079\u3066\u306b\u95a2\u308f\u308b\u30ea\u30b9\u30af\u3092\u8efd\u6e1b\u3057\u307e\u3059\u3002\u6700\u65b0\u306e\u66f4\u65b0\u30d7\u30ed\u30b0\u30e9\u30e0\u306b\u3064\u304d\u307e\u3057\u3066\u306f\u3001Twitter\u306e\u30da\u30fc\u30b8\u3068\u30c6\u30ad\u30b9\u30c8\u3084\u96fb\u5b50\u30e1\u30fc\u30eb\u306b\u3088\u308b\u5f53\u793e\u306e\u901a\u77e5\u306b\u5f93\u3063\u3066\u304f\u3060\u3055\u3044\u3002\u5f53\u793e\u306e\u4e00\u756a\u306e\u95a2\u5fc3\u306f\u3001\u304a\u5ba2\u69d8\u306e\u60c5\u5831\u3084\u8cc7\u7523\u3092\u53ef\u80fd\u306a\u9650\u308a\u6700\u5584\u3092\u5c3d\u304f\u3057\u3066\u5b88\u308b\u3053\u3068\u3067\u3059\u3002\u3054\u4e0d\u4fbf\u3092\u304a\u304b\u3051\u3057\u3066\u7533\u3057\u8a33\u3054\u3056\u3044\u307e\u305b\u3093\u3002\u304a\u5ba2\u69d8\u306e\u5fa1\u652f\u63f4\u3068\u5fa1\u5354\u529b\u306b\u611f\u8b1d\u3044\u305f\u3057\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Panic enabled pop up subtext"
+    }
+  },
+  "apply_job": {
+    "position_label": {
+      "page": "Apply Job",
+      "message": "\u30dd\u30b8\u30b7\u30e7\u30f3",
+      "message_type": "Web content",
+      "context": "Position label"
+    },
+    "phone_label": {
+      "page": "Apply Job",
+      "message": "\u96fb\u8a71",
+      "message_type": "Web content",
+      "context": "Phone label"
+    },
+    "resume_cv_label": {
+      "page": "Apply Job",
+      "message": "\u5c65\u6b74\u66f8/CV",
+      "message_type": "Web content",
+      "context": "Resume/CV label"
+    },
+    "choose_file_text": {
+      "page": "Apply Job",
+      "message": "\u30d5\u30a1\u30a4\u30eb\u3092\u9078\u629e\u3059\u308b\u304b\u3001\u3053\u3053\u306b\u30c9\u30e9\u30c3\u30b0\u3057\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Choose a file or drag it here text"
+    },
+    "wrong_file_text": {
+      "page": "Apply Job",
+      "message": "\u30d5\u30a1\u30a4\u30eb\u306e\u9078\u629e\u304c\u6b63\u3057\u304f\u3042\u308a\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "Wrong File Selected text"
+    },
+    "supported_formats_text": {
+      "page": "Apply Job",
+      "message": "\u30b5\u30dd\u30fc\u30c8\u3055\u308c\u3066\u3044\u308b\u5f62\u5f0f\uff1a.doc. .docx. .pdf.",
+      "message_type": "Web content",
+      "context": "Supported formats text"
+    },
+    "linkedin_label": {
+      "page": "Apply Job",
+      "message": "LinkedIn\u306e\u30d7\u30ed\u30d5\u30a3\u30fc\u30eb",
+      "message_type": "Web content",
+      "context": "Linkedin Profile label"
+    },
+    "website_label": {
+      "page": "Apply Job",
+      "message": "\u30a6\u30a7\u30d6\u30b5\u30a4\u30c8",
+      "message_type": "Web content",
+      "context": "Website Profile label"
+    }
+  },
+  "validations": {
+    "field_is_required": {
+      "page": "Personal Details",
+      "message": "\u30d5\u30a3\u30fc\u30eb\u30c9\u306f\u5fc5\u9808\u9805\u76ee\u3067\u3059",
+      "message_type": "Web content",
+      "context": "validation for first name required"
+    },
+    "min_max_first_name": {
+      "page": "Personal Details",
+      "message": "\u6700\u5c0f2\u5b57\u304b\u3089\u6700\u592715\u5b57\u3067\u3001\u7279\u6b8a\u6587\u5b57\u306f\u4f7f\u7528\u3067\u304d\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "validation for first name for min max and no special characters"
+    },
+    "apostrophe_first_name": {
+      "page": "Personal Details",
+      "message": "1\u3064\u3060\u3051\u30a2\u30dd\u30b9\u30c8\u30ed\u30d5\u30a3\u304c\u4f7f\u7528\u3067\u304d\u307e\u3059",
+      "message_type": "Web content",
+      "context": "validation for first name for one apostrophe only"
+    },
+    "required_country_state_city": {
+      "page": "Personal Details",
+      "message": "\u56fd\u3001\u5dde\u3001\u5e02\u306f\u5fc5\u305a\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "validation for country, state and city field required"
+    },
+    "required_state_city": {
+      "page": "Personal Details",
+      "message": "\u5dde\u3001\u5e02\u306f\u5fc5\u305a\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "validation for state and city field required"
+    },
+    "required_city": {
+      "page": "Personal Details",
+      "message": "\u5e02\u306f\u5fc5\u305a\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "validation for city field required"
+    },
+    "only_number_not_allowed": {
+      "page": "Personal Details",
+      "message": "\u30d5\u30a3\u30fc\u30eb\u30c9\u306b\u306f\u6570\u5b57\u4ee5\u5916\u306e\u3082\u306e\u3082\u542b\u3081\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "validation for only numbers are not allowed"
+    },
+    "min_max_postal_code": {
+      "page": "Personal Details",
+      "message": "\n\u90f5\u4fbf\u756a\u53f7\u306b\u306f\u3001\u6700\u5c0f3\u5b57\u304b\u3089\u6700\u592725\u5b57\u307e\u3067\u5165\u529b\u3067\u304d\u307e\u3059",
+      "message_type": "Web content",
+      "context": "validation for postal code min max numbers"
+    },
+    "postal_code_letters_numbers": {
+      "page": "Personal Details",
+      "message": "\u90f5\u4fbf\u756a\u53f7\u306b\u306f\u3001\u6587\u5b57\u3001\u6570\u5b57\u3001\u30c0\u30c3\u30b7\u30e5\u306e\u307f\u3092\u542b\u3080\u3053\u3068\u304c\u3067\u304d\u307e\u3059",
+      "message_type": "Web content",
+      "context": "validation for postal code contain letters, numbers, and dashes"
+    },
+    "success_text": {
+      "page": "General",
+      "message": "\u6210\u529f",
+      "message_type": "Web content",
+      "context": "Success text ijn notification toaster"
+    },
+    "warning_text": {
+      "page": "General",
+      "message": "\u8b66\u544a",
+      "message_type": "Web content",
+      "context": "Warning text ijn notification toaster"
+    },
+    "error_text": {
+      "page": "General",
+      "message": "\u30a8\u30e9\u30fc",
+      "message_type": "Web content",
+      "context": "Error text ijn notification toaster"
+    },
+    "policies_error": {
+      "page": "Personal Details",
+      "message": "\u3059\u3079\u3066\u306e\u30dd\u30ea\u30b7\u30fc\u306b\u540c\u610f\u3057\u3066\u304b\u3089\u3001\u6b21\u306b\u9032\u3093\u3067\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Displayed when policies are not accepted during edit profile"
+    },
+    "profile_img_error1": {
+      "page": "Personal Details",
+      "message": "\u30d5\u30a1\u30a4\u30eb\u30b5\u30a4\u30ba\u306f5MB\u4ee5\u4e0a\u306b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Displayed when profile image is more than 5 MB edit profile"
+    },
+    "profile_img_error2": {
+      "page": "Personal Details",
+      "message": "\u753b\u50cf\u306e\u307f\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Displayed when profile image other than image is uploaded edit profile"
+    },
+    "street_address_error": {
+      "page": "Personal Details",
+      "message": "\u4f4f\u6240\uff081\u884c\u76ee\uff09\u306b\u306f\u3001\u6700\u5927100\u6587\u5b57\u307e\u3067\u5165\u529b\u3067\u304d\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Displayed when street address is more then max characters edit profile"
+    },
+    "street_address2_error": {
+      "page": "Personal Details",
+      "message": "\u4f4f\u6240\uff082\u884c\u76ee\uff09\u306b\u306f\u3001\u6700\u5927100\u6587\u5b57\u307e\u3067\u5165\u529b\u3067\u304d\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Displayed when street address is more then max characters edit profile"
+    },
+    "street_address_required_error": {
+      "page": "Personal Details",
+      "message": "\u4f4f\u6240\u30d5\u30a3\u30fc\u30eb\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Displayed for required field"
+    },
+    "no_suffix_prefix_error": {
+      "page": "Personal Details",
+      "message": "\u63a5\u982d\u8a9e/\u63a5\u5c3e\u8a9e\u306b\u306f\u30b9\u30da\u30fc\u30b9\u3092\u4f7f\u7528\u3067\u304d\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "Displayed when space is entered in prefix/suffix"
+    },
+    "error_on_submit_profile": {
+      "page": "Personal Details",
+      "message": "\u3059\u3079\u3066\u306e\u5fc5\u9808\u4e8b\u9805\u3092\u5165\u529b\u3057\u3066\u304b\u3089\u3001\u6b21\u306b\u9032\u3093\u3067\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "when required fields are not filled up and submit is clicked"
+    },
+    "space_in_password": {
+      "page": "Edit Profile > Security",
+      "message": "\u30d1\u30b9\u30ef\u30fc\u30c9\u306b\u306f\u30b9\u30da\u30fc\u30b9\u3092\u4f7f\u7528\u3067\u304d\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "When space is included in password"
+    },
+    "password_error": {
+      "page": "Edit Profile > Security",
+      "message": "\u30d1\u30b9\u30ef\u30fc\u30c9\u306b\u306f\u5c11\u306a\u304f\u3066\u3082\u5927\u6587\u5b571\u5b57\u3001\u5c0f\u6587\u5b571\u5b57\u3001\u7279\u6b8a\u6587\u5b57\uff08\uff01@\uff03$\uff05_\uff091\u5b57\u3001\u6570\u5b571\u5b57\u3092\u542b\u3093\u3067\u304f\u3060\u3055\u3044\u3002\u6700\u5c0f8\u5b57\u304b\u3089\u6700\u592760\u5b57\u307e\u3067\u5165\u529b\u3067\u304d\u307e\u3059",
+      "message_type": "Web content",
+      "context": "When space is included in password"
+    },
+    "password_mismatch_error": {
+      "page": "Edit Profile > Security",
+      "message": "\u30d1\u30b9\u30ef\u30fc\u30c9\u304c\u4e00\u81f4\u3057\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "When new and confirm password does not match"
+    },
+    "otp_error": {
+      "page": "Edit Profile > Security",
+      "message": "2\u30d5\u30a1\u30af\u30bf\u30fc\u8a8d\u8a3c\u30b3\u30fc\u30c9\u306f\u6570\u5b576\u6841\u3067\u3059\u3002",
+      "message_type": "Web content",
+      "context": "when otp is not a valid number"
+    },
+    "invalid_email_error": {
+      "page": "Edit Profile > Security",
+      "message": "\u6709\u52b9\u306a\u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "when email is not a valid email"
+    },
+    "invalid_ip_error": {
+      "page": "Edit Profile > Security",
+      "message": "\u6709\u52b9\u306aIP\u30a2\u30c9\u30ec\u30b9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "when ip is not a valid ip"
+    },
+    "forfeit_funds_error": {
+      "page": "Edit Profile > Security",
+      "message": "\u300c\u6ca1\u53ce\u8cc7\u91d1\u300d\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "FORFEIT FUNDS error message"
+    },
+    "invalid_end_date_error": {
+      "page": "Edit Profile > Security",
+      "message": "\u672a\u6765\u306e\u65e5\u4ed8\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "invalid date error"
+    },
+    "deactivate_error": {
+      "page": "Edit Profile > Security",
+      "message": "\u300c\u7121\u52b9\u5316\u300d\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "DEACTIVATE error message"
+    },
+    "mobile_no_error": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "\u643a\u5e2f\u96fb\u8a71\u756a\u53f7\u306f\u6570\u5b57\u3060\u3051\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "invalid mobile number validation message"
+    },
+    "mobile_no_min_error": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "\u643a\u5e2f\u96fb\u8a71\u306e\u756a\u53f7\u306b\u306f\u6700\u4f4e5\u5b57\u5165\u529b\u3055\u308c\u307e\u3059",
+      "message_type": "Web content",
+      "context": "min mobile number validation message"
+    },
+    "mobile_no_max_error": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "\u643a\u5e2f\u96fb\u8a71\u306e\u756a\u53f7\u306b\u306f\u6700\u9ad830\u5b57\u5165\u529b\u3055\u308c\u307e\u3059",
+      "message_type": "Web content",
+      "context": "max mobile number validation message"
+    },
+    "Postal_min_error": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "\u90f5\u4fbf\u756a\u53f7\u306b\u306f\u6700\u4f4e3\u5b57\u5165\u529b\u3055\u308c\u307e\u3059",
+      "message_type": "Web content",
+      "context": "min postal code validation message"
+    },
+    "postal_max_error": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "\u90f5\u4fbf\u756a\u53f7\u306b\u306f\u6700\u9ad825\u5b57\u5165\u529b\u3055\u308c\u307e\u3059",
+      "message_type": "Web content",
+      "context": "max postal code validation message"
+    },
+    "image_upload_error": {
+      "page": "Edit Profile > Identity Verification",
+      "message": "\u30d5\u30a1\u30a4\u30eb\u306e\u5bf8\u6cd5\u306f450\u00d7600\u4ee5\u4e0a\u306b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Uploaded image is less than 450*600 dimension"
+    },
+    "cover_limit_error": {
+      "page": "Apply Job",
+      "message": "\u30d5\u30a1\u30a4\u30eb\u30b5\u30a4\u30ba\u304c2mb\u4ee5\u5185\u306e\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u3092\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Uploaded document is greater than 2 MB"
+    },
+    "valid_website_url_error": {
+      "page": "Apply Job",
+      "message": "\u6709\u52b9\u306a\u30a6\u30a7\u30d6\u30b5\u30a4\u30c8\u306e\u30a2\u30c9\u30ec\u30b9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "invalid website url is entered"
+    },
+    "valid_linkedin_url_error": {
+      "page": "Apply Job",
+      "message": "\u6709\u52b9\u306aLinkedIn\u306e\u30a2\u30c9\u30ec\u30b9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "invalid linkedin url is entered"
+    },
+    "min_threshold_error": {
+      "page": "Crypto Conversion",
+      "message": "\u6700\u4f4e\u9650",
+      "message_type": "Web content",
+      "context": "minimum limit message"
+    },
+    "invalid_data_error": {
+      "page": "Crypto Conversion",
+      "message": "\u6709\u52b9\u306a\u30c7\u30fc\u30bf\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "if any invalid data is entered"
+    },
+    "value_greater_than_0_error": {
+      "page": "Crypto Conversion",
+      "message": "\u5024\u306f0\u3088\u308a\u5927\u304d\u304f\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Value should be greater than 0 error"
+    },
+    "2_decimal_error": {
+      "page": "Crypto Conversion",
+      "message": "\u5024\u306f\u5c0f\u6570\u70b92\u6841\u3088\u308a\u5c11\u306a\u3044\u304b\u540c\u3058\u306b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 2 digits after decimal point error"
+    },
+    "8_decimal_error": {
+      "page": "Crypto Conversion",
+      "message": "\u5024\u306f\u5c0f\u6570\u70b98\u6841\u3088\u308a\u5c11\u306a\u3044\u304b\u540c\u3058\u306b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 8 digits after decimal point error"
+    },
+    "min_limit_error": {
+      "page": "Crypto Conversion",
+      "message": "\u6700\u5c0f\u91cf\u306f\u5927\u304d\u304f\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Minimum amount should be greater than error"
+    },
+    "simplex_min_limit_error": {
+      "page": "Simplex",
+      "message": "\u91cf\u306f50\u4ee5\u4e0a\u306b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Amount must be greater than or equal to 50 error"
+    },
+    "simplex_max_limit_error": {
+      "page": "Simplex",
+      "message": "\u91cf\u306f20,000\u3088\u308a\u5c11\u306a\u3044\u304b\u540c\u3058\u306b\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Amount must be less than or equal to 20,000 error"
+    }
+  },
+  "general_1": {
+    "language_head": {
+      "page": "Header",
+      "message": "言語",
+      "message_type": "Web content",
+      "context": "Header top menu to change language"
+    },
+    "default_language_head": {
+      "page": "Edit profile",
+      "message": "既定の言語",
+      "message_type": "Web content",
+      "context": "Edit profile head to change default language"
+    },
+    "numeric_valdation": {
+      "page": "Personal Details",
+      "message": "数字でなければなりません",
+      "message_type": "Web content",
+      "context": "validation for first name required"
+    },
+    "enable_text": {
+      "page": "Security",
+      "message": "有効にする",
+      "message_type": "Web content",
+      "context": "enable text"
+    },
+    "disable_text": {
+      "page": "Security",
+      "message": "無効にする",
+      "message_type": "Web content",
+      "context": "disable text"
+    },
+    "enabled_text": {
+      "page": "Security",
+      "message": "有効",
+      "message_type": "Web content",
+      "context": "enabled text"
+    },
+    "disabled_text": {
+      "page": "Security",
+      "message": "無効",
+      "message_type": "Web content",
+      "context": "disabled text"
+    },
+    "authenticator_text": {
+      "page": "Security",
+      "message": "認証者",
+      "message_type": "Web content",
+      "context": "Authenticator text"
+    }
+  }
+}
