@@ -8,7 +8,7 @@ import moment from "moment";
 import { faDesktop, faMobileAlt } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
-
+import { translate } from "react-i18next";
 /* Components */
 import { globalVariables } from "Globals.js";
 import { deleteAccount } from "ACTIONS/authActions";
@@ -74,24 +74,24 @@ const IpInput = styled(NewInput)`
 `;
 let { API_URL } = globalVariables;
 
-const columns = [
-  {
-    title: "Date/Time",
-    dataIndex: "date",
-    key: "date"
-  },
-  {
-    title: "IP Address",
-    dataIndex: "IP",
-    key: "IP"
-  },
-  {
-    title: "Device",
-    className: "column_device",
-    dataIndex: "Device",
-    key: "Device"
-  }
-];
+// const columns = [
+//   {
+//     title: "Date/Time",
+//     dataIndex: "date",
+//     key: "date"
+//   },
+//   {
+//     title: "IP Address",
+//     dataIndex: "IP",
+//     key: "IP"
+//   },
+//   {
+//     title: "Device",
+//     className: "column_device",
+//     dataIndex: "Device",
+//     key: "Device"
+//   }
+// ];
 
 const confirm = Modal.confirm;
 const ModalIpInput = styled(NewInput)``;
@@ -132,6 +132,7 @@ class Acc_settings extends Component {
       user2fastatus: this.props.profileDetails.is_twofactor,
       selectAllText: false,
       selectAllEmail: false,
+      headerLang: "",
       // totalUSDOfWallet: this.props.totalUSDOfWallet,
       // showDeactivateModal: false,
       // walletCoins: this.props.walletCoins,
@@ -142,10 +143,10 @@ class Acc_settings extends Component {
       },
       isWhitelistIp: false
     };
-
+    this.t = this.props.t;
     this.validator = new SimpleReactValidator({
       ipvalid: {
-        message: "Enter a valid IP address.",
+        message: this.t("validations:invalid_ip_error.message"),
         rule: val => {
           var RE = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
           if (RE.test(val)) {
@@ -156,7 +157,7 @@ class Acc_settings extends Component {
         }
       },
       matchDelete: {
-        message: "Please enter 'FORFEIT FUNDS'.",
+        message: this.t("validations:forfeit_funds_error.message"),
         rule: val => {
           var RE = /^FORFEIT FUNDS$/;
           if (RE.test(val)) {
@@ -167,7 +168,7 @@ class Acc_settings extends Component {
         }
       },
       gttoday: {
-        message: "Please enter upcoming date.",
+        message: this.t("valiadtions:invalid_end_date_error.message"),
         rule: val => {
           var a = moment();
           var b = moment(val);
@@ -184,7 +185,7 @@ class Acc_settings extends Component {
     });
     this.validator1 = new SimpleReactValidator({
       matchDelete: {
-        message: "Please enter 'FORFEIT FUNDS'.",
+        message: this.t("validations:forfeit_funds_error.message"),
         rule: val => {
           var RE = /^FORFEIT FUNDS$/;
           if (RE.test(val)) {
@@ -195,7 +196,7 @@ class Acc_settings extends Component {
         }
       },
       matchDeactivate: {
-        message: "Please enter 'DEACTIVATE'.",
+        message: this.t("validations:deactivate_error.message"),
         rule: val => {
           var RE = /^DEACTIVATE$/;
           if (RE.test(val)) {
@@ -224,26 +225,13 @@ class Acc_settings extends Component {
     this.handleDeactivateYes = this.handleDeactivateYes.bind(this);
     this.fianlPerIpWhitelist = this.fianlPerIpWhitelist.bind(this);
     this.addPerIpWhitelist = this.addPerIpWhitelist.bind(this);
-    // this.onStartChange = this.onStartChange.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
   /* Life Cycle Methods */
 
   componentWillReceiveProps(newProps) {
-    /*  console.log(this.props)
-         if(this.props.theme!==undefined)
-         {
-             if(this.props.theme !== this.state.theme)
-             {
-                 if(this.props.theme==false)
-                     this.setState({searchCSS:"Input_search_night"})
-                 else
-                     this.setState({searchCSS:"INPUT_search"})
-             }
-         } */
     this.setState({ user2fastatus: this.props.profileDetails.is_twofactor });
-    // console.log("walletCoins-------------------", this.state.user2fastatus);
     if (
       newProps.profileDetails.date_format !==
         this.props.profileDetails.date_format &&
@@ -267,12 +255,10 @@ class Acc_settings extends Component {
       this.setState({
         checked: this.props.profileDetails.security_feature
       });
-      // console.log(this.props);
       if (
         this.props.profileDetails.is_whitelist_ip !== undefined &&
         this.props.profileDetails.is_whitelist_ip !== null
       ) {
-        // console.log("9898989898988898989");
         this.setState({
           isWhitelistIp: this.props.profileDetails.is_whitelist_ip
         });
@@ -294,17 +280,6 @@ class Acc_settings extends Component {
     var a = moment();
     var b = moment(value);
     var ans = b.diff(a, "days"); // "in a day"
-
-    // if (a.format("DD-MM-YYYY") === b.format("DD-MM-YYYY")) {
-    //   this.setState({
-    //     validDays: 1
-    //   });
-    // } else {
-    //   this.setState({
-    //     validDays: ans + 2
-    //   });
-    // }
-    // console.log("startValue", ans + 1);
     this.setState({
       startValue: value,
       validDays: ans + 1
@@ -314,7 +289,6 @@ class Acc_settings extends Component {
     this.validator.hideMessages();
     this.validator1.hideMessages();
     this.forceUpdate();
-    // rerender to hide messages for the first time
   }
   checkBoxChange(key, e, record) {
     const { data_noti } = this.state;
@@ -361,12 +335,12 @@ class Acc_settings extends Component {
     fetch(API_URL + `/get-notification-list`, {
       method: "get",
       headers: {
-        Authorization: "Bearer " + this.props.isLoggedIn
+        Authorization: "Bearer " + this.props.isLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       }
     })
       .then(response => response.json())
       .then(responseData => {
-        // console.log("Did IP : ", responseData);
         if (responseData.status == 200) {
           let b = JSON.parse(JSON.stringify(responseData.data));
           let [selectAllEmail, selectAllText] = this.getEmailAndText(
@@ -389,8 +363,7 @@ class Acc_settings extends Component {
       })
       .catch(error => {
         this.setState({ loader: false });
-        this.openNotificationWithIcon("error", "Error", error);
-        // console.log(error);
+        console.log(error);
       });
   }
   addData() {
@@ -416,7 +389,7 @@ class Acc_settings extends Component {
           });
           this.openNotificationWithIcon(
             "success",
-            "Success",
+            this.t("validations:success_text.message"),
             responseData.message
           );
         } else {
@@ -431,8 +404,6 @@ class Acc_settings extends Component {
       .catch(error => {
         this.setState({ loader: false });
         this.openNotificationWithIcon("error", "Error", error);
-
-        // console.log(error);
       });
   }
   getIpWhitelist(pageIp) {
@@ -444,7 +415,6 @@ class Acc_settings extends Component {
     })
       .then(response => response.json())
       .then(responseData => {
-        // console.log("Did IP : ", responseData);
         if (responseData.status == 200) {
           this.setState({
             whitelistData: responseData.data,
@@ -470,15 +440,11 @@ class Acc_settings extends Component {
   deleteUserAccount() {
     if (this.validator1.allValid()) {
       this.setState({ loader: true });
-      // alert("btn clicked");
       let value = {};
       value["email"] = this.props.email;
       value["user_id"] = this.props.profileDetails.id;
       value["jwt_token"] = this.props.isLoggedIn;
       value["otp"] = this.state.code2fa;
-      // value["otp"] = this.state.code2fa;
-      // console.log("deleteUserAccount value======================", value);
-      // this.props.deleteAccount(this.props.isLoggedIn, value);
       fetch(API_URL + "/users/deleteAccount", {
         method: "delete",
         headers: {
@@ -582,7 +548,6 @@ class Acc_settings extends Component {
             };
             antTableData.push(temp);
           });
-          /* console.log("->>>>>>>>>",antTableData); */
           self.setState({
             loginHistory: antTableData,
             loader: false
@@ -713,7 +678,7 @@ class Acc_settings extends Component {
           this.getIpWhitelist(this.state.pageIp);
           this.openNotificationWithIcon(
             "success",
-            "SUCCESS",
+            this.t("validations:success_text.message"),
             responseData.message
           );
           let fields = {
@@ -731,7 +696,7 @@ class Acc_settings extends Component {
           this.setState({ loader: false });
           this.openNotificationWithIcon(
             "error",
-            "Error",
+            this.t("validations:error_text.message"),
             responseData.err ? responseData.err : responseData.message
           );
         } else {
@@ -772,7 +737,7 @@ class Acc_settings extends Component {
           this.getIpWhitelist(this.state.pageIp);
           this.openNotificationWithIcon(
             "success",
-            "SUCCESS",
+            this.t("validations:success_text.message"),
             responseData.message
           );
           let fields = {
@@ -792,7 +757,7 @@ class Acc_settings extends Component {
           this.setState({ loader: false });
           this.openNotificationWithIcon(
             "error",
-            "Error",
+            this.t("validations:error_text.message"),
             responseData.err ? responseData.err : responseData.message
           );
         } else {
@@ -823,28 +788,15 @@ class Acc_settings extends Component {
     }
   }
   addIpWhitelist(e, fields = null) {
-    // console.log(fields, e);
-    // if (fields == null) {
-    //   if (this.validator.allValid() && this.state.daysErrMsg === null) {
-    //     this.fianlIpWhitelist(this.state.fields);
-    //   } else {
-    //     this.validator.showMessages();
-    //     this.forceUpdate();
-    //   }
-    // } else {
-    //   this.fianlIpWhitelist(fields);
-    // }
     if (this.validator.allValid()) {
       this.fianlIpWhitelist(this.state.fields);
     } else {
-      // console.log("this.state.daysErrMsg", this.state.daysErrMsg);
       this.validator.showMessages();
       this.forceUpdate();
     }
   }
 
   deleteIP(src) {
-    // console.log(src, this.props.isLoggedIn);
     this.setState({ loader: true });
     fetch(API_URL + `/users/delete-whitelist-ip`, {
       method: "delete",
@@ -860,7 +812,7 @@ class Acc_settings extends Component {
         this.getIpWhitelist(this.state.pageIp);
         this.openNotificationWithIcon(
           "success",
-          "SUCCESS",
+          this.t("validations:success_text.message"),
           responseData.message
         );
         this.setState({ loader: false });
@@ -916,7 +868,7 @@ class Acc_settings extends Component {
             () => {
               this.openNotificationWithIcon(
                 "success",
-                "Success",
+                this.t("validations:success_text.message"),
                 responseData.message
               );
             }
@@ -941,42 +893,9 @@ class Acc_settings extends Component {
       });
   }
   onChangeIP(checked) {
-    // console.log(checked, API_URL, this.props);
-
     this.setState({ visibleIpModal: true, checkedIP: checked });
-    /* this.setState({ loader: true });
-
-        fetch(API_URL + `/users/whitelist-ip-status-change`, {
-            method: "post",
-            headers: {
-                Authorization: "Bearer " + this.props.isLoggedIn,
-            },
-            body: JSON.stringify({
-                status: checked
-            })
-        })
-            .then(response => response.json())
-            .then((responseData) => {
-                console.log(responseData)
-                if (responseData.status == 200) {
-                    console.log("Inside IF")
-                    if (checked == true)
-                        this.setState({ visibleIpModal: true, checkedIP: checked });
-                }
-                else {
-                    console.log("Inside ELSE")
-                    this.openNotificationWithIcon("error", responseData.status, responseData.err);
-                }
-                this.setState({ loader: false });
-            })
-            .catch(error => {
-                console.log(error)
-                this.openNotificationWithIcon("error", "Error", "Something went wrong!");
-                this.setState({ loader: false })
-            }) */
   }
   ipModalCancel() {
-    // console.log("IP Modal Cancel");
     this.setState({ visibleIpModal: false, checkedIP: false });
   }
   getWalletSummary() {
@@ -1007,7 +926,11 @@ class Acc_settings extends Component {
             loader: false
           });
         } else if (responseData.status == 403) {
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
           this.setState(
             {
               loader: false
@@ -1034,9 +957,10 @@ class Acc_settings extends Component {
     deactivate.classList.add("hide");
   }
   render() {
+    const { t } = this.props;
     const columns_text = [
       {
-        title: "Notifications",
+        title: `${t("head_notifications.message")}`,
         dataIndex: "title",
         className: "column-Noti",
         key: "title"
@@ -1050,7 +974,7 @@ class Acc_settings extends Component {
               value={this.state.selectAllText}
               checked={this.state.selectAllText}
             />
-            <span>&nbsp;Text</span>
+            <span>&nbsp;{t("table_head_text.message")}</span>
           </>
         ),
         className: "column-Text",
@@ -1076,7 +1000,7 @@ class Acc_settings extends Component {
               onChange={e => this.checkBoxChange("allEmail", e)}
               value={this.state.selectAllEmail}
             />
-            <span>&nbsp;Email</span>
+            <span>&nbsp;{t("table_head_email.message")}</span>
           </>
         ),
         className: "column-Email",
@@ -1146,15 +1070,15 @@ class Acc_settings extends Component {
     ];
 
     const { fields, data_noti, savedDataNoti, startValue } = this.state;
-    // console.log("Render method data is >>", this.state.data_noti);
+
     const columnsIP = [
       {
-        title: "IP Whitelist",
+        title: `${t("table_head_ip_whitelist.message")}`,
         dataIndex: "ip",
         key: "ip"
       },
       {
-        title: "Till Date",
+        title: `${t("table_head_till_date.message")}`,
         dataIndex: "expire_time",
         key: "day",
         render: src => {
@@ -1175,7 +1099,7 @@ class Acc_settings extends Component {
         }
       },
       {
-        title: "Action",
+        title: `${t("table_head_action.message")}`,
         key: "action",
         render: src => {
           // console.log(src.is_permanent);
@@ -1196,6 +1120,24 @@ class Acc_settings extends Component {
         }
       }
     ];
+    const columns = [
+      {
+        title: `${t("table_head_date_time.message")}`,
+        dataIndex: "date",
+        key: "date"
+      },
+      {
+        title: `${t("table_head_ip_address.message")}`,
+        dataIndex: "IP",
+        key: "IP"
+      },
+      {
+        title: `${t("table_head_device.message")}`,
+        className: "column_device",
+        dataIndex: "Device",
+        key: "Device"
+      }
+    ];
     let disabled = true;
     // console.log(savedDataNoti, "-------------->", data_noti);
     if (JSON.stringify(savedDataNoti) === JSON.stringify(data_noti)) {
@@ -1208,10 +1150,10 @@ class Acc_settings extends Component {
         {/* ----Notification code start ---- */}
         <NotiWrap>
           <NotiHead>
-            <span>Notifications</span>
+            <span>{t("head_notifications.message")}</span>
           </NotiHead>
           <NotiDesc>
-            <span>Automatic Email and/or Text Notifications</span>
+            <span>{t("subhead_notifications.message")}</span>
           </NotiDesc>
         </NotiWrap>
 
@@ -1231,7 +1173,7 @@ class Acc_settings extends Component {
           </WrapTable>
         </div>
         <AddButton disabled={disabled} onClick={this.addData}>
-          Save
+          {t("edit_profile_titles:subhead_personal_form_save_btn.message")}
         </AddButton>
 
         <HR />
@@ -1239,7 +1181,7 @@ class Acc_settings extends Component {
         {/* ----Threshold Notification code starts ---- */}
         {/* <NotiWrap>
           <NotiHead>
-            <span>Threshold Notifications</span>
+            <span>{t("head_threshold_notifications.message")}</span>
           </NotiHead>
         </NotiWrap>
         <WrapTable>
@@ -1250,7 +1192,7 @@ class Acc_settings extends Component {
         <LoginHistory>
           <HistoryHead>
             <Heading>
-              <span>Login History</span>
+              <span>{t("head_login_history.message")}</span>
             </Heading>
             <Desc>
               {/* <span>This feature provides information about the last activity on this mail account and any concurrent activity.</span> */}
@@ -1284,7 +1226,7 @@ class Acc_settings extends Component {
         <div>
           <HR2 />
           <DeleteHead>
-            <span>Security Settings</span>
+            <span>{t("head_security_settings.message")}</span>
           </DeleteHead>
           <DeleteDesc
             className="maxWidth"
@@ -1293,18 +1235,14 @@ class Acc_settings extends Component {
             <div
             // style={{ width: "1000px" }}
             >
-              When set 'ON', changes to any security settings on your account
-              will disable debits from your wallets for 24 hours. Additionally,
-              you will be notified prior to changing any security settings and
-              will have to confirm that you want to make those changes to ensure
-              you don't accidently lock your wallet.
+              {t("subhead_security_settings.message")}
             </div>
           </DeleteDesc>
           {/* {console.log(this.state.checked)} */}
           <TableWrap>
             <Switch
-              checkedChildren="ON"
-              unCheckedChildren="OFF"
+              checkedChildren={t("general_1:on_switch_text.message")}
+              unCheckedChildren={t("general_1:off_switch_text.message")}
               defaultChecked
               onChange={this.onChangeSwitch}
               checked={this.state.checked}
@@ -1318,7 +1256,7 @@ class Acc_settings extends Component {
         <LoginHistory>
           <HistoryHead>
             <Heading>
-              <span>IP Whitelist</span>
+              <span>{t("table_head_ip_whitelist.message")}</span>
             </Heading>
             <Desc>
               {/* <span>This feature provides information about the last activity on this mail account and any concurrent activity.</span> */}
@@ -1327,8 +1265,8 @@ class Acc_settings extends Component {
           {!this.state.isWhitelistIp && (
             <TableWrap>
               <Switch
-                checkedChildren="ON"
-                unCheckedChildren="OFF"
+                checkedChildren={this.t("general_1:on_switch_text.message")}
+                unCheckedChildren={this.t("general_1:off_switch_text.message")}
                 defaultChecked
                 onChange={this.onChangeIP}
                 checked={this.state.checkedIP}
@@ -1362,35 +1300,32 @@ class Acc_settings extends Component {
                 current={this.state.pageIp}
                 total={this.state.ipCount}
               />
-              <IpButton onClick={this.openAddModal.bind(this)}>Add</IpButton>
+              <IpButton onClick={this.openAddModal.bind(this)}>
+                {t("subhead_setting_add_btn.message")}
+              </IpButton>
             </div>
           )}
         </LoginHistory>
         <HR2 />
         <DeleteWrap>
           <DeleteHead>
-            <span>Deactivate Account</span>
+            <span>{t("head_deactivate_account.message")}</span>
           </DeleteHead>
-          <DeleteDesc className="maxWidth">
-            <span>Click on the button below to deactivate your account.</span>
+          <DeleteDesc>
+            <span>{t("subhead_deactivate_account.message")}</span>
           </DeleteDesc>
           <DeleteBtn>
-            {/* <ButtonDel type="primary" onClick={this.showConfirm.bind(this)}> */}
             <ButtonDel
               type="primary"
               onClick={() => {
                 if (this.state.walletCoins != null) {
-                  // alert("openDeleteModal", this.state.walletCoins);
-                  // console.log("openDeleteModal", this.state.walletCoins);
                   this.openDeleteModal();
                 } else {
-                  // alert("forfeitFunds", this.state.walletCoins);
-                  // console.log("forfeitFunds", this.state.walletCoins);
                   this.openDeactivateModal();
                 }
               }}
             >
-              Deactivate Account
+              {t("head_deactivate_account.message")}
             </ButtonDel>
           </DeleteBtn>
         </DeleteWrap>
@@ -1402,18 +1337,12 @@ class Acc_settings extends Component {
         <VerifyModal
           visible={this.state.showAddModal}
           onCancel={this.closeModal}
-          title="Whitelist an IP Address"
+          title={t("whitelist_popup_title.message")}
           footer={null}
         >
-          <Description>
-            {" "}
-            A Whitelist enhances the security of your account by limiting access
-            to your account from IP Addresses you specify. Speak to your
-            Internet Service Provider to ensure that your IP Address is 'Static'
-            and will not change prior to enabling this security feature.
-          </Description>
+          <Description> {t("whitelist_popup_text.message")}</Description>
           <NewP className="add_new_ip">
-            <InputLabel>IP Address*</InputLabel>
+            <InputLabel>{t("table_head_ip_address.message")}*</InputLabel>
             <div className="otp-input-wrap">
               <OTPInput
                 className="otp-input"
@@ -1421,42 +1350,22 @@ class Acc_settings extends Component {
                 size="medium"
                 onChange={this.ipChange.bind(this)}
                 name="ip"
-                // style={{ marginBottom: "20px" }}
               />
               {this.validator.message(
                 "ip",
                 this.state.fields.ip,
                 "required|ipvalid",
                 "text-danger-validation",
-                { required: "IP field is required." }
+                { required: this.t("general_1:ip_required_error.message") }
               )}
             </div>
-            {/* <InputLabel>Enter Days</InputLabel> */}
             <div className="range_picker_wrap">
-              {/* <OTPInput
-                style={{ paddingRight: "10px" }}
-                min="1"
-                value={this.state.fields.days}
-                type="number"
-                size="medium"
-                onChange={this.ipChange.bind(this)}
-                name="days"
-              />
-              {this.validator.message(
-                "days",
-                this.state.fields.days,
-                "required",
-                "text-danger-validation",
-                { required: "Days field is required." }
-              )} */}
               <DatePicker
-                // disabledDate={this.disabledStartDate}
-                // minDate={moment()}
-                // disabledDate={this.disabledDate}
-                // defaultValue={moment()}
                 format="YYYY-MM-DD"
                 value={startValue}
-                placeholder="Select End Date"
+                placeholder={this.t(
+                  "general_1:select_end_date_placeholder.message"
+                )}
                 onChange={this.onChange}
                 showToday={false}
               />
@@ -1465,34 +1374,35 @@ class Acc_settings extends Component {
                 this.state.startValue,
                 "required|gttoday",
                 "text-danger-validation",
-                { required: "End Date field is required." }
+                {
+                  required:
+                    this.t("general_1:end_date_text.message") +
+                    this.t("validations:field_is_required.message")
+                }
               )}
-              {/* {this.state.daysErrMsg && (
-                <div className="text-danger-validation">
-                  {this.state.daysErrMsg}
-                </div>
-              )} */}
             </div>
           </NewP>
           <ButtonDiv>
-            <NewButton onClick={this.addIpWhitelist}>Submit</NewButton>
+            <NewButton onClick={this.addIpWhitelist}>
+              {t("submit_btn.message")}
+            </NewButton>
           </ButtonDiv>
         </VerifyModal>
         <VerifyModal
           visible={this.state.showDeleteModal}
           onCancel={this.closeModal}
-          title="Deactivate Account"
+          title={t("head_deactivate_account.message")}
           footer={null}
           className="deactivate_modal"
         >
           <div>
-            <Description> Below is the summary of your wallet</Description>
+            <Description>{this.t("deactivate_popup_text.message")}</Description>
             <SummaryTable>
               <thead>
                 <tr>
-                  <th>Coins</th>
-                  <th>Quantity</th>
-                  <th>Fiat Value</th>
+                  <th>{t("deactivate_popup_table_head_coins.message")}</th>
+                  <th>{t("deactivate_popup_table_head_quantity.message")}</th>
+                  <th>{t("deactivate_popup_table_head_fiat_value.message")}</th>
                 </tr>
               </thead>
               {this.state.walletCoins ? (
@@ -1511,7 +1421,9 @@ class Acc_settings extends Component {
                     );
                   })}
                   <tr>
-                    <td colSpan="2">Total Value (USD)</td>
+                    <td colSpan="2">
+                      {t("deactivate_popup_table_footer_head.message")}
+                    </td>
                     <td>$ {this.state.totalUSDOfWallet}</td>
                   </tr>
                 </tbody>
@@ -1525,11 +1437,13 @@ class Acc_settings extends Component {
                   this.props.history.push("/wallet");
                 }}
               >
-                <DeNewButton>Remove Existing Funds</DeNewButton>
+                <DeNewButton>
+                  {t("deactivate_popup_remove_funds_btn.message")}
+                </DeNewButton>
               </DeButtonDiv>
               <DeButtonDiv className="right_btn" onClick={this.forfeitFunds}>
                 <DeNewButton className="right_text">
-                  Forfeit Funds & Deactivate
+                  {t("deactivate_popup_forfeit_funds_btn.message")}
                 </DeNewButton>
               </DeButtonDiv>
             </DeactivateButtonWarp>
@@ -1538,19 +1452,21 @@ class Acc_settings extends Component {
         <VerifyModal
           visible={this.state.showDeactivateModal}
           onCancel={this.closeModal}
-          title="Deactivate Account"
+          title={t("deactivate_popup_title.message")}
           footer={null}
           className="deactivate_modal"
         >
           {this.state.walletCoins ? (
             <div>
-              <Description> Below is the summary of your wallet</Description>
+              <Description>{t("deactivate_popup_text.message")}</Description>
               <SummaryTable>
                 <thead>
                   <tr>
-                    <th>Coins</th>
-                    <th>Quantity</th>
-                    <th>Fiat Value</th>
+                    <th>{t("deactivate_popup_table_head_coins.message")}</th>
+                    <th>{t("deactivate_popup_table_head_quantity.message")}</th>
+                    <th>
+                      {t("deactivate_popup_table_head_fiat_value.message")}
+                    </th>
                   </tr>
                 </thead>
 
@@ -1569,7 +1485,9 @@ class Acc_settings extends Component {
                     );
                   })}
                   <tr>
-                    <td colSpan="2">Total Value (USD)</td>
+                    <td colSpan="2">
+                      {t("deactivate_popup_table_footer_head.message")}
+                    </td>
                     <td>$ {this.state.totalUSDOfWallet}</td>
                   </tr>
                 </tbody>
@@ -1581,33 +1499,36 @@ class Acc_settings extends Component {
 
           <DeactiveWrap className="" id="deactivate">
             <Description className="final_deactivate">
-              Are you sure you want to Deactivate your account?
+              {t("deactivate_popup_text_confirm.message")}
             </Description>
             <DeactivateButtonWarp className="final_deactivate">
               <DeButtonDiv
                 className="final_deactivate"
                 onClick={this.closeModal}
               >
-                <DeNewButton>No</DeNewButton>
+                <DeNewButton>
+                  {t("edit_profile_titles:dont_agree_no_btn.message")}
+                </DeNewButton>
               </DeButtonDiv>
               <DeButtonDiv
                 className="right_btn final_deactivate"
                 onClick={this.handleDeactivateYes}
               >
-                <DeNewButton className="right_text">Yes</DeNewButton>
+                <DeNewButton className="right_text">
+                  {t("edit_profile_titles:dont_agree_yes_btn.message")}
+                </DeNewButton>
               </DeButtonDiv>
             </DeactivateButtonWarp>
           </DeactiveWrap>
           {this.state.walletCoins ? (
             <DeactivateWrapper className="wrapper" id="wrapper">
               <Description>
-                *Any funds in your wallet will no longer be accessible after the
-                deactivation of your account.
+                *{t("deactivate_popup_text_note.message")}
               </Description>
               <div className="nav__body">
                 <NewP className="deactivate">
                   <InputLabel>
-                    Type 'FORFEIT FUNDS' in the box below:
+                    {t("deactivate_popup_label3.message")}
                   </InputLabel>
                   <div className="otp-input-wrap">
                     <OTPInput
@@ -1623,17 +1544,20 @@ class Acc_settings extends Component {
                       this.state.deleteText,
                       "required|matchDelete",
                       "text-danger-validation",
-                      { required: "This field is required." }
+                      {
+                        required: this.t(
+                          "general_1:this_field_required_error.message"
+                        )
+                      }
                     )}
                   </div>
                   {this.state.user2fastatus ? (
                     <div>
                       <InputLabel>
-                        Enter your 2FA code in the box below:
+                        {t("deactivate_popup_label2.message")}:
                       </InputLabel>
                       <div>
                         <OTPInput
-                          // style={{ paddingRight: "10px" }}
                           min="1"
                           value={this.state.code2fa}
                           type="text"
@@ -1646,15 +1570,26 @@ class Acc_settings extends Component {
                           this.state.code2fa,
                           "required|numeric|min:6|max:6",
                           "text-danger-validation",
-                          { required: "2FA field is required." }
+                          {
+                            required: t(
+                              "general_1:2fa_field_required_error.message"
+                            ),
+                            numeric: t(
+                              "general_1:2fa_must_number_error.message"
+                            ),
+                            min: t("general_1:2fa_min_error.message"),
+                            max: t("general_1:2fa_max_error.message")
+                          }
                         )}
                       </div>
                     </div>
                   ) : (
                     <Code2FADiv>
-                      <p>2FA is mandatory to deactivate your account.</p>
-                      <p>Please click on below link to enable 2FA.</p>
-                      <Link to={"/editProfile"}>Click here</Link>
+                      <p>{t("deactivate_popup_text1.message")}</p>
+                      <p>{t("deactivate_popup_text2.message")}</p>
+                      <Link to={"/editProfile"}>
+                        {t("deactivate_popup_click_here.message")}
+                      </Link>
                     </Code2FADiv>
                   )}
                 </NewP>
@@ -1663,14 +1598,20 @@ class Acc_settings extends Component {
                     className="final_deactivate"
                     onClick={this.closeModal}
                   >
-                    <DeNewButton>Cancel</DeNewButton>
+                    <DeNewButton>
+                      {t(
+                        "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                      )}
+                    </DeNewButton>
                   </DeButtonDiv>
                   {this.state.user2fastatus ? (
                     <DeButtonDiv
                       className="right_btn final_deactivate"
                       onClick={this.deleteUserAccount}
                     >
-                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                      <DeNewButton className="right_text">
+                        {t("conversion:confirm_btn.message")}
+                      </DeNewButton>
                     </DeButtonDiv>
                   ) : (
                     <DeButtonDiv
@@ -1678,7 +1619,9 @@ class Acc_settings extends Component {
                       className="right_btn final_deactivate disabled"
                       onClick={this.deleteUserAccount}
                     >
-                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                      <DeNewButton className="right_text">
+                        {t("conversion:confirm_btn.message")}
+                      </DeNewButton>
                     </DeButtonDiv>
                   )}
                 </DeactivateButtonWarp>
@@ -1692,7 +1635,9 @@ class Acc_settings extends Component {
               </Description> */}
               <div className="nav__body">
                 <NewP className="deactivate deactivate_no_funds">
-                  <InputLabel>Type 'DEACTIVATE' in the box below:</InputLabel>
+                  <InputLabel>
+                    {t("deactivate_popup_label1.message")}:
+                  </InputLabel>
                   <div className="otp-input-wrap">
                     <OTPInput
                       className="otp-input"
@@ -1707,13 +1652,17 @@ class Acc_settings extends Component {
                       this.state.deactivateText,
                       "required|matchDeactivate",
                       "text-danger-validation",
-                      { required: "This field is required." }
+                      {
+                        required: this.t(
+                          "general_1:this_field_required_error.message"
+                        )
+                      }
                     )}
                   </div>
                   {this.state.user2fastatus ? (
                     <div>
                       <InputLabel>
-                        Enter your 2FA code in the box below:
+                        {this.t("deactivate_popup_label2.message")}:
                       </InputLabel>
                       <div>
                         <OTPInput
@@ -1730,15 +1679,26 @@ class Acc_settings extends Component {
                           this.state.code2fa,
                           "required|numeric|min:6|max:6",
                           "text-danger-validation",
-                          { required: "2FA field is required." }
+                          {
+                            required: this.t(
+                              "general_1:2fa_field_required_error.message"
+                            ),
+                            numeric: this.t(
+                              "general_1:2fa_must_number_error.message"
+                            ),
+                            min: this.t("general_1:2fa_min_error.message"),
+                            max: this.t("general_1:2fa_max_error.message")
+                          }
                         )}
                       </div>
                     </div>
                   ) : (
                     <Code2FADiv>
-                      <p>2FA is mandatory to deactivate your account.</p>
-                      <p>Please click on below link to enable 2FA.</p>
-                      <Link to={"/editProfile"}>Click here</Link>
+                      <p>{t("deactivate_popup_text1.message")}</p>
+                      <p>{t("deactivate_popup_text2.message")}</p>
+                      <Link to={"/editProfile"}>
+                        {t("deactivate_popup_click_here.message")}
+                      </Link>
                     </Code2FADiv>
                   )}
                 </NewP>
@@ -1747,14 +1707,20 @@ class Acc_settings extends Component {
                     className="final_deactivate"
                     onClick={this.closeModal}
                   >
-                    <DeNewButton>Cancel</DeNewButton>
+                    <DeNewButton>
+                      {t(
+                        "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                      )}
+                    </DeNewButton>
                   </DeButtonDiv>
                   {this.state.user2fastatus ? (
                     <DeButtonDiv
                       className="right_btn final_deactivate"
                       onClick={this.deleteUserAccount}
                     >
-                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                      <DeNewButton className="right_text">
+                        {t("conversion:confirm_btn.message")}
+                      </DeNewButton>
                     </DeButtonDiv>
                   ) : (
                     <DeButtonDiv
@@ -1762,7 +1728,9 @@ class Acc_settings extends Component {
                       className="right_btn final_deactivate disabled"
                       onClick={this.deleteUserAccount}
                     >
-                      <DeNewButton className="right_text">Confirm</DeNewButton>
+                      <DeNewButton className="right_text">
+                        {t("conversion:confirm_btn.message")}
+                      </DeNewButton>
                     </DeButtonDiv>
                   )}
                 </DeactivateButtonWarp>
@@ -1796,4 +1764,10 @@ const mapDispatchToProps = dispatch => ({
   LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Acc_settings);
+export default translate([
+  "settings",
+  "edit_profile_titles",
+  "general_1",
+  "validations",
+  "conversion"
+])(connect(mapStateToProps, mapDispatchToProps)(Acc_settings));
