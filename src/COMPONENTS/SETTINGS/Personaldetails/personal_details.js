@@ -979,7 +979,7 @@ class PersonalDetails extends Component {
         document.querySelectorAll(".street1_msg")[0].style.display = "block";
         this.setState({
           street1msg:
-            t("subhead_personal_form_street_address_line.message") +
+            t("subhead_personal_form_street_address_line1.message") +
             " " +
             t("validations:field_is_required.message")
         });
@@ -1213,7 +1213,7 @@ class PersonalDetails extends Component {
         document.querySelectorAll(".street1_msg")[0].style.display = "block";
         this.setState({
           street1msg:
-            t("subhead_personal_form_street_address_line.message") +
+            t("subhead_personal_form_street_address_line1.message") +
             " " +
             t("validations:field_is_required.message")
         });
@@ -1447,7 +1447,7 @@ class PersonalDetails extends Component {
         document.querySelectorAll(".street1_msg")[0].style.display = "block";
         this.setState({
           street1msg:
-            t("subhead_personal_form_street_address_line.message") +
+            t("subhead_personal_form_street_address_line1.message") +
             " " +
             t("validations:field_is_required.message")
         });
