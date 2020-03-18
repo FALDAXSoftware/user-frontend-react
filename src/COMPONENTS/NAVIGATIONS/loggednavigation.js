@@ -662,8 +662,9 @@ class LoggedNavigation extends Component {
     //   }
     // }
   }
-  onChange = e => {
-    this.props.i18n.changeLanguage(e.key);
+  onChange = e => {    
+    window.location.reload(false);  
+    this.props.i18n.changeLanguage(e.key)
   };
   render() {
     const radioStyle = {
