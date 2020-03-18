@@ -85,7 +85,7 @@ export const TicketTitle = styled.span`
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   &:before {
     content: "";
-    width: calc(50% - 140px);
+    width: calc(50% - 180px);
     height: 1px;
     display: inline-block;
     background: #827777;
@@ -95,7 +95,7 @@ export const TicketTitle = styled.span`
   }
   &:after {
     content: "";
-    width: calc(50% - 140px);
+    width: calc(50% - 180px);
     height: 1px;
     display: inline-block;
     background: #827777;

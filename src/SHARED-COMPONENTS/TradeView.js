@@ -939,7 +939,7 @@ class TradeView extends React.Component {
         this.props.profileDetails.is_kyc_done == 2
       ) {
         window.open(
-          WP_URL + "/crypto-only-coming-soon",
+          WP_URL + localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""+"/crypto-only-coming-soon",
           "_blank" // <- This is what makes it open in a new window.
         );
       } else {

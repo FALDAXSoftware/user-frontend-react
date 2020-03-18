@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Col, Row, notification, Icon } from "antd";
+import { translate } from "react-i18next";
 import SimpleReactValidator from "simple-react-validator";
 
 import { globalVariables } from "Globals.js";
@@ -179,6 +180,7 @@ class ProfileBackup extends Component {
     this.handleProfile = this.handleProfile.bind(this);
     this.submitProfile = this.submitProfile.bind(this);
     this.validator = new SimpleReactValidator();
+    this.t = this.props.t;
   }
 
   openNotificationWithIcon(type, head, desc) {
@@ -294,8 +296,8 @@ class ProfileBackup extends Component {
                       _self.setState({ flagImage: false });
                       _self.openNotificationWithIcon(
                         "error",
-                        "File Size",
-                        "File needs to be greater than 450*600 in dimension"
+                        this.t("validations:error_text.message"),
+                        this.t("validations:image_upload_error.message")
                       );
                     }
                   };
@@ -307,22 +309,22 @@ class ProfileBackup extends Component {
                     profileImg: "Default Photo",
                     imageName: "",
                     imageType: fileType,
-                    imagemsg: "Please select image with less then 5 mb"
+                    imagemsg: "Please select image with less than 5 mb"
                   });
                 }
                 _self.setState({ flagImage: false });
                 _self.openNotificationWithIcon(
                   "error",
-                  "File Size",
-                  "Please select image with less then 5 mb"
+                  this.t("validations:error_text.message"),
+                  this.t("max_image_size_5_error.message")
                 );
                 document.getElementById("front").value = "";
               }
             } else {
               _self.openNotificationWithIcon(
                 "error",
-                "File Format",
-                "File format is not supported. Please upload only images."
+                this.t("validations:error_text.message"),
+                this.t("general_1:only_images_error.message")
               );
               document.getElementById("front").value = "";
             }
@@ -370,7 +372,7 @@ class ProfileBackup extends Component {
             this.props.history.push("/login");
             this.openNotificationWithIcon(
               "success",
-              "Success",
+              this.t("validations:success_text.message"),
               responseData.message
             );
           } else {
@@ -378,7 +380,7 @@ class ProfileBackup extends Component {
             this.props.history.push("/login");
             this.openNotificationWithIcon(
               "warning",
-              "Warning",
+              this.t("validations:warning_text.message"),
               responseData.err
             );
           }
@@ -407,7 +409,7 @@ class ProfileBackup extends Component {
         <RowWrap>
           <ColLeft sm={24} lg={12}>
             <LeftWrap>
-              <a href={globalVariables.WordpressSiteURL}>
+              <a href={globalVariables.WordpressSiteURL+(localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:"")}>
                 <VertImg
                   className="wow fadeInUp"
                   src="/images/LeftSideLogo.png"
@@ -419,13 +421,10 @@ class ProfileBackup extends Component {
           <ColRight sm={24} lg={12}>
             <FormWrap>
               <RightWrap className="wow fadeInDown">
-                <LoginHead>Upload Image</LoginHead>
-                <SubText>
-                  Please upload your image and soon we will notify you about the
-                  2FA status through an email.
-                </SubText>
+                <LoginHead>{this.t("upload_image_text.message")}</LoginHead>
+                <SubText>{this.t("image_note_text.message")}</SubText>
                 <SubSmallText>
-                  PS: Image size should not exceed 5MB.
+                  {this.t("image_note1_text.message")}
                 </SubSmallText>
                 <FileWrapDup>
                   <Fileselect1 className="file-select-col">
@@ -465,7 +464,7 @@ class ProfileBackup extends Component {
                   onClick={this.submitProfile}
                   disabled={!this.state.flagImage}
                 >
-                  SUBMIT
+                  {this.t("settings:submit_btn.message")}
                 </ButtonLogin>
               </RightWrap>
             </FormWrap>
@@ -483,4 +482,9 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, null)(ProfileBackup));
+export default translate([
+  "login_page",
+  "validations",
+  "general_1",
+  "settings"
+])(withRouter(connect(mapStateToProps, null)(ProfileBackup)));

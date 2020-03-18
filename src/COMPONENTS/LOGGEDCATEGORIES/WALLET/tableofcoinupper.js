@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Menu, Dropdown, Icon } from "antd";
 import NumberFormat from "react-number-format";
+import {translate} from "react-i18next"
 
 /* Styled Components */
 import { HistoryWrap } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
@@ -91,6 +92,7 @@ class TableofCoin extends React.Component {
       curr2: "\u20AC",
       curr3: "\u20B9"
     };
+    this.t=this.props.t;
   }
 
   /* Life Cycle Methods */
@@ -136,6 +138,18 @@ class TableofCoin extends React.Component {
     this.props.totalUSD(total);
   }
 
+  translateCurrency(currency){
+    switch(currency){
+      case "INR":
+          return this.t("edit_profile_titles:currency_inr.message");
+      case "EUR":
+          return this.t("edit_profile_titles:currency_eur.message");
+        case "USD":
+          return this.t("settings:currency_usd.message");
+      default:
+          return this.t("settings:currency_usd.message");
+    }
+  }
   render() {
     let { tableData } = this.props;
     var me = this;
@@ -196,23 +210,23 @@ class TableofCoin extends React.Component {
     };
     const menu1 = (
       <Menu onClick={onClick1}>
-        <Menu.Item key="1">INR</Menu.Item>
-        <Menu.Item key="2">USD</Menu.Item>
-        <Menu.Item key="3">EUR</Menu.Item>
+        <Menu.Item key="1">{this.t("edit_profile_titles:currency_inr.message")}</Menu.Item>
+        <Menu.Item key="2">{this.t("settings:currency_usd.message")}</Menu.Item>
+        <Menu.Item key="3">{this.t("edit_profile_titles:currency_eur.message")}</Menu.Item>
       </Menu>
     );
     const menu2 = (
       <Menu onClick={onClick2}>
-        <Menu.Item key="1">INR</Menu.Item>
-        <Menu.Item key="2">USD</Menu.Item>
-        <Menu.Item key="3">EUR</Menu.Item>
+        <Menu.Item key="1">{this.t("edit_profile_titles:currency_inr.message")}</Menu.Item>
+        <Menu.Item key="2">{this.t("settings:currency_usd.message")}</Menu.Item>
+        <Menu.Item key="3">{this.t("edit_profile_titles:currency_eur.message")}</Menu.Item>
       </Menu>
     );
     const menu3 = (
       <Menu onClick={onClick3}>
-        <Menu.Item key="1">INR</Menu.Item>
-        <Menu.Item key="2">USD</Menu.Item>
-        <Menu.Item key="3">EUR</Menu.Item>
+        <Menu.Item key="1">{this.t("edit_profile_titles:currency_inr.message")}</Menu.Item>
+        <Menu.Item key="2">{this.t("settings:currency_usd.message")}</Menu.Item>
+        <Menu.Item key="3">{this.t("edit_profile_titles:currency_eur.message")}</Menu.Item>
       </Menu>
     );
     return (
@@ -221,9 +235,9 @@ class TableofCoin extends React.Component {
           <TableCoin cellpadding="10px" cellspacing="0" border="0">
             <thead>
               <Head>
-                <SubHead>Coins</SubHead>
+                <SubHead>{this.t("coins_text_subhead.message")}</SubHead>
                 <SubHead>
-                  {this.state.drop1}
+                  {this.translateCurrency(this.state.drop1)}
                   <Dropdown overlay={menu1} trigger={["click"]}>
                     <a
                       className="ant-dropdown-link"
@@ -235,7 +249,7 @@ class TableofCoin extends React.Component {
                   </Dropdown>
                 </SubHead>
                 <SubHead>
-                  {this.state.drop2}
+                {this.translateCurrency(this.state.drop2)}
                   <Dropdown overlay={menu2} trigger={["click"]}>
                     <a
                       className="ant-dropdown-link"
@@ -247,7 +261,7 @@ class TableofCoin extends React.Component {
                   </Dropdown>
                 </SubHead>
                 <SubHead>
-                  {this.state.drop3}
+                {this.translateCurrency(this.state.drop3)}
                   <Dropdown overlay={menu3} trigger={["click"]}>
                     <a
                       className="ant-dropdown-link"
@@ -409,7 +423,7 @@ class TableofCoin extends React.Component {
                     );
                   })
                 ) : (
-                  <NDF colSpan="5">No Data Found</NDF>
+                  <NDF colSpan="5">{this.t("no_data_found_text.message")}</NDF>
                 )
               ) : (
                 ""
@@ -426,4 +440,4 @@ function mapStateToProps(state) {
   return {};
 }
 
-export default connect(mapStateToProps)(TableofCoin);
+export default translate(['wallet','settings','edit_profile_titles'])(connect(mapStateToProps)(TableofCoin));

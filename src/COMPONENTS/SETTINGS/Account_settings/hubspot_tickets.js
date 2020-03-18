@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { /* Row, */ Col } from "antd";
 import { connect } from "react-redux";
+import { translate } from "react-i18next";
 import moment from "moment";
 import ShowMore from "react-show-more";
 
@@ -50,6 +51,7 @@ class HubSpotTickets extends Component {
       loader: false,
       showDescription: false
     };
+    this.t = this.props.t;
   }
   /* Life-Cycle Methods */
   componentDidMount() {
@@ -74,19 +76,19 @@ class HubSpotTickets extends Component {
     const { ticketData, loader, ticketCount } = this.state;
     const statusArray = [
       {
-        title: "New",
+        title: this.t("general_1:ticket_status_new_text.message"),
         color: "#6fa82f"
       },
       {
-        title: "Waiting On Contact",
+        title: this.t("general_1:ticket_status_waiting_text.message"),
         color: "#ffc107"
       },
       {
-        title: "Waiting On Us",
+        title: this.t("general_1:ticket_status_waiting_us_text.message"),
         color: "#ffc107"
       },
       {
-        title: "Closed",
+        title: this.t("general_1:ticket_status_closed_text.message"),
         color: "#f5222d"
       }
     ];
@@ -99,7 +101,9 @@ class HubSpotTickets extends Component {
           <TicketContainer>
             <TicketDiv>
               <TicketWholeWarp>
-                <TicketTitle>All Tickets </TicketTitle>
+                <TicketTitle>
+                  {this.t("support_text_all_tickets.message")}
+                </TicketTitle>
               </TicketWholeWarp>
               <WholeWrap>
                 {ticketData && ticketData.length > 0
@@ -152,8 +156,12 @@ class HubSpotTickets extends Component {
                           </Title>
                           <ShowMore
                             lines={4}
-                            more="Read more"
-                            less="Read less"
+                            more={this.t(
+                              "general_1:ticket_read_more_text.message"
+                            )}
+                            less={this.t(
+                              "general_1:ticket_read_less_text.message"
+                            )}
                             anchorClass=""
                           >
                             {temp.properties.content &&
@@ -164,7 +172,7 @@ class HubSpotTickets extends Component {
                         </Col>
                       </TicketWrap>
                     ))
-                  : !loader && <NDF>NO DATA FOUND</NDF>}
+                  : !loader && <NDF>{this.t("no_data_found.message")}</NDF>}
               </WholeWrap>
             </TicketDiv>
           </TicketContainer>
@@ -185,5 +193,6 @@ function mapStateToProps(state) {
         : ""
   };
 }
-
-export default connect(mapStateToProps, null)(HubSpotTickets);
+export default translate(["support", "general_1"])(
+  connect(mapStateToProps, null)(HubSpotTickets)
+);

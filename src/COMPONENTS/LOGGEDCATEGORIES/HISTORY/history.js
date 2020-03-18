@@ -7,6 +7,7 @@ import moment from "moment";
 import { Checkbox, Select, notification, Tabs } from "antd";
 import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
 import { CSVLink } from "react-csv";
+import { translate } from "react-i18next";
 
 /* components */
 import LoggedNavigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
@@ -38,10 +39,7 @@ let { API_URL } = globalVariables;
 const { TabPane } = Tabs;
 const Option = Select.Option;
 const CheckboxGroup = Checkbox.Group;
-const options = [
-  { label: "BUY", value: "BUY" },
-  { label: "SELL", value: "SELL" }
-];
+
 const Select1 = styled(Select)`
   &.display-value {
     width: 120px;
@@ -203,6 +201,7 @@ class History extends Component {
     this.selectChange2 = this.selectChange2.bind(this);
     this.callback = this.callback.bind(this);
     this.resetFilters = this.resetFilters.bind(this);
+    this.t = this.props.t;
   }
 
   /* Life-Cycle Methods */
@@ -386,7 +385,11 @@ class History extends Component {
                 csvJSTFields
               });
             } else {
-              this.openNotificationWithIcon("error", "Error", responseData.err);
+              this.openNotificationWithIcon(
+                "error",
+                this.t("validations:error_text.message"),
+                responseData.err
+              );
             }
           } else if (this.state.activeKey === "2") {
             let csvSimplexFields = [];
@@ -435,7 +438,11 @@ class History extends Component {
                 csvSimplexFields
               });
             } else {
-              this.openNotificationWithIcon("error", "Error", responseData.err);
+              this.openNotificationWithIcon(
+                "error",
+                this.t("validations:error_text.message"),
+                responseData.err
+              );
             }
           } else if (this.state.activeKey === "3") {
             // alert("trade");
@@ -487,17 +494,29 @@ class History extends Component {
                 csvTradeFields
               });
             } else {
-              this.openNotificationWithIcon("error", "Error", responseData.err);
+              this.openNotificationWithIcon(
+                "error",
+                this.t("validations:error_text.message"),
+                responseData.err
+              );
             }
           }
         } else if (responseData.status === 403) {
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
           let tempValue2 = {};
           tempValue2["user_id"] = this.props.profileData.id;
           tempValue2["jwt_token"] = this.props.isLoggedIn;
           this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
         } else {
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
         }
         this.setState({ loader: false });
       })
@@ -673,6 +692,11 @@ class History extends Component {
 
   render() {
     var self = this;
+    const { t } = this.props;
+    const options = [
+      { label: t("buy_text.message"), value: "BUY" },
+      { label: t("sell_text.message"), value: "SELL" }
+    ];
     return (
       <div>
         <ContactWrap>
@@ -790,6 +814,7 @@ class History extends Component {
                     <RangePickerS
                       disabledDate={this.disabledDate}
                       disabledTime={this.disabledRangeTime}
+                      placeholder={[this.t("start_date_text.message"),this.t("end_date_text.message")]}
                       onChange={this.changeDate}
                       allowClear={false}
                       value={[this.state.fromDate, this.state.toDate]}
@@ -802,7 +827,7 @@ class History extends Component {
                         onClick={this.resetFilters}
                         className="reset_btn"
                       >
-                        RESET
+                        {t("reset_btn.message")}
                       </EXPButton>
                       {this.state.csvJSTFields !== undefined ? (
                         this.state.csvJSTFields.length > 0 ? (
@@ -812,7 +837,7 @@ class History extends Component {
                               data={this.state.csvJSTFields}
                               headers={this.state.csvHeadersJST}
                             >
-                              EXPORT
+                              {t("export_btn.message")}
                             </CSVLink>
                           </EXPButton>
                         ) : (
@@ -829,7 +854,7 @@ class History extends Component {
                         onClick={this.resetFilters}
                         className="reset_btn"
                       >
-                        RESET
+                        {t("reset_btn.message")}
                       </EXPButton>
                       {this.state.csvSimplexFields !== undefined ? (
                         this.state.csvSimplexFields.length > 0 &&
@@ -840,7 +865,7 @@ class History extends Component {
                               data={this.state.csvSimplexFields}
                               headers={this.state.csvHeadersSimplex}
                             >
-                              EXPORT
+                              {t("export_btn.message")}
                             </CSVLink>
                           </EXPButton>
                         ) : (
@@ -893,19 +918,30 @@ class History extends Component {
               </HeadHis>
               <HisWrap>
                 <Tabs activeKey={this.state.activeKey} onChange={this.callback}>
-                  {/* <TabPane tab="Crypto Only" key="1">
+                  {/* <TabPane
+                    tab={t(
+                      "header:navbar_sub_menu_conversation_crypto_only.message"
+                    )}
+                    key="1"
+                  >
                     <Tablediv>
                       <HisTable responsive striped condensed>
                         <thead>
                           <tr>
-                            <th>Coin</th>
-                            <th>Side</th>
-                            <th>Date</th>
-                            <th>Order Id</th>
-                            <th>Status</th>
-                            <th>Filled Price</th>
-                            <th>Amount</th>
-                            <th>Fees</th>
+                            <th>{t("settings:table_head_coin.message")}</th>
+                            <th>{t("side_text.message")}</th>
+                            <th>{t("wallet:date_text.message")}</th>
+                            <th>
+                              {t("order_text.message")}&nbsp;
+                              {t("id_text.message")}
+                            </th>
+                            <th>{t("security_tab:title_status.message")}</th>
+                            <th>
+                              {t("filled_text.message")}&nbsp;
+                              {t("price_text.message")}
+                            </th>
+                            <th>{t("wallet:amount_text.message")}</th>
+                            <th>{t("footer:subhead_fees.message")}</th>
                           </tr>
                         </thead>
                         {this.state.historyJSTData !== undefined ? (
@@ -977,7 +1013,9 @@ class History extends Component {
                           ) : (
                             <NDF>
                               <tr>
-                                <td colSpan="5">No Data Found</td>
+                                <td colSpan="5">
+                                  {t("support:no_data_found.message")}
+                                </td>
                               </tr>
                             </NDF>
                           )
@@ -986,20 +1024,40 @@ class History extends Component {
                         )}
                       </HisTable>
                     </Tablediv>
-                  </TabPane> */}
-                  <TabPane tab="Credit Card" key="2">
+                  </TabPane>  */}
+                  <TabPane
+                    tab={this.t(
+                      "header:navbar_sub_menu_conversation_credit_card.message"
+                    )}
+                    key="2"
+                  >
                     <Tablediv>
                       <HisTable responsive striped condensed>
                         <thead>
                           <tr>
-                            <th>Coin</th>
-                            <th>Date</th>
-                            <th>Filled Price</th>
-                            <th>Amount</th>
-                            <th>Wallet Address</th>
-                            <th>Payment Id</th>
-                            <th>Quote Id</th>
-                            <th>Payment Status</th>
+                            <th>{t("settings:table_head_coin.message")}</th>
+                            <th>{t("wallet:date_text.message")}</th>
+                            <th>
+                              {t("filled_text.message")}&nbsp;
+                              {t("price_text.message")}
+                            </th>
+                            <th>{t("wallet:amount_text.message")}</th>
+                            <th>
+                              {t("header:navbar_menu_wallet.message")}&nbsp;
+                              {t("wallet:address_text.message")}
+                            </th>
+                            <th>
+                              {t("payment_text.message")}&nbsp;
+                              {t("id_text.message")}
+                            </th>
+                            <th>
+                              {t("quote_text.message")}&nbsp;
+                              {t("id_text.message")}
+                            </th>
+                            <th>
+                              {t("payment_text.message")}&nbsp;
+                              {t("security_tab:title_status.message")}
+                            </th>
                           </tr>
                         </thead>
                         {this.state.historySimplexData !== undefined ? (
@@ -1019,8 +1077,8 @@ class History extends Component {
                                   self.props.profileData.id
                                     ? temps.side
                                     : temps.side === "Buy"
-                                    ? "Sell"
-                                    : "Buy";
+                                    ? t("sell_text.message")
+                                    : t("buy_text.message");
                                 if (temps.simplex_payment_status === 1) {
                                   var simplex_payment_status = "Under Approval";
                                 }
@@ -1065,7 +1123,9 @@ class History extends Component {
                           ) : (
                             <NDF>
                               <tr>
-                                <td colSpan="8">No Data Found</td>
+                                <td colSpan="8">
+                                  {t("support:no_data_found.message")}
+                                </td>
                               </tr>
                             </NDF>
                           )
@@ -1160,4 +1220,13 @@ function mapStateToProps(state) {
         : {}
   };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(History);
+
+export default translate([
+  "history",
+  "settings",
+  "wallet",
+  "security_tab",
+  "footer",
+  "header",
+  "support"
+])(connect(mapStateToProps, mapDispatchToProps)(History));
