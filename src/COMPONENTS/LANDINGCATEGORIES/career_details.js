@@ -4,6 +4,7 @@ import { withRouter, Link } from "react-router-dom";
 /* import { Spin } from 'antd'; */
 import styled from "styled-components";
 import ReactHtmlParser from "react-html-parser";
+import { translate } from "react-i18next";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 /* import { SpinEx } from 'STYLED-COMPONENTS/HOMEPAGE/style' */
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
@@ -40,6 +41,7 @@ class CareerDetails extends Component {
       jobDetails: null,
       loader: false
     };
+    this.t = this.props.t;
   }
 
   /* Life Cycle Methods */
@@ -77,7 +79,7 @@ class CareerDetails extends Component {
         <GreyWrap>
           <ContainerContact>
             <HeadContact>
-              <CareerHead>Careers</CareerHead>
+              <CareerHead>{this.t("careers_head.message")}</CareerHead>
               <hr />
             </HeadContact>
             <CareerDBody>
@@ -112,4 +114,6 @@ class CareerDetails extends Component {
   }
 }
 
-export default withRouter(CareerDetails);
+export default translate(["general", "validations", "support", "conversion"])(
+  withRouter(CareerDetails)
+);

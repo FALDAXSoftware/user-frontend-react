@@ -3,6 +3,7 @@ import "antd/dist/antd.css";
 import { Row, Col, notification } from "antd";
 // import { ReCaptcha } from "react-recaptcha-google";
 import { ReCaptcha, loadReCaptcha } from "react-recaptcha-v3";
+import { translate } from "react-i18next";
 import styled from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
@@ -126,10 +127,11 @@ class ApplyJob extends Component {
     this.verifyCallback = this.verifyCallback.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     let self = this;
+    this.t = this.props.t;
     this.validator = new SimpleReactValidator({
       resumeRequired: {
         // name the rule
-        message: "The resume field is required.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("general_3:resume_field_required.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -141,7 +143,7 @@ class ApplyJob extends Component {
       },
       resumeValid: {
         // name the rule
-        message: "The resume field has not valid file.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("general_3:resume_not_valid.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -153,7 +155,7 @@ class ApplyJob extends Component {
       },
       coverValid: {
         // name the rule
-        message: "The cover field has not valid file.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("general_3:cover_filed_not_valid.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -165,7 +167,7 @@ class ApplyJob extends Component {
       },
       validEmail: {
         // name the rule
-        message: "Please enter valid email address.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("validations:invalid_email_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -175,7 +177,7 @@ class ApplyJob extends Component {
         }
       },
       coverLimit: {
-        message: "Please upload the document with a file size less than 2 mb.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("general_3:file_size_3_mb.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -186,7 +188,7 @@ class ApplyJob extends Component {
         }
       },
       resumeLimit: {
-        message: "Please upload the document with a file size less than 2 mb.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("general_3:file_size_3_mb.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -198,7 +200,7 @@ class ApplyJob extends Component {
       },
       websiteurl: {
         // name the rule
-        message: "Please enter a valid website address.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("validations:valid_website_url_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -211,7 +213,7 @@ class ApplyJob extends Component {
       },
       linkedinurl: {
         // name the rule
-        message: "Please enter a valid LinkedIn address.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("validations:valid_linkedin_url_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -350,7 +352,7 @@ class ApplyJob extends Component {
           .then(responseData => {
             this.openNotificationWithIcon(
               "success",
-              "Job Applied",
+              this.t("general_3:job_applied_text.message"),
               responseData.message
             );
             let fields = {};
@@ -384,8 +386,8 @@ class ApplyJob extends Component {
       } else {
         this.openNotificationWithIcon(
           "error",
-          "Error",
-          "The automated human verification system encountered an error. Please refresh the page and try again. We apologize for any inconvenience."
+          this.t("validations:error_text.message"),
+          this.t("login_page:robot_error_text.message")
         );
       }
     } else {
@@ -445,7 +447,7 @@ class ApplyJob extends Component {
           <ContainerContact>
             <HeadContact2>
               <CarrerHead>
-                <CareerTitle>Careers </CareerTitle>
+                <CareerTitle>{this.t("careers_head.message")} </CareerTitle>
               </CarrerHead>
               <ApplyWrap>
                 <TitleApply>
@@ -459,7 +461,12 @@ class ApplyJob extends Component {
                   <Row>
                     <Col sm={24} md={12}>
                       <LeftWing>
-                        <LabelOne>First Name*</LabelOne>
+                        <LabelOne>
+                          {this.t(
+                            "edit_profile_titles:subhead_personal_form_first_name.message"
+                          )}
+                          *
+                        </LabelOne>
                         <InputOne
                           name="first_name"
                           onChange={this._onChangeFields}
@@ -469,13 +476,38 @@ class ApplyJob extends Component {
                           "first_name",
                           fields.first_name,
                           "required|alpha_num|max:30",
-                          "text-danger-validation"
+                          "text-danger-validation",
+                          {
+                            required:
+                              this.t(
+                                "edit_profile_titles:subhead_personal_form_first_name.message"
+                              ) +
+                              " " +
+                              this.t("validations:field_is_required.message"),
+                            alpha_num:
+                              this.t(
+                                "edit_profile_titles:subhead_personal_form_first_name.message"
+                              ) +
+                              " " +
+                              this.t("general_3:validate_latter.message"),
+                            max:
+                              this.t(
+                                "edit_profile_titles:subhead_personal_form_first_name.message"
+                              ) +
+                              " " +
+                              this.t("general_3:validate_not_gt_30_ch.message")
+                          }
                         )}
                       </LeftWing>
                     </Col>
                     <Col sm={24} md={12}>
                       <RightWing>
-                        <LabelOne>Last Name*</LabelOne>
+                        <LabelOne>
+                          {this.t(
+                            "edit_profile_titles:subhead_personal_form_last_name.message"
+                          )}
+                          *
+                        </LabelOne>
                         <InputTwo
                           name="last_name"
                           onChange={this._onChangeFields}
@@ -485,7 +517,27 @@ class ApplyJob extends Component {
                           "last_name",
                           fields.last_name,
                           "required|alpha_num|max:30",
-                          "text-danger-validation"
+                          "text-danger-validation",
+                          {
+                            required:
+                              this.t(
+                                "edit_profile_titles:subhead_personal_form_last_name.message"
+                              ) +
+                              " " +
+                              this.t("validations:field_is_required.message"),
+                            alpha_num:
+                              this.t(
+                                "edit_profile_titles:subhead_personal_form_last_name.message"
+                              ) +
+                              " " +
+                              this.t("general_3:validate_latter.message"),
+                            max:
+                              this.t(
+                                "edit_profile_titles:subhead_personal_form_last_name.message"
+                              ) +
+                              " " +
+                              this.t("general_3:validate_not_gt_30_ch.message")
+                          }
                         )}
                       </RightWing>
                     </Col>
@@ -494,7 +546,9 @@ class ApplyJob extends Component {
                     <Row>
                       <Col sm={24} md={12}>
                         <LeftWing>
-                          <LabelOne>Position*</LabelOne>
+                          <LabelOne>
+                            {this.t("apply_job:position_label.message")}*
+                          </LabelOne>
                           <InputOne
                             disabled
                             name="position"
@@ -504,7 +558,9 @@ class ApplyJob extends Component {
                       </Col>
                       <Col sm={24} md={12}>
                         <RightWing>
-                          <LabelOne>Phone*</LabelOne>
+                          <LabelOne>
+                            {this.t("apply_job:phone_label.message")}*
+                          </LabelOne>
                           <InputTwo
                             name="phone_number"
                             onChange={this._onChangeFields}
@@ -514,7 +570,26 @@ class ApplyJob extends Component {
                             "phone_number",
                             fields.phone_number,
                             "required|integer|min:10|max:15",
-                            "text-danger-validation"
+                            "text-danger-validation",
+                            {
+                              required:
+                                this.t("apply_job:phone_label.message") +
+                                " " +
+                                this.t("validations:field_is_required.message"),
+                              integer: this.t(
+                                "general_3:validate_should_number.message"
+                              ),
+                              min:
+                                this.t("apply_job:phone_label.message") +
+                                " " +
+                                this.t(
+                                  "general_3:validate_not_less_10.message"
+                                ),
+                              max:
+                                this.t("apply_job:phone_label.message") +
+                                " " +
+                                this.t("general_3:validate_not_gt_15.message")
+                            }
                           )}
                         </RightWing>
                       </Col>
@@ -523,7 +598,9 @@ class ApplyJob extends Component {
                   <Gap>
                     <Row>
                       <Col sm={24} md={24}>
-                        <LabelOne>Email*</LabelOne>
+                        <LabelOne>
+                          {this.t("security_tab:subhead_title_email.message")}*
+                        </LabelOne>
                         <InputThree
                           name="email"
                           onChange={this._onChangeFields}
@@ -532,8 +609,16 @@ class ApplyJob extends Component {
                         {this.validator.message(
                           "email",
                           fields.email,
-                          "required|validEmail|max:50",
-                          "text-danger-validation"
+                          "required|validEmail",
+                          "text-danger-validation",
+                          {
+                            required:
+                              this.t(
+                                "security_tab:subhead_title_email.message"
+                              ) +
+                              " " +
+                              this.t("validations:field_is_required.message")
+                          }
                         )}
                       </Col>
                     </Row>
@@ -541,7 +626,9 @@ class ApplyJob extends Component {
                   <Gap>
                     <Row>
                       <Col sm={24} md={24}>
-                        <LabelOne>Resume/CV*</LabelOne>
+                        <LabelOne>
+                          {this.t("apply_job:resume_cv_label.message")}*
+                        </LabelOne>
                         <DropzoneStyle
                           accept=".pdf,.doc,.docx"
                           className="Dropzone_apply"
@@ -552,7 +639,7 @@ class ApplyJob extends Component {
                             <div>
                               <IconS type="download" />
                               <FileSelectText>
-                                Choose a file or drag it here
+                                {this.t("apply_job:choose_file_text.message")}
                               </FileSelectText>
                             </div>
                           )}
@@ -560,7 +647,7 @@ class ApplyJob extends Component {
                             <div>
                               <IconS type="close-square" />
                               <FileSelectText>
-                                Wrong File Selected
+                                {this.t("apply_job:wrong_file_text.message")}
                               </FileSelectText>
                             </div>
                           )}
@@ -574,7 +661,7 @@ class ApplyJob extends Component {
                           )}
                         </DropzoneStyle>
                         <SupportText>
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.validator.message(
                           "resume",
@@ -588,7 +675,9 @@ class ApplyJob extends Component {
                   <Gap>
                     <Row>
                       <Col sm={24} md={24}>
-                        <LabelOne>Cover Letter</LabelOne>
+                        <LabelOne>
+                          {this.t("general_3:cover_latter_text")}
+                        </LabelOne>
                         <DropzoneStyle
                           accept=".pdf,.doc,.docx"
                           className="Dropzone_apply"
@@ -599,7 +688,7 @@ class ApplyJob extends Component {
                             <div>
                               <IconS type="download" />
                               <FileSelectText>
-                                Choose a file or drag it here
+                                {this.t("apply_job:choose_file_text.message")}
                               </FileSelectText>
                             </div>
                           )}
@@ -607,7 +696,7 @@ class ApplyJob extends Component {
                             <div>
                               <IconS type="close-square" />
                               <FileSelectText>
-                                Wrong File Selected
+                                {this.t("apply_job:wrong_file_text.message")}
                               </FileSelectText>
                             </div>
                           )}
@@ -621,7 +710,7 @@ class ApplyJob extends Component {
                           )}
                         </DropzoneStyle>
                         <SupportText>
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.validator.message(
                           "cover",
@@ -635,7 +724,9 @@ class ApplyJob extends Component {
                   <Gap>
                     <Row>
                       <Col sm={24} md={24}>
-                        <LabelOne>Linkedin Profile*</LabelOne>
+                        <LabelOne>
+                          {this.t("apply_job:linkedin_label.message")}*
+                        </LabelOne>
                         <InputThree
                           name="linkedin_profile"
                           onChange={this._onChangeFields}
@@ -645,7 +736,13 @@ class ApplyJob extends Component {
                           "linkedin_profile",
                           this.state.fields.linkedin_profile,
                           "required|linkedinurl",
-                          "text-danger-validation"
+                          "text-danger-validation",
+                          {
+                            required:
+                              this.t("apply_job:linkedin_label.message") +
+                              " " +
+                              this.t("validations:field_is_required.message")
+                          }
                         )}
                       </Col>
                     </Row>
@@ -653,7 +750,9 @@ class ApplyJob extends Component {
                   <Gap>
                     <Row>
                       <Col sm={24} md={24}>
-                        <LabelOne>Website</LabelOne>
+                        <LabelOne>
+                          {this.t("apply_job:website_label.message")}
+                        </LabelOne>
                         <InputThree
                           name="website_url"
                           onChange={this._onChangeFields}
@@ -668,25 +767,15 @@ class ApplyJob extends Component {
                       </Col>
                     </Row>
                   </Gap>
-                  {/* <ReCaptcha
-                    ref={el => {
-                      this.captchaDemo = el;
-                    }}
-                    size="invisible"
-                    render="explicit"
-                    sitekey={GOOGLE_SITE_KEY}
-                    onloadCallback={this.onLoadRecaptcha}
-                    verifyCallback={this.verifyCallback}
-                    badge="bottomleft"
-                  /> */}
                   {this.state.loadCaptch && (
                     <ReCaptcha
                       sitekey={GOOGLE_SITE_KEY}
-                      // action="action_name"
                       verifyCallback={this.verifyCallback}
                     />
                   )}
-                  <BtnApply onClick={this.onSubmit}>SUBMIT</BtnApply>
+                  <BtnApply onClick={this.onSubmit}>
+                    {this.t("settings:submit_btn.message")}
+                  </BtnApply>
                 </FormApply>
               </ApplyWrap>
             </HeadContact2>
@@ -699,4 +788,15 @@ class ApplyJob extends Component {
   }
 }
 
-export default ApplyJob;
+export default translate([
+  "general",
+  "validations",
+  "support",
+  "settings",
+  "general_3",
+  "conversion",
+  "login_page",
+  "apply_job",
+  "security_tab",
+  "edit_profile_titles"
+])(ApplyJob);
