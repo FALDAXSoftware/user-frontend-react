@@ -487,9 +487,9 @@ class FooterHome extends Component {
             <FooterText>
               {" "}
               ©{new Date().getFullYear()} FALDAX.{" "}
-              {t("subhead_all_rights_reserved.message")}.{" "}
+              {t("subhead_all_rights_reserved.message")}
             </FooterText>
-            <a href={globalVariables.WordpressSiteURL}>
+            <a href={globalVariables.WordpressSiteURL+(localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:"")}>
               <Footerlogo src={this.state.footerLogo} />
             </a>
           </BottomFooter>

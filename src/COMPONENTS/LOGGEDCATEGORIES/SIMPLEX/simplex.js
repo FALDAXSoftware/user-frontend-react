@@ -62,7 +62,7 @@ class Simplex extends React.Component {
     this.t = this.props.t;
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
-        message: this.t("simplex_min_limit_error.message"),
+        message: this.t("validations:simplex_min_limit_error.message"),
         rule: (val, params, validator) => {
           if (parseFloat(val) >= parseFloat(this.state.minCurrency)) {
             return true;
@@ -73,7 +73,7 @@ class Simplex extends React.Component {
         required: true // optional
       },
       maxCurrencyValid: {
-        message: this.t("simplex_max_limit_error.message"),
+        message: this.t("validations:simplex_max_limit_error.message"),
         rule: (val, params, validator) => {
           if (parseFloat(val) > parseFloat(this.state.maxCurrency)) {
             return false;
@@ -85,7 +85,7 @@ class Simplex extends React.Component {
       },
       gtzero: {
         // name the rule
-        message: this.t("simplex_min_limit_error.message"),
+        message: this.t("validations:simplex_min_limit_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;

@@ -1962,7 +1962,7 @@
       "message_type": "Web content",
       "context": "Edit profile head to change default language"
     },
-    "numeric_valdation": {
+    "numeric_validation": {
       "page": "Personal Details",
       "message": "must be a number",
       "message_type": "Web content",

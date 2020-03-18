@@ -65,7 +65,7 @@ class SimplexExchange extends React.Component {
     this.t = this.props.t;
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
-        message: this.t("simplex_min_limit_error.message"),
+        message: this.t("validations:simplex_min_limit_error.message"),
         rule: (val, params, validator) => {
           if (parseFloat(val) >= parseFloat(this.state.minCurrency)) {
             return true;
@@ -76,7 +76,7 @@ class SimplexExchange extends React.Component {
         required: true // optional
       },
       maxCurrencyValid: {
-        message: this.t("simplex_max_limit_error.message"),
+        message: this.t("validations:simplex_max_limit_error.message"),
         rule: (val, params, validator) => {
           if (parseFloat(val) > parseFloat(this.state.maxCurrency)) {
             return false;
@@ -88,7 +88,7 @@ class SimplexExchange extends React.Component {
       },
       gtzero: {
         // name the rule
-        message: this.t("simplex_min_limit_error.message"),
+        message: this.t("validations:simplex_min_limit_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -216,7 +216,7 @@ class SimplexExchange extends React.Component {
         if (result2.data.error) {
           this.openNotificationWithIcon(
             "error",
-            this.t("valiadtions:error_text.message"),
+            this.t("validations:error_text.message"),
             result2.data.errors[0].message
           );
           this.setState({
@@ -249,7 +249,7 @@ class SimplexExchange extends React.Component {
       } else {
         this.openNotificationWithIcon(
           "error",
-          this.t("valiadtions:error_text.message"),
+          this.t("validations:error_text.message"),
           result2.message
         );
       }
@@ -257,7 +257,7 @@ class SimplexExchange extends React.Component {
       console.log(error);
       this.openNotificationWithIcon(
         "error",
-        this.t("valiadtions:error_text.message"),
+        this.t("validations:error_text.message"),
         error.response.message
       );
     } finally {
@@ -510,7 +510,7 @@ class SimplexExchange extends React.Component {
               if (this.state.wallet_details === "") {
                 this.openNotificationWithIcon(
                   "error",
-                  this.t("valiadtions:error_text.message"),
+                  this.t("validations:error_text.message"),
                   this.t("general_3:create_wallet_and_continue.message")
                 );
               } else {
@@ -539,7 +539,7 @@ class SimplexExchange extends React.Component {
               } else {
                 this.openNotificationWithIcon(
                   "error",
-                  this.t("valiadtions:error_text.message"),
+                  this.t("validations:error_text.message"),
                   responseData.err
                 );
               }
@@ -583,7 +583,7 @@ class SimplexExchange extends React.Component {
               if (this.state.wallet_details === "") {
                 this.openNotificationWithIcon(
                   "error",
-                  this.t("valiadtions:error_text.message"),
+                  this.t("validations:error_text.message"),
                   this.t("general_3:create_wallet_and_continue.message")
                 );
               } else {
@@ -609,7 +609,7 @@ class SimplexExchange extends React.Component {
               // });
               this.openNotificationWithIcon(
                 "error",
-                this.t("valiadtions:error_text.message"),
+                this.t("validations:error_text.message"),
                 responseData.err
               );
             }
