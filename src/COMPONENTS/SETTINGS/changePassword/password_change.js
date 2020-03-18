@@ -5,6 +5,11 @@ import { connect } from "react-redux";
 import { Row, Col, Input, notification, Progress } from "antd";
 import styled from "styled-components";
 import { createForm, formShape } from "rc-form";
+import {
+  removeLoader,
+  addLoader,
+  getProfileDataAction
+} from "ACTIONS/SETTINGS/settingActions";
 
 /* components */
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
@@ -13,6 +18,7 @@ import RegenerateBackupCode from "./regenerate_backup";
 import ChangeEmail from "./change_email";
 import TFAModal from "./twofactor_modal";
 import { translate } from "react-i18next";
+import TFAModalOTP from "../../../SHARED-COMPONENTS/TFAModal";
 
 /* STYLED-COMPONENTS */
 import { HeaderCol, Save } from "../Personaldetails/personal_details";
@@ -31,7 +37,9 @@ import {
   UserIconS,
   EmailReq
 } from "COMPONENTS/LANDING/USERFORMS/login_form";
+import { globalVariables } from "../../../Globals";
 const Wrapper = styled.div``;
+let { API_URL } = globalVariables;
 const ChangeRow = styled(Row)`
   &:after {
     content: "";
@@ -340,7 +348,8 @@ class PasswordChange extends Component {
       confPass: "",
       verify_otp: "",
       showModalTFA: false,
-      backupCodeTFA: ""
+      backupCodeTFA: "",
+      showTFAModalOtp: false
     };
     this.t = this.props.t;
   }
@@ -728,9 +737,50 @@ class PasswordChange extends Component {
         Page: /editProfile --> Security
         It is called when Enable/Disable TFAUTH is clicked so to check if TF is enabled or not.
     */
-  TF_AUTH() {
+
+  disable2FA = async otp => {
+    try {
+      this.props.showLoader();
+      let response = await (
+        await fetch(API_URL + "/users/disable-two-factor", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.props.isLoggedIn
+          },
+          body: JSON.stringify({ otp: otp })
+        })
+      ).json();
+      if (response.status == 200) {
+        this.openNotificationWithIcon("success", "Success", response.message);
+        this.setState({
+          showTFAModalOtp: false,
+          is_twofactor: "ENABLE",
+          isEnabled: "DISABLED",
+          show_QR: false
+        });
+        this.props.getProfileData(this.props.isLoggedIn);
+      } else {
+        this.openNotificationWithIcon(
+          "error",
+          "Error",
+          response.message ? response.message : response.error
+        );
+      }
+    } catch (error) {
+      console.log("Error", error);
+    } finally {
+      this.props.hideLoader();
+    }
+  };
+
+  TF_AUTH(otp = undefined) {
     if (this.props.profileDetails.is_twofactor === true) {
-      this.props.TF_Disable(this.props.isLoggedIn);
+      if (!otp) {
+        this.setState({ showTFAModalOtp: true });
+      } else {
+        this.disable2FA(otp);
+      }
     } else this.props.TF_Enable(this.props.isLoggedIn);
   }
 
@@ -817,7 +867,8 @@ class PasswordChange extends Component {
       newEye,
       current_msg,
       percent,
-      repeatEye
+      repeatEye,
+      showTFAModalOtp
     } = this.state;
 
     return (
@@ -986,12 +1037,15 @@ class PasswordChange extends Component {
                 )}
               </Headtext>
               <Buttondiv>
-                <NewButton onClick={this.TF_AUTH.bind(this)}>
+                <NewButton onClick={() => this.TF_AUTH()}>
                   {(this.state.is_twofactor === "DISABLE"
                     ? t("general_1:disable_text.message")
                     : t("general_1:enable_text.message")) +
                     " " +
                     t("general_1:authenticator_text.message")}
+                  {/* <NewButton onClick={()=>this.TF_AUTH()}>
+                  {" "}
+                  {`${this.state.is_twofactor} AUTHENTICATOR`} */}
                 </NewButton>
               </Buttondiv>
               <TFAModal
@@ -1052,6 +1106,11 @@ class PasswordChange extends Component {
         {/* {console.log(isEnabled)} */}
         {isEnabled === "ENABLED" && <RegenerateBackupCode />}
         {this.props.loader === true ? <FaldaxLoader /> : ""}
+        <TFAModalOTP
+          visible={showTFAModalOtp}
+          isLoggedIn={this.props.isLoggedIn}
+          submit={otp => this.TF_AUTH(otp)}
+        />
       </Wrapper>
     );
   }
@@ -1092,7 +1151,10 @@ const mapDispatchToProps = dispatch => ({
   verifyTF: (isLoggedIn, value) => dispatch(verifyTF(isLoggedIn, value)),
   verifyQRData: () => dispatch(verifyQRData()),
   TF_Disable: isLoggedIn => dispatch(TF_Disable(isLoggedIn)),
-  disableAction: () => dispatch(disableAction())
+  disableAction: () => dispatch(disableAction()),
+  showLoader: () => dispatch(addLoader()),
+  hideLoader: () => dispatch(removeLoader()),
+  getProfileData: isLoggedIn => dispatch(getProfileDataAction(isLoggedIn))
 });
 
 export default translate(["security_tab", "general_1", "validations"])(
