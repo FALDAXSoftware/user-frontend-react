@@ -12,7 +12,7 @@ import CountryAccess from "../../../SHARED-COMPONENTS/CountryAccess";
 import ComingSoon from "../../../COMPONENTS/comingsoon";
 import { globalVariables } from "Globals.js";
 import { Icon } from "antd";
-import {translate} from "react-i18next";
+import { translate } from "react-i18next";
 // Styled components
 import {
   ContactWrap,
@@ -51,7 +51,7 @@ class Conversion extends React.Component {
       is_allowed: ""
       // showConversion: false
     };
-    this.t=this.props.t;
+    this.t = this.props.t;
     this.comingCancel = this.comingCancel.bind(this);
     this.cryptoAccess = this.cryptoAccess.bind(this);
     this.simplexAccess = this.simplexAccess.bind(this);
@@ -191,15 +191,24 @@ class Conversion extends React.Component {
           <LoggedNavigation />
           <GreyWrap>
             <ContainerConversion>
-              <HeadStyle>{this.t('conversion_head.message')}</HeadStyle>
+              <HeadStyle>{this.t("conversion_head.message")}</HeadStyle>
               <RowConStyle>
                 <TokComingSoonWrap
-                href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/crypto-only-coming-soon`}
+                  href={`${globalVariables.WordpressSiteURL}${
+                    localStorage["i18nextLng"] &&
+                    localStorage["i18nextLng"] !== "en"
+                      ? "/" + localStorage["i18nextLng"]
+                      : ""
+                  }/crypto-only-coming-soon`}
                 >
                   <ColConTokStyle
                   // onClick={this.cryptoAccess}
                   >
-                    <ColHeadConStyle>{this.t("header:navbar_sub_menu_conversation_crypto_only.message")}</ColHeadConStyle>
+                    <ColHeadConStyle>
+                      {this.t(
+                        "header:navbar_sub_menu_conversation_crypto_only.message"
+                      )}
+                    </ColHeadConStyle>
                     <ColSubRow>
                       <ConIconWrap>
                         {this.props.theme === true ? (
@@ -221,13 +230,22 @@ class Conversion extends React.Component {
                     </ColSubRow>
                   </ColConTokStyle>
                   <TokComingSoon
-                    href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/crypto-only-coming-soon`}
+                    href={`${globalVariables.WordpressSiteURL}${
+                      localStorage["i18nextLng"] &&
+                      localStorage["i18nextLng"] !== "en"
+                        ? "/" + localStorage["i18nextLng"]
+                        : ""
+                    }/crypto-only-coming-soon`}
                   >
                     {this.t("conversion_subhead.message")}
                   </TokComingSoon>
                 </TokComingSoonWrap>
                 <ColConStyle onClick={this.simplexAccess}>
-                  <ColHeadConStyle>{this.t("header:navbar_sub_menu_conversation_credit_card.message")}</ColHeadConStyle>
+                  <ColHeadConStyle>
+                    {this.t(
+                      "header:navbar_sub_menu_conversation_credit_card.message"
+                    )}
+                  </ColHeadConStyle>
                   <ColSubRow>
                     <div>
                       <ConIconWrap className="mastercard">
@@ -259,9 +277,18 @@ class Conversion extends React.Component {
                 </ColConStyle>
                 <TokComingSoonWrap>
                   <ColConTokStyle
-                    href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/token-coming-soon`}
+                    href={`${globalVariables.WordpressSiteURL}${
+                      localStorage["i18nextLng"] &&
+                      localStorage["i18nextLng"] !== "en"
+                        ? "/" + localStorage["i18nextLng"]
+                        : ""
+                    }/token-coming-soon`}
                   >
-                    <ColHeadConStyle>{this.t("header:navbar_sub_menu_conversation_bank_transfer.message")}</ColHeadConStyle>
+                    <ColHeadConStyle>
+                      {this.t(
+                        "header:navbar_sub_menu_conversation_bank_transfer.message"
+                      )}
+                    </ColHeadConStyle>
                     <ColSubRow>
                       <ConIconWrap>
                         {this.props.theme === true ? (
@@ -298,7 +325,12 @@ class Conversion extends React.Component {
                   ></a> */}
                   </ColConTokStyle>
                   <TokComingSoon
-                    href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/token-coming-soon`}
+                    href={`${globalVariables.WordpressSiteURL}${
+                      localStorage["i18nextLng"] &&
+                      localStorage["i18nextLng"] !== "en"
+                        ? "/" + localStorage["i18nextLng"]
+                        : ""
+                    }/token-coming-soon`}
                   >
                     {this.t("conversion_subhead.message")}
                   </TokComingSoon>
@@ -348,7 +380,6 @@ const mapDispatchToProps = dispatch => ({
   getProfileDataAction: isLoggedIn => dispatch(getProfileDataAction(isLoggedIn))
 });
 
-export default translate(["conversion","header"])(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Conversion)));
+export default translate(["conversion", "header"])(
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(Conversion))
+);
