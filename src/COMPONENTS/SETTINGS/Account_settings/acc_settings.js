@@ -132,6 +132,7 @@ class Acc_settings extends Component {
       user2fastatus: this.props.profileDetails.is_twofactor,
       selectAllText: false,
       selectAllEmail: false,
+      headerLang: "",
       // totalUSDOfWallet: this.props.totalUSDOfWallet,
       // showDeactivateModal: false,
       // walletCoins: this.props.walletCoins,
@@ -334,7 +335,8 @@ class Acc_settings extends Component {
     fetch(API_URL + `/get-notification-list`, {
       method: "get",
       headers: {
-        Authorization: "Bearer " + this.props.isLoggedIn
+        Authorization: "Bearer " + this.props.isLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       }
     })
       .then(response => response.json())
@@ -361,8 +363,7 @@ class Acc_settings extends Component {
       })
       .catch(error => {
         this.setState({ loader: false });
-        this.openNotificationWithIcon("error", "Error", error);
-        // console.log(error);
+        console.log(error);
       });
   }
   addData() {
@@ -1685,12 +1686,8 @@ class Acc_settings extends Component {
                             numeric: this.t(
                               "general_1:2fa_must_number_error.message"
                             ),
-                            min:this.t(
-                              "general_1:2fa_min_error.message"
-                            ),
-                            max:this.t(
-                              "general_1:2fa_max_error.message"
-                            )
+                            min: this.t("general_1:2fa_min_error.message"),
+                            max: this.t("general_1:2fa_max_error.message")
                           }
                         )}
                       </div>
