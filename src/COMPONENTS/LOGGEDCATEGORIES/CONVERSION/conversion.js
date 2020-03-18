@@ -194,7 +194,7 @@ class Conversion extends React.Component {
               <HeadStyle>{this.t('conversion_head.message')}</HeadStyle>
               <RowConStyle>
                 <TokComingSoonWrap
-                  href={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
+                href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/crypto-only-coming-soon`}
                 >
                   <ColConTokStyle
                   // onClick={this.cryptoAccess}
@@ -221,7 +221,7 @@ class Conversion extends React.Component {
                     </ColSubRow>
                   </ColConTokStyle>
                   <TokComingSoon
-                    href={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
+                    href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/crypto-only-coming-soon`}
                   >
                     {this.t("conversion_subhead.message")}
                   </TokComingSoon>
@@ -259,7 +259,7 @@ class Conversion extends React.Component {
                 </ColConStyle>
                 <TokComingSoonWrap>
                   <ColConTokStyle
-                    href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+                    href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/token-coming-soon`}
                   >
                     <ColHeadConStyle>{this.t("header:navbar_sub_menu_conversation_bank_transfer.message")}</ColHeadConStyle>
                     <ColSubRow>
@@ -298,7 +298,7 @@ class Conversion extends React.Component {
                   ></a> */}
                   </ColConTokStyle>
                   <TokComingSoon
-                    href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+                    href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/token-coming-soon`}
                   >
                     {this.t("conversion_subhead.message")}
                   </TokComingSoon>

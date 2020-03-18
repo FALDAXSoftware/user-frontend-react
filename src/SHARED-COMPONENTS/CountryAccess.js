@@ -109,7 +109,7 @@ class ComingSoon extends React.Component {
               {this.t(
                 "general_3:while_we_are_actively_working_to_increase_service_availability.message"
               )}{" "}
-              <a href={`${globalVariables.WordpressSiteURL}/`}>
+              <a href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/`}>
                 {this.t("general_3:home_text.message")}
               </a>{" "}
               {this.t(

@@ -126,7 +126,7 @@ class SignupSuccess extends Component {
         <RowWrap>
           <ColLeft sm={24} lg={12}>
             <LeftWrap>
-              <a href={globalVariables.WordpressSiteURL}>
+              <a href={globalVariables.WordpressSiteURL+(localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:"")}>
                 <VertImg
                   className="wow fadeInUp"
                   src="/images/LeftSideLogo.png"

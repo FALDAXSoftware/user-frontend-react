@@ -685,7 +685,7 @@ class LoggedNavigation extends Component {
         <Menu.Item key="0">
           <a
             className="tokenlink"
-            href={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
+            href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/crypto-only-coming-soon`}
           >
             {t("navbar_sub_menu_conversation_crypto_only.message")}
           </a>
@@ -699,7 +699,7 @@ class LoggedNavigation extends Component {
         <Menu.Item key="2">
           <a
             className="tokenlink"
-            href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+            href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/token-coming-soon`}
           >
             {t("navbar_sub_menu_conversation_bank_transfer.message")}
           </a>
@@ -789,7 +789,7 @@ class LoggedNavigation extends Component {
     return (
       <Headermain id="main">
         <Logo>
-          <a href={globalVariables.WordpressSiteURL}>
+          <a href={globalVariables.WordpressSiteURL+(localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:"")}>
             <FALDAXLOGO className="" src={this.state.faldaxLogo} />
             <FALDAX src={this.state.faldax} />
           </a>
@@ -823,7 +823,7 @@ class LoggedNavigation extends Component {
             </DropDownDiv>
           </Menuitem>
           {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
-          <Menuitem key="2">
+          <Menuitem key="4">
             <NavLink className="Nav_selected" to="/wallet">
               {t("navbar_menu_wallet.message")}
             </NavLink>
@@ -847,7 +847,7 @@ class LoggedNavigation extends Component {
               </NavLink>
             </DropDownDiv>
           </Menuitem>
-          <Menuitem key="4">
+          <Menuitem key="6">
             <DropDownDiv
               // className="Drop-main"
               overlay={langItems}
@@ -911,7 +911,7 @@ class LoggedNavigation extends Component {
                   <Menu.Item key="0">
                     <a
                       className="tokenlink"
-                      href={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/crypto-only-coming-soon`}
                     >
                       {t("navbar_sub_menu_conversation_crypto_only.message")}
                     </a>
@@ -925,7 +925,7 @@ class LoggedNavigation extends Component {
                   <Menu.Item key="2">
                     <a
                       className="tokenlink"
-                      href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/token-coming-soon`}
                     >
                       {t("navbar_sub_menu_conversation_bank_transfer.message")}
                     </a>
@@ -1009,29 +1009,29 @@ class LoggedNavigation extends Component {
                   title={t("footer:head_information.message")}
                 >
                   <Menu.Item key="9">
-                    <a href={`${globalVariables.WordpressSiteURL}/about-us`}>
+                    <a href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/about-us`}>
                       {t("footer:subhead_about_us.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="10">
-                    <a href={`${globalVariables.WordpressSiteURL}/contact-us`}>
+                    <a href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/contact-us`}>
                       {t("footer:subhead_contact_us.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="11">
                     <a
-                      href={`${globalVariables.WordpressSiteURL}/media-contact`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/media-contact`}
                     >
                       {t("footer:subhead_media_contact.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="12">
-                    <a href={`${globalVariables.WordpressSiteURL}/blogs`}>
+                    <a href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/blogs`}>
                       {t("footer:subhead_blog.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="13">
-                    <a href={`${globalVariables.WordpressSiteURL}/fee`}>
+                    <a href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/fee`}>
                       {t("footer:subhead_fees.message")}
                     </a>
                   </Menu.Item>
@@ -1054,13 +1054,13 @@ class LoggedNavigation extends Component {
                   {/* <Menu.Item key="11"><a href="#">API Documentation</a></Menu.Item> */}
                   <Menu.Item key="12">
                     <a
-                      href={`${globalVariables.WordpressSiteURL}/list-your-token`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/list-your-token`}
                     >
                       {t("footer:subhead_List_your_token.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="12">
-                    <a href={`${globalVariables.WordpressSiteURL}/news`}>
+                    <a href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/news`}>
                       {t("footer:subhead_news.message")}
                     </a>
                   </Menu.Item>
@@ -1074,13 +1074,13 @@ class LoggedNavigation extends Component {
                   title={t("footer:head_Legal_&_technical.message")}
                 >
                   <Menu.Item key="9">
-                    <a href={`${globalVariables.WordpressSiteURL}/policies`}>
+                    <a href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/policies`}>
                       {t("footer:subhead_policies.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="10">
                     <a
-                      href={`${globalVariables.WordpressSiteURL}/service-availability`}
+                      href={`${globalVariables.WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/service-availability`}
                     >
                       {t("footer:subhead_service_availability.message")}
                     </a>

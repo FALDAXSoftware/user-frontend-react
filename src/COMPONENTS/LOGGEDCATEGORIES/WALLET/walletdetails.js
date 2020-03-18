@@ -682,7 +682,7 @@ class WalletDetails extends Component {
                     </p> */}
                     <p>
                       {this.t("wallet:wallet_generation_in_process.message")}
-                      <a href={`${WordpressSiteURL}/contact-us/`}>
+                      <a href={`${WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/contact-us/`}>
                         {this.t("wallet:here_text.message")}
                       </a>
                       .
@@ -711,7 +711,7 @@ class WalletDetails extends Component {
                     </WalletCreateButton>
                       <p> */}
                         {this.t("wallet_details_contact_us.message")}{" "}
-                        <a href={`${WordpressSiteURL}/contact-us/`}>
+                        <a href={`${WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/contact-us/`}>
                           {this.t("wallet:here_text.message")}
                         </a>
                         .
@@ -731,7 +731,7 @@ class WalletDetails extends Component {
                       </WalletCreateButton>
                       <p>
                         {this.t("wallet_details_contact_us.message")}{" "}
-                        <a href={`${WordpressSiteURL}/contact-us/`}>
+                        <a href={`${WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/contact-us/`}>
                           {this.t("wallet:here_text.message")}
                         </a>
                         .
@@ -754,7 +754,7 @@ class WalletDetails extends Component {
                       </WalletCreateButton>
                       <p>
                         {this.t("wallet_details_contact_us.message")}{" "}
-                        <a href={`${WordpressSiteURL}/contact-us/`}>
+                        <a href={`${WordpressSiteURL}${localStorage["i18nextLng"]?'/'+localStorage["i18nextLng"]:""}/contact-us/`}>
                           {this.t("wallet:here_text.message")}
                         </a>
                         .

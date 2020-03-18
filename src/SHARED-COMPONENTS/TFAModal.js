@@ -49,9 +49,9 @@ class TFAModal extends Component {
         } 
       },
       customVerificationCodeRequire:{
-        message:this.t("security_tab:subhead_title_verification_code.message")+" "+this.t("validation:field_is_required"),
+        message:`${this.t("security_tab:subhead_title_verification_code.message")} ${this.t("validations:field_is_required.message")}`,
         rule: val => {
-          var RE = /^\d+.?\d*$/;
+          var RE = /.+/;
           if (RE.test(val)) {
             return true;
           } else {
@@ -60,7 +60,7 @@ class TFAModal extends Component {
         } 
       },
       customVerificationCodeNumeric:{
-        message:this.t("security_tab:subhead_title_verification_code.message")+" "+this.t("numeric_valdation.message"),
+        message:(this.t("security_tab:subhead_title_verification_code.message")+" "+this.t("numeric_validation.message")),
         rule: val => {
           var RE = /^\d+.?\d*$/;
           if (RE.test(val)) {
