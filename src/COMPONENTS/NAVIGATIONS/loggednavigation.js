@@ -344,7 +344,7 @@ class LoggedNavigation extends Component {
       countryAccess: false,
       completeKYC: false,
       panicEnabled: false,
-      panic_status: false,
+      panic_status: false
       // langValue: this.props.language
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
@@ -376,6 +376,8 @@ class LoggedNavigation extends Component {
         this.setState({ selected: "4" });
       } else if (this.props.location.pathname.includes("history")) {
         this.setState({ selected: "5" });
+      } else {
+        this.setState({ selected: "6" });
       }
     }
     if (this.props.theme !== undefined) {
@@ -662,9 +664,9 @@ class LoggedNavigation extends Component {
     //   }
     // }
   }
-  onChange = e => {    
-    window.location.reload(false);  
-    this.props.i18n.changeLanguage(e.key)
+  onChange = e => {
+    window.location.reload(false);
+    this.props.i18n.changeLanguage(e.key);
   };
   render() {
     const radioStyle = {
@@ -823,7 +825,7 @@ class LoggedNavigation extends Component {
             </DropDownDiv>
           </Menuitem>
           {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
-          <Menuitem key="2">
+          <Menuitem key="4">
             <NavLink className="Nav_selected" to="/wallet">
               {t("navbar_menu_wallet.message")}
             </NavLink>
@@ -847,7 +849,7 @@ class LoggedNavigation extends Component {
               </NavLink>
             </DropDownDiv>
           </Menuitem>
-          <Menuitem key="4">
+          <Menuitem key="6">
             <DropDownDiv
               // className="Drop-main"
               overlay={langItems}
