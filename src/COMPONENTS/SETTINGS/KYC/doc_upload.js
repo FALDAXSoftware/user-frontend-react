@@ -4,7 +4,7 @@ import "antd/dist/antd.css";
 import { connect } from "react-redux";
 import { notification, Icon } from "antd";
 import styled from "styled-components";
-
+import { translate } from "react-i18next";
 /* components */
 import { kycDoc, kycFormAction } from "ACTIONS/SETTINGS/passwordActions";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
@@ -145,6 +145,7 @@ class DocUpload extends Component {
       displaySecond: "none"
     };
     this.handleProfile = this.handleProfile.bind(this);
+    this.t = this.props.t;
   }
 
   /* Life-Cycle Methods */
@@ -263,8 +264,8 @@ class DocUpload extends Component {
                     }
                     _self.openNotificationWithIcon(
                       "error",
-                      "File Size",
-                      "File needs to be greater than 450*600 in dimension"
+                      this.t("validations:error_text.message"),
+                      this.t("validations:image_upload_error.message")
                     );
                     document.getElementById("front").value = "";
                     document.getElementById("back").value = "";
@@ -281,14 +282,14 @@ class DocUpload extends Component {
                   profileImage: "",
                   icon1: "plus",
                   displayFirst: "none",
-                  imagemsg: "Please select image with less than 4 mb"
+                  imagemsg: this.t("general_1:max_image_size_error.message")
                 });
               } else {
                 _self.setState({
                   profileImg2: "Default Photo",
                   imageName2: "",
                   imageType2: fileType,
-                  imagemsg2: "Please select image with less than 4 mb",
+                  imagemsg2: this.t("general_1:max_image_size_error.message"),
                   profileImage2: "",
                   icon2: "plus",
                   displaySecond: "none"
@@ -296,18 +297,17 @@ class DocUpload extends Component {
               }
               _self.openNotificationWithIcon(
                 "error",
-                "File Size",
-                "Please select image with less than 4 mb"
+                this.t("validations:error_text.message"),
+                this.t("general_1:max_image_size_error.message")
               );
               document.getElementById("front").value = "";
               document.getElementById("back").value = "";
             }
-          } else if (fileType) {
-            // console.log(fileType);
+          } else {
             _self.openNotificationWithIcon(
               "error",
-              "File Format",
-              "File format is not supported. Please upload only images."
+              this.t("validations:error_text.message"),
+              this.t("general_1:only_images_error.message")
             );
             document.getElementById("front").value = "";
             document.getElementById("back").value = "";
@@ -376,16 +376,13 @@ class DocUpload extends Component {
         kycDoc["front_doc"] = this.state.frontImg;
         kycDoc["back_doc"] = this.state.backImg;
         kycDoc["steps"] = 3;
-        // console.log(
-        //   "FINALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
-        // );
         this.props.kycFormAction(this.props.isLoggedIn, kycDoc);
       }
     } else {
       this.openNotificationWithIcon(
         "error",
-        "Error",
-        "Please upload front and back of your document"
+        this.t("validations:error_text.message"),
+        this.t("general_1:upload_front_back_error.message")
       );
     }
   }
@@ -400,11 +397,20 @@ class DocUpload extends Component {
   }
 
   render() {
+    const { t } = this.props;
+    console.log("this.props.docText", this.props.docText);
     return (
       <div>
         <SSNWrap>
           <SSNSub>
-            <SSNlabel>Upload Your {this.props.docText}</SSNlabel>
+            <SSNlabel>
+              {t("upload_your_text.message")}{" "}
+              {this.props.docText.toLowerCase() == "passport"
+                ? t("id_type_passport.message")
+                : this.props.docText.toLowerCase() == "driving license"
+                ? t("id_type_driving_licence.message")
+                : t("id_type_identity.message")}
+            </SSNlabel>
           </SSNSub>
           <Filewrap>
             <Fileselect1 className="file-select-col">
@@ -427,7 +433,7 @@ class DocUpload extends Component {
                 <Plus className="plus">
                   <Icon type={this.state.icon1} theme="outlined" />
                 </Plus>
-                <Plustext className="text">Front</Plustext>
+                <Plustext className="text">{t("front_text.message")}</Plustext>
               </ButtonUp>
               <Fileinput
                 onChange={this.handleProfile}
@@ -455,7 +461,7 @@ class DocUpload extends Component {
                 <Plus2 className="plus">
                   <Icon type={this.state.icon2} theme="outlined" />
                 </Plus2>
-                <Plustext2 className="text">Back</Plustext2>
+                <Plustext2 className="text">{t("back_text.message")}</Plustext2>
               </ButtonUp2>
               <Fileinput2
                 onChange={this.handleProfile}
@@ -465,18 +471,18 @@ class DocUpload extends Component {
               />
             </Fileselect2>
           </Filewrap>
-          <NoteSpan>Supported format: .jpg, .jpeg, .png</NoteSpan>
+          <NoteSpan>{t("general_1:supported_format_text.message")}</NoteSpan>
           <NoteSpan className="upload_note">
-            *Upload image with minimum size 400 KB and maximum upto 4 MB.
+            *{t("general_1:upload_note_text.message")}
           </NoteSpan>
         </SSNWrap>
         <ButtonWrap>
           <SubWrap>
             <BackButton onClick={this.back_step.bind(this)} type="primary">
-              Back
+              {t("back_text.message")}
             </BackButton>
             <NextButton onClick={this.next_step.bind(this)} type="primary">
-              Next
+              {t("subhead_btn_next.message")}
             </NextButton>
           </SubWrap>
         </ButtonWrap>
@@ -510,4 +516,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(kycFormAction(isLoggedIn, value))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DocUpload);
+export default translate(["identity_verification", "validations", "general_1"])(
+  connect(mapStateToProps, mapDispatchToProps)(DocUpload)
+);
