@@ -46,7 +46,7 @@ export const globalVariables = {
         'https://dev-backend.faldax.com',
     */
   // API_URL: 'http://13.58.130.154:8989' //Client Live URL,
-
+  SOCKET_HOST:'http://192.168.1.96:3011',
   Terms_and_services:
     "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Terms+of+Service.pdf",
 
