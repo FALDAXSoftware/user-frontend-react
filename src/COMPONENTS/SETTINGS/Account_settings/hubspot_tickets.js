@@ -60,6 +60,7 @@ class HubSpotTickets extends Component {
       method: "get",
       headers: {
         Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"], 
         "Content-Type": "application/json",
         Authorization: "Bearer " + this.props.isLoggedIn
       }
