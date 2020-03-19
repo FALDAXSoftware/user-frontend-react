@@ -128,6 +128,11 @@ class Wallet extends Component {
   }
 
   /* Life Cycle Methods */
+  componentWillMount() {
+    if (!this.props.profileDetails.is_user_updated) {
+      this.props.history.push("/");
+    }
+  }
   componentDidMount() {
     // var total = 0;
     // var tableData = this.props.walletDetails.activated_asset_lists;

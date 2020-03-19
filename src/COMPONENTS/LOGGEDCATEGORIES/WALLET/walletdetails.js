@@ -133,6 +133,11 @@ class WalletDetails extends Component {
   }
 
   /* Life Cycle Methods */
+  componentWillMount() {
+    if (!this.props.profileDetails.is_user_updated) {
+      this.props.history.push("/");
+    }
+  }
   async componentDidMount() {
     // console.log("^^^", this.props.walletDetails);
     // this.props.walletBal(this.props.isLoggedIn);

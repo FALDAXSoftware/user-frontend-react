@@ -15,6 +15,7 @@ import ComingSoon from "COMPONENTS/comingsoon";
 import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
 import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
 import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
+import CompleteProfile from "../../SHARED-COMPONENTS/completeProfile";
 // import { DropMenu, SubMenuNav } from "./navigation";
 
 /* CONSTANTS */
@@ -109,6 +110,9 @@ const Headermain = styled(Header)`
   height: 80px;
   display: flex;
   align-items: center;
+  & .color_important {
+    color: black !important;
+  }
 `;
 const Menumain = styled(Menu)`
   display: inline-block;
@@ -341,12 +345,14 @@ class LoggedNavigation extends Component {
       selected: "",
       countryAccess: false,
       completeKYC: false,
+      completeProfile: false,
       panicEnabled: false,
       panic_status: false
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
     this.cryptoAccess = this.cryptoAccess.bind(this);
     this.simplexAccess = this.simplexAccess.bind(this);
+    this.walletAccess = this.walletAccess.bind(this);
     this.tokenAccess = this.tokenAccess.bind(this);
     this.panicStatus = this.panicStatus.bind(this);
   }
@@ -576,6 +582,14 @@ class LoggedNavigation extends Component {
       }
     }
   }
+  walletAccess() {
+    if (this.props.profileDetails.is_user_updated) {
+      if (this.props.location.pathname !== "/wallet")
+        this.props.history.push("/wallet");
+    } else {
+      this.setState({ completeProfile: true });
+    }
+  }
   simplexAccess() {
     // console.log(
     //   "^^^^",
@@ -785,9 +799,13 @@ class LoggedNavigation extends Component {
             </DropDownDiv>
           </Menuitem>
           <Menuitem key="4">
-            <NavLink className="" to="/wallet">
+            <a
+              className="color_important"
+              // to="/wallet"
+              onClick={this.walletAccess}
+            >
               Wallet
-            </NavLink>
+            </a>
           </Menuitem>
           <Menuitem key="5">
             <DropDownDiv
@@ -872,7 +890,7 @@ class LoggedNavigation extends Component {
             </span> */}
             <span>
               {" "}
-              <Link to="/wallet">Wallet</Link>
+              <a onClick={this.walletAccess}>Wallet</a>
             </span>
             <a className="DROPSUB">
               <DropMenu mode="inline">
@@ -1024,6 +1042,10 @@ class LoggedNavigation extends Component {
         <PanicEnabled
           comingCancel={e => this.comingCancel(e)}
           visible={this.state.panicEnabled}
+        />
+        <CompleteProfile
+          comingCancel={e => this.comingCancel(e)}
+          visible={this.state.completeProfile}
         />
       </Headermain>
     );
