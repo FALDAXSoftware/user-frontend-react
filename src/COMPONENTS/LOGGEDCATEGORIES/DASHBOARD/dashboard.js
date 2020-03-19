@@ -257,6 +257,7 @@ class Dashboard extends Component {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
+                "Accept-Language": localStorage["i18nextLng"], 
                 Authorization: "Bearer " + this.props.isLoggedIn
             }
         }).then(response => response.json())
@@ -303,6 +304,7 @@ class Dashboard extends Component {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
+                "Accept-Language": localStorage["i18nextLng"], 
                 Authorization: "Bearer " + this.props.isLoggedIn
             }
         })
@@ -346,6 +348,7 @@ class Dashboard extends Component {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
+                "Accept-Language": localStorage["i18nextLng"], 
             }
         })
             .then(response => response.json())

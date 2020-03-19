@@ -48,6 +48,7 @@ class BlogDetails extends Component {
             method: "get",
             headers: {
                 Accept: 'application/json',
+                "Accept-Language": localStorage["i18nextLng"],
                 'Content-Type': 'application/json',
             }
         })
@@ -73,6 +74,7 @@ class BlogDetails extends Component {
             method: "post",
             headers: {
                 Accept: 'application/json',
+                "Accept-Language": localStorage["i18nextLng"],
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(Obj)
