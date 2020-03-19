@@ -346,6 +346,10 @@ class ApplyJob extends Component {
         this.setState({ loader: true });
         fetch(API_URL + "/apply-job", {
           method: "post",
+          headers: {
+            "Accept-Language": localStorage["i18nextLng"], 
+            'Content-Type': 'application/json'
+          },
           body: formdata
         })
           .then(response => response.json())

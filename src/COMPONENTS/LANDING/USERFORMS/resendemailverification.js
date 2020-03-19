@@ -149,6 +149,10 @@ class EmailVerification extends Component {
       this.setState({ loader: true });
       fetch(API_URL + "/users/resend-email", {
         method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"]
+        },
         body: JSON.stringify(this.state.fields)
       })
         .then(response => response.json())
