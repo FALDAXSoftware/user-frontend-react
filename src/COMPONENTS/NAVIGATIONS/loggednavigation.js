@@ -602,6 +602,11 @@ class LoggedNavigation extends Component {
         ) {
           // alert("ELSE IF");
           this.setState({ completeKYC: true });
+        } else if (
+          this.props.profileDetails.is_allowed === true &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
         } else {
           // alert("ELSE ELSE");
           this.setState({ countryAccess: true });
@@ -923,9 +928,9 @@ class LoggedNavigation extends Component {
                 </SubMenuNav>
               </DropMenu>
             </a>
-            <span>
+            {/* <span>
               <CarLink to="/careers">Careers</CarLink>
-            </span>
+            </span> */}
             <a className="DROP">
               <DropMenu mode="inline">
                 <SubMenuNav key="sub1" title={"Information"}>

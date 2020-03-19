@@ -4,7 +4,8 @@ export const globalVariables = {
   _AMAZONBUCKET: "https://s3.us-east-2.amazonaws.com/production-static-asset/",
   WordpressSiteURL: "https://www.faldax.com", //Live URL
   tvChartURL: "/chart",
-  API_URL: "https://api.faldax.com", //Mainnet Production URL
+  API_URL: "https://pre-prod-backend.faldax.com", //pre Production URL
+  // API_URL: "https://api.faldax.com", //Mainnet Production URL
   TRADE_URL: "https://trade.faldax.com",
   Terms_and_services:
     "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Terms+of+Service.pdf",

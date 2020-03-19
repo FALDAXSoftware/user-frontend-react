@@ -261,11 +261,11 @@ class Afterlog extends Component {
             </Tooltip>{" "}
           </span>
         </DayNightMode>
-        <Link to="/careers">
+        {/* <Link to="/careers">
           <Exchange color={this.state.selected}>
             <span> CAREERS </span>
           </Exchange>
-        </Link>
+        </Link> */}
         <DropDownDiv
           className="Drop-main"
           overlay={DropdownItems}
