@@ -456,7 +456,7 @@ class SignupForm extends Component {
         }
       }
     } else if (field === "firstname") {
-      var re = /^[a-zA-Z0-9?']{2,15}$/;
+      var re = /^[a-zA-Z0-9?']{2,5000}$/;
       var bool = re.test(value);
       if (value !== "" && value !== undefined) {
         if (bool === true) {
@@ -496,7 +496,7 @@ class SignupForm extends Component {
           document.querySelectorAll(".first_sign")[0].style.display = "block";
           this.setState({
             first_msg:
-              "*First Name must have min 2, max 15 characters and no special characters are allowed."
+              "*First Name must be at least 2 characters in length. No special characters are permitted."
           });
         }
       } else {
@@ -510,7 +510,7 @@ class SignupForm extends Component {
         }
       }
     } else if (field === "lastname") {
-      var re = /^[a-zA-Z0-9?']{2,15}$/;
+      var re = /^[a-zA-Z0-9?']{2,5000}$/;
       var bool = re.test(value);
       if (value !== "" && value !== undefined) {
         if (bool === true) {
@@ -549,7 +549,7 @@ class SignupForm extends Component {
           document.querySelectorAll(".last_sign")[0].style.display = "block";
           this.setState({
             last_msg:
-              "*Last Name must have min 2, max 15 characters and no special characters are allowed."
+              "*Last Name must be at least 2 characters in length. No special characters are permitted."
           });
         }
       } else {
