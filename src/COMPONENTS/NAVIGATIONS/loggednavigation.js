@@ -666,7 +666,22 @@ class LoggedNavigation extends Component {
     // }
   }
   onChange = e => {
-    window.location.reload(false);
+    // Pages that redirect from WordPress with lng params
+    let lngQueryParamsUrls = [
+      "/open-ticket",
+      "/simplex",
+      "/crypto-conversion",
+      "/conversion",
+      "/editProfile",
+      "/careers"
+    ];
+    debugger;
+    // remove queryParams in case of found from list else reload component.
+    if (lngQueryParamsUrls.indexOf(window.location.pathname) != -1) {
+      window.location.href = window.location.pathname;
+    } else {
+      window.location.reload();
+    }
     this.props.i18n.changeLanguage(e.key);
   };
   render() {
