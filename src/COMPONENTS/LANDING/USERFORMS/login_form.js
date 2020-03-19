@@ -231,7 +231,7 @@ const Forgot = styled.a`
   }
 `;
 const ButtonLogin = styled(Button)`
-  width: 110px;
+  min-width: 120px;
   background-color: rgb(0, 170, 250);
   color: white;
   margin-top: 50px;
