@@ -78,7 +78,7 @@ class CompleteProfile extends React.Component {
               {this.t("general_2:complete_profile_text.message")}
             </p>
             <p className="second-subhead">
-              {this.t("illegal_popup_subtext2.message")}
+              {this.t("general_3:complete_profile_popup_subtext2.message")}
             </p>
             <Link
               className="get_verified_link complete_profile"
@@ -93,4 +93,6 @@ class CompleteProfile extends React.Component {
   }
 }
 
-export default translate(["popups", "general_2"])(withRouter(CompleteProfile));
+export default translate(["popups", "general_2", "general_3"])(
+  withRouter(CompleteProfile)
+);
