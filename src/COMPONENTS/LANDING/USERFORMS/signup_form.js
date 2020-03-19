@@ -987,7 +987,9 @@ class SignupForm extends Component {
                   <ConfirmPassReq className="confirmPass_sign">
                     {this.state.confirmPass_msg}
                   </ConfirmPassReq>
-                  <PhLabel>Default Language</PhLabel>
+                  <PhLabel>
+                    {this.t("general_1:default_language_head.message")}
+                  </PhLabel>
                   <DefaultLang>
                     <Select
                       value={this.state.language}

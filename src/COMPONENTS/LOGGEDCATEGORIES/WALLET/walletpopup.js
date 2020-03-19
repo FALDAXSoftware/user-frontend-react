@@ -682,9 +682,9 @@ class WalletPopup extends Component {
             sendFields: fields
           });
         } else if (responseData.status === 500) {
-          this.openNotificationWithIcon("error",this.t("validation:error_text.message"), responseData.err);
+          this.openNotificationWithIcon("error",this.t("validations:error_text.message"), responseData.err);
         } else {
-          this.openNotificationWithIcon("error",this.t("validation.error_text.message"), responseData.message);
+          this.openNotificationWithIcon("error",this.t("validations:error_text.message"), responseData.message);
         }
         this.setState({
           loader: false
