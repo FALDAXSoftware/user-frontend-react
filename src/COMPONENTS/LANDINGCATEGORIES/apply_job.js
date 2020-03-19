@@ -489,7 +489,7 @@ class ApplyJob extends Component {
                                 "edit_profile_titles:subhead_personal_form_first_name.message"
                               ) +
                               " " +
-                              this.t("general_3:validate_latter.message"),
+                              this.t("general_3:validate_letter.message"),
                             max:
                               this.t(
                                 "edit_profile_titles:subhead_personal_form_first_name.message"
@@ -530,7 +530,7 @@ class ApplyJob extends Component {
                                 "edit_profile_titles:subhead_personal_form_last_name.message"
                               ) +
                               " " +
-                              this.t("general_3:validate_latter.message"),
+                              this.t("general_3:validate_letter.message"),
                             max:
                               this.t(
                                 "edit_profile_titles:subhead_personal_form_last_name.message"
