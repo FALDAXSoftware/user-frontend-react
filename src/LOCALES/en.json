@@ -488,13 +488,13 @@
     },
     "verify_email_popup_text1": {
       "page": "Edit Profile > Securtiy > Verify Email Address",
-      "message": "We have sent a one-time use verification code to ",
+      "message": "We have sent a one-time use verification code to",
       "message_type": "Web content",
       "context": "text"
     },
     "verify_email_popup_text2": {
       "page": "Edit Profile > Securtiy > Verify Email Address",
-      "message": "Please enter the code in the box below to verify ",
+      "message": "Please enter the code in the box below to verify",
       "message_type": "Web content",
       "context": "text"
     },
@@ -1964,7 +1964,7 @@
     },
     "numeric_validation": {
       "page": "Personal Details",
-      "message": "must be a number",
+      "message": "Field must include more than just numbers",
       "message_type": "Web content",
       "context": "validation for first name required"
     },
@@ -2000,13 +2000,13 @@
     },
     "otp_required_error": {
       "page": "Edit Profile > Security",
-      "message": "Otp is required.",
+      "message": "Two-Factor Authentication code is required.",
       "message_type": "Web content",
       "context": "when otp filed is blank"
     },
     "otp_6_digit_error": {
       "page": "Edit Profile > Security",
-      "message": "Otp should have 6 digit number.",
+      "message": "Your Two-Factor Authentication code should be six digits",
       "message_type": "Web content",
       "context": "when otp filed is not a 6 digit number"
     },
@@ -2036,49 +2036,49 @@
     },
     "two_factor_authentication_head": {
       "page": "Edit Profile > Security > Regenerate Backup code",
-      "message": "Two Factor Authentication",
+      "message": "Two-Factor Authentication",
       "message_type": "Web content",
       "context": "Two Factor Authentication text"
     },
     "two_factor_authentication_subhead": {
       "page": "Edit Profile > Security > Regenerate Backup code",
-      "message": "Please keep Below backup code with you, in case you are unable to enter Two-Factor Authentication.",
+      "message": "Please SAVE this backup code. It will be required to change your Two-Factor Authentication in the future if you no longer have the device you orginally associated with your 2FA.  ",
       "message_type": "Web content",
       "context": "Two Factor Authentication sub text"
     },
     "subhead_title_confirm_password": {
       "page": "Edit Profile > Security",
-      "message": "Confirm password",
+      "message": "Confirm Password",
       "message_type": "Web content",
       "context": "Two Factor Authentication sub text"
     },
     "password_not_match_error": {
       "page": "Edit Profile > Security",
-      "message": "Password does not match.",
+      "message": "Passwords do not match.",
       "message_type": "Web content",
       "context": "Password does not match error"
     },
     "password_regex_error": {
       "page": "Edit Profile > Security",
-      "message": "Your password must contain at least one uppercase letter,one lowercase letter, one special character(!@#$%_), and one number. Minimum 8 characters and maximum 60 characters.",
+      "message": "Your password must contain at least one uppercase letter, one lowercase letter, one special character (!@#$%_), and one number. Minimum of 8 characters and a maximum of 60 characters.",
       "message_type": "Web content",
       "context": "Password regex does not match error"
     },
     "password_no_space_error": {
       "page": "Edit Profile > Security",
-      "message": "Your password must not contain space.",
+      "message": "Your password must not contain any spaces.",
       "message_type": "Web content",
       "context": "Password should not contain space error"
     },
     "sure_cancel_popup_confirm_text": {
       "page": "Edit Profile > Settings",
-      "message": "Sure to cancel?",
+      "message": "Are you sure you want to cancel? All changes will be lost.",
       "message_type": "Web content",
       "context": "Sure editing cancel popup text"
     },
     "valid_positive_error_msg": {
       "page": "Edit Profile > Settings",
-      "message": "Please Enter Valid Positive Number.",
+      "message": "Please Enter a Valid Positive Number.",
       "message_type": "Web content",
       "context": "Valid poitive nymber error message"
     },
@@ -2138,55 +2138,55 @@
     },
     "2fa_field_required_error": {
       "page": "Edit Profile > settings",
-      "message": "2FA field is required.",
+      "message": "Two-Factor Authentication field is required.",
       "message_type": "Web content",
       "context": "2FA field is required error message"
     },
     "2fa_must_number_error": {
       "page": "Edit Profile > settings",
-      "message": "The 2FA code must be a number.",
+      "message": "The Two-Factor Authentication code must be a number.",
       "message_type": "Web content",
       "context": "2FA field is must be a number error message"
     },
     "2fa_min_error": {
       "page": "Edit Profile > settings",
-      "message": "The 2FA code must be at least 6 characters.",
+      "message": "The Two-Factor Authentication code must be at least 6 characters.",
       "message_type": "Web content",
       "context": "2FA field min error message"
     },
     "2fa_max_error": {
       "page": "Edit Profile > settings",
-      "message": "The 2FA code may not be greater than 6 characters.",
+      "message": "The Two-Factor Authentication code may not be greater than 6 characters.",
       "message_type": "Web content",
       "context": "2FA field max error message"
     },
     "max_image_size_error": {
       "page": "Edit Profile > settings",
-      "message": "Please select image with less than 4 mb",
+      "message": "Please select an image with a file size less than 4 mb",
       "message_type": "Web content",
       "context": "Max image size error message"
     },
     "only_images_error": {
       "page": "Edit Profile > settings",
-      "message": "File format is not supported. Please upload only images.",
+      "message": "File format is not supported. Please upload an image using a supported format.",
       "message_type": "Web content",
       "context": "File format is not supported. Please upload only images error message"
     },
     "upload_front_back_error": {
       "page": "Edit Profile > KYC",
-      "message": "Please upload front and back of your document",
+      "message": "Please upload the front and back of your document",
       "message_type": "Web content",
       "context": "Upload front and back of your document error message"
     },
     "supported_format_text": {
       "page": "Edit Profile > KYC",
-      "message": "Supported format: .jpg, .jpeg, .png",
+      "message": "Supported formats: .jpg, .jpeg, .png",
       "message_type": "Web content",
       "context": "supported image note"
     },
     "upload_note_text": {
       "page": "Edit Profile > KYC",
-      "message": "Upload image with minimum size 400 KB and maximum upto 4 MB.",
+      "message": "Upload an image with a minimum file size of 400 KB and a maximum of 4 MB.",
       "message_type": "Web content",
       "context": "upload note"
     },
@@ -2236,13 +2236,13 @@
   "login_page": {
     "backup_required_text": {
       "page": "Login",
-      "message": "Back-up code is required.",
+      "message": "Backup code is required.",
       "message_type": "Web content",
       "context": "validation for backup code required"
     },
     "backup_alpha_error_text": {
       "page": "Login",
-      "message": "Back-up code should have 10 alphanumeric characters.",
+      "message": "Backup code should have 10 alphanumeric characters.",
       "message_type": "Web content",
       "context": "validation for backup code alphanumeric 10 characters"
     },
@@ -2296,7 +2296,7 @@
     },
     "2fa_enabled_text": {
       "page": "Login",
-      "message": "Two-Factor Authentication is enabled for this account. Please enter your 2FA code below to proceed.",
+      "message": "Two-Factor Authentication is enabled for this account. Please enter your Two-Factor Authentication code below to proceed.",
       "message_type": "Web content",
       "context": "Email Address text"
     },
@@ -2308,25 +2308,25 @@
     },
     "no_2fa_text": {
       "page": "Login",
-      "message": "Don't have Two-Factor Authentication",
+      "message": "Don't have your Two-Factor Authentication code",
       "message_type": "Web content",
       "context": "Don't have Two-Factor Authentication text"
     },
     "have_2fa_text": {
       "page": "Login",
-      "message": "Have Two-Factor Authentication",
+      "message": "Do you have your Two-Factor Authentication code",
       "message_type": "Web content",
       "context": "Have Two-Factor Authentication text"
     },
     "backup_to_proceed_text": {
       "page": "Login",
-      "message": "Please enter your Back-up code below to proceed.",
+      "message": "Please enter your Backup code below to proceed.",
       "message_type": "Web content",
       "context": "enter your Back-up code below to proceed text"
     },
     "forgot_backupcode_text": {
       "page": "Login",
-      "message": "Forgot Backup Code",
+      "message": "Forgot your Backup Code",
       "message_type": "Web content",
       "context": "Forgot Backup Code text"
     },
@@ -2344,7 +2344,7 @@
     },
     "forgot_message_text": {
       "page": "Forgot Password",
-      "message": "Don't worry, It happen's to the best of us.",
+      "message": "Don't worry, It happens to the best of us.",
       "message_type": "Web content",
       "context": "Forgot password message"
     },
@@ -2392,13 +2392,13 @@
     },
     "image_note1_text": {
       "page": "Verification",
-      "message": "PS: Image size should not exceed 5MB.",
+      "message": "PS: Image file size should not exceed 5MB.",
       "message_type": "Web content",
       "context": "Image note text"
     },
     "max_image_size_5_error": {
       "page": "Profile backup",
-      "message": "Please select image with less than 5 mb",
+      "message": "Please select an image with a file size less than 5 mb",
       "message_type": "Web content",
       "context": "Max image size error message"
     },
@@ -2496,7 +2496,7 @@
     },
     "wallet_details_contact_us": {
       "page": "Wallet Details",
-      "message": "If you still have any issue,please feel free to contact us",
+      "message": "If you still have any issue, please feel free to contact us",
       "message_type": "Web content",
       "context": "Eth wallet not created"
     },
@@ -2546,13 +2546,13 @@
     },
     "first_name_error": {
       "page": "Signup",
-      "message": "First Name must have min 2, max 15 characters and no special characters are allowed.",
+      "message": "First Name must be at least 2 characters in length. No special characters are permitted.",
       "message_type": "Web content",
       "context": "First name error text"
     },
     "last_name_error": {
       "page": "Signup",
-      "message": "last Name must have min 2, max 15 characters and no special characters are allowed.",
+      "message": "First Name must be at least 2 characters in length. No special characters are permitted.",
       "message_type": "Web content",
       "context": "last name error text"
     },
@@ -2728,13 +2728,13 @@
     },
     "resume_not_valid": {
       "page": "Jobs",
-      "message": "The resume field has not valid file.",
+      "message": "The resume field has an invalid file.",
       "message_type": "Web content",
       "context": "Field Validation"
     },
     "cover_filed_not_valid": {
       "page": "Jobs",
-      "message": "The cover field has not valid file.",
+      "message": "The cover field has an invalid file.",
       "message_type": "Web content",
       "context": "Field Validation"
     },
@@ -2788,13 +2788,7 @@
     },
     "page_to_view_currently_trading_availability": {
       "page": "Country access",
-      "message": "page to view currently trading availability. Subscribe to our newsletter to receive notifications when services are available in your area.",
-      "message_type": "Web content",
-      "context": "Text"
-    },
-    "transaction_cancel": {
-      "page": "Country access",
-      "message": "Your transaction has been cancelled.",
+      "message": "page to view current trading availability. Subscribe to our newsletter to receive notifications when services are available in your area.",
       "message_type": "Web content",
       "context": "Text"
     },
@@ -2812,7 +2806,13 @@
     },
     "restricted_withdrawal": {
       "page": "IP Modal",
-      "message": "If your security feature is on, while you add a new IP address,you will be restricted to perform withdrawal for 24 hours.",
+      "message": "If your security feature is on, and you add a new IP address, you will not be able to perform a withdrawal for 24 hours.",
+      "message_type": "Web content",
+      "context": "Text"
+    },
+    "transaction_cancel": {
+      "page": "Country access",
+      "message": "Your transaction has been cancelled.",
       "message_type": "Web content",
       "context": "Text"
     },
@@ -2821,6 +2821,18 @@
       "message": "Please select any one option",
       "message_type": "Web content",
       "context": "Text"
+    },
+    "validate_letter": {
+      "page": "Apply Job",
+      "message": "may only contain letters and numbers.",
+      "message_type": "Web content",
+      "context": "letter and numbers valdiations"
+    },
+    "complete_profile_popup_subtext2": {
+      "page": "Complete Profile pop up",
+      "message": "Thank you for your understanding.",
+      "message_type": "Web content",
+      "context": "Complete Profile pop up subtext"
     }
   }
 }
