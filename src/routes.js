@@ -40,10 +40,8 @@ import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
 import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
 let { API_URL } = globalVariables;
 const socketIOClient = require("socket.io-client");
-const sailsIOClient = require("sails.io.js");
-let io = sailsIOClient(socketIOClient);
-io.sails.url = API_URL;
-io.sails.environment = "production";
+// const sailsIOClient = require("sails.io.js");
+let io = socketIOClient(globalVariables.SOCKET_HOST)
 
 const routes = [
   {
@@ -207,11 +205,13 @@ class AppRouter extends Component {
     this.onActive = this._onActive.bind(this) */
     this.onIdle = this._onIdle.bind(this);
   }
-  componentDidMount() {}
+  componentDidMount() {
+
+  }
   /*   _onAction(e) {
       console.log('user did something', e)
     }
-  
+
     _onActive(e) {
       console.log('user is active', e)
       console.log('time remaining', moment.unix(this.idleTimer.getRemainingTime()).format("MM/DD/YYYY"))
