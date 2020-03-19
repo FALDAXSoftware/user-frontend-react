@@ -118,6 +118,7 @@ class TradeView extends React.Component {
       method: "get",
       headers: {
         Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"], 
         "Content-Type": "application/json"
       }
     })
@@ -144,6 +145,7 @@ class TradeView extends React.Component {
       method: "get",
       headers: {
         Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"], 
         "Content-Type": "application/json"
       }
     })
@@ -613,7 +615,8 @@ class TradeView extends React.Component {
         method: "post",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"], 
           // Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify(values)
@@ -806,6 +809,7 @@ class TradeView extends React.Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"], 
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify(values)

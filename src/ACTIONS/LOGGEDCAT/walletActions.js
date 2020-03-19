@@ -17,7 +17,8 @@ export function walletBal(isLoggedIn) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + isLoggedIn
+        Authorization: "Bearer " + isLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       }
     })
       .then(response => response.json())
@@ -62,7 +63,8 @@ export function getAllCoins(isLoggedIn) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + isLoggedIn
+        Authorization: "Bearer " + isLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       }
     })
       .then(response => response.json())

@@ -176,6 +176,10 @@ class AddCoin extends Component {
 
   _getAllCountries = () => {
     fetch(globalVariables.API_URL + "/users/countries", {
+      headers: {
+        "Accept-Language": localStorage["i18nextLng"],
+        Accept: "application/json",
+      },
       method: "GET"
     })
       .then(response => response.json())
@@ -216,6 +220,10 @@ class AddCoin extends Component {
 
       fetch(API_URL + "/users/add-coin-request", {
         method: "post",
+        headers: {
+          "Accept-Language": localStorage["i18nextLng"], 
+          'Content-Type': 'application/json'
+        },
         body: formdata
       })
         .then(response => response.json())

@@ -1080,6 +1080,7 @@ class ConversionDetail extends React.Component {
   //       headers: {
   //         Accept: "application/json",
   //         "Content-Type": "application/json",
+  // "Accept-Language": localStorage["i18nextLng"], 
   //         Authorization: "Bearer " + this.props.isLoggedIn
   //       },
   //       body: JSON.stringify(values)
@@ -1289,6 +1290,7 @@ class ConversionDetail extends React.Component {
   //       headers: {
   //         Accept: "application/json",
   //         "Content-Type": "application/json",
+  // "Accept-Language": localStorage["i18nextLng"], 
   //         Authorization: "Bearer " + this.props.isLoggedIn
   //       },
   //       body: JSON.stringify(values)
@@ -1481,6 +1483,7 @@ class ConversionDetail extends React.Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"], 
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify(values)
@@ -1583,6 +1586,7 @@ class ConversionDetail extends React.Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"], 
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify(values)
@@ -1635,6 +1639,7 @@ class ConversionDetail extends React.Component {
     fetch(API_URL + `/get-simplex-coin-list`, {
       method: "get",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"], 
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "Bearer " + this.props.isLoggedIn
@@ -1660,6 +1665,7 @@ class ConversionDetail extends React.Component {
     fetch(API_URL + `/conversion/get-jst-pair`, {
       method: "get",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"], 
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "Bearer " + this.props.isLoggedIn
@@ -2056,6 +2062,7 @@ class ConversionDetail extends React.Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"], 
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify(values)
