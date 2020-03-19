@@ -2827,6 +2827,12 @@
       "message": "\u6587\u5b57\u3068\u6570\u5b57\u306e\u307f\u3092\u542b\u3081\u308b\u3053\u3068\u304c\u3067\u304d\u307e\u3059\u3002",
       "message_type": "Web content",
       "context": "letter and numbers valdiations"
+    },
+    "complete_profile_popup_subtext2": {
+      "page": "Complete Profile pop up",
+      "message": "\u3054\u7406\u89e3\u3092\u3044\u305f\u3060\u304d\u3001\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Complete Profile pop up subtext"
     }
   }
 }
