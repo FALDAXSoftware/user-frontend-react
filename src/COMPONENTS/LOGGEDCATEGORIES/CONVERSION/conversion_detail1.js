@@ -214,6 +214,7 @@ class ConversionDetail extends React.Component {
       method: "get",
       headers: {
         Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"], 
         "Content-Type": "application/json",
         Authorization: "Bearer " + this.props.isLoggedIn
       }
@@ -283,6 +284,7 @@ class ConversionDetail extends React.Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"], 
         Authorization: "Bearer " + this.props.isLoggedIn
       },
       body: JSON.stringify(values)
@@ -626,6 +628,7 @@ class ConversionDetail extends React.Component {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Accept-Language": localStorage["i18nextLng"], 
             Authorization: "Bearer " + this.props.isLoggedIn
           },
           body: JSON.stringify(fields)
@@ -677,6 +680,7 @@ class ConversionDetail extends React.Component {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Accept-Language": localStorage["i18nextLng"], 
             Authorization: "Bearer " + this.props.isLoggedIn
           },
           body: JSON.stringify(fields)

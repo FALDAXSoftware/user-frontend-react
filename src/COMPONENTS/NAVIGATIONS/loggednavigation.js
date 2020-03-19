@@ -488,6 +488,7 @@ class LoggedNavigation extends Component {
         method: "post",
         headers: {
           Accept: "application/json",
+          "Accept-Language": localStorage["i18nextLng"],
           "Content-Type": "application/json"
         },
         body: JSON.stringify(values)
@@ -525,6 +526,7 @@ class LoggedNavigation extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"], 
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })

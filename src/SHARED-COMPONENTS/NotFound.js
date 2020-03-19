@@ -13,12 +13,12 @@ class NotFound extends React.Component {
     };
   }
   componentWillMount() {
-    window.location =
-      API_URL + localStorage["i18nextLng"] &&
+    this.setState({ loader: false });
+    window.location.href =
+      API_URL + (localStorage["i18nextLng"] &&
       localStorage["i18nextLng"] !== "en"
         ? "/" + localStorage["i18nextLng"]
-        : "" + "/page-not-found/";
-    this.setState({ loader: false });
+        : "" )+ "/page-not-found/";
   }
   render() {
     return <div> {this.state.loader == true ? <FaldaxLoader /> : ""}</div>;

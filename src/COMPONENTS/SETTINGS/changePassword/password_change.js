@@ -746,6 +746,7 @@ class PasswordChange extends Component {
           method: "post",
           headers: {
             "Content-Type": "application/json",
+            "Accept-Language": localStorage["i18nextLng"], 
             Authorization: "Bearer " + this.props.isLoggedIn
           },
           body: JSON.stringify({ otp: otp })

@@ -253,6 +253,7 @@ class FooterHome extends Component {
     fetch(globalVariables.API_URL + "/get-contact-details", {
       method: "get",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"],
         Accept: "application/json",
         "Content-Type": "application/json"
       }

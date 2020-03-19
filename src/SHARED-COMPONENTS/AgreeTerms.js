@@ -131,6 +131,7 @@ class AgreeTerms extends Component {
     fetch(API_URL + "/users/terms-status-update", {
       method: "put",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"], 
         Authorization: "Bearer " + this.props.isLoggedIn
       },
       body: JSON.stringify({ status: true })
@@ -198,6 +199,7 @@ class AgreeTerms extends Component {
         method: "post",
         headers: {
           Accept: "application/json",
+          "Accept-Language": localStorage["i18nextLng"],
           "Content-Type": "application/json"
         },
         body: JSON.stringify(values)
