@@ -64,16 +64,16 @@ const routes = [
     path: "/walletDetails",
     component: WalletDetails
   },
-  // {
-  //   exact: false,
-  //   path: "/trade",
-  //   component: () => <Trade io={io} />
-  // },
-  // {
-  //   exact: false,
-  //   path: "/chart",
-  //   component: () => <Tradingviewchart io={io} />
-  // },
+  {
+    exact: false,
+    path: "/trade",
+    component: () => <Trade io={io} />
+  },
+  {
+    exact: false,
+    path: "/chart",
+    component: () => <Tradingviewchart io={io} />
+  },
   {
     exact: false,
     path: "/history",

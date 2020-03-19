@@ -69,6 +69,8 @@ import {
   SelectMonth,
   SettingDropdown
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import { async } from "q";
+import { func } from "prop-types";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const originalLayouts = getFromLS("layouts") || {};
@@ -99,13 +101,13 @@ const GreyWrapTrade = styled(GreyWrap)`
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
     border-right: ${props =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
     border-bottom: ${props =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
   }
 `;
 const columns = [
@@ -195,8 +197,8 @@ class Trade extends Component {
     this.statusChange = this.statusChange.bind(this);
     this.getUserBal = this.getUserBal.bind(this);
     this.onInsChange = this.onInsChange.bind(this);
-    this.getInstrumentData = this.getInstrumentData.bind(this);
-    this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
+    // this.getInstrumentData = this.getInstrumentData.bind(this);
+    // this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
     this.onLayoutChange = this.onLayoutChange.bind(this);
     this.goFullScreen = this.goFullScreen.bind(this);
     this.exitFullScreen = this.exitFullScreen.bind(this);
@@ -240,10 +242,16 @@ class Trade extends Component {
     var self = this;
     io = this.props.io
     console.log(io)
-    io.emit("join",{room:this.state.crypto+'-'+this.state.currency})
-    io.on("test",function (data) {
-      console.log(data)
+    io.emit("join", { room: this.state.crypto + '-' + this.state.currency })
+    io.on("instrument-data", async function (data) {
+      self.updateInstrumentsData(data);
     })
+    // io.on("test",function (data) {
+    //   console.log(data)
+    // })
+    // io.on("getBuyBookData", async function (data) {
+    //   console.log(data);
+    // })
     // io.on
     // io.sails.headers = {
     //   Accept: "application/json",
@@ -297,29 +305,29 @@ class Trade extends Component {
   //
   //
 
-  getInstrumentData() {
-    var self = this;
-    self.setState({ insLoader: true });
-    io.socket.request(
-      {
-        method: "GET",
-        url: `/socket/get-instrument-data?coin=${self.state.InsCurrency}`,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
-      },
-      (body, JWR) => {
-        if (body.status === 200) {
-          self.updateInstrumentsData(body.data);
-        }
-      }
-    );
-    io.socket.on("instrumentUpdate", data => {
-      self.updateInstrumentsData(data);
-    });
-  }
+  // getInstrumentData() {
+  //   var self = this;
+  //   self.setState({ insLoader: true });
+  //   io.socket.request(
+  //     {
+  //       method: "GET",
+  //       url: `/socket/get-instrument-data?coin=${self.state.InsCurrency}`,
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + this.props.isLoggedIn
+  //       }
+  //     },
+  //     (body, JWR) => {
+  //       if (body.status === 200) {
+  //         self.updateInstrumentsData(body.data);
+  //       }
+  //     }
+  //   );
+  //   io.socket.on("instrumentUpdate", data => {
+  //     self.updateInstrumentsData(data);
+  //   });
+  // }
 
   // created by Meghal Patel at 2019-04-27 15:11.
   //
@@ -463,7 +471,7 @@ class Trade extends Component {
         } else
           this.openNotificationWithIcon("error", "Error", responseData.err);
       })
-      .catch(error => {});
+      .catch(error => { });
   }
 
   // created by Meghal Patel at 2019-04-27 15:24.
@@ -541,7 +549,7 @@ class Trade extends Component {
   searchInstu(e) {
     var search = e.target.value;
     if (search.trim() !== "") {
-      var searchedInstu = this.state.InsData.filter(function(temp) {
+      var searchedInstu = this.state.InsData.filter(function (temp) {
         if (temp.name.toLowerCase().includes(search.toLowerCase())) {
           return true;
         } else {
@@ -895,288 +903,288 @@ class Trade extends Component {
     );
     return (
       <ContactWrap>
-        {/*<SettingDropdown*/}
-        {/*  overlay={menu}*/}
-        {/*  placement="bottomLeft"*/}
-        {/*  trigger={["click"]}*/}
-        {/*  overlayClassName="dropSettings"*/}
-        {/*>*/}
-        {/*  <Icon type="setting" />*/}
-        {/*</SettingDropdown>*/}
-        {/*<Navigation />*/}
-        {/*<GreyWrapTrade>*/}
-        {/*  /!* <Row>*/}
-        {/*                <Col>*/}
-        {/*                    <Layout>*/}
-        {/*                        <EditButton  >Edit Layout</EditButton>*/}
-        {/*                        <SaveButton>Save</SaveButton>*/}
-        {/*                    </Layout>*/}
-        {/*                </Col>*/}
-        {/*            </Row> *!/*/}
-        {/*  <Row>*/}
-        {/*    <Col>*/}
-        {/*      /!* <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} /> *!/*/}
-        {/*    </Col>*/}
-        {/*  </Row>*/}
-        {/*  <Row>*/}
-        {/*    <Col>*/}
-        {/*      <RGL*/}
-        {/*        className="layout"*/}
-        {/*        layouts={this.state.layouts}*/}
-        {/*        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}*/}
-        {/*        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}*/}
-        {/*        isDraggable={this.state.editState}*/}
-        {/*        isResizable={this.state.editState}*/}
-        {/*        onLayoutChange={(layout, layouts) =>*/}
-        {/*          this.onLayoutChange(layout, layouts)*/}
-        {/*        }*/}
-        {/*      >*/}
-        {/*        <div key="tradeView">*/}
-        {/*          <div style={{ height: "100%", width: "100%" }}>*/}
-        {/*            <MainTV className="trade_chart_view_main">*/}
-        {/*              <TVBar>*/}
-        {/*                <div>*/}
-        {/*                  <span>*/}
-        {/*                    {this.state.crypto}-{this.state.currency}*/}
-        {/*                  </span>*/}
-        {/*                </div>*/}
-        {/*                <div*/}
-        {/*                  onClick={() => {*/}
-        {/*                    window.open(*/}
-        {/*                      tvChartURL,*/}
-        {/*                      "_blank",*/}
-        {/*                      "location=yes,height=800,width=1000,scrollbars=yes,status=yes"*/}
-        {/*                    );*/}
-        {/*                  }}*/}
-        {/*                  style={{ marginLeft: "auto" }}*/}
-        {/*                >*/}
-        {/*                  <Tooltip*/}
-        {/*                    placement="bottomLeft"*/}
-        {/*                    title={"Chart in New Window"}*/}
-        {/*                  >*/}
-        {/*                    <Icon type="arrows-alt" />*/}
-        {/*                  </Tooltip>*/}
-        {/*                </div>*/}
-        {/*              </TVBar>*/}
-        {/*              <TradingViewChart*/}
-        {/*                crypto={this.state.crypto}*/}
-        {/*                currency={this.state.currency}*/}
-        {/*                theme={this.props.theme}*/}
-        {/*              />*/}
-        {/*            </MainTV>*/}
-        {/*          </div>*/}
-        {/*        </div>*/}
-        {/*        <div key="instruments">*/}
-        {/*          <div*/}
-        {/*            style={{ height: "100%", width: "100%", overflow: "auto" }}*/}
-        {/*          >*/}
-        {/*            {this.state.insLoader === true ? (*/}
-        {/*              <Loader color="#1990ff" width="50" height="50" />*/}
-        {/*            ) : (*/}
-        {/*              ""*/}
-        {/*            )}*/}
-        {/*            <LeftDiv1>*/}
-        {/*              <Instru>INSTRUMENTS</Instru>*/}
-        {/*              {this.state.InsData.length > 0 ? (*/}
-        {/*                <SearchInput*/}
-        {/*                  onChange={e => this.searchInstu(e)}*/}
-        {/*                  style={{ width: 200 }}*/}
-        {/*                />*/}
-        {/*              ) : (*/}
-        {/*                ""*/}
-        {/*              )}*/}
-        {/*              <FIATWrap>*/}
-        {/*                <FIAT>*/}
-        {/*                  <RadioSelect*/}
-        {/*                    value={this.state.InsCurrency}*/}
-        {/*                    size="large"*/}
-        {/*                    buttonStyle="solid"*/}
-        {/*                    onChange={this.onInsChange}*/}
-        {/*                  >*/}
-        {/*                    <RadioButton value="BTC">BTC</RadioButton>*/}
-        {/*                    <RadioButton value="XRP">XRP</RadioButton>*/}
-        {/*                    <RadioButton value="ETH">ETH</RadioButton>*/}
-        {/*                  </RadioSelect>*/}
-        {/*                </FIAT>*/}
-        {/*              </FIATWrap>*/}
-        {/*              <InstruTable>*/}
-        {/*                <TableIns*/}
-        {/*                  InsCurrency*/}
-        {/*                  onRow={(record, rowIndex) => {*/}
-        {/*                    return {*/}
-        {/*                      onClick: event => {*/}
-        {/*                        self.currencyPair(record.name);*/}
-        {/*                      } // click row*/}
-        {/*                    };*/}
-        {/*                  }}*/}
-        {/*                  pagination={false}*/}
-        {/*                  columns={columns}*/}
-        {/*                  dataSource={*/}
-        {/*                    this.state.searchedInstu === null*/}
-        {/*                      ? this.state.InsData*/}
-        {/*                      : this.state.searchedInstu.length === 0*/}
-        {/*                      ? []*/}
-        {/*                      : this.state.searchedInstu*/}
-        {/*                  }*/}
-        {/*                  onChange={this.onChange}*/}
-        {/*                  scroll={{ y: self.state.instrumentTableHeight }}*/}
-        {/*                />*/}
-        {/*              </InstruTable>*/}
-        {/*            </LeftDiv1>*/}
-        {/*          </div>*/}
-        {/*        </div>*/}
-        {/*        <div key="tradeAction">*/}
-        {/*          <div*/}
-        {/*            style={{ height: "100%", width: "100%", overflow: "auto" }}*/}
-        {/*          >*/}
-        {/*            {this.state.userBalLoader === true ? (*/}
-        {/*              <Loader color="#1990ff" width="50" height="50" />*/}
-        {/*            ) : (*/}
-        {/*              ""*/}
-        {/*            )}*/}
-        {/*            <RightDiv1>*/}
-        {/*              <TabsRight*/}
-        {/*                defaultActiveKey="1"*/}
-        {/*                onChange={this.callback}*/}
-        {/*                className="tardeActionCard"*/}
-        {/*              >*/}
-        {/*                <TabPane tab="Market" key="1">*/}
-        {/*                  {console.log("^^^^user", this.state.userBal)}*/}
-        {/*                  <Market*/}
-        {/*                    MLS={this.state.MLS}*/}
-        {/*                    userBal={this.state.userBal}*/}
-        {/*                  />*/}
-        {/*                </TabPane>*/}
-        {/*                <TabPane tab="Limit" key="2">*/}
-        {/*                  <Limit*/}
-        {/*                    MLS={this.state.MLS}*/}
-        {/*                    userBal={this.state.userBal}*/}
-        {/*                  />*/}
-        {/*                </TabPane>*/}
-        {/*                <TabPane tab="Stop-Limit" key="3">*/}
-        {/*                  <StopLimit*/}
-        {/*                    MLS={this.state.MLS}*/}
-        {/*                    userBal={this.state.userBal}*/}
-        {/*                  />*/}
-        {/*                </TabPane>*/}
-        {/*              </TabsRight>*/}
-        {/*            </RightDiv1>*/}
-        {/*          </div>*/}
-        {/*        </div>*/}
-        {/*        <div key="buysellBook">*/}
-        {/*          <div*/}
-        {/*            style={{ height: "100%", width: "100%", overflow: "auto" }}*/}
-        {/*          >*/}
-        {/*            {this.state.buySellLoader === true ? (*/}
-        {/*              <Loader color="#1990ff" width="50" height="50" />*/}
-        {/*            ) : (*/}
-        {/*              ""*/}
-        {/*            )}*/}
-        {/*            <BuySell*/}
-        {/*              crypto={this.state.crypto}*/}
-        {/*              currency={this.state.currency}*/}
-        {/*              buySellLoader={loader => {*/}
-        {/*                this.buySellLoaderFunc(loader);*/}
-        {/*              }}*/}
-        {/*              io={io}*/}
-        {/*              height={this.state.buySellOrderHeight}*/}
-        {/*            />*/}
-        {/*          </div>*/}
-        {/*        </div>*/}
-        {/*        <div key="depthChart">*/}
-        {/*          <div*/}
-        {/*            style={{ height: "100%", width: "100%", overflow: "auto" }}*/}
-        {/*          >*/}
-        {/*            {this.state.depthLoader === true ? (*/}
-        {/*              <Loader color="#1990ff" width="50" height="50" />*/}
-        {/*            ) : (*/}
-        {/*              ""*/}
-        {/*            )}*/}
-        {/*            <RightDiv>*/}
-        {/*              <DepthChart*/}
-        {/*                crypto={this.state.crypto}*/}
-        {/*                currency={this.state.currency}*/}
-        {/*                depthLoaderFunc={loader => this.depthLoaderFunc(loader)}*/}
-        {/*                io={io}*/}
-        {/*                height={this.state.depthChartHeight}*/}
-        {/*              />*/}
-        {/*            </RightDiv>*/}
-        {/*          </div>*/}
-        {/*        </div>*/}
-        {/*        <div key="orderHistory">*/}
-        {/*          <div*/}
-        {/*            style={{ height: "100%", width: "100%", overflow: "auto" }}*/}
-        {/*          >*/}
-        {/*            {this.state.hisLoader === true ? (*/}
-        {/*              <Loader color="#1990ff" width="50" height="50" />*/}
-        {/*            ) : (*/}
-        {/*              ""*/}
-        {/*            )}*/}
-        {/*            <OrderHIstory*/}
-        {/*              io={io}*/}
-        {/*              hisFunc={loader => this.hisFunc(loader)}*/}
-        {/*              height={self.state.orderHistoryTableHeight}*/}
-        {/*            />*/}
-        {/*          </div>*/}
-        {/*        </div>*/}
-        {/*        <div key="myorder">*/}
-        {/*          <div*/}
-        {/*            style={{ height: "100%", width: "100%", overflow: "auto" }}*/}
-        {/*          >*/}
-        {/*            {this.state.orderTradeLoader === true ? (*/}
-        {/*              <Loader color="#1990ff" width="50" height="50" />*/}
-        {/*            ) : (*/}
-        {/*              ""*/}
-        {/*            )}*/}
-        {/*            <LeftDiv2>*/}
-        {/*              <OrderWrap>*/}
-        {/*                <InstruOrder>MY ORDERS AND TRADES</InstruOrder>*/}
-        {/*                <OrderTradeWrap>*/}
-        {/*                  <SelectMonth*/}
-        {/*                    labelInValue*/}
-        {/*                    defaultValue={{ key: "1" }}*/}
-        {/*                    style={{ width: 120, marginRight: "30px" }}*/}
-        {/*                    onChange={this.handleChangeOT}*/}
-        {/*                  >*/}
-        {/*                    <Option value="1">1 Month</Option>*/}
-        {/*                    <Option value="3">3 Months</Option>*/}
-        {/*                    <Option value="6">6 Months</Option>*/}
-        {/*                    <Option value="12">12 Months</Option>*/}
-        {/*                  </SelectMonth>*/}
-        {/*                  <FIATWrap2>*/}
-        {/*                    <FIAT>*/}
-        {/*                      <RadioSelect*/}
-        {/*                        onChange={this.statusChange}*/}
-        {/*                        defaultValue="a"*/}
-        {/*                        size="large"*/}
-        {/*                        buttonStyle="solid"*/}
-        {/*                        className="order-tab-select"*/}
-        {/*                      >*/}
-        {/*                        <RadioButton value="a">COMPLETED</RadioButton>*/}
-        {/*                        <RadioButton value="b">PENDING</RadioButton>*/}
-        {/*                        <RadioButton value="c">CANCELED</RadioButton>*/}
-        {/*                      </RadioSelect>*/}
-        {/*                    </FIAT>*/}
-        {/*                  </FIATWrap2>*/}
-        {/*                </OrderTradeWrap>*/}
-        {/*              </OrderWrap>*/}
-        {/*              <OrderTrade*/}
-        {/*                profileDetails={this.props.profileDetails}*/}
-        {/*                pending={this.state.status}*/}
-        {/*                cancelOrder={(id, side, type) => {*/}
-        {/*                  this.cancelOrder(id, side, type);*/}
-        {/*                }}*/}
-        {/*                orderTradeData={this.state.orderTradeData}*/}
-        {/*                height={self.state.myOrderTableHeight}*/}
-        {/*              />*/}
-        {/*            </LeftDiv2>*/}
-        {/*          </div>*/}
-        {/*        </div>*/}
-        {/*      </RGL>*/}
-        {/*    </Col>*/}
-        {/*  </Row>*/}
-        {/*</GreyWrapTrade>*/}
-        {/*<CommonFooter />*/}
+        <SettingDropdown
+          overlay={menu}
+          placement="bottomLeft"
+          trigger={["click"]}
+          overlayClassName="dropSettings"
+        >
+          <Icon type="setting" />
+        </SettingDropdown>
+        <Navigation />
+        <GreyWrapTrade>
+          <Row>
+            <Col>
+              {/* <Layout>
+                <EditButton  >Edit Layout</EditButton>
+                <SaveButton>Save</SaveButton>
+              </Layout> */}
+            </Col>
+          </Row>
+          {/* <Row>
+            <Col>
+              <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} />
+            </Col>
+          </Row> */}
+          <Row>
+            <Col>
+              <RGL
+                className="layout"
+                layouts={this.state.layouts}
+                breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+                cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                isDraggable={this.state.editState}
+                isResizable={this.state.editState}
+                onLayoutChange={(layout, layouts) =>
+                  this.onLayoutChange(layout, layouts)
+                }
+              >
+                {/* <div key="tradeView">
+                  <div style={{ height: "100%", width: "100%" }}>
+                    <MainTV className="trade_chart_view_main">
+                      <TVBar>
+                        <div>
+                          <span>
+                            {this.state.crypto}-{this.state.currency}
+                          </span>
+                        </div>
+                        <div
+                          onClick={() => {
+                            window.open(
+                              tvChartURL,
+                              "_blank",
+                              "location=yes,height=800,width=1000,scrollbars=yes,status=yes"
+                            );
+                          }}
+                          style={{ marginLeft: "auto" }}
+                        >
+                          <Tooltip
+                            placement="bottomLeft"
+                            title={"Chart in New Window"}
+                          >
+                            <Icon type="arrows-alt" />
+                          </Tooltip>
+                        </div>
+                      </TVBar>
+                      <TradingViewChart
+                        crypto={this.state.crypto}
+                        currency={this.state.currency}
+                        theme={this.props.theme}
+                      />
+                    </MainTV>
+                  </div>
+                </div> */}
+                <div key="instruments">
+                  <div
+                    style={{ height: "100%", width: "100%", overflow: "auto" }}
+                  >
+                    {this.state.insLoader === true ? (
+                      <Loader color="#1990ff" width="50" height="50" />
+                    ) : (
+                        ""
+                      )}
+                    <LeftDiv1>
+                      <Instru>INSTRUMENTS</Instru>
+                      {this.state.InsData.length > 0 ? (
+                        <SearchInput
+                          onChange={e => this.searchInstu(e)}
+                          style={{ width: 200 }}
+                        />
+                      ) : (
+                          ""
+                        )}
+                      <FIATWrap>
+                        <FIAT>
+                          <RadioSelect
+                            value={this.state.InsCurrency}
+                            size="large"
+                            buttonStyle="solid"
+                            onChange={this.onInsChange}
+                          >
+                            <RadioButton value="BTC">BTC</RadioButton>
+                            <RadioButton value="XRP">XRP</RadioButton>
+                            <RadioButton value="ETH">ETH</RadioButton>
+                          </RadioSelect>
+                        </FIAT>
+                      </FIATWrap>
+                      <InstruTable>
+                        <TableIns
+                          InsCurrency
+                          onRow={(record, rowIndex) => {
+                            return {
+                              onClick: event => {
+                                self.currencyPair(record.name);
+                              } // click row
+                            };
+                          }}
+                          pagination={false}
+                          columns={columns}
+                          dataSource={
+                            this.state.searchedInstu === null
+                              ? this.state.InsData
+                              : this.state.searchedInstu.length === 0
+                                ? []
+                                : this.state.searchedInstu
+                          }
+                          onChange={this.onChange}
+                          scroll={{ y: self.state.instrumentTableHeight }}
+                        />
+                      </InstruTable>
+                    </LeftDiv1>
+                  </div>
+                </div>
+                {/* <div key="tradeAction">
+                  <div
+                    style={{ height: "100%", width: "100%", overflow: "auto" }}
+                  >
+                    {this.state.userBalLoader === true ? (
+                      <Loader color="#1990ff" width="50" height="50" />
+                    ) : (
+                        ""
+                      )}
+                    <RightDiv1>
+                      <TabsRight
+                        defaultActiveKey="1"
+                        onChange={this.callback}
+                        className="tardeActionCard"
+                      >
+                        <TabPane tab="Market" key="1">
+                          {console.log("^^^^user", this.state.userBal)}
+                          <Market
+                            MLS={this.state.MLS}
+                            userBal={this.state.userBal}
+                          />
+                        </TabPane>
+                        <TabPane tab="Limit" key="2">
+                          <Limit
+                            MLS={this.state.MLS}
+                            userBal={this.state.userBal}
+                          />
+                        </TabPane>
+                        <TabPane tab="Stop-Limit" key="3">
+                          <StopLimit
+                            MLS={this.state.MLS}
+                            userBal={this.state.userBal}
+                          />
+                        </TabPane>
+                      </TabsRight>
+                    </RightDiv1>
+                  </div>
+                </div> */}
+                <div key="buysellBook">
+                  <div
+                    style={{ height: "100%", width: "100%", overflow: "auto" }}
+                  >
+                    {this.state.buySellLoader === true ? (
+                      <Loader color="#1990ff" width="50" height="50" />
+                    ) : (
+                        ""
+                      )}
+                    <BuySell
+                      crypto={this.state.crypto}
+                      currency={this.state.currency}
+                      buySellLoader={loader => {
+                        this.buySellLoaderFunc(loader);
+                      }}
+                      io={io}
+                      height={this.state.buySellOrderHeight}
+                    />
+                  </div>
+                </div>
+                {/* <div key="depthChart">
+                  <div
+                    style={{ height: "100%", width: "100%", overflow: "auto" }}
+                  >
+                    {this.state.depthLoader === true ? (
+                      <Loader color="#1990ff" width="50" height="50" />
+                    ) : (
+                        ""
+                      )}
+                    <RightDiv>
+                      <DepthChart
+                        crypto={this.state.crypto}
+                        currency={this.state.currency}
+                        depthLoaderFunc={loader => this.depthLoaderFunc(loader)}
+                        io={io}
+                        height={this.state.depthChartHeight}
+                      />
+                    </RightDiv>
+                  </div>
+                </div> */}
+                <div key="orderHistory">
+                  <div
+                    style={{ height: "100%", width: "100%", overflow: "auto" }}
+                  >
+                    {this.state.hisLoader === true ? (
+                      <Loader color="#1990ff" width="50" height="50" />
+                    ) : (
+                        ""
+                      )}
+                    <OrderHIstory
+                      io={io}
+                      hisFunc={loader => this.hisFunc(loader)}
+                      height={self.state.orderHistoryTableHeight}
+                    />
+                  </div>
+                </div>
+                {/* <div key="myorder">
+                  <div
+                    style={{ height: "100%", width: "100%", overflow: "auto" }}
+                  >
+                    {this.state.orderTradeLoader === true ? (
+                      <Loader color="#1990ff" width="50" height="50" />
+                    ) : (
+                        ""
+                      )}
+                    <LeftDiv2>
+                      <OrderWrap>
+                        <InstruOrder>MY ORDERS AND TRADES</InstruOrder>
+                        <OrderTradeWrap>
+                          <SelectMonth
+                            labelInValue
+                            defaultValue={{ key: "1" }}
+                            style={{ width: 120, marginRight: "30px" }}
+                            onChange={this.handleChangeOT}
+                          >
+                            <Option value="1">1 Month</Option>
+                            <Option value="3">3 Months</Option>
+                            <Option value="6">6 Months</Option>
+                            <Option value="12">12 Months</Option>
+                          </SelectMonth>
+                          <FIATWrap2>
+                            <FIAT>
+                              <RadioSelect
+                                onChange={this.statusChange}
+                                defaultValue="a"
+                                size="large"
+                                buttonStyle="solid"
+                                className="order-tab-select"
+                              >
+                                <RadioButton value="a">COMPLETED</RadioButton>
+                                <RadioButton value="b">PENDING</RadioButton>
+                                <RadioButton value="c">CANCELED</RadioButton>
+                              </RadioSelect>
+                            </FIAT>
+                          </FIATWrap2>
+                        </OrderTradeWrap>
+                      </OrderWrap>
+                      <OrderTrade
+                        profileDetails={this.props.profileDetails}
+                        pending={this.state.status}
+                        cancelOrder={(id, side, type) => {
+                          this.cancelOrder(id, side, type);
+                        }}
+                        orderTradeData={this.state.orderTradeData}
+                        height={self.state.myOrderTableHeight}
+                      />
+                    </LeftDiv2>
+                  </div>
+                </div> */}
+              </RGL>
+            </Col>
+          </Row>
+        </GreyWrapTrade>
+        <CommonFooter />
       </ContactWrap>
     );
   }
