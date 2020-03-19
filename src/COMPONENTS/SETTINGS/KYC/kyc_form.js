@@ -152,11 +152,11 @@ class KYCForm extends Component {
       firstname: {
         // name the rule
         message:
-          "First Name should have a minimum of 2 and a maximum of 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+          "First Name must be at least 2 characters in length. No special characters are permitted.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^[a-zA-Z0-9?']{2,15}$/;
+          var re = /^[a-zA-Z0-9?']{2,5000}$/;
           var bool = re.test(String(val).toLowerCase());
           return bool;
         }
@@ -164,11 +164,11 @@ class KYCForm extends Component {
       lastname: {
         // name the rule
         message:
-          "Last Name should have a minimum of 2 and a maximum of 15 characters and no special characters are allowed", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+          "Last Name must be at least 2 characters in length. No special characters are permitted.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^[a-zA-Z0-9?']{2,15}$/;
+          var re = /^[a-zA-Z0-9?']{2,5000}$/;
           var bool = re.test(String(val).toLowerCase());
           return bool;
         }

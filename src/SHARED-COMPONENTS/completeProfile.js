@@ -83,9 +83,7 @@ class CompleteProfile extends React.Component {
               Before proceeding to identity verification please complete your
               profile.
             </p>
-            <p className="second-subhead">
-              Thank you for your support and your patience.
-            </p>
+            <p className="second-subhead">Thank you for your understanding.</p>
             <Link
               className="get_verified_link complete_profile"
               to={{ pathname: "/editProfile", state: { tabNum: "3" } }}
