@@ -394,6 +394,7 @@ class WalletPopup extends Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"], 
           Authorization: "Bearer " + this.props.isLoggedIn
         }
       })
@@ -435,6 +436,7 @@ class WalletPopup extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"], 
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
@@ -543,6 +545,7 @@ class WalletPopup extends Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"], 
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify(values)
@@ -663,6 +666,8 @@ class WalletPopup extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"], 
+        "Accept-Language": localStorage["i18nextLng"], 
         Authorization: "Bearer " + this.props.isLoggedIn
       },
       body: JSON.stringify(values)

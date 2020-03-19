@@ -46,7 +46,8 @@ export function deleteAccount(isLoggedIn, value) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + isLoggedIn
+        Authorization: "Bearer " + isLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: JSON.stringify(value)
     })
@@ -78,7 +79,8 @@ export function Login(values) {
       method: "post",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: JSON.stringify(values)
     })
@@ -132,7 +134,8 @@ export function LogoutUser(isLoggedIn, value) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + isLoggedIn
+        Authorization: "Bearer " + isLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: JSON.stringify(value)
     })
@@ -182,7 +185,8 @@ export function Signup(values) {
       method: "post",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: JSON.stringify(values)
     })
@@ -225,7 +229,8 @@ export function forgotAction(email) {
     fetch(API_URL + "/users/forgotPassword", {
       method: "post",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: JSON.stringify(email)
     })
@@ -269,7 +274,8 @@ export function resetAction(value) {
     fetch(API_URL + "/users/resetPassword", {
       method: "put",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: JSON.stringify(value)
     })
