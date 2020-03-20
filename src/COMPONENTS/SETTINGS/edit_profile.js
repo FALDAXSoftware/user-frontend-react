@@ -17,6 +17,7 @@ import TierOne from "./TIERS/tier_one";
 // import KYC from "./KYC/kyc";
 /* import Paymethods from './Payment/paymethods'; */
 import SupportHub from "./Account_settings/support_hub";
+import { translate } from "react-i18next";
 import CompleteProfile from "../../SHARED-COMPONENTS/completeProfile";
 // import AgreeTerms from "../../SHARED-COMPONENTS/AgreeTerms";
 
@@ -140,6 +141,7 @@ class Editprofile extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"], 
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
@@ -173,6 +175,8 @@ class Editprofile extends Component {
     });
   };
   render() {
+    const { t } = this.props;
+    // console.log("defaultActiveKey:", this.props.activeKey);
     return (
       <div>
         <Navigation />
@@ -183,13 +187,13 @@ class Editprofile extends Component {
               onChange={this.callback}
               className="profile-tabs"
             >
-              <TabPane tab="Personal Details" key="1">
+              <TabPane tab={t("head_personal_details.message")} key="1">
                 <PersonalDetails {...this.props} />
               </TabPane>
-              <TabPane tab="Security" key="2">
+              <TabPane tab={t("head_security.message")} key="2">
                 <Passwordchange {...this.props} />
               </TabPane>
-              <TabPane tab="Settings" key="3">
+              <TabPane tab={t("head_settings.message")} key="3">
                 <AccSettings
                   {...this.props}
                   user2fastatus={this.state.user2fastatus}
@@ -197,7 +201,7 @@ class Editprofile extends Component {
                   totalUSDOfWallet={this.state.totalUSDOfWallet}
                 />
               </TabPane>
-              <TabPane tab="Identity Verification" key="4">
+              <TabPane tab={t("head_identity_verification.message")} key="4">
                 {/* <TierOne /> */}
                 {this.state.countryAccess ? (
                   <CompleteProfile
@@ -208,10 +212,10 @@ class Editprofile extends Component {
                   <TierOne />
                 )}
               </TabPane>
-              <TabPane tab="Referral" key="5">
+              <TabPane tab={t("head_referral.message")} key="5">
                 <Referral {...this.props} />
               </TabPane>
-              <TabPane tab="Support" key="6">
+              <TabPane tab={t("head_support.message")} key="6">
                 <SupportHub {...this.props} />
               </TabPane>
             </TabsStyle>
@@ -235,4 +239,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Editprofile);
+export default translate("edit_profile_titles")(
+  connect(mapStateToProps)(Editprofile)
+);

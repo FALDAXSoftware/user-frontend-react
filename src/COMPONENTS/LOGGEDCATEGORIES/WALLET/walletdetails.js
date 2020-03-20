@@ -8,6 +8,7 @@ import NumberFormat from "react-number-format";
 import { Redirect } from "react-router-dom";
 import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
 import { walletBal, getAllCoins } from "ACTIONS/LOGGEDCAT/walletActions";
+import { translate } from "react-i18next";
 // import { Tabs } from 'antd';
 
 /* import { DropdownButton, ButtonToolbar } from 'react-bootstrap'; */
@@ -130,6 +131,7 @@ class WalletDetails extends Component {
     this._walletCreate = this._walletCreate.bind(this);
     this.walletDetailsApi = this.walletDetailsApi.bind(this);
     this.panicStatus = this.panicStatus.bind(this);
+    this.t = this.props.t;
   }
 
   /* Life Cycle Methods */
@@ -139,8 +141,6 @@ class WalletDetails extends Component {
     }
   }
   async componentDidMount() {
-    // console.log("^^^", this.props.walletDetails);
-    // this.props.walletBal(this.props.isLoggedIn);
     if (
       this.props.profileDetails &&
       this.props.profileDetails.is_terms_agreed == false
@@ -154,7 +154,6 @@ class WalletDetails extends Component {
     if (this.props.walletDetails !== null) {
       var tableData = this.props.walletDetails.coins;
       if (tableData !== undefined) {
-        // console.log(tableData);
         Object.keys(tableData).map(function(index, key) {
           if (tableData[index].USD !== undefined)
             total =
@@ -173,8 +172,10 @@ class WalletDetails extends Component {
       }
     }
     if (this.props.location !== undefined) {
-      if (this.props.location.search.includes("coinID")) {
-        // this.props.walletBal(this.props.isLoggedIn);
+      if (
+        this.props.location.search.includes("coinID") &&
+        this.props.profileDetails.is_user_updated
+      ) {
         await this.walletDetailsApi();
       }
     }
@@ -195,6 +196,7 @@ class WalletDetails extends Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"],
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify({
@@ -202,13 +204,10 @@ class WalletDetails extends Component {
         })
       })
     ).json();
-    // .then(response => response.json())
-    // .then(responseData => {
     if (responseData.status == 200) {
       let transDetails = null;
       let walletUserDetails = null;
       let withdrawDetails = null;
-      // console.log(responseData);
       if (Object.keys(responseData.walletTransData).length > 0) {
         transDetails = responseData.walletTransData;
       }
@@ -224,8 +223,6 @@ class WalletDetails extends Component {
       }
       this.props.walletBal(this.props.isLoggedIn);
       this.props.getAllCoins(this.props.isLoggedIn);
-      // console.log("wallet details props walletDetails", walletUserDetails);
-      // console.log("asdgh^^^^", this.props.profileDetails.fiat);
       let fiat = 0,
         currency;
       if (this.props.profileDetails && responseData.currencyConversionData) {
@@ -248,31 +245,23 @@ class WalletDetails extends Component {
             break;
         }
       }
-      self.setState(
-        {
-          walletUserData: walletUserDetails,
-          currencyConv: responseData.currencyConversionData,
-          defaultCoin: walletUserDetails.coin_code,
-          min_limit: walletUserDetails.min_limit,
-          max_limit: walletUserDetails.max_limit,
-          walletDetails: transDetails,
-          withdrawRequests: withdrawDetails,
-          coin_code: coin_name[1],
-          isERC: walletUserDetails.iserc,
-          coinFee: responseData.default_send_Coin_fee,
-          is_active_asset: responseData.is_active,
-          eth_for_erc_status: responseData.eth_for_erc_status,
-          eth_for_erc_address: responseData.eth_for_erc_address,
-          fiatValue: fiat,
-          fiatCurrency: currency
-        },
-        () => {
-          // console.log(
-          //   "responseData.currencyConversionData.quote.USD.price===========",
-          //   responseData.currencyConversionData.quote.USD.price
-          // );
-        }
-      );
+      self.setState({
+        walletUserData: walletUserDetails,
+        currencyConv: responseData.currencyConversionData,
+        defaultCoin: walletUserDetails.coin_code,
+        min_limit: walletUserDetails.min_limit,
+        max_limit: walletUserDetails.max_limit,
+        walletDetails: transDetails,
+        withdrawRequests: withdrawDetails,
+        coin_code: coin_name[1],
+        isERC: walletUserDetails.iserc,
+        coinFee: responseData.default_send_Coin_fee,
+        is_active_asset: responseData.is_active,
+        eth_for_erc_status: responseData.eth_for_erc_status,
+        eth_for_erc_address: responseData.eth_for_erc_address,
+        fiatValue: fiat,
+        fiatCurrency: currency
+      });
     } else if (responseData.status == 403) {
       this.openNotificationWithIcon("error", "Error", responseData.err);
       let tempValue2 = {};
@@ -287,16 +276,6 @@ class WalletDetails extends Component {
       );
     }
     this.setState({ loader: false });
-    // })
-    // .catch(error => {
-    //   // console.log("wallet details props -----error ", error);
-    //   // this.openNotificationWithIcon(
-    //   //   "error",
-    //   //   "Error",
-    //   //   "Something went wrong!"
-    //   // );
-    //   this.setState({ loader: false });
-    // });
   }
 
   /* 
@@ -335,23 +314,18 @@ class WalletDetails extends Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"],
           Authorization: "Bearer " + this.props.isLoggedIn
         }
       })
     ).json();
-    // .then(response => response.json())
-    // .then(responseData => {
     if (responseData.status === 200) {
-      // console.log("responsedata 200", responseData.data);
       this.setState({
         panic_status: JSON.parse(responseData.data)
-        // panic_status: true,
-        // loader: false
       });
     } else {
       this.setState({
         panic_status: false
-        // loader: false
       });
     }
   }
@@ -363,13 +337,25 @@ class WalletDetails extends Component {
 
   showModal = e => {
     if (this.state.panic_status === true) {
-      // alert("Idf");
       this.setState({ panicEnabled: true });
     } else {
       if (e.target.name === "SEND") this.setState({ send: true });
       else this.setState({ withdraw: true });
     }
   };
+
+  translateCurrency(currency) {
+    switch (currency) {
+      case "INR":
+        return this.t("edit_profile_titles:currency_inr.message");
+      case "EUR":
+        return this.t("edit_profile_titles:currency_eur.message");
+      case "USD":
+        return this.t("settings:currency_usd.message");
+      default:
+        return this.t("settings:currency_usd.message");
+    }
+  }
 
   /* 
         Page: /wallet
@@ -392,21 +378,25 @@ class WalletDetails extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
       .then(response => response.json())
       .then(responseData => {
-        // console.log(responseData)
         if (responseData.status == 200) {
           this.props.history.push("/wallet");
           this.openNotificationWithIcon(
             "success",
-            "Success",
+            this.t("validations:success_text.message"),
             responseData.message
           );
         } else {
-          this.openNotificationWithIcon("error", "Error", responseData.message);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.message
+          );
         }
         this.setState({ loader: false });
       })
@@ -414,7 +404,7 @@ class WalletDetails extends Component {
         // console.log(error);
         this.openNotificationWithIcon(
           "error",
-          "Error",
+          this.t("validations:error_text.message"),
           "Something went wrong!!"
         );
         this.setState({ loader: false });
@@ -422,7 +412,6 @@ class WalletDetails extends Component {
   }
   render() {
     /* var self = this; */
-
     const {
       walletUserData,
       defaultCoin,
@@ -436,7 +425,6 @@ class WalletDetails extends Component {
       <ContactWrap>
         <LoggedNavigation />
         <GreyWrap>
-          {/* {console.log("wallet details props", this.props, walletUserData)} */}
           {Object.keys(walletUserData).length > 0 ? (
             walletUserData.flag == 0 ? (
               <ContainerContact2>
@@ -451,37 +439,6 @@ class WalletDetails extends Component {
                               : "COIN"}
                           </span>
                         </MYWallet>
-                        {/* {this.props.walletDetails.activated_asset_lists &&
-                        this.state.balanceFlag === false ? (
-                          <WalletCoin>
-                            {this.props.walletDetails.activated_asset_lists &&
-                            this.props.walletDetails.activated_asset_lists !==
-                              null &&
-                            this.props.walletDetails.activated_asset_lists !==
-                              undefined ? (
-                              <Select
-                                onChange={this.changeCoins}
-                                value={defaultCoin}
-                                // style={{ width: "100%" }}
-                                // className = "select-display"
-                              >
-                                {this.props.walletDetails.activated_asset_lists.map(
-                                  function(temp) {
-                                    return (
-                                      <Option value={temp.coin_code}>
-                                        {temp.coin}
-                                      </Option>
-                                    );
-                                  }
-                                )}
-                              </Select>
-                            ) : (
-                              ""
-                            )}
-                          </WalletCoin>
-                        ) : (
-                          ""
-                        )} */}
                         {this.state.balanceFlag === false && is_active_asset ? (
                           <WalletCoin>
                             {this.props.walletDetails &&
@@ -539,36 +496,6 @@ class WalletDetails extends Component {
                         ) : (
                           ""
                         )}
-
-                        {/* {is_active_asset &&
-                        this.state.balanceFlag === true &&
-                        is_active_asset === false ? (
-                          <WalletCoin>
-                            {this.props.walletDetails
-                              .deactivated_asset_lists !== null &&
-                            this.props.walletDetails.deactivated_asset_lists !==
-                              undefined ? (
-                              <Select
-                                onChange={this.changeCoins}
-                                value={defaultCoin}
-                              >
-                                {this.props.walletDetails.deactivated_asset_lists.map(
-                                  function(temp) {
-                                    return (
-                                      <Option value={temp.coin_code}>
-                                        {temp.coin}
-                                      </Option>
-                                    );
-                                  }
-                                )}
-                              </Select>
-                            ) : (
-                              ""
-                            )}
-                          </WalletCoin>
-                        ) : (
-                          ""
-                        )} */}
                       </LeftHead>
                     </Col>
                   </Row>
@@ -578,7 +505,7 @@ class WalletDetails extends Component {
                     {Object.keys(walletUserData).length > 0
                       ? walletUserData.coin_name.toUpperCase()
                       : "COIN"}{" "}
-                    Address :{" "}
+                    {this.t("address.message")} :{" "}
                     <AddressDisplay>
                       {Object.keys(walletUserData).length > 0
                         ? walletUserData.receive_address
@@ -632,7 +559,7 @@ class WalletDetails extends Component {
                                   currencyConv.quote["USD"].price *
                                     walletUserData.balance
                                 ).toFixed(8)}
-                                <AMT>{FIAT}</AMT>
+                                <AMT>{this.translateCurrency(FIAT)}</AMT>
                               </FIATAmt>
                             ) : (
                               ""
@@ -640,7 +567,7 @@ class WalletDetails extends Component {
                           </CryptAmt>
                         </LeftBit>
                         <PlacedDiv>
-                          In Orders:{" "}
+                          {this.t("wallet:in_order_text.message")}:{" "}
                           {walletUserData.balance >
                           walletUserData.placed_balance
                             ? (
@@ -657,10 +584,10 @@ class WalletDetails extends Component {
                         {this.state.is_active_asset && (
                           <RightBit>
                             <DepButton name="SEND" onClick={this.showModal}>
-                              SEND
+                              {this.t("wallet:send_btn.message")}
                             </DepButton>
                             <WithButton name="RECEIVE" onClick={this.showModal}>
-                              RECEIVE
+                              {this.t("wallet:recieve_btn.message")}
                             </WithButton>
                           </RightBit>
                         )}
@@ -677,7 +604,7 @@ class WalletDetails extends Component {
                   </RowWrap>
                 </DetailWrap>
                 <Tabs defaultActiveKey="1" onChange={callback}>
-                  <TabPane tab="Transaction History" key="1">
+                  <TabPane tab={this.t("general_2:Date.message")} key="1">
                     <TransTable>
                       {/* <TransTitle>Transaction History</TransTitle> */}
                       <CoinTable>
@@ -689,7 +616,10 @@ class WalletDetails extends Component {
                       </CoinTable>
                     </TransTable>
                   </TabPane>
-                  <TabPane tab="Withdrawal Requests" key="2">
+                  <TabPane
+                    tab={this.t("wallet:withdrawal_requests_text.message")}
+                    key="2"
+                  >
                     <TransTable>
                       {/* <TransTitle>Transaction History</TransTitle> */}
                       <CoinTable>
@@ -762,13 +692,20 @@ class WalletDetails extends Component {
                       us <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
                     </p> */}
                     <p>
-                      Your wallet is being generated and you will receive a
-                      notification when it is ready for use. If you do not
-                      receive a notification within 24 hours, or if you have any
-                      other concerns, please feel free to contact us{" "}
-                      <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                      {this.t("wallet:wallet_generation_in_process.message")}
+                      <a
+                        href={`${WordpressSiteURL}${
+                          localStorage["i18nextLng"] &&
+                          localStorage["i18nextLng"] !== "en"
+                            ? "/" + localStorage["i18nextLng"]
+                            : ""
+                        }/contact-us/`}
+                      >
+                        {this.t("wallet:here_text.message")}
+                      </a>
+                      .
                     </p>
-                    <p>Thank you for choosing FALDAX!</p>
+                    <p>{this.t("wallet:thanks_note_text.message")}</p>
                   </PendingPara>
                 </PendingWrap>
               </ContainerContact2>
@@ -784,33 +721,52 @@ class WalletDetails extends Component {
                   {walletUserData.iserc && !eth_for_erc_address && (
                     <PendingPara>
                       <p>
-                        Your wallet is not created yet. Please create your
-                        Ethereum wallet to use {walletUserData.coin_name}.
+                        {this.t("wallet_details_eth_not_created.message")}{" "}
+                        {walletUserData.coin_name}.
                         {/* </p>
                       <WalletCreateButton onClick={this._walletCreate}>
                         Create {walletUserData.coin_name} Wallet
                     </WalletCreateButton>
                       <p> */}
-                        If you still have any issue , please feel free to
-                        contact us{" "}
-                        <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                        {this.t("wallet_details_contact_us.message")}{" "}
+                        <a
+                          href={`${WordpressSiteURL}${
+                            localStorage["i18nextLng"] &&
+                            localStorage["i18nextLng"] !== "en"
+                              ? "/" + localStorage["i18nextLng"]
+                              : ""
+                          }/contact-us/`}
+                        >
+                          {this.t("wallet:here_text.message")}
+                        </a>
+                        .
                       </p>
                     </PendingPara>
                   )}
                   {eth_for_erc_address && eth_for_erc_status && (
                     <PendingPara>
                       <p>
-                        Your wallet is not created yet. Please click on the
-                        button below to create your wallet for{" "}
+                        {this.t("wallet_details_create.message")}{" "}
                         {walletUserData.coin_name}.
                       </p>
                       <WalletCreateButton onClick={this._walletCreate}>
-                        Create {walletUserData.coin_name} Wallet
+                        {this.t("general_2:wallet_details_create_text.message")}{" "}
+                        {walletUserData.coin_name}{" "}
+                        {this.t("header:navbar_menu_wallet.message")}
                       </WalletCreateButton>
                       <p>
-                        If you still have any issue , please feel free to
-                        contact us{" "}
-                        <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                        {this.t("wallet_details_contact_us.message")}{" "}
+                        <a
+                          href={`${WordpressSiteURL}${
+                            localStorage["i18nextLng"] &&
+                            localStorage["i18nextLng"] !== "en"
+                              ? "/" + localStorage["i18nextLng"]
+                              : ""
+                          }/contact-us/`}
+                        >
+                          {this.t("wallet:here_text.message")}
+                        </a>
+                        .
                       </p>
                     </PendingPara>
                   )}
@@ -820,17 +776,27 @@ class WalletDetails extends Component {
                   {!walletUserData.iserc && (
                     <PendingPara>
                       <p>
-                        Your wallet is not created yet. Please click on the
-                        button below to create your wallet for{" "}
+                        {this.t("wallet_details_not_created.message")}{" "}
                         {walletUserData.coin_name}.
                       </p>
                       <WalletCreateButton onClick={this._walletCreate}>
-                        Create {walletUserData.coin_name} Wallet
+                        {this.t("general_2:wallet_details_create_text.message")}{" "}
+                        {walletUserData.coin_name}{" "}
+                        {this.t("header:navbar_menu_wallet.message")}
                       </WalletCreateButton>
                       <p>
-                        If you still have any issue , please feel free to
-                        contact us{" "}
-                        <a href={`${WordpressSiteURL}/contact-us/`}>here</a>.
+                        {this.t("wallet_details_contact_us.message")}{" "}
+                        <a
+                          href={`${WordpressSiteURL}${
+                            localStorage["i18nextLng"] &&
+                            localStorage["i18nextLng"] !== "en"
+                              ? "/" + localStorage["i18nextLng"]
+                              : ""
+                          }/contact-us/`}
+                        >
+                          {this.t("wallet:here_text.message")}
+                        </a>
+                        .
                       </p>
                     </PendingPara>
                   )}
@@ -883,4 +849,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getAllCoins(isLoggedIn, currency)),
   LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
-export default connect(mapStateToProps, mapDispatchToProps)(WalletDetails);
+export default translate(["general_2", "wallet", "header"])(
+  connect(mapStateToProps, mapDispatchToProps)(WalletDetails)
+);

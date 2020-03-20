@@ -3,6 +3,8 @@ import "antd/dist/antd.css";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import { translate } from "react-i18next";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from "STYLED-COMPONENTS/HOMEPAGE/style";
@@ -81,6 +83,7 @@ class OpenTicket extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.t = this.props.t;
   }
   componentDidMount() {
     if (!this.props.profileDetails) {
@@ -94,7 +97,7 @@ class OpenTicket extends Component {
         <GreyWrap>
           <ContainerContact>
             <ContactCarrer>
-              <TicketTitle>Open a Ticket </TicketTitle>
+              <TicketTitle>{this.t("open_a_ticket_head.message")}</TicketTitle>
             </ContactCarrer>
             <CareerWrap>
               <HubspotForm
@@ -127,7 +130,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => ({
   getProfileDataAction: isLoggedIn => dispatch(getProfileDataAction(isLoggedIn))
 });
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(OpenTicket));
+
+export default translate(["general"])(
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(OpenTicket))
+);

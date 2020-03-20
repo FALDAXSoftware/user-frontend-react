@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { translate } from "react-i18next";
 import { _FOOTERLOGO, _DEFAULTPROFILE } from "CONSTANTS/images";
 
 /* Components */
@@ -214,20 +215,23 @@ class Afterlog extends Component {
   }
 
   render() {
+    const { t } = this.props;
     const DropdownItems = (
       <Menu className="fixed-drop">
         {/* <Menu.Item key="0">User ID: {this.props.profileDetails.id}</Menu.Item> */}
         <Menu.Item key="1">
           <a onClick={() => this.props.history.push("/editProfile")}>
             {" "}
-            Profile{" "}
+            {t("navbar_sub_menu_profile.message")}{" "}
           </a>
         </Menu.Item>
-        <Menu.Item key="2">
-          <a onClick={() => this.props.history.push("/tickets")}>Tickets</a>
+        <Menu.Item key="1">
+          <a onClick={() => this.props.history.push("/tickets")}>
+            {t("navbar_sub_menu_ticket.message")}
+          </a>
         </Menu.Item>
-        <Menu.Item key="3" onClick={this.logout.bind(this)}>
-          Logout
+        <Menu.Item key="2" onClick={this.logout.bind(this)}>
+          {t("navbar_sub_menu_history_logout.message")}
         </Menu.Item>
       </Menu>
     );
@@ -263,7 +267,7 @@ class Afterlog extends Component {
         </DayNightMode>
         {/* <Link to="/careers">
           <Exchange color={this.state.selected}>
-            <span> CAREERS </span>
+            <span> {t("navbar_menu_careers.message")} </span>
           </Exchange>
         </Link> */}
         <DropDownDiv
@@ -358,4 +362,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Afterlog);
+export default translate(["header"])(
+  connect(mapStateToProps, mapDispatchToProps)(Afterlog)
+);

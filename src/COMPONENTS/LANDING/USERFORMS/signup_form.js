@@ -2,8 +2,9 @@
 import React, { Component } from "react";
 import { createForm, formShape } from "rc-form";
 import styled from "styled-components";
-import { Row, Col, Button, notification, Icon, Progress } from "antd";
+import { Row, Col, Button, notification, Icon, Progress, Select } from "antd";
 import { connect } from "react-redux";
+import { translate } from "react-i18next";
 // import { ReCaptcha } from "react-recaptcha-google";
 import { ReCaptcha, loadReCaptcha } from "react-recaptcha-v3";
 import "react-password-strength/dist/style.css";
@@ -23,7 +24,7 @@ import {
   PassReq
 } from "./login_form";
 let { GOOGLE_SITE_KEY } = globalVariables;
-
+const { Option } = Select;
 export const LoginWrap = styled.div`
   background-color: #f0f3f2;
   min-height: 100%;
@@ -175,8 +176,21 @@ const Password = styled(Username)`
   padding-right: 40px;
 `;
 const Referral = styled(Username)``;
+export const DefaultLang = styled.div`
+  > .ant-select.ant-select-enabled {
+    width: 76%;
+    border-radius: 5px;
+    margin-top: 10px;
+    > .ant-select-selection.ant-select-selection--single {
+      height: 50px;
+      > .ant-select-selection__rendered {
+        line-height: 50px;
+      }
+    }
+  }
+`;
 export const ButtonLogin = styled(Button)`
-  width: 110px;
+  min-width: 120px;
   background-color: rgb(0, 170, 250);
   color: white;
   margin-top: 50px;
@@ -266,13 +280,16 @@ class SignupForm extends Component {
       qP: "",
       isSignDisable: false,
       recaptchaToken: null,
-      loadCaptch: false
+      loadCaptch: false,
+      language: "en"
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.dispModal = this.dispModal.bind(this);
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
     this.verifyCallback = this.verifyCallback.bind(this);
     this._resendVerLink = this._resendVerLink.bind(this);
+    this.handleLangChange = this.handleLangChange.bind(this);
+    this.t = this.props.t;
   }
 
   static propTypes = {
@@ -297,7 +314,11 @@ class SignupForm extends Component {
             this.onLoadRecaptcha();
           }
         );
-        this.openNotificationWithIcon("error", "Sign Up", props.isSignUp.err);
+        this.openNotificationWithIcon(
+          "error",
+          this.t("validations:error_text.message"),
+          props.isSignUp.err
+        );
       }
       this.setState({ isSignDisable: false });
     }
@@ -319,7 +340,12 @@ class SignupForm extends Component {
       }
     }
   }
-
+  handleLangChange(value) {
+    // console.log(`selected ${value}`);
+    this.setState({
+      language: value
+    });
+  }
   _resendVerLink() {
     this.props.history.push("/resend-verification");
   }
@@ -348,8 +374,6 @@ class SignupForm extends Component {
     );
   }
   verifyCallback(recaptchaToken) {
-    // Here you will get the final recaptchaToken!!!
-    // console.log(recaptchaToken, "<= your recaptcha token");
     this.setState({
       recaptchaToken
     });
@@ -387,6 +411,7 @@ class SignupForm extends Component {
         obj["confirm_password"] = value.confirm_password;
         obj["referral_code"] = value.referral_code;
         obj["device_type"] = 0;
+        obj["default_language"] = this.state.language;
         if (this.state.recaptchaToken != null) {
           obj["g_recaptcha_response"] = this.state.recaptchaToken;
           this.setState({ loader: true });
@@ -394,8 +419,8 @@ class SignupForm extends Component {
         } else {
           this.openNotificationWithIcon(
             "error",
-            "Error",
-            "The automated human verification system encountered an error. Please refresh the page and try again. We apologize for any inconvenience."
+            this.t("validations:error_text.message"),
+            this.t("general:captcha_not_loaded_error_head.message")
           );
         }
       } else {
@@ -416,7 +441,6 @@ class SignupForm extends Component {
             this.onChangeField(value.confirm_password, "confirm_password");
           }
         }
-        //this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue")
       }
     });
   };
@@ -443,7 +467,9 @@ class SignupForm extends Component {
             "inline-block";
           document.querySelector("#email_icon_success").style.display = "none";
           document.querySelectorAll(".email_sign")[0].style.display = "block";
-          this.setState({ email_msg: "Email address is not valid" });
+          this.setState({
+            email_msg: this.t("validations:invalid_email_error.message")
+          });
         }
       } else {
         this.setState({ emailIcon: false });
@@ -452,7 +478,12 @@ class SignupForm extends Component {
           "inline-block";
         document.querySelectorAll(".email_sign")[0].style.display = "block";
         if (value === "" || value === undefined) {
-          this.setState({ email_msg: "Email address is required" });
+          this.setState({
+            email_msg:
+              this.t("login_page:email_address_text.message") +
+              " " +
+              this.t("validations:field_is_required.message")
+          });
         }
       }
     } else if (field === "firstname") {
@@ -469,7 +500,9 @@ class SignupForm extends Component {
               "inline-block";
             document.querySelectorAll(".first_sign")[0].style.display = "block";
             this.setState({
-              first_msg: "*Field must include more than just numbers"
+              first_msg: `*${this.t(
+                "validations:only_number_not_allowed.message"
+              )}`
             });
           } else {
             this.setState({ firstIcon: true });
@@ -477,16 +510,6 @@ class SignupForm extends Component {
               "inline-block";
             document.querySelector("#first_icon_fail").style.display = "none";
             document.querySelectorAll(".first_sign")[0].style.display = "none";
-            if (value.split("'").length - 1 > 1) {
-              this.setState({ firstIcon: false });
-              document.querySelector("#first_icon_success").style.display =
-                "none";
-              document.querySelector("#first_icon_fail").style.display =
-                "inline-block";
-              document.querySelectorAll(".first_sign")[0].style.display =
-                "block";
-              this.setState({ first_msg: "Only one apostrophe is allowed" });
-            }
           }
         } else {
           this.setState({ firstIcon: false });
@@ -495,8 +518,7 @@ class SignupForm extends Component {
             "inline-block";
           document.querySelectorAll(".first_sign")[0].style.display = "block";
           this.setState({
-            first_msg:
-              "*First Name must be at least 2 characters in length. No special characters are permitted."
+            first_msg: `*${this.t("first_name_error.message")}`
           });
         }
       } else {
@@ -506,7 +528,14 @@ class SignupForm extends Component {
           "inline-block";
         document.querySelectorAll(".first_sign")[0].style.display = "block";
         if (value === "" || value === undefined) {
-          this.setState({ first_msg: "First name is required." });
+          this.setState({
+            first_msg:
+              this.t(
+                "edit_profile_titles:subhead_personal_form_first_name.message"
+              ) +
+              " " +
+              this.t("validations:field_is_required.message")
+          });
         }
       }
     } else if (field === "lastname") {
@@ -522,7 +551,9 @@ class SignupForm extends Component {
               "inline-block";
             document.querySelectorAll(".last_sign")[0].style.display = "block";
             this.setState({
-              last_msg: "*Field must include more than just numbers"
+              last_msg: `*${this.t(
+                "validations:only_number_not_allowed.message"
+              )}`
             });
           } else {
             this.setState({ lastIcon: true });
@@ -530,16 +561,6 @@ class SignupForm extends Component {
               "inline-block";
             document.querySelector("#last_icon_fail").style.display = "none";
             document.querySelectorAll(".last_sign")[0].style.display = "none";
-            if (value.split("'").length - 1 > 1) {
-              this.setState({ lastIcon: false });
-              document.querySelector("#last_icon_success").style.display =
-                "none";
-              document.querySelector("#last_icon_fail").style.display =
-                "inline-block";
-              document.querySelectorAll(".last_sign")[0].style.display =
-                "block";
-              this.setState({ last_msg: "Only one apostrophe is allowed" });
-            }
           }
         } else {
           this.setState({ lastIcon: false });
@@ -548,8 +569,7 @@ class SignupForm extends Component {
             "inline-block";
           document.querySelectorAll(".last_sign")[0].style.display = "block";
           this.setState({
-            last_msg:
-              "*Last Name must be at least 2 characters in length. No special characters are permitted."
+            last_msg: `*${this.t("last_name_error.message")}`
           });
         }
       } else {
@@ -559,7 +579,14 @@ class SignupForm extends Component {
           "inline-block";
         document.querySelectorAll(".last_sign")[0].style.display = "block";
         if (value === "" || value === undefined) {
-          this.setState({ last_msg: "Last name is required" });
+          this.setState({
+            last_msg:
+              this.t(
+                "edit_profile_titles:subhead_personal_form_last_name.message"
+              ) +
+              " " +
+              this.t("validations:field_is_required.message")
+          });
         }
       }
     } else if (field === "password") {
@@ -613,7 +640,7 @@ class SignupForm extends Component {
               "inline-block";
             document.querySelectorAll(".pass_sign")[0].style.display = "block";
             this.setState({
-              pass_msg: "Your password must not contain any spaces."
+              pass_msg: this.t("validations:space_in_password.message")
             });
           } else {
             this.setState({ newpassIcon: false });
@@ -623,8 +650,7 @@ class SignupForm extends Component {
               "inline-block";
             document.querySelectorAll(".pass_sign")[0].style.display = "block";
             this.setState({
-              pass_msg:
-                "Your password must contain at least one uppercase letter, one lowercase letter, one special character (!@#$%_), and one number. Minimum of 8 characters and a maximum of 60 characters."
+              pass_msg: this.t("validations:password_error.message")
             });
           }
         }
@@ -635,7 +661,12 @@ class SignupForm extends Component {
           "inline-block";
         document.querySelectorAll(".pass_sign")[0].style.display = "block";
         if (value === "" || value === undefined) {
-          this.setState({ pass_msg: "Password is required" });
+          this.setState({
+            pass_msg:
+              this.t("login_page:password_text.message") +
+              " " +
+              this.t("validations:field_is_required.message")
+          });
         }
       }
     } else if (field === "confirm_password") {
@@ -657,7 +688,11 @@ class SignupForm extends Component {
             "inline-block";
           document.querySelectorAll(".confirmPass_sign")[0].style.display =
             "block";
-          this.setState({ confirmPass_msg: "*Password doesn't match" });
+          this.setState({
+            confirmPass_msg: `${this.t(
+              "validations:password_mismatch_error.message"
+            )}`
+          });
         }
       } else {
         this.setState({ confirmIcon: false });
@@ -666,7 +701,11 @@ class SignupForm extends Component {
           document.querySelector("#confirm_icon_fail").style.display = "none";
           document.querySelectorAll(".confirmPass_sign")[0].style.display =
             "block";
-          this.setState({ confirmPass_msg: "*Password doesn't match" });
+          this.setState({
+            confirmPass_msg: `${this.t(
+              "validations:password_mismatch_error.message"
+            )}`
+          });
         } else {
           document.querySelector("#confirm_icon_fail").style.display = "none";
           document.querySelectorAll(".confirmPass_sign")[0].style.display =
@@ -741,7 +780,15 @@ class SignupForm extends Component {
         <RowWrap>
           <ColLeft sm={24} lg={12}>
             <LeftWrap>
-              <a href={globalVariables.WordpressSiteURL}>
+              <a
+                href={
+                  globalVariables.WordpressSiteURL +
+                  (localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : "")
+                }
+              >
                 <VertImg
                   className="wow fadeInUp"
                   src="/images/LeftSideLogo.png"
@@ -753,11 +800,20 @@ class SignupForm extends Component {
           <ColRight sm={24} lg={12}>
             <FormWrap>
               <RightWrap className="wow fadeInDown">
-                <LoginHead>Sign Up</LoginHead>
-                <Welcome>A Better Trading Experience is Moments Away</Welcome>
-                <SubHeading>Let's Get Started</SubHeading>
+                <LoginHead>
+                  {this.t("login_page:sign_up_text.message")}
+                </LoginHead>
+                <Welcome>{this.t("sign_up_head_text.message")}</Welcome>
+                <SubHeading>
+                  {this.t("lets_get_started_text.message")}
+                </SubHeading>
                 <form onSubmit={this.handleSubmit}>
-                  <EmailLabel>First Name*</EmailLabel>
+                  <EmailLabel>
+                    {this.t(
+                      "edit_profile_titles:subhead_personal_form_first_name.message"
+                    )}
+                    *
+                  </EmailLabel>
                   <div>
                     <Full
                       {...getFieldProps("first_name", {
@@ -785,7 +841,12 @@ class SignupForm extends Component {
                     {this.state.first_msg}
                   </FullReq>
 
-                  <PhLabel>Last Name*</PhLabel>
+                  <PhLabel>
+                    {this.t(
+                      "edit_profile_titles:subhead_personal_form_last_name.message"
+                    )}
+                    *
+                  </PhLabel>
                   <div>
                     <Full
                       {...getFieldProps("last_name", {
@@ -811,7 +872,9 @@ class SignupForm extends Component {
                   </div>
                   <FullReq className="last_sign">{this.state.last_msg}</FullReq>
 
-                  <PhLabel>Email Address*</PhLabel>
+                  <PhLabel>
+                    {this.t("login_page:email_address_text.message")}*
+                  </PhLabel>
                   <div>
                     <Email
                       // type="email"
@@ -840,7 +903,9 @@ class SignupForm extends Component {
                     {this.state.email_msg}
                   </EmailReq>
 
-                  <PhLabel>Password*</PhLabel>
+                  <PhLabel>
+                    {this.t("login_page:password_text.message")}*
+                  </PhLabel>
                   <div>
                     <Password
                       type={this.state.PasswordtypeEye}
@@ -883,7 +948,7 @@ class SignupForm extends Component {
                     strokeColor={this.state.stroke}
                   />
                   <PassReq className="pass_sign">{this.state.pass_msg}</PassReq>
-                  <PhLabel>Confirm Password*</PhLabel>
+                  <PhLabel>{this.t("confirm_password_text.message")}*</PhLabel>
                   <div>
                     <Password
                       type={this.state.repeatEye}
@@ -922,13 +987,27 @@ class SignupForm extends Component {
                   <ConfirmPassReq className="confirmPass_sign">
                     {this.state.confirmPass_msg}
                   </ConfirmPassReq>
-                  <PhLabel>Referral Code</PhLabel>
+                  <PhLabel>
+                    {this.t("general_1:default_language_head.message")}
+                  </PhLabel>
+                  <DefaultLang>
+                    <Select
+                      value={this.state.language}
+                      onChange={this.handleLangChange}
+                    >
+                      <Option value="en">English</Option>
+                      <Option value="ja">日本語</Option>
+                      {/* <Option value="es">Española</Option>
+                      <Option value="uk">Українська</Option>
+                      <Option value="ru">русский</Option>
+                      <Option value="zh">普通话</Option> */}
+                    </Select>
+                  </DefaultLang>
+                  <PhLabel>{this.t("referral_code_text.message")}</PhLabel>
                   <div>
                     <Referral
                       {...getFieldProps("referral_code", {
-                        onChange() {
-                          /* console.log("Hello How are You") */
-                        }, // have to write original onChange here if you need
+                        onChange() {},
                         initialValue:
                           this.state.qP === "" ? me.props.init : this.state.qP,
                         rules: [{ type: "string", required: false }]
@@ -942,26 +1021,23 @@ class SignupForm extends Component {
                   onClick={this.submit}
                   disabled={this.state.isSignDisable}
                 >
-                  Sign Up
+                  {this.t("login_page:sign_up_text.message")}
                 </ButtonLogin>
                 <br />
                 <SignWrap>
                   <Sign>
-                    Already Signed Up ?{" "}
+                    {this.t("already_signed_up_text.message")} ?{" "}
                     <Signa
                       href="/resend-verification"
                       // onClick={this._resendVerLink}
                     >
-                      Resend Verification Link
+                      {this.t("login_page:resend_link_text.message")}
                     </Signa>
                   </Sign>
                   <Sign>
-                    Already have an account?{" "}
-                    <Signa
-                      href="/login"
-                      // onClick={this.dispModal}
-                    >
-                      Login
+                    {this.t("login_page:already_have_account_text.message")}?{" "}
+                    <Signa href="/login">
+                      {this.t("login_page:login_text.message")}
                     </Signa>
                   </Sign>
                 </SignWrap>
@@ -969,17 +1045,6 @@ class SignupForm extends Component {
             </FormWrap>
           </ColRight>
         </RowWrap>
-        {/* <ReCaptcha
-          ref={el => {
-            this.captchaDemo = el;
-          }}
-          size="invisible"
-          render="explicit"
-          sitekey={GOOGLE_SITE_KEY}
-          onloadCallback={this.onLoadRecaptcha}
-          verifyCallback={this.verifyCallback}
-          badge="bottomleft"
-        /> */}
         {this.state.loadCaptch && (
           <ReCaptcha
             sitekey={GOOGLE_SITE_KEY}
@@ -1007,7 +1072,12 @@ const mapDispatchToProps = dispatch => ({
   clearSignUp: () => dispatch(clearSignUp())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(createForm()(SignupForm));
+export default translate([
+  "sign_up",
+  "login_page",
+  "referral",
+  "general_1",
+  "validations",
+  "security_tab",
+  "general"
+])(connect(mapStateToProps, mapDispatchToProps)(createForm()(SignupForm)));

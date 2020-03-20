@@ -83,6 +83,7 @@ export default class FaqPage extends Component {
     fetch(API_URL + "/users/static-page-json/faq", {
       method: "get",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"], 
         'Content-Type': 'application/json'
       }
     })
