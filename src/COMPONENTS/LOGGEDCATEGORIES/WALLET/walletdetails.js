@@ -173,7 +173,10 @@ class WalletDetails extends Component {
       }
     }
     if (this.props.location !== undefined) {
-      if (this.props.location.search.includes("coinID")) {
+      if (
+        this.props.location.search.includes("coinID") &&
+        this.props.profileDetails.is_user_updated
+      ) {
         await this.walletDetailsApi();
       }
     }
