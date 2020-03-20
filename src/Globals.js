@@ -7,9 +7,11 @@ export const globalVariables = {
 
   // WordpressSiteURL: "https://www.faldax.com", //Live URL
 
-  WordpressSiteURL: "https://preprod.faldax.com", //Pre-Production URL
+  WordpressSiteURL: "https://wwww.faldax.com", //Production URL
 
   tvChartURL: "/chart",
+  API_URL: "https://mainnet-backend.faldax.com", //Mainnet Production URL
+  TRADE_URL: "https://mainnet-trade.faldax.com",
 
   //API_URL: 'http://18.191.87.133:8084', //Live URL
 
@@ -29,9 +31,9 @@ export const globalVariables = {
 
   // API_URL: "https://mainnet-backend.faldax.com", //Pre-Production URL
 
-  API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
+  // API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
 
-  TRADE_URL: "https://preprod-trade.faldax.com",
+  // TRADE_URL: "https://preprod-trade.faldax.com",
 
   //    TRADE_URL: "https://dev-trade.faldax.com", // DEV url
 
