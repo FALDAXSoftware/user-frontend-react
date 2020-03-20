@@ -112,6 +112,7 @@ class Afterlog extends Component {
       selected: false,
       fontColor: ""
     };
+    this.t = this.props.t;
   }
 
   /* Life-Cycle Methods */
@@ -123,13 +124,13 @@ class Afterlog extends Component {
           this.setState({
             fontColor: "black",
             themeIcon: faMoon,
-            iconTitle: "Change to Night Mode"
+            iconTitle: this.t("general_4:change_to_night_text.message")
           });
         else
           this.setState({
             fontColor: "white",
             themeIcon: faSun,
-            iconTitle: "Change to Day Mode"
+            iconTitle: this.t("general_4:change_to_day_text.message")
           });
       }
     }
@@ -141,13 +142,13 @@ class Afterlog extends Component {
           this.setState({
             fontColor: "black",
             themeIcon: faMoon,
-            iconTitle: "Change to Night Mode"
+            iconTitle: this.t("general_4:change_to_night_text.message")
           });
         else
           this.setState({
             fontColor: "white",
             themeIcon: faSun,
-            iconTitle: "Change to Day Mode"
+            iconTitle: this.t("general_4:change_to_day_text.message")
           });
       }
     }
@@ -206,9 +207,15 @@ class Afterlog extends Component {
     let flag;
     if (this.props.themeReducer.theme === true) {
       flag = false;
-      this.setState({ themeIcon: faSun, iconTitle: "Change to Night Mode" });
+      this.setState({
+        themeIcon: faSun,
+        iconTitle: this.t("general_4:change_to_night_text.message")
+      });
     } else {
-      this.setState({ themeIcon: faMoon, iconTitle: "Change to Day Mode" });
+      this.setState({
+        themeIcon: faMoon,
+        iconTitle: this.t("general_4:change_to_day_text.message")
+      });
       flag = true;
     }
     this.props.actions.theme.darkTheme(flag);
@@ -265,11 +272,11 @@ class Afterlog extends Component {
             </Tooltip>{" "}
           </span>
         </DayNightMode>
-        <Link to="/careers">
+        {/* <Link to="/careers">
           <Exchange color={this.state.selected}>
             <span> {t("navbar_menu_careers.message")} </span>
           </Exchange>
-        </Link>
+        </Link> */}
         <DropDownDiv
           className="Drop-main"
           overlay={DropdownItems}
@@ -362,6 +369,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default translate(["header"])(
+export default translate(["header", "general_4"])(
   connect(mapStateToProps, mapDispatchToProps)(Afterlog)
 );

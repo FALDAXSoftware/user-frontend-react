@@ -152,28 +152,22 @@ class KYCForm extends Component {
     this.validator = new SimpleReactValidator({
       firstname: {
         // name the rule
-        message:
-          this.t("subhead_personal_form_first_name.message") +
-          " " +
-          this.t("validations:min_max_first_name.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("sign_up:first_name_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^[a-zA-Z0-9]{2,15}$/;
+          var re = /^[a-zA-Z0-9?']{2,5000}$/;
           var bool = re.test(String(val).toLowerCase());
           return bool;
         }
       },
       lastname: {
         // name the rule
-        message:
-          this.t("subhead_personal_form_last_name.message") +
-          " " +
-          this.t("validations:min_max_first_name.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("sign_up:last_name_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^[a-zA-Z0-9]{2,15}$/;
+          var re = /^[a-zA-Z0-9?']{2,5000}$/;
           var bool = re.test(String(val).toLowerCase());
           return bool;
         }
@@ -294,7 +288,7 @@ class KYCForm extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
@@ -1259,5 +1253,6 @@ const mapDispatchToProps = dispatch => ({
 export default translate([
   "edit_profile_titles",
   "validations",
-  "identity_verification"
+  "identity_verification",
+  "sign_up"
 ])(connect(mapStateToProps, mapDispatchToProps)(KYCForm));

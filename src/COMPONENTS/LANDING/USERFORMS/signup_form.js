@@ -190,7 +190,7 @@ export const DefaultLang = styled.div`
   }
 `;
 export const ButtonLogin = styled(Button)`
-  width: 110px;
+  min-width: 120px;
   background-color: rgb(0, 170, 250);
   color: white;
   margin-top: 50px;
@@ -487,7 +487,7 @@ class SignupForm extends Component {
         }
       }
     } else if (field === "firstname") {
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      var re = /^[a-zA-Z0-9?']{2,5000}$/;
       var bool = re.test(value);
       if (value !== "" && value !== undefined) {
         if (bool === true) {
@@ -539,7 +539,7 @@ class SignupForm extends Component {
         }
       }
     } else if (field === "lastname") {
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      var re = /^[a-zA-Z0-9?']{2,5000}$/;
       var bool = re.test(value);
       if (value !== "" && value !== undefined) {
         if (bool === true) {
