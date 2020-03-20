@@ -46,6 +46,7 @@ class BlogComments extends Component {
             fetch(globalVariables.API_URL + `/get-comments?page=1&limit=10`, {
                 method: "post",
                 headers: {
+                    "Accept-Language": localStorage["i18nextLng"],
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
@@ -82,6 +83,7 @@ class BlogComments extends Component {
             method: "post",
             headers: {
                 Accept: 'application/json',
+                "Accept-Language": localStorage["i18nextLng"],
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(Obj)
@@ -109,6 +111,7 @@ class BlogComments extends Component {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
+                    "Accept-Language": localStorage["i18nextLng"],
                     Authorization: "Bearer " + this.props.simpleReducer.isLoggedIn
                 },
                 body: JSON.stringify(obj)
@@ -120,6 +123,7 @@ class BlogComments extends Component {
                     fetch(globalVariables.API_URL + `/get-comments?page=1&limit=10`, {
                         method: "post",
                         headers: {
+                            "Accept-Language": localStorage["i18nextLng"],
                             Accept: 'application/json',
                             'Content-Type': 'application/json',
                         },

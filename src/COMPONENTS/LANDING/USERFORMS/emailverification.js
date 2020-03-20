@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { WelcomeText } from "./login_form";
 import { Col, Row } from "antd";
+import { translate } from "react-i18next";
 import { globalVariables } from "Globals.js";
 
 /* Components */
@@ -104,16 +105,25 @@ const SubText = styled.span`
 `;
 
 class EmailVerification extends Component {
-  // componentDidMount() {
-  //   // console.log("mount", this.props.location.state);
-  // }
+  constructor(props) {
+    super(props);
+    this.t = this.props.t;
+  }
   render() {
     return (
       <div>
         <RowWrap>
           <ColLeft sm={24} lg={12}>
             <LeftWrap>
-              <a href={globalVariables.WordpressSiteURL}>
+              <a
+                href={
+                  globalVariables.WordpressSiteURL +
+                  (localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : "")
+                }
+              >
                 <VertImg
                   className="wow fadeInUp"
                   src="/images/LeftSideLogo.png"
@@ -125,12 +135,12 @@ class EmailVerification extends Component {
           <ColRight sm={24} lg={12}>
             <FormWrap>
               <RightWrap className="wow fadeInDown">
-                <LoginHead>Thank You</LoginHead>
+                <LoginHead>{this.t("thank_you_text.message")}</LoginHead>
                 <WelcomeText>
-                  To continue, please verify your new email address.
+                  {this.t("verification_head1_text.message")}
                 </WelcomeText>
                 <SubText>
-                  Please check your updated email address{" "}
+                  {this.t("verification_head2_text.message")}{" "}
                   <b>{this.props.location.state}</b>.
                 </SubText>
               </RightWrap>
@@ -142,4 +152,4 @@ class EmailVerification extends Component {
   }
 }
 
-export default EmailVerification;
+export default translate(["login_page"])(EmailVerification);
