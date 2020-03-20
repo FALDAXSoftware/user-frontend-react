@@ -2901,6 +2901,18 @@
       "message": "Upload",
       "message_type": "Web content",
       "context": "Upload text"
+    },
+    "upload_ssn_require": {
+      "page": "Identity Verification",
+      "message": "Please enter Social Security Number.",
+      "message_type": "Web content",
+      "context": "SSN validation text"
+    },
+    "upload_ssn_invalid": {
+      "page": "Identity Verification",
+      "message": "Enter a valid SSN number.",
+      "message_type": "Web content",
+      "context": "SSN valid text"
     }
   }
 }
