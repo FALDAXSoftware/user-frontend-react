@@ -748,7 +748,9 @@ class PersonalDetails extends Component {
           if (regexnum.test(value)) {
             this.setState({ firstIcon: false });
             document.querySelectorAll(".first_msg")[0].style.display = "block";
-            this.setState({ firstmsg: t("only_number_not_allowed.message") });
+            this.setState({
+              firstmsg: t("validations:only_number_not_allowed.message")
+            });
           } else {
             this.setState({ firstIcon: true });
             document.querySelectorAll(".first_msg")[0].style.display = "none";
@@ -782,7 +784,9 @@ class PersonalDetails extends Component {
           if (regexnum.test(value)) {
             this.setState({ lastIcon: false });
             document.querySelectorAll(".last_msg")[0].style.display = "block";
-            this.setState({ lastmsg: t("only_number_not_allowed.message") });
+            this.setState({
+              lastmsg: t("validations:only_number_not_allowed.message")
+            });
           } else {
             this.setState({ lastIcon: true });
             document.querySelectorAll(".last_msg")[0].style.display = "none";

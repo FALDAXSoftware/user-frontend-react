@@ -135,6 +135,12 @@ class WalletDetails extends Component {
   }
 
   /* Life Cycle Methods */
+  componentWillMount() {
+    if (!this.props.profileDetails.is_user_updated) {
+      this.props.history.push("/");
+    }
+  }
+
   async componentDidMount() {
     if (
       this.props.profileDetails &&
@@ -167,7 +173,10 @@ class WalletDetails extends Component {
       }
     }
     if (this.props.location !== undefined) {
-      if (this.props.location.search.includes("coinID")) {
+      if (
+        this.props.location.search.includes("coinID") &&
+        this.props.profileDetails.is_user_updated
+      ) {
         await this.walletDetailsApi();
       }
     }
@@ -188,7 +197,7 @@ class WalletDetails extends Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify({
@@ -306,7 +315,7 @@ class WalletDetails extends Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           Authorization: "Bearer " + this.props.isLoggedIn
         }
       })
@@ -370,6 +379,7 @@ class WalletDetails extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
@@ -741,7 +751,7 @@ class WalletDetails extends Component {
                         {walletUserData.coin_name}.
                       </p>
                       <WalletCreateButton onClick={this._walletCreate}>
-                        {this.t("header:wallet_details_create_text.message")}{" "}
+                        {this.t("general_2:wallet_details_create_text.message")}{" "}
                         {walletUserData.coin_name}{" "}
                         {this.t("header:navbar_menu_wallet.message")}
                       </WalletCreateButton>
@@ -771,7 +781,7 @@ class WalletDetails extends Component {
                         {walletUserData.coin_name}.
                       </p>
                       <WalletCreateButton onClick={this._walletCreate}>
-                        {this.t("header:wallet_details_create_text")}{" "}
+                        {this.t("general_2:wallet_details_create_text.message")}{" "}
                         {walletUserData.coin_name}{" "}
                         {this.t("header:navbar_menu_wallet.message")}
                       </WalletCreateButton>
