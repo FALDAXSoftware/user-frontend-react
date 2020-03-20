@@ -370,8 +370,8 @@ class DocUpload extends Component {
     //   this.state.frontImg,
     //   this.state.backImg
     // );
-    if (this.state.icon1 === "check" && this.state.icon2 === "check") {
-      if (this.state.frontImg !== "" && this.state.backImg !== "") {
+    if ((this.props.docText.toLowerCase() == "passport" && this.state.icon1 === "check")||(this.state.icon1 === "check" && this.state.icon2 === "check")) {
+      if ((this.props.docText.toLowerCase() == "passport" && this.state.frontImg !== "") || (this.state.frontImg !== "" && this.state.backImg !== "")) {
         var kycDoc = {};
         kycDoc["front_doc"] = this.state.frontImg;
         kycDoc["back_doc"] = this.state.backImg;
@@ -433,7 +433,7 @@ class DocUpload extends Component {
                 <Plus className="plus">
                   <Icon type={this.state.icon1} theme="outlined" />
                 </Plus>
-                <Plustext className="text">{t("front_text.message")}</Plustext>
+                <Plustext className="text">{this.props.docText.toLowerCase() != "passport"?t("front_text.message"):t("general_3:passport_picture_text.message")}</Plustext>
               </ButtonUp>
               <Fileinput
                 onChange={this.handleProfile}
@@ -442,7 +442,7 @@ class DocUpload extends Component {
                 id="front"
               />
             </Fileselect1>
-            <Fileselect2 md={{ span: 6 }} className="file-select-col">
+           {this.props.docText.toLowerCase() != "passport" && <Fileselect2 md={{ span: 6 }} className="file-select-col">
               <RemoveIcon2
                 onClick={() => {
                   this.removeFile("back-doc");
@@ -470,6 +470,7 @@ class DocUpload extends Component {
                 id="back"
               />
             </Fileselect2>
+           }
           </Filewrap>
           <NoteSpan>{t("general_1:supported_format_text.message")}</NoteSpan>
           <NoteSpan className="upload_note">
@@ -516,6 +517,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(kycFormAction(isLoggedIn, value))
 });
 
-export default translate(["identity_verification", "validations", "general_1"])(
+export default translate(["identity_verification", "validations", "general_1","general_3"])(
   connect(mapStateToProps, mapDispatchToProps)(DocUpload)
 );
