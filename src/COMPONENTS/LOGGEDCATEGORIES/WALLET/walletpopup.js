@@ -8,7 +8,7 @@ import SimpleReactValidator from "simple-react-validator";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import moment from "moment";
 import { connect } from "react-redux";
-import {translate} from "react-i18next"
+import { translate } from "react-i18next";
 /* Styled-Components */
 
 /* Components */
@@ -209,15 +209,15 @@ export const AddressDiv = styled.div`
 export const ReceiveDiv = styled.div`
   text-align: center;
   margin-top: 40px;
-  `;
+`;
 
-  export const CopyAddress = styled.div`
+export const CopyAddress = styled.div`
   margin-top: 20px;
 `;
 class WalletPopup extends Component {
   constructor(props) {
     super(props);
-    this.t=this.props.t;
+    this.t = this.props.t;
     this.state = {
       value: null,
       copied: false,
@@ -242,13 +242,13 @@ class WalletPopup extends Component {
       showTFAModal: false,
       withdrawFlag: false,
       availableBalance: "",
-      withdrawMsg:this.t("withdraw_request_is_processed.message")
+      withdrawMsg: this.t("withdraw_request_is_processed.message")
     };
     this.timeout = null;
     this.validator = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message:this.t("amount_gt_zero_validation.message"),
+        message: this.t("amount_gt_zero_validation.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -258,8 +258,8 @@ class WalletPopup extends Component {
         },
         required: true // optional
       },
-      amountNumeric:{
-        message:this.t("amount_8_precision_validation.message"),
+      amountNumeric: {
+        message: this.t("amount_8_precision_validation.message"),
         rule: val => {
           var RE = /^\d+.?\d*$/;
           if (RE.test(val)) {
@@ -267,11 +267,10 @@ class WalletPopup extends Component {
           } else {
             return false;
           }
-        } 
-      }
-      ,
+        }
+      },
       decimalrestrict: {
-        message:this.t("validation_amount_numeric.message"),
+        message: this.t("validation_amount_numeric.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
@@ -282,7 +281,9 @@ class WalletPopup extends Component {
         }
       },
       minAddress: {
-        message: `${this.t("validation_destination_address_min_require.message")}.`,
+        message: `${this.t(
+          "validation_destination_address_min_require.message"
+        )}.`,
         rule: (val, params, validator) => {
           // console.log("this is val?????", val);
           if (val.length >= params[0]) {
@@ -296,7 +297,9 @@ class WalletPopup extends Component {
         required: true // optional
       },
       maxAddress: {
-        message: `${this.t("validation_destination_address_max_require.message")}`,
+        message: `${this.t(
+          "validation_destination_address_max_require.message"
+        )}`,
         rule: (val, params, validator) => {
           if (val.length <= params[0]) {
             return true;
@@ -307,7 +310,9 @@ class WalletPopup extends Component {
         required: true // optional
       },
       minLimitCheck: {
-        message: `${this.t("amount_gte_validation.message")} ${this.props.coin_min_limit}.`,
+        message: `${this.t("amount_gte_validation.message")} ${
+          this.props.coin_min_limit
+        }.`,
         rule: (val, params, validator) => {
           // console.log("this is val?????", val);
           if (val >= this.props.coin_min_limit) {
@@ -321,7 +326,9 @@ class WalletPopup extends Component {
         required: true // optional
       },
       maxLimitCheck: {
-        message: `${this.t("amount_lte_validation.message")} ${this.props.coin_max_limit}.`,
+        message: `${this.t("amount_lte_validation.message")} ${
+          this.props.coin_max_limit
+        }.`,
         rule: (val, params, validator) => {
           // console.log("this is val?????", val);
           if (val <= this.props.coin_max_limit) {
@@ -334,9 +341,9 @@ class WalletPopup extends Component {
         },
         required: true // optional
       },
-      destinationRequire:{
-        message :this.t('validation_destination_address_required.message'),
-        required:true,
+      destinationRequire: {
+        message: this.t("validation_destination_address_required.message"),
+        required: true,
         rule: val => {
           var RE = /.+/;
           if (RE.test(val)) {
@@ -344,10 +351,10 @@ class WalletPopup extends Component {
           } else {
             return false;
           }
-        } 
+        }
       },
-      amountRequired:{
-        message :this.t('validation_amount_required.message'),
+      amountRequired: {
+        message: this.t("validation_amount_required.message"),
         rule: val => {
           var RE = /.+/;
           if (RE.test(val)) {
@@ -355,8 +362,8 @@ class WalletPopup extends Component {
           } else {
             return false;
           }
-        }, 
-        required:true,
+        },
+        required: true
       },
       allowSpecial: {
         message: this.t("destination_address_validation.message"),
@@ -394,7 +401,7 @@ class WalletPopup extends Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           Authorization: "Bearer " + this.props.isLoggedIn
         }
       })
@@ -436,7 +443,7 @@ class WalletPopup extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
@@ -545,7 +552,7 @@ class WalletPopup extends Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify(values)
@@ -666,8 +673,8 @@ class WalletPopup extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
-        "Accept-Language": localStorage["i18nextLng"], 
+        "Accept-Language": localStorage["i18nextLng"],
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       },
       body: JSON.stringify(values)
@@ -687,9 +694,17 @@ class WalletPopup extends Component {
             sendFields: fields
           });
         } else if (responseData.status === 500) {
-          this.openNotificationWithIcon("error",this.t("validations:error_text.message"), responseData.err);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
         } else {
-          this.openNotificationWithIcon("error",this.t("validations:error_text.message"), responseData.message);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.message
+          );
         }
         this.setState({
           loader: false
@@ -797,7 +812,11 @@ class WalletPopup extends Component {
           <WalletModal
             title={
               <TitleDiv>
-                <Title>{this.props.title=='RECEIVE'?this.t("wallet:recieve_btn.message"):this.t("wallet:send_btn.message")}</Title>
+                <Title>
+                  {this.props.title == "RECEIVE"
+                    ? this.t("wallet:recieve_btn.message")
+                    : this.t("wallet:send_btn.message")}
+                </Title>
               </TitleDiv>
             }
             visible={this.props.visible}
@@ -828,7 +847,7 @@ class WalletPopup extends Component {
                             value={this.state.receive.receive_address}
                             className={this.state.receiveAdd}
                             placeholder="Referral"
-                            enterButton={this.t('referral:copy_btn.message')}
+                            enterButton={this.t("referral:copy_btn.message")}
                             size="large"
                             onSearch={(e, value) => this.SearchText(e, value)}
                           />
@@ -850,7 +869,7 @@ class WalletPopup extends Component {
                     size="large"
                     type="primary"
                   >
-                    {this.t("conversation:confirm_btn.message")}
+                    {this.t("conversion:confirm_btn.message")}
                   </Button>
                   <Button
                     onClick={this.cancelFunc}
@@ -858,7 +877,9 @@ class WalletPopup extends Component {
                     size="large"
                     type="primary"
                   >
-                    {this.t("edit_profile_titles:subhead_personal_form_cancel_btn.message")}
+                    {this.t(
+                      "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                    )}
                   </Button>
                 </ConfirmDiv>
               </ModalWrap>
@@ -925,7 +946,10 @@ class WalletPopup extends Component {
                     <Fee>
                       <span>
                         <span>
-                          <b>FALDAX {this.t("conversion:fee_text.message")} {`(${this.props.coinFee}%)`}: </b>
+                          <b>
+                            FALDAX {this.t("conversion:fee_text.message")}{" "}
+                            {`(${this.props.coinFee}%)`}:{" "}
+                          </b>
                           {/* {this.props.coinFee ? `${this.props.coinFee} %` : 0} */}
                           {this.props.coinFee
                             ? `${this.state.faldaxFee}${" "}${
@@ -936,7 +960,10 @@ class WalletPopup extends Component {
                       </span>
                       <span>
                         <span>
-                          <b>{this.t("conversion:network_text.message")} {this.t("conversion:fee_text.message")}*:</b>
+                          <b>
+                            {this.t("conversion:network_text.message")}{" "}
+                            {this.t("conversion:fee_text.message")}*:
+                          </b>
                           {this.props.coinFee
                             ? `${this.state.networkFee}${" "}${
                                 this.props.coin_code
@@ -966,7 +993,12 @@ class WalletPopup extends Component {
                         {this.props.coin_code}
                       </span> */}
                       <span>
-                        <b>{this.t("settings:deactivate_popup_table_head_fiat_value.message")}: </b>
+                        <b>
+                          {this.t(
+                            "settings:deactivate_popup_table_head_fiat_value.message"
+                          )}
+                          :{" "}
+                        </b>
                         {this.state.fiatCurrency} {this.state.fiatValue}
                       </span>
                     </TotPay>
@@ -976,13 +1008,16 @@ class WalletPopup extends Component {
                   <SendButton
                     disabled={this.state.disabled}
                     onClick={this.sendSubmit}
-                  >{`${this.t("wallet:send_btn.message")} ${this.props.coin_code}`}</SendButton>
+                  >{`${this.t("wallet:send_btn.message")} ${
+                    this.props.coin_code
+                  }`}</SendButton>
                 </SendWrap>
               </ModalWrap>
             )}
             {this.props.title === "SEND" && (
               <span className="note_text">
-                {this.t("note_text.message")}*: {this.t("wallet:send_amount_note_text.message")}
+                {this.t("note_text.message")}*:{" "}
+                {this.t("wallet:send_amount_note_text.message")}
               </span>
             )}
           </WalletModal>
@@ -1018,4 +1053,12 @@ const mapDispatchToProps = dispatch => ({
   LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 
-export default translate(["general_3","validations","wallet","conversion","edit_profile_titles","settings","referral"])(connect(mapStateToProps, mapDispatchToProps)(WalletPopup));
+export default translate([
+  "general_3",
+  "validations",
+  "wallet",
+  "conversion",
+  "edit_profile_titles",
+  "settings",
+  "referral"
+])(connect(mapStateToProps, mapDispatchToProps)(WalletPopup));
