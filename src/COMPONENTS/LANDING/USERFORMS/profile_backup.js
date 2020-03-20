@@ -442,39 +442,21 @@ class ProfileBackup extends Component {
           <ColRight sm={24} lg={12}>
             <FormWrap>
               <RightWrap className="wow fadeInDown">
-                <LoginHead>Upload Image</LoginHead>
+                <LoginHead>{this.t("upload_image_text.message")}</LoginHead>
+                <SubText>{this.t("image_note_text.message")}</SubText>
                 <SubText>
-                  Please upload your image and soon we will notify you about the
-                  2FA status through an email.
-                </SubText>
-                <SubText>
-                  <b>ID confirmation photo (IDCP) instructions</b>
+                  <b>{this.t("general_4:idcp_text_1.message")}</b>
+                  <p>{this.t("general_4:idcp_text_2.message")}</p>
+                  <p>{this.t("general_4:idcp_text_3.message")}</p>
                   <p>
-                    An ID confirmation photo (IDCP) is a photo of you, the
-                    account holder, holding your ID document and a handwritten
-                    note next to your face.
+                    {this.t("identity_verification:step_1_no.message")}.{" "}
+                    {this.t("general_4:idcp_text_id_require.message")}
+                    <p>{this.t("general_4:idcp_text_id_brief.message")}</p>
                   </p>
                   <p>
-                    Below is a checklist for producing a proper IDCP that can be
-                    accepted by our verification team:
-                  </p>
-                  <p>
-                    1. ID requirements
-                    <p>
-                      The ID you're holding must be the same ID used for KYC
-                      verification. The details on the ID in the photo must be
-                      readable. They cannot be blurry or out of focus.
-                    </p>
-                  </p>
-                  <p>
-                    2. Note requirements
-                    <p>
-                      The handwritten note must say "only for trading digital
-                      currency on www.faldax.com" and include: the current date
-                      your signature Pay close attention when writing the
-                      handwritten note! If even one word is different in the
-                      note, the IDCP may not be accepted.
-                    </p>
+                    {this.t("identity_verification:step_2_no.message")}.{" "}
+                    {this.t("general_4:idcp_text_note_require.message")}
+                    <p>{this.t("general_4:idcp_text_note_brief.message")}</p>
                   </p>
                 </SubText>
 
@@ -505,7 +487,9 @@ class ProfileBackup extends Component {
                       <PlusDup className="plus">
                         <Icon type={this.state.icon1} theme="outlined" />
                       </PlusDup>
-                      <PlustextDup className="text">Upload</PlustextDup>
+                      <PlustextDup className="text">
+                        {this.t("general_4:upload_text.message")}
+                      </PlustextDup>
                     </ButtonUpDup>
                     <Fileinput
                       onChange={this.handleProfile}
@@ -541,5 +525,7 @@ export default translate([
   "login_page",
   "validations",
   "general_1",
-  "settings"
+  "settings",
+  "general_4",
+  "identity_verification"
 ])(withRouter(connect(mapStateToProps, null)(ProfileBackup)));
