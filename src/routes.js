@@ -41,7 +41,15 @@ import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
 let { API_URL } = globalVariables;
 const socketIOClient = require("socket.io-client");
 // const sailsIOClient = require("sails.io.js");
-let io = socketIOClient(globalVariables.SOCKET_HOST)
+let io = socketIOClient(globalVariables.SOCKET_HOST,{
+  transportOptions: {
+    polling: {
+      extraHeaders: {
+        'Authorization': 'Bearer Bhai_Ko_Rokne_ka_nai'
+      }
+    }
+  }
+})
 
 const routes = [
   {
