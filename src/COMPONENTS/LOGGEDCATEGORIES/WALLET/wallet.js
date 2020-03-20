@@ -133,7 +133,6 @@ class Wallet extends Component {
       this.props.history.push("/");
     }
   }
-
   componentDidMount() {
     // var total = 0;
     // var tableData = this.props.walletDetails.activated_asset_lists;

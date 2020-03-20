@@ -739,8 +739,8 @@ class PersonalDetails extends Component {
     )
       value = value.trim();
     if (field === "first_name") {
-      value = value.trim();
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      // value = value.trim();
+      var re = /^[a-zA-Z0-9?']{2,5000}$/;
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
@@ -760,9 +760,7 @@ class PersonalDetails extends Component {
           document.querySelectorAll(".first_msg")[0].style.display = "block";
           this.setState({
             firstmsg:
-              t("subhead_personal_form_first_name.message") +
-              " " +
-              t("validations:min_max_first_name.message")
+              "First Name must be at least 2 characters in length. No special characters are permitted."
           });
         }
       } else {
@@ -776,7 +774,7 @@ class PersonalDetails extends Component {
         });
       }
     } else if (field === "last_name") {
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      var re = /^[a-zA-Z0-9?']{2,5000}$/;
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
@@ -796,9 +794,7 @@ class PersonalDetails extends Component {
           document.querySelectorAll(".last_msg")[0].style.display = "block";
           this.setState({
             lastmsg:
-              t("subhead_personal_form_last_name.message") +
-              " " +
-              t("validations:min_max_first_name.message")
+              "Last Name must be at least 2 characters in length. No special characters are permitted."
           });
         }
       } else {

@@ -140,7 +140,6 @@ class WalletDetails extends Component {
       this.props.history.push("/");
     }
   }
-
   async componentDidMount() {
     if (
       this.props.profileDetails &&

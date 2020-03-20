@@ -153,13 +153,11 @@ class KYCForm extends Component {
       firstname: {
         // name the rule
         message:
-          this.t("subhead_personal_form_first_name.message") +
-          " " +
-          this.t("validations:min_max_first_name.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+          "First Name must be at least 2 characters in length. No special characters are permitted.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^[a-zA-Z0-9]{2,15}$/;
+          var re = /^[a-zA-Z0-9?']{2,5000}$/;
           var bool = re.test(String(val).toLowerCase());
           return bool;
         }
@@ -167,13 +165,11 @@ class KYCForm extends Component {
       lastname: {
         // name the rule
         message:
-          this.t("subhead_personal_form_last_name.message") +
-          " " +
-          this.t("validations:min_max_first_name.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+          "Last Name must be at least 2 characters in length. No special characters are permitted.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^[a-zA-Z0-9]{2,15}$/;
+          var re = /^[a-zA-Z0-9?']{2,5000}$/;
           var bool = re.test(String(val).toLowerCase());
           return bool;
         }
