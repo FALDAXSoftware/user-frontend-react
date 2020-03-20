@@ -59,6 +59,7 @@ const ColLeft = styled(Col)`
   }
 `;
 const ColRight = styled(Col)`
+  overflow: hidden;
   min-height: 100%;
   @media (max-width: 991px) {
     height: auto;
@@ -111,6 +112,9 @@ const FormWrap = styled.div`
 `;
 const RightWrap = styled.div`
   width: 100%;
+  overflow: auto;
+  height: 100vh;
+  padding: 30px 0;
   @media (max-width: 991px) {
     height: auto;
   }
@@ -138,6 +142,7 @@ const SubText = styled.span`
   font-family: "Open Sans";
   color: rgb(163, 163, 163);
   display: block;
+  max-width: 90%;
   @media (max-width: 478px) {
     text-align: left;
   }
@@ -437,8 +442,42 @@ class ProfileBackup extends Component {
           <ColRight sm={24} lg={12}>
             <FormWrap>
               <RightWrap className="wow fadeInDown">
-                <LoginHead>{this.t("upload_image_text.message")}</LoginHead>
-                <SubText>{this.t("image_note_text.message")}</SubText>
+                <LoginHead>Upload Image</LoginHead>
+                <SubText>
+                  Please upload your image and soon we will notify you about the
+                  2FA status through an email.
+                </SubText>
+                <SubText>
+                  <b>ID confirmation photo (IDCP) instructions</b>
+                  <p>
+                    An ID confirmation photo (IDCP) is a photo of you, the
+                    account holder, holding your ID document and a handwritten
+                    note next to your face.
+                  </p>
+                  <p>
+                    Below is a checklist for producing a proper IDCP that can be
+                    accepted by our verification team:
+                  </p>
+                  <p>
+                    1. ID requirements
+                    <p>
+                      The ID you're holding must be the same ID used for KYC
+                      verification. The details on the ID in the photo must be
+                      readable. They cannot be blurry or out of focus.
+                    </p>
+                  </p>
+                  <p>
+                    2. Note requirements
+                    <p>
+                      The handwritten note must say "only for trading digital
+                      currency on www.faldax.com" and include: the current date
+                      your signature Pay close attention when writing the
+                      handwritten note! If even one word is different in the
+                      note, the IDCP may not be accepted.
+                    </p>
+                  </p>
+                </SubText>
+
                 <SubSmallText>
                   {this.t("image_note1_text.message")}
                 </SubSmallText>

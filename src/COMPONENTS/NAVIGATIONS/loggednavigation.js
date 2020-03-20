@@ -347,6 +347,7 @@ class LoggedNavigation extends Component {
       selected: "",
       countryAccess: false,
       completeKYC: false,
+      completeProfile: false,
       panicEnabled: false,
       panic_status: false
       // langValue: this.props.language
@@ -596,7 +597,6 @@ class LoggedNavigation extends Component {
       this.setState({ completeProfile: true });
     }
   }
-
   simplexAccess() {
     // console.log(
     //   "^^^^",
@@ -622,6 +622,11 @@ class LoggedNavigation extends Component {
           this.props.profileDetails.is_kyc_done !== 2
         ) {
           // alert("ELSE IF");
+          this.setState({ completeKYC: true });
+        } else if (
+          this.props.profileDetails.is_allowed === true &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
           this.setState({ completeKYC: true });
         } else {
           // alert("ELSE ELSE");
@@ -1065,11 +1070,9 @@ class LoggedNavigation extends Component {
                 </SubMenuNav>
               </DropMenu>
             </a>
-            <span>
-              <CarLink to="/careers">
-                {t("navbar_menu_careers.message")}
-              </CarLink>
-            </span>
+            {/* <span>
+              <CarLink to="/careers">Careers</CarLink>
+            </span> */}
             <a className="DROP">
               <DropMenu mode="inline">
                 <SubMenuNav
