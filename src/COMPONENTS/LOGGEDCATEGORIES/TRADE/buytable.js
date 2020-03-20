@@ -69,7 +69,10 @@ class BuyTABLE extends Component {
     componentDidMount() {
         var self = this;
 
-        self.buyTableData();
+        this.props.io.on('buy-book-data', (data) => {
+            console.log(data)
+            this.updateData(data);
+        });
         // this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
         // })
     }
@@ -83,33 +86,31 @@ class BuyTABLE extends Component {
         let io = this.props.io
         io.sails.url = APP_URL;
 
-        this.props.loaderfunc(true);
-        this.setState({ loader: true });
-        var URL;
-        if (this.props.cryptoPair.prevRoom !== undefined && Object.keys(this.props.cryptoPair.prevRoom).length > 0) {
-            URL = `/socket/get-buy-book?prevRoom=${this.props.cryptoPair.prevRoom.crypto}-${this.props.cryptoPair.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`
-        }
-        else {
-            URL = `/socket/get-buy-book?room=${this.state.crypto}-${this.state.currency}`
-        }
-        io.socket.request({
-            method: 'GET',
-            url: URL,
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: "Bearer " + this.props.isLoggedIn
-            }
-        }, (body, JWR) => {
-            if (body.status === 200) {
-                console.log(body.data, body);
-                let res = body.data;
-                this.updateData(res);
-            }
-        });
-        io.socket.on('buybookUpdate', (data) => {
-            this.updateData(data);
-        });
+        // this.props.loaderfunc(true);
+        // this.setState({ loader: true });
+        // var URL;
+        // if (this.props.cryptoPair.prevRoom !== undefined && Object.keys(this.props.cryptoPair.prevRoom).length > 0) {
+        //     URL = `/socket/get-buy-book?prevRoom=${this.props.cryptoPair.prevRoom.crypto}-${this.props.cryptoPair.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`
+        // }
+        // else {
+        //     URL = `/socket/get-buy-book?room=${this.state.crypto}-${this.state.currency}`
+        // }
+        // io.socket.request({
+        //     method: 'GET',
+        //     url: URL,
+        //     headers: {
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json',
+        //         Authorization: "Bearer " + this.props.isLoggedIn
+        //     }
+        // }, (body, JWR) => {
+        //     if (body.status === 200) {
+        //         console.log(body.data, body);
+        //         let res = body.data;
+        //         this.updateData(res);
+        //     }
+        // });
+
     }
     // updateData(data) {
     //     console.log(data)
