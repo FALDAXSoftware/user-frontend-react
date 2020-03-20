@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Col, Row, notification, Icon } from "antd";
+import { translate } from "react-i18next";
 import SimpleReactValidator from "simple-react-validator";
 
 import { globalVariables } from "Globals.js";
@@ -184,6 +185,7 @@ class ProfileBackup extends Component {
     this.handleProfile = this.handleProfile.bind(this);
     this.submitProfile = this.submitProfile.bind(this);
     this.validator = new SimpleReactValidator();
+    this.t = this.props.t;
   }
 
   openNotificationWithIcon(type, head, desc) {
@@ -198,6 +200,10 @@ class ProfileBackup extends Component {
       this.setState({ loader: true });
       fetch(API_URL + "/users/resend-email", {
         method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"]
+        },
         body: JSON.stringify(this.state.fields)
       })
         .then(response => response.json())
@@ -299,8 +305,8 @@ class ProfileBackup extends Component {
                       _self.setState({ flagImage: false });
                       _self.openNotificationWithIcon(
                         "error",
-                        "File Size",
-                        "File needs to be greater than 450*600 in dimension"
+                        this.t("validations:error_text.message"),
+                        this.t("validations:image_upload_error.message")
                       );
                     }
                   };
@@ -312,22 +318,22 @@ class ProfileBackup extends Component {
                     profileImg: "Default Photo",
                     imageName: "",
                     imageType: fileType,
-                    imagemsg: "Please select image with less then 5 mb"
+                    imagemsg: "Please select image with less than 5 mb"
                   });
                 }
                 _self.setState({ flagImage: false });
                 _self.openNotificationWithIcon(
                   "error",
-                  "File Size",
-                  "Please select image with less then 5 mb"
+                  this.t("validations:error_text.message"),
+                  this.t("max_image_size_5_error.message")
                 );
                 document.getElementById("front").value = "";
               }
             } else {
               _self.openNotificationWithIcon(
                 "error",
-                "File Format",
-                "File format is not supported. Please upload only images."
+                this.t("validations:error_text.message"),
+                this.t("general_1:only_images_error.message")
               );
               document.getElementById("front").value = "";
             }
@@ -366,6 +372,10 @@ class ProfileBackup extends Component {
       this.setState({ loader: true });
       fetch(API_URL + "/users/forgot-twofactors", {
         method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"]
+        },
         body: dataForm
       })
         .then(response => response.json())
@@ -375,7 +385,7 @@ class ProfileBackup extends Component {
             this.props.history.push("/login");
             this.openNotificationWithIcon(
               "success",
-              "Success",
+              this.t("validations:success_text.message"),
               responseData.message
             );
           } else {
@@ -383,7 +393,7 @@ class ProfileBackup extends Component {
             this.props.history.push("/login");
             this.openNotificationWithIcon(
               "warning",
-              "Warning",
+              this.t("validations:warning_text.message"),
               responseData.err
             );
           }
@@ -412,7 +422,15 @@ class ProfileBackup extends Component {
         <RowWrap>
           <ColLeft sm={24} lg={12}>
             <LeftWrap>
-              <a href={globalVariables.WordpressSiteURL}>
+              <a
+                href={
+                  globalVariables.WordpressSiteURL +
+                  (localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : "")
+                }
+              >
                 <VertImg
                   className="wow fadeInUp"
                   src="/images/LeftSideLogo.png"
@@ -424,44 +442,26 @@ class ProfileBackup extends Component {
           <ColRight sm={24} lg={12}>
             <FormWrap>
               <RightWrap className="wow fadeInDown">
-                <LoginHead>Upload Image</LoginHead>
+                <LoginHead>{this.t("upload_image_text.message")}</LoginHead>
+                <SubText>{this.t("image_note_text.message")}</SubText>
                 <SubText>
-                  Please upload your image and soon we will notify you about the
-                  2FA status through an email.
-                </SubText>
-                <SubText>
-                  <b>ID confirmation photo (IDCP) instructions</b>
+                  <b>{this.t("general_4:idcp_text_1.message")}</b>
+                  <p>{this.t("general_4:idcp_text_2.message")}</p>
+                  <p>{this.t("general_4:idcp_text_3.message")}</p>
                   <p>
-                    An ID confirmation photo (IDCP) is a photo of you, the
-                    account holder, holding your ID document and a handwritten
-                    note next to your face.
+                    {this.t("identity_verification:step_1_no.message")}.{" "}
+                    {this.t("general_4:idcp_text_id_require.message")}
+                    <p>{this.t("general_4:idcp_text_id_brief.message")}</p>
                   </p>
                   <p>
-                    Below is a checklist for producing a proper IDCP that can be
-                    accepted by our verification team:
-                  </p>
-                  <p>
-                    1. ID requirements
-                    <p>
-                      The ID you're holding must be the same ID used for KYC
-                      verification. The details on the ID in the photo must be
-                      readable. They cannot be blurry or out of focus.
-                    </p>
-                  </p>
-                  <p>
-                    2. Note requirements
-                    <p>
-                      The handwritten note must say "only for trading digital
-                      currency on www.faldax.com" and include: the current date
-                      your signature Pay close attention when writing the
-                      handwritten note! If even one word is different in the
-                      note, the IDCP may not be accepted.
-                    </p>
+                    {this.t("identity_verification:step_2_no.message")}.{" "}
+                    {this.t("general_4:idcp_text_note_require.message")}
+                    <p>{this.t("general_4:idcp_text_note_brief.message")}</p>
                   </p>
                 </SubText>
 
                 <SubSmallText>
-                  PS: Image size should not exceed 5MB.
+                  {this.t("image_note1_text.message")}
                 </SubSmallText>
                 <FileWrapDup>
                   <Fileselect1 className="file-select-col">
@@ -487,7 +487,9 @@ class ProfileBackup extends Component {
                       <PlusDup className="plus">
                         <Icon type={this.state.icon1} theme="outlined" />
                       </PlusDup>
-                      <PlustextDup className="text">Upload</PlustextDup>
+                      <PlustextDup className="text">
+                        {this.t("general_4:upload_text.message")}
+                      </PlustextDup>
                     </ButtonUpDup>
                     <Fileinput
                       onChange={this.handleProfile}
@@ -501,7 +503,7 @@ class ProfileBackup extends Component {
                   onClick={this.submitProfile}
                   disabled={!this.state.flagImage}
                 >
-                  SUBMIT
+                  {this.t("settings:submit_btn.message")}
                 </ButtonLogin>
               </RightWrap>
             </FormWrap>
@@ -519,4 +521,11 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, null)(ProfileBackup));
+export default translate([
+  "login_page",
+  "validations",
+  "general_1",
+  "settings",
+  "general_4",
+  "identity_verification"
+])(withRouter(connect(mapStateToProps, null)(ProfileBackup)));

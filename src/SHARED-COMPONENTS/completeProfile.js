@@ -2,10 +2,11 @@ import React from "react";
 import "antd/dist/antd.css";
 import { Modal, Icon, notification } from "antd";
 import { withRouter } from "react-router-dom";
-import { globalVariables } from "../Globals.js";
+// import { globalVariables } from "../Globals.js";
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
 import { ModalWrap } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
 import { Link } from "react-router-dom";
+import { translate } from "react-i18next";
 
 /* const API_URL = globalVariables.API_URL; */
 
@@ -17,6 +18,7 @@ class CompleteProfile extends React.Component {
       email_address: "",
       email_msg: ""
     };
+    this.t = this.props.t;
   }
 
   handleComing = e => {
@@ -58,18 +60,11 @@ class CompleteProfile extends React.Component {
           title={
             <div>
               <img alt="coming" src={_COMINGIMG} />{" "}
-              <img
-                alt="coming"
-                // style={{ marginLeft: "10px" }}
-                src={_COMINGIMG2}
-              />
+              <img alt="coming" src={_COMINGIMG2} />
             </div>
           }
           visible={this.props.visible}
           onOk={e => this.handleComing()}
-          //   onCancel={e => this.comingCancel(e)}
-          // closable={this.props.location.pathname == "/conversion" ? false : true}
-          // maskClosable={this.props.location.pathname == "/conversion" ? false : true}
           closable={false}
           maskClosable={false}
           footer={null}
@@ -78,27 +73,19 @@ class CompleteProfile extends React.Component {
           className="simple-maps"
         >
           <ModalWrap className="country-wrap">
-            <h3>Access Denied</h3>
+            <h3>{this.t("illegal_popup_head.message")}</h3>
             <p className="first-subhead">
-              Before proceeding to identity verification please complete your
-              profile.
+              {this.t("general_2:complete_profile_text.message")}
             </p>
-            <p className="second-subhead">Thank you for your understanding.</p>
+            <p className="second-subhead">
+              {this.t("general_3:complete_profile_popup_subtext2.message")}
+            </p>
             <Link
               className="get_verified_link complete_profile"
               to={{ pathname: "/editProfile", state: { tabNum: "3" } }}
-              // state={{ testvalue: "hello" }}
-              // pathname="/editProfile"
             >
-              Complete Profile
+              {this.t("general_2:complete_profile_btn.message")}
             </Link>
-            {/* <Sub_wrap>
-                            <label style={{ color: 'black', fontWeight: "600", marginTop: "20px" }}> Enter your email address to receive updates: </label>
-                            <Email_input placeholder="Email Address" value={this.state.email_address} onChange={(e) => { this.setState({ email_address: e.target.value }); }} />
-                        </Sub_wrap>
-                        <div style={{ marginTop: '20px', minHeight: '20px' }}>
-                            <Button style={{ float: 'right', color: 'white', borderColor: '#00a7ff', backgroundColor: "#0f477b", height: "45px" }} onClick={() => this.send_email()}>SUBMIT</Button>
-                        </div> */}
           </ModalWrap>
         </Modal>
       </div>
@@ -106,4 +93,6 @@ class CompleteProfile extends React.Component {
   }
 }
 
-export default withRouter(CompleteProfile);
+export default translate(["popups", "general_2", "general_3"])(
+  withRouter(CompleteProfile)
+);

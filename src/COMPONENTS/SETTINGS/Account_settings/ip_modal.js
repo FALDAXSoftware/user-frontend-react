@@ -4,10 +4,11 @@ import { Modal, Input, notification, Row } from "antd";
 import { withRouter } from "react-router-dom";
 import SimpleReactValidator from "simple-react-validator";
 
-import { globalVariables } from "Globals.js";
+// import { globalVariables } from "Globals.js";
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
 import { HeaderCol, Save } from "../Personaldetails/personal_details";
 import styled from "styled-components";
+import  {translate} from "react-i18next"
 
 const Old = styled.div`
     width: 635px; 
@@ -175,9 +176,10 @@ class IpModal extends Component {
         days: null
       }
     };
+    this.t=this.props.t;
     this.validator = new SimpleReactValidator({
       ipvalid: {
-        message: "Enter a valid IP address.",
+        message: this.t("invalid_ip_error.message"),
         rule: val => {
           var RE = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
           if (RE.test(val)) {
@@ -244,17 +246,16 @@ class IpModal extends Component {
           {this.props.security == false ? (
             <Description>
               {" "}
-              Please enter IP which will be permanent for your FALDAX account.
+              {this.t("settings:permanent_ip_popup_text.message")}
             </Description>
           ) : (
             <Description>
               {" "}
-              If your security feature is on, while you add a new IP address,
-              you will be restricted to perform withdrawal for 24 hours.
+              {this.t('general_3:restricted_withdrawal.message')}
             </Description>
           )}
           <NewP>
-            <InputLabel>Enter IP*</InputLabel>
+            <InputLabel>{this.t("settings:permanent_ip_popup_label_ip.message")}*</InputLabel>
             <div>
               <OTPInput
                 value={this.state.fields.ip}
@@ -268,7 +269,7 @@ class IpModal extends Component {
                 this.state.fields.ip,
                 "required|ipvalid",
                 "text-danger-validation",
-                { required: "IP field is required." }
+                { required: this.t("general_1:ip_required_error.message") }
               )}
             </div>
           </NewP>
@@ -281,4 +282,4 @@ class IpModal extends Component {
   }
 }
 
-export default withRouter(IpModal);
+export default translate(["validations","settings","general_3","general_1"])(withRouter(IpModal));
