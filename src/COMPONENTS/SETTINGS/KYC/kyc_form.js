@@ -1192,8 +1192,8 @@ class KYCForm extends Component {
                     t("subhead_personal_form_postal_code.message") +
                     " " +
                     t("validations:field_is_required.message"),
-                  min: t("validations:Postal_min_error.message"),
-                  max: t("validations:Postal_max_error.message")
+                  min: t("validations:postal_min_error.message"),
+                  max: t("validations:postal_max_error.message")
                 }
               )}
             </Col>
