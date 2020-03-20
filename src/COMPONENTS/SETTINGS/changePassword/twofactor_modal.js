@@ -3,6 +3,7 @@ import "antd/dist/antd.css";
 import { Modal, Input, notification, Row } from "antd";
 import { withRouter } from "react-router-dom";
 import SimpleReactValidator from "simple-react-validator";
+import { translate } from "react-i18next";
 
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
 
@@ -58,25 +59,25 @@ class TFAModal extends Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <div>
         {/* {console.log(this.state.visible)} */}
         <VerifyModal
           onCancel={e => this.TFAModalCancel(e)}
           onOk={e => this.TFAModalCancel(e)}
-          title="Two-Factor Authentication"
+          title={t("two_factor_success_popup_head.message")}
           visible={this.state.visible}
           footer={null}
         >
           {/* {console.log(this.state.backupCode)} */}
           <Description>
-            Save this backup code in a secure place. It will be only method by
-            which you can access your account if you are unable to generate a
-            2FA code.
+            {t("two_factor_success_popup_text.message")}
           </Description>
 
           <BackupCode>
-            BACKUP CODE: <FontModal>{this.state.backupCode}</FontModal>
+            {t("two_factor_success_title.message")}:{" "}
+            <FontModal>{this.state.backupCode}</FontModal>
           </BackupCode>
         </VerifyModal>
       </div>
@@ -84,4 +85,4 @@ class TFAModal extends Component {
   }
 }
 
-export default withRouter(TFAModal);
+export default translate(["security_tab"])(withRouter(TFAModal));

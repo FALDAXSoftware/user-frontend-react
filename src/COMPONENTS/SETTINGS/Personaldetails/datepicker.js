@@ -380,9 +380,9 @@ export default class Datepicker extends Component {
         ) {
           date = this.props.kycData2.dob.split("-");
 
-          year = Number(date[0]);
+          year = Number(date[2]);
           month = date[1];
-          day = Number(date[2]);
+          day = Number(date[0]);
           if (month !== null) {
             month = Number(month) - 1;
           }

@@ -7,41 +7,13 @@ import styled from "styled-components";
 import { globalVariables } from "Globals.js";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import { translate } from "react-i18next";
 import { LogoutUser } from "../../ACTIONS/authActions";
 
 let { API_URL, _AMAZONBUCKET, TRADE_URL } = globalVariables;
 /* CONSTANTS */
 const Search = Input.Search;
 const Option = Select.Option;
-
-/* Styled Components */
-const columns1 = [
-  {
-    title: "Coin Name",
-    dataIndex: "coin_name"
-  },
-  {
-    title: "Amount Collected",
-    dataIndex: "amount"
-  }
-];
-const columns = [
-  {
-    title: "    ",
-    dataIndex: "profile_pic",
-    render: text => (
-      <img width="40px" height="40px" src={`${_AMAZONBUCKET}${text}`} />
-    )
-  },
-  {
-    title: "Name",
-    dataIndex: "full_name"
-  },
-  {
-    title: "Accounts Referred",
-    dataIndex: "email"
-  }
-];
 const data = [
   {
     key: "1",
@@ -267,11 +239,11 @@ class Referral extends Component {
     this.coinsEarned = this.coinsEarned.bind(this);
     this.collectRefCoins = this.collectRefCoins.bind(this);
     this.getReferralData = this.getReferralData.bind(this);
+    this.t = this.props.t;
   }
   /* Life-Cycle Methods */
 
   componentWillReceiveProps(props) {
-    // console.log(this.props, props);
     if (this.props !== props) {
       this.getReferralData();
     }
@@ -309,39 +281,32 @@ class Referral extends Component {
   getReferralData() {
     let { profileDetails } = this.props;
     this.setState({ loader: true });
-    // console.log(this.state);
     fetch(`${API_URL}/users/referredUsers`, {
       method: "get",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"], 
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 200) {
-          // console.log(profileDetails.fiat);
           let fiat = profileDetails.fiat;
           let fields = [];
           let sum = 0;
           let sum2 = 0;
           responseData.referredData.map(function(temp) {
-            // console.log(temp);
-            //Converting amount into currency.
             let fiatAmt =
               parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
             //Sum of all fiatAmt.
             sum = sum + parseFloat(fiatAmt.toFixed(4));
-
             //Object Taken for fields for dropdown
             let obj = {
               coin_name: temp.coin_name,
               amount: temp.amount
             };
-
-            // console.log(fields, obj);
-
             //first time obj is pushed in fields
             if (fields.length == 0) {
               fields.push(obj);
@@ -351,13 +316,9 @@ class Referral extends Component {
               let index = "";
               //map for fields to remove duplicates
               fields.map(function(temp2, index) {
-                // console.log(temp2, obj.coin_name, obj, fields);
-
                 if (temp2.coin_name == obj.coin_name) {
                   flag = true;
-                  // console.log("DONE", fields[index].amount, obj.amount);
                   fields[index].amount = fields[index].amount + obj.amount;
-                  // console.log("DONE", fields[index].amount, obj.amount);
                 }
               });
               // console.log(sum3)
@@ -366,22 +327,13 @@ class Referral extends Component {
               }
             }
           });
-          // console.log(responseData.leftReferredData);
           responseData.leftReferredData.map(function(temp) {
-            // console.log(temp);
-            // console.log(parseFloat(temp.amount));
-            // console.log(parseFloat(temp.quote[`${fiat}`].price));
             let fiatAmt =
               parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
-            // console.log(fiatAmt);
             fiatAmt = parseFloat(fiatAmt).toFixed(8);
-            // console.log(fiatAmt);
-            // console.log(sum2);
             sum2 = parseFloat(sum2) + parseFloat(fiatAmt);
             sum2 = parseFloat(sum2.toFixed(8));
-            // console.log("After Sum ??????", sum2);
           });
-          // console.log(sum2, fields);
           this.setState({
             referredData: responseData.data,
             referredCoin: fields,
@@ -390,7 +342,11 @@ class Referral extends Component {
             loader: false
           });
         } else if (responseData.status == 403) {
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
           let tempValue2 = {};
           tempValue2["user_id"] = this.props.profileDetails.id;
           tempValue2["jwt_token"] = this.props.isLoggedIn;
@@ -399,14 +355,12 @@ class Referral extends Component {
       })
       .catch(error => {
         this.setState({ loader: false });
-        /* console.log(error) */
       });
   }
   /* 
         Page: /editProfile --> Referral
         It is called for custom notifications.
     */
-
   openNotificationWithIcon = (type, msg, desc) => {
     notification[type]({
       message: msg,
@@ -420,26 +374,21 @@ class Referral extends Component {
         It is called when copy is clicked.
         so this method copies the text to clipboard.
     */
-
   SearchText() {
-    // Copy to clipboard example
     document.querySelectorAll(
       ".ant-input-search-button"
     )[0].onclick = function() {
-      // Select the content
       if (document.querySelectorAll(".INPUT_search > input")[0] !== undefined)
         document.querySelectorAll(".INPUT_search > input")[0].select();
-      // Copy to the clipboard
       document.execCommand("copy");
     };
     this.openNotificationWithIcon(
       "success",
-      "Success",
-      "Referral Code Copied to Clipboard"
+      this.t("validations:success_text.message"),
+      this.t("general_1:referral_code_copy_text.message")
     );
   }
   coinsEarned(coin) {
-    // console.log(coin);
     var coinAmt = 0;
     this.state.referredCoin.map(function(temp) {
       if (temp.coin_name == coin) {
@@ -458,51 +407,81 @@ class Referral extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"], 
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
       .then(response => response.json())
       .then(async responseData => {
         if (responseData.status == 200) {
-          // this.getReferralData();
           this.openNotificationWithIcon(
             "success",
-            "Success",
+            this.t("validations:success_text.message"),
             responseData.message
           );
           this.setState(
             {
               coinSelected: "",
               perCoinEarned: ""
-              // loader: false
             },
             () => {
               this.getReferralData();
             }
           );
         } else {
-          this.openNotificationWithIcon("error", "Error", responseData.message);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.message
+          );
           this.setState({ loader: false });
         }
       })
       .catch(error => {
-        // console.log(error);
         this.setState({ loader: false });
       });
-    // this.getReferralData();
   }
   render() {
-    const { referralLink, referTable, referredData } = this.state;
+    const [{ referralLink, referTable, referredData }, { t }] = [
+      this.state,
+      this.props
+    ];
+    const columns1 = [
+      {
+        title: `${t("settings:table_head_coin.message")} ${t(
+          "referral_table_head_name.message"
+        )}`,
+        dataIndex: "coin_name"
+      },
+      {
+        title: `${t("general_1:amount_collected_text.message")}`,
+        dataIndex: "amount"
+      }
+    ];
+    const columns = [
+      {
+        title: "    ",
+        dataIndex: "profile_pic",
+        render: text => (
+          <img width="40px" height="40px" src={`${_AMAZONBUCKET}${text}`} />
+        )
+      },
+      {
+        title: `${t("referral_table_head_name.message")}`,
+        dataIndex: "full_name"
+      },
+      {
+        title: `${t("referral_table_head_accounts_referred.message")}`,
+        dataIndex: "email"
+      }
+    ];
     return (
       <ParentWrap>
-        <Header_text>Referral Program</Header_text>
-        {/*  <Coming>
-                    <span>Coming soon.</span>
-                </Coming> */}
+        <Header_text>{t("referral_head.message")}</Header_text>
         <Ref_div>
           <Row>
             <Ref_leftcol sm={24} md={18}>
-              <Ref_text>YOUR REFERRAL LINK</Ref_text>
+              <Ref_text>{t("referral_text1.message")}</Ref_text>
               <CopyToClipboard
                 text={referralLink}
                 onCopy={() => this.setState({ copied: true })}
@@ -511,8 +490,8 @@ class Referral extends Component {
                   <RefInput
                     value={this.props.profileDetails.referral_code}
                     className={this.state.searchCSS}
-                    placeholder="Referral"
-                    enterButton="Copy"
+                    placeholder={t("edit_profile_titles:head_referral.message")}
+                    enterButton={t("copy_btn.message")}
                     size="large"
                     onSearch={value => this.SearchText()}
                   />
@@ -520,7 +499,7 @@ class Referral extends Component {
               </CopyToClipboard>
             </Ref_leftcol>
             <Ref_rightcol sm={24} md={6}>
-              <Right_text>Collect Earnings</Right_text>
+              <Right_text>{t("referral_text2.message")}</Right_text>
               <Right_value>
                 {this.state.leftOutRef} {this.props.profileDetails.fiat}
               </Right_value>
@@ -529,7 +508,7 @@ class Referral extends Component {
                   this.collectRefCoins();
                 }}
               >
-                Collect
+                {t("collect_btn.message")}
               </CollectButton>
             </Ref_rightcol>
           </Row>
@@ -557,7 +536,9 @@ class Referral extends Component {
                 </Col>
                 <Col xs={24} sm={24} md={8}>
                   <div className="ColWrap">
-                    <span className="earnTitle">Earned:</span>
+                    <span className="earnTitle">
+                      {t("conversion:earned_text.message")}:
+                    </span>
                     {this.state.perCoinEarned !== "" ? (
                       <span className="amtSpan">
                         {" "}
@@ -571,7 +552,10 @@ class Referral extends Component {
                 </Col>
                 <Col xs={24} sm={24} md={8}>
                   <div className="ColWrap">
-                    <span className="earnTitle">Total Earned:</span>
+                    <span className="earnTitle">
+                      {t("conversion:total_text.message")}{" "}
+                      {t("conversion:earned_text.message")}:
+                    </span>
                     <span className="amtSpan">
                       {this.state.totalEarned} {this.props.profileDetails.fiat}
                     </span>
@@ -618,4 +602,10 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Referral);
+export default translate([
+  "referral",
+  "edit_profile_titles",
+  "conversion",
+  "settings",
+  "general_1"
+])(connect(mapStateToProps, mapDispatchToProps)(Referral));

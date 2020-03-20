@@ -252,6 +252,7 @@ export default class AboutUs extends Component {
     fetch(API_URL + "/users/static-page-json/about", {
       method: "get",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"], 
         'Content-Type': 'application/json'
       }
     }).then(response => response.json())

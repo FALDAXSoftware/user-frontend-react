@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { translate } from "react-i18next";
 import { _FOOTERLOGO, _DEFAULTPROFILE } from "CONSTANTS/images";
 
 /* Components */
@@ -111,6 +112,7 @@ class Afterlog extends Component {
       selected: false,
       fontColor: ""
     };
+    this.t = this.props.t;
   }
 
   /* Life-Cycle Methods */
@@ -122,13 +124,13 @@ class Afterlog extends Component {
           this.setState({
             fontColor: "black",
             themeIcon: faMoon,
-            iconTitle: "Change to Night Mode"
+            iconTitle: this.t("general_4:change_to_night_text.message")
           });
         else
           this.setState({
             fontColor: "white",
             themeIcon: faSun,
-            iconTitle: "Change to Day Mode"
+            iconTitle: this.t("general_4:change_to_day_text.message")
           });
       }
     }
@@ -140,13 +142,13 @@ class Afterlog extends Component {
           this.setState({
             fontColor: "black",
             themeIcon: faMoon,
-            iconTitle: "Change to Night Mode"
+            iconTitle: this.t("general_4:change_to_night_text.message")
           });
         else
           this.setState({
             fontColor: "white",
             themeIcon: faSun,
-            iconTitle: "Change to Day Mode"
+            iconTitle: this.t("general_4:change_to_day_text.message")
           });
       }
     }
@@ -205,29 +207,38 @@ class Afterlog extends Component {
     let flag;
     if (this.props.themeReducer.theme === true) {
       flag = false;
-      this.setState({ themeIcon: faSun, iconTitle: "Change to Night Mode" });
+      this.setState({
+        themeIcon: faSun,
+        iconTitle: this.t("general_4:change_to_night_text.message")
+      });
     } else {
-      this.setState({ themeIcon: faMoon, iconTitle: "Change to Day Mode" });
+      this.setState({
+        themeIcon: faMoon,
+        iconTitle: this.t("general_4:change_to_day_text.message")
+      });
       flag = true;
     }
     this.props.actions.theme.darkTheme(flag);
   }
 
   render() {
+    const { t } = this.props;
     const DropdownItems = (
       <Menu className="fixed-drop">
         {/* <Menu.Item key="0">User ID: {this.props.profileDetails.id}</Menu.Item> */}
         <Menu.Item key="1">
           <a onClick={() => this.props.history.push("/editProfile")}>
             {" "}
-            Profile{" "}
+            {t("navbar_sub_menu_profile.message")}{" "}
           </a>
         </Menu.Item>
-        <Menu.Item key="2">
-          <a onClick={() => this.props.history.push("/tickets")}>Tickets</a>
+        <Menu.Item key="1">
+          <a onClick={() => this.props.history.push("/tickets")}>
+            {t("navbar_sub_menu_ticket.message")}
+          </a>
         </Menu.Item>
-        <Menu.Item key="3" onClick={this.logout.bind(this)}>
-          Logout
+        <Menu.Item key="2" onClick={this.logout.bind(this)}>
+          {t("navbar_sub_menu_history_logout.message")}
         </Menu.Item>
       </Menu>
     );
@@ -261,11 +272,11 @@ class Afterlog extends Component {
             </Tooltip>{" "}
           </span>
         </DayNightMode>
-        <Link to="/careers">
+        {/* <Link to="/careers">
           <Exchange color={this.state.selected}>
-            <span> CAREERS </span>
+            <span> {t("navbar_menu_careers.message")} </span>
           </Exchange>
-        </Link>
+        </Link> */}
         <DropDownDiv
           className="Drop-main"
           overlay={DropdownItems}
@@ -358,4 +369,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Afterlog);
+export default translate(["header", "general_4"])(
+  connect(mapStateToProps, mapDispatchToProps)(Afterlog)
+);

@@ -46,6 +46,7 @@ class MediaContact extends Component {
         fetch(API_URL + "/get-contact-details", {
             method: "get",
             headers: {
+                "Accept-Language": localStorage["i18nextLng"], 
                 'Content-Type': 'application/json'
             }
         })

@@ -3,10 +3,12 @@ import "babel-polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { I18nextProvider } from "react-i18next";
 import "./index.css";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import registerServiceWorker, { unregister } from "./registerServiceWorker";
 import App from "./App";
+import i18n from "./i18n.js";
 
 /* Redux store */
 import configureStore from "./store";
@@ -44,11 +46,13 @@ store.subscribe(() => {
 });
 /* Appication start from here */
 ReactDOM.render(
-  <Router>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </Router>,
+  <I18nextProvider i18n={i18n}>
+    <Router>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Router>
+  </I18nextProvider>,
   document.getElementById("root")
 );
 // registerServiceWorker();
