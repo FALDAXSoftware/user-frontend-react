@@ -759,8 +759,7 @@ class PersonalDetails extends Component {
           this.setState({ firstIcon: false });
           document.querySelectorAll(".first_msg")[0].style.display = "block";
           this.setState({
-            firstmsg:
-              "First Name must be at least 2 characters in length. No special characters are permitted."
+            firstmsg: this.t("sign_up:first_name_error.message")
           });
         }
       } else {
@@ -793,8 +792,7 @@ class PersonalDetails extends Component {
           this.setState({ lastIcon: false });
           document.querySelectorAll(".last_msg")[0].style.display = "block";
           this.setState({
-            lastmsg:
-              "Last Name must be at least 2 characters in length. No special characters are permitted."
+            lastmsg: this.t("sign_up:last_name_error.message")
           });
         }
       } else {
@@ -2040,5 +2038,6 @@ export default translate([
   "validations",
   "general",
   "general_1",
-  "settings"
+  "settings",
+  "sign_up"
 ])(connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails)));
