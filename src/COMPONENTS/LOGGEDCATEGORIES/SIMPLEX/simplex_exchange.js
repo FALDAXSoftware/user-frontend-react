@@ -5,6 +5,7 @@ import { globalVariables } from "Globals.js";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import TFAModal from "SHARED-COMPONENTS/TFAModal";
 import SimpleReactValidator from "simple-react-validator";
+import { translate } from "react-i18next";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
@@ -42,19 +43,11 @@ class SimplexExchange extends React.Component {
     super(props);
     this.state = {
       loader: false,
-      // currencyToPay: this.props.location.state.currencyToPay,
-      // currencyToGet: this.props.location.state.currencyToGet,
       minCurrency: "50",
       maxCurrency: "20000",
       cryptoList: [],
-      // crypto: this.props.location.state.crypto,
-      // currency: this.props.location.state.currency,
-      // quote_id: this.props.location.state.id,
-      // address: this.props.location.state.wallet_address,
-      // cryptoCode: this.props.location.state.crypto_code,
       response: "",
       destination_wallet: "",
-      // wallet_details: this.props.location.state.wallet_address,
       currencyToPay: null,
       currencyToGet: null,
       crypto: "XRP",
@@ -69,9 +62,10 @@ class SimplexExchange extends React.Component {
       checkOTP: false,
       btnDisabled: true
     };
+    this.t = this.props.t;
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
-        message: `Amount must be greater than or equal to 50`,
+        message: this.t("validations:simplex_min_limit_error.message"),
         rule: (val, params, validator) => {
           if (parseFloat(val) >= parseFloat(this.state.minCurrency)) {
             return true;
@@ -82,7 +76,7 @@ class SimplexExchange extends React.Component {
         required: true // optional
       },
       maxCurrencyValid: {
-        message: `Amount must be less than or equal to 20,000`,
+        message: this.t("validations:simplex_max_limit_error.message"),
         rule: (val, params, validator) => {
           if (parseFloat(val) > parseFloat(this.state.maxCurrency)) {
             return false;
@@ -94,7 +88,7 @@ class SimplexExchange extends React.Component {
       },
       gtzero: {
         // name the rule
-        message: "Amount must be greater than zero",
+        message: this.t("validations:simplex_min_limit_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -105,8 +99,7 @@ class SimplexExchange extends React.Component {
         required: true // optional
       },
       decimalrestrict2: {
-        message:
-          "Value must be less than or equal to 2 digits after decimal point.",
+        message: this.t("2_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,2}$/;
           if (RE.test(val)) {
@@ -118,7 +111,6 @@ class SimplexExchange extends React.Component {
       }
     });
     this.timeout = null;
-    // this.handleCurrencyGetChange = this.handleCurrencyGetChange.bind(this);
     this.handleCurrencyPayChange = this.handleCurrencyPayChange.bind(this);
     this.btnClicked = this.btnClicked.bind(this);
     this.handleCryptoChange = this.handleCryptoChange.bind(this);
@@ -129,12 +121,6 @@ class SimplexExchange extends React.Component {
   }
 
   componentWillMount() {
-    // if (
-    //   this.props.profileDetails.is_allowed === true &&
-    //   this.props.profileDetails.is_kyc_done === 2
-    // ) {
-    //   if (this.props.location.pathname !== "/simplex-exchange")
-    //     this.props.history.push("/simplex-exchange");
     if (
       this.props.location.state === undefined ||
       this.props.location.state.currencyToPay === "" ||
@@ -165,19 +151,6 @@ class SimplexExchange extends React.Component {
         coin_name: this.props.location.state.coin_name
       });
     }
-    // } else {
-    //   if (
-    //     this.props.profileDetails.is_allowed === false &&
-    //     this.props.profileDetails.is_kyc_done !== 2
-    //   ) {
-    //     this.props.history.push("/conversion");
-    //     // console.log("history", this.props.history);
-    //   } else {
-    //     this.setState({ countryAccess: true });
-    //     this.props.history.push("/conversion");
-    //     // console.log("history", this.props.history);
-    //   }
-    // }
   }
 
   async componentDidMount(e) {
@@ -187,10 +160,6 @@ class SimplexExchange extends React.Component {
     } catch (error) {
     } finally {
     }
-    // console.log(
-    //   "this.props.profileDetails.is_kyc_done",
-    //   this.props.profileDetails.is_twofactor
-    // );
     if (this.props.profileDetails.is_twofactor) {
       this.setState({
         checkOTP: true
@@ -247,7 +216,7 @@ class SimplexExchange extends React.Component {
         if (result2.data.error) {
           this.openNotificationWithIcon(
             "error",
-            "Error",
+            this.t("validations:error_text.message"),
             result2.data.errors[0].message
           );
           this.setState({
@@ -278,11 +247,19 @@ class SimplexExchange extends React.Component {
           }
         }
       } else {
-        this.openNotificationWithIcon("error", "Error", result2.message);
+        this.openNotificationWithIcon(
+          "error",
+          this.t("validations:error_text.message"),
+          result2.message
+        );
       }
     } catch (error) {
       console.log(error);
-      this.openNotificationWithIcon("error", "Error", error.response.message);
+      this.openNotificationWithIcon(
+        "error",
+        this.t("validations:error_text.message"),
+        error.response.message
+      );
     } finally {
       this.setState({ loader: false });
     }
@@ -297,6 +274,7 @@ class SimplexExchange extends React.Component {
   //     headers: {
   //       Accept: "application/json",
   //       "Content-Type": "application/json",
+  //  "Accept-Language": localStorage["i18nextLng"], 
   //       Authorization: "Bearer " + this.props.isLoggedIn
   //     }
   //   })
@@ -340,6 +318,7 @@ class SimplexExchange extends React.Component {
   //       headers: {
   //         Accept: "application/json",
   //         "Content-Type": "application/json",
+  // "Accept-Language": localStorage["i18nextLng"], 
   //         Authorization: "Bearer " + this.props.isLoggedIn
   //       },
   //       body: JSON.stringify(values)
@@ -519,6 +498,7 @@ class SimplexExchange extends React.Component {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Accept-Language": localStorage["i18nextLng"], 
             Authorization: "Bearer " + this.props.isLoggedIn
           },
           body: JSON.stringify(values)
@@ -533,14 +513,14 @@ class SimplexExchange extends React.Component {
               if (this.state.wallet_details === "") {
                 this.openNotificationWithIcon(
                   "error",
-                  "Error",
-                  "Please create wallet and then continue."
+                  this.t("validations:error_text.message"),
+                  this.t("general_3:create_wallet_and_continue.message")
                 );
               } else {
                 this.openNotificationWithIcon(
                   "warning",
-                  "Transaction Error",
-                  "There is some error in the transaction. Please retry."
+                  this.t("general_3:transition_error.message"),
+                  this.t("general_3:transition_error_please_try.message")
                 );
                 this.props.history.push("/simplex");
               }
@@ -562,7 +542,7 @@ class SimplexExchange extends React.Component {
               } else {
                 this.openNotificationWithIcon(
                   "error",
-                  "Error",
+                  this.t("validations:error_text.message"),
                   responseData.err
                 );
               }
@@ -592,6 +572,7 @@ class SimplexExchange extends React.Component {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Accept-Language": localStorage["i18nextLng"], 
             Authorization: "Bearer " + this.props.isLoggedIn
           },
           body: JSON.stringify(values)
@@ -606,14 +587,14 @@ class SimplexExchange extends React.Component {
               if (this.state.wallet_details === "") {
                 this.openNotificationWithIcon(
                   "error",
-                  "Error",
-                  "Please create wallet and then continue."
+                  this.t("validations:error_text.message"),
+                  this.t("general_3:create_wallet_and_continue.message")
                 );
               } else {
                 this.openNotificationWithIcon(
                   "warning",
-                  "Transaction Error",
-                  "There is some error in the transaction. Please retry."
+                  this.t("general_3:transition_error.message"),
+                  this.t("general_3:transition_error_please_try.message")
                 );
                 this.props.history.push("/simplex");
               }
@@ -630,7 +611,11 @@ class SimplexExchange extends React.Component {
               //   loader: false
               //   // showTFAModal: false
               // });
-              this.openNotificationWithIcon("error", "Error", responseData.err);
+              this.openNotificationWithIcon(
+                "error",
+                this.t("validations:error_text.message"),
+                responseData.err
+              );
             }
             this.setState({
               loader: false
@@ -663,7 +648,7 @@ class SimplexExchange extends React.Component {
             <SimMainRow className="simplex_main_row">
               <SimLeftCol className="simplex_left_col_exchange" lg={12}>
                 <BorderRow className="simplex_row">
-                  <RowTitle>You Pay</RowTitle>
+                  <RowTitle>{this.t("you_pay_text.message")}</RowTitle>
                   <Col xs={12} sm={12} md={16}>
                     <ConversionInput
                       type="text"
@@ -681,7 +666,12 @@ class SimplexExchange extends React.Component {
                       `required|numeric|gtzero|minCurrencyValid|decimalrestrict2|maxCurrencyValid`,
                       "text-danger-validation",
                       {
-                        numeric: "Enter only integer or a decimal number"
+                        required: this.t(
+                          "general_3:validation_amount_required.message"
+                        ),
+                        numeric: this.t(
+                          "general_3:validation_amount_numeric.message"
+                        )
                       }
                     )}
                   </Col>
@@ -714,7 +704,7 @@ class SimplexExchange extends React.Component {
                   </Col>
                 </BorderRow>
                 <BorderRow className="simplex_row">
-                  <RowTitle>You Get</RowTitle>
+                  <RowTitle>{this.t("you_get_text.message")}</RowTitle>
                   <Col xs={12} sm={12} md={16}>
                     <ConversionInput
                       type="number"
@@ -774,11 +764,15 @@ class SimplexExchange extends React.Component {
                   <div>
                     <CreateWalletRow className="create-wallet-link">
                       <Col>
-                        <span>Don't have {this.state.coin_name} wallet?</span>
+                        <span>
+                          {this.t("general_3:dont_have_text.message")}{" "}
+                          {this.state.coin_name}{" "}
+                          {this.t("header:navbar_menu_wallet.message")}?
+                        </span>
                         <Link
                           to={`/walletDetails?coinID0=${this.state.cryptoCode}`}
                         >
-                          Generate wallet
+                          {this.t("general_3:generate_wallet_text.message")}
                         </Link>
                       </Col>
                     </CreateWalletRow>
@@ -791,7 +785,7 @@ class SimplexExchange extends React.Component {
                           block
                           disabled
                         >
-                          Continue
+                          {this.t("continue_btn.message")}
                         </ConversionSubmitBtn>
                       </Col>
                     </Row>
@@ -803,7 +797,7 @@ class SimplexExchange extends React.Component {
                         <ConversionInput
                           className="address_field"
                           type="text"
-                          placeholder="Address"
+                          placeholder={this.t("wallet:address_text.message")}
                           value={this.state.address}
                           // readOnly
                           onChange={this.handleAddressChange}
@@ -825,7 +819,7 @@ class SimplexExchange extends React.Component {
                           block
                           disabled={this.state.btnDisabled}
                         >
-                          Continue
+                          {this.t("continue_btn.message")}
                         </ConversionSubmitBtn>
                       </Col>
                     </Row>
@@ -973,4 +967,10 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(withRouter(SimplexExchange));
+export default translate([
+  "conversion",
+  "validations",
+  "general_3",
+  "wallet",
+  "header"
+])(connect(mapStateToProps)(withRouter(SimplexExchange)));

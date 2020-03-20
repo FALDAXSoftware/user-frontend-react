@@ -6,6 +6,7 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import "antd/dist/antd.css";
 import ReactSwipeEvents from "react-swipe-events";
+import { translate, Trans } from "react-i18next";
 
 /* Components */
 import Afterlog from "./afterlog";
@@ -15,6 +16,8 @@ import ComingSoon from "COMPONENTS/comingsoon";
 import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
 import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
 import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
+import { langAction } from "../../ACTIONS/authActions";
+import CompleteProfile from "../../SHARED-COMPONENTS/completeProfile";
 // import { DropMenu, SubMenuNav } from "./navigation";
 
 /* CONSTANTS */
@@ -109,6 +112,9 @@ const Headermain = styled(Header)`
   height: 80px;
   display: flex;
   align-items: center;
+  & .color_important {
+    color: black !important;
+  }
 `;
 const Menumain = styled(Menu)`
   display: inline-block;
@@ -341,12 +347,15 @@ class LoggedNavigation extends Component {
       selected: "",
       countryAccess: false,
       completeKYC: false,
+      completeProfile: false,
       panicEnabled: false,
       panic_status: false
+      // langValue: this.props.language
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
     this.cryptoAccess = this.cryptoAccess.bind(this);
     this.simplexAccess = this.simplexAccess.bind(this);
+    this.walletAccess = this.walletAccess.bind(this);
     this.tokenAccess = this.tokenAccess.bind(this);
     this.panicStatus = this.panicStatus.bind(this);
   }
@@ -368,13 +377,15 @@ class LoggedNavigation extends Component {
       // } else if (this.props.location.pathname.includes("trade")) {
       //   this.setState({ selected: "2" });
       // } else
-      if (this.props.location.pathname.includes("conversion")) {
-        this.setState({ selected: "3" });
-      } else if (this.props.location.pathname.includes("wallet")) {
-        this.setState({ selected: "4" });
-      } else if (this.props.location.pathname.includes("history")) {
-        this.setState({ selected: "5" });
-      }
+      // if (this.props.location.pathname.includes("conversion")) {
+      //   this.setState({ selected: "3" });
+      // } else if (this.props.location.pathname.includes("wallet")) {
+      //   this.setState({ selected: "4" });
+      // } else if (this.props.location.pathname.includes("history")) {
+      //   this.setState({ selected: "5" });
+      // } else {
+      //   this.setState({ selected: "6" });
+      // }
     }
     if (this.props.theme !== undefined) {
       if (this.props.theme !== this.state.theme) {
@@ -483,6 +494,7 @@ class LoggedNavigation extends Component {
         method: "post",
         headers: {
           Accept: "application/json",
+          "Accept-Language": localStorage["i18nextLng"],
           "Content-Type": "application/json"
         },
         body: JSON.stringify(values)
@@ -520,6 +532,7 @@ class LoggedNavigation extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
@@ -574,6 +587,14 @@ class LoggedNavigation extends Component {
           this.setState({ countryAccess: true });
         }
       }
+    }
+  }
+  walletAccess() {
+    if (this.props.profileDetails.is_user_updated) {
+      if (this.props.location.pathname !== "/wallet")
+        this.props.history.push("/wallet");
+    } else {
+      this.setState({ completeProfile: true });
     }
   }
   simplexAccess() {
@@ -666,18 +687,30 @@ class LoggedNavigation extends Component {
     // }
   }
   onChange = e => {
-    // console.log("radio checked", e.target.value);
-    this.props.i18n.changeLanguage(e.target.value);
-    this.setState(
-      {
-        langValue: e.target.value
-      },
-      () => {
-        this.props.langAction(this.state.langValue);
-      }
-    );
+    // Pages that redirect from WordPress with lng params
+    let lngQueryParamsUrls = [
+      "/open-ticket",
+      "/simplex",
+      "/crypto-conversion",
+      "/conversion",
+      "/editProfile",
+      "/careers"
+    ];
+    // remove queryParams in case of found from list else reload component.
+    if (lngQueryParamsUrls.indexOf(window.location.pathname) != -1) {
+      window.location.href = window.location.pathname;
+    } else {
+      window.location.reload();
+    }
+    this.props.i18n.changeLanguage(e.key);
   };
   render() {
+    const radioStyle = {
+      display: "block",
+      height: "30px",
+      lineHeight: "30px"
+    };
+    const { t } = this.props;
     let prof_name =
       this.props.profileDetails.first_name !== null &&
       this.props.profileDetails.first_name !== undefined
@@ -690,21 +723,31 @@ class LoggedNavigation extends Component {
         <Menu.Item key="0">
           <a
             className="tokenlink"
-            href={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
+            href={`${globalVariables.WordpressSiteURL}${
+              localStorage["i18nextLng"] && localStorage["i18nextLng"] !== "en"
+                ? "/" + localStorage["i18nextLng"]
+                : ""
+            }/crypto-only-coming-soon`}
           >
-            Crypto Only
+            {t("navbar_sub_menu_conversation_crypto_only.message")}
           </a>
           {/* <a onClick={this.cryptoAccess}>Crypto Only</a> */}
         </Menu.Item>
         <Menu.Item key="1">
-          <a onClick={this.simplexAccess}>Credit Card</a>
+          <a onClick={this.simplexAccess}>
+            {t("navbar_sub_menu_conversation_credit_card.message")}
+          </a>
         </Menu.Item>
         <Menu.Item key="2">
           <a
             className="tokenlink"
-            href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+            href={`${globalVariables.WordpressSiteURL}${
+              localStorage["i18nextLng"] && localStorage["i18nextLng"] !== "en"
+                ? "/" + localStorage["i18nextLng"]
+                : ""
+            }/token-coming-soon`}
           >
-            Bank Transfer
+            {t("navbar_sub_menu_conversation_bank_transfer.message")}
           </a>
         </Menu.Item>
       </Menu>
@@ -726,7 +769,7 @@ class LoggedNavigation extends Component {
               this.props.history.push({ pathname: "/history", tradeType: "1" })
             }
           >
-            Crypto Only
+            {t("navbar_sub_menu_conversation_crypto_only.message")}
           </a>
         </Menu.Item> */}
         <Menu.Item key="1">
@@ -735,7 +778,7 @@ class LoggedNavigation extends Component {
               this.props.history.push({ pathname: "/history", tradeType: "2" })
             }
           >
-            Credit Card
+            {t("navbar_sub_menu_conversation_credit_card.message")}
           </a>
         </Menu.Item>
         {/* <Menu.Item key="2">
@@ -749,11 +792,57 @@ class LoggedNavigation extends Component {
         </Menu.Item> */}
       </Menu>
     );
-
+    // const langItems = (
+    //   <Radio.Group onChange={this.onChange} value={this.state.langValue}>
+    //     <Radio style={radioStyle} value="en">
+    //       English
+    //     </Radio>
+    //     <Radio style={radioStyle} value="ja">
+    //       Japanese
+    //     </Radio>
+    //   </Radio.Group>
+    // );
+    const langItems = (
+      <Menu
+        // onClick={e => {
+        //   alert("change");
+        //   console.log("this", e.key);
+        // }}
+        onClick={this.onChange}
+      >
+        <Menu.Item
+          key="en"
+          // onClick={() => {
+          //   this.setState({
+          //     langValue: "en"
+          //   });
+          // }}
+        >
+          <a>English</a>
+        </Menu.Item>
+        <Menu.Item
+          key="ja"
+          // onClick={() => {
+          //   this.setState({
+          //     langValue: "ja"
+          //   });
+          // }}
+        >
+          <a>Japanese</a>
+        </Menu.Item>
+      </Menu>
+    );
     return (
       <Headermain id="main">
         <Logo>
-          <a href={globalVariables.WordpressSiteURL}>
+          <a
+            href={
+              globalVariables.WordpressSiteURL +
+              (localStorage["i18nextLng"] && localStorage["i18nextLng"] !== "en"
+                ? "/" + localStorage["i18nextLng"]
+                : "")
+            }
+          >
             <FALDAXLOGO className="" src={this.state.faldaxLogo} />
             <FALDAX src={this.state.faldax} />
           </a>
@@ -779,15 +868,26 @@ class LoggedNavigation extends Component {
               overlay={DropdownItems}
               overlayClassName="custom_dropdown_menu"
             >
-              <NavLink className="ant-dropdown-link " to="/conversion">
-                Conversion
+              <NavLink className="ant-dropdown-link" to="/conversion">
+                {/* Conversion */}
+                {/* <Trans i18nKey="Introduction" /> */}
+                {t("navbar_menu_conversion.message")}
               </NavLink>
             </DropDownDiv>
           </Menuitem>
+          {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
           <Menuitem key="4">
-            <NavLink className="" to="/wallet">
-              Wallet
-            </NavLink>
+            <a
+              className="color_important"
+              // to="/wallet"
+              onClick={this.walletAccess}
+            >
+              {t("navbar_menu_wallet.message")}
+            </a>
+
+            {/* <NavLink className="Nav_selected" to="/wallet">
+              {t("navbar_menu_wallet.message")}
+            </NavLink> */}
           </Menuitem>
           <Menuitem key="5">
             <DropDownDiv
@@ -804,10 +904,30 @@ class LoggedNavigation extends Component {
                   }
                 }}
               >
-                History
+                {t("navbar_menu_history.message")}
               </NavLink>
             </DropDownDiv>
           </Menuitem>
+          <Menuitem key="6">
+            <DropDownDiv
+              // className="Drop-main"
+              overlay={langItems}
+              trigger={["click"]}
+              // overlayClassName="custom_dropdown_menu"
+            >
+              <div>{t("general_1:language_head.message")}</div>
+            </DropDownDiv>
+            {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
+          </Menuitem>
+          {/* <Menuitem key="3">
+            <NavLink className="Nav_selected" to="/history">
+              HISTORY
+            </NavLink>
+          </Menuitem> */}
+          {/* <Menu_item key="1" onClick={this.showComing}><LogNav>DASHBOARD</LogNav></Menu_item>
+                    <Menu_item key="2" onClick={this.showComing}><LogNav>TRADE</LogNav></Menu_item>
+                    <Menu_item key="3" onClick={this.showComing}><LogNav>Wallet</LogNav></Menu_item>
+                    <Menu_item key="4" onClick={this.showComing}><LogNav>HISTORY</LogNav></Menu_item> */}
         </Menumain>
         <RightCol>
           <Afterlog
@@ -830,7 +950,9 @@ class LoggedNavigation extends Component {
               &times;
             </Close>
             <LogoutStyle>
-              <Link to="/editProfile">Profile</Link>
+              <Link to="/editProfile">
+                {t("navbar_sub_menu_profile.message")}
+              </Link>
             </LogoutStyle>
             {/* <span>
               <Link to="/dashboard">Dashboard</Link>
@@ -843,25 +965,40 @@ class LoggedNavigation extends Component {
             </span> */}
             <a className="DROPSUB">
               <DropMenu mode="inline">
-                <SubMenuNav key="mobsub1" title={"Conversion"}>
+                <SubMenuNav
+                  key="mobsub1"
+                  title={t("navbar_menu_conversion.message")}
+                >
                   <Menu.Item key="0">
                     <a
                       className="tokenlink"
-                      href={`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
+                      href={`${globalVariables.WordpressSiteURL}${
+                        localStorage["i18nextLng"] &&
+                        localStorage["i18nextLng"] !== "en"
+                          ? "/" + localStorage["i18nextLng"]
+                          : ""
+                      }/crypto-only-coming-soon`}
                     >
-                      Crypto Only
+                      {t("navbar_sub_menu_conversation_crypto_only.message")}
                     </a>
                     {/* <a onClick={this.cryptoAccess}>Crypto Only</a> */}
                   </Menu.Item>
                   <Menu.Item key="1">
-                    <a onClick={this.simplexAccess}>Credit Card</a>
+                    <a onClick={this.simplexAccess}>
+                      {t("navbar_sub_menu_conversation_credit_card.message")}
+                    </a>
                   </Menu.Item>
                   <Menu.Item key="2">
                     <a
                       className="tokenlink"
-                      href={`${globalVariables.WordpressSiteURL}/token-coming-soon`}
+                      href={`${globalVariables.WordpressSiteURL}${
+                        localStorage["i18nextLng"] &&
+                        localStorage["i18nextLng"] !== "en"
+                          ? "/" + localStorage["i18nextLng"]
+                          : ""
+                      }/token-coming-soon`}
                     >
-                      Bank Transfer
+                      {t("navbar_sub_menu_conversation_bank_transfer.message")}
                     </a>
                   </Menu.Item>
                 </SubMenuNav>
@@ -871,12 +1008,17 @@ class LoggedNavigation extends Component {
               <Link to="/trade">Trade</Link>
             </span> */}
             <span>
-              {" "}
-              <Link to="/wallet">Wallet</Link>
+              {/* <Link to="/wallet">{t("navbar_menu_wallet.message")}</Link> */}
+              <a onClick={this.walletAccess}>
+                {t("navbar_menu_wallet.message")}
+              </a>
             </span>
             <a className="DROPSUB">
               <DropMenu mode="inline">
-                <SubMenuNav key="mobsub2" title={"History"}>
+                <SubMenuNav
+                  key="mobsub2"
+                  title={t("navbar_menu_history.message")}
+                >
                   {/* <Menu.Item key="0">
                     <a
                       onClick={() =>
@@ -898,7 +1040,7 @@ class LoggedNavigation extends Component {
                         })
                       }
                     >
-                      Crypto Only
+                      {t("navbar_sub_menu_conversation_crypto_only.message")}
                     </a>
                   </Menu.Item> */}
                   <Menu.Item key="1">
@@ -910,7 +1052,7 @@ class LoggedNavigation extends Component {
                         })
                       }
                     >
-                      Credit Card
+                      {t("navbar_sub_menu_conversation_credit_card.message")}
                     </a>
                   </Menu.Item>
                   {/* <Menu.Item key="2">
@@ -933,55 +1075,109 @@ class LoggedNavigation extends Component {
             </span> */}
             <a className="DROP">
               <DropMenu mode="inline">
-                <SubMenuNav key="sub1" title={"Information"}>
+                <SubMenuNav
+                  key="sub1"
+                  title={t("footer:head_information.message")}
+                >
                   <Menu.Item key="9">
-                    <a href={`${globalVariables.WordpressSiteURL}/about-us`}>
-                      About Us
+                    <a
+                      href={`${globalVariables.WordpressSiteURL}${
+                        localStorage["i18nextLng"] &&
+                        localStorage["i18nextLng"] !== "en"
+                          ? "/" + localStorage["i18nextLng"]
+                          : ""
+                      }/about-us`}
+                    >
+                      {t("footer:subhead_about_us.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="10">
-                    <a href={`${globalVariables.WordpressSiteURL}/contact-us`}>
-                      Contact Us
+                    <a
+                      href={`${globalVariables.WordpressSiteURL}${
+                        localStorage["i18nextLng"] &&
+                        localStorage["i18nextLng"] !== "en"
+                          ? "/" + localStorage["i18nextLng"]
+                          : ""
+                      }/contact-us`}
+                    >
+                      {t("footer:subhead_contact_us.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="11">
                     <a
-                      href={`${globalVariables.WordpressSiteURL}/media-contact`}
+                      href={`${globalVariables.WordpressSiteURL}${
+                        localStorage["i18nextLng"] &&
+                        localStorage["i18nextLng"] !== "en"
+                          ? "/" + localStorage["i18nextLng"]
+                          : ""
+                      }/media-contact`}
                     >
-                      Media Contact
+                      {t("footer:subhead_media_contact.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="12">
-                    <a href={`${globalVariables.WordpressSiteURL}/blogs`}>
-                      Blogs
+                    <a
+                      href={`${globalVariables.WordpressSiteURL}${
+                        localStorage["i18nextLng"] &&
+                        localStorage["i18nextLng"] !== "en"
+                          ? "/" + localStorage["i18nextLng"]
+                          : ""
+                      }/blogs`}
+                    >
+                      {t("footer:subhead_blog.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="13">
-                    <a href={`${globalVariables.WordpressSiteURL}/fee`}>Fees</a>
+                    <a
+                      href={`${globalVariables.WordpressSiteURL}${
+                        localStorage["i18nextLng"] &&
+                        localStorage["i18nextLng"] !== "en"
+                          ? "/" + localStorage["i18nextLng"]
+                          : ""
+                      }/fee`}
+                    >
+                      {t("footer:subhead_fees.message")}
+                    </a>
                   </Menu.Item>
                 </SubMenuNav>
               </DropMenu>
             </a>
             <a className="DROP">
               <DropMenu mode="inline">
-                <SubMenuNav key="sub2" title={"Support"}>
+                <SubMenuNav key="sub2" title={t("footer:head_support.message")}>
                   <Menu.Item key="9">
-                    <Link to="/open-ticket">Open a Ticket</Link>
+                    <Link to="/open-ticket">
+                      {t("footer:subhead_open_a_ticket.message")}
+                    </Link>
                   </Menu.Item>
                   <Menu.Item key="10">
-                    <a href="https://knowledge.faldax.com/">FAQ</a>
+                    <a href="https://knowledge.faldax.com/">
+                      {t("footer:subhead_faq.message")}
+                    </a>
                   </Menu.Item>
                   {/* <Menu.Item key="11"><a href="#">API Documentation</a></Menu.Item> */}
                   <Menu.Item key="12">
                     <a
-                      href={`${globalVariables.WordpressSiteURL}/list-your-token`}
+                      href={`${globalVariables.WordpressSiteURL}${
+                        localStorage["i18nextLng"] &&
+                        localStorage["i18nextLng"] !== "en"
+                          ? "/" + localStorage["i18nextLng"]
+                          : ""
+                      }/list-your-token`}
                     >
-                      List Your Token
+                      {t("footer:subhead_List_your_token.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="12">
-                    <a href={`${globalVariables.WordpressSiteURL}/news`}>
-                      News
+                    <a
+                      href={`${globalVariables.WordpressSiteURL}${
+                        localStorage["i18nextLng"] &&
+                        localStorage["i18nextLng"] !== "en"
+                          ? "/" + localStorage["i18nextLng"]
+                          : ""
+                      }/news`}
+                    >
+                      {t("footer:subhead_news.message")}
                     </a>
                   </Menu.Item>
                 </SubMenuNav>
@@ -989,24 +1185,41 @@ class LoggedNavigation extends Component {
             </a>
             <a className="DROP">
               <DropMenu mode="inline">
-                <SubMenuNav key="sub3" title={"Legal & Technical"}>
+                <SubMenuNav
+                  key="sub3"
+                  title={t("footer:head_Legal_&_technical.message")}
+                >
                   <Menu.Item key="9">
-                    <a href={`${globalVariables.WordpressSiteURL}/policies`}>
-                      Policies
+                    <a
+                      href={`${globalVariables.WordpressSiteURL}${
+                        localStorage["i18nextLng"] &&
+                        localStorage["i18nextLng"] !== "en"
+                          ? "/" + localStorage["i18nextLng"]
+                          : ""
+                      }/policies`}
+                    >
+                      {t("footer:subhead_policies.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="10">
                     <a
-                      href={`${globalVariables.WordpressSiteURL}/service-availability`}
+                      href={`${globalVariables.WordpressSiteURL}${
+                        localStorage["i18nextLng"] &&
+                        localStorage["i18nextLng"] !== "en"
+                          ? "/" + localStorage["i18nextLng"]
+                          : ""
+                      }/service-availability`}
                     >
-                      Service Availability
+                      {t("footer:subhead_service_availability.message")}
                     </a>
                   </Menu.Item>
                   {/* <Menu.Item key="11"><a onClick={this.showComing} href="#">Security</a></Menu.Item> */}
                 </SubMenuNav>
               </DropMenu>
             </a>
-            <LogoutStyle onClick={this.logout.bind(this)}> Logout </LogoutStyle>
+            <LogoutStyle onClick={this.logout.bind(this)}>
+              {t("navbar_sub_menu_history_logout.message")}{" "}
+            </LogoutStyle>
           </SideNav>
         </ReactSwipeEvents>
         <ComingSoon
@@ -1025,6 +1238,10 @@ class LoggedNavigation extends Component {
           comingCancel={e => this.comingCancel(e)}
           visible={this.state.panicEnabled}
         />
+        <CompleteProfile
+          comingCancel={e => this.comingCancel(e)}
+          visible={this.state.completeProfile}
+        />
       </Headermain>
     );
   }
@@ -1039,15 +1256,17 @@ function mapStateToProps(state) {
           : ""
         : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+    language: state.themeReducer.lang
   };
 }
 const mapDispatchToProps = dispatch => ({
   // Logout: () => dispatch(Logout()),
-  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+  LogoutUser: (isLoggedIn, user_id) =>
+    dispatch(LogoutUser(isLoggedIn, user_id)),
+  langAction: lang => dispatch(langAction(lang))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(LoggedNavigation));
+export default translate(["header", "footer", "general_1"])(
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation))
+);

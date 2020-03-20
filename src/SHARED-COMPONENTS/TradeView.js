@@ -118,6 +118,7 @@ class TradeView extends React.Component {
       method: "get",
       headers: {
         Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"], 
         "Content-Type": "application/json"
       }
     })
@@ -144,6 +145,7 @@ class TradeView extends React.Component {
       method: "get",
       headers: {
         Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"], 
         "Content-Type": "application/json"
       }
     })
@@ -613,7 +615,8 @@ class TradeView extends React.Component {
         method: "post",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"], 
           // Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify(values)
@@ -806,6 +809,7 @@ class TradeView extends React.Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"], 
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify(values)
@@ -939,7 +943,10 @@ class TradeView extends React.Component {
         this.props.profileDetails.is_kyc_done == 2
       ) {
         window.open(
-          WP_URL + "/crypto-only-coming-soon",
+          WP_URL + localStorage["i18nextLng"] &&
+            localStorage["i18nextLng"] !== "en"
+            ? "/" + localStorage["i18nextLng"]
+            : "" + "/crypto-only-coming-soon",
           "_blank" // <- This is what makes it open in a new window.
         );
       } else {

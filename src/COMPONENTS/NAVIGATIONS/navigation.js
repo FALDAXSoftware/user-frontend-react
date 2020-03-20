@@ -491,7 +491,15 @@ class Navigation extends Component {
       <div>
         <Headermain id="main">
           <Logo>
-            <a href={globalVariables.WordpressSiteURL}>
+            <a
+              href={
+                globalVariables.WordpressSiteURL +
+                (localStorage["i18nextLng"] &&
+                localStorage["i18nextLng"] !== "en"
+                  ? "/" + localStorage["i18nextLng"]
+                  : "")
+              }
+            >
               <FALDAXLOGO className="" src={this.state.faldaxLogo} />
               <FALDAX src={this.state.faldax} />
             </a>
@@ -504,7 +512,12 @@ class Navigation extends Component {
             <Menuitem key="1">
               <NavLink
                 className="Nav_selected"
-                href={`${globalVariables.WordpressSiteURL}/`}
+                href={`${globalVariables.WordpressSiteURL}${
+                  localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : ""
+                }/`}
               >
                 HOME
               </NavLink>
@@ -513,7 +526,12 @@ class Navigation extends Component {
             <Menuitem key="2">
               <NavLink
                 className="Nav_selected"
-                href={`${globalVariables.WordpressSiteURL}/about-us`}
+                href={`${globalVariables.WordpressSiteURL}${
+                  localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : ""
+                }/about-us`}
               >
                 ABOUT
               </NavLink>
@@ -521,7 +539,12 @@ class Navigation extends Component {
             <Menuitem key="3">
               <NavLink
                 className="Nav_selected"
-                href={`${globalVariables.WordpressSiteURL}/blogs`}
+                href={`${globalVariables.WordpressSiteURL}${
+                  localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : ""
+                }/blogs`}
               >
                 BLOG
               </NavLink>
@@ -530,7 +553,12 @@ class Navigation extends Component {
             <Menuitem key="5">
               <NavLink
                 className="Nav_selected"
-                href={`${globalVariables.WordpressSiteURL}/news`}
+                href={`${globalVariables.WordpressSiteURL}${
+                  localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : ""
+                }/news`}
               >
                 NEWS
               </NavLink>
@@ -538,7 +566,12 @@ class Navigation extends Component {
             <Menuitem key="6">
               <NavLink
                 className="Nav_selected"
-                href={`${globalVariables.WordpressSiteURL}/contact-us`}
+                href={`${globalVariables.WordpressSiteURL}${
+                  localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : ""
+                }/contact-us`}
               >
                 CONTACT
               </NavLink>
@@ -546,7 +579,12 @@ class Navigation extends Component {
             <Menuitem key="7">
               <NavLink
                 className="Nav_selected"
-                href={`${globalVariables.WordpressSiteURL}/list-your-token`}
+                href={`${globalVariables.WordpressSiteURL}${
+                  localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : ""
+                }/list-your-token`}
               >
                 LIST YOUR TOKEN
               </NavLink>
@@ -554,7 +592,12 @@ class Navigation extends Component {
             <Menuitem key="8">
               <NavLink
                 className="Nav_selected"
-                href={`${globalVariables.WordpressSiteURL}/exchange`}
+                href={`${globalVariables.WordpressSiteURL}${
+                  localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : ""
+                }/exchange`}
               >
                 EXCHANGE
               </NavLink>
@@ -593,7 +636,12 @@ class Navigation extends Component {
                   <Finlog
                     onClick={() =>
                       this.props.history.push(
-                        `${globalVariables.WordpressSiteURL}/login`
+                        `${globalVariables.WordpressSiteURL}${
+                          localStorage["i18nextLng"] &&
+                          localStorage["i18nextLng"] !== "en"
+                            ? "/" + localStorage["i18nextLng"]
+                            : ""
+                        }/login`
                       )
                     }
                   >
@@ -602,7 +650,12 @@ class Navigation extends Component {
                   <Finsign
                     onClick={() =>
                       this.props.history.push(
-                        `${globalVariables.WordpressSiteURL}/signup`
+                        `${globalVariables.WordpressSiteURL}${
+                          localStorage["i18nextLng"] &&
+                          localStorage["i18nextLng"] !== "en"
+                            ? "/" + localStorage["i18nextLng"]
+                            : ""
+                        }/signup`
                       )
                     }
                   >
@@ -610,19 +663,77 @@ class Navigation extends Component {
                   </Finsign>
                 </Findiv>
               )}
-              <a href={globalVariables.WordpressSiteURL}>Home</a>
+              <a
+                href={
+                  globalVariables.WordpressSiteURL +
+                  (localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : "")
+                }
+              >
+                Home
+              </a>
               {/* <a onClick={this.showComing} href="#">Features</a> */}
-              <a href={`${globalVariables.WordpressSiteURL}/about-us`}>About</a>
-              <a href={`${globalVariables.WordpressSiteURL}/blogs`}>Blogs</a>
+              <a
+                href={`${globalVariables.WordpressSiteURL}${
+                  localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : ""
+                }/about-us`}
+              >
+                About
+              </a>
+              <a
+                href={`${globalVariables.WordpressSiteURL}${
+                  localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : ""
+                }/blogs`}
+              >
+                Blogs
+              </a>
               {/* <a onClick={this.showComing} href="#">Security</a> */}
-              <a href={`${globalVariables.WordpressSiteURL}/news`}>News</a>
-              <a href={`${globalVariables.WordpressSiteURL}/contact-us`}>
+              <a
+                href={`${globalVariables.WordpressSiteURL}${
+                  localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : ""
+                }/news`}
+              >
+                News
+              </a>
+              <a
+                href={`${globalVariables.WordpressSiteURL}${
+                  localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : ""
+                }/contact-us`}
+              >
                 Contact
               </a>
-              <a href={`${globalVariables.WordpressSiteURL}/list-your-token`}>
+              <a
+                href={`${globalVariables.WordpressSiteURL}${
+                  localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : ""
+                }/list-your-token`}
+              >
                 List Your Token
               </a>
-              <a href={`${globalVariables.WordpressSiteURL}/coming-soon`}>
+              <a
+                href={`${globalVariables.WordpressSiteURL}${
+                  localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : ""
+                }/coming-soon`}
+              >
                 Exchange
               </a>
               {/* <a onClick={this.showComing} href="#">Exchange</a> */}
@@ -649,14 +760,26 @@ class Navigation extends Component {
                     </Menu.Item> */}
                     <Menu.Item key="11">
                       <a
-                        href={`${globalVariables.WordpressSiteURL}/media-contact`}
+                        href={`${globalVariables.WordpressSiteURL}${
+                          localStorage["i18nextLng"] &&
+                          localStorage["i18nextLng"] !== "en"
+                            ? "/" + localStorage["i18nextLng"]
+                            : ""
+                        }/media-contact`}
                       >
                         Media Contact
                       </a>
                     </Menu.Item>
                     {/* <Menu.Item key="12"><a href="/blogs">Blog</a></Menu.Item> */}
                     <Menu.Item key="13">
-                      <a href={`${globalVariables.WordpressSiteURL}/fee`}>
+                      <a
+                        href={`${globalVariables.WordpressSiteURL}${
+                          localStorage["i18nextLng"] &&
+                          localStorage["i18nextLng"] !== "en"
+                            ? "/" + localStorage["i18nextLng"]
+                            : ""
+                        }/fee`}
+                      >
                         Fees
                       </a>
                     </Menu.Item>
@@ -692,13 +815,25 @@ class Navigation extends Component {
                 <DropMenu mode="inline">
                   <SubMenuNav key="sub3" title={"Legal & Technical"}>
                     <Menu.Item key="9">
-                      <a href={`${globalVariables.WordpressSiteURL}/policies`}>
+                      <a
+                        href={`${globalVariables.WordpressSiteURL}${
+                          localStorage["i18nextLng"] &&
+                          localStorage["i18nextLng"] !== "en"
+                            ? "/" + localStorage["i18nextLng"]
+                            : ""
+                        }/policies`}
+                      >
                         Policies
                       </a>
                     </Menu.Item>
                     <Menu.Item key="10">
                       <a
-                        href={`${globalVariables.WordpressSiteURL}/service-availability`}
+                        href={`${globalVariables.WordpressSiteURL}${
+                          localStorage["i18nextLng"] &&
+                          localStorage["i18nextLng"] !== "en"
+                            ? "/" + localStorage["i18nextLng"]
+                            : ""
+                        }/service-availability`}
                       >
                         Service Availability
                       </a>
