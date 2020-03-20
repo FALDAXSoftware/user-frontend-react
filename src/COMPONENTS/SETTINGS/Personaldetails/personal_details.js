@@ -739,8 +739,8 @@ class PersonalDetails extends Component {
     )
       value = value.trim();
     if (field === "first_name") {
-      value = value.trim();
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      // value = value.trim();
+      var re = /^[a-zA-Z0-9?']{2,5000}$/;
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
@@ -748,7 +748,9 @@ class PersonalDetails extends Component {
           if (regexnum.test(value)) {
             this.setState({ firstIcon: false });
             document.querySelectorAll(".first_msg")[0].style.display = "block";
-            this.setState({ firstmsg: t("only_number_not_allowed.message") });
+            this.setState({
+              firstmsg: t("validations:only_number_not_allowed.message")
+            });
           } else {
             this.setState({ firstIcon: true });
             document.querySelectorAll(".first_msg")[0].style.display = "none";
@@ -757,10 +759,7 @@ class PersonalDetails extends Component {
           this.setState({ firstIcon: false });
           document.querySelectorAll(".first_msg")[0].style.display = "block";
           this.setState({
-            firstmsg:
-              t("subhead_personal_form_first_name.message") +
-              " " +
-              t("validations:min_max_first_name.message")
+            firstmsg: this.t("sign_up:first_name_error.message")
           });
         }
       } else {
@@ -774,7 +773,7 @@ class PersonalDetails extends Component {
         });
       }
     } else if (field === "last_name") {
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      var re = /^[a-zA-Z0-9?']{2,5000}$/;
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
@@ -782,7 +781,9 @@ class PersonalDetails extends Component {
           if (regexnum.test(value)) {
             this.setState({ lastIcon: false });
             document.querySelectorAll(".last_msg")[0].style.display = "block";
-            this.setState({ lastmsg: t("only_number_not_allowed.message") });
+            this.setState({
+              lastmsg: t("validations:only_number_not_allowed.message")
+            });
           } else {
             this.setState({ lastIcon: true });
             document.querySelectorAll(".last_msg")[0].style.display = "none";
@@ -791,10 +792,7 @@ class PersonalDetails extends Component {
           this.setState({ lastIcon: false });
           document.querySelectorAll(".last_msg")[0].style.display = "block";
           this.setState({
-            lastmsg:
-              t("subhead_personal_form_last_name.message") +
-              " " +
-              t("validations:min_max_first_name.message")
+            lastmsg: this.t("sign_up:last_name_error.message")
           });
         }
       } else {
@@ -2040,5 +2038,6 @@ export default translate([
   "validations",
   "general",
   "general_1",
-  "settings"
+  "settings",
+  "sign_up"
 ])(connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails)));

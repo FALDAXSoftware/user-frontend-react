@@ -157,6 +157,10 @@ class DetailsTable extends React.Component {
                     {this.t("conversion:total_text.message")}{" "}
                     {this.t("wallet:amount_text.message")}
                   </SubHead>
+                  <SubHead>
+                    {this.t("wallet:transaction_text.message")}{" "}
+                    {this.t("wallet:hash_text.message")}
+                  </SubHead>
                 </Head>
               </thead>
             </TableHeader>

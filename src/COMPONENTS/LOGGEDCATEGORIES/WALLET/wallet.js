@@ -122,12 +122,17 @@ class Wallet extends Component {
       searchedWallet: null,
       currencySeq: ["USD", "EUR", "INR"]
     };
-    this.t=this.props.t;
+    this.t = this.props.t;
     this.searchChangeCoins = this.searchChangeCoins.bind(this);
     this.searchChangeWallet = this.searchChangeWallet.bind(this);
   }
 
   /* Life Cycle Methods */
+  componentWillMount() {
+    if (!this.props.profileDetails.is_user_updated) {
+      this.props.history.push("/");
+    }
+  }
   componentDidMount() {
     // var total = 0;
     // var tableData = this.props.walletDetails.activated_asset_lists;
@@ -327,16 +332,16 @@ class Wallet extends Component {
       this.setState({ searchedCoins: null, searchedERCTokens: null });
     }
   }
-  translateCurrency(currency){
-    switch(currency){
+  translateCurrency(currency) {
+    switch (currency) {
       case "INR":
-          return this.t("edit_profile_titles:currency_inr.message");
+        return this.t("edit_profile_titles:currency_inr.message");
       case "EUR":
-          return this.t("edit_profile_titles:currency_eur.message");
-        case "USD":
-          return this.t("settings:currency_usd.message");
+        return this.t("edit_profile_titles:currency_eur.message");
+      case "USD":
+        return this.t("settings:currency_usd.message");
       default:
-          return this.t("settings:currency_usd.message");
+        return this.t("settings:currency_usd.message");
     }
   }
 
@@ -362,7 +367,11 @@ class Wallet extends Component {
                   </MYWallet>
                   <SearchCoin>
                     <Inputsearch
-                      placeholder={this.t("search_text.message")+" "+this.t("coins_text_subhead.message")}
+                      placeholder={
+                        this.t("search_text.message") +
+                        " " +
+                        this.t("coins_text_subhead.message")
+                      }
                       onChange={value =>
                         this.searchChangeWallet(value, "active_wallet")
                       }
@@ -370,7 +379,7 @@ class Wallet extends Component {
                     />
                   </SearchCoin>
                   <Total>
-                    <Tot>{this.t('conversion:total_text.message')}:</Tot>
+                    <Tot>{this.t("conversion:total_text.message")}:</Tot>
                     {/* {console.log(this.state.total)} */}
                     <Money>
                       {FIAT !== "USD"
@@ -429,11 +438,15 @@ class Wallet extends Component {
               <ContainerContact2>
                 <HeaderWrap2 className="head_of_wallet">
                   <MYWallet>
-                    <span>{this.t("general_2:wallet_available_coin.message")}</span>
+                    <span>
+                      {this.t("general_2:wallet_available_coin.message")}
+                    </span>
                   </MYWallet>
                   <SearchCoin2>
                     <Inputsearch
-                      placeholder={this.t('general_2:wallet_search_tokens.message')}
+                      placeholder={this.t(
+                        "general_2:wallet_search_tokens.message"
+                      )}
                       onChange={value =>
                         this.searchChangeCoins(value, "all_assets")
                       }
@@ -476,11 +489,16 @@ class Wallet extends Component {
               <ContainerContact2>
                 <HeaderWrap2 className="head_of_wallet">
                   <MYWallet>
-                    <span>{this.t("general_2:wallet_available_erc20_token.message")})</span>
+                    <span>
+                      {this.t("general_2:wallet_available_erc20_token.message")}
+                      )
+                    </span>
                   </MYWallet>
                   <SearchCoin2>
                     <Inputsearch
-                      placeholder={this.t('general_2:wallet_search_tokens.message')}
+                      placeholder={this.t(
+                        "general_2:wallet_search_tokens.message"
+                      )}
                       onChange={value =>
                         this.searchChangeCoins(value, "all_erc_tokens")
                       }
@@ -521,11 +539,15 @@ class Wallet extends Component {
               <ContainerContact2>
                 <HeaderWrap2 className="head_of_wallet">
                   <MYWallet>
-                    <span>{this.t("general_2:wallet_deactive_coin.message")}</span>
+                    <span>
+                      {this.t("general_2:wallet_deactive_coin.message")}
+                    </span>
                   </MYWallet>
                   <SearchCoin2>
                     <Inputsearch
-                      placeholder={this.t("general_2:wallet_search_coin.message")}
+                      placeholder={this.t(
+                        "general_2:wallet_search_coin.message"
+                      )}
                       onChange={value =>
                         this.searchChangeWallet(value, "deactive_wallet")
                       }
@@ -597,6 +619,11 @@ const mapDispatchToProps = dispatch => ({
   getAllCoins: (isLoggedIn, currency) =>
     dispatch(getAllCoins(isLoggedIn, currency))
 });
-export default translate(["wallet","header","conversion","general_2","setting","edit_profile_titles"])(
-  connect(mapStateToProps, mapDispatchToProps)(Wallet)
-);
+export default translate([
+  "wallet",
+  "header",
+  "conversion",
+  "general_2",
+  "setting",
+  "edit_profile_titles"
+])(connect(mapStateToProps, mapDispatchToProps)(Wallet));

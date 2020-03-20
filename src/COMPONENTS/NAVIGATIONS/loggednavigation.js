@@ -17,6 +17,7 @@ import CompleteKYC from "SHARED-COMPONENTS/CompleteKYC";
 import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
 import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
 import { langAction } from "../../ACTIONS/authActions";
+import CompleteProfile from "../../SHARED-COMPONENTS/completeProfile";
 // import { DropMenu, SubMenuNav } from "./navigation";
 
 /* CONSTANTS */
@@ -111,6 +112,9 @@ const Headermain = styled(Header)`
   height: 80px;
   display: flex;
   align-items: center;
+  & .color_important {
+    color: black !important;
+  }
 `;
 const Menumain = styled(Menu)`
   display: inline-block;
@@ -343,6 +347,7 @@ class LoggedNavigation extends Component {
       selected: "",
       countryAccess: false,
       completeKYC: false,
+      completeProfile: false,
       panicEnabled: false,
       panic_status: false
       // langValue: this.props.language
@@ -350,6 +355,7 @@ class LoggedNavigation extends Component {
     // this.tradeAccess = this.tradeAccess.bind(this);
     this.cryptoAccess = this.cryptoAccess.bind(this);
     this.simplexAccess = this.simplexAccess.bind(this);
+    this.walletAccess = this.walletAccess.bind(this);
     this.tokenAccess = this.tokenAccess.bind(this);
     this.panicStatus = this.panicStatus.bind(this);
   }
@@ -526,7 +532,7 @@ class LoggedNavigation extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
@@ -583,6 +589,14 @@ class LoggedNavigation extends Component {
       }
     }
   }
+  walletAccess() {
+    if (this.props.profileDetails.is_user_updated) {
+      if (this.props.location.pathname !== "/wallet")
+        this.props.history.push("/wallet");
+    } else {
+      this.setState({ completeProfile: true });
+    }
+  }
   simplexAccess() {
     // console.log(
     //   "^^^^",
@@ -608,6 +622,11 @@ class LoggedNavigation extends Component {
           this.props.profileDetails.is_kyc_done !== 2
         ) {
           // alert("ELSE IF");
+          this.setState({ completeKYC: true });
+        } else if (
+          this.props.profileDetails.is_allowed === true &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
           this.setState({ completeKYC: true });
         } else {
           // alert("ELSE ELSE");
@@ -677,7 +696,6 @@ class LoggedNavigation extends Component {
       "/editProfile",
       "/careers"
     ];
-    debugger;
     // remove queryParams in case of found from list else reload component.
     if (lngQueryParamsUrls.indexOf(window.location.pathname) != -1) {
       window.location.href = window.location.pathname;
@@ -859,9 +877,17 @@ class LoggedNavigation extends Component {
           </Menuitem>
           {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
           <Menuitem key="4">
-            <NavLink className="Nav_selected" to="/wallet">
+            <a
+              className="color_important"
+              // to="/wallet"
+              onClick={this.walletAccess}
+            >
               {t("navbar_menu_wallet.message")}
-            </NavLink>
+            </a>
+
+            {/* <NavLink className="Nav_selected" to="/wallet">
+              {t("navbar_menu_wallet.message")}
+            </NavLink> */}
           </Menuitem>
           <Menuitem key="5">
             <DropDownDiv
@@ -982,8 +1008,10 @@ class LoggedNavigation extends Component {
               <Link to="/trade">Trade</Link>
             </span> */}
             <span>
-              {" "}
-              <Link to="/wallet">{t("navbar_menu_wallet.message")}</Link>
+              {/* <Link to="/wallet">{t("navbar_menu_wallet.message")}</Link> */}
+              <a onClick={this.walletAccess}>
+                {t("navbar_menu_wallet.message")}
+              </a>
             </span>
             <a className="DROPSUB">
               <DropMenu mode="inline">
@@ -1042,11 +1070,9 @@ class LoggedNavigation extends Component {
                 </SubMenuNav>
               </DropMenu>
             </a>
-            <span>
-              <CarLink to="/careers">
-                {t("navbar_menu_careers.message")}
-              </CarLink>
-            </span>
+            {/* <span>
+              <CarLink to="/careers">Careers</CarLink>
+            </span> */}
             <a className="DROP">
               <DropMenu mode="inline">
                 <SubMenuNav
@@ -1211,6 +1237,10 @@ class LoggedNavigation extends Component {
         <PanicEnabled
           comingCancel={e => this.comingCancel(e)}
           visible={this.state.panicEnabled}
+        />
+        <CompleteProfile
+          comingCancel={e => this.comingCancel(e)}
+          visible={this.state.completeProfile}
         />
       </Headermain>
     );
