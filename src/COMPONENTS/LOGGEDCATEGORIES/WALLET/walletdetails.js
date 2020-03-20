@@ -778,7 +778,7 @@ class WalletDetails extends Component {
                         {walletUserData.coin_name}.
                       </p>
                       <WalletCreateButton onClick={this._walletCreate}>
-                        {this.t("header:wallet_details_create_text")}{" "}
+                        {this.t("header:wallet_details_create_text.message")}{" "}
                         {walletUserData.coin_name}{" "}
                         {this.t("header:navbar_menu_wallet.message")}
                       </WalletCreateButton>
