@@ -59,6 +59,7 @@ const ColLeft = styled(Col)`
   }
 `;
 const ColRight = styled(Col)`
+  overflow: hidden;
   min-height: 100%;
   @media (max-width: 991px) {
     height: auto;
@@ -111,6 +112,9 @@ const FormWrap = styled.div`
 `;
 const RightWrap = styled.div`
   width: 100%;
+  overflow: auto;
+  height: 100vh;
+  padding: 30px 0;
   @media (max-width: 991px) {
     height: auto;
   }
@@ -138,6 +142,7 @@ const SubText = styled.span`
   font-family: "Open Sans";
   color: rgb(163, 163, 163);
   display: block;
+  max-width: 90%;
   @media (max-width: 478px) {
     text-align: left;
   }
@@ -195,6 +200,10 @@ class ProfileBackup extends Component {
       this.setState({ loader: true });
       fetch(API_URL + "/users/resend-email", {
         method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"]
+        },
         body: JSON.stringify(this.state.fields)
       })
         .then(response => response.json())
@@ -363,6 +372,10 @@ class ProfileBackup extends Component {
       this.setState({ loader: true });
       fetch(API_URL + "/users/forgot-twofactors", {
         method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"]
+        },
         body: dataForm
       })
         .then(response => response.json())
@@ -431,6 +444,22 @@ class ProfileBackup extends Component {
               <RightWrap className="wow fadeInDown">
                 <LoginHead>{this.t("upload_image_text.message")}</LoginHead>
                 <SubText>{this.t("image_note_text.message")}</SubText>
+                <SubText>
+                  <b>{this.t("general_4:idcp_text_1.message")}</b>
+                  <p>{this.t("general_4:idcp_text_2.message")}</p>
+                  <p>{this.t("general_4:idcp_text_3.message")}</p>
+                  <p>
+                    {this.t("identity_verification:step_1_no.message")}.{" "}
+                    {this.t("general_4:idcp_text_id_require.message")}
+                    <p>{this.t("general_4:idcp_text_id_brief.message")}</p>
+                  </p>
+                  <p>
+                    {this.t("identity_verification:step_2_no.message")}.{" "}
+                    {this.t("general_4:idcp_text_note_require.message")}
+                    <p>{this.t("general_4:idcp_text_note_brief.message")}</p>
+                  </p>
+                </SubText>
+
                 <SubSmallText>
                   {this.t("image_note1_text.message")}
                 </SubSmallText>
@@ -458,7 +487,9 @@ class ProfileBackup extends Component {
                       <PlusDup className="plus">
                         <Icon type={this.state.icon1} theme="outlined" />
                       </PlusDup>
-                      <PlustextDup className="text">Upload</PlustextDup>
+                      <PlustextDup className="text">
+                        {this.t("general_4:upload_text.message")}
+                      </PlustextDup>
                     </ButtonUpDup>
                     <Fileinput
                       onChange={this.handleProfile}
@@ -494,5 +525,7 @@ export default translate([
   "login_page",
   "validations",
   "general_1",
-  "settings"
+  "settings",
+  "general_4",
+  "identity_verification"
 ])(withRouter(connect(mapStateToProps, null)(ProfileBackup)));

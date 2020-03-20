@@ -144,6 +144,7 @@ class ContactUs extends Component {
     fetch(API_URL + "/get-contact-details", {
       method: "get",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"], 
         "Content-Type": "application/json"
       }
     })
@@ -193,6 +194,7 @@ class ContactUs extends Component {
       fetch(API_URL + "/send-inquiry", {
         method: "post",
         headers: {
+          "Accept-Language": localStorage["i18nextLng"], 
           "Content-Type": "application/json"
         },
         body: JSON.stringify(this.state.fields)

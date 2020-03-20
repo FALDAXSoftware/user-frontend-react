@@ -101,6 +101,7 @@ class ComingSoon extends Component {
       fetch(globalVariables.API_URL + "/users/email-subscription", {
         method: "post",
         headers: {
+          "Accept-Language": localStorage["i18nextLng"],
           Accept: "application/json",
           "Content-Type": "application/json"
         },

@@ -231,7 +231,7 @@ const Forgot = styled.a`
   }
 `;
 const ButtonLogin = styled(Button)`
-  width: 110px;
+  min-width: 120px;
   background-color: rgb(0, 170, 250);
   color: white;
   margin-top: 50px;
@@ -710,7 +710,8 @@ class Login_Form extends Component {
     fetch(API_URL + "/users/verify-new-ip", {
       method: "post",
       headers: {
-        Authorization: "Bearer " + this.propsisLoggedIn
+        Authorization: "Bearer " + this.propsisLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: JSON.stringify(queryObj)
     })
@@ -759,7 +760,8 @@ class Login_Form extends Component {
     fetch(API_URL + "/users/verify-user", {
       method: "post",
       headers: {
-        Authorization: "Bearer " + this.propsisLoggedIn
+        Authorization: "Bearer " + this.propsisLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: JSON.stringify(queryObj)
     })
@@ -796,7 +798,8 @@ class Login_Form extends Component {
     fetch(API_URL + "/users/verify-new-email", {
       method: "post",
       headers: {
-        Authorization: "Bearer " + this.propsisLoggedIn
+        Authorization: "Bearer " + this.propsisLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: JSON.stringify(queryObj)
     })

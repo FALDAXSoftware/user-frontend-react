@@ -257,6 +257,7 @@ class ChangeEmail extends Component {
         method: "post",
         headers: {
           Accept: "application/json",
+          "Accept-Language": localStorage["i18nextLng"], 
           "Content-Type": "application/json",
           Authorization: "Bearer " + this.props.isLoggedIn
         },
@@ -310,6 +311,7 @@ class ChangeEmail extends Component {
         method: "post",
         headers: {
           Accept: "application/json",
+          "Accept-Language": localStorage["i18nextLng"], 
           "Content-Type": "application/json",
           Authorization: "Bearer " + this.props.isLoggedIn
         },

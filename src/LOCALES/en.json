@@ -2042,7 +2042,7 @@
     },
     "two_factor_authentication_subhead": {
       "page": "Edit Profile > Security > Regenerate Backup code",
-      "message": "Please SAVE this backup code. It will be required to change your Two-Factor Authentication in the future if you no longer have the device you orginally associated with your 2FA.  ",
+      "message": "Please SAVE this backup code. It will be required to change your Two-Factor Authentication in the future if you no longer have the device you orginally associated with your 2FA.",
       "message_type": "Web content",
       "context": "Two Factor Authentication sub text"
     },
@@ -2552,7 +2552,7 @@
     },
     "last_name_error": {
       "page": "Signup",
-      "message": "First Name must be at least 2 characters in length. No special characters are permitted.",
+      "message": "Last Name must be at least 2 characters in length. No special characters are permitted.",
       "message_type": "Web content",
       "context": "last name error text"
     },
@@ -2833,6 +2833,86 @@
       "message": "Thank you for your understanding.",
       "message_type": "Web content",
       "context": "Complete Profile pop up subtext"
+    },
+    "passport_picture_text": {
+      "page": "Upload KYC",
+      "message": "Passport Picture",
+      "message_type": "Web content",
+      "context": "Upload Passport"
+    }
+  },
+  "general_4": {
+    "idcp_text_1": {
+      "page": "Profile Backup",
+      "message": "ID confirmation photo (IDCP) instructions",
+      "message_type": "Web content",
+      "context": "profile backup clarity text"
+    },
+    "idcp_text_2": {
+      "page": "Profile Backup",
+      "message": "An ID confirmation photo (IDCP) is a photo of you, the account holder, holding your ID document and a handwritten note next to your face.",
+      "message_type": "Web content",
+      "context": "profile backup clarity text"
+    },
+    "idcp_text_3": {
+      "page": "Profile Backup",
+      "message": "Below is a checklist for producing a proper IDCP that can be accepted by our verification team:",
+      "message_type": "Web content",
+      "context": "profile backup clarity text"
+    },
+    "idcp_text_id_require": {
+      "page": "Profile Backup",
+      "message": "ID requirements",
+      "message_type": "Web content",
+      "context": "profile backup clarity text"
+    },
+    "idcp_text_note_require": {
+      "page": "Profile Backup",
+      "message": "Note requirements",
+      "message_type": "Web content",
+      "context": "profile backup clarity text"
+    },
+    "idcp_text_id_brief": {
+      "page": "Profile Backup",
+      "message": "The ID you're holding must be the same ID used for KYC verification. The details on the ID in the photo must be readable. They cannot be blurry or out of focus.",
+      "message_type": "Web content",
+      "context": "profile backup clarity text"
+    },
+    "idcp_text_note_brief": {
+      "page": "Profile Backup",
+      "message": "The handwritten note must say 'only for trading digital currency on www.faldax.com' and include: the current date your signature Pay close attention when writing the handwritten note! If even one word is different in the note, the IDCP may not be accepted.",
+      "message_type": "Web content",
+      "context": "profile backup clarity text"
+    },
+    "change_to_day_text": {
+      "page": "Header",
+      "message": "Change to Day Mode",
+      "message_type": "Web content",
+      "context": "Change to Day Mode text"
+    },
+    "change_to_night_text": {
+      "page": "Header",
+      "message": "Change to Night Mode",
+      "message_type": "Web content",
+      "context": "Change to Night Mode text"
+    },
+    "upload_text": {
+      "page": "Header",
+      "message": "Upload",
+      "message_type": "Web content",
+      "context": "Upload text"
+    },
+    "upload_ssn_require": {
+      "page": "Identity Verification",
+      "message": "Please enter Social Security Number.",
+      "message_type": "Web content",
+      "context": "SSN validation text"
+    },
+    "upload_ssn_invalid": {
+      "page": "Identity Verification",
+      "message": "Enter a valid SSN number.",
+      "message_type": "Web content",
+      "context": "SSN valid text"
     }
   }
 }

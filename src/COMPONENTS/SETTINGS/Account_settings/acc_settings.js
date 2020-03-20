@@ -168,7 +168,7 @@ class Acc_settings extends Component {
         }
       },
       gttoday: {
-        message: this.t("valiadtions:invalid_end_date_error.message"),
+        message: this.t("validations:invalid_end_date_error.message"),
         rule: val => {
           var a = moment();
           var b = moment(val);
@@ -335,6 +335,7 @@ class Acc_settings extends Component {
     fetch(API_URL + `/get-notification-list`, {
       method: "get",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn,
         "Accept-Language": localStorage["i18nextLng"]
       }
@@ -372,6 +373,7 @@ class Acc_settings extends Component {
     fetch(API_URL + `/update-notification-list`, {
       method: "post",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn,
         "Content-Type": "application/json"
       },
@@ -410,6 +412,7 @@ class Acc_settings extends Component {
     fetch(API_URL + `/users/get-whitelist-ip?page=${pageIp}&limit=${10}`, {
       method: "get",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
@@ -450,6 +453,7 @@ class Acc_settings extends Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"],
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify(value)
@@ -512,6 +516,7 @@ class Acc_settings extends Component {
     fetch(API_URL + `/users/login-history?page=${curr}&limit=9`, {
       method: "get",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
@@ -664,6 +669,7 @@ class Acc_settings extends Component {
     fetch(API_URL + `/users/add-whitelist-ip`, {
       method: "post",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       },
       body: JSON.stringify(fields)
@@ -723,6 +729,7 @@ class Acc_settings extends Component {
     fetch(API_URL + `/users/add-whitelist-ip`, {
       method: "post",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       },
       body: JSON.stringify(values)
@@ -801,6 +808,7 @@ class Acc_settings extends Component {
     fetch(API_URL + `/users/delete-whitelist-ip`, {
       method: "delete",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       },
       body: JSON.stringify({ id: src.id })
@@ -852,6 +860,7 @@ class Acc_settings extends Component {
     fetch(API_URL + `/users/security-feature-status-change`, {
       method: "post",
       headers: {
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       },
       body: JSON.stringify({
@@ -907,6 +916,7 @@ class Acc_settings extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
