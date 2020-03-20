@@ -2,12 +2,12 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
-import styled from 'styled-components';
+import styled, { consolidateStreamedStyles } from 'styled-components';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Spin } from 'antd';
 
 /*Components  */
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 
 /* STYLED-COMPONENTS */
 import { BuyTable, BBC, TotalBTC, HistoryWrap1, TableHeader, TableContent, ScrollTableContent } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
@@ -102,6 +102,7 @@ class BuyTABLE extends Component {
             }
         }, (body, JWR) => {
             if (body.status === 200) {
+                console.log(body.data, body);
                 let res = body.data;
                 this.updateData(res);
             }
@@ -175,14 +176,15 @@ class BuyTABLE extends Component {
         let self = this;
         // console.log("buyrow------------", data);
         const row = [];
+        var value = [];
         let sum = 0;
         for (let index = 0; index < data.length; index++) {
             const element = data[index];
             let isAdded = false;
             element["my_size"] = 0;
-            if (element.user_id === self.props.profileDetails.id) {
-                element["my_size"] = element.quantity;
-            }
+            // if (element.user_id === self.props.profileDetails.id) {
+            //     element["my_size"] = element.quantity;
+            // }
 
             for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
                 const internalElement = row[internalIndex];
@@ -190,16 +192,38 @@ class BuyTABLE extends Component {
                     row[internalIndex].amount += element.quantity;
                     // console.log(element, internalElement);
 
-                    if (internalElement.user_id === self.props.profileDetails.id) {
-                        row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
-                    }
+                    // if (internalElement.user_id === self.props.profileDetails.id) {
+                    // row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
+                    // }
                     isAdded = true;
                     break;
                 }
             }
+            element.my_size = 0;
+            for (let tempIndex = 0; tempIndex < data.length; tempIndex++) {
+                if (value.includes(element.price)) {
+                    if (element.price == data[tempIndex].price) {
+                        if (data[tempIndex].user_id == self.props.profileDetails.id) {
+                            element.my_size = value.my_size + data[tempIndex].quantity;
+                        }
+                    }
+                    value.my_size = element.my_size
+                } else {
+                    value.push(element.price);
+                    if (element.price == data[tempIndex].price) {
+                        if (data[tempIndex].user_id == self.props.profileDetails.id) {
+                            element.my_size = element.my_size + data[tempIndex].quantity;
+                        }
+                    }
+                    value.my_size = element.my_size
+                }
+                // value.push(element.price)
+
+            }
+            console.log(element)
             if (!isAdded) {
                 row.push({
-                    my_size: 0,
+                    my_size: element.my_size,
                     amount: element.quantity,
                     bid: element.price,
                     user_id: element.user_id
@@ -228,7 +252,7 @@ class BuyTABLE extends Component {
         return (
             <div>
                 <BBC>BUYING {this.props.crypto}</BBC>
-                <TotalBTC>Total: {this.state.lastsum && this.state.lastsum.toFixed(4)} {this.state.currency}</TotalBTC>
+                <TotalBTC>Total: {this.state.lastsum && this.state.lastsum.toFixed(8)} {this.state.currency}</TotalBTC>
                 <BuyTable>
                     <HistoryWrap1>
                         <OTwrap2>
@@ -257,9 +281,9 @@ class BuyTABLE extends Component {
                                                 {this.state.result.map(element => (
                                                     <tr>
                                                         <td>{element.my_size}</td>
-                                                        <td>{element.amount.toFixed(4)}</td>
-                                                        <td>{element.bid}</td>
-                                                        <td>{element.total.toFixed(4)}</td>
+                                                        <td>{element.amount.toFixed(3)}</td>
+                                                        <td>{element.bid.toFixed(5)}</td>
+                                                        <td>{element.total.toFixed(8)}</td>
                                                     </tr>
                                                 ))
                                                 }

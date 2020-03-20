@@ -1,17 +1,22 @@
-export default (state = {
-  theme:false
-}, action) => {
-    switch (action.type) {
+import { LANG_DATA } from "../REDUX/actionTypes";
 
-        case "FALDAXTHEME":
-        return {
-          ...state,
-          theme: action.payload
-        }  
-
-        default:
-        /* console.log("default") */
-        return { ...state };
+export default (
+  state = {
+    theme: false,
+    lang: "en"
+  },
+  action
+) => {
+  switch (action.type) {
+    case "FALDAXTHEME":
+      return {
+        ...state,
+        theme: action.payload
+      };
+    case LANG_DATA:
+      return { ...state, lang: action.payload };
+    default:
+      /* console.log("default") */
+      return { ...state };
   }
-
-}
+};

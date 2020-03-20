@@ -10,7 +10,7 @@ import {
     RightMedia, TextWrap, LeftRow, RightRow, LTDiv, ColWrapR, ColWrapL, LLDiv, MediaUL,
     MediaLI, MediaSpan, MediaP, BlueTag, BlueTagP
 } from 'STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle';
-import { globalVariables } from "Globals";
+import { globalVariables } from "Globals.js";
 import {
     _MEDIACONTACTICON, _MEDIAWHITE, _MEDIAFB, _MEDIALINKEDIN, _MEDIATWEETER, _MEDIADISCORD
 } from "CONSTANTS/images";
