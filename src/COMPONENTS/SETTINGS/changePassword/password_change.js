@@ -746,14 +746,18 @@ class PasswordChange extends Component {
           method: "post",
           headers: {
             "Content-Type": "application/json",
-            "Accept-Language": localStorage["i18nextLng"], 
+            "Accept-Language": localStorage["i18nextLng"],
             Authorization: "Bearer " + this.props.isLoggedIn
           },
           body: JSON.stringify({ otp: otp })
         })
       ).json();
       if (response.status == 200) {
-        this.openNotificationWithIcon("success", "Success", response.message);
+        this.openNotificationWithIcon(
+          "success",
+          this.t("validations:success_text.message"),
+          response.message
+        );
         this.setState({
           showTFAModalOtp: false,
           is_twofactor: "ENABLE",
@@ -764,12 +768,12 @@ class PasswordChange extends Component {
       } else {
         this.openNotificationWithIcon(
           "error",
-          "Error",
+          this.t("validations:error_text.message"),
           response.message ? response.message : response.error
         );
       }
     } catch (error) {
-      console.log("Error", error);
+      console.log(this.t("validations:error_text.message"), error);
     } finally {
       this.props.hideLoader();
     }
@@ -782,7 +786,10 @@ class PasswordChange extends Component {
       } else {
         this.disable2FA(otp);
       }
-    } else this.props.TF_Enable(this.props.isLoggedIn);
+    } else {
+      this.setState({ showTFAModalOtp: false });
+      this.props.TF_Enable(this.props.isLoggedIn);
+    }
   }
 
   /* 
@@ -1041,7 +1048,7 @@ class PasswordChange extends Component {
                 <NewButton onClick={() => this.TF_AUTH()}>
                   {(this.state.is_twofactor === "DISABLE"
                     ? t("general_1:disable_text.message")
-                    : t("general_1:enable_text.message")) +
+                    : t("enable_btn.message")) +
                     " " +
                     t("general_1:authenticator_text.message")}
                   {/* <NewButton onClick={()=>this.TF_AUTH()}>
