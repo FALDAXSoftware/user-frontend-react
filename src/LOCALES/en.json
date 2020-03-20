@@ -2532,7 +2532,7 @@
     },
     "complete_profile_text": {
       "page": "Complete profile Popup",
-      "message": "Before proceeding to identity verification please complete your profile",
+      "message": "In accordance with our legal policy, you must complete complete the 'Personal Details' page of your profile before creating a wallet.",
       "message_type": "Web content",
       "context": "Complete Profile text"
     }
