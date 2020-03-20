@@ -147,6 +147,9 @@ export const DeleteHead = styled.div`
 export const DeleteDesc = styled.div`
   margin-top: 30px;
   display: flex;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
   justify-content: center;
   color: ${props => (props.theme.mode === "dark" ? "#3c4b64" : "")};
   @media (min-width: 1980px) {

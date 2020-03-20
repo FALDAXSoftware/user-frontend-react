@@ -5,6 +5,11 @@ import { connect } from "react-redux";
 import { Row, Col, Input, notification, Progress } from "antd";
 import styled from "styled-components";
 import { createForm, formShape } from "rc-form";
+import {
+  removeLoader,
+  addLoader,
+  getProfileDataAction
+} from "ACTIONS/SETTINGS/settingActions";
 
 /* components */
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
@@ -12,6 +17,8 @@ import { _EYE, _ACTIVEEYE } from "CONSTANTS/images";
 import RegenerateBackupCode from "./regenerate_backup";
 import ChangeEmail from "./change_email";
 import TFAModal from "./twofactor_modal";
+import { translate } from "react-i18next";
+import TFAModalOTP from "../../../SHARED-COMPONENTS/TFAModal";
 
 /* STYLED-COMPONENTS */
 import { HeaderCol, Save } from "../Personaldetails/personal_details";
@@ -30,7 +37,9 @@ import {
   UserIconS,
   EmailReq
 } from "COMPONENTS/LANDING/USERFORMS/login_form";
+import { globalVariables } from "../../../Globals";
 const Wrapper = styled.div``;
+let { API_URL } = globalVariables;
 const ChangeRow = styled(Row)`
   &:after {
     content: "";
@@ -339,8 +348,10 @@ class PasswordChange extends Component {
       confPass: "",
       verify_otp: "",
       showModalTFA: false,
-      backupCodeTFA: ""
+      backupCodeTFA: "",
+      showTFAModalOtp: false
     };
+    this.t = this.props.t;
   }
   static propTypes = {
     form: formShape
@@ -363,13 +374,13 @@ class PasswordChange extends Component {
         this.setState({ percent: 0 });
         this.openNotificationWithIcon(
           "success",
-          "Change Password",
+          this.t("change_password_text.message"),
           props.passChange.message
         );
       } else {
         this.openNotificationWithIcon(
           "error",
-          "Change Password",
+          this.t("change_password_text.message"),
           props.passChange.err
         );
       }
@@ -380,7 +391,7 @@ class PasswordChange extends Component {
         // console.log(props.verifyOTP);
         this.openNotificationWithIcon(
           "success",
-          "Two-Factor Authentication",
+          this.t("head_change_two_factor_status.message"),
           props.verifyOTP.message
         );
         this.setState({
@@ -393,7 +404,7 @@ class PasswordChange extends Component {
       } else {
         this.openNotificationWithIcon(
           "error",
-          "Two-Factor Authentication",
+          this.t("head_change_two_factor_status.message"),
           props.verifyOTP.err
         );
       }
@@ -403,7 +414,7 @@ class PasswordChange extends Component {
       if (props.DisableTF.status === 200) {
         this.openNotificationWithIcon(
           "success",
-          "Two-Factor Authentication",
+          this.t("head_change_two_factor_status.message"),
           props.DisableTF.message
         );
         this.setState({
@@ -414,7 +425,7 @@ class PasswordChange extends Component {
       } else {
         this.openNotificationWithIcon(
           "error",
-          "Two-Factor Authentication",
+          this.t("head_change_two_factor_status.message"),
           props.DisableTF.err
         );
       }
@@ -469,6 +480,7 @@ class PasswordChange extends Component {
     */
 
   submit = () => {
+    const { t } = this.props;
     this.props.form.validateFields((error, value) => {
       if (
         error === null &&
@@ -490,20 +502,34 @@ class PasswordChange extends Component {
           value.current_password === null ||
           value.current_password === undefined
         ) {
-          this.setState({ current_msg: "Old password is required." }, () => {
-            document.querySelectorAll(".oldchange_msg")[0].style.display =
-              "block";
-          });
+          this.setState(
+            {
+              current_msg: `${t("subhead_title_old_password.message")} ${t(
+                "validations:field_is_required.message"
+              )}.`
+            },
+            () => {
+              document.querySelectorAll(".oldchange_msg")[0].style.display =
+                "block";
+            }
+          );
         }
         if (
           value.new_password === "" ||
           value.new_password === null ||
           value.new_password === undefined
         ) {
-          this.setState({ new_msg: "New password is required." }, () => {
-            document.querySelectorAll(".newchange_msg")[0].style.display =
-              "block";
-          });
+          this.setState(
+            {
+              new_msg: `${t("subhead_title_new_password.message")} ${t(
+                "validations:field_is_required.message"
+              )}.`
+            },
+            () => {
+              document.querySelectorAll(".newchange_msg")[0].style.display =
+                "block";
+            }
+          );
         }
         if (
           value.confirm_password === "" ||
@@ -511,14 +537,17 @@ class PasswordChange extends Component {
           value.confirm_password === undefined
         ) {
           this.setState(
-            { confirmPass_msg: "Confirm password is required." },
+            {
+              confirmPass_msg: `${t(
+                "general_1:subhead_title_confirm_password.message"
+              )} ${t("validations:field_is_required.message")}.`
+            },
             () => {
               document.querySelectorAll(".confirmchange_msg")[0].style.display =
                 "block";
             }
           );
         }
-        //this.openNotificationWithIcon('error', "Error", "Please complete all required details to continue.")
       }
     });
   };
@@ -527,38 +556,10 @@ class PasswordChange extends Component {
         Page: /editProfile --> Security
         It is called when any input is changed and handle it and also validate it.
     */
-
   onChangeField(value, field) {
-    // old password should not have validation except required.
-
-    // if (field==="current_password") {
-    //     var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-    //     var bool = re.test(value);
-    //     if (value !== "") {
-    //         if (bool===true) {
-    //             this.setState({ currentpassIcon: true, password: value })
-    //             document.querySelector("#passchange_icon_success").style.display = "inline-block"
-    //             document.querySelector("#passchange_icon_fail").style.display = "none"
-    //             document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
-    //         } else {
-    //             this.setState({ currentpassIcon: false })
-    //             document.querySelector("#passchange_icon_success").style.display = "none"
-    //             document.querySelector("#passchange_icon_fail").style.display = "inline-block"
-    //             document.querySelectorAll(".oldchange_msg")[0].style.display = "block";
-    //             this.setState({ current_msg: "You" })
-    //         }
-    //     } else {
-    //         this.setState({ currentpassIcon: false })
-    //         document.querySelector("#passchange_icon_success").style.display = "none"
-    //         document.querySelector("#passchange_icon_fail").style.display = "none"
-    //         document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
-    //     }
-    // }
+    const { t } = this.props;
     if (field === "current_password") {
-      //   alert("current");
       var regexp = /^[a-zA-Z0-9]*$/;
-      // console.log("value.trim()", regexp.test(value));
-
       if (value !== "") {
         document.querySelector("#passchange_icon_success").style.display =
           "none";
@@ -566,7 +567,11 @@ class PasswordChange extends Component {
         document.querySelectorAll(".oldchange_msg")[0].style.display = "none";
       } else {
         document.querySelectorAll(".oldchange_msg")[0].style.display = "block";
-        this.setState({ current_msg: "Old password is required." });
+        this.setState({
+          current_msg: `${t("subhead_title_old_password.message")} ${t(
+            "validations:field_is_required.message"
+          )}.`
+        });
       }
     } else if (field === "new_password") {
       password = value;
@@ -589,7 +594,11 @@ class PasswordChange extends Component {
             "none";
           document.querySelectorAll(".confirmchange_msg")[0].style.display =
             "block";
-          this.setState({ confirmPass_msg: "Password does not match." });
+          this.setState({
+            confirmPass_msg: this.t(
+              "validations:password_mismatch_error.message"
+            )
+          });
         } else {
           this.setState({ confirmIcon: true });
           document.querySelector("#confirmchange_icon_success").style.display =
@@ -598,24 +607,13 @@ class PasswordChange extends Component {
             "none";
           document.querySelectorAll(".confirmchange_msg")[0].style.display =
             "none";
-          //   alert("3");
-          // this.setState({ confirmIcon: false });
-          // document.querySelector("#confirmchange_icon_success").style.display =
-          //   "none";
-          // document.querySelector("#confirmchange_icon_fail").style.display =
-          //   "inline-block";
-          // document.querySelectorAll(".confirmchange_msg")[0].style.display =
-          //   "block";
-          // this.setState({ confirmPass_msg: "Password does not match." });
         }
       }
-      // var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%_])[A-Za-z\d!@#$%_]{8,60}$/;
       var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~])[A-Za-z\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]{8,60}$/;
       var bool = re.test(value);
       var numb = /^\d+$/,
         letters = /^[A-Za-z]+$/,
         alphanum = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
-      // alphanum = /^[a-zA-Z0-9]*$/;
       if (numb.test(value) || letters.test(value)) {
         this.setState({ stroke: "red", percent: 20 });
       }
@@ -658,7 +656,6 @@ class PasswordChange extends Component {
         } else {
           var regex = /\s/;
           let check = regex.test(value);
-          // console.log("asd", check, value);
           if (check) {
             this.setState({ newpassIcon: false });
             document.querySelector("#newchange_icon_success").style.display =
@@ -668,7 +665,7 @@ class PasswordChange extends Component {
             document.querySelectorAll(".newchange_msg")[0].style.display =
               "block";
             this.setState({
-              new_msg: "Your password must not contain any spaces."
+              new_msg: `${t("general_1:password_no_space_error.message")}`
             });
           } else {
             this.setState({ newpassIcon: false });
@@ -679,8 +676,7 @@ class PasswordChange extends Component {
             document.querySelectorAll(".newchange_msg")[0].style.display =
               "block";
             this.setState({
-              new_msg:
-                "Your password must contain at least one uppercase letter, one lowercase letter, one special character (!@#$%_), and one number. Minimum of 8 characters and a maximum of 60 characters."
+              new_msg: `${t("general_1:password_regex_error.message")}`
             });
           }
         }
@@ -691,9 +687,14 @@ class PasswordChange extends Component {
         document.querySelector("#newchange_icon_fail").style.display =
           "inline-block";
         document.querySelectorAll(".newchange_msg")[0].style.display = "block";
-        this.setState({ new_msg: "New password is required." });
+        this.setState({
+          new_msg: `${t("subhead_title_new_password.message")} ${t(
+            "validations:field_is_required.message"
+          )}.`
+        });
       }
     } else if (field === "confirm_password") {
+      //   alert("repeat");
       var boool = password === value ? true : false;
       if (value !== "") {
         this.setState({ confPass: value });
@@ -713,7 +714,11 @@ class PasswordChange extends Component {
             "inline-block";
           document.querySelectorAll(".confirmchange_msg")[0].style.display =
             "block";
-          this.setState({ confirmPass_msg: "Password does not match." });
+          this.setState({
+            confirmPass_msg: `${t(
+              "general_1:password_not_match_error.message"
+            )}`
+          });
         }
       } else {
         this.setState({ confirmIcon: false });
@@ -724,7 +729,7 @@ class PasswordChange extends Component {
         document.querySelectorAll(".confirmchange_msg")[0].style.display =
           "none";
       }
-      // console.log("no break");
+    } else {
     }
   }
 
@@ -733,18 +738,66 @@ class PasswordChange extends Component {
         It is called when Enable/Disable TFAUTH is clicked so to check if TF is enabled or not.
     */
 
-  TF_AUTH() {
+  disable2FA = async otp => {
+    try {
+      this.props.showLoader();
+      let response = await (
+        await fetch(API_URL + "/users/disable-two-factor", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept-Language": localStorage["i18nextLng"],
+            Authorization: "Bearer " + this.props.isLoggedIn
+          },
+          body: JSON.stringify({ otp: otp })
+        })
+      ).json();
+      if (response.status == 200) {
+        this.openNotificationWithIcon(
+          "success",
+          this.t("validations:success_text.message"),
+          response.message
+        );
+        this.setState({
+          showTFAModalOtp: false,
+          is_twofactor: "ENABLE",
+          isEnabled: "DISABLED",
+          show_QR: false
+        });
+        this.props.getProfileData(this.props.isLoggedIn);
+      } else {
+        this.openNotificationWithIcon(
+          "error",
+          this.t("validations:error_text.message"),
+          response.message ? response.message : response.error
+        );
+      }
+    } catch (error) {
+      console.log(this.t("validations:error_text.message"), error);
+    } finally {
+      this.props.hideLoader();
+    }
+  };
+
+  TF_AUTH(otp = undefined) {
     if (this.props.profileDetails.is_twofactor === true) {
-      this.props.TF_Disable(this.props.isLoggedIn);
-    } else this.props.TF_Enable(this.props.isLoggedIn);
+      if (!otp) {
+        this.setState({ showTFAModalOtp: true });
+      } else {
+        this.disable2FA(otp);
+      }
+    } else {
+      this.setState({ showTFAModalOtp: false });
+      this.props.TF_Enable(this.props.isLoggedIn);
+    }
   }
 
   /* 
         Page: /editProfile --> Security
         It is called when input field is changed and we can validate it. 
     */
-
   changeOTP(value, field) {
+    const { t } = this.props;
     if (field === "otp") {
       var re = /^[0-9]{6}$/;
       var bool = re.test(value);
@@ -760,8 +813,7 @@ class PasswordChange extends Component {
           document.querySelector("#otp_fail").style.display = "inline-block";
           document.querySelectorAll(".MSG_OTP")[0].style.display = "block";
           this.setState({
-            otp_msg:
-              "*Your Two-Factor Authentication code should be six digits.."
+            otp_msg: `*${t("validations:otp_error.message")}`
           });
         }
       } else {
@@ -769,7 +821,9 @@ class PasswordChange extends Component {
         document.querySelector("#otp_success").style.display = "none";
         document.querySelector("#otp_fail").style.display = "none";
         document.querySelectorAll(".MSG_OTP")[0].style.display = "block";
-        this.setState({ otp_msg: "*Otp is required." });
+        this.setState({
+          otp_msg: `*${t("general_1:otp_required_error.message")}`
+        });
       }
     }
   }
@@ -778,7 +832,6 @@ class PasswordChange extends Component {
         Page: /editProfile --> Security
         It is called when input field is changed and we can validate it. 
     */
-
   OTPfield(e) {
     this.setState({ verify_otp: e.target.value });
     this.changeOTP(e.target.value, "otp");
@@ -788,7 +841,6 @@ class PasswordChange extends Component {
         Page: /editProfile --> Security
         It is called when after entering OTP,we click on ENABLE and API is called to Enable the Two-Factor. 
     */
-
   finalEnable() {
     let value = {};
     value["otp"] = this.state.verify_otp;
@@ -801,7 +853,6 @@ class PasswordChange extends Component {
         Page: /editProfile --> Security
         It is called for cutom notifications.
     */
-
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
@@ -817,13 +868,15 @@ class PasswordChange extends Component {
   render() {
     var me = this;
     const { getFieldProps } = this.props.form;
+    const { t } = this.props;
     const {
       isEnabled,
       typeEye,
       newEye,
       current_msg,
       percent,
-      repeatEye
+      repeatEye,
+      showTFAModalOtp
     } = this.state;
 
     return (
@@ -831,13 +884,13 @@ class PasswordChange extends Component {
         <Row>
           <Col span={6} />
           <HeaderCol span={12}>
-            <span>Change Your Password</span>
+            <span>{t("head_change_password.message")}</span>
           </HeaderCol>
         </Row>
         <ChangeRow>
           <ChangeCol>
             <Old>
-              <OldLabel>Old Password*</OldLabel>
+              <OldLabel>{t("subhead_title_old_password.message")}*</OldLabel>
               <div>
                 <OldInput
                   type={typeEye}
@@ -874,7 +927,7 @@ class PasswordChange extends Component {
               <Passreq className="oldchange_msg">{current_msg}</Passreq>
             </Old>
             <NewP>
-              <Newlabel>New Password*</Newlabel>
+              <Newlabel>{t("subhead_title_new_password.message")}*</Newlabel>
               <div>
                 <NewInput
                   type={newEye}
@@ -917,7 +970,9 @@ class PasswordChange extends Component {
               />
             </NewP>
             <Repeat>
-              <Repeatlabel>Re-Enter New Password*</Repeatlabel>
+              <Repeatlabel>
+                {t("subhead_title_re_enter_new_password.message")}*
+              </Repeatlabel>
               <div>
                 <RepeatInput
                   type={repeatEye}
@@ -926,7 +981,7 @@ class PasswordChange extends Component {
                       me.onChangeField(e.target.value, "confirm_password");
                     }, // have to write original onChange here if you need
                     rules: [
-                      { type: "string", required: true, whitespace: false }
+                      { type: "string", required: true, whitespace: true }
                     ]
                   })}
                 />
@@ -957,16 +1012,11 @@ class PasswordChange extends Component {
               <Passreq className="confirmchange_msg">
                 {this.state.confirmPass_msg}
               </Passreq>
-
-              {/* <Progressbar
-                type="line"
-                size="small"
-                percent={percent}
-                strokeColor={this.state.stroke}
-              /> */}
             </Repeat>
             <Buttondiv>
-              <NewButton onClick={this.submit}>Save New Password</NewButton>
+              <NewButton onClick={this.submit}>
+                {t("save_new_password_btn.message")}
+              </NewButton>
             </Buttondiv>
           </ChangeCol>
         </ChangeRow>
@@ -977,37 +1027,35 @@ class PasswordChange extends Component {
         <ChangeRow className="two_factor_no_border">
           <TwofactorRow>
             <TFCol>
-              <HeadTF>Two-Factor Authentication</HeadTF>
+              <HeadTF>{t("head_change_two_factor_status.message")}</HeadTF>
               <IsEnabled>
                 {" "}
-                Status:
+                {t("title_status.message")}:
                 {isEnabled === "DISABLED" ? (
-                  <RedSpan> {isEnabled}</RedSpan>
+                  <RedSpan> {t("general_1:disabled_text.message")}</RedSpan>
                 ) : (
-                  <GreenSpan> {isEnabled}</GreenSpan>
+                  <GreenSpan> {t("general_1:enabled_text.message")}</GreenSpan>
                 )}
               </IsEnabled>
               <Headtext>
                 {isEnabled === "DISABLED" ? (
-                  <span>
-                    Two-Factor Authentication significantly increases the
-                    security of your account. We highly recommend that you
-                    enable it.{" "}
-                  </span>
+                  <span>{t("two_factor_text1.message")} </span>
                 ) : (
-                  <span>
-                    Way to go! You care about your security as much as we do.
-                    Thank you for enabling Two-Factor Authentication!
-                  </span>
+                  <span>{t("two_factor_text2.message")}</span>
                 )}
               </Headtext>
               <Buttondiv>
-                <NewButton onClick={this.TF_AUTH.bind(this)}>
+                <NewButton onClick={() => this.TF_AUTH()}>
+                  {(this.state.is_twofactor === "DISABLE"
+                    ? t("general_1:disable_text.message")
+                    : t("enable_btn.message")) +
+                    " " +
+                    t("general_1:authenticator_text.message")}
+                  {/* <NewButton onClick={()=>this.TF_AUTH()}>
                   {" "}
-                  {`${this.state.is_twofactor} AUTHENTICATOR`}
+                  {`${this.state.is_twofactor} AUTHENTICATOR`} */}
                 </NewButton>
               </Buttondiv>
-              {/* {console.log("Password Change", this.state.backupCodeTFA)} */}
               <TFAModal
                 visible={this.state.showModalTFA}
                 TFAModalCancel={() => this.TFAModalCancel()}
@@ -1015,7 +1063,6 @@ class PasswordChange extends Component {
               />
             </TFCol>
           </TwofactorRow>
-
           {this.state.show_QR === true ? (
             <BarRow>
               <LeftCol sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>
@@ -1023,28 +1070,19 @@ class PasswordChange extends Component {
                   <Barcode src={this.state.QR_img} />
                 </ImageWrap>
                 <Keywrap>
-                  <Keytext>16 Digit Key</Keytext>
+                  <Keytext>{t("two_factor_text3.message")}</Keytext>
                   <Key>{this.state.Key}</Key>
                 </Keywrap>
               </LeftCol>
               <RightCol sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 12 }}>
                 <Orderlist>
-                  <LI>
-                    Install an authenticator app on your mobile device. We
-                    suggest Google Authenticator.{" "}
-                  </LI>
-                  <LI>Scan the QR code when prompted by your Authenticator.</LI>
-                  <LI>
-                    In case your phone gets stolen or erased, you will need this
-                    code to link FALDAX with a new app.
-                  </LI>
-                  <LI>
-                    Do not share the code with anyone. FALDAX will never ask you
-                    for this code.
-                  </LI>
+                  <LI>{t("two_factor_text_point1.message")} </LI>
+                  <LI>{t("two_factor_text_point2.message")}</LI>
+                  <LI>{t("two_factor_text_point3.message")}</LI>
+                  <LI>{t("two_factor_text_point4.message")}</LI>
                 </Orderlist>
                 <TFcode>
-                  <TFlabel>Enter your two-factor code here:</TFlabel>
+                  <TFlabel>{t("subhead_title_enter_code.message")}:</TFlabel>
                   <div>
                     <TFinput onChange={this.OTPfield.bind(this)} />
                     <UserIconS
@@ -1064,7 +1102,7 @@ class PasswordChange extends Component {
                 </TFcode>
                 <Enable>
                   <Ebutton onClick={this.finalEnable.bind(this)}>
-                    ENABLE
+                    {t("enable_btn.message")}
                   </Ebutton>
                 </Enable>
               </RightCol>
@@ -1076,6 +1114,11 @@ class PasswordChange extends Component {
         {/* {console.log(isEnabled)} */}
         {isEnabled === "ENABLED" && <RegenerateBackupCode />}
         {this.props.loader === true ? <FaldaxLoader /> : ""}
+        <TFAModalOTP
+          visible={showTFAModalOtp}
+          isLoggedIn={this.props.isLoggedIn}
+          submit={otp => this.TF_AUTH(otp)}
+        />
       </Wrapper>
     );
   }
@@ -1116,10 +1159,12 @@ const mapDispatchToProps = dispatch => ({
   verifyTF: (isLoggedIn, value) => dispatch(verifyTF(isLoggedIn, value)),
   verifyQRData: () => dispatch(verifyQRData()),
   TF_Disable: isLoggedIn => dispatch(TF_Disable(isLoggedIn)),
-  disableAction: () => dispatch(disableAction())
+  disableAction: () => dispatch(disableAction()),
+  showLoader: () => dispatch(addLoader()),
+  hideLoader: () => dispatch(removeLoader()),
+  getProfileData: isLoggedIn => dispatch(getProfileDataAction(isLoggedIn))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(createForm()(PasswordChange));
+export default translate(["security_tab", "general_1", "validations"])(
+  connect(mapStateToProps, mapDispatchToProps)(createForm()(PasswordChange))
+);

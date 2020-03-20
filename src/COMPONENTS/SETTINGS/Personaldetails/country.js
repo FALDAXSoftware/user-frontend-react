@@ -6,7 +6,7 @@ import CountryData from "country-state-city";
 import { Select, Row, Col } from "antd";
 import { connect } from "react-redux";
 import { createForm, formShape } from "rc-form";
-
+import { translate } from "react-i18next";
 /* components */
 import { globalVariables } from "Globals.js";
 
@@ -83,7 +83,7 @@ const CountryWrap = styled.div`
     margin-right: 0px;
   }
 `;
-export default class CountryPick extends Component {
+class CountryPick extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -96,13 +96,13 @@ export default class CountryPick extends Component {
       CSS: "Country_Select",
       theme: "",
       states: [],
-      cities: [],
-      phone_number: ""
+      cities: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeState = this.handleChangeState.bind(this);
     this.handleChangeCity = this.handleChangeCity.bind(this);
     this.getCountryId = this.getCountryId.bind(this);
+    this.t = this.props.t;
   }
 
   /* Life-Cycle Methods */
@@ -118,11 +118,7 @@ export default class CountryPick extends Component {
     this.setState({
       country_selected: this.props.country,
       state_selected: this.props.state,
-      city_selected: this.props.city,
-      country_json_id: this.props.country_id,
-      country_code,
-      phoneCode,
-      phone_number: this.props.phone_number
+      city_selected: this.props.city
     });
   }
   componentWillReceiveProps(newprops) {
@@ -153,13 +149,13 @@ export default class CountryPick extends Component {
   handleChange(value, position) {
     var newPosition = Number(position.key) - 1;
     var countrySelected = CountryData.getCountryById(newPosition);
+    // console.log(countrySelected);
+
     let country_code = "";
     let phoneCode = "";
-    let country_json_id = "";
     if (countrySelected) {
       country_code = countrySelected.sortname;
       phoneCode = countrySelected.phonecode;
-      country_json_id = countrySelected.id;
     }
     // var states = CountryData.getStatesOfCountry(newPosition + 1);
     this.setState(
@@ -168,9 +164,7 @@ export default class CountryPick extends Component {
         state_selected: "",
         country_selected: value,
         country_code,
-        phoneCode,
-        country_json_id,
-        phone_number: ""
+        phoneCode
         // stateID: null,
         // countryID: newPosition,
         // states
@@ -190,34 +184,16 @@ export default class CountryPick extends Component {
     */
 
   handleChangeState(value, position) {
-    // console.log(
-    //   "this.state.phone_number country",
-    //   this.state.phone_number,
-    //   this.props.phone_number
-    // );
-    var countrySelected = CountryData.getCountryById(
-      this.state.country_json_id - 1
-    );
-    let country_code = "";
-    let phoneCode = "";
-    if (countrySelected) {
-      country_code = countrySelected.sortname;
-      phoneCode = countrySelected.phonecode;
-    }
     this.setState(
       {
         state_selected: value,
-        city_selected: "",
-        country_code,
-        phoneCode
-
+        city_selected: ""
         // country_selected: country,
         // stateID: newPosition,
         // cities
       },
       () => {
         this.passOnChangeToParent();
-        // console.log("-----state country", this.state.country_code);
       }
     );
 
@@ -225,16 +201,7 @@ export default class CountryPick extends Component {
   }
 
   handleChangeCity(value, position) {
-    var countrySelected = CountryData.getCountryById(
-      this.state.country_json_id - 1
-    );
-    let country_code = "";
-    let phoneCode = "";
-    if (countrySelected) {
-      country_code = countrySelected.sortname;
-      phoneCode = countrySelected.phonecode;
-    }
-    this.setState({ city_selected: value, country_code, phoneCode }, () => {
+    this.setState({ city_selected: value }, () => {
       this.passOnChangeToParent();
     });
     // this.props.onCountryChange(country, state, value);
@@ -273,12 +240,12 @@ export default class CountryPick extends Component {
       this.state.state_selected,
       this.state.city_selected,
       this.state.country_code,
-      this.state.phoneCode,
-      this.state.phone_number
+      this.state.phoneCode
     );
   };
   render() {
     let country, state, city;
+    const { t } = this.props;
     if (this.props.kyc !== undefined)
       if (this.props.kyc === "kyc") {
         if (
@@ -324,12 +291,14 @@ export default class CountryPick extends Component {
       <CountryWrap>
         <Row>
           <Col sm={24} md={8} xl={8} xxl={8}>
-            <Country>Country*</Country>
+            <Country>{t("subhead_personal_form_country.message")}*</Country>
             <SelectS
               disabled={this.props.disabled}
               showSearch
               value={this.state.country_selected}
-              placeholder="Select a Country"
+              placeholder={t(
+                "subhead_personal_form_country_placeholder.message"
+              )}
               className={`${
                 this.props.theme == true
                   ? "Country_Select_night"
@@ -354,12 +323,14 @@ export default class CountryPick extends Component {
           </Col>
           <Col sm={24} md={8} xl={8} xxl={8}>
             <SelectWrap>
-              <Country>State*</Country>
+              <Country>{t("subhead_personal_form_state.message")}*</Country>
               <SelectS
                 disabled={this.props.disabled}
                 showSearch
                 value={this.state.state_selected}
-                placeholder="Select a State"
+                placeholder={t(
+                  "subhead_personal_form_state_placeholder.message"
+                )}
                 className={`${
                   this.props.theme == true
                     ? "Country_Select_night"
@@ -385,12 +356,14 @@ export default class CountryPick extends Component {
           </Col>
           <Col sm={24} md={8} xl={8} xxl={8}>
             <SelectWrap>
-              <Country>City*</Country>
+              <Country>{t("subhead_personal_form_city.message")}*</Country>
               <SelectS
                 disabled={this.props.disabled}
                 showSearch
                 value={this.state.city_selected}
-                placeholder="Select a City"
+                placeholder={t(
+                  "subhead_personal_form_city_placeholder.message"
+                )}
                 className={`${
                   this.props.theme == true
                     ? "Country_Select_night"
@@ -419,3 +392,5 @@ export default class CountryPick extends Component {
     );
   }
 }
+
+export default translate("edit_profile_titles")(CountryPick);

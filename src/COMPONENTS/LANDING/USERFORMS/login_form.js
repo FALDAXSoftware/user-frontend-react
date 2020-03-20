@@ -4,7 +4,7 @@ import { createForm, formShape } from "rc-form";
 import styled from "styled-components";
 import { Row, Col, Button, notification, Icon } from "antd";
 import { connect } from "react-redux";
-// import { ReCaptcha } from "react-recaptcha-google";
+import { translate } from "react-i18next";
 import { ReCaptcha, loadReCaptcha } from "react-recaptcha-v3";
 
 /* Components */
@@ -231,7 +231,7 @@ const Forgot = styled.a`
   }
 `;
 const ButtonLogin = styled(Button)`
-  width: 110px;
+  min-width: 120px;
   background-color: rgb(0, 170, 250);
   color: white;
   margin-top: 50px;
@@ -311,6 +311,7 @@ class Login_Form extends Component {
     this.verifyCallback = this.verifyCallback.bind(this);
     this.onClickTFA = this.onClickTFA.bind(this);
     this.forgotBackup = this.forgotBackup.bind(this);
+    this.t = this.props.t;
   }
 
   static propTypes = {
@@ -318,7 +319,6 @@ class Login_Form extends Component {
   };
   onLoadRecaptcha() {
     loadReCaptcha(GOOGLE_SITE_KEY);
-
     this.setState(
       {
         loadCaptch: false
@@ -330,21 +330,14 @@ class Login_Form extends Component {
       }
     );
   }
+  componentDidMount() {}
   verifyCallback(recaptchaToken) {
-    // Here you will get the final recaptchaToken!!!
-    // console.log(recaptchaToken, "<= your recaptcha token");
     this.setState({
       recaptchaToken
     });
   }
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      // console.log(
-      //   this.state.isOtpRequired,
-      //   this.state.showBackUpInput,
-      //   this.state.backupIcon,
-      //   this.state.otpIcon
-      // );
       if (
         this.state.isOtpRequired === true &&
         this.state.showBackUpInput === false
@@ -355,7 +348,9 @@ class Login_Form extends Component {
           document.querySelector("#otp_icon_fail").style.display =
             "inline-block";
           document.querySelectorAll(".otp_msg")[0].style.display = "block";
-          this.setState({ otp_msg: "Otp is required." });
+          this.setState({
+            otp_msg: this.t("general_1:otp_required_error.message")
+          });
         }
       } else if (
         this.state.showBackUpInput === true &&
@@ -370,7 +365,9 @@ class Login_Form extends Component {
           document.querySelector("#backup_icon_fail").style.display =
             "inline-block";
           document.querySelectorAll(".backup_msg")[0].style.display = "block";
-          this.setState({ backup_msg: "Back-up code is required." });
+          this.setState({
+            backup_msg: this.t("login_page:backup_required_text.message")
+          });
         }
       }
       if (
@@ -414,8 +411,8 @@ class Login_Form extends Component {
         } else {
           this.openNotificationWithIcon(
             "error",
-            "Error",
-            "The automated human verification system encountered an error. Please refresh the page and try again. We apologize for any inconvenience."
+            this.t("validations:error_text.message"),
+            this.t("login_page:robot_error_text.message")
           );
         }
       } else {
@@ -430,7 +427,12 @@ class Login_Form extends Component {
             document.querySelector("#passlog_icon_fail").style.display =
               "inline-block";
             document.querySelectorAll(".pass_msg")[0].style.display = "block";
-            this.setState({ pass_msg: "Password is required" });
+            this.setState({
+              pass_msg:
+                this.t("login_page:password_text.message") +
+                " " +
+                this.t("validations:field_is_required.message")
+            });
           }
           if (error["email"] !== undefined) {
             this.setState({ emailIcon: false });
@@ -440,7 +442,12 @@ class Login_Form extends Component {
               "inline-block";
             document.querySelectorAll(".user_msg")[0].style.display = "block";
             if (this.state.email_msg === null)
-              this.setState({ email_msg: "Email is required" });
+              this.setState({
+                email_msg:
+                  this.t("security_tab:subhead_title_email.message") +
+                  " " +
+                  this.t("validations:field_is_required.message")
+              });
           }
         } else {
           if (this.state.backupIcon === true) {
@@ -501,7 +508,9 @@ class Login_Form extends Component {
           document.querySelector("#userlog_icon_success").style.display =
             "none";
           document.querySelectorAll(".user_msg")[0].style.display = "block";
-          this.setState({ email_msg: "Email address is not valid" });
+          this.setState({
+            email_msg: this.t("validations:invalid_email_error.message")
+          });
         }
       } else {
         this.setState({ emailIcon: false });
@@ -509,7 +518,12 @@ class Login_Form extends Component {
           "inline-block";
         document.querySelector("#userlog_icon_success").style.display = "none";
         document.querySelectorAll(".user_msg")[0].style.display = "block";
-        this.setState({ email_msg: "Email address is required" });
+        this.setState({
+          email_msg:
+            this.t("sign_up:email_address_text.message") +
+            " " +
+            this.t("validations:field_is_required.message")
+        });
       }
     } else if (field === "password") {
       let val = value.trim();
@@ -524,37 +538,14 @@ class Login_Form extends Component {
         document.querySelector("#passlog_icon_fail").style.display =
           "inline-block";
         document.querySelectorAll(".pass_msg")[0].style.display = "block";
-        this.setState({ pass_msg: "Password is required" });
+        this.setState({
+          pass_msg:
+            this.t("login_page:password_text.message") +
+            " " +
+            this.t("validations:field_is_required.message")
+        });
       }
-    }
-    //password shouldn't have validation except required.
-
-    //  else if (field == "password") {
-    //   var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,60}$/;
-    //   var bool = re.test(value);
-    //   if (value !== "") {
-    //     if (bool == true) {
-    //       /* console.log("passIcon is true") */
-    //       this.setState({ passIcon: true, password: value })
-    //       document.querySelector("#passlog_icon_success").style.display = "inline-block"
-    //       document.querySelector("#passlog_icon_fail").style.display = "none"
-    //       document.querySelectorAll(".pass_msg")[0].style.display = "none";
-    //     } else {
-    //       this.setState({ passIcon: false })
-    //       document.querySelector("#passlog_icon_success").style.display = "none"
-    //       document.querySelector("#passlog_icon_fail").style.display = "inline-block"
-    //       document.querySelectorAll(".pass_msg")[0].style.display = "block";
-    //       this.setState({ pass_msg: "Your password contain at least one letter, one special character, and one number. Minimum 8 characters and maximum 60 characters." })
-    //     }
-    //   } else {
-    //     this.setState({ passIcon: false })
-    //     document.querySelector("#passlog_icon_success").style.display = "none"
-    //     document.querySelector("#passlog_icon_fail").style.display = "none"
-    //     document.querySelectorAll(".pass_msg")[0].style.display = "none";
-    //   }
-    // }
-    else if (field === "otp") {
-      // var re = /^\b[a-zA-Z0-9]{6}\b|\b[a-zA-Z0-9]{6}\b/;
+    } else if (field === "otp") {
       var re = /^[0-9]{1,6}$/;
       var bool = re.test(value);
       if (value !== "") {
@@ -570,14 +561,18 @@ class Login_Form extends Component {
           document.querySelector("#otp_icon_fail").style.display =
             "inline-block";
           document.querySelectorAll(".otp_msg")[0].style.display = "block";
-          this.setState({ otp_msg: "Otp should have 6 digits." });
+          this.setState({
+            otp_msg: this.t("validations:otp_error.message")
+          });
         }
       } else {
         this.setState({ otpIcon: false });
         document.querySelector("#otp_icon_success").style.display = "none";
         document.querySelector("#otp_icon_fail").style.display = "inline-block";
         document.querySelectorAll(".otp_msg")[0].style.display = "block";
-        this.setState({ otp_msg: "Otp is required." });
+        this.setState({
+          otp_msg: this.t("general_1:otp_required_error.message")
+        });
       }
     } else if (field === "twofactor_backup_code") {
       // var re = /^\b[a-zA-Z0-9]{10}\b|\b[a-zA-Z0-9]{10}\b/;
@@ -597,7 +592,7 @@ class Login_Form extends Component {
             "inline-block";
           document.querySelectorAll(".backup_msg")[0].style.display = "block";
           this.setState({
-            backup_msg: "Back-up code should have 10 alphanumeric characters."
+            backup_msg: this.t("login_page:backup_alpha_error_text.message")
           });
         }
       } else {
@@ -606,7 +601,9 @@ class Login_Form extends Component {
         document.querySelector("#backup_icon_fail").style.display =
           "inline-block";
         document.querySelectorAll(".backup_msg")[0].style.display = "block";
-        this.setState({ backup_msg: "Back-up code is required." });
+        this.setState({
+          backup_msg: this.t("login_page:backup_required_text.message")
+        });
       }
     }
   }
@@ -628,7 +625,7 @@ class Login_Form extends Component {
 
   componentDidMount() {
     document.cookie = "isLoggedInPreprod=false; domain=faldax.com";
-    document.cookie = "isLoggedInLive=false; domain=faldax.com";
+
     if (!this.props.isLoggedIn) {
       loadReCaptcha(GOOGLE_SITE_KEY);
       // alert("mount");
@@ -658,16 +655,17 @@ class Login_Form extends Component {
   componentWillReceiveProps(props, newProps) {
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
+        this.props.i18n.changeLanguage(props.errorStatus.user.default_language);
         this.openNotificationWithIcon(
           "success",
-          "Success",
+          this.t("validations:success_text.message"),
           props.errorStatus.message
         );
         // console.log("thisd^^^", props.errorStatus.user.is_kyc_done);
         if (this.state.verify == true) {
           this.openNotificationWithIcon(
             "success",
-            "Login Successful",
+            this.t("login_page:login_successful_text.message"),
             props.errorStatus.message
           );
           this.setState({ loader: false, verify: true });
@@ -687,14 +685,18 @@ class Login_Form extends Component {
         });
         this.openNotificationWithIcon(
           "warning",
-          "Warning",
+          this.t("validations:warning_text.message"),
           props.errorStatus.err
         );
       } else {
         this.setState({ loader: false, recaptchaToken: null }, () => {
           this.onLoadRecaptcha();
         });
-        this.openNotificationWithIcon("error", "Error", props.errorStatus.err);
+        this.openNotificationWithIcon(
+          "error",
+          this.t("validations:error_text.message"),
+          props.errorStatus.err
+        );
       }
       this.props.clearLogin();
     }
@@ -708,7 +710,8 @@ class Login_Form extends Component {
     fetch(API_URL + "/users/verify-new-ip", {
       method: "post",
       headers: {
-        Authorization: "Bearer " + this.propsisLoggedIn
+        Authorization: "Bearer " + this.propsisLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: JSON.stringify(queryObj)
     })
@@ -721,21 +724,21 @@ class Login_Form extends Component {
           this.setState({ verify: true });
           this.openNotificationWithIcon(
             "success",
-            "Verified",
+            this.t("login_page:verified_text.message"),
             responseData.message
           );
         } else if (responseData.status === 201) {
           this.setState({ verify: true });
           this.openNotificationWithIcon(
             "success",
-            "Verified",
+            this.t("login_page:verified_text.message"),
             responseData.message
           );
           this.props.history.push("/login");
         } else {
           this.openNotificationWithIcon(
             "error",
-            "Not Verified",
+            this.t("login_page:not_verified_text.message"),
             responseData.err
           );
         }
@@ -757,7 +760,8 @@ class Login_Form extends Component {
     fetch(API_URL + "/users/verify-user", {
       method: "post",
       headers: {
-        Authorization: "Bearer " + this.propsisLoggedIn
+        Authorization: "Bearer " + this.propsisLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: JSON.stringify(queryObj)
     })
@@ -767,13 +771,13 @@ class Login_Form extends Component {
         if (responseData.status === 200) {
           this.openNotificationWithIcon(
             "success",
-            "Verified",
+            this.t("login_page:verified_text.message"),
             responseData.message
           );
         } else
           this.openNotificationWithIcon(
             "error",
-            "Not Verified",
+            this.t("login_page:not_verified_text.message"),
             responseData.err
           );
       })
@@ -794,7 +798,8 @@ class Login_Form extends Component {
     fetch(API_URL + "/users/verify-new-email", {
       method: "post",
       headers: {
-        Authorization: "Bearer " + this.propsisLoggedIn
+        Authorization: "Bearer " + this.propsisLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: JSON.stringify(queryObj)
     })
@@ -809,7 +814,7 @@ class Login_Form extends Component {
         } else
           this.openNotificationWithIcon(
             "error",
-            "Not Verified",
+            this.t("login_page:not_verified_text.message"),
             responseData.err
           );
       })
@@ -891,7 +896,6 @@ class Login_Form extends Component {
       ) {
         this.props.history.push(this.props.location.state.from.pathname);
       } else {
-        // console.log("^^^^logimn", this.props.isKYCDone);
         if (this.props.isKYCDone == 2) {
           this.props.history.push("/conversion");
         } else {
@@ -908,7 +912,15 @@ class Login_Form extends Component {
         <RowWrap>
           <ColLeft sm={24} lg={12}>
             <LeftWrap>
-              <a href={globalVariables.WordpressSiteURL}>
+              <a
+                href={
+                  globalVariables.WordpressSiteURL +
+                  (localStorage["i18nextLng"] &&
+                  localStorage["i18nextLng"] !== "en"
+                    ? "/" + localStorage["i18nextLng"]
+                    : "")
+                }
+              >
                 <VertImg
                   className="wow fadeInUp"
                   src="/images/LeftSideLogo.png"
@@ -921,9 +933,15 @@ class Login_Form extends Component {
             <FormWrap>
               <RightWrap>
                 <div className="wow fadeInDown">
-                  <LoginHead>Login</LoginHead>
-                  <WelcomeText>Welcome To FALDAX!</WelcomeText>
-                  <EmailLabel>Email Address*</EmailLabel>
+                  <LoginHead>
+                    {this.t("login_page:login_text.message")}
+                  </LoginHead>
+                  <WelcomeText>
+                    {this.t("login_page:welcome_text.message")}
+                  </WelcomeText>
+                  <EmailLabel>
+                    {this.t("sign_up:email_address_text.message")}*
+                  </EmailLabel>
                   <form onSubmit={this.handleSubmit}>
                     <div>
                       <Username
@@ -952,7 +970,9 @@ class Login_Form extends Component {
                     <EmailReq className="user_msg">
                       {this.state.email_msg}
                     </EmailReq>
-                    <PhLabel>Password*</PhLabel>
+                    <PhLabel>
+                      {this.t("login_page:password_text.message")}*
+                    </PhLabel>
                     <div>
                       <Password
                         disabled={this.state.isOtpRequired}
@@ -993,8 +1013,7 @@ class Login_Form extends Component {
                     {this.state.isOtpRequired && !this.state.showBackUpInput ? (
                       <div>
                         <OtpLabel>
-                          Two-Factor Authentication is enabled for this account.
-                          Please enter your 2FA code below to proceed.
+                          {this.t("login_page:2fa_enabled_text.message")}
                         </OtpLabel>
                         <div>
                           <Username
@@ -1030,7 +1049,9 @@ class Login_Form extends Component {
                   </form>
                   {!this.state.isOtpRequired && (
                     <CheckWrap>
-                      <Forgot href="/forgot-password">Forgot Password?</Forgot>
+                      <Forgot href="/forgot-password">
+                        {this.t("login_page:forgot_password_text.message")}?
+                      </Forgot>
                     </CheckWrap>
                   )}
                   {this.state.isOtpRequired && !this.state.showBackUpInput ? (
@@ -1038,7 +1059,7 @@ class Login_Form extends Component {
                       {/* <Remember>
                       <Check type="checkbox" /> Remember Me</Remember> */}
                       <Forgot onClick={this.onClickTFA}>
-                        Don't have Two-Factor Authentication?
+                        {this.t("login_page:no_2fa_text.message")}?
                       </Forgot>
                     </CheckWrap>
                   ) : (
@@ -1049,7 +1070,7 @@ class Login_Form extends Component {
                       {/* <Remember>
                       <Check type="checkbox" /> Remember Me</Remember> */}
                       <Forgot onClick={this.onClickTFA}>
-                        Have Two-Factor Authentication?
+                        {this.t("login_page:have_2fa_text.message")}?
                       </Forgot>
                     </CheckWrap>
                   ) : (
@@ -1058,7 +1079,7 @@ class Login_Form extends Component {
                   {this.state.showBackUpInput && (
                     <BackUpOtp className="backuptext">
                       <OtpLabel>
-                        Please enter your Back-up code below to proceed.
+                        {this.t("login_page:backup_to_proceed_text.message")}
                       </OtpLabel>
                       <div>
                         <Username
@@ -1095,7 +1116,7 @@ class Login_Form extends Component {
                   {this.state.showBackUpInput && (
                     <CheckWrap>
                       <Forgot onClick={this.forgotBackup}>
-                        Forgot Backup Code?
+                        {this.t("login_page:forgot_backupcode_text.message")}?
                       </Forgot>
                     </CheckWrap>
                   )}
@@ -1106,15 +1127,15 @@ class Login_Form extends Component {
                     disabled={this.state.loader}
                     onClick={this.submit}
                   >
-                    LOGIN
+                    {this.t("login_page:login_text.message")}
                   </ButtonLogin>
                   <Sign>
-                    No account?{" "}
+                    {this.t("login_page:no_account_text.message")}?{" "}
                     <Signa
                       href="/signup"
                       // onClick={() => this.dispModal("signup")}
                     >
-                      Sign Up
+                      {this.t("login_page:sign_up_text.message")}
                     </Signa>
                   </Sign>
                   {this.state.loader === true ? <FaldaxLoader /> : ""}
@@ -1123,17 +1144,6 @@ class Login_Form extends Component {
             </FormWrap>
           </ColRight>
         </RowWrap>
-        {/* <ReCaptcha
-          ref={el => {
-            this.captchaDemo = el;
-          }}
-          size="invisible"
-          render="explicit"
-          sitekey={GOOGLE_SITE_KEY}
-          onloadCallback={this.onLoadRecaptcha}
-          verifyCallback={this.verifyCallback}
-          badge="bottomleft"
-        /> */}
         {this.state.loadCaptch && (
           <ReCaptcha
             sitekey={GOOGLE_SITE_KEY}
@@ -1154,7 +1164,6 @@ function mapStateToProps(state) {
         ? state.simpleReducer.errorStatus
         : undefined,
     isKYCDone: state.simpleReducer.isKYCDone
-    // isOtpRequired:state.simpleReducer.isOtpRequired,
   };
 }
 
@@ -1166,7 +1175,12 @@ const mapDispatchToProps = dispatch => ({
   loginAction: value => dispatch(loginAction(value))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(createForm()(Login_Form));
+export default translate([
+  "referral",
+  "general_1",
+  "login_page",
+  "validations",
+  "security_tab",
+  "general_1",
+  "sign_up"
+])(connect(mapStateToProps, mapDispatchToProps)(createForm()(Login_Form)));

@@ -12,7 +12,8 @@ export function passwordChange(isLoggedIn, values) {
         fetch(API_URL + "/users/changePassword", {
             method: "post",
             headers: {
-                Authorization: "Bearer " + isLoggedIn
+                Authorization: "Bearer " + isLoggedIn,
+                "Accept-Language": localStorage["i18nextLng"]
             },
             body: JSON.stringify(values)
         })
@@ -55,7 +56,8 @@ export function TF_Enable(isLoggedIn) {
         fetch(API_URL + "/users/setup-two-factor", {
             method: "post",
             headers: {
-                Authorization: "Bearer " + isLoggedIn
+                Authorization: "Bearer " + isLoggedIn,
+                "Accept-Language": localStorage["i18nextLng"]
             },
         })
             .then(response => response.json())
@@ -91,7 +93,8 @@ export function verifyTF(isLoggedIn, value) {
         fetch(API_URL + "/users/verify-two-factor", {
             method: "post",
             headers: {
-                Authorization: "Bearer " + isLoggedIn
+                Authorization: "Bearer " + isLoggedIn,
+                "Accept-Language": localStorage["i18nextLng"]
             },
             body: JSON.stringify(value)
         })
@@ -133,7 +136,8 @@ export function TF_Disable(isLoggedIn) {
         fetch(API_URL + "/users/disable-two-factor", {
             method: "post",
             headers: {
-                Authorization: "Bearer " + isLoggedIn
+                Authorization: "Bearer " + isLoggedIn,
+                "Accept-Language": localStorage["i18nextLng"]
             }
         })
             .then(response => response.json())
@@ -171,7 +175,8 @@ export function kycFormAction(isLoggedIn, value) {
         fetch(API_URL + "/users/add-kyc-details", {
             method: "post",
             headers: {
-                Authorization: "Bearer " + isLoggedIn
+                Authorization: "Bearer " + isLoggedIn,
+                "Accept-Language": localStorage["i18nextLng"]
             },
             body: JSON.stringify(value)
         })
@@ -211,7 +216,8 @@ export function kycDoc(isLoggedIn, value, type) {
         fetch(API_URL + "/users/add-kyc-docs", {
             method: "post",
             headers: {
-                Authorization: "Bearer " + isLoggedIn
+                Authorization: "Bearer " + isLoggedIn,
+                "Accept-Language": localStorage["i18nextLng"]
             },
             body: value
         })

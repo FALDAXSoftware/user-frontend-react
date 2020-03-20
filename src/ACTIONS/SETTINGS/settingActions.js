@@ -11,7 +11,8 @@ export function profileupdateAction(isLoggedIn, form) {
     fetch(API_URL + "/users/update", {
       method: "put",
       headers: {
-        Authorization: "Bearer " + isLoggedIn
+        Authorization: "Bearer " + isLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: form
     })
@@ -60,6 +61,7 @@ export const getProfileDataAction = token => dispatch => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "Accept-Language": localStorage["i18nextLng"],
       Authorization: "Bearer " + token
     }
   })
@@ -103,7 +105,8 @@ export function removepicAction(isLoggedIn, form) {
     fetch(API_URL + "/users/update", {
       method: "put",
       headers: {
-        Authorization: "Bearer " + isLoggedIn
+        Authorization: "Bearer " + isLoggedIn,
+        "Accept-Language": localStorage["i18nextLng"]
       },
       body: form
     })

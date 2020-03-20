@@ -1,5 +1,6 @@
 /* In-built Packages*/
 import React, { Component } from "react";
+import { translate } from "react-i18next";
 import styled from "styled-components";
 
 /* Components */
@@ -30,19 +31,20 @@ const Sub_Text = styled.span`
 class ThankYou extends Component {
   constructor(props) {
     super(props);
+    this.t = this.props.t;
   }
 
   render() {
     return (
       <div>
         <Form_Wrap>
-          <Login_Head>Thank You</Login_Head>
-          <Welcome_Text>We have sent a confirmation email.</Welcome_Text>
-          <Sub_Text>Please check your email.</Sub_Text>
+          <Login_Head>{this.t("thank_you_text.message")}</Login_Head>
+          <Welcome_Text>{this.t("confirmation_text.message")}</Welcome_Text>
+          <Sub_Text>{this.t("confirmation_email_text.message")}</Sub_Text>
         </Form_Wrap>
       </div>
     );
   }
 }
 
-export default ThankYou;
+export default translate(["login_page", "validations"])(ThankYou);

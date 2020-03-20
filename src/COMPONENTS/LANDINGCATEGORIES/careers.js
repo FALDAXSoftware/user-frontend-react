@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { Link, withRouter } from "react-router-dom";
 import { Button, notification } from "antd";
+import { translate } from "react-i18next";
 import styled from "styled-components";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
@@ -108,6 +109,7 @@ class Careers extends Component {
       Jobs: [],
       loader: false
     };
+    this.t = this.props.t;
   }
 
   /* Life Cycle Methods */
@@ -117,6 +119,7 @@ class Careers extends Component {
       method: "get",
       headers: {
         Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
         "Content-Type": "application/json"
       }
     })
@@ -130,7 +133,11 @@ class Careers extends Component {
           });
         } else {
           this.setState({ loader: false });
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
         }
       })
       .catch(error => {
@@ -152,12 +159,8 @@ class Careers extends Component {
         <GreyWrap>
           <ContainerContact>
             <ContactStyle>
-              <CareerTitle>Careers </CareerTitle>
+              <CareerTitle>{this.t("careers_head.message")}</CareerTitle>
             </ContactStyle>
-            {/* <Careerdesc>
-                            <Deschead>careers</Deschead>
-                            <Descbody>{(this.state.careerDesc) ? ReactHtmlParser(this.state.careerDesc.content) : ''}</Descbody>
-                        </Careerdesc> */}
             <JobWrap>
               {this.state.Jobs.length > 0
                 ? this.state.Jobs.map(function(jobCat, key) {
@@ -184,7 +187,7 @@ class Careers extends Component {
                                   );
                                 }}
                               >
-                                Apply
+                                {me.t("conversion:apply_btn.message")}
                               </ApplyBtn>
                               <LocationP>{job.location}</LocationP>
                               {/* {job.short_desc ? <Body_p>{job.short_desc}</Body_p> : ''} */}
@@ -207,7 +210,11 @@ class Careers extends Component {
                     );
                   })
                 : ""}
-              {flag === false ? <NDF>NO DATA FOUND</NDF> : ""}
+              {flag === false ? (
+                <NDF>{this.t("support:no_data_found.message")}</NDF>
+              ) : (
+                ""
+              )}
             </JobWrap>
           </ContainerContact>
         </GreyWrap>
@@ -218,4 +225,6 @@ class Careers extends Component {
   }
 }
 
-export default withRouter(Careers);
+export default translate(["general", "validations", "support", "conversion"])(
+  withRouter(Careers)
+);
