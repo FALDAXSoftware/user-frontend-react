@@ -135,6 +135,12 @@ class WalletDetails extends Component {
   }
 
   /* Life Cycle Methods */
+  componentWillMount() {
+    if (!this.props.profileDetails.is_user_updated) {
+      this.props.history.push("/");
+    }
+  }
+
   async componentDidMount() {
     if (
       this.props.profileDetails &&
@@ -188,7 +194,7 @@ class WalletDetails extends Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify({
@@ -306,7 +312,7 @@ class WalletDetails extends Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           Authorization: "Bearer " + this.props.isLoggedIn
         }
       })
@@ -370,6 +376,7 @@ class WalletDetails extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })

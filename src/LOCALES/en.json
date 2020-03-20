@@ -2042,7 +2042,7 @@
     },
     "two_factor_authentication_subhead": {
       "page": "Edit Profile > Security > Regenerate Backup code",
-      "message": "Please SAVE this backup code. It will be required to change your Two-Factor Authentication in the future if you no longer have the device you orginally associated with your 2FA.  ",
+      "message": "Please SAVE this backup code. It will be required to change your Two-Factor Authentication in the future if you no longer have the device you orginally associated with your 2FA.",
       "message_type": "Web content",
       "context": "Two Factor Authentication sub text"
     },
@@ -2552,7 +2552,7 @@
     },
     "last_name_error": {
       "page": "Signup",
-      "message": "First Name must be at least 2 characters in length. No special characters are permitted.",
+      "message": "Last Name must be at least 2 characters in length. No special characters are permitted.",
       "message_type": "Web content",
       "context": "last name error text"
     },
@@ -2833,6 +2833,12 @@
       "message": "Thank you for your understanding.",
       "message_type": "Web content",
       "context": "Complete Profile pop up subtext"
+    },
+    "passport_picture_text": {
+      "page": "Upload KYC",
+      "message": "Passport Picture",
+      "message_type": "Web content",
+      "context": "Upload Passport"
     }
   }
 }
