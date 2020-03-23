@@ -100,7 +100,7 @@ const Fee = styled.span`
     width: 100%;
     > span {
       > b {
-        min-width: 150px;
+        min-width: 170px;
         display: inline-block;
       }
     }
