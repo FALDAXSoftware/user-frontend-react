@@ -69,6 +69,8 @@ import {
   SelectMonth,
   SettingDropdown
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import { async } from "q";
+import { func } from "prop-types";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const originalLayouts = getFromLS("layouts") || {};
@@ -99,13 +101,13 @@ const GreyWrapTrade = styled(GreyWrap)`
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
     border-right: ${props =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
     border-bottom: ${props =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
   }
 `;
 const columns = [
@@ -195,8 +197,8 @@ class Trade extends Component {
     this.statusChange = this.statusChange.bind(this);
     this.getUserBal = this.getUserBal.bind(this);
     this.onInsChange = this.onInsChange.bind(this);
-    this.getInstrumentData = this.getInstrumentData.bind(this);
-    this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
+    // this.getInstrumentData = this.getInstrumentData.bind(this);
+    // this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
     this.onLayoutChange = this.onLayoutChange.bind(this);
     this.goFullScreen = this.goFullScreen.bind(this);
     this.exitFullScreen = this.exitFullScreen.bind(this);
@@ -238,21 +240,34 @@ class Trade extends Component {
 
   componentDidMount() {
     var self = this;
-    io.sails.headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + this.props.isLoggedIn
-    };
-    this.orderSocket(this.state.timePeriod, this.state.status);
-    this.getInstrumentData();
-    this.getUserBal();
-    io.socket.on("walletBalanceUpdate", data => {
-      self.setState({ userBal: data });
-    });
-    io.socket.on("orderUpdated", data => {
-      self.orderSocket(self.state.timePeriod, self.state.status);
-      // self.getUserBal();
-    });
+    io = this.props.io
+    console.log(io)
+    io.emit("join", { room: this.state.crypto + '-' + this.state.currency })
+    io.on("instrument-data", async function (data) {
+      self.updateInstrumentsData(data);
+    })
+    // io.on("test",function (data) {
+    //   console.log(data)
+    // })
+    // io.on("getBuyBookData", async function (data) {
+    //   console.log(data);
+    // })
+    // io.on
+    // io.sails.headers = {
+    //   Accept: "application/json",
+    //   "Content-Type": "application/json",
+    //   Authorization: "Bearer " + this.props.isLoggedIn
+    // };
+    // this.orderSocket(this.state.timePeriod, this.state.status);
+    // this.getInstrumentData();
+    // this.getUserBal();
+    // io.socket.on("walletBalanceUpdate", data => {
+    //   self.setState({ userBal: data });
+    // });
+    // io.socket.on("orderUpdated", data => {
+    //   self.orderSocket(self.state.timePeriod, self.state.status);
+    //   // self.getUserBal();
+    // });
   }
 
   // created by Meghal Patel at 2019-04-27 15:09.
@@ -290,29 +305,29 @@ class Trade extends Component {
   //
   //
 
-  getInstrumentData() {
-    var self = this;
-    self.setState({ insLoader: true });
-    io.socket.request(
-      {
-        method: "GET",
-        url: `/socket/get-instrument-data?coin=${self.state.InsCurrency}`,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
-      },
-      (body, JWR) => {
-        if (body.status === 200) {
-          self.updateInstrumentsData(body.data);
-        }
-      }
-    );
-    io.socket.on("instrumentUpdate", data => {
-      self.updateInstrumentsData(data);
-    });
-  }
+  // getInstrumentData() {
+  //   var self = this;
+  //   self.setState({ insLoader: true });
+  //   io.socket.request(
+  //     {
+  //       method: "GET",
+  //       url: `/socket/get-instrument-data?coin=${self.state.InsCurrency}`,
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + this.props.isLoggedIn
+  //       }
+  //     },
+  //     (body, JWR) => {
+  //       if (body.status === 200) {
+  //         self.updateInstrumentsData(body.data);
+  //       }
+  //     }
+  //   );
+  //   io.socket.on("instrumentUpdate", data => {
+  //     self.updateInstrumentsData(data);
+  //   });
+  // }
 
   // created by Meghal Patel at 2019-04-27 15:11.
   //
@@ -457,7 +472,7 @@ class Trade extends Component {
         } else
           this.openNotificationWithIcon("error", "Error", responseData.err);
       })
-      .catch(error => {});
+      .catch(error => { });
   }
 
   // created by Meghal Patel at 2019-04-27 15:24.
@@ -535,7 +550,7 @@ class Trade extends Component {
   searchInstu(e) {
     var search = e.target.value;
     if (search.trim() !== "") {
-      var searchedInstu = this.state.InsData.filter(function(temp) {
+      var searchedInstu = this.state.InsData.filter(function (temp) {
         if (temp.name.toLowerCase().includes(search.toLowerCase())) {
           return true;
         } else {
@@ -899,19 +914,19 @@ class Trade extends Component {
         </SettingDropdown>
         <Navigation />
         <GreyWrapTrade>
-          {/* <Row>
-                        <Col>
-                            <Layout>
-                                <EditButton  >Edit Layout</EditButton>
-                                <SaveButton>Save</SaveButton>
-                            </Layout>
-                        </Col>
-                    </Row> */}
           <Row>
             <Col>
-              {/* <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} /> */}
+              {/* <Layout>
+                <EditButton  >Edit Layout</EditButton>
+                <SaveButton>Save</SaveButton>
+              </Layout> */}
             </Col>
           </Row>
+          {/* <Row>
+            <Col>
+              <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} />
+            </Col>
+          </Row> */}
           <Row>
             <Col>
               <RGL
@@ -925,7 +940,7 @@ class Trade extends Component {
                   this.onLayoutChange(layout, layouts)
                 }
               >
-                <div key="tradeView">
+                {/* <div key="tradeView">
                   <div style={{ height: "100%", width: "100%" }}>
                     <MainTV className="trade_chart_view_main">
                       <TVBar>
@@ -959,7 +974,7 @@ class Trade extends Component {
                       />
                     </MainTV>
                   </div>
-                </div>
+                </div> */}
                 <div key="instruments">
                   <div
                     style={{ height: "100%", width: "100%", overflow: "auto" }}
@@ -967,8 +982,8 @@ class Trade extends Component {
                     {this.state.insLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <LeftDiv1>
                       <Instru>INSTRUMENTS</Instru>
                       {this.state.InsData.length > 0 ? (
@@ -977,8 +992,8 @@ class Trade extends Component {
                           style={{ width: 200 }}
                         />
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       <FIATWrap>
                         <FIAT>
                           <RadioSelect
@@ -1009,8 +1024,8 @@ class Trade extends Component {
                             this.state.searchedInstu === null
                               ? this.state.InsData
                               : this.state.searchedInstu.length === 0
-                              ? []
-                              : this.state.searchedInstu
+                                ? []
+                                : this.state.searchedInstu
                           }
                           onChange={this.onChange}
                           scroll={{ y: self.state.instrumentTableHeight }}
@@ -1019,15 +1034,15 @@ class Trade extends Component {
                     </LeftDiv1>
                   </div>
                 </div>
-                <div key="tradeAction">
+                {/* <div key="tradeAction">
                   <div
                     style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.userBalLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <RightDiv1>
                       <TabsRight
                         defaultActiveKey="1"
@@ -1056,7 +1071,7 @@ class Trade extends Component {
                       </TabsRight>
                     </RightDiv1>
                   </div>
-                </div>
+                </div> */}
                 <div key="buysellBook">
                   <div
                     style={{ height: "100%", width: "100%", overflow: "auto" }}
@@ -1064,8 +1079,8 @@ class Trade extends Component {
                     {this.state.buySellLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <BuySell
                       crypto={this.state.crypto}
                       currency={this.state.currency}
@@ -1077,15 +1092,15 @@ class Trade extends Component {
                     />
                   </div>
                 </div>
-                <div key="depthChart">
+                {/* <div key="depthChart">
                   <div
                     style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.depthLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <RightDiv>
                       <DepthChart
                         crypto={this.state.crypto}
@@ -1096,7 +1111,7 @@ class Trade extends Component {
                       />
                     </RightDiv>
                   </div>
-                </div>
+                </div> */}
                 <div key="orderHistory">
                   <div
                     style={{ height: "100%", width: "100%", overflow: "auto" }}
@@ -1104,8 +1119,8 @@ class Trade extends Component {
                     {this.state.hisLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <OrderHIstory
                       io={io}
                       hisFunc={loader => this.hisFunc(loader)}
@@ -1113,15 +1128,15 @@ class Trade extends Component {
                     />
                   </div>
                 </div>
-                <div key="myorder">
+                {/* <div key="myorder">
                   <div
                     style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.orderTradeLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <LeftDiv2>
                       <OrderWrap>
                         <InstruOrder>MY ORDERS AND TRADES</InstruOrder>
@@ -1165,7 +1180,7 @@ class Trade extends Component {
                       />
                     </LeftDiv2>
                   </div>
-                </div>
+                </div> */}
               </RGL>
             </Col>
           </Row>
