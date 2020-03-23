@@ -1120,6 +1120,7 @@ class KYCForm extends Component {
                   state={this.state.kycData.state}
                   city={this.state.kycData.city_town}
                   kyc="kyc"
+                  country_id={this.state.kycData.countryJsonId}
                   // isLoggedIn={this.props.simpleReducer.isLoggedIn}
                   onCountryChange={(
                     country,

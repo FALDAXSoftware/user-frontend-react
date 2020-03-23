@@ -264,8 +264,8 @@ class DocUpload extends Component {
                     }
                     _self.openNotificationWithIcon(
                       "error",
-                      this.t("validations:error_text.message"),
-                      this.t("validations:image_upload_error.message")
+                      _self.t("validations:error_text.message"),
+                      _self.t("validations:image_upload_error.message")
                     );
                     document.getElementById("front").value = "";
                     document.getElementById("back").value = "";
@@ -282,14 +282,14 @@ class DocUpload extends Component {
                   profileImage: "",
                   icon1: "plus",
                   displayFirst: "none",
-                  imagemsg: this.t("general_1:max_image_size_error.message")
+                  imagemsg: _self.t("general_1:max_image_size_error.message")
                 });
               } else {
                 _self.setState({
                   profileImg2: "Default Photo",
                   imageName2: "",
                   imageType2: fileType,
-                  imagemsg2: this.t("general_1:max_image_size_error.message"),
+                  imagemsg2: _self.t("general_1:max_image_size_error.message"),
                   profileImage2: "",
                   icon2: "plus",
                   displaySecond: "none"
@@ -297,8 +297,8 @@ class DocUpload extends Component {
               }
               _self.openNotificationWithIcon(
                 "error",
-                this.t("validations:error_text.message"),
-                this.t("general_1:max_image_size_error.message")
+                _self.t("validations:error_text.message"),
+                _self.t("general_1:max_image_size_error.message")
               );
               document.getElementById("front").value = "";
               document.getElementById("back").value = "";
@@ -306,8 +306,8 @@ class DocUpload extends Component {
           } else {
             _self.openNotificationWithIcon(
               "error",
-              this.t("validations:error_text.message"),
-              this.t("general_1:only_images_error.message")
+              _self.t("validations:error_text.message"),
+              _self.t("general_1:only_images_error.message")
             );
             document.getElementById("front").value = "";
             document.getElementById("back").value = "";
@@ -370,8 +370,16 @@ class DocUpload extends Component {
     //   this.state.frontImg,
     //   this.state.backImg
     // );
-    if ((this.props.docText.toLowerCase() == "passport" && this.state.icon1 === "check")||(this.state.icon1 === "check" && this.state.icon2 === "check")) {
-      if ((this.props.docText.toLowerCase() == "passport" && this.state.frontImg !== "") || (this.state.frontImg !== "" && this.state.backImg !== "")) {
+    if (
+      (this.props.docText.toLowerCase() == "passport" &&
+        this.state.icon1 === "check") ||
+      (this.state.icon1 === "check" && this.state.icon2 === "check")
+    ) {
+      if (
+        (this.props.docText.toLowerCase() == "passport" &&
+          this.state.frontImg !== "") ||
+        (this.state.frontImg !== "" && this.state.backImg !== "")
+      ) {
         var kycDoc = {};
         kycDoc["front_doc"] = this.state.frontImg;
         kycDoc["back_doc"] = this.state.backImg;
@@ -433,7 +441,11 @@ class DocUpload extends Component {
                 <Plus className="plus">
                   <Icon type={this.state.icon1} theme="outlined" />
                 </Plus>
-                <Plustext className="text">{this.props.docText.toLowerCase() != "passport"?t("front_text.message"):t("general_3:passport_picture_text.message")}</Plustext>
+                <Plustext className="text">
+                  {this.props.docText.toLowerCase() != "passport"
+                    ? t("front_text.message")
+                    : t("general_3:passport_picture_text.message")}
+                </Plustext>
               </ButtonUp>
               <Fileinput
                 onChange={this.handleProfile}
@@ -442,35 +454,40 @@ class DocUpload extends Component {
                 id="front"
               />
             </Fileselect1>
-           {this.props.docText.toLowerCase() != "passport" && <Fileselect2 md={{ span: 6 }} className="file-select-col">
-              <RemoveIcon2
-                onClick={() => {
-                  this.removeFile("back-doc");
-                }}
-                style={{ display: `${this.state.displaySecond}` }}
-                type={"close"}
-                theme="outlined"
-              />
-              <ButtonUp2
-                style={{ backgroundImage: `url('${this.state.profileImg2}')` }}
-                className="file-select-btn"
-                onClick={() => {
-                  this.handleFileSelectClick("back");
-                }}
-              >
-                <Plus2 className="plus">
-                  <Icon type={this.state.icon2} theme="outlined" />
-                </Plus2>
-                <Plustext2 className="text">{t("back_text.message")}</Plustext2>
-              </ButtonUp2>
-              <Fileinput2
-                onChange={this.handleProfile}
-                type="file"
-                name="back-doc"
-                id="back"
-              />
-            </Fileselect2>
-           }
+            {this.props.docText.toLowerCase() != "passport" && (
+              <Fileselect2 md={{ span: 6 }} className="file-select-col">
+                <RemoveIcon2
+                  onClick={() => {
+                    this.removeFile("back-doc");
+                  }}
+                  style={{ display: `${this.state.displaySecond}` }}
+                  type={"close"}
+                  theme="outlined"
+                />
+                <ButtonUp2
+                  style={{
+                    backgroundImage: `url('${this.state.profileImg2}')`
+                  }}
+                  className="file-select-btn"
+                  onClick={() => {
+                    this.handleFileSelectClick("back");
+                  }}
+                >
+                  <Plus2 className="plus">
+                    <Icon type={this.state.icon2} theme="outlined" />
+                  </Plus2>
+                  <Plustext2 className="text">
+                    {t("back_text.message")}
+                  </Plustext2>
+                </ButtonUp2>
+                <Fileinput2
+                  onChange={this.handleProfile}
+                  type="file"
+                  name="back-doc"
+                  id="back"
+                />
+              </Fileselect2>
+            )}
           </Filewrap>
           <NoteSpan>{t("general_1:supported_format_text.message")}</NoteSpan>
           <NoteSpan className="upload_note">
@@ -517,6 +534,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(kycFormAction(isLoggedIn, value))
 });
 
-export default translate(["identity_verification", "validations", "general_1","general_3"])(
-  connect(mapStateToProps, mapDispatchToProps)(DocUpload)
-);
+export default translate([
+  "identity_verification",
+  "validations",
+  "general_1",
+  "general_3"
+])(connect(mapStateToProps, mapDispatchToProps)(DocUpload));
