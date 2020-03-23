@@ -353,6 +353,7 @@ class LoggedNavigation extends Component {
       // langValue: this.props.language
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
+    this.t = this.props.t;
     this.cryptoAccess = this.cryptoAccess.bind(this);
     this.simplexAccess = this.simplexAccess.bind(this);
     this.walletAccess = this.walletAccess.bind(this);
@@ -475,7 +476,8 @@ class LoggedNavigation extends Component {
       comingSoon: false,
       countryAccess: false,
       completeKYC: false,
-      panicEnabled: false
+      panicEnabled: false,
+      completeProfile: false
     });
   };
 
@@ -818,7 +820,7 @@ class LoggedNavigation extends Component {
           //   });
           // }}
         >
-          <a>English</a>
+          <a>{this.t("general_4:lang_eng_text.message")}</a>
         </Menu.Item>
         <Menu.Item
           key="ja"
@@ -828,7 +830,7 @@ class LoggedNavigation extends Component {
           //   });
           // }}
         >
-          <a>Japanese</a>
+          <a>{this.t("general_4:lang_ja_text.message")}</a>
         </Menu.Item>
       </Menu>
     );
@@ -963,6 +965,22 @@ class LoggedNavigation extends Component {
               {" "}
               <Link to="/conversion">Conversion</Link>
             </span> */}
+            <a className="DROPSUB">
+              <DropMenu mode="inline">
+                <SubMenuNav
+                  key="mobsub0"
+                  title={t("general_1:language_head.message")}
+                  onClick={this.onChange}
+                >
+                  <Menu.Item key="en">
+                    <a>{this.t("general_4:lang_eng_text.message")}</a>
+                  </Menu.Item>
+                  <Menu.Item key="ja">
+                    <a>{this.t("general_4:lang_ja_text.message")}</a>
+                  </Menu.Item>
+                </SubMenuNav>
+              </DropMenu>
+            </a>
             <a className="DROPSUB">
               <DropMenu mode="inline">
                 <SubMenuNav
@@ -1267,6 +1285,6 @@ const mapDispatchToProps = dispatch => ({
   langAction: lang => dispatch(langAction(lang))
 });
 
-export default translate(["header", "footer", "general_1"])(
+export default translate(["header", "footer", "general_1", "general_4"])(
   connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation))
 );

@@ -35,13 +35,13 @@ import TierIDConfirmation from "./COMPONENTS/SETTINGS/tier_id_confirmation.js";
 import Simplex from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex.js";
 import SimplexExchange from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex_exchange.js";
 import NotFound from "./SHARED-COMPONENTS/NotFound.js";
-import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
-import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
-import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
-let { API_URL } = globalVariables;
-const socketIOClient = require("socket.io-client");
+// import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
+// import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
+// import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
+// let { API_URL } = globalVariables;
+// const socketIOClient = require("socket.io-client");
 // const sailsIOClient = require("sails.io.js");
-let io = socketIOClient(globalVariables.SOCKET_HOST)
+// let io = socketIOClient(globalVariables.SOCKET_HOST)
 
 const routes = [
   {
@@ -49,11 +49,11 @@ const routes = [
     path: "/editProfile",
     component: Editprofile
   },
-  {
-    exact: false,
-    path: "/home",
-    component: HomePage
-  },
+  // {
+  //   exact: false,
+  //   path: "/home",
+  //   component: HomePage
+  // },
   {
     exact: false,
     path: "/wallet",
@@ -64,16 +64,16 @@ const routes = [
     path: "/walletDetails",
     component: WalletDetails
   },
-  {
-    exact: false,
-    path: "/trade",
-    component: () => <Trade io={io} />
-  },
-  {
-    exact: false,
-    path: "/chart",
-    component: () => <Tradingviewchart io={io} />
-  },
+  // {
+  //   exact: false,
+  //   path: "/trade",
+  //   component: () => <Trade io={io} />
+  // },
+  // {
+  //   exact: false,
+  //   path: "/chart",
+  //   component: () => <Tradingviewchart io={io} />
+  // },
   {
     exact: false,
     path: "/history",
@@ -88,13 +88,13 @@ const routes = [
   {
     exact: false,
     path: "/open-ticket",
-    component: () => <OpenTicket />,
+    component: () => <OpenTicket />
     // io: io
   },
   {
     exact: false,
     path: "/conversion",
-    component: () => <Conversion />,
+    component: () => <Conversion />
     // io: io
   },
   // {
@@ -116,12 +116,12 @@ const routes = [
   {
     exact: false,
     path: "/simplex",
-    component: () => <Simplex />,
+    component: () => <Simplex />
   },
   {
     exact: false,
     path: "/simplex-exchange",
-    component: () => <SimplexExchange />,
+    component: () => <SimplexExchange />
   },
   // {
   //   exact: false,
@@ -168,17 +168,17 @@ const routes = [
   {
     exact: false,
     path: "/tier-upgrade-information",
-    component: () => <TierUpgradeInfo />,
+    component: () => <TierUpgradeInfo />
   },
   {
     exact: false,
     path: "/tier-image-information",
-    component: () => <TierUpgradeInfoImageRequirements />,
+    component: () => <TierUpgradeInfoImageRequirements />
   },
   {
     exact: false,
     path: "/tier-idcp-confirmation",
-    component: () => <TierIDConfirmation />,
+    component: () => <TierIDConfirmation />
   },
   {
     exact: false,
@@ -200,9 +200,7 @@ class AppRouter extends Component {
     this.onActive = this._onActive.bind(this) */
     this.onIdle = this._onIdle.bind(this);
   }
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
   /*   _onAction(e) {
       console.log('user did something', e)
     }
@@ -255,8 +253,8 @@ class AppRouter extends Component {
           })}
           <Route
             component={NotFound}
-          // path="/privacy-policy"
-          // loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
+            // path="/privacy-policy"
+            // loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
           />
           {/* <Route
   path="/privacy-policy"

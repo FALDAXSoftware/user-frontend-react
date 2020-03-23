@@ -2913,6 +2913,18 @@
       "message": "Enter a valid SSN number.",
       "message_type": "Web content",
       "context": "SSN valid text"
+    },
+    "lang_eng_text": {
+      "page": "Header",
+      "message": "English",
+      "message_type": "Web content",
+      "context": "English text"
+    },
+    "lang_ja_text": {
+      "page": "Header",
+      "message": "Japanese",
+      "message_type": "Web content",
+      "context": "Japanese text"
     }
   }
 }
