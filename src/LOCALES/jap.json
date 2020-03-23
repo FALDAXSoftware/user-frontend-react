@@ -2913,6 +2913,18 @@
       "message": "\u6709\u52b9\u306aSSN\u756a\u53f7\u3092\u5165\u529b\u3057\u307e\u3059\u3002",
       "message_type": "Web content",
       "context": "SSN valid text"
+    },
+    "lang_eng_text": {
+      "page": "Header",
+      "message": "\u82f1\u8a9e",
+      "message_type": "Web content",
+      "context": "English text"
+    },
+    "lang_ja_text": {
+      "page": "Header",
+      "message": "\u65e5\u672c\u8a9e",
+      "message_type": "Web content",
+      "context": "Japanese text"
     }
   }
 }
