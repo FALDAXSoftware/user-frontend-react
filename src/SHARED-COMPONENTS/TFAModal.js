@@ -9,7 +9,7 @@ import SimpleReactValidator from "simple-react-validator";
 import { globalVariables } from "Globals.js";
 // import { getProfileDataAction } from "ACTIONS/SETTINGS/settingActions";
 import { verifyTF } from "ACTIONS/SETTINGS/passwordActions.js";
-import {translate} from "react-i18next"
+import { translate } from "react-i18next";
 /* STYLED-COMPONENTS */
 import {
   VerifyModal,
@@ -32,13 +32,16 @@ class TFAModal extends Component {
       fields: {
         otp: ""
       },
-      visibleTFA: false,
+      visibleTFA: false
     };
-    this.t=this.props.t;
+    this.t = this.props.t;
     this.validator = new SimpleReactValidator({
       validOTP: {
-        message: this.t("security_tab:subhead_title_verification_code.message")+" "+this.t("numeric_valdation.message"),
-        required:true,
+        message:
+          this.t("security_tab:subhead_title_verification_code.message") +
+          " " +
+          this.t("numeric_valdation.message"),
+        required: true,
         rule: val => {
           var RE = /.+/;
           if (RE.test(val)) {
@@ -46,10 +49,12 @@ class TFAModal extends Component {
           } else {
             return false;
           }
-        } 
+        }
       },
-      customVerificationCodeRequire:{
-        message:`${this.t("security_tab:subhead_title_verification_code.message")} ${this.t("validations:field_is_required.message")}`,
+      customVerificationCodeRequire: {
+        message: `${this.t(
+          "security_tab:subhead_title_verification_code.message"
+        )} ${this.t("validations:field_is_required.message")}`,
         rule: val => {
           var RE = /.+/;
           if (RE.test(val)) {
@@ -57,10 +62,13 @@ class TFAModal extends Component {
           } else {
             return false;
           }
-        } 
+        }
       },
-      customVerificationCodeNumeric:{
-        message:(this.t("security_tab:subhead_title_verification_code.message")+" "+this.t("numeric_validation.message")),
+      customVerificationCodeNumeric: {
+        message:
+          this.t("security_tab:subhead_title_verification_code.message") +
+          " " +
+          this.t("numeric_validation.message"),
         rule: val => {
           var RE = /^\d+.?\d*$/;
           if (RE.test(val)) {
@@ -68,7 +76,7 @@ class TFAModal extends Component {
           } else {
             return false;
           }
-        } 
+        }
       }
     });
   }
@@ -155,7 +163,9 @@ class TFAModal extends Component {
           {this.t("general_3:enter_2fa_code.message")}.
         </Description>
         <NewP>
-          <InputLabel>{this.t("security_tab:subhead_title_verification_code.message")}</InputLabel>
+          <InputLabel>
+            {this.t("security_tab:subhead_title_verification_code.message")}
+          </InputLabel>
           <div>
             <OTPInput
               value={fields.otp}
@@ -173,20 +183,20 @@ class TFAModal extends Component {
           </div>
         </NewP>
         <ButtonDiv>
-          <NewButton onClick={this.verifyOTP.bind(this)}>{this.t("security_tab:verify_btn.message")}</NewButton>
+          <NewButton onClick={this.verifyOTP.bind(this)}>
+            {this.t("security_tab:verify_btn.message")}
+          </NewButton>
           <p>
             <Popover
               placement="topLeft"
-              content={
-                <b>
-                  {this.t("general_3.reset_2fa_code.message")}.
-                </b>
-              }
+              content={<b>{this.t("general_3:reset_2fa_code.message")}.</b>}
               trigger="click"
               visible={this.state.visible}
               onVisibleChange={this.handleVisibleChange}
             >
-              <Button type="link">{this.t("login_page:no_2fa_text.message")}?</Button>
+              <Button type="link">
+                {this.t("login_page:no_2fa_text.message")}?
+              </Button>
             </Popover>
           </p>
         </ButtonDiv>
@@ -199,4 +209,10 @@ const mapDispatchToProps = dispatch => ({
   verifyTF: (isLoggedIn, value) => dispatch(verifyTF(isLoggedIn, value))
 });
 
-export default translate(["general_1","security_tab","general_3","login_page","validations"])(connect(null, mapDispatchToProps)(TFAModal));
+export default translate([
+  "general_1",
+  "security_tab",
+  "general_3",
+  "login_page",
+  "validations"
+])(connect(null, mapDispatchToProps)(TFAModal));
