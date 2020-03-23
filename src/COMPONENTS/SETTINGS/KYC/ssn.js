@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
+import { translate, Trans } from "react-i18next";
 
 /* components */
 import { kycFormAction } from "ACTIONS/SETTINGS/passwordActions";
@@ -57,9 +58,10 @@ class SSN extends Component {
     this.state = {
       value_input: ""
     };
+    this.t = this.props.t;
     this.validator = new SimpleReactValidator({
       ssnValid: {
-        message: "Enter a valid SSN number.", // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("general_4:upload_ssn_invalid.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
@@ -118,7 +120,7 @@ class SSN extends Component {
       <div>
         <SSNWrap>
           <SSNsub>
-            <SSNLabel>Social Security Number</SSNLabel>
+            <SSNLabel>{this.t("id_type_ssn.message")}</SSNLabel>
             <SSNInput onChange={this.input_change.bind(this)} />
             {this.validator.message(
               "postal_code",
@@ -126,7 +128,7 @@ class SSN extends Component {
               "required|ssnValid",
               "text-danger-validation",
               {
-                required: "Please enter Social Security Number."
+                required: this.t("general_4:upload_ssn_require.message")
               }
             )}
           </SSNsub>
@@ -134,10 +136,10 @@ class SSN extends Component {
         <ButtonWrap>
           <SubWrap>
             <BackButton onClick={this.back_step.bind(this)} type="primary">
-              Back
+              {this.t("back_text.message")}
             </BackButton>
             <NextButton onClick={this.next_step.bind(this)} type="primary">
-              Next
+              {this.t("subhead_btn_next.message")}
             </NextButton>
           </SubWrap>
         </ButtonWrap>
@@ -160,4 +162,6 @@ const mapDispatchToProps = dispatch => ({
   kycFormAction: (is, data) => dispatch(kycFormAction(is, data))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SSN);
+export default translate(["identity_verification", "general_4"])(
+  connect(mapStateToProps, mapDispatchToProps)(SSN)
+);
