@@ -680,7 +680,7 @@ class ApplyJob extends Component {
                     <Row>
                       <Col sm={24} md={24}>
                         <LabelOne>
-                          {this.t("general_3:cover_latter_text")}
+                          {this.t("general_3:cover_latter_text.message")}
                         </LabelOne>
                         <DropzoneStyle
                           accept=".pdf,.doc,.docx"
