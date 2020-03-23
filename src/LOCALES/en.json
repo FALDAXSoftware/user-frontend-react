@@ -2532,7 +2532,7 @@
     },
     "complete_profile_text": {
       "page": "Complete profile Popup",
-      "message": "Before proceeding to identity verification please complete your profile",
+      "message": "In accordance with our legal policy, you must complete the 'Personal Details' page of your profile before creating a wallet.",
       "message_type": "Web content",
       "context": "Complete Profile text"
     }
@@ -2901,6 +2901,30 @@
       "message": "Upload",
       "message_type": "Web content",
       "context": "Upload text"
+    },
+    "upload_ssn_require": {
+      "page": "Identity Verification",
+      "message": "Please enter Social Security Number.",
+      "message_type": "Web content",
+      "context": "SSN validation text"
+    },
+    "upload_ssn_invalid": {
+      "page": "Identity Verification",
+      "message": "Enter a valid SSN number.",
+      "message_type": "Web content",
+      "context": "SSN valid text"
+    },
+    "lang_eng_text": {
+      "page": "Header",
+      "message": "English",
+      "message_type": "Web content",
+      "context": "English text"
+    },
+    "lang_ja_text": {
+      "page": "Header",
+      "message": "Japanese",
+      "message_type": "Web content",
+      "context": "Japanese text"
     }
   }
 }

@@ -41,9 +41,7 @@ import NotFound from "./SHARED-COMPONENTS/NotFound.js";
 // let { API_URL } = globalVariables;
 // const socketIOClient = require("socket.io-client");
 // const sailsIOClient = require("sails.io.js");
-// let io = sailsIOClient(socketIOClient);
-// io.sails.url = API_URL;
-// io.sails.environment = "production";
+// let io = socketIOClient(globalVariables.SOCKET_HOST)
 
 const routes = [
   {
@@ -51,11 +49,11 @@ const routes = [
     path: "/editProfile",
     component: Editprofile
   },
-  {
-    exact: false,
-    path: "/home",
-    component: HomePage
-  },
+  // {
+  //   exact: false,
+  //   path: "/home",
+  //   component: HomePage
+  // },
   {
     exact: false,
     path: "/wallet",
@@ -90,13 +88,13 @@ const routes = [
   {
     exact: false,
     path: "/open-ticket",
-    component: () => <OpenTicket />,
+    component: () => <OpenTicket />
     // io: io
   },
   {
     exact: false,
     path: "/conversion",
-    component: () => <Conversion />,
+    component: () => <Conversion />
     // io: io
   },
   // {
@@ -118,12 +116,12 @@ const routes = [
   {
     exact: false,
     path: "/simplex",
-    component: () => <Simplex/>,
+    component: () => <Simplex />
   },
   {
     exact: false,
     path: "/simplex-exchange",
-    component: () => <SimplexExchange/>,
+    component: () => <SimplexExchange />
   },
   // {
   //   exact: false,
@@ -170,22 +168,22 @@ const routes = [
   {
     exact: false,
     path: "/tier-upgrade-information",
-    component: () => <TierUpgradeInfo/>,
+    component: () => <TierUpgradeInfo />
   },
   {
     exact: false,
     path: "/tier-image-information",
-    component: () => <TierUpgradeInfoImageRequirements/>,
+    component: () => <TierUpgradeInfoImageRequirements />
   },
   {
     exact: false,
     path: "/tier-idcp-confirmation",
-    component: () => <TierIDConfirmation/>,
+    component: () => <TierIDConfirmation />
   },
   {
     exact: false,
     path: "/tickets",
-    component: () => <HubspotTickets/>
+    component: () => <HubspotTickets />
   }
   // {
   //   exact: true,
@@ -206,7 +204,7 @@ class AppRouter extends Component {
   /*   _onAction(e) {
       console.log('user did something', e)
     }
-  
+
     _onActive(e) {
       console.log('user is active', e)
       console.log('time remaining', moment.unix(this.idleTimer.getRemainingTime()).format("MM/DD/YYYY"))
