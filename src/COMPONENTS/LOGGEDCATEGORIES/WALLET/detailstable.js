@@ -186,34 +186,34 @@ class DetailsTable extends React.Component {
                         let url;
                         if (me.props.coin_code != undefined) {
                           switch (me.props.coin_code) {
-                            case "btc":
+                            case "tbtc":
                               url =
-                                "https://blockchair.com/bitcoin/transaction/" +
+                                "https://blockstream.info/testnet/tx/" +
                                 details[index].transaction_id;
                               break;
-                            case "xrp":
+                            case "txrp":
                               url =
-                                "https://blockchair.com/ripple/transaction/" +
+                                "https://test.bithomp.com/explorer/" +
                                 details[index].transaction_id;
                               break;
-                            case "ltc":
+                            case "tltc":
                               url =
-                                "https://blockchair.com/litecoin/transaction/" +
+                                "https://blockexplorer.one/litecoin/testnet/tx/" +
                                 details[index].transaction_id;
                               break;
-                            case "bch":
+                            case "tbch":
                               url =
-                                "https://blockchair.com/bitcoin-cash/transaction/" +
+                                "https://explorer.bitcoin.com/tbch/tx/" +
                                 details[index].transaction_id;
                               break;
-                            case "eth":
+                            case "teth":
                               url =
-                                "https://etherscan.io/tx/" +
+                                "https://kovan.etherscan.io/tx/" +
                                 details[index].transaction_id;
                               break;
                             case "SUSU":
                               url =
-                                "https://explore.susukino.com/tx/" +
+                                "http://explore.susukino.com/tx/" +
                                 details[index].transaction_id;
                               break;
                             default:
