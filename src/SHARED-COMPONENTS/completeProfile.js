@@ -65,7 +65,8 @@ class CompleteProfile extends React.Component {
           }
           visible={this.props.visible}
           onOk={e => this.handleComing()}
-          closable={false}
+          // closable={false}
+          onCancel={e => this.comingCancel(e)}
           maskClosable={false}
           footer={null}
           width={605}
