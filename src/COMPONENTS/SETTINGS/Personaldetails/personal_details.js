@@ -514,10 +514,6 @@ class PersonalDetails extends Component {
       });
     }
     if (this.props.profileDetails.phone_number) {
-      console.log(
-        "^^^^Did mount Phone",
-        this.props.profileDetails.phone_number
-      );
       let phone = this.props.profileDetails.phone_number;
       this.setState({
         displayCountry: true,
@@ -1668,15 +1664,15 @@ class PersonalDetails extends Component {
             this.state.stateSelected == null) &&
           (this.state.citySelected == "" || this.state.citySelected == null)
         ) {
-          countrymsg = t("validations:required_state_city");
+          countrymsg = t("validations:required_state_city.message");
         } else if (
           this.state.countrySelected &&
           this.state.stateSelected &&
           (this.state.citySelected == "" || this.state.citySelected == null)
         ) {
-          countrymsg = t("validations:required_city");
+          countrymsg = t("validations:required_city.message");
         } else {
-          countrymsg = t("validations:required_country");
+          countrymsg = t("validations:required_country.message");
         }
         this.setState({ countrymsg });
       }
