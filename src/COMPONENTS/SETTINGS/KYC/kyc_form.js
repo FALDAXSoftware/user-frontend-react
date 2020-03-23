@@ -243,6 +243,16 @@ class KYCForm extends Component {
 
   /* Life-Cycle Methods */
   componentWillReceiveProps(props, newProps) {
+    if (
+      props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_user_updated !==
+        props.profileDetails.is_user_updated &&
+      !props.profileDetails.is_user_updated &&
+      props.profileDetails.is_kyc_done != "2"
+    ) {
+      // this.props.history.push("/editProfile");
+      this.setState({ disableform: true, loader: false });
+    }
     if (props.kycData !== undefined && props.kycData !== "") {
       if (props.kycData.status === 200) {
         //this.openNotificationWithIcon("success","KYC",props.kycData.message)
@@ -262,6 +272,41 @@ class KYCForm extends Component {
       this.props.profileDetails != props.profileDetails &&
       props.profileDetails
     ) {
+      // console.log("^^^", props.profileDetails.phone_number);
+      // let fields;
+      // if (
+      //   this.props.profileDetails.country != props.profileDetails.country &&
+      //   props.profileDetails.country
+      // ) {
+      //   console.log("^^^alag", props.profileDetails.country_code);
+      //   if (props.profileDetails.phone_number) {
+      //     // fields["phone_number"] = props.profileDetails.phone_number.replace(
+      //     //   / /g,
+      //     //   ""
+      //     // );
+      //     // fields["country_code"] = props.profileDetails.country_code;
+      //     let arr = [];
+      //     arr.push(props.profileDetails.country_code);
+      //     this.setState(
+      //       {
+      //         countrychange: true,
+      //         mobile: props.profileDetails.phone_number.replace(/ /g, ""),
+      //         phoneCountry: arr,
+      //         displayCountry: true,
+      //         fields
+      //       },
+      //       () => {
+      //         if (
+      //           props.profileDetails.country_code == "US" ||
+      //           props.profileDetails.country_code == "CA"
+      //         )
+      //           this.setState({
+      //             showSSN: true
+      //           });
+      //       }
+      //     );
+      //   }
+      // }
       this.getKYCDetails();
     }
   }
@@ -432,13 +477,21 @@ class KYCForm extends Component {
               profileData.dob === null || profileData.dob === "Invalid date"
                 ? ""
                 : moment(profileData.dob, "DD-MM-YYYY").format("YYYY-MM-DD");
-            // fields["dob"] =
-            //   profileData.dob !== null
-            //     ? moment(profileData.dob).format("YYYY-DD-MM")
-            //     : "";
             fields["country_code"] =
               profileData.country_code !== null ? profileData.country_code : "";
             let country_code = "";
+            console.log(
+              "^^^profileData.country_code ",
+              profileData.country_code
+            );
+            // if (
+            //   profileData.country_code == "US" ||
+            //   profileData.country_code == "CA"
+            // ) {
+            //   self.setState({
+            //     showSSN: true
+            //   });
+            // }
             if (profileData.country) {
               // console.log("kyc dob ^^^^", profileData.countryJsonId);
               var countrySelected = CountryData.getCountryById(
@@ -688,8 +741,6 @@ class KYCForm extends Component {
       {
         kycData: { ...this.state.kycData, ...fields },
         fields
-        // phoneCountry: [country_code],
-        // mobile
       },
       () => {
         // To rerender the mobile input field
@@ -1108,7 +1159,7 @@ class KYCForm extends Component {
                 <Postalkyc>
                   {t("identity_verification:subhead_mobile_no.message")}*
                 </Postalkyc>
-                <PhoneDiv className="jkasdhkasjd">
+                <PhoneDiv>
                   {/* {console.log(
                     "Test",
                     this.state.mobile,
