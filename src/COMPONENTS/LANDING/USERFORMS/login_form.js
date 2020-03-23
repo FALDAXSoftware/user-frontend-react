@@ -331,7 +331,7 @@ class Login_Form extends Component {
     );
   }
   componentDidMount() {
-    document.cookie = "isLoggedInLive=false; domain=faldax.com";
+    document.cookie = "isLoggedInPreprod=false; domain=faldax.com";
   }
   verifyCallback(recaptchaToken) {
     this.setState({

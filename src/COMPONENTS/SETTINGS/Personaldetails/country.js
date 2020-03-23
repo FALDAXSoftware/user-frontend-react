@@ -127,6 +127,11 @@ class CountryPick extends Component {
     });
   }
   componentWillReceiveProps(newprops) {
+    if (this.props.country_id != newprops.country_id && newprops.country_id) {
+      this.setState({
+        country_json_id: newprops.country_id
+      });
+    }
     if (this.props != newprops) {
       var countrySelected = CountryData.getCountryById(
         this.state.country_json_id - 1

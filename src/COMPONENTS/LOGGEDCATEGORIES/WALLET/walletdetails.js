@@ -232,11 +232,15 @@ class WalletDetails extends Component {
             currency = "$";
             break;
           case "EUR":
-            fiat = responseData.currencyConversionData.quote.EUR.price;
+            fiat = responseData.currencyConversionData.quote.EUR
+              ? responseData.currencyConversionData.quote.EUR.price
+              : 0;
             currency = "€";
             break;
           case "INR":
-            fiat = responseData.currencyConversionData.quote.INR.price;
+            fiat = responseData.currencyConversionData.quote.INR
+              ? responseData.currencyConversionData.quote.INR.price
+              : 0;
             currency = "₹";
             break;
           default:
