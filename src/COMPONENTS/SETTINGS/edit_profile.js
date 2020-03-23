@@ -73,14 +73,23 @@ class Editprofile extends Component {
     this.setState({
       activeKey: key
     });
+    if (key == "4") {
+      if (
+        !this.props.profileDetails.is_user_updated &&
+        this.props.profileDetails.is_kyc_done != "2"
+      ) {
+        this.setState({
+          countryAccess: true
+        });
+      } else {
+        this.setState({
+          countryAccess: false
+        });
+      }
+    }
   }
   componentDidMount() {
     this.getWalletSummary();
-    // console.log(
-    //   "^^tier^",
-    //   this.props.profileDetails.is_user_updated,
-    //   this.props.profileDetails.is_kyc_done
-    // );
     if (
       !this.props.profileDetails.is_user_updated &&
       this.props.profileDetails.is_kyc_done != "2"
@@ -141,24 +150,19 @@ class Editprofile extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 201) {
-          // console.log("responsedata summary=-----------", responseData.data);
           this.setState({
             totalUSDOfWallet: responseData.usd_price.toFixed(2),
             walletCoins: responseData.data,
             user2fastatus: responseData.user2fastatus,
             loader: false
           });
-          // console.log(
-          //   "responsedata walletCoins=-----------",
-          //   this.state.walletCoins
-          // );
         } else if (responseData.status == 200) {
           this.setState({
             walletCoins: null,
@@ -170,13 +174,17 @@ class Editprofile extends Component {
       .catch(error => {});
   }
   comingCancel = e => {
-    this.setState({
-      countryAccess: false
-    });
+    this.setState(
+      {
+        countryAccess: false
+      },
+      () => {
+        this.props.history.push("/editProfile");
+      }
+    );
   };
   render() {
     const { t } = this.props;
-    // console.log("defaultActiveKey:", this.props.activeKey);
     return (
       <div>
         <Navigation />
@@ -202,7 +210,6 @@ class Editprofile extends Component {
                 />
               </TabPane>
               <TabPane tab={t("head_identity_verification.message")} key="4">
-                {/* <TierOne /> */}
                 {this.state.countryAccess ? (
                   <CompleteProfile
                     comingCancel={e => this.comingCancel(e)}
