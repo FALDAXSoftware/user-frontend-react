@@ -2770,7 +2770,7 @@
     },
     "cover_latter_text": {
       "page": "Jobs",
-      "message": "Cover Letter.",
+      "message": "Cover Letter",
       "message_type": "Web content",
       "context": "Text"
     },
