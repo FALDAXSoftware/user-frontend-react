@@ -8,13 +8,16 @@ import {Table} from "react-bootstrap";
 import Screener from "../../tv_widgets/screener";
 import MarketWidget from "../../tv_widgets/market_widget";
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
-const WhiteBgContainer = styled(Container)`
-    background-color: white;
+import TechnicalChart from "./technical_chart";
+import {globalVariables} from "../../../Globals";
+import {connect} from "react-redux";
+const API_URL = globalVariables.API_URL;
+const WhiteBgWrapper = styled.div`
+    background-color: ${props => (props.theme.mode === "dark" ? "#041b2c" : "white")};
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0,0,0,0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0,0,0,0.53);
     box-shadow: -1px 5px 31px -10px rgba(0,0,0,0.53);
     border-radius: 5px;
-
 `
 const Search = Input.Search;
 const Headwrap = styled.div`
@@ -52,8 +55,37 @@ class MarketPage extends React.PureComponent{
     constructor(props) {
         super(props);
         this.state={
-            screener_key:1
+            screener_key:1,
+            tc1:"ETHBTC",
+            tc2:"XRPBTC",
+            tc3:"LTCBTC",
+            pairs:[]
         }
+    }
+    componentDidMount() {
+        this.getPairs()
+    }
+
+    getPairs = ()=>{
+        fetch(API_URL + `/users/get-all-pair`, {
+            method: "get",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "Accept-Language": localStorage["i18nextLng"]
+            }
+        }).then(response => response.json())
+            .then(responseData => {
+                if (responseData.status == 200) {
+                    this.setState({
+                        pairs:responseData.data
+                    })
+
+                }
+            })
+            .catch(error => {
+
+            });
     }
     onScreenerTabChange = (key)=>{
         this.setState({screener_key:key})
@@ -82,12 +114,34 @@ class MarketPage extends React.PureComponent{
                 <ContactWrap>
                     <Navigation/>
                     <GreyWrap>
+                        <Container>
+                            {this.state.pairs.length > 0 &&
+                            <Row style={{marginBottom:"30px"}} gutter={16}>
+                                <Col md={8}>
+                                    <WhiteBgWrapper>
+                                        <TechnicalChart pairs={this.state.pairs} defaultPair={this.state.tc1}/>
+                                    </WhiteBgWrapper>
+                                </Col>
+                                <Col md={8}>
+                                    <WhiteBgWrapper>
+                                        <TechnicalChart pairs={this.state.pairs} defaultPair={this.state.tc2}/>
+                                    </WhiteBgWrapper>
+                                </Col>
+                                <Col md={8}>
+                                    <WhiteBgWrapper>
+                                        <TechnicalChart pairs={this.state.pairs} defaultPair={this.state.tc3}/>
+                                    </WhiteBgWrapper>
+                                </Col>
+                            </Row>
+                            }
+
+
                         <Row style={{marginBottom:"30px"}}>
                             <Col>
-                                <WhiteBgContainer>
+                                <WhiteBgWrapper>
                                             <div>
                                                 <Headwrap>
-                                                    <Row style={{}}>
+                                                    <Row >
                                                         <Col span={24}>
                                                             <RiseText style={{marginBottom:"0"}}>Crypto Screener</RiseText>
                                                         </Col>
@@ -104,8 +158,8 @@ class MarketPage extends React.PureComponent{
                                                                         "defaultScreen": "general",
                                                                         "market": "crypto",
                                                                         "showToolbar": true,
-                                                                        "colorTheme": "light",
-                                                                        "locale": "en"
+                                                                        "colorTheme":this.props.theme? "dark" : "light",
+                                                                        "locale": localStorage["i18nextLng"]
                                                                     }}/>
                                                                     }
 
@@ -119,8 +173,8 @@ class MarketPage extends React.PureComponent{
                                                                         "defaultScreen": "general",
                                                                         "market": "crypto",
                                                                         "showToolbar": true,
-                                                                        "colorTheme": "light",
-                                                                        "locale": "en"
+                                                                        "colorTheme":this.props.theme? "dark" : "light",
+                                                                        "locale": localStorage["i18nextLng"]
                                                                     }}/>
                                                                     }
                                                                 </TabPane>
@@ -133,8 +187,8 @@ class MarketPage extends React.PureComponent{
                                                                         "defaultScreen": "general",
                                                                         "market": "crypto",
                                                                         "showToolbar": true,
-                                                                        "colorTheme": "light",
-                                                                        "locale": "en"
+                                                                        "colorTheme":this.props.theme? "dark" : "light",
+                                                                        "locale": localStorage["i18nextLng"]
                                                                     }}/>
                                                                     }
                                                                 </TabPane>
@@ -147,8 +201,8 @@ class MarketPage extends React.PureComponent{
                                                                         "defaultScreen": "general",
                                                                         "market": "crypto",
                                                                         "showToolbar": true,
-                                                                        "colorTheme": "light",
-                                                                        "locale": "en"
+                                                                        "colorTheme":this.props.theme? "dark" : "light",
+                                                                        "locale": localStorage["i18nextLng"]
                                                                     }}/>
                                                                     }
                                                                 </TabPane>
@@ -159,12 +213,12 @@ class MarketPage extends React.PureComponent{
 
                                                 </Headwrap>
                                             </div>
-                                </WhiteBgContainer>
+                                </WhiteBgWrapper>
                             </Col>
                         </Row>
                         <Row>
                             <Col span={24}>
-                                <WhiteBgContainer>
+                                <WhiteBgWrapper>
                                     <div>
                                         <Headwrap>
                                             <Row style={{}}>
@@ -181,8 +235,8 @@ class MarketPage extends React.PureComponent{
                                                             "defaultColumn": "overview",
                                                             "screener_type": "crypto_mkt",
                                                             "displayCurrency": "USD",
-                                                            "colorTheme": "light",
-                                                            "locale": "en"
+                                                            "colorTheme":this.props.theme? "dark" : "light",
+                                                            "locale": localStorage["i18nextLng"]
                                                         }}/>
                                                     </div>
 
@@ -191,14 +245,27 @@ class MarketPage extends React.PureComponent{
 
                                         </Headwrap>
                                     </div>
-                                </WhiteBgContainer>
+                                </WhiteBgWrapper>
                             </Col>
                         </Row>
+                        </Container>
                     </GreyWrap>
                     <FooterHome />
                 </ContactWrap>
         )
     }
 }
+function mapStateToProps(state) {
+    return {
+        isLoggedIn: state.simpleReducer.isLoggedIn,
+        theme:
+            state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+        cryptoPair:
+            state.walletReducer.cryptoPair !== undefined
+                ? state.walletReducer.cryptoPair
+                : ""
+        /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
+    };
+}
 
-export default  MarketPage
+export default connect(mapStateToProps)(MarketPage);
