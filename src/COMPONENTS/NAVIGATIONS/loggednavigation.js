@@ -854,7 +854,7 @@ class LoggedNavigation extends Component {
           defaultSelectedKeys={["1"]}
           selectedKeys={this.state.selected}
         >
-          {/* <Menuitem key="1" onClick={this.showComing}>
+          <Menuitem key="1" onClick={this.showComing}>
             <NavLink className="" to="/dashboard">
               DASHBOARD
             </NavLink>
@@ -863,7 +863,7 @@ class LoggedNavigation extends Component {
             <NavLink className="" to="/trade">
               Trade
             </NavLink>
-          </Menuitem> */}
+          </Menuitem>
           <Menuitem key="3">
             <DropDownDiv
               className="Drop-main "
@@ -956,9 +956,7 @@ class LoggedNavigation extends Component {
                 {t("navbar_sub_menu_profile.message")}
               </Link>
             </LogoutStyle>
-            {/* <span>
-              <Link to="/dashboard">Dashboard</Link>
-            </span> */}
+
             {/* <span> <Link to="/conversion">CONVERSION</Link></span> */}
             {/* <span onClick={this.tradeAccess}>CONVERSION</span> */}
             {/* <span>
@@ -981,6 +979,9 @@ class LoggedNavigation extends Component {
                 </SubMenuNav>
               </DropMenu>
             </a>
+            <span>
+              <Link to="/dashboard">Dashboard</Link>
+            </span>
             <a className="DROPSUB">
               <DropMenu mode="inline">
                 <SubMenuNav
@@ -1022,9 +1023,9 @@ class LoggedNavigation extends Component {
                 </SubMenuNav>
               </DropMenu>
             </a>
-            {/* <span onClick={this.tradeAccess}>
+            <span onClick={this.tradeAccess}>
               <Link to="/trade">Trade</Link>
-            </span> */}
+            </span>
             <span>
               {/* <Link to="/wallet">{t("navbar_menu_wallet.message")}</Link> */}
               <a onClick={this.walletAccess}>
