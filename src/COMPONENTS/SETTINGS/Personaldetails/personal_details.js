@@ -15,6 +15,7 @@ import {
 } from "antd";
 import styled from "styled-components";
 import moment from "moment";
+import SimpleReactValidator from "simple-react-validator";
 import AgreeTerms from "../../../SHARED-COMPONENTS/AgreeTerms";
 import { translate } from "react-i18next";
 /* Components */
@@ -240,6 +241,86 @@ export const Postal = styled(Firstname)`
     margin-top: 25px;
   }
 `;
+const Postalkyc = styled(Postal)`
+  @media (max-width: 767px) {
+    margin-top: 0px;
+  }
+`;
+const PhoneDiv = styled.div`
+  > .intl-tel-input {
+    width: 95%;
+
+    @media (max-width: 992px) {
+      width: 95%;
+    }
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+  }
+  & .form-control {
+    border: 1px solid #e2e6ea;
+    background-color: ${props =>
+      props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
+    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    border-radius: 5px;
+    min-height: 45px;
+    width: 100%;
+    padding-left: 5px;
+  }
+  & .selected-dial-code {
+    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  }
+  &.mobile_field {
+    > .intl-tel-input {
+      & .selected-flag {
+        outline: none;
+        font-weight: 600;
+        background-color: ;
+        ${props =>
+          props.theme.mode === "dark"
+            ? "#06223c !important"
+            : "#f5f6fa !important"};
+      }
+      & .intl-tel-input.form-control {
+        font-weight: 600;
+        box-shadow: none;
+      }
+      & .intl-tel-input.form-control:focus {
+        box-shadow: none;
+      }
+      & .intl-tel-input.form-control:active,
+      .intl-tel-input.form-control:focus,
+      .intl-tel-input.form-control:hover {
+        border-color: rgb(0, 170, 250);
+      }
+    }
+  }
+  &.mobile_field.disabled {
+    > .intl-tel-input {
+      & .selected-flag {
+        cursor: not-allowed;
+        #b2b2b236background: #bfbfbf24 !important;
+        color: ${props =>
+          props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.4)"};
+      }
+      & .selected-dial-code {
+        color: ${props =>
+          props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.4)"};
+      }
+      & .intl-tel-input.form-control {
+        color: ${props =>
+          props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.4)"};
+        background-color: ${props =>
+          props.theme.mode === "dark" ? " #041422" : "#f5f6fa"};
+      }
+      & .intl-tel-input.form-control:active,
+      .intl-tel-input.form-control:focus,
+      .intl-tel-input.form-control:hover {
+        border: 1px solid #e2e6ea;
+      }
+    }
+  }
+`;
 export const FifthRow = styled(Row)`
   text-align: left;
   margin-top: 50px;
@@ -381,6 +462,21 @@ class PersonalDetails extends Component {
     this.handleProfile = this.handleProfile.bind(this);
     this.handleLangChange = this.handleLangChange.bind(this);
     this.t = this.props.t;
+    this.changeNumber = this.changeNumber.bind(this);
+    this.clearValidation = this.clearValidation.bind(this);
+    this.validator = new SimpleReactValidator({
+      mobileVal: {
+        // name the rule
+        message: this.t("validations:mobile_no_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        rule: function(val, options) {
+          // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
+          // check that it is a valid IP address and is not blacklisted
+          var re = /^(\(?\+?[0-9]*\)?)?[0-9_\-\(\)]*$/;
+          var bool = re.test(String(val).toLowerCase());
+          return bool;
+        }
+      }
+    });
   }
   static propTypes = {
     form: formShape
@@ -450,6 +546,93 @@ class PersonalDetails extends Component {
   }
 
   componentWillReceiveProps(props) {
+    if (
+      props.profileDetails.countryJsonId &&
+      props.profileDetails.countryJsonId !==
+        this.props.profileDetails.countryJsonId
+    ) {
+      var countrySelected = CountryData.getCountryById(
+        props.profileDetails.countryJsonId - 1
+      );
+      let country_code = "";
+      let phoneCode = "";
+      let arr = [];
+      if (countrySelected) {
+        country_code = countrySelected.sortname;
+        phoneCode = countrySelected.phonecode;
+        arr.push(country_code);
+      }
+      if (props.profileDetails.country) {
+        this.setState({
+          displayCountry: true,
+          phoneCountry: arr,
+          phoneCode,
+          countryJsonId: props.profileDetails.countryJsonId
+        });
+      }
+    }
+    if (
+      props.profileDetails.phone_number &&
+      this.props.profileDetails.phone_number !==
+        props.profileDetails.phone_number
+    ) {
+      console.log(
+        "^^^ recieve props phone number",
+        props.profileDetails.phone_number
+      );
+      var countrySelected = CountryData.getCountryById(
+        props.profileDetails.countryJsonId - 1
+      );
+      let phoneCode = "";
+      if (countrySelected) {
+        phoneCode = countrySelected.phonecode;
+      }
+      // if (this.state.phoneCode) {
+      let temp = props.profileDetails.phone_number;
+      var mob = temp.split(`+${phoneCode}`);
+      // }
+      // let temp = props.profileDetails.phone_number;
+      // var mob = temp.split(`${this.state.phoneCode}`);
+      // console.log(
+      //   "this is phoneCode^^^^",
+      //   this.state.phoneCode,
+      //   props.profileDetails.phone_number,
+      //   phoneCode,
+      //   mob
+      // );
+      let phone = props.profileDetails.phone_number;
+      this.setState({
+        mobile: mob[1],
+        displayCountry: true,
+        fields: {
+          phone_number: phone
+        }
+      });
+    }
+    if (
+      props.profileDetails.country &&
+      this.props.profileDetails.country !== props.profileDetails.country
+    ) {
+      this.setState({
+        countrySelected: props.profileDetails.country
+      });
+    }
+    if (
+      props.profileDetails.state &&
+      this.props.profileDetails.state !== props.profileDetails.state
+    ) {
+      this.setState({
+        stateSelected: props.profileDetails.state
+      });
+    }
+    if (
+      props.profileDetails.city_town &&
+      this.props.profileDetails.city_town !== props.profileDetails.city_town
+    ) {
+      this.setState({
+        citySelected: props.profileDetails.city_town
+      });
+    }
     if (
       props.profileDetails.profile_pic !== null &&
       props.profileDetails.profile_pic !== undefined &&
@@ -531,14 +714,12 @@ class PersonalDetails extends Component {
 
   onCheckboxChange = e => {
     let { t } = this.props;
-    // console.log(`checked = ${e.target.checked}`);
     this.setState(
       {
         agreeCheck: e.target.checked
       },
       () => {
         if (this.state.agreeCheck !== true) {
-          // this.setState({ dateFIcon: false });
           document.querySelectorAll(".agree_check_msg")[0].style.display =
             "block";
           this.setState({
@@ -586,12 +767,75 @@ class PersonalDetails extends Component {
         It is passed as props(callback function) to Country component.
     */
 
-  onCountryChange(country, state, city) {
-    this.setState({
-      countrySelected: country,
-      stateSelected: state,
-      citySelected: city
-    });
+  // onCountryChange(country, state, city) {
+  //   this.setState({
+  //     countrySelected: country,
+  //     stateSelected: state,
+  //     citySelected: city
+  //   });
+  //   var loc = {
+  //     country: country,
+  //     state: state,
+  //     city: city
+  //   };
+  //   this.onChangeField(loc, "country");
+  // }
+  onCountryChange(country, state, city, country_code, phoneCode, phone_number) {
+    // console.log("^^^Before", this.state.countrySelected);
+    // console.log("^^^kyc", country, state, city, country_code);
+    let fields = this.state.fields;
+    if (this.state.countrySelected === country) {
+      if (this.state.fields.phone_number === phone_number) {
+        fields["phone_number"] = phone_number;
+        let mobile = phone_number;
+        this.setState({
+          phoneCountry: [country_code],
+          mobile
+        });
+      } else {
+        fields["phone_number"] = this.state.fields.phone_number;
+        let mobile = this.state.mobile;
+        this.setState({
+          phoneCountry: [country_code],
+          mobile
+        });
+      }
+    } else {
+      let mobile = this.state.mobile;
+      if (
+        this.state.phoneCountry &&
+        this.state.phoneCountry[0] != country_code
+      ) {
+        mobile = `+${phoneCode}`;
+      }
+      this.setState({
+        phoneCountry: [country_code],
+        mobile
+      });
+    }
+    let self = this;
+    fields["country_code"] = country_code;
+    this.setState(
+      {
+        countrySelected: country,
+        stateSelected: state,
+        citySelected: city,
+        fields
+      },
+      () => {
+        // To rerender the mobile input field
+        self.setState(
+          {
+            displayCountry: false
+          },
+          () => {
+            self.setState({
+              displayCountry: true
+            });
+          }
+        );
+      }
+    );
     var loc = {
       country: country,
       state: state,
@@ -739,8 +983,8 @@ class PersonalDetails extends Component {
     )
       value = value.trim();
     if (field === "first_name") {
-      value = value.trim();
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      // value = value.trim();
+      var re = /^[a-zA-Z0-9?']{2,5000}$/;
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
@@ -759,10 +1003,7 @@ class PersonalDetails extends Component {
           this.setState({ firstIcon: false });
           document.querySelectorAll(".first_msg")[0].style.display = "block";
           this.setState({
-            firstmsg:
-              t("subhead_personal_form_first_name.message") +
-              " " +
-              t("validations:min_max_first_name.message")
+            firstmsg: this.t("sign_up:first_name_error.message")
           });
         }
       } else {
@@ -776,7 +1017,7 @@ class PersonalDetails extends Component {
         });
       }
     } else if (field === "last_name") {
-      var re = /^[a-zA-Z0-9]{2,15}$/;
+      var re = /^[a-zA-Z0-9?']{2,5000}$/;
       var bool = re.test(value);
       if (value !== "") {
         if (bool === true) {
@@ -795,10 +1036,7 @@ class PersonalDetails extends Component {
           this.setState({ lastIcon: false });
           document.querySelectorAll(".last_msg")[0].style.display = "block";
           this.setState({
-            lastmsg:
-              t("subhead_personal_form_last_name.message") +
-              " " +
-              t("validations:min_max_first_name.message")
+            lastmsg: this.t("sign_up:last_name_error.message")
           });
         }
       } else {
@@ -1118,12 +1356,16 @@ class PersonalDetails extends Component {
           this.props.profileDetails.country !== null) ||
           (this.state.countrySelected !== null &&
             this.state.countrySelected !== undefined &&
-            this.state.countrySelected !== ""))
+            this.state.countrySelected !== "")) &&
+        this.validator.allValid()
       ) {
         this.setState({
           agreeTermsShow: true
         });
       } else {
+        this.validator.showMessages();
+        // rerender to show messages for the first time
+        this.forceUpdate();
         this.openNotificationWithProfile(
           "error",
           t("validations:error_text.message"),
@@ -1287,7 +1529,8 @@ class PersonalDetails extends Component {
           this.props.profileDetails.country !== null) ||
           (this.state.countrySelected !== null &&
             this.state.countrySelected !== undefined &&
-            this.state.countrySelected !== ""))
+            this.state.countrySelected !== "")) &&
+        this.validator.allValid()
       ) {
         document.querySelectorAll(".first_msg")[0].style.display = "none";
         document.querySelectorAll(".last_msg")[0].style.display = "none";
@@ -1366,6 +1609,7 @@ class PersonalDetails extends Component {
         }
         profileData.append("default_language", this.state.language);
         profileData.append("phone_number", this.state.fields.phone_number);
+        profileData.append("country_code", this.state.fields.country_code);
         this.props.profileupdateAction(this.props.isLoggedIn, profileData);
         this.props.i18n.changeLanguage(this.state.language);
         this.props.langAction(this.state.language);
@@ -1373,6 +1617,9 @@ class PersonalDetails extends Component {
           editMode: false
         });
       } else {
+        this.validator.showMessages();
+        // rerender to show messages for the first time
+        this.forceUpdate();
         this.openNotificationWithProfile(
           "error",
           t("validations:error_text.message"),
@@ -1417,15 +1664,15 @@ class PersonalDetails extends Component {
             this.state.stateSelected == null) &&
           (this.state.citySelected == "" || this.state.citySelected == null)
         ) {
-          countrymsg = t("validations:required_state_city");
+          countrymsg = t("validations:required_state_city.message");
         } else if (
           this.state.countrySelected &&
           this.state.stateSelected &&
           (this.state.citySelected == "" || this.state.citySelected == null)
         ) {
-          countrymsg = t("validations:required_city");
+          countrymsg = t("validations:required_city.message");
         } else {
-          countrymsg = t("validations:required_country");
+          countrymsg = t("validations:required_country.message");
         }
         this.setState({ countrymsg });
       }
@@ -1503,7 +1750,38 @@ class PersonalDetails extends Component {
       language: value
     });
   }
-
+  changeNumber(a, mob, code) {
+    // console.log("^^^code", code, mob);
+    if (mob.trim !== "") {
+      var temp = `+${code.dialCode}`;
+      var mobile = mob.includes(`+${code.dialCode}`) ? mob : temp.concat(mob);
+      let fields = this.state.fields;
+      fields["phone_number"] =
+        typeof mobile == "string" ? mobile.replace(/ /g, "") : mobile;
+      this.setState(
+        {
+          fields,
+          mobile: typeof mob == "string" ? mob.replace(/ /g, "") : mob
+        },
+        () => {
+          // console.log(
+          //   "phone_number^^^^",
+          //   this.state.fields.phone_number,
+          //   this.state.mobile
+          // );
+        }
+      );
+    } else {
+      this.validator.showMessages();
+      // rerender to show messages for the first time
+      this.forceUpdate();
+    }
+  }
+  clearValidation() {
+    this.validator.hideMessages();
+    this.forceUpdate();
+    // rerender to hide messages for the first time
+  }
   onKycCancel = () => {
     this.setState(
       {
@@ -1544,6 +1822,7 @@ class PersonalDetails extends Component {
         /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
         document.querySelectorAll(".postal_msg")[0].style.display = "none";
         document.querySelectorAll(".df_msg")[0].style.display = "none";
+        this.clearValidation();
       }
     );
   };
@@ -1776,8 +2055,30 @@ class PersonalDetails extends Component {
                           ? this.state.citySelected
                           : this.props.profileDetails.city_town
                       }
-                      onCountryChange={(country, state, city) =>
-                        this.onCountryChange(country, state, city)
+                      // onCountryChange={(country, state, city) =>
+                      //   this.onCountryChange(country, state, city)
+                      // }
+                      country_id={this.state.countryJsonId}
+                      phone_number={this.state.fields.phone_number}
+                      // onCountryChange={(country, state, city) =>
+                      //   this.onCountryChange(country, state, city)
+                      // }
+                      onCountryChange={(
+                        country,
+                        state,
+                        city,
+                        country_code,
+                        phoneCode,
+                        phone_number
+                      ) =>
+                        this.onCountryChange(
+                          country,
+                          state,
+                          city,
+                          country_code,
+                          phoneCode,
+                          phone_number
+                        )
                       }
                     />
                     <CountryMsg className="country_msg">
@@ -1785,6 +2086,79 @@ class PersonalDetails extends Component {
                     </CountryMsg>
                   </Col>
                 </FourthRow>
+                {this.state.displayCountry && this.state.phoneCountry ? (
+                  <FourthRow>
+                    <Col
+                      md={{ span: 24 }}
+                      lg={{ span: 24 }}
+                      xl={{ span: 24 }}
+                      xxl={{ span: 24 }}
+                    >
+                      <Postalkyc>
+                        {this.t(
+                          "identity_verification:subhead_mobile_no.message"
+                        )}
+                        *
+                      </Postalkyc>
+                      <PhoneDiv
+                        className={
+                          this.state.editMode
+                            ? "mobile_field"
+                            : "mobile_field disabled"
+                        }
+                      >
+                        {this.state.displayCountry && (
+                          <IntlTelInputS
+                            disabled={!this.state.editMode}
+                            value={
+                              this.state.mobile
+                                ? typeof this.state.mobile == "string"
+                                  ? this.state.mobile.replace(/ /g, "")
+                                  : this.state.mobile
+                                : ""
+                            }
+                            allowDropdown={false}
+                            autoHideDialCode={true}
+                            preferredCountries={[]}
+                            inputClassName="intl-tel-input form-control"
+                            onlyCountries={
+                              this.state.phoneCountry[0] !== null
+                                ? this.state.phoneCountry
+                                : ""
+                            }
+                            defaultCountry={
+                              this.state.phoneCountry[0] !== null
+                                ? this.state.phoneCountry[0].toLowerCase()
+                                : ""
+                            }
+                            separateDialCode={true}
+                            onPhoneNumberChange={(a, b, c) =>
+                              this.changeNumber(a, b, c)
+                            }
+                          />
+                        )}
+                      </PhoneDiv>
+                      {this.validator.message(
+                        "phone_number",
+                        this.state.mobile,
+                        "required|mobileVal|min:5|max:30",
+                        "text-danger-validation",
+                        {
+                          required:
+                            this.t(
+                              "identity_verification:subhead_mobile_no.message"
+                            ) +
+                            " " +
+                            t("validations:field_is_required.message"),
+                          min: t("validations:mobile_no_min_error.message"),
+                          max: t("validations:mobile_no_max_error.message")
+                        }
+                      )}
+                    </Col>
+                  </FourthRow>
+                ) : (
+                  ""
+                )}
                 <FourthRow>
                   <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
                     <Postal>
@@ -1930,7 +2304,6 @@ class PersonalDetails extends Component {
                     </FIATMsg>
                   </SixthRow>
                 )}
-
                 <FifthRow>
                   <Col
                     md={{ span: 24 }}
@@ -2044,5 +2417,7 @@ export default translate([
   "validations",
   "general",
   "general_1",
-  "settings"
+  "settings",
+  "sign_up",
+  "identity_verification"
 ])(connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails)));

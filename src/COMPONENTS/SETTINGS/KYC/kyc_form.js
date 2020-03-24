@@ -152,28 +152,22 @@ class KYCForm extends Component {
     this.validator = new SimpleReactValidator({
       firstname: {
         // name the rule
-        message:
-          this.t("subhead_personal_form_first_name.message") +
-          " " +
-          this.t("validations:min_max_first_name.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("sign_up:first_name_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^[a-zA-Z0-9]{2,15}$/;
+          var re = /^[a-zA-Z0-9?']{2,5000}$/;
           var bool = re.test(String(val).toLowerCase());
           return bool;
         }
       },
       lastname: {
         // name the rule
-        message:
-          this.t("subhead_personal_form_last_name.message") +
-          " " +
-          this.t("validations:min_max_first_name.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
+        message: this.t("sign_up:last_name_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
         rule: function(val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
-          var re = /^[a-zA-Z0-9]{2,15}$/;
+          var re = /^[a-zA-Z0-9?']{2,5000}$/;
           var bool = re.test(String(val).toLowerCase());
           return bool;
         }
@@ -249,6 +243,16 @@ class KYCForm extends Component {
 
   /* Life-Cycle Methods */
   componentWillReceiveProps(props, newProps) {
+    if (
+      props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_user_updated !==
+        props.profileDetails.is_user_updated &&
+      !props.profileDetails.is_user_updated &&
+      props.profileDetails.is_kyc_done != "2"
+    ) {
+      // this.props.history.push("/editProfile");
+      this.setState({ disableform: true, loader: false });
+    }
     if (props.kycData !== undefined && props.kycData !== "") {
       if (props.kycData.status === 200) {
         //this.openNotificationWithIcon("success","KYC",props.kycData.message)
@@ -268,6 +272,41 @@ class KYCForm extends Component {
       this.props.profileDetails != props.profileDetails &&
       props.profileDetails
     ) {
+      // console.log("^^^", props.profileDetails.phone_number);
+      // let fields;
+      // if (
+      //   this.props.profileDetails.country != props.profileDetails.country &&
+      //   props.profileDetails.country
+      // ) {
+      //   console.log("^^^alag", props.profileDetails.country_code);
+      //   if (props.profileDetails.phone_number) {
+      //     // fields["phone_number"] = props.profileDetails.phone_number.replace(
+      //     //   / /g,
+      //     //   ""
+      //     // );
+      //     // fields["country_code"] = props.profileDetails.country_code;
+      //     let arr = [];
+      //     arr.push(props.profileDetails.country_code);
+      //     this.setState(
+      //       {
+      //         countrychange: true,
+      //         mobile: props.profileDetails.phone_number.replace(/ /g, ""),
+      //         phoneCountry: arr,
+      //         displayCountry: true,
+      //         fields
+      //       },
+      //       () => {
+      //         if (
+      //           props.profileDetails.country_code == "US" ||
+      //           props.profileDetails.country_code == "CA"
+      //         )
+      //           this.setState({
+      //             showSSN: true
+      //           });
+      //       }
+      //     );
+      //   }
+      // }
       this.getKYCDetails();
     }
   }
@@ -294,7 +333,7 @@ class KYCForm extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
@@ -438,13 +477,21 @@ class KYCForm extends Component {
               profileData.dob === null || profileData.dob === "Invalid date"
                 ? ""
                 : moment(profileData.dob, "DD-MM-YYYY").format("YYYY-MM-DD");
-            // fields["dob"] =
-            //   profileData.dob !== null
-            //     ? moment(profileData.dob).format("YYYY-DD-MM")
-            //     : "";
             fields["country_code"] =
               profileData.country_code !== null ? profileData.country_code : "";
             let country_code = "";
+            console.log(
+              "^^^profileData.country_code ",
+              profileData.country_code
+            );
+            // if (
+            //   profileData.country_code == "US" ||
+            //   profileData.country_code == "CA"
+            // ) {
+            //   self.setState({
+            //     showSSN: true
+            //   });
+            // }
             if (profileData.country) {
               // console.log("kyc dob ^^^^", profileData.countryJsonId);
               var countrySelected = CountryData.getCountryById(
@@ -694,8 +741,6 @@ class KYCForm extends Component {
       {
         kycData: { ...this.state.kycData, ...fields },
         fields
-        // phoneCountry: [country_code],
-        // mobile
       },
       () => {
         // To rerender the mobile input field
@@ -1075,6 +1120,7 @@ class KYCForm extends Component {
                   state={this.state.kycData.state}
                   city={this.state.kycData.city_town}
                   kyc="kyc"
+                  country_id={this.state.kycData.countryJsonId}
                   // isLoggedIn={this.props.simpleReducer.isLoggedIn}
                   onCountryChange={(
                     country,
@@ -1114,7 +1160,7 @@ class KYCForm extends Component {
                 <Postalkyc>
                   {t("identity_verification:subhead_mobile_no.message")}*
                 </Postalkyc>
-                <PhoneDiv className="jkasdhkasjd">
+                <PhoneDiv>
                   {/* {console.log(
                     "Test",
                     this.state.mobile,
@@ -1198,8 +1244,8 @@ class KYCForm extends Component {
                     t("subhead_personal_form_postal_code.message") +
                     " " +
                     t("validations:field_is_required.message"),
-                  min: t("validations:Postal_min_error.message"),
-                  max: t("validations:Postal_max_error.message")
+                  min: t("validations:postal_min_error.message"),
+                  max: t("validations:postal_max_error.message")
                 }
               )}
             </Col>
@@ -1259,5 +1305,6 @@ const mapDispatchToProps = dispatch => ({
 export default translate([
   "edit_profile_titles",
   "validations",
-  "identity_verification"
+  "identity_verification",
+  "sign_up"
 ])(connect(mapStateToProps, mapDispatchToProps)(KYCForm));

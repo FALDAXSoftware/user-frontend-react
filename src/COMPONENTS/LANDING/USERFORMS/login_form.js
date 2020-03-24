@@ -330,7 +330,9 @@ class Login_Form extends Component {
       }
     );
   }
-  componentDidMount() {}
+  componentDidMount() {
+    document.cookie = "isLoggedInPreprod=false; domain=faldax.com";
+  }
   verifyCallback(recaptchaToken) {
     this.setState({
       recaptchaToken

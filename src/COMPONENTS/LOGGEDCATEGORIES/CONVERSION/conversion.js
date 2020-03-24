@@ -135,7 +135,6 @@ class Conversion extends React.Component {
     }
   }
   simplexAccess() {
-    // console.log("^^^^^", this.state.panic_status);
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
     } else {
@@ -144,6 +143,11 @@ class Conversion extends React.Component {
           this.props.history.push("/simplex");
       } else {
         if (this.state.is_allowed === false && this.state.is_kyc_done !== 2) {
+          this.setState({ completeKYC: true });
+        } else if (
+          this.state.is_allowed === true &&
+          this.state.is_kyc_done !== 2
+        ) {
           this.setState({ completeKYC: true });
         } else {
           this.setState({ countryAccess: true });

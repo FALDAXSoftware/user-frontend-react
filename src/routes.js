@@ -43,9 +43,7 @@ import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
 // let { API_URL } = globalVariables;
 // const socketIOClient = require("socket.io-client");
 // const sailsIOClient = require("sails.io.js");
-// let io = sailsIOClient(socketIOClient);
-// io.sails.url = API_URL;
-// io.sails.environment = "production";
+// let io = socketIOClient(globalVariables.SOCKET_HOST)
 
 const routes = [
   {
@@ -53,11 +51,11 @@ const routes = [
     path: "/editProfile",
     component: Editprofile
   },
-  {
-    exact: false,
-    path: "/home",
-    component: HomePage
-  },
+  // {
+  //   exact: false,
+  //   path: "/home",
+  //   component: HomePage
+  // },
   {
     exact: false,
     path: "/wallet",
@@ -86,19 +84,19 @@ const routes = [
   {
     exact: false,
     path: "/dashboard",
-    component: () => <Dashboard/>,
+    component: () => <Dashboard />,
     // io: io
   },
   {
     exact: false,
     path: "/open-ticket",
-    component: () => <OpenTicket />,
+    component: () => <OpenTicket />
     // io: io
   },
   {
     exact: false,
     path: "/conversion",
-    component: () => <Conversion />,
+    component: () => <Conversion />
     // io: io
   },
   // {
@@ -120,12 +118,12 @@ const routes = [
   {
     exact: false,
     path: "/simplex",
-    component: () => <Simplex/>,
+    component: () => <Simplex />
   },
   {
     exact: false,
     path: "/simplex-exchange",
-    component: () => <SimplexExchange/>,
+    component: () => <SimplexExchange />
   },
   // {
   //   exact: false,
@@ -172,27 +170,27 @@ const routes = [
   {
     exact: false,
     path: "/tier-upgrade-information",
-    component: () => <TierUpgradeInfo/>,
+    component: () => <TierUpgradeInfo />
   },
   {
     exact: false,
     path: "/tier-image-information",
-    component: () => <TierUpgradeInfoImageRequirements/>,
+    component: () => <TierUpgradeInfoImageRequirements />
   },
   {
     exact: false,
     path: "/tier-idcp-confirmation",
-    component: () => <TierIDConfirmation/>,
+    component: () => <TierIDConfirmation />
   },
   {
     exact: false,
     path: "/tickets",
-    component: () => <HubspotTickets/>
+    component: () => <HubspotTickets />
   },
   {
     exact: false,
     path: "/market",
-    component: () => <MarketPage/>
+    component: () => <MarketPage />
   }
   // {
   //   exact: true,
@@ -209,7 +207,7 @@ class AppRouter extends Component {
     this.onActive = this._onActive.bind(this) */
     this.onIdle = this._onIdle.bind(this);
   }
-  componentDidMount() {}
+  componentDidMount() { }
   /*   _onAction(e) {
       console.log('user did something', e)
     }
@@ -262,8 +260,8 @@ class AppRouter extends Component {
           })}
           <Route
             component={NotFound}
-            // path="/privacy-policy"
-            // loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
+          // path="/privacy-policy"
+          // loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
           />
           {/* <Route
   path="/privacy-policy"
