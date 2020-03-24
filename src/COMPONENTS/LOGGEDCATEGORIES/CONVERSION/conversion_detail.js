@@ -122,7 +122,7 @@ class ConversionDetail extends React.Component {
     this.validator1 = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message: this.t("value_greater_than_0_error.message"),
+        message: this.t("validations:value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -134,7 +134,7 @@ class ConversionDetail extends React.Component {
       },
       gtzerofiat: {
         // name the rule
-        message: this.t("value_greater_than_0_error.message"),
+        message: this.t("validations:value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -145,7 +145,7 @@ class ConversionDetail extends React.Component {
         required: true // optional
       },
       decimalrestrict2: {
-        message: this.t("2_decimal_error.message"),
+        message: this.t("validations:2_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,2}$/;
           if (RE.test(val)) {
@@ -156,7 +156,7 @@ class ConversionDetail extends React.Component {
         }
       },
       decimalrestrict8: {
-        message: this.t("8_decimal_error.message"),
+        message: this.t("validations:8_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
@@ -167,7 +167,9 @@ class ConversionDetail extends React.Component {
         }
       },
       minCryptoValid: {
-        message: `${this.t("min_limit_error.message")} ${this.state.minCrypto}`,
+        message: `${this.t("validations:min_limit_error.message")} ${
+          this.state.minCrypto
+        }`,
         rule: (val, params, validator) => {
           // console.log("this is val?????", val);
           if (val >= this.state.minCrypto) {
@@ -184,7 +186,7 @@ class ConversionDetail extends React.Component {
     this.validator2 = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message: this.t("value_greater_than_0_error.message"),
+        message: this.t("validations:value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -196,7 +198,7 @@ class ConversionDetail extends React.Component {
       },
       gtzerofiat: {
         // name the rule
-        message: this.t("value_greater_than_0_error.message"),
+        message: this.t("validations:value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -207,7 +209,7 @@ class ConversionDetail extends React.Component {
         required: true // optional
       },
       decimalrestrict2: {
-        message: this.t("2_decimal_error.message"),
+        message: this.t("validations:2_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,2}$/;
           if (RE.test(val)) {
@@ -218,7 +220,7 @@ class ConversionDetail extends React.Component {
         }
       },
       decimalrestrict8: {
-        message: this.t("8_decimal_error.message"),
+        message: this.t("validations:8_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
@@ -229,7 +231,7 @@ class ConversionDetail extends React.Component {
         }
       },
       minCurrValid: {
-        message: `${this.t("min_limit_error.message")} ${
+        message: `${this.t("validations:min_limit_error.message")} ${
           this.state.minCurrency
         }`,
         rule: (val, params, validator) => {
@@ -450,7 +452,7 @@ class ConversionDetail extends React.Component {
         (body, JWR) => {
           if (body.status === 200) {
             let res = body.data;
-            console.log("getsocketvalues", res);
+            // console.log("getsocketvalues", res);
             this.setState({
               // loader: false,
               subTotal: parseFloat(res.original_value).toFixed(8),
@@ -551,7 +553,7 @@ class ConversionDetail extends React.Component {
             // console.log(body.err);
             this.openNotificationWithIcon("error", "Error", body.err);
           }
-          console.log("getsocketvalues", body);
+          // console.log("getsocketvalues", body);
           this.setState({
             loader: false
           });
@@ -1080,7 +1082,7 @@ class ConversionDetail extends React.Component {
   //       headers: {
   //         Accept: "application/json",
   //         "Content-Type": "application/json",
-  // "Accept-Language": localStorage["i18nextLng"], 
+  // "Accept-Language": localStorage["i18nextLng"],
   //         Authorization: "Bearer " + this.props.isLoggedIn
   //       },
   //       body: JSON.stringify(values)
@@ -1290,7 +1292,7 @@ class ConversionDetail extends React.Component {
   //       headers: {
   //         Accept: "application/json",
   //         "Content-Type": "application/json",
-  // "Accept-Language": localStorage["i18nextLng"], 
+  // "Accept-Language": localStorage["i18nextLng"],
   //         Authorization: "Bearer " + this.props.isLoggedIn
   //       },
   //       body: JSON.stringify(values)
@@ -1483,7 +1485,7 @@ class ConversionDetail extends React.Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify(values)
@@ -1586,7 +1588,7 @@ class ConversionDetail extends React.Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify(values)
@@ -1639,7 +1641,7 @@ class ConversionDetail extends React.Component {
     fetch(API_URL + `/get-simplex-coin-list`, {
       method: "get",
       headers: {
-        "Accept-Language": localStorage["i18nextLng"], 
+        "Accept-Language": localStorage["i18nextLng"],
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "Bearer " + this.props.isLoggedIn
@@ -1665,7 +1667,7 @@ class ConversionDetail extends React.Component {
     fetch(API_URL + `/conversion/get-jst-pair`, {
       method: "get",
       headers: {
-        "Accept-Language": localStorage["i18nextLng"], 
+        "Accept-Language": localStorage["i18nextLng"],
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "Bearer " + this.props.isLoggedIn
@@ -2062,7 +2064,7 @@ class ConversionDetail extends React.Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           Authorization: "Bearer " + this.props.isLoggedIn
         },
         body: JSON.stringify(values)
@@ -2259,8 +2261,15 @@ class ConversionDetail extends React.Component {
                             `required|numeric|gtzero|decimalrestrict8|minCryptoValid`,
                             "text-danger-validation",
                             {
-                              minCryptoValid: `Minimum limit is ${this.state.minCrypto}`,
-                              numeric: "Please enter valid data"
+                              required: this.t(
+                                "general_1:this_field_required_error.message"
+                              ),
+                              minCryptoValid: `${this.t(
+                                "validations:min_threshold_error.message"
+                              )} ${this.state.minCrypto}`,
+                              numeric: this.t(
+                                "validations:invalid_data_error.message"
+                              )
                             }
                           )}
                         </Col>
@@ -2371,7 +2380,12 @@ class ConversionDetail extends React.Component {
                             `required|numeric|gtzerofiat|decimalrestrict2`,
                             "text-danger-validation",
                             {
-                              numeric: "Please enter valid data"
+                              required: this.t(
+                                "general_1:this_field_required_error.message"
+                              ),
+                              numeric: this.t(
+                                "validations:invalid_data_error.message"
+                              )
                             }
                           )}
                         </Col>
@@ -2515,8 +2529,15 @@ class ConversionDetail extends React.Component {
                             `required|numeric|gtzero|decimalrestrict8|minCurrValid`,
                             "text-danger-validation",
                             {
-                              minCurrValid: `Minimum limit is ${this.state.minCurrency}`,
-                              numeric: "Please enter valid data"
+                              required: this.t(
+                                "general_1:this_field_required_error.message"
+                              ),
+                              minCurrValid: `${this.t(
+                                "validations:min_threshold_error.message"
+                              )} ${this.state.minCurrency}`,
+                              numeric: this.t(
+                                "validations:invalid_data_error.message"
+                              )
                             }
                           )}
                         </Col>
@@ -2651,7 +2672,12 @@ class ConversionDetail extends React.Component {
                             `required|numeric|gtzerofiat|decimalrestrict2`,
                             "text-danger-validation",
                             {
-                              numeric: "Please enter valid data"
+                              required: this.t(
+                                "general_1:this_field_required_error.message"
+                              ),
+                              numeric: this.t(
+                                "validations:invalid_data_error.message"
+                              )
                             }
                           )}
                         </Col>
@@ -2733,7 +2759,7 @@ class ConversionDetail extends React.Component {
                     <Row>
                       <Col xs={12} className="left-style">
                         <ConversionRightSpan>
-                          {t("network_text")} {t("fee_text.message")}
+                          {t("network_text.message")} {t("fee_text.message")}
                         </ConversionRightSpan>
                       </Col>
                       <Col xs={12} className="right-style">
@@ -2834,7 +2860,12 @@ class ConversionDetail extends React.Component {
                             "Promo Code ",
                             this.state.promoCode,
                             "required",
-                            "text-danger-validation"
+                            "text-danger-validation",
+                            {
+                              required: this.t(
+                                "general_1:this_field_required_error.message"
+                              )
+                            }
                           )}
                           {this.state.promoCode && (
                             <span
@@ -2902,7 +2933,12 @@ class ConversionDetail extends React.Component {
                             "Promo Code ",
                             this.state.promoCode,
                             "required",
-                            "text-danger-validation"
+                            "text-danger-validation",
+                            {
+                              required: this.t(
+                                "general_1:this_field_required_error.message"
+                              )
+                            }
                           )}
                           {this.state.promoCode && (
                             <span
@@ -3043,6 +3079,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default translate("conversion")(
+export default translate(["conversion", "validations", "general_1"])(
   connect(mapStateToProps, mapDispatchToProps)(withRouter(ConversionDetail))
 );
