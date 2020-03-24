@@ -26,9 +26,9 @@ import OpenTicket from "COMPONENTS/LANDINGCATEGORIES/open_ticket";
 import { globalVariables } from "./Globals.js";
 import { LogoutUser } from "ACTIONS/authActions";
 
-/* import Chart from "COMPONENTS/tradingviewchart"; */
+// import Chart from "COMPONENTS/tradingviewchart";
 import Conversion from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion";
-// import ConversionDetail from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion_detail";
+import ConversionDetail from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion_detail";
 import TierUpgradeInfo from "./COMPONENTS/SETTINGS/tier_upgrade_information.js";
 import TierUpgradeInfoImageRequirements from "./COMPONENTS/SETTINGS/tier-upgrade-info-image-requirements.js";
 import TierIDConfirmation from "./COMPONENTS/SETTINGS/tier_id_confirmation.js";
@@ -36,12 +36,13 @@ import Simplex from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex.js";
 import SimplexExchange from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex_exchange.js";
 import NotFound from "./SHARED-COMPONENTS/NotFound.js";
 // import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
-// import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
-// import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
-// let { API_URL } = globalVariables;
-// const socketIOClient = require("socket.io-client");
-// const sailsIOClient = require("sails.io.js");
-// let io = socketIOClient(globalVariables.SOCKET_HOST)
+import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
+import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
+let { API_URL } = globalVariables;
+const socketIOClient = require("socket.io-client");
+const sailsIOClient = require("sails.io.js");
+let io = sailsIOClient(socketIOClient);
+io.sails.url = API_URL;
 
 const routes = [
   {
@@ -64,16 +65,16 @@ const routes = [
     path: "/walletDetails",
     component: WalletDetails
   },
-  // {
-  //   exact: false,
-  //   path: "/trade",
-  //   component: () => <Trade io={io} />
-  // },
-  // {
-  //   exact: false,
-  //   path: "/chart",
-  //   component: () => <Tradingviewchart io={io} />
-  // },
+  {
+    exact: false,
+    path: "/trade",
+    component: () => <Trade io={io} />
+  },
+  {
+    exact: false,
+    path: "/chart",
+    component: () => <Tradingviewchart io={io} />
+  },
   {
     exact: false,
     path: "/history",
@@ -97,12 +98,13 @@ const routes = [
     component: () => <Conversion />
     // io: io
   },
-  // {
-  //   exact: false,
-  //   path: "/crypto-conversion",
-  //   component: () => <ConversionDetail io={io} />,
-  //   io: io
-  // },{`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
+  {
+    exact: false,
+    path: "/crypto-conversion",
+    component: () => <ConversionDetail io={io} />,
+    io: io
+  },
+  // {`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
   // {
   //   exact: false,
   //   path: "/crypto-conversion",
