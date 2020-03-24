@@ -114,9 +114,7 @@ const Headermain = styled(Header)`
   align-items: center;
   & .color_important {
     color: ${props =>
-      props.theme.mode === "dark"
-        ? "rgba(0,0,0,.65) !important"
-        : "black !important"};
+      props.theme.mode === "dark" ? "#fff !important" : "black !important"};
   }
 `;
 const Menumain = styled(Menu)`
