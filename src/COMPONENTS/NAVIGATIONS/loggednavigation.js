@@ -113,7 +113,10 @@ const Headermain = styled(Header)`
   display: flex;
   align-items: center;
   & .color_important {
-    color: black !important;
+    color: ${props =>
+      props.theme.mode === "dark"
+        ? "rgba(0,0,0,.65) !important"
+        : "black !important"};
   }
 `;
 const Menumain = styled(Menu)`
