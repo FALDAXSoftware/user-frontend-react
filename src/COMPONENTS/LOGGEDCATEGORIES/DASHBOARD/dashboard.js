@@ -23,6 +23,7 @@ import { ContainerContact } from "STYLED-COMPONENTS/LOGGED_STYLE/historyStyle"
 import {
     ActPortWrap, Lleft, Rright, Topic, ActDiv, ActTable, PortTable, HighLow, LeftHl, RightHl, Newsdiv, News, NewsList, List, ListSpan, Listp, Date, SpinSingle, RiseFall
 } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle"
+import CrossRate from "./cross_rate";
 
 let { API_URL } = globalVariables;
 
@@ -231,18 +232,18 @@ class Dashboard extends Component {
 
     componentDidMount() {
         var self = this;
-        self.loadNews(1);
-        self.loadActivity();
-        self.loadPortfolio();
-        io.sails.url = API_URL;
-        io.sails.headers = {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: "Bearer " + this.props.isLoggedIn
-        }
+        // self.loadNews(1);
+        // self.loadActivity();
+        // self.loadPortfolio();
+        // io.sails.url = API_URL;
+        // io.sails.headers = {
+        //     Accept: 'application/json',
+        //     'Content-Type': 'application/json',
+        //     Authorization: "Bearer " + this.props.isLoggedIn
+        // }
     }
 
-    /* 
+    /*
             Page: /dashboard
             It is called in ComponentDidMount.
             API is called to get Data of Activity table.
@@ -257,7 +258,7 @@ class Dashboard extends Component {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                "Accept-Language": localStorage["i18nextLng"], 
+                "Accept-Language": localStorage["i18nextLng"],
                 Authorization: "Bearer " + this.props.isLoggedIn
             }
         }).then(response => response.json())
@@ -290,7 +291,7 @@ class Dashboard extends Component {
             })
     }
 
-    /* 
+    /*
             Page: /dashboard
             It is called in ComponentDidMount.
             API is called to get Data of Portfolio table.
@@ -304,7 +305,7 @@ class Dashboard extends Component {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                "Accept-Language": localStorage["i18nextLng"], 
+                "Accept-Language": localStorage["i18nextLng"],
                 Authorization: "Bearer " + this.props.isLoggedIn
             }
         })
@@ -333,7 +334,7 @@ class Dashboard extends Component {
             .catch(error => { /* console.log(error) */ })
     }
 
-    /* 
+    /*
            Page: /dashboard
            It is called in ComponentDidMount.
            API is called to get Data of News table.
@@ -348,7 +349,7 @@ class Dashboard extends Component {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                "Accept-Language": localStorage["i18nextLng"], 
+                "Accept-Language": localStorage["i18nextLng"],
             }
         })
             .then(response => response.json())
@@ -377,7 +378,7 @@ class Dashboard extends Component {
             })
     }
 
-    /* 
+    /*
         Page: /dashboard
         It is called to get Domain From URL.
         URL is split into array and domain is returned.
@@ -400,50 +401,50 @@ class Dashboard extends Component {
                         <BodyWrap>
                             <ContainerNew>
                                 <div>
-                                    <DashGraph data={data} io={io} />
+                                    {/*<DashGraph data={data} io={io} />*/}
                                 </div>
                                 <ActPortWrap>
                                     <Row>
                                         <Col sm={24} lg={12}>
-                                            <Lleft>
-                                                <Topic>
-                                                    <span>ACTIVITY</span>
-                                                </Topic>
-                                                <ActDiv>
-                                                    <ActTable scroll={{ y: 320 }} pagination={false} columns={activityColumns} dataSource={activityData} className="activity-table" />
-                                                </ActDiv>
-                                                {(this.state.activityLoader === true) ?
-                                                    <SpinSingle className="Single_spin">
-                                                        <Spin size="small" />
-                                                    </SpinSingle>
-                                                    : ""
-                                                }
-                                            </Lleft>
+                                            {/*<Lleft>*/}
+                                            {/*    <Topic>*/}
+                                            {/*        <span>ACTIVITY</span>*/}
+                                            {/*    </Topic>*/}
+                                            {/*    <ActDiv>*/}
+                                            {/*        <ActTable scroll={{ y: 320 }} pagination={false} columns={activityColumns} dataSource={activityData} className="activity-table" />*/}
+                                            {/*    </ActDiv>*/}
+                                            {/*    {(this.state.activityLoader === true) ?*/}
+                                            {/*        <SpinSingle className="Single_spin">*/}
+                                            {/*            <Spin size="small" />*/}
+                                            {/*        </SpinSingle>*/}
+                                            {/*        : ""*/}
+                                            {/*    }*/}
+                                            {/*</Lleft>*/}
                                         </Col>
                                         <Col sm={24} lg={12}>
-                                            <Rright>
-                                                <Topic>
-                                                    <span>PORTFOLIO</span>
-                                                </Topic>
-                                                <HighLow>
-                                                    <LeftHl>{this.state.total.toFixed(8)} {userFiat}</LeftHl>
-                                                    <RightHl>^{this.state.diffrence.toFixed(8)} {userFiat}</RightHl>
-                                                </HighLow>
-                                                <ActDiv>
-                                                    <PortTable scroll={{ y: 250 }} pagination={false} columns={portfolioColumn} dataSource={this.state.portfolioData} className="portfolio-table" />
-                                                </ActDiv>
-                                                {(this.state.portfolioLoader === true) ?
-                                                    <SpinSingle className="Single_spin">
-                                                        <Spin size="small" />
-                                                    </SpinSingle>
-                                                    : ""
-                                                }
-                                            </Rright>
+                                            {/*<Rright>*/}
+                                            {/*    <Topic>*/}
+                                            {/*        <span>PORTFOLIO</span>*/}
+                                            {/*    </Topic>*/}
+                                            {/*    <HighLow>*/}
+                                            {/*        <LeftHl>{this.state.total.toFixed(8)} {userFiat}</LeftHl>*/}
+                                            {/*        <RightHl>^{this.state.diffrence.toFixed(8)} {userFiat}</RightHl>*/}
+                                            {/*    </HighLow>*/}
+                                            {/*    <ActDiv>*/}
+                                            {/*        <PortTable scroll={{ y: 250 }} pagination={false} columns={portfolioColumn} dataSource={this.state.portfolioData} className="portfolio-table" />*/}
+                                            {/*    </ActDiv>*/}
+                                            {/*    {(this.state.portfolioLoader === true) ?*/}
+                                            {/*        <SpinSingle className="Single_spin">*/}
+                                            {/*            <Spin size="small" />*/}
+                                            {/*        </SpinSingle>*/}
+                                            {/*        : ""*/}
+                                            {/*    }*/}
+                                            {/*</Rright>*/}
                                         </Col>
                                     </Row>
                                 </ActPortWrap>
                                 <RiseFall>
-                                    <RiseTable isLoggedIn={this.props.isLoggedIn} />
+                                    <CrossRate/>
                                 </RiseFall>
                                 <Newsdiv>
                                     <News>NEWS</News>
@@ -492,7 +493,7 @@ class Dashboard extends Component {
 
 function mapStateToProps(state) {
     return ({
-        isLoggedIn: state.simpleReducer.isLoggedIn,/* 
+        isLoggedIn: state.simpleReducer.isLoggedIn,/*
         theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "", */
         profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "",
         /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
