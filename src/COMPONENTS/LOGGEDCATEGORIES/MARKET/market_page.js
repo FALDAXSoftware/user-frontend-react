@@ -10,7 +10,9 @@ import MarketWidget from "../../tv_widgets/market_widget";
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import TechnicalChart from "./technical_chart";
 import {globalVariables} from "../../../Globals";
+import { translate, Trans } from "react-i18next";
 import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
 const API_URL = globalVariables.API_URL;
 const WhiteBgWrapper = styled.div`
     background-color: ${props => (props.theme.mode === "dark" ? "#041b2c" : "white")};
@@ -61,6 +63,7 @@ class MarketPage extends React.PureComponent{
             tc3:"LTCBTC",
             pairs:[]
         }
+        this.t = this.props.t;
     }
     componentDidMount() {
         this.getPairs()
@@ -143,13 +146,13 @@ class MarketPage extends React.PureComponent{
                                                 <Headwrap>
                                                     <Row >
                                                         <Col span={24}>
-                                                            <RiseText style={{marginBottom:"0"}}>Crypto Screener</RiseText>
+                                                            <RiseText style={{marginBottom:"0"}}>{this.t("market:crypto_screener.message")}</RiseText>
                                                         </Col>
                                                     </Row>
                                                     <Row>
                                                         <Col span={24} style={{marginBottom:"20px"}} >
                                                             <Tabs defaultActiveKey="1" onChange={this.onScreenerTabChange} tabBarExtraContent={<Tooltip title="Launch In Fullscreen"><Button className="fullscreenBtn" size={"large"} type="link" onClick={()=>{this.goFullScreen("screener")}}><Icon type="arrows-alt" /></Button></Tooltip>}>
-                                                                <TabPane tab="Overview" key="1" style={{minHeight:"400px"}} id={"screener"}>
+                                                                <TabPane tab={this.t("market:overview.message")} key="1" style={{minHeight:"400px"}} id={"screener"}>
                                                                     {this.state.screener_key== 1 &&
                                                                     <Screener  options={{
                                                                         "width": "100%",
@@ -164,7 +167,7 @@ class MarketPage extends React.PureComponent{
                                                                     }
 
                                                                 </TabPane>
-                                                                <TabPane tab="Performance" key="2">
+                                                                <TabPane tab={this.t("market:performance.message")} key="2">
                                                                     {this.state.screener_key== 2 &&
                                                                     <Screener options={{
                                                                         "width": "100%",
@@ -178,7 +181,7 @@ class MarketPage extends React.PureComponent{
                                                                     }}/>
                                                                     }
                                                                 </TabPane>
-                                                                <TabPane tab="Oscillators" key="3">
+                                                                <TabPane tab={this.t("market:oscillators.message")} key="3">
                                                                     {this.state.screener_key == 3 &&
                                                                     <Screener options={{
                                                                         "width": "100%",
@@ -192,7 +195,7 @@ class MarketPage extends React.PureComponent{
                                                                     }}/>
                                                                     }
                                                                 </TabPane>
-                                                                <TabPane tab="Trend-Following" key="4">
+                                                                <TabPane tab={this.t("market:trend_following.message")} key="4">
                                                                     {this.state.screener_key== 4 &&
                                                                     <Screener options={{
                                                                         "width": "100%",
@@ -223,7 +226,7 @@ class MarketPage extends React.PureComponent{
                                         <Headwrap>
                                             <Row style={{}}>
                                                 <Col span={24}>
-                                                    <RiseText>RISING/FALLING</RiseText>
+                                                    <RiseText>{this.t("market:rise_fall.message")}</RiseText>
                                                 </Col>
                                             </Row>
                                             <Row>
@@ -268,4 +271,6 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(MarketPage);
+export default translate(["header", "footer", "general_1", "general_4"])(
+    connect(mapStateToProps)(MarketPage)
+);
