@@ -35,7 +35,9 @@ import TierIDConfirmation from "./COMPONENTS/SETTINGS/tier_id_confirmation.js";
 import Simplex from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex.js";
 import SimplexExchange from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex_exchange.js";
 import NotFound from "./SHARED-COMPONENTS/NotFound.js";
-// import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
+import Market from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/market";
+import MarketPage from "./COMPONENTS/LOGGEDCATEGORIES/MARKET/market_page";
+import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
 // import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
 // import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
 let { API_URL } = globalVariables;
@@ -80,12 +82,12 @@ const routes = [
     path: "/history",
     component: History2
   },
-  // {
-  //   exact: false,
-  //   path: "/dashboard",
-  //   component: () => <Dashboard io={io} />,
-  //   io: io
-  // },
+  {
+    exact: false,
+    path: "/dashboard",
+    component: () => <Dashboard />,
+    // io: io
+  },
   {
     exact: false,
     path: "/open-ticket",
@@ -186,6 +188,11 @@ const routes = [
     exact: false,
     path: "/tickets",
     component: () => <HubspotTickets />
+  },
+  {
+    exact: false,
+    path: "/market",
+    component: () => <MarketPage />
   }
   // {
   //   exact: true,
@@ -202,7 +209,7 @@ class AppRouter extends Component {
     this.onActive = this._onActive.bind(this) */
     this.onIdle = this._onIdle.bind(this);
   }
-  componentDidMount() {}
+  componentDidMount() { }
   /*   _onAction(e) {
       console.log('user did something', e)
     }
@@ -255,8 +262,8 @@ class AppRouter extends Component {
           })}
           <Route
             component={NotFound}
-            // path="/privacy-policy"
-            // loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
+          // path="/privacy-policy"
+          // loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
           />
           {/* <Route
   path="/privacy-policy"
