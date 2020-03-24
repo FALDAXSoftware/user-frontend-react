@@ -72,9 +72,15 @@ class BuyTABLE extends Component {
     }
   }
   componentDidMount() {
-    var self = this;
+    // self.buyTableData();
+    console.log("^^^^ Here", this.props.io);
+    if (this.props.io) {
+      this.props.io.on("buy-book-data", data => {
+        console.log("^^^^data", data);
+        // this.updateData(data);
+      });
+    }
 
-    self.buyTableData();
     // this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
     // })
   }

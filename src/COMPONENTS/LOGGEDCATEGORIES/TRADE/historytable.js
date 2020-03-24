@@ -73,10 +73,10 @@ class HistoryTable extends Component {
 
   componentDidMount() {
     var self = this;
-    self.historyData();
-    io.socket.on("tradehistoryUpdate", data => {
-      self.updateData(data);
-    });
+    // self.historyData();
+    // io.socket.on("tradehistoryUpdate", data => {
+    //   self.updateData(data);
+    // });
   }
   componentWillReceiveProps(props, newProps) {
     var self = this;

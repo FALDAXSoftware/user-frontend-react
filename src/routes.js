@@ -38,12 +38,12 @@ import NotFound from "./SHARED-COMPONENTS/NotFound.js";
 import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
 import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
 import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
-let { API_URL } = globalVariables;
+// let { API_URL } = globalVariables;
 const socketIOClient = require("socket.io-client");
-const sailsIOClient = require("sails.io.js");
-let io = sailsIOClient(socketIOClient);
-io.sails.url = API_URL;
-
+// const sailsIOClient = require("sails.io.js");
+// let io = sailsIOClient(socketIOClient);
+// io.sails.url = API_URL;
+let io = null;
 const routes = [
   {
     exact: false,
@@ -80,12 +80,12 @@ const routes = [
     path: "/history",
     component: History2
   },
-  {
-    exact: false,
-    path: "/dashboard",
-    component: () => <Dashboard io={io} />,
-    io: io
-  },
+  // {
+  //   exact: false,
+  //   path: "/dashboard",
+  //   component: () => <Dashboard io={io} />,
+  //   io: io
+  // },
   {
     exact: false,
     path: "/open-ticket",
@@ -202,7 +202,18 @@ class AppRouter extends Component {
     this.onActive = this._onActive.bind(this) */
     this.onIdle = this._onIdle.bind(this);
   }
-  componentDidMount() {}
+  componentDidMount() {
+    console.log("^^headert", this.props.isLoggedIn);
+    io = socketIOClient(globalVariables.SOCKET_HOST, {
+      transportOptions: {
+        polling: {
+          extraHeaders: {
+            Authorization: "Bearer " + this.props.isLoggedIn //ahiya header pass karide auth
+          }
+        }
+      }
+    });
+  }
   /*   _onAction(e) {
       console.log('user did something', e)
     }

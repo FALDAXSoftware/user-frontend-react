@@ -58,7 +58,7 @@ class SellTable extends Component {
 
   componentDidMount() {
     var self = this;
-    self.sellTableData();
+    // self.sellTableData();
     // this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
     // })
   }

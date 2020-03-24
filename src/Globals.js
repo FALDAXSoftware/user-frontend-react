@@ -29,6 +29,7 @@ export const globalVariables = {
 
   // API_URL: "https://mainnet-backend.faldax.com", //Pre-Production URL
 
+  // API_URL: "http://991e8fb6.ngrok.io/api/v1/tradding/",
   API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
 
   TRADE_URL: "https://preprod-trade.faldax.com",
@@ -46,6 +47,7 @@ export const globalVariables = {
         'https://dev-backend.faldax.com',
     */
   // API_URL: 'http://13.58.130.154:8989' //Client Live URL,
+  SOCKET_HOST: "http://34064c97.ngrok.io",
 
   Terms_and_services:
     "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Terms+of+Service.pdf",

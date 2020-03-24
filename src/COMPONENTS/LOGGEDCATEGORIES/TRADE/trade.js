@@ -238,21 +238,21 @@ class Trade extends Component {
 
   componentDidMount() {
     var self = this;
-    io.sails.headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + this.props.isLoggedIn
-    };
-    this.orderSocket(this.state.timePeriod, this.state.status);
-    this.getInstrumentData();
-    this.getUserBal();
-    io.socket.on("walletBalanceUpdate", data => {
-      self.setState({ userBal: data });
-    });
-    io.socket.on("orderUpdated", data => {
-      self.orderSocket(self.state.timePeriod, self.state.status);
-      // self.getUserBal();
-    });
+    // io.sails.headers = {
+    //   Accept: "application/json",
+    //   "Content-Type": "application/json",
+    //   Authorization: "Bearer " + this.props.isLoggedIn
+    // };
+    // this.orderSocket(this.state.timePeriod, this.state.status);
+    // this.getInstrumentData();
+    // this.getUserBal();
+    // io.socket.on("walletBalanceUpdate", data => {
+    //   self.setState({ userBal: data });
+    // });
+    // io.socket.on("orderUpdated", data => {
+    //   self.orderSocket(self.state.timePeriod, self.state.status);
+    //   // self.getUserBal();
+    // });
   }
 
   // created by Meghal Patel at 2019-04-27 15:09.
