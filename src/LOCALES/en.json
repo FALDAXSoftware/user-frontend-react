@@ -2926,5 +2926,43 @@
       "message_type": "Web content",
       "context": "Japanese text"
     }
+  },
+  "market": {
+    "crypto_screener": {
+      "page": "Market",
+      "message": "CRYPTO SCREENER",
+      "message_type": "Web content",
+      "context": "CRYPTO SCREENER Widget header"
+    },
+    "overview": {
+      "page": "Market",
+      "message": "Overview",
+      "message_type": "Web content",
+      "context": "Overview Tab of crypto screener"
+    },
+    "performance": {
+      "page": "Market",
+      "message": "Performance",
+      "message_type": "Web content",
+      "context": "Performance Tab of crypto screener"
+    },
+    "oscillators": {
+      "page": "Market",
+      "message": "Oscillators",
+      "message_type": "Web content",
+      "context": "Oscillators Tab of crypto screener"
+    },
+    "trend_following": {
+      "page": "Market",
+      "message": "Trend-Following",
+      "message_type": "Web content",
+      "context": "Trend-Following Tab of crypto screener"
+    },
+    "rise_fall": {
+      "page": "Market",
+      "message": "RISING/FALLING",
+      "message_type": "Web content",
+      "context": "RISING/FALLING Tab of crypto screener"
+    }
   }
 }
