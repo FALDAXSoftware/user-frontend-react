@@ -233,7 +233,7 @@ export const RiseFall = styled.div`
     padding-bottom: 40px;
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     border-radius: 5px;
-    height:500px;
+    // height:500px;
     overflow-y:auto;
 
 `
