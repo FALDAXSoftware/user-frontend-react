@@ -1723,7 +1723,11 @@ class ConversionDetail extends React.Component {
         }
       });
       if (value === "XRP") {
-        if (this.state.currencyList[0].coin === "LTC") {
+        // console.log("^^^^this.state.currencyList XRP", this.state.currencyList);
+        if (
+          this.state.currencyList[0].coin === "LTC" ||
+          this.state.currencyList[0].coin === "ETH"
+        ) {
           this.setState({
             currency: this.state.currencyList[1].coin,
             minCurrency: this.state.currencyList[1].jst_min_coin_limit
@@ -1735,12 +1739,46 @@ class ConversionDetail extends React.Component {
           });
         }
       } else if (value === "LTC") {
-        if (this.state.currencyList[0].coin === "XRP") {
+        // console.log("^^^^this.state.currencyList LTC", this.state.currencyList);
+        if (
+          this.state.currencyList[0].coin === "XRP" ||
+          this.state.currencyList[0].coin === "ETH"
+        ) {
           this.setState({
             currency: this.state.currencyList[1].coin,
             minCurrency: this.state.currencyList[1].jst_min_coin_limit
           });
-        } else {
+        }
+        // else if (this.state.currencyList[0].coin === "ETH") {
+        //   this.setState({
+        //     currency: this.state.currencyList[1].coin,
+        //     minCurrency: this.state.currencyList[1].jst_min_coin_limit
+        //   });
+        // }
+        else {
+          this.setState({
+            currency: this.state.currencyList[0].coin,
+            minCurrency: this.state.currencyList[0].jst_min_coin_limit
+          });
+        }
+      } else if (value === "ETH") {
+        // console.log("^^^^this.state.currencyList ETH", this.state.currencyList);
+        if (
+          this.state.currencyList[0].coin === "XRP" ||
+          this.state.currencyList[0].coin === "LTC"
+        ) {
+          this.setState({
+            currency: this.state.currencyList[1].coin,
+            minCurrency: this.state.currencyList[1].jst_min_coin_limit
+          });
+        }
+        // else if (this.state.currencyList[2].coin === "LTC") {
+        //   this.setState({
+        //     currency: this.state.currencyList[3].coin,
+        //     minCurrency: this.state.currencyList[3].jst_min_coin_limit
+        //   });
+        // }
+        else {
           this.setState({
             currency: this.state.currencyList[0].coin,
             minCurrency: this.state.currencyList[0].jst_min_coin_limit
@@ -1855,7 +1893,10 @@ class ConversionDetail extends React.Component {
         }
       });
       if (value === "XRP") {
-        if (this.state.cryptoList[0].coin === "LTC") {
+        if (
+          this.state.cryptoList[0].coin === "LTC" ||
+          this.state.cryptoList[0].coin === "ETH"
+        ) {
           this.setState({
             crypto: this.state.cryptoList[1].coin,
             minCrypto: this.state.cryptoList[1].jst_min_coin_limit
@@ -1867,7 +1908,25 @@ class ConversionDetail extends React.Component {
           });
         }
       } else if (value === "LTC") {
-        if (this.state.cryptoList[0].coin === "XRP") {
+        if (
+          this.state.cryptoList[0].coin === "XRP" ||
+          this.state.cryptoList[0].coin === "ETH"
+        ) {
+          this.setState({
+            crypto: this.state.cryptoList[1].coin,
+            minCrypto: this.state.cryptoList[1].jst_min_coin_limit
+          });
+        } else {
+          this.setState({
+            crypto: this.state.cryptoList[0].coin,
+            minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+          });
+        }
+      } else if (value === "ETH") {
+        if (
+          this.state.cryptoList[0].coin === "XRP" ||
+          this.state.cryptoList[0].coin === "LTC"
+        ) {
           this.setState({
             crypto: this.state.cryptoList[1].coin,
             minCrypto: this.state.cryptoList[1].jst_min_coin_limit
@@ -2166,9 +2225,9 @@ class ConversionDetail extends React.Component {
                                   if (this.state.currency === "XRP") {
                                     if (
                                       // element.coin != this.state.currency &&
-                                      element.coin != "LTC"
+                                      element.coin != "LTC" &&
+                                      element.coin != "ETH"
                                     ) {
-                                      // console.log(this.state.cryptoList);
                                       return (
                                         <DropDownOption
                                           key={index}
@@ -2187,7 +2246,30 @@ class ConversionDetail extends React.Component {
                                   } else if (this.state.currency === "LTC") {
                                     if (
                                       // element.coin != this.state.currency &&
-                                      element.coin != "XRP"
+                                      element.coin != "XRP" &&
+                                      element.coin != "ETH"
+                                    ) {
+                                      // console.log(this.state.cryptoList);
+                                      return (
+                                        <DropDownOption
+                                          key={index}
+                                          value={element.coin}
+                                          selectedData={element}
+                                        >
+                                          {" "}
+                                          <DropIcon
+                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                            height="20px"
+                                          />{" "}
+                                          {element.coin}
+                                        </DropDownOption>
+                                      );
+                                    }
+                                  } else if (this.state.currency === "ETH") {
+                                    if (
+                                      // element.coin != this.state.currency &&
+                                      element.coin != "XRP" &&
+                                      element.coin != "LTC"
                                     ) {
                                       // console.log(this.state.cryptoList);
                                       return (
@@ -2284,7 +2366,8 @@ class ConversionDetail extends React.Component {
                                   if (this.state.currency === "XRP") {
                                     if (
                                       // element.coin != this.state.currency &&
-                                      element.coin != "LTC"
+                                      element.coin != "LTC" &&
+                                      element.coin != "ETH"
                                     ) {
                                       // console.log(this.state.cryptoList);
                                       return (
@@ -2305,7 +2388,30 @@ class ConversionDetail extends React.Component {
                                   } else if (this.state.currency === "LTC") {
                                     if (
                                       // element.coin != this.state.currency &&
-                                      element.coin != "XRP"
+                                      element.coin != "XRP" &&
+                                      element.coin != "ETH"
+                                    ) {
+                                      // console.log(this.state.cryptoList);
+                                      return (
+                                        <DropDownOption
+                                          key={index}
+                                          value={element.coin}
+                                          selectedData={element}
+                                        >
+                                          {" "}
+                                          <DropIcon
+                                            src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                            height="20px"
+                                          />{" "}
+                                          {element.coin}
+                                        </DropDownOption>
+                                      );
+                                    }
+                                  } else if (this.state.currency === "ETH") {
+                                    if (
+                                      // element.coin != this.state.currency &&
+                                      element.coin != "XRP" &&
+                                      element.coin != "LTC"
                                     ) {
                                       // console.log(this.state.cryptoList);
                                       return (
@@ -2435,7 +2541,8 @@ class ConversionDetail extends React.Component {
                                     if (this.state.crypto === "XRP") {
                                       if (
                                         // element.coin != this.state.crypto &&
-                                        element.coin != "LTC"
+                                        element.coin != "LTC" &&
+                                        element.coin != "ETH"
                                       ) {
                                         return (
                                           <DropDownOption
@@ -2455,7 +2562,29 @@ class ConversionDetail extends React.Component {
                                     } else if (this.state.crypto === "LTC") {
                                       if (
                                         // element.coin != this.state.crypto &&
-                                        element.coin != "XRP"
+                                        element.coin != "XRP" &&
+                                        element.coin != "ETH"
+                                      ) {
+                                        return (
+                                          <DropDownOption
+                                            key={index}
+                                            value={element.coin}
+                                            selectedData={element}
+                                          >
+                                            {" "}
+                                            <DropIcon
+                                              src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                              height="20px"
+                                            />{" "}
+                                            {element.coin}
+                                          </DropDownOption>
+                                        );
+                                      }
+                                    } else if (this.state.crypto === "ETH") {
+                                      if (
+                                        // element.coin != this.state.crypto &&
+                                        element.coin != "XRP" &&
+                                        element.coin != "LTC"
                                       ) {
                                         return (
                                           <DropDownOption
@@ -2577,7 +2706,8 @@ class ConversionDetail extends React.Component {
                                     if (this.state.crypto === "XRP") {
                                       if (
                                         // element.coin != this.state.crypto &&
-                                        element.coin != "LTC"
+                                        element.coin != "LTC" &&
+                                        element.coin != "ETH"
                                       ) {
                                         return (
                                           <DropDownOption
@@ -2597,7 +2727,29 @@ class ConversionDetail extends React.Component {
                                     } else if (this.state.crypto === "LTC") {
                                       if (
                                         // element.coin != this.state.crypto &&
-                                        element.coin != "XRP"
+                                        element.coin != "XRP" &&
+                                        element.coin != "ETH"
+                                      ) {
+                                        return (
+                                          <DropDownOption
+                                            key={index}
+                                            value={element.coin}
+                                            selectedData={element}
+                                          >
+                                            {" "}
+                                            <DropIcon
+                                              src={`${_AMAZONBUCKET}${element.coin_icon}`}
+                                              height="20px"
+                                            />{" "}
+                                            {element.coin}
+                                          </DropDownOption>
+                                        );
+                                      }
+                                    } else if (this.state.crypto === "ETH") {
+                                      if (
+                                        // element.coin != this.state.crypto &&
+                                        element.coin != "XRP" &&
+                                        element.coin != "LTC"
                                       ) {
                                         return (
                                           <DropDownOption
