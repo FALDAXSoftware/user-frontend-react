@@ -77,7 +77,7 @@ class BuyTABLE extends Component {
     if (this.props.io) {
       this.props.io.on("buy-book-data", data => {
         console.log("^^^^data", data);
-        // this.updateData(data);
+        this.updateData(data);
       });
     }
 
