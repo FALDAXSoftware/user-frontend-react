@@ -192,13 +192,13 @@ class Mini_graph extends React.Component {
     var self = this;
     let dataArray = [];
     let timeStampArray = [];
-    console.log("^^^", data);
+    // console.log("^^^", data);
     data = data[0];
     data.tradeChartDetails.map(element => {
       dataArray.push(element.fill_price);
       timeStampArray.push(moment.utc(element.created_at).unix());
     });
-    console.log("^^^dataArray", dataArray);
+    // console.log("^^^dataArray", dataArray);
     let graphOptions = this.state.data;
     // graphOptions.image =
     //   !this.coin_icon || this.coin_icon === "" || this.coin_icon === null

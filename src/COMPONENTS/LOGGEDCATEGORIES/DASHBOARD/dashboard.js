@@ -548,11 +548,12 @@ class Dashboard extends Component {
       .then(responseData => {
         let portfolioData = [];
         if (responseData.status === 200) {
+          // console.log("^^^^portfolioData", responseData.data);
           let userFiat = responseData.data.fiat;
           responseData.data.portfolioData.map(element => {
             portfolioData.push({
               coin: element.name,
-              amount: element.amount.toFixed(3) + " " + element.symbol,
+              amount: element.Amount.toFixed(3) + " " + element.symbol,
               value: element.average_price.toFixed(5) + " " + userFiat,
               change: element.percentchange.toFixed(5) + "%"
             });

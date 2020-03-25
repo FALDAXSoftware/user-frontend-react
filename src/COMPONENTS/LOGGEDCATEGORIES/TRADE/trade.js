@@ -216,8 +216,8 @@ class Trade extends Component {
             prevRoom: props.cryptoPair.prevRoom
           },
           () => {
-            self.orderSocket(self.state.timePeriod, self.state.status);
-            self.getUserBal();
+            // self.orderSocket(self.state.timePeriod, self.state.status);
+            // self.getUserBal();
           }
         );
       }
@@ -228,8 +228,8 @@ class Trade extends Component {
             prevRoom: props.cryptoPair.prevRoom
           },
           () => {
-            self.orderSocket(self.state.timePeriod, self.state.status);
-            self.getUserBal();
+            // self.orderSocket(self.state.timePeriod, self.state.status);
+            // self.getUserBal();
           }
         );
       }
@@ -262,6 +262,9 @@ class Trade extends Component {
       });
       this.props.io.on("walletBalanceUpdate", data => {
         self.setState({ userBal: data });
+      });
+      this.props.io.on("user-wallet-balance", data => {
+        this.setState({ userBal: data });
       });
     }
   }
