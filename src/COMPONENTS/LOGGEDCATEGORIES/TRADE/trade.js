@@ -72,7 +72,7 @@ import {
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const originalLayouts = getFromLS("layouts") || {};
 
-let { API_URL, tvChartURL } = globalVariables;
+let { API_URL, tvChartURL, SOCKET_HOST } = globalVariables;
 /* var socketIOClient = require('socket.io-client');
 io.sails.url = API_URL;
 var sailsIOClient = require('sails.io.js');
@@ -246,9 +246,7 @@ class Trade extends Component {
     // this.orderSocket(this.state.timePeriod, this.state.status);
     // this.getInstrumentData();
     // this.getUserBal();
-    // io.socket.on("walletBalanceUpdate", data => {
-    //   self.setState({ userBal: data });
-    // });
+
     // io.socket.on("orderUpdated", data => {
     //   self.orderSocket(self.state.timePeriod, self.state.status);
     //   // self.getUserBal();
@@ -261,6 +259,9 @@ class Trade extends Component {
       });
       this.props.io.on("instrument-data", data => {
         this.updateInstrumentsData(data);
+      });
+      this.props.io.on("walletBalanceUpdate", data => {
+        self.setState({ userBal: data });
       });
     }
   }
@@ -456,7 +457,7 @@ class Trade extends Component {
   //
 
   cancelOrder(id, side, type) {
-    fetch(API_URL + `/cancel-pending-order`, {
+    fetch(SOCKET_HOST + `/api/v1/tradding/cancel-pending-order`, {
       method: "post",
       headers: {
         Accept: "application/json",

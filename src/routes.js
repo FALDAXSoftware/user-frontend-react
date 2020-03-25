@@ -80,12 +80,12 @@ const routes = [
     path: "/history",
     component: History2
   },
-  // {
-  //   exact: false,
-  //   path: "/dashboard",
-  //   component: () => <Dashboard io={io} />,
-  //   io: io
-  // },
+  {
+    exact: false,
+    path: "/dashboard",
+    component: () => <Dashboard io={io} />,
+    io: io
+  },
   {
     exact: false,
     path: "/open-ticket",
@@ -209,7 +209,7 @@ class AppRouter extends Component {
           }
         }
       }
-  });
+    });
   }
   componentDidMount() {
     console.log("^^headert", this.props.isLoggedIn);

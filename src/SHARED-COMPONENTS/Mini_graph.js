@@ -5,9 +5,10 @@ import { connect } from "react-redux";
 import { Line } from "react-chartjs-2";
 import styled from "styled-components";
 import { globalVariables } from "../Globals.js";
+import NumberFormat from "react-number-format";
 const moment = require("moment");
 let { _AMAZONBUCKET } = globalVariables;
-
+const SOCKET_HOST = globalVariables.SOCKET_HOST;
 /* Styled componets */
 const GraphWrapper = styled.div`
   background-color: ${props =>
@@ -64,7 +65,8 @@ let io = null;
 class Mini_graph extends React.Component {
   constructor(props) {
     super(props);
-    io = props.io;
+    io = this.props.io;
+    this.timeout = null;
     this.state = {
       crypto: this.props.crypto,
       currency: this.props.currency,
@@ -104,45 +106,72 @@ class Mini_graph extends React.Component {
     this.updateGraph = this.updateGraph.bind(this);
   }
   componentDidMount() {
+    clearTimeout(this.timeout);
     var self = this;
     if (this.props.crypto !== undefined && this.props.currency !== undefined) {
       this.setState(
         { crypto: this.props.crypto, currency: this.props.currency },
         () => {
+          // self.timeout = setTimeout(self.miniGraph(), 1000);
           self.miniGraph();
         }
       );
     }
+    // self.timeout = setTimeout(self.miniGraph(), 1000);
   }
   miniGraph() {
-    var self = this;
-    let URL =
-      "/socket/get-card-data?room=" +
-      this.state.crypto +
-      "-" +
-      this.state.currency;
-    io.socket.request(
+    fetch(
+      SOCKET_HOST +
+        `/api/v1/tradding/get-chart-data-graph?symbol=${this.props.crypto}-${this.props.currency}`,
       {
-        method: "GET",
-        url: URL,
+        method: "get",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"],
           Authorization: "Bearer " + this.props.isLoggedIn
         }
-      },
-      (body, JWR) => {
-        // console.log("card body", body);
-
-        if (body.status === 200) {
-          let res = body.data;
-          this.updateGraph(res);
-        }
       }
-    );
-    io.socket.on("cardDataUpdate", function(data) {
-      self.updateGraph(data);
-    });
+    )
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status == 200) {
+          console.log("here", responseData.data);
+          this.updateGraph(responseData.data);
+        } else {
+        }
+        // this.setState({ loader: false });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    // var self = this;
+    // let URL =
+    //   "/socket/get-card-data?room=" +
+    //   this.state.crypto +
+    //   "-" +
+    //   this.state.currency;
+    // io.socket.request(
+    //   {
+    //     method: "GET",
+    //     url: URL,
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json",
+    //       Authorization: "Bearer " + this.props.isLoggedIn
+    //     }
+    //   },
+    //   (body, JWR) => {
+    //     // console.log("card body", body);
+    //     if (body.status === 200) {
+    //       let res = body.data;
+    //       this.updateGraph(res);
+    //     }
+    //   }
+    // );
+    // io.socket.on("cardDataUpdate", function(data) {
+    //   self.updateGraph(data);
+    // });
   }
   componentWillReceiveProps(props, newProps) {
     /* var self = this;
@@ -163,10 +192,13 @@ class Mini_graph extends React.Component {
     var self = this;
     let dataArray = [];
     let timeStampArray = [];
+    console.log("^^^", data);
+    data = data[0];
     data.tradeChartDetails.map(element => {
       dataArray.push(element.fill_price);
       timeStampArray.push(moment.utc(element.created_at).unix());
     });
+    console.log("^^^dataArray", dataArray);
     let graphOptions = this.state.data;
     // graphOptions.image =
     //   !this.coin_icon || this.coin_icon === "" || this.coin_icon === null
@@ -175,7 +207,7 @@ class Mini_graph extends React.Component {
     graphOptions.image = data.icon;
     graphOptions.datasets[0].data = dataArray;
     graphOptions.timeStamps = timeStampArray;
-    graphOptions.price = Math.round(data.average_price * 100) / 100;
+    graphOptions.price = Number(data.average_price);
     graphOptions.percentage = data.percentchange;
 
     this.setState(
@@ -228,9 +260,7 @@ class Mini_graph extends React.Component {
           </SpanCoinNameWrapper>
         </Row>
         <Row>
-          <Col xs={5}>
-            <ImageWrapper src={_AMAZONBUCKET + image} />
-          </Col>
+          <Col xs={5}>{/* <ImageWrapper src={_AMAZONBUCKET + image} /> */}</Col>
           <Col xs={11} md={12}>
             <SpanCoinPrice>
               {" "}
