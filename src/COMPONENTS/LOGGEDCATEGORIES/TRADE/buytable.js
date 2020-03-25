@@ -85,7 +85,7 @@ class BuyTABLE extends Component {
     // })
   }
 
-  /* 
+  /*
         Page: /trade --> Buy Book
         SOCKET is called for buybook table data according to room provided.
     */
@@ -123,7 +123,7 @@ class BuyTABLE extends Component {
         }
       }
     );
-    io.socket.on("buybookUpdate", data => {
+    io.on("buybookUpdate", data => {
       this.updateData(data);
     });
   }
@@ -183,7 +183,7 @@ class BuyTABLE extends Component {
   //     });
   // }
 
-  /* 
+  /*
         Page: /trade --> Buy Book
         SOCKET is called to update buybook table data according to room provided.
     */

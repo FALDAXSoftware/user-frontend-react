@@ -201,9 +201,6 @@ class AppRouter extends Component {
     /* this.onAction = this._onAction.bind(this)
     this.onActive = this._onActive.bind(this) */
     this.onIdle = this._onIdle.bind(this);
-  }
-  componentDidMount() {
-    console.log("^^headert", this.props.isLoggedIn);
     io = socketIOClient(globalVariables.SOCKET_HOST, {
       transportOptions: {
         polling: {
@@ -212,7 +209,19 @@ class AppRouter extends Component {
           }
         }
       }
-    });
+  });
+  }
+  componentDidMount() {
+    console.log("^^headert", this.props.isLoggedIn);
+    // io = socketIOClient(globalVariables.SOCKET_HOST, {
+    //   transportOptions: {
+    //     polling: {
+    //       extraHeaders: {
+    //         Authorization: "Bearer " + this.props.isLoggedIn //ahiya header pass karide auth
+    //       }
+    //     }
+    //   }
+    // });
   }
   /*   _onAction(e) {
       console.log('user did something', e)

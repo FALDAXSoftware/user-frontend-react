@@ -253,8 +253,11 @@ class Trade extends Component {
     //   self.orderSocket(self.state.timePeriod, self.state.status);
     //   // self.getUserBal();
     // });
+    this.joinRoom()
   }
-
+  joinRoom=(prevRoom=null)=>{
+    io.emit("join",{room:this.state.crypto+"-"+this.state.currency});
+  }
   // created by Meghal Patel at 2019-04-27 15:09.
   //
   // Description: Crypto Pair changes from here.It will go in redux.
