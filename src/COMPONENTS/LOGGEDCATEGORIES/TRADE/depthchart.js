@@ -32,7 +32,13 @@ class DepthChart extends Component {
   /* Life-Cycle Methods */
 
   componentDidMount() {
-    this.depthFunc();
+    if (this.props.io) {
+      this.props.io.on("depth-chart-data", data => {
+        // console.log("^^^^data", data);
+        this.updateGraph(data);
+      });
+    }
+    // this.depthFunc();
   }
 
   componentWillReceiveProps(props, neProps) {
@@ -48,7 +54,7 @@ class DepthChart extends Component {
             currency: props.currency
           },
           () => {
-            self.depthFunc();
+            // self.depthFunc();
           }
         );
       }

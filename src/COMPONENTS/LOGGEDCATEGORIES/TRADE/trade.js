@@ -194,7 +194,7 @@ class Trade extends Component {
     this.statusChange = this.statusChange.bind(this);
     this.getUserBal = this.getUserBal.bind(this);
     this.onInsChange = this.onInsChange.bind(this);
-    this.getInstrumentData = this.getInstrumentData.bind(this);
+    // this.getInstrumentData = this.getInstrumentData.bind(this);
     this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
     this.onLayoutChange = this.onLayoutChange.bind(this);
     this.goFullScreen = this.goFullScreen.bind(this);
@@ -253,11 +253,20 @@ class Trade extends Component {
     //   self.orderSocket(self.state.timePeriod, self.state.status);
     //   // self.getUserBal();
     // });
-    this.joinRoom()
+    this.joinRoom();
+    if (this.props.io) {
+      this.props.io.on("users-all-trade-data", data => {
+        // console.log("^^^^data", data);
+        this.updateMyOrder(data);
+      });
+      this.props.io.on("instrument-data", data => {
+        this.updateInstrumentsData(data);
+      });
+    }
   }
-  joinRoom=(prevRoom=null)=>{
-    io.emit("join",{room:this.state.crypto+"-"+this.state.currency});
-  }
+  joinRoom = (prevRoom = null) => {
+    io.emit("join", { room: this.state.crypto + "-" + this.state.currency });
+  };
   // created by Meghal Patel at 2019-04-27 15:09.
   //
   // Description: Crypto Pair changes from here.It will go in redux.
@@ -282,7 +291,11 @@ class Trade extends Component {
       },
       () => {
         self.props.cryptoCurrency(cryptoPair);
-        self.getInstrumentData();
+        // self.getInstrumentData();
+        // this.props
+        this.joinRoom(
+          cryptoPair.prevRoom.crypto + "-" + cryptoPair.prevRoom.currency
+        );
       }
     );
   }
@@ -293,29 +306,29 @@ class Trade extends Component {
   //
   //
 
-  getInstrumentData() {
-    var self = this;
-    self.setState({ insLoader: true });
-    io.socket.request(
-      {
-        method: "GET",
-        url: `/socket/get-instrument-data?coin=${self.state.InsCurrency}`,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
-      },
-      (body, JWR) => {
-        if (body.status === 200) {
-          self.updateInstrumentsData(body.data);
-        }
-      }
-    );
-    io.socket.on("instrumentUpdate", data => {
-      self.updateInstrumentsData(data);
-    });
-  }
+  // getInstrumentData() {
+  //   var self = this;
+  //   self.setState({ insLoader: true });
+  //   io.socket.request(
+  //     {
+  //       method: "GET",
+  //       url: `/socket/get-instrument-data?coin=${self.state.InsCurrency}`,
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + this.props.isLoggedIn
+  //       }
+  //     },
+  //     (body, JWR) => {
+  //       if (body.status === 200) {
+  //         self.updateInstrumentsData(body.data);
+  //       }
+  //     }
+  //   );
+  //   this.props.io.on("instrument-data", data => {
+  //     self.updateInstrumentsData(data);
+  //   });
+  // }
 
   // created by Meghal Patel at 2019-04-27 15:11.
   //
@@ -391,30 +404,39 @@ class Trade extends Component {
   //
 
   orderSocket(month, filter_type) {
-    var URL;
-    this.setState({ orderTradeLoader: true });
-    if (Object.keys(this.state.prevRoom).length > 0)
-      URL = `/socket/get-user-trade-data?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`;
-    else
-      URL = `/socket/get-user-trade-data?room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`;
-    io.socket.request(
-      {
-        method: "GET",
-        url: URL,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
-      },
-      (body, JWR) => {
-        if (body.status === 200) {
-          let res = body.data;
-          this.updateMyOrder(res);
-        }
-        this.setState({ orderTradeLoader: false });
-      }
-    );
+    // io.emit("")
+
+    if (this.props.io) {
+      this.props.io.emit("trade_users_history_event", {
+        month,
+        flag: filter_type,
+        pair: `${this.state.crypto}-${this.state.currency}`
+      });
+    }
+    // var URL;
+    // this.setState({ orderTradeLoader: true });
+    // if (Object.keys(this.state.prevRoom).length > 0)
+    //   URL = `/socket/get-user-trade-data?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`;
+    // else
+    //   URL = `/socket/get-user-trade-data?room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`;
+    // io.socket.request(
+    //   {
+    //     method: "GET",
+    //     url: URL,
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json",
+    //       Authorization: "Bearer " + this.props.isLoggedIn
+    //     }
+    //   },
+    //   (body, JWR) => {
+    //     if (body.status === 200) {
+    //       let res = body.data;
+    //       this.updateMyOrder(res);
+    //     }
+    //     this.setState({ orderTradeLoader: false });
+    //   }
+    // );
   }
 
   // created by Meghal Patel at 2019-04-27 15:22.
@@ -500,32 +522,32 @@ class Trade extends Component {
   //
 
   getUserBal() {
-    var URL;
-    this.setState({ userBalLoader: true });
-    if (Object.keys(this.state.prevRoom).length > 0)
-      URL = `/socket/get-user-balance?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}&userId=${this.props.profileDetails.id}`;
-    else
-      URL = `/socket/get-user-balance?room=${this.state.crypto}-${this.state.currency}&userId=${this.props.profileDetails.id}`;
-    io.socket.request(
-      {
-        method: "GET",
-        url: URL,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
-      },
-      (body, JWR) => {
-        if (body.status === 200) {
-          let res = body.data;
-          this.setState({ userBal: res, userBalLoader: false });
-        }
-      }
-    );
-    io.socket.on("orderUpdate", data => {
-      this.setState({ userBal: data, userBalLoader: false });
-    });
+    // var URL;
+    // this.setState({ userBalLoader: true });
+    // if (Object.keys(this.state.prevRoom).length > 0)
+    //   URL = `/socket/get-user-balance?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}&userId=${this.props.profileDetails.id}`;
+    // else
+    //   URL = `/socket/get-user-balance?room=${this.state.crypto}-${this.state.currency}&userId=${this.props.profileDetails.id}`;
+    // io.socket.request(
+    //   {
+    //     method: "GET",
+    //     url: URL,
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json",
+    //       Authorization: "Bearer " + this.props.isLoggedIn
+    //     }
+    //   },
+    //   (body, JWR) => {
+    //     if (body.status === 200) {
+    //       let res = body.data;
+    //       this.setState({ userBal: res, userBalLoader: false });
+    //     }
+    //   }
+    // );
+    // io.socket.on("orderUpdate", data => {
+    //   this.setState({ userBal: data, userBalLoader: false });
+    // });
   }
 
   // created by Meghal Patel at 2019-04-27 15:27.
@@ -1091,7 +1113,7 @@ class Trade extends Component {
                         crypto={this.state.crypto}
                         currency={this.state.currency}
                         depthLoaderFunc={loader => this.depthLoaderFunc(loader)}
-                        io={io}
+                        io={this.props.io}
                         height={this.state.depthChartHeight}
                       />
                     </RightDiv>

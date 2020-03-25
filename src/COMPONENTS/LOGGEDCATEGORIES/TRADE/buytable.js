@@ -57,26 +57,26 @@ class BuyTABLE extends Component {
   /* Life-Cycle Methods */
 
   componentWillReceiveProps(props, newProps) {
-    var self = this;
-    if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
-      if (props.cryptoPair.crypto !== this.state.crypto) {
-        this.setState({ crypto: props.cryptoPair.crypto }, () => {
-          self.buyTableData();
-        });
-      }
-      if (props.cryptoPair.currency !== this.state.currency) {
-        this.setState({ currency: props.cryptoPair.currency }, () => {
-          self.buyTableData();
-        });
-      }
-    }
+    // var self = this;
+    // if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
+    //   if (props.cryptoPair.crypto !== this.state.crypto) {
+    //     this.setState({ crypto: props.cryptoPair.crypto }, () => {
+    //       self.buyTableData();
+    //     });
+    //   }
+    //   if (props.cryptoPair.currency !== this.state.currency) {
+    //     this.setState({ currency: props.cryptoPair.currency }, () => {
+    //       self.buyTableData();
+    //     });
+    //   }
+    // }
   }
   componentDidMount() {
     // self.buyTableData();
-    console.log("^^^^ Here", this.props.io);
+    // console.log("^^^^ Here", this.props.io);
     if (this.props.io) {
       this.props.io.on("buy-book-data", data => {
-        console.log("^^^^data", data);
+        // console.log("^^^^data", data);
         this.updateData(data);
       });
     }
@@ -90,43 +90,42 @@ class BuyTABLE extends Component {
         SOCKET is called for buybook table data according to room provided.
     */
 
-  buyTableData() {
-    let io = this.props.io;
-    io.sails.url = APP_URL;
-
-    this.props.loaderfunc(true);
-    this.setState({ loader: true });
-    var URL;
-    if (
-      this.props.cryptoPair.prevRoom !== undefined &&
-      Object.keys(this.props.cryptoPair.prevRoom).length > 0
-    ) {
-      URL = `/socket/get-buy-book?prevRoom=${this.props.cryptoPair.prevRoom.crypto}-${this.props.cryptoPair.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`;
-    } else {
-      URL = `/socket/get-buy-book?room=${this.state.crypto}-${this.state.currency}`;
-    }
-    io.socket.request(
-      {
-        method: "GET",
-        url: URL,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
-      },
-      (body, JWR) => {
-        if (body.status === 200) {
-          console.log(body.data, body);
-          let res = body.data;
-          this.updateData(res);
-        }
-      }
-    );
-    io.on("buybookUpdate", data => {
-      this.updateData(data);
-    });
-  }
+  // buyTableData() {
+  //   let io = this.props.io;
+  //   io.sails.url = APP_URL;
+  //   this.props.loaderfunc(true);
+  //   this.setState({ loader: true });
+  //   var URL;
+  //   if (
+  //     this.props.cryptoPair.prevRoom !== undefined &&
+  //     Object.keys(this.props.cryptoPair.prevRoom).length > 0
+  //   ) {
+  //     URL = `/socket/get-buy-book?prevRoom=${this.props.cryptoPair.prevRoom.crypto}-${this.props.cryptoPair.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`;
+  //   } else {
+  //     URL = `/socket/get-buy-book?room=${this.state.crypto}-${this.state.currency}`;
+  //   }
+  //   io.socket.request(
+  //     {
+  //       method: "GET",
+  //       url: URL,
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + this.props.isLoggedIn
+  //       }
+  //     },
+  //     (body, JWR) => {
+  //       if (body.status === 200) {
+  //         console.log(body.data, body);
+  //         let res = body.data;
+  //         this.updateData(res);
+  //       }
+  //     }
+  //   );
+  //   io.on("buy-book-data", data => {
+  //     this.updateData(data);
+  //   });
+  // }
   // updateData(data) {
   //     console.log(data)
   //     const rows = [];

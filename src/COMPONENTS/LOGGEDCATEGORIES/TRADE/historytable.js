@@ -72,7 +72,13 @@ class HistoryTable extends Component {
   /* Life-Cycle Methods */
 
   componentDidMount() {
-    var self = this;
+    // var self = this;
+    if (this.props.io) {
+      this.props.io.on("trade-history-data", data => {
+        // console.log("^^^^data", data);
+        this.updateData(data);
+      });
+    }
     // self.historyData();
     // io.socket.on("tradehistoryUpdate", data => {
     //   self.updateData(data);
@@ -83,12 +89,12 @@ class HistoryTable extends Component {
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
         this.setState({ crypto: props.cryptoPair.crypto }, () => {
-          self.historyData();
+          // self.historyData();
         });
       }
       if (props.cryptoPair.currency !== this.state.currency) {
         this.setState({ currency: props.cryptoPair.currency }, () => {
-          self.historyData();
+          // self.historyData();
         });
       }
     }
@@ -100,40 +106,40 @@ class HistoryTable extends Component {
     */
 
   historyData() {
-    io = this.props.io;
-    this.props.hisFunc(true);
-    this.setState({ loader: true });
-    io.sails.url = APP_URL;
-    var URL;
-    if (
-      this.props.cryptoPair.prevRoom !== undefined &&
-      Object.keys(this.props.cryptoPair.prevRoom).length > 0
-    ) {
-      URL = `/socket/get-trade-history?prevRoom=${this.props.cryptoPair.prevRoom.crypto}-${this.props.cryptoPair.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`;
-    } else {
-      URL = `/socket/get-trade-history?room=${this.state.crypto}-${this.state.currency}`;
-    }
-    io.socket.request(
-      {
-        method: "GET",
-        url: URL,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
-      },
-      (body, JWR) => {
-        if (body.status === 200) {
-          let res = body.data;
-          this.props.hisFunc(false);
-          this.updateData(res);
-        }
-      }
-    );
-    io.socket.on("tradeHistoryUpdate", data => {
-      this.updateData(data);
-    });
+    // io = this.props.io;
+    // this.props.hisFunc(true);
+    // this.setState({ loader: true });
+    // io.sails.url = APP_URL;
+    // var URL;
+    // if (
+    //   this.props.cryptoPair.prevRoom !== undefined &&
+    //   Object.keys(this.props.cryptoPair.prevRoom).length > 0
+    // ) {
+    //   URL = `/socket/get-trade-history?prevRoom=${this.props.cryptoPair.prevRoom.crypto}-${this.props.cryptoPair.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}`;
+    // } else {
+    //   URL = `/socket/get-trade-history?room=${this.state.crypto}-${this.state.currency}`;
+    // }
+    // io.socket.request(
+    //   {
+    //     method: "GET",
+    //     url: URL,
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json",
+    //       Authorization: "Bearer " + this.props.isLoggedIn
+    //     }
+    //   },
+    //   (body, JWR) => {
+    //     if (body.status === 200) {
+    //       let res = body.data;
+    //       this.props.hisFunc(false);
+    //       this.updateData(res);
+    //     }
+    //   }
+    // );
+    // io.socket.on("tradeHistoryUpdate", data => {
+    //   this.updateData(data);
+    // });
   }
 
   /* 

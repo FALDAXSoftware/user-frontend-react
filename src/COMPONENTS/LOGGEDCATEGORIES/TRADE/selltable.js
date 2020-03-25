@@ -57,7 +57,13 @@ class SellTable extends Component {
   /* Life-Cycle Methods */
 
   componentDidMount() {
-    var self = this;
+    // var self = this;
+    if (this.props.io) {
+      this.props.io.on("sell-book-data", data => {
+        // console.log("^^^^data", data);
+        this.updateData(data);
+      });
+    }
     // self.sellTableData();
     // this.setState({ crypto: this.props.cryptoPair.crypto, currency: this.props.cryptoPair.currency }, () => {
     // })
@@ -67,12 +73,12 @@ class SellTable extends Component {
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
         this.setState({ crypto: props.cryptoPair.crypto }, () => {
-          self.sellTableData();
+          // self.sellTableData();
         });
       }
       if (props.cryptoPair.currency !== this.state.currency) {
         this.setState({ currency: props.cryptoPair.currency }, () => {
-          self.sellTableData();
+          // self.sellTableData();
         });
       }
     }
@@ -114,7 +120,7 @@ class SellTable extends Component {
         }
       }
     );
-    io.socket.on("sellbookUpdate", data => {
+    io.socket.on("sell-book-data", data => {
       console.log(data);
       this.updateData(data);
     });
