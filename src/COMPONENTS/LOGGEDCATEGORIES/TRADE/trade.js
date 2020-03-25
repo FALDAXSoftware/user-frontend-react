@@ -260,9 +260,6 @@ class Trade extends Component {
       this.props.io.on("instrument-data", data => {
         this.updateInstrumentsData(data);
       });
-      this.props.io.on("walletBalanceUpdate", data => {
-        self.setState({ userBal: data });
-      });
       this.props.io.on("user-wallet-balance", data => {
         this.setState({ userBal: data });
       });
