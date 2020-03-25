@@ -12,7 +12,6 @@ import TechnicalChart from "./technical_chart";
 import {globalVariables} from "../../../Globals";
 import { translate, Trans } from "react-i18next";
 import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
 const API_URL = globalVariables.API_URL;
 const WhiteBgWrapper = styled.div`
     background-color: ${props => (props.theme.mode === "dark" ? "#041b2c" : "white")};
@@ -152,7 +151,7 @@ class MarketPage extends React.PureComponent{
                                                     <Row>
                                                         <Col span={24} style={{marginBottom:"20px"}} >
                                                             <Tabs defaultActiveKey="1" onChange={this.onScreenerTabChange} tabBarExtraContent={<Tooltip title="Launch In Fullscreen"><Button className="fullscreenBtn" size={"large"} type="link" onClick={()=>{this.goFullScreen("screener")}}><Icon type="arrows-alt" /></Button></Tooltip>}>
-                                                                <TabPane tab={this.t("market:overview.message")} key="1" style={{minHeight:"400px"}} id={"screener"}>
+                                                                <TabPane tab={this.t("market:overview.message")} key="1" style={{minHeight:"600px"}} id={"screener"}>
                                                                     {this.state.screener_key== 1 &&
                                                                     <Screener  options={{
                                                                         "width": "100%",
