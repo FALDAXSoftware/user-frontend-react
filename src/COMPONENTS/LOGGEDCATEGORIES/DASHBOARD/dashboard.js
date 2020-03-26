@@ -45,6 +45,7 @@ import {
   RiseFall
 } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle";
 
+let { SOCKET_HOST } = globalVariables;
 let { API_URL } = globalVariables;
 
 const ContainerNew = styled(ContainerContact)`
@@ -455,12 +456,12 @@ class Dashboard extends Component {
     self.loadNews(1);
     self.loadActivity();
     self.loadPortfolio();
-    io.sails.url = API_URL;
-    io.sails.headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + this.props.isLoggedIn
-    };
+    // io.sails.url = API_URL;
+    // io.sails.headers = {
+    //   Accept: "application/json",
+    //   "Content-Type": "application/json",
+    //   Authorization: "Bearer " + this.props.isLoggedIn
+    // };
   }
 
   /* 
@@ -473,7 +474,7 @@ class Dashboard extends Component {
     var self = this;
     self.setState({ activityLoader: true });
 
-    fetch(`${API_URL}/dashboard/get-activity`, {
+    fetch(`${SOCKET_HOST}/api/v1/tradding/get-activity-data`, {
       method: "get",
       headers: {
         Accept: "application/json",
@@ -534,7 +535,7 @@ class Dashboard extends Component {
   loadPortfolio() {
     var self = this;
     self.setState({ portfolioLoader: true });
-    fetch(`${API_URL}/dashboard/get-portfolio`, {
+    fetch(`${SOCKET_HOST}/api/v1/tradding/get-portfolio-data`, {
       method: "get",
       headers: {
         Accept: "application/json",
@@ -547,11 +548,12 @@ class Dashboard extends Component {
       .then(responseData => {
         let portfolioData = [];
         if (responseData.status === 200) {
+          // console.log("^^^^portfolioData", responseData.data);
           let userFiat = responseData.data.fiat;
           responseData.data.portfolioData.map(element => {
             portfolioData.push({
               coin: element.name,
-              amount: element.amount.toFixed(3) + " " + element.symbol,
+              amount: element.Amount.toFixed(3) + " " + element.symbol,
               value: element.average_price.toFixed(5) + " " + userFiat,
               change: element.percentchange.toFixed(5) + "%"
             });
@@ -701,9 +703,9 @@ class Dashboard extends Component {
                     </Col>
                   </Row>
                 </ActPortWrap>
-                <RiseFall>
+                {/* <RiseFall>
                   <RiseTable isLoggedIn={this.props.isLoggedIn} />
-                </RiseFall>
+                </RiseFall> */}
                 <Newsdiv>
                   <News>NEWS</News>
                   <NewsList>
@@ -774,10 +776,11 @@ class Dashboard extends Component {
 
 function mapStateToProps(state) {
   return {
-    isLoggedIn:
-      state.simpleReducer
-        .isLoggedIn /* 
-        theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "", */,
+    isLoggedIn: state.simpleReducer.isLoggedIn,
+    // isLoggedIn:
+    //   state.simpleReducer
+    //     .isLoggedIn /*
+    // theme: state.themeReducer.theme !== undefined ? state.themeReducer.theme : "", */,
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]

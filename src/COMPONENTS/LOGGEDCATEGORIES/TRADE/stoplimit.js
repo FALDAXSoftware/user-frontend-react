@@ -33,7 +33,8 @@ import {
   ButtonETH
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
-let { API_URL } = globalVariables;
+// let { API_URL } = globalVariables;
+let { SOCKET_HOST } = globalVariables;
 
 class StopLimit extends Component {
   constructor(props) {
@@ -254,16 +255,20 @@ class StopLimit extends Component {
         stop_price: self.state.stop_price
       };
       this.setState({ loader: true });
-      fetch(API_URL + "/stop/limit/" + self.state.side.toLowerCase(), {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
-          Authorization: "Bearer " + self.props.isLoggedIn
-        },
-        body: JSON.stringify(params)
-      })
+      fetch(
+        SOCKET_HOST +
+          `/api/v1/tradding/orders/pending-${self.state.side.toLowerCase()}-order-create`,
+        {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Accept-Language": localStorage["i18nextLng"],
+            Authorization: "Bearer " + self.props.isLoggedIn
+          },
+          body: JSON.stringify(params)
+        }
+      )
         .then(response => response.json())
         .then(responseData => {
           if (responseData.status === 200) {

@@ -128,6 +128,11 @@ class Conversion extends React.Component {
       } else {
         if (this.state.is_allowed === false && this.state.is_kyc_done !== 2) {
           this.setState({ completeKYC: true });
+        } else if (
+          this.state.is_allowed === true &&
+          this.state.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
         } else {
           this.setState({ countryAccess: true });
         }
@@ -197,7 +202,7 @@ class Conversion extends React.Component {
             <ContainerConversion>
               <HeadStyle>{this.t("conversion_head.message")}</HeadStyle>
               <RowConStyle>
-                <TokComingSoonWrap
+                {/* <TokComingSoonWrap
                   href={`${globalVariables.WordpressSiteURL}${
                     localStorage["i18nextLng"] &&
                     localStorage["i18nextLng"] !== "en"
@@ -206,7 +211,7 @@ class Conversion extends React.Component {
                   }/crypto-only-coming-soon`}
                 >
                   <ColConTokStyle
-                  // onClick={this.cryptoAccess}
+                  onClick={this.cryptoAccess}
                   >
                     <ColHeadConStyle>
                       {this.t(
@@ -243,7 +248,33 @@ class Conversion extends React.Component {
                   >
                     {this.t("conversion_subhead.message")}
                   </TokComingSoon>
-                </TokComingSoonWrap>
+                </TokComingSoonWrap> */}
+                <ColConStyle onClick={this.cryptoAccess}>
+                  <ColHeadConStyle>
+                    {this.t(
+                      "header:navbar_sub_menu_conversation_crypto_only.message"
+                    )}
+                  </ColHeadConStyle>
+                  <ColSubRow>
+                    <ConIconWrap>
+                      {this.props.theme === true ? (
+                        <img src="/images/bitcoin_icon_dark.png" />
+                      ) : (
+                        <img src="/images/bitcoin_icon.png" />
+                      )}
+                    </ConIconWrap>
+                    <ConArrowWrap>
+                      <Icon type="arrow-right" />
+                    </ConArrowWrap>
+                    <ConIconWrap>
+                      {this.props.theme === true ? (
+                        <img src="/images/eth_icon_dark.png" />
+                      ) : (
+                        <img src="/images/eth_icon.png" />
+                      )}
+                    </ConIconWrap>
+                  </ColSubRow>
+                </ColConStyle>
                 <ColConStyle onClick={this.simplexAccess}>
                   <ColHeadConStyle>
                     {this.t(

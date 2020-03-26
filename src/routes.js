@@ -25,6 +25,7 @@ import History2 from "COMPONENTS/LOGGEDCATEGORIES/HISTORY/history";
 import OpenTicket from "COMPONENTS/LANDINGCATEGORIES/open_ticket";
 import { globalVariables } from "./Globals.js";
 import { LogoutUser } from "ACTIONS/authActions";
+import MarketPage from "./COMPONENTS/LOGGEDCATEGORIES/MARKET/market_page";
 
 // import Chart from "COMPONENTS/tradingviewchart";
 import Conversion from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion";
@@ -67,6 +68,11 @@ const routes = [
   },
   {
     exact: false,
+    path: "/market",
+    component: () => <MarketPage />
+  },
+  {
+    exact: false,
     path: "/trade",
     component: () => <Trade io={io} />
   },
@@ -80,12 +86,12 @@ const routes = [
     path: "/history",
     component: History2
   },
-  // {
-  //   exact: false,
-  //   path: "/dashboard",
-  //   component: () => <Dashboard io={io} />,
-  //   io: io
-  // },
+  {
+    exact: false,
+    path: "/dashboard",
+    component: () => <Dashboard io={io} />,
+    io: io
+  },
   {
     exact: false,
     path: "/open-ticket",
@@ -209,10 +215,10 @@ class AppRouter extends Component {
           }
         }
       }
-  });
+    });
   }
   componentDidMount() {
-    console.log("^^headert", this.props.isLoggedIn);
+    // console.log("^^headert", this.props.isLoggedIn);
     // io = socketIOClient(globalVariables.SOCKET_HOST, {
     //   transportOptions: {
     //     polling: {
