@@ -235,7 +235,7 @@ class Market extends Component {
             });
             obj["total"] =
               Number(this.state.amount) * this.props.userBal.buyPay;
-            obj["amount"] = Number(this.state.amount).toFixed(3);
+            // obj["amount"] = Number(this.state.amount).toFixed(3);
             // let singlefiatCryptoValue = this.state.singlefiatCryptoValue;
             if (value > 0 && name === "amount") {
               let fiatValue =
@@ -255,7 +255,7 @@ class Market extends Component {
             });
             obj["total"] =
               Number(this.state.amount) * this.props.userBal.sellPay;
-            obj["amount"] = Number(this.state.amount).toFixed(3);
+            // obj["amount"] = Number(this.state.amount).toFixed(3);
             if (value > 0 && name === "amount") {
               let fiatValue =
                 parseFloat(this.state.singlefiatCurrencyValue) *
@@ -264,17 +264,10 @@ class Market extends Component {
                 fiatCurrencyValue: fiatValue
               });
             }
-            // let singlefiatCurrencyValue = this.state.singlefiatCurrencyValue;
-            // let fiatValue =
-            //   parseFloat(singlefiatCurrencyValue) *
-            //   parseFloat(value).toFixed(8);
-            // this.setState({
-            //   fiatCurrencyValue: fiatValue
-            // });
           }
         } else {
           obj["total"] = 0;
-          obj["amount"] = Number(this.state.amount).toFixed(3);
+          // obj["amount"] = Number(this.state.amount).toFixed(3);
         }
         self.setState({ ...obj });
       }
@@ -328,15 +321,28 @@ class Market extends Component {
       )
         .then(response => response.json())
         .then(responseData => {
-          this.setState({
-            Loader: false,
-            total: 0,
-            amount: 0,
-            buyPayAmt: 0,
-            sellPayAmt: 0,
-            buyEstPrice: 0,
-            sellEstPrice: 0
-          });
+          this.setState(
+            {
+              Loader: false,
+              total: 0,
+              amount: "",
+              buyPayAmt: 0,
+              sellPayAmt: 0,
+              buyEstPrice: 0,
+              sellEstPrice: 0
+            },
+            () => {
+              if (this.state.side === "Buy") {
+                this.setState({
+                  fiatCryptoValue: this.state.singlefiatCryptoValue
+                });
+              } else if (this.state.side === "Sell") {
+                this.setState({
+                  fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                });
+              }
+            }
+          );
           if (responseData.status === 200) {
             self.openNotificationWithIcon(
               "success",
@@ -347,6 +353,12 @@ class Market extends Component {
             self.openNotificationWithIcon(
               "warning",
               "Warning",
+              responseData.message
+            );
+          } else if (responseData.status === 500) {
+            self.openNotificationWithIcon(
+              "error",
+              "Error",
               responseData.message
             );
           } else {
@@ -544,7 +556,7 @@ class Market extends Component {
             <AMTInput
               min="0"
               type="number"
-              // step="0.001"
+              step="0.001"
               addonAfter={this.state.crypto}
               value={this.state.amount}
               placeholder="0"
