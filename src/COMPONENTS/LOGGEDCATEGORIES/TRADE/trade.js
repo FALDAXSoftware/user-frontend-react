@@ -254,13 +254,13 @@ class Trade extends Component {
     this.joinRoom();
     if (this.props.io) {
       this.props.io.on("users-all-trade-data", data => {
-        // console.log("^^^^data", data);
         this.updateMyOrder(data);
       });
       this.props.io.on("instrument-data", data => {
         this.updateInstrumentsData(data);
       });
       this.props.io.on("user-wallet-balance", data => {
+        console.log("^^^^userdata", data);
         this.setState({ userBal: data });
       });
     }

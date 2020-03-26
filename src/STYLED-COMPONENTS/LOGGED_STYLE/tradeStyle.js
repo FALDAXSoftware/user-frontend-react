@@ -734,6 +734,9 @@ export const ScrollTableContent = styled.div`
   > .scrollbar {
     // height: 500px !important;
   }
+  > .scrollbarwallet {
+    height: 500px !important;
+  }
   & .scrollbar > div:first-child {
     overflow: auto !important;
   }

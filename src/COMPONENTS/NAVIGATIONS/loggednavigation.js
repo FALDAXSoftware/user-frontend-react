@@ -760,7 +760,7 @@ class LoggedNavigation extends Component {
             Trade History
           </a>
         </Menu.Item> */}
-        {/* <Menu.Item key="0">
+        <Menu.Item key="0">
           <a
             onClick={() =>
               this.props.history.push({ pathname: "/history", tradeType: "1" })
@@ -768,7 +768,7 @@ class LoggedNavigation extends Component {
           >
             {t("navbar_sub_menu_conversation_crypto_only.message")}
           </a>
-        </Menu.Item> */}
+        </Menu.Item>
         <Menu.Item key="1">
           <a
             onClick={() =>
@@ -854,39 +854,34 @@ class LoggedNavigation extends Component {
               DASHBOARD
             </NavLink>
           </Menuitem>
-          <Menuitem key="2" onClick={this.tradeAccess}>
+          <Menuitem key="2">
+            <NavLink className="" to="/market">
+              MARKET
+            </NavLink>
+          </Menuitem>
+          <Menuitem key="3" onClick={this.tradeAccess}>
             <NavLink className="" to="/trade">
               Trade
             </NavLink>
           </Menuitem>
-          <Menuitem key="3">
+          <Menuitem key="4">
             <DropDownDiv
               className="Drop-main "
               overlay={DropdownItems}
               overlayClassName="custom_dropdown_menu"
             >
               <NavLink className="ant-dropdown-link" to="/conversion">
-                {/* Conversion */}
-                {/* <Trans i18nKey="Introduction" /> */}
                 {t("navbar_menu_conversion.message")}
               </NavLink>
             </DropDownDiv>
           </Menuitem>
           {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
-          <Menuitem key="4">
-            <a
-              className="color_important"
-              // to="/wallet"
-              onClick={this.walletAccess}
-            >
+          <Menuitem key="5">
+            <a className="color_important" onClick={this.walletAccess}>
               {t("navbar_menu_wallet.message")}
             </a>
-
-            {/* <NavLink className="Nav_selected" to="/wallet">
-              {t("navbar_menu_wallet.message")}
-            </NavLink> */}
           </Menuitem>
-          <Menuitem key="5">
+          <Menuitem key="6">
             <DropDownDiv
               className="Drop-main"
               overlay={DropdownHistoryItems}
@@ -905,7 +900,7 @@ class LoggedNavigation extends Component {
               </NavLink>
             </DropDownDiv>
           </Menuitem>
-          <Menuitem key="6">
+          <Menuitem key="7">
             <DropDownDiv
               // className="Drop-main"
               overlay={langItems}
