@@ -136,7 +136,7 @@ class Mini_graph extends React.Component {
       .then(response => response.json())
       .then(responseData => {
         if (responseData.status == 200) {
-          console.log("here", responseData.data);
+          // console.log("here", responseData.data);
           this.updateGraph(responseData.data);
         } else {
         }

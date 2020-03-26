@@ -212,7 +212,7 @@ class AppRouter extends Component {
     });
   }
   componentDidMount() {
-    console.log("^^headert", this.props.isLoggedIn);
+    // console.log("^^headert", this.props.isLoggedIn);
     // io = socketIOClient(globalVariables.SOCKET_HOST, {
     //   transportOptions: {
     //     polling: {
