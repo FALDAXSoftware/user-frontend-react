@@ -13,7 +13,7 @@ export const globalVariables = {
 
   //API_URL: 'http://18.191.87.133:8084', //Live URL
 
-  // API_URL: "http://192.168.0.213:1440", //Mansi's
+  // API_URL: "http://localhost:1440", //Mansi's
 
   //API_URL: 'http://192.168.0.85:1337'
 
