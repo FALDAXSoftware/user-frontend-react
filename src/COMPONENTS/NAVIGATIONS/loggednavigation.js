@@ -778,6 +778,15 @@ class LoggedNavigation extends Component {
             {t("navbar_sub_menu_conversation_credit_card.message")}
           </a>
         </Menu.Item>
+        <Menu.Item key="2">
+          <a
+            onClick={() =>
+              this.props.history.push({ pathname: "/history", tradeType: "3" })
+            }
+          >
+            Trade
+          </a>
+        </Menu.Item>
         {/* <Menu.Item key="2">
           <a
             onClick={() =>
@@ -1042,7 +1051,7 @@ class LoggedNavigation extends Component {
                       Trade History
                     </a>
                   </Menu.Item> */}
-                  {/* <Menu.Item key="0">
+                  <Menu.Item key="0">
                     <a
                       onClick={() =>
                         this.props.history.push({
@@ -1053,7 +1062,7 @@ class LoggedNavigation extends Component {
                     >
                       {t("navbar_sub_menu_conversation_crypto_only.message")}
                     </a>
-                  </Menu.Item> */}
+                  </Menu.Item>
                   <Menu.Item key="1">
                     <a
                       onClick={() =>
@@ -1064,6 +1073,18 @@ class LoggedNavigation extends Component {
                       }
                     >
                       {t("navbar_sub_menu_conversation_credit_card.message")}
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="2">
+                    <a
+                      onClick={() =>
+                        this.props.history.push({
+                          pathname: "/history",
+                          tradeType: "3"
+                        })
+                      }
+                    >
+                      Trade
                     </a>
                   </Menu.Item>
                   {/* <Menu.Item key="2">
