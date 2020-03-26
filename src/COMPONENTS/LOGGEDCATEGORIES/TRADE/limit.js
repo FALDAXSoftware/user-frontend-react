@@ -232,14 +232,6 @@ class Limit extends Component {
               Number(this.state.amount) * this.props.userBal.sellPay;
             // obj["amount"] = Number(this.state.amount).toFixed(3);
             // obj["limit_price"] = Number(this.state.limit_price).toFixed(5);
-            if (value > 0 && name === "amount") {
-              let fiatValue =
-                parseFloat(this.state.singlefiatCurrencyValue) *
-                parseFloat(value).toFixed(8);
-              this.setState({
-                fiatCurrencyValue: fiatValue
-              });
-            }
           }
         } else if (this.state.amount > 0) {
           if (this.state.side === "Buy") {
@@ -329,36 +321,68 @@ class Limit extends Component {
         .then(response => response.json())
         .then(responseData => {
           if (responseData.status === 200) {
-            this.setState({
-              limit_price: 0,
-              total: 0,
-              amount: 0,
-              loader: false,
-              buyPayAmt: 0,
-              sellPayAmt: 0,
-              buyEstPrice: 0,
-              sellEstPrice: 0
-            });
+            this.setState(
+              {
+                limit_price: "",
+                total: 0,
+                amount: "",
+                loader: false,
+                buyPayAmt: 0,
+                sellPayAmt: 0,
+                buyEstPrice: 0,
+                sellEstPrice: 0
+              },
+              () => {
+                if (this.state.side === "Buy") {
+                  this.setState({
+                    fiatCryptoValue: this.state.singlefiatCryptoValue
+                  });
+                } else if (this.state.side === "Sell") {
+                  this.setState({
+                    fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                  });
+                }
+              }
+            );
             self.openNotificationWithIcon(
               "success",
               "Success",
               responseData.message
             );
           } else if (responseData.status === 201) {
-            this.setState({
-              stop_price: 0,
-              limit_price: 0,
-              total: 0,
-              amount: 0,
-              loader: false,
-              buyPayAmt: 0,
-              sellPayAmt: 0,
-              buyEstPrice: 0,
-              sellEstPrice: 0
-            });
+            this.setState(
+              {
+                stop_price: "",
+                limit_price: "",
+                total: 0,
+                amount: "",
+                loader: false,
+                buyPayAmt: 0,
+                sellPayAmt: 0,
+                buyEstPrice: 0,
+                sellEstPrice: 0
+              },
+              () => {
+                if (this.state.side === "Buy") {
+                  this.setState({
+                    fiatCryptoValue: this.state.singlefiatCryptoValue
+                  });
+                } else if (this.state.side === "Sell") {
+                  this.setState({
+                    fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                  });
+                }
+              }
+            );
             self.openNotificationWithIcon(
               "warning",
               "Warning",
+              responseData.message
+            );
+          } else if (responseData.status === 500) {
+            self.openNotificationWithIcon(
+              "error",
+              "Error",
               responseData.message
             );
           } else {
