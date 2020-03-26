@@ -679,7 +679,13 @@ class Dashboard extends Component {
                           <LeftHl>
                             {this.state.total.toFixed(8)} {userFiat}
                           </LeftHl>
-                          <RightHl>
+                          <RightHl
+                            className={
+                              parseFloat(this.state.diffrence) < 0
+                                ? "red_colour"
+                                : ""
+                            }
+                          >
                             ^{this.state.diffrence.toFixed(8)} {userFiat}
                           </RightHl>
                         </HighLow>

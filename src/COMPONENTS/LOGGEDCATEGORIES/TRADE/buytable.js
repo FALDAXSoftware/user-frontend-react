@@ -75,6 +75,8 @@ class BuyTABLE extends Component {
     // self.buyTableData();
     // console.log("^^^^ Here", this.props.io);
     if (this.props.io) {
+      this.props.loaderfunc(true);
+      this.setState({ loader: true });
       this.props.io.on("buy-book-data", data => {
         // console.log("^^^^data", data);
         this.updateData(data);

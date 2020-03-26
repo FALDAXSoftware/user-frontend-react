@@ -260,6 +260,12 @@ class Trade extends Component {
 
     this.joinRoom();
     if (this.props.io) {
+      this.setState({
+        insLoader: true,
+        userBalLoader: true,
+        orderTradeLoader: true
+      });
+      // this.setState({ userBalLoader: true });
       this.props.io.on("users-all-trade-data", data => {
         console.log("^^^^data", data);
         this.updateMyOrder(data);
@@ -271,7 +277,7 @@ class Trade extends Component {
       });
       this.props.io.on("user-wallet-balance", data => {
         // console.log("^^^^userdata", data);
-        this.setState({ userBal: data });
+        this.setState({ userBal: data, userBalLoader: false });
       });
     }
   }
@@ -471,7 +477,7 @@ class Trade extends Component {
   //
 
   updateMyOrder(response) {
-    this.setState({ orderTradeData: response });
+    this.setState({ orderTradeData: response, orderTradeLoader: false });
   }
 
   // created by Meghal Patel at 2019-04-27 15:23.
