@@ -25,8 +25,9 @@ import History2 from "COMPONENTS/LOGGEDCATEGORIES/HISTORY/history";
 import OpenTicket from "COMPONENTS/LANDINGCATEGORIES/open_ticket";
 import { globalVariables } from "./Globals.js";
 import { LogoutUser } from "ACTIONS/authActions";
+import MarketPage from "./COMPONENTS/LOGGEDCATEGORIES/MARKET/market_page";
 
-/* import Chart from "COMPONENTS/tradingviewchart"; */
+// import Chart from "COMPONENTS/tradingviewchart";
 import Conversion from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion";
 import ConversionDetail from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion_detail";
 import TierUpgradeInfo from "./COMPONENTS/SETTINGS/tier_upgrade_information.js";
@@ -35,17 +36,15 @@ import TierIDConfirmation from "./COMPONENTS/SETTINGS/tier_id_confirmation.js";
 import Simplex from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex.js";
 import SimplexExchange from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex_exchange.js";
 import NotFound from "./SHARED-COMPONENTS/NotFound.js";
-import Market from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/market";
-import MarketPage from "./COMPONENTS/LOGGEDCATEGORIES/MARKET/market_page";
 import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
-// import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
-// import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
-let { API_URL } = globalVariables;
+import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
+import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
+// let { API_URL } = globalVariables;
 const socketIOClient = require("socket.io-client");
-const sailsIOClient = require("sails.io.js");
-let io = sailsIOClient(socketIOClient);
-io.sails.url = API_URL;
-
+// const sailsIOClient = require("sails.io.js");
+// let io = sailsIOClient(socketIOClient);
+// io.sails.url = API_URL;
+let io = null;
 const routes = [
   {
     exact: false,
@@ -67,16 +66,21 @@ const routes = [
     path: "/walletDetails",
     component: WalletDetails
   },
-  // {
-  //   exact: false,
-  //   path: "/trade",
-  //   component: () => <Trade io={io} />
-  // },
-  // {
-  //   exact: false,
-  //   path: "/chart",
-  //   component: () => <Tradingviewchart io={io} />
-  // },
+  {
+    exact: false,
+    path: "/market",
+    component: () => <MarketPage />
+  },
+  {
+    exact: false,
+    path: "/trade",
+    component: () => <Trade io={io} />
+  },
+  {
+    exact: false,
+    path: "/chart",
+    component: () => <Tradingviewchart io={io} />
+  },
   {
     exact: false,
     path: "/history",
@@ -85,8 +89,8 @@ const routes = [
   {
     exact: false,
     path: "/dashboard",
-    component: () => <Dashboard />,
-    // io: io
+    component: () => <Dashboard io={io} />,
+    io: io
   },
   {
     exact: false,
@@ -188,11 +192,6 @@ const routes = [
     exact: false,
     path: "/tickets",
     component: () => <HubspotTickets />
-  },
-  {
-    exact: false,
-    path: "/market",
-    component: () => <MarketPage />
   }
   // {
   //   exact: true,
@@ -208,8 +207,28 @@ class AppRouter extends Component {
     /* this.onAction = this._onAction.bind(this)
     this.onActive = this._onActive.bind(this) */
     this.onIdle = this._onIdle.bind(this);
+    io = socketIOClient(globalVariables.SOCKET_HOST, {
+      transportOptions: {
+        polling: {
+          extraHeaders: {
+            Authorization: "Bearer " + this.props.isLoggedIn //ahiya header pass karide auth
+          }
+        }
+      }
+    });
   }
-  componentDidMount() { }
+  componentDidMount() {
+    // console.log("^^headert", this.props.isLoggedIn);
+    // io = socketIOClient(globalVariables.SOCKET_HOST, {
+    //   transportOptions: {
+    //     polling: {
+    //       extraHeaders: {
+    //         Authorization: "Bearer " + this.props.isLoggedIn //ahiya header pass karide auth
+    //       }
+    //     }
+    //   }
+    // });
+  }
   /*   _onAction(e) {
       console.log('user did something', e)
     }
@@ -262,8 +281,8 @@ class AppRouter extends Component {
           })}
           <Route
             component={NotFound}
-          // path="/privacy-policy"
-          // loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
+            // path="/privacy-policy"
+            // loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
           />
           {/* <Route
   path="/privacy-policy"

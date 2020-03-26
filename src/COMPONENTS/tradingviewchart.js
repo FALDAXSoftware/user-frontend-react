@@ -9,7 +9,8 @@ const API_URL = globalVariables.API_URL;
 
 const TVChart = styled.div`
   margin-top: 0px;
-  height: 100vh;
+  // height: 100vh;
+  height: 100%;
 `;
 
 class TradingViewChart extends React.Component {
