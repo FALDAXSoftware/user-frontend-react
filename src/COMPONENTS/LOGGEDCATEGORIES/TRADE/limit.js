@@ -53,7 +53,10 @@ class Limit extends Component {
       sellPayAmt: 0,
       userBalFees: 0,
       loader: false,
-      fiatValue: "",
+      singlefiatCryptoValue: "",
+      singlefiatCurrencyValue: "",
+      fiatCryptoValue: "",
+      fiatCurrencyValue: "",
       fiatCurrency: ""
     };
     this.onChange = this.onChange.bind(this);
@@ -133,8 +136,11 @@ class Limit extends Component {
       buyPayAmt: 0,
       sellPayAmt: 0,
       loader: false,
-      fiatValue: fiat,
-      fiatCurrency: currency
+      fiatCurrency: "$",
+      fiatCryptoValue: this.props.userBal.cryptoFiat,
+      fiatCurrencyValue: this.props.userBal.currencyFiat,
+      singlefiatCryptoValue: this.props.userBal.cryptoFiat,
+      singlefiatCurrencyValue: this.props.userBal.currencyFiat
     });
   }
   componentWillReceiveProps(props, newProps) {
@@ -142,7 +148,11 @@ class Limit extends Component {
       amount: "",
       total: 0,
       limit_price: "",
-      userBalFees: props.userBal.fees
+      userBalFees: props.userBal.fees,
+      fiatCryptoValue: props.userBal.cryptoFiat,
+      fiatCurrencyValue: props.userBal.currencyFiat,
+      singlefiatCryptoValue: props.userBal.cryptoFiat,
+      singlefiatCurrencyValue: props.userBal.currencyFiat
     });
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -177,6 +187,15 @@ class Limit extends Component {
       obj["total"] = 0;
       obj["limit_price"] = "";
       this.clearValidation();
+      if (e.target.value === "Buy") {
+        this.setState({
+          fiatCryptoValue: this.state.singlefiatCryptoValue
+        });
+      } else if (e.target.value === "Sell") {
+        this.setState({
+          fiatCurrencyValue: this.state.singlefiatCurrencyValue
+        });
+      }
     }
     this.setState(
       {
@@ -213,9 +232,46 @@ class Limit extends Component {
               Number(this.state.amount) * this.props.userBal.sellPay;
             // obj["amount"] = Number(this.state.amount).toFixed(3);
             // obj["limit_price"] = Number(this.state.limit_price).toFixed(5);
+            if (value > 0 && name === "amount") {
+              let fiatValue =
+                parseFloat(this.state.singlefiatCurrencyValue) *
+                parseFloat(value).toFixed(8);
+              this.setState({
+                fiatCurrencyValue: fiatValue
+              });
+            }
+          }
+        } else if (this.state.amount > 0) {
+          if (this.state.side === "Buy") {
+            if (value > 0 && name === "amount") {
+              let fiatValue =
+                parseFloat(this.state.singlefiatCryptoValue) *
+                parseFloat(value).toFixed(8);
+              this.setState({
+                fiatCryptoValue: fiatValue
+              });
+            }
+          } else if (this.state.side === "Sell") {
+            if (value > 0 && name === "amount") {
+              let fiatValue =
+                parseFloat(this.state.singlefiatCurrencyValue) *
+                parseFloat(value).toFixed(8);
+              this.setState({
+                fiatCurrencyValue: fiatValue
+              });
+            }
           }
         } else {
           obj["total"] = 0;
+          if (this.state.side === "Buy") {
+            this.setState({
+              fiatCryptoValue: this.state.singlefiatCryptoValue
+            });
+          } else if (this.state.side === "Sell") {
+            this.setState({
+              fiatCurrencyValue: this.state.singlefiatCurrencyValue
+            });
+          }
           // obj["amount"] = Number(this.state.amount).toFixed(3);
           // obj["limit_price"] = Number(this.state.limit_price).toFixed(5);
         }
@@ -587,7 +643,7 @@ class Limit extends Component {
                   </Col>
                   <Col xs={9} sm={12}>
                     {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCryptoValue).toFixed(8)}
                   </Col>
                   <Col xs={15} sm={12}>
                     Estimated Best Price
@@ -627,7 +683,7 @@ class Limit extends Component {
                   </Col>
                   <Col xs={9} sm={12}>
                     {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
                   </Col>
                   <Col xs={15} sm={12}>
                     Estimated Best Price

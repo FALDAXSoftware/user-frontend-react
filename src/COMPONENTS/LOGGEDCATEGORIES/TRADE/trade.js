@@ -426,6 +426,12 @@ class Trade extends Component {
       pair: `${this.state.crypto}-${this.state.currency}`
     });
     if (this.props.io) {
+      console.log(
+        "^^^jf",
+        month,
+        filter_type,
+        `${this.state.crypto}-${this.state.currency}`
+      );
       this.props.io.emit("trade_users_history_event", {
         month,
         flag: filter_type,

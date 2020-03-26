@@ -192,7 +192,7 @@ class Market extends Component {
     // this.setState({
     //   amount: e.target.value.toFixed(3)
     // });
-    console.log("^^^asd,mkasd", e.target.name);
+    // console.log("^^^asd,mkasd", e.target.name);
     this.clearValidation();
     obj[name] = value;
     if (name === "side") {
@@ -205,7 +205,6 @@ class Market extends Component {
           e.target.value,
           this.state.singlefiatCryptoValue
         );
-        // let fiatValue = this.props.userBal.cryptoFiat;
         this.setState({
           fiatCryptoValue: this.state.singlefiatCryptoValue
         });
@@ -215,7 +214,6 @@ class Market extends Component {
           e.target.value,
           this.state.singlefiatCurrencyValue
         );
-        let fiatValue = this.props.userBal.currencyFiat;
         this.setState({
           fiatCurrencyValue: this.state.singlefiatCurrencyValue
         });
