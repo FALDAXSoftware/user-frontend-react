@@ -53,7 +53,10 @@ class Market extends Component {
       sellPayAmt: 0,
       disabledMode: false,
       panic_status: false,
-      fiatValue: "",
+      singlefiatCryptoValue: "",
+      singlefiatCurrencyValue: "",
+      fiatCryptoValue: "",
+      fiatCurrencyValue: "",
       fiatCurrency: ""
     };
     this.onChange = this.onChange.bind(this);
@@ -89,6 +92,7 @@ class Market extends Component {
   /* Life-Cycle Methods */
 
   componentWillReceiveProps(props, newProps) {
+    console.log("^^^^userdata  pro", props.userBal);
     this.setState({
       userBalFees: props.userBal.fees,
       amount: "",
@@ -96,7 +100,11 @@ class Market extends Component {
       buyPayAmt: 0,
       sellPayAmt: 0,
       buyEstPrice: 0,
-      sellEstPrice: 0
+      sellEstPrice: 0,
+      fiatCryptoValue: props.userBal.cryptoFiat,
+      fiatCurrencyValue: props.userBal.currencyFiat,
+      singlefiatCryptoValue: props.userBal.cryptoFiat,
+      singlefiatCurrencyValue: props.userBal.currencyFiat
     });
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -108,6 +116,7 @@ class Market extends Component {
     }
   }
   componentDidMount() {
+    console.log("^^^^userdata", this.props.userBal);
     let fiat, currency;
     if (this.props.profileDetails) {
       switch (this.props.profileDetails.fiat) {
@@ -130,8 +139,8 @@ class Market extends Component {
       }
     }
     this.setState({
-      fiatValue: fiat,
-      fiatCurrency: currency
+      // fiatValue: this.props.userBal.cryptoFiat,
+      fiatCurrency: "$"
     });
     //   if (this.state.panic_status === true) {
     //     this.setState({ panicEnabled: true });
@@ -183,11 +192,32 @@ class Market extends Component {
     // this.setState({
     //   amount: e.target.value.toFixed(3)
     // });
+    // console.log("^^^asd,mkasd", e.target.name);
     this.clearValidation();
     obj[name] = value;
     if (name === "side") {
       obj["amount"] = "";
       obj["total"] = 0;
+
+      if (e.target.value === "Buy") {
+        console.log(
+          "here^^^^",
+          e.target.value,
+          this.state.singlefiatCryptoValue
+        );
+        this.setState({
+          fiatCryptoValue: this.state.singlefiatCryptoValue
+        });
+      } else if (e.target.value === "Sell") {
+        console.log(
+          "here^^^^",
+          e.target.value,
+          this.state.singlefiatCurrencyValue
+        );
+        this.setState({
+          fiatCurrencyValue: this.state.singlefiatCurrencyValue
+        });
+      }
     }
     this.setState(
       {
@@ -205,7 +235,16 @@ class Market extends Component {
             });
             obj["total"] =
               Number(this.state.amount) * this.props.userBal.buyPay;
-            obj["amount"] = Number(this.state.amount).toFixed(3);
+            // obj["amount"] = Number(this.state.amount).toFixed(3);
+            // let singlefiatCryptoValue = this.state.singlefiatCryptoValue;
+            if (value > 0 && name === "amount") {
+              let fiatValue =
+                parseFloat(this.state.singlefiatCryptoValue) *
+                parseFloat(value).toFixed(8);
+              this.setState({
+                fiatCryptoValue: fiatValue
+              });
+            }
           } else if (this.state.side === "Sell") {
             self.setState({
               sellPayAmt:
@@ -216,11 +255,19 @@ class Market extends Component {
             });
             obj["total"] =
               Number(this.state.amount) * this.props.userBal.sellPay;
-            obj["amount"] = Number(this.state.amount).toFixed(3);
+            // obj["amount"] = Number(this.state.amount).toFixed(3);
+            if (value > 0 && name === "amount") {
+              let fiatValue =
+                parseFloat(this.state.singlefiatCurrencyValue) *
+                parseFloat(value).toFixed(8);
+              this.setState({
+                fiatCurrencyValue: fiatValue
+              });
+            }
           }
         } else {
           obj["total"] = 0;
-          obj["amount"] = Number(this.state.amount).toFixed(3);
+          // obj["amount"] = Number(this.state.amount).toFixed(3);
         }
         self.setState({ ...obj });
       }
@@ -274,15 +321,28 @@ class Market extends Component {
       )
         .then(response => response.json())
         .then(responseData => {
-          this.setState({
-            Loader: false,
-            total: 0,
-            amount: 0,
-            buyPayAmt: 0,
-            sellPayAmt: 0,
-            buyEstPrice: 0,
-            sellEstPrice: 0
-          });
+          this.setState(
+            {
+              Loader: false,
+              total: 0,
+              amount: "",
+              buyPayAmt: 0,
+              sellPayAmt: 0,
+              buyEstPrice: 0,
+              sellEstPrice: 0
+            },
+            () => {
+              if (this.state.side === "Buy") {
+                this.setState({
+                  fiatCryptoValue: this.state.singlefiatCryptoValue
+                });
+              } else if (this.state.side === "Sell") {
+                this.setState({
+                  fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                });
+              }
+            }
+          );
           if (responseData.status === 200) {
             self.openNotificationWithIcon(
               "success",
@@ -293,6 +353,12 @@ class Market extends Component {
             self.openNotificationWithIcon(
               "warning",
               "Warning",
+              responseData.message
+            );
+          } else if (responseData.status === 500) {
+            self.openNotificationWithIcon(
+              "error",
+              "Error",
               responseData.message
             );
           } else {
@@ -541,7 +607,7 @@ class Market extends Component {
                   </Col>
                   <Col xs={9} sm={12}>
                     {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCryptoValue).toFixed(8)}
                   </Col>
                   <Col xs={15} sm={12}>
                     Estimated Best Price
@@ -581,7 +647,7 @@ class Market extends Component {
                   </Col>
                   <Col xs={9} sm={12}>
                     {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
                   </Col>
                   <Col xs={15} sm={12}>
                     Estimated Best Price

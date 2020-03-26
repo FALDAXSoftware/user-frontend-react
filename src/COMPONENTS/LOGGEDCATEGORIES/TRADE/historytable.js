@@ -74,6 +74,8 @@ class HistoryTable extends Component {
   componentDidMount() {
     // var self = this;
     if (this.props.io) {
+      this.props.hisFunc(true);
+      this.setState({ loader: true });
       this.props.io.on("trade-history-data", data => {
         // console.log("^^^^data", data);
         this.updateData(data);
@@ -176,10 +178,15 @@ class HistoryTable extends Component {
       });
     }
 
-    this.setState({
-      data: rows,
-      loader: false
-    });
+    this.setState(
+      {
+        data: rows,
+        loader: false
+      },
+      () => {
+        this.props.hisFunc(false);
+      }
+    );
   }
 
   /* 
