@@ -76,6 +76,7 @@ class OrderTrade extends Component {
     */
 
     cancelOrder(id, side, type) {
+        console.log(id, side, type)
         this.props.cancelOrder(id, side, type)
     }
 
@@ -131,7 +132,7 @@ class OrderTrade extends Component {
                                                     <td>{data.order_type}</td>
                                                     <td>{date}</td>
                                                     <td>{self.props.pending === 2 ? (data.quantity * data.limit_price).toFixed(8) : (data.quantity * data.fill_price).toFixed(8)}</td>
-                                                    {self.props.pending === 2 ? <th ><span onClick={() => self.cancelOrder(data.id, data.side, data.order_type)}><Icon style={{ color: "#279CED", fontSize: "18px" }
+                                                    {self.props.pending === 2 ? <th ><span onClick={() => self.cancelOrder(data.encript_id, data.side, data.order_type)}><Icon style={{ color: "#279CED", fontSize: "18px" }
                                                     } type="close-circle" /></span></th> : ''}
                                                 </tr>
                                             );

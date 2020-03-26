@@ -340,6 +340,12 @@ class ConversionDetail extends React.Component {
     //     clearInterval(this.interval1);
     //   }
     // }
+    // if (this.props.io) {
+    //   this.props.io.on("conversion-data-incoming", data => {
+    //     console.log(data);
+    //     this.updateInstrumentsData(data);
+    //   });
+    // }
     this.getCrypto();
     if (this.props.profileDetails.is_twofactor) {
       this.setState({
@@ -438,127 +444,142 @@ class ConversionDetail extends React.Component {
         loader: false
       });
     } else {
-      let URL = `/socket/get-conversionDetail?Currency=${values.Currency}&OrdType=${values.OrdType}&OrderQty=${values.OrderQty}&Side=${values.Side}&Symbol=${values.Symbol}&flag=${values.flag}&offer_code=${values.offer_code}&order_pair=${values.order_pair}&original_pair=${values.original_pair}&usd_value=${values.usd_value}`;
-      io.socket.request(
-        {
-          method: "GET",
-          url: URL,
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + this.props.isLoggedIn
-          }
-        },
-        (body, JWR) => {
-          if (body.status === 200) {
-            let res = body.data;
-            // console.log("getsocketvalues", res);
-            this.setState({
-              // loader: false,
-              subTotal: parseFloat(res.original_value).toFixed(8),
-              faldaxFee: parseFloat(res.faldax_fee).toFixed(8),
-              faldaxFeeActual: parseFloat(res.faldax_fees_actual).toFixed(8),
-              limitPrice: parseFloat(res.limit_price).toFixed(8),
-              networkFee: parseFloat(res.network_fee).toFixed(8),
-              totalAmount: parseFloat(res.total_value).toFixed(8),
-              fiatJSTValue: parseFloat(res.price_usd).toFixed(2),
-              displayCurrency: res.currency,
-              Quantity: parseFloat(res.total_value).toFixed(8),
-              flag: values.flag,
-              disabledButton: false
-            });
-            if (this.state.includeFees === 1) {
-              this.setState({
-                sendCurrencyInput: parseFloat(res.currency_value).toFixed(8),
-                orderQuantity: parseFloat(res.currency_value).toFixed(8),
-                subTotalJST: parseFloat(res.total_value).toFixed(8)
-                // loader: false
-              });
-            } else {
-              this.setState({
-                recieveCurrencyInput: parseFloat(res.total_value).toFixed(8),
-                orderQuantity: parseFloat(res.currency_value).toFixed(8),
-                subTotalJST: parseFloat(res.original_value).toFixed(8)
-                // loader: false
-              });
-            }
-            if (this.state.includeFees === 1 && this.state.OrdType === "1") {
-              this.setState({
-                OriginalQuantity: parseFloat(res.original_value).toFixed(8),
-                buy_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(res.total_value).toFixed(8)
-                    : parseFloat(res.original_value).toFixed(8),
-                sell_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(res.currency_value).toFixed(8)
-                    : parseFloat(res.currency_value).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 2 &&
-              this.state.OrdType === "1"
-            ) {
-              this.setState({
-                OriginalQuantity: parseFloat(res.total_value).toFixed(8),
-                buy_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(res.total_value).toFixed(8)
-                    : parseFloat(res.original_value).toFixed(8),
-                sell_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(res.currency_value).toFixed(8)
-                    : parseFloat(res.currency_value).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 2 &&
-              this.state.OrdType === "2"
-            ) {
-              this.setState({
-                OriginalQuantity: parseFloat(res.currency_value).toFixed(8),
-                buy_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(res.total_value).toFixed(8)
-                    : parseFloat(res.original_value).toFixed(8),
-                sell_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(res.currency_value).toFixed(8)
-                    : parseFloat(res.currency_value).toFixed(8)
-              });
-            } else if (
-              this.state.includeFees === 1 &&
-              this.state.OrdType === "2"
-            ) {
-              this.setState({
-                OriginalQuantity: parseFloat(res.currency_value).toFixed(8),
-                buy_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(res.total_value).toFixed(8)
-                    : parseFloat(res.original_value).toFixed(8),
-                sell_currency_amount:
-                  values.flag == 1
-                    ? parseFloat(res.currency_value).toFixed(8)
-                    : parseFloat(res.currency_value).toFixed(8)
-              });
-            } else {
-              // console.log("no scenario");
-            }
-          } else if (body.status === 403) {
-            // console.log(body.err);
-            this.openNotificationWithIcon("error", "Error", body.err);
-            let tempValue2 = {};
-            tempValue2["user_id"] = this.props.profileDetails.id;
-            tempValue2["jwt_token"] = this.props.isLoggedIn;
-            this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
-          } else {
-            // console.log(body.err);
-            this.openNotificationWithIcon("error", "Error", body.err);
-          }
-          // console.log("getsocketvalues", body);
-          this.setState({
-            loader: false
-          });
-        }
-      );
+      if (this.props.io) {
+        this.props.io.emit("conversion-data-incoming", {
+          user_id: this.props.profileDetails.id,
+          Symbol: values.Symbol,
+          Side: values.Side,
+          OrderQty: values.OrderQty,
+          Currency: values.Currency,
+          OrdType: values.OrdType,
+          flag: values.flag,
+          offer_code: values.offer_code,
+          order_pair: values.order_pair,
+          original_pair: values.original_pair,
+          usd_value: values.usd_value
+        });
+      }
+      // let URL = `/socket/get-conversionDetail?Currency=${values.Currency}&OrdType=${values.OrdType}&OrderQty=${values.OrderQty}&Side=${values.Side}&Symbol=${values.Symbol}&flag=${values.flag}&offer_code=${values.offer_code}&order_pair=${values.order_pair}&original_pair=${values.original_pair}&usd_value=${values.usd_value}`;
+      // io.socket.request(
+      //   {
+      //     method: "GET",
+      //     url: URL,
+      //     headers: {
+      //       Accept: "application/json",
+      //       "Content-Type": "application/json",
+      //       Authorization: "Bearer " + this.props.isLoggedIn
+      //     }
+      //   },
+      //   (body, JWR) => {
+      //     if (body.status === 200) {
+      //       let res = body.data;
+      //       // console.log("getsocketvalues", res);
+      //       this.setState({
+      //         // loader: false,
+      //         subTotal: parseFloat(res.original_value).toFixed(8),
+      //         faldaxFee: parseFloat(res.faldax_fee).toFixed(8),
+      //         faldaxFeeActual: parseFloat(res.faldax_fees_actual).toFixed(8),
+      //         limitPrice: parseFloat(res.limit_price).toFixed(8),
+      //         networkFee: parseFloat(res.network_fee).toFixed(8),
+      //         totalAmount: parseFloat(res.total_value).toFixed(8),
+      //         fiatJSTValue: parseFloat(res.price_usd).toFixed(2),
+      //         displayCurrency: res.currency,
+      //         Quantity: parseFloat(res.total_value).toFixed(8),
+      //         flag: values.flag,
+      //         disabledButton: false
+      //       });
+      //       if (this.state.includeFees === 1) {
+      //         this.setState({
+      //           sendCurrencyInput: parseFloat(res.currency_value).toFixed(8),
+      //           orderQuantity: parseFloat(res.currency_value).toFixed(8),
+      //           subTotalJST: parseFloat(res.total_value).toFixed(8)
+      //           // loader: false
+      //         });
+      //       } else {
+      //         this.setState({
+      //           recieveCurrencyInput: parseFloat(res.total_value).toFixed(8),
+      //           orderQuantity: parseFloat(res.currency_value).toFixed(8),
+      //           subTotalJST: parseFloat(res.original_value).toFixed(8)
+      //           // loader: false
+      //         });
+      //       }
+      //       if (this.state.includeFees === 1 && this.state.OrdType === "1") {
+      //         this.setState({
+      //           OriginalQuantity: parseFloat(res.original_value).toFixed(8),
+      //           buy_currency_amount:
+      //             values.flag == 1
+      //               ? parseFloat(res.total_value).toFixed(8)
+      //               : parseFloat(res.original_value).toFixed(8),
+      //           sell_currency_amount:
+      //             values.flag == 1
+      //               ? parseFloat(res.currency_value).toFixed(8)
+      //               : parseFloat(res.currency_value).toFixed(8)
+      //         });
+      //       } else if (
+      //         this.state.includeFees === 2 &&
+      //         this.state.OrdType === "1"
+      //       ) {
+      //         this.setState({
+      //           OriginalQuantity: parseFloat(res.total_value).toFixed(8),
+      //           buy_currency_amount:
+      //             values.flag == 1
+      //               ? parseFloat(res.total_value).toFixed(8)
+      //               : parseFloat(res.original_value).toFixed(8),
+      //           sell_currency_amount:
+      //             values.flag == 1
+      //               ? parseFloat(res.currency_value).toFixed(8)
+      //               : parseFloat(res.currency_value).toFixed(8)
+      //         });
+      //       } else if (
+      //         this.state.includeFees === 2 &&
+      //         this.state.OrdType === "2"
+      //       ) {
+      //         this.setState({
+      //           OriginalQuantity: parseFloat(res.currency_value).toFixed(8),
+      //           buy_currency_amount:
+      //             values.flag == 1
+      //               ? parseFloat(res.total_value).toFixed(8)
+      //               : parseFloat(res.original_value).toFixed(8),
+      //           sell_currency_amount:
+      //             values.flag == 1
+      //               ? parseFloat(res.currency_value).toFixed(8)
+      //               : parseFloat(res.currency_value).toFixed(8)
+      //         });
+      //       } else if (
+      //         this.state.includeFees === 1 &&
+      //         this.state.OrdType === "2"
+      //       ) {
+      //         this.setState({
+      //           OriginalQuantity: parseFloat(res.currency_value).toFixed(8),
+      //           buy_currency_amount:
+      //             values.flag == 1
+      //               ? parseFloat(res.total_value).toFixed(8)
+      //               : parseFloat(res.original_value).toFixed(8),
+      //           sell_currency_amount:
+      //             values.flag == 1
+      //               ? parseFloat(res.currency_value).toFixed(8)
+      //               : parseFloat(res.currency_value).toFixed(8)
+      //         });
+      //       } else {
+      //         // console.log("no scenario");
+      //       }
+      //     } else if (body.status === 403) {
+      //       // console.log(body.err);
+      //       this.openNotificationWithIcon("error", "Error", body.err);
+      //       let tempValue2 = {};
+      //       tempValue2["user_id"] = this.props.profileDetails.id;
+      //       tempValue2["jwt_token"] = this.props.isLoggedIn;
+      //       this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
+      //     } else {
+      //       // console.log(body.err);
+      //       this.openNotificationWithIcon("error", "Error", body.err);
+      //     }
+      //     // console.log("getsocketvalues", body);
+      //     this.setState({
+      //       loader: false
+      //     });
+      //   }
+      // );
     }
   }
   getValuesUSDSocket(showLoader = true) {
@@ -2849,7 +2870,7 @@ class ConversionDetail extends React.Component {
             </ConversionRadioRow>
             <ConversionLeftCol md={12} lg={12}>
               <Collapse accordion>
-                <Panel header="Details" key="1">
+                <Panel header={t("details_text.message")} key="1">
                   <div>
                     <Row>
                       <Col xs={12} className="left-style">
