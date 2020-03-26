@@ -98,13 +98,13 @@ const GreyWrapTrade = styled(GreyWrap)`
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
     border-right: ${props =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
     border-bottom: ${props =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
   }
 `;
 const columns = [
@@ -433,7 +433,7 @@ class Trade extends Component {
         `${this.state.crypto}-${this.state.currency}`
       );
       this.props.io.emit("trade_users_history_event", {
-        month,
+        month: month,
         flag: filter_type,
         pair: `${this.state.crypto}-${this.state.currency}`
       });
@@ -481,6 +481,7 @@ class Trade extends Component {
   //
 
   cancelOrder(id, side, type) {
+    console.log(id, side, type)
     fetch(SOCKET_HOST + `/api/v1/tradding/cancel-pending-order`, {
       method: "post",
       headers: {
@@ -506,7 +507,7 @@ class Trade extends Component {
         } else
           this.openNotificationWithIcon("error", "Error", responseData.err);
       })
-      .catch(error => {});
+      .catch(error => { });
   }
 
   // created by Meghal Patel at 2019-04-27 15:24.
@@ -584,7 +585,7 @@ class Trade extends Component {
   searchInstu(e) {
     var search = e.target.value;
     if (search.trim() !== "") {
-      var searchedInstu = this.state.InsData.filter(function(temp) {
+      var searchedInstu = this.state.InsData.filter(function (temp) {
         if (temp.name.toLowerCase().includes(search.toLowerCase())) {
           return true;
         } else {
@@ -1016,8 +1017,8 @@ class Trade extends Component {
                     {this.state.insLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <LeftDiv1>
                       <Instru>INSTRUMENTS</Instru>
                       {this.state.InsData.length > 0 ? (
@@ -1026,8 +1027,8 @@ class Trade extends Component {
                           style={{ width: 200 }}
                         />
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       <FIATWrap>
                         <FIAT>
                           <RadioSelect
@@ -1057,8 +1058,8 @@ class Trade extends Component {
                             this.state.searchedInstu === null
                               ? this.state.InsData
                               : this.state.searchedInstu.length === 0
-                              ? []
-                              : this.state.searchedInstu
+                                ? []
+                                : this.state.searchedInstu
                           }
                           onChange={this.onChange}
                           scroll={{ y: self.state.instrumentTableHeight }}
@@ -1074,8 +1075,8 @@ class Trade extends Component {
                     {this.state.userBalLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <RightDiv1>
                       <TabsRight
                         defaultActiveKey="1"
@@ -1111,8 +1112,8 @@ class Trade extends Component {
                     {this.state.buySellLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <BuySell
                       crypto={this.state.crypto}
                       currency={this.state.currency}
@@ -1131,8 +1132,8 @@ class Trade extends Component {
                     {this.state.depthLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <RightDiv>
                       <DepthChart
                         crypto={this.state.crypto}
@@ -1151,8 +1152,8 @@ class Trade extends Component {
                     {this.state.hisLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <OrderHIstory
                       io={io}
                       hisFunc={loader => this.hisFunc(loader)}
@@ -1167,8 +1168,8 @@ class Trade extends Component {
                     {this.state.orderTradeLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <LeftDiv2>
                       <OrderWrap>
                         <InstruOrder>MY ORDERS AND TRADES</InstruOrder>
