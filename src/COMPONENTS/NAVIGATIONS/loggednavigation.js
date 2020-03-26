@@ -113,7 +113,8 @@ const Headermain = styled(Header)`
   display: flex;
   align-items: center;
   & .color_important {
-    color: black !important;
+    color: ${props =>
+      props.theme.mode === "dark" ? "#fff !important" : "black !important"};
   }
 `;
 const Menumain = styled(Menu)`
@@ -557,24 +558,13 @@ class LoggedNavigation extends Component {
       .catch(error => {});
   }
   cryptoAccess() {
-    // console.log(
-    //   "this.props.profileDetails.is_panic_enabled",
-    //   this.props.profileDetails.is_panic_enabled
-    // );
-    // let panic = JSON.parse(this.props.profileDetails.is_panic_enabled);
-    // console.log("Panic", panic);
-
     if (this.state.panic_status === true) {
-      // alert("Idf");
       this.setState({ panicEnabled: true });
     } else {
       if (
         this.props.profileDetails.is_allowed === true &&
         this.props.profileDetails.is_kyc_done === 2
       ) {
-        // alert("IF");
-        // console.log("I am here", this.props.location.pathname);
-        // this.props.history.push('/trade');
         if (this.props.location.pathname !== "/crypto-conversion")
           this.props.history.push("/crypto-conversion");
       } else {
@@ -582,10 +572,13 @@ class LoggedNavigation extends Component {
           this.props.profileDetails.is_allowed === false &&
           this.props.profileDetails.is_kyc_done !== 2
         ) {
-          // alert("ELSE IF");
+          this.setState({ completeKYC: true });
+        } else if (
+          this.props.profileDetails.is_allowed === true &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
           this.setState({ completeKYC: true });
         } else {
-          // alert("ELSE ELSE");
           this.setState({ countryAccess: true });
         }
       }
@@ -723,7 +716,7 @@ class LoggedNavigation extends Component {
     const DropdownItems = (
       <Menu className="fixed-drop">
         <Menu.Item key="0">
-          <a
+          {/* <a
             className="tokenlink"
             href={`${globalVariables.WordpressSiteURL}${
               localStorage["i18nextLng"] && localStorage["i18nextLng"] !== "en"
@@ -732,8 +725,10 @@ class LoggedNavigation extends Component {
             }/crypto-only-coming-soon`}
           >
             {t("navbar_sub_menu_conversation_crypto_only.message")}
+          </a> */}
+          <a onClick={this.cryptoAccess}>
+            {t("navbar_sub_menu_conversation_crypto_only.message")}
           </a>
-          {/* <a onClick={this.cryptoAccess}>Crypto Only</a> */}
         </Menu.Item>
         <Menu.Item key="1">
           <a onClick={this.simplexAccess}>
@@ -989,7 +984,7 @@ class LoggedNavigation extends Component {
                   title={t("navbar_menu_conversion.message")}
                 >
                   <Menu.Item key="0">
-                    <a
+                    {/* <a
                       className="tokenlink"
                       href={`${globalVariables.WordpressSiteURL}${
                         localStorage["i18nextLng"] &&
@@ -999,8 +994,10 @@ class LoggedNavigation extends Component {
                       }/crypto-only-coming-soon`}
                     >
                       {t("navbar_sub_menu_conversation_crypto_only.message")}
+                    </a> */}
+                    <a onClick={this.cryptoAccess}>
+                      {t("navbar_sub_menu_conversation_crypto_only.message")}
                     </a>
-                    {/* <a onClick={this.cryptoAccess}>Crypto Only</a> */}
                   </Menu.Item>
                   <Menu.Item key="1">
                     <a onClick={this.simplexAccess}>

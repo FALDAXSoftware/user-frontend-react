@@ -25,6 +25,7 @@ import History2 from "COMPONENTS/LOGGEDCATEGORIES/HISTORY/history";
 import OpenTicket from "COMPONENTS/LANDINGCATEGORIES/open_ticket";
 import { globalVariables } from "./Globals.js";
 import { LogoutUser } from "ACTIONS/authActions";
+import MarketPage from "./COMPONENTS/LOGGEDCATEGORIES/MARKET/market_page";
 
 // import Chart from "COMPONENTS/tradingviewchart";
 import Conversion from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion";
@@ -64,6 +65,11 @@ const routes = [
     exact: false,
     path: "/walletDetails",
     component: WalletDetails
+  },
+  {
+    exact: false,
+    path: "/market",
+    component: () => <MarketPage />
   },
   {
     exact: false,
