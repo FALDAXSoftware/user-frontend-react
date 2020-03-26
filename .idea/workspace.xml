@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="76a58117-e192-4313-86cb-0ec4949b92db" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/COMPONENTS/LOGGEDCATEGORIES/MARKET/market_page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/COMPONENTS/LOGGEDCATEGORIES/MARKET/market_page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LOCALES/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/LOCALES/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/COMPONENTS/LOGGEDCATEGORIES/TRADE/buytable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/COMPONENTS/LOGGEDCATEGORIES/TRADE/buytable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
