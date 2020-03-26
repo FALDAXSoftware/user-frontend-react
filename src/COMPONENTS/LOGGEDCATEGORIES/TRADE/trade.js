@@ -218,6 +218,7 @@ class Trade extends Component {
           () => {
             self.orderSocket(self.state.timePeriod, self.state.status);
             self.getUserBal();
+            this.joinRoom(props.cryptoPair.prevRoom.crypto+"-"+props.cryptoPair.currency)
           }
         );
       }
@@ -230,6 +231,7 @@ class Trade extends Component {
           () => {
             self.orderSocket(self.state.timePeriod, self.state.status);
             self.getUserBal();
+            this.joinRoom(props.cryptoPair.prevRoom.crypto+"-"+props.cryptoPair.currency)
           }
         );
       }
@@ -260,12 +262,14 @@ class Trade extends Component {
         this.updateMyOrder(data);
       });
       this.props.io.on("instrument-data", data => {
+        console.log(data)
         this.updateInstrumentsData(data);
       });
     }
   }
   joinRoom = (prevRoom = null) => {
-    io.emit("join", { room: this.state.crypto + "-" + this.state.currency });
+    console.log(this.state,prevRoom)
+    io.emit("join", { room: this.state.crypto + "-" + this.state.currency,prevRoom });
   };
   // created by Meghal Patel at 2019-04-27 15:09.
   //
