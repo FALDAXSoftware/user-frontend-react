@@ -37,7 +37,6 @@ import BuySell from "./buysell";
 import OrderHIstory from "./orderhistory";
 import DepthChart from "./depthchart";
 import OrderTrade from "./ordertrade";
-import { withRouter } from "react-router-dom";
 import { globalVariables } from "Globals.js";
 import TradingViewChart from "COMPONENTS/tradingviewchart";
 /* import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'; */
@@ -69,13 +68,11 @@ import {
   SelectMonth,
   SettingDropdown
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
-import { async } from "q";
-import { func } from "prop-types";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const originalLayouts = getFromLS("layouts") || {};
 
-let { API_URL, tvChartURL } = globalVariables;
+let { API_URL, tvChartURL, SOCKET_HOST } = globalVariables;
 /* var socketIOClient = require('socket.io-client');
 io.sails.url = API_URL;
 var sailsIOClient = require('sails.io.js');
@@ -101,13 +98,13 @@ const GreyWrapTrade = styled(GreyWrap)`
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
     border-right: ${props =>
-    props.theme.mode === "dark"
-      ? "2px solid rgb(255, 255, 255) !important"
-      : ""};
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
     border-bottom: ${props =>
-    props.theme.mode === "dark"
-      ? "2px solid rgb(255, 255, 255) !important"
-      : ""};
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
   }
 `;
 const columns = [
@@ -198,7 +195,7 @@ class Trade extends Component {
     this.getUserBal = this.getUserBal.bind(this);
     this.onInsChange = this.onInsChange.bind(this);
     // this.getInstrumentData = this.getInstrumentData.bind(this);
-    // this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
+    this.updateInstrumentsData = this.updateInstrumentsData.bind(this);
     this.onLayoutChange = this.onLayoutChange.bind(this);
     this.goFullScreen = this.goFullScreen.bind(this);
     this.exitFullScreen = this.exitFullScreen.bind(this);
@@ -208,6 +205,7 @@ class Trade extends Component {
   }
 
   /* Life-Cycle Methods */
+
   componentWillReceiveProps(props, newProps) {
     var self = this;
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
@@ -218,8 +216,8 @@ class Trade extends Component {
             prevRoom: props.cryptoPair.prevRoom
           },
           () => {
-            self.orderSocket(self.state.timePeriod, self.state.status);
-            self.getUserBal();
+            // self.orderSocket(self.state.timePeriod, self.state.status);
+            // self.getUserBal();
           }
         );
       }
@@ -230,8 +228,8 @@ class Trade extends Component {
             prevRoom: props.cryptoPair.prevRoom
           },
           () => {
-            self.orderSocket(self.state.timePeriod, self.state.status);
-            self.getUserBal();
+            // self.orderSocket(self.state.timePeriod, self.state.status);
+            // self.getUserBal();
           }
         );
       }
@@ -240,19 +238,6 @@ class Trade extends Component {
 
   componentDidMount() {
     var self = this;
-    io = this.props.io
-    console.log(io)
-    io.emit("join", { room: this.state.crypto + '-' + this.state.currency })
-    io.on("instrument-data", async function (data) {
-      self.updateInstrumentsData(data);
-    })
-    // io.on("test",function (data) {
-    //   console.log(data)
-    // })
-    // io.on("getBuyBookData", async function (data) {
-    //   console.log(data);
-    // })
-    // io.on
     // io.sails.headers = {
     //   Accept: "application/json",
     //   "Content-Type": "application/json",
@@ -261,15 +246,28 @@ class Trade extends Component {
     // this.orderSocket(this.state.timePeriod, this.state.status);
     // this.getInstrumentData();
     // this.getUserBal();
-    // io.socket.on("walletBalanceUpdate", data => {
-    //   self.setState({ userBal: data });
-    // });
+
     // io.socket.on("orderUpdated", data => {
     //   self.orderSocket(self.state.timePeriod, self.state.status);
     //   // self.getUserBal();
     // });
+    this.joinRoom();
+    if (this.props.io) {
+      this.props.io.on("users-all-trade-data", data => {
+        // console.log("^^^^data", data);
+        this.updateMyOrder(data);
+      });
+      this.props.io.on("instrument-data", data => {
+        this.updateInstrumentsData(data);
+      });
+      this.props.io.on("user-wallet-balance", data => {
+        this.setState({ userBal: data });
+      });
+    }
   }
-
+  joinRoom = (prevRoom = null) => {
+    io.emit("join", { room: this.state.crypto + "-" + this.state.currency });
+  };
   // created by Meghal Patel at 2019-04-27 15:09.
   //
   // Description: Crypto Pair changes from here.It will go in redux.
@@ -294,7 +292,11 @@ class Trade extends Component {
       },
       () => {
         self.props.cryptoCurrency(cryptoPair);
-        self.getInstrumentData();
+        // self.getInstrumentData();
+        // this.props
+        this.joinRoom(
+          cryptoPair.prevRoom.crypto + "-" + cryptoPair.prevRoom.currency
+        );
       }
     );
   }
@@ -324,7 +326,7 @@ class Trade extends Component {
   //       }
   //     }
   //   );
-  //   io.socket.on("instrumentUpdate", data => {
+  //   this.props.io.on("instrument-data", data => {
   //     self.updateInstrumentsData(data);
   //   });
   // }
@@ -403,30 +405,39 @@ class Trade extends Component {
   //
 
   orderSocket(month, filter_type) {
-    var URL;
-    this.setState({ orderTradeLoader: true });
-    if (Object.keys(this.state.prevRoom).length > 0)
-      URL = `/socket/get-user-trade-data?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`;
-    else
-      URL = `/socket/get-user-trade-data?room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`;
-    io.socket.request(
-      {
-        method: "GET",
-        url: URL,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
-      },
-      (body, JWR) => {
-        if (body.status === 200) {
-          let res = body.data;
-          this.updateMyOrder(res);
-        }
-        this.setState({ orderTradeLoader: false });
-      }
-    );
+    // io.emit("")
+
+    if (this.props.io) {
+      this.props.io.emit("trade_users_history_event", {
+        month,
+        flag: filter_type,
+        pair: `${this.state.crypto}-${this.state.currency}`
+      });
+    }
+    // var URL;
+    // this.setState({ orderTradeLoader: true });
+    // if (Object.keys(this.state.prevRoom).length > 0)
+    //   URL = `/socket/get-user-trade-data?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`;
+    // else
+    //   URL = `/socket/get-user-trade-data?room=${this.state.crypto}-${this.state.currency}&month=${month}&filter_type=${filter_type}`;
+    // io.socket.request(
+    //   {
+    //     method: "GET",
+    //     url: URL,
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json",
+    //       Authorization: "Bearer " + this.props.isLoggedIn
+    //     }
+    //   },
+    //   (body, JWR) => {
+    //     if (body.status === 200) {
+    //       let res = body.data;
+    //       this.updateMyOrder(res);
+    //     }
+    //     this.setState({ orderTradeLoader: false });
+    //   }
+    // );
   }
 
   // created by Meghal Patel at 2019-04-27 15:22.
@@ -446,12 +457,11 @@ class Trade extends Component {
   //
 
   cancelOrder(id, side, type) {
-    fetch(API_URL + `/cancel-pending-order`, {
+    fetch(SOCKET_HOST + `/api/v1/tradding/cancel-pending-order`, {
       method: "post",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
         Authorization: "Bearer " + this.props.isLoggedIn
       },
       body: JSON.stringify({
@@ -472,7 +482,7 @@ class Trade extends Component {
         } else
           this.openNotificationWithIcon("error", "Error", responseData.err);
       })
-      .catch(error => { });
+      .catch(error => {});
   }
 
   // created by Meghal Patel at 2019-04-27 15:24.
@@ -513,32 +523,32 @@ class Trade extends Component {
   //
 
   getUserBal() {
-    var URL;
-    this.setState({ userBalLoader: true });
-    if (Object.keys(this.state.prevRoom).length > 0)
-      URL = `/socket/get-user-balance?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}&userId=${this.props.profileDetails.id}`;
-    else
-      URL = `/socket/get-user-balance?room=${this.state.crypto}-${this.state.currency}&userId=${this.props.profileDetails.id}`;
-    io.socket.request(
-      {
-        method: "GET",
-        url: URL,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
-      },
-      (body, JWR) => {
-        if (body.status === 200) {
-          let res = body.data;
-          this.setState({ userBal: res, userBalLoader: false });
-        }
-      }
-    );
-    io.socket.on("orderUpdate", data => {
-      this.setState({ userBal: data, userBalLoader: false });
-    });
+    // var URL;
+    // this.setState({ userBalLoader: true });
+    // if (Object.keys(this.state.prevRoom).length > 0)
+    //   URL = `/socket/get-user-balance?prevRoom=${this.state.prevRoom.crypto}-${this.state.prevRoom.currency}&room=${this.state.crypto}-${this.state.currency}&userId=${this.props.profileDetails.id}`;
+    // else
+    //   URL = `/socket/get-user-balance?room=${this.state.crypto}-${this.state.currency}&userId=${this.props.profileDetails.id}`;
+    // io.socket.request(
+    //   {
+    //     method: "GET",
+    //     url: URL,
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json",
+    //       Authorization: "Bearer " + this.props.isLoggedIn
+    //     }
+    //   },
+    //   (body, JWR) => {
+    //     if (body.status === 200) {
+    //       let res = body.data;
+    //       this.setState({ userBal: res, userBalLoader: false });
+    //     }
+    //   }
+    // );
+    // io.socket.on("orderUpdate", data => {
+    //   this.setState({ userBal: data, userBalLoader: false });
+    // });
   }
 
   // created by Meghal Patel at 2019-04-27 15:27.
@@ -550,7 +560,7 @@ class Trade extends Component {
   searchInstu(e) {
     var search = e.target.value;
     if (search.trim() !== "") {
-      var searchedInstu = this.state.InsData.filter(function (temp) {
+      var searchedInstu = this.state.InsData.filter(function(temp) {
         if (temp.name.toLowerCase().includes(search.toLowerCase())) {
           return true;
         } else {
@@ -914,19 +924,19 @@ class Trade extends Component {
         </SettingDropdown>
         <Navigation />
         <GreyWrapTrade>
+          {/* <Row>
+                        <Col>
+                            <Layout>
+                                <EditButton  >Edit Layout</EditButton>
+                                <SaveButton>Save</SaveButton>
+                            </Layout>
+                        </Col>
+                    </Row> */}
           <Row>
             <Col>
-              {/* <Layout>
-                <EditButton  >Edit Layout</EditButton>
-                <SaveButton>Save</SaveButton>
-              </Layout> */}
+              {/* <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} /> */}
             </Col>
           </Row>
-          {/* <Row>
-            <Col>
-              <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} />
-            </Col>
-          </Row> */}
           <Row>
             <Col>
               <RGL
@@ -940,9 +950,9 @@ class Trade extends Component {
                   this.onLayoutChange(layout, layouts)
                 }
               >
-                {/* <div key="tradeView">
+                <div key="tradeView">
                   <div style={{ height: "100%", width: "100%" }}>
-                    <MainTV className="trade_chart_view_main">
+                    <MainTV>
                       <TVBar>
                         <div>
                           <span>
@@ -974,7 +984,7 @@ class Trade extends Component {
                       />
                     </MainTV>
                   </div>
-                </div> */}
+                </div>
                 <div key="instruments">
                   <div
                     style={{ height: "100%", width: "100%", overflow: "auto" }}
@@ -982,8 +992,8 @@ class Trade extends Component {
                     {this.state.insLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <LeftDiv1>
                       <Instru>INSTRUMENTS</Instru>
                       {this.state.InsData.length > 0 ? (
@@ -992,8 +1002,8 @@ class Trade extends Component {
                           style={{ width: 200 }}
                         />
                       ) : (
-                          ""
-                        )}
+                        ""
+                      )}
                       <FIATWrap>
                         <FIAT>
                           <RadioSelect
@@ -1004,7 +1014,6 @@ class Trade extends Component {
                           >
                             <RadioButton value="BTC">BTC</RadioButton>
                             <RadioButton value="XRP">XRP</RadioButton>
-                            <RadioButton value="ETH">ETH</RadioButton>
                           </RadioSelect>
                         </FIAT>
                       </FIATWrap>
@@ -1024,8 +1033,8 @@ class Trade extends Component {
                             this.state.searchedInstu === null
                               ? this.state.InsData
                               : this.state.searchedInstu.length === 0
-                                ? []
-                                : this.state.searchedInstu
+                              ? []
+                              : this.state.searchedInstu
                           }
                           onChange={this.onChange}
                           scroll={{ y: self.state.instrumentTableHeight }}
@@ -1034,15 +1043,15 @@ class Trade extends Component {
                     </LeftDiv1>
                   </div>
                 </div>
-                {/* <div key="tradeAction">
+                <div key="tradeAction">
                   <div
                     style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.userBalLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <RightDiv1>
                       <TabsRight
                         defaultActiveKey="1"
@@ -1050,7 +1059,6 @@ class Trade extends Component {
                         className="tardeActionCard"
                       >
                         <TabPane tab="Market" key="1">
-                          {console.log("^^^^user", this.state.userBal)}
                           <Market
                             MLS={this.state.MLS}
                             userBal={this.state.userBal}
@@ -1071,7 +1079,7 @@ class Trade extends Component {
                       </TabsRight>
                     </RightDiv1>
                   </div>
-                </div> */}
+                </div>
                 <div key="buysellBook">
                   <div
                     style={{ height: "100%", width: "100%", overflow: "auto" }}
@@ -1079,8 +1087,8 @@ class Trade extends Component {
                     {this.state.buySellLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <BuySell
                       crypto={this.state.crypto}
                       currency={this.state.currency}
@@ -1092,26 +1100,26 @@ class Trade extends Component {
                     />
                   </div>
                 </div>
-                {/* <div key="depthChart">
+                <div key="depthChart">
                   <div
                     style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.depthLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <RightDiv>
                       <DepthChart
                         crypto={this.state.crypto}
                         currency={this.state.currency}
                         depthLoaderFunc={loader => this.depthLoaderFunc(loader)}
-                        io={io}
+                        io={this.props.io}
                         height={this.state.depthChartHeight}
                       />
                     </RightDiv>
                   </div>
-                </div> */}
+                </div>
                 <div key="orderHistory">
                   <div
                     style={{ height: "100%", width: "100%", overflow: "auto" }}
@@ -1119,8 +1127,8 @@ class Trade extends Component {
                     {this.state.hisLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <OrderHIstory
                       io={io}
                       hisFunc={loader => this.hisFunc(loader)}
@@ -1128,15 +1136,15 @@ class Trade extends Component {
                     />
                   </div>
                 </div>
-                {/* <div key="myorder">
+                <div key="myorder">
                   <div
                     style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.orderTradeLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <LeftDiv2>
                       <OrderWrap>
                         <InstruOrder>MY ORDERS AND TRADES</InstruOrder>
@@ -1180,7 +1188,7 @@ class Trade extends Component {
                       />
                     </LeftDiv2>
                   </div>
-                </div> */}
+                </div>
               </RGL>
             </Col>
           </Row>
@@ -1211,7 +1219,7 @@ const mapDispatchToProps = dispatch => ({
   cryptoCurrency: Pair => dispatch(cryptoCurrency(Pair))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Trade));
+export default connect(mapStateToProps, mapDispatchToProps)(Trade);
 
 function getFromLS(key) {
   let ls = {};

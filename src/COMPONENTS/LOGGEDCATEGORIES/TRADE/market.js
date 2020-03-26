@@ -33,7 +33,7 @@ import {
 import { SpinSingle } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle";
 import { globalVariables } from "Globals.js";
 
-let { API_URL } = globalVariables;
+let { SOCKET_HOST } = globalVariables;
 
 class Market extends Component {
   constructor(props) {
@@ -258,16 +258,20 @@ class Market extends Component {
         orderQuantity: self.state.amount
       };
       self.setState({ Loader: true });
-      fetch(API_URL + "/market/" + self.state.side.toLowerCase(), {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
-          Authorization: "Bearer " + self.props.isLoggedIn
-        },
-        body: JSON.stringify(params)
-      })
+      fetch(
+        SOCKET_HOST +
+          `/api/v1/tradding/orders/market-${self.state.side.toLowerCase()}-create/`,
+        {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Accept-Language": localStorage["i18nextLng"],
+            Authorization: "Bearer " + self.props.isLoggedIn
+          },
+          body: JSON.stringify(params)
+        }
+      )
         .then(response => response.json())
         .then(responseData => {
           this.setState({
