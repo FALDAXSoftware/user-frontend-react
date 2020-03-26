@@ -266,13 +266,14 @@ class Trade extends Component {
         this.updateInstrumentsData(data);
       });
       this.props.io.on("user-wallet-balance", data => {
+        console.log("^^^^userdata", data);
         this.setState({ userBal: data });
       });
     }
   }
   joinRoom = (prevRoom = null) => {
     console.log(this.state, prevRoom)
-    io.emit("join", { room: this.state.crypto + "-" + this.state.currency, previous_room:prevRoom });
+    io.emit("join", { room: this.state.crypto + "-" + this.state.currency, previous_room: prevRoom });
   };
   // created by Meghal Patel at 2019-04-27 15:09.
   //

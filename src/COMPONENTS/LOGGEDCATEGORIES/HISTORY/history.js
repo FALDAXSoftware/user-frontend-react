@@ -153,7 +153,7 @@ class History extends Component {
       loader: false,
       csvFields: [],
       checkedGroupValue: ["SEND", "RECEIVE", "SELL", "BUY"],
-      activeKey: "2",
+      activeKey: "1",
       csvHeadersTrade: [
         { label: "Date", key: "date" },
         { label: "Side", key: "side" },
@@ -240,7 +240,7 @@ class History extends Component {
         method: "get",
         headers: {
           Accept: "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           "Content-Type": "application/json",
           Authorization: "Bearer " + this.props.isLoggedIn
         }
@@ -259,7 +259,7 @@ class History extends Component {
         method: "get",
         headers: {
           Accept: "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           "Content-Type": "application/json",
           Authorization: "Bearer " + this.props.isLoggedIn
         }
@@ -816,7 +816,10 @@ class History extends Component {
                     <RangePickerS
                       disabledDate={this.disabledDate}
                       disabledTime={this.disabledRangeTime}
-                      placeholder={[this.t("start_date_text.message"),this.t("end_date_text.message")]}
+                      placeholder={[
+                        this.t("start_date_text.message"),
+                        this.t("end_date_text.message")
+                      ]}
                       onChange={this.changeDate}
                       allowClear={false}
                       value={[this.state.fromDate, this.state.toDate]}
@@ -920,7 +923,7 @@ class History extends Component {
               </HeadHis>
               <HisWrap>
                 <Tabs activeKey={this.state.activeKey} onChange={this.callback}>
-                  {/* <TabPane
+                  <TabPane
                     tab={t(
                       "header:navbar_sub_menu_conversation_crypto_only.message"
                     )}
@@ -1026,7 +1029,7 @@ class History extends Component {
                         )}
                       </HisTable>
                     </Tablediv>
-                  </TabPane>  */}
+                  </TabPane>
                   <TabPane
                     tab={this.t(
                       "header:navbar_sub_menu_conversation_credit_card.message"
