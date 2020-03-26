@@ -13,7 +13,7 @@ export const globalVariables = {
 
   //API_URL: 'http://18.191.87.133:8084', //Live URL
 
-  // API_URL: "http://192.168.0.213:1440", //Mansi's
+  API_URL: "http://localhost:1440", //Mansi's
 
   //API_URL: 'http://192.168.0.85:1337'
 
@@ -30,7 +30,7 @@ export const globalVariables = {
   // API_URL: "https://mainnet-backend.faldax.com", //Pre-Production URL
 
   // API_URL: "http://991e8fb6.ngrok.io/api/v1/tradding/",
-  API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
+  // API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
 
   TRADE_URL: "https://preprod-trade.faldax.com",
 
