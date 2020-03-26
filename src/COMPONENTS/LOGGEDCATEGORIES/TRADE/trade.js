@@ -270,7 +270,7 @@ class Trade extends Component {
   }
   joinRoom = (prevRoom = null) => {
     console.log(this.state, prevRoom)
-    io.emit("join", { room: this.state.crypto + "-" + this.state.currency, prevRoom });
+    io.emit("join", { room: this.state.crypto + "-" + this.state.currency, previous_room:prevRoom });
   };
   // created by Meghal Patel at 2019-04-27 15:09.
   //
