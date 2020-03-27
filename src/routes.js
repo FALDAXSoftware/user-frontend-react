@@ -25,24 +25,26 @@ import History2 from "COMPONENTS/LOGGEDCATEGORIES/HISTORY/history";
 import OpenTicket from "COMPONENTS/LANDINGCATEGORIES/open_ticket";
 import { globalVariables } from "./Globals.js";
 import { LogoutUser } from "ACTIONS/authActions";
+import MarketPage from "./COMPONENTS/LOGGEDCATEGORIES/MARKET/market_page";
 
-/* import Chart from "COMPONENTS/tradingviewchart"; */
+// import Chart from "COMPONENTS/tradingviewchart";
 import Conversion from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion";
-// import ConversionDetail from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion_detail";
+import ConversionDetail from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion_detail";
 import TierUpgradeInfo from "./COMPONENTS/SETTINGS/tier_upgrade_information.js";
 import TierUpgradeInfoImageRequirements from "./COMPONENTS/SETTINGS/tier-upgrade-info-image-requirements.js";
 import TierIDConfirmation from "./COMPONENTS/SETTINGS/tier_id_confirmation.js";
 import Simplex from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex.js";
 import SimplexExchange from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex_exchange.js";
 import NotFound from "./SHARED-COMPONENTS/NotFound.js";
-// import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
-// import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
-// import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
+import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
+import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
+import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
 // let { API_URL } = globalVariables;
-// const socketIOClient = require("socket.io-client");
+const socketIOClient = require("socket.io-client");
 // const sailsIOClient = require("sails.io.js");
-// let io = socketIOClient(globalVariables.SOCKET_HOST)
-
+// let io = sailsIOClient(socketIOClient);
+// io.sails.url = API_URL;
+let io = null;
 const routes = [
   {
     exact: false,
@@ -64,27 +66,32 @@ const routes = [
     path: "/walletDetails",
     component: WalletDetails
   },
-  // {
-  //   exact: false,
-  //   path: "/trade",
-  //   component: () => <Trade io={io} />
-  // },
-  // {
-  //   exact: false,
-  //   path: "/chart",
-  //   component: () => <Tradingviewchart io={io} />
-  // },
+  {
+    exact: false,
+    path: "/market",
+    component: () => <MarketPage />
+  },
+  {
+    exact: false,
+    path: "/trade",
+    component: () => <Trade io={io} />
+  },
+  {
+    exact: false,
+    path: "/chart",
+    component: () => <Tradingviewchart io={io} />
+  },
   {
     exact: false,
     path: "/history",
     component: History2
   },
-  // {
-  //   exact: false,
-  //   path: "/dashboard",
-  //   component: () => <Dashboard io={io} />,
-  //   io: io
-  // },
+  {
+    exact: false,
+    path: "/dashboard",
+    component: () => <Dashboard io={io} />,
+    io: io
+  },
   {
     exact: false,
     path: "/open-ticket",
@@ -97,12 +104,13 @@ const routes = [
     component: () => <Conversion />
     // io: io
   },
-  // {
-  //   exact: false,
-  //   path: "/crypto-conversion",
-  //   component: () => <ConversionDetail io={io} />,
-  //   io: io
-  // },{`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
+  {
+    exact: false,
+    path: "/crypto-conversion",
+    component: () => <ConversionDetail io={io} />,
+    io: io
+  },
+  // {`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
   // {
   //   exact: false,
   //   path: "/crypto-conversion",
@@ -199,8 +207,28 @@ class AppRouter extends Component {
     /* this.onAction = this._onAction.bind(this)
     this.onActive = this._onActive.bind(this) */
     this.onIdle = this._onIdle.bind(this);
+    io = socketIOClient(globalVariables.SOCKET_HOST, {
+      transportOptions: {
+        polling: {
+          extraHeaders: {
+            Authorization: "Bearer " + this.props.isLoggedIn //ahiya header pass karide auth
+          }
+        }
+      }
+    });
   }
-  componentDidMount() {}
+  componentDidMount() {
+    // console.log("^^headert", this.props.isLoggedIn);
+    // io = socketIOClient(globalVariables.SOCKET_HOST, {
+    //   transportOptions: {
+    //     polling: {
+    //       extraHeaders: {
+    //         Authorization: "Bearer " + this.props.isLoggedIn //ahiya header pass karide auth
+    //       }
+    //     }
+    //   }
+    // });
+  }
   /*   _onAction(e) {
       console.log('user did something', e)
     }

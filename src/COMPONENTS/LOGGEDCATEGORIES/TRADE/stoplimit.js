@@ -33,7 +33,8 @@ import {
   ButtonETH
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
-let { API_URL } = globalVariables;
+// let { API_URL } = globalVariables;
+let { SOCKET_HOST } = globalVariables;
 
 class StopLimit extends Component {
   constructor(props) {
@@ -54,7 +55,10 @@ class StopLimit extends Component {
       sellEstPrice: 0,
       sellPayAmt: 0,
       loader: false,
-      fiatValue: "",
+      singlefiatCryptoValue: "",
+      singlefiatCurrencyValue: "",
+      fiatCryptoValue: "",
+      fiatCurrencyValue: "",
       fiatCurrency: ""
     };
 
@@ -135,8 +139,11 @@ class StopLimit extends Component {
       sellEstPrice: 0,
       sellPayAmt: 0,
       buyPayAmt: 0,
-      fiatValue: fiat,
-      fiatCurrency: currency
+      fiatCurrency: "$",
+      fiatCryptoValue: this.props.userBal.cryptoFiat,
+      fiatCurrencyValue: this.props.userBal.currencyFiat,
+      singlefiatCryptoValue: this.props.userBal.cryptoFiat,
+      singlefiatCurrencyValue: this.props.userBal.currencyFiat
     });
   }
 
@@ -150,7 +157,11 @@ class StopLimit extends Component {
       buyEstPrice: 0,
       sellEstPrice: 0,
       sellPayAmt: 0,
-      buyPayAmt: 0
+      buyPayAmt: 0,
+      fiatCryptoValue: props.userBal.cryptoFiat,
+      fiatCurrencyValue: props.userBal.currencyFiat,
+      singlefiatCryptoValue: props.userBal.cryptoFiat,
+      singlefiatCurrencyValue: props.userBal.currencyFiat
     });
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -185,6 +196,15 @@ class StopLimit extends Component {
       obj["limit_price"] = "";
       obj["stop_price"] = "";
       this.clearValidation();
+      if (e.target.value === "Buy") {
+        this.setState({
+          fiatCryptoValue: this.state.singlefiatCryptoValue
+        });
+      } else if (e.target.value === "Sell") {
+        this.setState({
+          fiatCurrencyValue: this.state.singlefiatCurrencyValue
+        });
+      }
     }
     this.setState(
       {
@@ -214,8 +234,37 @@ class StopLimit extends Component {
                 this.state.amount * this.props.userBal.sellEstimatedPrice
             });
           }
+        } else if (this.state.amount > 0) {
+          if (this.state.side === "Buy") {
+            if (value > 0 && name === "amount") {
+              let fiatValue =
+                parseFloat(this.state.singlefiatCryptoValue) *
+                parseFloat(value).toFixed(8);
+              this.setState({
+                fiatCryptoValue: fiatValue
+              });
+            }
+          } else if (this.state.side === "Sell") {
+            if (value > 0 && name === "amount") {
+              let fiatValue =
+                parseFloat(this.state.singlefiatCurrencyValue) *
+                parseFloat(value).toFixed(8);
+              this.setState({
+                fiatCurrencyValue: fiatValue
+              });
+            }
+          }
         } else {
           obj["total"] = 0;
+          if (this.state.side === "Buy") {
+            this.setState({
+              fiatCryptoValue: this.state.singlefiatCryptoValue
+            });
+          } else if (this.state.side === "Sell") {
+            this.setState({
+              fiatCurrencyValue: this.state.singlefiatCurrencyValue
+            });
+          }
         }
         self.setState({ ...obj });
       }
@@ -254,50 +303,86 @@ class StopLimit extends Component {
         stop_price: self.state.stop_price
       };
       this.setState({ loader: true });
-      fetch(API_URL + "/stop/limit/" + self.state.side.toLowerCase(), {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
-          Authorization: "Bearer " + self.props.isLoggedIn
-        },
-        body: JSON.stringify(params)
-      })
+      fetch(
+        SOCKET_HOST +
+          `/api/v1/tradding/orders/pending-${self.state.side.toLowerCase()}-order-create`,
+        {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Accept-Language": localStorage["i18nextLng"],
+            Authorization: "Bearer " + self.props.isLoggedIn
+          },
+          body: JSON.stringify(params)
+        }
+      )
         .then(response => response.json())
         .then(responseData => {
           if (responseData.status === 200) {
-            this.setState({
-              stop_price: 0,
-              limit_price: 0,
-              total: 0,
-              amount: 0,
-              loader: false,
-              buyPayAmt: 0,
-              sellPayAmt: 0,
-              buyEstPrice: 0,
-              sellEstPrice: 0
-            });
+            this.setState(
+              {
+                stop_price: "",
+                limit_price: "",
+                total: 0,
+                amount: "",
+                loader: false,
+                buyPayAmt: 0,
+                sellPayAmt: 0,
+                buyEstPrice: 0,
+                sellEstPrice: 0
+              },
+              () => {
+                if (this.state.side === "Buy") {
+                  this.setState({
+                    fiatCryptoValue: this.state.singlefiatCryptoValue
+                  });
+                } else if (this.state.side === "Sell") {
+                  this.setState({
+                    fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                  });
+                }
+              }
+            );
             self.openNotificationWithIcon(
               "success",
               "Success",
               responseData.message
             );
           } else if (responseData.status === 201) {
-            this.setState({
-              stop_price: 0,
-              limit_price: 0,
-              total: 0,
-              amount: 0,
-              loader: false,
-              buyPayAmt: 0,
-              sellPayAmt: 0,
-              buyEstPrice: 0,
-              sellEstPrice: 0
-            });
+            this.setState(
+              {
+                stop_price: "",
+                limit_price: "",
+                total: 0,
+                amount: "",
+                loader: false,
+                buyPayAmt: 0,
+                sellPayAmt: 0,
+                buyEstPrice: 0,
+                sellEstPrice: 0
+              },
+              () => {
+                if (this.state.side === "Buy") {
+                  this.setState({
+                    fiatCryptoValue: this.state.singlefiatCryptoValue
+                  });
+                } else if (this.state.side === "Sell") {
+                  this.setState({
+                    fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                  });
+                }
+              }
+            );
             self.openNotificationWithIcon(
               "warning",
               "Warning",
+              responseData.message
+            );
+          } else if (responseData.status === 500) {
+            self.openNotificationWithIcon(
+              "error",
+              "Error",
               responseData.message
             );
           } else {
@@ -629,7 +714,7 @@ class StopLimit extends Component {
                   </Col>
                   <Col xs={9} sm={12}>
                     {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCryptoValue).toFixed(8)}
                   </Col>
                   <Col xs={15} sm={12}>
                     Estimated Best Price
@@ -669,7 +754,7 @@ class StopLimit extends Component {
                   </Col>
                   <Col xs={9} sm={12}>
                     {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
                   </Col>
                   <Col xs={15} sm={12}>
                     Estimated Best Price
