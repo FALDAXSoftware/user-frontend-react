@@ -576,10 +576,10 @@ class PersonalDetails extends Component {
       this.props.profileDetails.phone_number !==
         props.profileDetails.phone_number
     ) {
-      console.log(
-        "^^^ recieve props phone number",
-        props.profileDetails.phone_number
-      );
+      // console.log(
+      //   "^^^ recieve props phone number",
+      //   props.profileDetails.phone_number
+      // );
       var countrySelected = CountryData.getCountryById(
         props.profileDetails.countryJsonId - 1
       );
