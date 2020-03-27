@@ -233,4 +233,8 @@ export const FontAwesomeIconS = styled(FontAwesomeIcon)`
   @media (max-width: 375px) {
     margin: 0px 10px;
   }
+  &.click_change:hover {
+    cursor: pointer
+    color: #1890ff;
+  }
 `;

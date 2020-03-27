@@ -364,6 +364,9 @@ class Market extends Component {
           } else {
             self.openNotificationWithIcon("error", "Error", responseData.err);
           }
+          this.setState({
+            Loader: false
+          });
         })
         .catch(error => {
           self.openNotificationWithIcon(
@@ -411,10 +414,10 @@ class Market extends Component {
               <Row>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={10}>
                       <Balance1>Balance</Balance1>
                     </Col>
-                    <Col span={12}>
+                    <Col span={14}>
                       <Balance>
                         {this.props.userBal.currency[0]
                           ? `${this.props.userBal.currency[0].balance.toFixed(
@@ -428,10 +431,10 @@ class Market extends Component {
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={10}>
                       <Balance1>Total</Balance1>
                     </Col>
-                    <Col span={12}>
+                    <Col span={14}>
                       <Total>
                         {this.props.userBal.currency[0]
                           ? `${this.props.userBal.currency[0].balance.toFixed(
@@ -445,10 +448,10 @@ class Market extends Component {
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={10}>
                       <Balance1>In orders</Balance1>
                     </Col>
-                    <Col span={12}>
+                    <Col span={14}>
                       <Total>
                         {this.props.userBal.currency[0]
                           ? `${Math.abs(
@@ -463,10 +466,10 @@ class Market extends Component {
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={10}>
                       <Balance1>Best ask</Balance1>
                     </Col>
-                    <Col span={12}>
+                    <Col span={14}>
                       <Total>
                         {this.props.userBal.buyPay.toFixed(5)}{" "}
                         {this.state.crypto}
@@ -481,10 +484,10 @@ class Market extends Component {
               <Row>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={10}>
                       <Balance1>Balance</Balance1>
                     </Col>
-                    <Col span={12}>
+                    <Col span={14}>
                       <Balance>
                         {this.props.userBal.crypto[0]
                           ? `${this.props.userBal.crypto[0].balance.toFixed(
@@ -498,10 +501,10 @@ class Market extends Component {
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={10}>
                       <Balance1>Total</Balance1>
                     </Col>
-                    <Col span={12}>
+                    <Col span={14}>
                       <Total>
                         {this.props.userBal.crypto[0]
                           ? `${this.props.userBal.crypto[0].balance.toFixed(
@@ -515,10 +518,10 @@ class Market extends Component {
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={10}>
                       <Balance1>In orders</Balance1>
                     </Col>
-                    <Col span={12}>
+                    <Col span={14}>
                       <Total>
                         {this.props.userBal.crypto[0]
                           ? `${Math.abs(
@@ -533,10 +536,10 @@ class Market extends Component {
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={10}>
                       <Balance1>Best ask</Balance1>
                     </Col>
-                    <Col span={12}>
+                    <Col span={14}>
                       <Total>
                         {this.props.userBal.sellPay.toFixed(5)}{" "}
                         {this.state.currency}
