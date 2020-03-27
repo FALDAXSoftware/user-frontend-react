@@ -115,6 +115,9 @@ const Headermain = styled(Header)`
   & .color_important {
     color: ${props =>
       props.theme.mode === "dark" ? "#fff !important" : "black !important"};
+    @media (min-width: 2000px) {
+      font-size: 20px;
+    }
   }
 `;
 const Menumain = styled(Menu)`
@@ -310,6 +313,11 @@ const CarLink = styled(Link)`
   }
 `;
 const DropDownDiv = styled(Dropdown)`
+  &.language_head {
+    @media (min-width: 2000px) {
+      font-size: 20px;
+    }
+  }
   @media (max-width: 480px) {
     margin-top: 10px;
   }
@@ -912,11 +920,14 @@ class LoggedNavigation extends Component {
           <Menuitem key="7">
             <DropDownDiv
               // className="Drop-main"
+              className="lang-main"
               overlay={langItems}
               trigger={["click"]}
               // overlayClassName="custom_dropdown_menu"
             >
-              <div>{t("general_1:language_head.message")}</div>
+              <div className="language_head">
+                {t("general_1:language_head.message")}
+              </div>
             </DropDownDiv>
             {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
           </Menuitem>

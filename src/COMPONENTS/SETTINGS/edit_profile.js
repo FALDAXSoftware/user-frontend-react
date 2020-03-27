@@ -202,12 +202,25 @@ class Editprofile extends Component {
                 <Passwordchange {...this.props} />
               </TabPane>
               <TabPane tab={t("head_settings.message")} key="3">
-                <AccSettings
+                {this.state.countryAccess ? (
+                  <CompleteProfile
+                    comingCancel={e => this.comingCancel(e)}
+                    visible={this.state.countryAccess}
+                  />
+                ) : (
+                  <AccSettings
+                    {...this.props}
+                    user2fastatus={this.state.user2fastatus}
+                    walletCoins={this.state.walletCoins}
+                    totalUSDOfWallet={this.state.totalUSDOfWallet}
+                  />
+                )}
+                {/* <AccSettings
                   {...this.props}
                   user2fastatus={this.state.user2fastatus}
                   walletCoins={this.state.walletCoins}
                   totalUSDOfWallet={this.state.totalUSDOfWallet}
-                />
+                /> */}
               </TabPane>
               <TabPane tab={t("head_identity_verification.message")} key="4">
                 {this.state.countryAccess ? (
