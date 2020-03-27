@@ -10,7 +10,7 @@ export const Lleft = styled.div`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
   margin-right: 15px;
-  height: 500px;
+  height: 680px;
   padding-bottom: 30px;
   overflow-y: auto;
   box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -23,7 +23,7 @@ export const Rright = styled.div`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
   margin-left: 15px;
-  height: 500px;
+  height: 680px;
   padding-bottom: 30px;
   overflow-y: auto;
   box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -70,7 +70,7 @@ export const ActTable = styled(Table)`
     {
         color:${props => (props.theme.mode === "dark" ? "white" : "")};
         background-color:${props =>
-          props.theme.mode === "dark" ? "#041b2c" : "white"};
+          props.theme.mode === "dark" ? "#041b2c !important" : "white"};
         border-bottom:${props =>
           props.theme.mode === "dark" ? "1px solid #334553" : ""}
     }
@@ -83,6 +83,12 @@ export const ActTable = styled(Table)`
     }
     & .progress-bar-container{
     width: 170px;
+     & .ant-progress-text {
+       color:${props =>
+         props.theme.mode === "dark"
+           ? "#fff !important"
+           : "rgba(0, 0, 0, 0.45)"};
+     }
     }
     & .ant-table{
     font-family: "Open sans" !important;
@@ -136,6 +142,15 @@ export const ActTable = styled(Table)`
         }
        }
     }  */
+    > table {
+      > tbody {
+        > tr:hover {
+          > td {
+            background:transparent
+          }
+        }
+      }
+    }
 `;
 export const PortTable = styled(Table)`
 & .ant-table-header
@@ -156,7 +171,7 @@ export const PortTable = styled(Table)`
     {
         color:${props => (props.theme.mode === "dark" ? "white" : "")};
         background-color:${props =>
-          props.theme.mode === "dark" ? "#041b2c" : "white"};
+          props.theme.mode === "dark" ? "#041b2c !important" : "white"};
         border-bottom:${props =>
           props.theme.mode === "dark" ? "1px solid #334553" : ""}
     }
@@ -269,7 +284,7 @@ export const Newsdiv = styled.div`
   padding-top: 25px;
   box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
   border-radius: 5px;
-  height: 500px;
+  height: 680px;
   overflow-y: auto;
 `;
 export const News = styled.span`

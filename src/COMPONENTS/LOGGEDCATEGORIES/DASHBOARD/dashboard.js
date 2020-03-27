@@ -581,7 +581,6 @@ class Dashboard extends Component {
   loadNews(page) {
     var self = this;
     self.setState({ newsLoader: true });
-
     fetch(`${API_URL}/users/get-all-news?limit=50&page=${page}`, {
       method: "post",
       headers: {
@@ -654,7 +653,7 @@ class Dashboard extends Component {
                         </Topic>
                         <ActDiv>
                           <ActTable
-                            scroll={{ y: 320 }}
+                            scroll={{ y: 500 }}
                             pagination={false}
                             columns={activityColumns}
                             dataSource={activityData}
@@ -691,7 +690,7 @@ class Dashboard extends Component {
                         </HighLow>
                         <ActDiv>
                           <PortTable
-                            scroll={{ y: 250 }}
+                            scroll={{ y: 430 }}
                             pagination={false}
                             columns={portfolioColumn}
                             dataSource={this.state.portfolioData}
@@ -716,7 +715,7 @@ class Dashboard extends Component {
                   <News>NEWS</News>
                   <NewsList>
                     <Scrollbars
-                      style={{ height: 380 }}
+                      style={{ height: 560 }}
                       hideTracksWhenNotNeeded={true}
                       className="scrollbar news"
                     >
