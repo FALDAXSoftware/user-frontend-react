@@ -101,7 +101,8 @@ export const HisTable = styled(Table)`
     border: 0px;
     padding: 8px !important;
     height: 40px;
-    width: 200px;
+    width: 12.5%;
+    text-align: center;
   }
   > tbody {
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
@@ -114,11 +115,12 @@ export const HisTable = styled(Table)`
     }
   }
   > tbody > tr > td {
-    width: 200px;
-    word-break: break-all;
+    width: 12.5%;
+    text-align: center;
+    word-break: break-word;
     height: 50px;
-    padding-top: 12px;
-    padding-left: 8px;
+    // padding-top: 12px;
+    padding: 12px 8px 5px;
     font-size: 14px;
     font-weight: 600;
     font-family: "Open Sans";
@@ -136,7 +138,6 @@ export const HisTable = styled(Table)`
     background-color: ${props =>
       props.theme.mode === "dark" ? "#041422" : "#f9f9f9"};
   }
-
   @media (max-width: 991px) {
     > thead {
       min-width: 1400px;
