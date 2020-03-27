@@ -389,6 +389,9 @@ class StopLimit extends Component {
             this.setState({ loader: false });
             self.openNotificationWithIcon("error", "Error", responseData.err);
           }
+          this.setState({
+            Loader: false
+          });
         })
         .catch(error => {
           this.setState({ loader: false });

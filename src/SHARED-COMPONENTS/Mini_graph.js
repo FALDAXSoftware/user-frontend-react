@@ -60,6 +60,7 @@ const SpanCoinPercentage = styled.span`
     line-height: 1.286;
     text-align: left;
     line-height: 25px;
+    word-break: break-word;
 `;
 let io = null;
 class Mini_graph extends React.Component {
