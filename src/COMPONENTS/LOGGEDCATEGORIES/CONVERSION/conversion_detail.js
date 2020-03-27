@@ -420,6 +420,7 @@ class ConversionDetail extends React.Component {
     if (
       (values.OrderQty === null ||
         values.OrderQty === "" ||
+        parseFloat(values.OrderQty) <= 0 ||
         isNaN(this.state.recieveCurrencyInput) === true) &&
       this.state.includeFees === 1
     ) {
@@ -441,6 +442,7 @@ class ConversionDetail extends React.Component {
     } else if (
       (values.OrderQty === null ||
         values.OrderQty === "" ||
+        parseFloat(values.OrderQty) <= 0 ||
         isNaN(this.state.sendCurrencyInput) === true) &&
       // !isNaN(this.state.sendCurrencyInput) &&
       this.state.includeFees === 2
@@ -467,6 +469,10 @@ class ConversionDetail extends React.Component {
     } else {
       if (this.props.io) {
         console.log("^^^^values", values);
+        // if (parseFloat(values.OrderQty) <= 0) {
+        //   console.log("^^^^less than 0");
+        //   this.setState({ loader: false });
+        // } else {
         this.props.io.emit("conversion-data-incoming", {
           user_id: this.props.profileDetails.id,
           Symbol: values.Symbol,
@@ -480,6 +486,7 @@ class ConversionDetail extends React.Component {
           original_pair: values.original_pair,
           usd_value: values.usd_value
         });
+        // }
       }
       this.setState({
         values
@@ -816,6 +823,7 @@ class ConversionDetail extends React.Component {
     if (
       (values.usd_value === null ||
         values.usd_value === "" ||
+        parseFloat(values.usd_value) <= 0 ||
         isNaN(this.state.fiatJSTValue) === true) &&
       this.state.includeFees === 1
     ) {
@@ -839,6 +847,7 @@ class ConversionDetail extends React.Component {
     } else if (
       (values.usd_value === null ||
         values.usd_value === "" ||
+        parseFloat(values.usd_value) <= 0 ||
         isNaN(this.state.fiatJSTValue) === true) &&
       this.state.includeFees === 2
     ) {
@@ -861,6 +870,10 @@ class ConversionDetail extends React.Component {
       });
     } else {
       if (this.props.io) {
+        // if (parseFloat(values.usd_value) <= 0) {
+        //   console.log("^^^^less than 0");
+        //   this.setState({ loader: false });
+        // } else {
         this.props.io.emit("conversion-data-incoming", {
           // user_id: this.props.profileDetails.id,
           Symbol: values.Symbol,
@@ -874,6 +887,7 @@ class ConversionDetail extends React.Component {
           original_pair: values.original_pair,
           usd_value: values.usd_value
         });
+        // }
       }
       this.setState({
         usdvalues: values
