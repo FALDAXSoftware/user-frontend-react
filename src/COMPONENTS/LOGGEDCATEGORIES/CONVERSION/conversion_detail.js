@@ -297,10 +297,17 @@ class ConversionDetail extends React.Component {
   componentDidMount() {
     if (this.props.io) {
       this.props.io.on("conversion-data-outgoing", data => {
-        if (data.is_usd_set) {
-          this.updateUSDData(data);
+        console.log("^^^^^Outgoing", data);
+        if (data) {
+          if (data.is_usd_set) {
+            this.updateUSDData(data);
+          } else {
+            this.updateData(data);
+          }
         } else {
-          this.updateData(data);
+          this.setState({
+            loader: false
+          });
         }
       });
     }
@@ -458,6 +465,7 @@ class ConversionDetail extends React.Component {
       });
     } else {
       if (this.props.io) {
+        console.log("^^^^values", values);
         this.props.io.emit("conversion-data-incoming", {
           user_id: this.props.profileDetails.id,
           Symbol: values.Symbol,
