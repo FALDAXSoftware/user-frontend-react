@@ -33,7 +33,7 @@ import {
   ButtonETH
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
-let { API_URL } = globalVariables;
+let { SOCKET_HOST } = globalVariables;
 
 class Limit extends Component {
   constructor(props) {
@@ -53,7 +53,10 @@ class Limit extends Component {
       sellPayAmt: 0,
       userBalFees: 0,
       loader: false,
-      fiatValue: "",
+      singlefiatCryptoValue: "",
+      singlefiatCurrencyValue: "",
+      fiatCryptoValue: "",
+      fiatCurrencyValue: "",
       fiatCurrency: ""
     };
     this.onChange = this.onChange.bind(this);
@@ -133,8 +136,11 @@ class Limit extends Component {
       buyPayAmt: 0,
       sellPayAmt: 0,
       loader: false,
-      fiatValue: fiat,
-      fiatCurrency: currency
+      fiatCurrency: "$",
+      fiatCryptoValue: this.props.userBal.cryptoFiat,
+      fiatCurrencyValue: this.props.userBal.currencyFiat,
+      singlefiatCryptoValue: this.props.userBal.cryptoFiat,
+      singlefiatCurrencyValue: this.props.userBal.currencyFiat
     });
   }
   componentWillReceiveProps(props, newProps) {
@@ -142,7 +148,11 @@ class Limit extends Component {
       amount: "",
       total: 0,
       limit_price: "",
-      userBalFees: props.userBal.fees
+      userBalFees: props.userBal.fees,
+      fiatCryptoValue: props.userBal.cryptoFiat,
+      fiatCurrencyValue: props.userBal.currencyFiat,
+      singlefiatCryptoValue: props.userBal.cryptoFiat,
+      singlefiatCurrencyValue: props.userBal.currencyFiat
     });
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -177,6 +187,15 @@ class Limit extends Component {
       obj["total"] = 0;
       obj["limit_price"] = "";
       this.clearValidation();
+      if (e.target.value === "Buy") {
+        this.setState({
+          fiatCryptoValue: this.state.singlefiatCryptoValue
+        });
+      } else if (e.target.value === "Sell") {
+        this.setState({
+          fiatCurrencyValue: this.state.singlefiatCurrencyValue
+        });
+      }
     }
     this.setState(
       {
@@ -214,8 +233,37 @@ class Limit extends Component {
             // obj["amount"] = Number(this.state.amount).toFixed(3);
             // obj["limit_price"] = Number(this.state.limit_price).toFixed(5);
           }
+        } else if (this.state.amount > 0) {
+          if (this.state.side === "Buy") {
+            if (value > 0 && name === "amount") {
+              let fiatValue =
+                parseFloat(this.state.singlefiatCryptoValue) *
+                parseFloat(value).toFixed(8);
+              this.setState({
+                fiatCryptoValue: fiatValue
+              });
+            }
+          } else if (this.state.side === "Sell") {
+            if (value > 0 && name === "amount") {
+              let fiatValue =
+                parseFloat(this.state.singlefiatCurrencyValue) *
+                parseFloat(value).toFixed(8);
+              this.setState({
+                fiatCurrencyValue: fiatValue
+              });
+            }
+          }
         } else {
           obj["total"] = 0;
+          if (this.state.side === "Buy") {
+            this.setState({
+              fiatCryptoValue: this.state.singlefiatCryptoValue
+            });
+          } else if (this.state.side === "Sell") {
+            this.setState({
+              fiatCurrencyValue: this.state.singlefiatCurrencyValue
+            });
+          }
           // obj["amount"] = Number(this.state.amount).toFixed(3);
           // obj["limit_price"] = Number(this.state.limit_price).toFixed(5);
         }
@@ -256,49 +304,85 @@ class Limit extends Component {
         limit_price: self.state.limit_price
       };
       this.setState({ loader: true });
-      fetch(API_URL + "/limit/" + self.state.side.toLowerCase(), {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
-          Authorization: "Bearer " + self.props.isLoggedIn
-        },
-        body: JSON.stringify(params)
-      })
+      fetch(
+        SOCKET_HOST +
+          `/api/v1/tradding/orders/limit-${self.state.side.toLowerCase()}-order-create`,
+        {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Accept-Language": localStorage["i18nextLng"],
+            Authorization: "Bearer " + self.props.isLoggedIn
+          },
+          body: JSON.stringify(params)
+        }
+      )
         .then(response => response.json())
         .then(responseData => {
           if (responseData.status === 200) {
-            this.setState({
-              limit_price: 0,
-              total: 0,
-              amount: 0,
-              loader: false,
-              buyPayAmt: 0,
-              sellPayAmt: 0,
-              buyEstPrice: 0,
-              sellEstPrice: 0
-            });
+            this.setState(
+              {
+                limit_price: "",
+                total: 0,
+                amount: "",
+                loader: false,
+                buyPayAmt: 0,
+                sellPayAmt: 0,
+                buyEstPrice: 0,
+                sellEstPrice: 0
+              },
+              () => {
+                if (this.state.side === "Buy") {
+                  this.setState({
+                    fiatCryptoValue: this.state.singlefiatCryptoValue
+                  });
+                } else if (this.state.side === "Sell") {
+                  this.setState({
+                    fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                  });
+                }
+              }
+            );
             self.openNotificationWithIcon(
               "success",
               "Success",
               responseData.message
             );
           } else if (responseData.status === 201) {
-            this.setState({
-              stop_price: 0,
-              limit_price: 0,
-              total: 0,
-              amount: 0,
-              loader: false,
-              buyPayAmt: 0,
-              sellPayAmt: 0,
-              buyEstPrice: 0,
-              sellEstPrice: 0
-            });
+            this.setState(
+              {
+                stop_price: "",
+                limit_price: "",
+                total: 0,
+                amount: "",
+                loader: false,
+                buyPayAmt: 0,
+                sellPayAmt: 0,
+                buyEstPrice: 0,
+                sellEstPrice: 0
+              },
+              () => {
+                if (this.state.side === "Buy") {
+                  this.setState({
+                    fiatCryptoValue: this.state.singlefiatCryptoValue
+                  });
+                } else if (this.state.side === "Sell") {
+                  this.setState({
+                    fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                  });
+                }
+              }
+            );
             self.openNotificationWithIcon(
               "warning",
               "Warning",
+              responseData.message
+            );
+          } else if (responseData.status === 500) {
+            self.openNotificationWithIcon(
+              "error",
+              "Error",
               responseData.message
             );
           } else {
@@ -583,7 +667,7 @@ class Limit extends Component {
                   </Col>
                   <Col xs={9} sm={12}>
                     {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCryptoValue).toFixed(8)}
                   </Col>
                   <Col xs={15} sm={12}>
                     Estimated Best Price
@@ -623,7 +707,7 @@ class Limit extends Component {
                   </Col>
                   <Col xs={9} sm={12}>
                     {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
                   </Col>
                   <Col xs={15} sm={12}>
                     Estimated Best Price

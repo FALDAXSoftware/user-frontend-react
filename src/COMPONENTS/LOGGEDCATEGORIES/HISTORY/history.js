@@ -46,7 +46,7 @@ const Select1 = styled(Select)`
   }
   & .ant-select-selection {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#01090f" : ""};
+    props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
@@ -67,7 +67,7 @@ const Select2 = styled(Select)`
   }
   & .ant-select-selection {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#01090f" : ""};
+    props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
@@ -99,7 +99,7 @@ const NDF = styled.tbody`
     > td {
       border-top: 0 !important;
       background: ${props =>
-        props.theme.mode === "dark" ? "#041422" : "white"};
+    props.theme.mode === "dark" ? "#041422" : "white"};
     }
   }
   @media (max-width: 767px) {
@@ -153,15 +153,15 @@ class History extends Component {
       loader: false,
       csvFields: [],
       checkedGroupValue: ["SEND", "RECEIVE", "SELL", "BUY"],
-      activeKey: "2",
-      csvHeadersTrade: [
-        { label: "Date", key: "date" },
-        { label: "Side", key: "side" },
-        { label: "Filled Price", key: "filled_price" },
-        { label: "Amount", key: "amount" },
-        { label: "Fee", key: "fee" },
-        { label: "Volume", key: "volume" }
-      ],
+      activeKey: "1",
+      // csvHeadersTrade: [
+      //   { label: "Date", key: "date" },
+      //   { label: "Side", key: "side" },
+      //   { label: "Filled Price", key: "filled_price" },
+      //   { label: "Amount", key: "amount" },
+      //   { label: "Fee", key: "fee" },
+      //   { label: "Volume", key: "volume" }
+      // ],
       csvHeadersSimplex: [
         { label: "Coin", key: "symbol" },
         { label: "Date", key: "date" },
@@ -184,13 +184,13 @@ class History extends Component {
       ],
       csvHeadersTrade: [
         { label: "Coin", key: "symbol" },
-        { label: "Side", key: "side" },
         { label: "Date", key: "date" },
-        { label: "Date", key: "date" },
-        { label: "Order Id", key: "order_id" },
         { label: "Filled Price", key: "filled_price" },
         { label: "Amount", key: "amount" },
-        { label: "Fees", key: "fees" }
+        { label: "Side", key: "side" },
+        { label: "Order Type", key: "order_type" },
+        { label: "Limit Price", key: "limit_price" },
+        { label: "Stop Price", key: "stop_price" }
       ]
     };
     this.historyResult = this.historyResult.bind(this);
@@ -240,7 +240,7 @@ class History extends Component {
         method: "get",
         headers: {
           Accept: "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           "Content-Type": "application/json",
           Authorization: "Bearer " + this.props.isLoggedIn
         }
@@ -253,13 +253,13 @@ class History extends Component {
             drop2List: responseData.coinList
           });
         })
-        .catch(error => {});
+        .catch(error => { });
     } else if (this.state.activeKey === "2") {
       fetch(API_URL + "/get-simplex-coin-list", {
         method: "get",
         headers: {
           Accept: "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           "Content-Type": "application/json",
           Authorization: "Bearer " + this.props.isLoggedIn
         }
@@ -279,7 +279,7 @@ class History extends Component {
             this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
           }
         })
-        .catch(error => {});
+        .catch(error => { });
     }
   }
 
@@ -308,13 +308,13 @@ class History extends Component {
       let url =
         API_URL +
         `/get-user-history?send=${this.state.send}&receive=${
-          this.state.receive
+        this.state.receive
         }&buy=${this.state.buy}&sell=${
-          this.state.sell
+        this.state.sell
         }&toDate=${this.state.toDate.format(
           "YYYY-MM-DD"
         )}&fromDate=${this.state.fromDate.format("YYYY-MM-DD")}&trade_type=${
-          this.state.activeKey
+        this.state.activeKey
         }`;
     }
     if (drop1Value && drop2Value && activeKey === "1") {
@@ -322,6 +322,10 @@ class History extends Component {
         url + "&symbol=" + this.state.drop1Value + "/" + this.state.drop2Value;
     }
     if (drop1Value && drop2Value && activeKey === "2") {
+      url =
+        url + "&symbol=" + this.state.drop1Value + "-" + this.state.drop2Value;
+    }
+    if (drop1Value && drop2Value && activeKey === "3") {
       url =
         url + "&symbol=" + this.state.drop1Value + "-" + this.state.drop2Value;
     }
@@ -338,6 +342,7 @@ class History extends Component {
       .then(responseData => {
         this.setState({ loader: false });
         if (responseData.status === 200) {
+          // console.log("this.state.activeKey", this.state.activeKey)
           if (this.state.activeKey === "1") {
             let csvJSTFields = [];
             if (responseData.data && responseData.data.length > 0) {
@@ -363,7 +368,7 @@ class History extends Component {
                 ).toFixed(8);
                 var amount = parseFloat(
                   parseFloat(temp.execution_report.CumQty) -
-                    parseFloat(fees_total)
+                  parseFloat(fees_total)
                 ).toFixed(8);
                 var status = temp.order_status.toUpperCase();
                 var order_id = temp.order_id;
@@ -447,45 +452,31 @@ class History extends Component {
               );
             }
           } else if (this.state.activeKey === "3") {
-            // alert("trade");
             let csvTradeFields = [];
             if (responseData.data && responseData.data.length > 0) {
               for (var i = 0; i < responseData.data.length; i++) {
+                // console.log("^^^^ inside", responseData.data[i]);
                 let temp = responseData.data[i];
                 let obj = {};
-                var symbol = temp.symbol;
                 var date = moment
                   .utc(temp.created_at)
                   .local()
                   .format(`${this.props.profileData.date_format} HH:mm:ss`);
-                if (temp.side === "Sell") {
-                  var fill_price = parseFloat(temp.buy_currency_amount).toFixed(
-                    8
-                  );
-                } else {
-                  var fill_price = parseFloat(
-                    temp.sell_currency_amount
-                  ).toFixed(8);
-                }
-                var fees_total = parseFloat(
-                  parseFloat(temp.faldax_fees) + parseFloat(temp.network_fees)
-                ).toFixed(8);
-                var amount = parseFloat(
-                  parseFloat(temp.execution_report.CumQty) -
-                    parseFloat(fees_total)
-                ).toFixed(8);
-                var status = temp.order_status.toUpperCase();
-                var order_id = temp.order_id;
-                obj["symbol"] = symbol;
-                obj["side"] = temp.side;
+                var limit_price =
+                  temp.order_type != "Market" ? temp.limit_price : 0.0;
+                var stop_price =
+                  temp.order_type == "SopLimit" ? temp.stop_price : 0.0;
+                obj["symbol"] = temp.symbol;
                 obj["date"] = date;
-                obj["order_id"] = order_id;
-                obj["order_status"] = status;
-                obj["filled_price"] = fill_price;
-                obj["amount"] = amount;
-                obj["fees"] = fees_total;
+                obj["filled_price"] = temp.fill_price;
+                obj["amount"] = temp.quantity;
+                obj["side"] = temp.side;
+                obj["order_type"] = temp.order_type;
+                obj["limit_price"] = limit_price;
+                obj["stop_price"] = stop_price;
                 csvTradeFields.push(obj);
               }
+              // console.log(responseData.data);
               this.setState({
                 historyTradeData: responseData.data,
                 csvTradeFields
@@ -522,7 +513,7 @@ class History extends Component {
         }
         this.setState({ loader: false });
       })
-      .catch(error => {});
+      .catch(error => { });
   }
 
   range(start, end) {
@@ -699,6 +690,7 @@ class History extends Component {
       { label: t("buy_text.message"), value: "BUY" },
       { label: t("sell_text.message"), value: "SELL" }
     ];
+    console.log(self.props.profileData.id)
     return (
       <div>
         <ContactWrap>
@@ -816,7 +808,10 @@ class History extends Component {
                     <RangePickerS
                       disabledDate={this.disabledDate}
                       disabledTime={this.disabledRangeTime}
-                      placeholder={[this.t("start_date_text.message"),this.t("end_date_text.message")]}
+                      placeholder={[
+                        this.t("start_date_text.message"),
+                        this.t("end_date_text.message")
+                      ]}
                       onChange={this.changeDate}
                       allowClear={false}
                       value={[this.state.fromDate, this.state.toDate]}
@@ -843,11 +838,11 @@ class History extends Component {
                             </CSVLink>
                           </EXPButton>
                         ) : (
-                          ""
-                        )
+                            ""
+                          )
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                     </div>
                   )}
                   {this.state.activeKey === "2" && (
@@ -860,22 +855,22 @@ class History extends Component {
                       </EXPButton>
                       {this.state.csvSimplexFields !== undefined ? (
                         this.state.csvSimplexFields.length > 0 &&
-                        this.state.csvSimplexFields !== null ? (
-                          <EXPButton>
-                            <CSVLink
-                              filename="simplexreportfile.csv"
-                              data={this.state.csvSimplexFields}
-                              headers={this.state.csvHeadersSimplex}
-                            >
-                              {t("export_btn.message")}
-                            </CSVLink>
-                          </EXPButton>
-                        ) : (
-                          ""
-                        )
+                          this.state.csvSimplexFields !== null ? (
+                            <EXPButton>
+                              <CSVLink
+                                filename="simplexreportfile.csv"
+                                data={this.state.csvSimplexFields}
+                                headers={this.state.csvHeadersSimplex}
+                              >
+                                {t("export_btn.message")}
+                              </CSVLink>
+                            </EXPButton>
+                          ) : (
+                            ""
+                          )
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                     </div>
                   )}
                   {this.state.activeKey === "3" && (
@@ -898,29 +893,29 @@ class History extends Component {
                             </CSVLink>
                           </EXPButton>
                         ) : (
-                          ""
-                        )
+                            ""
+                          )
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                     </div>
                   )}
                 </Filter>
                 {this.state.activeKey === "2" ? (
                   ""
                 ) : (
-                  <FilterDivSelection>
-                    <CheckboxGroupS
-                      options={options}
-                      value={this.state.checkedGroupValue}
-                      onChange={this.onChangeCheck}
-                    />
-                  </FilterDivSelection>
-                )}
+                    <FilterDivSelection>
+                      <CheckboxGroupS
+                        options={options}
+                        value={this.state.checkedGroupValue}
+                        onChange={this.onChangeCheck}
+                      />
+                    </FilterDivSelection>
+                  )}
               </HeadHis>
               <HisWrap>
                 <Tabs activeKey={this.state.activeKey} onChange={this.callback}>
-                  {/* <TabPane
+                  <TabPane
                     tab={t(
                       "header:navbar_sub_menu_conversation_crypto_only.message"
                     )}
@@ -949,7 +944,7 @@ class History extends Component {
                         {this.state.historyJSTData !== undefined ? (
                           this.state.historyJSTData.length > 0 ? (
                             <tbody>
-                              {this.state.historyJSTData.map(function(temps) {
+                              {this.state.historyJSTData.map(function (temps) {
                                 var date = moment
                                   .utc(temps.created_at)
                                   .local()
@@ -1013,20 +1008,20 @@ class History extends Component {
                               })}
                             </tbody>
                           ) : (
-                            <NDF>
-                              <tr>
-                                <td colSpan="5">
-                                  {t("support:no_data_found.message")}
-                                </td>
-                              </tr>
-                            </NDF>
-                          )
+                              <NDF>
+                                <tr>
+                                  <td colSpan="5">
+                                    {t("support:no_data_found.message")}
+                                  </td>
+                                </tr>
+                              </NDF>
+                            )
                         ) : (
-                          ""
-                        )}
+                            ""
+                          )}
                       </HisTable>
                     </Tablediv>
-                  </TabPane>  */}
+                  </TabPane>
                   <TabPane
                     tab={this.t(
                       "header:navbar_sub_menu_conversation_credit_card.message"
@@ -1065,7 +1060,7 @@ class History extends Component {
                         {this.state.historySimplexData !== undefined ? (
                           this.state.historySimplexData.length > 0 ? (
                             <tbody>
-                              {this.state.historySimplexData.map(function(
+                              {this.state.historySimplexData.map(function (
                                 temps
                               ) {
                                 var date = moment
@@ -1076,11 +1071,11 @@ class History extends Component {
                                   );
                                 var side =
                                   Number(temps.user_id) ===
-                                  self.props.profileData.id
+                                    self.props.profileData.id
                                     ? temps.side
                                     : temps.side === "Buy"
-                                    ? t("sell_text.message")
-                                    : t("buy_text.message");
+                                      ? t("sell_text.message")
+                                      : t("buy_text.message");
                                 if (temps.simplex_payment_status === 1) {
                                   var simplex_payment_status = "Under Approval";
                                 }
@@ -1102,10 +1097,10 @@ class History extends Component {
                                     <td>
                                       {simplex_payment_status ==
                                         "Under Approval" && (
-                                        <span className="order-inapproval">
-                                          {simplex_payment_status}
-                                        </span>
-                                      )}
+                                          <span className="order-inapproval">
+                                            {simplex_payment_status}
+                                          </span>
+                                        )}
                                       {simplex_payment_status == "Approved" && (
                                         <span className="order-sucess">
                                           {simplex_payment_status}
@@ -1113,31 +1108,31 @@ class History extends Component {
                                       )}
                                       {simplex_payment_status ==
                                         "Cancelled" && (
-                                        <span className="order-cancelled">
-                                          {simplex_payment_status}
-                                        </span>
-                                      )}
+                                          <span className="order-cancelled">
+                                            {simplex_payment_status}
+                                          </span>
+                                        )}
                                     </td>
                                   </tr>
                                 );
                               })}
                             </tbody>
                           ) : (
-                            <NDF>
-                              <tr>
-                                <td colSpan="8">
-                                  {t("support:no_data_found.message")}
-                                </td>
-                              </tr>
-                            </NDF>
-                          )
+                              <NDF>
+                                <tr>
+                                  <td colSpan="8">
+                                    {t("support:no_data_found.message")}
+                                  </td>
+                                </tr>
+                              </NDF>
+                            )
                         ) : (
-                          ""
-                        )}
+                            ""
+                          )}
                       </HisTable>
                     </Tablediv>
                   </TabPane>
-                  {/* <TabPane tab="Trade" key="3">
+                  <TabPane tab="Trade" key="3">
                     <Tablediv>
                       <HisTable responsive striped condensed>
                         <thead>
@@ -1146,16 +1141,17 @@ class History extends Component {
                             <th>Date</th>
                             <th>Filled Price</th>
                             <th>Amount</th>
-                            <th>Wallet Address</th>
-                            <th>Payment Id</th>
-                            <th>Quote Id</th>
-                            <th>Payment Status</th>
+                            <th>Side</th>
+                            <th>Order Type</th>
+                            <th>Limit Price</th>
+                            <th>Stop Price</th>
                           </tr>
                         </thead>
+                        {/* {console.log(this.state.historyTradeData)} */}
                         {this.state.historyTradeData !== undefined ? (
                           this.state.historyTradeData.length > 0 ? (
                             <tbody>
-                              {this.state.historyTradeData.map(function(temps) {
+                              {this.state.historyTradeData.map(function (temps) {
                                 var date = moment
                                   .utc(temps.created_at)
                                   .local()
@@ -1164,39 +1160,50 @@ class History extends Component {
                                   );
                                 var side =
                                   Number(temps.user_id) ===
-                                  self.props.profileData.id
+                                    self.props.profileData.id
                                     ? temps.side
                                     : temps.side === "Buy"
-                                    ? "Sell"
-                                    : "Buy";
+                                      ? "Sell"
+                                      : "Buy";
 
+                                var limit_price =
+                                  temps.order_type != "Market"
+                                    ? temps.limit_price
+                                    : 0.0;
+                                var stop_price =
+                                  temps.order_type == "StopLimit"
+                                    ? temps.stop_price
+                                    : 0.0;
+
+
+                                console.log(self.props.profileData.id)
                                 return (
                                   <tr>
                                     <td>{temps.symbol}</td>
                                     <td>{date}</td>
                                     <td>{temps.fill_price}</td>
                                     <td>{temps.quantity}</td>
-                                    <td>{temps.address}</td>
-                                    <td>{temps.payment_id}</td>
-                                    <td>{temps.quote_id}</td>
-                                    <td>{temps.symbol}</td>
+                                    <td>{side}</td>
+                                    <td>{temps.order_type}</td>
+                                    <td>{limit_price}</td>
+                                    <td>{stop_price}</td>
                                   </tr>
                                 );
                               })}
                             </tbody>
                           ) : (
-                            <NDF>
-                              <tr>
-                                <td colSpan="8">No Data Found</td>
-                              </tr>
-                            </NDF>
-                          )
+                              <NDF>
+                                <tr>
+                                  <td colSpan="8">No Data Found</td>
+                                </tr>
+                              </NDF>
+                            )
                         ) : (
-                          ""
-                        )}
+                            ""
+                          )}
                       </HisTable>
                     </Tablediv>
-                  </TabPane> */}
+                  </TabPane>
                 </Tabs>
               </HisWrap>
             </ContainerContact>

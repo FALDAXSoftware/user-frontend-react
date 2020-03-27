@@ -9,7 +9,11 @@ const API_URL = globalVariables.API_URL;
 
 const TVChart = styled.div`
   margin-top: 0px;
-  height: 100vh;
+  // height: 100vh;
+  height: 100%;
+  &.Full_chart_height {
+    height: 100vh;
+  }
 `;
 
 class TradingViewChart extends React.Component {
@@ -109,6 +113,8 @@ class TradingViewChart extends React.Component {
   }
 
   componentDidMount() {
+    console.log("^^^prods", window.location.href);
+
     let currency, crypto;
     if (this.props.cryptoPair.crypto === undefined) {
       currency = this.state.currency;
@@ -171,7 +177,14 @@ class TradingViewChart extends React.Component {
   }
   render() {
     return (
-      <TVChart id={this.props.containerId} className={"TVChartContainer"} />
+      <TVChart
+        id={this.props.containerId}
+        className={
+          window.location.href.includes("/chart")
+            ? "Full_chart_height"
+            : "TVChartContainer"
+        }
+      />
     );
   }
 }
