@@ -599,7 +599,7 @@ class ConversionDetail extends React.Component {
     }
   }
   updateData(data) {
-    console.log("^^^^^^data tesgv", data);
+    console.log("^^^^^crypto", data);
     let res = data;
     let values = this.state.values;
     this.setState({
@@ -686,7 +686,7 @@ class ConversionDetail extends React.Component {
   updateUSDData(data) {
     let res = data;
     let values = this.state.usdvalues;
-    // console.log("getsocketUSdvalues", res);
+    console.log("^^^^USD", data);
     this.setState({
       faldaxFee: parseFloat(res.faldax_fee).toFixed(8),
       faldaxFeeActual: parseFloat(res.faldax_fees_actual).toFixed(8),
