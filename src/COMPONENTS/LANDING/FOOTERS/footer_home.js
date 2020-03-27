@@ -198,6 +198,9 @@ const FooterLink = styled.a`
 const CareerLink = styled(Link)`
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb(0, 0, 0, 0.65)"};
+  @media (min-width: 2000px) {
+    font-size: 20px;
+  }
 `;
 const FooterContainer = styled.div`
   @media (max-width: 991px) {
