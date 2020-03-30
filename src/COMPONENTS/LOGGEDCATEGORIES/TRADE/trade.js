@@ -97,6 +97,9 @@ const GreyWrapTrade = styled(GreyWrap)`
     height: calc(100% - 20px);
     width: calc(100% - 20px);
     margin: 10px;
+    background-color: ${props =>
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius:5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -106,6 +109,9 @@ const GreyWrapTrade = styled(GreyWrap)`
     width: calc(100% - 20px);
     margin: 10px;
     overflow: auto;
+    background-color: ${props =>
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius:5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -115,6 +121,9 @@ const GreyWrapTrade = styled(GreyWrap)`
     width: calc(100% - 20px);
     margin: 10px;
     overflow: auto;
+    background-color: ${props =>
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius:5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -124,6 +133,9 @@ const GreyWrapTrade = styled(GreyWrap)`
     width: calc(100% - 20px);
     margin: 10px;
     overflow: auto;
+    background-color: ${props =>
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius:5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -133,6 +145,9 @@ const GreyWrapTrade = styled(GreyWrap)`
     width: calc(100% - 20px);
     margin: 10px;
     overflow: auto;
+    background-color: ${props =>
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius:5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -142,6 +157,9 @@ const GreyWrapTrade = styled(GreyWrap)`
     width: calc(100% - 20px);
     margin: 10px;
     overflow: auto;
+    background-color: ${props =>
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius:5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -151,6 +169,9 @@ const GreyWrapTrade = styled(GreyWrap)`
     width: calc(100% - 20px);
     margin: 10px;
     overflow: auto;
+    background-color: ${props =>
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius:5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -238,7 +259,7 @@ class Trade extends Component {
       orderHistoryTableHeight: 330,
       myOrderTableHeight: 150,
       buySellOrderHeight: 91,
-      depthChartHeight: 558,
+      depthChartHeight: 538,
       buySellLoader: false,
       hisLoader: false,
       depthLoader: false,
@@ -684,27 +705,27 @@ class Trade extends Component {
       if (element.i === "instruments") {
         let newHeight = 0;
         if (element.h === 2) {
-          newHeight = 100;
+          newHeight = 80;
         } else {
-          newHeight = 100 + 160 * (element.h - 2);
+          newHeight = 80 + 160 * (element.h - 2);
         }
         instrumentTableHeight = newHeight;
       }
       if (element.i === "orderHistory") {
         let newHeight = 0;
         if (element.h === 2) {
-          newHeight = 170;
+          newHeight = 150;
         } else {
-          newHeight = 170 + 160 * (element.h - 2);
+          newHeight = 150 + 160 * (element.h - 2);
         }
         orderHistoryTableHeight = newHeight;
       }
       if (element.i === "myorder") {
         let newHeight = 0;
         if (element.h === 2) {
-          newHeight = 150;
+          newHeight = 130;
         } else {
-          newHeight = 150 + 160 * (element.h - 2);
+          newHeight = 130 + 160 * (element.h - 2);
         }
         myOrderTableHeight = newHeight;
       }
@@ -712,18 +733,18 @@ class Trade extends Component {
       if (element.i === "buysellBook") {
         let newHeight = 0;
         if (element.h === 3) {
-          newHeight = 91;
+          newHeight = 81;
         } else {
-          newHeight = 91 + 80 * (element.h - 3);
+          newHeight = 81 + 80 * (element.h - 3);
         }
         buySellOrderHeight = newHeight;
       }
       if (element.i === "depthChart") {
         let newHeight = 0;
         if (element.h === 3) {
-          newHeight = 398;
+          newHeight = 378;
         } else {
-          newHeight = 398 + 160 * (element.h - 3);
+          newHeight = 378 + 160 * (element.h - 3);
         }
         depthChartHeight = newHeight;
       }

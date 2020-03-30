@@ -34,14 +34,14 @@ export const EditButton = styled(Button)`
 `;
 export const MainTV = styled.div`
   background-color: ${props =>
-    props.theme.mode === "dark" ? "#2e3141" : "#eceff1"};
+    props.theme.mode === "dark" ? "#2e3141" : 'white'};
   height: calc(100% - 38px);
 `;
 export const TVBar = styled.div`
   display: flex;
   align-items: center;
   background-color: ${props =>
-    props.theme.mode === "dark" ? "#131722" : "white"};
+    props.theme.mode === "dark" ? "#2e3141" : "white"};
   width: calc(100% - 12px);
   margin: 0 auto;
   border-bottom: ${props =>
@@ -108,7 +108,7 @@ export const LeftDiv2 = styled(LeftDiv)`
   box-shadow: ${props =>
     props.theme.mode === "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
   border-radius: 5px;
-  height: auto;
+  height: 100%;
 `;
 export const Instru = styled.p`
   display: inline-block;

@@ -1270,7 +1270,7 @@ div.scrollbar>div:nth-child(3){
   border-right: none;
   border-bottom: none;
   padding: 2px;
-  background-color: white; 
+  background-color: white;
 }
 div.scrollbar.news>div:nth-child(3){
   border: none !important;
