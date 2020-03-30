@@ -37,7 +37,7 @@ const NDF = styled.p`
   text-align: center;
   font-size: 14px;
   font-weight: 600;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
   font-family: "Open Sans";
 `;
 class SellTable extends Component {

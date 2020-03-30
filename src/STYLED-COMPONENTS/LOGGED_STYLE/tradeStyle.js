@@ -34,7 +34,7 @@ export const EditButton = styled(Button)`
 `;
 export const MainTV = styled.div`
   background-color: ${props =>
-    props.theme.mode === "dark" ? "#2e3141" : 'white'};
+    props.theme.mode === "dark" ? "#2e3141" : "white"};
   height: calc(100% - 38px);
 `;
 export const TVBar = styled.div`
@@ -391,7 +391,7 @@ export const TabsRight = styled(Tabs)`
 /* Market Style */
 
 export const Label = styled.label`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
 `;
 export const MarketWrap = styled.div`
   padding-left: 30px;
