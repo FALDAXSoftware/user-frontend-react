@@ -34,14 +34,14 @@ export const EditButton = styled(Button)`
 `;
 export const MainTV = styled.div`
   background-color: ${props =>
-    props.theme.mode === "dark" ? "#2e3141" : 'white'};
+    props.theme.mode === "dark" ? "#041b2c" : 'white'};
   height: calc(100% - 38px);
 `;
 export const TVBar = styled.div`
   display: flex;
   align-items: center;
   background-color: ${props =>
-    props.theme.mode === "dark" ? "#2e3141" : "white"};
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
   width: calc(100% - 12px);
   margin: 0 auto;
   border-bottom: ${props =>
