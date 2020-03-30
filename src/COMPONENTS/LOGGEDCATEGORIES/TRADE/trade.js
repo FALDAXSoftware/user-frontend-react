@@ -98,6 +98,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     height: calc(100% - 20px);
     width: calc(100% - 20px);
     margin: 10px;
+    overflow:hidden;
     background-color: ${props =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius:5px;
