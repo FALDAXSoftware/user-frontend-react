@@ -730,6 +730,10 @@ export const DropdownButtonOne = styled(DropdownButton)`
   }
 `;
 export const ScrollTableContent = styled.div`
+  &.wallet {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
   overflow-x: auto;
   > .scrollbar {
     // height: 500px !important;

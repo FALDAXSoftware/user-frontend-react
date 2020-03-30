@@ -93,6 +93,68 @@ const OrderTradeWrap = styled.div`
 `;
 const GreyWrapTrade = styled(GreyWrap)`
   padding-top: 120px;
+  & .tradeView {
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    margin: 10px;
+    -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+  }
+  & .instruments {
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    margin: 10px;
+    overflow: auto;
+    -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+  }
+  & .tradeAction {
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    margin: 10px;
+    overflow: auto;
+    -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+  }
+  & .buysellBook {
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    margin: 10px;
+    overflow: auto;
+    -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+  }
+  & .depthChart {
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    margin: 10px;
+    overflow: auto;
+    -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+  }
+  & .orderHistory {
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    margin: 10px;
+    overflow: auto;
+    -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+  }
+  & .myorder {
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    margin: 10px;
+    overflow: auto;
+    -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+    box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+  }
 `;
 
 const RGL = styled(ResponsiveReactGridLayout)`
@@ -1153,7 +1215,6 @@ class Trade extends Component {
 
   render() {
     var self = this;
-
     const menu = (
       <Menu className="SettingMenu">
         <Menu.Item
@@ -1163,7 +1224,6 @@ class Trade extends Component {
         >
           Edit Layout
         </Menu.Item>
-
         {self.state.isFullscreen && (
           <Menu.Item key="2" onClick={this.exitFullScreen}>
             <Icon type="fullscreen-exit" />
@@ -1206,19 +1266,6 @@ class Trade extends Component {
         </SettingDropdown>
         <Navigation />
         <GreyWrapTrade>
-          {/* <Row>
-                        <Col>
-                            <Layout>
-                                <EditButton  >Edit Layout</EditButton>
-                                <SaveButton>Save</SaveButton>
-                            </Layout>
-                        </Col>
-                    </Row> */}
-          <Row>
-            <Col>
-              {/* <img src="/images/tradingview.png" width="100%" style={{ marginBottom: "30px" }} /> */}
-            </Col>
-          </Row>
           <Row>
             <Col>
               <RGL
@@ -1233,7 +1280,10 @@ class Trade extends Component {
                 }
               >
                 <div key="tradeView">
-                  <div style={{ height: "100%", width: "100%" }}>
+                  <div
+                    className="tradeView"
+                    // style={{ height: "100%", width: "100%" }}
+                  >
                     <MainTV>
                       <TVBar>
                         <div>
@@ -1269,7 +1319,8 @@ class Trade extends Component {
                 </div>
                 <div key="instruments">
                   <div
-                    style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    className="instruments"
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.insLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
@@ -1327,7 +1378,8 @@ class Trade extends Component {
                 </div>
                 <div key="tradeAction">
                   <div
-                    style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    className="tradeAction"
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.userBalLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
@@ -1364,7 +1416,8 @@ class Trade extends Component {
                 </div>
                 <div key="buysellBook">
                   <div
-                    style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    className="buysellBook"
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {/* {this.state.buySellLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
@@ -1384,7 +1437,8 @@ class Trade extends Component {
                 </div>
                 <div key="depthChart">
                   <div
-                    style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    className="depthChart"
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.depthLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
@@ -1404,7 +1458,8 @@ class Trade extends Component {
                 </div>
                 <div key="orderHistory">
                   <div
-                    style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    className="orderHistory"
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {/* {this.state.hisLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
@@ -1420,7 +1475,8 @@ class Trade extends Component {
                 </div>
                 <div key="myorder">
                   <div
-                    style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    className="myorder"
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {/* {this.state.orderTradeLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
