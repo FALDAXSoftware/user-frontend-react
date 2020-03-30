@@ -112,6 +112,12 @@ const Headermain = styled(Header)`
   height: 80px;
   display: flex;
   align-items: center;
+  & ul {
+    > li.ant-menu-item-selected {
+      border: 1px solid #1890ff !important;
+      border-radius: 38px;
+    }
+  }
   & .color_important {
     color: ${props =>
       props.theme.mode === "dark" ? "#fff !important" : "black !important"};
@@ -382,16 +388,23 @@ class LoggedNavigation extends Component {
   }
   componentDidMount() {
     if (this.props.location) {
-      // if (this.props.location.pathname.includes("dashboard")) {
-      //   this.setState({ selected: "1" });
-      // } else if (this.props.location.pathname.includes("trade")) {
-      //   this.setState({ selected: "2" });
-      // } else
-      // if (this.props.location.pathname.includes("conversion")) {
-      //   this.setState({ selected: "3" });
-      // } else if (this.props.location.pathname.includes("wallet")) {
-      //   this.setState({ selected: "4" });
-      // } else if (this.props.location.pathname.includes("history")) {
+      if (this.props.location.pathname.includes("market")) {
+        this.setState({ selected: "1" });
+      } else if (this.props.location.pathname.includes("dashboard")) {
+        this.setState({ selected: "2" });
+      } else if (this.props.location.pathname.includes("trade")) {
+        this.setState({ selected: "3" });
+      } else if (
+        this.props.location.pathname.includes("conversion") ||
+        this.props.location.pathname.includes("simplex")
+      ) {
+        this.setState({ selected: "4" });
+      } else if (this.props.location.pathname.includes("wallet")) {
+        this.setState({ selected: "5" });
+      } else if (this.props.location.pathname.includes("history")) {
+        this.setState({ selected: "6" });
+      }
+      // else if (this.props.location.pathname.includes("history")) {
       //   this.setState({ selected: "5" });
       // } else {
       //   this.setState({ selected: "6" });
