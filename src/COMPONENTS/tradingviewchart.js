@@ -67,7 +67,7 @@ class TradingViewChart extends React.Component {
         interval: props.interval,
         container_id: props.containerId,
         library_path: props.libraryPath,
-        locale: "en",
+        locale: localStorage["i18nextLng"],
         disabled_features: [
           "use_localstorage_for_settings",
           "header_symbol_search",
@@ -76,7 +76,7 @@ class TradingViewChart extends React.Component {
           "compare_symbol",
           "header_saveload",
           "header_settings",
-          "left_toolbar",
+          // "left_toolbar",
           "header_undo_redo",
           "study_dialog_search_control",
           "go_to_date",
@@ -114,7 +114,6 @@ class TradingViewChart extends React.Component {
 
   componentDidMount() {
     console.log("^^^prods", window.location.href);
-
     let currency, crypto;
     if (this.props.cryptoPair.crypto === undefined) {
       currency = this.state.currency;
@@ -132,7 +131,7 @@ class TradingViewChart extends React.Component {
       interval: this.props.interval,
       container_id: this.props.containerId,
       library_path: this.props.libraryPath,
-      locale: "en",
+      locale: localStorage["i18nextLng"],
       disabled_features: [
         "use_localstorage_for_settings",
         "header_symbol_search",
@@ -141,7 +140,7 @@ class TradingViewChart extends React.Component {
         "compare_symbol",
         "header_saveload",
         "header_settings",
-        "left_toolbar",
+        // "left_toolbar",
         "header_undo_redo",
         "study_dialog_search_control",
         "go_to_date",
