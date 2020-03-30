@@ -112,7 +112,7 @@ export const LeftDiv2 = styled(LeftDiv)`
 `;
 export const Instru = styled.p`
   display: inline-block;
-  font-size: 19px;
+  font-size: 18px;
   font-weight: bold;
   margin-left: 30px;
   color: ${props => (props.theme.mode === "dark" ? "white" : "#333333")};
@@ -449,13 +449,17 @@ export const BalanceWrap = styled.div`
 export const Balance = styled.p`
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   word-break: break-word;
+  font-size: 13px;
 `;
 export const Balance1 = styled(Balance)`
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
   font-weight: 600;
+  font-size: 13px;
 `;
 export const Total = styled.p`
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   word-break: break-word;
+  font-size: 13px;
 `;
 export const CheckWrap = styled.div`
   > .ant-checkbox-wrapper > span {
@@ -492,7 +496,7 @@ export const Willpay = styled.span`
 `;
 export const Willpay2 = styled.span`
   font-size: 20px;
-  font-family: "NotoSansThai";
+  // font-family: "NotoSansThai";
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
   font-weight: 600;
@@ -534,6 +538,9 @@ export const Pay = styled.div`
 `;
 export const Esti = styled.div`
   margin-top: 30px;
+  > .ant-row {
+    font-size: 13px;
+  }
 `;
 export const Best = styled.span`
   font-size: 12px;

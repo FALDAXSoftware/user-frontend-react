@@ -92,6 +92,7 @@ const OrderTradeWrap = styled.div`
   }
 `;
 const GreyWrapTrade = styled(GreyWrap)`
+  font-family: "Open sans";
   padding-top: 120px;
   & .tradeView {
     height: calc(100% - 20px);
