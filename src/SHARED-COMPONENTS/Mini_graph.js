@@ -265,7 +265,8 @@ class Mini_graph extends React.Component {
           <Col xs={11} md={12}>
             <SpanCoinPrice>
               {" "}
-              {price.toFixed(5)} {this.props.currency}{" "}
+              {price ? `${price.toFixed(5)}` : "0"}
+              {this.props.currency}{" "}
             </SpanCoinPrice>
           </Col>
           <Col xs={8} md={7}>
