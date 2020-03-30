@@ -34,14 +34,14 @@ export const EditButton = styled(Button)`
 `;
 export const MainTV = styled.div`
   background-color: ${props =>
-    props.theme.mode === "dark" ? "#2e3141" : "#eceff1"};
+    props.theme.mode === "dark" ? "#2e3141" : "white"};
   height: calc(100% - 38px);
 `;
 export const TVBar = styled.div`
   display: flex;
   align-items: center;
   background-color: ${props =>
-    props.theme.mode === "dark" ? "#131722" : "white"};
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
   width: calc(100% - 12px);
   margin: 0 auto;
   border-bottom: ${props =>
@@ -52,7 +52,7 @@ export const TVBar = styled.div`
     font-weight: "normal";
     font-size: "17px";
     color: ${props =>
-      props.theme.mode === "dark" ? "rgb(217, 217, 217)" : "rgb(85, 85, 85)"};
+    props.theme.mode === "dark" ? "rgb(217, 217, 217)" : "rgb(85, 85, 85)"};
   }
   > div > i {
     cursor: pointer;
@@ -108,11 +108,11 @@ export const LeftDiv2 = styled(LeftDiv)`
   box-shadow: ${props =>
     props.theme.mode === "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
   border-radius: 5px;
-  height: auto;
+  height: 100%;
 `;
 export const Instru = styled.p`
   display: inline-block;
-  font-size: 19px;
+  font-size: 18px;
   font-weight: bold;
   margin-left: 30px;
   color: ${props => (props.theme.mode === "dark" ? "white" : "#333333")};
@@ -147,7 +147,7 @@ export const SearchInput = styled(Search)`
         border-right:0px;
         border-radius:0px;
         background-color:${props =>
-          props.theme.mode === "dark" ? "#041b2c" : ""}
+    props.theme.mode === "dark" ? "#041b2c" : ""}
         caret-color:${props => (props.theme.mode === "dark" ? "white" : "")}
         color:${props => (props.theme.mode === "dark" ? "white" : "")}
     }
@@ -173,7 +173,7 @@ export const FIATWrap2 = styled.div`
   float: right;
   & .ant-radio-button-wrapper {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041422" : ""};
+    props.theme.mode === "dark" ? "#041422" : ""};
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   }
   @media (max-width: 535px) {
@@ -191,7 +191,7 @@ export const RadioSelect = styled(RadioGroup)`
   & .ant-radio-button-wrapper {
     font-weight: 600 !important;
     background-color: ${props =>
-      props.theme.mode === "dark" ? "" : "#f5f6fa"};
+    props.theme.mode === "dark" ? "" : "#f5f6fa"};
     font-size: 13px;
   }
   @media (max-width: 460px) {
@@ -275,7 +275,7 @@ export const TableIns = styled(Table)`
     > th {
     color: #174c7e;
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041422" : ""};
+    props.theme.mode === "dark" ? "#041422" : ""};
     font-weight: bold;
     border-bottom: 0px;
   }
@@ -349,7 +349,7 @@ export const TableIns = styled(Table)`
   }
   & .ant-table-tbody > tr:hover > td {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041b2c" : ""};
+    props.theme.mode === "dark" ? "#041b2c" : ""};
   }
   & .ant-table-placeholder {
     position: relative;
@@ -391,7 +391,7 @@ export const TabsRight = styled(Tabs)`
 /* Market Style */
 
 export const Label = styled.label`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
 `;
 export const MarketWrap = styled.div`
   padding-left: 30px;
@@ -449,13 +449,17 @@ export const BalanceWrap = styled.div`
 export const Balance = styled.p`
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   word-break: break-word;
+  font-size: 13px;
 `;
 export const Balance1 = styled(Balance)`
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
   font-weight: 600;
+  font-size: 13px;
 `;
 export const Total = styled.p`
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   word-break: break-word;
+  font-size: 13px;
 `;
 export const CheckWrap = styled.div`
   > .ant-checkbox-wrapper > span {
@@ -476,7 +480,7 @@ export const AMTInput = styled(Input)`
     caret-color: ${props => (props.theme.mode === "dark" ? "white" : "")};
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041b2c" : ""};
+    props.theme.mode === "dark" ? "#041b2c" : ""};
   }
 `;
 
@@ -492,7 +496,7 @@ export const Willpay = styled.span`
 `;
 export const Willpay2 = styled.span`
   font-size: 20px;
-  font-family: "NotoSansThai";
+  // font-family: "NotoSansThai";
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
   font-weight: 600;
@@ -507,7 +511,7 @@ export const TotalWrap = styled.div`
   }
   > .ant-input-group-wrapper > .ant-input-group > .ant-input-group-addon {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-left: 0px;
     color: #c5c5c5;
   }
@@ -525,7 +529,7 @@ export const TotInput = styled(Input)`
     caret-color: ${props => (props.theme.mode === "dark" ? "white" : "")};
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041b2c" : ""} !important;
+    props.theme.mode === "dark" ? "#041b2c" : ""} !important;
   }
 `;
 export const Pay = styled.div`
@@ -534,6 +538,9 @@ export const Pay = styled.div`
 `;
 export const Esti = styled.div`
   margin-top: 30px;
+  > .ant-row {
+    font-size: 13px;
+  }
 `;
 export const Best = styled.span`
   font-size: 12px;
@@ -554,7 +561,7 @@ export const ButtonETH = styled(Button)`
   &:hover,
   &:focus {
     background-color: ${props =>
-      props.side === "Buy" ? "#64ba71" : "#ba6471"};
+    props.side === "Buy" ? "#64ba71" : "#ba6471"};
     color: rgb(255, 255, 255);
     border-color: ${props => (props.side === "Buy" ? "#64ba71" : "#ba6471")};
   }
@@ -628,7 +635,7 @@ export const HistoryWrap1 = styled.div`
 
   &::-webkit-scrollbar-thumb {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041624" : ""};
+    props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
@@ -668,7 +675,7 @@ export const TableContent = styled(CustomTable)`
   }
   > tbody > tr:nth-of-type(even) {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
+    props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
   }
 `;
 
@@ -686,9 +693,9 @@ export const SelectMonth = styled(Select)`
   }
   & .ant-select-selection {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041422" : ""};
+    props.theme.mode === "dark" ? "#041422" : ""};
     color: ${props =>
-      props.theme.mode === "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
+    props.theme.mode === "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
     > .ant-select-selection__rendered {
       line-height: 38px;
     }
@@ -730,6 +737,10 @@ export const DropdownButtonOne = styled(DropdownButton)`
   }
 `;
 export const ScrollTableContent = styled.div`
+  &.wallet {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
   overflow-x: auto;
   > .scrollbar {
     // height: 500px !important;

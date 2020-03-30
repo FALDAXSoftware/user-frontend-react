@@ -1485,7 +1485,7 @@ class PersonalDetails extends Component {
         document.querySelectorAll(".fiat_msg")[0].style.display = "block";
         this.setState({
           fiatmsg:
-            t("general_1.currency_text.message") +
+            t("general_1:currency_text.message") +
             " " +
             t("validations:field_is_required.message")
         });
@@ -1498,7 +1498,7 @@ class PersonalDetails extends Component {
         document.querySelectorAll(".df_msg")[0].style.display = "block";
         this.setState({
           dfmsg:
-            t("general_1.dateformat_text.message") +
+            t("general_1:dateformat_text.message") +
             " " +
             t("validations:field_is_required.message")
         });
@@ -1614,7 +1614,8 @@ class PersonalDetails extends Component {
         this.props.i18n.changeLanguage(this.state.language);
         this.props.langAction(this.state.language);
         this.setState({
-          editMode: false
+          editMode: false,
+          isFirstLogin: false
         });
       } else {
         this.validator.showMessages();
@@ -1724,7 +1725,7 @@ class PersonalDetails extends Component {
         document.querySelectorAll(".fiat_msg")[0].style.display = "block";
         this.setState({
           fiatmsg:
-            t("general_1.currency_text.message") +
+            t("general_1:currency_text.message") +
             " " +
             t("validations:field_is_required.message")
         });
@@ -1737,7 +1738,7 @@ class PersonalDetails extends Component {
         document.querySelectorAll(".df_msg")[0].style.display = "block";
         this.setState({
           dfmsg:
-            t("general_1.dateformat_text.message") +
+            t("general_1:dateformat_text.message") +
             " " +
             t("validations:field_is_required.message")
         });

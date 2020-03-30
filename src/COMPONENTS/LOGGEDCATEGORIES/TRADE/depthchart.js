@@ -181,7 +181,7 @@ class DepthChart extends Component {
     return (
       <WrapDepth>
         <Instru2>
-          Market Depth {this.props.crypto}/{this.props.currency}
+          MARKET DEPTH {this.props.crypto}/{this.props.currency}
         </Instru2>
         <Row>
           <Col xl={24}>
