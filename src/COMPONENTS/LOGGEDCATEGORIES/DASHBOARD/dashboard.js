@@ -444,7 +444,7 @@ class Dashboard extends Component {
       activityLoader: false,
       newsLoader: false,
       portfolioLoader: false,
-      templateManage: true
+      templateManage: false
     };
 
     io = this.props.io;
