@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 import styled from "styled-components";
 import "antd/dist/antd.css";
-import { Row, Col, Progress, Spin } from "antd";
+import { Row, Col, Progress, Spin, Menu, Icon } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareFull } from "@fortawesome/free-solid-svg-icons";
 /* import InfiniteScroll from 'react-infinite-scroller'; */
@@ -44,6 +44,7 @@ import {
   SpinSingle,
   RiseFall
 } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle";
+import { SettingDropdown } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
 let { SOCKET_HOST } = globalVariables;
 let { API_URL } = globalVariables;
@@ -633,10 +634,28 @@ class Dashboard extends Component {
       /* activityLoader, */ activityData,
       userFiat
     } = this.state;
-
+    const menu = (
+      <Menu className="SettingMenu">
+        <Menu.Item
+          //   onClick={this.editLayout.bind(this)}
+          //   disabled={this.state.editState}
+          key="1"
+        >
+          Manage template
+        </Menu.Item>
+      </Menu>
+    );
     return (
       <div>
         <ContactWrap>
+          <SettingDropdown
+            overlay={menu}
+            placement="bottomLeft"
+            trigger={["click"]}
+            overlayClassName="dropSettings"
+          >
+            <Icon type="setting" />
+          </SettingDropdown>
           <LoggedNavigation />
           <GreyWrap>
             <BodyWrap>
