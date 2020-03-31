@@ -152,7 +152,7 @@ export const TemplateTab = styled(Tabs)`
               line-height: 1;
               height: auto;
               margin: 0 10px 0 0 !important;
-              padding: 10px !important;
+              padding: 12px 10px !important;
               vertical-align: top;
             }
           }

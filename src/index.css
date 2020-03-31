@@ -320,7 +320,7 @@ table .ant-table-tbody > tr > td {
   padding-bottom: 50px;
 }
 .simple-maps.template_manage .ant-modal-body {
-  height: calc(100vh - 500px);
+  height: calc(100vh - 350px);
 }
 @media (max-width: 425px) {
   .simple-maps img:first-child {
