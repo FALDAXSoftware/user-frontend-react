@@ -45,6 +45,8 @@ import {
   RiseFall
 } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle";
 import { SettingDropdown } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import SubMenu from "antd/lib/menu/SubMenu";
+import TemplateManage from "../../../SHARED-COMPONENTS/templateManage";
 
 let { SOCKET_HOST } = globalVariables;
 let { API_URL } = globalVariables;
@@ -441,7 +443,8 @@ class Dashboard extends Component {
       userFiat: "USD",
       activityLoader: false,
       newsLoader: false,
-      portfolioLoader: false
+      portfolioLoader: false,
+      templateManage: true
     };
 
     io = this.props.io;
@@ -627,7 +630,11 @@ class Dashboard extends Component {
     var result = arr[2];
     return result;
   }
-
+  comingCancel = e => {
+    this.setState({
+      templateManage: false
+    });
+  };
   render() {
     const {
       /*  newsLoader, */ news,
@@ -636,12 +643,70 @@ class Dashboard extends Component {
     } = this.state;
     const menu = (
       <Menu className="SettingMenu">
+        {/* <Menu.Item
+          //   onClick={this.editLayout.bind(this)}
+          disabled={this.state.editState}
+          key="0"
+        >
+          Template
+        </Menu.Item> */}
+        <SubMenu title="Templates">
+          <Menu.Item>Template 1</Menu.Item>
+          <Menu.Item>Template 2</Menu.Item>
+          <Menu.Divider />
+          <Menu.Item
+            onClick={() => {
+              this.setState({
+                templateManage: true
+              });
+            }}
+          >
+            Manage templates
+          </Menu.Item>
+        </SubMenu>
         <Menu.Item
           //   onClick={this.editLayout.bind(this)}
-          //   disabled={this.state.editState}
+          disabled={this.state.editState}
           key="1"
         >
-          Manage template
+          Edit Layout
+        </Menu.Item>
+        {this.state.isFullscreen && (
+          <Menu.Item
+            key="2"
+            //   onClick={this.exitFullScreen}
+          >
+            <Icon type="fullscreen-exit" />
+            Exit Full Screen
+          </Menu.Item>
+        )}
+        {!this.state.isFullscreen && (
+          <Menu.Item
+            key="2"
+            //   onClick={this.goFullScreen}
+          >
+            <Icon type="fullscreen" /> Full Screen
+          </Menu.Item>
+        )}
+        <Menu.Item
+          //   onClick={this.clearLayout.bind(this)}
+          disabled={this.state.saveState}
+          key="3"
+        >
+          Clear Layout
+        </Menu.Item>
+        <Menu.Item
+          //   onClick={this.saveLayout.bind(this)}
+          disabled={this.state.saveState}
+          key="2"
+        >
+          Save
+        </Menu.Item>
+        <Menu.Item
+          //  onClick={this.resetLayout.bind(this)}
+          key="4"
+        >
+          Reset Layout
         </Menu.Item>
       </Menu>
     );
@@ -791,6 +856,10 @@ class Dashboard extends Component {
               </ContainerNew>
             </BodyWrap>
           </GreyWrap>
+          <TemplateManage
+            comingCancel={e => this.comingCancel(e)}
+            visible={this.state.templateManage}
+          />
           <CommonFooter />
         </ContactWrap>
       </div>

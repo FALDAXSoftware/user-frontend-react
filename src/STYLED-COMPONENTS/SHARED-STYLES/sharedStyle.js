@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Tabs } from "antd";
+const { TabPane } = Tabs;
 
 export const ModalAgreeWrap = styled.div`
   width: 90%;
@@ -139,3 +141,24 @@ export const EmailInput = styled.input`
   @media (max-width: 576px) {
   }
 `;
+export const TemplateTab = styled(Tabs)`
+  margin: 30px 0;
+  > .ant-tabs-bar {
+    > .ant-tabs-nav-container {
+      > .ant-tabs-nav-wrap {
+        > .ant-tabs-nav-scroll {
+          > .ant-tabs-nav {
+            & .ant-tabs-tab {
+              line-height: 1;
+              height: auto;
+              margin: 0 10px 0 0 !important;
+              padding: 10px !important;
+              vertical-align: top;
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+export const TemplateTabPane = styled(TabPane)``;

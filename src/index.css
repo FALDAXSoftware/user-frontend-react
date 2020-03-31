@@ -319,6 +319,9 @@ table .ant-table-tbody > tr > td {
 .world-map .ant-modal-body {
   padding-bottom: 50px;
 }
+.simple-maps.template_manage .ant-modal-body {
+  height: calc(100vh - 500px);
+}
 @media (max-width: 425px) {
   .simple-maps img:first-child {
     width: 50px;
