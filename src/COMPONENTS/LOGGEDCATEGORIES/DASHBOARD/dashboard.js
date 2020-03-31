@@ -47,10 +47,22 @@ import {
 import { SettingDropdown } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import SubMenu from "antd/lib/menu/SubMenu";
 import TemplateManage from "../../../SHARED-COMPONENTS/templateManage";
+import Technical from "../../tv_widgets/technical";
+import Screener from "../../tv_widgets/screener";
+import MarketWidget from "../../tv_widgets/market_widget";
+import TradingViewChart from "../../tradingviewchart";
 
 let { SOCKET_HOST } = globalVariables;
 let { API_URL } = globalVariables;
-
+const WhiteBgWrapper = styled.div`
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
+  -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+  -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+  box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+  border-radius: 5px;
+  margin-top: 30px;
+`;
 const ContainerNew = styled(ContainerContact)`
   padding: 0px;
   background-color: ${props =>
@@ -444,7 +456,9 @@ class Dashboard extends Component {
       activityLoader: false,
       newsLoader: false,
       portfolioLoader: false,
-      templateManage: false
+      templateManage: false,
+      tc1: "ETHBTC",
+      pairs: []
     };
 
     io = this.props.io;
@@ -457,6 +471,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     var self = this;
+    self.getPairs();
     self.loadNews(1);
     self.loadActivity();
     self.loadPortfolio();
@@ -467,7 +482,25 @@ class Dashboard extends Component {
     //   Authorization: "Bearer " + this.props.isLoggedIn
     // };
   }
-
+  getPairs = () => {
+    fetch(API_URL + `/users/get-all-pair`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"]
+      }
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status == 200) {
+          this.setState({
+            pairs: responseData.data
+          });
+        }
+      })
+      .catch(error => {});
+  };
   /* 
             Page: /dashboard
             It is called in ComponentDidMount.
@@ -642,8 +675,8 @@ class Dashboard extends Component {
       userFiat
     } = this.state;
     const menu = (
-      <Menu className="SettingMenu">
-        <SubMenu title="Templates">
+      <Menu className="SettingMenu templateSettingMenu">
+        <SubMenu className="templates" title="Templates">
           <Menu.Item>Template 1</Menu.Item>
           <Menu.Item>Template 2</Menu.Item>
           <Menu.Divider />
@@ -847,6 +880,55 @@ class Dashboard extends Component {
                     </Scrollbars>
                   </NewsList>
                 </Newsdiv>
+                <WhiteBgWrapper>
+                  <Technical
+                    options={{
+                      interval: "1m",
+                      width: "100%",
+                      isTransparent: true,
+                      height: "100%",
+                      symbol: `BINANCE:${"XRPBTC"}`,
+                      showIntervalTabs: true,
+                      locale: localStorage["i18nextLng"],
+                      colorTheme: this.props.theme ? "dark" : "light",
+                      largeChartUrl: "https://faldax.com"
+                    }}
+                  />
+                </WhiteBgWrapper>
+                <WhiteBgWrapper>
+                  <Screener
+                    options={{
+                      width: "100%",
+                      height: "100%",
+                      defaultColumn: "oscillators",
+                      defaultScreen: "general",
+                      market: "crypto",
+                      showToolbar: true,
+                      colorTheme: this.props.theme ? "dark" : "light",
+                      locale: localStorage["i18nextLng"]
+                    }}
+                  />
+                </WhiteBgWrapper>
+                <WhiteBgWrapper>
+                  <MarketWidget
+                    options={{
+                      width: "100%",
+                      height: "100%",
+                      defaultColumn: "overview",
+                      screener_type: "crypto_mkt",
+                      displayCurrency: "USD",
+                      colorTheme: this.props.theme ? "dark" : "light",
+                      locale: localStorage["i18nextLng"]
+                    }}
+                  />
+                </WhiteBgWrapper>
+                <WhiteBgWrapper>
+                  <TradingViewChart
+                    crypto="XRP"
+                    currency="BTC"
+                    theme={this.props.theme}
+                  />
+                </WhiteBgWrapper>
               </ContainerNew>
             </BodyWrap>
           </GreyWrap>

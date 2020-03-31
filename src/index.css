@@ -320,7 +320,7 @@ table .ant-table-tbody > tr > td {
   padding-bottom: 50px;
 }
 .simple-maps.template_manage .ant-modal-body {
-  height: calc(100vh - 350px);
+  /* height: calc(100vh - 350px); */
 }
 .simple-maps.template_manage .ant-modal-header {
   height: auto;
@@ -330,6 +330,14 @@ table .ant-table-tbody > tr > td {
   display: inherit;
   font-size: 20px;
   text-transform: uppercase;
+}
+.templateSettingMenu .templates .ant-dropdown-menu-submenu-title {
+  padding-left: 26px;
+}
+.templateSettingMenu .templates .ant-dropdown-menu-submenu-title span {
+  left: 0;
+  transform: rotate(180deg);
+  right: auto;
 }
 @media (max-width: 425px) {
   .simple-maps img:first-child {

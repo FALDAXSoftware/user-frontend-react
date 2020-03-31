@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Tabs } from "antd";
+import { Tabs, Select } from "antd";
 const { TabPane } = Tabs;
 
 export const ModalAgreeWrap = styled.div`
@@ -145,7 +145,10 @@ export const EmailInput = styled.input`
   }
 `;
 export const TemplateTab = styled(Tabs)`
-  margin: 30px 0;
+  padding: 30px 0;
+  & .ant-checkbox-group-item {
+    display: block;
+  }
   > .ant-tabs-bar {
     > .ant-tabs-nav-container {
       > .ant-tabs-nav-wrap {
@@ -164,4 +167,33 @@ export const TemplateTab = styled(Tabs)`
     }
   }
 `;
-export const TemplateTabPane = styled(TabPane)``;
+export const TemplateTabPane = styled(TabPane)`
+  & .ant-checkbox-wrapper {
+    display: block;
+    margin: 0 !important;
+  }
+`;
+export const TemplatePairSelect = styled(Select)`
+  margin: 10px 0 15px 0;
+`;
+export const SaveBtn = styled.button`
+  font-size: 13px;
+  font-family: "Open Sans";
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  -moz-transform: matrix(1.2195120140195, 0, 0, 1.20991183157525, 0, 0);
+  -webkit-transform: matrix(1.2195120140195, 0, 0, 1.20991183157525, 0, 0);
+  -ms-transform: matrix(1.2195120140195, 0, 0, 1.20991183157525, 0, 0);
+  border-radius: 24px;
+  background-color: rgb(76, 132, 255);
+  box-shadow: 0px 4px 10px 0px rgba(76, 132, 255, 0.33);
+  height: 40px;
+  border: 0;
+  padding: 0 20px;
+  margin: 30px 0 0px 9px;
+  &:focus {
+    outline: none;
+  }
+`;
