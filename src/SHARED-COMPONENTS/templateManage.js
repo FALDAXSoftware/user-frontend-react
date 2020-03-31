@@ -88,8 +88,7 @@ class TemplateManage extends React.Component {
         <Modal
           title={
             <div>
-              <img alt="coming" src={_COMINGIMG} />{" "}
-              <img alt="coming" src={_COMINGIMG2} />
+              <span>Manage Templates</span>
             </div>
           }
           visible={this.props.visible}
@@ -102,7 +101,7 @@ class TemplateManage extends React.Component {
           height={490}
           className="simple-maps template_manage"
         >
-          <ModalWrap>
+          <ModalWrap className="template_modal_wrap">
             <TemplateTab
               onChange={this.onChange}
               activeKey={this.state.activeKey}

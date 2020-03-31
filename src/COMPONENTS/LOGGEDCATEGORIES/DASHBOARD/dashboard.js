@@ -643,13 +643,6 @@ class Dashboard extends Component {
     } = this.state;
     const menu = (
       <Menu className="SettingMenu">
-        {/* <Menu.Item
-          //   onClick={this.editLayout.bind(this)}
-          disabled={this.state.editState}
-          key="0"
-        >
-          Template
-        </Menu.Item> */}
         <SubMenu title="Templates">
           <Menu.Item>Template 1</Menu.Item>
           <Menu.Item>Template 2</Menu.Item>
@@ -661,6 +654,7 @@ class Dashboard extends Component {
               });
             }}
           >
+            <Icon type="setting" />
             Manage templates
           </Menu.Item>
         </SubMenu>

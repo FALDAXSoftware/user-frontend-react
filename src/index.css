@@ -322,6 +322,15 @@ table .ant-table-tbody > tr > td {
 .simple-maps.template_manage .ant-modal-body {
   height: calc(100vh - 350px);
 }
+.simple-maps.template_manage .ant-modal-header {
+  height: auto;
+}
+.simple-maps.template_manage .ant-modal-header .ant-modal-title div span {
+  padding: 20px 0;
+  display: inherit;
+  font-size: 20px;
+  text-transform: uppercase;
+}
 @media (max-width: 425px) {
   .simple-maps img:first-child {
     width: 50px;

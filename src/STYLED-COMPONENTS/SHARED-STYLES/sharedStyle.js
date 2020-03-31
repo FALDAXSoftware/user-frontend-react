@@ -37,6 +37,9 @@ export const ModalWrap = styled.div`
   width: 465px;
   margin-left: auto;
   margin-right: auto;
+  &.template_modal_wrap {
+    width: 90%;
+  }
   &.kyc-wrap {
     width: 90%;
     padding: 0 0 30px 0;
