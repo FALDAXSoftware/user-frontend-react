@@ -604,7 +604,7 @@ class Limit extends Component {
               "Amount",
               this.state.amount,
               "required|gtzero|numeric|decimalrestrict3",
-              "text-danger-validation",
+              "trade-action-validation",
               {
                 gtzero: "Amount should be greater than zero.",
                 decimalrestrict3:
@@ -630,7 +630,7 @@ class Limit extends Component {
               "Limit_price",
               this.state.limit_price,
               "required|gtzero|numeric|decimalrestrict5",
-              "text-danger-validation",
+              "trade-action-validation",
               {
                 gtzero: "Limit Price should be greater than zero.",
                 decimalrestrict5:

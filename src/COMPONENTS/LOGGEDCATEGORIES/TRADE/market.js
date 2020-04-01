@@ -572,7 +572,8 @@ class Market extends Component {
             {this.validator.message(
               "Amount",
               this.state.amount,
-              "required|gtzero|numeric|decimalrestrict3"
+              "required|gtzero|numeric|decimalrestrict3",
+              "trade-action-validation"
             )}
           </TotalWrap>
         </ETHWrap>
