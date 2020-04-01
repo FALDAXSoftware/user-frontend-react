@@ -1053,7 +1053,10 @@ td.column-Email {
 .validation-message {
   color: red;
 }
-
+.trade-action-validation {
+  color: red;
+  /* font-size: 12px; */
+}
 /* React Date Picker Css */
 .datePicker .react-datepicker-wrapper {
   max-width: 450px;

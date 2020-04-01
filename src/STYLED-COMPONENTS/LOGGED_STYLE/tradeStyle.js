@@ -658,6 +658,9 @@ export const FlexWrapDiv = styled.div`
 `;
 export const ButtonWrap = styled.div`
   margin-top: 20px;
+  position: absolute;
+  width: calc(100% - 60px);
+  bottom: 30px;
 `;
 export const BBCWrap = styled.div`
   margin-left: 30px;
