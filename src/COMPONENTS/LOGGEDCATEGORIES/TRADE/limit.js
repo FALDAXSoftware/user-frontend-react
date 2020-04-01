@@ -32,6 +32,12 @@ import {
   ButtonWrap,
   ButtonETH
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import {
+  Approx,
+  ApproxBelow,
+  WillpayBelow2,
+  WillpayBelow
+} from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
 let { SOCKET_HOST } = globalVariables;
 
@@ -442,10 +448,10 @@ class Limit extends Component {
               <Row>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>Balance</Balance1>
                     </Col>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance>
                         {this.props.userBal.currency[0]
                           ? `${this.props.userBal.currency[0].balance.toFixed(
@@ -459,28 +465,28 @@ class Limit extends Component {
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>Total</Balance1>
                     </Col>
-                    <Col span={12}>
-                      <Total>
+                    <Col span={24}>
+                      <Balance>
                         {this.props.userBal.currency[0]
                           ? `${this.props.userBal.currency[0].balance.toFixed(
                               8
                             )}${" "}`
                           : `00${" "}`}
                         {this.state.currency}
-                      </Total>
+                      </Balance>
                     </Col>
                   </Row>
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>In orders</Balance1>
                     </Col>
-                    <Col span={12}>
-                      <Total>
+                    <Col span={24}>
+                      <Balance>
                         {this.props.userBal.currency[0]
                           ? `${Math.abs(
                               this.props.userBal.currency[0].balance -
@@ -488,20 +494,20 @@ class Limit extends Component {
                             ).toFixed(8)}${" "}`
                           : `00${" "}`}
                         {this.state.currency}
-                      </Total>
+                      </Balance>
                     </Col>
                   </Row>
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>Best ask</Balance1>
                     </Col>
-                    <Col span={12}>
-                      <Total>
+                    <Col span={24}>
+                      <Balance>
                         {this.props.userBal.buyPay.toFixed(5)}{" "}
                         {this.state.crypto}
-                      </Total>
+                      </Balance>
                     </Col>
                   </Row>
                 </Col>
@@ -512,10 +518,10 @@ class Limit extends Component {
               <Row>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>Balance</Balance1>
                     </Col>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance>
                         {this.props.userBal.crypto[0]
                           ? `${this.props.userBal.crypto[0].balance.toFixed(
@@ -529,28 +535,28 @@ class Limit extends Component {
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>Total</Balance1>
                     </Col>
-                    <Col span={12}>
-                      <Total>
+                    <Col span={24}>
+                      <Balance>
                         {this.props.userBal.crypto[0]
                           ? `${this.props.userBal.crypto[0].balance.toFixed(
                               8
                             )}${" "}`
                           : `00${" "}`}
                         {this.state.crypto}
-                      </Total>
+                      </Balance>
                     </Col>
                   </Row>
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>In orders</Balance1>
                     </Col>
-                    <Col span={12}>
-                      <Total>
+                    <Col span={24}>
+                      <Balance>
                         {this.props.userBal.crypto[0]
                           ? `${Math.abs(
                               this.props.userBal.crypto[0].balance -
@@ -558,20 +564,20 @@ class Limit extends Component {
                             ).toFixed(8)}${" "}`
                           : `00${" "}`}
                         {this.state.crypto}
-                      </Total>
+                      </Balance>
                     </Col>
                   </Row>
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>Best ask</Balance1>
                     </Col>
-                    <Col span={12}>
-                      <Total>
+                    <Col span={24}>
+                      <Balance>
                         {this.props.userBal.sellPay.toFixed(5)}{" "}
                         {this.state.currency}
-                      </Total>
+                      </Balance>
                     </Col>
                   </Row>
                 </Col>
@@ -583,7 +589,7 @@ class Limit extends Component {
         )}
         <ETHWrap>
           <Label>Amount</Label>
-          <TotalWrap style={{ marginBottom: 16 }}>
+          <TotalWrap>
             <AMTInput
               min="0"
               type="number"
@@ -609,7 +615,7 @@ class Limit extends Component {
         </ETHWrap>
         <BTCWrap>
           <Label>Limit Price</Label>
-          <TotalWrap style={{ marginBottom: 16 }}>
+          <TotalWrap>
             <TotInput
               min="0"
               step="0.00001"
@@ -635,7 +641,7 @@ class Limit extends Component {
         </BTCWrap>
         <BTCWrap>
           <Label>Total</Label>
-          <TotalWrap style={{ marginBottom: 16 }} className="readonly-input">
+          <TotalWrap className="readonly-input">
             <TotInput
               min="0"
               type="number"
@@ -649,83 +655,63 @@ class Limit extends Component {
         {Object.keys(this.props.userBal).length > 0 ? (
           this.state.side === "Buy" ? (
             <Pay>
-              <Row>
-                <Col xs={15} sm={12}>
-                  <div>
-                    <Willpay>You will approximately pay</Willpay>
-                  </div>
-                </Col>
-                <Col xs={9} sm={12}>
-                  <div>
-                    <Willpay2>
-                      {buyPayAmt.toFixed(8)} {this.state.currency}
-                    </Willpay2>
-                  </div>
-                </Col>
-              </Row>
+              <Approx>
+                <Willpay>You will approximately pay</Willpay>
+                <Willpay2>
+                  {buyPayAmt.toFixed(8)} {this.state.currency}
+                </Willpay2>
+              </Approx>
               <Esti>
-                <Row>
-                  <Col xs={15} sm={12}>
-                    Fiat Value
-                  </Col>
-                  <Col xs={9} sm={12}>
+                <ApproxBelow>
+                  <WillpayBelow>Fiat Value</WillpayBelow>
+                  <WillpayBelow2>
                     {this.state.fiatCurrency}{" "}
                     {parseFloat(this.state.fiatCryptoValue).toFixed(8)}
-                  </Col>
-                  <Col xs={15} sm={12}>
-                    Estimated Best Price
-                  </Col>
-                  <Col xs={9} sm={12}>
+                  </WillpayBelow2>
+                </ApproxBelow>
+                <ApproxBelow>
+                  <WillpayBelow>Estimated Best Price</WillpayBelow>
+                  <WillpayBelow2>
                     {buyPayAmt.toFixed(8)} {this.state.currency}
-                  </Col>
-                  <Col xs={15} sm={12}>
-                    Fee {userBalFees} %
-                  </Col>
-                  <Col xs={9} sm={12}>
+                  </WillpayBelow2>
+                </ApproxBelow>
+                <ApproxBelow>
+                  <WillpayBelow>Fee {userBalFees} %</WillpayBelow>
+                  <WillpayBelow2>
                     {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.currency}
-                  </Col>
-                </Row>
+                  </WillpayBelow2>
+                </ApproxBelow>
               </Esti>
             </Pay>
           ) : (
             <Pay>
-              <Row>
-                <Col xs={15} sm={12}>
-                  <div>
-                    <Willpay>You will approximately receive</Willpay>
-                  </div>
-                </Col>
-                <Col xs={9} sm={12}>
-                  <div>
-                    <Willpay2>
-                      {sellEstPrice.toFixed(8)} {this.state.currency}
-                    </Willpay2>
-                  </div>
-                </Col>
-              </Row>
+              <Approx>
+                <Willpay>You will approximately receive</Willpay>
+                <Willpay2>
+                  {sellEstPrice.toFixed(8)} {this.state.currency}
+                </Willpay2>
+              </Approx>
               <Esti>
-                <Row>
-                  <Col xs={15} sm={12}>
-                    Fiat Value
-                  </Col>
-                  <Col xs={9} sm={12}>
+                <ApproxBelow>
+                  <WillpayBelow>Fiat Value</WillpayBelow>
+                  <WillpayBelow2>
                     {this.state.fiatCurrency}{" "}
                     {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
-                  </Col>
-                  <Col xs={15} sm={12}>
-                    Estimated Best Price
-                  </Col>
-                  <Col xs={9} sm={12}>
+                  </WillpayBelow2>
+                </ApproxBelow>
+                <ApproxBelow>
+                  <WillpayBelow>Estimated Best Price</WillpayBelow>
+                  <WillpayBelow2>
                     {sellPayAmt.toFixed(8)} {this.state.currency}
-                  </Col>
-                  <Col xs={15} sm={12}>
-                    Fee {userBalFees} %
-                  </Col>
-                  <Col xs={9} sm={12}>
+                  </WillpayBelow2>
+                </ApproxBelow>
+                <ApproxBelow>
+                  <WillpayBelow>Fee {userBalFees} %</WillpayBelow>
+                  <WillpayBelow2>
                     {(sellPayAmt - sellEstPrice).toFixed(8)}{" "}
                     {this.state.currency}
-                  </Col>
-                </Row>
+                  </WillpayBelow2>
+                </ApproxBelow>
               </Esti>
             </Pay>
           )
