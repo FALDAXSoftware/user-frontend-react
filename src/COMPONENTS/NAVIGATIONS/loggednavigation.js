@@ -112,17 +112,20 @@ const Headermain = styled(Header)`
   height: 80px;
   display: flex;
   align-items: center;
-  & ul {
-    > li.ant-menu-item-selected {
-      border: 1px solid #1890ff !important;
-      border-radius: 38px;
-    }
-  }
   & .color_important {
     color: ${props =>
       props.theme.mode === "dark" ? "#fff !important" : "black !important"};
     @media (min-width: 2000px) {
       font-size: 20px;
+    }
+  }
+  & ul {
+    > li.ant-menu-item-selected {
+      // border: 1px solid #1890ff !important;
+      border-radius: 38px;
+      & .color_important {
+        color: #1890ff !important;
+      }
     }
   }
 `;
