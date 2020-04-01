@@ -1372,3 +1372,10 @@ div.scrollbar>div:nth-child(3)>div{
 .grecaptcha-badge:hover {
   width: 256px !important;
 }
+.lang-menu .ant-dropdown-menu-item .lang-menu-item {
+  display: flex;
+  align-items: center;
+}
+.lang-menu .ant-dropdown-menu-item .lang-menu-item img {
+  margin: 0 5px 0 0;
+}
