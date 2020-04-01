@@ -71,7 +71,31 @@ const HeaderAvatar = styled.div`
 `;
 const DropDownDiv = styled(Dropdown)`
   margin-right: 30px;
-
+  &.lang-main {
+    margin-right: 10px;
+    margin-top: 0;
+    > span {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      color: #000;
+      > img {
+        margin: 0 5px 0 0;
+      }
+    }
+    > span:hover {
+      cursor: pointer;
+    }
+  }
+  @media (max-width: 450px) {
+    &.lang-main {
+      > span {
+        > span {
+          display: none;
+        }
+      }
+    }
+  }
   @media (max-width: 480px) {
     margin-top: 10px;
   }
@@ -221,6 +245,25 @@ class Afterlog extends Component {
     this.props.actions.theme.darkTheme(flag);
   }
 
+  onChange = e => {
+    // Pages that redirect from WordPress with lng params
+    let lngQueryParamsUrls = [
+      "/open-ticket",
+      "/simplex",
+      "/crypto-conversion",
+      "/conversion",
+      "/editProfile",
+      "/careers"
+    ];
+    // remove queryParams in case of found from list else reload component.
+    if (lngQueryParamsUrls.indexOf(window.location.pathname) != -1) {
+      window.location.href = window.location.pathname;
+    } else {
+      window.location.reload();
+    }
+    this.props.i18n.changeLanguage(e.key);
+  };
+
   render() {
     const { t } = this.props;
     const DropdownItems = (
@@ -255,6 +298,29 @@ class Afterlog extends Component {
         Avatar_img = _DEFAULTPROFILE;
       }
     }
+    const langItems = (
+      <Menu
+        className="lang-menu"
+        // onClick={e => {
+        //   alert("change");
+        //   console.log("this", e.key);
+        // }}
+        onClick={this.onChange}
+      >
+        <Menu.Item key="en">
+          <a className="lang-menu-item">
+            <img src="/images/en.png" />
+            {this.t("general_4:lang_eng_text.message")}
+          </a>
+        </Menu.Item>
+        <Menu.Item key="ja">
+          <a className="lang-menu-item">
+            <img src="/images/ja.png" />
+            {this.t("general_4:lang_ja_text.message")}
+          </a>
+        </Menu.Item>
+      </Menu>
+    );
     return (
       <RightDiv>
         {/*  <Bell>
@@ -277,6 +343,28 @@ class Afterlog extends Component {
             <span> {t("navbar_menu_careers.message")} </span>
           </Exchange>
         </Link> */}
+        <DropDownDiv
+          // className="Drop-main"
+          className="lang-main"
+          overlay={langItems}
+          trigger={["click"]}
+          // overlayClassName="custom_dropdown_menu"
+        >
+          <div className="language_head">
+            {/* {t("general_1:language_head.message")} */}
+            {localStorage["i18nextLng"] == "en" ? (
+              <span>
+                <img src="/images/en.png" />
+                <span>{this.t("general_4:lang_eng_text.message")}</span>
+              </span>
+            ) : (
+              <span>
+                <img src="/images/ja.png" />
+                <span>{this.t("general_4:lang_ja_text.message")}</span>
+              </span>
+            )}
+          </div>
+        </DropDownDiv>
         <DropDownDiv
           className="Drop-main"
           overlay={DropdownItems}
