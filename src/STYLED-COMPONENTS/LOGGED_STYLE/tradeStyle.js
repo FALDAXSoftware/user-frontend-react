@@ -396,6 +396,7 @@ export const Label = styled.label`
 export const MarketWrap = styled.div`
   padding-left: 30px;
   padding-right: 30px;
+  
 `;
 export const BuyWrap = styled.div``;
 export const BuySell = styled.div`
@@ -439,7 +440,7 @@ export const Sell = styled(Button)`
   height: 40px;
 `;
 export const BalanceWrap = styled.div`
-  margin-top: 30px;
+  margin-top: 15px;
   > .ant-row {
     > .ant-col {
       padding: 0 10px;
@@ -533,11 +534,12 @@ export const TotInput = styled(Input)`
   }
 `;
 export const Pay = styled.div`
-  margin-top: 30px;
+  margin-top: 15px;
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
 `;
 export const Esti = styled.div`
-  margin-top: 30px;
+  margin-top: 15px;
+   margin-bottom: 15px;
   > .ant-row {
     font-size: 13px;
   }

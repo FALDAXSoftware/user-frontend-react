@@ -168,7 +168,7 @@ class Market extends Component {
     //     }
     //   }
   }
-  /* 
+  /*
         Page: /trade --> market
         this method is called for clearing validation messages.
     */
@@ -179,7 +179,7 @@ class Market extends Component {
     // rerender to hide messages for the first time
   }
 
-  /* 
+  /*
         Page: /trade --> market
         this method is called to change BUY/SELL side.
     */
@@ -274,7 +274,7 @@ class Market extends Component {
     );
   }
 
-  /* 
+  /*
         Page: /trade --> market
         this method is called for cutom notifications.
     */
@@ -286,7 +286,7 @@ class Market extends Component {
     });
   }
 
-  /* 
+  /*
         Page: /trade --> market
         this method is called when u submit form to BUY/SELL.
     */
