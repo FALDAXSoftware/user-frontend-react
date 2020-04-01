@@ -605,7 +605,7 @@ class StopLimit extends Component {
               "amount",
               this.state.amount,
               "required|gtzero|numeric|decimalrestrict3",
-              "text-danger-validation",
+              "trade-action-validation",
               {
                 gtzero: "Amount should be greater than zero.",
                 decimalrestrict3:
@@ -616,7 +616,7 @@ class StopLimit extends Component {
               "amount",
               this.state.amount,
               "required|gtzero|numeric|decimalrestrict3",
-              "text-danger-validation",
+              "trade-action-validation",
               {
                 gtzero: "Amount should be greater than zero.",
                 decimalrestrict3:
@@ -643,7 +643,7 @@ class StopLimit extends Component {
                 "stop_price",
                 this.state.stop_price,
                 "required|gtzero|numeric|decimalrestrict5",
-                "text-danger-validation",
+                "trade-action-validation",
                 {
                   gtzero: "Amount should be greater than zero.",
                   decimalrestrict5:
@@ -669,7 +669,7 @@ class StopLimit extends Component {
                 "Limit_Price",
                 this.state.limit_price,
                 "required|gtzero|numeric|decimalrestrict5",
-                "text-danger-validation",
+                "trade-action-validation",
                 {
                   gtzero: "Limit Price should be greater than zero.",
                   decimalrestrict5:
@@ -695,7 +695,7 @@ class StopLimit extends Component {
               "Total",
               this.state.total,
               "required|gtzero|numeric",
-              "text-danger-validation",
+              "trade-action-validation",
               {
                 gtzero: "Total should be greater than zero."
               }
