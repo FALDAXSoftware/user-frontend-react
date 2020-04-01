@@ -52,7 +52,7 @@ export const TVBar = styled.div`
     font-weight: "normal";
     font-size: "17px";
     color: ${props =>
-    props.theme.mode === "dark" ? "rgb(217, 217, 217)" : "rgb(85, 85, 85)"};
+      props.theme.mode === "dark" ? "rgb(217, 217, 217)" : "rgb(85, 85, 85)"};
   }
   > div > i {
     cursor: pointer;
@@ -147,7 +147,7 @@ export const SearchInput = styled(Search)`
         border-right:0px;
         border-radius:0px;
         background-color:${props =>
-    props.theme.mode === "dark" ? "#041b2c" : ""}
+          props.theme.mode === "dark" ? "#041b2c" : ""}
         caret-color:${props => (props.theme.mode === "dark" ? "white" : "")}
         color:${props => (props.theme.mode === "dark" ? "white" : "")}
     }
@@ -173,7 +173,7 @@ export const FIATWrap2 = styled.div`
   float: right;
   & .ant-radio-button-wrapper {
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041422" : ""};
+      props.theme.mode === "dark" ? "#041422" : ""};
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   }
   @media (max-width: 535px) {
@@ -187,11 +187,10 @@ export const FIAT = styled.div`
 
 export const RadioSelect = styled(RadioGroup)`
   font-family: "Open Sans";
-
   & .ant-radio-button-wrapper {
     font-weight: 600 !important;
     background-color: ${props =>
-    props.theme.mode === "dark" ? "" : "#f5f6fa"};
+      props.theme.mode === "dark" ? "" : "#f5f6fa"};
     font-size: 13px;
   }
   @media (max-width: 460px) {
@@ -275,7 +274,7 @@ export const TableIns = styled(Table)`
     > th {
     color: #174c7e;
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041422" : ""};
+      props.theme.mode === "dark" ? "#041422" : ""};
     font-weight: bold;
     border-bottom: 0px;
   }
@@ -349,7 +348,7 @@ export const TableIns = styled(Table)`
   }
   & .ant-table-tbody > tr:hover > td {
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : ""};
+      props.theme.mode === "dark" ? "#041b2c" : ""};
   }
   & .ant-table-placeholder {
     position: relative;
@@ -376,6 +375,42 @@ export const TabsRight = styled(Tabs)`
     > div
     > .ant-tabs-tab {
     margin: 0 20px !important;
+  }
+  &.tardeActionCard {
+    .ant-tabs-nav-container {
+      > .ant-tabs-nav-wrap {
+        > .ant-tabs-nav-scroll {
+          > .ant-tabs-nav-animated {
+            > div {
+              > .ant-tabs-tab {
+                margin: 0 !important;
+              }
+            }
+          }
+        }
+      }
+    }
+    & .ant-tabs-nav-container-scrolling {
+      padding: 0;
+      & .ant-tabs-tab-arrow-show {
+        display: none;
+      }
+    }
+    & .ant-tabs-nav {
+      width: 100%;
+      & .ant-tabs-ink-bar {
+        display: none !important;
+      }
+      & .ant-tabs-tab {
+        display: inline-flex;
+        margin: 0 !important;
+        justify-content: center;
+        width: 33.33%;
+      }
+      & .ant-tabs-tab-active {
+        border-bottom: 4px solid;
+      }
+    }
   }
   @media (max-width: 475px) {
     > .ant-tabs-nav-container
@@ -404,10 +439,19 @@ export const BuySell = styled.div`
   margin-right: auto;
   height: auto;
   text-align: center;
+  & .ant-radio-button-wrapper {
+    background: ${props =>
+      props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
+    border: ${props =>
+      props.theme.mode === "dark" ? "1px solid #2c3f51" : "1px solid #cad0e6"};
+    color: ${props => (props.theme.mode === "dark" ? "#617090" : "#9e9ea1")};
+  }
 `;
 export const BuySellRadio = styled(RadioButton)`
   padding-left: 40px;
   padding-right: 40px;
+  font-size: 14px !important;
+  font-weight: bold;
   @media (max-width: 375px) {
     border-radius: 4px 4px 4px 4px !important;
     margin-top: 15px;
@@ -447,14 +491,20 @@ export const BalanceWrap = styled.div`
   }
 `;
 export const Balance = styled.p`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#174c7e")};
+  font-weight: bold;
   word-break: break-word;
-  font-size: 13px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  line-height: 1;
+  margin: 0 0 20px 0;
 `;
-export const Balance1 = styled(Balance)`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
-  font-weight: 600;
-  font-size: 13px;
+export const Balance1 = styled.p`
+  color: ${props => (props.theme.mode === "dark" ? "#617090" : "#7f7f7f")};
+  font-weight: normal;
+  font-size: 12px;
+  margin: 0 0 5px 0;
+  line-height: 1;
 `;
 export const Total = styled.p`
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
@@ -467,7 +517,8 @@ export const CheckWrap = styled.div`
   }
 `;
 export const ETHWrap = styled.div`
-  margin-top: 15px;
+  // margin-top: 15px;
+  padding: 0 10px;
 `;
 
 export const AMTInput = styled(Input)`
@@ -480,26 +531,29 @@ export const AMTInput = styled(Input)`
     caret-color: ${props => (props.theme.mode === "dark" ? "white" : "")};
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : ""};
+      props.theme.mode === "dark" ? "#041b2c" : ""};
   }
 `;
 
 export const BTCWrap = styled.div`
-  margin-top: 10px;
+  margin-top: 15px;
+  padding: 0 10px;
+  &.width_class {
+    width: 50%;
+  }
 `;
 export const Willpay = styled.span`
   font-size: 12px;
   font-family: "Open Sans";
   font-weight: 600;
-  color: ${props =>
-    props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
 `;
 export const Willpay2 = styled.span`
   font-size: 20px;
   // font-family: "NotoSansThai";
-  color: ${props =>
-    props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
-  font-weight: 600;
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#174c7e")};
+  font-weight: bold;
+  letter-spacing: 1px;
 `;
 export const TotalWrap = styled.div`
   > .ant-input-group-wrapper > .ant-input-group > .ant-input {
@@ -511,9 +565,10 @@ export const TotalWrap = styled.div`
   }
   > .ant-input-group-wrapper > .ant-input-group > .ant-input-group-addon {
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-left: 0px;
     color: #c5c5c5;
+    letter-spacing: 1px;
   }
   &.readonly-input input {
     -moz-appearance: textfield;
@@ -529,18 +584,43 @@ export const TotInput = styled(Input)`
     caret-color: ${props => (props.theme.mode === "dark" ? "white" : "")};
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : ""} !important;
+      props.theme.mode === "dark" ? "#041b2c" : ""} !important;
   }
 `;
 export const Pay = styled.div`
-  margin-top: 30px;
+  margin-top: 20px;
+  padding: 0 10px;
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
 `;
+export const Approx = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 export const Esti = styled.div`
-  margin-top: 30px;
+  margin-top: 20px;
   > .ant-row {
     font-size: 13px;
   }
+`;
+export const ApproxBelow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 10px 0;
+`;
+export const WillpayBelow = styled.div`
+  line-height: 1;
+  font-weight: 600;
+  font-size: 12px;
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
+`;
+export const WillpayBelow2 = styled.div`
+  line-height: 1;
+  font-weight: bold;
+  font-size: 14px;
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
+  letter-spacing: 1px;
 `;
 export const Best = styled.span`
   font-size: 12px;
@@ -557,11 +637,11 @@ export const ButtonETH = styled(Button)`
   text-transform: uppercase;
   width: 100%;
   height: 50px;
-  margin-bottom: 30px;
+  // margin-bottom: 30px;
   &:hover,
   &:focus {
     background-color: ${props =>
-    props.side === "Buy" ? "#64ba71" : "#ba6471"};
+      props.side === "Buy" ? "#64ba71" : "#ba6471"};
     color: rgb(255, 255, 255);
     border-color: ${props => (props.side === "Buy" ? "#64ba71" : "#ba6471")};
   }
@@ -573,8 +653,11 @@ export const StopCheck = styled(Checkbox)`
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 127, 127, 127 )"};
 `;
+export const FlexWrapDiv = styled.div`
+  display: flex;
+`;
 export const ButtonWrap = styled.div`
-  margin-top: 25px;
+  margin-top: 20px;
 `;
 export const BBCWrap = styled.div`
   margin-left: 30px;
@@ -635,7 +718,7 @@ export const HistoryWrap1 = styled.div`
 
   &::-webkit-scrollbar-thumb {
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041624" : ""};
+      props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
@@ -675,7 +758,7 @@ export const TableContent = styled(CustomTable)`
   }
   > tbody > tr:nth-of-type(even) {
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
+      props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
   }
 `;
 
@@ -693,9 +776,9 @@ export const SelectMonth = styled(Select)`
   }
   & .ant-select-selection {
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041422" : ""};
+      props.theme.mode === "dark" ? "#041422" : ""};
     color: ${props =>
-    props.theme.mode === "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
+      props.theme.mode === "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
     > .ant-select-selection__rendered {
       line-height: 38px;
     }
