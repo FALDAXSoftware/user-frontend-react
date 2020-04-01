@@ -10,7 +10,7 @@ export const Lleft = styled.div`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
   margin-right: 15px;
-  height: 680px;
+  // height: 680px;
   padding-bottom: 30px;
   overflow-y: auto;
   box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -23,7 +23,7 @@ export const Rright = styled.div`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
   margin-left: 15px;
-  height: 680px;
+  // height: 680px;
   padding-bottom: 30px;
   overflow-y: auto;
   box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);

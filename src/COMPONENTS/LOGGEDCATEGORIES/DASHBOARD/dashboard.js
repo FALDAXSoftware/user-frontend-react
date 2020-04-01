@@ -51,9 +51,12 @@ import Technical from "../../tv_widgets/technical";
 import Screener from "../../tv_widgets/screener";
 import MarketWidget from "../../tv_widgets/market_widget";
 import TradingViewChart from "../../tradingviewchart";
+import MiniGraph from "../../../SHARED-COMPONENTS/Mini_graph";
+import { Responsive, WidthProvider } from "react-grid-layout";
 
 let { SOCKET_HOST } = globalVariables;
 let { API_URL } = globalVariables;
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const WhiteBgWrapper = styled.div`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
@@ -62,6 +65,22 @@ const WhiteBgWrapper = styled.div`
   box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
   border-radius: 5px;
   margin-top: 30px;
+`;
+const GreyWrapDashboard = styled(GreyWrap)`
+  font-family: "Open sans";
+  padding-top: 120px;
+`;
+const RGL = styled(ResponsiveReactGridLayout)`
+  & .react-resizable-handle::after {
+    border-right: ${props =>
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
+    border-bottom: ${props =>
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
+  }
 `;
 const ContainerNew = styled(ContainerContact)`
   padding: 0px;
@@ -440,7 +459,7 @@ const portfolioColumn = [
     className: "change"
   }
 ];
-
+const originalLayouts = getFromLS("layouts") || {};
 let io = null;
 class Dashboard extends Component {
   constructor(props) {
@@ -458,7 +477,8 @@ class Dashboard extends Component {
       portfolioLoader: false,
       templateManage: false,
       tc1: "ETHBTC",
-      pairs: []
+      pairs: [],
+      layouts: JSON.parse(JSON.stringify(originalLayouts))
     };
 
     io = this.props.io;
@@ -749,195 +769,214 @@ class Dashboard extends Component {
             <Icon type="setting" />
           </SettingDropdown>
           <LoggedNavigation />
-          <GreyWrap>
-            <BodyWrap>
-              <ContainerNew>
-                <div>
-                  <DashGraph data={data} io={io} />
-                </div>
-                <ActPortWrap>
-                  <Row>
-                    <Col sm={24} lg={12}>
-                      <Lleft>
-                        <Topic>
-                          <span>ACTIVITY</span>
-                        </Topic>
-                        <ActDiv>
-                          <ActTable
-                            scroll={{ y: 500 }}
-                            pagination={false}
-                            columns={activityColumns}
-                            dataSource={activityData}
-                            className="activity-table"
-                          />
-                        </ActDiv>
-                        {this.state.activityLoader === true ? (
-                          <SpinSingle className="Single_spin">
-                            <Spin size="small" />
-                          </SpinSingle>
-                        ) : (
-                          ""
-                        )}
-                      </Lleft>
-                    </Col>
-                    <Col sm={24} lg={12}>
-                      <Rright>
-                        <Topic>
-                          <span>PORTFOLIO</span>
-                        </Topic>
-                        <HighLow>
-                          <LeftHl>
-                            {this.state.total.toFixed(8)} {userFiat}
-                          </LeftHl>
-                          <RightHl
-                            className={
-                              parseFloat(this.state.diffrence) < 0
-                                ? "red_colour"
-                                : ""
-                            }
-                          >
-                            ^{this.state.diffrence.toFixed(8)} {userFiat}
-                          </RightHl>
-                        </HighLow>
-                        <ActDiv>
-                          <PortTable
-                            scroll={{ y: 430 }}
-                            pagination={false}
-                            columns={portfolioColumn}
-                            dataSource={this.state.portfolioData}
-                            className="portfolio-table"
-                          />
-                        </ActDiv>
-                        {this.state.portfolioLoader === true ? (
-                          <SpinSingle className="Single_spin">
-                            <Spin size="small" />
-                          </SpinSingle>
-                        ) : (
-                          ""
-                        )}
-                      </Rright>
-                    </Col>
-                  </Row>
-                </ActPortWrap>
-                {/* <RiseFall>
-                  <RiseTable isLoggedIn={this.props.isLoggedIn} />
-                </RiseFall> */}
-                <Newsdiv>
-                  <News>NEWS</News>
-                  <NewsList>
-                    <Scrollbars
-                      style={{ height: 560 }}
-                      hideTracksWhenNotNeeded={true}
-                      className="scrollbar news"
-                    >
-                      {news.map((element, index) => (
-                        <List>
-                          <Date>
-                            {moment
-                              .utc(element.posted_at)
-                              .format(
-                                `${this.props.profileDetails.date_format} HH:mm`
-                              )}
-                          </Date>
-                          <ListSpan>
-                            {element.owner === "bitcoinist" && (
-                              <img
-                                alt="bit pic"
-                                src="/images/bitcoinist.png"
-                                style={{ marginRight: "10px", height: "20px" }}
-                              />
-                            )}
-                            {element.owner === "cointelegraph" && (
-                              <img
-                                alt="bit pic"
-                                src="/images/cointelegraph.ico"
-                                style={{ marginRight: "10px", height: "20px" }}
-                              />
-                            )}
-                            {element.owner === "bitcoin" && (
-                              <img
-                                alt="bit pic"
-                                src="/images/bitcoin.png"
-                                style={{ marginRight: "10px", height: "20px" }}
-                              />
-                            )}
-                            {element.owner !== "bitcoinist" &&
-                              element.owner !== "cointelegraph" &&
-                              element.owner !== "bitcoin" && (
-                                <FontAwesomeIcon
-                                  icon={faSquareFull}
-                                  color="#d4d4d4"
-                                  style={{ marginRight: "10px" }}
+          <GreyWrapDashboard>
+            <Row>
+              <Col>
+                <RGL
+                  className="layout"
+                  layouts={this.state.layouts}
+                  breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+                  cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                  isDraggable={this.state.editState}
+                  isResizable={this.state.editState}
+                  // onLayoutChange={(layout, layouts) =>
+                  //   this.onLayoutChange(layout, layouts)
+                  // }
+                >
+                  <WhiteBgWrapper key="0" style={{ overflow: "auto" }}>
+                    <Topic>
+                      <span>ACTIVITY</span>
+                    </Topic>
+                    <ActDiv>
+                      <ActTable
+                        // scroll={{ y: 500 }}
+                        pagination={false}
+                        columns={activityColumns}
+                        dataSource={activityData}
+                        className="activity-table"
+                      />
+                    </ActDiv>
+                    {this.state.activityLoader === true ? (
+                      <SpinSingle className="Single_spin">
+                        <Spin size="small" />
+                      </SpinSingle>
+                    ) : (
+                      ""
+                    )}
+                  </WhiteBgWrapper>
+                  <WhiteBgWrapper key="1" style={{ overflow: "auto" }}>
+                    <MiniGraph
+                      crypto="XRP"
+                      currency="BTC"
+                      data={data[0]}
+                      total={4}
+                      io={this.props.io}
+                      lineColor="#ffab30"
+                    />
+                  </WhiteBgWrapper>
+                  <WhiteBgWrapper key="2" style={{ overflow: "auto" }}>
+                    {/* <Newsdiv> */}
+                    <News>NEWS</News>
+                    <NewsList>
+                      <Scrollbars
+                        // style={{ height: 560 }}
+                        hideTracksWhenNotNeeded={true}
+                        className="scrollbar news"
+                      >
+                        {news.map((element, index) => (
+                          <List>
+                            <Date>
+                              {moment
+                                .utc(element.posted_at)
+                                .format(
+                                  `${this.props.profileDetails.date_format} HH:mm`
+                                )}
+                            </Date>
+                            <ListSpan>
+                              {element.owner === "bitcoinist" && (
+                                <img
+                                  alt="bit pic"
+                                  src="/images/bitcoinist.png"
+                                  style={{
+                                    marginRight: "10px",
+                                    height: "20px"
+                                  }}
                                 />
                               )}
-                            {this.getDomainFromUrl(element.link)}
-                          </ListSpan>
-                          <Listp href={element.link} target="_blank">
-                            {element.title}
-                          </Listp>
-                        </List>
-                      ))}
-                    </Scrollbars>
-                  </NewsList>
-                </Newsdiv>
-                <WhiteBgWrapper>
-                  <Technical
-                    options={{
-                      interval: "1m",
-                      width: "100%",
-                      isTransparent: true,
-                      height: "100%",
-                      symbol: `BINANCE:${"XRPBTC"}`,
-                      showIntervalTabs: true,
-                      locale: localStorage["i18nextLng"],
-                      colorTheme: this.props.theme ? "dark" : "light",
-                      largeChartUrl: "https://faldax.com"
-                    }}
-                  />
-                </WhiteBgWrapper>
-                <WhiteBgWrapper>
-                  <Screener
-                    options={{
-                      width: "100%",
-                      height: "100%",
-                      defaultColumn: "oscillators",
-                      defaultScreen: "general",
-                      market: "crypto",
-                      showToolbar: true,
-                      colorTheme: this.props.theme ? "dark" : "light",
-                      locale: localStorage["i18nextLng"]
-                    }}
-                  />
-                </WhiteBgWrapper>
-                <WhiteBgWrapper>
-                  <MarketWidget
-                    options={{
-                      width: "100%",
-                      height: "100%",
-                      defaultColumn: "overview",
-                      screener_type: "crypto_mkt",
-                      displayCurrency: "USD",
-                      colorTheme: this.props.theme ? "dark" : "light",
-                      locale: localStorage["i18nextLng"]
-                    }}
-                  />
-                </WhiteBgWrapper>
-                <WhiteBgWrapper>
-                  <TradingViewChart
-                    crypto="XRP"
-                    currency="BTC"
-                    theme={this.props.theme}
-                  />
-                </WhiteBgWrapper>
-              </ContainerNew>
-            </BodyWrap>
-          </GreyWrap>
-          <TemplateManage
-            comingCancel={e => this.comingCancel(e)}
-            visible={this.state.templateManage}
-          />
+                              {element.owner === "cointelegraph" && (
+                                <img
+                                  alt="bit pic"
+                                  src="/images/cointelegraph.ico"
+                                  style={{
+                                    marginRight: "10px",
+                                    height: "20px"
+                                  }}
+                                />
+                              )}
+                              {element.owner === "bitcoin" && (
+                                <img
+                                  alt="bit pic"
+                                  src="/images/bitcoin.png"
+                                  style={{
+                                    marginRight: "10px",
+                                    height: "20px"
+                                  }}
+                                />
+                              )}
+                              {element.owner !== "bitcoinist" &&
+                                element.owner !== "cointelegraph" &&
+                                element.owner !== "bitcoin" && (
+                                  <FontAwesomeIcon
+                                    icon={faSquareFull}
+                                    color="#d4d4d4"
+                                    style={{ marginRight: "10px" }}
+                                  />
+                                )}
+                              {this.getDomainFromUrl(element.link)}
+                            </ListSpan>
+                            <Listp href={element.link} target="_blank">
+                              {element.title}
+                            </Listp>
+                          </List>
+                        ))}
+                      </Scrollbars>
+                    </NewsList>
+                    {/* </Newsdiv> */}
+                  </WhiteBgWrapper>
+                  <WhiteBgWrapper key="3" style={{ overflow: "auto" }}>
+                    <Technical
+                      options={{
+                        interval: "1m",
+                        width: "100%",
+                        isTransparent: true,
+                        height: "100%",
+                        symbol: `BINANCE:${"XRPBTC"}`,
+                        showIntervalTabs: true,
+                        locale: localStorage["i18nextLng"],
+                        colorTheme: this.props.theme ? "dark" : "light",
+                        largeChartUrl: "https://faldax.com"
+                      }}
+                    />
+                  </WhiteBgWrapper>
+                  <WhiteBgWrapper key="4" style={{ overflow: "auto" }}>
+                    <Screener
+                      options={{
+                        width: "100%",
+                        height: "100%",
+                        defaultColumn: "oscillators",
+                        defaultScreen: "general",
+                        market: "crypto",
+                        showToolbar: true,
+                        colorTheme: this.props.theme ? "dark" : "light",
+                        locale: localStorage["i18nextLng"]
+                      }}
+                    />
+                  </WhiteBgWrapper>
+                  <WhiteBgWrapper key="5" style={{ overflow: "auto" }}>
+                    <MarketWidget
+                      options={{
+                        width: "100%",
+                        height: "100%",
+                        defaultColumn: "overview",
+                        screener_type: "crypto_mkt",
+                        displayCurrency: "USD",
+                        colorTheme: this.props.theme ? "dark" : "light",
+                        locale: localStorage["i18nextLng"]
+                      }}
+                    />
+                  </WhiteBgWrapper>
+                  <WhiteBgWrapper key="6" style={{ overflow: "auto" }}>
+                    <TradingViewChart
+                      crypto="XRP"
+                      currency="BTC"
+                      theme={this.props.theme}
+                    />
+                  </WhiteBgWrapper>
+                  <WhiteBgWrapper key="7" style={{ overflow: "auto" }}>
+                    <Topic>
+                      <span>PORTFOLIO</span>
+                    </Topic>
+                    <HighLow>
+                      <LeftHl>
+                        {this.state.total.toFixed(8)} {userFiat}
+                      </LeftHl>
+                      <RightHl
+                        className={
+                          parseFloat(this.state.diffrence) < 0
+                            ? "red_colour"
+                            : ""
+                        }
+                      >
+                        ^{this.state.diffrence.toFixed(8)} {userFiat}
+                      </RightHl>
+                    </HighLow>
+                    <ActDiv>
+                      <PortTable
+                        // scroll={{ y: 430 }}
+                        pagination={false}
+                        columns={portfolioColumn}
+                        dataSource={this.state.portfolioData}
+                        className="portfolio-table"
+                      />
+                    </ActDiv>
+                    {this.state.portfolioLoader === true ? (
+                      <SpinSingle className="Single_spin">
+                        <Spin size="small" />
+                      </SpinSingle>
+                    ) : (
+                      ""
+                    )}
+                  </WhiteBgWrapper>
+                </RGL>
+              </Col>
+            </Row>
+          </GreyWrapDashboard>
           <CommonFooter />
         </ContactWrap>
+        <TemplateManage
+          comingCancel={e => this.comingCancel(e)}
+          visible={this.state.templateManage}
+        />
       </div>
     );
   }
@@ -959,3 +998,317 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Dashboard);
+function getFromLS(key) {
+  let ls = {};
+  if (global.localStorage) {
+    try {
+      ls = JSON.parse(global.localStorage.getItem("rgl-8")) || {
+        layouts: {
+          lg: [
+            {
+              w: 12,
+              h: 4,
+              // x: 0,
+              // y: 0,
+              i: "0",
+              minW: 4
+            },
+            {
+              w: 12,
+              h: 4,
+              // x: 8,
+              // y: 0,
+              i: "1"
+            },
+            {
+              w: 12,
+              h: 4,
+              // x: 4,
+              // y: 4,
+              i: "2"
+            },
+            {
+              w: 12,
+              h: 4,
+              // x: 8,
+              // y: 4,
+              i: "3"
+            },
+            {
+              w: 12,
+              h: 4,
+              // x: 0,
+              // y: 4,
+              i: "4"
+            },
+            {
+              w: 12,
+              h: 3,
+              // x: 0,
+              // y: 8,
+              i: "5"
+            },
+            {
+              w: 12,
+              h: 4,
+              // x: 0,
+              // y: 11,
+              i: "6"
+            },
+            {
+              w: 12,
+              h: 4,
+              // x: 0,
+              // y: 11,
+              i: "7"
+            }
+          ]
+          // md: [
+          //   {
+          //     i: "tradeView",
+          //     x: 0,
+          //     y: 0,
+          //     w: 10,
+          //     h: 3,
+          //     minH: 3
+          //   },
+          //   {
+          //     i: "instruments",
+          //     x: 0,
+          //     y: 1,
+          //     w: 5,
+          //     h: 2,
+          //     minW: 5
+          //   },
+          //   {
+          //     i: "tradeAction",
+          //     x: 5,
+          //     y: 1,
+          //     w: 5,
+          //     h: 2,
+          //     minW: 3
+          //   },
+          //   {
+          //     i: "buysellBook",
+          //     x: 0,
+          //     y: 2,
+          //     w: 5,
+          //     h: 3,
+          //     minH: 3,
+          //     minW: 5
+          //   },
+          //   {
+          //     i: "depthChart",
+          //     x: 5,
+          //     y: 2,
+          //     w: 5,
+          //     h: 2,
+          //     minW: 5
+          //   },
+          //   {
+          //     i: "orderHistory",
+          //     x: 0,
+          //     y: 3,
+          //     w: 12,
+          //     h: 2,
+          //     minH: 2,
+          //     minW: 5
+          //   },
+          //   {
+          //     i: "myorder",
+          //     x: 0,
+          //     y: 4,
+          //     w: 10,
+          //     h: 4,
+          //     minW: 5,
+          //     minH: 4
+          //   }
+          // ],
+          // sm: [
+          //   {
+          //     i: "tradeView",
+          //     x: 0,
+          //     y: 0,
+          //     w: 6,
+          //     h: 3,
+          //     minH: 3
+          //   },
+          //   {
+          //     i: "instruments",
+          //     x: 0,
+          //     y: 1,
+          //     w: 6,
+          //     h: 2,
+          //     minW: 6
+          //   },
+          //   {
+          //     i: "tradeAction",
+          //     x: 0,
+          //     y: 2,
+          //     w: 6,
+          //     h: 2,
+          //     minW: 6
+          //   },
+          //   {
+          //     i: "buysellBook",
+          //     x: 0,
+          //     y: 3,
+          //     w: 6,
+          //     h: 3,
+          //     minH: 3,
+          //     minW: 6
+          //   },
+          //   {
+          //     i: "depthChart",
+          //     x: 0,
+          //     y: 4,
+          //     w: 6,
+          //     h: 2,
+          //     minW: 6
+          //   },
+          //   {
+          //     i: "orderHistory",
+          //     x: 0,
+          //     y: 5,
+          //     w: 6,
+          //     h: 2,
+          //     minH: 2,
+          //     minW: 6
+          //   },
+          //   {
+          //     i: "myorder",
+          //     x: 0,
+          //     y: 6,
+          //     w: 6,
+          //     h: 2,
+          //     minW: 6
+          //   }
+          // ],
+          // xs: [
+          //   {
+          //     i: "tradeView",
+          //     x: 0,
+          //     y: 0,
+          //     w: 4,
+          //     h: 3,
+          //     minH: 3
+          //   },
+          //   {
+          //     i: "instruments",
+          //     x: 0,
+          //     y: 1,
+          //     w: 4,
+          //     h: 2,
+          //     minW: 4
+          //   },
+          //   {
+          //     i: "tradeAction",
+          //     x: 0,
+          //     y: 2,
+          //     w: 4,
+          //     h: 2,
+          //     minW: 4
+          //   },
+          //   {
+          //     i: "buysellBook",
+          //     x: 0,
+          //     y: 3,
+          //     w: 4,
+          //     h: 3,
+          //     minH: 3,
+          //     minW: 4
+          //   },
+          //   {
+          //     i: "depthChart",
+          //     x: 0,
+          //     y: 4,
+          //     w: 4,
+          //     h: 2,
+          //     minW: 4
+          //   },
+          //   {
+          //     i: "orderHistory",
+          //     x: 0,
+          //     y: 5,
+          //     w: 4,
+          //     h: 2,
+          //     minH: 2,
+          //     minW: 4
+          //   },
+          //   {
+          //     i: "myorder",
+          //     x: 0,
+          //     y: 5,
+          //     w: 5,
+          //     h: 2,
+          //     minW: 4
+          //   }
+          // ],
+          // xxs: [
+          //   {
+          //     i: "tradeView",
+          //     x: 0,
+          //     y: 0,
+          //     w: 2,
+          //     h: 3,
+          //     minH: 3
+          //   },
+          //   {
+          //     i: "instruments",
+          //     x: 0,
+          //     y: 1,
+          //     w: 2,
+          //     h: 2,
+          //     minW: 2
+          //   },
+          //   {
+          //     i: "tradeAction",
+          //     x: 0,
+          //     y: 2,
+          //     w: 2,
+          //     h: 2,
+          //     minW: 2
+          //   },
+          //   {
+          //     i: "buysellBook",
+          //     x: 0,
+          //     y: 3,
+          //     w: 2,
+          //     h: 3,
+          //     minH: 3,
+          //     minW: 2
+          //   },
+          //   {
+          //     i: "depthChart",
+          //     x: 0,
+          //     y: 4,
+          //     w: 2,
+          //     h: 2,
+          //     minW: 2
+          //   },
+          //   {
+          //     i: "orderHistory",
+          //     x: 0,
+          //     y: 5,
+          //     w: 2,
+          //     h: 2,
+          //     minH: 2,
+          //     minW: 2
+          //   },
+          //   {
+          //     i: "myorder",
+          //     x: 0,
+          //     y: 6,
+          //     w: 2,
+          //     h: 2,
+          //     minW: 2
+          //   }
+          // ]
+        }
+      };
+    } catch (e) {
+      /*Ignore*/
+    }
+  }
+  return ls[key];
+}
