@@ -44,8 +44,8 @@ class Market extends Component {
     super(props);
     this.state = {
       side: "Buy",
-      crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
-      currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
+      crypto: this.props.crypto ? this.props.crypto : "XRP",
+      currency: this.props.currency ? this.props.currency : "BTC",
       sellprice: 0.001,
       buyPrice: 0.002,
       amount: "",
@@ -96,7 +96,12 @@ class Market extends Component {
   /* Life-Cycle Methods */
 
   componentWillReceiveProps(props, newProps) {
-    console.log("^^^^userdata  pro", props.userBal);
+    console.log(
+      "^^^^userdata  pro",
+      props.userBal,
+      props.crypto,
+      props.currency
+    );
     this.setState({
       userBalFees: props.userBal.fees,
       amount: "",
@@ -470,12 +475,12 @@ class Market extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Best ask</Balance1>
+                      <Balance1>Best Ask</Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
                         {this.props.userBal.buyPay.toFixed(5)}{" "}
-                        {this.state.crypto}
+                        {this.state.currency}
                       </Balance>
                     </Col>
                   </Row>
@@ -540,7 +545,7 @@ class Market extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Best ask</Balance1>
+                      <Balance1>Best Bid</Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -604,7 +609,7 @@ class Market extends Component {
                   <WillpayBelow>Fiat Value</WillpayBelow>
                   <WillpayBelow2>
                     {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatCryptoValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -616,7 +621,7 @@ class Market extends Component {
                 <ApproxBelow>
                   <WillpayBelow>Fee {this.state.userBalFees} %</WillpayBelow>
                   <WillpayBelow2>
-                    {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.currency}
+                    {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>
