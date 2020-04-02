@@ -28,6 +28,7 @@ import {
   TempRow
 } from "../STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
 import NumberFormat from "react-number-format";
+import { inbuiltTemplates } from "../COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/inbuiltTemplate.js";
 // import { translate } from "react-i18next";
 
 const API_URL = globalVariables.API_URL;
@@ -162,7 +163,7 @@ class TemplateManage extends React.Component {
           );
         }
       })
-      .catch(error => { });
+      .catch(error => {});
   };
   onCancle = e => {
     this.setState({ comingSoon: false });
@@ -184,8 +185,8 @@ class TemplateManage extends React.Component {
     let temp = this.state.templates;
     const activeKey = temp.length + 1;
     temp.push({
-      ...temp[0],
-      title: this.state.templateName,
+      ...JSON.parse(JSON.stringify(inbuiltTemplates[0])),
+      title: "New Template",
       inbuilt: false
     });
     this.setState({
@@ -196,8 +197,8 @@ class TemplateManage extends React.Component {
 
   remove = targetKey => {
     let templates = this.state.templates;
-    templates.splice(targetKey);
-    this.setState({ templates, activeKey: "0" });
+    templates.splice(targetKey, 1);
+    this.setState({ templates, activeKey: "0", templateName: "New Template" });
   };
   handleChange(value, widgetIndex, templateIndex) {
     let templates = this.state.templates;
@@ -264,7 +265,6 @@ class TemplateManage extends React.Component {
                         placeholder="Template Name"
                         value={t.title ? t.title : this.state.templateName}
                         onChange={e => {
-                          e.preventDefault();
                           let temp = this.state.templates;
                           if (e.target.value) {
                             // console.log("%%%%", e.target.value);
@@ -292,8 +292,8 @@ class TemplateManage extends React.Component {
                       )}
                     </TempName>
                   ) : (
-                      ""
-                    )}
+                    ""
+                  )}
                   {t.widgets.map((w, windex) => (
                     <TempRow>
                       <WidgetName>
@@ -326,8 +326,8 @@ class TemplateManage extends React.Component {
                             ))}
                         </TemplatePairSelect>
                       ) : (
-                          ""
-                        )}
+                        ""
+                      )}
                     </TempRow>
                   ))}
                 </TemplateTabPane>
