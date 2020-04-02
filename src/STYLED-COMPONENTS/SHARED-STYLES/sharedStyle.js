@@ -197,3 +197,20 @@ export const SaveBtn = styled.button`
     outline: none;
   }
 `;
+export const WidgetName = styled.div`
+  display: flex;
+  align-items: center;
+  > span {
+    margin: 0 0 0 10px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1;
+  }
+`;
+export const TempRow = styled.div`
+  margin: 0 0 10px 0;
+  & .ant-select.ant-select-enabled {
+    margin: 10px 0 10px 0;
+    padding: 0 0 0 55px;
+  }
+`;

@@ -1,6 +1,14 @@
 import React from "react";
 import "antd/dist/antd.css";
-import { Modal, Icon, notification, Tabs, Checkbox, Select } from "antd";
+import {
+  Modal,
+  Icon,
+  notification,
+  Tabs,
+  Checkbox,
+  Select,
+  Switch
+} from "antd";
 import { withRouter } from "react-router-dom";
 import { globalVariables } from "../Globals.js";
 import { _COMINGIMG, _COMINGIMG2 } from "CONSTANTS/images";
@@ -10,7 +18,11 @@ import {
   TemplatePairSelect,
   SaveBtn
 } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
-import { TemplateTab } from "../STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
+import {
+  TemplateTab,
+  WidgetName,
+  TempRow
+} from "../STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
 import NumberFormat from "react-number-format";
 // import { translate } from "react-i18next";
 
@@ -47,20 +59,6 @@ class TemplateManage extends React.Component {
         },
         {
           id: "2",
-          key: "crypto_screener",
-          name: "Crypto screener",
-          checked: false,
-          multiple: false
-        },
-        {
-          id: "3",
-          key: "rising_falling",
-          name: "Rising / Falling",
-          checked: false,
-          multiple: false
-        },
-        {
-          id: "4",
           key: "mini_graph",
           name: "Mini graph",
           checked: false,
@@ -68,39 +66,55 @@ class TemplateManage extends React.Component {
           data: ["XRP-BTC"]
         },
         {
+          id: "3",
+          key: "candle_stick",
+          name: "Candle Stick",
+          checked: false,
+          multiple: true,
+          data: ["XRP-BTC"]
+        },
+        {
+          id: "4",
+          key: "crypto_screener",
+          name: "Crypto screener",
+          checked: false,
+          multiple: false
+        },
+        {
           id: "5",
+          key: "rising_falling",
+          name: "Rising / Falling",
+          checked: false,
+          multiple: false
+        },
+
+        {
+          id: "6",
           key: "activity",
           name: "Activity",
           checked: true,
           multiple: false
         },
         {
-          id: "6",
+          id: "7",
           key: "portfolio",
           name: "Portfolio",
           checked: true,
           multiple: false
         },
         {
-          id: "7",
+          id: "8",
           key: "news",
           name: "News",
           checked: false,
           multiple: false
-        },
-        {
-          id: "8",
-          key: "candle_stick",
-          name: "Candle Stick",
-          checked: false,
-          multiple: true,
-          data: ["XRP-BTC"]
         }
       ]
     };
     // this.t = this.props.t;
     this.newTabIndex = 0;
     this.handleChange = this.handleChange.bind(this);
+    this.onChangeCheckbox = this.onChangeCheckbox.bind(this);
   }
 
   //   handleComing = e => {
@@ -200,10 +214,11 @@ class TemplateManage extends React.Component {
       }
     );
   }
-  onChangeCheckbox = e => {
+  onChangeCheckbox = (e, id) => {
+    console.log("^^^^e", e, id);
     let temp = this.state.templateArray;
     for (var i = 0; i < this.state.templateArray.length; i++) {
-      if (temp[i].id === e.target.value) {
+      if (temp[i].id === id) {
         if (temp[i].checked) {
           temp[i].checked = false;
         } else {
@@ -266,14 +281,24 @@ class TemplateManage extends React.Component {
                 closable={false}
               >
                 {templateArray.map((element, index) => (
-                  <div>
-                    <Checkbox
+                  <TempRow>
+                    {/* <Checkbox
                       checked={element.checked}
                       value={element.id}
                       onClick={this.onChangeCheckbox.bind(this)}
                     >
                       {element.name}
-                    </Checkbox>
+                    </Checkbox> */}
+                    <WidgetName>
+                      <Switch
+                        data-id={`${element.id}`}
+                        checked={element.checked}
+                        onChange={e => {
+                          this.onChangeCheckbox(e, element.id);
+                        }}
+                      />
+                      <span>{element.name}</span>
+                    </WidgetName>
                     {element.checked && element.multiple ? (
                       <TemplatePairSelect
                         mode="multiple"
@@ -293,7 +318,7 @@ class TemplateManage extends React.Component {
                     ) : (
                       ""
                     )}
-                  </div>
+                  </TempRow>
                 ))}
                 <SaveBtn type="primary">Save</SaveBtn>
               </TemplateTabPane>

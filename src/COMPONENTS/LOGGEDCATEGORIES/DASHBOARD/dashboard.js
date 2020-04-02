@@ -43,8 +43,8 @@ const WhiteBgWrapper = styled.div`
   border-radius: 5px;
   // margin-top: 30px;
   overflow: auto;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
 `;
 const GreyWrapDashboard = styled(GreyWrap)`
   font-family: "Open sans";
@@ -53,16 +53,15 @@ const GreyWrapDashboard = styled(GreyWrap)`
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
     border-right: ${props =>
-    props.theme.mode === "dark"
-      ? "2px solid rgb(255, 255, 255) !important"
-      : ""};
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
     border-bottom: ${props =>
-    props.theme.mode === "dark"
-      ? "2px solid rgb(255, 255, 255) !important"
-      : ""};
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
   }
 `;
-
 
 const originalLayouts = getFromLS("layouts") || {};
 let io = null;
@@ -70,7 +69,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      templateManage: false,
+      templateManage: true,
       pairs: [],
       currentTemplate: {
         widgets: [
@@ -80,28 +79,30 @@ class Dashboard extends Component {
             name: "Technical analysis",
             checked: true,
             multiple: true,
-            data: [{
-              key: "technical_analysis1",
-              pair: "XRP-BTC"
-            },
-            {
-              key: "technical_analysis2",
-              pair: "LTC-BTC"
-            }]
+            data: [
+              {
+                key: "technical_analysis1",
+                pair: "XRP-BTC"
+              },
+              {
+                key: "technical_analysis2",
+                pair: "LTC-BTC"
+              }
+            ]
           },
           {
             id: "2",
             key: "crypto_screener",
             name: "Crypto screener",
             checked: true,
-            multiple: false,
+            multiple: false
           },
           {
             id: "3",
             key: "rising_falling",
             name: "Rising / Falling",
             checked: true,
-            multiple: false,
+            multiple: false
           },
           {
             id: "4",
@@ -109,24 +110,26 @@ class Dashboard extends Component {
             name: "Mini graph",
             checked: true,
             multiple: true,
-            data: [{
-              key: "mini_graph1",
-              pair: "XRP-BTC"
-            }]
+            data: [
+              {
+                key: "mini_graph1",
+                pair: "XRP-BTC"
+              }
+            ]
           },
           {
             id: "5",
             key: "activity",
             name: "Activity",
             checked: true,
-            multiple: false,
+            multiple: false
           },
           {
             id: "6",
             key: "portfolio",
             name: "Portfolio",
             checked: true,
-            multiple: false,
+            multiple: false
           },
           {
             id: "7",
@@ -141,150 +144,181 @@ class Dashboard extends Component {
             name: "Candle Stick",
             checked: true,
             multiple: true,
-            data: [{
-              key: "candle_stick1",
-              pair: "XRP-BTC"
-            }]
+            data: [
+              {
+                key: "candle_stick1",
+                pair: "XRP-BTC"
+              }
+            ]
           }
         ],
         layouts: {}
-      },
+      }
     };
 
     io = this.props.io;
   }
 
   renderLayout = () => {
-
-    let { widgets, layouts } = this.state.currentTemplate
-    let renderLayout = []
+    let { widgets, layouts } = this.state.currentTemplate;
+    let renderLayout = [];
     if (!layouts || !layouts.lg) {
-      layouts["lg"] = []
-      layouts["md"] = []
-      layouts["sm"] = []
-      layouts["xs"] = []
-      layouts["xxs"] = []
+      layouts["lg"] = [];
+      layouts["md"] = [];
+      layouts["sm"] = [];
+      layouts["xs"] = [];
+      layouts["xxs"] = [];
     }
     for (let index = 0; index < widgets.length; index++) {
       const element = widgets[index];
       if (element.checked) {
-        let renderElement = null
+        let renderElement = null;
         switch (element.key) {
           case "technical_analysis":
-            for (let innerIndex = 0; innerIndex < element.data.length; innerIndex++) {
+            for (
+              let innerIndex = 0;
+              innerIndex < element.data.length;
+              innerIndex++
+            ) {
               const innerElement = element.data[innerIndex];
-              renderLayout.push(<div key={innerElement.key}>
-                <WhiteBgWrapper>
-                  <Technical
-                    options={{
-                      interval: "1m",
-                      width: "100%",
-                      isTransparent: true,
-                      height: "98%",
-                      symbol: `BINANCE:${innerElement.pair.split("-")[0]}${innerElement.pair.split("-")[1]}`,
-                      showIntervalTabs: true,
-                      locale: localStorage["i18nextLng"],
-                      colorTheme: this.props.theme ? "dark" : "light",
-                      largeChartUrl: "https://faldax.com"
-                    }}
-                  />
-                </WhiteBgWrapper>
-              </div>)
-              layouts = this.addKeyToLayout(innerElement, layouts)
+              renderLayout.push(
+                <div key={innerElement.key}>
+                  <WhiteBgWrapper>
+                    <Technical
+                      options={{
+                        interval: "1m",
+                        width: "100%",
+                        isTransparent: true,
+                        height: "98%",
+                        symbol: `BINANCE:${innerElement.pair.split("-")[0]}${
+                          innerElement.pair.split("-")[1]
+                        }`,
+                        showIntervalTabs: true,
+                        locale: localStorage["i18nextLng"],
+                        colorTheme: this.props.theme ? "dark" : "light",
+                        largeChartUrl: "https://faldax.com"
+                      }}
+                    />
+                  </WhiteBgWrapper>
+                </div>
+              );
+              layouts = this.addKeyToLayout(innerElement, layouts);
             }
             break;
           case "crypto_screener":
-            renderLayout.push(<div key={element.key}>
-              <WhiteBgWrapper>
-                <Screener
-                  options={{
-                    width: "100%",
-                    height: "98%",
-                    defaultColumn: "oscillators",
-                    defaultScreen: "general",
-                    market: "crypto",
-                    showToolbar: true,
-                    colorTheme: this.props.theme ? "dark" : "light",
-                    locale: localStorage["i18nextLng"]
-                  }}
-                />
-              </WhiteBgWrapper>
-            </div>)
-            layouts = this.addKeyToLayout(element, layouts)
-            break;
-          case "rising_falling":
-            renderLayout.push(<div key={element.key}>
-              <WhiteBgWrapper>
-                <MarketWidget
-                  options={{
-                    width: "100%",
-                    height: "98%",
-                    defaultColumn: "overview",
-                    screener_type: "crypto_mkt",
-                    displayCurrency: "USD",
-                    colorTheme: this.props.theme ? "dark" : "light",
-                    locale: localStorage["i18nextLng"]
-                  }}
-                />
-              </WhiteBgWrapper>
-            </div>)
-            layouts = this.addKeyToLayout(element, layouts)
-            break;
-          case "mini_graph":
-            for (let innerIndex = 0; innerIndex < element.data.length; innerIndex++) {
-              const innerElement = element.data[innerIndex];
-              renderLayout.push(<div key={innerElement.key}>
+            renderLayout.push(
+              <div key={element.key}>
                 <WhiteBgWrapper>
-                  <MiniGraph
-                    crypto={innerElement.pair.split("-")[0]}
-                    currency={innerElement.pair.split("-")[1]}
-                    // total={4}
-                    lineColor="#ffab30"
+                  <Screener
+                    options={{
+                      width: "100%",
+                      height: "98%",
+                      defaultColumn: "oscillators",
+                      defaultScreen: "general",
+                      market: "crypto",
+                      showToolbar: true,
+                      colorTheme: this.props.theme ? "dark" : "light",
+                      locale: localStorage["i18nextLng"]
+                    }}
                   />
                 </WhiteBgWrapper>
-              </div>)
-              layouts = this.addKeyToLayout(innerElement, layouts)
+              </div>
+            );
+            layouts = this.addKeyToLayout(element, layouts);
+            break;
+          case "rising_falling":
+            renderLayout.push(
+              <div key={element.key}>
+                <WhiteBgWrapper>
+                  <MarketWidget
+                    options={{
+                      width: "100%",
+                      height: "98%",
+                      defaultColumn: "overview",
+                      screener_type: "crypto_mkt",
+                      displayCurrency: "USD",
+                      colorTheme: this.props.theme ? "dark" : "light",
+                      locale: localStorage["i18nextLng"]
+                    }}
+                  />
+                </WhiteBgWrapper>
+              </div>
+            );
+            layouts = this.addKeyToLayout(element, layouts);
+            break;
+          case "mini_graph":
+            for (
+              let innerIndex = 0;
+              innerIndex < element.data.length;
+              innerIndex++
+            ) {
+              const innerElement = element.data[innerIndex];
+              renderLayout.push(
+                <div key={innerElement.key}>
+                  <WhiteBgWrapper>
+                    <MiniGraph
+                      crypto={innerElement.pair.split("-")[0]}
+                      currency={innerElement.pair.split("-")[1]}
+                      // total={4}
+                      lineColor="#ffab30"
+                    />
+                  </WhiteBgWrapper>
+                </div>
+              );
+              layouts = this.addKeyToLayout(innerElement, layouts);
             }
             break;
           case "activity":
-            renderLayout.push(<div key={element.key}>
-              <WhiteBgWrapper>
-                <Activity />
-              </WhiteBgWrapper>
-            </div>)
-            layouts = this.addKeyToLayout(element, layouts)
+            renderLayout.push(
+              <div key={element.key}>
+                <WhiteBgWrapper>
+                  <Activity />
+                </WhiteBgWrapper>
+              </div>
+            );
+            layouts = this.addKeyToLayout(element, layouts);
             break;
           case "portfolio":
-            renderLayout.push(<div key={element.key}>
-              <WhiteBgWrapper>
-                <Portfolio />
-              </WhiteBgWrapper>
-            </div>)
-            layouts = this.addKeyToLayout(element, layouts)
+            renderLayout.push(
+              <div key={element.key}>
+                <WhiteBgWrapper>
+                  <Portfolio />
+                </WhiteBgWrapper>
+              </div>
+            );
+            layouts = this.addKeyToLayout(element, layouts);
             break;
           case "news":
-            renderLayout.push(<div key={element.key}>
-              <WhiteBgWrapper>
-                <News />
-              </WhiteBgWrapper>
-            </div>)
-            layouts = this.addKeyToLayout(element, layouts)
+            renderLayout.push(
+              <div key={element.key}>
+                <WhiteBgWrapper>
+                  <News />
+                </WhiteBgWrapper>
+              </div>
+            );
+            layouts = this.addKeyToLayout(element, layouts);
             break;
           case "candle_stick":
-            for (let innerIndex = 0; innerIndex < element.data.length; innerIndex++) {
+            for (
+              let innerIndex = 0;
+              innerIndex < element.data.length;
+              innerIndex++
+            ) {
               const innerElement = element.data[innerIndex];
-              renderLayout.push(<div key={innerElement.key}>
-                <WhiteBgWrapper style={{ overflow: "hidden" }}>
-                  <div style={{ height: "100%", paddingTop: "20px" }}>
-                    <TradingViewChart
-                      crypto={innerElement.pair.split("-")[0]}
-                      currency={innerElement.pair.split("-")[1]}
-                      theme={this.props.theme}
-                    />
-                  </div>
-                </WhiteBgWrapper>
-              </div>)
-              layouts = this.addKeyToLayout(innerElement, layouts)
+              renderLayout.push(
+                <div key={innerElement.key}>
+                  <WhiteBgWrapper style={{ overflow: "hidden" }}>
+                    <div style={{ height: "100%", paddingTop: "20px" }}>
+                      <TradingViewChart
+                        crypto={innerElement.pair.split("-")[0]}
+                        currency={innerElement.pair.split("-")[1]}
+                        theme={this.props.theme}
+                      />
+                    </div>
+                  </WhiteBgWrapper>
+                </div>
+              );
+              layouts = this.addKeyToLayout(innerElement, layouts);
             }
             break;
           default:
@@ -292,8 +326,8 @@ class Dashboard extends Component {
         }
       }
     }
-    return { renderLayout, layouts }
-  }
+    return { renderLayout, layouts };
+  };
   /* Life-Cycle Methods */
   findKeyFromLayout = (key, layout) => {
     console.log(layout);
@@ -301,11 +335,11 @@ class Dashboard extends Component {
     for (let index = 0; index < layout.length; index++) {
       const element = layout[index];
       if (element.key == key) {
-        return element
+        return element;
       }
     }
-    return null
-  }
+    return null;
+  };
   addKeyToLayout = (element, layouts) => {
     if (!this.findKeyFromLayout(element.key, layouts.lg)) {
       layouts.lg.push({
@@ -314,38 +348,38 @@ class Dashboard extends Component {
         y: 0,
         x: 0,
         i: element.key
-      })
+      });
       layouts.md.push({
         h: 3,
         w: 12,
         y: 0,
         x: 0,
         i: element.key
-      })
+      });
       layouts.sm.push({
         h: 3,
         w: 12,
         y: 0,
         x: 0,
         i: element.key
-      })
+      });
       layouts.xs.push({
         h: 3,
         w: 12,
         y: 0,
         x: 0,
         i: element.key
-      })
+      });
       layouts.xxs.push({
         h: 3,
         w: 12,
         y: 0,
         x: 0,
         i: element.key
-      })
+      });
     }
-    return layouts
-  }
+    return layouts;
+  };
   componentDidMount() {
     var self = this;
     self.getPairs();
@@ -367,7 +401,7 @@ class Dashboard extends Component {
           });
         }
       })
-      .catch(error => { });
+      .catch(error => {});
   };
   comingCancel = e => {
     this.setState({
@@ -375,7 +409,7 @@ class Dashboard extends Component {
     });
   };
   render() {
-    const { renderLayout, layouts } = this.renderLayout()
+    const { renderLayout, layouts } = this.renderLayout();
     const menu = (
       <Menu className="SettingMenu templateSettingMenu">
         <SubMenu className="templates" title="Templates">
@@ -403,7 +437,7 @@ class Dashboard extends Component {
         {this.state.isFullscreen && (
           <Menu.Item
             key="2"
-          //   onClick={this.exitFullScreen}
+            //   onClick={this.exitFullScreen}
           >
             <Icon type="fullscreen-exit" />
             Exit Full Screen
@@ -412,7 +446,7 @@ class Dashboard extends Component {
         {!this.state.isFullscreen && (
           <Menu.Item
             key="2"
-          //   onClick={this.goFullScreen}
+            //   onClick={this.goFullScreen}
           >
             <Icon type="fullscreen" /> Full Screen
           </Menu.Item>
@@ -461,17 +495,15 @@ class Dashboard extends Component {
                   cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                   isDraggable={this.state.editState}
                   isResizable={this.state.editState}
-                // onLayoutChange={(layout, layouts) =>
-                //   this.onLayoutChange(layout, layouts)
-                // }
+                  // onLayoutChange={(layout, layouts) =>
+                  //   this.onLayoutChange(layout, layouts)
+                  // }
                 >
-                  {
-                    renderLayout.map((el) => {
-                      console.log(el);
+                  {renderLayout.map(el => {
+                    console.log(el);
 
-                      return el
-                    })
-                  }
+                    return el;
+                  })}
                 </RGL>
               </Col>
             </Row>
