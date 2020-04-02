@@ -73,12 +73,14 @@ class Dashboard extends Component {
       templateManage: false,
       pairs: [],
       currentTemplate: {
+        title: [],
+        inbuilt: false,
         widgets: [
           {
             id: "1",
             key: "technical_analysis",
             name: "Technical analysis",
-            checked: true,
+            checked: false,
             multiple: true,
             data: [{
               key: "technical_analysis1",
@@ -112,6 +114,14 @@ class Dashboard extends Component {
             data: [{
               key: "mini_graph1",
               pair: "XRP-BTC"
+            },
+            {
+              key: "mini_graph2",
+              pair: "XRP-BTC"
+            },
+            {
+              key: "mini_graph3",
+              pair: "XRP-BTC"
             }]
           },
           {
@@ -144,7 +154,12 @@ class Dashboard extends Component {
             data: [{
               key: "candle_stick1",
               pair: "XRP-BTC"
-            }]
+            },
+            {
+              key: "candle_stick2",
+              pair: "XRP-BTC"
+            }
+            ]
           }
         ],
         layouts: {}
@@ -234,7 +249,7 @@ class Dashboard extends Component {
             for (let innerIndex = 0; innerIndex < element.data.length; innerIndex++) {
               const innerElement = element.data[innerIndex];
               renderLayout.push(<div key={innerElement.key}>
-                <WhiteBgWrapper>
+                <WhiteBgWrapper style={{ overflow: "hidden" }}>
                   <MiniGraph
                     crypto={innerElement.pair.split("-")[0]}
                     currency={innerElement.pair.split("-")[1]}
@@ -280,6 +295,7 @@ class Dashboard extends Component {
                       crypto={innerElement.pair.split("-")[0]}
                       currency={innerElement.pair.split("-")[1]}
                       theme={this.props.theme}
+                      containerId={innerElement.key}
                     />
                   </div>
                 </WhiteBgWrapper>
@@ -296,8 +312,6 @@ class Dashboard extends Component {
   }
   /* Life-Cycle Methods */
   findKeyFromLayout = (key, layout) => {
-    console.log(layout);
-
     for (let index = 0; index < layout.length; index++) {
       const element = layout[index];
       if (element.key == key) {
@@ -374,6 +388,14 @@ class Dashboard extends Component {
       templateManage: false
     });
   };
+  onLayoutChange = (layout, layouts) => {
+    this.setState({
+      currentTemplate: {
+        ...this.state.currentTemplate,
+        layouts: layout
+      }
+    })
+  }
   render() {
     const { renderLayout, layouts } = this.renderLayout()
     const menu = (
@@ -461,16 +483,12 @@ class Dashboard extends Component {
                   cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                   isDraggable={this.state.editState}
                   isResizable={this.state.editState}
-                // onLayoutChange={(layout, layouts) =>
-                //   this.onLayoutChange(layout, layouts)
-                // }
+                  onLayoutChange={(layout, layouts) =>
+                    this.onLayoutChange(layout, layouts)
+                  }
                 >
                   {
-                    renderLayout.map((el) => {
-                      console.log(el);
-
-                      return el
-                    })
+                    renderLayout.map((el) => (el))
                   }
                 </RGL>
               </Col>
